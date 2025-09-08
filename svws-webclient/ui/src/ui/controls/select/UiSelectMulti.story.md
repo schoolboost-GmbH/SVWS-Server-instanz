@@ -36,6 +36,7 @@ Folgende Props können gesetzt werden, um die Komponente zu konfigurieren.
 | removable | `boolean` | `true` | Definiert, ob eine Selektion gelöscht werden kann. Das Löschen ist dann nur für einzelne Elemente möglich, außer es ist das letzte in der Selektion. |
 | nullable | `boolean` | `true` | Definiert, ob für das model `null` oder `undefined` übergeben werden darf. |
 | disabled    | `boolean`                                         | `false`     | Definiert, ob die Komponente deaktiviert ist                                                                                                            |
+| readonly | `boolean` | `false` | Definiert, ob die Komponente schreibgeschützt ist |
 | statistics  | `boolean`                                         | `false`     | Definiert, ob die Komponente für die Statistik relevant ist                                                                                             |
 | headless    | `boolean`                                         | `false`     | Definiert, ob das Select headless (ohne Rahmen und Hintergrund) dargestellt wird, z. B. für Tabellen                                                    |                            |
 | minOptions  | `number`                                          | `undefined` | Definiert die minimale Anzahl an auszuwählenden Optionen. Wird mit `maxOptions` abgeglichen                                    |

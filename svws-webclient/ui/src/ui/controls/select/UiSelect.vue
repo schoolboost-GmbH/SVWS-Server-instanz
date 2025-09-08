@@ -2,45 +2,44 @@
 	<div ref="uiSelect" class="ui-select relative rounded-md text-base inline-flex h-fit w-full" v-bind="filteredAttributes">
 		<!-- Combobox -->
 		<div :id="`uiSelectInput_${instanceId}`" ref="uiSelectCombobox" :tabindex="comboboxTabindex" :role="comboboxRole" v-bind="comboboxAriaAttrs"
-			:class="[comboboxClasses, 'relative outline-none focus-within:ring-2 ring-ui-neutral w-full rounded-md flex items-center gap-1 hover:ring-ui-neutral hover:ring-2 min-w-16 m-[0.2em]']"
+			:class="[comboboxClasses, 'relative outline-none ring-ui-neutral w-full rounded-md flex items-center gap-1 min-w-16 m-[0.2em] select-none']"
 			@click.stop="handleComponentClick" @focus="handleComboboxFocus" @keydown.stop="onKeyDown">
 			<div :class="[headlessPadding, 'flex']">
 				<!-- Expand-Icon + Clear-Button headless -->
-				<div v-if="headless" class="flex items-center">
+				<div v-if="headless && !readonly" class="flex items-center">
 					<span :class="[iconColorClass, 'icon-sm i-ri-expand-up-down-line cursor-pointer']" />
-					<button v-if="removable" type="button" :disabled aria-label="Auswahl löschen" @click.stop="clearSelection" @keydown.enter.stop="clearSelection"
+					<button v-if="removable" type="button" :disabled aria-label="Auswahl löschen" @click.stop="clearSelection"
+						@keydown.enter.stop="clearSelection"
 						class="hover:bg-ui-hover flex focus:ring-2 ring-ui-neutral outline-none rounded-sm">
 						<span :class="[iconColorClass, 'icon-sm i-ri-close-line']" />
 					</button>
 				</div>
 				<!-- Label -->
-				<label v-if="showLabel" :id="`uiSelectLabel_${instanceId}`"
-					:class="[labelClasses, 'absolute transition-all duration-100 ease-in-out pointer-events-none rounded left-2 whitespace-nowrap max-w-fit flex gap-1 px-1 -translate-y-1/2']">
+				<div v-if="showLabel"
+					:class="[labelClasses, 'absolute transition-all duration-100 ease-in-out pointer-events-none rounded left-2 whitespace-nowrap max-w-fit flex justify-center items-center gap-1 px-1 -translate-y-1/2']">
 					<span v-if="statistics" class="cursor-pointer flex">
 						<svws-ui-tooltip position="right">
-							<span :class="[disabled ? 'icon-ui-disabled' : 'icon-ui-statistic', 'icon i-ri-bar-chart-2-line pointer-events-auto']" />
+							<span :class="[disabled ? 'icon-ui-disabled' : 'icon-ui-statistic', 'icon i-ri-bar-chart-2-line pointer-events-auto']"
+								aria-label="Relevant für die Statistik" />
 							<template #content>
 								Relevant für die Statistik
 							</template>
 						</svws-ui-tooltip>
 					</span>
 
-					<span :class="[labelTextColorClass, 'leading-none content-center overflow-hidden truncate h-5.5']">
+					<span :id="`uiSelectLabel_${instanceId}`" :class="[labelTextColorClass, 'overflow-hidden truncate']" aria-hidden="true">
 						{{ label }}
 					</span>
-					<span v-if="required" class="cursor-pointer flex items-end" aria-hidden>
-						<span :class="[iconColorClass, 'icon-xs i-ri-asterisk font-normal relative -top-2']" />
+					<span v-if="required" class="cursor-pointer flex items-end" aria-label="erforderlich">
+						<span :class="[iconColorClass, 'icon-xs i-ri-asterisk font-normal relative -top-0.5']" />
 					</span>
-					<span v-if="required" class="sr-only">erforderlich</span>
-					<span v-if="showValidatorError" class="cursor-pointer flex items-end">
+					<span v-if="showValidatorError" class="cursor-pointer flex items-end justify-center">
 						<span :class="[iconColorClass, 'icon i-ri-alert-line']" />
 					</span>
-					<span v-if="!isValidatorValid" class="cursor-pointer">
+					<span v-if="!isValidatorValid" class="cursor-pointer flex justify-center items-center">
 						<svws-ui-tooltip position="right">
-							<span class="pointer-events-auto">
-								<template v-if="!validator().getFehler().isEmpty()">
-									<span :class="[validatorErrorIcon, 'icon']" />
-								</template>
+							<span v-if="!validator().getFehler().isEmpty()" class="pointer-events-auto flex justify-center items-center">
+								<span :class="[validatorErrorIcon, 'icon']" />
 							</span>
 							<template #content>
 								<template v-if="showValidatorErrorMessage">
@@ -58,7 +57,13 @@
 							</template>
 						</svws-ui-tooltip>
 					</span>
-				</label>
+					<svws-ui-tooltip position="right" v-if="readonly" class="cursor-pointer pointer-events-auto">
+						<span :class="[labelIconClass, 'icon-xs i-ri-lock-line flex-shrink-0']" aria-label="schreibgeschützt" />
+						<template #content>
+							Schreibgeschützt
+						</template>
+					</svws-ui-tooltip>
+				</div>
 
 				<!-- Wrapper für die aktuelle Selektion und das Suchfeld -->
 				<div class="flex flex-wrap items-center gap-x-1 flex-1 min-w-0">
@@ -85,8 +90,9 @@
 			</div>
 
 			<!-- Expand-Icon + Clear-Button -->
-			<div v-if="!headless" class="ml-auto flex items-center h-fit">
-				<button v-if="removable" type="button" :disabled aria-label="Auswahl löschen" @click.stop="clearSelection" @keydown.enter.stop="clearSelection"
+			<div v-if="!headless && !readonly" class="ml-auto flex items-center h-fit">
+				<button v-if="removable && !readonly" type="button" :disabled aria-label="Auswahl löschen" @click.stop="clearSelection"
+					@keydown.enter.stop="clearSelection"
 					class="hover:bg-ui-hover flex focus:ring-2 ring-ui-neutral outline-none rounded-sm">
 					<span :class="[iconColorClass, 'icon-sm i-ri-close-line']" />
 				</button>
@@ -128,6 +134,7 @@
 		searchable: false,
 		deepSearchAttributes: () => [],
 		required: false,
+		readonly: false,
 		removable: true,
 		nullable: true,
 		disabled: false,
@@ -259,7 +266,7 @@
 	const {
 		instanceId, filteredAttributes, iconColorClass, focusBasedTextColorClass, comboboxAriaAttrs, searchAriaAttrs, comboboxTabindex,
 		searchInputTabindex, comboboxRole, dropdownPositionStyles, onKeyDown, searchInputFocusClass, handleComboboxFocus, handleBlur, handleComponentClick,
-		comboboxClasses, headlessPadding, labelClasses, labelTextColorClass, optionClasses, validatorErrorIcon, showLabel, showValidatorError,
+		comboboxClasses, headlessPadding, labelClasses, labelTextColorClass, labelIconClass, optionClasses, validatorErrorIcon, showLabel, showValidatorError,
 		showValidatorErrorMessage, validatorErrorBgClasses, showSelection, splitText, handleInput, toggleSelection, getMatchingOptions, resetSearch,
 
 	} = useUiSelectUtils(

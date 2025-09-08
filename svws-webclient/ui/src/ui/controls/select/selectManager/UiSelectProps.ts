@@ -9,6 +9,7 @@ export interface UiSelectProps<T, V> {
 	removable?: boolean;
 	nullable?: boolean;
 	disabled?: boolean;
+	readonly?: boolean;
 	statistics?: boolean;
 	headless?: boolean;
 	validator?: () => V;

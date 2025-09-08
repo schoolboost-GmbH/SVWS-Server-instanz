@@ -226,14 +226,14 @@ export function useUiSelectUtils<T, V extends Validator>(
 	 * Berechnet den Tabindex der Combobox. Nur wenn kein SearchInput generiert wird (searchable = false) darf die Combobox vie Tastatur erreicht werden können.
 	 */
 	const comboboxTabindex = computed((): number =>
-		props.searchable! || props.disabled! ? -1 : 0
+		(props.searchable! || props.disabled! || props.readonly!) ? -1 : 0
 	);
 
 	/**
 	 * Berechnet den Tabindex des Searchinputs.
 	 */
 	const searchInputTabindex = computed((): number =>
-		props.disabled! ? -1 : 0
+		(props.disabled! || props.readonly!) ? -1 : 0
 	);
 
 	/**
@@ -241,7 +241,7 @@ export function useUiSelectUtils<T, V extends Validator>(
 	 * gesetzt wird.
 	 */
 	const comboboxRole = computed((): string | undefined =>
-		(!props.searchable! || props.disabled!) ? 'combobox' : undefined
+		(!props.searchable! || props.disabled! || props.readonly!) ? 'combobox' : undefined
 	);
 
 	/**
@@ -391,7 +391,7 @@ export function useUiSelectUtils<T, V extends Validator>(
 	 * @param event das Keyboardevent, das die gedrückte Taste enthält
 	 */
 	async function onKeyDown(event: KeyboardEvent) {
-		if (props.disabled!)
+		if (props.disabled! || props.readonly!)
 			return;
 
 		// Nur bei geöffnetem Dropdown, oder wenn Navigation ausgelöst wird. Verhindert, dass die Seite beim Navigieren des Dropdowns gescrollt wird.
@@ -658,6 +658,8 @@ export function useUiSelectUtils<T, V extends Validator>(
 	 * nicht beim Klick getroffen hat, weil es nicht die gesamte Combobox ausfüllt.
 	 */
 	function handleComponentClick() {
+		if (props.readonly!)
+			return;
 		handleComboboxFocus();
 		toggleDropdown();
 	}
@@ -671,12 +673,11 @@ export function useUiSelectUtils<T, V extends Validator>(
 	 */
 	const comboboxClasses = computed((): (string | object)[] => [
 		props.headless! ? 'pl-1 min-h-6' : 'border mt-[0.8em] pl-3 pr-1 min-h-9',
-		props.disabled! ? 'pointer-events-none border-ui-disabled' : borderColorClass.value,
+		props.disabled! ? 'border-ui-disabled' : borderColorClass.value,
+		props.readonly! ? 'cursor-not-allowed' : props.searchable! ? 'cursor-text hover:ring-2 focus-within:ring-2' : 'cursor-pointer hover:ring-2 focus-within:ring-2',
 		backgroundColorClass.value,
 		{
-			'pointer-events-none border-ui-disabled': props.disabled,
-			'cursor-text': props.searchable,
-			'cursor-pointer': !props.searchable!,
+			'pointer-events-none': props.disabled!,
 		},
 		comboboxFocusClass.value,
 	]);
@@ -703,7 +704,11 @@ export function useUiSelectUtils<T, V extends Validator>(
 	 * CSS- und Tailwindklassen für den Labeltext
 	 */
 	const labelTextColorClass = computed((): string =>
-		props.disabled! ? '' : moveLabel.value ? textColorClass.value : getSecondaryTextColor(textColorClass.value)
+		moveLabel.value ? textColorClass.value : getSecondaryTextColor(textColorClass.value)
+	);
+
+	const labelIconClass = computed((): string =>
+		moveLabel.value ? iconColorClass.value : getSecondaryIconColor(iconColorClass.value)
 	);
 
 	/**
@@ -721,11 +726,11 @@ export function useUiSelectUtils<T, V extends Validator>(
 			return null;
 		const fehlerart = props.validator().getFehlerart();
 		if (fehlerart === ValidatorFehlerart.MUSS)
-			return 'i-ri-alert-fill icon-ui-danger';
+			return ['i-ri-alert-fill', props.disabled! ? 'icon-ui-disabled' : 'icon-ui-danger'];
 		if (fehlerart === ValidatorFehlerart.KANN)
-			return 'i-ri-error-warning-fill icon-ui-caution';
+			return ['i-ri-error-warning-fill', props.disabled! ? 'icon-ui-disabled' : 'icon-ui-caution'];
 		if (fehlerart === ValidatorFehlerart.HINWEIS)
-			return 'i-ri-question-fill icon-ui-warning';
+			return ['i-ri-question-fill', props.disabled! ? 'icon-ui-disabled' : 'icon-ui-warning'];
 		return null;
 	});
 
@@ -811,7 +816,7 @@ export function useUiSelectUtils<T, V extends Validator>(
 	/**
 	 * Generiert die passende sekundäre Textfarbe für gesetzte Textfarben von außen.
 	 *
-	 * @param color    die Textfarbe, dessen Sekundärfarbe ermittler werden soll.
+	 * @param color    die Textfarbe, dessen Sekundärfarbe ermittlet werden soll.
 	 */
 	function getSecondaryTextColor (color: string) {
 		if (color.startsWith("text-uistatic"))
@@ -857,6 +862,58 @@ export function useUiSelectUtils<T, V extends Validator>(
 				return "text-ui-ondisabled-secondary"
 			default:
 				return "text-ui-secondary";
+		}
+	}
+
+	/**
+	 * Generiert die passende sekundäre Iconfarbe für gesetzte Iconfarben von außen.
+	 *
+	 * @param color    die Iconfarbe, dessen Sekundärfarbe ermittlet werden soll.
+	 */
+	function getSecondaryIconColor (color: string) {
+		if (color.startsWith("icon-uistatic"))
+			return "icon-uistatic-25";
+		switch (color) {
+			case "icon-ui":
+				return "icon-ui-secondary";
+			case "icon-ui-brand":
+				return "icon-ui-brand-secondary"
+			case "icon-ui-statistic":
+				return "icon-ui-statistic-secondary"
+			case "icon-ui-selected":
+				return "icon-ui-selected-secondary"
+			case "icon-ui-danger":
+				return "icon-ui-danger-secondary"
+			case "icon-ui-success":
+				return "icon-ui-success-secondary"
+			case "icon-ui-warning":
+				return "icon-ui-warning-secondary"
+			case "icon-ui-caution":
+				return "icon-ui-caution-secondary"
+			case "icon-ui-neutral":
+				return "icon-ui-neutral-secondary"
+			case "icon-ui-disabled":
+				return "icon-ui-disabled-secondary"
+			case "icon-ui-onbrand":
+				return "icon-ui-onbrand-secondary"
+			case "icon-ui-onstatistic":
+				return "icon-ui-onstatistic-secondary"
+			case "icon-ui-onselected":
+				return "icon-ui-onselected-secondary"
+			case "icon-ui-ondanger":
+				return "icon-ui-ondanger-secondary"
+			case "icon-ui-onsuccess":
+				return "icon-ui-onsuccess-secondary"
+			case "icon-ui-onwarning":
+				return "icon-ui-onwarning-secondary"
+			case "icon-ui-oncaution":
+				return "icon-ui-oncaution-secondary"
+			case "icon-ui-onneutral":
+				return "icon-ui-onneutral-secondary"
+			case "icon-ui-ondisabled":
+				return "icon-ui-ondisabled-secondary"
+			default:
+				return "icon-ui-secondary";
 		}
 	}
 
@@ -945,7 +1002,7 @@ export function useUiSelectUtils<T, V extends Validator>(
 	return {
 		instanceId, search, filteredAttributes, textColorClass, iconColorClass, focusBasedTextColorClass, comboboxAriaAttrs,
 		searchAriaAttrs, comboboxTabindex, searchInputTabindex, comboboxRole, dropdownPositionStyles, onKeyDown, searchInputFocusClass, handleComboboxFocus,
-		handleBlur, handleComponentClick, comboboxClasses, headlessPadding, labelClasses, labelTextColorClass, optionClasses, validatorErrorIcon, showLabel,
+		handleBlur, handleComponentClick, comboboxClasses, headlessPadding, labelClasses, labelTextColorClass, labelIconClass, optionClasses, validatorErrorIcon, showLabel,
 		showValidatorError, showValidatorErrorMessage, validatorErrorBgClasses, showSelection, splitText, getSecondaryTextColor, handleInput,
 		toggleSelection, getMatchingOptions, resetSearch,
 	}

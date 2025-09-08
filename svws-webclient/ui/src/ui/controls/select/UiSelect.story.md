@@ -36,6 +36,7 @@ Folgende Props können gesetzt werden, um die Komponente zu konfigurieren.
 | removable | `boolean` | `true` | Definiert, ob eine Selektion gelöscht werden kann.
 | nullable | `boolean` | `true` | Definiert, ob für das model `null` oder `undefined` übergeben werden darf. |
 | disabled    | `boolean`                                         | `false`     | Definiert, ob die Komponente deaktiviert ist                                                                                                            |
+| readonly | `boolean` | `false` | Definiert, ob die Komponente schreibgeschützt ist |
 | statistics  | `boolean`                                         | `false`     | Definiert, ob die Komponente für die Statistik relevant ist                                                                                             |
 | headless    | `boolean`                                         | `false`     | Definiert, ob das Select headless (ohne Rahmen und Hintergrund) dargestellt wird, z. B. für Tabellen                                                    |
 | validator   | `() => Validator`   | `undefined` | Ein Statistik-Validator, der auf Fehler für die Statistik prüft. |

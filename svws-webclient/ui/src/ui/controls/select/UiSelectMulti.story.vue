@@ -4,13 +4,13 @@
 		<Variant title="SelectManager" id="selectManager">
 			<svws-ui-input-wrapper>
 				<ui-select-multi label="SelectManager mit String" :manager="stringSelectManager" :searchable="state.searchable" :removable="state.removable"
-					:disabled="state.disabled" :statistics="state.statistics" :headless="state.headless"
+					:disabled="state.disabled" :statistics="state.statistics" :headless="state.headless" :readonly="state.readonly"
 					:class="[state.bgColor, state.textColor, state.iconColor, state.borderColor]" :required="state.required" />
 				<ui-select-multi label="SelectManager mit Custom-Objekten" :manager="objectSelectManager" :searchable="state.searchable" :removable="state.removable"
-					:disabled="state.disabled" :statistics="state.statistics" :headless="state.headless"
+					:disabled="state.disabled" :statistics="state.statistics" :headless="state.headless" :readonly="state.readonly"
 					:class="[state.bgColor, state.textColor, state.iconColor, state.borderColor]" :required="state.required" />
 				<ui-select-multi label="CoreTypeSelectManager mit LehrerRechtsverhaeltnis" :manager="coreTypeSelectManager" :searchable="state.searchable" :disabled="state.disabled"
-					:statistics="state.statistics" :headless="state.headless" :removable="state.removable"
+					:statistics="state.statistics" :headless="state.headless" :removable="state.removable" :readonly="state.readonly"
 					:class="[state.bgColor, state.textColor, state.iconColor, state.borderColor]" :required="state.required" />
 			</svws-ui-input-wrapper>
 			<template #controls>
@@ -19,6 +19,7 @@
 				<HstCheckbox v-model="state.disabled" title="Disabled" />
 				<HstCheckbox v-model="state.statistics" title="Statistik" />
 				<HstCheckbox v-model="state.removable" title="Removable" />
+				<HstCheckbox v-model="state.readonly" title="Readonly" />
 				<HstCheckbox v-model="state.headless" title="Headless" />
 				<span class="text-headline-md">Farben</span>
 				<HstRadio v-model="state.bgColor" title="Hintergrund" :options="[
@@ -69,7 +70,7 @@
 				</svws-ui-checkbox>
 				<ui-select-multi label="CoreTypeSelectManager Fach abhängig von Fachgruppe" :manager="fachSelectManager" :searchable="state.searchable"
 					:disabled="state.disabled" :statistics="state.statistics" :headless="state.headless" :removable="state.removable"
-					:min-options="state.minOptions" :max-options="state.maxOptions" :required="state.required"
+					:min-options="state.minOptions" :max-options="state.maxOptions" :required="state.required" :readonly="state.readonly"
 					:class="[state.bgColor, state.textColor, state.iconColor, state.borderColor]" />
 			</svws-ui-input-wrapper>
 		</Variant>
@@ -95,7 +96,8 @@
 			<svws-ui-input-wrapper>
 				<ui-select-multi label="Sortiertes Select" :manager="sortableCoreTypeSelectManager" :searchable="true" :disabled="state.disabled"
 					:statistics="state.statistics" :headless="state.headless" :min-options="state.minOptions" :removable="state.removable"
-					:max-options="state.maxOptions" :class="[state.bgColor, state.textColor, state.iconColor, state.borderColor]" :required="state.required" />
+					:max-options="state.maxOptions" :class="[state.bgColor, state.textColor, state.iconColor, state.borderColor]" :required="state.required"
+					:readonly="state.readonly" />
 			</svws-ui-input-wrapper>
 			<template #controls>
 				<HstCheckbox v-model="state.searchable" title="Searchable" />
@@ -103,6 +105,7 @@
 				<HstCheckbox v-model="state.disabled" title="Disabled" />
 				<HstCheckbox v-model="state.statistics" title="Statistik" />
 				<HstCheckbox v-model="state.removable" title="Removable" />
+				<HstCheckbox v-model="state.readonly" title="Readonly" />
 				<HstCheckbox v-model="state.headless" title="Headless" />
 				<HstNumber v-model="state.minOptions" title="minOptions" />
 				<HstNumber v-model="state.maxOptions" title="maxOptions" />
@@ -144,6 +147,7 @@
 			<HstCheckbox v-model="state.disabled" title="Disabled" />
 			<HstCheckbox v-model="state.statistics" title="Statistik" />
 			<HstCheckbox v-model="state.removable" title="Removable" />
+			<HstCheckbox v-model="state.readonly" title="Readonly" />
 			<HstCheckbox v-model="state.headless" title="Headless" />
 			<HstNumber v-model="state.minOptions" title="minOptions" />
 			<HstNumber v-model="state.maxOptions" title="maxOptions" />
@@ -194,6 +198,7 @@
 		disabled: false,
 		statistics: false,
 		removable: true,
+		readonly: false,
 		required: false,
 		headless: false,
 		minOptions: undefined as number | undefined,
