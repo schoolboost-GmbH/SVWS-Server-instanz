@@ -54,13 +54,10 @@ import jakarta.ws.rs.core.EntityTag;
 /**
  * Diese Klasse handhabt HTTP-Requests an der CalDAV-API des SVWS-Servers.
  */
-public class CalDavRequestManager extends DavRequestManager {
+public class CalDavRequestManager extends AbstractDavRequestManager {
 
 	/** Das Kalender-Repository für den Datenbankzugriff */
 	private final KalenderRepository repo;
-
-	/** Der Input-Stream mit dem Body der Anfrage*/
-	private final byte[] requestBody;
 
 
 	/**
@@ -72,10 +69,7 @@ public class CalDavRequestManager extends DavRequestManager {
 	 * @throws IOException   wenn der Request-Body nicht gelesen werden kann
 	 */
 	public CalDavRequestManager(final @NotNull DBEntityManager conn, final InputStream is) throws IOException {
-		super(conn);
-		this.requestBody = is.readAllBytes();
-		setParameterSchema(conn.getDBSchema());
-		setParameterBenutzerId(String.valueOf(conn.getUser().getId()));
+		super(conn, is);
 		repo = new KalenderRepository(conn);
 	}
 
