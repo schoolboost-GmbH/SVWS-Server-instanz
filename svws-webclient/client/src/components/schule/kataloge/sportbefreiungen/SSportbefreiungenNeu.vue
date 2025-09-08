@@ -22,12 +22,13 @@
 
 <script setup lang="ts">
 
-	import type {SportbefreiungenNeuProps} from "~/components/schule/kataloge/sportbefreiungen/SSportbefreiungenNeuProps";
-	import {BenutzerKompetenz, JavaString, Sportbefreiung} from "@core";
-	import {computed, ref, watch} from "vue";
+	import type { SportbefreiungenNeuProps } from "~/components/schule/kataloge/sportbefreiungen/SSportbefreiungenNeuProps";
+	import { BenutzerKompetenz, Sportbefreiung } from "@core";
+	import { computed, ref, watch } from "vue";
+	import { isUniqueInList, mandatoryInputIsValid } from "~/util/validation/Validation";
 
 	const props = defineProps<SportbefreiungenNeuProps>();
-	const data = ref<Sportbefreiung>(Object.assign( new Sportbefreiung(), {istSichtbar: true, sortierung: 1}))
+	const data = ref<Sportbefreiung>(Object.assign(new Sportbefreiung(), { istSichtbar: true, sortierung: 1 }))
 	const isLoading = ref<boolean>(false);
 	const hatKompetenzAdd = computed<boolean>(() => props.benutzerKompetenzen.has(BenutzerKompetenz.KATALOG_EINTRAEGE_AENDERN));
 	const disabled = computed(() => !hatKompetenzAdd.value);
@@ -52,13 +53,11 @@
 		})
 	})
 
-	function bezeichnungIsValid(v: string | null) {
-		if ((v === null) || JavaString.isBlank(v) || (v.length > 50))
+	function bezeichnungIsValid(value: string | null) {
+		if (!mandatoryInputIsValid(value, 50))
 			return false;
-		for (const sportbefreiung of props.manager().liste.list())
-			if (JavaString.equalsIgnoreCase(v, sportbefreiung.bezeichnung))
-				return false;
-		return true;
+
+		return isUniqueInList(value, props.manager().liste.list(), "bezeichnung");
 	}
 
 	async function add() {
@@ -72,14 +71,15 @@
 		isLoading.value = false;
 	}
 
-	function cancel() {
+	async function cancel() {
 		props.checkpoint.active = false;
-		void props.goToDefaultView(null);
+		await props.goToDefaultView(null);
 	}
 
 	watch(() => data.value, async() => {
 		if (isLoading.value)
 			return;
+
 		props.checkpoint.active = true;
 	}, {immediate: false, deep: true});
 
