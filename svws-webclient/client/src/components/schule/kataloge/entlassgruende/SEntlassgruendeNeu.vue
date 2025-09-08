@@ -22,8 +22,9 @@
 <script setup lang="ts">
 
 	import type { EntlassgruendeNeuProps } from "~/components/schule/kataloge/entlassgruende/SEntlassgruendeNeuProps";
-	import { BenutzerKompetenz, JavaString, KatalogEntlassgrund} from "@core";
+	import { BenutzerKompetenz, KatalogEntlassgrund } from "@core";
 	import { ref, computed, watch } from "vue";
+	import { isUniqueInList, mandatoryInputIsValid } from "~/util/validation/Validation";
 
 	const props = defineProps<EntlassgruendeNeuProps>();
 	const data = ref<KatalogEntlassgrund>(new KatalogEntlassgrund());
@@ -35,15 +36,17 @@
 		return (v: string | null) => {
 			switch (field) {
 				case 'bezeichnung':
-					return bezeichnungIsValid();
+					return bezeichnungIsValid(data.value.bezeichnung);
 				default:
 					return true;
 			}
 		}
 	}
 
-	function bezeichnungIsValid() {
-		return (!JavaString.isBlank(data.value.bezeichnung)) && (data.value.bezeichnung.length <= 30);
+	function bezeichnungIsValid(value: string | null) {
+		if (!mandatoryInputIsValid(value, 30))
+			return false;
+		return isUniqueInList(value, props.manager().liste.list(), 'bezeichnung')
 	}
 
 	const formIsValid = computed(() => {
@@ -66,9 +69,9 @@
 		isLoading.value = false;
 	}
 
-	function cancel() {
+	async function cancel() {
 		props.checkpoint.active = false;
-		void props.goToDefaultView(null);
+		await props.goToDefaultView(null);
 	}
 
 	watch(() => data.value, async() => {
