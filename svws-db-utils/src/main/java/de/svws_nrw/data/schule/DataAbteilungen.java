@@ -83,8 +83,7 @@ public final class DataAbteilungen extends DataManagerRevised<Long, DTOAbteilung
 							"Die ID %d des Patches ist null oder stimmt nicht mit der ID %d in der Datenbank überein.".formatted(id, dtoAbteilungen.ID));
 			}
 			case "idSchuljahresabschnitt" -> dtoAbteilungen.Schuljahresabschnitts_ID = JSONMapper.convertToLong(value, false, name);
-			case "bezeichnung" -> dtoAbteilungen.Bezeichnung =
-					JSONMapper.convertToString(value, false, false, Schema.tab_EigeneSchule_Abteilungen.col_Bezeichnung.datenlaenge(), name);
+			case "bezeichnung" -> updateBezeichnung(dtoAbteilungen, name, value);
 			case "idAbteilungsleiter" -> dtoAbteilungen.AbteilungsLeiter_ID = JSONMapper.convertToLong(value, true, name);
 			case "raum" -> dtoAbteilungen.Raum =
 					JSONMapper.convertToString(value, true, true,  Schema.tab_EigeneSchule_Abteilungen.col_Raum.datenlaenge(), name);
@@ -95,6 +94,19 @@ public final class DataAbteilungen extends DataManagerRevised<Long, DTOAbteilung
 			case "sortierung" -> dtoAbteilungen.Sortierung = JSONMapper.convertToInteger(value, false, name);
 			default -> throw new ApiOperationException(Status.BAD_REQUEST, "Das Patchen des Attributes %s wird nicht unterstützt.".formatted(name));
 		}
+	}
+
+	private void updateBezeichnung(final DTOAbteilungen dto, final String name, final Object value) throws ApiOperationException {
+		final String bezeichnung =
+				JSONMapper.convertToString(value, false, false, Schema.tab_EigeneSchule_Abteilungen.col_Bezeichnung.datenlaenge(), name);
+		if ((dto.Bezeichnung != null) && !dto.Bezeichnung.isBlank() && dto.Bezeichnung.equals(bezeichnung))
+			return;
+		final List<DTOAbteilungen> abteilungen = this.conn.queryAll(DTOAbteilungen.class);
+		final boolean bezeichnungAlreadyUsed = abteilungen.stream().anyMatch(a -> (a.ID != dto.ID) && a.Bezeichnung.equalsIgnoreCase(bezeichnung));
+		if (bezeichnungAlreadyUsed)
+			throw new ApiOperationException(Status.BAD_REQUEST, "Die Bezeichnung %s ist bereits vorhanden.".formatted(value));
+
+		dto.Bezeichnung = bezeichnung;
 	}
 
 	@Override

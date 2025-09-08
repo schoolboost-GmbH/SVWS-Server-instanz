@@ -34,7 +34,7 @@
 	import { BenutzerKompetenz, Abteilung, AbteilungKlassenzuordnung, ArrayList } from "@core";
 	import { SelectManager } from "@ui";
 	import { computed, ref, watch } from "vue";
-	import { emailIsValid, mandatoryInputIsValid, optionalInputIsValid } from "~/util/validation/Validation";
+	import { emailIsValid, isUniqueInList, mandatoryInputIsValid, optionalInputIsValid } from "~/util/validation/Validation";
 
 	const props = defineProps<AbteilungenNeuProps>();
 	const hatKompetenzAdd = computed<boolean>(() => props.benutzerKompetenzen.has(BenutzerKompetenz.SCHULBEZOGENE_DATEN_AENDERN));
@@ -57,7 +57,7 @@
 		return (v: string | null) => {
 			switch (field) {
 				case 'bezeichnung':
-					return mandatoryInputIsValid(data.value.bezeichnung, 50);
+					return bezeichnungIsValid(data.value.bezeichnung);
 				case 'raum':
 					return optionalInputIsValid(data.value.raum, 20);
 				case 'email':
@@ -68,6 +68,12 @@
 					return true;
 			}
 		}
+	}
+
+	function bezeichnungIsValid(value: string | null) {
+		if (!mandatoryInputIsValid(value, 50))
+			return false;
+		return isUniqueInList(value, props.manager().liste.list(), 'bezeichnung')
 	}
 
 	const formIsValid = computed(() => {

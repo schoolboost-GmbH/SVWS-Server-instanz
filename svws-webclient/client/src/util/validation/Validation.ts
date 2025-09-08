@@ -25,12 +25,14 @@ export function optionalInputIsValid(input : string | null, maxLength: number) {
 	return input.length <= maxLength;
 }
 
-export function isUniqueInList<T>(value: string | null, list: Array<T>, key: keyof T): boolean {
+export function isUniqueInList<T>(value: string | null, list: Iterable<T>, key: keyof T): boolean {
 	if ((value === null) || (value === ""))
 		return true;
 
-	return !list.some(entry => {
+	for (const entry of list) {
 		const fieldValue = entry[key];
-		return typeof fieldValue === "string" && fieldValue.trim() === value.trim();
-	});
+		if (typeof fieldValue === "string" && fieldValue.trim().toLowerCase() === value.trim().toLowerCase())
+			return false;
+	}
+	return true;
 }
