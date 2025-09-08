@@ -96,9 +96,10 @@ public final class DataKatalogSchuelerFoerderschwerpunkte extends DataManagerRev
 
 	private void mapBezeichnung(final DTOFoerderschwerpunkt dto, final Object value) throws ApiOperationException {
 		final String bezeichnung = JSONMapper.convertToString(value, false, false, 50, "kuerzel");
-		final List<DTOFoerderschwerpunkt> eintraege = this.conn.queryAll(DTOFoerderschwerpunkt.class);
-		for (final DTOFoerderschwerpunkt eintrag : eintraege)
-			if (eintrag.Bezeichnung.equals(bezeichnung))
+		final List<DTOFoerderschwerpunkt> foerderschwerpunkte = this.conn.queryAll(DTOFoerderschwerpunkt.class);
+		final boolean bezeichnungAlreadyUsed = foerderschwerpunkte.stream()
+				.anyMatch(f -> (f.ID != dto.ID) && f.Bezeichnung.equalsIgnoreCase(bezeichnung));
+		if (bezeichnungAlreadyUsed)
 				throw new ApiOperationException(Status.BAD_REQUEST, "Das Kürzel %s darf nicht doppelt vergeben werden".formatted(bezeichnung));
 
 		dto.Bezeichnung = bezeichnung;

@@ -61,13 +61,13 @@
 	function bezeichnungIsValid(value: string | null): boolean {
 		if (!mandatoryInputIsValid(value, 250))
 			return false;
-		return isUniqueInList(value, [...props.manager().liste.list()], 'bezeichnung');
+		return isUniqueInList(value, props.manager().liste.list(), 'bezeichnung');
 	}
 
 	function schluesselIsValid(value: string | null): boolean {
 		if (!optionalInputIsValid(value, 20))
 			return false;
-		return isUniqueInList(value, [...props.manager().liste.list()], 'schluessel');
+		return isUniqueInList(value, props.manager().liste.list(), 'schluessel');
 	}
 
 	async function addEinwilligungsart() {

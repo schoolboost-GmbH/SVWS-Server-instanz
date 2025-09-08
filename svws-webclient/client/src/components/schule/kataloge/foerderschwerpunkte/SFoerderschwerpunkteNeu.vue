@@ -28,6 +28,7 @@
 	import { computed, ref, watch} from "vue";
 	import type { FoerderschwerpunkteNeuProps } from "~/components/schule/kataloge/foerderschwerpunkte/SFoerderschwerpunkteNeuProps";
 	import { BenutzerKompetenz, Foerderschwerpunkt, FoerderschwerpunktEintrag, JavaString } from "@core";
+	import { isUniqueInList, mandatoryInputIsValid } from "~/util/validation/Validation";
 
 	const props = defineProps<FoerderschwerpunkteNeuProps>();
 	const data = ref<FoerderschwerpunktEintrag>(Object.assign( new FoerderschwerpunktEintrag(), { istSichtbar: true }));
@@ -46,7 +47,7 @@
 				case 'kuerzelStatistik':
 					return foerderschwerpunktIsValid();
 				case 'kuerzel':
-					return kuerzelIsValid();
+					return kuerzelIsValid(data.value.kuerzel);
 				default:
 					return true;
 			}
@@ -57,15 +58,11 @@
 		return (!JavaString.isBlank(data.value.kuerzelStatistik));
 	}
 
-	function kuerzelIsValid() {
-		if (JavaString.isBlank(data.value.kuerzel) || (data.value.kuerzel.length > 50))
+	function kuerzelIsValid(value: string | null) {
+		if (!mandatoryInputIsValid(value, 50))
 			return false;
 
-		for (const eintrag of props.manager().liste.list())
-			if (JavaString.equalsIgnoreCase(data.value.kuerzel, eintrag.kuerzel))
-				return false;
-
-		return true;
+		return isUniqueInList(value ,props.manager().liste.list(), "kuerzel");
 	}
 
 
@@ -89,14 +86,15 @@
 		isLoading.value = false;
 	}
 
-	function cancel() {
+	async function cancel() {
 		props.checkpoint.active = false;
-		void props.goToDefaultView(null);
+		await props.goToDefaultView(null);
 	}
 
 	watch(() => data.value, async() => {
 		if (isLoading.value)
 			return;
+
 		props.checkpoint.active = true;
 	}, {immediate: false, deep: true});
 
