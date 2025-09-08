@@ -12,7 +12,7 @@
 								</svws-ui-tooltip>
 							</template>
 							<template v-else>{{ col.kuerzel }}</template>
-							<template v-if="colsValidationTooltip.includes(col.kuerzel)">
+							<template v-if="colsValidationTooltip.has(col.kuerzel)">
 								<svws-ui-tooltip>
 									<span class="icon-sm i-ri-question-line ml-0.5" />
 									<template #content>
@@ -158,7 +158,7 @@
 
 	const props = defineProps<EnmLeistungenUebersichtProps>();
 
-	const colsValidationTooltip = ["Quartal", "Note", "FS", "FSU"];
+	const colsValidationTooltip = new Set(["Quartal", "Note", "FS", "FSU"]);
 
 	const gridManager = new GridManager<string, PairNN<ENMLeistung, ENMSchueler>, List<PairNN<ENMLeistung, ENMSchueler>>>({
 		daten: computed<List<PairNN<ENMLeistung, ENMSchueler>>>(() => {

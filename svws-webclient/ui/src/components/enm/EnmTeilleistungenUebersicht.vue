@@ -4,11 +4,18 @@
 			<template v-for="col of gridManager.cols.values()" :key="col.name">
 				<template v-if="col.kuerzel !== ''">
 					<th v-if="gridManager.isColVisible(col.kuerzel)">
-						<svws-ui-tooltip v-if="col.kuerzel !== col.name">
-							{{ col.kuerzel }}
-							<template #content>{{ col.name }}</template>
-						</svws-ui-tooltip>
-						<span v-else>{{ col.kuerzel }}</span>
+						<template v-if="!colsValidationTooltip.has(col.kuerzel)">
+							<svws-ui-tooltip>
+								{{ col.kuerzel }}
+								<template #content>
+									{{ col.name }}
+									<ul class="mt-2">
+										<li v-for="n in notenKuerzel" :key="n"> {{ n }} </li>
+									</ul>
+								</template>
+							</svws-ui-tooltip>
+						</template>
+						<template v-else>{{ col.kuerzel }}</template>
 					</th>
 				</template>
 				<template v-else>
@@ -88,7 +95,7 @@
 <script setup lang="ts">
 
 	import type { ComponentPublicInstance} from 'vue';
-	import { computed, watch, watchEffect } from 'vue';
+	import { computed, watch } from 'vue';
 	import type { EnmTeilleistungenProps } from './EnmTeilleistungenProps';
 	import type { ENMLeistung } from '../../../../core/src/core/data/enm/ENMLeistung';
 	import type { PairNN } from '../../../../core/src/asd/adt/PairNN';
@@ -101,6 +108,9 @@
 	import { Note } from '../../../../core/src/asd/types/Note';
 
 	const props = defineProps<EnmTeilleistungenProps>();
+
+	const colsValidationTooltip = new Set(['Fach', 'Lehrer', 'Kurs', 'Kursart']);
+	const notenKuerzel = computed(() => Note.values().map(e => e.daten(props.enmManager().schuljahr)?.kuerzel).filter(e => e !== ""));
 
 	const setTeilleistungsarten = computed(() => {
 		const result = new HashSet<number>();
@@ -142,7 +152,7 @@
 			const art = props.enmManager().mapTeilleistungsarten.get(idArt);
 			if (art === null)
 				continue;
-			cols.push({ kuerzel: art.bezeichnung ?? "???", name: "Teilleistung: " + (art.bezeichnung ?? "???"), width: "4rem", hideable: true });
+			cols.push({ kuerzel: art.bezeichnung ?? "???", name: art.bezeichnung ?? "???", width: "4rem", hideable: true });
 		}
 		cols.push({ kuerzel: "Quartal", name: "Quartalsnote", width: "6rem", hideable: true });
 		cols.push({ kuerzel: "Note", name: "Note", width: "6rem", hideable: true });
@@ -153,10 +163,7 @@
 
 	function inputNoteTeilleistung(pair: PairNN<ENMLeistung, ENMSchueler>, teilleistung: ENMTeilleistung, col: number, index: number) {
 		const key = 'Teilleistung_' + teilleistung.id + '_' + pair.a.id + "_" + pair.b.id;
-		const setter = (value : string | null) => {
-			console.log("setter", value);
-			void props.patchTeilleistung(teilleistung, { note: value });
-		};
+		const setter = (value : string | null) => void props.patchTeilleistung(teilleistung, { note: value });
 		return (element : Element | ComponentPublicInstance<unknown> | null) => {
 			const input = gridManager.applyInputNote(key, col, index, element, setter, props.enmManager().schuljahr);
 			if (input !== null)
