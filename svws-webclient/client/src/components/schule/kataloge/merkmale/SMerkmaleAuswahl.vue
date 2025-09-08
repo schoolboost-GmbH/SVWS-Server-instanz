@@ -42,7 +42,8 @@
 		return (props.manager().hasDaten()) ? props.manager().auswahl() : null;
 	})
 	const columns: DataTableColumn[] = [
-		{ key: "bezeichnung", label: "Bezeichnung", sortable: true, defaultSort: "asc"},
+		{ key: "kuerzel", label: "Kürzel", sortable: true, defaultSort: "asc"},
+		{ key: "bezeichnung", label: "Bezeichnung", sortable: true, defaultSort: "asc", span: 3},
 	];
 
 	async function setAuswahl(merkmale: Merkmal[]) {

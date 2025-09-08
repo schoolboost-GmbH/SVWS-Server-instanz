@@ -1,9 +1,11 @@
 <template>
 	<div class="page page-grid-cards">
-		<svws-ui-content-card title="Merkmal anlegen">
+		<svws-ui-content-card title="Allgemein">
 			<svws-ui-input-wrapper :grid="2">
-				<svws-ui-text-input placeholder="Bezeichnung" :max-len="100" v-model="data.bezeichnung" :disabled :valid="fieldIsValid('bezeichnung')" />
-				<svws-ui-text-input placeholder="Kürzel" :max-len="10" :min-len="1" v-model="data.kuerzel" :disabled :valid="fieldIsValid('kuerzel')" required />
+				<svws-ui-text-input placeholder="Bezeichnung" :max-len="100" :min-len="1" v-model="data.bezeichnung" :disabled
+					:valid="fieldIsValid('bezeichnung')" required />
+				<svws-ui-text-input placeholder="Kürzel" :max-len="10" :min-len="1" v-model="data.kuerzel" :disabled
+					:valid="fieldIsValid('kuerzel')" required />
 				<svws-ui-spacing />
 				<svws-ui-checkbox v-model="data.istSchuelermerkmal" :disabled>Schülermerkmal</svws-ui-checkbox>
 				<div />
@@ -21,8 +23,9 @@
 <script setup lang="ts">
 
 	import type { MerkmaleNeuProps } from "~/components/schule/kataloge/merkmale/SMerkmaleNeuProps";
-	import { BenutzerKompetenz, JavaString, Merkmal } from "@core";
+	import { BenutzerKompetenz, Merkmal } from "@core";
 	import { ref, computed, watch } from "vue";
+	import { isUniqueInList, mandatoryInputIsValid } from "~/util/validation/Validation";
 
 	const props = defineProps<MerkmaleNeuProps>();
 	const data = ref<Merkmal>(new Merkmal());
@@ -43,20 +46,18 @@
 		}
 	}
 
-	function bezeichnungIsValid(input: string | null) {
-		if (input === null)
-			return true;
-		return input.length <= 100;
+	function bezeichnungIsValid(value: string | null) {
+		if (!mandatoryInputIsValid(value, 100))
+			return false;
+
+		return isUniqueInList(value, props.manager().liste.list(), 'bezeichnung');
 	}
 
-	function kuerzelIsValid(input: string | null) {
-		if ((input === null) || JavaString.isBlank(input) || (input.length > 10))
+	function kuerzelIsValid(value: string | null) {
+		if (!mandatoryInputIsValid(value, 10))
 			return false;
-		for (const merkmal of props.manager().liste.list()) {
-			if (JavaString.equalsIgnoreCase(input, merkmal.kuerzel))
-				return false;
-		}
-		return true;
+
+		return isUniqueInList(value, props.manager().liste.list(), 'kuerzel');
 	}
 
 	const formIsValid = computed(() => {
@@ -79,14 +80,15 @@
 		isLoading.value = false;
 	}
 
-	function cancel() {
+	async function cancel() {
 		props.checkpoint.active = false;
-		void props.goToDefaultView(null);
+		await props.goToDefaultView(null);
 	}
 
 	watch(() => data.value, async() => {
 		if (isLoading.value)
 			return;
+
 		props.checkpoint.active = true;
 	}, {immediate: false, deep: true});
 
