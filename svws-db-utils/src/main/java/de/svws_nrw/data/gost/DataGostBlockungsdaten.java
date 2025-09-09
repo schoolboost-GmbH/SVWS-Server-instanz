@@ -15,6 +15,10 @@ import java.util.stream.Stream;
 
 import de.svws_nrw.asd.data.schueler.Schueler;
 import de.svws_nrw.asd.data.schule.Schuljahresabschnitt;
+import de.svws_nrw.asd.types.fach.Fach;
+import de.svws_nrw.asd.types.jahrgang.Jahrgaenge;
+import de.svws_nrw.asd.types.schule.Schulform;
+import de.svws_nrw.asd.types.schule.Schulgliederung;
 import de.svws_nrw.core.adt.map.HashMap3D;
 import de.svws_nrw.core.data.gost.GostBlockungKurs;
 import de.svws_nrw.core.data.gost.GostBlockungKursLehrer;
@@ -28,15 +32,11 @@ import de.svws_nrw.core.data.gost.GostStatistikFachwahl;
 import de.svws_nrw.core.data.gost.GostStatistikFachwahlHalbjahr;
 import de.svws_nrw.core.data.schueler.SchuelerListeEintrag;
 import de.svws_nrw.core.kursblockung.KursblockungAlgorithmus;
-import de.svws_nrw.asd.types.fach.Fach;
 import de.svws_nrw.core.types.gost.GostFachbereich;
 import de.svws_nrw.core.types.gost.GostHalbjahr;
 import de.svws_nrw.core.types.gost.GostKursart;
-import de.svws_nrw.asd.types.jahrgang.Jahrgaenge;
 import de.svws_nrw.core.types.kursblockung.GostKursblockungRegelParameterTyp;
 import de.svws_nrw.core.types.kursblockung.GostKursblockungRegelTyp;
-import de.svws_nrw.asd.types.schule.Schulform;
-import de.svws_nrw.asd.types.schule.Schulgliederung;
 import de.svws_nrw.core.utils.gost.GostAbiturjahrUtils;
 import de.svws_nrw.core.utils.gost.GostBlockungsdatenManager;
 import de.svws_nrw.core.utils.gost.GostBlockungsergebnisManager;
@@ -323,7 +323,6 @@ public final class DataGostBlockungsdaten extends DataManager<Long> {
 		return manager;
 	}
 
-
 	private static GostBlockungsdaten getBlockungsdaten(final DBEntityManager conn, final Long id) throws ApiOperationException {
 		DBUtilsGost.pruefeSchuleMitGOSt(conn);
 		// Erstellen den Manager mit den Blockungsdaten
@@ -331,6 +330,8 @@ public final class DataGostBlockungsdaten extends DataManager<Long> {
 		final GostBlockungsdaten daten = manager.daten();
 		// Ergänze Blockungsliste
 		DataGostBlockungsergebnisse.getErgebnisListe(conn, manager);
+		// Ergänze fehlerhafte Regeln, die der Manager zuvor rausgefiltert hat.
+		daten.regeln.addAll(manager.regelGetMapUngueltig().values());
 		return daten;
 	}
 
@@ -359,6 +360,8 @@ public final class DataGostBlockungsdaten extends DataManager<Long> {
 		final GostBlockungsdaten daten = manager.daten();
 		// Ergänze Blockungsliste
 		DataGostBlockungsergebnisse.getErgebnisListe(conn, manager);
+		// Ergänze fehlerhafte Regeln, die der Manager zuvor rausgefiltert hat.
+		daten.regeln.addAll(manager.regelGetMapUngueltig().values());
 		return JSONMapper.gzipFileResponseFromObject(daten, "blockung_%d.json.gz".formatted(id));
 	}
 
@@ -393,7 +396,6 @@ public final class DataGostBlockungsdaten extends DataManager<Long> {
 		conn.transactionFlush();
 		return blockung;
 	}
-
 
 	@Override
 	public Response patch(final Long id, final InputStream is) throws ApiOperationException {
@@ -591,7 +593,6 @@ public final class DataGostBlockungsdaten extends DataManager<Long> {
 		return Response.status(Status.OK).type(MediaType.APPLICATION_JSON).entity(id).build();
 	}
 
-
 	private static synchronized List<Long> schreibeErgebnisse(final DBEntityManager conn, final long id, final List<GostBlockungsergebnisManager> outputs) {
 		final ArrayList<Long> ergebnisse = new ArrayList<>();
 		final DTOSchemaAutoInkremente lastID = conn.queryByKey(DTOSchemaAutoInkremente.class, "Gost_Blockung_Zwischenergebnisse");
@@ -651,7 +652,6 @@ public final class DataGostBlockungsdaten extends DataManager<Long> {
 			throw new ApiOperationException(Status.INTERNAL_SERVER_ERROR, e, e.getMessage(), MediaType.TEXT_PLAIN);
 		}
 	}
-
 
 	/**
 	 * Erzeugt ein Duplikat der Blockung des angegebenen Ergebnis.
@@ -811,8 +811,6 @@ public final class DataGostBlockungsdaten extends DataManager<Long> {
 		return Response.status(Status.OK).type(MediaType.APPLICATION_JSON).entity(blockungListeneintrag).build();
 	}
 
-
-
 	/**
 	 * Erzeugt ein Duplikat der Blockung des angegebenen Ergebnis und des Ergebnisses
 	 * selber und schreibt dieses direkt in das nächste Halbjahr hoch. Wird diese
@@ -969,7 +967,6 @@ public final class DataGostBlockungsdaten extends DataManager<Long> {
 		conn.transactionFlush();
 		return get(idBlockungDuplikat);
 	}
-
 
 	/**
 	 * Versucht eine Blockung aus den Kursen und den Leistungsdaten wiederherzustellen,
@@ -1227,6 +1224,5 @@ public final class DataGostBlockungsdaten extends DataManager<Long> {
 		blockungListeneintrag.anzahlErgebnisse = blockungsdaten.ergebnisse.size();
 		return Response.status(Status.OK).type(MediaType.APPLICATION_JSON).entity(blockungListeneintrag).build();
 	}
-
 
 }
