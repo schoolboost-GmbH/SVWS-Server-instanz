@@ -1007,6 +1007,7 @@ public class ReportingRepository {
 		if ((idsSchueler == null) || idsSchueler.isEmpty())
 			return resultSchueler;
 
+		// Bereinige die Liste der IDs und suche die heraus, zu denen noch keine Stammdaten vorhanden sind.
 		final List<Long> fehlendeSchuelerIds = idsSchueler.stream()
 				.filter(Objects::nonNull)
 				.filter(id -> id >= 0)
@@ -1014,6 +1015,7 @@ public class ReportingRepository {
 				.filter(id -> !mapSchuelerStammdaten.containsKey(id))
 				.toList();
 
+		// Lade die fehlenden Schülerstammdaten aus der Datenbank nach.
 		if (!fehlendeSchuelerIds.isEmpty()) {
 			try {
 				final List<SchuelerStammdaten> fehlendeSchulerstammdaten = new DataSchuelerStammdaten(this.conn).getListByIds(fehlendeSchuelerIds);
@@ -1042,6 +1044,7 @@ public class ReportingRepository {
 				ComparatorFactory.buildOptionalComparator(this, ReportingSchueler.class.getSimpleName(),
 						SortierungRegistryReportingSchueler.sortierungRegistry(), SortierungRegistryReportingSchueler.standardsortierung());
 
+		// Rückgabe der sortierten Liste oder der unsortierten Liste.
 		return optionalComparator
 				.map(reportingSchuelerComparator -> resultSchueler.stream().sorted(reportingSchuelerComparator).toList())
 				.orElse(resultSchueler);
