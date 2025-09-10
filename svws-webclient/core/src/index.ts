@@ -293,7 +293,7 @@ export { BKGymAbiturFachbelegungHalbjahr } from './core/abschluss/bk/d/BKGymAbit
 export { BKGymAbiturdaten } from './core/abschluss/bk/d/BKGymAbiturdaten';
 export { BKGymAbiturdatenManager } from './core/abschluss/bk/d/BKGymAbiturdatenManager';
 export { BKGymBelegpruefung } from './core/abschluss/bk/d/BKGymBelegpruefung';
-export { BKGymBelegpruefungD01_10600 } from './core/abschluss/bk/d/BKGymBelegpruefungD01_10600';
+export { BKGymBelegpruefungD3 } from './core/abschluss/bk/d/BKGymBelegpruefungD3';
 export { BKGymBelegpruefungErgebnis } from './core/abschluss/bk/d/BKGymBelegpruefungErgebnis';
 export { BKGymBelegpruefungErgebnisFehler } from './core/abschluss/bk/d/BKGymBelegpruefungErgebnisFehler';
 export { BKGymBelegungsfehler } from './core/abschluss/bk/d/BKGymBelegungsfehler';
