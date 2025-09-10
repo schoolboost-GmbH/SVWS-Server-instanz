@@ -20,7 +20,7 @@ export class RouteKatalogErzieherartenDaten extends RouteNode<any, RouteKatalogE
 	public getProps(to: RouteLocationNormalized): ErzieherartenDatenProps {
 		return {
 			patch: routeKatalogErzieherarten.data.patch,
-			erzieherartListeManager: () => routeKatalogErzieherarten.data.manager,
+			manager: () => routeKatalogErzieherarten.data.manager,
 			benutzerKompetenzen: api.benutzerKompetenzen,
 		};
 	}

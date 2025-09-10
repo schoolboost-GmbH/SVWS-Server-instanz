@@ -3,6 +3,7 @@ package de.svws_nrw.data.erzieher;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import de.svws_nrw.core.data.SimpleOperationResponse;
@@ -87,6 +88,14 @@ public final class DataErzieherarten extends DataManagerRevised<Long, DTOErziehe
 		dto.Bezeichnung = "";
 		dto.Sichtbar = true;
 		dto.Sortierung = 32000;
+	}
+
+	@Override
+	public void checkBeforePatch(final DTOErzieherart dto, final Map<String, Object> patchAttributes) throws ApiOperationException {
+		// patching these entries is not aloud according to SchILDzentral
+		final Set<Long> idsOfNonPatchableEntries = Set.of(1L, 2L, 3L, 4L, 5L);
+		if (idsOfNonPatchableEntries.contains(dto.ID))
+			throw new ApiOperationException(Response.Status.BAD_REQUEST, "Der Eintrag %s mit der id %d darf nicht verändert werden.".formatted(dto.Bezeichnung, dto.ID));
 	}
 
 	@Override
