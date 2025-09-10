@@ -3,7 +3,7 @@
 		<svws-ui-content-card title="Allgemein">
 			<svws-ui-input-wrapper>
 				<svws-ui-text-input class="contentFocusField" placeholder="Bezeichnung" :model-value="manager().daten().bezeichnung" :readonly
-					:max-len="100" @change="v => patch({ bezeichnung: v?.trim() ?? undefined })" />
+					:max-len="100" :min-len="1" @change="v => patch({ bezeichnung: v?.trim() ?? undefined })" />
 				<svws-ui-text-input required placeholder="Kürzel" :model-value="manager().daten().kuerzel" :readonly
 					:max-len="10" :min-len="1" @change="v => patch({ kuerzel: v?.trim() ?? undefined })" />
 				<svws-ui-spacing />

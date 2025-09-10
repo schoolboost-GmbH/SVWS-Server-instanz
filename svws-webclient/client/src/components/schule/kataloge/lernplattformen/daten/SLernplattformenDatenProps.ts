@@ -3,6 +3,6 @@ import type { LernplattformListeManager } from "@ui";
 
 export interface LernplattformenDatenProps {
 	patch: (data : Partial<Lernplattform>) => Promise<void>;
-	lernplattformListeManager: () => LernplattformListeManager,
+	manager: () => LernplattformListeManager,
 	benutzerKompetenzen: Set<BenutzerKompetenz>,
 }

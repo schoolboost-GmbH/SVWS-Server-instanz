@@ -20,7 +20,7 @@ export class RouteKatalogLernplattformenDaten extends RouteNode<any, RouteKatalo
 	public getProps(to: RouteLocationNormalized): LernplattformenDatenProps {
 		return {
 			patch: routeKatalogLernplattformen.data.patch,
-			lernplattformListeManager: () => routeKatalogLernplattformen.data.manager,
+			manager: () => routeKatalogLernplattformen.data.manager,
 			benutzerKompetenzen: api.benutzerKompetenzen,
 		};
 	}

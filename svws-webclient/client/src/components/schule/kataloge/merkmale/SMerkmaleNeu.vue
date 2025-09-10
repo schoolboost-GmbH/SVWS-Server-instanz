@@ -7,7 +7,6 @@
 				<div v-if="!isUniqueInList(data.bezeichnung, props.manager().liste.list(), 'bezeichnung')" class="flex my-auto">
 					<span class="icon i-ri-alert-line mx-0.5 mr-1 inline-flex" />
 					<p> Diese Bezeichnung wird bereits verwendet. </p>
-
 				</div>
 				<div v-if="bezeichnungIsTooLong" class="flex my-auto">
 					<span class="icon i-ri-alert-line mx-0.5 mr-1 inline-flex" />
@@ -49,8 +48,16 @@
 	const isLoading = ref<boolean>(false);
 	const hatKompetenzAdd = computed<boolean>(() => props.benutzerKompetenzen.has(BenutzerKompetenz.KATALOG_EINTRAEGE_AENDERN));
 	const disabled = computed(() => !hatKompetenzAdd.value);
-	const bezeichnungIsTooLong = computed(() => (data.value.bezeichnung?.length ?? 0) > 100);
-	const kuerzelIsTooLong = computed(() => (data.value.kuerzel?.length ?? 0) > 10);
+	const bezeichnungIsTooLong = computed(() => {
+		if (data.value.bezeichnung === null)
+			return false;
+		return data.value.bezeichnung.length > 100;
+	});
+	const kuerzelIsTooLong = computed(() => {
+		if (data.value.kuerzel === null)
+			return false;
+		return data.value.kuerzel.length > 10
+	});
 
 	function fieldIsValid(field: keyof Merkmal | null) : (v: string | null) => boolean {
 		return (v: string | null) => {

@@ -1164,7 +1164,7 @@ public class APISchule {
 					content = @Content(mediaType = MediaType.APPLICATION_JSON,
 							array = @ArraySchema(schema = @Schema(implementation = Long.class)))) final InputStream is,
 			@Context final HttpServletRequest request) {
-		return DBBenutzerUtils.runWithTransaction(conn -> new DataKatalogEinwilligungsarten(conn).deleteMultipleAsResponse(JSONMapper.toListOfLong(is)),
+		return DBBenutzerUtils.runWithTransaction(conn -> new DataKatalogEinwilligungsarten(conn).deleteMultipleAsSimpleResponseList(JSONMapper.toListOfLong(is)),
 				request, ServerMode.DEV,
 				BenutzerKompetenz.KATALOG_EINTRAEGE_AENDERN);
 	}
@@ -2876,7 +2876,7 @@ public class APISchule {
 					content = @Content(mediaType = MediaType.APPLICATION_JSON,
 							array = @ArraySchema(schema = @Schema(implementation = Long.class)))) final InputStream is,
 			@Context final HttpServletRequest request) {
-		return DBBenutzerUtils.runWithTransaction(conn -> new DataKatalogLernplattformen(conn).deleteMultipleAsResponse(JSONMapper.toListOfLong(is)),
+		return DBBenutzerUtils.runWithTransaction(conn -> new DataKatalogLernplattformen(conn).deleteMultipleAsSimpleResponseList(JSONMapper.toListOfLong(is)),
 				request, ServerMode.DEV,
 				BenutzerKompetenz.KATALOG_EINTRAEGE_LOESCHEN);
 	}
