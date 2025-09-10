@@ -88,13 +88,13 @@ public final class DataKatalogEntlassgruende extends DataManagerRevised<Long, DT
 	}
 
 	private void updateBezeichnung(final DTOEntlassarten dto, final Object value, final String name) throws ApiOperationException {
-		final String bezeichnung = JSONMapper.convertToString(
-				value, false, false, Schema.tab_K_EntlassGrund.col_Bezeichnung.datenlaenge(), name);
-		if ((dto.Bezeichnung != null) && !dto.Bezeichnung.isBlank() && dto.Bezeichnung.equals(bezeichnung))
+		final String bezeichnung =
+				JSONMapper.convertToString(value, false, false, Schema.tab_K_EntlassGrund.col_Bezeichnung.datenlaenge(), name);
+		if (Objects.equals(dto.Bezeichnung, bezeichnung) || bezeichnung.isBlank())
 			return;
 
-		final List<DTOEntlassarten> entlassarten = this.conn.queryAll(DTOEntlassarten.class);
-		final boolean bezeichnungAlreadyUsed = entlassarten.stream().anyMatch(e -> (e.ID != dto.ID) && e.Bezeichnung.equalsIgnoreCase(bezeichnung));
+		final boolean bezeichnungAlreadyUsed = this.conn.queryAll(DTOEntlassarten.class).stream()
+				.anyMatch(e -> (e.ID != dto.ID) && e.Bezeichnung.equalsIgnoreCase(bezeichnung));
 		if (bezeichnungAlreadyUsed)
 			throw new ApiOperationException(Status.BAD_REQUEST, "Die Bezeichnung %s ist bereits vorhanden.".formatted(value));
 

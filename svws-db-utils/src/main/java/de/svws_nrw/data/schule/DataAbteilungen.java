@@ -4,6 +4,7 @@ import de.svws_nrw.db.schema.Schema;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import de.svws_nrw.core.data.schule.Abteilung;
 import de.svws_nrw.core.data.schule.AbteilungKlassenzuordnung;
@@ -99,10 +100,11 @@ public final class DataAbteilungen extends DataManagerRevised<Long, DTOAbteilung
 	private void updateBezeichnung(final DTOAbteilungen dto, final String name, final Object value) throws ApiOperationException {
 		final String bezeichnung =
 				JSONMapper.convertToString(value, false, false, Schema.tab_EigeneSchule_Abteilungen.col_Bezeichnung.datenlaenge(), name);
-		if ((dto.Bezeichnung != null) && !dto.Bezeichnung.isBlank() && dto.Bezeichnung.equals(bezeichnung))
+		if (Objects.equals(dto.Bezeichnung, bezeichnung) || bezeichnung.isBlank())
 			return;
-		final List<DTOAbteilungen> abteilungen = this.conn.queryAll(DTOAbteilungen.class);
-		final boolean bezeichnungAlreadyUsed = abteilungen.stream().anyMatch(a -> (a.ID != dto.ID) && a.Bezeichnung.equalsIgnoreCase(bezeichnung));
+
+		final boolean bezeichnungAlreadyUsed = this.conn.queryAll(DTOAbteilungen.class).stream()
+				.anyMatch(a -> (a.ID != dto.ID) && a.Bezeichnung.equalsIgnoreCase(bezeichnung));
 		if (bezeichnungAlreadyUsed)
 			throw new ApiOperationException(Status.BAD_REQUEST, "Die Bezeichnung %s ist bereits vorhanden.".formatted(value));
 

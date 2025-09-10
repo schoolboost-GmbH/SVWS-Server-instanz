@@ -1,5 +1,5 @@
 import type { RouteLocationNormalized } from "vue-router";
-import type { VermerkartDatenProps } from "~/components/schule/kataloge/vermerke/daten/SVermerkartDatenProps";
+import type { VermerkartenDatenProps } from "~/components/schule/kataloge/vermerke/daten/SVermerkartenDatenProps";
 import type { SchuelerVermerkartZusammenfassung } from "@core";
 import { BenutzerKompetenz, Schulform, ServerMode } from "@core";
 import { RouteNode } from "~/router/RouteNode";
@@ -8,12 +8,12 @@ import { RouteManager } from "~/router/RouteManager";
 import { routeSchuelerVermerke } from "../../schueler/vermerke/RouteSchuelerVermerke";
 import { api } from "~/router/Api";
 
-const SVermerkDaten = () => import("~/components/schule/kataloge/vermerke/daten/SVermerkartDaten.vue");
+const SVermerkartenDaten = () => import("~/components/schule/kataloge/vermerke/daten/SVermerkartenDaten.vue");
 
 export class RouteKatalogVermerkartenDaten extends RouteNode<any, RouteKatalogVermerkarten> {
 
 	public constructor() {
-		super(Schulform.values(), [ BenutzerKompetenz.KATALOG_EINTRAEGE_ANSEHEN, BenutzerKompetenz.KATALOG_EINTRAEGE_AENDERN ], "schule.vermerke.daten", "daten", SVermerkDaten);
+		super(Schulform.values(), [ BenutzerKompetenz.KATALOG_EINTRAEGE_ANSEHEN, BenutzerKompetenz.KATALOG_EINTRAEGE_AENDERN ], "schule.vermerke.daten", "daten", SVermerkartenDaten);
 		super.mode = ServerMode.STABLE;
 		super.propHandler = (route) => this.getProps(route);
 		super.text = "Vermerkart";
@@ -23,7 +23,7 @@ export class RouteKatalogVermerkartenDaten extends RouteNode<any, RouteKatalogVe
 		await RouteManager.doRoute(routeSchuelerVermerke.getRoute({ id: schuelerVermerkartZusammenfassung.id }));
 	}
 
-	public getProps(to: RouteLocationNormalized): VermerkartDatenProps {
+	public getProps(to: RouteLocationNormalized): VermerkartenDatenProps {
 		return {
 			patch: routeKatalogVermerkarten.data.patch,
 			vermerkartenManager: () => routeKatalogVermerkarten.data.manager,

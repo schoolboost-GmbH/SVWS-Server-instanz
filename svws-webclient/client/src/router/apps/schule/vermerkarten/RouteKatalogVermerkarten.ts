@@ -6,7 +6,7 @@ import { BenutzerKompetenz, Schulform, ServerMode } from "@core";
 import { RouteAuswahlNode } from "~/router/RouteAuswahlNode";
 import { RouteSchuleMenuGroup } from "../RouteSchuleMenuGroup";
 import { routeKatalogVermerkartenDaten } from "./RouteKatalogVermerkartenDaten";
-import { routeKatalogVermerkartNeu } from "./RouteKatalogVermerkartNeu";
+import { routeKatalogVermerkartenNeu } from "./RouteKatalogVermerkartenNeu";
 import { routeKatalogVermerkartenGruppenprozesse } from "./RouteKatalogVermerkartenGruppenprozesse";
 import { RouteDataKatalogVermerkarten } from "./RouteDataKatalogVermerkarten";
 
@@ -22,7 +22,7 @@ export class RouteKatalogVermerkarten extends RouteAuswahlNode<VermerkartenListe
 		super.menugroup = RouteSchuleMenuGroup.SCHULBEZOGEN;
 		super.children = [
 			routeKatalogVermerkartenDaten,
-			routeKatalogVermerkartNeu,
+			routeKatalogVermerkartenNeu,
 			routeKatalogVermerkartenGruppenprozesse,
 		];
 		super.defaultChild = routeKatalogVermerkartenDaten;

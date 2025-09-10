@@ -1,18 +1,19 @@
 import type { RouteLocationNormalized } from "vue-router";
+import type { SchuleVermerkartenNeuProps } from "~/components/schule/kataloge/vermerke/SVermerkartenNeuProps";
+import type { RouteKatalogVermerkarten } from "./RouteKatalogVermerkarten";
 import { BenutzerKompetenz, Schulform, ServerMode } from "@core";
 import { RouteNode } from "~/router/RouteNode";
 import { ViewType } from "@ui";
 import { RouteManager } from "~/router/RouteManager";
-import type { RouteKatalogVermerkarten } from "./RouteKatalogVermerkarten";
 import { routeKatalogVermerkarten } from "./RouteKatalogVermerkarten";
-import type { SchuleVermerkartNeuProps } from "~/components/schule/kataloge/vermerke/SVermerkartNeuProps";
+import { api } from "~/router/Api";
 
-const SVermerkartNeu = () => import("~/components/schule/kataloge/vermerke/SVermerkartNeu.vue");
+const SVermerkartenNeu = () => import("~/components/schule/kataloge/vermerke/SVermerkartenNeu.vue");
 
 export class RouteKatalogVermerkartNeu extends RouteNode<any, RouteKatalogVermerkarten> {
 
 	public constructor() {
-		super(Schulform.values(), [ BenutzerKompetenz.KATALOG_EINTRAEGE_AENDERN ], "schule.vermerkarten.neu", "neu", SVermerkartNeu);
+		super(Schulform.values(), [ BenutzerKompetenz.KATALOG_EINTRAEGE_AENDERN ], "schule.vermerkarten.neu", "neu", SVermerkartenNeu);
 		super.types = new Set([ ViewType.HINZUFUEGEN ]);
 		super.mode = ServerMode.DEV;
 		super.propHandler = (route) => this.getProps(route);
@@ -20,15 +21,16 @@ export class RouteKatalogVermerkartNeu extends RouteNode<any, RouteKatalogVermer
 		super.setCheckpoint = true;
 	}
 
-	public getProps(to: RouteLocationNormalized): SchuleVermerkartNeuProps {
+	public getProps(to: RouteLocationNormalized): SchuleVermerkartenNeuProps {
 		return {
 			manager: () => routeKatalogVermerkarten.data.manager,
 			add: routeKatalogVermerkarten.data.add,
 			gotoDefaultView: routeKatalogVermerkarten.data.gotoDefaultView,
 			checkpoint: this.checkpoint,
 			continueRoutingAfterCheckpoint: () => RouteManager.continueRoutingAfterCheckpoint(),
+			benutzerKompetenzen: api.benutzerKompetenzen,
 		};
 	}
 }
 
-export const routeKatalogVermerkartNeu = new RouteKatalogVermerkartNeu();
+export const routeKatalogVermerkartenNeu = new RouteKatalogVermerkartNeu();

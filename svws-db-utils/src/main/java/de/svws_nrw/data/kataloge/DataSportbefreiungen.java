@@ -89,11 +89,10 @@ public final class DataSportbefreiungen extends DataManagerRevised<Long, DTOSpor
 	private void updateBezeichnung(final DTOSportbefreiung dto, final Object value, final String name) throws ApiOperationException {
 		final String bezeichnung = JSONMapper.convertToString(
 				value, false, false, Schema.tab_K_Sportbefreiung.col_Bezeichnung.datenlaenge(), name);
-		if ((dto.Bezeichnung != null) && !dto.Bezeichnung.isBlank() && dto.Bezeichnung.equals(bezeichnung))
+		if (Objects.equals(dto.Bezeichnung, bezeichnung) || bezeichnung.isBlank())
 			return;
 
-		final List<DTOSportbefreiung> sportbefreiungen = this.conn.queryAll(DTOSportbefreiung.class);
-		final boolean bezeichnungAlreadyUsed = sportbefreiungen.stream()
+		final boolean bezeichnungAlreadyUsed = this.conn.queryAll(DTOSportbefreiung.class).stream()
 				.anyMatch(s -> (s.ID != dto.ID) && (s.Bezeichnung.equalsIgnoreCase(bezeichnung)));
 		if (bezeichnungAlreadyUsed)
 			throw new ApiOperationException(Status.BAD_REQUEST, "Die Bezeichnung %s ist bereits vorhanden.".formatted(bezeichnung));

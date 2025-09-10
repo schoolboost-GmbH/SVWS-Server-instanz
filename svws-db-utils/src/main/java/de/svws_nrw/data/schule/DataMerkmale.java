@@ -87,11 +87,10 @@ public final class DataMerkmale extends DataManagerRevised<Long, DTOMerkmale, Me
 	private void updateBezeichnung(final DTOMerkmale dto, final String name, final Object value) throws ApiOperationException {
 		final String bezeichnung = JSONMapper.convertToString(
 				value, false, false, Schema.tab_EigeneSchule_Merkmale.col_Langtext.datenlaenge(), name);
-		if ((dto.Langtext != null) && !dto.Langtext.isBlank() && dto.Langtext.equals(bezeichnung))
+		if (Objects.equals(dto.Langtext, bezeichnung) || bezeichnung.isBlank())
 			return;
 
-		final List<DTOMerkmale> merkmale = this.conn.queryAll(DTOMerkmale.class);
-		final boolean bezeichnungAlreadyUsed = merkmale.stream()
+		final boolean bezeichnungAlreadyUsed = this.conn.queryAll(DTOMerkmale.class).stream()
 				.anyMatch(m -> (m.ID != dto.ID) && m.Langtext.equalsIgnoreCase(bezeichnung));
 		if (bezeichnungAlreadyUsed)
 			throw new ApiOperationException(Status.BAD_REQUEST, "Die Bezeichnung %s ist bereits vorhanden.".formatted(bezeichnung));
@@ -102,11 +101,10 @@ public final class DataMerkmale extends DataManagerRevised<Long, DTOMerkmale, Me
 	private void updateKuerzel(final DTOMerkmale dto, final String name, final Object value) throws ApiOperationException {
 		final String kuerzel = JSONMapper.convertToString(
 				value, false, false, Schema.tab_EigeneSchule_Merkmale.col_Kurztext.datenlaenge(), name);
-		if ((dto.Kurztext != null) && !dto.Kurztext.isBlank() && dto.Kurztext.equals(kuerzel))
+		if (Objects.equals(dto.Kurztext, kuerzel) || kuerzel.isBlank())
 			return;
 
-		final List<DTOMerkmale> merkmale = this.conn.queryAll(DTOMerkmale.class);
-		final boolean kuerzelAlreadyUsed = merkmale.stream()
+		final boolean kuerzelAlreadyUsed = this.conn.queryAll(DTOMerkmale.class).stream()
 				.anyMatch(m -> (m.ID != dto.ID) && m.Kurztext.equalsIgnoreCase(kuerzel));
 		if (kuerzelAlreadyUsed)
 			throw new ApiOperationException(Status.BAD_REQUEST, "Das Kürzel %s ist bereits vorhanden.".formatted(kuerzel));
