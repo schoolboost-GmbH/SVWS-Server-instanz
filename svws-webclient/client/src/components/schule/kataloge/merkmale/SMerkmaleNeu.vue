@@ -1,11 +1,28 @@
 <template>
 	<div class="page page-grid-cards">
 		<svws-ui-content-card title="Allgemein">
-			<svws-ui-input-wrapper :grid="2">
+			<svws-ui-input-wrapper>
 				<svws-ui-text-input placeholder="Bezeichnung" :max-len="100" :min-len="1" v-model="data.bezeichnung" :disabled
 					:valid="fieldIsValid('bezeichnung')" required />
+				<div v-if="!isUniqueInList(data.bezeichnung, props.manager().liste.list(), 'bezeichnung')" class="flex my-auto">
+					<span class="icon i-ri-alert-line mx-0.5 mr-1 inline-flex" />
+					<p> Diese Bezeichnung wird bereits verwendet. </p>
+
+				</div>
+				<div v-if="bezeichnungIsTooLong" class="flex my-auto">
+					<span class="icon i-ri-alert-line mx-0.5 mr-1 inline-flex" />
+					<p> Diese Bezeichnung verwendet zu viele Zeichen. </p>
+				</div>
 				<svws-ui-text-input placeholder="Kürzel" :max-len="10" :min-len="1" v-model="data.kuerzel" :disabled
 					:valid="fieldIsValid('kuerzel')" required />
+				<div v-if="!isUniqueInList(data.kuerzel, props.manager().liste.list(), 'kuerzel')" class="flex my-auto">
+					<span class="icon i-ri-alert-line mx-0.5 mr-1 inline-flex" />
+					<p> Dieses Kürzel wird bereits verwendet. </p>
+				</div>
+				<div v-if="kuerzelIsTooLong" class="flex my-auto">
+					<span class="icon i-ri-alert-line mx-0.5 mr-1 inline-flex" />
+					<p> Dieses Kürzel verwendet zu viele Zeichen. </p>
+				</div>
 				<svws-ui-spacing />
 				<svws-ui-checkbox v-model="data.istSchuelermerkmal" :disabled>Schülermerkmal</svws-ui-checkbox>
 				<div />
@@ -32,6 +49,8 @@
 	const isLoading = ref<boolean>(false);
 	const hatKompetenzAdd = computed<boolean>(() => props.benutzerKompetenzen.has(BenutzerKompetenz.KATALOG_EINTRAEGE_AENDERN));
 	const disabled = computed(() => !hatKompetenzAdd.value);
+	const bezeichnungIsTooLong = computed(() => (data.value.bezeichnung?.length ?? 0) > 100);
+	const kuerzelIsTooLong = computed(() => (data.value.kuerzel?.length ?? 0) > 10);
 
 	function fieldIsValid(field: keyof Merkmal | null) : (v: string | null) => boolean {
 		return (v: string | null) => {

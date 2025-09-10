@@ -4,7 +4,24 @@
 			<svws-ui-input-wrapper>
 				<svws-ui-text-input :valid="fieldIsValid('bezeichnung')" v-model="data.bezeichnung" placeholder="Bezeichnung" :disabled
 					required :min-len="1" :max-len="250" />
+				<div v-if="!isUniqueInList(data.bezeichnung, props.manager().liste.list(), 'bezeichnung')" class="flex my-auto">
+					<span class="icon i-ri-alert-line mx-0.5 mr-1 inline-flex" />
+					<p> Diese Bezeichnung wird bereits verwendet. </p>
+				</div>
+				<div v-if="data.bezeichnung.length > 250" class="flex my-auto">
+					<span class="icon i-ri-alert-line mx-0.5 mr-1 inline-flex" />
+					<p> Diese Bezeichnung verwendet zu viele Zeichen. </p>
+				</div>
+				<div />
 				<svws-ui-text-input :valid="schluesselIsValid" v-model="data.schluessel" placeholder="Schlüssel" :disabled :max-len="20" />
+				<div v-if="!isUniqueInList(data.schluessel, props.manager().liste.list(), 'schluessel')" class="flex my-auto">
+					<span class="icon i-ri-alert-line mx-0.5 mr-1 inline-flex" />
+					<p> Dieser Schlüssel wird bereits verwendet. </p>
+				</div>
+				<div v-if="data.schluessel.length > 20" class="flex my-auto">
+					<span class="icon i-ri-alert-line mx-0.5 mr-1 inline-flex" />
+					<p> Dieser Schlüssel verwendet zu viele Zeichen. </p>
+				</div>
 				<svws-ui-textarea-input v-model="data.beschreibung" placeholder="Beschreibung" class="col-span-full" :disabled />
 				<svws-ui-select title="Personenart" class="col-span-full" :items="[PersonTyp.LEHRER, PersonTyp.SCHUELER]" v-model="selectedPersonTyp"
 					:item-text="item => item.bezeichnung" :disabled />

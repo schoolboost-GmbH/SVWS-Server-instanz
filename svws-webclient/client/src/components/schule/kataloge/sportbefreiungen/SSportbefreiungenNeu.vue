@@ -3,17 +3,22 @@
 		<svws-ui-content-card title="Sportbefreiung anlegen">
 			<svws-ui-input-wrapper :grid="1">
 				<svws-ui-text-input placeholder="Bezeichnung" :max-len="50" :min-len="1" v-model="data.bezeichnung" :disabled :valid="fieldIsValid('bezeichnung')" />
-				<svws-ui-input-wrapper :grid="2">
-					<svws-ui-input-number placeholder="Sortierung" v-model="data.sortierung" :disabled :min="0" :max="32000" />
-					<svws-ui-spacing />
-					<svws-ui-checkbox v-model="data.istSichtbar" :disabled>
-						Sichtbar
-					</svws-ui-checkbox>
-					<div class="mt-7 flex flex-row gap-4 justify end">
-						<svws-ui-button type="secondary" @click="cancel">Abbrechen</svws-ui-button>
-						<svws-ui-button @click="add" :disabled="!formIsValid || !hatKompetenzAdd">Speichern</svws-ui-button>
-					</div>
-				</svws-ui-input-wrapper>
+				<div v-if="!isUniqueInList(data.bezeichnung, props.manager().liste.list(), 'bezeichnung')" class="flex my-auto">
+					<span class="icon i-ri-alert-line mx-0.5 mr-1 inline-flex" />
+					<p> Diese Bezeichnung wird bereits verwendet. </p>
+				</div>
+				<div v-if="bezeichnungIsTooLong" class="flex my-auto">
+					<span class="icon i-ri-alert-line mx-0.5 mr-1 inline-flex" />
+					<p> Diese Bezeichnung verwendet zu viele Zeichen. </p>
+				</div>
+				<svws-ui-input-number placeholder="Sortierung" v-model="data.sortierung" :disabled :min="0" :max="32000" />
+				<svws-ui-checkbox v-model="data.istSichtbar" :disabled>
+					Sichtbar
+				</svws-ui-checkbox>
+				<div class="mt-7 flex flex-row gap-4 justify end">
+					<svws-ui-button type="secondary" @click="cancel">Abbrechen</svws-ui-button>
+					<svws-ui-button @click="add" :disabled="!formIsValid || !hatKompetenzAdd">Speichern</svws-ui-button>
+				</div>
 			</svws-ui-input-wrapper>
 		</svws-ui-content-card>
 		<svws-ui-checkpoint-modal :checkpoint :continue-routing="props.continueRoutingAfterCheckpoint" />
@@ -32,6 +37,7 @@
 	const isLoading = ref<boolean>(false);
 	const hatKompetenzAdd = computed<boolean>(() => props.benutzerKompetenzen.has(BenutzerKompetenz.KATALOG_EINTRAEGE_AENDERN));
 	const disabled = computed(() => !hatKompetenzAdd.value);
+	const bezeichnungIsTooLong = computed(() => (data.value.bezeichnung?.length ?? 0) > 50);
 
 	function fieldIsValid(field: keyof Sportbefreiung | null) : (v: string | null) => boolean {
 		return (v: string | null) => {

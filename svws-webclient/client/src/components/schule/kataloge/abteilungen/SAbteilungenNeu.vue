@@ -5,6 +5,17 @@
 				<svws-ui-text-input placeholder="Bezeichnung" :min-len="1" :max-len="50" v-model="data.bezeichnung" required :disabled
 					:valid="fieldIsValid('bezeichnung')" />
 				<svws-ui-text-input placeholder="Raum" :max-len="20" v-model="data.raum" :valid="fieldIsValid('raum')" :disabled />
+				<div class="flex flex-col my-auto space-y-1">
+					<div v-if="!isUniqueInList(data.bezeichnung, props.manager().liste.list(), 'bezeichnung')" class="flex items-center">
+						<span class="icon i-ri-alert-line mx-0.5 mr-1" />
+						<p>Diese Bezeichnung wird bereits verwendet.</p>
+					</div>
+					<div v-if="data.bezeichnung.length > 50" class="flex items-center">
+						<span class="icon i-ri-alert-line mx-0.5 mr-1" />
+						<p>Diese Bezeichnung verwendet zu viele Zeichen.</p>
+					</div>
+				</div>
+				<div />
 				<svws-ui-text-input placeholder="Email" type="email" :max-len="100" v-model="data.email" :valid="fieldIsValid('email')" :disabled />
 				<svws-ui-text-input placeholder="Durchwahl" type="tel" :max-len="20" v-model="data.durchwahl" :valid="fieldIsValid('durchwahl')" :disabled />
 				<svws-ui-spacing />

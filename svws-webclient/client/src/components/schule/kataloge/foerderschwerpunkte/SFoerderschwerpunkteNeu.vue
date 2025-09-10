@@ -7,6 +7,17 @@
 				<svws-ui-input-wrapper :grid="2">
 					<svws-ui-text-input placeholder="Kürzel" :min-len="1" :max-len="50" v-model="data.kuerzel" :disabled :valid="fieldIsValid('kuerzel')" />
 					<svws-ui-text-input placeholder="Statistik-Kürzel" readonly :model-value="data.kuerzelStatistik" statistics />
+					<div class="flex flex-col my-auto space-y-1">
+						<div v-if="!isUniqueInList(data.kuerzel, props.manager().liste.list(), 'kuerzel')" class="flex items-center">
+							<span class="icon i-ri-alert-line mx-0.5 mr-1" />
+							<p>Dieses Kürzel wird bereits verwendet.</p>
+						</div>
+						<div v-if="data.kuerzel.length > 50" class="flex items-center">
+							<span class="icon i-ri-alert-line mx-0.5 mr-1" />
+							<p>Dieses Kürzel verwendet zu viele Zeichen.</p>
+						</div>
+					</div>
+					<div />
 					<svws-ui-input-number placeholder="Sortierung" v-model="data.sortierung" :disabled :min="0" :max="32000" />
 					<svws-ui-spacing />
 					<svws-ui-checkbox v-model="data.istSichtbar" :disabled>

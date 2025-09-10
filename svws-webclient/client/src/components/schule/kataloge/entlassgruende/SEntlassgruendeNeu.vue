@@ -5,6 +5,14 @@
 				<svws-ui-text-input placeholder="Bezeichnung" :min-len="1" :max-len="30" v-model="data.bezeichnung" required :disabled
 					:valid="fieldIsValid('bezeichnung')" />
 				<svws-ui-input-number placeholder="Sortierung" v-model="data.sortierung" :disabled="!bezeichnungIsValid || !hatKompetenzAdd" />
+				<div v-if="!isUniqueInList(data.bezeichnung, props.manager().liste.list(), 'bezeichnung')" class="flex my-auto">
+					<span class="icon i-ri-alert-line mx-0.5 mr-1 inline-flex" />
+					<p> Diese Bezeichnung wird bereits verwendet. </p>
+				</div>
+				<div v-if="data.bezeichnung.length > 30" class="flex my-auto">
+					<span class="icon i-ri-alert-line mx-0.5 mr-1 inline-flex" />
+					<p> Diese Bezeichnung verwendet zu viele Zeichen. </p>
+				</div>
 				<svws-ui-spacing />
 				<svws-ui-checkbox v-model="data.istSichtbar" :disabled="!bezeichnungIsValid || !hatKompetenzAdd">
 					Sichtbar
