@@ -81,7 +81,7 @@
 							</svws-ui-tooltip>
 						</div>
 						<!-- Such-Input -->
-						<input v-if="searchable && !disabled" :id="`uiSelectinput_${instanceId}`" ref="uiSelectSearch" type="text" role="combobox"
+						<input v-if="searchable && !disabled && !readonly" :id="`uiSelectinput_${instanceId}`" ref="uiSelectSearch" type="text" role="combobox"
 							:tabindex="searchInputTabindex" v-bind="searchAriaAttrs" v-model="search"
 							:class="[searchInputFocusClass, 'row-start-1 col-start-1 outline-none font-normal h-5']"
 							@focus="handleComboboxFocus" @blur="handleBlur" @input="handleInput">
@@ -101,7 +101,7 @@
 		</div>
 
 		<!-- Dropdown -->
-		<ul popover :aria-labelledby="`uiSelectLabel_${instanceId}`" :id="`uiSelectDropdown_${instanceId}`" ref="uiSelectDropdown" role="listbox"
+		<ul v-if="!disabled && !readonly" popover :aria-labelledby="`uiSelectLabel_${instanceId}`" :id="`uiSelectDropdown_${instanceId}`" ref="uiSelectDropdown" role="listbox"
 			class="overflow-auto bg-ui select-none scrollbar-thin p-1 rounded-md border border-ui font-normal" :style="dropdownPositionStyles">
 			<li v-if="manager.filteredOptions.isEmpty() || (searchFilteredOptions.size() === 0)" class="cursor-not-allowed p-2 hover:bg-ui-hover text-ui-secondary italic text-left">
 				{{ "Keine passenden Einträge gefunden" }}

@@ -202,14 +202,19 @@ export function useUiSelectUtils<T, V extends Validator>(
 	/**
 	 * Aria Attribute der Combobox
 	 */
-	const comboboxAriaAttrs = computed(() => ({
-		'aria-labelledby': `uiSelectLabel_${instanceId}`,
-		'aria-controls': !props.searchable! ? `uiSelectDropdown_${instanceId}` : undefined,
-		'aria-autocomplete': 'none' as const,
-		'aria-expanded': (!props.searchable! || props.disabled!) ? showDropdown.value : undefined,
-		'aria-disabled': props.disabled! ? true : undefined,
-		'aria-activedescendant': (!props.searchable! && (highlightedIndex.value !== -1)) ? `uiSelectOption_${highlightedIndex.value}_${instanceId}` : undefined,
-	}));
+	const comboboxAriaAttrs = computed(() => {
+		const isEditable = !props.readonly! || !props.disabled!;
+		if (props.searchable! && !isEditable)
+			return {};
+		return {
+			'aria-labelledby': `uiSelectLabel_${instanceId}`,
+			'aria-controls': isEditable? `uiSelectDropdown_${instanceId}` : undefined,
+			'aria-autocomplete': isEditable ? 'none' as const : undefined,
+			'aria-expanded': isEditable ? showDropdown.value : undefined,
+			'aria-disabled': props.disabled! ? true : undefined,
+			'aria-activedescendant': (isEditable && highlightedIndex.value !== -1) ? `uiSelectOption_${highlightedIndex.value}_${instanceId}` : undefined,
+		}
+	});
 
 	/**
 	 * Aria Attribute des SearchInputs
