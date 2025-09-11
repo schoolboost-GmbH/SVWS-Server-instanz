@@ -13,7 +13,7 @@
 				<svws-ui-checkbox :model-value="daten.bietetPraktika" @update:model-value="bietetPraktika => patch({ bietetPraktika })" :readonly> Bietet Praktikumsplätze </svws-ui-checkbox>
 				<svws-ui-checkbox :model-value="daten.Massnahmentraeger" @update:model-value="Massnahmentraeger => patch({ Massnahmentraeger })" :readonly> Maßnahmenträger </svws-ui-checkbox>
 				<svws-ui-checkbox :model-value="daten.ErwFuehrungszeugnis" @update:model-value="ErwFuehrungszeugnis => patch({ ErwFuehrungszeugnis })" :readonly> Erweitertes Führungszeugnis notwendig </svws-ui-checkbox>
-				<svws-ui-checkbox :model-value="daten.BelehrungISG" @update:model-value="BelehrungISG => patch({ BelehrungISG })" :readonly> Belehrung n. Infektionsschutzgesetz notwendig </svws-ui-checkbox>
+				<svws-ui-checkbox :model-value="daten.BelehrungISG" @update:model-value="BelehrungISG => patch({ BelehrungISG })" :readonly> Belehrung nach Infektionsschutzgesetz notwendig </svws-ui-checkbox>
 			</svws-ui-input-wrapper>
 			<svws-ui-spacing />
 			<svws-ui-spacing />

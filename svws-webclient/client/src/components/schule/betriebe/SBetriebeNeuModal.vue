@@ -44,7 +44,7 @@
 						<svws-ui-checkbox v-model="betrieb.bietetPraktika" :disabled> Bietet Praktumsplätze </svws-ui-checkbox>
 						<svws-ui-checkbox v-model="betrieb.Massnahmentraeger" :disabled> Maßnahmenträger </svws-ui-checkbox>
 						<svws-ui-checkbox v-model="betrieb.ErwFuehrungszeugnis" :disabled> Erweitertes Führungszeugnis notwendig </svws-ui-checkbox>
-						<svws-ui-checkbox v-model="betrieb.BelehrungISG" :disabled> Belehrung n. Infektionsschutzgesetz notwendig </svws-ui-checkbox>
+						<svws-ui-checkbox v-model="betrieb.BelehrungISG" :disabled> Belehrung nach Infektionsschutzgesetz notwendig </svws-ui-checkbox>
 					</svws-ui-input-wrapper>
 				</div>
 			</svws-ui-content-card>
