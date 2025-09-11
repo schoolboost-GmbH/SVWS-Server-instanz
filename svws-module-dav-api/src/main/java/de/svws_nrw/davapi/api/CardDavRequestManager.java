@@ -6,15 +6,13 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 import de.svws_nrw.core.data.adressbuch.Adressbuch;
 import de.svws_nrw.core.data.adressbuch.AdressbuchEintrag;
 import de.svws_nrw.core.logger.LogLevel;
 import de.svws_nrw.core.logger.Logger;
-import de.svws_nrw.davapi.data.carddav.AdressbuchWithCategoriesRepository;
-import de.svws_nrw.davapi.data.dav.CollectionQueryParameters;
+import de.svws_nrw.davapi.data.carddav.CardDavAdressbuch;
 import de.svws_nrw.davapi.model.dav.Collection;
 import de.svws_nrw.davapi.model.dav.CurrentUserPrincipal;
 import de.svws_nrw.davapi.model.dav.CurrentUserPrivilegeSet;
@@ -34,6 +32,7 @@ import de.svws_nrw.davapi.model.dav.card.SupportedAddressData;
 import de.svws_nrw.davapi.model.dav.cs.Getctag;
 import de.svws_nrw.davapi.util.vcard.VCard;
 import de.svws_nrw.db.DBEntityManager;
+import de.svws_nrw.db.utils.ApiOperationException;
 import jakarta.validation.constraints.NotNull;
 
 
@@ -43,7 +42,7 @@ import jakarta.validation.constraints.NotNull;
 public class CardDavRequestManager extends AbstractDavRequestManager {
 
 	/** Das Adressbuch-Repository für den Datenbankzugriff */
-	private final AdressbuchWithCategoriesRepository repo;
+	private final CardDavAdressbuch repo;
 
 
 	/**
@@ -56,7 +55,7 @@ public class CardDavRequestManager extends AbstractDavRequestManager {
 	 */
 	public CardDavRequestManager(final @NotNull DBEntityManager conn, final InputStream is) throws IOException {
 		super(conn, is);
-		repo = new AdressbuchWithCategoriesRepository(conn);
+		repo = new CardDavAdressbuch(conn);
 	}
 
 
@@ -72,7 +71,7 @@ public class CardDavRequestManager extends AbstractDavRequestManager {
 
 		final Propfind propfind = mapper.readValue(requestBody, Propfind.class);
 
-		final List<Adressbuch> adressbuecher = repo.getAvailableAdressbuecher(CollectionQueryParameters.NO_RESSOURCES);
+		final List<Adressbuch> adressbuecher = repo.getAvailableAdressbuecher();
 		if (adressbuecher.isEmpty())
 			return buildResponse(createResourceNotFoundError("Es wurden keine Adressbücher für den angemeldeten Benutzer gefunden!"));
 		final Multistatus ms = new Multistatus();
@@ -89,9 +88,10 @@ public class CardDavRequestManager extends AbstractDavRequestManager {
 	 *
 	 * @return die HTTP-Response
 	 *
-	 * @throws IOException  für den Fall, dass die Anfrage nicht erfolgreich deserialisiert werden kann
+	 * @throws IOException             für den Fall, dass die Anfrage nicht erfolgreich deserialisiert werden kann
+	 * @throws ApiOperationException   im Fehlerfall
 	 */
-	public jakarta.ws.rs.core.Response propfindAddressbook(final String idBook) throws IOException {
+	public jakarta.ws.rs.core.Response propfindAddressbook(final String idBook) throws IOException, ApiOperationException {
 		logRequest("CardDAV->propfindCalendar", "idBook=" + idBook);
 
 		// Wurde keine gültige Ressource angegeben, so ist dies eigentlich ein Zugriff auf die Adressbuch-Sammlung
@@ -100,14 +100,14 @@ public class CardDavRequestManager extends AbstractDavRequestManager {
 
 		final Propfind propfind = mapper.readValue(requestBody, Propfind.class);
 
-		final Optional<Adressbuch> adressbuch = repo.getAdressbuchById(idBook, CollectionQueryParameters.NO_PAYLOAD);
-		if (adressbuch.isEmpty())
+		final Adressbuch adressbuch = repo.getAdressbuchById(idBook, true, false);
+		if (adressbuch == null)
 			return buildResponse(createResourceNotFoundError("Adressbuch mit der angegebenen Id wurde nicht gefunden!"));
 
 		final Multistatus ms = new Multistatus();
-		ms.getResponse().add(this.genPropfindAddressbookResponse(adressbuch.get(), propfind.getProp()));
-		for (final AdressbuchEintrag eintrag : adressbuch.get().adressbuchEintraege) {
-			eintrag.adressbuchId = adressbuch.get().id;
+		ms.getResponse().add(this.genPropfindAddressbookResponse(adressbuch, propfind.getProp()));
+		for (final AdressbuchEintrag eintrag : adressbuch.adressbuchEintraege) {
+			eintrag.adressbuchId = adressbuch.id;
 			ms.getResponse().add(this.genPropfindContactResponse(eintrag, propfind.getProp()));
 		}
 		return buildResponse(ms);
@@ -234,26 +234,27 @@ public class CardDavRequestManager extends AbstractDavRequestManager {
 	 *
 	 * @return die HTTP-Response
 	 *
-	 * @throws IOException  für den Fall, dass die Anfrage nicht erfolgreich deserialisiert werden kann
+	 * @throws IOException             für den Fall, dass die Anfrage nicht erfolgreich deserialisiert werden kann
+	 * @throws ApiOperationException   im Fehlerfall
 	 */
-	public jakarta.ws.rs.core.Response reportAddressbook(final String idBook) throws IOException {
+	public jakarta.ws.rs.core.Response reportAddressbook(final String idBook) throws IOException, ApiOperationException {
 		logRequest("CardDAV->reportCalendar", "idBook=" + idBook);
 
 		// Bestimme die Kalenderdaten aus der Datenbank und gebe einen Fehler zurück, falls kein Kalender mit der ID gefunden wurde
-		final Optional<Adressbuch> adressbuch = this.repo.getAdressbuchById(idBook, CollectionQueryParameters.ALL);
-		if (adressbuch.isEmpty())
+		final Adressbuch adressbuch = this.repo.getAdressbuchById(idBook, true, true);
+		if (adressbuch == null)
 			return buildResponse(this.createResourceNotFoundError("Adressbuch mit der angegebenen ID wurde nicht gefunden!"));
-		this.setParameterResourceCollectionId(adressbuch.get().id);
+		this.setParameterResourceCollectionId(adressbuch.id);
 
 		// Prüfe, ob es sich um eine Anfrage mit dem Typ CalendarMultiget handelt
 		final AddressbookMultiget adressbuchMultiget = deserialiseAddressbookMultiget(requestBody);
 		if (adressbuchMultiget != null)
-			return reportAddressbookMultigetRequest(adressbuch.get(), adressbuchMultiget);
+			return reportAddressbookMultigetRequest(adressbuch, adressbuchMultiget);
 
 		// Prüfe, ob es sich um eine Anfrage mit dem Typ SyncCollection handelt
 		final SyncCollection syncCollection = deserialiseSyncCollection(requestBody);
 		if (syncCollection != null)
-			return reportSyncCollectionRequest(adressbuch.get(), syncCollection);
+			return reportSyncCollectionRequest(adressbuch, syncCollection);
 
 		throw new UnsupportedOperationException(
 				"Es werden nur die Typen AddressbookMultiget und SyncCollection für die Methode REPORT bei einem Adressbuch unterstützt.");
@@ -329,16 +330,19 @@ public class CardDavRequestManager extends AbstractDavRequestManager {
 	 * @param syncCollection   die Anfrage vom Typ SyncCollection mit dem SyncToken
 	 *
 	 * @return die HTTP-Response
+	 *
+	 * @throws ApiOperationException   im Fehlerfall
 	 */
-	private jakarta.ws.rs.core.Response reportSyncCollectionRequest(final Adressbuch adressbuch, final SyncCollection syncCollection) {
+	private jakarta.ws.rs.core.Response reportSyncCollectionRequest(final Adressbuch adressbuch, final SyncCollection syncCollection)
+			throws ApiOperationException {
 		// Bestimme den Sync-Token
 		// TODO final Long syncTokenMillis = syncCollection.getSyncToken().isBlank() ? 0 : Long.valueOf(syncCollection.getSyncToken());
 
 		// Bestimme die Einträge mit Änderungen seit diesem Sync-Token und die UIDs der entfernten Einträge
-		final Optional<Adressbuch> adressbuchById = this.repo.getAdressbuchById(adressbuch.id, CollectionQueryParameters.ALL);
+		final Adressbuch adressbuchById = this.repo.getAdressbuchById(adressbuch.id, true, true);
 		// TODO: Filterung über Sync-Token ergänzen - siehe auch CalDAV-Lösung
-		final List<AdressbuchEintrag> eintraege = adressbuchById.isEmpty() ? Collections.emptyList()
-				: adressbuchById.get().adressbuchEintraege.stream().toList();
+		final List<AdressbuchEintrag> eintraege = (adressbuchById == null) ? Collections.emptyList()
+				: adressbuchById.adressbuchEintraege.stream().toList();
 
 		// Generiere die Response mit den Adressbuch-Einträgen und den UIDs der entfernten Einträge
 		final Multistatus ms = new Multistatus();
@@ -393,9 +397,10 @@ public class CardDavRequestManager extends AbstractDavRequestManager {
 	 *
 	 * @return die HTTP-Response
 	 *
-	 * @throws IOException  für den Fall, dass die Anfrage nicht erfolgreich deserialisiert werden kann
+	 * @throws IOException           für den Fall, dass die Anfrage nicht erfolgreich deserialisiert werden kann
+	 * @throws ApiOperationException im Fehlerfall
 	 */
-	public jakarta.ws.rs.core.Response reportContact(final String idBook, final String idContact) throws IOException {
+	public jakarta.ws.rs.core.Response reportContact(final String idBook, final String idContact) throws IOException, ApiOperationException {
 		logRequest("CardDAV->reportCalendar", "idBook=" + idBook, "idContact=" + idContact);
 
 		// TODO Erzeuge eine Response speziell für den Kontakt mit der übergebenen ID

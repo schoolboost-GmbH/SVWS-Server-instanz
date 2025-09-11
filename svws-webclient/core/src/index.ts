@@ -808,7 +808,6 @@ export { SprachendatenUtils } from './core/utils/schueler/SprachendatenUtils';
 export { AbgangsartenManager } from './core/utils/schule/AbgangsartenManager';
 export { BerufskollegBildungsplanManager } from './core/utils/schule/BerufskollegBildungsplanManager';
 export { BerufskollegFachklassenManager } from './core/utils/schule/BerufskollegFachklassenManager';
-export { SchuljahresAbschnittsManager } from './core/utils/schule/SchuljahresAbschnittsManager';
 export { SchuljahresabschnittsUtils } from './core/utils/schule/SchuljahresabschnittsUtils';
 export { IntegerComparator } from './core/utils/stundenplan/IntegerComparator';
 export { StundenplanListUtils } from './core/utils/stundenplan/StundenplanListUtils';
