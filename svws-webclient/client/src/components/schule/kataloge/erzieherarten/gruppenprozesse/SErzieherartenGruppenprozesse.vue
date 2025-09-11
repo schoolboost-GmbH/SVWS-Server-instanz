@@ -53,7 +53,7 @@
 		const errorLog: List<string> = new ArrayList<string>();
 		if (!alleErziehungsberechtigteLeer.value)
 			for (const erzieherart of props.manager().getErzieherartIDsMitPersonen())
-				errorLog.add(`Erzieherart ${props.manager().liste.get(erzieherart)?.bezeichnung ?? '???'} (ID: ${erzieherart}) kann nicht gelöscht werden, da ihr noch Erziehungsberechtigten zugeordnet sind.`);
+				errorLog.add(`Erzieherart ${props.manager().liste.get(erzieherart)?.bezeichnung ?? '???'} (ID: ${erzieherart}) kann nicht gelöscht werden, da ihr noch Erziehungsberechtigte zugeordnet sind.`);
 		return errorLog;
 	})
 

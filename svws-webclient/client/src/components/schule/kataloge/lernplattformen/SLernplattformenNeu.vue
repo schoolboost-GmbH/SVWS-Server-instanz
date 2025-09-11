@@ -47,7 +47,7 @@
 	}
 
 	function bezeichnungIsValid(value: string | null) {
-		if (!mandatoryInputIsValid(value, 100))
+		if (!mandatoryInputIsValid(value, 255))
 			return false;
 
 		return isUniqueInList(value, props.manager().liste.list(), 'bezeichnung');

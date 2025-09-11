@@ -1,9 +1,9 @@
 <template>
 	<div class="page page-grid-cards">
-		<svws-ui-content-card title="Erzieherart" class="w-full">
+		<svws-ui-content-card title="Allgemein">
 			<svws-ui-input-wrapper>
-				<svws-ui-text-input class="contentFocusField w-5/5" placeholder="Bezeichnung" :model-value="manager().auswahl().bezeichnung"
-					@change="bezeichnung => patch({ bezeichnung: bezeichnung ?? undefined })" :readonly />
+				<svws-ui-text-input class="contentFocusField" placeholder="Bezeichnung" :model-value="manager().auswahl().bezeichnung" :readonly
+					:max-len="30" :min-len="1" @change="v => patch({ bezeichnung: v?.trim() ?? undefined })" />
 			</svws-ui-input-wrapper>
 		</svws-ui-content-card>
 	</div>

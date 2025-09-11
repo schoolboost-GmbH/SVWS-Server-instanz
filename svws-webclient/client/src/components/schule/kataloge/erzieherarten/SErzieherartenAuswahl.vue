@@ -7,7 +7,7 @@
 		<div class="secondary-menu--content">
 			<div class="container">
 				<svws-ui-table clickable :clicked="clickedEintrag" @update:clicked="eintrag => gotoDefaultView(eintrag.id)"
-					:items="props.manager().filtered()" :columns :selectable="!hatKompetenzLoeschen"
+					:items="props.manager().filtered()" :columns :selectable="hatKompetenzLoeschen"
 					:model-value="[...props.manager().liste.auswahl()]" @update:model-value="items => setAuswahl(items)" scroll-into-view
 					:focus-switching-enabled :focus-help-visible>
 					<template #cell(anzahlErziehungsberechtigte)="{ value, rowData }">
