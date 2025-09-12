@@ -42,7 +42,7 @@ public final class CardDavAdressbuch {
 	 * @throws ApiOperationException   im Fehlerfall
 	 */
 	public Adressbuch getAdressbuchById(final String idBook, final boolean withContacts, final boolean withPayload) throws ApiOperationException {
-		final Adressbuch book = CardDavAdressbuecher.getAdressbuchbyID(idBook);
+		final Adressbuch book = CardDavAdressbuchTyp.getAdressbuchByID(idBook);
 		if (book == null)
 			return null;
 		if (!withContacts)
@@ -59,7 +59,7 @@ public final class CardDavAdressbuch {
 	@SuppressWarnings("static-method")
 	public List<Adressbuch> getAvailableAdressbuecher() {
 		// TODO Hier muss später noch gefiltert werden, so dass anhand der Berechtigungen des Connection-Users die Adressbücher zusammengestellt werden
-		return CardDavAdressbuecher.getAdressbuecher();
+		return CardDavAdressbuchTyp.getAdressbuecher();
 	}
 
 
@@ -76,7 +76,7 @@ public final class CardDavAdressbuch {
 	private List<AdressbuchEintrag> getKontakteByAdressbuch(final @NotNull String idBook, final boolean withPayload)
 			throws ApiOperationException {
 		// Bestimme zunächst den Typ und die ID des Schuljahresabschnittes für das Einlesen der Kontakte
-		final CardDavAdressbuecher typ = CardDavAdressbuecher.valueOf(idBook.toUpperCase());
+		final CardDavAdressbuchTyp typ = CardDavAdressbuchTyp.valueOf(idBook.toUpperCase());
 		final long idSchuljahresabschnitt = conn.getUser().schuleGetSchuljahresabschnitt().id;
 
 		// Lese die Kontakte anhand des Typs und des Schuljahresabschnittes aus der DB ein

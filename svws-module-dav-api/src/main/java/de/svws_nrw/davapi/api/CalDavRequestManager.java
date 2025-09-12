@@ -6,15 +6,13 @@ import java.nio.charset.StandardCharsets;
 import java.time.Instant;
 import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 import java.util.function.Predicate;
 
 import de.svws_nrw.core.data.kalender.Kalender;
 import de.svws_nrw.core.data.kalender.KalenderEintrag;
 import de.svws_nrw.core.logger.LogLevel;
 import de.svws_nrw.core.logger.Logger;
-import de.svws_nrw.davapi.data.caldav.KalenderRepository;
-import de.svws_nrw.davapi.data.dav.CollectionQueryParameters;
+import de.svws_nrw.davapi.data.caldav.CalDavKalender;
 import de.svws_nrw.davapi.data.dav.DavException;
 import de.svws_nrw.davapi.model.dav.Collection;
 import de.svws_nrw.davapi.model.dav.CurrentUserPrincipal;
@@ -57,7 +55,7 @@ import jakarta.ws.rs.core.EntityTag;
 public class CalDavRequestManager extends AbstractDavRequestManager {
 
 	/** Das Kalender-Repository für den Datenbankzugriff */
-	private final KalenderRepository repo;
+	private final CalDavKalender repo;
 
 
 	/**
@@ -70,7 +68,7 @@ public class CalDavRequestManager extends AbstractDavRequestManager {
 	 */
 	public CalDavRequestManager(final @NotNull DBEntityManager conn, final InputStream is) throws IOException {
 		super(conn, is);
-		repo = new KalenderRepository(conn);
+		repo = new CalDavKalender(conn);
 	}
 
 
@@ -79,22 +77,26 @@ public class CalDavRequestManager extends AbstractDavRequestManager {
 	 *
 	 * @return die HTTP-Response
 	 *
-	 * @throws IOException  für den Fall, dass die Anfrage nicht erfolgreich deserialisiert werden kann
+	 * @throws IOException             für den Fall, dass die Anfrage nicht erfolgreich deserialisiert werden kann
 	 */
 	public jakarta.ws.rs.core.Response propfindCollection() throws IOException {
 		logRequest("CalDAV->propfindCollection");
 
-		final Propfind propfind = mapper.readValue(requestBody, Propfind.class);
-		final List<Kalender> kalenderList = repo.getAvailableKalender(CollectionQueryParameters.NO_RESSOURCES);
-		if (kalenderList.isEmpty())
-			return buildResponse(createResourceNotFoundError("Es wurden keine Adressbücher für den angemeldeten Benutzer gefunden!"));
-		final Multistatus ms = new Multistatus();
-		// wichtig ist, dass dem Client die Collection selbst im Response beschrieben wird
-		final var response = genPropfindCollectionResponse(propfind.getProp());
-		ms.getResponse().add(response);
-		for (final Kalender kalender : kalenderList)
-			ms.getResponse().add(this.genPropfindCalendarResponse(kalender, propfind.getProp()));
-		return buildResponse(ms);
+		try {
+			final Propfind propfind = mapper.readValue(requestBody, Propfind.class);
+			final List<Kalender> kalenderList = repo.getAvailableKalender(false, false);
+			if (kalenderList.isEmpty())
+				return buildResponse(createResourceNotFoundError("Es wurden keine Adressbücher für den angemeldeten Benutzer gefunden!"));
+			final Multistatus ms = new Multistatus();
+			// wichtig ist, dass dem Client die Collection selbst im Response beschrieben wird
+			final var response = genPropfindCollectionResponse(propfind.getProp());
+			ms.getResponse().add(response);
+			for (final Kalender kalender : kalenderList)
+				ms.getResponse().add(this.genPropfindCalendarResponse(kalender, propfind.getProp()));
+			return buildResponse(ms);
+		} catch (final DavException e) {
+			return buildResponse(e.getDavResponse(getKalenderUri()).getError());
+		}
 	}
 
 
@@ -105,28 +107,29 @@ public class CalDavRequestManager extends AbstractDavRequestManager {
 	 *
 	 * @return die HTTP-Response
 	 *
-	 * @throws IOException  für den Fall, dass die Anfrage nicht erfolgreich deserialisiert werden kann
+	 * @throws IOException             für den Fall, dass die Anfrage nicht erfolgreich deserialisiert werden kann
 	 */
 	public jakarta.ws.rs.core.Response propfindCalendar(final String idCal) throws IOException {
 		logRequest("CalDAV->propfindCalendar", "idCal=" + idCal);
+		this.setParameterResourceCollectionId(idCal);
 
-		// Wurde keine gültige Ressource angegeben, so ist dies eigentlicht ein Zugriff auf die Kalendersammlung
-		if ((idCal == null) || idCal.isBlank())
-			return propfindCollection();
+			// Wurde keine gültige Ressource angegeben, so ist dies eigentlicht ein Zugriff auf die Kalendersammlung
+			if ((idCal == null) || idCal.isBlank())
+				return propfindCollection();
 
-		final Propfind propfind = mapper.readValue(requestBody, Propfind.class);
+			final Propfind propfind = mapper.readValue(requestBody, Propfind.class);
 
-		final Optional<Kalender> kalender = repo.getKalenderById(idCal, CollectionQueryParameters.NO_PAYLOAD);
-		if (kalender.isEmpty())
-			return buildResponse(createResourceNotFoundError("Kalender mit der angegebenen Id wurde nicht gefunden!"));
+			final Kalender kalender = repo.getKalenderById(idCal, true, false);
+			if (kalender == null)
+				return buildResponse(createResourceNotFoundError("Kalender mit der angegebenen Id wurde nicht gefunden!"));
 
-		final Multistatus ms = new Multistatus();
-		ms.getResponse().add(this.genPropfindCalendarResponse(kalender.get(), propfind.getProp()));
-		for (final KalenderEintrag eintrag : kalender.get().kalenderEintraege) {
-			eintrag.kalenderId = kalender.get().id;
-			ms.getResponse().add(this.genPropfindEntryResponse(eintrag, propfind.getProp()));
-		}
-		return buildResponse(ms);
+			final Multistatus ms = new Multistatus();
+			ms.getResponse().add(this.genPropfindCalendarResponse(kalender, propfind.getProp()));
+			for (final KalenderEintrag eintrag : kalender.kalenderEintraege) {
+				eintrag.kalenderId = kalender.id;
+				ms.getResponse().add(this.genPropfindEntryResponse(eintrag, propfind.getProp()));
+			}
+			return buildResponse(ms);
 	}
 
 
@@ -319,34 +322,38 @@ public class CalDavRequestManager extends AbstractDavRequestManager {
 	 *
 	 * @return die HTTP-Response
 	 *
-	 * @throws IOException  für den Fall, dass die Anfrage nicht erfolgreich deserialisiert werden kann
+	 * @throws IOException              für den Fall, dass die Anfrage nicht erfolgreich deserialisiert werden kann
 	 */
 	public jakarta.ws.rs.core.Response reportCalendar(final String idCal) throws IOException {
 		logRequest("CalDAV->reportCalendar", "idCal=" + idCal);
+		this.setParameterResourceCollectionId(idCal);
 
-		// Bestimme die Kalenderdaten aus der Datenbank und gebe einen Fehler zurück, falls kein Kalender mit der ID gefunden wurde
-		final Optional<Kalender> kalender = this.repo.getKalenderById(idCal, CollectionQueryParameters.ALL);
-		if (kalender.isEmpty())
-			return buildResponse(this.createResourceNotFoundError("Kalender mit der angegebenen ID wurde nicht gefunden!"));
-		this.setParameterResourceCollectionId(kalender.get().id);
+		try {
+			// Bestimme die Kalenderdaten aus der Datenbank und gebe einen Fehler zurück, falls kein Kalender mit der ID gefunden wurde
+			final Kalender kalender = this.repo.getKalenderById(idCal, true, true);
+			if (kalender == null)
+				return buildResponse(this.createResourceNotFoundError("Kalender mit der angegebenen ID wurde nicht gefunden!"));
 
-		// Prüfe, ob es sich um eine Anfrage mit dem Typ CalendarMultiget handelt
-		final CalendarMultiget calendarMultiget = deserialiseCalendarMultiget(requestBody);
-		if (calendarMultiget != null)
-			return reportCalendarMultigetRequest(kalender.get(), calendarMultiget);
+			// Prüfe, ob es sich um eine Anfrage mit dem Typ CalendarMultiget handelt
+			final CalendarMultiget calendarMultiget = deserialiseCalendarMultiget(requestBody);
+			if (calendarMultiget != null)
+				return reportCalendarMultigetRequest(kalender, calendarMultiget);
 
-		// Prüfe, ob es sich um eine Anfrage mit dem Typ SyncCollection handelt
-		final SyncCollection syncCollection = deserialiseSyncCollection(requestBody);
-		if (syncCollection != null)
-			return reportSyncCollectionRequest(kalender.get(), syncCollection);
+			// Prüfe, ob es sich um eine Anfrage mit dem Typ SyncCollection handelt
+			final SyncCollection syncCollection = deserialiseSyncCollection(requestBody);
+			if (syncCollection != null)
+				return reportSyncCollectionRequest(kalender, syncCollection);
 
-		// Prüfe, ob es sich um eine Anfrage mit dem Typ CalendarQuery handelt
-		final CalendarQuery calendarQuery = deserialiseCalendarQuery(requestBody);
-		if (calendarQuery != null)
-			return reportCalendarQueryRequest(kalender.get(), calendarQuery);
+			// Prüfe, ob es sich um eine Anfrage mit dem Typ CalendarQuery handelt
+			final CalendarQuery calendarQuery = deserialiseCalendarQuery(requestBody);
+			if (calendarQuery != null)
+				return reportCalendarQueryRequest(kalender, calendarQuery);
 
-		throw new UnsupportedOperationException(
-				"Es werden nur die Typen CalendarMultiget, SyncCollection und CalendarQuery für die Methode REPORT bei einem Kalender unterstützt.");
+			throw new UnsupportedOperationException(
+					"Es werden nur die Typen CalendarMultiget, SyncCollection und CalendarQuery für die Methode REPORT bei einem Kalender unterstützt.");
+		} catch (final DavException e) {
+			return buildResponse(e.getDavResponse(getKalenderResourceCollectionUri()).getError());
+		}
 	}
 
 
@@ -431,23 +438,27 @@ public class CalDavRequestManager extends AbstractDavRequestManager {
 	 * @param syncCollection   die Anfrage vom Typ SyncCollection mit dem SyncToken
 	 *
 	 * @return die HTTP-Response
+	 *
+	 * @throws DavException   im Fehlerfall
 	 */
-	private jakarta.ws.rs.core.Response reportSyncCollectionRequest(final Kalender kalender, final SyncCollection syncCollection) {
+	private jakarta.ws.rs.core.Response reportSyncCollectionRequest(final Kalender kalender, final SyncCollection syncCollection) throws DavException {
 		// Bestimme den Sync-Token
 		final Long syncTokenMillis = syncCollection.getSyncToken().isBlank() ? 0 : Long.valueOf(syncCollection.getSyncToken());
 
 		// Bestimme die Einträge mit Änderungen seit diesem Sync-Token und die UIDs der entfernten Einträge
-		final Optional<Kalender> kalenderById = this.repo.getKalenderById(kalender.id, CollectionQueryParameters.ALL);
-		final List<KalenderEintrag> eintraege = kalenderById.isEmpty() ? Collections.emptyList()
-				: kalenderById.get().kalenderEintraege.stream().filter(e -> Long.valueOf(e.version) > syncTokenMillis).toList();
-		final List<String> deletedUIDs = repo.getDeletedResourceUIDsSince(kalender.id, syncTokenMillis);
+		final Kalender kalenderById = this.repo.getKalenderById(kalender.id, true, true);
+		final List<KalenderEintrag> eintraege = (kalenderById == null) ? Collections.emptyList()
+				: kalenderById.kalenderEintraege.stream().filter(e -> Long.valueOf(e.version) > syncTokenMillis).toList();
+		final List<String> deletedUIDs = repo.getDeletedEintragUIDs(kalender.id, syncTokenMillis);
 
 		// Generiere die Response mit den Kalender-Einträgen und den UIDs der entfernten Einträge
 		final Multistatus ms = new Multistatus();
 		for (final KalenderEintrag eintrag : eintraege)
 			ms.getResponse().add(this.genReportEntryResponse(eintrag, syncCollection.getProp()));
-		for (final String uid : deletedUIDs)
+		for (final String uid : deletedUIDs) {
+			this.setParameterResourceId(uid);
 			ms.getResponse().add(this.genReportResourceNotFoundResponse(getKalenderResourceUri(), uid));
+		}
 		ms.setSyncToken(Long.toString(kalender.synctoken));
 		return buildResponse(ms);
 	}
@@ -461,13 +472,15 @@ public class CalDavRequestManager extends AbstractDavRequestManager {
 	 * @param calendarQuery   die Anfrage vom Typ CalendarQuery mit den angeforderten Einträgen als HRefs
 	 *
 	 * @return die HTTP-Response
+	 *
+	 * @throws DavException   im Fehlerfall
 	 */
-	private jakarta.ws.rs.core.Response reportCalendarQueryRequest(final Kalender kalender, final CalendarQuery calendarQuery) {
+	private jakarta.ws.rs.core.Response reportCalendarQueryRequest(final Kalender kalender, final CalendarQuery calendarQuery) throws DavException {
 		// Erstelle den Filter als Prädikat und wende diesen zur Filterung der Einträge an
 		final Predicate<? super @NotNull KalenderEintrag> eintragFilter = getCalendarQueryFilter(calendarQuery);
-		final Optional<Kalender> kalenderById = this.repo.getKalenderById(kalender.id, CollectionQueryParameters.ALL);
-		final List<KalenderEintrag> eintraege = kalenderById.isEmpty() ? Collections.emptyList()
-				: kalenderById.get().kalenderEintraege.stream().filter(eintragFilter).toList();
+		final Kalender kalenderById = this.repo.getKalenderById(kalender.id, true, true);
+		final List<KalenderEintrag> eintraege = (kalenderById == null) ? Collections.emptyList()
+				: kalenderById.kalenderEintraege.stream().filter(eintragFilter).toList();
 
 		// Generiere die Response mit den Kalender-Einträgen
 		final Multistatus ms = new Multistatus();
@@ -624,16 +637,14 @@ public class CalDavRequestManager extends AbstractDavRequestManager {
 		if (eTag != null)
 			eintrag.version = eTag;
 
-		// Speicher den Kalender-Eintrag und gibt die neue Version des Eintrags als Entity-Tag zurück
-		try {
-			final KalenderEintrag saveKalenderEintrag = this.repo.saveKalenderEintrag(eintrag);
-			final EntityTag entityTag = new EntityTag(saveKalenderEintrag.version);
-			if (isCreate)
-				return buildCreatedResponse(entityTag);
-			return buildNoContentResponse(entityTag);
-		} catch (final DavException e) {
-			return buildResponse(e.getDavResponse(getKalenderResourceUri()).getError());
-		}
+		// Speichert den Kalender-Eintrag und gibt die neue Version des Eintrags als Entity-Tag zurück
+		final String version = this.repo.persistEintrag(eintrag);
+		if (version == null)
+			return buildResponse(createResourceNotFoundError("Zugriff auf %s nicht möglich.".formatted(getKalenderResourceUri())));
+		final EntityTag entityTag = new EntityTag(version);
+		if (isCreate)
+			return buildCreatedResponse(entityTag);
+		return buildNoContentResponse(entityTag);
 	}
 
 
@@ -656,7 +667,7 @@ public class CalDavRequestManager extends AbstractDavRequestManager {
 
 		String errorMessage;
 		try {
-			if (repo.deleteKalenderEintrag(Long.valueOf(idCal), uid, Long.valueOf(adjustETags(match))))
+			if (repo.deleteKalenderEintrag(idCal, uid, Long.valueOf(adjustETags(match))))
 				return buildNoContentResponse();
 			errorMessage = "DavRessource<" + uid + "> in Collection<" + idCal + "> nicht gefunden.";
 		} catch (final Exception e) {

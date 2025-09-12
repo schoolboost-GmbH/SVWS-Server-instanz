@@ -114,7 +114,6 @@ public abstract class AbstractDavRequestManager {
 		} catch (final ApiOperationException e) {
 			return e.getResponse();
 		} catch (final IOException e) {
-			e.printStackTrace();
 			return Response.status(Response.Status.BAD_REQUEST).type(MediaType.TEXT_PLAIN).entity(e.getMessage()).build();
 		} catch (final Exception e) {
 			if (e instanceof final ApiOperationException apiOperationException)

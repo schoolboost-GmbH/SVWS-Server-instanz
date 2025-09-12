@@ -11,7 +11,7 @@ import jakarta.validation.constraints.NotNull;
 /**
  * Eine Aufzählung der verfügbaren Adressbuecher
  */
-public enum CardDavAdressbuecher {
+public enum CardDavAdressbuchTyp {
 
 	/** Ein Adressbuch für Schüler-Kontaktdaten */
 	SCHUELER("Schüler", "Ein generiertes Adressbuch mit allen Schülern", "Generiert"),
@@ -45,7 +45,7 @@ public enum CardDavAdressbuecher {
 	public final @NotNull String beschreibung;
 
 	/** Eien Map für den schnellen Zugriff auf ein Adressbuch anhand des Typs */
-	private static @NotNull Map<String, CardDavAdressbuecher> mapAdressbuecherByID = new HashMap<>();
+	private static @NotNull Map<String, CardDavAdressbuchTyp> mapAdressbuecherByID = new HashMap<>();
 
 
 	/**
@@ -55,7 +55,7 @@ public enum CardDavAdressbuecher {
 	 * @param beschreibung   die Beschreibung
 	 * @param typ            der Typ des Adressuches (Persönlich, Generiert oder Öffentlich)
 	 */
-	CardDavAdressbuecher(final @NotNull String displayname, final @NotNull String beschreibung, final @NotNull String typ) {
+	CardDavAdressbuchTyp(final @NotNull String displayname, final @NotNull String beschreibung, final @NotNull String typ) {
 		this.id = this.toString().toLowerCase();
 		this.typ = typ;
 		this.displayname = displayname;
@@ -71,9 +71,9 @@ public enum CardDavAdressbuecher {
 	 *
 	 * @return der Eintrag oder null
 	 */
-	public static CardDavAdressbuecher getbyID(final @NotNull String id) {
+	public static CardDavAdressbuchTyp getByID(final @NotNull String id) {
 		if (mapAdressbuecherByID.isEmpty())
-			for (final @NotNull CardDavAdressbuecher book : CardDavAdressbuecher.values())
+			for (final @NotNull CardDavAdressbuchTyp book : CardDavAdressbuchTyp.values())
 				mapAdressbuecherByID.put(book.id, book);
 		return mapAdressbuecherByID.get(id);
 	}
@@ -87,11 +87,11 @@ public enum CardDavAdressbuecher {
 	 *
 	 * @return der Eintrag oder null
 	 */
-	public static Adressbuch getAdressbuchbyID(final @NotNull String id) {
+	public static Adressbuch getAdressbuchByID(final @NotNull String id) {
 		if (mapAdressbuecherByID.isEmpty())
-			for (final @NotNull CardDavAdressbuecher book : CardDavAdressbuecher.values())
+			for (final @NotNull CardDavAdressbuchTyp book : CardDavAdressbuchTyp.values())
 				mapAdressbuecherByID.put(book.id, book);
-		final CardDavAdressbuecher book = mapAdressbuecherByID.get(id);
+		final CardDavAdressbuchTyp book = mapAdressbuecherByID.get(id);
 		return (book == null) ? null : book.toAdressbuch();
 	}
 
@@ -119,9 +119,9 @@ public enum CardDavAdressbuecher {
 	 */
 	public static @NotNull List<Adressbuch> getAdressbuecher() {
 		final @NotNull List<Adressbuch> result = new ArrayList<>();
-		result.add(CardDavAdressbuecher.SCHUELER.toAdressbuch());
-		result.add(CardDavAdressbuecher.LEHRER.toAdressbuch());
-		result.add(CardDavAdressbuecher.ERZIEHER.toAdressbuch());
+		result.add(CardDavAdressbuchTyp.SCHUELER.toAdressbuch());
+		result.add(CardDavAdressbuchTyp.LEHRER.toAdressbuch());
+		result.add(CardDavAdressbuchTyp.ERZIEHER.toAdressbuch());
 		// TODO die weiteren Adressbücher implementieren (siehe Aufzählung oben)
 		return result;
 	}
