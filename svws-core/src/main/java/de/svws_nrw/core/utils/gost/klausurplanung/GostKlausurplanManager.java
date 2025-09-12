@@ -1578,7 +1578,8 @@ public class GostKlausurplanManager {
 
 	private void kursklausurRemoveOhneUpdateById(final long idKursklausur) {
 		schuelerklausurRemoveAllOhneUpdate(_schuelerklausur_by_idKursklausur_and_idSchueler.get1(idKursklausur));
-		DeveloperNotificationException.ifMapRemoveFailes(_kursklausur_by_id, idKursklausur);
+		final GostKursklausur removed = DeveloperNotificationException.ifMapRemoveFailes(_kursklausur_by_id, idKursklausur);
+		kursklausurfehlendRemoveOhneUpdate(removed);
 	}
 
 	/**

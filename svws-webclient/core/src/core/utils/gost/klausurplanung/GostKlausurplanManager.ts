@@ -1524,7 +1524,8 @@ export class GostKlausurplanManager extends JavaObject {
 
 	private kursklausurRemoveOhneUpdateById(idKursklausur : number) : void {
 		this.schuelerklausurRemoveAllOhneUpdate(this._schuelerklausur_by_idKursklausur_and_idSchueler.get1(idKursklausur));
-		DeveloperNotificationException.ifMapRemoveFailes(this._kursklausur_by_id, idKursklausur);
+		const removed : GostKursklausur | null = DeveloperNotificationException.ifMapRemoveFailes(this._kursklausur_by_id, idKursklausur);
+		this.kursklausurfehlendRemoveOhneUpdate(removed);
 	}
 
 	/**

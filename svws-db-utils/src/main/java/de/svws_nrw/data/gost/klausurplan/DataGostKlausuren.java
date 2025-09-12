@@ -309,6 +309,7 @@ public final class DataGostKlausuren {
 						if (kursklausur != null) {
 							fehlendData.data.kursklausuren.add(kursklausur);
 							manager.kursklausurfehlendAdd(kursklausur);
+							fehlendData.data.schuelerklausuren.addAll(manager.schuelerklausurGetMengeByKursklausur(kursklausur));
 						}
 					}
 				} else {
