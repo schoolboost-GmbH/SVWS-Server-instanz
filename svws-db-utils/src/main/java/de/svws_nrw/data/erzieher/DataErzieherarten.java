@@ -149,7 +149,7 @@ public final class DataErzieherarten extends DataManagerRevised<Long, DTOErziehe
 								+ "WHERE e.ErzieherArt_ID IN ?1 GROUP BY e.ErzieherArt_ID", Object[].class, ids).stream()
 				.collect(Collectors.toMap(id -> (Long) id[0], count -> (Long) count[1]));
 		for (final DTOErzieherart dto : dtos) {
-			final SimpleOperationResponse response = mapResponses.get(dto.ID);
+			final SimpleOperationResponse response = mapResponses.getOrDefault(dto.ID, null);
 			if (response == null)
 				throw new DeveloperNotificationException("Das SimpleOperationResponse Objekt zu der ID %d existiert nicht.".formatted(dto.ID));
 

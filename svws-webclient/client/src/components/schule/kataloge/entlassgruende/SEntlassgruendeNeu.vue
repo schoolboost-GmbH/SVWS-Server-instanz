@@ -1,6 +1,6 @@
 <template>
 	<div class="page page-grid-cards">
-		<svws-ui-content-card title="Entlassgrund anlegen">
+		<svws-ui-content-card title="Allgemein">
 			<svws-ui-input-wrapper :grid="2">
 				<svws-ui-text-input placeholder="Bezeichnung" :min-len="1" :max-len="30" v-model="data.bezeichnung" required :disabled
 					:valid="fieldIsValid('bezeichnung')" />

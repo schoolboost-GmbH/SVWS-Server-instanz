@@ -1,6 +1,6 @@
 <template>
 	<div class="page page-grid-cards">
-		<svws-ui-content-card title="Vermerkart" class="w-full">
+		<svws-ui-content-card title="Allgemein">
 			<svws-ui-input-wrapper>
 				<svws-ui-text-input class="contentFocusField" placeholder="Bezeichnung" :model-value="vermerkartenManager().auswahl().bezeichnung" :readonly
 					@change="v => patch({ bezeichnung: v?.trim() ?? undefined })" />
@@ -27,10 +27,6 @@
 				</template>
 			</svws-ui-table>
 		</svws-ui-content-card>
-
-		<div v-else>
-			<svws-ui-content-card :title="'Die Vermerkart `' + vermerkartenManager().auswahl().bezeichnung + '` wurde bislang nicht verwendet'" />
-		</div>
 	</div>
 </template>
 

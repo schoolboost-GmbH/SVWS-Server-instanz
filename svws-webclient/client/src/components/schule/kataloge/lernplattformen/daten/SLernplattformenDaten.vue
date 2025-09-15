@@ -1,8 +1,8 @@
 <template>
 	<div class="page page-grid-cards">
-		<svws-ui-content-card title="Lernplattform">
+		<svws-ui-content-card title="Allgemein">
 			<svws-ui-input-wrapper>
-				<svws-ui-text-input class="contentFocusField w-5/5" placeholder="Bezeichnung" :model-value="manager().auswahl().bezeichnung"
+				<svws-ui-text-input class="contentFocusField" placeholder="Bezeichnung" :model-value="manager().auswahl().bezeichnung"
 					@change="v => patch({ bezeichnung: v?.trim() ?? undefined })" :readonly :max-len="255" :min-len="1" />
 			</svws-ui-input-wrapper>
 		</svws-ui-content-card>

@@ -1,7 +1,7 @@
 <template>
 	<div class="page page-grid-cards">
-		<svws-ui-content-card title="Sportbefreiung anlegen">
-			<svws-ui-input-wrapper :grid="1">
+		<svws-ui-content-card title="Allgemein">
+			<svws-ui-input-wrapper>
 				<svws-ui-text-input placeholder="Bezeichnung" :max-len="50" :min-len="1" v-model="data.bezeichnung" :disabled :valid="fieldIsValid('bezeichnung')" />
 				<div v-if="!isUniqueInList(data.bezeichnung, props.manager().liste.list(), 'bezeichnung')" class="flex my-auto">
 					<span class="icon i-ri-alert-line mx-0.5 mr-1 inline-flex" />

@@ -1,9 +1,9 @@
 <template>
 	<div class="page page-grid-cards">
-		<svws-ui-content-card title="Telefonarten" class="w-full">
+		<svws-ui-content-card title="Allgemein">
 			<svws-ui-input-wrapper>
-				<svws-ui-text-input class="contentFocusField w-5/5" placeholder="Bezeichnung" :model-value="telefonArtListeManager().auswahl().bezeichnung"
-					@change="bezeichnung => patch({ bezeichnung: bezeichnung ?? undefined })" :readonly />
+				<svws-ui-text-input class="contentFocusField" placeholder="Bezeichnung" :model-value="telefonArtListeManager().auswahl().bezeichnung"
+					:readonly :max-len="30" :min-len="1" @change="v => patch({ bezeichnung: v?.trim() ?? undefined })" />
 			</svws-ui-input-wrapper>
 		</svws-ui-content-card>
 	</div>
@@ -16,7 +16,6 @@
 	import { BenutzerKompetenz } from "@core";
 
 	const props = defineProps<TelefonArtenDatenProps>();
-
 	const hatKompetenzUpdate = computed<boolean>(() => props.benutzerKompetenzen.has(BenutzerKompetenz.KATALOG_EINTRAEGE_AENDERN));
 	const readonly = computed(() => !hatKompetenzUpdate.value);
 

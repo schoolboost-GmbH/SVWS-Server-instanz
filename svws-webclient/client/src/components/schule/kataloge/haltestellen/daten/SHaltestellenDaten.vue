@@ -1,7 +1,7 @@
 <template>
 	<div class="page page-grid-cards">
 		<svws-ui-content-card title="Allgemein">
-			<svws-ui-input-wrapper :grid="1">
+			<svws-ui-input-wrapper>
 				<svws-ui-text-input class="contentFocusField" placeholder="Bezeichnung" :model-value="manager().daten().bezeichnung"
 					:readonly :max-len="30" :min-len="1" @change="v => patch({ bezeichnung: v?.trim() ?? undefined })" />
 				<svws-ui-input-number placeholder="Entfernung zur Schule" :model-value="manager().daten().entfernungSchule" :readonly :min="0" :max="32000"

@@ -1,6 +1,6 @@
 <template>
 	<div class="page page-grid-cards">
-		<svws-ui-content-card title="Einwilligungsart">
+		<svws-ui-content-card title="Allgemein">
 			<svws-ui-input-wrapper>
 				<svws-ui-text-input class="contentFocusField" placeholder="Bezeichnung" :model-value="einwilligungsartenListeManager().auswahl().bezeichnung"
 					@change="bezeichnung => patch({ bezeichnung: bezeichnung ?? undefined })" :readonly required :min-len="1" :max-len="250" />

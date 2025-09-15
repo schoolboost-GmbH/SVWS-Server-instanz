@@ -1,49 +1,77 @@
 <template>
 	<div class="page page-grid-cards">
-		<div class="flex flex-col gap-y-16 lg:gap-y-20">
-			<svws-ui-content-card title="Allgemein">
-				<svws-ui-input-wrapper :grid="2">
-					<div>
-						<svws-ui-text-input	:valid="validatorTelefonArtBezeichnung" v-model="telefonArt.bezeichnung" type="text" placeholder="Bezeichnung" :readonly />
-						<div v-if="!validatorTelefonArtBezeichnung(telefonArt.bezeichnung) && (telefonArt.bezeichnung.length > 0)" class="flex my-auto">
-							<span class="icon i-ri-alert-line mx-0.5 mr-1 inline-flex" />
-							<p> Diese Bezeichnung wird bereits verwendet </p>
-						</div>
-					</div>
-				</svws-ui-input-wrapper>
-				<div class="mt-7 flex flex-row gap-4 justify-end">
-					<svws-ui-button type="secondary" @click="cancel" :disabled="isLoading">Abbrechen</svws-ui-button>
-					<svws-ui-button @click="addTelefonArt"
-						:disabled="((!validatorTelefonArtBezeichnung(telefonArt.bezeichnung)) || isLoading || (telefonArt.bezeichnung === '') || (!hatKompetenzUpdate))">
-						Speichern <svws-ui-spinner :spinning="isLoading" />
-					</svws-ui-button>
+		<svws-ui-content-card title="Allgemein">
+			<svws-ui-input-wrapper>
+				<svws-ui-text-input placeholder="Bezeichnung" :max-len="30" :min-len="1" v-model="data.bezeichnung" :disabled required
+					:valid="fieldIsValid('bezeichnung')" />
+				<div v-if="!isUniqueInList(data.bezeichnung, props.manager().liste.list(), 'bezeichnung')" class="flex my-auto">
+					<span class="icon i-ri-alert-line mx-0.5 mr-1 inline-flex" />
+					<p> Diese Bezeichnung wird bereits verwendet. </p>
 				</div>
-			</svws-ui-content-card>
-		</div>
+				<div v-if="bezeichnungIsTooLong" class="flex my-auto">
+					<span class="icon i-ri-alert-line mx-0.5 mr-1 inline-flex" />
+					<p> Diese Bezeichnung verwendet zu viele Zeichen. </p>
+				</div>
+				<div class="mt-7 flex flex-row gap-4 justify-end">
+					<svws-ui-button type="secondary" @click="cancel">Abbrechen</svws-ui-button>
+					<svws-ui-button @click="addTelefonArt" :disabled="!formIsValid || !hatKompetenzUpdate">Speichern</svws-ui-button>
+				</div>
+			</svws-ui-input-wrapper>
+		</svws-ui-content-card>
 		<svws-ui-checkpoint-modal :checkpoint :continue-routing="props.continueRoutingAfterCheckpoint" />
 	</div>
 </template>
 
 <script setup lang="ts">
-	import { computed, ref } from "vue";
-	import { BenutzerKompetenz, TelefonArt } from "@core";
+
 	import type { STelefonArtenNeuProps } from "~/components/schule/kataloge/telefonarten/STelefonArtenNeuProps";
+	import { BenutzerKompetenz, TelefonArt } from "@core";
+	import { computed, ref, watch } from "vue";
+	import { isUniqueInList, mandatoryInputIsValid } from "~/util/validation/Validation";
 
 	const props = defineProps<STelefonArtenNeuProps>();
-
 	const hatKompetenzUpdate = computed<boolean>(() => props.benutzerKompetenzen.has(BenutzerKompetenz.KATALOG_EINTRAEGE_AENDERN));
-	const readonly = computed(() => !hatKompetenzUpdate.value);
-
-	const telefonArt = ref(new TelefonArt());
+	const disabled = computed(() => !hatKompetenzUpdate.value);
+	const data = ref(new TelefonArt());
 	const isLoading = ref<boolean>(false);
+	const bezeichnungIsTooLong = computed(() => data.value.bezeichnung.length > 30);
 
-	function validatorTelefonArtBezeichnung(value: string | null): boolean {
-		if (value === null)
-			return true;
-		for (const eintrag of props.manager().liste.list())
-			if (eintrag.bezeichnung === value.trim())
-				return false;
-		return true;
+	function fieldIsValid(field: keyof TelefonArt | null) : (v: string | null) => boolean {
+		return (v: string | null) => {
+			switch (field) {
+				case 'bezeichnung':
+					return bezeichnungIsValid(data.value.bezeichnung);
+				default:
+					return true;
+			}
+		}
+	}
+
+	const formIsValid = computed(() => {
+		// alle Felder auf validity prüfen
+		return Object.keys(data.value).every(field => {
+			const validateField = fieldIsValid(field as keyof TelefonArt);
+			const fieldValue = data.value[field as keyof TelefonArt] as string | null;
+			return validateField(fieldValue);
+		})
+	})
+
+	function bezeichnungIsValid(value: string | null) {
+		if (!mandatoryInputIsValid(value, 30))
+			return false;
+
+		return isUniqueInList(value, props.manager().liste.list(), 'bezeichnung');
+	}
+
+	async function addTelefonArt() {
+		if (isLoading.value)
+			return;
+
+		isLoading.value = true;
+		props.checkpoint.active = false;
+		const { id, anzahlTelefonnummern, ...partialData } = data.value;
+		await props.add(partialData);
+		isLoading.value = false;
 	}
 
 	async function cancel() {
@@ -51,15 +79,11 @@
 		await props.gotoDefaultView(null);
 	}
 
-	async function addTelefonArt() {
-		if (isLoading.value === true)
+	watch(() => data.value, async() => {
+		if (isLoading.value)
 			return;
-		isLoading.value = true;
-		props.checkpoint.active = false;
-		await props.add({
-			bezeichnung: telefonArt.value.bezeichnung.trim(),
-		});
-		telefonArt.value = new TelefonArt();
-		isLoading.value = false;
-	}
+
+		props.checkpoint.active = true;
+	}, { immediate: false, deep: true });
+
 </script>

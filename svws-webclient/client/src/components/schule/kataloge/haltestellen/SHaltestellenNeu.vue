@@ -1,6 +1,6 @@
 <template>
 	<div class="page page-grid-cards">
-		<svws-ui-content-card title="Haltestelle anlegen">
+		<svws-ui-content-card title="Allgemein">
 			<svws-ui-input-wrapper>
 				<svws-ui-text-input placeholder="Bezeichnung" :max-len="30" :min-len="1" v-model="data.bezeichnung" :disabled required
 					:valid="fieldIsValid('bezeichnung')" />

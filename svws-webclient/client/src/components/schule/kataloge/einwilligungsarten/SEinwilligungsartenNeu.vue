@@ -1,6 +1,6 @@
 <template>
 	<div class="page page-grid-cards">
-		<svws-ui-content-card title="Einwilligungsart">
+		<svws-ui-content-card title="Allgemein">
 			<svws-ui-input-wrapper>
 				<svws-ui-text-input :valid="fieldIsValid('bezeichnung')" v-model="data.bezeichnung" placeholder="Bezeichnung" :disabled
 					required :min-len="1" :max-len="250" />

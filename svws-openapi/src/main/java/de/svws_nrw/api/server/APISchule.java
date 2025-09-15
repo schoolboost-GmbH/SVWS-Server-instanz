@@ -3010,7 +3010,7 @@ public class APISchule {
 	public Response deleteTelefonarten(@PathParam("schema") final String schema,
 			@RequestBody(description = "Die IDs der zu löschenden Telefonarten", required = true, content = @Content(mediaType = MediaType.APPLICATION_JSON,
 					array = @ArraySchema(schema = @Schema(implementation = Long.class)))) final InputStream is, @Context final HttpServletRequest request) {
-		return DBBenutzerUtils.runWithTransaction(conn -> new DataKatalogTelefonArten(conn).deleteMultipleAsResponse(JSONMapper.toListOfLong(is)),
+		return DBBenutzerUtils.runWithTransaction(conn -> new DataKatalogTelefonArten(conn).deleteMultipleAsSimpleResponseList(JSONMapper.toListOfLong(is)),
 				request, ServerMode.DEV, BenutzerKompetenz.KATALOG_EINTRAEGE_LOESCHEN);
 	}
 
