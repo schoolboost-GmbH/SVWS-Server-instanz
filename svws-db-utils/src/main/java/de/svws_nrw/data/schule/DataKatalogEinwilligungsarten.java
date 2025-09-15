@@ -164,7 +164,7 @@ public final class DataKatalogEinwilligungsarten extends DataManagerRevised<Long
 
 	private String validateBezeichnung(final DTOKatalogEinwilligungsart dto, final Object value, final PersonTyp personTyp, final String name) throws ApiOperationException {
 		final String bezeichnung = JSONMapper.convertToString(value, false, false, Schema.tab_K_Datenschutz.col_Bezeichnung.datenlaenge(), name);
-		if (Objects.equals(dto.Bezeichnung, bezeichnung))
+		if (Objects.equals(dto.Bezeichnung, bezeichnung) || bezeichnung.isBlank())
 			return dto.Bezeichnung;
 
 		final boolean bezeichnungAlreadyUsed =  this.conn.queryAll(DTOKatalogEinwilligungsart.class).stream()

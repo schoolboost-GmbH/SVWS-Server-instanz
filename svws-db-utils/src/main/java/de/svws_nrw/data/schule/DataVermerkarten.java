@@ -113,16 +113,16 @@ public final class DataVermerkarten extends DataManagerRevised<Long, DTOVermerkA
 	}
 
 	private void updateBezeichnung(final DTOVermerkArt dto, final Object value, final String name) throws ApiOperationException {
-		final String neueBezeichnung = JSONMapper.convertToString(value, false, false, Schema.tab_K_Vermerkart.col_Bezeichnung.datenlaenge(), name);
-		if (Objects.equals(dto.Bezeichnung, neueBezeichnung) || neueBezeichnung.isBlank())
+		final String bezeichnung = JSONMapper.convertToString(value, false, false, Schema.tab_K_Vermerkart.col_Bezeichnung.datenlaenge(), name);
+		if (Objects.equals(dto.Bezeichnung, bezeichnung) || bezeichnung.isBlank())
 			return;
 
 		final boolean alreadyUsed = this.conn.queryAll(DTOVermerkArt.class).stream()
-				.anyMatch(v -> (v.ID != dto.ID) && v.Bezeichnung.equalsIgnoreCase(neueBezeichnung));
+				.anyMatch(v -> (v.ID != dto.ID) && v.Bezeichnung.equalsIgnoreCase(bezeichnung));
 		if (alreadyUsed)
-			throw new ApiOperationException(Status.BAD_REQUEST, "Die Bezeichnung %s ist bereits vorhanden.".formatted(neueBezeichnung));
+			throw new ApiOperationException(Status.BAD_REQUEST, "Die Bezeichnung %s ist bereits vorhanden.".formatted(bezeichnung));
 
-		dto.Bezeichnung = neueBezeichnung;
+		dto.Bezeichnung = bezeichnung;
 	}
 
 

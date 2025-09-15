@@ -84,6 +84,7 @@
 	function bezeichnungIsValid(value: string | null) {
 		if (!mandatoryInputIsValid(value, 50))
 			return false;
+
 		return isUniqueInList(value, props.manager().liste.list(), 'bezeichnung')
 	}
 
@@ -113,6 +114,7 @@
 	function createKlassenzuordnungen(idAbteilung: number): List<AbteilungKlassenzuordnung> {
 		if (klassenToBeAdded.value.length === 0)
 			return new ArrayList<AbteilungKlassenzuordnung>();
+
 		const klassenzuordnungen = new ArrayList<AbteilungKlassenzuordnung>();
 		for (const klasse of klassenToBeAdded.value ) {
 			const zuordnung = new AbteilungKlassenzuordnung()
@@ -130,13 +132,14 @@
 	}
 
 	const columns: DataTableColumn[] = [
-		{ key: "kuerzel", label: "Klasse"},
+		{ key: "kuerzel", label: "Klasse" },
 	];
 
 	watch(() => data.value, async() => {
 		if (isLoading.value)
 			return;
+
 		props.checkpoint.active = true;
-	}, {immediate: false, deep: true});
+	}, { immediate: false, deep: true });
 
 </script>
