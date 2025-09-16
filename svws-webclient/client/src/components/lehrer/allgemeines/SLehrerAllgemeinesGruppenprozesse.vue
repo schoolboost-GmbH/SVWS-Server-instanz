@@ -62,10 +62,10 @@
 
 <script setup lang="ts">
 
-	import { ref, computed, watch } from "vue";
+	import { ref, computed } from "vue";
 	import type { SLehrerAllgemeinesGruppenprozesseProps } from "./SLehrerAllgemeinesGruppenprozesseProps";
-	import { type StundenplanListeEintrag, type List, BenutzerKompetenz } from "@core";
-	import { DateUtils, ReportingParameter, ReportingReportvorlage } from "@core";
+	import type { StundenplanListeEintrag, List } from "@core";
+	import { DateUtils, ReportingParameter, ReportingReportvorlage, BenutzerKompetenz } from "@core";
 	import { SelectManager } from "@ui";
 
 	type Action = 'print' | 'delete' | '';

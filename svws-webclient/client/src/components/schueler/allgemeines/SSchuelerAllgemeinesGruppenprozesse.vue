@@ -161,10 +161,10 @@
 
 <script setup lang="ts">
 
-	import { ref, computed, watch } from "vue";
+	import { ref, computed } from "vue";
 	import type { SSchuelerAllgemeinesGruppenprozesseProps } from "./SSchuelerAllgemeinesGruppenprozesseProps";
-	import {StundenplanListeEintrag, List, ReportingSortierungDefinition} from "@core";
-	import { DateUtils, ReportingParameter, ReportingReportvorlage, ListUtils, ArrayList, BenutzerKompetenz } from "@core";
+	import type {StundenplanListeEintrag, List } from "@core";
+	import { DateUtils, ReportingParameter, ReportingReportvorlage, ListUtils, ArrayList, BenutzerKompetenz, ReportingSortierungDefinition } from "@core";
 	import { SelectManager } from "@ui";
 
 	type Action = 'druckSchuelerListeKontaktdatenErzieher' | 'druckSchuelerSchulbescheinigung' | 'druckSchuelerStundenplan' | 'delete' | '';

@@ -1,5 +1,5 @@
 import type { ApiFile, List, ReportingParameter, SchuelerListeEintrag, SchuelerStammdaten, SimpleOperationResponse, StundenplanListeEintrag, SchuelerTelefon, SchuelerSchulbesuchsdaten, ErzieherStammdaten, Merkmal, KatalogEntlassgrund, SchulEintrag } from "@core";
-import { BenutzerKompetenz, ArrayList, SchuelerListe, SchuelerStatus, DeveloperNotificationException, ServerMode } from "@core";
+import { BenutzerKompetenz, ArrayList, SchuelerListe, SchuelerStatus, DeveloperNotificationException, ServerMode, UserNotificationException } from "@core";
 
 import { api } from "~/router/Api";
 import { RouteDataAuswahl, type RouteStateAuswahlInterface } from "~/router/RouteDataAuswahl";
@@ -259,10 +259,11 @@ export class RouteDataSchueler extends RouteDataAuswahl<SchuelerListeManager, Ro
 	}
 
 	getPDF = api.call(async (reportingParameter: ReportingParameter): Promise<ApiFile> => {
-		if (!this.manager.liste.auswahlExists())
-			throw new DeveloperNotificationException("Dieser Stundenplan kann nur gedruckt werden, wenn mindestens ein Schüler ausgewählt ist.");
-		reportingParameter.idSchuljahresabschnitt = this.idSchuljahresabschnitt;
-		return await api.server.pdfReport(reportingParameter, api.schema);
+		if (this.manager.liste.auswahlExists() || this.manager.hasDaten()) {
+			reportingParameter.idSchuljahresabschnitt = this.idSchuljahresabschnitt;
+			return await api.server.pdfReport(reportingParameter, api.schema);
+		}
+		throw new UserNotificationException("Dieser Report kann nur gedruckt werden, wenn mindestens ein Schüler ausgewählt ist.");
 	})
 
 	patchMultiple = async (pendingStateManager: PendingStateManager<any>): Promise<void> => {
