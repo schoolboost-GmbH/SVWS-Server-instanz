@@ -132,6 +132,33 @@ class DataKatalogKindergaertenTest {
 				.hasFieldOrPropertyWithValue("sortierung", 1);
 	}
 
+
+	@Test
+	@DisplayName("mapAttribute | plz darf nur zahlen enthalten")
+	void mapAttributeTest_plzDarfNurZahlenEnthalten() {
+		final var kindergarten = new DTOKindergarten(1L);
+
+		final var throwable = catchThrowable(() -> this.data.mapAttribute(kindergarten, "plz", "abc", null));
+
+		assertThat(throwable)
+				.isInstanceOf(ApiOperationException.class)
+				.hasMessage("Die PLZ abc darf ausschließlich aus Zahlen bestehen.")
+				.hasFieldOrPropertyWithValue("status", Response.Status.BAD_REQUEST);
+	}
+
+	@Test
+	@DisplayName("mapAttribute | tel muss dem erlaubten Format entsprechen")
+	void mapAttributeTest_telFehlerhaft() {
+		final var kindergarten = new DTOKindergarten(1L);
+
+		final var throwable = catchThrowable(() -> this.data.mapAttribute(kindergarten, "tel", "abc", null));
+
+		assertThat(throwable)
+				.isInstanceOf(ApiOperationException.class)
+				.hasMessage("Die Telefonnummer abc entspricht nicht dem erlaubten Format.")
+				.hasFieldOrPropertyWithValue("status", Response.Status.BAD_REQUEST);
+	}
+
 	@ParameterizedTest
 	@DisplayName("mapAttribute | erfolgreiches mapping")
 	@MethodSource("provideMappingAttributes")
@@ -165,7 +192,7 @@ class DataKatalogKindergaertenTest {
 	private static Stream<Arguments> provideMappingAttributes() {
 		return Stream.of(
 				arguments("id", 35),
-				arguments("bezeichnung", "Kita Sonnenschein"),
+				arguments("bezeichnung", "Kita Pusteblume"),
 				arguments("plz", "12345"),
 				arguments("ort", "Musterort"),
 				arguments("strassenname", "Musterstraße"),

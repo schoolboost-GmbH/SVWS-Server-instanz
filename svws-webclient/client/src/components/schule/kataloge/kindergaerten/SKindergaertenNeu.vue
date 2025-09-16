@@ -2,12 +2,20 @@
 	<div class="page page-grid-cards">
 		<svws-ui-content-card title="Allgemein">
 			<svws-ui-input-wrapper :grid="2">
-				<svws-ui-text-input placeholder="Bezeichnung" :min-len="1" :max-len="100" v-model="data.bezeichnung" required :disabled
+				<svws-ui-text-input span="full" placeholder="Bezeichnung" :min-len="1" :max-len="100" v-model="data.bezeichnung" required :disabled
 					:valid="fieldIsValid('bezeichnung')" />
-				<svws-ui-input-number placeholder="Sortierung" v-model="data.sortierung" :disabled />
+				<div v-if="data.bezeichnung.length > 100" class="flex my-auto col-span-2">
+					<span class="icon i-ri-alert-line mx-0.5 mr-1 inline-flex" />
+					<p> Diese Bezeichnung verwendet zu viele Zeichen. </p>
+				</div>
 				<svws-ui-text-input placeholder="Bemerkung" span="full" :max-len="50" v-model="data.bemerkung" :disabled :valid="fieldIsValid('bemerkung')" />
+				<div v-if="data.bezeichnung.length > 50" class="flex my-auto col-span-2">
+					<span class="icon i-ri-alert-line mx-0.5 mr-1 inline-flex" />
+					<p> Diese Bemerkung verwendet zu viele Zeichen. </p>
+				</div>
 				<svws-ui-text-input placeholder="Telefon" :max-len="20" :valid="fieldIsValid('tel')" v-model="data.tel" type="tel" :disabled />
 				<svws-ui-text-input placeholder="E-Mail-Adresse" :max-len="40" :valid="fieldIsValid('email')" type="email" v-model="data.email" :disabled />
+				<svws-ui-input-number placeholder="Sortierung" v-model="data.sortierung" :disabled />
 				<svws-ui-checkbox v-model="data.istSichtbar" :disabled>
 					Sichtbar
 				</svws-ui-checkbox>
@@ -31,9 +39,10 @@
 
 <script setup lang="ts">
 
-	import { AdressenUtils, BenutzerKompetenz, JavaString, Kindergarten } from "@core";
-	import {computed, ref, watch} from "vue";
+	import { AdressenUtils, BenutzerKompetenz, Kindergarten } from "@core";
+	import { computed, ref, watch } from "vue";
 	import type { KindergaertenNeuProps } from "~/components/schule/kataloge/kindergaerten/SKindergaertenNeuProps";
+	import { emailIsValid, mandatoryInputIsValid, optionalInputIsValid, phoneNumberIsValid, plzIsValid } from "~/util/validation/Validation";
 
 	const props = defineProps<KindergaertenNeuProps>();
 	const data = ref<Kindergarten>(new Kindergarten());
@@ -45,59 +54,29 @@
 		return (v: string | null) => {
 			switch (field) {
 				case 'bezeichnung':
-					return stringIsValid(data.value.bezeichnung, true, 100);
+					return mandatoryInputIsValid(data.value.bezeichnung, 100);
 				case 'strassenname':
 					return adresseIsValid();
 				case 'ort':
-					return stringIsValid(data.value.ort, false, 30);
+					return optionalInputIsValid(data.value.ort, 30);
 				case 'plz':
 					return plzIsValid(data.value.plz, 10);
 				case 'tel':
 					return phoneNumberIsValid(data.value.tel, 20);
 				case 'email':
-					return emailIsValid(data.value.email);
+					return emailIsValid(data.value.email, 40);
 				case 'bemerkung':
-					return stringIsValid(data.value.bemerkung, false, 50);
+					return optionalInputIsValid(data.value.bemerkung, 50);
 				default:
 					return true;
 			}
 		}
 	}
 
-	function emailIsValid(value: string | null) {
-		if ((value === null) || JavaString.isBlank(value))
-			return true;
-		if (value.length > 40)
-			return false;
-		return /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))[^@]?$/.test(value) ||
-			/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(value);
-	}
-
-	function phoneNumberIsValid(input: string | null, maxLength: number) {
-		if ((input === null) || (JavaString.isBlank(input)))
-			return true;
-		// folgende Formate sind erlaubt: 0151123456, 0151/123456, 0151-123456, +49/176-456456 -> Buchstaben sind nicht erlaubt
-		return /^\+?\d+([-/]?\d+)*$/.test(input) && input.length <= maxLength;
-	}
-
-	function plzIsValid(input: string | null, maxLength : number) {
-		if (input === null || JavaString.isBlank(input))
-			return true;
-		if (input.length > maxLength)
-			return false;
-		return /^\d+$/.test(input)
-	}
-
-	function stringIsValid(input: string | null, mandatory: boolean, maxLength: number) {
-		if (mandatory)
-			return (input !== null) && (!JavaString.isBlank(input)) && (input.length <= maxLength);
-		return (input === null) || (input.length <= maxLength);
-	}
-
 	function adresseIsValid() {
-		return stringIsValid(data.value.strassenname, false, 55) &&
-			stringIsValid(data.value.hausNr, false, 10) &&
-			stringIsValid(data.value.hausNrZusatz, false, 30);
+		return optionalInputIsValid(data.value.strassenname, 55) &&
+			optionalInputIsValid(data.value.hausNr, 10) &&
+			optionalInputIsValid(data.value.hausNrZusatz, 30);
 	}
 
 	const adresse = computed({
@@ -138,7 +117,8 @@
 	watch(() => data.value, async() => {
 		if (isLoading.value)
 			return;
+
 		props.checkpoint.active = true;
-	}, {immediate: false, deep: true});
+	}, { immediate: false, deep: true });
 
 </script>
