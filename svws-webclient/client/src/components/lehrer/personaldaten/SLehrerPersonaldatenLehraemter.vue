@@ -102,31 +102,44 @@
 		</template>
 		<template #footer>
 			<template v-if="hatUpdateKompetenz">
-				<td class="col-span-2">
-					<div class="w-fit flex flex-row items-center">
-						<span class="inline-block icon-sm i-ri-add-line" />
-						<svws-ui-button-select type="transparent" :dropdown-actions="actionsLehraemterHinzufuegen" :default-action="{ text: 'Lehramt hinzufügen', action: () => {}}" no-default />
-					</div>
+				<td class="col-span-4 text-right">
+					<svws-ui-tooltip>
+						<svws-ui-button type="icon" @click="openLehramtHinzufuegen">
+							<span class="icon i-ri-add-line" />
+						</svws-ui-button>
+						<template #content>
+							Lehramt hinzufügen
+						</template>
+					</svws-ui-tooltip>
 				</td>
-				<td class="col-span-2" />
 			</template>
 			<template v-else>
 				<td class="col-span-4" />
 			</template>
 		</template>
 	</ui-table-grid>
+	<svws-ui-modal v-model:show="showLehramtHinzufuegen" size="small" class="hidden">
+		<template #modalTitle> Lehramt hinzufügen </template>
+		<template #modalContent>
+			<ui-select label="Lehrämter" v-model="auswahlLehramtNeu" :manager="lehraemterSelectManager" statistics required />
+		</template>
+		<template #modalActions>
+			<svws-ui-button type="secondary" @click="showLehramtHinzufuegen = false"> Abbrechen </svws-ui-button>
+			<svws-ui-button @click="createLehramt"> Anlegen </svws-ui-button>
+		</template>
+	</svws-ui-modal>
 </template>
 
 <script setup lang="ts">
 
-	import { computed } from "vue";
-	import type { List, JavaMap } from "@core";
+	import { computed, ref, shallowRef } from "vue";
+	import type { List, JavaMap, LehrerLehramtKatalogEintrag, JavaSet } from "@core";
 	import { Arrays, ArrayList, HashSet, HashMap } from "@core";
 	import { LehrerLehramt, LehrerLehrbefaehigung, LehrerFachrichtung } from "@core";
 	import { LehrerLehramtEintrag, LehrerLehrbefaehigungEintrag, LehrerFachrichtungEintrag } from "@core";
 	import { LehrerLehramtAnerkennung, LehrerLehrbefaehigungAnerkennung, LehrerFachrichtungAnerkennung } from "@core";
 	import type { LehrerListeManager } from "@ui";
-	import { GridManager } from "@ui";
+	import { CoreTypeSelectManager, GridManager } from "@ui";
 
 	const props = defineProps<{
 		hatUpdateKompetenz: boolean;
@@ -147,26 +160,41 @@
 		return props.lehrerListeManager().personalDaten();
 	}
 
-	const actionsLehraemterHinzufuegen = computed<Array<{ text: string; action: () => void | Promise<any>; }>>(() => {
-		const result = new Array<{ text: string; action: () => void | Promise<any>; }>();
+	const showLehramtHinzufuegen = ref<boolean>(false);
+	const auswahlLehramtNeu = shallowRef<LehrerLehramtKatalogEintrag | null>(null);
+	const lehraemterSelectManager = computed(() => new CoreTypeSelectManager({
+		clazz: LehrerLehramt.class, schuljahr: props.schuljahr, schulformen: props.lehrerListeManager().schulform(),
+		filters: [ { key: 'vorhandene', apply: filterLehraemter } ],
+		selectionDisplayText: 'text', optionDisplayText: 'kuerzelText',
+	}));
+	const lehraemterVorhanden = computed<JavaSet<number>>(() => {
 		const vorhanden = new HashSet<number>();
 		for (const lehramt of personaldaten().lehraemter)
 			vorhanden.add(lehramt.idKatalogLehramt);
-		for (const lehramt of LehrerLehramt.data().getWerteBySchuljahr(props.schuljahr)) {
-			const eintrag = lehramt.daten(props.schuljahr);
-			if ((eintrag === null) || (vorhanden.contains(eintrag.id)))
-				continue;
-			result.push({
-				text: eintrag.text,
-				action: async () => await props.addLehramt({
-					idLehrer: personaldaten().id,
-					idKatalogLehramt: eintrag.id,
-					idAnerkennungsgrund: null,
-				}),
-			});
-		}
-		return result;
+		return vorhanden;
 	});
+
+	function openLehramtHinzufuegen() {
+		auswahlLehramtNeu.value = null;
+		showLehramtHinzufuegen.value = true;
+	}
+
+	function filterLehraemter(options: List<LehrerLehramtKatalogEintrag>): List<LehrerLehramtKatalogEintrag> {
+		const result = new ArrayList<LehrerLehramtKatalogEintrag>();
+		for (const e of options)
+			if (!lehraemterVorhanden.value.contains(e.id))
+				result.add(e);
+		return result;
+	}
+
+	async function createLehramt() {
+		if ((auswahlLehramtNeu.value === null) || (lehraemterVorhanden.value.contains(auswahlLehramtNeu.value.id)))
+			return;
+		await props.addLehramt({ idLehrer: personaldaten().id, idKatalogLehramt: auswahlLehramtNeu.value.id, idAnerkennungsgrund: null });
+		showLehramtHinzufuegen.value = false;
+	}
+
+
 
 	const actionsLehrbefaehigungenHinzufuegen = computed<JavaMap<number, Array<{ text: string; action: () => void | Promise<any>; }>>>(() => {
 		const result = new HashMap<number, Array<{ text: string; action: () => void | Promise<any>; }>>();
@@ -242,8 +270,8 @@
 		},
 		columns: [
 			{ kuerzel: "Indent", name: "Indent", width: "4rem", hideable: false },
-			{ kuerzel: "Lehramt", name: "Lehramt", width: "28rem", hideable: false },
-			{ kuerzel: "Anerkennungsgrund", name: "Anerkennungsgrund", width: "28rem", hideable: false },
+			{ kuerzel: "Lehramt", name: "Lehramt", width: "minmax(40%,28rem)", hideable: false },
+			{ kuerzel: "Anerkennungsgrund", name: "Anerkennungsgrund", width: "minmax(40%,28rem)", hideable: false },
 			{ kuerzel: "Buttons", name: "Buttons", width: "4rem", hideable: false },
 		],
 	});
