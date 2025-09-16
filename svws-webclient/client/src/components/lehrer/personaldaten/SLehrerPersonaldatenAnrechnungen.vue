@@ -1,45 +1,42 @@
 <template>
-	<ui-table-grid name="Lehrer Leistungen Übersicht" :cell-format="cellFormat" :manager="() => gridManager">
+	<ui-table-grid name="Übersicht zu Anrechnungsstunden, Mehr- und Minderleistungsgründe" :cell-format="cellFormat" :manager="() => gridManager">
 		<template #header v-if="gridManager.daten.size() !== 0">
-			<th>Typ</th>
+			<th class="text-left">Typ</th>
 			<th class="text-left">Grund</th>
-			<th class="col-span-2 text-left">Stunden</th>
+			<th class="">Stunden</th>
+			<th />
 		</template>
 		<template #default="{ row, index }">
-			<td>
-				<span class="capitalize font-bold text-blue-700 text-left">
-					{{ getTypText(row) }}
-				</span>
+			<td class="capitalize font-bold text-ui-brand text-left">
+				{{ getTypText(row) }}
 			</td>
 			<td class="ui-table-grid-input ">
-				<ui-select :key="`${row.id}-select`" :manager="getSelectManagerForRow(row)"
-					:model-value="getGrund(row)"
-					@update:model-value="setGrund(row, $event)"
-					headless :removable="false" />
+				<ui-select :key="`${row.id}-select`" :manager="getSelectManagerForRow(row)" headless :removable="false"
+					:model-value="getGrund(row)" @update:model-value="setGrund(row, $event)" />
 			</td>
 			<td class="ui-table-grid-input" :ref="inputAnzahl(row, index)">
 				{{ row.anzahl }}
 			</td>
 			<td>
-				<div v-if="hatUpdateKompetenz" class="inline-flex gap-1">
-					<svws-ui-button @click="removeDaten(row)" type="trash" />
+				<div v-if="hatUpdateKompetenz" class="inline-flex gap-4">
+					<svws-ui-button v-if="hatUpdateKompetenz" @click="removeDaten(row)" type="trash" />
 				</div>
 			</td>
 		</template>
 		<template #footer>
 			<td class="col-span-4">
 				<div class="w-fit flex flex-row items-center">
-					<ui-select label="+ Mehrleistung hinzufügen" @update:model-value="addGrund($event)" :manager="selectManagerAddMehrleistung" style="width: 50.99rem" v-model="mehrleistung" />
+					<ui-select label="+ Mehrleistung hinzufügen" @update:model-value="addGrund($event)" :manager="selectManagerAddMehrleistung" style="width: 50.99rem" v-model="mehrleistung" :removable="false" />
 				</div>
 			</td>
 			<td class="col-span-4">
 				<div class="w-fit flex flex-row items-center">
-					<ui-select label="+ Minderleistung hinzufügen" @update:model-value="addGrund($event)" :manager="selectManagerAddMinderleistung" style="width: 50.99rem" v-model="minderleistung" />
+					<ui-select label="+ Minderleistung hinzufügen" @update:model-value="addGrund($event)" :manager="selectManagerAddMinderleistung" style="width: 50.99rem" v-model="minderleistung" :removable="false" />
 				</div>
 			</td>
 			<td class="col-span-4">
 				<div class="w-fit flex flex-row items-center">
-					<ui-select label="+ Anrechnung hinzufügen" @update:model-value="addGrund($event)" :manager="selectManagerAddAnrechnung" style="width: 50.99rem" />
+					<ui-select label="+ Anrechnung hinzufügen" @update:model-value="addGrund($event)" :manager="selectManagerAddAnrechnung" style="width: 50.99rem" :removable="false" />
 				</div>
 			</td>
 		</template>
@@ -49,7 +46,7 @@
 <script setup lang="ts">
 
 	import { GridManager, CoreTypeSelectManager } from "@ui";
-	import type { ComponentPublicInstance, ShallowRef } from "vue";
+	import type { ComponentPublicInstance } from "vue";
 	import { computed, ref, watch, watchEffect } from "vue";
 	import type { LehrerPersonalabschnittsdaten, LehrerPersonalabschnittsdatenAnrechnungsstunden, Schulform, List} from "@core";
 	import { LehrerAnrechnungsgrundKatalogEintrag, LehrerMehrleistungsartKatalogEintrag, LehrerMinderleistungsartKatalogEintrag,LehrerMehrleistungsarten, LehrerMinderleistungsarten, LehrerAnrechnungsgrund, ArrayList, DeveloperNotificationException } from "@core";

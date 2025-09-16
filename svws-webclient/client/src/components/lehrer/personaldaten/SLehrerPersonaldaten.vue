@@ -45,7 +45,7 @@
 		</svws-ui-content-card>
 		<svws-ui-content-card title="Mehr- und Minderleistung, Anrechnungsstunden">
 			<svws-ui-input-wrapper>
-				<s-lehrer-personaldaten-leistungen :hat-update-kompetenz="!readonly" :personalabschnittsdaten :schuljahr :schulform :add-mehrleistung :patch-mehrleistung :remove-mehrleistung
+				<s-lehrer-personaldaten-anrechnungen :hat-update-kompetenz="!readonly" :personalabschnittsdaten :schuljahr :schulform :add-mehrleistung :patch-mehrleistung :remove-mehrleistung
 					:add-minderleistung :patch-minderleistung :remove-minderleistung :add-anrechnung :patch-anrechnung :remove-anrechnung />
 			</svws-ui-input-wrapper>
 		</svws-ui-content-card>
