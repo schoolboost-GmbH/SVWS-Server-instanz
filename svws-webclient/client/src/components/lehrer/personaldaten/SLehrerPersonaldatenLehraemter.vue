@@ -42,6 +42,14 @@
 				<td class="text-left">
 					<div v-if="hatUpdateKompetenz" class="inline-flex gap-1">
 						<svws-ui-button @click="removeLehraemter(Arrays.asList(row))" type="trash" />
+						<svws-ui-tooltip>
+							<svws-ui-button type="icon" size="small">
+								<span class="icon-sm i-ri-add-line" @click="() => openLehrbefFachrHinzufuegen(row)" />
+							</svws-ui-button>
+							<template #content>
+								Lehrbefähigung oder Fachrichtung hinzufügen
+							</template>
+						</svws-ui-tooltip>
 					</div>
 				</td>
 			</template>
@@ -79,26 +87,6 @@
 					</div>
 				</td>
 			</template>
-			<template v-else-if="(row.type === 'lehrbefaehigung') && hatUpdateKompetenz">
-				<td />
-				<td>
-					<div class="w-fit flex flex-row items-center">
-						<span class="inline-block icon-sm i-ri-add-line" />
-						<svws-ui-button-select type="transparent" :dropdown-actions="actionsLehrbefaehigungenHinzufuegen.get(row.id)!" :default-action="{ text: 'Lehrbefähigung hinzufügen', action: () => {}}" no-default />
-					</div>
-				</td>
-				<td class="col-span-2" />
-			</template>
-			<template v-else-if="(row.type === 'fachrichtung') && hatUpdateKompetenz">
-				<td />
-				<td class="">
-					<div class="w-fit flex flex-row items-center">
-						<span class="inline-block icon-sm i-ri-add-line" />
-						<svws-ui-button-select type="transparent" :dropdown-actions="actionsFachrichtungenHinzufuegen.get(row.id)!" :default-action="{ text: 'Fachrichtung hinzufügen', action: () => {}}" no-default />
-					</div>
-				</td>
-				<td class="col-span-2" />
-			</template>
 		</template>
 		<template #footer>
 			<template v-if="hatUpdateKompetenz">
@@ -128,13 +116,24 @@
 			<svws-ui-button @click="createLehramt"> Anlegen </svws-ui-button>
 		</template>
 	</svws-ui-modal>
+	<svws-ui-modal v-model:show="showLehrbefFachrHinzufuegen" size="small" class="hidden">
+		<template #modalTitle> Lehrbefähigung/Fachrichtung hinzufügen </template>
+		<template #modalContent>
+			<ui-select-multi label="Lehrbefähigungen" v-model="auswahlLehrbefaehigungenNeu" :manager="lehrbefaehigungenSelectManager" statistics required />
+			<ui-select-multi label="Fachrichtungen" v-model="auswahlFachrichtungenNeu" :manager="fachrichtungenSelectManager" statistics required />
+		</template>
+		<template #modalActions>
+			<svws-ui-button type="secondary" @click="showLehrbefFachrHinzufuegen = false"> Abbrechen </svws-ui-button>
+			<svws-ui-button @click="createLehrbefFachr"> Anlegen </svws-ui-button>
+		</template>
+	</svws-ui-modal>
 </template>
 
 <script setup lang="ts">
 
 	import { computed, ref, shallowRef } from "vue";
-	import type { List, JavaMap, LehrerLehramtKatalogEintrag, JavaSet } from "@core";
-	import { Arrays, ArrayList, HashSet, HashMap } from "@core";
+	import type { List, LehrerLehramtKatalogEintrag, JavaSet, LehrerLehrbefaehigungKatalogEintrag, LehrerFachrichtungKatalogEintrag } from "@core";
+	import { Arrays, ArrayList, HashSet } from "@core";
 	import { LehrerLehramt, LehrerLehrbefaehigung, LehrerFachrichtung } from "@core";
 	import { LehrerLehramtEintrag, LehrerLehrbefaehigungEintrag, LehrerFachrichtungEintrag } from "@core";
 	import { LehrerLehramtAnerkennung, LehrerLehrbefaehigungAnerkennung, LehrerFachrichtungAnerkennung } from "@core";
@@ -194,54 +193,82 @@
 		showLehramtHinzufuegen.value = false;
 	}
 
+	const showLehrbefFachrHinzufuegen = ref<boolean>(false);
 
+	const auswahlLehrbefFachrNeuLehramt = shallowRef<LehrerLehramtEintrag | null>(null);
+	const auswahlLehrbefaehigungenNeu = shallowRef<Array<LehrerLehrbefaehigungKatalogEintrag>>([]);
+	const auswahlFachrichtungenNeu = shallowRef<Array<LehrerFachrichtungKatalogEintrag>>([]);
 
-	const actionsLehrbefaehigungenHinzufuegen = computed<JavaMap<number, Array<{ text: string; action: () => void | Promise<any>; }>>>(() => {
-		const result = new HashMap<number, Array<{ text: string; action: () => void | Promise<any>; }>>();
-		for (const lehramt of personaldaten().lehraemter) {
-			const list = new Array<{ text: string; action: () => void | Promise<any>; }>();
-			for (const lehrbefaehigung of LehrerLehrbefaehigung.data().getWerteBySchuljahr(props.schuljahr)) {
-				const eintrag = lehrbefaehigung.daten(props.schuljahr);
-				if (eintrag === null)
-					continue;
-				list.push({
-					text: eintrag.text,
-					action: async () => await props.addLehrbefaehigung({
-						idLehramt: lehramt.id,
-						idLehrbefaehigung: eintrag.id,
-						idAnerkennungsgrund: null,
-					}),
-				});
-			}
-			result.put(lehramt.id, list);
-		}
-		return result;
+	const lehrbefaehigungenSelectManager = computed(() => new CoreTypeSelectManager({
+		clazz: LehrerLehrbefaehigung.class, schuljahr: props.schuljahr, schulformen: props.lehrerListeManager().schulform(),
+		filters: [ { key: 'vorhandene', apply: filterLehrbefaehigungen } ],
+		selectionDisplayText: 'text', optionDisplayText: 'kuerzelText',
+	}));
+
+	const fachrichtungenSelectManager = computed(() => new CoreTypeSelectManager({
+		clazz: LehrerFachrichtung.class, schuljahr: props.schuljahr, schulformen: props.lehrerListeManager().schulform(),
+		filters: [ { key: 'vorhandene', apply: filterFachrichtungen } ],
+		selectionDisplayText: 'text', optionDisplayText: 'kuerzelText',
+	}));
+
+	function openLehrbefFachrHinzufuegen(row: LehrerLehramtEintrag) {
+		auswahlLehrbefaehigungenNeu.value = [];
+		auswahlFachrichtungenNeu.value = [];
+		auswahlLehrbefFachrNeuLehramt.value = row;
+		showLehrbefFachrHinzufuegen.value = true;
+	}
+
+	const lehrbefaehigungenVorhanden = computed<JavaSet<number>>(() => {
+		const vorhanden = new HashSet<number>();
+		const lehramt = auswahlLehrbefFachrNeuLehramt.value;
+		if (lehramt === null)
+			return vorhanden;
+		for (const lehrbef of lehramt.lehrbefaehigungen)
+			vorhanden.add(lehrbef.idLehrbefaehigung);
+		return vorhanden;
 	});
 
-	const actionsFachrichtungenHinzufuegen = computed<JavaMap<number, Array<{ text: string; action: () => void | Promise<any>; }>>>(() => {
-		const result = new HashMap<number, Array<{ text: string; action: () => void | Promise<any>; }>>();
-		for (const lehramt of personaldaten().lehraemter) {
-			const list = new Array<{ text: string; action: () => void | Promise<any>; }>();
-			for (const fachrichtung of LehrerFachrichtung.data().getWerteBySchuljahr(props.schuljahr)) {
-				const eintrag = fachrichtung.daten(props.schuljahr);
-				if (eintrag === null)
-					continue;
-				list.push({
-					text: eintrag.text,
-					action: async () => await props.addFachrichtung({
-						idLehramt: lehramt.id,
-						idFachrichtung: eintrag.id,
-						idAnerkennungsgrund: null,
-					}),
-				});
-			}
-			result.put(lehramt.id, list);
-		}
+	function filterLehrbefaehigungen(options: List<LehrerLehrbefaehigungKatalogEintrag>): List<LehrerLehrbefaehigungKatalogEintrag> {
+		const result = new ArrayList<LehrerLehrbefaehigungKatalogEintrag>();
+		for (const e of options)
+			if (!lehrbefaehigungenVorhanden.value.contains(e.id))
+				result.add(e);
 		return result;
+	}
+
+	const fachrichtungenVorhanden = computed<JavaSet<number>>(() => {
+		const vorhanden = new HashSet<number>();
+		const lehramt = auswahlLehrbefFachrNeuLehramt.value;
+		if (lehramt === null)
+			return vorhanden;
+		for (const fachr of lehramt.fachrichtungen)
+			vorhanden.add(fachr.idFachrichtung);
+		return vorhanden;
 	});
 
-	type GridDatenLehraemter = LehrerLehramtEintrag | LehrerLehrbefaehigungEintrag | LehrerFachrichtungEintrag
-		| { type: 'lehrbefaehigung' | 'fachrichtung', id: number };
+	function filterFachrichtungen(options: List<LehrerFachrichtungKatalogEintrag>): List<LehrerFachrichtungKatalogEintrag> {
+		const result = new ArrayList<LehrerFachrichtungKatalogEintrag>();
+		for (const e of options)
+			if (!fachrichtungenVorhanden.value.contains(e.id))
+				result.add(e);
+		return result;
+	}
+
+	async function createLehrbefFachr() {
+		const lehramt = auswahlLehrbefFachrNeuLehramt.value;
+		if (lehramt !== null) {
+			for (const eintrag of auswahlLehrbefaehigungenNeu.value)
+				if (!lehrbefaehigungenVorhanden.value.contains(eintrag.id))
+					await props.addLehrbefaehigung({ idLehramt: lehramt.id, idLehrbefaehigung: eintrag.id, idAnerkennungsgrund: null });
+			for (const eintrag of auswahlFachrichtungenNeu.value)
+				if (!fachrichtungenVorhanden.value.contains(eintrag.id))
+					await props.addFachrichtung({ idLehramt: lehramt.id, idFachrichtung: eintrag.id, idAnerkennungsgrund: null });
+		}
+		showLehrbefFachrHinzufuegen.value = false;
+	}
+
+
+	type GridDatenLehraemter = LehrerLehramtEintrag | LehrerLehrbefaehigungEintrag | LehrerFachrichtungEintrag;
 
 	const gridManager = new GridManager<string, GridDatenLehraemter, List<GridDatenLehraemter>>({
 		daten: computed<List<GridDatenLehraemter>>(() => {
@@ -250,10 +277,8 @@
 				result.add(lehramt);
 				for (const l of lehramt.lehrbefaehigungen)
 					result.add(l);
-				result.add({ type: 'lehrbefaehigung', id: lehramt.id });
 				for (const f of lehramt.fachrichtungen)
 					result.add(f);
-				result.add({ type: 'fachrichtung', id: lehramt.id });
 			}
 			return result;
 		}),
@@ -262,11 +287,8 @@
 				return "Lehramt_" + row.id;
 			else if (row instanceof LehrerLehrbefaehigungEintrag)
 				return "Lehrbefaehigung_" + row.id;
-			else if (row instanceof LehrerFachrichtungEintrag)
+			else
 				return "Fachrichtung_" + row.id;
-			else if (row.type === 'lehrbefaehigung')
-				return "Add_Lehrbefaehigung_" + row.id;
-			return "Add_Fachrichtung_" + row.id;
 		},
 		columns: [
 			{ kuerzel: "Indent", name: "Indent", width: "4rem", hideable: false },
