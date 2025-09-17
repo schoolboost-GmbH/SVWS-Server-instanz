@@ -32,21 +32,19 @@ public class ValidatorDocGenerator {
 	 */
 	public static void main(final String[] args) {
 		File[] validatorClasses = null;
-		String docOutputDir = null;
-        String projectDir = null;
 		final CmdLineParser cmdLine = new CmdLineParser(args);
 		try {
 		    // Resourcedatei der Validatoren nutzen als Liste der Validatorklassen
 			cmdLine.addOption(new CmdLineOption("o", "output", true, "Der Ziel-Ordner für die erzeugten Dokumentationsdateien"));
 			cmdLine.addOption(new CmdLineOption("p", "projectdir", true, "Das Projektverzeichnis, in dem die JAVA-Klassen liegen"));
-			docOutputDir = cmdLine.getValue("o", "build/docs/validate");
-			projectDir = cmdLine.getValue("p", "src/main/java/");
+			cmdLine.getValue("o", "build/docs/validate"); // String docOutputDir =
+			final String projectDir = cmdLine.getValue("p", "src/main/java/");
 			final JsonValidatorFehlerartKontextData dataValidatorenFehlerartKontext = JsonReader.fromResourceGetValidatorData("de/svws_nrw/asd/validate/ValidatorenFehlerartKontext.json");
 			// Fülle das Array validatorClasses mit den File-Objekten.
 			final Set<String> classStrings = dataValidatorenFehlerartKontext.getData().keySet();
 			validatorClasses = new File[classStrings.size()];
 			int i = 0;
-			for (String classname : dataValidatorenFehlerartKontext.getData().keySet()) {
+			for (final String classname : dataValidatorenFehlerartKontext.getData().keySet()) {
 				final Path p = Paths.get((projectDir + classname.replace('.', '/') + ".java").trim());
 				validatorClasses[i++] = p.toFile();
 			}
