@@ -1,9 +1,17 @@
 <template>
 	<div class="page page-grid-cards">
 		<svws-ui-content-card title="Beschäftigungsart anlegen">
-			<svws-ui-input-wrapper :grid="2">
+			<svws-ui-input-wrapper>
 				<svws-ui-text-input placeholder="Bezeichnung" :min-len="1" :max-len="100" v-model="data.bezeichnung" required :disabled
 					:valid="fieldIsValid('bezeichnung')" />
+				<div v-if="!isUniqueInList(data.bezeichnung, props.manager().liste.list(), 'bezeichnung')" class="flex my-auto">
+					<span class="icon i-ri-alert-line mx-0.5 mr-1 inline-flex" />
+					<p> Diese Bezeichnung wird bereits verwendet. </p>
+				</div>
+				<div v-if="bezeichnungIsTooLong" class="flex my-auto">
+					<span class="icon i-ri-alert-line mx-0.5 mr-1 inline-flex" />
+					<p> Diese Bezeichnung verwendet zu viele Zeichen. </p>
+				</div>
 				<svws-ui-input-number placeholder="Sortierung" v-model="data.sortierung" :disabled="!bezeichnungIsValid || !hatKompetenzAdd" :min="0" :max="32000" />
 				<svws-ui-spacing />
 				<svws-ui-checkbox v-model="data.istSichtbar" :disabled="!bezeichnungIsValid || !hatKompetenzAdd">
@@ -24,12 +32,20 @@
 	import type { BeschaeftigungsartenNeuProps } from "~/components/schule/kataloge/beschaeftigungsarten/SBeschaeftigungsartenNeuProps";
 	import { BenutzerKompetenz, Beschaeftigungsart, JavaString } from "@core";
 	import { computed, ref, watch } from "vue";
+	import { isUniqueInList, mandatoryInputIsValid } from "~/util/validation/Validation";
 
 	const props = defineProps<BeschaeftigungsartenNeuProps>();
 	const data = ref<Beschaeftigungsart>(new Beschaeftigungsart());
 	const isLoading = ref<boolean>(false);
 	const hatKompetenzAdd = computed<boolean>(() => props.benutzerKompetenzen.has(BenutzerKompetenz.KATALOG_EINTRAEGE_AENDERN));
 	const disabled = computed(() => !hatKompetenzAdd.value);
+
+	const bezeichnungIsTooLong = computed(() => {
+		if (data.value.bezeichnung === null)
+			return false;
+
+		return data.value.bezeichnung.length > 100;
+	});
 
 	function fieldIsValid(field: keyof Beschaeftigungsart | null) : (v: string | null) => boolean {
 		return (v: string | null) => {
@@ -42,16 +58,11 @@
 		}
 	}
 
-	function bezeichnungIsValid(v: string | null) {
-		if ((v === null) || JavaString.isBlank(v) || (v.length > 100))
+	function bezeichnungIsValid(value: string | null) {
+		if (!mandatoryInputIsValid(value, 100))
 			return false;
 
-		for (const beschaeftigungsart of props.manager().liste.list()) {
-			if (JavaString.equalsIgnoreCase(v, beschaeftigungsart.bezeichnung))
-				return false;
-		}
-
-		return true;
+		return isUniqueInList(value, props.manager().liste.list(), 'bezeichnung');
 	}
 
 	const formIsValid = computed(() => {
@@ -82,7 +93,8 @@
 	watch(() => data.value, async() => {
 		if (isLoading.value)
 			return;
+
 		props.checkpoint.active = true;
-	}, {immediate: false, deep: true});
+	}, { immediate: false, deep: true });
 
 </script>

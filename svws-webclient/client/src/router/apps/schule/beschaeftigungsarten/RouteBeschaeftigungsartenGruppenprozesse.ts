@@ -29,7 +29,6 @@ export class RouteBeschaeftigungsartenGruppenprozesse extends RouteNode<any, Rou
 	public getProps(to: RouteLocationNormalized): BeschaeftigungsartenGruppenprozesseProps {
 		return {
 			serverMode: api.mode,
-			schulform: api.schulform,
 			benutzerKompetenzen: api.benutzerKompetenzen,
 			deleteBeschaeftigungsarten: routeBeschaeftigungsarten.data.delete,
 			manager: () => routeBeschaeftigungsarten.data.manager,
