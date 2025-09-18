@@ -1,4 +1,4 @@
-import type { ReligionListeManager } from "@ui";
+import type { ReligionenListeManager } from "@ui";
 import type { RouteAuswahlProps } from "~/router/RouteAuswahlNode";
 
-export type KatalogReligionenAppProps = RouteAuswahlProps<ReligionListeManager>;
+export type ReligionenAppProps = RouteAuswahlProps<ReligionenListeManager>;

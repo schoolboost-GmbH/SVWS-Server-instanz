@@ -42,7 +42,7 @@
 	import { AdressenUtils, BenutzerKompetenz, Kindergarten } from "@core";
 	import { computed, ref, watch } from "vue";
 	import type { KindergaertenNeuProps } from "~/components/schule/allgemein/kindergaerten/SKindergaertenNeuProps";
-	import { emailIsValid, mandatoryInputIsValid, optionalInputIsValid, phoneNumberIsValid, plzIsValid } from "~/util/validation/Validation";
+	import { emailIsValid, mandatoryInputIsValid, optionalInputIsValid, phoneNumberIsValid } from "~/util/validation/Validation";
 
 	const props = defineProps<KindergaertenNeuProps>();
 	const data = ref<Kindergarten>(new Kindergarten());
@@ -60,7 +60,7 @@
 				case 'ort':
 					return optionalInputIsValid(data.value.ort, 30);
 				case 'plz':
-					return plzIsValid(data.value.plz, 10);
+					return optionalInputIsValid(data.value.plz, 10);
 				case 'tel':
 					return phoneNumberIsValid(data.value.tel, 20);
 				case 'email':

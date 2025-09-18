@@ -1,8 +1,8 @@
 import type { BenutzerKompetenz, ReligionEintrag } from "@core";
-import type { ReligionListeManager } from "@ui";
+import type { ReligionenListeManager } from "@ui";
 
-export interface ReligionDatenProps {
-	religionListeManager: () => ReligionListeManager;
+export interface ReligionenDatenProps {
+	manager: () => ReligionenListeManager;
 	patch: (data : Partial<ReligionEintrag>) => Promise<void>;
 	benutzerKompetenzen: Set<BenutzerKompetenz>,
 }

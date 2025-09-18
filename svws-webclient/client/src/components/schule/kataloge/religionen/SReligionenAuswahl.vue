@@ -31,10 +31,10 @@
 
 	import { computed } from "vue";
 	import {BenutzerKompetenz, type ReligionEintrag, ServerMode} from "@core";
-	import type { KatalogReligionAuswahlProps } from "~/components/schule/kataloge/religionen/SReligionenAuswahlPops";
+	import type { ReligionenAuswahlProps } from "~/components/schule/kataloge/religionen/SReligionenAuswahlPops";
 	import { useRegionSwitch, ViewType } from "@ui";
 
-	const props = defineProps<KatalogReligionAuswahlProps>();
+	const props = defineProps<ReligionenAuswahlProps>();
 	const { focusHelpVisible, focusSwitchingEnabled } = useRegionSwitch();
 
 	const hatKompetenzAendern = computed<boolean>(() => props.benutzerKompetenzen.has(BenutzerKompetenz.KATALOG_EINTRAEGE_AENDERN));

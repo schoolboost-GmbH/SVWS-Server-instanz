@@ -86,7 +86,7 @@ public final class DataKatalogKindergaerten extends DataManagerRevised<Long, DTO
 			}
 			case "bezeichnung" -> dto.Bezeichnung =
 					JSONMapper.convertToString(value, false, false, Schema.tab_K_Kindergarten.col_Bezeichnung.datenlaenge(), name);
-			case "plz" -> validatePlz(dto, name, value);
+			case "plz" -> dto.PLZ = JSONMapper.convertToString(value, true, true, Schema.tab_K_Kindergarten.col_PLZ.datenlaenge(), name);
 			case "ort" -> dto.Ort = JSONMapper.convertToString(value, true, true, Schema.tab_K_Kindergarten.col_Ort.datenlaenge(), name);
 			case "strassenname" ->
 					dto.Strassenname = JSONMapper.convertToString(value, true, true, Schema.tab_K_Kindergarten.col_Strassenname.datenlaenge(), name);
@@ -112,17 +112,6 @@ public final class DataKatalogKindergaerten extends DataManagerRevised<Long, DTO
 			throw new ApiOperationException(Response.Status.BAD_REQUEST, "Die Telefonnummer %s entspricht nicht dem erlaubten Format.".formatted(tel));
 
 		dto.Tel = tel;
-	}
-
-	private static void validatePlz(final DTOKindergarten dto, final String name, final Object value) throws ApiOperationException {
-		final String plz = JSONMapper.convertToString(value, true, true, Schema.tab_K_Kindergarten.col_PLZ.datenlaenge(), name);
-		if (Objects.equals(plz, dto.PLZ) || plz.isBlank())
-			return;
-
-		if (!plz.matches("\\d+"))
-			throw new ApiOperationException(Response.Status.BAD_REQUEST, "Die PLZ %s darf ausschließlich aus Zahlen bestehen.".formatted(plz));
-
-		dto.PLZ = plz;
 	}
 
 }

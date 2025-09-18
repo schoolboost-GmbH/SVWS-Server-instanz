@@ -131,7 +131,7 @@ export { StundenplanUnterrichtListeManager } from "./ui/managers/stundenplan/Stu
 export { KatalogSchuleListeManager } from "./ui/managers/schule/KatalogSchuleListeManager";
 export { SchuelerListeManager } from "./ui/managers/schueler/SchuelerListeManager";
 export { SchuelerKAoAManager } from "./ui/managers/schueler/SchuelerKAoAManager";
-export { ReligionListeManager } from "./ui/managers/religion/ReligionListeManager";
+export { ReligionenListeManager } from "./ui/managers/kataloge/religionen/ReligionenListeManager";
 export { RaumListeManager } from "./ui/managers/raum/RaumListeManager";
 export { LernplattformListeManager } from "./ui/managers/lernplattform/LernplattformListeManager";
 export { LehrerListeManager } from "./ui/managers/lehrer/LehrerListeManager";

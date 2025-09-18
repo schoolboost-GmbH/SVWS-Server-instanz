@@ -1,9 +1,9 @@
 <template>
 	<div class="page page-grid-cards">
 		<svws-ui-content-card title="Allgemein">
-			<svws-ui-input-wrapper :grid="1">
-				<svws-ui-select label="ASD-Bezeichnung" span="full" :items="props.manager().getAvailableFoerderschwerpunkte()" v-model="selectedFoerderschwerpunkt"
-					:valid="fieldIsValid('kuerzelStatistik')" :item-text="v => v.daten(props.manager().getSchuljahr())?.text?? ''" statistics />
+			<svws-ui-input-wrapper>
+				<svws-ui-select label="ASD-Statistik-Förderschwerpunkt" span="full" :items="props.manager().getAvailableFoerderschwerpunkte()" v-model="selectedFoerderschwerpunkt"
+					:valid="fieldIsValid('kuerzelStatistik')" :item-text="v => v.daten(props.manager().getSchuljahr())?.text?? ''" statistics :disabled />
 				<svws-ui-input-wrapper :grid="2">
 					<svws-ui-text-input placeholder="Kürzel" :min-len="1" :max-len="50" v-model="data.kuerzel" :disabled :valid="fieldIsValid('kuerzel')" />
 					<svws-ui-text-input placeholder="Statistik-Kürzel" readonly :model-value="data.kuerzelStatistik" statistics />

@@ -1,34 +1,34 @@
 import type { List, ReligionEintrag, SimpleOperationResponse } from "@core";
 import { BenutzerKompetenz, ArrayList } from "@core";
-import { ReligionListeManager } from "@ui";
+import { ReligionenListeManager } from "@ui";
 import { api } from "~/router/Api";
-import { routeKatalogReligionDaten } from "./RouteKatalogReligionDaten";
+import { routeReligionenDaten } from "./RouteReligionenDaten";
 import { RouteDataAuswahl, type RouteStateAuswahlInterface } from "~/router/RouteDataAuswahl";
 import type { RouteParamsRawGeneric } from "vue-router";
-import { routeKatalogReligionGruppenprozesse } from "~/router/apps/schule/religionen/RouteKatalogReligionGruppenprozesse";
-import { routeKatalogReligionNeu } from "~/router/apps/schule/religionen/RouteKatalogReligionNeu";
+import { routeReligionenGruppenprozesse } from "~/router/apps/schule/religionen/RouteReligionenGruppenprozesse";
+import { routeReligionenNeu } from "~/router/apps/schule/religionen/RouteReligionenNeu";
 
-type RouteStateKatalogeReligionen = RouteStateAuswahlInterface<ReligionListeManager>;
+type RouteStateReligionen = RouteStateAuswahlInterface<ReligionenListeManager>;
 
-const defaultState: RouteStateKatalogeReligionen = {
+const defaultState: RouteStateReligionen = {
 	idSchuljahresabschnitt: -1,
 	manager: undefined,
-	view: routeKatalogReligionDaten,
+	view: routeReligionenDaten,
 };
 
-export class RouteDataKatalogReligionen extends RouteDataAuswahl<ReligionListeManager, RouteStateKatalogeReligionen> {
+export class RouteDataReligionen extends RouteDataAuswahl<ReligionenListeManager, RouteStateReligionen> {
 
 	public constructor() {
-		super(defaultState, { gruppenprozesse: routeKatalogReligionGruppenprozesse, hinzufuegen: routeKatalogReligionNeu });
+		super(defaultState, { gruppenprozesse: routeReligionenGruppenprozesse, hinzufuegen: routeReligionenNeu });
 	}
 
 	public addID(param: RouteParamsRawGeneric, id: number): void {
 		param.id = id;
 	}
 
-	protected async createManager(idSchuljahresabschnitt: number): Promise<Partial<RouteStateKatalogeReligionen>> {
-		const listeReligionen = await api.server.getReligionen(api.schema);
-		const manager = new ReligionListeManager(idSchuljahresabschnitt, api.schuleStammdaten.idSchuljahresabschnitt, api.schuleStammdaten.abschnitte, api.schulform, listeReligionen);
+	protected async createManager(idSchuljahresabschnitt: number): Promise<Partial<RouteStateReligionen>> {
+		const religionen = await api.server.getReligionen(api.schema);
+		const manager = new ReligionenListeManager(idSchuljahresabschnitt, api.schuleStammdaten.idSchuljahresabschnitt, api.schuleStammdaten.abschnitte, api.schulform, religionen);
 		if (this._state.value.manager === undefined) {
 			manager.setFilterAuswahlPermitted(true);
 			manager.setFilterNurSichtbar(false);

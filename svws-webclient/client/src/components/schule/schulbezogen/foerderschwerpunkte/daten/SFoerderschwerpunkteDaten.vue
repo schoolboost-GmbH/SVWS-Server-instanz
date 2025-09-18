@@ -2,7 +2,7 @@
 	<div class="page page-grid-cards">
 		<svws-ui-content-card title="Allgemein">
 			<svws-ui-input-wrapper :grid="2">
-				<svws-ui-text-input class="contentFocusField" span="full" placeholder="ASD-Bezeichnung" :model-value="manager().daten().text" readonly statistics />
+				<svws-ui-text-input class="contentFocusField" span="full" placeholder="ASD-Statistik-Förderschwerpunkt" :model-value="manager().daten().text" readonly statistics />
 				<svws-ui-text-input placeholder="Kürzel" :model-value="manager().daten().kuerzel" :readonly
 					@change="kuerzel => patch({ kuerzel: kuerzel ?? '' })" :max-len="50" />
 				<svws-ui-text-input placeholder="Statistik-Kürzel" readonly :model-value="manager().daten().kuerzelStatistik" statistics />

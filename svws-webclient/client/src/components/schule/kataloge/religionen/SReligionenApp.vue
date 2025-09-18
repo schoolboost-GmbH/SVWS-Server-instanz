@@ -36,9 +36,9 @@
 
 	import { computed } from "vue";
 	import { useRegionSwitch, ViewType } from "@ui";
-	import type { KatalogReligionenAppProps } from "./SReligionenAppProps";
+	import type { ReligionenAppProps } from "./SReligionenAppProps";
 
-	const props = defineProps<KatalogReligionenAppProps>();
+	const props = defineProps<ReligionenAppProps>();
 	const { focusHelpVisible, focusSwitchingEnabled } = useRegionSwitch();
 
 	const religionenSubline = computed(() => {
