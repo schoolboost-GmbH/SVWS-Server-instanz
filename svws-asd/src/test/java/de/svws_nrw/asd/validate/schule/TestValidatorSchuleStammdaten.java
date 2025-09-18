@@ -98,7 +98,7 @@ class TestValidatorSchuleStammdaten {
 
 		// Erzeuge den Kontext für die Validierung
 		final ValidatorKontext kontext = new ValidatorKontext(testdaten_001, true);
-		final ValidatorSchuleStammdatenSchulform validator = new ValidatorSchuleStammdatenSchulform(kontext);
+		final ValidatorSchuleStammdaten validator = new ValidatorSchuleStammdaten(kontext);
 		assertEquals(true, validator.run());
 	}
 

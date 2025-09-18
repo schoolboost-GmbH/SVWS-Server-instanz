@@ -244,8 +244,16 @@
 	import { Fachgruppe } from "../../../../../core/src/asd/types/fach/Fachgruppe";
 	import { LehrerRechtsverhaeltnis } from "../../../../../core/src/asd/types/lehrer/LehrerRechtsverhaeltnis";
 	import { Schulform } from "../../../../../core/src/asd/types/schule/Schulform";
-	import type { Validator, LehrerRechtsverhaeltnisKatalogEintrag} from "../../../../../core/src";
-	import { LehrerPersonalabschnittsdaten, LehrerStammdaten, SchuleStammdaten, Schuljahresabschnitt, ValidatorKontext, ValidatorLehrerPersonalabschnittsdatenPflichtstundensoll, ValidatorLehrerStammdatenNachnameVorhanden, ValidatorLehrerStammdatenVorname } from "../../../../../core/src";
+	import type { Validator } from "../../../../../core/src/asd/validate/Validator";
+	import type { LehrerRechtsverhaeltnisKatalogEintrag } from "../../../../../core/src/asd/data/lehrer/LehrerRechtsverhaeltnisKatalogEintrag";
+	import { LehrerPersonalabschnittsdaten } from "../../../../../core/src/asd/data/lehrer/LehrerPersonalabschnittsdaten";
+	import { LehrerStammdaten } from "../../../../../core/src/asd/data/lehrer/LehrerStammdaten";
+	import { SchuleStammdaten } from "../../../../../core/src/asd/data/schule/SchuleStammdaten";
+	import { Schuljahresabschnitt } from "../../../../../core/src/asd/data/schule/Schuljahresabschnitt";
+	import { ValidatorKontext } from "../../../../../core/src/asd/validate/ValidatorKontext";
+	import { ValidatorLehrerPersonalabschnittsdatenPflichtstundensoll } from "../../../../../core/src/asd/validate/lehrer/ValidatorLehrerPersonalabschnittsdatenPflichtstundensoll";
+	import { ValidatorLehrerStammdatenNachname } from "../../../../../core/src/asd/validate/lehrer/ValidatorLehrerStammdatenNachname";
+	import { ValidatorLehrerStammdatenVorname } from "../../../../../core/src/asd/validate/lehrer/ValidatorLehrerStammdatenVorname";
 	import { CoreTypeSelectManager } from "./selectManager/CoreTypeSelectManager";
 	import { SelectManager } from "./selectManager/SelectManager";
 	import Docs from "./UiSelect.story.md"
@@ -421,7 +429,7 @@
 	const validatorMuss = computed(() => {
 		const lehrerStammdaten = new LehrerStammdaten();
 		lehrerStammdaten.nachname = mussValidatorSelection.value ?? "";
-		return new ValidatorLehrerStammdatenNachnameVorhanden(lehrerStammdaten, selectValidatorKontext);
+		return new ValidatorLehrerStammdatenNachname(lehrerStammdaten, selectValidatorKontext);
 	});
 
 	function validateSelect(validator: Validator, value: string | Iterable<string> | null): boolean {

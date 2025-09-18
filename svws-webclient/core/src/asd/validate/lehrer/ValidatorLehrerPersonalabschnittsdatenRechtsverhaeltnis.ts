@@ -6,7 +6,7 @@ import { LehrerRechtsverhaeltnis } from '../../../asd/types/lehrer/LehrerRechtsv
 import { Schuljahresabschnitt } from '../../../asd/data/schule/Schuljahresabschnitt';
 import { Validator } from '../../../asd/validate/Validator';
 
-export class ValidatorLehrerPersonalabschnittsdatenRechtsverhaeltnisGeburtsdatum extends Validator {
+export class ValidatorLehrerPersonalabschnittsdatenRechtsverhaeltnis extends Validator {
 
 	/**
 	 * Die Lehrer-Personalabschnittdaten
@@ -32,16 +32,15 @@ export class ValidatorLehrerPersonalabschnittsdatenRechtsverhaeltnisGeburtsdatum
 		this.geburtsdatum = geburtsdatum;
 	}
 
-	protected pruefe() : boolean {
-		const schuljahresabschnitt : Schuljahresabschnitt | null = this.kontext().getSchuljahresabschnittByID(this.daten.idSchuljahresabschnitt);
-		if (schuljahresabschnitt === null)
-			return false;
-		const schuljahr : number = schuljahresabschnitt.schuljahr;
-		const rv : LehrerRechtsverhaeltnis | null = LehrerRechtsverhaeltnis.getBySchluessel(this.daten.rechtsverhaeltnis);
-		if (rv === null) {
-			this.addFehler(0, "Kein Wert im Feld 'rechtsverhaeltnis'.");
-			return false;
-		}
+	/**
+	 * Prüfe das Feld Rechtsverhältnis in Bezug auf das Geburtsdatum des Lehrers.
+	 *
+	 * @param rv          das Rechtsverhältnis
+	 * @param schuljahr   das Schuljahr der Prüfung
+	 *
+	 * @return true, wenn die Prüfung erfolgreich war, und ansonsten false
+	 */
+	private pruefeGeburtsdatum(rv : LehrerRechtsverhaeltnis | null, schuljahr : number) : boolean {
 		let success : boolean = true;
 		switch (rv) {
 			case LehrerRechtsverhaeltnis.L: {
@@ -84,18 +83,31 @@ export class ValidatorLehrerPersonalabschnittsdatenRechtsverhaeltnisGeburtsdatum
 		return success;
 	}
 
+	protected pruefe() : boolean {
+		const schuljahresabschnitt : Schuljahresabschnitt | null = this.kontext().getSchuljahresabschnittByID(this.daten.idSchuljahresabschnitt);
+		if (schuljahresabschnitt === null)
+			return false;
+		const schuljahr : number = schuljahresabschnitt.schuljahr;
+		const rv : LehrerRechtsverhaeltnis | null = LehrerRechtsverhaeltnis.getBySchluessel(this.daten.rechtsverhaeltnis);
+		if (rv === null) {
+			this.addFehler(0, "Kein Wert im Feld 'rechtsverhaeltnis'.");
+			return false;
+		}
+		return this.pruefeGeburtsdatum(rv, schuljahr);
+	}
+
 	transpilerCanonicalName(): string {
-		return 'de.svws_nrw.asd.validate.lehrer.ValidatorLehrerPersonalabschnittsdatenRechtsverhaeltnisGeburtsdatum';
+		return 'de.svws_nrw.asd.validate.lehrer.ValidatorLehrerPersonalabschnittsdatenRechtsverhaeltnis';
 	}
 
 	isTranspiledInstanceOf(name : string): boolean {
-		return ['de.svws_nrw.asd.validate.lehrer.ValidatorLehrerPersonalabschnittsdatenRechtsverhaeltnisGeburtsdatum', 'de.svws_nrw.asd.validate.Validator'].includes(name);
+		return ['de.svws_nrw.asd.validate.lehrer.ValidatorLehrerPersonalabschnittsdatenRechtsverhaeltnis', 'de.svws_nrw.asd.validate.Validator'].includes(name);
 	}
 
-	public static class = new Class<ValidatorLehrerPersonalabschnittsdatenRechtsverhaeltnisGeburtsdatum>('de.svws_nrw.asd.validate.lehrer.ValidatorLehrerPersonalabschnittsdatenRechtsverhaeltnisGeburtsdatum');
+	public static class = new Class<ValidatorLehrerPersonalabschnittsdatenRechtsverhaeltnis>('de.svws_nrw.asd.validate.lehrer.ValidatorLehrerPersonalabschnittsdatenRechtsverhaeltnis');
 
 }
 
-export function cast_de_svws_nrw_asd_validate_lehrer_ValidatorLehrerPersonalabschnittsdatenRechtsverhaeltnisGeburtsdatum(obj : unknown) : ValidatorLehrerPersonalabschnittsdatenRechtsverhaeltnisGeburtsdatum {
-	return obj as ValidatorLehrerPersonalabschnittsdatenRechtsverhaeltnisGeburtsdatum;
+export function cast_de_svws_nrw_asd_validate_lehrer_ValidatorLehrerPersonalabschnittsdatenRechtsverhaeltnis(obj : unknown) : ValidatorLehrerPersonalabschnittsdatenRechtsverhaeltnis {
+	return obj as ValidatorLehrerPersonalabschnittsdatenRechtsverhaeltnis;
 }

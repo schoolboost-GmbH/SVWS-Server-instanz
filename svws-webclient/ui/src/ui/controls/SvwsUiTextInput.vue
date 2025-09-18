@@ -76,9 +76,9 @@
 							<div class="text-headline-sm text-center pt-1"> Relevant für die Statistik </div>
 							<div v-for="fehler in validator().getFehler()" :key="fehler.getFehlermeldung() ?? '--'" class="pt-2 pb-2">
 								<div class="rounded-sm pl-2" :class="{
-									'bg-ui-danger': (validator().getFehlerart() === ValidatorFehlerart.MUSS),
-									'bg-ui-caution': (validator().getFehlerart() === ValidatorFehlerart.KANN),
-									'bg-ui-warning': (validator().getFehlerart() === ValidatorFehlerart.HINWEIS)}">
+									'bg-ui-danger': (fehler.getFehlerart() === ValidatorFehlerart.MUSS),
+									'bg-ui-caution': (fehler.getFehlerart() === ValidatorFehlerart.KANN),
+									'bg-ui-warning': (fehler.getFehlerart() === ValidatorFehlerart.HINWEIS)}">
 									{{ fehler.getFehlerart() }} - Fehlercode: {{ fehler.getFehlercode() }}
 								</div>
 								<div class="pl-2"> {{ fehler.getFehlermeldung() }} </div>

@@ -16,6 +16,8 @@ import de.svws_nrw.asd.validate.ValidatorKontext;
 @DisplayName("Teste den Validator zu SchuleStammdatenSchulform")
 class TestValidatorSchuleStammdatenSchulform {
 
+	// TODO Tests nach TestValidatorSchuleStammdaten verschieben...
+
 	@BeforeAll
 	static void setup() {
 		ASDCoreTypeUtils.initAll();
@@ -24,7 +26,7 @@ class TestValidatorSchuleStammdatenSchulform {
 	/** Stammdaten der Schule */
 	final SchuleStammdaten schuleStammdaten = JsonReader.fromResource(
 			"de/svws_nrw/asd/validate/schule/Testdaten_001_SchuleStammdaten.json", SchuleStammdaten.class);
-	private ValidatorSchuleStammdatenSchulform validatorSchuleStammdatenSchulform;
+	private ValidatorSchuleStammdaten validatorSchuleStammdaten;
 
 	private ValidatorKontext kontext;
 
@@ -97,9 +99,9 @@ class TestValidatorSchuleStammdatenSchulform {
 
 		// Erzeuge den Kontext für die Validierung ...
 		kontext = new ValidatorKontext(schuleStammdaten, true);
-		validatorSchuleStammdatenSchulform = new ValidatorSchuleStammdatenSchulform(kontext);
+		validatorSchuleStammdaten = new ValidatorSchuleStammdaten(kontext);
 
-		assertEquals(expected, validatorSchuleStammdatenSchulform.run());
+		assertEquals(expected, validatorSchuleStammdaten.run());
 	}
 
 }

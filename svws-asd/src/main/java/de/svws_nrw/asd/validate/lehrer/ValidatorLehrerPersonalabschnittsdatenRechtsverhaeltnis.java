@@ -12,7 +12,7 @@ import jakarta.validation.constraints.NotNull;
  * Dieser Validator führt eine Statistikprüfung auf das Geburtsdatum im Kontext des Rechtsverhältnisses
  * der Abschnittsdaten eines Lehrers einer Schule aus.
  */
-public final class ValidatorLehrerPersonalabschnittsdatenRechtsverhaeltnisGeburtsdatum extends Validator {
+public final class ValidatorLehrerPersonalabschnittsdatenRechtsverhaeltnis extends Validator {
 
 	/** Die Lehrer-Personalabschnittdaten */
 	private final @NotNull LehrerPersonalabschnittsdaten daten;
@@ -27,7 +27,7 @@ public final class ValidatorLehrerPersonalabschnittsdatenRechtsverhaeltnisGeburt
 	 * @param geburtsdatum   das Geburtsdatum des Lehrers
 	 * @param kontext        der Kontext des Validators
 	 */
-	public ValidatorLehrerPersonalabschnittsdatenRechtsverhaeltnisGeburtsdatum(final @NotNull LehrerPersonalabschnittsdaten daten,
+	public ValidatorLehrerPersonalabschnittsdatenRechtsverhaeltnis(final @NotNull LehrerPersonalabschnittsdaten daten,
 			final @NotNull DateManager geburtsdatum, final @NotNull ValidatorKontext kontext) {
 		super(kontext);
 		this.daten = daten;
@@ -35,21 +35,15 @@ public final class ValidatorLehrerPersonalabschnittsdatenRechtsverhaeltnisGeburt
 	}
 
 
-	@Override
-	protected boolean pruefe() {
-		// Bestimme das Schuljahr über den Schuljahresabschnitt. Treten dabei Fehler auf, so ist dieser durch einen übergeordneten Validator zu prüfen.
-		final Schuljahresabschnitt schuljahresabschnitt = kontext().getSchuljahresabschnittByID(daten.idSchuljahresabschnitt);
-		if (schuljahresabschnitt == null)
-			return false;
-		final int schuljahr = schuljahresabschnitt.schuljahr;
-
-		// Bestimme das Rechtsverhältnis. Ist dieses nicht angegeben, so wird im Folgenden von einem sonstigen Rechtsverhältnis ausgegangen
-		final LehrerRechtsverhaeltnis rv = LehrerRechtsverhaeltnis.getBySchluessel(daten.rechtsverhaeltnis);
-		if (rv == null) {
-			addFehler(0, "Kein Wert im Feld 'rechtsverhaeltnis'.");
-			return false;
-		}
-
+	/**
+	 * Prüfe das Feld Rechtsverhältnis in Bezug auf das Geburtsdatum des Lehrers.
+	 *
+	 * @param rv          das Rechtsverhältnis
+	 * @param schuljahr   das Schuljahr der Prüfung
+	 *
+	 * @return true, wenn die Prüfung erfolgreich war, und ansonsten false
+	 */
+	private boolean pruefeGeburtsdatum(final LehrerRechtsverhaeltnis rv, final int schuljahr) {
 		// Prüfe das Geburtsdatum bzw. das Alter bei den folgenden Rechtsverhältnissen...
 		boolean success = true;
 		switch (rv) {
@@ -98,6 +92,25 @@ public final class ValidatorLehrerPersonalabschnittsdatenRechtsverhaeltnisGeburt
 			}
 		}
 		return success;
+	}
+
+	@Override
+	protected boolean pruefe() {
+		// Bestimme das Schuljahr über den Schuljahresabschnitt. Treten dabei Fehler auf, so ist dieser durch einen übergeordneten Validator zu prüfen.
+		final Schuljahresabschnitt schuljahresabschnitt = kontext().getSchuljahresabschnittByID(daten.idSchuljahresabschnitt);
+		if (schuljahresabschnitt == null)
+			return false;
+		final int schuljahr = schuljahresabschnitt.schuljahr;
+
+		// Bestimme das Rechtsverhältnis. Ist dieses nicht angegeben, so wird im Folgenden von einem sonstigen Rechtsverhältnis ausgegangen
+		final LehrerRechtsverhaeltnis rv = LehrerRechtsverhaeltnis.getBySchluessel(daten.rechtsverhaeltnis);
+		if (rv == null) {
+			addFehler(0, "Kein Wert im Feld 'rechtsverhaeltnis'.");
+			return false;
+		}
+
+		// Prüfe das Geburtsdatum bzw. das Alter bei den folgenden Rechtsverhältnissen...
+		return pruefeGeburtsdatum(rv, schuljahr);
 	}
 
 }
