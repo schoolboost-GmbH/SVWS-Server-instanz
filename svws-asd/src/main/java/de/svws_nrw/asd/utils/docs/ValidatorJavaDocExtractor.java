@@ -111,18 +111,18 @@ public final class ValidatorJavaDocExtractor extends AbstractProcessor {
 	@Override
 	public boolean process(final Set<? extends TypeElement> annotations, final RoundEnvironment roundEnv) {
 		if (!roundEnv.processingOver()) {
-   			for (final Element element : roundEnv.getRootElements()) {
-   				System.out.println("  -> Extraction of: " + element.toString());
-   				final TreePath path = trees.getPath(element);
-            	extractJavaDocFromElement(trees.getDocComment(path));
-            }
+			for (final Element element : roundEnv.getRootElements()) {
+				System.out.println("  -> Extraction of: " + element.toString());
+				final TreePath path = trees.getPath(element);
+				extractJavaDocFromElement(trees.getDocComment(path));
+			}
 		}
 		return true;
 	}
 
-    private void extractJavaDocFromElement(final String docComment) {
-        // Hier DocComment prozessieren
-    	System.out.println("docComment: " + docComment);
-    }
+	private void extractJavaDocFromElement(final String docComment) {
+		// Hier DocComment prozessieren
+		System.out.println("docComment: " + docComment);
+	}
 
 }

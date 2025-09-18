@@ -19,14 +19,14 @@ export class ValidatorSchuleStammdatenSchulform extends Validator {
 	protected pruefe() : boolean {
 		const schulformKrz : string | null = super.kontext().getSchuleStammdaten().schulform;
 		if ((schulformKrz === null) || (JavaString.isBlank(schulformKrz))) {
-			this.addFehler("Die Schulform muss gesetzt sein.");
+			this.addFehler(0, "Die Schulform muss gesetzt sein.");
 			return false;
 		}
 		try {
 			Schulform.data().getWertByKuerzel(schulformKrz);
 			return true;
 		} catch(e : any) {
-			this.addFehler(e.getMessage());
+			this.addFehler(1, e.getMessage());
 			return false;
 		}
 	}

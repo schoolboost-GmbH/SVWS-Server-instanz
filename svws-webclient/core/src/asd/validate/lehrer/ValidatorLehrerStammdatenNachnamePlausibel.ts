@@ -76,20 +76,20 @@ export class ValidatorLehrerStammdatenNachnamePlausibel extends Validator {
 			return true;
 		let success : boolean = true;
 		if (nachname.startsWith(" ") || nachname.startsWith("\t")) {
-			this.addFehler("Nachname der Lehrkraft: Die Eintragung des Nachnamens muss linksbündig erfolgen (ohne vorangestellte Leerzeichen oder Tabs).");
+			this.addFehler(0, "Nachname der Lehrkraft: Die Eintragung des Nachnamens muss linksbündig erfolgen (ohne vorangestellte Leerzeichen oder Tabs).");
 			success = false;
 		}
 		const nachnameOhneZusatz : string = this.getOhneZusatz(nachname);
 		if (!JavaCharacter.isUpperCase(nachnameOhneZusatz.charAt(0))) {
-			this.addFehler("Nachname der Lehrkraft: Die erste Stelle des Nachnamens muss - ggf. im Anschluss an einen Namenszusatz, wie z.B. \"von\" -  mit einem Großbuchstaben besetzt sein.");
+			this.addFehler(1, "Nachname der Lehrkraft: Die erste Stelle des Nachnamens muss - ggf. im Anschluss an einen Namenszusatz, wie z.B. \"von\" -  mit einem Großbuchstaben besetzt sein.");
 			success = false;
 		}
 		if ((nachnameOhneZusatz.length > 1) && JavaCharacter.isUpperCase(nachnameOhneZusatz.charAt(1))) {
-			this.addFehler("Die zweite Stelle des Nachnamens ist mit einem Großbuchstaben besetzt. Bitte stellen sie sicher, dass nur der erste Buchstabe des Nachnamens ein Großbuchstabe ist. Bitte schreiben Sie auf ihn folgende Buchstaben klein.");
+			this.addFehler(2, "Die zweite Stelle des Nachnamens ist mit einem Großbuchstaben besetzt. Bitte stellen sie sicher, dass nur der erste Buchstabe des Nachnamens ein Großbuchstabe ist. Bitte schreiben Sie auf ihn folgende Buchstaben klein.");
 			success = false;
 		}
 		if ((nachnameOhneZusatz.length > 2) && JavaCharacter.isUpperCase(nachnameOhneZusatz.charAt(2)) && !java_util_Set_of("A'", "D'", "M'", "O'", "Mc").contains(nachnameOhneZusatz.substring(0, 2))) {
-			this.addFehler("Nachname der Lehrkraft: Die dritte Stelle des Nachnamens ist mit einem Großbuchstaben besetzt. Bitte stellen sie sicher, dass nur der erste Buchstabe des Nachnamens ein Großbuchstabe ist. Bitte schreiben Sie auf ihn folgende Buchstaben klein.");
+			this.addFehler(3, "Nachname der Lehrkraft: Die dritte Stelle des Nachnamens ist mit einem Großbuchstaben besetzt. Bitte stellen sie sicher, dass nur der erste Buchstabe des Nachnamens ein Großbuchstabe ist. Bitte schreiben Sie auf ihn folgende Buchstaben klein.");
 			success = false;
 		}
 		return success;

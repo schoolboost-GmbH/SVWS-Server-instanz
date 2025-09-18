@@ -33,7 +33,7 @@ export class ValidatorLehrerStammdatenVornameAnredeFehlerhaft extends Validator 
 		const hatFrau : boolean = JavaString.contains(vLower, "frau ") && !JavaObject.equalsTranspiler(vLower, ("frauke"));
 		const hatHerr : boolean = JavaString.contains(vLower, "herr ") && !JavaObject.equalsTranspiler(vLower, ("herr"));
 		if (hatFrau || hatHerr) {
-			this.addFehler("Bitte entfernen Sie die Anrede (Frau oder Herr) im Feld Vorname. (AA8)");
+			this.addFehler(0, "Bitte entfernen Sie die Anrede (Frau oder Herr) im Feld Vorname. (AA8)");
 			success = false;
 		}
 		return success;

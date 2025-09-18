@@ -35,7 +35,7 @@ public final class ValidatorLehrerStammdatenVornameNurEinstellig extends Validat
 		}
 		boolean success = true;
 		if ((daten.vorname.length() == 1)) {
-			addFehler("Der Vorname besteht aus nur einem Zeichen. Bitte überprüfen sie ihre Angaben.");
+			addFehler(0, "Der Vorname besteht aus nur einem Zeichen. Bitte überprüfen sie ihre Angaben.");
 			success = false;
 		}
 		return success;

@@ -33,25 +33,25 @@ public final class ValidatorLehrerStammdatenVorname extends Validator {
 	protected boolean pruefe() {
 		final String vorname = daten.vorname;
 		if ((vorname == null) || (vorname.length() == 0)) {
-			addFehler("Kein Wert im Feld 'vorname'.");
+			addFehler(0, "Kein Wert im Feld 'vorname'.");
 			return false;
 		}
 		boolean success = true;
 		if (vorname.startsWith(" ") || vorname.startsWith("\t")) {
-			addFehler("Vorname der Lehrkraft: Die Eintragung des Nachnamens muss linksbündig erfolgen (ohne vorangestellte Leerzeichen oder Tabs).");
+			addFehler(1, "Vorname der Lehrkraft: Die Eintragung des Nachnamens muss linksbündig erfolgen (ohne vorangestellte Leerzeichen oder Tabs).");
 			success = false;
 		}
 		if (!Character.isUpperCase(vorname.charAt(0))) {
-			addFehler("Vorname der Lehrkraft: Die erste Stelle des Vornamens muss mit einem Großbuchstaben besetzt sein.");
+			addFehler(2, "Vorname der Lehrkraft: Die erste Stelle des Vornamens muss mit einem Großbuchstaben besetzt sein.");
 			success = false;
 		}
 		if ((vorname.length() > 1) && Character.isUpperCase(vorname.charAt(1))) {
-			addFehler(
+			addFehler(3,
 					"Vorname der Lehrkraft: Die zweite Stelle des Vornamens ist mit einem Großbuchstaben besetzt. Bitte stellen sie sicher, dass nur der erste Buchstabe des Vornamens ein Großbuchstabe ist. Bitte schreiben Sie auf ihn folgende Buchstaben klein.");
 			success = false;
 		}
 		if ((vorname.length() > 2) && Character.isUpperCase(vorname.charAt(2))) {
-			addFehler(
+			addFehler(4,
 					"Vorname der Lehrkraft: Die dritte Stelle des Vornamens ist mit einem Großbuchstaben besetzt. Bitte stellen sie sicher, dass nur der erste Buchstabe des Vornamens ein Großbuchstabe ist. Bitte schreiben Sie auf ihn folgende Buchstaben klein.");
 			success = false;
 		}

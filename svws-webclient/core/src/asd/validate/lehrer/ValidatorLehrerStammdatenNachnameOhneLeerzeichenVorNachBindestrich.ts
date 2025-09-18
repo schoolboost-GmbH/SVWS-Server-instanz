@@ -27,7 +27,7 @@ export class ValidatorLehrerStammdatenNachnameOhneLeerzeichenVorNachBindestrich 
 		const nachname : string | null = this.daten.nachname;
 		let success : boolean = true;
 		if (JavaString.contains(nachname, " -") || JavaString.contains(nachname, "- ")) {
-			this.addFehler("Bitte entfernen Sie beim Nachnamen überflüssige Leerzeichen vor und/oder nach dem Bindestrich.(AA7)");
+			this.addFehler(0, "Bitte entfernen Sie beim Nachnamen überflüssige Leerzeichen vor und/oder nach dem Bindestrich.(AA7)");
 			success = false;
 		}
 		return success;

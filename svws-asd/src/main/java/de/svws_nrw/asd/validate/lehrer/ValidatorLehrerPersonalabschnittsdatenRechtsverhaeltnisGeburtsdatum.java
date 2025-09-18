@@ -46,7 +46,7 @@ public final class ValidatorLehrerPersonalabschnittsdatenRechtsverhaeltnisGeburt
 		// Bestimme das Rechtsverhältnis. Ist dieses nicht angegeben, so wird im Folgenden von einem sonstigen Rechtsverhältnis ausgegangen
 		final LehrerRechtsverhaeltnis rv = LehrerRechtsverhaeltnis.getBySchluessel(daten.rechtsverhaeltnis);
 		if (rv == null) {
-			addFehler("Kein Wert im Feld 'rechtsverhaeltnis'.");
+			addFehler(0, "Kein Wert im Feld 'rechtsverhaeltnis'.");
 			return false;
 		}
 
@@ -64,7 +64,7 @@ public final class ValidatorLehrerPersonalabschnittsdatenRechtsverhaeltnisGeburt
 				final int minJahr = schuljahr - ((schuljahr <= 2023) ? 65 : ((schuljahr <= 2030) ? 66 : 67));
 				final int maxJahr = schuljahr - 27;  // Das letzte akzeptierte Geburtsjahr: vor 27 Jahren
 				if (!geburtsdatum.istInJahren(minJahr, maxJahr)) {
-					addFehler("Der Wert für das Geburtsjahr sollte bei Beamten/-innen auf Lebenszeit (Rechtsverhältnis = L)"
+					addFehler(1, "Der Wert für das Geburtsjahr sollte bei Beamten/-innen auf Lebenszeit (Rechtsverhältnis = L)"
 							+ " zwischen " + minJahr + " und " + maxJahr + " liegen. Bitte prüfen!");
 					success = false;
 				}
@@ -73,7 +73,7 @@ public final class ValidatorLehrerPersonalabschnittsdatenRechtsverhaeltnisGeburt
 				final int minJahr = schuljahr - 55; // das erste akzeptierte Geburtsjahr: vor 55 Jahren
 				final int maxJahr = schuljahr - 20; // das letzte akzeptierte Geburtsjahr: vor 20 Jahren
 				if (!geburtsdatum.istInJahren(minJahr, maxJahr)) {
-					addFehler("Der Wert für das Geburtsjahr sollte bei Beamten/-innen auf Probe (Rechtsverhältnis = P)"
+					addFehler(2, "Der Wert für das Geburtsjahr sollte bei Beamten/-innen auf Probe (Rechtsverhältnis = P)"
 							+ " zwischen " + minJahr + " und " + maxJahr + " liegen. Bitte prüfen!");
 					success = false;
 				}
@@ -82,7 +82,7 @@ public final class ValidatorLehrerPersonalabschnittsdatenRechtsverhaeltnisGeburt
 				final int minJahr = schuljahr - 50; // das erste akzeptierte Geburtsjahr: vor 50 Jahren
 				final int maxJahr = schuljahr - 18; // das letzte akzeptierte Geburtsjahr: vor 18 Jahren
 				if (!geburtsdatum.istInJahren(minJahr, maxJahr)) {
-					addFehler("Der Wert für das Geburtsjahr sollte bei Lehramtsanwärtern/-innen (Rechtsverhältnis = W)"
+					addFehler(3, "Der Wert für das Geburtsjahr sollte bei Lehramtsanwärtern/-innen (Rechtsverhältnis = W)"
 							+ " zwischen " + minJahr + " und " + maxJahr + " liegen. Bitte prüfen!");
 					success = false;
 				}
@@ -91,7 +91,7 @@ public final class ValidatorLehrerPersonalabschnittsdatenRechtsverhaeltnisGeburt
 				final int minJahr = schuljahr - 80;   // das erste akzeptierte Geburtsjahr: vor 80 Jahren
 				final int maxJahr = schuljahr - 18;   // das letzte akzeptierte Geburtsjahr: vor 18 Jahren
 				if (!geburtsdatum.istInJahren(minJahr, maxJahr)) {
-					addFehler("Der Wert für das Geburtsjahr sollte bei sonstigen Rechtsverhältnissen"
+					addFehler(4, "Der Wert für das Geburtsjahr sollte bei sonstigen Rechtsverhältnissen"
 							+ " zwischen " + minJahr + " und " + maxJahr + " liegen. Bitte prüfen!");
 					success = false;
 				}

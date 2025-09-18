@@ -79,7 +79,7 @@
 									'bg-ui-danger': (validator().getFehlerart() === ValidatorFehlerart.MUSS),
 									'bg-ui-caution': (validator().getFehlerart() === ValidatorFehlerart.KANN),
 									'bg-ui-warning': (validator().getFehlerart() === ValidatorFehlerart.HINWEIS)}">
-									{{ fehler.getFehlerart() }}
+									{{ fehler.getFehlerart() }} - Fehlercode: {{ fehler.getFehlercode() }}
 								</div>
 								<div class="pl-2"> {{ fehler.getFehlermeldung() }} </div>
 							</div>

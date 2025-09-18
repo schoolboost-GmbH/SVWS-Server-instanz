@@ -30,11 +30,11 @@ public final class ValidatorLehrerStammdatenNachnameVorhanden extends Validator 
 	protected boolean pruefe() {
 		final String nachname = daten.nachname;
 		if ((nachname == null) || (nachname.length() == 0)) {
-			addFehler("Kein Wert im Feld 'nachname'.");
+			addFehler(0, "Kein Wert im Feld 'nachname'.");
 			return false;
 		}
 		if (nachname.trim().isBlank()) {
-			addFehler("Das Feld 'nachname' darf nicht nur aus Leerzeichen bestehen.");
+			addFehler(1, "Das Feld 'nachname' darf nicht nur aus Leerzeichen bestehen.");
 			return false;
 		}
 		return true;

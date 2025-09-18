@@ -43,7 +43,7 @@ public final class ValidatorLehrerStammdatenVornameAnredeFehlerhaft extends Vali
 		final boolean hatHerr = vLower.contains("herr ") && !vLower.equals("herr");
 
 		if (hatFrau || hatHerr) {
-			addFehler("Bitte entfernen Sie die Anrede (Frau oder Herr) im Feld Vorname. (AA8)");
+			addFehler(0, "Bitte entfernen Sie die Anrede (Frau oder Herr) im Feld Vorname. (AA8)");
 			success = false;
 		}
 		return success;

@@ -35,7 +35,7 @@ public final class ValidatorLehrerStammdatenNachnameNurEinstellig extends Valida
 		}
 		boolean success = true;
 		if (daten.nachname.length() == 1) {
-			addFehler("Der Nachname besteht aus nur einem Zeichen. Bitte überprüfen sie ihre Angaben.");
+			addFehler(0, "Der Nachname besteht aus nur einem Zeichen. Bitte überprüfen sie ihre Angaben.");
 			success = false;
 		}
 		return success;

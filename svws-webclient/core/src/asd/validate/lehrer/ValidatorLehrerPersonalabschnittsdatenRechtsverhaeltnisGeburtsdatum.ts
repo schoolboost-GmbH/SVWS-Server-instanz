@@ -39,7 +39,7 @@ export class ValidatorLehrerPersonalabschnittsdatenRechtsverhaeltnisGeburtsdatum
 		const schuljahr : number = schuljahresabschnitt.schuljahr;
 		const rv : LehrerRechtsverhaeltnis | null = LehrerRechtsverhaeltnis.getBySchluessel(this.daten.rechtsverhaeltnis);
 		if (rv === null) {
-			this.addFehler("Kein Wert im Feld 'rechtsverhaeltnis'.");
+			this.addFehler(0, "Kein Wert im Feld 'rechtsverhaeltnis'.");
 			return false;
 		}
 		let success : boolean = true;
@@ -48,7 +48,7 @@ export class ValidatorLehrerPersonalabschnittsdatenRechtsverhaeltnisGeburtsdatum
 				const minJahr : number = schuljahr - ((schuljahr <= 2023) ? 65 : ((schuljahr <= 2030) ? 66 : 67));
 				const maxJahr : number = schuljahr - 27;
 				if (!this.geburtsdatum.istInJahren(minJahr, maxJahr)) {
-					this.addFehler("Der Wert für das Geburtsjahr sollte bei Beamten/-innen auf Lebenszeit (Rechtsverhältnis = L) zwischen " + minJahr + " und " + maxJahr + " liegen. Bitte prüfen!");
+					this.addFehler(1, "Der Wert für das Geburtsjahr sollte bei Beamten/-innen auf Lebenszeit (Rechtsverhältnis = L) zwischen " + minJahr + " und " + maxJahr + " liegen. Bitte prüfen!");
 					success = false;
 				}
 				break;
@@ -57,7 +57,7 @@ export class ValidatorLehrerPersonalabschnittsdatenRechtsverhaeltnisGeburtsdatum
 				const minJahr : number = schuljahr - 55;
 				const maxJahr : number = schuljahr - 20;
 				if (!this.geburtsdatum.istInJahren(minJahr, maxJahr)) {
-					this.addFehler("Der Wert für das Geburtsjahr sollte bei Beamten/-innen auf Probe (Rechtsverhältnis = P) zwischen " + minJahr + " und " + maxJahr + " liegen. Bitte prüfen!");
+					this.addFehler(2, "Der Wert für das Geburtsjahr sollte bei Beamten/-innen auf Probe (Rechtsverhältnis = P) zwischen " + minJahr + " und " + maxJahr + " liegen. Bitte prüfen!");
 					success = false;
 				}
 				break;
@@ -66,7 +66,7 @@ export class ValidatorLehrerPersonalabschnittsdatenRechtsverhaeltnisGeburtsdatum
 				const minJahr : number = schuljahr - 50;
 				const maxJahr : number = schuljahr - 18;
 				if (!this.geburtsdatum.istInJahren(minJahr, maxJahr)) {
-					this.addFehler("Der Wert für das Geburtsjahr sollte bei Lehramtsanwärtern/-innen (Rechtsverhältnis = W) zwischen " + minJahr + " und " + maxJahr + " liegen. Bitte prüfen!");
+					this.addFehler(3, "Der Wert für das Geburtsjahr sollte bei Lehramtsanwärtern/-innen (Rechtsverhältnis = W) zwischen " + minJahr + " und " + maxJahr + " liegen. Bitte prüfen!");
 					success = false;
 				}
 				break;
@@ -75,7 +75,7 @@ export class ValidatorLehrerPersonalabschnittsdatenRechtsverhaeltnisGeburtsdatum
 				const minJahr : number = schuljahr - 80;
 				const maxJahr : number = schuljahr - 18;
 				if (!this.geburtsdatum.istInJahren(minJahr, maxJahr)) {
-					this.addFehler("Der Wert für das Geburtsjahr sollte bei sonstigen Rechtsverhältnissen zwischen " + minJahr + " und " + maxJahr + " liegen. Bitte prüfen!");
+					this.addFehler(4, "Der Wert für das Geburtsjahr sollte bei sonstigen Rechtsverhältnissen zwischen " + minJahr + " und " + maxJahr + " liegen. Bitte prüfen!");
 					success = false;
 				}
 				break;

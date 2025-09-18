@@ -24,14 +24,14 @@ public final class ValidatorSchuleStammdatenSchulform extends Validator {
 	protected boolean pruefe() {
 		final String schulformKrz = super.kontext().getSchuleStammdaten().schulform;
 		if ((schulformKrz == null) || (schulformKrz.isBlank())) {
-			addFehler("Die Schulform muss gesetzt sein.");
+			addFehler(0, "Die Schulform muss gesetzt sein.");
 			return false;
 		}
 		try {
 			Schulform.data().getWertByKuerzel(schulformKrz);
 			return true;
 		} catch (final CoreTypeException e) {
-			addFehler(e.getMessage());
+			addFehler(1, e.getMessage());
 			return false;
 		}
 	}

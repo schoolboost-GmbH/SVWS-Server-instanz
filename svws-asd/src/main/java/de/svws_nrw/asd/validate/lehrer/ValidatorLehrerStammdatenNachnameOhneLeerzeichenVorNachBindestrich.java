@@ -31,7 +31,7 @@ public final class ValidatorLehrerStammdatenNachnameOhneLeerzeichenVorNachBindes
 		final String nachname = daten.nachname;
 		boolean success = true;
 		if (nachname.contains(" -") || nachname.contains("- ")) {
-			addFehler("Bitte entfernen Sie beim Nachnamen überflüssige Leerzeichen vor und/oder nach dem Bindestrich.(AA7)");
+			addFehler(0, "Bitte entfernen Sie beim Nachnamen überflüssige Leerzeichen vor und/oder nach dem Bindestrich.(AA7)");
 			success = false;
 		}
 		return success;

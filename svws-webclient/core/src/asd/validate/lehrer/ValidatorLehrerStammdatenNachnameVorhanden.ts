@@ -26,11 +26,11 @@ export class ValidatorLehrerStammdatenNachnameVorhanden extends Validator {
 	protected pruefe() : boolean {
 		const nachname : string | null = this.daten.nachname;
 		if ((nachname === null) || (nachname.length === 0)) {
-			this.addFehler("Kein Wert im Feld 'nachname'.");
+			this.addFehler(0, "Kein Wert im Feld 'nachname'.");
 			return false;
 		}
 		if (JavaString.isBlank(nachname.trim())) {
-			this.addFehler("Das Feld 'nachname' darf nicht nur aus Leerzeichen bestehen.");
+			this.addFehler(1, "Das Feld 'nachname' darf nicht nur aus Leerzeichen bestehen.");
 			return false;
 		}
 		return true;

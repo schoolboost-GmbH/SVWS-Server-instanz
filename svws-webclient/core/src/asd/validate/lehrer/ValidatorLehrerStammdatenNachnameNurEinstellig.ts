@@ -29,7 +29,7 @@ export class ValidatorLehrerStammdatenNachnameNurEinstellig extends Validator {
 		}
 		let success : boolean = true;
 		if (this.daten.nachname.length === 1) {
-			this.addFehler("Der Nachname besteht aus nur einem Zeichen. Bitte überprüfen sie ihre Angaben.");
+			this.addFehler(0, "Der Nachname besteht aus nur einem Zeichen. Bitte überprüfen sie ihre Angaben.");
 			success = false;
 		}
 		return success;
