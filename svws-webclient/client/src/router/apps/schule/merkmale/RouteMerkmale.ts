@@ -10,8 +10,8 @@ import { routeMerkmaleGruppenprozesse } from "~/router/apps/schule/merkmale/Rout
 import { routeMerkmaleDaten } from "~/router/apps/schule/merkmale/RouteMerkmaleDaten";
 import { routeMerkmaleNeu } from "~/router/apps/schule/merkmale/RouteMerkmaleNeu";
 
-const SMerkmaleApp = () => import("~/components/schule/kataloge/merkmale/SMerkmaleApp.vue");
-const SMerkmaleAuswahl = () => import("~/components/schule/kataloge/merkmale/SMerkmaleAuswahl.vue");
+const SMerkmaleApp = () => import("~/components/schule/schulbezogen/merkmale/SMerkmaleApp.vue");
+const SMerkmaleAuswahl = () => import("~/components/schule/schulbezogen/merkmale/SMerkmaleAuswahl.vue");
 
 export class RouteMerkmale extends RouteAuswahlNode<MerkmaleListeManager, RouteDataMerkmale, RouteApp> {
 

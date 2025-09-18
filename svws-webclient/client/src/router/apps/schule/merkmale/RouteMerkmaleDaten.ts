@@ -1,12 +1,12 @@
 import type { RouteLocationNormalized } from "vue-router";
-import type { MerkmaleDatenProps } from "~/components/schule/kataloge/merkmale/daten/SMerkmaleDatenProps";
+import type { MerkmaleDatenProps } from "~/components/schule/schulbezogen/merkmale/daten/SMerkmaleDatenProps";
 import type { RouteMerkmale } from "~/router/apps/schule/merkmale/RouteMerkmale";
 import { BenutzerKompetenz, Schulform, ServerMode } from "@core";
 import { RouteNode } from "~/router/RouteNode";
 import { api } from "~/router/Api";
 import { routeMerkmale } from "~/router/apps/schule/merkmale/RouteMerkmale";
 
-const SMerkmaleDaten = () => import("~/components/schule/kataloge/merkmale/daten/SMerkmaleDaten.vue")
+const SMerkmaleDaten = () => import("~/components/schule/schulbezogen/merkmale/daten/SMerkmaleDaten.vue")
 
 export class RouteMerkmaleDaten extends RouteNode<any, RouteMerkmale> {
 

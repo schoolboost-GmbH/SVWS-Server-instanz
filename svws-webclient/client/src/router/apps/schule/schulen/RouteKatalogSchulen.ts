@@ -1,7 +1,7 @@
 import type { RouteParams } from "vue-router";
 import type { RouteApp } from "~/router/apps/RouteApp";
 import type { RouteNode } from "~/router/RouteNode";
-import type { SchulenAuswahlProps } from "~/components/schule/kataloge/schulen/SSchulenAuswahlProps";
+import type { SchulenAuswahlProps } from "~/components/schule/allgemein/schulen/SSchulenAuswahlProps";
 import { BenutzerKompetenz, Schulform, ServerMode } from "@core";
 import type { KatalogSchuleListeManager } from "@ui";
 import { routeKatalogSchuleDaten } from "~/router/apps/schule/schulen/RouteKatalogSchuleDaten";
@@ -12,8 +12,8 @@ import { routeKatalogSchuleNeu } from "~/router/apps/schule/schulen/RouteKatalog
 import { routeKatalogSchuleGruppenprozesse } from "~/router/apps/schule/schulen/RouteKatalogSchuleGruppenprozesse";
 import { routeApp } from "~/router/apps/RouteApp";
 
-const SSchulenAuswahl = () => import("~/components/schule/kataloge/schulen/SSchulenAuswahl.vue");
-const SSchulenApp = () => import("~/components/schule/kataloge/schulen/SSchulenApp.vue");
+const SSchulenAuswahl = () => import("~/components/schule/allgemein/schulen/SSchulenAuswahl.vue");
+const SSchulenApp = () => import("~/components/schule/allgemein/schulen/SSchulenApp.vue");
 
 export class RouteKatalogSchulen extends RouteAuswahlNode<KatalogSchuleListeManager, RouteDataKatalogSchulen, RouteApp> {
 

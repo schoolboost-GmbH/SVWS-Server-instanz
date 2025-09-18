@@ -1,5 +1,5 @@
 import type { RouteLocationNormalized } from "vue-router";
-import type { AbteilungenNeuProps } from "~/components/schule/kataloge/abteilungen/SAbteilungenNeuProps";
+import type { AbteilungenNeuProps } from "~/components/schule/schulbezogen/abteilungen/SAbteilungenNeuProps";
 import type { RouteAbteilungen } from "~/router/apps/schule/abteilungen/RouteAbteilungen";
 import { BenutzerKompetenz, Schulform, ServerMode } from "@core";
 import { RouteManager } from "~/router/RouteManager";
@@ -9,7 +9,7 @@ import { routeAbteilungen } from "~/router/apps/schule/abteilungen/RouteAbteilun
 import { routeLehrer } from "~/router/apps/lehrer/RouteLehrer";
 import { api } from "~/router/Api";
 
-const SAbteilungenNeu = () => import("~/components/schule/kataloge/abteilungen/SAbteilungenNeu.vue");
+const SAbteilungenNeu = () => import("~/components/schule/schulbezogen/abteilungen/SAbteilungenNeu.vue");
 
 export class RouteAbteilungenNeu extends RouteNode<any, RouteAbteilungen> {
 

@@ -1,5 +1,5 @@
 import type { RouteLocationNormalized } from "vue-router";
-import type { SportbefreiungenNeuProps } from "~/components/schule/kataloge/sportbefreiungen/SSportbefreiungenNeuProps";
+import type { SportbefreiungenNeuProps } from "~/components/schule/schulbezogen/sportbefreiungen/SSportbefreiungenNeuProps";
 import type{ RouteSportbefreiungen } from "~/router/apps/schule/sportbefreiungen/RouteSportbefreiungen";
 import { BenutzerKompetenz, Schulform, ServerMode } from "@core";
 import { RouteManager } from "~/router/RouteManager";
@@ -8,7 +8,7 @@ import { ViewType } from "@ui";
 import { api } from "~/router/Api";
 import { routeSportbefreiungen } from "~/router/apps/schule/sportbefreiungen/RouteSportbefreiungen";
 
-const SSportbefreiungenNeu = () => import("~/components/schule/kataloge/sportbefreiungen/SSportbefreiungenNeu.vue");
+const SSportbefreiungenNeu = () => import("~/components/schule/schulbezogen/sportbefreiungen/SSportbefreiungenNeu.vue");
 
 export class RouteSportbefreiungenNeu extends RouteNode<any, RouteSportbefreiungen> {
 

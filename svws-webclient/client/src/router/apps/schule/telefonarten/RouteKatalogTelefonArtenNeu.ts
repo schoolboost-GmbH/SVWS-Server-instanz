@@ -5,10 +5,10 @@ import { ViewType } from "@ui";
 import { RouteManager } from "~/router/RouteManager";
 import type { RouteKatalogTelefonArten } from "~/router/apps/schule/telefonarten/RouteKatalogTelefonArten";
 import { routeKatalogTelefonArten } from "~/router/apps/schule/telefonarten/RouteKatalogTelefonArten";
-import type { STelefonArtenNeuProps } from "~/components/schule/kataloge/telefonarten/STelefonArtenNeuProps";
+import type { STelefonArtenNeuProps } from "~/components/schule/allgemein/telefonarten/STelefonArtenNeuProps";
 import { api } from "~/router/Api";
 
-const STelefonArtenNeu = () => import("~/components/schule/kataloge/telefonarten/STelefonArtenNeu.vue");
+const STelefonArtenNeu = () => import("~/components/schule/allgemein/telefonarten/STelefonArtenNeu.vue");
 
 export class RouteKatalogTelefonArtenNeu extends RouteNode<any, RouteKatalogTelefonArten> {
 

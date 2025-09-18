@@ -1,5 +1,5 @@
 import type { RouteLocationNormalized } from "vue-router";
-import type { AbteilungenDatenProps } from "~/components/schule/kataloge/abteilungen/daten/SAbteilungenDatenProps";
+import type { AbteilungenDatenProps } from "~/components/schule/schulbezogen/abteilungen/daten/SAbteilungenDatenProps";
 import type { RouteAbteilungen } from "~/router/apps/schule/abteilungen/RouteAbteilungen";
 import { BenutzerKompetenz, Schulform, ServerMode } from "@core";
 import { RouteNode } from "~/router/RouteNode";
@@ -8,7 +8,7 @@ import { RouteManager } from "~/router/RouteManager";
 import { routeLehrer } from "~/router/apps/lehrer/RouteLehrer";
 import { api } from "~/router/Api";
 
-const SAbteilungenDaten = () => import("~/components/schule/kataloge/abteilungen/daten/SAbteilungenDaten.vue");
+const SAbteilungenDaten = () => import("~/components/schule/schulbezogen/abteilungen/daten/SAbteilungenDaten.vue");
 
 export class RouteAbteilungenDaten extends RouteNode<any, RouteAbteilungen> {
 

@@ -7,10 +7,10 @@ import { ViewType } from "@ui";
 import { RouteManager } from "~/router/RouteManager";
 import { routeJahrgaenge } from "./RouteJahrgaenge";
 import type { RouteJahrgaenge } from "~/router/apps/schule/jahrgaenge/RouteJahrgaenge";
-import type { SchuleJahrgangNeuProps } from "~/components/schule/jahrgaenge/SJahrgaengeNeuProps";
+import type { SchuleJahrgangNeuProps } from "~/components/schule/schulbezogen/jahrgaenge/SJahrgaengeNeuProps";
 import { api } from "~/router/Api";
 
-const SJahrgaengeNeu = () => import("~/components/schule/jahrgaenge/SJahrgaengeNeu.vue");
+const SJahrgaengeNeu = () => import("~/components/schule/schulbezogen/jahrgaenge/SJahrgaengeNeu.vue");
 
 export class RouteJahrgaengeNeu extends RouteNode<any, RouteJahrgaenge> {
 

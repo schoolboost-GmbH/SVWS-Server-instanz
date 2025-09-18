@@ -1,11 +1,11 @@
 import type { RouteLocationNormalized, RouteLocationRaw, RouteParams } from "vue-router";
-import type { FachDatenProps } from "~/components/schule/faecher/daten/SFachDatenProps";
+import type { FachDatenProps } from "~/components/schule/schulbezogen/faecher/daten/SFachDatenProps";
 import { BenutzerKompetenz, Schulform, ServerMode } from "@core";
 import { RouteNode } from "~/router/RouteNode";
 import { routeSchuleFaecher, type RouteSchuleFaecher } from "~/router/apps/schule/faecher/RouteSchuleFaecher";
 import { api } from "~/router/Api";
 
-const SFachDaten = () => import("~/components/schule/faecher/daten/SFachDaten.vue");
+const SFachDaten = () => import("~/components/schule/schulbezogen/faecher/daten/SFachDaten.vue");
 
 export class RouteSchuleFachDaten extends RouteNode<any, RouteSchuleFaecher> {
 

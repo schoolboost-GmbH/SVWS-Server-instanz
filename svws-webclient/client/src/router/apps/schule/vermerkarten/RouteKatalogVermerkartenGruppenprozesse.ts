@@ -1,6 +1,6 @@
 import type { RouteLocationNormalized, RouteLocationRaw } from "vue-router";
 import type { RouteKatalogVermerkarten} from "./RouteKatalogVermerkarten";
-import type { SchuleVermerkartenGruppenprozesseProps } from "~/components/schule/kataloge/vermerke/gruppenprozesse/SVermerkartenGruppenprozesseProps";
+import type { SchuleVermerkartenGruppenprozesseProps } from "~/components/schule/schulbezogen/vermerkarten/gruppenprozesse/SVermerkartenGruppenprozesseProps";
 import { BenutzerKompetenz, Schulform, ServerMode } from "@core";
 import { api } from "~/router/Api";
 import { RouteNode } from "~/router/RouteNode";
@@ -8,7 +8,7 @@ import { routeApp } from "../../RouteApp";
 import { ViewType } from "@ui";
 import { routeKatalogVermerkarten } from "./RouteKatalogVermerkarten";
 
-const SVermerkartenGruppenprozesse = () => import("~/components/schule/kataloge/vermerke/gruppenprozesse/SVermerkartenGruppenprozesse.vue");
+const SVermerkartenGruppenprozesse = () => import("~/components/schule/schulbezogen/vermerkarten/gruppenprozesse/SVermerkartenGruppenprozesse.vue");
 
 export class RouteKatalogVermerkartenGruppenprozesse extends RouteNode<any, RouteKatalogVermerkarten> {
 

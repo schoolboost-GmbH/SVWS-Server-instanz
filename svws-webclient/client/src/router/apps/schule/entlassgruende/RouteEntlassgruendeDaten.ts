@@ -1,12 +1,12 @@
 import type { RouteLocationNormalized } from "vue-router";
-import type { EntlassgruendeDatenProps } from "~/components/schule/kataloge/entlassgruende/daten/SEntlassgruendeDatenProps";
+import type { EntlassgruendeDatenProps } from "~/components/schule/schulbezogen/entlassgruende/daten/SEntlassgruendeDatenProps";
 import type { RouteEntlassgruende } from "~/router/apps/schule/entlassgruende/RouteEntlassgruende";
 import { BenutzerKompetenz, Schulform, ServerMode } from "@core";
 import { RouteNode } from "~/router/RouteNode";
 import { routeEntlassgruende } from "~/router/apps/schule/entlassgruende/RouteEntlassgruende";
 import { api } from "~/router/Api";
 
-const SEntlassgruendeDaten = () => import("~/components/schule/kataloge/entlassgruende/daten/SEntlassgruendeDaten.vue")
+const SEntlassgruendeDaten = () => import("~/components/schule/schulbezogen/entlassgruende/daten/SEntlassgruendeDaten.vue")
 
 export class RouteEntlassgruendeDaten extends RouteNode<any, RouteEntlassgruende> {
 

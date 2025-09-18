@@ -1,5 +1,5 @@
 import type { RouteLocationNormalized, RouteLocationRaw } from "vue-router";
-import type { FahrschuelerartenGruppenprozesseProps } from "~/components/schule/kataloge/fahrschuelerarten/gruppenprozesse/SFahrschuelerartenGruppenprozesseProps";
+import type { FahrschuelerartenGruppenprozesseProps } from "~/components/schule/allgemein/fahrschuelerarten/gruppenprozesse/SFahrschuelerartenGruppenprozesseProps";
 import type { RouteFahrschuelerarten } from "~/router/apps/schule/fahrschuelerarten/RouteFahrschuelerarten";
 import { BenutzerKompetenz, Schulform, ServerMode } from "@core";
 import { RouteNode } from "~/router/RouteNode";
@@ -9,7 +9,7 @@ import { routeApp } from "~/router/apps/RouteApp";
 import { routeFahrschuelerarten } from "~/router/apps/schule/fahrschuelerarten/RouteFahrschuelerarten";
 
 const SFahrschuelerartenGruppenprozesse = () => import(
-	"~/components/schule/kataloge/fahrschuelerarten/gruppenprozesse/SFahrschuelerartenGruppenprozesse.vue");
+	"~/components/schule/allgemein/fahrschuelerarten/gruppenprozesse/SFahrschuelerartenGruppenprozesse.vue");
 
 export class RouteFahrschuelerartenGruppenprozesse extends RouteNode<any, RouteFahrschuelerarten> {
 

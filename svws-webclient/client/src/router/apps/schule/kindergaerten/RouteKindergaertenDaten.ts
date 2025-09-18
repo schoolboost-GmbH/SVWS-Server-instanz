@@ -1,12 +1,12 @@
 import type { RouteLocationNormalized } from "vue-router";
-import type { KindergaertenDatenProps } from "~/components/schule/kataloge/kindergaerten/daten/SKindergaertenDatenProps";
+import type { KindergaertenDatenProps } from "~/components/schule/allgemein/kindergaerten/daten/SKindergaertenDatenProps";
 import type { RouteKindergaerten } from "~/router/apps/schule/kindergaerten/RouteKindergaerten";
 import { BenutzerKompetenz, Schulform, ServerMode } from "@core";
 import { RouteNode } from "~/router/RouteNode";
 import { api } from "~/router/Api";
 import { routeKindergaerten } from "~/router/apps/schule/kindergaerten/RouteKindergaerten";
 
-const SKindergaertenDaten = () => import("~/components/schule/kataloge/kindergaerten/daten/SKindergaertenDaten.vue")
+const SKindergaertenDaten = () => import("~/components/schule/allgemein/kindergaerten/daten/SKindergaertenDaten.vue")
 
 export class RouteKindergaertenDaten extends RouteNode<any, RouteKindergaerten> {
 

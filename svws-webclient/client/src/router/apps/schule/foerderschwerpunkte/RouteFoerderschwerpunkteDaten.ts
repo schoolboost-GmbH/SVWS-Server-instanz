@@ -1,4 +1,4 @@
-import type { FoerderschwerpunkteDatenProps } from "~/components/schule/kataloge/foerderschwerpunkte/daten/SFoerderschwerpunkteDatenProps";
+import type { FoerderschwerpunkteDatenProps } from "~/components/schule/schulbezogen/foerderschwerpunkte/daten/SFoerderschwerpunkteDatenProps";
 import type { RouteLocationNormalized } from "vue-router";
 import type { RouteFoerderschwerpunkte } from "~/router/apps/schule/foerderschwerpunkte/RouteFoerderschwerpunkte";
 import { BenutzerKompetenz, Schulform, ServerMode } from "@core";
@@ -6,7 +6,7 @@ import { RouteNode } from "~/router/RouteNode";
 import { api } from "~/router/Api";
 import { routeFoerderschwerpunkte } from "~/router/apps/schule/foerderschwerpunkte/RouteFoerderschwerpunkte";
 
-const SFoerderschwerpunkteDaten = () => import("~/components/schule/kataloge/foerderschwerpunkte/daten/SFoerderschwerpunkteDaten.vue")
+const SFoerderschwerpunkteDaten = () => import("~/components/schule/schulbezogen/foerderschwerpunkte/daten/SFoerderschwerpunkteDaten.vue")
 
 export class RouteFoerderschwerpunkteDaten extends RouteNode<any, RouteFoerderschwerpunkte> {
 

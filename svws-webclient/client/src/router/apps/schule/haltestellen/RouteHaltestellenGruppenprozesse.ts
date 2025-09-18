@@ -1,4 +1,4 @@
-import type { HaltestellenGruppenprozesseProps } from "~/components/schule/kataloge/haltestellen/gruppenprozesse/SHaltestellenGruppenprozesseProps";
+import type { HaltestellenGruppenprozesseProps } from "~/components/schule/allgemein/haltestellen/gruppenprozesse/SHaltestellenGruppenprozesseProps";
 import type { RouteLocationNormalized, RouteLocationRaw } from "vue-router";
 import type { RouteHaltestellen } from "~/router/apps/schule/haltestellen/RouteHaltestellen";
 import { BenutzerKompetenz, Schulform, ServerMode } from "@core";
@@ -9,7 +9,7 @@ import { routeApp} from "~/router/apps/RouteApp";
 import { routeHaltestellen } from "~/router/apps/schule/haltestellen/RouteHaltestellen";
 
 const SHaltestellenGruppenprozesse = () => import(
-	"~/components/schule/kataloge/haltestellen/gruppenprozesse/SHaltestellenGruppenprozesse.vue");
+	"~/components/schule/allgemein/haltestellen/gruppenprozesse/SHaltestellenGruppenprozesse.vue");
 
 export class RouteHaltestellenGruppenprozesse extends RouteNode<any, RouteHaltestellen> {
 

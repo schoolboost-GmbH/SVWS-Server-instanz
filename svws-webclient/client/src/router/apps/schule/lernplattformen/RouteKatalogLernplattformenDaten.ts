@@ -3,10 +3,10 @@ import { BenutzerKompetenz, Schulform, ServerMode } from "@core";
 import { RouteNode } from "~/router/RouteNode";
 import type { RouteKatalogLernplattformen } from "~/router/apps/schule/lernplattformen/RouteKatalogLernplattformen";
 import { routeKatalogLernplattformen } from "~/router/apps/schule/lernplattformen/RouteKatalogLernplattformen";
-import type { LernplattformenDatenProps } from "~/components/schule/kataloge/lernplattformen/daten/SLernplattformenDatenProps";
+import type { LernplattformenDatenProps } from "~/components/schule/schulbezogen/lernplattformen/daten/SLernplattformenDatenProps";
 import { api } from "~/router/Api";
 
-const SLernplattformenDaten = () => import("~/components/schule/kataloge/lernplattformen/daten/SLernplattformenDaten.vue");
+const SLernplattformenDaten = () => import("~/components/schule/schulbezogen/lernplattformen/daten/SLernplattformenDaten.vue");
 
 export class RouteKatalogLernplattformenDaten extends RouteNode<any, RouteKatalogLernplattformen> {
 

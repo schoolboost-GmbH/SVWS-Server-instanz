@@ -1,7 +1,7 @@
 import type { RouteLocationNormalized, RouteLocationRaw } from "vue-router";
 import type { RouteFoerderschwerpunkte } from "~/router/apps/schule/foerderschwerpunkte/RouteFoerderschwerpunkte";
 import type { FoerderschwerpunkteGruppenprozesseProps }
-	from "~/components/schule/kataloge/foerderschwerpunkte/gruppenprozesse/SFoerderschwerpunkteGruppenprozesseProps";
+	from "~/components/schule/schulbezogen/foerderschwerpunkte/gruppenprozesse/SFoerderschwerpunkteGruppenprozesseProps";
 import { BenutzerKompetenz, Schulform, ServerMode } from "@core";
 import { RouteNode } from "~/router/RouteNode";
 import { ViewType } from "@ui";
@@ -10,7 +10,7 @@ import { routeApp } from "~/router/apps/RouteApp";
 import { routeFoerderschwerpunkte } from "~/router/apps/schule/foerderschwerpunkte/RouteFoerderschwerpunkte";
 
 const SFoerderschwerpunkteGruppenprozesse = () => import(
-	"~/components/schule/kataloge/foerderschwerpunkte/gruppenprozesse/SFoerderschwerpunkteGruppenprozesse.vue");
+	"~/components/schule/schulbezogen/foerderschwerpunkte/gruppenprozesse/SFoerderschwerpunkteGruppenprozesse.vue");
 
 export class RouteFoerderschwerpunkteGruppenprozesse extends RouteNode<any, RouteFoerderschwerpunkte> {
 

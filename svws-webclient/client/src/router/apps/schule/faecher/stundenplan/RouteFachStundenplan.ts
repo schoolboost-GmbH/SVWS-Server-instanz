@@ -7,9 +7,9 @@ import { routeSchuleFaecher, type RouteSchuleFaecher } from "~/router/apps/schul
 import { RouteDataFachStundenplan } from "~/router/apps/schule/faecher/stundenplan/RouteDataFachStundenplan";
 import { ConfigElement } from "../../../../../../../ui/src/utils/Config";
 import { api } from "~/router/Api";
-import type { FachStundenplanProps } from "~/components/schule/faecher/stundenplan/SFachStundenplanProps";
+import type { FachStundenplanProps } from "~/components/schule/schulbezogen/faecher/stundenplan/SFachStundenplanProps";
 
-const SFachStundenplan = () => import("~/components/schule/faecher/stundenplan/SFachStundenplan.vue");
+const SFachStundenplan = () => import("~/components/schule/schulbezogen/faecher/stundenplan/SFachStundenplan.vue");
 
 export class RouteFachStundenplan extends RouteNode<RouteDataFachStundenplan, RouteSchuleFaecher> {
 

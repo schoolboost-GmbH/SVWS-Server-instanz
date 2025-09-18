@@ -4,12 +4,12 @@ import { BenutzerKompetenz, Schulform, ServerMode } from "@core";
 
 import { RouteNode } from "~/router/RouteNode";
 
-import type { SchuleDatenaustauschWenomProps } from "~/components/schule/datenaustausch/wenom/SSchuleDatenaustauschWenomProps";
+import type { SchuleDatenaustauschWenomProps } from "~/components/schule/datenaustausch/webnotenmanager/SSchuleDatenaustauschWenomProps";
 import type { RouteApp } from "../../RouteApp";
 import { RouteSchuleMenuGroup } from "../RouteSchuleMenuGroup";
 import { RouteDataSchuleDatenaustauschWenom } from "./RouteDataSchuleDatenaustauschWenom";
 
-const SSchuleDatenaustauschWenom = () => import("~/components/schule/datenaustausch/wenom/SSchuleDatenaustauschWenom.vue");
+const SSchuleDatenaustauschWenom = () => import("~/components/schule/datenaustausch/webnotenmanager/SSchuleDatenaustauschWenom.vue");
 
 export class RouteSchuleDatenaustauschWenom extends RouteNode<RouteDataSchuleDatenaustauschWenom, RouteApp> {
 

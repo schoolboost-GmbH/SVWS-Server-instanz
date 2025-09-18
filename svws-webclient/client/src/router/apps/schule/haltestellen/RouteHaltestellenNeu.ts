@@ -1,4 +1,4 @@
-import type { HaltestellenNeuProps } from "~/components/schule/kataloge/haltestellen/SHaltestellenNeuProps";
+import type { HaltestellenNeuProps } from "~/components/schule/allgemein/haltestellen/SHaltestellenNeuProps";
 import type { RouteLocationNormalized } from "vue-router";
 import type { RouteHaltestellen } from "~/router/apps/schule/haltestellen/RouteHaltestellen";
 import { BenutzerKompetenz, Schulform, ServerMode } from "@core";
@@ -8,7 +8,7 @@ import { ViewType } from "@ui";
 import { api } from "~/router/Api";
 import { routeHaltestellen } from "~/router/apps/schule/haltestellen/RouteHaltestellen";
 
-const SHaltestellenNeu = () => import("~/components/schule/kataloge/haltestellen/SHaltestellenNeu.vue");
+const SHaltestellenNeu = () => import("~/components/schule/allgemein/haltestellen/SHaltestellenNeu.vue");
 
 export class RouteHaltestellenNeu extends RouteNode<any, RouteHaltestellen> {
 

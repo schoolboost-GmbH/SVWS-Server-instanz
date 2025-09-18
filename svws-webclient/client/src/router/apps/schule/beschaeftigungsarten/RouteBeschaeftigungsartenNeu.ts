@@ -6,9 +6,9 @@ import { ViewType } from "@ui";
 import { api } from "~/router/Api";
 import type { RouteBeschaeftigungsarten } from "~/router/apps/schule/beschaeftigungsarten/RouteBeschaeftigungsarten";
 import { routeBeschaeftigungsarten } from "~/router/apps/schule/beschaeftigungsarten/RouteBeschaeftigungsarten";
-import type { BeschaeftigungsartenNeuProps } from "~/components/schule/kataloge/beschaeftigungsarten/SBeschaeftigungsartenNeuProps";
+import type { BeschaeftigungsartenNeuProps } from "~/components/schule/allgemein/beschaeftigungsarten/SBeschaeftigungsartenNeuProps";
 
-const SBeschaeftigungsartenNeu = () => import("~/components/schule/kataloge/beschaeftigungsarten/SBeschaeftigungsartenNeu.vue");
+const SBeschaeftigungsartenNeu = () => import("~/components/schule/allgemein/beschaeftigungsarten/SBeschaeftigungsartenNeu.vue");
 
 export class RouteBeschaeftigungsartenNeu extends RouteNode<any, RouteBeschaeftigungsarten> {
 

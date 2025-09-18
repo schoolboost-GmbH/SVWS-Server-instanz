@@ -1,5 +1,5 @@
 import type { RouteLocationNormalized, RouteLocationRaw } from "vue-router";
-import type { SchuleFachNeuProps } from "~/components/schule/faecher/SSchuleFachNeuProps";
+import type { SchuleFachNeuProps } from "~/components/schule/schulbezogen/faecher/SSchuleFachNeuProps";
 import { BenutzerKompetenz, Schulform, ServerMode } from "@core";
 import { RouteNode } from "~/router/RouteNode";
 import { ViewType } from "@ui";
@@ -8,7 +8,7 @@ import { routeSchuleFaecher, type RouteSchuleFaecher } from "./RouteSchuleFaeche
 import { routeApp } from "../../RouteApp";
 import { api } from "~/router/Api";
 
-const SSchuleFachNeu = () => import("~/components/schule/faecher/SSchuleFachNeu.vue");
+const SSchuleFachNeu = () => import("~/components/schule/schulbezogen/faecher/SSchuleFachNeu.vue");
 
 export class RouteSchuleFachNeu extends RouteNode<any, RouteSchuleFaecher> {
 

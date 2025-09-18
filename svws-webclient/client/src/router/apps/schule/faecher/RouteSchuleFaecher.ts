@@ -6,7 +6,7 @@ import type { RouteNode } from "~/router/RouteNode";
 import type { RouteApp } from "~/router/apps/RouteApp";
 import { routeSchuleFachDaten } from "~/router/apps/schule/faecher/RouteSchuleFachDaten";
 
-import type { FaecherAuswahlProps } from "~/components/schule/faecher/SFaecherAuswahlProps";
+import type { FaecherAuswahlProps } from "~/components/schule/schulbezogen/faecher/SFaecherAuswahlProps";
 import { RouteDataSchuleFaecher } from "./RouteDataSchuleFaecher";
 import { routeFachStundenplan } from "./stundenplan/RouteFachStundenplan";
 import { RouteSchuleMenuGroup } from "../RouteSchuleMenuGroup";
@@ -14,8 +14,8 @@ import { routeSchuleFachGruppenprozesse } from "./RouteSchuleFachGruppenprozesse
 import { routeSchuleFachNeu } from "./RouteSchuleFachNeu";
 import { RouteAuswahlNode } from "~/router/RouteAuswahlNode";
 
-const SFaecherAuswahl = () => import("~/components/schule/faecher/SFaecherAuswahl.vue")
-const SFaecherApp = () => import("~/components/schule/faecher/SFaecherApp.vue")
+const SFaecherAuswahl = () => import("~/components/schule/schulbezogen/faecher/SFaecherAuswahl.vue")
+const SFaecherApp = () => import("~/components/schule/schulbezogen/faecher/SFaecherApp.vue")
 
 export class RouteSchuleFaecher extends RouteAuswahlNode<FachListeManager, RouteDataSchuleFaecher, RouteApp> {
 

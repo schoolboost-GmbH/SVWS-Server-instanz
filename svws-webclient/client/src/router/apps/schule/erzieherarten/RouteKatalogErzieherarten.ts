@@ -10,8 +10,8 @@ import { routeKatalogErzieherartenDaten } from "~/router/apps/schule/erzieherart
 import { routeKatalogErzieherartenNeu } from "~/router/apps/schule/erzieherarten/RouteKatalogErzieherartenNeu";
 import { routeKatalogErzieherartenGruppenprozesse } from "~/router/apps/schule/erzieherarten/RouteKatalogErzieherartenGruppenprozesse";
 
-const SErzieherartenAuswahl = () => import("~/components/schule/kataloge/erzieherarten/SErzieherartenAuswahl.vue");
-const SErzieherartenApp = () => import("~/components/schule/kataloge/erzieherarten/SErzieherartenApp.vue");
+const SErzieherartenAuswahl = () => import("~/components/schule/allgemein/erzieherarten/SErzieherartenAuswahl.vue");
+const SErzieherartenApp = () => import("~/components/schule/allgemein/erzieherarten/SErzieherartenApp.vue");
 
 export class RouteKatalogErzieherarten extends RouteAuswahlNode<ErzieherartListeManager, RouteDataKatalogErzieherarten, RouteApp> {
 

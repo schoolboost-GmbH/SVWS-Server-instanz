@@ -10,8 +10,8 @@ import { routeKatalogTelefonArtenGruppenprozesse } from "~/router/apps/schule/te
 import { routeKatalogTelefonArtenNeu } from "~/router/apps/schule/telefonarten/RouteKatalogTelefonArtenNeu";
 import { RouteDataKatalogTelefonArten } from "~/router/apps/schule/telefonarten/RouteDataKatalogTelefonArten";
 
-const STelefonArtenAuswahl = () => import("~/components/schule/kataloge/telefonarten/STelefonArtenAuswahl.vue");
-const STelefonArtenApp = () => import("~/components/schule/kataloge/telefonarten/STelefonArtenApp.vue");
+const STelefonArtenAuswahl = () => import("~/components/schule/allgemein/telefonarten/STelefonArtenAuswahl.vue");
+const STelefonArtenApp = () => import("~/components/schule/allgemein/telefonarten/STelefonArtenApp.vue");
 
 export class RouteKatalogTelefonArten extends RouteAuswahlNode<TelefonArtListeManager, RouteDataKatalogTelefonArten, RouteApp> {
 

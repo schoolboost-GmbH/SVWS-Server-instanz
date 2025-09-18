@@ -6,9 +6,9 @@ import { RouteNode } from "~/router/RouteNode";
 import { routeApp } from "../../RouteApp";
 import { ViewType } from "@ui";
 import { type RouteJahrgaenge, routeJahrgaenge } from "~/router/apps/schule/jahrgaenge/RouteJahrgaenge";
-import type { SchuleJahrgangGruppenprozesseProps } from "~/components/schule/jahrgaenge/gruppenprozesse/SJahrgaengeGruppenprozesseProps";
+import type { SchuleJahrgangGruppenprozesseProps } from "~/components/schule/schulbezogen/jahrgaenge/gruppenprozesse/SJahrgaengeGruppenprozesseProps";
 
-const SJahrgaengeGruppenprozesse = () => import("~/components/schule/jahrgaenge/gruppenprozesse/SJahrgaengeGruppenprozesse.vue");
+const SJahrgaengeGruppenprozesse = () => import("~/components/schule/schulbezogen/jahrgaenge/gruppenprozesse/SJahrgaengeGruppenprozesse.vue");
 
 export class RouteJahrgaengeGruppenprozesse extends RouteNode<any, RouteJahrgaenge> {
 

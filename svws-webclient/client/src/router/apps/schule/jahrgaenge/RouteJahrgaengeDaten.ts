@@ -5,11 +5,11 @@ import { BenutzerKompetenz, Schulform, ServerMode } from "@core";
 import { RouteNode } from "~/router/RouteNode";
 import { routeJahrgaenge, type RouteJahrgaenge } from "~/router/apps/schule/jahrgaenge/RouteJahrgaenge";
 
-import type { JahrgangDatenProps } from "~/components/schule/jahrgaenge/daten/SJahrgaengeDatenProps";
+import type { JahrgangDatenProps } from "~/components/schule/schulbezogen/jahrgaenge/daten/SJahrgaengeDatenProps";
 import { api } from "~/router/Api";
 import { routeApp } from "../../RouteApp";
 
-const SJahrgaengeDaten = () => import("~/components/schule/jahrgaenge/daten/SJahrgaengeDaten.vue");
+const SJahrgaengeDaten = () => import("~/components/schule/schulbezogen/jahrgaenge/daten/SJahrgaengeDaten.vue");
 
 export class RouteJahrgaengeDaten extends RouteNode<any, RouteJahrgaenge> {
 

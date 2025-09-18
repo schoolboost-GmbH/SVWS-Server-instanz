@@ -10,8 +10,8 @@ import { routeKatalogLernplattformenDaten } from "~/router/apps/schule/lernplatt
 import { routeKatalogLernplattformenNeu } from "~/router/apps/schule/lernplattformen/RouteKatalogLernplattformenNeu";
 import { routeKatalogLernplattformenGruppenprozesse } from "~/router/apps/schule/lernplattformen/RouteKatalogLernplattformenGruppenprozesse";
 
-const SLernplattformenAuswahl = () => import("~/components/schule/kataloge/lernplattformen/SLernplattformenAuswahl.vue");
-const SLernplattformenApp = () => import("~/components/schule/kataloge/lernplattformen/SLernplattformenApp.vue");
+const SLernplattformenAuswahl = () => import("~/components/schule/schulbezogen/lernplattformen/SLernplattformenAuswahl.vue");
+const SLernplattformenApp = () => import("~/components/schule/schulbezogen/lernplattformen/SLernplattformenApp.vue");
 
 export class RouteKatalogLernplattformen extends RouteAuswahlNode<LernplattformListeManager, RouteDataKatalogLernplattformen, RouteApp> {
 

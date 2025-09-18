@@ -1,5 +1,5 @@
 import type { RouteLocationNormalized, RouteLocationRaw } from "vue-router";
-import type { MerkmaleGruppenprozesseProps } from "~/components/schule/kataloge/merkmale/gruppenprozesse/SMerkmaleGruppenprozesseProps";
+import type { MerkmaleGruppenprozesseProps } from "~/components/schule/schulbezogen/merkmale/gruppenprozesse/SMerkmaleGruppenprozesseProps";
 import type { RouteMerkmale } from "~/router/apps/schule/merkmale/RouteMerkmale";
 import { BenutzerKompetenz, Schulform, ServerMode } from "@core";
 import { RouteNode } from "~/router/RouteNode";
@@ -9,7 +9,7 @@ import { routeApp } from "~/router/apps/RouteApp";
 import { routeMerkmale } from "~/router/apps/schule/merkmale/RouteMerkmale";
 
 const SMerkmaleGruppenprozesse = () => import(
-	"~/components/schule/kataloge/merkmale/gruppenprozesse/SMerkmaleGruppenprozesse.vue");
+	"~/components/schule/schulbezogen/merkmale/gruppenprozesse/SMerkmaleGruppenprozesse.vue");
 
 export class RouteMerkmaleGruppenprozesse extends RouteNode<any, RouteMerkmale> {
 

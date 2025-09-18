@@ -10,8 +10,8 @@ import { routeFoerderschwerpunkteDaten } from "~/router/apps/schule/foerderschwe
 import { routeFoerderschwerpunkteGruppenprozesse } from "~/router/apps/schule/foerderschwerpunkte/RouteFoerderschwerpunkteGruppenprozesse";
 import { RouteDataFoerderschwerpunkte } from "~/router/apps/schule/foerderschwerpunkte/RouteDataFoerderschwerpunkte";
 
-const SFoerderschwerpunkteApp = () => import("~/components/schule/kataloge/foerderschwerpunkte/SFoerderschwerpunkteApp.vue");
-const SFoerderschwerpunkteAuswahl = () => import("~/components/schule/kataloge/foerderschwerpunkte/SFoerderschwerpunkteAuswahl.vue");
+const SFoerderschwerpunkteApp = () => import("~/components/schule/schulbezogen/foerderschwerpunkte/SFoerderschwerpunkteApp.vue");
+const SFoerderschwerpunkteAuswahl = () => import("~/components/schule/schulbezogen/foerderschwerpunkte/SFoerderschwerpunkteAuswahl.vue");
 
 export class RouteFoerderschwerpunkte extends RouteAuswahlNode<FoerderschwerpunkteListeManager, RouteDataFoerderschwerpunkte, RouteApp> {
 

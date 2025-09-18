@@ -10,8 +10,8 @@ import { routeBeschaeftigungsartenDaten } from "~/router/apps/schule/beschaeftig
 import { routeBeschaeftigungsartenNeu } from "~/router/apps/schule/beschaeftigungsarten/RouteBeschaeftigungsartenNeu";
 import { routeBeschaeftigungsartenGruppenprozesse } from "~/router/apps/schule/beschaeftigungsarten/RouteBeschaeftigungsartenGruppenprozesse";
 
-const SBeschaeftigungsartenApp = () => import("~/components/schule/kataloge/beschaeftigungsarten/SBeschaeftigungsartenApp.vue");
-const SBeschaeftigungsartenAuswahl = () => import("~/components/schule/kataloge/beschaeftigungsarten/SBeschaeftigungsartenAuswahl.vue");
+const SBeschaeftigungsartenApp = () => import("~/components/schule/allgemein/beschaeftigungsarten/SBeschaeftigungsartenApp.vue");
+const SBeschaeftigungsartenAuswahl = () => import("~/components/schule/allgemein/beschaeftigungsarten/SBeschaeftigungsartenAuswahl.vue");
 
 export class RouteBeschaeftigungsarten extends RouteAuswahlNode<BeschaeftigungsartenListeManager, RouteDataBeschaeftigungsarten, RouteApp> {
 

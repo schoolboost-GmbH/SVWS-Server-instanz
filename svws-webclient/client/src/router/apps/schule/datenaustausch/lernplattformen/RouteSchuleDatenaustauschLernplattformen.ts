@@ -5,10 +5,10 @@ import { RouteDataSchuleDatenaustauschLernplattformen } from "./RouteDataSchuleD
 import { RouteSchuleMenuGroup } from "../../RouteSchuleMenuGroup";
 import { RouteNode } from "~/router/RouteNode";
 import type { RouteLocationNormalized, RouteLocationRaw, RouteParams } from "vue-router";
-import type { SchuleDatenaustauschLernplattformenProps } from "~/components/schule/datenaustausch/lernplattformen/SSchuleDatenaustauschLernplattformenProps";
+import type { SchuleDatenaustauschLernplattformenProps } from "~/components/schule/datenaustausch/lernplattformenExport/SSchuleDatenaustauschLernplattformenProps";
 import { api } from "~/router/Api";
 
-const SSchuleDatenaustauschLernplattformen = () => import("~/components/schule/datenaustausch/lernplattformen/SSchuleDatenaustauschLernplattformen.vue");
+const SSchuleDatenaustauschLernplattformen = () => import("~/components/schule/datenaustausch/lernplattformenExport/SSchuleDatenaustauschLernplattformen.vue");
 
 export class RouteSchuleDatenaustauschLernplattformen extends RouteNode<RouteDataSchuleDatenaustauschLernplattformen, RouteApp> {
 

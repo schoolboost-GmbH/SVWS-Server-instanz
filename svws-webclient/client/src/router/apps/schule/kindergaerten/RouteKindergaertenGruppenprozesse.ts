@@ -1,5 +1,5 @@
 import type { RouteLocationNormalized, RouteLocationRaw } from "vue-router";
-import type { KindergaertenGruppenprozesseProps } from "~/components/schule/kataloge/kindergaerten/gruppenprozesse/SKindergaertenGruppenprozesseProps";
+import type { KindergaertenGruppenprozesseProps } from "~/components/schule/allgemein/kindergaerten/gruppenprozesse/SKindergaertenGruppenprozesseProps";
 import type { RouteKindergaerten } from "~/router/apps/schule/kindergaerten/RouteKindergaerten";
 import { BenutzerKompetenz, Schulform, ServerMode } from "@core";
 import { RouteNode } from "~/router/RouteNode";
@@ -9,7 +9,7 @@ import { routeApp } from "~/router/apps/RouteApp";
 import { routeKindergaerten } from "~/router/apps/schule/kindergaerten/RouteKindergaerten";
 
 const SKindergaertenGruppenprozesse = () => import(
-	"~/components/schule/kataloge/kindergaerten/gruppenprozesse/SKindergaertenGruppenprozesse.vue");
+	"~/components/schule/allgemein/kindergaerten/gruppenprozesse/SKindergaertenGruppenprozesse.vue");
 
 export class RouteKindergaertenGruppenprozesse extends RouteNode<any, RouteKindergaerten> {
 

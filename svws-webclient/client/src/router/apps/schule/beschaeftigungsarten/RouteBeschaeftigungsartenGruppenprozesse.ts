@@ -6,10 +6,10 @@ import { ViewType } from "@ui";
 import { api } from "~/router/Api";
 import { routeApp } from "~/router/apps/RouteApp";
 import { routeBeschaeftigungsarten } from "~/router/apps/schule/beschaeftigungsarten/RouteBeschaeftigungsarten";
-import type { BeschaeftigungsartenGruppenprozesseProps } from "~/components/schule/kataloge/beschaeftigungsarten/gruppenprozesse/SBeschaeftigungsartenGruppenprozesseProps";
+import type { BeschaeftigungsartenGruppenprozesseProps } from "~/components/schule/allgemein/beschaeftigungsarten/gruppenprozesse/SBeschaeftigungsartenGruppenprozesseProps";
 
 const SBeschaeftigungsartenGruppenprozesse = () => import(
-	"~/components/schule/kataloge/beschaeftigungsarten/gruppenprozesse/SBeschaeftigungsartenGruppenprozesse.vue");
+	"~/components/schule/allgemein/beschaeftigungsarten/gruppenprozesse/SBeschaeftigungsartenGruppenprozesse.vue");
 
 export class RouteBeschaeftigungsartenGruppenprozesse extends RouteNode<any, RouteBeschaeftigungsarten> {
 

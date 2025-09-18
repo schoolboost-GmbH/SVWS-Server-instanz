@@ -6,9 +6,9 @@ import { RouteNode } from "~/router/RouteNode";
 import { routeApp } from "../../RouteApp";
 import { ViewType } from "@ui";
 import { routeKatalogSchulen, type RouteKatalogSchulen } from "~/router/apps/schule/schulen/RouteKatalogSchulen";
-import type { KatalogSchuleGruppenprozesseProps } from "~/components/schule/kataloge/schulen/gruppenprozesse/SKatalogSchuleGruppenprozesseProps";
+import type { KatalogSchuleGruppenprozesseProps } from "~/components/schule/allgemein/schulen/gruppenprozesse/SKatalogSchuleGruppenprozesseProps";
 
-const SKatalogSchuleGruppenprozesse = () => import("~/components/schule/kataloge/schulen/gruppenprozesse/SKatalogSchuleGruppenprozesse.vue");
+const SKatalogSchuleGruppenprozesse = () => import("~/components/schule/allgemein/schulen/gruppenprozesse/SKatalogSchuleGruppenprozesse.vue");
 
 export class RouteKatalogSchuleGruppenprozesse extends RouteNode<any, RouteKatalogSchulen> {
 

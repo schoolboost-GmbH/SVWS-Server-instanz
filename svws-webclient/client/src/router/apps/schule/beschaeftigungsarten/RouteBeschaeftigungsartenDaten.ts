@@ -1,4 +1,4 @@
-import type { BeschaeftigungsartenDatenProps } from "~/components/schule/kataloge/beschaeftigungsarten/daten/SBeschaeftigungsartenDatenProps";
+import type { BeschaeftigungsartenDatenProps } from "~/components/schule/allgemein/beschaeftigungsarten/daten/SBeschaeftigungsartenDatenProps";
 import type { RouteLocationNormalized } from "vue-router";
 import type { RouteBeschaeftigungsarten } from "~/router/apps/schule/beschaeftigungsarten/RouteBeschaeftigungsarten";
 import { BenutzerKompetenz, Schulform, ServerMode } from "@core";
@@ -6,7 +6,7 @@ import { RouteNode } from "~/router/RouteNode";
 import { api } from "~/router/Api";
 import { routeBeschaeftigungsarten } from "~/router/apps/schule/beschaeftigungsarten/RouteBeschaeftigungsarten";
 
-const SBeschaeftigungsartenDaten = () => import("~/components/schule/kataloge/beschaeftigungsarten/daten/SBeschaeftigungsartenDaten.vue")
+const SBeschaeftigungsartenDaten = () => import("~/components/schule/allgemein/beschaeftigungsarten/daten/SBeschaeftigungsartenDaten.vue")
 
 export class RouteBeschaeftigungsartenDaten extends RouteNode<any, RouteBeschaeftigungsarten> {
 

@@ -5,12 +5,12 @@ import { BenutzerKompetenz, Schulform, ServerMode } from "@core";
 import { RouteNode } from "~/router/RouteNode";
 import { routeApp } from "~/router/apps/RouteApp";
 
-import type { BetriebeDatenProps } from "~/components/schule/betriebe/daten/SBetriebeDatenProps";
+import type { BetriebeDatenProps } from "~/components/schule/schulbezogen/betriebe/daten/SBetriebeDatenProps";
 import type { RouteSchuleBetriebe} from "./RouteSchuleBetriebe";
 import { routeSchuleBetriebe } from "./RouteSchuleBetriebe";
 import { api } from "~/router/Api";
 
-const SBetriebeDaten = () => import("~/components/schule/betriebe/daten/SBetriebeDaten.vue")
+const SBetriebeDaten = () => import("~/components/schule/schulbezogen/betriebe/daten/SBetriebeDaten.vue")
 
 export class RouteSchuleBetriebeDaten extends RouteNode<any, RouteSchuleBetriebe> {
 

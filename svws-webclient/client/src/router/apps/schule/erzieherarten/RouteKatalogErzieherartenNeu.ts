@@ -3,12 +3,12 @@ import { BenutzerKompetenz, Schulform, ServerMode } from "@core";
 import { RouteNode } from "~/router/RouteNode";
 import { ViewType } from "@ui";
 import { RouteManager } from "~/router/RouteManager";
-import type { SErzieherartenNeuProps } from "~/components/schule/kataloge/erzieherarten/SErzieherartenNeuProps";
+import type { SErzieherartenNeuProps } from "~/components/schule/allgemein/erzieherarten/SErzieherartenNeuProps";
 import type { RouteKatalogErzieherarten } from "~/router/apps/schule/erzieherarten/RouteKatalogErzieherarten";
 import { routeKatalogErzieherarten } from "~/router/apps/schule/erzieherarten/RouteKatalogErzieherarten";
 import { api } from "~/router/Api";
 
-const SErzieherartenNeu = () => import("~/components/schule/kataloge/erzieherarten/SErzieherartenNeu.vue");
+const SErzieherartenNeu = () => import("~/components/schule/allgemein/erzieherarten/SErzieherartenNeu.vue");
 
 export class RouteKatalogErzieherartenNeu extends RouteNode<any, RouteKatalogErzieherarten> {
 

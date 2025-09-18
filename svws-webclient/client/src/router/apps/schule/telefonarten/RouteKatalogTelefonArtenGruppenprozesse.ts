@@ -6,9 +6,9 @@ import { routeApp } from "../../RouteApp";
 import { ViewType } from "@ui";
 import type { RouteKatalogTelefonArten } from "~/router/apps/schule/telefonarten/RouteKatalogTelefonArten";
 import { routeKatalogTelefonArten } from "~/router/apps/schule/telefonarten/RouteKatalogTelefonArten";
-import type { STelefonArtenGruppenprozesseProps } from "~/components/schule/kataloge/telefonarten/gruppenprozesse/STelefonArtenGruppenprozesseProps";
+import type { STelefonArtenGruppenprozesseProps } from "~/components/schule/allgemein/telefonarten/gruppenprozesse/STelefonArtenGruppenprozesseProps";
 
-const STelefonArtenGruppenprozesse = () => import("~/components/schule/kataloge/telefonarten/gruppenprozesse/STelefonArtenGruppenprozesse.vue");
+const STelefonArtenGruppenprozesse = () => import("~/components/schule/allgemein/telefonarten/gruppenprozesse/STelefonArtenGruppenprozesse.vue");
 
 export class RouteKatalogTelefonArtenGruppenprozesse extends RouteNode<any, RouteKatalogTelefonArten> {
 

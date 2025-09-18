@@ -10,8 +10,8 @@ import { routeAbteilungenDaten } from "~/router/apps/schule/abteilungen/RouteAbt
 import { routeAbteilungenNeu } from "~/router/apps/schule/abteilungen/RouteAbteilungenNeu";
 import { routeAbteilungenGruppenprozesse } from "~/router/apps/schule/abteilungen/RouteAbteilungenGruppenprozesse";
 
-const SAbteilungenApp = () => import("~/components/schule/kataloge/abteilungen/SAbteilungenApp.vue");
-const SAbteilungenAuswahl = () => import("~/components/schule/kataloge/abteilungen/SAbteilungenAuswahl.vue")
+const SAbteilungenApp = () => import("~/components/schule/schulbezogen/abteilungen/SAbteilungenApp.vue");
+const SAbteilungenAuswahl = () => import("~/components/schule/schulbezogen/abteilungen/SAbteilungenAuswahl.vue")
 
 export class RouteAbteilungen extends RouteAuswahlNode<AbteilungenListeManager, RouteDataAbteilungen, RouteApp> {
 

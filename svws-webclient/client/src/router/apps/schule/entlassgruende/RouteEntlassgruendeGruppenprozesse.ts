@@ -1,5 +1,5 @@
 import type { RouteLocationNormalized, RouteLocationRaw } from "vue-router";
-import type { EntlassgruendeGruppenprozesseProps } from "~/components/schule/kataloge/entlassgruende/gruppenprozesse/SEntlassgruendeGruppenprozesseProps";
+import type { EntlassgruendeGruppenprozesseProps } from "~/components/schule/schulbezogen/entlassgruende/gruppenprozesse/SEntlassgruendeGruppenprozesseProps";
 import type { RouteEntlassgruende } from "~/router/apps/schule/entlassgruende/RouteEntlassgruende";
 import { BenutzerKompetenz, Schulform, ServerMode } from "@core";
 import { RouteNode } from "~/router/RouteNode";
@@ -9,7 +9,7 @@ import { routeApp } from "~/router/apps/RouteApp";
 import { routeEntlassgruende } from "~/router/apps/schule/entlassgruende/RouteEntlassgruende";
 
 const SEntlassgruendeGruppenprozesse = () => import(
-	"~/components/schule/kataloge/entlassgruende/gruppenprozesse/SEntlassgruendeGruppenprozesse.vue");
+	"~/components/schule/schulbezogen/entlassgruende/gruppenprozesse/SEntlassgruendeGruppenprozesse.vue");
 
 export class RouteEntlassgruendeGruppenprozesse extends RouteNode<any, RouteEntlassgruende> {
 

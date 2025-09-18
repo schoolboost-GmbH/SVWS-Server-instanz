@@ -10,8 +10,8 @@ import { routeFahrschuelerartenDaten } from "~/router/apps/schule/fahrschuelerar
 import { routeFahrschuelerartenNeu } from "~/router/apps/schule/fahrschuelerarten/RouteFahrschuelerartenNeu";
 import { routeFahrschuelerartenGruppenprozesse } from "~/router/apps/schule/fahrschuelerarten/RouteFahrschuelerartenGruppenprozesse";
 
-const SFahrschuelerartenApp = () => import("~/components/schule/kataloge/fahrschuelerarten/SFahrschuelerartenApp.vue");
-const SFahrschuelerartenAuswahl = () => import("~/components/schule/kataloge/fahrschuelerarten/SFahrschuelerartenAuswahl.vue");
+const SFahrschuelerartenApp = () => import("~/components/schule/allgemein/fahrschuelerarten/SFahrschuelerartenApp.vue");
+const SFahrschuelerartenAuswahl = () => import("~/components/schule/allgemein/fahrschuelerarten/SFahrschuelerartenAuswahl.vue");
 
 export class RouteFahrschuelerarten extends RouteAuswahlNode<FahrschuelerartenListeManager, RouteDataFahrschuelerarten, RouteApp> {
 

@@ -10,16 +10,16 @@ import type { RouteApp } from "~/router/apps/RouteApp";
 import { routeApp } from "~/router/apps/RouteApp";
 
 import type { TabData } from "@ui";
-import type { BetriebeAppProps } from "~/components/schule/betriebe/SBetriebeAppProps";
-import type { BetriebeAuswahlProps } from "~/components/schule/betriebe/SBetriebeAuswahlProps";
+import type { BetriebeAppProps } from "~/components/schule/schulbezogen/betriebe/SBetriebeAppProps";
+import type { BetriebeAuswahlProps } from "~/components/schule/schulbezogen/betriebe/SBetriebeAuswahlProps";
 import { RouteDataSchuleBetriebe } from "./RouteDataSchuleBetriebe";
 import { routeSchuleBetriebeDaten } from "./RouteSchuleBetriebeDaten";
 import { RouteSchuleMenuGroup } from "../RouteSchuleMenuGroup";
 import { routeError } from "~/router/error/RouteError";
 import { api } from "~/router/Api";
 
-const SBetriebeAuswahl = () => import("~/components/schule/betriebe/SBetriebeAuswahl.vue")
-const SBetriebeApp = () => import("~/components/schule/betriebe/SBetriebeApp.vue")
+const SBetriebeAuswahl = () => import("~/components/schule/schulbezogen/betriebe/SBetriebeAuswahl.vue")
+const SBetriebeApp = () => import("~/components/schule/schulbezogen/betriebe/SBetriebeApp.vue")
 
 export class RouteSchuleBetriebe extends RouteNode<RouteDataSchuleBetriebe, RouteApp>{
 

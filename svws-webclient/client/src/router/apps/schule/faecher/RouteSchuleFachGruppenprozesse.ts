@@ -6,9 +6,9 @@ import { RouteNode } from "~/router/RouteNode";
 import { routeApp } from "../../RouteApp";
 import { ViewType } from "@ui";
 import { routeSchuleFaecher, type RouteSchuleFaecher } from "./RouteSchuleFaecher";
-import type { SchuleFachGruppenprozesseProps } from "~/components/schule/faecher/gruppenprozesse/SSchuleFachGruppenprozesseProps";
+import type { SchuleFachGruppenprozesseProps } from "~/components/schule/schulbezogen/faecher/gruppenprozesse/SSchuleFachGruppenprozesseProps";
 
-const SSchuleFachGruppenprozesse = () => import("~/components/schule/faecher/gruppenprozesse/SSchuleFachGruppenprozesse.vue");
+const SSchuleFachGruppenprozesse = () => import("~/components/schule/schulbezogen/faecher/gruppenprozesse/SSchuleFachGruppenprozesse.vue");
 
 export class RouteSchuleFachGruppenprozesse extends RouteNode<any, RouteSchuleFaecher> {
 

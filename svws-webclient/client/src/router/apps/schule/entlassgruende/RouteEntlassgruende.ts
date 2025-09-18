@@ -10,8 +10,8 @@ import { routeEntlassgruendeDaten } from "~/router/apps/schule/entlassgruende/Ro
 import { routeEntlassgruendeGruppenprozesse } from "~/router/apps/schule/entlassgruende/RouteEntlassgruendeGruppenprozesse";
 import { routeEntlassgruendeNeu } from "~/router/apps/schule/entlassgruende/RouteEntlassgruendeNeu";
 
-const SEntlassgruendeApp = () => import("~/components/schule/kataloge/entlassgruende/SEntlassgruendeApp.vue");
-const SEntlassgruendeAuswahl = () => import("~/components/schule/kataloge/entlassgruende/SEntlassgruendeAuswahl.vue");
+const SEntlassgruendeApp = () => import("~/components/schule/schulbezogen/entlassgruende/SEntlassgruendeApp.vue");
+const SEntlassgruendeAuswahl = () => import("~/components/schule/schulbezogen/entlassgruende/SEntlassgruendeAuswahl.vue");
 
 export class RouteEntlassgruende extends RouteAuswahlNode<EntlassgruendeListeManager, RouteDataEntlassgruende, RouteApp> {
 

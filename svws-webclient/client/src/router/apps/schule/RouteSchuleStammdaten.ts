@@ -5,13 +5,13 @@ import { BenutzerKompetenz, Schulform, ServerMode } from "@core";
 import { api } from "~/router/Api";
 import { RouteNode } from "~/router/RouteNode";
 
-import type { SchuleAppProps } from "~/components/schule/SSchuleAppProps";
+import type { SchuleAppProps } from "~/components/schule/schulbezogen/stammdaten/SSchuleAppProps";
 
 import type { RouteSchule} from "./RouteSchule";
 import { routeSchule } from "./RouteSchule";
 import { RouteSchuleMenuGroup } from "./RouteSchuleMenuGroup";
 
-const SSchuleStammdaten = () => import("~/components/schule/SSchuleStammdaten.vue")
+const SSchuleStammdaten = () => import("~/components/schule/schulbezogen/stammdaten/SSchuleStammdaten.vue")
 
 export class RouteSchuleStammdaten extends RouteNode<any, RouteSchule> {
 

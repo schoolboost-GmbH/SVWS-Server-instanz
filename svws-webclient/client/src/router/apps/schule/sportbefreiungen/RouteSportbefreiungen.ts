@@ -10,8 +10,8 @@ import { routeSportbefreiungenNeu } from "~/router/apps/schule/sportbefreiungen/
 import { routeSportbefreiungenDaten } from "~/router/apps/schule/sportbefreiungen/RouteSportbefreiungenDaten";
 import { routeSportbefreiungenGruppenprozesse } from "~/router/apps/schule/sportbefreiungen/RouteSportbefreiungenGruppenprozesse";
 
-const SSportbefreiungenApp = () => import("~/components/schule/kataloge/sportbefreiungen/SSportbefreiungenApp.vue");
-const SSportbefreiungenAuswahl = () => import("~/components/schule/kataloge/sportbefreiungen/SSportbefreiungenAuswahl.vue");
+const SSportbefreiungenApp = () => import("~/components/schule/schulbezogen/sportbefreiungen/SSportbefreiungenApp.vue");
+const SSportbefreiungenAuswahl = () => import("~/components/schule/schulbezogen/sportbefreiungen/SSportbefreiungenAuswahl.vue");
 
 export class RouteSportbefreiungen extends RouteAuswahlNode<SportbefreiungenListeManager, RouteDataSportbefreiungen, RouteApp> {
 

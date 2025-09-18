@@ -10,8 +10,8 @@ import { routeHaltestellenDaten } from "~/router/apps/schule/haltestellen/RouteH
 import { routeHaltestellenNeu } from "~/router/apps/schule/haltestellen/RouteHaltestellenNeu";
 import { routeHaltestellenGruppenprozesse } from "~/router/apps/schule/haltestellen/RouteHaltestellenGruppenprozesse";
 
-const SHaltestellenApp = () => import("~/components/schule/kataloge/haltestellen/SHaltestellenApp.vue");
-const SHaltestellenAuswahl = () => import("~/components/schule/kataloge/haltestellen/SHaltestellenAuswahl.vue");
+const SHaltestellenApp = () => import("~/components/schule/allgemein/haltestellen/SHaltestellenApp.vue");
+const SHaltestellenAuswahl = () => import("~/components/schule/allgemein/haltestellen/SHaltestellenAuswahl.vue");
 
 export class RouteHaltestellen extends RouteAuswahlNode<HaltestellenListeManager, RouteDataHaltestellen, RouteApp> {
 

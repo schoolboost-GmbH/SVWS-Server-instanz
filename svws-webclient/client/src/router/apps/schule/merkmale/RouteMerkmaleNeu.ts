@@ -1,5 +1,5 @@
 import type { RouteLocationNormalized } from "vue-router";
-import type { MerkmaleNeuProps } from "~/components/schule/kataloge/merkmale/SMerkmaleNeuProps";
+import type { MerkmaleNeuProps } from "~/components/schule/schulbezogen/merkmale/SMerkmaleNeuProps";
 import type { RouteMerkmale } from "~/router/apps/schule/merkmale/RouteMerkmale";
 import { BenutzerKompetenz, Schulform, ServerMode } from "@core";
 import { RouteManager } from "~/router/RouteManager";
@@ -8,7 +8,7 @@ import { ViewType } from "@ui";
 import { api } from "~/router/Api";
 import { routeMerkmale } from "~/router/apps/schule/merkmale/RouteMerkmale";
 
-const SMerkmaleNeu = () => import("~/components/schule/kataloge/merkmale/SMerkmaleNeu.vue");
+const SMerkmaleNeu = () => import("~/components/schule/schulbezogen/merkmale/SMerkmaleNeu.vue");
 
 export class RouteMerkmaleNeu extends RouteNode<any, RouteMerkmale> {
 

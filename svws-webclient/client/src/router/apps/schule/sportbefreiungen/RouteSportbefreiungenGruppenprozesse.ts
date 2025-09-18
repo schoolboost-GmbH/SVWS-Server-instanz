@@ -1,5 +1,5 @@
 import type { RouteLocationNormalized, RouteLocationRaw } from "vue-router";
-import type { SportbefreiungenGruppenprozesseProps } from "~/components/schule/kataloge/sportbefreiungen/gruppenprozesse/SSportbefreiungenGruppenprozesseProps";
+import type { SportbefreiungenGruppenprozesseProps } from "~/components/schule/schulbezogen/sportbefreiungen/gruppenprozesse/SSportbefreiungenGruppenprozesseProps";
 import type { RouteSportbefreiungen } from "~/router/apps/schule/sportbefreiungen/RouteSportbefreiungen";
 import { BenutzerKompetenz, Schulform, ServerMode } from "@core";
 import { RouteNode } from "~/router/RouteNode";
@@ -9,7 +9,7 @@ import { routeApp } from "~/router/apps/RouteApp";
 import { routeSportbefreiungen } from "~/router/apps/schule/sportbefreiungen/RouteSportbefreiungen";
 
 const SSportbefreiungenGruppenprozesse = () => import(
-	"~/components/schule/kataloge/sportbefreiungen/gruppenprozesse/SSportbefreiungenGruppenprozesse.vue");
+	"~/components/schule/schulbezogen/sportbefreiungen/gruppenprozesse/SSportbefreiungenGruppenprozesse.vue");
 
 export class RouteSportbefreiungenGruppenprozesse extends RouteNode<any, RouteSportbefreiungen> {
 

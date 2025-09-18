@@ -6,9 +6,9 @@ import { routeApp } from "../../RouteApp";
 import { ViewType } from "@ui";
 import type { RouteKatalogErzieherarten } from "~/router/apps/schule/erzieherarten/RouteKatalogErzieherarten";
 import { routeKatalogErzieherarten } from "~/router/apps/schule/erzieherarten/RouteKatalogErzieherarten";
-import type { SErzieherartenGruppenprozesseProps } from "~/components/schule/kataloge/erzieherarten/gruppenprozesse/SErzieherartenGruppenprozesseProps";
+import type { SErzieherartenGruppenprozesseProps } from "~/components/schule/allgemein/erzieherarten/gruppenprozesse/SErzieherartenGruppenprozesseProps";
 
-const SErzieherartenGruppenprozesse = () => import("~/components/schule/kataloge/erzieherarten/gruppenprozesse/SErzieherartenGruppenprozesse.vue");
+const SErzieherartenGruppenprozesse = () => import("~/components/schule/allgemein/erzieherarten/gruppenprozesse/SErzieherartenGruppenprozesse.vue");
 
 export class RouteKatalogErzieherartenGruppenprozesse extends RouteNode<any, RouteKatalogErzieherarten> {
 

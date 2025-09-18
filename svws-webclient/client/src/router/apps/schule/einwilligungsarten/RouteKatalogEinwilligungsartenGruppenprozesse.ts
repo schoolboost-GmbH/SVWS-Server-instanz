@@ -8,9 +8,9 @@ import type { RouteKatalogEinwilligungsarten} from "~/router/apps/schule/einwill
 import {routeKatalogEinwilligungsarten} from "~/router/apps/schule/einwilligungsarten/RouteKatalogEinwilligungsarten";
 import type {
 	SchuleEinwilligungsartenGruppenprozesseProps,
-} from "~/components/schule/kataloge/einwilligungsarten/gruppenprozesse/SEinwilligungsartenGruppenprozesseProps";
+} from "~/components/schule/schulbezogen/einwilligungsarten/gruppenprozesse/SEinwilligungsartenGruppenprozesseProps";
 
-const SEinwilligungsartenGruppenprozesse = () => import("~/components/schule/kataloge/einwilligungsarten/gruppenprozesse/SEinwilligungsartenGruppenprozesse.vue");
+const SEinwilligungsartenGruppenprozesse = () => import("~/components/schule/schulbezogen/einwilligungsarten/gruppenprozesse/SEinwilligungsartenGruppenprozesse.vue");
 
 export class RouteKatalogEinwilligungsartenGruppenprozesse extends RouteNode<any, RouteKatalogEinwilligungsarten> {
 

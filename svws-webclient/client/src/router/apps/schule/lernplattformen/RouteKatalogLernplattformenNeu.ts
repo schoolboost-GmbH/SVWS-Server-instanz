@@ -5,10 +5,10 @@ import { ViewType } from "@ui";
 import { RouteManager } from "~/router/RouteManager";
 import type { RouteKatalogLernplattformen} from "~/router/apps/schule/lernplattformen/RouteKatalogLernplattformen";
 import { routeKatalogLernplattformen } from "~/router/apps/schule/lernplattformen/RouteKatalogLernplattformen";
-import type { SLernplattformenNeuProps } from "~/components/schule/kataloge/lernplattformen/SLernplattformenNeuProps";
+import type { SLernplattformenNeuProps } from "~/components/schule/schulbezogen/lernplattformen/SLernplattformenNeuProps";
 import { api } from "~/router/Api";
 
-const SLernplattformenNeu = () => import("~/components/schule/kataloge/lernplattformen/SLernplattformenNeu.vue");
+const SLernplattformenNeu = () => import("~/components/schule/schulbezogen/lernplattformen/SLernplattformenNeu.vue");
 
 export class RouteKatalogLernplattformenNeu extends RouteNode<any, RouteKatalogLernplattformen> {
 

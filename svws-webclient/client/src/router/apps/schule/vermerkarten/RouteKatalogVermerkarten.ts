@@ -10,8 +10,8 @@ import { routeKatalogVermerkartenNeu } from "./RouteKatalogVermerkartenNeu";
 import { routeKatalogVermerkartenGruppenprozesse } from "./RouteKatalogVermerkartenGruppenprozesse";
 import { RouteDataKatalogVermerkarten } from "./RouteDataKatalogVermerkarten";
 
-const SVermerkartenAuswahl = () => import("~/components/schule/kataloge/vermerke/SVermerkartenAuswahl.vue");
-const SVermerkartenApp = () => import("~/components/schule/kataloge/vermerke/SVermerkartenApp.vue");
+const SVermerkartenAuswahl = () => import("~/components/schule/schulbezogen/vermerkarten/SVermerkartenAuswahl.vue");
+const SVermerkartenApp = () => import("~/components/schule/schulbezogen/vermerkarten/SVermerkartenApp.vue");
 
 export class RouteKatalogVermerkarten extends RouteAuswahlNode<VermerkartenListeManager, RouteDataKatalogVermerkarten, RouteApp> {
 

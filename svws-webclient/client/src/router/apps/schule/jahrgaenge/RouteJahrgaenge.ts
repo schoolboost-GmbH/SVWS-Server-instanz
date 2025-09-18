@@ -12,8 +12,8 @@ import { routeJahrgaengeNeu } from "~/router/apps/schule/jahrgaenge/RouteJahrgae
 import { routeJahrgaengeGruppenprozesse } from "~/router/apps/schule/jahrgaenge/RouteJahrgaengeGruppenprozesse";
 import { RouteAuswahlNode } from "~/router/RouteAuswahlNode";
 
-const SJahrgaengeAuswahl = () => import("~/components/schule/jahrgaenge/SJahrgaengeAuswahl.vue")
-const SJahrgaengeApp = () => import("~/components/schule/jahrgaenge/SJahrgaengeApp.vue")
+const SJahrgaengeAuswahl = () => import("~/components/schule/schulbezogen/jahrgaenge/SJahrgaengeAuswahl.vue")
+const SJahrgaengeApp = () => import("~/components/schule/schulbezogen/jahrgaenge/SJahrgaengeApp.vue")
 
 export class RouteJahrgaenge extends RouteAuswahlNode<JahrgaengeListeManager, RouteDataJahrgaenge, RouteApp> {
 

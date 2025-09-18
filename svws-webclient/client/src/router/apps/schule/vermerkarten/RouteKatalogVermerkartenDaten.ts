@@ -1,5 +1,5 @@
 import type { RouteLocationNormalized } from "vue-router";
-import type { VermerkartenDatenProps } from "~/components/schule/kataloge/vermerke/daten/SVermerkartenDatenProps";
+import type { VermerkartenDatenProps } from "~/components/schule/schulbezogen/vermerkarten/daten/SVermerkartenDatenProps";
 import type { SchuelerVermerkartZusammenfassung } from "@core";
 import { BenutzerKompetenz, Schulform, ServerMode } from "@core";
 import { RouteNode } from "~/router/RouteNode";
@@ -8,7 +8,7 @@ import { RouteManager } from "~/router/RouteManager";
 import { routeSchuelerVermerke } from "../../schueler/vermerke/RouteSchuelerVermerke";
 import { api } from "~/router/Api";
 
-const SVermerkartenDaten = () => import("~/components/schule/kataloge/vermerke/daten/SVermerkartenDaten.vue");
+const SVermerkartenDaten = () => import("~/components/schule/schulbezogen/vermerkarten/daten/SVermerkartenDaten.vue");
 
 export class RouteKatalogVermerkartenDaten extends RouteNode<any, RouteKatalogVermerkarten> {
 

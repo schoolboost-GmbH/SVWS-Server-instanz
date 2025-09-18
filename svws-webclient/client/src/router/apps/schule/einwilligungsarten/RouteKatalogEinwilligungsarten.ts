@@ -10,8 +10,8 @@ import { RouteAuswahlNode } from "~/router/RouteAuswahlNode";
 import { routeKatalogEinwilligungsartenNeu } from "~/router/apps/schule/einwilligungsarten/RouteKatalogEinwilligungsartenNeu";
 import { routeKatalogEinwilligungsartenGruppenprozesse } from "~/router/apps/schule/einwilligungsarten/RouteKatalogEinwilligungsartenGruppenprozesse";
 
-const SEinwilligungsartenAuswahl = () => import("~/components/schule/kataloge/einwilligungsarten/SEinwilligungsartenAuswahl.vue");
-const SEinwilligungsartenApp = () => import("~/components/schule/kataloge/einwilligungsarten/SEinwilligungsartenApp.vue");
+const SEinwilligungsartenAuswahl = () => import("~/components/schule/schulbezogen/einwilligungsarten/SEinwilligungsartenAuswahl.vue");
+const SEinwilligungsartenApp = () => import("~/components/schule/schulbezogen/einwilligungsarten/SEinwilligungsartenApp.vue");
 
 export class RouteKatalogEinwilligungsarten extends RouteAuswahlNode<EinwilligungsartenListeManager, RouteDataKatalogEinwilligungsarten, RouteApp> {
 

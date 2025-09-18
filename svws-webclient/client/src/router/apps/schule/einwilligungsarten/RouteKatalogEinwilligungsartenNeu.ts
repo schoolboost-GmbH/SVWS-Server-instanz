@@ -5,10 +5,10 @@ import { ViewType } from "@ui";
 import { RouteManager } from "~/router/RouteManager";
 import type { RouteKatalogEinwilligungsarten } from "~/router/apps/schule/einwilligungsarten/RouteKatalogEinwilligungsarten";
 import { routeKatalogEinwilligungsarten } from "~/router/apps/schule/einwilligungsarten/RouteKatalogEinwilligungsarten";
-import type { SchuleEinwilligungsartenNeuProps } from "~/components/schule/kataloge/einwilligungsarten/SEinwilligungsartenNeuProps";
+import type { SchuleEinwilligungsartenNeuProps } from "~/components/schule/schulbezogen/einwilligungsarten/SEinwilligungsartenNeuProps";
 import { api } from "~/router/Api";
 
-const SEinwilligungsartNeu = () => import("~/components/schule/kataloge/einwilligungsarten/SEinwilligungsartenNeu.vue");
+const SEinwilligungsartNeu = () => import("~/components/schule/schulbezogen/einwilligungsarten/SEinwilligungsartenNeu.vue");
 
 export class RouteKatalogEinwilligungsartenNeu extends RouteNode<any, RouteKatalogEinwilligungsarten> {
 

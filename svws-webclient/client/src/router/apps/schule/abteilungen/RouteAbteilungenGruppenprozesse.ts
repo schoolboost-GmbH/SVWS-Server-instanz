@@ -1,5 +1,5 @@
 import type { RouteLocationNormalized, RouteLocationRaw } from "vue-router";
-import type { AbteilungenGruppenprozesseProps } from "~/components/schule/kataloge/abteilungen/gruppenprozesse/SAbteilungenGruppenprozesseProps";
+import type { AbteilungenGruppenprozesseProps } from "~/components/schule/schulbezogen/abteilungen/gruppenprozesse/SAbteilungenGruppenprozesseProps";
 import type { RouteAbteilungen } from "~/router/apps/schule/abteilungen/RouteAbteilungen";
 import { BenutzerKompetenz, Schulform, ServerMode } from "@core";
 import { RouteNode } from "~/router/RouteNode";
@@ -9,7 +9,7 @@ import { routeApp } from "../../RouteApp";
 import { api } from "~/router/Api";
 
 const SAbteilungenGruppenprozesse = () =>
-	import("~/components/schule/kataloge/abteilungen/gruppenprozesse/SAbteilungenGruppenprozesse.vue")
+	import("~/components/schule/schulbezogen/abteilungen/gruppenprozesse/SAbteilungenGruppenprozesse.vue")
 
 export class RouteAbteilungenGruppenprozesse extends RouteNode<any, RouteAbteilungen> {
 

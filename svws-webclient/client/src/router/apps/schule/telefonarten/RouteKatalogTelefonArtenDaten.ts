@@ -3,10 +3,10 @@ import { BenutzerKompetenz, Schulform, ServerMode } from "@core";
 import { RouteNode } from "~/router/RouteNode";
 import type { RouteKatalogTelefonArten } from "~/router/apps/schule/telefonarten/RouteKatalogTelefonArten";
 import { routeKatalogTelefonArten } from "~/router/apps/schule/telefonarten/RouteKatalogTelefonArten";
-import type { TelefonArtenDatenProps } from "~/components/schule/kataloge/telefonarten/daten/STelefonArtenDatenProps";
+import type { TelefonArtenDatenProps } from "~/components/schule/allgemein/telefonarten/daten/STelefonArtenDatenProps";
 import { api } from "~/router/Api";
 
-const STelefonArtenDaten = () => import("~/components/schule/kataloge/telefonarten/daten/STelefonArtenDaten.vue");
+const STelefonArtenDaten = () => import("~/components/schule/allgemein/telefonarten/daten/STelefonArtenDaten.vue");
 
 export class RouteKatalogTelefonArtenDaten extends RouteNode<any, RouteKatalogTelefonArten> {
 

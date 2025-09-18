@@ -6,9 +6,9 @@ import { routeApp } from "../../RouteApp";
 import { ViewType } from "@ui";
 import type { RouteKatalogLernplattformen } from "~/router/apps/schule/lernplattformen/RouteKatalogLernplattformen";
 import { routeKatalogLernplattformen } from "~/router/apps/schule/lernplattformen/RouteKatalogLernplattformen";
-import type { SLernplattformenGruppenprozesseProps } from "~/components/schule/kataloge/lernplattformen/gruppenprozesse/SLernplattformenGruppenprozesseProps";
+import type { SLernplattformenGruppenprozesseProps } from "~/components/schule/schulbezogen/lernplattformen/gruppenprozesse/SLernplattformenGruppenprozesseProps";
 
-const SLernplattformenGruppenprozesse = () => import("~/components/schule/kataloge/lernplattformen/gruppenprozesse/SLernplattformenGruppenprozesse.vue");
+const SLernplattformenGruppenprozesse = () => import("~/components/schule/schulbezogen/lernplattformen/gruppenprozesse/SLernplattformenGruppenprozesse.vue");
 
 export class RouteKatalogLernplattformenGruppenprozesse extends RouteNode<any, RouteKatalogLernplattformen> {
 

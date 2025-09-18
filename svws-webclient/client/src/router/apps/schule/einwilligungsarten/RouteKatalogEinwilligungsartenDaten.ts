@@ -3,12 +3,12 @@ import type { SchuelerEinwilligungsartenZusammenfassung } from "@core";
 import { BenutzerKompetenz, Schulform, ServerMode } from "@core";
 import { RouteNode } from "~/router/RouteNode";
 import { routeKatalogEinwilligungsarten, type RouteKatalogEinwilligungsarten } from "~/router/apps/schule/einwilligungsarten/RouteKatalogEinwilligungsarten";
-import type { EinwilligungsartenDatenProps } from "~/components/schule/kataloge/einwilligungsarten/daten/SEinwilligungsartenDatenProps";
+import type { EinwilligungsartenDatenProps } from "~/components/schule/schulbezogen/einwilligungsarten/daten/SEinwilligungsartenDatenProps";
 import { RouteManager } from "~/router/RouteManager";
 import { routeSchuelerEinwilligungen } from "~/router/apps/schueler/einwilligungen/RouteSchuelerEinwilligungen";
 import { api } from "~/router/Api";
 
-const SEinwilligungsartDaten = () => import("~/components/schule/kataloge/einwilligungsarten/daten/SEinwilligungsartenDaten.vue");
+const SEinwilligungsartDaten = () => import("~/components/schule/schulbezogen/einwilligungsarten/daten/SEinwilligungsartenDaten.vue");
 
 export class RouteKatalogEinwilligungsartenDaten extends RouteNode<any, RouteKatalogEinwilligungsarten> {
 

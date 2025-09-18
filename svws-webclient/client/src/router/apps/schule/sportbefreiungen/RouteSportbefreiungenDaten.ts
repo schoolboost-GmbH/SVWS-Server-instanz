@@ -1,12 +1,12 @@
 import type { RouteLocationNormalized } from "vue-router";
-import type { SportbefreiungenDatenProps } from "~/components/schule/kataloge/sportbefreiungen/daten/SSportbefreiungenDatenProps";
+import type { SportbefreiungenDatenProps } from "~/components/schule/schulbezogen/sportbefreiungen/daten/SSportbefreiungenDatenProps";
 import { BenutzerKompetenz, Schulform, ServerMode } from "@core";
 import { RouteNode } from "~/router/RouteNode";
 import { api } from "~/router/Api";
 import { routeSportbefreiungen } from "~/router/apps/schule/sportbefreiungen/RouteSportbefreiungen";
 import type { RouteSportbefreiungen } from "~/router/apps/schule/sportbefreiungen/RouteSportbefreiungen";
 
-const SSportbefreiungenDaten = () => import("~/components/schule/kataloge/sportbefreiungen/daten/SSportbefreiungenDaten.vue")
+const SSportbefreiungenDaten = () => import("~/components/schule/schulbezogen/sportbefreiungen/daten/SSportbefreiungenDaten.vue")
 
 export class RouteSportbefreiungenDaten extends RouteNode<any, RouteSportbefreiungen> {
 

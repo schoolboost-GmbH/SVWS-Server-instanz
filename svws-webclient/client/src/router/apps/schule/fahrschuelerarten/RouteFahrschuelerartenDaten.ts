@@ -1,12 +1,12 @@
 import type { RouteLocationNormalized } from "vue-router";
-import type { FahrschuelerartenDatenProps } from "~/components/schule/kataloge/fahrschuelerarten/daten/SFahrschuelerartenDatenProps";
+import type { FahrschuelerartenDatenProps } from "~/components/schule/allgemein/fahrschuelerarten/daten/SFahrschuelerartenDatenProps";
 import type { RouteFahrschuelerarten } from "~/router/apps/schule/fahrschuelerarten/RouteFahrschuelerarten";
 import { BenutzerKompetenz, Schulform, ServerMode } from "@core";
 import { RouteNode } from "~/router/RouteNode";
 import { api } from "~/router/Api";
 import { routeFahrschuelerarten } from "~/router/apps/schule/fahrschuelerarten/RouteFahrschuelerarten";
 
-const SFahrschuelerartenDaten = () => import("~/components/schule/kataloge/fahrschuelerarten/daten/SFahrschuelerartenDaten.vue")
+const SFahrschuelerartenDaten = () => import("~/components/schule/allgemein/fahrschuelerarten/daten/SFahrschuelerartenDaten.vue")
 
 export class RouteFahrschuelerartenDaten extends RouteNode<any, RouteFahrschuelerarten> {
 

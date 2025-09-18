@@ -11,8 +11,8 @@ import { routeKindergaertenNeu } from "~/router/apps/schule/kindergaerten/RouteK
 import { routeKindergaertenGruppenprozesse } from "~/router/apps/schule/kindergaerten/RouteKindergaertenGruppenprozesse";
 
 
-const SKindergartenApp = () => import("~/components/schule/kataloge/kindergaerten/SKindergaertenApp.vue");
-const SKindergaertenAuswahl = () => import("~/components/schule/kataloge/kindergaerten/SKindergaertenAuswahl.vue");
+const SKindergartenApp = () => import("~/components/schule/allgemein/kindergaerten/SKindergaertenApp.vue");
+const SKindergaertenAuswahl = () => import("~/components/schule/allgemein/kindergaerten/SKindergaertenAuswahl.vue");
 
 export class RouteKindergaerten extends RouteAuswahlNode<KindergaertenListeManager, RouteDataKindergaerten, RouteApp> {
 
