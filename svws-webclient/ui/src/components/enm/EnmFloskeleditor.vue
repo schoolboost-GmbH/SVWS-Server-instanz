@@ -1,11 +1,11 @@
 <template>
 	<svws-ui-modal :show type="default" size="big" @update:show="show = $event">
 		<template #modalTitle>
-			{{ schueler?.nachname }}, {{ schueler?.vorname }}<br>{{ hauptgruppenBezeichnung[erlaubteHauptgruppe] }}
+			<div class="text-right w-full">{{ schueler?.nachname }}, {{ schueler?.vorname }}<br>{{ hauptgruppenBezeichnung[erlaubteHauptgruppe] }}</div>
 		</template>
 		<template #modalContent>
-			<div class="flex overflow-hidden">
-				<div class="min-w-64 overflow-auto">
+			<div class="flex overflow-hidden gap-6">
+				<div class="min-w-fit overflow-auto border rounded-md border-uistatic-50">
 					<ui-table-grid name="Schüler" :manager="() => gridManagerSchueler">
 						<template #default="{ row, index }">
 							<td :ref="auswahlSchueler(index)" :class="['cursor-pointer text-left', gridManagerSchueler.focusRowLast === index ? 'bg-ui-selected':'']">
