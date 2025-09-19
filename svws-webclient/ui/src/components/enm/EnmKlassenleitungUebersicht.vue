@@ -154,7 +154,7 @@
 		if ((input === null) || (input.row >= gridManager.daten.size()))
 			return;
 		const pair = gridManager.daten.get(input.row);
-		void props.focusFloskelEditor(null, pair.b, pair.a, false);
+		void props.focusFloskelEditor(null, pair.b, pair.a, input.row, false);
 	}
 	defineExpose({ gridManager });
 
@@ -190,7 +190,7 @@
 
 	function inputASV(pair: PairNN<ENMKlasse, ENMSchueler>, col: number, index: number) {
 		const key = 'ASV_' + pair.a.id + "_" + pair.b.id;
-		const setter = (value : boolean) => void props.focusFloskelEditor('ASV', pair.b, pair.a, true);
+		const setter = (value : boolean) => void props.focusFloskelEditor('ASV', pair.b, pair.a, index, true);
 		return (element : Element | ComponentPublicInstance<unknown> | null) => {
 			const input = gridManager.applyInputToggle(key, col, index, element, setter);
 			if (input !== null) {
@@ -202,7 +202,7 @@
 
 	function inputAUE(pair: PairNN<ENMKlasse, ENMSchueler>, col: number, index: number) {
 		const key = 'AUE_' + pair.a.id + "_" + pair.b.id;
-		const setter = (value : boolean) => void props.focusFloskelEditor('AUE', pair.b, pair.a, true);
+		const setter = (value : boolean) => void props.focusFloskelEditor('AUE', pair.b, pair.a, index, true);
 		return (element : Element | ComponentPublicInstance<unknown> | null) => {
 			const input = gridManager.applyInputToggle(key, col, index, element, setter);
 			if (input !== null) {
@@ -214,7 +214,7 @@
 
 	function inputZB(pair: PairNN<ENMKlasse, ENMSchueler>, col: number, index: number) {
 		const key = 'ZB_' + pair.a.id + "_" + pair.b.id;
-		const setter = (value : boolean) => void props.focusFloskelEditor('ZB', pair.b, pair.a, true);
+		const setter = (value : boolean) => void props.focusFloskelEditor('ZB', pair.b, pair.a, index, true);
 		return (element : Element | ComponentPublicInstance<unknown> | null) => {
 			const input = gridManager.applyInputToggle(key, col, index, element, setter);
 			if (input !== null) {

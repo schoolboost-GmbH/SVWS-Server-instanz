@@ -131,7 +131,7 @@
 				<td :ref="inputBemerkung(pair, 6, index)" class="ui-table-grid-button"
 					:class="{
 						'bg-ui-selected': (gridManager.focusColumn === 6),
-						'bg-ui-selected text-ui-onselected': floskelEditorVisible && ((gridManager.focusColumnLast === 6) && (gridManager.focusRowLast === index)),
+						'bg-ui-selected text-ui-onselected': ((gridManager.focusColumnLast === 6) && (gridManager.focusRowLast === index)),
 					}">
 					<span class="text-ellipsis overflow-hidden whitespace-nowrap w-full">{{ pair.a.fachbezogeneBemerkungen ?? "-" }}</span>
 				</td>
@@ -196,9 +196,11 @@
 		if ((input === null) || (input.row >= gridManager.daten.size()))
 			return;
 		const pair = gridManager.daten.get(input.row);
-		void props.focusFloskelEditor(pair.b, pair.a, false);
+		void props.focusFloskelEditor(pair.b, pair.a, input.row, false);
 	}
 	defineExpose({ gridManager });
+
+
 
 	const notenKuerzel = computed(() => Note.values().map(e => e.daten(props.enmManager().schuljahr)?.kuerzel).filter(e => e !== ""));
 
@@ -265,7 +267,7 @@
 
 	function inputBemerkung(pair: PairNN<ENMLeistung, ENMSchueler>, col: number, index: number) {
 		const key = 'Bemerkung_' + pair.a.id + "_" + pair.b.id;
-		const setter = (value : boolean) => void props.focusFloskelEditor(pair.b, pair.a, true);
+		const setter = (value : boolean) => void props.focusFloskelEditor(pair.b, pair.a, index, true);
 		return (element : Element | ComponentPublicInstance<unknown> | null) => {
 			const input = gridManager.applyInputToggle(key, col, index, element, setter);
 			if (input !== null) {
