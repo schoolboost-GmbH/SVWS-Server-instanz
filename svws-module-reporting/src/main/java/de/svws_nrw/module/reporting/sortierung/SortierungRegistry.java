@@ -8,6 +8,7 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.Function;
@@ -59,7 +60,7 @@ public final class SortierungRegistry<T> {
 	 * sind die Namen der Attribute als Strings und die Werte sind {@code Entry}-Objekte,
 	 * die Funktionalitäten zur Extraktion und Typinformationen definieren.
 	 * Diese Map wird verwendet, um die registrierten Attribute mit ihren
-	 * Extraktions- und Vergleichsstrategien zentral zu verwalten.
+	 * Ermittlung- und Vergleichsstrategien zentral zu verwalten.
 	 */
 	private final Map<String, Attributeintrag<T>> map = new HashMap<>();
 
@@ -81,14 +82,13 @@ public final class SortierungRegistry<T> {
 	 * Der gegebene Name wird normalisiert, und eine Funktion wird gespeichert, die den
 	 * vergleichbaren Wert aus einem Objekt extrahiert.
 	 *
-	 * @param <U> Der Typ des vergleichbaren Werts, der vom Typ {@link Comparable} implementiert werden muss.
 	 * @param attributName Der Name des Attributs, das registriert werden soll. Dieser wird normalisiert.
 	 * @param wertermittlungsfunktion Eine Funktion, die für ein gegebenes Objekt den entsprechenden
 	 *                  vergleichbaren Wert extrahiert.
 	 * @return Die aktuelle Instanz der {@code AttributeRegistry}, um method chaining zu ermöglichen.
 	 */
-	public <U extends Comparable<? super U>> SortierungRegistry<T> registiereComparable(final String attributName,
-			final Function<T, U> wertermittlungsfunktion) {
+	public SortierungRegistry<T> registiereComparable(final String attributName,
+			final Function<T, ? extends Comparable<?>> wertermittlungsfunktion) {
 		map.put(normalisieren(attributName), new Attributeintrag<>(wertermittlungsfunktion, ValueType.COMPARABLE));
 		return this;
 	}
@@ -122,7 +122,7 @@ public final class SortierungRegistry<T> {
 	 * Importiert Einträge aus einer Quell-Registry in die aktuelle Registry, indem Attribute
 	 * mit entsprechend angegebenem Präfix ergänzt werden. Dabei werden die Attribute basierend
 	 * auf ihrem Werttyp (z. B. STRING oder COMPARABLE) verarbeitet und registriert.
-	 * So können bspw. alle Schülersortierungen in Registries, die ein ein Schülerobjekt enthalten,
+	 * So können bspw. alle Schülersortierungen in Registries, die ein Schülerobjekt enthalten,
 	 * mit dem Prefix "schueler" importiert werden.
 	 *
 	 * @param <P> Der Typ der Objekte in der Quell-Registry.
@@ -144,27 +144,20 @@ public final class SortierungRegistry<T> {
 			final Attributeintrag<P> attributeintrag = optionalAttributeintrag.get();
 			final String vollstaendigerAttributname = ergaenzePrefix(prefix, quellattribut);
 
-			switch (attributeintrag.werttype()) {
-				case STRING -> {
-					@SuppressWarnings("unchecked")
-					final Function<P, String> wertermittlungsfunktion =
-							(Function<P, String>) attributeintrag.wertermittlungsfunktion();
-					this.registiereString(vollstaendigerAttributname, t -> {
-						final P quellwert = quellwertermittlungsfunktion.apply(t);
-						return (quellwert == null) ? null : wertermittlungsfunktion.apply(quellwert);
-					});
-				}
-				case COMPARABLE -> {
-					@SuppressWarnings({ "rawtypes", "unchecked" })
-					final Function<P, Comparable> wertermittlungsfunktion =
-							(Function) attributeintrag.wertermittlungsfunktion();
-
-					@SuppressWarnings({ "rawtypes", "unchecked" })
-					final SortierungRegistry sortierungRegistry = this.registiereComparable(vollstaendigerAttributname, t -> {
-						final P quellwert = quellwertermittlungsfunktion.apply(t);
-						return (quellwert == null) ? null : wertermittlungsfunktion.apply(quellwert);
-					});
-				}
+			if (Objects.requireNonNull(attributeintrag.werttype()) == ValueType.STRING) {
+				@SuppressWarnings("unchecked")
+				final Function<P, String> wertermittlungsfunktion =
+						(Function<P, String>) attributeintrag.wertermittlungsfunktion();
+				this.registiereString(vollstaendigerAttributname, t -> {
+					final P quellwert = quellwertermittlungsfunktion.apply(t);
+					return (quellwert == null) ? null : wertermittlungsfunktion.apply(quellwert);
+				});
+			} else if (attributeintrag.werttype() == ValueType.COMPARABLE) {
+				this.registiereComparable(vollstaendigerAttributname, t -> {
+					final P quellwert = quellwertermittlungsfunktion.apply(t);
+					return (quellwert == null) ? null
+							: asComparableFunction(attributeintrag.wertermittlungsfunktion()).apply(quellwert);
+				});
 			}
 		}
 	}
@@ -217,6 +210,13 @@ public final class SortierungRegistry<T> {
 			return name;
 		return prefix + name;
 	}
+
+	// Kapselt den unsicheren Cast einer Function<P, X> zu Function<P, Comparable>, um SuppressWarnings lokal zu halten.
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	private static <P> Function<P, Comparable> asComparableFunction(final Function<P, ?> f) {
+		return (Function) f;
+	}
+
 
 	/**
 	 * Functional Interface für serialisierbare Methodenreferenzen, damit der Methodenname über eine SerializedLambda ermittelt werden kann.

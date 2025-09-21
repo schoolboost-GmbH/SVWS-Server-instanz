@@ -558,6 +558,7 @@ export { LernplattformV1Lerngruppe } from './core/data/lernplattform/v1/Lernplat
 export { LernplattformV1Login } from './core/data/lernplattform/v1/LernplattformV1Login';
 export { LernplattformV1Schueler } from './core/data/lernplattform/v1/LernplattformV1Schueler';
 export { OAuth2ClientConnection } from './core/data/oauth2/OAuth2ClientConnection';
+export { ReportingEMailDaten } from './core/data/reporting/ReportingEMailDaten';
 export { ReportingParameter } from './core/data/reporting/ReportingParameter';
 export { ReportingSortierungDefinition } from './core/data/reporting/ReportingSortierungDefinition';
 export { DatenbankVerbindungsdaten } from './core/data/schema/DatenbankVerbindungsdaten';
@@ -730,6 +731,7 @@ export { GostKursblockungRegelParameterTyp } from './core/types/kursblockung/Gos
 export { GostKursblockungRegelTyp } from './core/types/kursblockung/GostKursblockungRegelTyp';
 export { OAuth2ServerTyp } from './core/types/oauth2/OAuth2ServerTyp';
 export { ReportingAusgabeformat } from './core/types/reporting/ReportingAusgabeformat';
+export { ReportingEMailEmpfaengerTyp } from './core/types/reporting/ReportingEMailEmpfaengerTyp';
 export { ReportingReportvorlage } from './core/types/reporting/ReportingReportvorlage';
 export { SchildReportingAttributTyp } from './core/types/schild3/SchildReportingAttributTyp';
 export { HerkunftSchulform } from './core/types/schueler/HerkunftSchulform';

@@ -45,7 +45,7 @@ public abstract class HtmlContext<T> {
 	/** Repository mit Parametern, Logger und Daten-Cache zur Report-Generierung. */
 	private final ReportingRepository reportingRepository;
 
-	/** Legt fest, ob der Context als Haupt-Daten-Context verwendet werden soll (true) oder als Detail-Daten-Conetxt (false). */
+	/** Legt fest, ob der Context als Haupt-Daten-Context verwendet werden soll (true) oder als Detail-Daten-Context (false). */
 	private boolean istHauptdatenContext = true;
 
 	/** Legt fest, ob die Standardsortierung verwendet des entsprechenden Types werden soll. */
@@ -56,7 +56,7 @@ public abstract class HtmlContext<T> {
 
 
 	/**
-	 * Konstruktor für die Klasse HtmlContext, der das Repository und den Flag zur Hauptdatenquelle initialisiert.
+	 * Konstruktor für die Klasse HtmlContext, die das Repository und das Flag zur Hauptdatenquelle initialisiert.
 	 *
 	 * @param reportingRepository Das Reporting-Repository, welches verwendet wird, um die Daten zu verwalten.
 	 * @param istHauptdatenContext Ein Boolean-Wert, der angibt, ob der aktuelle Kontext ein Hauptdatenkontext ist.
@@ -103,6 +103,17 @@ public abstract class HtmlContext<T> {
 	public List<T> getContextData() {
 		return contextData;
 	}
+
+	/**
+	 * Die IDs der Daten (z. B. Schüler-/Lehrer-/Klassen-/Kurs-IDs), die dieser Context für nachgelagerte Schritte (z. B. E-Mail-Versand) bereitstellt.
+	 * Der Standard ist eine leere Liste. Abgeleitete Kontexte überschreiben diese Methode, um die konkreten IDs zu ermitteln.
+	 *
+	 * @return Die Liste der IDs. Standard ist eine leere Liste.
+	 */
+	public List<Long> getIds() {
+		return new ArrayList<>();
+	}
+
 
 	/**
 	 * Setzt die Context-Daten. Null-Werte werden herausgefiltert. Bei Übergabe von null wird eine leere Liste gesetzt.
@@ -294,7 +305,7 @@ public abstract class HtmlContext<T> {
 			ReportingExceptionUtils.putInfoInLog(
 					"INFO: Es wurden folgende Attribute zur Sortierung übergeben, die nicht in der Registry definiert wurden: "
 							+ String.join(", ", validierungsfehler),
-					reportingRepository.logger(), LogLevel.INFO, 0);
+					reportingRepository.logger(), LogLevel.INFO, 4);
 		}
 
 		return listNonNull;
@@ -306,7 +317,7 @@ public abstract class HtmlContext<T> {
 	 * und ruft anschließend die Sortierfunktion der Liste mit dem bereitgestellten Comparator auf.
 	 *
 	 * @param <X> Der Typ der Objekte, die innerhalb der Liste erwartet werden, auf die der Comparator angewandt wird.
-	 * @param liste Die Liste von Objekten, die sortiert werden soll. Die Liste darf nicht null sein.
+	 * @param liste Die Liste von Objekten, die sortiert werden sollen. Die Liste darf nicht null sein.
 	 * @param comparator Der Comparator, der zur Bestimmung der Sortierfolge für die Liste verwendet wird.
 	 *                   Der Comparator darf nicht null sein.
 	 */

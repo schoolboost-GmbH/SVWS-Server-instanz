@@ -1,4 +1,22 @@
-import type { SchuelerStammdaten, OrtKatalogEintrag, OrtsteilKatalogEintrag, FoerderschwerpunktEintrag, ReligionEintrag, SchulEintrag, Schulform, ServerMode, BenutzerKompetenz, TelefonArt, SchuelerTelefon, List, Haltestelle, Fahrschuelerart, ApiFile, ReportingParameter } from "@core";
+import type {
+	SchuelerStammdaten,
+	OrtKatalogEintrag,
+	OrtsteilKatalogEintrag,
+	FoerderschwerpunktEintrag,
+	ReligionEintrag,
+	SchulEintrag,
+	Schulform,
+	ServerMode,
+	BenutzerKompetenz,
+	TelefonArt,
+	SchuelerTelefon,
+	List,
+	Haltestelle,
+	Fahrschuelerart,
+	ApiFile,
+	ReportingParameter,
+	SimpleOperationResponse
+} from "@core";
 import type { SchuelerListeManager } from "@ui";
 
 export interface SchuelerIndividualdatenProps {
@@ -21,4 +39,5 @@ export interface SchuelerIndividualdatenProps {
 	benutzerKompetenzen: Set<BenutzerKompetenz>;
 	autofocus: boolean;
 	getPDF: (parameter: ReportingParameter) => Promise<ApiFile>;
+	sendEMail: (parameter: ReportingParameter) => Promise<SimpleOperationResponse>;
 }

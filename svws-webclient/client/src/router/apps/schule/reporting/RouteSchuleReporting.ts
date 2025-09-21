@@ -4,12 +4,11 @@ import { BenutzerKompetenz, Schulform, ServerMode } from "@core";
 
 import { RouteNode } from "~/router/RouteNode";
 
-import type { RouteApp } from "~/router/apps/RouteApp";
+import { routeApp, RouteApp } from "~/router/apps/RouteApp";
 
 import { RouteSchuleMenuGroup } from "../RouteSchuleMenuGroup";
 import { RouteDataSchuleReporting } from "./RouteDataSchuleReporting";
 import type { SchuleReportingProps } from "~/components/schule/reporting/SSchuleReportingProps";
-import { api } from "~/router/Api";
 
 const SSchuleReporting = () => import("~/components/schule/reporting/SSchuleReporting.vue")
 
@@ -31,7 +30,7 @@ export class RouteSchuleReporting extends RouteNode<RouteDataSchuleReporting, Ro
 	public getProps(to: RouteLocationNormalized): SchuleReportingProps {
 		return {
 			createReport: this.data.createReport,
-			idAbschnitt: api.abschnitt.id,
+			schuljahresabschnitt: () => routeApp.data.aktAbschnitt.value,
 		};
 	}
 }

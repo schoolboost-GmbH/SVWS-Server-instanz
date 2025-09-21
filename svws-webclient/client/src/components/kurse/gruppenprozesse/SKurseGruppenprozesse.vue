@@ -1,7 +1,80 @@
 <template>
 	<div class="page page-grid-cards">
-		<div class="flex flex-col gap-y-16 lg:gap-y-16" v-if="ServerMode.DEV.checkServerMode(serverMode)">
-			<ui-card icon="i-ri-delete-bin-line" title="Löschen" subtitle="Ausgewählte Kurse werden gelöscht."
+		<div class="flex flex-col gap-4">
+			<!-- Karte: Kursliste Schüler-Kontaktdaten/Erzieher drucken/versenden -->
+			<ui-card v-if="hatKompetenzDruckenSchuelerIndividualdaten" icon="i-ri-printer-line" title="Kursliste drucken oder versenden" subtitle="Eine Liste mit den Daten der Schülerinnen und Schüler der ausgewählten Kurse drucken oder versenden."
+				:is-open="currentAction === 'druckKursListeSchuelerKontaktdatenErzieher'" @update:is-open="isOpen => setCurrentAction('druckKursListeSchuelerKontaktdatenErzieher', isOpen)">
+				<svws-ui-input-wrapper :grid="4" class="p-2">
+					<div class="text-left col-span-4 mb-2">
+						<p class="font-bold underline">Elemente der Liste:</p>
+					</div>
+					<div class="text-left">
+						<svws-ui-checkbox v-model="option2" name="nurSchuelerRufname">Nur Rufname</svws-ui-checkbox><br>
+						<svws-ui-checkbox v-model="option4" name="mitSchuelerGeschlecht">Geschlecht</svws-ui-checkbox><br>
+						<svws-ui-checkbox v-model="option8" name="mitSchuelerGebDat">Geburtsdatum</svws-ui-checkbox><br>
+						<svws-ui-checkbox v-model="option16" name="mitSchuelerStaat">Staatsangehörigkeit</svws-ui-checkbox><br>
+						<svws-ui-checkbox v-model="option32" name="mitSchuelerAnschrift">Anschrift</svws-ui-checkbox><br>
+					</div>
+					<div class="text-left">
+						<svws-ui-checkbox v-model="option64" name="mitSchuelerTelefonPrivat">Telefon</svws-ui-checkbox><br>
+						<svws-ui-checkbox v-model="option128" name="mitSchuelerEmailSchule">Schulische E-Mail</svws-ui-checkbox><br>
+						<svws-ui-checkbox v-model="option256" name="mitSchuelerEmailPrivat">Private E-Mail</svws-ui-checkbox><br>
+					</div>
+					<div class="text-left">
+						<svws-ui-checkbox v-model="option512" name="mitSchuelerTelefonkontakte">Telefonische Kontakte</svws-ui-checkbox><br>
+						<svws-ui-checkbox v-model="option1024" name="mitErzieher">Erzieher</svws-ui-checkbox><br>
+						<svws-ui-checkbox v-model="option2048" name="mitErzieherAnschrift">Erzieher Anschrift</svws-ui-checkbox><br>
+						<svws-ui-checkbox v-model="option4096" name="mitErzieherEmailPrivat">Erzieher E-Mail</svws-ui-checkbox><br>
+					</div>
+					<div class="text-left">
+						<svws-ui-button @click="selectAll" class="mt-4">
+							<span class="icon i-ri-checkbox-line" />
+							Alle auswählen
+						</svws-ui-button>
+						<svws-ui-button @click="deselectAll" class="mt-4">
+							<span class="icon i-ri-checkbox-blank-line" />
+							Alle abwählen
+						</svws-ui-button>
+					</div>
+					<div class="text-left col-span-4 mb-2">
+						<br><p class="font-bold underline">Optionen zur Druckausgabe:</p>
+						<svws-ui-radio-group class="grid grid-cols-4 p-2 items-start">
+							<svws-ui-radio-option :value="1" v-model="druckoptionListeSchuelerKontaktdatenErzieher" name="druckoptionListeSchuelerKontaktdatenErzieherGesamtausdruckEinseitig" label="Gesamtausdruck einseitig" />
+							<svws-ui-radio-option :value="2" v-model="druckoptionListeSchuelerKontaktdatenErzieher" name="druckoptionListeSchuelerKontaktdatenErzieherEinzelausdruckEinseitig" label="Einzelausdruck einseitig" />
+							<svws-ui-radio-option :value="3" v-model="druckoptionListeSchuelerKontaktdatenErzieher" name="druckoptionListeSchuelerKontaktdatenErzieherGesamtausdruckDuplex" label="Gesamtausdruck duplex" />
+							<svws-ui-radio-option :value="4" v-model="druckoptionListeSchuelerKontaktdatenErzieher" name="druckoptionListeSchuelerKontaktdatenErzieherEinzelausdruckDuplex" label="Einzelausdruck duplex" />
+						</svws-ui-radio-group>
+					</div>
+					<div class="text-left col-span-4">
+						<svws-ui-button :disabled="isPrintDisabled" @click="downloadPDF" :is-loading="loading" class="mt-4">
+							<svws-ui-spinner v-if="loading" spinning />
+							<span v-else class="icon i-ri-printer-line" />
+							Drucken
+						</svws-ui-button>
+					</div>
+					<!-- E-Mail-Eingabefelder -->
+					<div class="text-left col-span-4 mb-4" v-if="ServerMode.DEV.checkServerMode(serverMode)">
+						<br><p class="font-bold mb-2">Die Kursliste mit den Kontaktdaten als E-Mail an die Kursleitungen versenden.</p>
+						<div class="flex flex-col gap-2">
+							<input type="text" v-model="emailBetreff" placeholder="Betreff eingeben" class="w-full border rounded px-2 py-1">
+							<textarea v-model="emailText" rows="5" placeholder="E-Mail-Text eingeben" class="w-full border rounded px-2 py-1" />
+							<svws-ui-checkbox v-model="istPrivateEmailAlternative" name="istPrivateEmailAlternative">
+								Private E-Mail verwenden, wenn keine schulische E-Mail-Adresse vorhanden ist.
+							</svws-ui-checkbox>
+						</div>
+					</div>
+					<div class="text-left col-span-4" v-if="ServerMode.DEV.checkServerMode(serverMode)">
+						<svws-ui-button :disabled="isEmailDisabled" @click="sendPdfByEmail" :is-loading="loading" class="mt-4">
+							<svws-ui-spinner v-if="loading" spinning />
+							<span v-else class="icon i-ri-mail-send-line" />
+							E-Mail senden
+						</svws-ui-button>
+					</div>
+					<!-- Ende: E-Mail-Eingabefelder -->
+				</svws-ui-input-wrapper>
+			</ui-card>
+			<!-- Karte: Löschen (bestehende Funktionalität, DEV) -->
+			<ui-card v-if="ServerMode.DEV.checkServerMode(serverMode)" icon="i-ri-delete-bin-line" title="Löschen" subtitle="Ausgewählte Kurse werden gelöscht."
 				:is-open="currentAction === 'delete'" @update:is-open="(isOpen) => setCurrentAction('delete', isOpen)">
 				<div>
 					<span v-if="preConditionCheck[0]">Alle ausgewählten Kurse sind bereit zum Löschen.</span>
@@ -23,24 +96,20 @@
 				</template>
 			</log-box>
 		</div>
-		<div v-else>
-			<svws-ui-todo title="Kurse - Gruppenprozesse">
-				Dieser Bereich ist noch in Entwicklung. Hier werden später Gruppenprozesse zu den Kursen vorhanden sein.
-			</svws-ui-todo>
-		</div>
 	</div>
 </template>
 
 <script setup lang="ts">
-
 	import { ref, computed } from "vue";
 	import type { KurseGruppenprozesseProps } from "./SKurseGruppenprozesseProps";
 	import type { List } from "@core";
-	import { ServerMode } from "@core";
+	import { ServerMode, ReportingAusgabeformat, ReportingEMailDaten, ReportingEMailEmpfaengerTyp, ArrayList, BenutzerKompetenz, ReportingParameter, ReportingReportvorlage } from "@core";
+
+	type Action = 'druckKursListeSchuelerKontaktdatenErzieher' | 'delete' | '';
 
 	const props = defineProps<KurseGruppenprozesseProps>();
 
-	const currentAction = ref<string>('');
+	const currentAction = ref<Action>('');
 	const oldAction = ref<{ name: string | undefined; open: boolean }>({
 		name: undefined,
 		open: false,
@@ -49,21 +118,60 @@
 	const logs = ref<List<string | null> | undefined>();
 	const status = ref<boolean | undefined>();
 
+	const hatKompetenzDrucken = computed(() => (props.benutzerKompetenzen.has(BenutzerKompetenz.BERICHTE_ALLE_FORMULARE_DRUCKEN) || props.benutzerKompetenzen.has(BenutzerKompetenz.BERICHTE_STANDARDFORMULARE_DRUCKEN)));
+	const hatKompetenzDruckenSchuelerIndividualdaten = computed(() => (props.benutzerKompetenzen.has(BenutzerKompetenz.SCHUELER_INDIVIDUALDATEN_ANSEHEN) && hatKompetenzDrucken.value));
+
+	// Auswahlabhängige States
+	const isPrintDisabled = computed<boolean>(() => !props.manager().liste.auswahlExists() || loading.value);
+	const isEmailDisabled = computed<boolean>(() => isPrintDisabled.value || ((emailBetreff.value.trim().length) === 0) || ((emailText.value.trim().length) === 0));
+
+	// E-Mail Felder
+	const emailBetreff = ref<string>("");
+	const emailText = ref<string>("");
+	const istPrivateEmailAlternative = ref<boolean>(false);
+
+	// Detail-Optionen und Druckoption analog
+	const option2 = ref(false);
+	const option4 = ref(false);
+	const option8 = ref(false);
+	const option16 = ref(false);
+	const option32 = ref(false);
+	const option64 = ref(false);
+	const option128 = ref(false);
+	const option256 = ref(false);
+	const option512 = ref(false);
+	const option1024 = ref(false);
+	const option2048 = ref(false);
+	const option4096 = ref(false);
+	const druckoptionListeSchuelerKontaktdatenErzieher = ref(1);
+
 	const preConditionCheck = computed(() => {
 		if (currentAction.value === 'delete')
 			return [true, []];
 		return [false, []];
 	})
 
-	function setCurrentAction(newAction: string, open: boolean) {
-		if(newAction === oldAction.value.name && !open)
+	function setCurrentAction(newAction: Action, open: boolean) {
+		if(newAction !== currentAction.value && !open)
 			return;
-		oldAction.value.name = currentAction.value;
-		oldAction.value.open = (currentAction.value === "") ? false : true;
-		if(open === true)
-			currentAction.value= newAction;
-		else
-			currentAction.value = "";
+		option2.value = false;
+		option4.value = false;
+		option8.value = false;
+		option16.value = false;
+		option32.value = false;
+		option64.value = false;
+		option128.value = false;
+		option256.value = false;
+		option512.value = false;
+		option1024.value = false;
+		option2048.value = false;
+		option4096.value = false;
+		druckoptionListeSchuelerKontaktdatenErzieher.value = 1;
+		emailBetreff.value = '';
+		emailText.value = '';
+		istPrivateEmailAlternative.value = false;
+
+		currentAction.value = open ? newAction : '';
 	}
 
 	function clearLog() {
@@ -83,4 +191,101 @@
 		loading.value = false;
 	}
 
+	// Druck analog implementiert: Kontaktdaten/Erzieher für Kurse
+	async function downloadPDF() {
+		const reportingParameter = new ReportingParameter();
+		const listeIdsKurse = new ArrayList<number>();
+		for (const kurs of props.manager().liste.auswahl())
+			listeIdsKurse.add(kurs.id);
+
+		if (currentAction.value === 'druckKursListeSchuelerKontaktdatenErzieher') {
+			reportingParameter.reportvorlage = ReportingReportvorlage.KURSE_v_LISTE_SCHUELER_KONTAKTDATENERZIEHER.getBezeichnung();
+			reportingParameter.idsHauptdaten = listeIdsKurse;
+			reportingParameter.einzelausgabeHauptdaten = ((druckoptionListeSchuelerKontaktdatenErzieher.value === 2) || (druckoptionListeSchuelerKontaktdatenErzieher.value === 4));
+			reportingParameter.einzelausgabeDetaildaten = false;
+		} else {
+			return;
+		}
+		reportingParameter.duplexdruck = ((druckoptionListeSchuelerKontaktdatenErzieher.value === 3) || (druckoptionListeSchuelerKontaktdatenErzieher.value === 4));
+		reportingParameter.detailLevel = ((option2.value ? 2 : 0) + (option4.value ? 4 : 0) + (option8.value ? 8 : 0)
+			+ (option16.value ? 16 : 0) + (option32.value ? 32 : 0) + (option64.value ? 64 : 0)
+			+ (option128.value ? 128 : 0) + (option256.value ? 256 : 0) + (option512.value ? 512 : 0)
+			+ (option1024.value ? 1024 : 0) + (option2048.value ? 2048 : 0) + (option4096.value ? 4096 : 0));
+		loading.value = true;
+		const { data, name } = await props.getPDF(reportingParameter);
+		const link = document.createElement("a");
+		link.href = URL.createObjectURL(data);
+		link.download = name;
+		link.target = "_blank";
+		link.click();
+		URL.revokeObjectURL(link.href);
+		loading.value = false;
+	}
+
+	// E-Mail analog implementiert
+	async function sendPdfByEmail() {
+		const listeIdsKurse = new ArrayList<number>();
+		for (const kurs of props.manager().liste.auswahl())
+			listeIdsKurse.add(kurs.id);
+
+		const reportingParameter = new ReportingParameter();
+		reportingParameter.ausgabeformat = ReportingAusgabeformat.EMAIL.getId();
+
+		const emailDaten = new ReportingEMailDaten();
+		emailDaten.empfaengerTyp = ReportingEMailEmpfaengerTyp.KURSLEHRER.getId();
+		emailDaten.istPrivateEmailAlternative = istPrivateEmailAlternative.value;
+
+		if (currentAction.value === 'druckKursListeSchuelerKontaktdatenErzieher') {
+			reportingParameter.reportvorlage = ReportingReportvorlage.KURSE_v_LISTE_SCHUELER_KONTAKTDATENERZIEHER.getBezeichnung();
+			reportingParameter.idsHauptdaten = listeIdsKurse;
+			reportingParameter.einzelausgabeHauptdaten = true;
+			reportingParameter.einzelausgabeDetaildaten = false;
+			emailDaten.betreff = (((emailBetreff.value.trim().length) !== 0) ? emailBetreff.value : ("Kursliste mit Kontaktdaten"));
+			emailDaten.text = (((emailText.value.trim().length) !== 0) ? emailText.value : ("Im Anhang dieser E-Mail ist die Kursliste mit Kontaktdaten enthalten."));
+		} else {
+			return;
+		}
+		reportingParameter.eMailDaten = emailDaten;
+
+		reportingParameter.duplexdruck = ((druckoptionListeSchuelerKontaktdatenErzieher.value === 3) || (druckoptionListeSchuelerKontaktdatenErzieher.value === 4));
+		reportingParameter.detailLevel = ((option2.value ? 2 : 0) + (option4.value ? 4 : 0)
+			+ (option8.value ? 8 : 0) + (option16.value ? 16 : 0) + (option32.value ? 32 : 0) + (option64.value ? 64 : 0)
+			+ (option128.value ? 128 : 0) + (option256.value ? 256 : 0) + (option512.value ? 512 : 0)
+			+ (option1024.value ? 1024 : 0) + (option2048.value ? 2048 : 0) + (option4096.value ? 4096 : 0));
+		loading.value = true;
+		const result = await props.sendEMail(reportingParameter);
+		status.value = result.success;
+		logs.value = result.log;
+		loading.value = false;
+	}
+
+	async function selectAll() {
+		option2.value = true;
+		option4.value = true;
+		option8.value = true;
+		option16.value = true;
+		option32.value = true;
+		option64.value = true;
+		option128.value = true;
+		option256.value = true;
+		option512.value = true;
+		option1024.value = true;
+		option2048.value = true;
+		option4096.value = true;
+	}
+
+	async function deselectAll() {
+		option2.value = false;
+		option4.value = false;
+		option8.value = false;
+		option16.value = false;
+		option32.value = false;
+		option64.value = false;
+		option128.value = false;
+		option256.value = false;
+		option512.value = false;
+		option1024.value = false;
+		option2048.value = false;
+		option4096.value = false;
+	}
 </script>

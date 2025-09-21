@@ -1,5 +1,5 @@
 <html lang="de" xmlns:th="http://www.thymeleaf.org">
-	<head th:with="mediaPrint = ${Parameter.ausgabeformat == 2}">
+	<head th:with="mediaPrint = ${Parameter.ausgabeformat >= 2}">
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width" />
 		<title>Raum-Stundenplan</title>
@@ -9,7 +9,7 @@
 		<link rel="stylesheet" th:href="@{stundenplanung/StundenplanungRaumStundenplan.css}" href="StundenplanungRaumStundenplan.css" />
 	</head>
 
-	<body th:with="mediaPrint = ${Parameter.ausgabeformat == 2}">
+	<body th:with="mediaPrint = ${Parameter.ausgabeformat >= 2}">
 		<div class="reset-page-counter start-new-page"
 			 th:each="plan,iterationVarPlan : ${RaeumeStundenplaene}"
 			 th:with="anzeigeMitPausenzeiten = ${((Parameter.detailLevel % 4) / 2) >= 1}">

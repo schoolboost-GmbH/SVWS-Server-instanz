@@ -1,6 +1,7 @@
 package de.svws_nrw.module.reporting.factories;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import de.svws_nrw.core.data.SimpleOperationResponse;
@@ -12,6 +13,7 @@ import de.svws_nrw.core.types.reporting.ReportingAusgabeformat;
 import de.svws_nrw.core.types.reporting.ReportingReportvorlage;
 import de.svws_nrw.db.DBEntityManager;
 import de.svws_nrw.db.utils.ApiOperationException;
+import de.svws_nrw.module.reporting.html.HtmlBuilder;
 import de.svws_nrw.module.reporting.utils.ReportingExceptionUtils;
 import de.svws_nrw.module.reporting.repositories.ReportingRepository;
 import jakarta.ws.rs.core.MediaType;
@@ -38,7 +40,7 @@ public final class ReportingFactory {
 	/** Logger, der den Ablauf protokolliert und Fehlerdaten sammelt. Dieser wird in das Reporting-Repository übergeben, um auch während der Generierung der Ausgabe Fehler festzuhalten und auszugeben. */
 	private final Logger logger = new Logger();
 
-	/** Liste, die Einträge aus dem Logger sammelt. */
+	/** Die Liste, die Einträge aus dem Logger sammelt. */
 	private final LogConsumerList log = new LogConsumerList();
 
 
@@ -114,17 +116,66 @@ public final class ReportingFactory {
 	public Response createReportResponse() throws ApiOperationException {
 
 		try {
-			this.logger.logLn(LogLevel.DEBUG, 0, "### Beginn der Erzeugung einer API-Response zur Report-Generierung.");
+			this.logger.logLn(LogLevel.DEBUG, 0, ">>> Beginn der Erzeugung einer API-Response zur Report-Generierung.");
 
 			final Response reportResponse;
 
 			switch (ReportingAusgabeformat.getByID(reportingParameter.ausgabeformat)) {
-				case ReportingAusgabeformat.HTML -> reportResponse = new HtmlFactory(reportingRepository).createHtmlResponse();
-				case ReportingAusgabeformat.PDF -> {
-					final HtmlFactory htmlFactory = new HtmlFactory(reportingRepository);
-					reportResponse = new PdfFactory(htmlFactory.createHtmlBuilders(), reportingRepository).createPdfResponse();
+				case ReportingAusgabeformat.UNDEFINED -> {
+					logger.logLn(LogLevel.ERROR, 4, "FEHLER: Das Ausgabeformat UNDEFINIERT wurde für die Report-Generierung übergeben.");
+					final SimpleOperationResponse sop = ReportingExceptionUtils.getSimpleOperationResponse(null, logger, log);
+					throw new ApiOperationException(Status.BAD_REQUEST, null, sop, MediaType.APPLICATION_JSON);
 				}
-				case null -> {
+				case ReportingAusgabeformat.HTML -> {
+					this.logger.logLn(LogLevel.DEBUG, 4, "HTML als Ausgabeformat für die Report-Generierung gewählt.");
+					final HtmlFactory htmlFactory = new HtmlFactory(reportingRepository);
+					// Erzeuge im try-Block eine temporäre Response, die bei einem Fehler automatisch geschlossen wird (SonarCube-Angabe)
+					try (Response autocloseResponse = htmlFactory.createHtmlResponse()) {
+						if (!log.getText(LogLevel.ERROR).isEmpty()) {
+							logger.logLn(LogLevel.ERROR, 0, "### FEHLER: Während der Erzeugung einer HTML-Response zur Report-Generierung ist ein Fehler geloggt worden. Fehlerdaten folgen.");
+							final SimpleOperationResponse sop = ReportingExceptionUtils.getSimpleOperationResponse(null, logger, log);
+							throw new ApiOperationException(Status.INTERNAL_SERVER_ERROR, null, sop, MediaType.APPLICATION_JSON);
+						}
+						// Response klonen, damit die zurückgegebene Response nicht die Auto-Close-Ressource ist
+						reportResponse = Response.fromResponse(autocloseResponse).build();
+					}
+				}
+				case ReportingAusgabeformat.PDF -> {
+					this.logger.logLn(LogLevel.DEBUG, 4, "PDF als Ausgabeformat für die Report-Generierung gewählt.");
+					final HtmlFactory htmlFactory = new HtmlFactory(reportingRepository);
+					final List<HtmlBuilder> htmlBuilders = htmlFactory.createHtmlBuilders();
+					this.logger.logLn(LogLevel.DEBUG, 4, "HTML-Builder wurden erzeugt.");
+					final PdfFactory pdfFactory = new PdfFactory(htmlBuilders, reportingRepository);
+					// Erzeuge im try-Block eine temporäre Response, die bei einem Fehler automatisch geschlossen wird (SonarCube-Angabe)
+					try (Response autocloseResponse = pdfFactory.createPdfResponse()) {
+						if (!log.getText(LogLevel.ERROR).isEmpty()) {
+							logger.logLn(LogLevel.ERROR, 0, "### FEHLER: Während der Erzeugung einer PDF-Response zur Report-Generierung ist ein Fehler geloggt worden. Fehlerdaten folgen.");
+							final SimpleOperationResponse sop = ReportingExceptionUtils.getSimpleOperationResponse(null, logger, log);
+							throw new ApiOperationException(Status.INTERNAL_SERVER_ERROR, null, sop, MediaType.APPLICATION_JSON);
+						}
+						// Response klonen, damit die zurückgegebene Response nicht die Auto-Close-Ressource ist
+						reportResponse = Response.fromResponse(autocloseResponse).build();
+					}
+				}
+				case ReportingAusgabeformat.EMAIL -> {
+					this.logger.logLn(LogLevel.DEBUG, 4, "EMAIL als Ausgabeformat für die Report-Generierung gewählt.");
+					final HtmlFactory htmlFactory = new HtmlFactory(reportingRepository);
+					final List<HtmlBuilder> htmlBuilders = htmlFactory.createHtmlBuilders();
+					this.logger.logLn(LogLevel.DEBUG, 4, "HTML-Builder wurden erzeugt.");
+					final PdfFactory pdfFactory = new PdfFactory(htmlBuilders, reportingRepository);
+					final EmailFactory emailFactory = new EmailFactory(reportingRepository);
+					// Erzeuge im try-Block eine temporäre Response, die bei einem Fehler automatisch geschlossen wird (SonarCube-Angabe)
+					try (Response autocloseResponse = emailFactory.sendEmails(pdfFactory)) {
+						if (!log.getText(LogLevel.ERROR).isEmpty()) {
+							logger.logLn(LogLevel.ERROR, 0, "### FEHLER: Während des E-Mail-Versands (Response) wurde ein Fehler geloggt. Fehlerdaten folgen.");
+							final SimpleOperationResponse sop = ReportingExceptionUtils.getSimpleOperationResponse(null, logger, log);
+							throw new ApiOperationException(Status.INTERNAL_SERVER_ERROR, null, sop, MediaType.APPLICATION_JSON);
+						}
+						// Response klonen, damit die zurückgegebene Response nicht die Auto-Close-Ressource ist
+						reportResponse = Response.fromResponse(autocloseResponse).build();
+					}
+				}
+				case null, default -> {
 					logger.logLn(LogLevel.ERROR, 4, "FEHLER: Kein bekanntes Ausgabeformat für die Report-Generierung übergeben.");
 					final SimpleOperationResponse sop = ReportingExceptionUtils.getSimpleOperationResponse(null, logger, log);
 					throw new ApiOperationException(Status.NOT_FOUND, null, sop, MediaType.APPLICATION_JSON);
@@ -138,9 +189,8 @@ public final class ReportingFactory {
 				final SimpleOperationResponse sop = ReportingExceptionUtils.getSimpleOperationResponse(null, logger, log);
 				throw new ApiOperationException(Status.INTERNAL_SERVER_ERROR, null, sop, MediaType.APPLICATION_JSON);
 			}
-
 			// Wenn kein Fehler vermerkt wurde, kann der Report zurückgegeben werden.
-			this.logger.logLn(LogLevel.DEBUG, 0, "### Ende der Erzeugung einer API-Response zur Report-Generierung.");
+			this.logger.logLn(LogLevel.DEBUG, 0, "<<< Ende der Erzeugung einer API-Response zur Report-Generierung.");
 			return reportResponse;
 		} catch (final Exception e) {
 			logger.logLn(LogLevel.ERROR, 0, "### FEHLER: Während der Erzeugung einer API-Response zur Report-Generierung ist ein Fehler aufgetreten. "

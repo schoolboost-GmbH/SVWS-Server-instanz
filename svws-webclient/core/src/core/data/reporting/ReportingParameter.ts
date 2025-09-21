@@ -1,4 +1,5 @@
 import { JavaObject } from '../../../java/lang/JavaObject';
+import { ReportingEMailDaten } from '../../../core/data/reporting/ReportingEMailDaten';
 import { ArrayList } from '../../../java/util/ArrayList';
 import type { List } from '../../../java/util/List';
 import { Class } from '../../../java/lang/Class';
@@ -56,6 +57,11 @@ export class ReportingParameter extends JavaObject {
 	 * Typenspezifische Sortierdefinitionen, die für die Sortierung von ProxyTyp-Objekten verwendet werden sollen.
 	 */
 	public sortierungDefinitionen : List<ReportingSortierungDefinition> | null = new ArrayList<ReportingSortierungDefinition>();
+
+	/**
+	 * Parameter, der die Daten für den E-Mail-Versand enthält.
+	 */
+	public eMailDaten : ReportingEMailDaten | null = new ReportingEMailDaten();
 
 	/**
 	 * Legt fest, ob die Seiteneinstellungen für einen Duplexdruck verwendet werden sollen.
@@ -124,6 +130,7 @@ export class ReportingParameter extends JavaObject {
 		} else {
 			result.sortierungDefinitionen = null;
 		}
+		result.eMailDaten = ((obj.eMailDaten === undefined) || (obj.eMailDaten === null)) ? null : ReportingEMailDaten.transpilerFromJSON(JSON.stringify(obj.eMailDaten));
 		if (obj.duplexdruck === undefined)
 			throw new Error('invalid json format, missing attribute duplexdruck');
 		result.duplexdruck = obj.duplexdruck;
@@ -170,6 +177,7 @@ export class ReportingParameter extends JavaObject {
 			}
 			result += ' ]' + ',';
 		}
+		result += '"eMailDaten" : ' + ((obj.eMailDaten === null) ? 'null' : ReportingEMailDaten.transpilerToJSON(obj.eMailDaten)) + ',';
 		result += '"duplexdruck" : ' + obj.duplexdruck.toString() + ',';
 		result += '"detailLevel" : ' + obj.detailLevel.toString() + ',';
 		result = result.slice(0, -1);
@@ -233,6 +241,9 @@ export class ReportingParameter extends JavaObject {
 				}
 				result += ' ]' + ',';
 			}
+		}
+		if (obj.eMailDaten !== undefined) {
+			result += '"eMailDaten" : ' + ((obj.eMailDaten === null) ? 'null' : ReportingEMailDaten.transpilerToJSON(obj.eMailDaten)) + ',';
 		}
 		if (obj.duplexdruck !== undefined) {
 			result += '"duplexdruck" : ' + obj.duplexdruck.toString() + ',';

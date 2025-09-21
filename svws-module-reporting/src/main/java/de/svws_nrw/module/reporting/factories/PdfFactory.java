@@ -17,13 +17,16 @@ import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.Set;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
 
 /**
- * <p>Diese Klasse erstellt PDF-Dateien auf Basis von html.</p>
- * <p>Dabei werden bei der Initialisierung html-Builder übergebenen, die die html-Inhalte erzeugen. Diese Inhalte werden genutzt, um daraus pdf-Builder zu
+ * <p>Diese Klasse erstellt PDF-Dateien auf Basis von HTML.</p>
+ * <p>Dabei werden bei der Initialisierung HTML-Builder übergeben, die die HTML-Inhalte erzeugen. Diese Inhalte werden genutzt, um daraus pdf-Builder zu
  * erzeugen.</p>
  */
 public class PdfFactory {
@@ -34,17 +37,17 @@ public class PdfFactory {
 	/** Einstellungen und Daten zum Steuern der Report-Generierung. */
 	private final ReportingParameter reportingParameter;
 
-	/** Die Template-Definition für die Erstellung der Html-Datei */
+	/** Die Template-Definition für die Erstellung der HTML-Datei */
 	private final HtmlTemplateDefinition htmlTemplateDefinition;
 
-	/** Map mit den Dateinamen und Html-Dateiinhalten, die in PDF-Dateien gewandelt werden sollen. */
+	/** Map mit den Dateinamen und HTML-Dateiinhalten, die in PDF-Dateien gewandelt werden sollen. */
 	private final List<HtmlBuilder> htmlBuilders;
 
 
 	/**
-	 * Erzeugt eine neue PdfFactory, um eine Pdf-Datei aus den übergebenen Html-Inhalten zu erzeugen.
+	 * Erzeugt eine neue PdfFactory, um eine Pdf-Datei aus den übergebenen HTML-Inhalten zu erzeugen.
 	 *
-	 * @param htmlBuilders 				Eine Map mit den Dateinamen und Html-Dateiinhalten.
+	 * @param htmlBuilders 				Eine Map mit den Dateinamen und HTML-Dateiinhalten.
 	 * @param reportingRepository		Repository mit Parametern, Logger und Daten-Cache zur Report-Generierung.
 	 *
 	 * @throws ApiOperationException	Im Fehlerfall wird eine ApiOperationException ausgelöst und Log-Daten zusammen mit dieser zurückgegeben.
@@ -57,14 +60,14 @@ public class PdfFactory {
 
 		this.reportingRepository.logger().logLn(LogLevel.DEBUG, 0, ">>> Beginn der Initialisierung der PDF-Factory und der Validierung der übergebenen Daten.");
 
-		// Validiere die html-Builders
+		// Validiere die HTML-Builders
 		if ((htmlBuilders == null) || htmlBuilders.isEmpty()) {
 			this.reportingRepository.logger().logLn(LogLevel.ERROR, 4, "FEHLER: Die Html-Dateiinhalte für die PDF-Erzeugung sind nicht vorhanden.");
 			throw new ApiOperationException(Status.NOT_FOUND, "FEHLER: Die Html-Dateiinhalte für die PDF-Erzeugung sind nicht vorhanden.");
 		}
 		this.htmlBuilders = htmlBuilders;
 
-		// Validiere die Angaben zur html-Vorlage.
+		// Validiere die Angaben zur HTML-Vorlage.
 		this.htmlTemplateDefinition = HtmlTemplateDefinition.getByType(ReportingReportvorlage.getByBezeichnung(this.reportingParameter.reportvorlage));
 		if (this.htmlTemplateDefinition == null) {
 			this.reportingRepository.logger()
@@ -112,11 +115,11 @@ public class PdfFactory {
 
 
 	/**
-	 * Erzeugt auf Basis der übergebenen html-Builder die PDF-Builder zur Erzeugung der PDF-Dateien.
+	 * Erzeugt auf Basis der übergebenen HTML-Builder die PDF-Builder zur Erzeugung der PDF-Dateien.
 	 *
 	 * @return Ein oder mehrere PDF-Builder zur Erzeugung der PDF-Dateien.
 	 */
-	private List<PdfBuilder> getPdfBuilders() {
+	public List<PdfBuilder> getPdfBuilders() {
 
 		reportingRepository.logger().logLn(LogLevel.DEBUG, 0, ">>> Beginn der Erzeugung der PDF-Builder.");
 		final List<PdfBuilder> pdfBuilders = new ArrayList<>();
@@ -127,6 +130,39 @@ public class PdfFactory {
 
 		reportingRepository.logger().logLn(LogLevel.DEBUG, 0, "<<< Ende der Erzeugung der PDF-Builder.");
 		return pdfBuilders;
+	}
+
+	/**
+	 * Erzeugt eine Zuordnung von IDs zu einer Liste von {@code PdfBuilder}-Objekten, basierend
+	 * auf den verfügbaren {@code HtmlBuilder}-Objekten. Jedem {@code HtmlBuilder} können eine oder
+	 * mehrere IDs zugeordnet sein. Falls keine IDs vorhanden sind, wird der zugehörige
+	 * {@code PdfBuilder} optional der neutralen Gruppe (-1) hinzugefügt.
+	 *
+	 * @return Eine Map, die IDs (Schlüssel vom Typ {@code Long}) den jeweiligen Listen
+	 *         von {@code PdfBuilder}-Objekten (Werte vom Typ {@code List<PdfBuilder>})
+	 *         zuordnet. Die Schlüssel repräsentieren die IDs der zugehörigen {@code HtmlBuilder}.
+	 */
+	public Map<Long, List<PdfBuilder>> getPdfBuildersById() {
+		final Map<Long, List<PdfBuilder>> result = new LinkedHashMap<>();
+
+		for (final HtmlBuilder htmlBuilder : this.htmlBuilders) {
+			final PdfBuilder pdf = new PdfBuilder(htmlBuilder.getHtml(), htmlTemplateDefinition.getRootPfad(), htmlBuilder.getDateiname());
+			final Set<Long> ids = htmlBuilder.getIds();
+
+			// Falls kein Bezug hinterlegt ist, optional in neutraler Gruppe (-1) sammeln.
+			if ((ids == null) || ids.isEmpty()) {
+				result.computeIfAbsent(-1L, k -> new ArrayList<>()).add(pdf);
+				continue;
+			}
+
+			for (final Long id : ids) {
+				if (id == null)
+					continue;
+				result.computeIfAbsent(id, k -> new ArrayList<>()).add(pdf);
+			}
+		}
+		return result;
+
 	}
 
 

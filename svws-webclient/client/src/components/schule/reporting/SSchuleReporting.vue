@@ -33,34 +33,12 @@
 	const report = ref<ReportingReportvorlage>();
 	const parameter = ref<string>("");
 
-	const template = computed(() => `{
-		"idSchuljahresabschnitt": ${props.idAbschnitt},
-		"ausgabeformat": 2,
-		"reportvorlage": "${report.value?.getBezeichnung() ?? ''}",
-		"idsHauptdaten": [],
-		"einzelausgabeHauptdaten": false,
-		"idsDetaildaten": [],
-		"einzelausgabeDetaildaten": false,
-		"sortierungHauptdaten": {
-			"typ": "",
-			"verwendeStandardsortierung": true,
-			"attribute": []
-		},
-		"sortierungDetaildaten": {
-			"typ": "",
-			"verwendeStandardsortierung": true,
-			"attribute": []
-		},
-		"sortierungDefinitionen": [
-			{
-				"typ": "",
-				"verwendeStandardsortierung": true,
-				"attribute": []
-			}
-		],
-		"duplexdruck": false,
-		"detailLevel": 0
-	}`);
+	const template = computed(() => {
+		const t = new ReportingParameter();
+		t.idSchuljahresabschnitt = props.schuljahresabschnitt().id;
+		t.reportvorlage = report.value?.getBezeichnung() ?? '';
+		return JSON.stringify(JSON.parse(ReportingParameter.transpilerToJSON(t)), null, 4);
+	});
 
 	watch(report, () => (parameter.value = template.value));
 

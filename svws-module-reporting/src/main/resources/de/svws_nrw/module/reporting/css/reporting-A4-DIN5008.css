@@ -169,12 +169,12 @@ span.page-nums-print:after {
 	top: 37mm;
 	left: 15mm;
 	width: 73mm;
-	height: 5mm;
+	height: 7mm;
 }
 
 .versandinformationen {
 	position: absolute;
-	top: 42mm;
+	top: 44mm;
 	left: 15mm;
 	width: 73mm;
 	height: 5mm;
@@ -190,10 +190,10 @@ span.page-nums-print:after {
 
 .empfaengeranschrift {
 	position: absolute;
-	top: 47mm;
+	top: 49mm;
 	left: 15mm;
 	width: 73mm;
-	height: 31mm;
+	height: 30mm;
 }
 
 .ortunddatum {

@@ -1,5 +1,5 @@
 <html lang="de" xmlns:th="http://www.thymeleaf.org">
-<head th:with="mediaPrint = ${Parameter.ausgabeformat == 2}">
+<head th:with="mediaPrint = ${Parameter.ausgabeformat >= 2}">
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width"/>
     <title>Schulbescheinigung</title>
@@ -9,7 +9,7 @@
     <link rel="stylesheet" th:href="@{schueler/anschreiben/SchuelerSchulbescheinigung.css}" href="../../schueler/anschreiben/SchuelerSchulbescheinigung.css"/>
 </head>
 
-<body th:with="mediaPrint = ${Parameter.ausgabeformat == 2},
+<body th:with="mediaPrint = ${Parameter.ausgabeformat >= 2},
                fuerErzieher = ${((Parameter.detailLevel % 4) / 2) >= 1},
                mitBildBriefkopf = ${((Parameter.detailLevel % 8) / 4) >= 1},
                mitSchullogo = ${((Parameter.detailLevel % 16) / 8) >= 1},
@@ -120,7 +120,7 @@
 				<th:block th:if="${schueler.schulbesuch().entlassungDatum().isEmpty()}">
 					<p class="m-b-1em" th:text="'seit dem ' + ${#convert.toDateDE(schueler.aufnahmedatum())} + ' unsere Schule,'"></p>
 					<p class="m-l-2em m-b-1em" th:utext="${Schule.anschriftVollstaendigHtml()} + ','">Schulbezeichnung1<br/>Schulbezeichnung2<br/>Schulbezeichnung3<br/>Musterstraße 123A<br/>12345 Musterstadt</p>
-					<p class="m-b-1em" th:text="'besucht und aktuell am Unterricht der Jahrgangsstufe ' + ${schueler.aktuellerLernabschnitt().jahrgang().kuerzel()} + ' teilnimmt.'"></p>
+					<p class="m-b-1em" th:text="'besucht und aktuell am Unterricht der Jahrgangsstufe ' + ${schueler.aktuellerLernabschnitt().jahrgang() == null ? '---' : schueler.aktuellerLernabschnitt().jahrgang().kuerzel()} + ' teilnimmt.'"></p>
 					<p class="m-b-1em" th:text="'Bei einem regulären Verlauf der Schullaufbahn wird diese voraussichtlich im Juli ' + ${schueler.aktuellerLernabschnitt().jahrVoraussichtlicheEntlassung()} + ' enden.'"></p>
 				</th:block>
 				<th:block th:if="${!schueler.schulbesuch().entlassungDatum().isEmpty()}">
@@ -145,7 +145,7 @@
 					</tr>
 					<tr>
 						<td style="width: 100%;" class="ta-lt">
-							<p class="f-tiny">(Dieses Schreiben wurde automatisiert erstellt und ist ohne Unterschrift gültig.)</p>
+							<p class="f-tiny">Dieses Schreiben wurde automatisiert erstellt und ist ohne Unterschrift gültig.</p>
 						</td>
 					</tr>
 				</table>

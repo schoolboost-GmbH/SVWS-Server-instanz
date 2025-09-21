@@ -48,6 +48,7 @@ export class RouteSchuelerIndividualdaten extends RouteNode<RouteDataSchuelerInd
 			benutzerKompetenzen: api.benutzerKompetenzen,
 			autofocus: routeSchueler.data.autofocus,
 			getPDF: routeSchueler.data.getPDF,
+			sendEMail: routeSchueler.data.sendEMail,
 		};
 	}
 

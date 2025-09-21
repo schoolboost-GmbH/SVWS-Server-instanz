@@ -105,7 +105,6 @@ public final class HtmlContextKurse extends HtmlContext<ReportingKurs> {
 		super.setContext(context);
 	}
 
-
 	/**
 	 * Teile diesen Context mit allen Kursen in eine Liste von Contexts auf, die jeweils einen Kurs enthalten.
 	 *
@@ -121,5 +120,15 @@ public final class HtmlContextKurse extends HtmlContext<ReportingKurs> {
 		}
 
 		return resultContexts;
+	}
+
+	/**
+	 * Liefert die IDs der Context.
+	 *
+	 * @return Liste der IDs der Context-Daten.
+	 */
+	@Override
+	public List<Long> getIds() {
+		return getContextData().stream().map(ReportingKurs::id).toList();
 	}
 }

@@ -97,6 +97,10 @@ public final class SortierungRegistryReportingKurs {
 				FunktionBuilder.start(ReportingKurs::fach)
 						.then(ReportingFach::kuerzel)
 						.toFunction());
+		reg.registiereComparable(reg.methodeToString(ReportingKurs::fach) + "." + reg.methodeToString(ReportingFach::sortierung),
+				FunktionBuilder.start(ReportingKurs::fach)
+						.then(ReportingFach::sortierung)
+						.toFunction());
 		reg.registiereString(reg.methodeToString(ReportingKurs::kursleitung) + "." + reg.methodeToString(ReportingLehrer::nachname),
 				FunktionBuilder.start(ReportingKurs::kursleitung)
 						.then(ReportingLehrer::nachname)
@@ -117,7 +121,6 @@ public final class SortierungRegistryReportingKurs {
 				FunktionBuilder.start(ReportingKurs::schuljahresabschnitt)
 						.then(ReportingSchuljahresabschnitt::textSchuljahresabschnittLang)
 						.toFunction());
-
 
 		return reg;
 	}

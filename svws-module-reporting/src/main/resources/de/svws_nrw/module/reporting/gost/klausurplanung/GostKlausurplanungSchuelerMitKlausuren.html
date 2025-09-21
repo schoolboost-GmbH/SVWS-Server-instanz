@@ -1,5 +1,5 @@
 <html lang="de" xmlns:th="http://www.thymeleaf.org">
-	<head th:with="mediaPrint = ${Parameter.ausgabeformat == 2}">
+	<head th:with="mediaPrint = ${Parameter.ausgabeformat >= 2}">
 		<meta charset="utf-8"/>
 		<meta name="viewport" content="width=device-width"/>
 		<title>Schüler mit Klausuren</title>
@@ -9,7 +9,7 @@
 		<link rel="stylesheet" th:href="@{gost/klausurplanung/GostKlausurplanungSchuelerMitKlausuren.css}" href="../../gost/klausurplanung/GostKlausurplanungSchuelerMitKlausuren.css" />
 	</head>
 
-	<body th:with="mediaPrint = ${Parameter.ausgabeformat == 2}">
+	<body th:with="mediaPrint = ${Parameter.ausgabeformat >= 2}">
 		<div class="reset-page-counter start-new-page" th:each="schueler,iterationVarSchueler : ${GostKlausurplan.schuelerGefiltert()}">
 			<!--Beginn: Definition der Seitenköpfe und Seitenfüße. Diese werden per CSS in den @page-Boxen positioniert-->
 			<th:block th:if="${mediaPrint}">

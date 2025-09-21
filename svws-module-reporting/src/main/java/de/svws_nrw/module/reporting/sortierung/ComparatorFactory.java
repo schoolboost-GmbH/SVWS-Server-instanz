@@ -61,7 +61,7 @@ public final class ComparatorFactory {
 			ReportingExceptionUtils.putInfoInLog(
 					"INFO: Es wurden folgende Attribute zur Sortierung übergeben, die nicht in der Registry definiert wurden: "
 							+ String.join(", ", validierungsfehler),
-					reportingRepository.logger(), LogLevel.INFO, 0);
+					reportingRepository.logger(), LogLevel.INFO, 4);
 		}
 
 		return Optional.of(comparator);

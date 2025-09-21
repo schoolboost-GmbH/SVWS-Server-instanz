@@ -14,11 +14,11 @@ import de.svws_nrw.core.types.reporting.ReportingReportvorlage;
  * <p>Die Bezeichnungen der ENUM-Werte dienen auch dazu, die Daten-Contexts korrekt zu füllen.
  * Die Benennung der Vorlagen erfolgt nach dem Schema Hauptdaten_v_Detaildaten. Bei der Report-Generierung erfolgt in
  * Teilen ein entsprechendes Füllen der Datenkontexte anhand der Benennung.</p>
- * <p>Jede Templatedefinition hat eine Pfadangabe für den Root-Pfad und eine zur html-Templatedatei. Letztere Angabe hat relativ zum Root zu erfolgen.
- * Unter dem Root müssen alle weiteren Dateien zum Template zu finden sein, bspw. die css-Dateien.
- * Innerhalb der html-Vorlagendatei sind alle Pfade relativ zum Root anzugeben.</p>
+ * <p>Jede Templatedefinition hat eine Pfadangabe für den Root-Pfad und eine zur HTML-Templatedatei. Letztere Angabe hat relativ zum Root zu erfolgen.
+ * Unter dem Root müssen alle weiteren Dateien zum Template zu finden sein, bspw. die CSS-Dateien.
+ * Innerhalb der HTML-Vorlagendatei sind alle Pfade relativ zum Root anzugeben.</p>
  * <p>Es gibt zwei Einträge für die Erzeugung des Dateinamens. Einen "statischen" Dateinamen und eine Dateinamensvorlage.
- * Die Vorlage stellt den BODY eines html-Thymeleaf-Templates dar, welches eine einzige Zeile mit einem Absatz-Tag
+ * Die Vorlage stellt den BODY eines HTML-Thymeleaf-Templates dar, welches eine einzige Zeile mit einem Absatz-Tag
  * ergeben muss. Diese Zeile wird dann für die Erzeugung des Dateinamens aus den Daten genutzt.</p>
  */
 public enum HtmlTemplateDefinition {
@@ -63,7 +63,7 @@ public enum HtmlTemplateDefinition {
 			Arrays.asList(BenutzerKompetenz.OBERSTUFE_LAUFBAHNPLANUNG_ALLGEMEIN, BenutzerKompetenz.OBERSTUFE_LAUFBAHNPLANUNG_FUNKTIONSBEZOGEN,
 					BenutzerKompetenz.OBERSTUFE_KURSPLANUNG_ALLGEMEIN, BenutzerKompetenz.OBERSTUFE_KURSPLANUNG_FUNKTIONSBEZOGEN)),
 
-	/** Report-Vorlage: GOSt - Kursplanung - Kurse - Statistikwerten */
+	/** Report-Vorlage: GOSt - Kursplanung - Kurse - Statistikwerte */
 	GOST_KURSPLANUNG_v_KURSE_MIT_STATISTIKWERTEN(
 			ReportingReportvorlage.GOST_KURSPLANUNG_v_KURSE_MIT_STATISTIKWERTEN,
 			"de/svws_nrw/module/reporting/",
@@ -122,6 +122,21 @@ public enum HtmlTemplateDefinition {
 			        <th:block th:if="${!Klassen.isEmpty()}" th:each="klasse,iterState : ${Klassen}">
 			            <p th:if="${iterState.first && (Klassen.size() == 1)}" th:text="${'Klasse-Liste-Schueler-Kontaktdaten-Erzieher_' + #strings.replace(klasse.kuerzel(), ' ', '_')}"></p>
 			            <p th:if="${iterState.first && (Klassen.size() > 1)}" th:text="${'Klasse-Liste-Schueler-Kontaktdaten-Erzieher'}"></p>
+			        </th:block>
+			""",
+			Arrays.asList(BenutzerKompetenz.SCHUELER_INDIVIDUALDATEN_ANSEHEN)),
+
+	/** Report-Vorlage: Kurs - Liste - Schüler - Kontaktdaten - Erzieher */
+	KURSE_v_LISTE_SCHUELER_KONTAKTDATENERZIEHER(
+			ReportingReportvorlage.KURSE_v_LISTE_SCHUELER_KONTAKTDATENERZIEHER,
+			"de/svws_nrw/module/reporting/",
+			"kurse/KursListeSchuelerKontaktdatenErzieher.html",
+			"Kurs-Liste-Schueler-Kontaktdaten-Erzieher",
+			"""
+			        <p th:if="${Kurse.isEmpty()}">Kurs-Liste-Schueler-Kontaktdaten-Erzieher</p>
+			        <th:block th:if="${!Kurse.isEmpty()}" th:each="kurs,iterState : ${Kurse}">
+			            <p th:if="${iterState.first && (Kurse.size() == 1)}" th:text="${'Kurs-Liste-Schueler-Kontaktdaten-Erzieher_' + #strings.replace(kurs.kuerzel(), ' ', '_') + '-' + #strings.replace(#strings.replace(kurs.auflistungJahrgaenge(), ' ', '_'), ',', '-')}"></p>
+			            <p th:if="${iterState.first && (Kurse.size() > 1)}" th:text="${'Kurs-Liste-Schueler-Kontaktdaten-Erzieher'}"></p>
 			        </th:block>
 			""",
 			Arrays.asList(BenutzerKompetenz.SCHUELER_INDIVIDUALDATEN_ANSEHEN)),
@@ -343,13 +358,13 @@ public enum HtmlTemplateDefinition {
 	/** Der Root-Pfad zum Verzeichnis, unter dem alle Dateien dieser HtmlTemplateDefinition (html, css, fonts) auffindbar sind. */
 	private final String rootPfad;
 
-	/** Pfad zur html-Template-Datei. Angabe erfolgt relativ zum Root-Pfad. */
+	/** Pfad zur HTML-Template-Datei. Angabe erfolgt relativ zum Root-Pfad. */
 	private final String pfadHtmlTemplate;
 
 	/** Der statische Dateiname ohne Dateiendung, der bei der Ausgabe als ZIP-Datei verwendet wird. */
 	private final String dateiname;
 
-	/** Die Vorlage für dynamische Generierung des Dateinamens ohne Dateiendung. Sie ist in der Form eines thymeleaf-html-Templates anzulegen. */
+	/** Die Vorlage für dynamische Generierung des Dateinamens ohne Dateiendung. Sie ist in der Form eines thymeleaf-HTML-Templates anzulegen. */
 	private final String dateinamensvorlage;
 
 	/** Die List mit Benutzerkompetenzen gemäß {@link BenutzerKompetenz}, die zur Nutzung des Templates erforderlich sind. */
@@ -358,13 +373,13 @@ public enum HtmlTemplateDefinition {
 
 
 	/**
-	 * Erstellt eine neue Template-Definition
+	 * Erstellt eine neue Template-Definition.
 	 *
 	 * @param reportingReportvorlage 	Der CoreType {@link ReportingReportvorlage} des Templates
 	 * @param rootPfad 					Der Root-Pfad zum Verzeichnis, unter dem alle Dateien dieser HtmlTemplateDefinition (html, css, fonts) auffindbar sind.
-	 * @param pfadHtmlTemplate 			Pfad zur html-Template-Datei. Angabe erfolgt relativ zum Root-Pfad.
+	 * @param pfadHtmlTemplate 			Pfad zur HTML-Template-Datei. Angabe erfolgt relativ zum Root-Pfad.
 	 * @param dateiname 				Der statische Dateiname ohne Dateiendung, der unter anderem bei der Ausgabe als ZIP-Datei verwendet wird.
-	 * @param dateinamensvorlage 		Die Vorlage für dynamische Generierung des Dateinamens ohne Dateiendung. Sie ist in der Form eines thymeleaf-html-Templates anzulegen.
+	 * @param dateinamensvorlage 		Die Vorlage für dynamische Generierung des Dateinamens ohne Dateiendung. Sie ist in der Form eines thymeleaf-HTML-Templates anzulegen.
 	 * @param benutzerKompetenzen 		Die List mit Benutzerkompetenzen gemäß {@link BenutzerKompetenz}, die zur Nutzung des Templates erforderlich sind.
 	 */
 	HtmlTemplateDefinition(final ReportingReportvorlage reportingReportvorlage, final String rootPfad, final String pfadHtmlTemplate, final String dateiname,
@@ -398,18 +413,18 @@ public enum HtmlTemplateDefinition {
 	}
 
 	/**
-	 * Pfad zur html-Template-Datei. Angabe erfolgt relativ zum Root-Pfad.
+	 * Pfad zur HTML-Template-Datei. Angabe erfolgt relativ zum Root-Pfad.
 	 *
-	 * @return Der Dateipfad zur html-Template-Datei
+	 * @return Der Dateipfad zur HTML-Template-Datei
 	 */
 	public String getPfadHtmlTemplate() {
 		return this.pfadHtmlTemplate;
 	}
 
 	/**
-	 * Pfad zur html-Template-Datei, inklusive des Root-Pfads der HtmlTemplateDefinition.
+	 * Pfad zur HTML-Template-Datei, inklusive des Root-Pfads der HtmlTemplateDefinition.
 	 *
-	 * @return Der Root-Dateipfad zur html-Template-Datei
+	 * @return Der Root-Dateipfad zur HTML-Template-Datei
 	 */
 	public String getRootPfadHtmlTemplate() {
 		return this.rootPfad + this.pfadHtmlTemplate;

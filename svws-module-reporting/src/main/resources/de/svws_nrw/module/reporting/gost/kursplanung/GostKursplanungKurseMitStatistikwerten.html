@@ -1,5 +1,5 @@
 <html lang="de" xmlns:th="http://www.thymeleaf.org">
-	<head th:with="mediaPrint = ${Parameter.ausgabeformat == 2}">
+	<head th:with="mediaPrint = ${Parameter.ausgabeformat >= 2}">
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width" />
 		<title>Kurse mit Schülern</title>
@@ -9,7 +9,7 @@
 		<link rel="stylesheet" th:href="@{gost/kursplanung/GostKursplanungKurseMitStatistikwerten.css}" href="../../gost/kursplanung/GostKursplanungKurseMitStatistikwerten.css" />
 	</head>
 
-	<body th:with="mediaPrint = ${Parameter.ausgabeformat == 2}">
+	<body th:with="mediaPrint = ${Parameter.ausgabeformat >= 2}">
 		<!--Beginn: Definition der Seitenköpfe und Seitenfüße. Diese werden per CSS in den @page-Boxen positioniert-->
 		<th:block th:if="${mediaPrint}">
 			<div class="pageTopLeft" th:utext="${Schule.bezeichnungSchuleMehrzeiligHtml}">schulbezeichnung1<br/>schulbezeichnung2<br/>schulbezeichnung3</div>

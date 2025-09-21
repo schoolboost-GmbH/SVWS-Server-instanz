@@ -10,14 +10,24 @@ export class ReportingAusgabeformat extends JavaEnum<ReportingAusgabeformat> {
 	static readonly all_values_by_name : Map<string, ReportingAusgabeformat> = new Map<string, ReportingAusgabeformat>();
 
 	/**
+	 * Undefiniert, ein Ausgabeformat wurde nicht angegeben.
+	 */
+	public static readonly UNDEFINED : ReportingAusgabeformat = new ReportingAusgabeformat("UNDEFINED", 0, 0);
+
+	/**
 	 * Report-Ausgabeformat ist HTML
 	 */
-	public static readonly HTML : ReportingAusgabeformat = new ReportingAusgabeformat("HTML", 0, 1);
+	public static readonly HTML : ReportingAusgabeformat = new ReportingAusgabeformat("HTML", 1, 1);
 
 	/**
 	 * Report-Ausgabeformat ist PDF
 	 */
-	public static readonly PDF : ReportingAusgabeformat = new ReportingAusgabeformat("PDF", 1, 2);
+	public static readonly PDF : ReportingAusgabeformat = new ReportingAusgabeformat("PDF", 2, 2);
+
+	/**
+	 * Report-Ausgabeformat ist E-MAIL (PDF als Anhang)
+	 */
+	public static readonly EMAIL : ReportingAusgabeformat = new ReportingAusgabeformat("EMAIL", 3, 3);
 
 	/**
 	 * Die ID des Report-Ausgabeformats
@@ -52,7 +62,7 @@ export class ReportingAusgabeformat extends JavaEnum<ReportingAusgabeformat> {
 		for (const af of ReportingAusgabeformat.values())
 			if (af.id === id)
 				return af;
-		return null;
+		return ReportingAusgabeformat.UNDEFINED;
 	}
 
 	/**

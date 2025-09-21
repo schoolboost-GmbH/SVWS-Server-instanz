@@ -10981,7 +10981,7 @@ export class ApiServer extends BaseApi {
 	/**
 	 * Implementierung der POST-Methode pdfReport für den Zugriff auf die URL https://{hostname}/db/{schema}/reporting/ausgabe
 	 *
-	 * Erstellt die Wahlbogen für die Laufbahnplanung der gymnasialen Oberstufe zu den Schülern mit der angegebenen IDs als PDF-Datei. Dabei wird geprüft, ob der SVWS-Benutzer die notwendige Berechtigung zum Erstellen eines Reports besitzt. Weitergehende Berechtigungen werden im Vorfeld der Reporterstellung überprüft.
+	 * Erstellt den angeforderten Report gemäß den in den Reporting-Parametern angegebenen Daten und Einstellungen und bietet ihn als PDF-Datei zum Download an. Dabei wird geprüft, ob der SVWS-Benutzer die notwendige Berechtigung zum Erstellen eines Reports besitzt. Weitergehende Berechtigungen werden im Vorfeld der Reporterstellung überprüft.
 	 *
 	 * Mögliche HTTP-Antworten:
 	 *   Code 200: Der Report mit den übergebenen Daten wurde erfolgreich erstellt.
@@ -11004,6 +11004,36 @@ export class ApiServer extends BaseApi {
 		const body : string = ReportingParameter.transpilerToJSON(data);
 		const result : ApiFile = await super.postJSONtoPDF(path, body);
 		return result;
+	}
+
+
+	/**
+	 * Implementierung der POST-Methode emailReport für den Zugriff auf die URL https://{hostname}/db/{schema}/reporting/email
+	 *
+	 * Erstellt den angeforderten Report gemäß den in den Reporting-Parametern angegebenen Daten und Einstellungen und versendet ihn als PDF-Datei per E-Mail. Dabei wird geprüft, ob der SVWS-Benutzer die notwendige Berechtigung zum Erstellen eines Reports besitzt. Weitergehende Berechtigungen werden im Vorfeld der Reporterstellung überprüft.
+	 *
+	 * Mögliche HTTP-Antworten:
+	 *   Code 200: Der Report mit den übergebenen Daten wurde erfolgreich erstellt und als E-Mail versendet.
+	 *     - Mime-Type: application/json
+	 *     - Rückgabe-Typ: SimpleOperationResponse
+	 *   Code 403: Der SVWS-Benutzer hat keine Rechte, um den geforderten Report zu erstellen.
+	 *   Code 404: Kein Eintrag zu den übergebenen Daten gefunden.
+	 *   Code 500: Es ist ein unbekannter Fehler aufgetreten.
+	 *     - Mime-Type: application/json
+	 *     - Rückgabe-Typ: SimpleOperationResponse
+	 *
+	 * @param {ReportingParameter} data - der Request-Body für die HTTP-Methode
+	 * @param {string} schema - der Pfad-Parameter schema
+	 *
+	 * @returns Der Report mit den übergebenen Daten wurde erfolgreich erstellt und als E-Mail versendet.
+	 */
+	public async emailReport(data : ReportingParameter, schema : string) : Promise<SimpleOperationResponse> {
+		const path = "/db/{schema}/reporting/email"
+			.replace(/{schema\s*(:[^{}]+({[^{}]+})*)?}/g, schema);
+		const body : string = ReportingParameter.transpilerToJSON(data);
+		const result : string = await super.postJSON(path, body);
+		const text = result;
+		return SimpleOperationResponse.transpilerFromJSON(text);
 	}
 
 

@@ -5,11 +5,17 @@ package de.svws_nrw.core.types.reporting;
  */
 public enum ReportingAusgabeformat {
 
+	/** Undefiniert, ein Ausgabeformat wurde nicht angegeben. */
+	UNDEFINED(0),
+
 	/** Report-Ausgabeformat ist HTML */
 	HTML(1),
 
 	/** Report-Ausgabeformat ist PDF */
-	PDF(2);
+	PDF(2),
+
+	/** Report-Ausgabeformat ist E-MAIL (PDF als Anhang) */
+	EMAIL(3);
 
 	/** Die ID des Report-Ausgabeformats */
 	private final int id;
@@ -39,7 +45,6 @@ public enum ReportingAusgabeformat {
 		for (final ReportingAusgabeformat af : ReportingAusgabeformat.values())
 			if (af.id == id)
 				return af;
-		return null;
+		return UNDEFINED;
 	}
-
 }

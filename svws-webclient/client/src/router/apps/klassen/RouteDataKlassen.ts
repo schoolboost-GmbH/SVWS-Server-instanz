@@ -1,5 +1,8 @@
 
-import type { KlassenDaten, Schueler, List, LehrerListeEintrag, SimpleOperationResponse, ApiFile, ReportingParameter, StundenplanListeEintrag } from "@core";
+import {
+	KlassenDaten, Schueler, List, LehrerListeEintrag, SimpleOperationResponse, ApiFile, ReportingParameter, StundenplanListeEintrag,
+	UserNotificationException
+} from "@core";
 import { ArrayList, DeveloperNotificationException } from "@core";
 
 import { api } from "~/router/Api";
@@ -201,5 +204,12 @@ export class RouteDataKlassen extends RouteDataAuswahl<KlassenListeManager, Rout
 			throw new DeveloperNotificationException("Die Ausgabe kann nur erfolgen, wenn mindestens eine Klasse ausgewählt ist.");
 		reportingParameter.idSchuljahresabschnitt = this.idSchuljahresabschnitt;
 		return await api.server.pdfReport(reportingParameter, api.schema);
+	})
+
+	sendEMail = api.call(async (reportingParameter: ReportingParameter): Promise<SimpleOperationResponse> => {
+		if (!this.manager.liste.auswahlExists())
+			throw new UserNotificationException("Dieser Report kann nur versendet werden, wenn mindestens eine Klasse ausgewählt ist.");
+		reportingParameter.idSchuljahresabschnitt = this.idSchuljahresabschnitt;
+		return await api.server.emailReport(reportingParameter, api.schema);
 	})
 }

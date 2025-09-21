@@ -151,7 +151,7 @@ public class ReportingGostAbiturFachbelegung extends ReportingBaseType {
 				|| (this.halbjahresbelegungen()[gostHalbjahr].note() == null))
 			return "--";
 
-		if (ausgabeAbiturzeugnis && !this.halbjahresbelegungen()[gostHalbjahr].block1kursAufZeugnis())
+		if (ausgabeAbiturzeugnis && !Boolean.TRUE.equals(this.halbjahresbelegungen()[gostHalbjahr].block1kursAufZeugnis()))
 			return "--";
 
 		if (this.halbjahresbelegungen()[gostHalbjahr].note() == Note.E3_TEILGENOMMEN)
@@ -160,7 +160,7 @@ public class ReportingGostAbiturFachbelegung extends ReportingBaseType {
 		if (this.halbjahresbelegungen()[gostHalbjahr].note().getNotenpunkteZweistellig(schuljahr) == null)
 			return "--";
 
-		if (ausgabeAbiturzeugnis && !this.halbjahresbelegungen()[gostHalbjahr].block1gewertet())
+		if (ausgabeAbiturzeugnis && !Boolean.TRUE.equals(this.halbjahresbelegungen()[gostHalbjahr].block1gewertet()))
 			return '(' + this.halbjahresbelegungen()[gostHalbjahr].note().getNotenpunkteZweistellig(schuljahr) + ')';
 
 		return this.halbjahresbelegungen()[gostHalbjahr].note().getNotenpunkteZweistellig(schuljahr);

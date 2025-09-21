@@ -42,7 +42,6 @@ public final class HtmlContextSchueler extends HtmlContext<ReportingSchueler> {
 		erzeugeContextFromIds(this.reportingRepository.reportingParameter().idsHauptdaten);
 	}
 
-
 	/**
 	 * Erzeugt den Context aus einer Liste von Schülern.
 	 *
@@ -59,7 +58,6 @@ public final class HtmlContextSchueler extends HtmlContext<ReportingSchueler> {
 
 		super.setContext(context);
 	}
-
 
 	/**
 	 * Erzeugt den Context aus einer Liste von Schüler-IDs.
@@ -79,8 +77,6 @@ public final class HtmlContextSchueler extends HtmlContext<ReportingSchueler> {
 		super.setContext(context);
 	}
 
-
-
 	/**
 	 * Teile diesen Context mit allen Schülern in eine Liste von Contexts auf, die jeweils einen Schüler enthalten, um eine schülerbezogene Ausgabe zu
 	 * ermöglichen.
@@ -97,5 +93,15 @@ public final class HtmlContextSchueler extends HtmlContext<ReportingSchueler> {
 		}
 
 		return resultContexts;
+	}
+
+	/**
+	 * Liefert die IDs der Context.
+	 *
+	 * @return Liste der IDs der Context-Daten.
+	 */
+	@Override
+	public List<Long> getIds() {
+		return getContextData().stream().map(ReportingSchueler::id).toList();
 	}
 }

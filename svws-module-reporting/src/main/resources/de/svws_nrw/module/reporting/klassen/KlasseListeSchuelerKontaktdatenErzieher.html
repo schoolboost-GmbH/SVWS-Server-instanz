@@ -1,5 +1,5 @@
 <html lang="de" xmlns:th="http://www.thymeleaf.org">
-	<head th:with="mediaPrint = ${Parameter.ausgabeformat == 2}, duplex = ${Parameter.duplexdruck},
+	<head th:with="mediaPrint = ${Parameter.ausgabeformat >= 2}, duplex = ${Parameter.duplexdruck},
 	               querformat = ${(Parameter.detailLevel >= 1024) && (((Parameter.detailLevel % 128) / 64) >= 1 || ((Parameter.detailLevel % 256) / 128) >= 1 || ((Parameter.detailLevel % 512) / 256) >= 1 || ((Parameter.detailLevel % 1024) / 512) >= 1) }">
 		           <!-- querformat verwenden, wenn Erzieher plus eine weitere Datenart (Telefon, EMail, Kontakte) dargestellt werden sollen. -->
 		<meta charset="utf-8" />
@@ -14,7 +14,7 @@
 		<link rel="stylesheet" th:href="@{klassen/KlasseListeSchuelerKontaktdatenErzieher.css}" href="../klassen/KlasseListeSchuelerKontaktdatenErzieher.css" />
 	</head>
 
-	<body th:with="mediaPrint = ${Parameter.ausgabeformat == 2},
+	<body th:with="mediaPrint = ${Parameter.ausgabeformat >= 2},
 	               schuljahr = ${Schule.auswahlSchuljahresabschnitt().schuljahr()},
 	               nurSchuelerRufname = ${((Parameter.detailLevel % 4) / 2) >= 1},
 	               mitSchuelerGeschlecht = ${((Parameter.detailLevel % 8) / 4) >= 1},
@@ -46,7 +46,7 @@
 
 			<table class="fixed-100 mp-0">
 				<colgroup>
-					<col style="width: 7mm;" />    <!-- Lfd Nr -->
+					<col style="width: 7mm;" />     <!-- Lfd Nr -->
 					<col style="width: 58mm;" />    <!-- Schüler: Name, Angaben, Anschrift -->
 					<col style="width: 58mm;" />    <!-- Schüler: E-Mail und Telefon -->
  					<col style="width: 58mm;" />    <!-- Telefonkontakte -->

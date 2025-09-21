@@ -65,6 +65,11 @@ public class ReportingParameter {
 					+ " ]")
 	public List<ReportingSortierungDefinition> sortierungDefinitionen = new ArrayList<>();
 
+	/** Parameter, der die Daten für den E-Mail-Versand enthält. */
+	@Schema(description = "Parameter, der die Daten für den E-Mail-Versand enthält.",
+			example = "{\"betreff\":\"Persönlicher Stundenplan\",\"text\":\"Sehr geehrte Damen und Herren,\n\nanbei erhalten Sie den persönlichen Stundenplan.\n\nMit freundlichen Grüßen\\nIhre Schule\"}")
+	public ReportingEMailDaten eMailDaten = new ReportingEMailDaten();
+
 	/** Legt fest, ob die Seiteneinstellungen für einen Duplexdruck verwendet werden sollen. */
 	@Schema(description = "Legt fest, ob die Seiteneinstellungen für einen Duplexdruck verwendet werden sollen.", example = "false")
 	public boolean duplexdruck = false;

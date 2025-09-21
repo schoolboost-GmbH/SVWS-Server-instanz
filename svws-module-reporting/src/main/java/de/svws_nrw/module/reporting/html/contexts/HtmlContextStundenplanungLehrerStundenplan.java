@@ -83,4 +83,14 @@ public final class HtmlContextStundenplanungLehrerStundenplan extends HtmlContex
 
 		return resultContexts;
 	}
+
+	/**
+	 * Liefert die IDs der Context.
+	 *
+	 * @return Liste der IDs der Context-Daten.
+	 */
+	@Override
+	public List<Long> getIds() {
+		return getContextData().stream().map(plan -> plan.lehrer().id()).toList();
+	}
 }

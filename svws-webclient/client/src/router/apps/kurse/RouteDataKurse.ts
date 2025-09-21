@@ -1,4 +1,4 @@
-import type { KursDaten, KursLehrer, List, Schueler, SimpleOperationResponse } from "@core";
+import {ApiFile, KursDaten, KursLehrer, List, ReportingParameter, Schueler, SimpleOperationResponse, UserNotificationException} from "@core";
 import { DeveloperNotificationException } from "@core";
 import { KursListeManager } from "@ui";
 
@@ -30,6 +30,10 @@ export class RouteDataKurse extends RouteDataAuswahl<KursListeManager, RouteStat
 
 	public addID(param: RouteParamsRawGeneric, id: number): void {
 		param.id = id;
+	}
+
+	get idSchuljahresabschnitt(): number {
+		return this._state.value.idSchuljahresabschnitt;
 	}
 
 	get filterNurSichtbar(): boolean {
@@ -114,6 +118,20 @@ export class RouteDataKurse extends RouteDataAuswahl<KursListeManager, RouteStat
 				weitereLehrer.removeElementAt(i);
 		this.commit();
 	}
+
+	getPDF = api.call(async (reportingParameter: ReportingParameter): Promise<ApiFile> => {
+		if (!this.manager.liste.auswahlExists())
+			throw new DeveloperNotificationException("Die Ausgabe kann nur erfolgen, wenn mindestens ein Kurs ausgewählt ist.");
+		reportingParameter.idSchuljahresabschnitt = this.idSchuljahresabschnitt;
+		return await api.server.pdfReport(reportingParameter, api.schema);
+	})
+
+	sendEMail = api.call(async (reportingParameter: ReportingParameter): Promise<SimpleOperationResponse> => {
+		if (!this.manager.liste.auswahlExists())
+			throw new UserNotificationException("Dieser Report kann nur versendet werden, wenn mindestens ein Kurs ausgewählt ist.");
+		reportingParameter.idSchuljahresabschnitt = this.idSchuljahresabschnitt;
+		return await api.server.emailReport(reportingParameter, api.schema);
+	})
 
 	/* TODO
 	setzeDefaultSortierung = async () => {

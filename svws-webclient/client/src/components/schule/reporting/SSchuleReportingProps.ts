@@ -1,6 +1,6 @@
-import type { ApiFile, ReportingParameter } from "@core";
+import { ApiFile, ReportingParameter, Schuljahresabschnitt } from "@core";
 
 export interface SchuleReportingProps {
-	idAbschnitt: number;
+	schuljahresabschnitt: () => Schuljahresabschnitt;
 	createReport: (param: ReportingParameter) => Promise<ApiFile>;
 }

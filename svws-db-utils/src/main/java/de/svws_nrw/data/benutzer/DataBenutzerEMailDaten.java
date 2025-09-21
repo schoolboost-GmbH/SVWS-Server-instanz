@@ -102,6 +102,21 @@ public final class DataBenutzerEMailDaten extends DataManager<Long> {
 		return Response.status(Status.OK).type(MediaType.APPLICATION_JSON).entity(daten).build();
 	}
 
+	/**
+	 * Gibt die E-Mail-Daten eines Benutzers basierend auf der angegebenen ID zurück.
+	 * Falls die Daten nicht existieren, wird ein neuer Datensatz erstellt.
+	 *
+	 * @param id die ID des Benutzers, dessen E-Mail-Daten abgerufen oder erstellt werden sollen
+	 *
+	 * @return die {@link BenutzerEMailDaten} des Benutzers
+	 *
+	 * @throws ApiOperationException falls ein Fehler während der Datenverarbeitung auftritt
+	 */
+	public BenutzerEMailDaten getById(final Long id) throws ApiOperationException {
+		final @NotNull DTOBenutzerMail dto = getOrCreateDTO(conn, id);
+		return dtoMapper.apply(dto);
+	}
+
 	private static final Map<String, DataBasicMapper<DTOBenutzerMail>> patchMappings = Map.ofEntries(
 			Map.entry("id", (conn, dto, value, map) -> {
 				final Long patch_id = JSONMapper.convertToLong(value, true);
@@ -115,7 +130,7 @@ public final class DataBenutzerEMailDaten extends DataManager<Long> {
 				final String password = JSONMapper.convertToString(value, true, false, 127);
 				final AES aes = conn.getUser().getAES();
 				if (aes == null)
-					throw new ApiOperationException(Status.INTERNAL_SERVER_ERROR, "Konnte kein AES-Verschlüsselungsobject für den Benutzer finden.");
+					throw new ApiOperationException(Status.INTERNAL_SERVER_ERROR, "Konnte kein AES-Verschlüsselungsobjekt für den Benutzer finden.");
 				try {
 					dto.SMTPPassword = aes.encryptBase64(password.getBytes());
 				} catch (@SuppressWarnings("unused") final AESException e) {

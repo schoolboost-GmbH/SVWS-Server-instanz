@@ -53,7 +53,7 @@ public class APIReporting {
 	@Produces("application/pdf")
 	@Path("/ausgabe")
 	@Operation(summary = "Erstellt einen Report als PDF-Datei gemäß den übergebenen Daten.",
-			description = "Erstellt die Wahlbogen für die Laufbahnplanung der gymnasialen Oberstufe zu den Schülern mit der angegebenen IDs als PDF-Datei. "
+			description = "Erstellt den angeforderten Report gemäß den in den Reporting-Parametern angegebenen Daten und Einstellungen und bietet ihn als PDF-Datei zum Download an. "
 					+ "Dabei wird geprüft, ob der SVWS-Benutzer die notwendige Berechtigung zum Erstellen eines Reports besitzt. "
 					+ "Weitergehende Berechtigungen werden im Vorfeld der Reporterstellung überprüft.")
 	@ApiResponse(responseCode = "200", description = "Der Report mit den übergebenen Daten wurde erfolgreich erstellt.",
@@ -69,6 +69,39 @@ public class APIReporting {
 			@Context final HttpServletRequest request) {
 		return DBBenutzerUtils.runWithTransaction(conn -> new ReportingFactory(conn, reportingParameter).createReportResponse(),
 				request, ServerMode.STABLE,
+				BenutzerKompetenz.BERICHTE_STANDARDFORMULARE_DRUCKEN,
+				BenutzerKompetenz.BERICHTE_ALLE_FORMULARE_DRUCKEN);
+	}
+
+	/**
+	 * Die OpenAPI-Methode für die Erstellung eines Reports im geforderten Format. Dieser Report wird dann an die zugehörigen E-Mail-Adressen versendet.
+	 *
+	 * @param schema das Datenbankschema, auf welches die Abfrage ausgeführt werden soll
+	 * @param reportingParameter Objekt mit den Daten und Einstellungen für den zu erstellenden Report.
+	 * @param request die Informationen zur HTTP-Anfrage
+	 *
+	 * @return Informationen zum Versand der E-Mails.
+	 */
+	@POST
+	@Produces({"application/json"})
+	@Path("/email")
+	@Operation(summary = "Erstellt einen Report als PDF-Datei gemäß den übergebenen Daten und versendet ihn per E-Mail.",
+			description = "Erstellt den angeforderten Report gemäß den in den Reporting-Parametern angegebenen Daten und Einstellungen und versendet ihn als PDF-Datei per E-Mail. "
+					+ "Dabei wird geprüft, ob der SVWS-Benutzer die notwendige Berechtigung zum Erstellen eines Reports besitzt. "
+					+ "Weitergehende Berechtigungen werden im Vorfeld der Reporterstellung überprüft.")
+	@ApiResponse(responseCode = "200", description = "Der Report mit den übergebenen Daten wurde erfolgreich erstellt und als E-Mail versendet.",
+			content = @Content(mediaType = "application/json", schema = @Schema(implementation = SimpleOperationResponse.class)))
+	@ApiResponse(responseCode = "403", description = "Der SVWS-Benutzer hat keine Rechte, um den geforderten Report zu erstellen.")
+	@ApiResponse(responseCode = "404", description = "Kein Eintrag zu den übergebenen Daten gefunden.")
+	@ApiResponse(responseCode = "500", description = "Es ist ein unbekannter Fehler aufgetreten.",
+			content = @Content(mediaType = "application/json", schema = @Schema(implementation = SimpleOperationResponse.class)))
+	public Response emailReport(@PathParam("schema") final String schema,
+			@RequestBody(description = "Die Daten und Einstellungen, mit denen der Report erstellt und versendet werden soll.", required = true,
+					content = @Content(mediaType = MediaType.APPLICATION_JSON,
+							schema = @Schema(implementation = ReportingParameter.class))) final ReportingParameter reportingParameter,
+			@Context final HttpServletRequest request) {
+		return DBBenutzerUtils.runWithTransaction(conn -> new ReportingFactory(conn, reportingParameter).createReportResponse(),
+				request, ServerMode.DEV,
 				BenutzerKompetenz.BERICHTE_STANDARDFORMULARE_DRUCKEN,
 				BenutzerKompetenz.BERICHTE_ALLE_FORMULARE_DRUCKEN);
 	}

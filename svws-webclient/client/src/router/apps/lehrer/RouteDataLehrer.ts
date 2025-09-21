@@ -1,8 +1,8 @@
-import type {
+import {
 	ApiFile, LehrerFachrichtungEintrag, LehrerLehramtEintrag,
 	LehrerLehrbefaehigungEintrag, LehrerListeEintrag, LehrerPersonalabschnittsdaten, LehrerPersonaldaten, LehrerStammdaten, List, SimpleOperationResponse,
 	StundenplanListeEintrag, ReportingParameter,
-	LehrerPersonalabschnittsdatenAnrechnungsstunden,
+	LehrerPersonalabschnittsdatenAnrechnungsstunden, UserNotificationException,
 } from "@core";
 import { ArrayList, DeveloperNotificationException, BenutzerKompetenz } from "@core";
 import { api } from "~/router/Api";
@@ -364,6 +364,14 @@ export class RouteDataLehrer extends RouteDataAuswahl<LehrerListeManager, RouteS
 		for (const l of this.manager.liste.auswahl())
 			reportingParameter.idsDetaildaten.add(l.id);
 		return await api.server.pdfReport(reportingParameter, api.schema);
+	})
+
+	sendEMail = api.call(async (reportingParameter: ReportingParameter): Promise<SimpleOperationResponse> => {
+		if (this.manager.liste.auswahlExists() || this.manager.hasDaten()) {
+			reportingParameter.idSchuljahresabschnitt = this.idSchuljahresabschnitt;
+			return await api.server.emailReport(reportingParameter, api.schema);
+		}
+		throw new UserNotificationException("Dieser Report kann nur versendet werden, wenn mindestens ein Lehrer ausgewählt ist.");
 	})
 
 	patchMultiple = async (pendingStateManager: PendingStateManager<any>): Promise<void> => {

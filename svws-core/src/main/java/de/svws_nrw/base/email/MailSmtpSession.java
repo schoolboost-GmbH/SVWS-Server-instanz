@@ -1,5 +1,6 @@
 package de.svws_nrw.base.email;
 
+import java.util.List;
 import java.util.Properties;
 
 import jakarta.activation.DataHandler;
@@ -28,7 +29,7 @@ public class MailSmtpSession {
 	/**
 	 * Erstellt eine neue Session mit der übergebenen Konfiguration
 	 *
-	 * @param config   die Konfiguration für den SMTP-Server
+	 * @param config   Die Konfiguration für den SMTP-Server.
 	 */
 	public MailSmtpSession(final MailSmtpSessionConfig config) {
 		final Properties prop = new Properties();
@@ -66,12 +67,12 @@ public class MailSmtpSession {
 	/**
 	 * Sendet eine Text-Nachricht über diese Session, mit den angegebenen Informationen
 	 *
-	 * @param from      die Adresse, von der die Mail versendet wird
-	 * @param to        die Adresse, zu der die Mail gesendet wird
-	 * @param subject   der Betreff der Nachricht
-	 * @param text      der Text der Nachricht
+	 * @param from      Die Adresse, von der die Mail versendet wird.
+	 * @param to        Die Adresse, zu der die Mail gesendet wird.
+	 * @param subject   Der Betreff der Nachricht.
+	 * @param text      Der Text der Nachricht.
 	 *
-	 * @throws MessagingException   falls ein Fehler bei dem Versenden der Nachricht auftritt
+	 * @throws MessagingException   Falls ein Fehler bei dem Versenden der Nachricht auftritt.
 	 */
 	public void sendTextMessage(final @NotNull String from, final @NotNull String to, final @NotNull String subject, final @NotNull String text)
 			throws MessagingException {
@@ -91,15 +92,15 @@ public class MailSmtpSession {
 	/**
 	 * Sendet eine Text-Nachricht über diese Session, mit den angegebenen Informationen und einem Anhang
 	 *
-	 * @param from      die Adresse, von der die Mail versendet wird
-	 * @param to        die Adresse, zu der die Mail gesendet wird
-	 * @param subject   der Betreff der Nachricht
-	 * @param text      der Text der Nachricht
-	 * @param data      die Binärdaten für das Attachment
-	 * @param mimeType  der Mime-Type des Attachments
-	 * @param filename  der Datei-Name des Attachments
+	 * @param from      Die Adresse, von der die Mail versendet wird.
+	 * @param to        Die Adresse, zu der die Mail gesendet wird.
+	 * @param subject   Der Betreff der Nachricht.
+	 * @param text      Der Text der Nachricht.
+	 * @param data      Die Binärdaten für das Attachment.
+	 * @param mimeType  Der Mime-Type des Attachments.
+	 * @param filename  Der Datei-Name des Attachments.
 	 *
-	 * @throws MessagingException   falls ein Fehler bei dem Versenden der Nachricht auftritt
+	 * @throws MessagingException   Falls ein Fehler bei dem Versenden der Nachricht auftritt.
 	 */
 	public void sendTextMessageWithAttachment(final @NotNull String from, final @NotNull String to, final @NotNull String subject, final @NotNull String text,
 			final @NotNull byte[] data, final @NotNull String mimeType, final @NotNull String filename) throws MessagingException {
@@ -113,6 +114,41 @@ public class MailSmtpSession {
 		addAttachment(multipart, data, mimeType, filename);
 		message.setContent(multipart);
 
+		Transport.send(message);
+	}
+
+	/**
+	 * Sendet eine Text-Nachricht über diese Session mit mehreren Anhängen.
+	 *
+	 * @param from       Die Adresse, von der die Mail versendet wird.
+	 * @param to         Die Adresse, zu der die Mail gesendet wird.
+	 * @param subject    Der Betreff der Nachricht.
+	 * @param text       Der Text der Nachricht.
+	 * @param data       Liste der Binärdaten der Attachments.
+	 * @param mimeTypes  Liste der Mime-Types der Attachments.
+	 * @param filenames  Liste der Dateinamen der Attachments.
+	 *
+	 * @throws MessagingException Falls ein Fehler beim Versenden auftritt.
+	 */
+	public void sendTextMessageWithAttachments(final @NotNull String from, final @NotNull String to, final @NotNull String subject,
+			final @NotNull String text, final @NotNull List<byte[]> data, final @NotNull List<String> mimeTypes,
+			final @NotNull List<String> filenames) throws MessagingException {
+
+		if ((data.size() != mimeTypes.size()) || (data.size() != filenames.size()))
+			throw new MessagingException("Anzahl der Attachment-Listen (data/mimeTypes/filenames) ist inkonsistent.");
+
+		final Message message = new MimeMessage(this.session);
+		message.setFrom(new InternetAddress(from));
+		message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(to));
+		message.setSubject(subject);
+
+		final Multipart multipart = new MimeMultipart();
+		addBody(multipart, text);
+
+		for (int i = 0; i < data.size(); i++)
+			addAttachment(multipart, data.get(i), mimeTypes.get(i), filenames.get(i));
+
+		message.setContent(multipart);
 		Transport.send(message);
 	}
 

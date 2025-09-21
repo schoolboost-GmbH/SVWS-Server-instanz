@@ -26,13 +26,15 @@ export class RouteSchuelerAllgemeinesGruppenprozesse extends RouteNode<any, Rout
 
 	public getProps(to: RouteLocationNormalized): SSchuelerAllgemeinesGruppenprozesseProps {
 		return {
+			serverMode: api.mode,
 			apiStatus: api.status,
 			getPDF: routeSchueler.data.getPDF,
+			sendEMail : routeSchueler.data.sendEMail,
 			mapStundenplaene: routeSchueler.data.mapStundenplaene,
 			benutzerKompetenzen: api.benutzerKompetenzen,
 			schuelerListeManager: () => routeSchueler.data.manager,
 			deleteSchueler: routeSchueler.data.delete,
-			deleteSchuelerCheck: routeSchueler.data.deleteSchuelerCheck,
+			deleteSchuelerCheck: routeSchueler.data.deleteSchuelerCheck
 		};
 	}
 

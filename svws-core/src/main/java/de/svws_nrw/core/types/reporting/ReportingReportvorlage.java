@@ -9,7 +9,7 @@ import jakarta.validation.constraints.NotNull;
  * Hinweis:
  * --------
  * Es ist NICHT ausreichend eine neue Vorlage nur hier einzubinden. Es muss in jedem Fall auch eine neue
- * Html-Template-Definition im Reporting-Modul erstellt werden.
+ * HTML-Template-Definition im Reporting-Modul erstellt werden.
  * ----------
  * Anmerkung:
  * ----------
@@ -41,6 +41,9 @@ public enum ReportingReportvorlage {
 
 	/** Report-Vorlage: Klasse - Liste - Schüler - Kontaktdaten - Erzieher */
 	KLASSEN_v_LISTE_SCHUELER_KONTAKTDATENERZIEHER("Klasse-Liste-Schueler-Kontaktdaten-Erzieher"),
+
+	/** Report-Vorlage: Kurs - Liste - Schüler - Kontaktdaten - Erzieher */
+	KURSE_v_LISTE_SCHUELER_KONTAKTDATENERZIEHER("Kurs-Liste-Schueler-Kontaktdaten-Erzieher"),
 
 	/** Report-Vorlage: Kurs - Schülerstammdaten - Liste */
 	KURSE_v_KURS_SCHUELER_STAMMDATENLISTE("Kurs-Schueler-Stammdatenliste"),

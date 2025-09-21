@@ -4,6 +4,9 @@
 			<ui-card v-if="hatKompetenzDruckenSchuelerIndividualdaten" icon="i-ri-printer-line" title="Schülerliste drucken" subtitle="Drucke eine Liste mit den Daten der ausgewählten Schülerinnen und Schüler."
 				:is-open="currentAction === 'druckSchuelerListeKontaktdatenErzieher'" @update:is-open="isOpen => setCurrentAction('druckSchuelerListeKontaktdatenErzieher', isOpen)">
 				<svws-ui-input-wrapper :grid="4" class="p-2">
+					<div class="text-left col-span-4 mb-2">
+						<p class="font-bold underline">Elemente der Liste:</p>
+					</div>
 					<div class="text-left">
 						<svws-ui-checkbox v-model="option1" name="nurSchuelerKlasse">Klasse</svws-ui-checkbox><br>
 						<svws-ui-checkbox v-model="option2" name="nurSchuelerRufname">Nur Rufname</svws-ui-checkbox><br>
@@ -19,42 +22,42 @@
 					</div>
 					<div class="text-left">
 						<svws-ui-checkbox v-model="option512" name="mitSchuelerTelefonkontakte">Telefonische Kontakte</svws-ui-checkbox><br>
-					</div>
-					<div class="text-left">
 						<svws-ui-checkbox v-model="option1024" name="mitErzieher">Erzieher</svws-ui-checkbox><br>
 						<svws-ui-checkbox v-model="option2048" name="mitErzieherAnschrift">Erzieher Anschrift</svws-ui-checkbox><br>
 						<svws-ui-checkbox v-model="option4096" name="mitErzieherEmailPrivat">Erzieher E-Mail</svws-ui-checkbox><br>
 					</div>
-					<div class="text-left col-span-2">
-						<br><p class="font-bold underline mb-2">Optionen zur Druckausgabe:</p>
+					<div class="text-left">
+						<svws-ui-button @click="selectAll" class="mt-4">
+							<span class="icon i-ri-checkbox-line" />
+							Alle auswählen
+						</svws-ui-button>
+						<svws-ui-button @click="deselectAll" class="mt-4">
+							<span class="icon i-ri-checkbox-blank-line" />
+							Alle abwählen
+						</svws-ui-button>
+					</div>
+					<div class="text-left col-span-2 mb-2">
+						<br><p class="font-bold underline">Optionen zur Druckausgabe:</p>
 						<svws-ui-radio-group>
 							<svws-ui-radio-option :value="1" v-model="druckoptionSchuelerListeKontaktdatenErzieher" name="druckoptionSchuelerListeKontaktdatenErzieherGesamtausdruckEinseitig" label="Gesamtausdruck einseitig" />
 							<svws-ui-radio-option :value="3" v-model="druckoptionSchuelerListeKontaktdatenErzieher" name="druckoptionSchuelerListeKontaktdatenErzieherGesamtausdruckDuplex" label="Gesamtausdruck duplex" />
 						</svws-ui-radio-group>
 					</div>
-					<div class="text-left col-span-2">
-						<br><p class="font-bold underline mb-2">Sortierung:</p>
+					<div class="text-left col-span-2 mb-2">
+						<br><p class="font-bold underline">Sortierung:</p>
 						<svws-ui-radio-group>
 							<svws-ui-radio-option :value="1" v-model="sortieroptionSchuelerListeKontaktdatenErzieher" name="sortieroptionSchuelerListeKontaktdatenErzieherName" label="Standard (Nachname, Vorname(n))" />
 							<svws-ui-radio-option :value="2" v-model="sortieroptionSchuelerListeKontaktdatenErzieher" name="sortieroptionSchuelerListeKontaktdatenErzieherKlasseName" label="Klasse, Nachname, Vorname(n)" />
 						</svws-ui-radio-group>
 					</div>
+					<div class="text-left col-span-4">
+						<svws-ui-button :disabled="isPrintDisabled" @click="downloadPDF" :is-loading="loading" class="mt-4">
+							<svws-ui-spinner v-if="loading" spinning />
+							<span v-else class="icon i-ri-printer-line" />
+							Drucken
+						</svws-ui-button>
+					</div>
 				</svws-ui-input-wrapper>
-				<template #buttonFooterLeft>
-					<svws-ui-button @click="selectAll" class="mt-4">
-						<span class="icon i-ri-checkbox-line" />
-						Alle auswählen
-					</svws-ui-button>
-					<svws-ui-button @click="deselectAll" class="mt-4">
-						<span class="icon i-ri-checkbox-blank-line" />
-						Alle abwählen
-					</svws-ui-button>
-					<svws-ui-button @click="downloadPDF" :is-loading="loading" class="mt-4">
-						<svws-ui-spinner v-if="loading" spinning />
-						<span v-else class="icon i-ri-play-line" />
-						Drucken
-					</svws-ui-button>
-				</template>
 			</ui-card>
 			<ui-card v-if="hatKompetenzDruckenSchuelerIndividualdaten" icon="i-ri-printer-line" title="Schulbescheinigung drucken" subtitle="Drucke eine Schulbescheinigung für die ausgewählten Schülerinnen und Schüler."
 				:is-open="currentAction === 'druckSchuelerSchulbescheinigung'" @update:is-open="isOpen => setCurrentAction('druckSchuelerSchulbescheinigung', isOpen)">
@@ -83,16 +86,16 @@
 							<svws-ui-radio-option :value="2" v-model="sortieroptionSchuelerSchulbescheinigung" name="sortieroptionSchuelerSchulbescheinigungKlasseName" label="Klasse, Nachname, Vorname(n)" />
 						</svws-ui-radio-group>
 					</div>
+					<div class="text-left col-span-4">
+						<svws-ui-button :disabled="isPrintDisabled" @click="downloadPDF" :is-loading="loading" class="mt-4">
+							<svws-ui-spinner v-if="loading" spinning />
+							<span v-else class="icon i-ri-printer-line" />
+							Drucken
+						</svws-ui-button>
+					</div>
 				</svws-ui-input-wrapper>
-				<template #buttonFooterLeft>
-					<svws-ui-button @click="downloadPDF" :is-loading="loading" class="mt-4">
-						<svws-ui-spinner v-if="loading" spinning />
-						<span v-else class="icon i-ri-play-line" />
-						Drucken
-					</svws-ui-button>
-				</template>
 			</ui-card>
-			<ui-card v-if="hatKompetenzDruckenStundenplan && (mapStundenplaene.size > 0)" icon="i-ri-printer-line" title="Stundenplan drucken" subtitle="Drucke die Stundenpläne der ausgewählten Schüler."
+			<ui-card v-if="hatKompetenzDruckenStundenplan && (mapStundenplaene.size > 0)" icon="i-ri-printer-line" title="Stundenplan drucken oder versenden" subtitle="Drucke oder versende die Stundenpläne der ausgewählten Schüler."
 				:is-open="currentAction === 'druckSchuelerStundenplan'" @update:is-open="isOpen => setCurrentAction('druckSchuelerStundenplan', isOpen)">
 				<svws-ui-input-wrapper :grid="2" class="p-2">
 					<div class="text-left col-span-2">
@@ -107,31 +110,50 @@
 						<svws-ui-checkbox v-model="option8">Fachkürzel statt Fachbezeichnung verwenden</svws-ui-checkbox><br>
 						<svws-ui-checkbox v-model="option16">Individuelle Kursart anzeigen</svws-ui-checkbox>
 					</div>
-					<div class="text-left">
+					<div class="text-left mb-2">
 						<br><p class="font-bold underline mb-2">Optionen zur Druckausgabe:</p>
 						<svws-ui-radio-group>
 							<svws-ui-radio-option :value="1" v-model="druckoptionSchuelerStundenplan" name="druckoptionSchuelerStundenplanGesamtausdruckEinseitig" label="Gesamtausdruck einseitig" />
 							<svws-ui-radio-option :value="2" v-model="druckoptionSchuelerStundenplan" name="druckoptionSchuelerStundenplanGesamtausdruckEinseitig" label="Einzelausdruck einseitig" />
 						</svws-ui-radio-group>
 					</div>
-					<div class="text-left">
+					<div class="text-left mb-2">
 						<br><p class="font-bold underline mb-2">Sortierung:</p>
 						<svws-ui-radio-group>
 							<svws-ui-radio-option :value="1" v-model="sortieroptionSchuelerStundenplan" name="sortieroptionSchuelerStundenplanName" label="Standard (Nachname, Vorname(n))" />
 							<svws-ui-radio-option :value="2" v-model="sortieroptionSchuelerStundenplan" name="sortieroptionSchuelerStundenplanKlasseName" label="Klasse, Nachname, Vorname(n)" />
 						</svws-ui-radio-group>
 					</div>
+					<div class="text-left col-span-2">
+						<svws-ui-button :disabled="isPrintStundenplanDisabled" @click="downloadPDF" :is-loading="loading" class="mt-4">
+							<svws-ui-spinner v-if="loading" spinning />
+							<span v-else class="icon i-ri-printer-line" />
+							Drucken
+						</svws-ui-button>
+					</div>
+					<!-- E-Mail-Eingabefelder -->
+					<div class="text-left col-span-2 mb-2" v-if="ServerMode.DEV.checkServerMode(serverMode)">
+						<br><p class="font-bold mb-2">Den individuellen Stundenplan als E-Mail an die Schülerinnen und Schüler versenden.</p>
+						<div class="flex flex-col gap-2">
+							<input type="text" v-model="emailBetreff" placeholder="Betreff eingeben" class="w-full border rounded px-2 py-1">
+							<textarea v-model="emailText" rows="5" placeholder="E-Mail-Text eingeben" class="w-full border rounded px-2 py-1" />
+							<svws-ui-checkbox v-model="istPrivateEmailAlternative" name="istPrivateEmailAlternative">
+								Private E-Mail verwenden, wenn keine schulische E-Mail-Adresse vorhanden ist.
+							</svws-ui-checkbox>
+						</div>
+					</div>
+					<div class="text-left col-span-2" v-if="ServerMode.DEV.checkServerMode(serverMode)">
+						<svws-ui-button :disabled="isEmailStundenplanDisabled" @click="sendPdfByEmail" :is-loading="loading" class="mt-4">
+							<svws-ui-spinner v-if="loading" spinning />
+							<span v-else class="icon i-ri-mail-send-line" />
+							E-Mail senden
+						</svws-ui-button>
+					</div>
+					<!-- Ende: E-Mail-Eingabefelder -->
 					<div v-if="!schuelerListeManager().liste.auswahlExists()">
 						<span class="text-ui-danger">Es ist kein Schüler ausgewählt.</span>
 					</div>
 				</svws-ui-input-wrapper>
-				<template #buttonFooterLeft>
-					<svws-ui-button :disabled="isPrintDisabled" @click="downloadPDF" :is-loading="loading" class="mt-4">
-						<svws-ui-spinner v-if="loading" spinning />
-						<span v-else class="icon i-ri-play-line" />
-						Drucken
-					</svws-ui-button>
-				</template>
 			</ui-card>
 			<ui-card v-if="hatKompetenzLoeschen" icon="i-ri-delete-bin-line" title="Löschen"
 				subtitle="Setze einen Löschvermerk bei den ausgewählten Schülern." :is-open="currentAction === 'delete'"
@@ -163,8 +185,8 @@
 
 	import { ref, computed } from "vue";
 	import type { SSchuelerAllgemeinesGruppenprozesseProps } from "./SSchuelerAllgemeinesGruppenprozesseProps";
-	import type {StundenplanListeEintrag, List } from "@core";
-	import { DateUtils, ReportingParameter, ReportingReportvorlage, ListUtils, ArrayList, BenutzerKompetenz, ReportingSortierungDefinition } from "@core";
+	import type { StundenplanListeEintrag, List} from "@core";
+	import { DateUtils, ReportingParameter, ReportingReportvorlage, ListUtils, ArrayList, BenutzerKompetenz, ReportingSortierungDefinition, ReportingEMailDaten, ReportingEMailEmpfaengerTyp, ReportingAusgabeformat, ServerMode } from "@core";
 	import { SelectManager } from "@ui";
 
 	type Action = 'druckSchuelerListeKontaktdatenErzieher' | 'druckSchuelerSchulbescheinigung' | 'druckSchuelerStundenplan' | 'delete' | '';
@@ -176,7 +198,9 @@
 	const hatKompetenzDruckenSchuelerIndividualdaten = computed(() => (props.benutzerKompetenzen.has(BenutzerKompetenz.SCHUELER_INDIVIDUALDATEN_ANSEHEN) && hatKompetenzDrucken.value));
 	const hatKompetenzLoeschen = computed(() => props.benutzerKompetenzen.has(BenutzerKompetenz.SCHUELER_LOESCHEN));
 
-	const isPrintDisabled = computed<boolean>(() => !hatKompetenzDruckenStundenplan.value || !props.schuelerListeManager().liste.auswahlExists() || stundenplanAuswahl.value === undefined || loading.value)
+	const isPrintDisabled = computed<boolean>(() => !props.schuelerListeManager().liste.auswahlExists() || loading.value)
+	const isPrintStundenplanDisabled = computed<boolean>(() => isPrintDisabled.value || stundenplanAuswahl.value === undefined)
+	const isEmailStundenplanDisabled = computed<boolean>(() => isPrintStundenplanDisabled.value || ((emailBetreff.value.trim().length) === 0) || ((emailText.value.trim().length) === 0))
 	const isDeleteDisabled = computed<boolean>(() => !hatKompetenzLoeschen.value || !props.schuelerListeManager().liste.auswahlExists() || !props.deleteSchuelerCheck()[0] || loading.value)
 
 	const stundenplanAuswahl = ref<StundenplanListeEintrag>();
@@ -193,17 +217,10 @@
 			+ toKW(eintrag.gueltigBis) + ')'
 	}
 
-
 	const stundenplaene = computed<Array<StundenplanListeEintrag>>(() => [...props.mapStundenplaene.values()])
 	const stundenplanSelectManager = new SelectManager({
 		options: stundenplaene, optionDisplayText: stundenplanDisplayText, selectionDisplayText: stundenplanDisplayText,
 	})
-
-	async function entferneSchueler() {
-		loading.value = true;
-		[statusAction.value, logs.value] = await props.deleteSchueler();
-		loading.value = false;
-	}
 
 	const option1 = ref(false);
 	const option2 = ref(false);
@@ -218,12 +235,17 @@
 	const option1024 = ref(false);
 	const option2048 = ref(false);
 	const option4096 = ref(false);
+
 	const druckoptionSchuelerListeKontaktdatenErzieher = ref(1);
 	const sortieroptionSchuelerListeKontaktdatenErzieher = ref(1);
 	const druckoptionSchuelerSchulbescheinigung = ref(1);
 	const sortieroptionSchuelerSchulbescheinigung = ref(1);
 	const druckoptionSchuelerStundenplan = ref(1);
 	const sortieroptionSchuelerStundenplan = ref(1);
+
+	const emailBetreff = ref<string>("");
+	const emailText = ref<string>("");
+	const istPrivateEmailAlternative = ref<boolean>(false);
 
 	async function downloadPDF() {
 		const reportingParameter = new ReportingParameter();
@@ -311,6 +333,47 @@
 		loading.value = false;
 	}
 
+	async function sendPdfByEmail() {
+		if (stundenplanAuswahl.value === undefined)
+			return;
+
+		const listeIdsSchueler = new ArrayList<number>();
+		for (const schueler of props.schuelerListeManager().liste.auswahl())
+			listeIdsSchueler.add(schueler.id);
+
+		const reportingParameter = new ReportingParameter();
+		reportingParameter.reportvorlage = ReportingReportvorlage.STUNDENPLANUNG_v_SCHUELER_STUNDENPLAN.getBezeichnung();
+		reportingParameter.ausgabeformat = ReportingAusgabeformat.EMAIL.getId();
+		reportingParameter.idsHauptdaten = ListUtils.create1(stundenplanAuswahl.value.id);
+		reportingParameter.idsDetaildaten = listeIdsSchueler;
+		reportingParameter.einzelausgabeHauptdaten = false;
+		reportingParameter.einzelausgabeDetaildaten = true;
+
+		const emailDaten = new ReportingEMailDaten();
+		emailDaten.empfaengerTyp = ReportingEMailEmpfaengerTyp.SCHUELER.getId();
+		emailDaten.istPrivateEmailAlternative = istPrivateEmailAlternative.value;
+		emailDaten.betreff = (((emailBetreff.value.trim().length) !== 0) ? emailBetreff.value : ("Stundenplan " + stundenplanAuswahl.value.bezeichnung));
+		emailDaten.text = (((emailText.value.trim().length) !== 0) ? emailText.value : ("Im Anhang dieser E-Mail ist der Stundenplan " + stundenplanAuswahl.value.bezeichnung + " enthalten."));
+		reportingParameter.eMailDaten = emailDaten;
+
+		reportingParameter.duplexdruck = ((druckoptionSchuelerStundenplan.value === 3) || (druckoptionSchuelerStundenplan.value === 4));
+		reportingParameter.detailLevel = ((option1.value ? 1 : 0) + (option2.value ? 2 : 0) + (option4.value ? 4 : 0)
+			+ (option8.value ? 8 : 0) + (option16.value ? 16 : 0) + (option32.value ? 32 : 0) + (option64.value ? 64 : 0)
+			+ (option128.value ? 128 : 0) + (option256.value ? 256 : 0) + (option512.value ? 512 : 0)
+			+ (option1024.value ? 1024 : 0) + (option2048.value ? 2048 : 0) + (option4096.value ? 4096 : 0));
+		loading.value = true;
+		const result = await props.sendEMail(reportingParameter);
+		statusAction.value = result.success;
+		logs.value = result.log;
+		loading.value = false;
+	}
+
+	async function entferneSchueler() {
+		loading.value = true;
+		[statusAction.value, logs.value] = await props.deleteSchueler();
+		loading.value = false;
+	}
+
 	async function selectAll() {
 		option1.value = true;
 		option2.value = true;
@@ -377,6 +440,9 @@
 		sortieroptionSchuelerSchulbescheinigung.value = 1;
 		druckoptionSchuelerStundenplan.value = 1;
 		sortieroptionSchuelerStundenplan.value = 1;
+		emailBetreff.value = '';
+		emailText.value = '';
+		istPrivateEmailAlternative.value = false;
 
 		currentAction.value = open ? newAction : "";
 	}

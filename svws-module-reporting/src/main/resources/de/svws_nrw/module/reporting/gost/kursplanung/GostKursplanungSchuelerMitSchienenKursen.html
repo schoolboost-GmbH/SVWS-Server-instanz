@@ -1,5 +1,5 @@
 <html lang="de" xmlns:th="http://www.thymeleaf.org">
-	<head th:with="mediaPrint = ${Parameter.ausgabeformat == 2}">
+	<head th:with="mediaPrint = ${Parameter.ausgabeformat >= 2}">
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width" />
 		<title>Schüler-Kurse-Schienen-Zuordnung</title>
@@ -9,7 +9,7 @@
 		<link rel="stylesheet" th:href="@{gost/kursplanung/GostKursplanungSchuelerMitSchienenKursen.css}" href="../../gost/kursplanung/GostKursplanungSchuelerMitSchienenKursen.css" />
 	</head>
 
-	<body th:with="mediaPrint = ${Parameter.ausgabeformat == 2}">
+	<body th:with="mediaPrint = ${Parameter.ausgabeformat >= 2}">
 		<div th:switch="${Parameter.idsDetaildaten.size()}">
 			<div th:case="0">
 				<div th:with="zeigeExtDummy = ${(GostBlockungsergebnis.anzahlExterne() > 0 || GostBlockungsergebnis.anzahlDummy() > 0)}"
