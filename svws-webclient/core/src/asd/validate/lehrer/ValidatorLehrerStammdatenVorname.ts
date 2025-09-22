@@ -34,7 +34,7 @@ export class ValidatorLehrerStammdatenVorname extends Validator {
 		if (!success)
 			return false;
 		success = this.exec(2, { getAsBoolean : () => this.daten.vorname.length === 1 }, "Vorname der Lehrkraft: Der Vorname besteht aus nur einem Zeichen. Bitte überprüfen sie ihre Angaben.");
-		if (!this.exec(3, { getAsBoolean : () => vorname.startsWith(" ") || vorname.startsWith("\t") }, "Vorname der Lehrkraft: Die Eintragung des Nachnamens muss linksbündig erfolgen (ohne vorangestellte Leerzeichen oder Tabs)."))
+		if (!this.exec(3, { getAsBoolean : () => vorname.startsWith(" ") || vorname.startsWith("\t") }, "Vorname der Lehrkraft: Die Eintragung des Vornamens muss linksbündig erfolgen (ohne vorangestellte Leerzeichen oder Tabs)."))
 			success = false;
 		if (!this.exec(4, { getAsBoolean : () => !JavaCharacter.isUpperCase(vorname.charAt(0)) }, "Vorname der Lehrkraft: Die erste Stelle des Vornamens muss mit einem Großbuchstaben besetzt sein."))
 			success = false;

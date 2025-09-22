@@ -88,7 +88,7 @@ public final class ValidatorLehrerStammdatenNachname extends Validator {
 			return false;
 
 		success = exec(2, () -> daten.nachname.length() == 1,
-				"Nachname der Lehrkraft: Der Nachname besteht aus nur einem Zeichen. Bitte überprüfen sie ihre Angaben.");
+				"Nachname der Lehrkraft: Der Nachname besteht aus nur einem Zeichen. Bitte überprüfen sie Ihre Angaben.");
 
 		if (!exec(3, () -> nachname.startsWith(" ") || nachname.startsWith("\t"),
 				"Nachname der Lehrkraft: Die Eintragung des Nachnamens muss linksbündig erfolgen (ohne vorangestellte Leerzeichen oder Tabs)."))

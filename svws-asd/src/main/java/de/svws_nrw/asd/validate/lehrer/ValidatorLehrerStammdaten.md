@@ -1,5 +1,6 @@
-### [ValidatorLehrerStammdaten.java](https://git.svws-nrw.de/svws/SVWS-Server/-/blob/klehr/asd-erste-pl-spezifikation-als-markdown-erstellen/svws-asd/src/main/java/de/svws_nrw/asd/validate/lehrer/ValidatorLehrerStammdaten.java)
+### ValidatorLehrerStammdaten.java
 
-**Schulformen:** ["G", "H", "V", "S", "KS", "R", "PS", "SK", "GE", "FW", "HI", "WF", "GY", "WB", "BK", "SR", "SG", "SB"] <br>
-**Fehlerhärte:** Hinweis <br>
-
+**Default-Fehlerhärte:**<br>
+"muss": [],<br>
+"kann": [],<br>
+"hinweis": ["G", "H", "V", "S", "KS", "R", "PS", "SK", "GE", "FW", "HI", "WF", "GY", "WB", "BK", "SR", "SG", "SB"]

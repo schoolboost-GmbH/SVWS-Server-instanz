@@ -79,7 +79,7 @@ export class ValidatorLehrerStammdatenNachname extends Validator {
 		success = this.exec(1, { getAsBoolean : () => JavaString.isBlank(nachname.trim()) }, "Nachname der Lehrkraft: Der Nachname darf nicht nur aus Leerzeichen bestehen.");
 		if (!success)
 			return false;
-		success = this.exec(2, { getAsBoolean : () => this.daten.nachname.length === 1 }, "Nachname der Lehrkraft: Der Nachname besteht aus nur einem Zeichen. Bitte überprüfen sie ihre Angaben.");
+		success = this.exec(2, { getAsBoolean : () => this.daten.nachname.length === 1 }, "Nachname der Lehrkraft: Der Nachname besteht aus nur einem Zeichen. Bitte überprüfen sie Ihre Angaben.");
 		if (!this.exec(3, { getAsBoolean : () => nachname.startsWith(" ") || nachname.startsWith("\t") }, "Nachname der Lehrkraft: Die Eintragung des Nachnamens muss linksbündig erfolgen (ohne vorangestellte Leerzeichen oder Tabs)."))
 			success = false;
 		const nachnameOhneZusatz : string = this.getOhneZusatz(nachname);

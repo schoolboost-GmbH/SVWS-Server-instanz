@@ -44,7 +44,7 @@ public final class ValidatorLehrerStammdatenVorname extends Validator {
 				"Vorname der Lehrkraft: Der Vorname besteht aus nur einem Zeichen. Bitte überprüfen sie ihre Angaben.");
 
 		if (!exec(3, () -> vorname.startsWith(" ") || vorname.startsWith("\t"),
-				"Vorname der Lehrkraft: Die Eintragung des Nachnamens muss linksbündig erfolgen (ohne vorangestellte Leerzeichen oder Tabs)."))
+				"Vorname der Lehrkraft: Die Eintragung des Vornamens muss linksbündig erfolgen (ohne vorangestellte Leerzeichen oder Tabs)."))
 			success = false;
 
 		if (!exec(4, () -> !Character.isUpperCase(vorname.charAt(0)),
