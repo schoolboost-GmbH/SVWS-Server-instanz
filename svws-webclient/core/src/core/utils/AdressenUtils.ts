@@ -16,6 +16,10 @@ export class AdressenUtils extends JavaObject {
 	 * Strassennamen, der Hausnummer und dem Hausnummerzusatz
 	 * in die Bestandteile auf.
 	 *
+	 * In TS kann man diese Funktion sehr schön auf diese Weise verwenden,
+	 * da die Attribute in den verwendeten Klassen ebenso benannt sind:
+	 * `const [ strassenname, hausnummer, hausnummerZusatz ] = AdressenUtils.splitStrasse(value);`
+	 *
 	 * @param strasse   die Strassenangabe
 	 *
 	 * @return ein Array mit den 3 Elementen (0 - Strassennamen, 1 - Hausnummer und 2 - Hausnummerzusatz)
