@@ -133,7 +133,13 @@
 						'bg-ui-selected': (gridManager.focusColumn === 6),
 						'bg-ui-selected text-ui-onselected': ((gridManager.focusColumnLast === 6) && (gridManager.focusRowLast === index)),
 					}">
-					<span class="text-ellipsis overflow-hidden whitespace-nowrap w-full">{{ pair.a.fachbezogeneBemerkungen ?? "-" }}</span>
+					<svws-ui-tooltip v-if="(pair.a.fachbezogeneBemerkungen !== null) && (pair.a.fachbezogeneBemerkungen.length > 20)" class="h-full w-full">
+						<span class="text-ellipsis overflow-hidden whitespace-nowrap w-full">{{ pair.a.fachbezogeneBemerkungen ?? "-" }}</span>
+						<template #content>
+							{{ pair.a.fachbezogeneBemerkungen }}
+						</template>
+					</svws-ui-tooltip>
+					<span v-else class="text-ellipsis overflow-hidden whitespace-nowrap w-full">{{ pair.a.fachbezogeneBemerkungen ?? "-" }}</span>
 				</td>
 			</template>
 			<td />

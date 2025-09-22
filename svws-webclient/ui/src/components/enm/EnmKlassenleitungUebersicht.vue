@@ -77,7 +77,13 @@
 						'bg-ui-selected': (gridManager.focusColumn === 3),
 						'bg-ui-selected text-ui-onselected': floskelEditorVisible && ((gridManager.focusColumnLast === 3) && (gridManager.focusRowLast === index)),
 					}">
-					<span class="text-ellipsis overflow-hidden whitespace-nowrap w-full">{{ pair.b.bemerkungen.ASV ?? "-" }}</span>
+					<svws-ui-tooltip v-if="(pair.b.bemerkungen.ASV !== null) && (pair.b.bemerkungen.ASV.length > 20)" class="h-full w-full">
+						<span class="text-ellipsis overflow-hidden whitespace-nowrap w-full">{{ pair.b.bemerkungen.ASV ?? "-" }}</span>
+						<template #content>
+							{{ pair.b.bemerkungen.ASV }}
+						</template>
+					</svws-ui-tooltip>
+					<span v-else class="text-ellipsis overflow-hidden whitespace-nowrap w-full">{{ pair.b.bemerkungen.ASV ?? "-" }}</span>
 				</td>
 			</template>
 			<template v-if="gridManager.isColVisible('AUE') ?? true">
@@ -86,7 +92,13 @@
 						'bg-ui-selected': (gridManager.focusColumn === 4),
 						'bg-ui-selected text-ui-onselected': floskelEditorVisible && ((gridManager.focusColumnLast === 4) && (gridManager.focusRowLast === index)),
 					}">
-					<span class="text-ellipsis overflow-hidden whitespace-nowrap w-full">{{ pair.b.bemerkungen.AUE ?? "-" }}</span>
+					<svws-ui-tooltip v-if="(pair.b.bemerkungen.AUE !== null) && (pair.b.bemerkungen.AUE.length > 20)" class="h-full w-full">
+						<span class="text-ellipsis overflow-hidden whitespace-nowrap w-full">{{ pair.b.bemerkungen.AUE ?? "-" }}</span>
+						<template #content>
+							{{ pair.b.bemerkungen.AUE }}
+						</template>
+					</svws-ui-tooltip>
+					<span v-else class="text-ellipsis overflow-hidden whitespace-nowrap w-full">{{ pair.b.bemerkungen.AUE ?? "-" }}</span>
 				</td>
 			</template>
 			<template v-if="gridManager.isColVisible('ZB') ?? true">
@@ -95,7 +107,13 @@
 						'bg-ui-selected': (gridManager.focusColumn === 5),
 						'bg-ui-selected text-ui-onselected': floskelEditorVisible && ((gridManager.focusColumnLast === 5) && (gridManager.focusRowLast === index)),
 					}">
-					<span class="text-ellipsis overflow-hidden whitespace-nowrap w-full">{{ pair.b.bemerkungen.ZB ?? "-" }}</span>
+					<svws-ui-tooltip v-if="(pair.b.bemerkungen.ZB !== null) && (pair.b.bemerkungen.ZB.length > 20)" class="h-full w-full">
+						<span class="text-ellipsis overflow-hidden whitespace-nowrap w-full">{{ pair.b.bemerkungen.ZB ?? "-" }}</span>
+						<template #content>
+							{{ pair.b.bemerkungen.ZB }}
+						</template>
+					</svws-ui-tooltip>
+					<span v-else class="text-ellipsis overflow-hidden whitespace-nowrap w-full">{{ pair.b.bemerkungen.ZB ?? "-" }}</span>
 				</td>
 			</template>
 			<td />

@@ -50,9 +50,9 @@
 								</template>
 								<template v-else>
 									<td :ref="inputBemerkung(data.floskel, 1, index)" class="cursor-pointer"> {{ data.floskel.kuerzel }} </td>
-									<td class="text-left"> {{ data.floskel.text }} </td>
-									<td> {{ data.floskel.niveau }} </td>
-									<td> {{ data.floskel.jahrgangID }} </td>
+									<td class="text-left" @click="ergaenzeFloskel(data.floskel)"> {{ data.floskel.text }} </td>
+									<td @click="ergaenzeFloskel(data.floskel)"> {{ data.floskel.niveau }} </td>
+									<td @click="ergaenzeFloskel(data.floskel)"> {{ data.floskel.jahrgangID }} </td>
 								</template>
 							</template>
 						</ui-table-grid>
@@ -69,7 +69,7 @@
 <script setup lang="ts">
 
 	import type { ComponentPublicInstance } from 'vue';
-	import { computed, onMounted, onBeforeUnmount, onUnmounted, ref, watch, watchEffect } from 'vue';
+	import { computed, onMounted, onBeforeUnmount, onUnmounted, ref, watch } from 'vue';
 	import type { ENMFloskel } from '../../../../core/src/core/data/enm/ENMFloskel';
 	import type { ENMFloskelgruppe } from '../../../../core/src/core/data/enm/ENMFloskelgruppe';
 	import { ArrayList } from '../../../../core/src/java/util/ArrayList';
