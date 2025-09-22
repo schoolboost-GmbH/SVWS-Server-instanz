@@ -21,7 +21,9 @@ export function useRegionSwitch() {
 
 	function handleKeyEvent(event: KeyboardEvent) {
 		if (event.repeat || !event.altKey)
-			return
+			return;
+		if (event.ctrlKey || event.shiftKey || event.metaKey)
+			return;
 		if (regionMap.has(event.code))
 			switchRegion(event);
 		else if (event.code === 'Digit0')
