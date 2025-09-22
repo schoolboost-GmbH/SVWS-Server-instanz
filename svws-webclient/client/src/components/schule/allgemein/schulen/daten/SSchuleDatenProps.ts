@@ -4,6 +4,6 @@ import type { KatalogSchuleListeManager } from "@ui";
 export interface SchuleDatenProps {
 	schuljahr: number;
 	patch: (data : Partial<SchulEintrag>) => Promise<void>;
-	schuleListeManager: () => KatalogSchuleListeManager;
+	manager: () => KatalogSchuleListeManager;
 	benutzerKompetenzen: Set<BenutzerKompetenz>;
 }

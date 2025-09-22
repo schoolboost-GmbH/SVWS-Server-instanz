@@ -20,7 +20,7 @@ export class RouteKatalogSchuleDaten extends RouteNode<any, RouteKatalogSchulen>
 	public getProps(to: RouteLocationNormalized): SchuleDatenProps {
 		return {
 			schuljahr: api.abschnitt.schuljahr,
-			schuleListeManager: () => routeKatalogSchulen.data.manager,
+			manager: () => routeKatalogSchulen.data.manager,
 			patch: routeKatalogSchulen.data.patch,
 			benutzerKompetenzen: api.benutzerKompetenzen,
 		};

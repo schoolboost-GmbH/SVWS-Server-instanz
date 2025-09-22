@@ -1,8 +1,7 @@
 <template>
 	<div class="page page-grid-cards">
 		<div class="flex flex-col gap-y-16 lg:gap-y-16" v-if="ServerMode.DEV.checkServerMode(serverMode)">
-			<ui-card icon="i-ri-delete-bin-line" title="Löschen" subtitle="Ausgewählte Schulen werden gelöscht." :is-open="currentAction === 'delete'"
-				@update:is-open="(isOpen) => setCurrentAction('delete', isOpen)">
+			<ui-card icon="i-ri-delete-bin-line" title="Löschen" subtitle="Ausgewählte Schulen werden gelöscht.">
 				<div>
 					<!-- TODO: Vollständige Vorbedingungsprüfung für das Löschen einbauen -->
 					<span v-if="false">Alle ausgewählten Schulen sind bereit zum Löschen.</span>
@@ -41,25 +40,10 @@
 
 	const props = defineProps<KatalogSchuleGruppenprozesseProps>();
 
-	const currentAction = ref<string>('');
-	const oldAction = ref<{ name: string | undefined; open: boolean }>({
-		name: undefined,
-		open: false,
-	});
 	const loading = ref<boolean>(false);
 	const logs = ref<List<string | null> | undefined>();
 	const status = ref<boolean | undefined>();
 
-	function setCurrentAction(newAction: string, open: boolean) {
-		if(newAction === oldAction.value.name && !open)
-			return;
-		oldAction.value.name = currentAction.value;
-		oldAction.value.open = (currentAction.value === "") ? false : true;
-		if(open === true)
-			currentAction.value= newAction;
-		else
-			currentAction.value = "";
-	}
 
 	function clearLog() {
 		loading.value = false;
@@ -73,7 +57,6 @@
 		const [delStatus, logMessages] = await props.delete();
 		logs.value = logMessages;
 		status.value = delStatus;
-		currentAction.value = '';
 
 		loading.value = false;
 	}

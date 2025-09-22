@@ -57,6 +57,7 @@
 	import type { SchulenKatalogEintrag, List } from "@core"
 	import type { KatalogSchuleNeuProps } from "./SKatalogSchuleNeuProps";
 	import { filterSchulenKatalogEintraege } from "~/utils/helfer";
+	import { emailIsValid, mandatoryInputIsValid, optionalInputIsValid, phoneNumberIsValid } from "~/util/validation/Validation";
 
 	const props = defineProps<KatalogSchuleNeuProps>();
 	const hatKompetenzAdd = computed<boolean>(() => props.benutzerKompetenzen.has(BenutzerKompetenz.KATALOG_EINTRAEGE_AENDERN));
@@ -198,7 +199,7 @@
 				case "fax":
 					return phoneNumberIsValid(data.value.fax, 20);
 				case "email" :
-					return emailIsValid(data.value.email);
+					return emailIsValid(data.value.email, 40);
 				default:
 					return true;
 			}
@@ -220,42 +221,12 @@
 			optionalInputIsValid(data.value.zusatzHausnummer, 30);
 	}
 
-	function emailIsValid(value: string | null) {
-		if ((value === null) || JavaString.isBlank(value))
-			return true;
-		if (value.length > 40)
-			return false;
-		return /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))[^@]?$/.test(value) ||
-			/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(value);
-	}
-
-	function phoneNumberIsValid(input: string | null, maxLength: number) {
-		if ((input === null) || (JavaString.isBlank(input)))
-			return true;
-		// folgende Formate sind erlaubt: 0151123456, 0151/123456, 0151-123456, +49/176-456456 -> Buchstaben sind nicht erlaubt
-		return /^\+?\d+([-/]?\d+)*$/.test(input) && input.length <= maxLength;
-	}
-
 	function optionalNumberIsValid(input: string | null, maxLength : number) {
 		if (input === null || JavaString.isBlank(input))
 			return true;
 		if (input.length > maxLength)
 			return false;
 		return /^\d+$/.test(input)
-	}
-
-	function mandatoryInputIsValid(name: string | null, maxLength : number | null) {
-		return (
-			name !== null &&
-			!JavaString.isBlank(name) &&
-			(maxLength === null || name.length <= maxLength)
-		);
-	}
-
-	function optionalInputIsValid(input : string | null, maxLength : number) {
-		if ((input === null) || (JavaString.isBlank(input)))
-			return true;
-		return input.length <= maxLength;
 	}
 
 	function kuerzelIsValid(kuerzel : string | null) {

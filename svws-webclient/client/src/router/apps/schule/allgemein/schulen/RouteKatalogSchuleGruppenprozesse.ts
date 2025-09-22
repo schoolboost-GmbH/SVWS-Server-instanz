@@ -29,7 +29,6 @@ export class RouteKatalogSchuleGruppenprozesse extends RouteNode<any, RouteKatal
 			serverMode: api.mode,
 			schulform: api.schulform,
 			schulgliederungen: api.schulgliederungen,
-			schuleListeManager: () => routeKatalogSchulen.data.manager,
 			delete: routeKatalogSchulen.data.delete,
 		};
 	}
