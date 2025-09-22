@@ -45,6 +45,7 @@ export class RouteLehrerPersonaldaten extends RouteNode<any, RouteLehrer> {
 			serverMode: api.mode,
 			benutzerKompetenzen: api.benutzerKompetenzen,
 			lehrerListeManager: () => routeLehrer.data.manager,
+			mapSchulen: () => routeLehrer.data.mapSchulen,
 			patch: routeLehrer.data.patchPersonaldaten,
 			patchAbschnittsdaten: routeLehrer.data.patchPersonalAbschnittsdaten,
 			patchLehramt: routeLehrer.data.patchLehramt,

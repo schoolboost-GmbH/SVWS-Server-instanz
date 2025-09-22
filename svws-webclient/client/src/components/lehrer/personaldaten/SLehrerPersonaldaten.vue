@@ -31,8 +31,8 @@
 					@change="pflichtstundensoll => patchAbschnittsdaten({ pflichtstundensoll: pflichtstundensoll }, personalabschnittsdaten()?.id ?? -1)" />
 				<ui-select label="Einsatzstatus" :readonly v-model="einsatzstatus" statistics :manager="einsatzstatusSelectManager"
 					class="contentFocusField" :removable="false" required />
-				<svws-ui-text-input placeholder="Stammschule" :readonly :model-value="personalabschnittsdaten()?.stammschulnummer"
-					@change="stammschulnummer => patchAbschnittsdaten({ stammschulnummer }, personalabschnittsdaten()?.id ?? -1)" statistics />
+				<ui-select label="Stammschule" :readonly v-model="stammschulnummer" statistics :manager="stammschuleSelectManager"
+					class="contentFocusField" :removable="true" required />
 			</svws-ui-input-wrapper>
 		</svws-ui-content-card>
 		<svws-ui-content-card title="Lehrämter">
@@ -54,13 +54,13 @@
 
 <script setup lang="ts">
 
-	import { computed, watch } from "vue";
+	import { computed } from "vue";
 	import type { LehrerPersonaldatenProps } from './SLehrerPersonaldatenProps';
-	import type { LehrerBeschaeftigungsartKatalogEintrag, LehrerEinsatzstatusKatalogEintrag, LehrerRechtsverhaeltnisKatalogEintrag, Validator} from "@core";
-	import { DeveloperNotificationException, ValidatorLehrerPersonalabschnittsdaten} from "@core";
-	import { LehrerBeschaeftigungsart, LehrerEinsatzstatus, LehrerRechtsverhaeltnis, LehrerAnrechnungsgrund, LehrerMehrleistungsarten, LehrerMinderleistungsarten,
-		BenutzerKompetenz} from "@core";
-	import { CoreTypeSelectManager } from "@ui";
+	import type { LehrerBeschaeftigungsartKatalogEintrag, LehrerEinsatzstatusKatalogEintrag, LehrerRechtsverhaeltnisKatalogEintrag,
+		JavaSet, Validator } from "@core";
+	import { BenutzerKompetenz, DeveloperNotificationException, HashSet, ValidatorLehrerPersonalabschnittsdaten } from "@core";
+	import { LehrerBeschaeftigungsart, LehrerEinsatzstatus, LehrerRechtsverhaeltnis } from "@core";
+	import { CoreTypeSelectManager, SelectManager } from "@ui";
 
 	const props = defineProps<LehrerPersonaldatenProps>();
 
@@ -71,16 +71,9 @@
 	const personaldaten = () => props.lehrerListeManager().personalDaten();
 	const personalabschnittsdaten = () => props.lehrerListeManager().getAbschnittBySchuljahresabschnittsId(props.aktAbschnitt.id);
 
+
 	const rechtsverhaeltnisSelectManager = new CoreTypeSelectManager({ clazz: LehrerRechtsverhaeltnis.class, schuljahr: schuljahr,
 		schulformen: props.schulform, optionDisplayText: "text", selectionDisplayText: "text",
-	});
-
-	const beschaeftigungsartSelectManager = new CoreTypeSelectManager({ clazz: LehrerBeschaeftigungsart.class, schuljahr: schuljahr,
-		schulformen: props.schulform, optionDisplayText: "text", selectionDisplayText: "text",
-	});
-
-	const einsatzstatusSelectManager = new CoreTypeSelectManager({ clazz: LehrerEinsatzstatus.class, schuljahr: schuljahr, schulformen: props.schulform,
-		optionDisplayText: "text", selectionDisplayText: "text",
 	});
 
 	const rechtsverhaeltnis = computed<LehrerRechtsverhaeltnisKatalogEintrag | undefined>({
@@ -93,6 +86,11 @@
 			if (daten !== null)
 				void props.patchAbschnittsdaten({ rechtsverhaeltnis: val?.schluessel }, daten.id);
 		},
+	});
+
+
+	const beschaeftigungsartSelectManager = new CoreTypeSelectManager({ clazz: LehrerBeschaeftigungsart.class, schuljahr: schuljahr,
+		schulformen: props.schulform, optionDisplayText: "text", selectionDisplayText: "text",
 	});
 
 	const beschaeftigungsart = computed<LehrerBeschaeftigungsartKatalogEintrag | undefined>({
@@ -108,6 +106,10 @@
 	});
 
 
+	const einsatzstatusSelectManager = new CoreTypeSelectManager({ clazz: LehrerEinsatzstatus.class, schuljahr: schuljahr, schulformen: props.schulform,
+		optionDisplayText: "text", selectionDisplayText: "text",
+	});
+
 	const einsatzstatus = computed<LehrerEinsatzstatusKatalogEintrag | undefined>({
 		get(): LehrerEinsatzstatusKatalogEintrag | undefined {
 			return LehrerEinsatzstatus.values().map(r => r.daten(schuljahr.value) || undefined)
@@ -120,36 +122,49 @@
 		},
 	});
 
-	const mehrleistungsgrund = computed<LehrerMehrleistungsarten | undefined>({
-		get(): LehrerMehrleistungsarten | undefined {
-			// TODO aus Personaldaten bestimmten
-			const schluessel = undefined;
-			return LehrerMehrleistungsarten.values().find(e => e.daten(schuljahr.value)?.schluessel === schluessel);
-		},
-		set(val: LehrerMehrleistungsarten | undefined) {
-			// TODO props.patch({ mehrleistungsgrund: val?.schluessel });
-		},
+
+	const eigeneSchulnummer = computed<string>(() => `${props.validatorKontext().getSchulnummer()}`);
+
+	const moeglicheStammschulnummern = computed<JavaSet<string>>(() => {
+		// Füge zunächst alle Schulnummern mit eingetragenen Kürzeln im Schul-Katalog hinzu
+		const result = new HashSet<string>();
+		for (const schule of props.mapSchulen().values())
+			if (schule.schulnummerStatistik !== null)
+				result.add(schule.schulnummerStatistik);
+		// Ergänze die eigene Schule, sofern diese nicht bereits im Katalog enthalten ist
+		result.add(eigeneSchulnummer.value);
+		// Ergänze ggf. noch den Eintrag aus der Datenbank
+		const daten = personalabschnittsdaten();
+		if ((daten === null) || (daten.stammschulnummer === null))
+			return result;
+		result.add(daten.stammschulnummer);
+		return result;
 	});
 
-	const minderleistungsgrund = computed<LehrerMinderleistungsarten | undefined>({
-		get(): LehrerMinderleistungsarten | undefined {
-			// TODO aus Personaldaten bestimmen
-			const schluessel = undefined;
-			return LehrerMinderleistungsarten.values().find(e => e.daten(schuljahr.value)?.schluessel === schluessel);
-		},
-		set(val: LehrerMinderleistungsarten | undefined) {
-			// TODO props.patch({ minderleistungsgrund: val?.schluessel });
-		},
-	});
+	function getSchulnummerText(schulnummer: string): string {
+		const eintrag = props.mapSchulen().get(schulnummer);
+		const istEigene = (eigeneSchulnummer.value === schulnummer);
+		if (istEigene && (eintrag !== undefined))
+			return `Eigene Schule - ${eintrag.kuerzel} - ${schulnummer}`;
+		else if (istEigene)
+			return `Eigene Schule - ${schulnummer}`;
+		else if (eintrag !== undefined)
+			return `${eintrag.kuerzel} - ${schulnummer}`;
+		else
+			return schulnummer;
+	}
 
-	const anrechnungsgrund = computed<LehrerAnrechnungsgrund | undefined>({
-		get(): LehrerAnrechnungsgrund | undefined {
-			// TODO aus Personaldaten bestimmten
-			const schluessel = undefined;
-			return LehrerAnrechnungsgrund.values().find(e => e.daten(schuljahr.value)?.schluessel === schluessel);
+	const stammschuleSelectManager = new SelectManager({ options: moeglicheStammschulnummern.value, selectionDisplayText: getSchulnummerText,
+		optionDisplayText: getSchulnummerText });
+
+	const stammschulnummer = computed<string | null>({
+		get(): string | null {
+			return personalabschnittsdaten()?.stammschulnummer ?? null;
 		},
-		set(val: LehrerAnrechnungsgrund | undefined) {
-			// TODO props.patch({ anrechnungsgrund: val?.schluessel });
+		set(val: string | null) {
+			const daten = personalabschnittsdaten();
+			if (daten !== null)
+				void props.patchAbschnittsdaten({ stammschulnummer: val }, daten.id);
 		},
 	});
 

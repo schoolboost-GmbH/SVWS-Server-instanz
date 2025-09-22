@@ -1,10 +1,8 @@
-import {
-	ApiFile, LehrerFachrichtungEintrag, LehrerLehramtEintrag,
-	LehrerLehrbefaehigungEintrag, LehrerListeEintrag, LehrerPersonalabschnittsdaten, LehrerPersonaldaten, LehrerStammdaten, List, SimpleOperationResponse,
-	StundenplanListeEintrag, ReportingParameter,
-	LehrerPersonalabschnittsdatenAnrechnungsstunden, UserNotificationException,
-} from "@core";
-import { ArrayList, DeveloperNotificationException, BenutzerKompetenz } from "@core";
+import type {
+	ApiFile, LehrerFachrichtungEintrag, LehrerLehramtEintrag, LehrerLehrbefaehigungEintrag, LehrerListeEintrag, LehrerPersonalabschnittsdatenAnrechnungsstunden,
+	LehrerPersonaldaten, LehrerPersonalabschnittsdaten, LehrerStammdaten, List, SimpleOperationResponse, StundenplanListeEintrag,
+	ReportingParameter, SchulEintrag } from "@core";
+import { ArrayList, UserNotificationException, DeveloperNotificationException, BenutzerKompetenz } from "@core";
 import { api } from "~/router/Api";
 import { routeLehrerIndividualdaten } from "~/router/apps/lehrer/individualdaten/RouteLehrerIndividualdaten";
 import { type PendingStateManager, ViewType, LehrerListeManager } from "@ui";
@@ -17,6 +15,7 @@ import { routeLehrer } from "~/router/apps/lehrer/RouteLehrer";
 
 interface RouteStateLehrer extends RouteStateAuswahlInterface<LehrerListeManager> {
 	mapStundenplaene: Map<number, StundenplanListeEintrag>;
+	mapSchulen: Map<string, SchulEintrag>;
 	pendingStateManager: PendingStateManagerLehrerIndividualdaten | undefined;
 }
 
@@ -27,6 +26,7 @@ const defaultState = <RouteStateLehrer>{
 	view: routeLehrerIndividualdaten,
 	gruppenprozesseView: routeLehrerIndividualdatenGruppenprozesse,
 	mapStundenplaene: new Map(),
+	mapSchulen: new Map(),
 	pendingStateManager: undefined,
 };
 
@@ -62,6 +62,10 @@ export class RouteDataLehrer extends RouteDataAuswahl<LehrerListeManager, RouteS
 
 	get mapStundenplaene(): Map<number, StundenplanListeEintrag> {
 		return this._state.value.mapStundenplaene;
+	}
+
+	get mapSchulen(): Map<string, SchulEintrag> {
+		return this._state.value.mapSchulen;
 	}
 
 	public addID(param: RouteParamsRawGeneric, id: number): void {
@@ -131,21 +135,23 @@ export class RouteDataLehrer extends RouteDataAuswahl<LehrerListeManager, RouteS
 	public async ladeDatenMultiple(auswahlList: List<LehrerListeEintrag>, state: Partial<RouteStateLehrer>): Promise<List<LehrerStammdaten> | null> {
 		if (auswahlList.isEmpty())
 			return null;
-
 		const ids: List<number> = new ArrayList();
-		for (const eintrag of auswahlList) {
+		for (const eintrag of auswahlList)
 			ids.add(eintrag.id);
-		}
-
 		return await api.server.getLehrerStammdatenMultiple(ids, api.schema);
 	}
 
 	public async loadPersonaldaten() {
 		if (!this.manager.hasDaten())
 			return;
-		const personaldaten = await api.server.getLehrerPersonaldaten(api.schema, this.manager.auswahl().id)
+		const listSchulen = await api.server.getSchulenMitKuerzel(api.schema);
+		const mapSchulen = new Map<string, SchulEintrag>();
+		for (const s of listSchulen)
+			if (s.schulnummerStatistik !== null)
+				mapSchulen.set(s.schulnummerStatistik, s);
+		const personaldaten = await api.server.getLehrerPersonaldaten(api.schema, this.manager.auswahl().id);
 		this.manager.setPersonalDaten(personaldaten);
-		this.commit();
+		this.setPatchedState({ mapSchulen });
 	}
 
 	public async unloadPersonaldaten() {

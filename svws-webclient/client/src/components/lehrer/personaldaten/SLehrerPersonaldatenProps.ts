@@ -1,4 +1,6 @@
-import type { BenutzerKompetenz, LehrerFachrichtungEintrag, LehrerLehramtEintrag, LehrerLehrbefaehigungEintrag, LehrerPersonalabschnittsdaten, LehrerPersonalabschnittsdatenAnrechnungsstunden, LehrerPersonaldaten, List, Schulform, Schuljahresabschnitt, ServerMode, ValidatorKontext} from "@core";
+import type { BenutzerKompetenz, LehrerFachrichtungEintrag, LehrerLehramtEintrag, LehrerLehrbefaehigungEintrag, LehrerPersonalabschnittsdaten,
+	LehrerPersonalabschnittsdatenAnrechnungsstunden, LehrerPersonaldaten, List, SchulEintrag, Schulform, Schuljahresabschnitt, ServerMode,
+	ValidatorKontext} from "@core";
 import type { LehrerListeManager } from "@ui";
 
 export interface LehrerPersonaldatenProps {
@@ -7,6 +9,7 @@ export interface LehrerPersonaldatenProps {
 	serverMode: ServerMode;
 	benutzerKompetenzen: Set<BenutzerKompetenz>,
 	lehrerListeManager: () => LehrerListeManager;
+	mapSchulen: () => Map<string, SchulEintrag>;
 	aktAbschnitt: Schuljahresabschnitt;
 	patch: (data : Partial<LehrerPersonaldaten>) => Promise<void>;
 	patchAbschnittsdaten: (data : Partial<LehrerPersonalabschnittsdaten>, id : number) => Promise<void>;
