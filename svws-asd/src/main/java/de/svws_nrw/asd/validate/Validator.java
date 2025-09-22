@@ -2,6 +2,7 @@ package de.svws_nrw.asd.validate;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.BooleanSupplier;
 
 import jakarta.validation.constraints.NotNull;
 
@@ -79,6 +80,31 @@ public abstract class Validator {
 		return success;
 	}
 
+
+	/**
+	 * Diese Methode führt einen Prüfschritt aus, genau dann, wenn der Validator selbst und dieser explixite Schritt aktiv sind.
+	 * Das Lambda stellt die Fehlerbedingung da, die TRUE liefert, wenn ein Fehler vorliegt.
+	 *
+	 * @param schrittNummer     die Nummer des Prüfschrittes. Startet in der Regel mit 0
+	 * @param fehlerbedingung   die Prüfschrittbedingung als Lambda
+	 * @param error             die Fehlermeldung, falls der Prüfschritt fehlschlägt
+	 *
+	 * @return true, wenn der Prüfschritt erfolgreich ausgeführt wurde oder nicht aktiv ist und false, wenn ein Fehler beim Prüfschritt auftritt
+	 */
+	protected final boolean exec(final int schrittNummer, final @NotNull BooleanSupplier fehlerbedingung, final @NotNull String error) {
+		final boolean isActive =
+				_kontext.getValidatorManager().isPruefschrittActiveInSchuljahr(_kontext.getSchuljahr(), this.getClass().getCanonicalName(), schrittNummer);
+		if (!isActive)
+			return true;
+		final boolean result = fehlerbedingung.getAsBoolean();
+		if (result) {
+			this.addFehler(schrittNummer, error);
+			return false;
+		}
+		return true;
+	}
+
+
 	/**
 	 * Aktualisiert die Fehlerart, die durch den Lauf dieses Validators erzeugt wurde
 	 * anhand der übergebenen Fehlerart. Wird null übergeben, so wird die Fehlerart genutzt, die
@@ -91,6 +117,7 @@ public abstract class Validator {
 			this._fehlerart = art;
 	}
 
+
 	/**
 	 * Erstellt einen neuen Fehler mit der übergebenen Fehlermeldung
 	 *
@@ -101,6 +128,7 @@ public abstract class Validator {
 		_fehler.add(new ValidatorFehler(this, pruefschritt, fehlermeldung));
 		updateFehlerart(this.getValidatorFehlerart(pruefschritt));
 	}
+
 
 	/**
 	 * Gibt die Fehler des Validators als unmodifiable List zurück.

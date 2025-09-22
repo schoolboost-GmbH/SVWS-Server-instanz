@@ -442,7 +442,9 @@ public final class ValidatorManager {
 		final HashMap<Integer, ValidatorFehlerart> mapPruefschritt = mapValidator.get(validator);
 		if (mapPruefschritt == null)
 			return false;
-		final ValidatorFehlerart fa = mapPruefschritt.get(pruefschritt);
+		ValidatorFehlerart fa = mapPruefschritt.get(pruefschritt);
+		if (fa == null)
+			fa = mapPruefschritt.get(-1);
 		return (fa != null) && (fa != ValidatorFehlerart.UNGENUTZT);
 	}
 

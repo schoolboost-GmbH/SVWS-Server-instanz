@@ -24,19 +24,21 @@ export class ValidatorLehrerStammdatenGeburtsdatum extends Validator {
 	}
 
 	protected pruefe() : boolean {
-		let geburtsdatum : DateManager;
+		let success : boolean = true;
+		let geburtsdatum : DateManager | null = null;
+		let errorMsg : string = "";
 		try {
 			geburtsdatum = DateManager.from(this.daten.geburtsdatum);
 		} catch(e : any) {
-			this.addFehler(0, "Das Geburtsdatum ist ungültig: " + e.getMessage());
-			return false;
+			errorMsg = e.getMessage();
 		}
+		const finalGeburtsdatum : DateManager | null = geburtsdatum;
+		success = this.exec(0, { getAsBoolean : () => finalGeburtsdatum === null }, "Das Geburtsdatum ist ungültig: " + errorMsg);
+		if (!success)
+			return false;
 		const schuljahr : number = this.kontext().getSchuljahr();
-		if (!geburtsdatum.istInJahren(schuljahr - 80, schuljahr - 18)) {
-			this.addFehler(1, "Unzulässige Eintragung im Feld Jahr (Geburtsdatum). Zulässig sind die Werte " + (schuljahr - 80) + " bis " + (schuljahr - 18) + ".");
-			return false;
-		}
-		return true;
+		success = this.exec(1, { getAsBoolean : () => finalGeburtsdatum === null || !finalGeburtsdatum.istInJahren(schuljahr - 80, schuljahr - 18) }, "Unzulässige Eintragung im Feld Jahr (Geburtsdatum). Zulässig sind die Werte " + (schuljahr - 80) + " bis " + (schuljahr - 18) + ".");
+		return success;
 	}
 
 	transpilerCanonicalName(): string {

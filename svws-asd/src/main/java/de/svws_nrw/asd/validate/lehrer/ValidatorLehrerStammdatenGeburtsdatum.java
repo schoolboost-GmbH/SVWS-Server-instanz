@@ -30,21 +30,26 @@ public final class ValidatorLehrerStammdatenGeburtsdatum extends Validator {
 
 	@Override
 	protected boolean pruefe() {
+		boolean success = true;
+
 		// Bestimme das Geburtsdatum
-		@NotNull DateManager geburtsdatum;
+		DateManager geburtsdatum = null;
+		@NotNull String errorMsg = "";
 		try {
 			geburtsdatum = DateManager.from(daten.geburtsdatum);
 		} catch (final InvalidDateException e) {
-			addFehler(0, "Das Geburtsdatum ist ungültig: " + e.getMessage());
-			return false;
+			errorMsg = e.getMessage();
 		}
+		final DateManager finalGeburtsdatum = geburtsdatum; //wegen Lambda hier nochmal als final.
+
+		success = exec(0, () -> finalGeburtsdatum == null, "Das Geburtsdatum ist ungültig: " + errorMsg);
+		if (!success)
+			return false;
+
 		final int schuljahr = kontext().getSchuljahr();
-		if (!geburtsdatum.istInJahren(schuljahr - 80, schuljahr - 18)) {
-			addFehler(1, "Unzulässige Eintragung im Feld Jahr (Geburtsdatum). Zulässig sind die Werte "
-					+ (schuljahr - 80) + " bis " + (schuljahr - 18) + ".");
-			return false;
-		}
-		return true;
+		success = exec(1, () -> finalGeburtsdatum == null || !finalGeburtsdatum.istInJahren(schuljahr - 80, schuljahr - 18),
+				"Unzulässige Eintragung im Feld Jahr (Geburtsdatum). Zulässig sind die Werte " + (schuljahr - 80) + " bis " + (schuljahr - 18) + ".");
+		return success;
 	}
 
 }

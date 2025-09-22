@@ -17,18 +17,19 @@ export class ValidatorSchuleStammdaten extends Validator {
 	}
 
 	protected pruefe() : boolean {
+		let success : boolean = true;
 		const schulformKrz : string | null = super.kontext().getSchuleStammdaten().schulform;
-		if ((schulformKrz === null) || (JavaString.isBlank(schulformKrz))) {
-			this.addFehler(0, "Die Schulform muss gesetzt sein.");
+		success = this.exec(0, { getAsBoolean : () => (schulformKrz === null) || (JavaString.isBlank(schulformKrz)) }, "Die Schulform muss gesetzt sein.");
+		if (!success)
 			return false;
-		}
-		try {
-			Schulform.data().getWertByKuerzel(schulformKrz);
-		} catch(e : any) {
-			this.addFehler(1, "Das Kürzel für die Schulform ist ungültig.");
-			return false;
-		}
-		return true;
+		success = this.exec(1, { getAsBoolean : () => {
+			try {
+				return Schulform.data().getWertByKuerzel(schulformKrz) === null;
+			} catch(e : any) {
+				return false;
+			}
+		} }, "Das Kürzel für die Schulform ist ungültig.");
+		return success;
 	}
 
 	transpilerCanonicalName(): string {

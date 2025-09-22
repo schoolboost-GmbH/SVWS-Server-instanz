@@ -25,45 +25,30 @@ export class ValidatorLehrerStammdatenVorname extends Validator {
 	}
 
 	protected pruefe() : boolean {
-		const vorname : string | null = this.daten.vorname;
-		if ((vorname === null) || (vorname.length === 0)) {
-			this.addFehler(0, "Vorname der Lehrkraft: Kein Wert vorhanden.");
-			return false;
-		}
-		if (JavaString.isBlank(vorname.trim())) {
-			this.addFehler(1, "Vorname der Lehrkraft: Der Vorname darf nicht nur aus Leerzeichen bestehen.");
-			return false;
-		}
 		let success : boolean = true;
-		if ((this.daten.vorname.length === 1)) {
-			this.addFehler(2, "Vorname der Lehrkraft: Der Vorname besteht aus nur einem Zeichen. Bitte überprüfen sie ihre Angaben.");
+		const vorname : string | null = this.daten.vorname;
+		success = this.exec(0, { getAsBoolean : () => (vorname === null) || (vorname.length === 0) }, "Vorname der Lehrkraft: Kein Wert vorhanden.");
+		if (!success)
+			return false;
+		success = this.exec(1, { getAsBoolean : () => JavaString.isBlank(vorname.trim()) }, "Vorname der Lehrkraft: Der Vorname darf nicht nur aus Leerzeichen bestehen.");
+		if (!success)
+			return false;
+		success = this.exec(2, { getAsBoolean : () => this.daten.vorname.length === 1 }, "Vorname der Lehrkraft: Der Vorname besteht aus nur einem Zeichen. Bitte überprüfen sie ihre Angaben.");
+		if (!this.exec(3, { getAsBoolean : () => vorname.startsWith(" ") || vorname.startsWith("\t") }, "Vorname der Lehrkraft: Die Eintragung des Nachnamens muss linksbündig erfolgen (ohne vorangestellte Leerzeichen oder Tabs)."))
 			success = false;
-		}
-		if (vorname.startsWith(" ") || vorname.startsWith("\t")) {
-			this.addFehler(3, "Vorname der Lehrkraft: Die Eintragung des Nachnamens muss linksbündig erfolgen (ohne vorangestellte Leerzeichen oder Tabs).");
+		if (!this.exec(4, { getAsBoolean : () => !JavaCharacter.isUpperCase(vorname.charAt(0)) }, "Vorname der Lehrkraft: Die erste Stelle des Vornamens muss mit einem Großbuchstaben besetzt sein."))
 			success = false;
-		}
-		if (!JavaCharacter.isUpperCase(vorname.charAt(0))) {
-			this.addFehler(4, "Vorname der Lehrkraft: Die erste Stelle des Vornamens muss mit einem Großbuchstaben besetzt sein.");
+		if (!this.exec(5, { getAsBoolean : () => (vorname.length > 1) && JavaCharacter.isUpperCase(vorname.charAt(1)) }, "Vorname der Lehrkraft: Die zweite Stelle des Vornamens ist mit einem Großbuchstaben besetzt. Bitte stellen sie sicher, dass nur der erste Buchstabe des Vornamens ein Großbuchstabe ist. Bitte schreiben Sie auf ihn folgende Buchstaben klein."))
 			success = false;
-		}
-		if ((vorname.length > 1) && JavaCharacter.isUpperCase(vorname.charAt(1))) {
-			this.addFehler(5, "Vorname der Lehrkraft: Die zweite Stelle des Vornamens ist mit einem Großbuchstaben besetzt. Bitte stellen sie sicher, dass nur der erste Buchstabe des Vornamens ein Großbuchstabe ist. Bitte schreiben Sie auf ihn folgende Buchstaben klein.");
+		if (!this.exec(6, { getAsBoolean : () => (vorname.length > 2) && JavaCharacter.isUpperCase(vorname.charAt(2)) }, "Vorname der Lehrkraft: Die dritte Stelle des Vornamens ist mit einem Großbuchstaben besetzt. Bitte stellen sie sicher, dass nur der erste Buchstabe des Vornamens ein Großbuchstabe ist. Bitte schreiben Sie auf ihn folgende Buchstaben klein."))
 			success = false;
-		}
-		if ((vorname.length > 2) && JavaCharacter.isUpperCase(vorname.charAt(2))) {
-			this.addFehler(6, "Vorname der Lehrkraft: Die dritte Stelle des Vornamens ist mit einem Großbuchstaben besetzt. Bitte stellen sie sicher, dass nur der erste Buchstabe des Vornamens ein Großbuchstabe ist. Bitte schreiben Sie auf ihn folgende Buchstaben klein.");
+		if (!this.exec(7, { getAsBoolean : () => JavaString.contains(vorname, " -") || JavaString.contains(vorname, "- ") }, "Vorname der Lehrkraft: Der Vorname enthält überflüssige Leerzeichen vor und/oder nach dem Bindestrich."))
 			success = false;
-		}
-		if (JavaString.contains(vorname, " -") || JavaString.contains(vorname, "- ")) {
-			this.addFehler(7, "Vorname der Lehrkraft: Der Vorname enthält überflüssige Leerzeichen vor und/oder nach dem Bindestrich.");
+		if (!this.exec(8, { getAsBoolean : () => {
+			const nLower : string | null = vorname.toLowerCase();
+			return nLower.startsWith("frau ") || nLower.startsWith("herr ");
+		} }, "Vorname der Lehrkraft: Die Anrede (Frau oder Herr) gehört nicht in den Vornamen."))
 			success = false;
-		}
-		const nLower : string | null = vorname.toLowerCase();
-		if (nLower.startsWith("frau ") || nLower.startsWith("herr ")) {
-			this.addFehler(8, "Vorname der Lehrkraft: Die Anrede (Frau oder Herr) gehört nicht in den Vornamen.");
-			success = false;
-		}
 		return success;
 	}
 

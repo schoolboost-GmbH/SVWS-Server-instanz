@@ -6,6 +6,7 @@ import { ValidatorFehler } from '../../asd/validate/ValidatorFehler';
 import type { List } from '../../java/util/List';
 import { Class } from '../../java/lang/Class';
 import { ValidatorKontext } from '../../asd/validate/ValidatorKontext';
+import type { BooleanSupplier } from '../../java/util/function/BooleanSupplier';
 
 export abstract class Validator extends JavaObject {
 
@@ -82,6 +83,28 @@ export abstract class Validator extends JavaObject {
 			}
 		}
 		return success;
+	}
+
+	/**
+	 * Diese Methode führt einen Prüfschritt aus, genau dann, wenn der Validator selbst und dieser explixite Schritt aktiv sind.
+	 * Das Lambda stellt die Fehlerbedingung da, die TRUE liefert, wenn ein Fehler vorliegt.
+	 *
+	 * @param schrittNummer     die Nummer des Prüfschrittes. Startet in der Regel mit 0
+	 * @param fehlerbedingung   die Prüfschrittbedingung als Lambda
+	 * @param error             die Fehlermeldung, falls der Prüfschritt fehlschlägt
+	 *
+	 * @return true, wenn der Prüfschritt erfolgreich ausgeführt wurde oder nicht aktiv ist und false, wenn ein Fehler beim Prüfschritt auftritt
+	 */
+	protected exec(schrittNummer : number, fehlerbedingung : BooleanSupplier, error : string) : boolean {
+		const isActive : boolean = this._kontext.getValidatorManager().isPruefschrittActiveInSchuljahr(this._kontext.getSchuljahr(), this.getClass().getCanonicalName(), schrittNummer);
+		if (!isActive)
+			return true;
+		const result : boolean = fehlerbedingung.getAsBoolean();
+		if (result) {
+			this.addFehler(schrittNummer, error);
+			return false;
+		}
+		return true;
 	}
 
 	/**

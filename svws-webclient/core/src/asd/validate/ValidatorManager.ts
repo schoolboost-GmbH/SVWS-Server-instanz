@@ -407,7 +407,9 @@ export class ValidatorManager extends JavaObject {
 		const mapPruefschritt : HashMap<number, ValidatorFehlerart> | null = mapValidator.get(validator);
 		if (mapPruefschritt === null)
 			return false;
-		const fa : ValidatorFehlerart | null = mapPruefschritt.get(pruefschritt);
+		let fa : ValidatorFehlerart | null = mapPruefschritt.get(pruefschritt);
+		if (fa === null)
+			fa = mapPruefschritt.get(-1);
 		return (fa !== null) && (fa as unknown !== ValidatorFehlerart.UNGENUTZT as unknown);
 	}
 

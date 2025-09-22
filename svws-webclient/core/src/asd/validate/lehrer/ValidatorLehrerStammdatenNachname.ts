@@ -71,46 +71,31 @@ export class ValidatorLehrerStammdatenNachname extends Validator {
 	}
 
 	protected pruefe() : boolean {
-		const nachname : string | null = this.daten.nachname;
-		if ((nachname === null) || (nachname.length === 0)) {
-			this.addFehler(0, "Nachname der Lehrkraft: Kein Wert vorhanden.");
-			return false;
-		}
-		if (JavaString.isBlank(nachname.trim())) {
-			this.addFehler(1, "Nachname der Lehrkraft: Der Nachname darf nicht nur aus Leerzeichen bestehen.");
-			return false;
-		}
 		let success : boolean = true;
-		if (this.daten.nachname.length === 1) {
-			this.addFehler(2, "Nachname der Lehrkraft: Der Nachname besteht aus nur einem Zeichen. Bitte überprüfen sie ihre Angaben.");
+		const nachname : string | null = this.daten.nachname;
+		success = this.exec(0, { getAsBoolean : () => (nachname === null) || (nachname.length === 0) }, "Nachname der Lehrkraft: Kein Wert vorhanden.");
+		if (!success)
+			return false;
+		success = this.exec(1, { getAsBoolean : () => JavaString.isBlank(nachname.trim()) }, "Nachname der Lehrkraft: Der Nachname darf nicht nur aus Leerzeichen bestehen.");
+		if (!success)
+			return false;
+		success = this.exec(2, { getAsBoolean : () => this.daten.nachname.length === 1 }, "Nachname der Lehrkraft: Der Nachname besteht aus nur einem Zeichen. Bitte überprüfen sie ihre Angaben.");
+		if (!this.exec(3, { getAsBoolean : () => nachname.startsWith(" ") || nachname.startsWith("\t") }, "Nachname der Lehrkraft: Die Eintragung des Nachnamens muss linksbündig erfolgen (ohne vorangestellte Leerzeichen oder Tabs)."))
 			success = false;
-		}
-		if (nachname.startsWith(" ") || nachname.startsWith("\t")) {
-			this.addFehler(3, "Nachname der Lehrkraft: Die Eintragung des Nachnamens muss linksbündig erfolgen (ohne vorangestellte Leerzeichen oder Tabs).");
-			success = false;
-		}
 		const nachnameOhneZusatz : string = this.getOhneZusatz(nachname);
-		if (!JavaCharacter.isUpperCase(nachnameOhneZusatz.charAt(0))) {
-			this.addFehler(4, "Nachname der Lehrkraft: Die erste Stelle des Nachnamens muss - ggf. im Anschluss an einen Namenszusatz, wie z.B. \"von\" -  mit einem Großbuchstaben besetzt sein.");
+		if (!this.exec(4, { getAsBoolean : () => !JavaCharacter.isUpperCase(nachnameOhneZusatz.charAt(0)) }, "Nachname der Lehrkraft: Die erste Stelle des Nachnamens muss - ggf. im Anschluss an einen Namenszusatz, wie z.B. \"von\" -  mit einem Großbuchstaben besetzt sein."))
 			success = false;
-		}
-		if ((nachnameOhneZusatz.length > 1) && JavaCharacter.isUpperCase(nachnameOhneZusatz.charAt(1))) {
-			this.addFehler(5, "Nachname der Lehrkraft: Die zweite Stelle des Nachnamens ist mit einem Großbuchstaben besetzt. Bitte stellen sie sicher, dass nur der erste Buchstabe des Nachnamens ein Großbuchstabe ist. Bitte schreiben Sie auf ihn folgende Buchstaben klein.");
+		if (!this.exec(5, { getAsBoolean : () => (nachnameOhneZusatz.length > 1) && JavaCharacter.isUpperCase(nachnameOhneZusatz.charAt(1)) }, "Nachname der Lehrkraft: Die zweite Stelle des Nachnamens ist mit einem Großbuchstaben besetzt. Bitte stellen sie sicher, dass nur der erste Buchstabe des Nachnamens ein Großbuchstabe ist. Bitte schreiben Sie auf ihn folgende Buchstaben klein."))
 			success = false;
-		}
-		if ((nachnameOhneZusatz.length > 2) && JavaCharacter.isUpperCase(nachnameOhneZusatz.charAt(2)) && !java_util_Set_of("A'", "D'", "M'", "O'", "Mc").contains(nachnameOhneZusatz.substring(0, 2))) {
-			this.addFehler(6, "Nachname der Lehrkraft: Die dritte Stelle des Nachnamens ist mit einem Großbuchstaben besetzt. Bitte stellen sie sicher, dass nur der erste Buchstabe des Nachnamens ein Großbuchstabe ist. Bitte schreiben Sie auf ihn folgende Buchstaben klein.");
+		if (!this.exec(6, { getAsBoolean : () => (nachnameOhneZusatz.length > 2) && JavaCharacter.isUpperCase(nachnameOhneZusatz.charAt(2)) && !java_util_Set_of("A'", "D'", "M'", "O'", "Mc").contains(nachnameOhneZusatz.substring(0, 2)) }, "Nachname der Lehrkraft: Die dritte Stelle des Nachnamens ist mit einem Großbuchstaben besetzt. Bitte stellen sie sicher, dass nur der erste Buchstabe des Nachnamens ein Großbuchstabe ist. Bitte schreiben Sie auf ihn folgende Buchstaben klein."))
 			success = false;
-		}
-		if (JavaString.contains(nachname, " -") || JavaString.contains(nachname, "- ")) {
-			this.addFehler(7, "Nachname der Lehrkraft: Der Nachname enthält überflüssige Leerzeichen vor und/oder nach dem Bindestrich.");
+		if (!this.exec(7, { getAsBoolean : () => JavaString.contains(nachname, " -") || JavaString.contains(nachname, "- ") }, "Nachname der Lehrkraft: Der Nachname enthält überflüssige Leerzeichen vor und/oder nach dem Bindestrich."))
 			success = false;
-		}
-		const nLower : string | null = nachname.toLowerCase();
-		if (nLower.startsWith("frau ") || nLower.startsWith("herr ")) {
-			this.addFehler(8, "Nachname der Lehrkraft: Die Anrede (Frau oder Herr) gehört nicht in den Nachnamen.");
+		if (!this.exec(8, { getAsBoolean : () => {
+			const nLower : string | null = nachname.toLowerCase();
+			return nLower.startsWith("frau ") || nLower.startsWith("herr ");
+		} }, "Nachname der Lehrkraft: Die Anrede (Frau oder Herr) gehört nicht in den Nachnamen."))
 			success = false;
-		}
 		return success;
 	}
 
