@@ -1,20 +1,21 @@
 import { type Page, expect } from "@playwright/test";
 
 export async function startGruppenprozessMitSchuelern(page: Page, schuelerNames: Array<string>) {
-	for (const schuelerName of schuelerNames) {
-		await page.getByRole('row', { name: schuelerName }).getByRole('checkbox').click();
-		await page.waitForTimeout(50); // Führt sonst zu Problemem in Chrome
+	for (let i = 0; i < schuelerNames.length; i++) {
+		await page.getByRole('row', { name: schuelerNames[i] }).getByRole('checkbox').click();
+		// Prüfen, ob die Subheadline korrekt ist (ebenfalls Indikator dafür, ob Seite geladen wurde)
+		if (i < 3) {
+			const nameParts = schuelerNames[i].split(" ");
+			await expect(page.locator('.svws-subline')).toContainText(nameParts[1]);
+			await expect(page.locator('.svws-subline')).toContainText(nameParts[2]);
+		} else {
+			await expect(page.locator('.svws-subline')).toContainText((i + 1) + ' Schüler ausgewählt');
+		}
 	}
 
-	// Prüfen, ob die Gruppenprozesse App geladen wurde
+	// Prüfen, ob weitere Parameter korrekt sind
 	await expect(page.locator('.svws-headline')).toContainText('Mehrfachauswahl');
 	await expect(page).toHaveURL(new RegExp('.*/schueler/gruppenprozesse/daten'));
-
-	for (const s of schuelerNames) {
-		const nameParts = s.split(" ");
-		await expect(page.locator('header')).toContainText(nameParts[1]);
-		await expect(page.locator('header')).toContainText(nameParts[2]);
-	}
 }
 
 export const getContentOfActiveTooltip = async (page: Page) => {

@@ -1,6 +1,6 @@
-import { test, expect } from '@playwright/test';
+import { expect, test } from '@playwright/test';
 import { useLoginUtils } from "../../utils/LoginUtils";
-import { getResetButton, getSaveButton } from "../../utils/SchuelerGruppenprozesseUtils";
+import { getResetButton, getSaveButton, startGruppenprozessMitSchuelern } from "../../utils/SchuelerGruppenprozesseUtils";
 import { frontendURL } from "../../../../../utils/APIUtils";
 
 test.use({
@@ -19,8 +19,7 @@ test('Smoke Test Gruppenprozesse', async ({ page }) => {
 	const saveBtnLocator = await getSaveButton(page);
 	const resetBtnLocator = await getResetButton(page);
 
-	const auswahlItem1Checkbox = page.getByRole('row', { name: '09a Ankel Matthias' }).getByRole('checkbox');
-	const auswahlItem2Checkbox = page.getByRole('row', { name: '09a Bechtel Kerstin' }).getByRole('checkbox');
+	const auswahlItemCheckbox = page.getByRole('row', { name: '09a Bechtel Kerstin' }).getByRole('checkbox');
 
 	const statusSelectFieldLocator = page.locator('.ui-select').filter({ has: page.getByLabel('Status') })
 
@@ -31,9 +30,7 @@ test('Smoke Test Gruppenprozesse', async ({ page }) => {
 	await expect(headlineLocator).toContainText('Eleonora Externa');
 	await expect(subheadlineLocator).toBeHidden();
 
-	// zwei Schüler selektieren
-	await auswahlItem1Checkbox.check();
-	await auswahlItem2Checkbox.check();
+	await startGruppenprozessMitSchuelern(page, ['09a Ankel Matthias', '09a Bechtel Kerstin'])
 
 	// Prüfen, ob Mehrfachauswahl mit Schülern im Titel erscheint
 	await expect(headlineLocator).toContainText('Mehrfachauswahl');
@@ -59,13 +56,13 @@ test('Smoke Test Gruppenprozesse', async ({ page }) => {
 
 	// Prüfen, ob Änderung im Feld angezeigt wird und Auswahl nicht mehr möglich ist
 	await expect(statusSelectFieldLocator).toContainText('2 - Aktiv')
-	await expect(auswahlItem1Checkbox).toBeDisabled();
+	await expect(auswahlItemCheckbox).toBeDisabled();
 
 	// Änderungen zurücksetzen
 	await resetBtnLocator.click()
 
 	// Prüfen, ob ohne offene Änderungen Auswahl möglich ist
-	await expect(auswahlItem1Checkbox).toBeEnabled();
+	await expect(auswahlItemCheckbox).toBeEnabled();
 
 	// Status Änderung vornehmen und speichern
 	await statusSelectFieldLocator.click();
@@ -76,11 +73,11 @@ test('Smoke Test Gruppenprozesse', async ({ page }) => {
 	await expect(statusSelectFieldLocator).toContainText("");
 	await expect(saveBtnLocator).toBeDisabled();
 	await expect(resetBtnLocator).toBeDisabled();
-	await expect(auswahlItem1Checkbox).toBeEnabled();
+	await expect(auswahlItemCheckbox).toBeEnabled();
 
 	// Selektion der Schüler zurücknehmen
-	await auswahlItem1Checkbox.uncheck();
-	await auswahlItem2Checkbox.uncheck();
+	await auswahlItemCheckbox.uncheck();
+	await page.getByRole('row', { name: '09a Ankel Matthias' }).getByRole('checkbox').uncheck();
 
 	// prüfen, ob Einzelansicht Individualdaten erscheint
 	await expect(headlineLocator).toContainText('Eleonora Externa');

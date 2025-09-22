@@ -9,7 +9,7 @@ test.use({
 const targetHost = adminFrontendURL;
 
 test('Smoke-Test - Basic', async ({ page }) => {
-	const { loginRoot } = useLoginUtils(targetHost, page);
+	const { loginRoot, logout } = useLoginUtils(targetHost, page);
 
 	await loginRoot();
 
@@ -53,6 +53,5 @@ test('Smoke-Test - Basic', async ({ page }) => {
 	await expect(certificateBtnLocator).toContainText("Zertifikat exportieren");
 
 	// Logout prüfen
-	await page.getByRole('link', { name: 'Abmelden' }).click();
-	await expect(page.getByRole('button', { name: 'Anmelden' })).toContainText('Anmelden');
+	await logout()
 });

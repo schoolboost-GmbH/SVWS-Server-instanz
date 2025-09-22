@@ -1,5 +1,4 @@
 import { expect, test } from '@playwright/test';
-import { useLoginUtils } from "../../utils/LoginUtils";
 import { frontendURL } from "../../../../../utils/APIUtils";
 
 test.use({
@@ -9,9 +8,12 @@ test.use({
 const targetHost = frontendURL;
 
 test('Smoke-Test - Basic', async ({ page }) => {
-	const { loginRoot } = useLoginUtils(targetHost, page);
-
-	await loginRoot();
+	await page.goto(targetHost);
+	await page.waitForURL(/#\/login(\/[^?]*)?\?redirect=\/.*/, { timeout: 20_000 });
+	await page.getByLabel('Benutzername').click();
+	await page.getByLabel('Benutzername').fill('root');
+	await page.getByLabel('Passwort').fill('root');
+	await page.getByRole('button', { name: 'Anmelden' }).click();
 
 	// prüfen, ob die Anmeldung fehlgeschlagen ist. Zugriff für root User sollte nicht möglich sein
 	const errorNotificationLocator = page.locator('.notification--text');

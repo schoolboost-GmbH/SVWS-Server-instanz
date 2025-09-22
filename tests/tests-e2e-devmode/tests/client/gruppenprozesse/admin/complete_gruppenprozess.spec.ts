@@ -1,4 +1,4 @@
-import { expect, test } from "@playwright/test";
+import { expect, test } from '@playwright/test';
 import { useLoginUtils } from "../../utils/LoginUtils";
 import { getContentOfActiveTooltip, getResetButton, startGruppenprozessMitSchuelern } from "../../utils/SchuelerGruppenprozesseUtils";
 import { frontendURL } from "../../../../../utils/APIUtils";
@@ -83,7 +83,7 @@ test('Modal bei Routenwechsel wird aktiv, bei Fortsetzen werden Änderungen zur�
     `);
 	await page.getByRole('button', { name: 'Ja' }).click();
 
-	await page.getByRole('link', { name: 'Schüler' , exact: true}).click();
+	await page.getByRole('link', { name: 'Schüler', exact: true }).click();
 
 	await expect(page.locator(tooltipFahrschuelerId)).toHaveCount(0);
 })
@@ -256,7 +256,7 @@ test('Änderung wird vorgenommen, anschließend kann Pending State zurückgesetz
 
 	await loginAdmin();
 
-	await startGruppenprozessMitSchuelern(page, ['09a Daum Sven', '09a Delfes Michael']);
+	await startGruppenprozessMitSchuelern(page, ['09a Daum Sven', '09a Delfes Michael', '9a Dorin Antje', '9a Gerds Barbara']);
 
 	// Status
 	await page.getByRole('combobox', { name: 'Status' }).click();
@@ -387,8 +387,7 @@ test.skip('Mehrere Schüler auswählen und Staatsangehörigkeit ändern und ansc
 
 	await loginAdmin();
 
-	await page.getByRole('row', { name: '09a Arens Matthias' }).getByRole('checkbox').check();
-	await page.getByRole('row', { name: '09a Batta Dominik' }).getByRole('checkbox').check();
+	await startGruppenprozessMitSchuelern(page, ['09a Arens Matthias', '09a Batta Dominik']);
 
 	const staatsangehoerigkeitSelect = page.locator('.ui-select').filter({ has: page.getByLabel('1. Staatsangehörigkeit') })
 	await staatsangehoerigkeitSelect.click();

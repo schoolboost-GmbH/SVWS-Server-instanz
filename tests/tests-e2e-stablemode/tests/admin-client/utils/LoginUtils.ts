@@ -4,17 +4,12 @@ export function useLoginUtils(targetHost: string, page: Page) {
 
 	const loginRoot = async () => {
 		await page.goto(targetHost);
+		await page.waitForURL("**/login?redirect=/**", {timeout: 20_000});
 		await page.getByLabel('Benutzername').click();
 		await page.getByLabel('Benutzername').fill('root');
 		await page.getByLabel('Passwort').fill('root');
 		await page.getByRole('button', { name: 'Anmelden' }).click();
-	}
-
-	const loginAdmin = async () => {
-		await page.goto(targetHost);
-		await page.getByLabel('Benutzername').click();
-		await page.getByLabel('Benutzername').fill('admin');
-		await page.getByRole('button', { name: 'Anmelden' }).click();
+		await page.waitForURL('**/admin#/schema/**/uebersicht', { timeout: 20_000 });
 	}
 
 	const logout = async () => {
@@ -24,7 +19,6 @@ export function useLoginUtils(targetHost: string, page: Page) {
 
 	return {
 		loginRoot,
-		loginAdmin,
 		logout,
 	}
 }

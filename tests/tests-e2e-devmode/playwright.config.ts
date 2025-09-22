@@ -6,7 +6,7 @@ export default defineConfig({
 	testDir: './tests',
 
 	// Run all tests in parallel.
-	fullyParallel: false,
+	fullyParallel: true,
 
 	// Fail the build on CI if you accidentally left test.only in the source code.
 	forbidOnly: process.env.CI !== undefined,
@@ -15,7 +15,7 @@ export default defineConfig({
 	retries: process.env.CI !== undefined ? 2 : 0,
 
 	// Opt out of parallel tests on CI.
-	workers: 1,
+	workers: 3,
 
 	// Reporter to use
 	outputDir: './build/test-results',
@@ -24,8 +24,9 @@ export default defineConfig({
 
 	// For expect calls
 	expect: {
-		timeout: 60000,
+		timeout: 20000,
 	},
+	timeout: 90_000,
 
 	use: {
 		video: {

@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { expect, test } from '@playwright/test';
 import { useLoginUtils } from "../../utils/LoginUtils";
 import { frontendURL } from '../../../../../utils/APIUtils'
 
@@ -14,7 +14,7 @@ test('Admins können entsprechende Bereiche im STABLE Mode einsehen', async ({ p
 
 	await expect(page.getByRole('heading', { name: 'Schüler' })).toBeVisible();
 	await page.getByRole('cell', { name: 'Triebel' }).click();
-	await page.waitForURL('**/#/**/schueler/1010/daten', { timeout: 30_000 });
+	await page.waitForURL('**/#/**/schueler/1010/daten', { timeout: 20_000 });
 	await expect(page.locator('header')).toContainText('ID: 1010');
 
 
@@ -28,7 +28,7 @@ test('Admins können entsprechende Bereiche im STABLE Mode einsehen', async ({ p
 
 	await expect(page.getByRole('button', { name: 'Lernabschnitte' })).toBeVisible();
 	await page.getByRole('button', { name: 'Lernabschnitte' }).click();
-	await page.waitForURL('**/#/**/schueler/1010/lernabschnitt/**/**/leistungen', { timeout: 30_000 });
+	await page.waitForURL('**/#/**/schueler/1010/lernabschnitt/**/**/leistungen', { timeout: 20_000 });
 	await expect(page.getByRole('button', { name: 'Allgemein' })).toBeVisible();
 	await expect(page.getByRole('button', { name: 'Leistungsdaten', exact: true })).toBeVisible();
 	await expect(page.getByRole('button', { name: 'Klausuren' })).toBeVisible();
@@ -38,21 +38,21 @@ test('Admins können entsprechende Bereiche im STABLE Mode einsehen', async ({ p
 	await expect(page.getByRole('button', { name: 'Nachprüfung' })).toHaveCount(0);
 
 	await page.getByRole('button', { name: 'Allgemein' }).click();
-	await page.waitForURL('**/#/**/schueler/1010/lernabschnitt/**/**/allgemein', { timeout: 30_000 });
+	await page.waitForURL('**/#/**/schueler/1010/lernabschnitt/**/**/allgemein', { timeout: 20_000 });
 	await expect(page.getByText('Klassenlehrer')).toBeVisible();
 
 	await page.getByRole('button', { name: 'Leistungsdaten' }).click();
-	await page.waitForURL('**/#/**/schueler/1010/lernabschnitt/**/**/leistungen', { timeout: 30_000 });
+	await page.waitForURL('**/#/**/schueler/1010/lernabschnitt/**/**/leistungen', { timeout: 20_000 });
 	await expect(page.getByText('Fehlstunden (Summe)')).toBeVisible();
 
 	await page.getByRole('button', { name: 'Klausuren' }).click();
-	await page.waitForURL('**/#/**/schueler/1010/lernabschnitt/**/**/gostklausuren', { timeout: 30_000 });
+	await page.waitForURL('**/#/**/schueler/1010/lernabschnitt/**/**/gostklausuren', { timeout: 20_000 });
 	await expect(page.getByText('Abschnitt', { exact: true })).toBeVisible();
 
 
 	await expect(page.getByRole('button', { name: 'Sprachen' })).toBeVisible();
 	await page.getByRole('button', { name: 'Sprachen' }).click();
-	await page.waitForURL('**/#/**/schueler/1010/sprachen', { timeout: 30_000 });
+	await page.waitForURL('**/#/**/schueler/1010/sprachen', { timeout: 20_000 });
 	await expect(page.getByText('Sprachenfolge')).toBeVisible();
 	await expect(page.getByText('Sprachprüfungen – Herkunftsprachlicher Unterricht')).toBeVisible();
 	await expect(page.getByText('Sprachprüfungen – Feststellungsprüfungen')).toBeVisible()
@@ -60,7 +60,7 @@ test('Admins können entsprechende Bereiche im STABLE Mode einsehen', async ({ p
 
 	await expect(page.getByRole('button', { name: 'Laufbahnplanung' })).toBeVisible();
 	await page.getByRole('button', { name: 'Laufbahnplanung' }).click();
-	await page.waitForURL('**/#/**/schueler/1010/laufbahnplanung', { timeout: 30_000 });
+	await page.waitForURL('**/#/**/schueler/1010/laufbahnplanung', { timeout: 20_000 });
 	await expect(page.getByText('Belegprüfungsergebnisse')).toBeVisible();
 	await expect(page.getByText('Wochenstunden')).toBeVisible();
 	await expect(page.getByText('Projektkurs Informatik')).toBeVisible();
@@ -68,7 +68,7 @@ test('Admins können entsprechende Bereiche im STABLE Mode einsehen', async ({ p
 
 	await expect(page.getByRole('button', { name: 'Stundenplan' })).toBeVisible();
 	await page.getByRole('button', { name: 'Stundenplan' }).click();
-	await page.waitForURL('**/#/**/schueler/1010/stundenplan/**', { timeout: 30_000 });
+	await page.waitForURL('**/#/**/schueler/1010/stundenplan/**', { timeout: 20_000 });
 	await expect(page.getByText('Stundenplan 2. Halbjahr')).toBeVisible();
 
 
