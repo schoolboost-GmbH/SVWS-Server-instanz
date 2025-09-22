@@ -7,6 +7,7 @@ import { routeEinstellungen } from "~/router/apps/einstellungen/RouteEinstellung
 import { routeEinstellungenBenutzer, type RouteEinstellungenBenutzer } from "~/router/apps/einstellungen/benutzer/RouteEinstellungenBenutzer";
 
 import type { BenutzerProps } from "~/components/einstellungen/benutzer/daten/SBenutzerProps";
+import { api } from "~/router/Api";
 
 const SBenutzer = () => import("~/components/einstellungen/benutzer/daten/SBenutzer.vue");
 
@@ -34,7 +35,8 @@ export class RouteEinstellungenBenutzerDaten extends RouteNode<any, RouteEinstel
 			addBenutzerKompetenzGruppe : routeEinstellungenBenutzer.data.addBenutzerKompetenzGruppe,
 			removeBenutzerKompetenzGruppe : routeEinstellungenBenutzer.data.removeBenutzerKompetenzGruppe,
 			gotoBenutzergruppe: routeEinstellungenBenutzer.data.gotoBenutzergruppe,
-			benutzerKompetenzen: routeEinstellungen.benutzerKompetenzen
+			benutzerKompetenzen: routeEinstellungen.benutzerKompetenzen,
+			benutzerdaten: api.benutzerdaten,
 		};
 	}
 

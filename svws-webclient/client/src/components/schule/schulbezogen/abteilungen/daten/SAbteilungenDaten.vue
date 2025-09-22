@@ -10,8 +10,8 @@
 				<svws-ui-text-input placeholder="Durchwahl" type="tel" :max-len="20" :model-value="manager().daten().durchwahl" :readonly
 					@change="durchwahl => patch({ durchwahl })" />
 				<svws-ui-spacing />
-				<ui-select label="Lehrer" :manager="lehrerSelectManager" :model-value="manager().getLehrer().get(manager().daten().idAbteilungsleiter)"
-					:readonly @update:model-value="v => patch({ idAbteilungsleiter: v?.id ?? null })" />
+				<ui-select label="Lehrer" :manager="lehrerSelectManager" :readonly :model-value="manager().getLehrer().get(manager().daten().idAbteilungsleiter)"
+					@update:model-value="v => patch({ idAbteilungsleiter: v?.id ?? null })" />
 				<svws-ui-button :disabled="manager().daten().idAbteilungsleiter === null" type="transparent"
 					@click="goToLehrer(manager().daten().idAbteilungsleiter ?? -1)">
 					<span class="icon i-ri-link" /> Zum Lehrer
@@ -19,8 +19,8 @@
 			</svws-ui-input-wrapper>
 		</svws-ui-content-card>
 		<svws-ui-content-card title="Zugeordnete Klassen">
-			<svws-ui-table :items="manager().getKlassenByAuswahl()" :columns :selectable="hatKompetenzUpdate" v-model="klassenToBeDeleted" clickable>
-				<template #actions v-if="hatKompetenzUpdate">
+			<svws-ui-table :items="manager().getKlassenByAuswahl()" :columns :selectable="!readonly" v-model="klassenToBeDeleted" clickable>
+				<template #actions v-if="!readonly">
 					<div class="inline-flex gap-4">
 						<svws-ui-button @click="deleteSelectedKlassen" type="trash" :disabled="klassenToBeDeleted.length === 0" />
 						<svws-ui-button @click="toggleModal(true)" type="icon" title="Klasse hinzufügen">
@@ -34,7 +34,7 @@
 			<template #modalTitle>Klassen hinzufügen</template>
 			<template #modalContent>
 				<svws-ui-table :items="addableKlassen" :columns :selectable="true" v-model="klassenToBeAdded" :scroll="true" class="max-h-[400px]">
-					<template #actions v-if="hatKompetenzUpdate">
+					<template #actions v-if="!readonly">
 						<div class="inline-flex gap-4">
 							<div class="mt-7 flex flex-row gap-4 justify end">
 								<svws-ui-button type="secondary" @click="toggleModal(false)">Abbrechen</svws-ui-button>
@@ -58,8 +58,7 @@
 	import { AbteilungKlassenzuordnung, ArrayList, BenutzerKompetenz, HashMap } from "@core";
 
 	const props = defineProps<AbteilungenDatenProps>();
-	const hatKompetenzUpdate = computed<boolean>(() => props.benutzerKompetenzen.has(BenutzerKompetenz.SCHULBEZOGENE_DATEN_AENDERN));
-	const readonly = computed<boolean>(() => !hatKompetenzUpdate.value);
+	const readonly = computed<boolean>(() => !props.benutzerKompetenzen.has(BenutzerKompetenz.SCHULBEZOGENE_DATEN_AENDERN));
 	const klassenToBeDeleted = ref<KlassenDaten[]>([]);
 	const klassenToBeAdded = ref<KlassenDaten[]>([]);
 	const lehrer = computed(() => props.manager().getLehrer().values());

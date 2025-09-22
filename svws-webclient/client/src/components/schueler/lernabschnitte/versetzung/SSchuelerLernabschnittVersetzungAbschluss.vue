@@ -5,7 +5,7 @@
 				<svws-ui-todo>TODO: istAbschlussPrognose</svws-ui-todo>
 				<svws-ui-todo>TODO: versetzungsvermerk</svws-ui-todo>
 				<svws-ui-todo>TODO: abschlussart</svws-ui-todo>
-				<svws-ui-select title="Folgeklasse" v-model="folgeklasse" :items="props.manager().klasseGetMenge()" :item-text="i => `${i.kuerzel}`" autocomplete />
+				<svws-ui-select title="Folgeklasse" :readonly v-model="folgeklasse" :items="props.manager().klasseGetMenge()" :item-text="i => `${i.kuerzel}`" autocomplete />
 			</svws-ui-input-wrapper>
 			<svws-ui-spacing />
 			<svws-ui-input-wrapper>
@@ -13,13 +13,15 @@
 				<svws-ui-todo> TODO: abschlussBerufsbildend </svws-ui-todo>
 			</svws-ui-input-wrapper>
 			<svws-ui-spacing />
-			<svws-ui-textarea-input placeholder="Text für Abschluss-Berechnung" :model-value="manager().lernabschnittGet().textErgebnisPruefungsalgorithmus"
+			<svws-ui-textarea-input placeholder="Text für Abschluss-Berechnung" :readonly :model-value="manager().lernabschnittGet().textErgebnisPruefungsalgorithmus"
 				@change="textErgebnisPruefungsalgorithmus => patch({ textErgebnisPruefungsalgorithmus })"
 				resizeable="vertical" :autoresize="true" />
 			<svws-ui-spacing :size="2" />
-			<div class="col-span-full flex gap-4">
-				<svws-ui-button type="primary"> Versetzungs-/Abschluss-Berechnung </svws-ui-button>
-			</div>
+			<template #actions v-if="!readonly">
+				<div class="col-span-full flex gap-4">
+					<svws-ui-button type="primary"> Versetzungs-/Abschluss-Berechnung </svws-ui-button>
+				</div>
+			</template>
 		</svws-ui-content-card>
 	</div>
 </template>
@@ -27,10 +29,13 @@
 <script setup lang="ts">
 
 	import { computed } from 'vue';
-	import type { KlassenDaten } from "@core";
+	import { BenutzerKompetenz, type KlassenDaten } from "@core";
 	import type { SchuelerLernabschnittVersetzungAbschlussProps } from "./SSchuelerLernabschnittVersetzungAbschlussProps";
 
 	const props = defineProps<SchuelerLernabschnittVersetzungAbschlussProps>();
+	const readonly = computed<boolean>(() => !(props.benutzerKompetenzen.has(BenutzerKompetenz.SCHUELER_LEISTUNGSDATEN_FUNKTIONSBEZOGEN_AENDERN)
+		|| props.benutzerKompetenzen.has(BenutzerKompetenz.SCHUELER_LEISTUNGSDATEN_ALLE_AENDERN))
+	);
 
 	const folgeklasse = computed<KlassenDaten | undefined>({
 		get: () => {

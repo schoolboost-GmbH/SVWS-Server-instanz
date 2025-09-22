@@ -1,5 +1,5 @@
 import type { BetriebStammdaten, SchuelerBetriebsdaten, BetriebAnsprechpartner, OrtKatalogEintrag, OrtsteilKatalogEintrag, List, LehrerListeEintrag,
-	BetriebListeEintrag, Beschaeftigungsart } from "@core";
+	BetriebListeEintrag, Beschaeftigungsart, BenutzerKompetenz} from "@core";
 
 export interface SchuelerAdressenProps {
 	patchBetrieb: (data : Partial<BetriebStammdaten>, id : number) => Promise<void>;
@@ -18,4 +18,5 @@ export interface SchuelerAdressenProps {
 	mapLehrer: Map<number, LehrerListeEintrag>;
 	mapBetriebe: Map<number, BetriebListeEintrag>;
 	mapAnsprechpartner: Map<number, BetriebAnsprechpartner>;
+	benutzerKompetenzen: Set<BenutzerKompetenz>;
 }

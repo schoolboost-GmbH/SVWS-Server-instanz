@@ -9,6 +9,7 @@ import { routeSchueler, type RouteSchueler } from "~/router/apps/schueler/RouteS
 import { RouteDataSchuelerAusbildungsbetriebe } from "~/router/apps/schueler/ausbildungsbetriebe/RouteDataSchuelerAusbildungsbetriebe";
 
 import type { SchuelerAdressenProps } from "~/components/schueler/adressen/SSChuelerAdressenProps";
+import { api } from "~/router/Api";
 
 const SSchuelerAdressen = () => import("~/components/schueler/adressen/SSchuelerAdressen.vue");
 
@@ -51,6 +52,7 @@ export class RouteSchuelerAusbildungsbetriebe extends RouteNode<RouteDataSchuele
 			mapLehrer: this.data.mapLehrer,
 			mapBetriebe: this.data.mapBetriebe,
 			mapAnsprechpartner: this.data.mapAnsprechpartner,
+			benutzerKompetenzen: api.benutzerKompetenzen,
 		};
 	}
 

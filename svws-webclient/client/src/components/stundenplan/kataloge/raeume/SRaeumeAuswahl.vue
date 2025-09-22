@@ -1,6 +1,6 @@
 <template>
-	<svws-ui-table :clicked clickable @update:clicked="gotoEintrag" :items="raumListeManager().liste.list()" :columns selectable v-model="selected" class="max-w-128 min-w-96" scroll>
-		<template #actions>
+	<svws-ui-table :clicked clickable @update:clicked="gotoEintrag" :items="raumListeManager().liste.list()" :columns :selectable="!readonly" v-model="selected" class="max-w-128 min-w-96" scroll>
+		<template v-if="!readonly" #actions>
 			<svws-ui-button @click="doDeleteEintraege()" type="trash" :disabled="selected.length === 0" />
 			<svws-ui-button type="transparent" title="Räume exportieren" @click="export_raeume" :disabled="selected.length === 0"><span class="icon-sm i-ri-upload-2-line" /></svws-ui-button>
 			<s-raum-import-modal v-slot="{ openModal }" :set-katalog-raeume-import-j-s-o-n>
@@ -21,9 +21,10 @@
 
 	import { computed, ref } from "vue";
 	import type { RaeumeAuswahlProps } from "./SRaeumeAuswahlProps";
-	import { Raum } from "@core";
+	import { BenutzerKompetenz, Raum } from "@core";
 
 	const props = defineProps<RaeumeAuswahlProps>();
+	const readonly = computed<boolean>(() => !(props.benutzerKompetenzen.has(BenutzerKompetenz.STUNDENPLAN_AENDERN)));
 	const selected = ref<Raum[]>([]);
 
 	const columns = [

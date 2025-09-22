@@ -11,7 +11,7 @@
 				<template #search>
 					<svws-ui-text-input v-model="search" type="search" placeholder="Suchen" removable />
 				</template>
-				<template #actions>
+				<template #actions v-if="!readonly">
 					<svws-ui-button @click="doDeleteEintraege()" type="trash" :disabled="selected.length === 0" />
 					<s-betriebe-neu-modal v-slot="{ openModal }" :add-eintrag :delete-eintraege="doDeleteEintraege" :map-beschaeftigungsarten :map-orte
 						:map-ortsteile :benutzer-kompetenzen="props.benutzerKompetenzen">
@@ -30,10 +30,11 @@
 
 	import { computed, ref } from "vue";
 	import type { BetriebeAuswahlProps } from "./SBetriebeAuswahlProps";
-	import type { BetriebListeEintrag } from "@core";
+	import { BenutzerKompetenz, type BetriebListeEintrag } from "@core";
 	import { useRegionSwitch } from "@ui";
 
 	const props = defineProps<BetriebeAuswahlProps>();
+	const readonly = computed<boolean>(() => !props.benutzerKompetenzen.has(BenutzerKompetenz.SCHULBEZOGENE_DATEN_AENDERN));
 	const { focusHelpVisible, focusSwitchingEnabled } = useRegionSwitch();
 	const search = ref("");
 	const selected = ref<BetriebListeEintrag[]>([]);

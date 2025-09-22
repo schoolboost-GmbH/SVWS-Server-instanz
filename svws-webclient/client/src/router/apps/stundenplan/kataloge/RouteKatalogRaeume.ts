@@ -11,6 +11,7 @@ import type { RaeumeAuswahlProps } from "~/components/stundenplan/kataloge/raeum
 import { routeError } from "~/router/error/RouteError";
 import { RouteDataKatalogRaeume } from "./RouteDataKatalogRaeume";
 import { RouteStundenplan } from "../RouteStundenplan";
+import { api } from "~/router/Api";
 
 const SRaeumeAuswahl = () => import("~/components/stundenplan/kataloge/raeume/SRaeumeAuswahl.vue")
 const SRaeume = () => import("~/components/stundenplan/kataloge/raeume/SRaeume.vue")
@@ -61,6 +62,7 @@ export class RouteKatalogRaeume extends RouteNode<RouteDataKatalogRaeume, RouteS
 			addEintrag: this.data.addEintrag,
 			deleteEintraege: this.data.deleteEintraege,
 			setKatalogRaeumeImportJSON: this.data.setKatalogRaeumeImportJSON,
+			benutzerKompetenzen: api.benutzerKompetenzen,
 		};
 	}
 

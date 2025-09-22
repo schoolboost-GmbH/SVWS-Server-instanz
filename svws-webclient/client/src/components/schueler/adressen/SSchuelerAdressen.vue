@@ -4,18 +4,15 @@
 	</Teleport>
 	<div class="page page-grid-cards">
 		<div class="col-span-full">
-			<s-card-schueler-beschaeftigung :list-schuelerbetriebe="listSchuelerbetriebe" :map-beschaeftigungsarten="mapBeschaeftigungsarten"
-				:map-lehrer="mapLehrer" :map-betriebe="mapBetriebe" :map-ansprechpartner="mapAnsprechpartner"
-				:patch-schueler-betriebsdaten="patchSchuelerBetriebsdaten" :set-schueler-betrieb="setSchuelerBetrieb" />
-			<s-card-schueler-add-adresse-modal :id-schueler="idSchueler" :map-beschaeftigungsarten="mapBeschaeftigungsarten"
-				:map-lehrer="mapLehrer" :map-betriebe="mapBetriebe" :map-ansprechpartner="mapAnsprechpartner"
-				:create-schueler-betriebsdaten="createSchuelerBetriebsdaten" v-slot="{ openModal }">
+			<s-card-schueler-beschaeftigung :list-schuelerbetriebe :map-beschaeftigungsarten
+				:map-lehrer :map-betriebe :map-ansprechpartner :patch-schueler-betriebsdaten :set-schueler-betrieb />
+			<s-card-schueler-add-adresse-modal v-if="!readonly" :id-schueler :map-beschaeftigungsarten :map-lehrer :map-betriebe :map-ansprechpartner
+				:create-schueler-betriebsdaten v-slot="{ openModal }">
 				<svws-ui-button class="contentFocusField mt-4" @click="openModal()" autofocus>Betrieb hinzufügen</svws-ui-button>
 			</s-card-schueler-add-adresse-modal>
 			<template v-if="(betriebsStammdaten !== undefined) && (betrieb !== undefined)">
-				<s-card-schueler-adresse :betriebs-stammdaten="betriebsStammdaten" :betrieb="betrieb" :map-orte="mapOrte"
-					:map-lehrer="mapLehrer" :map-ansprechpartner="mapAnsprechpartner" :create-ansprechpartner="createAnsprechpartner"
-					:patch-schueler-betriebsdaten="patchSchuelerBetriebsdaten" :patch-betrieb="patchBetrieb" :patch-ansprechpartner="patchAnsprechpartner" />
+				<s-card-schueler-adresse :benutzer-kompetenzen :betriebs-stammdaten :betrieb :map-orte
+					:map-lehrer="mapLehrer" :map-ansprechpartner :create-ansprechpartner :patch-schueler-betriebsdaten :patch-betrieb :patch-ansprechpartner />
 			</template>
 		</div>
 	</div>
@@ -23,8 +20,11 @@
 
 <script setup lang="ts">
 
+	import { computed } from "vue";
 	import type { SchuelerAdressenProps } from "./SSChuelerAdressenProps";
+	import { BenutzerKompetenz } from "@core";
 
-	defineProps<SchuelerAdressenProps>();
+	const props = defineProps<SchuelerAdressenProps>();
+	const readonly = computed<boolean>(() => !props.benutzerKompetenzen.has(BenutzerKompetenz.SCHUELER_INDIVIDUALDATEN_AENDERN));
 
 </script>

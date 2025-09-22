@@ -2,15 +2,15 @@
 	<div class="w-250 p-4">
 		<svws-ui-content-card>
 			<svws-ui-input-wrapper>
-				<svws-ui-text-input placeholder="Konferenz-Datum" :model-value="manager().lernabschnittGet().datumKonferenz" @change="datumKonferenz=>patch({ datumKonferenz })" type="date" focus />
+				<svws-ui-text-input placeholder="Konferenz-Datum" :readonly :model-value="manager().lernabschnittGet().datumKonferenz" @change="datumKonferenz=>patch({ datumKonferenz })" type="date" focus />
 				<svws-ui-spacing />
-				<svws-ui-textarea-input placeholder="Zeugnisbemerkungen" :model-value="manager().lernabschnittGet().bemerkungen.zeugnisAllgemein"
+				<svws-ui-textarea-input placeholder="Zeugnisbemerkungen" :readonly :model-value="manager().lernabschnittGet().bemerkungen.zeugnisAllgemein"
 					@change="zeugnisAllgemein => patchBemerkungen({ zeugnisAllgemein: zeugnisAllgemein === null ? '' : zeugnisAllgemein })" resizeable="vertical" :autoresize="true" />
-				<svws-ui-textarea-input placeholder="Arbeits- und Sozialverhalten" :model-value="manager().lernabschnittGet().bemerkungen.zeugnisASV"
+				<svws-ui-textarea-input placeholder="Arbeits- und Sozialverhalten" :readonly :model-value="manager().lernabschnittGet().bemerkungen.zeugnisASV"
 					@change="zeugnisASV => patchBemerkungen({ zeugnisASV: zeugnisASV === null ? '' : zeugnisASV })" resizeable="vertical" :autoresize="true" />
-				<svws-ui-textarea-input placeholder="Außerunterrichtliches Engagement" :model-value="manager().lernabschnittGet().bemerkungen.zeugnisAUE"
+				<svws-ui-textarea-input placeholder="Außerunterrichtliches Engagement" :readonly :model-value="manager().lernabschnittGet().bemerkungen.zeugnisAUE"
 					@change="zeugnisAUE => patchBemerkungen({ zeugnisAUE: zeugnisAUE === null ? '' : zeugnisAUE })" resizeable="vertical" :autoresize="true" />
-				<svws-ui-textarea-input placeholder="Bemerkung Versetzung" :model-value="manager().lernabschnittGet().bemerkungen.versetzungsentscheidung"
+				<svws-ui-textarea-input placeholder="Bemerkung Versetzung" :readonly :model-value="manager().lernabschnittGet().bemerkungen.versetzungsentscheidung"
 					@change="versetzungsentscheidung => patchBemerkungen({ versetzungsentscheidung: versetzungsentscheidung === null ? '' : versetzungsentscheidung })"
 					resizeable="vertical" :autoresize="true" />
 			</svws-ui-input-wrapper>
@@ -20,8 +20,13 @@
 
 <script setup lang="ts">
 
+	import { computed } from "vue";
 	import type { SchuelerLernabschnittKonferenzProps } from "./SSchuelerLernabschnittKonferenzProps";
+	import { BenutzerKompetenz } from "@core";
 
 	const props = defineProps<SchuelerLernabschnittKonferenzProps>();
+	const readonly = computed<boolean>(() => !(props.benutzerKompetenzen.has(BenutzerKompetenz.SCHUELER_LEISTUNGSDATEN_FUNKTIONSBEZOGEN_AENDERN)
+		|| props.benutzerKompetenzen.has(BenutzerKompetenz.SCHUELER_LEISTUNGSDATEN_ALLE_AENDERN))
+	);
 
 </script>

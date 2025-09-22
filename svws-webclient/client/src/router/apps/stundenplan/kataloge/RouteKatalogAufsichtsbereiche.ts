@@ -13,6 +13,7 @@ import type { AufsichtsbereicheAuswahlProps } from "~/components/stundenplan/kat
 import { RouteDataKatalogAufsichtsbereiche } from "./RouteDataKatalogAufsichtsbereiche";
 import { routeError } from "~/router/error/RouteError";
 import { RouteStundenplan } from "../RouteStundenplan";
+import { api } from "~/router/Api";
 
 
 const SAufsichtsbereicheAuswahl = () => import("~/components/stundenplan/kataloge/aufsichtsbereiche/SAufsichtsbereicheAuswahl.vue");
@@ -62,6 +63,7 @@ export class RouteKatalogAufsichtsbereiche extends RouteNode<RouteDataKatalogAuf
 			addEintrag: this.data.addEintrag,
 			deleteEintraege: this.data.deleteEintraege,
 			stundenplanManager: () => this.data.stundenplanManager,
+			benutzerKompetenzen: api.benutzerKompetenzen,
 		};
 	}
 

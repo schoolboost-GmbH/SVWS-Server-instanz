@@ -1,4 +1,4 @@
-import type { Raum } from "@core";
+import type { BenutzerKompetenz, Raum } from "@core";
 import type { AbschnittAuswahlDaten, RaumListeManager } from "@ui";
 
 export interface RaeumeAuswahlProps {
@@ -8,4 +8,5 @@ export interface RaeumeAuswahlProps {
 	gotoEintrag: (eintrag: Raum) => Promise<void>;
 	schuljahresabschnittsauswahl: () => AbschnittAuswahlDaten;
 	setKatalogRaeumeImportJSON: (formData: FormData) => Promise<void>;
+	benutzerKompetenzen: Set<BenutzerKompetenz>;
 }

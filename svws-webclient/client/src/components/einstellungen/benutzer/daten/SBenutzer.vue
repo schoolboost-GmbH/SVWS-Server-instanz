@@ -4,7 +4,7 @@
 			<div class="flex flex-col gap-8">
 				<div class="text-headline-md">{{ `Benutzertyp ${BenutzerTyp.getByID(getBenutzerManager().daten().typ)?.bezeichnung}` }}</div>
 				<div class="grid grid-cols-2 gap-2">
-					<svws-ui-text-input class="contentFocusField" :model-value="getBenutzerManager().getAnmeldename()" @change="setAnmeldename" placeholder="Benutzername" />
+					<svws-ui-text-input class="contentFocusField" :model-value="getBenutzerManager().getAnmeldename()" @change="setAnmeldename" :readonly placeholder="Benutzername" />
 					<svws-ui-text-input :model-value="getBenutzerManager().getAnzeigename()" @change="setAnzeigename" placeholder="Anzeigename" :readonly="getBenutzerManager().daten().typ !== BenutzerTyp.ALLGEMEIN.id" />
 					<svws-ui-text-input v-model.trim="kennwort1" type="password" placeholder="Neues Passwort" />
 					<svws-ui-text-input v-model.trim="kennwort2" type="password" placeholder="Neues Passwort wiederholen" />
@@ -87,6 +87,8 @@
 	import { BenutzerKompetenzGruppe, BenutzerTyp } from '@core';
 
 	const props = defineProps<BenutzerProps>();
+	const readonly = computed<boolean>(() => (props.getBenutzerManager().daten().id === props.benutzerdaten.id ));
+
 	const columns = [
 		{key: 'bezeichnung', label: 'Bezeichnung'},
 		{key: 'istAdmin', label: 'ist Admin'},

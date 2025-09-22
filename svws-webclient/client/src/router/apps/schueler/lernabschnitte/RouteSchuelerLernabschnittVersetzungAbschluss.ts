@@ -29,7 +29,8 @@ export class RouteSchuelerLernabschnittVersetzungAbschluss extends RouteNode<any
 			schule: api.schuleStammdaten,
 			manager: () => routeSchuelerLernabschnitte.data.manager,
 			patch: routeSchuelerLernabschnitte.data.patchLernabschnitt,
-			patchBemerkungen: routeSchuelerLernabschnitte.data.patchBemerkungen
+			patchBemerkungen: routeSchuelerLernabschnitte.data.patchBemerkungen,
+			benutzerKompetenzen: api.benutzerKompetenzen
 		};
 	}
 

@@ -29,7 +29,8 @@ export class RouteSchuelerLernabschnittZeugnisdruck extends RouteNode<any, Route
 			schule: api.schuleStammdaten,
 			manager: () => routeSchuelerLernabschnitte.data.manager,
 			patch: routeSchuelerLernabschnitte.data.patchLernabschnitt,
-			patchBemerkungen: routeSchuelerLernabschnitte.data.patchBemerkungen
+			patchBemerkungen: routeSchuelerLernabschnitte.data.patchBemerkungen,
+			benutzerKompetenzen: api.benutzerKompetenzen
 		};
 	}
 

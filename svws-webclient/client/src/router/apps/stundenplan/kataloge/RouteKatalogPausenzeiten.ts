@@ -12,6 +12,7 @@ import type { PausenzeitenProps } from "~/components/stundenplan/kataloge/pausen
 import { RouteDataKatalogPausenzeiten } from "./RouteDataKatalogPausenzeiten";
 import { routeError } from "~/router/error/RouteError";
 import { RouteStundenplan, routeStundenplan } from "../RouteStundenplan";
+import { api } from "~/router/Api";
 
 const SPausenzeitenAuswahl = () => import("~/components/stundenplan/kataloge/pausenzeiten/SPausenzeitenAuswahl.vue");
 const SPausenzeiten = () => import("~/components/stundenplan/kataloge/pausenzeiten/SPausenzeiten.vue");
@@ -63,6 +64,7 @@ export class RouteKatalogPausenzeiten extends RouteNode<RouteDataKatalogPausenze
 			setKatalogPausenzeitenImportJSON: this.data.setKatalogRaeumeImportJSON,
 			stundenplanManager: () => this.data.stundenplanManager,
 			setSettingsDefaults: routeStundenplan.data.setSettingsDefaults,
+			benutzerKompetenzen: api.benutzerKompetenzen,
 		};
 	}
 
