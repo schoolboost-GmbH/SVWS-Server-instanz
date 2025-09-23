@@ -278,6 +278,7 @@ export { ValidatorLehrerPersonalabschnittsdatenRechtsverhaeltnis } from './asd/v
 export { ValidatorLehrerPersonaldaten } from './asd/validate/lehrer/ValidatorLehrerPersonaldaten';
 export { ValidatorLehrerStammdaten } from './asd/validate/lehrer/ValidatorLehrerStammdaten';
 export { ValidatorLehrerStammdatenGeburtsdatum } from './asd/validate/lehrer/ValidatorLehrerStammdatenGeburtsdatum';
+export { ValidatorLehrerStammdatenGeschlecht } from './asd/validate/lehrer/ValidatorLehrerStammdatenGeschlecht';
 export { ValidatorLehrerStammdatenNachname } from './asd/validate/lehrer/ValidatorLehrerStammdatenNachname';
 export { ValidatorLehrerStammdatenVorname } from './asd/validate/lehrer/ValidatorLehrerStammdatenVorname';
 export { ValidatorSchuleStammdaten } from './asd/validate/schule/ValidatorSchuleStammdaten';

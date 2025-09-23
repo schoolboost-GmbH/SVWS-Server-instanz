@@ -51,6 +51,21 @@
 			"gueltigBis": null
 		} ]
 	}, {
+		"validator": "de.svws_nrw.asd.validate.lehrer.ValidatorLehrerStammdatenGeschlecht",
+		"historie": [{
+			"zebras": true,
+			"svws": true,
+			"praefix": "LSGeb",
+			"pruefschritte" : [ {
+				"nummer": -1,
+				"muss": ["G", "H", "V", "S", "KS", "R", "PS", "SK", "GE", "FW", "HI", "WF", "GY", "WB", "BK", "SR", "SG", "SB"],
+				"kann": [],
+				"hinweis": []
+			} ],
+			"gueltigVon": null,
+			"gueltigBis": null
+		} ]
+	}, {
 		"validator": "de.svws_nrw.asd.validate.lehrer.ValidatorLehrerStammdatenNachname",
 		"historie": [ {
 			"zebras": true,

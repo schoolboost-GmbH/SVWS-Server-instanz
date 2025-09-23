@@ -124,7 +124,7 @@ public abstract class Validator {
 	 * @param pruefschritt    die Nummer des Prüfschrittes, bei welchem der Fehler aufgetreten ist
 	 * @param fehlermeldung   die Fehlermeldung
 	 */
-	protected void addFehler(final int pruefschritt, final @NotNull String fehlermeldung) {
+	private void addFehler(final int pruefschritt, final @NotNull String fehlermeldung) {
 		_fehler.add(new ValidatorFehler(this, pruefschritt, fehlermeldung));
 		updateFehlerart(this.getValidatorFehlerart(pruefschritt));
 	}

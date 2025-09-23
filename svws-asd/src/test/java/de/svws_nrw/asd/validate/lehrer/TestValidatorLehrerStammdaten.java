@@ -149,7 +149,6 @@ class TestValidatorLehrerStammdaten {
 		assertEquals(result, validator.run());
 	}
 
-
 	/**
 	 * Test von ValidatorLehrerStammdatenVorname
 	 *

@@ -125,7 +125,7 @@ export abstract class Validator extends JavaObject {
 	 * @param pruefschritt    die Nummer des Prüfschrittes, bei welchem der Fehler aufgetreten ist
 	 * @param fehlermeldung   die Fehlermeldung
 	 */
-	protected addFehler(pruefschritt : number, fehlermeldung : string) : void {
+	private addFehler(pruefschritt : number, fehlermeldung : string) : void {
 		this._fehler.add(new ValidatorFehler(this, pruefschritt, fehlermeldung));
 		this.updateFehlerart(this.getValidatorFehlerart(pruefschritt));
 	}
