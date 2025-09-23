@@ -40,7 +40,7 @@
 				<s-lehrer-personaldaten-lehraemter :hat-update-kompetenz="!readonly" :schuljahr :lehrer-liste-manager
 					:patch-lehramt :add-lehramt :remove-lehraemter
 					:patch-lehrbefaehigung :add-lehrbefaehigung :remove-lehrbefaehigungen
-					:patch-fachrichtung :add-fachrichtung :remove-fachrichtungen="removeFachrichtungen" />
+					:patch-fachrichtung :add-fachrichtung :remove-fachrichtungen />
 			</svws-ui-input-wrapper>
 		</svws-ui-content-card>
 		<svws-ui-content-card title="Mehr- und Minderleistung, Anrechnungsstunden">

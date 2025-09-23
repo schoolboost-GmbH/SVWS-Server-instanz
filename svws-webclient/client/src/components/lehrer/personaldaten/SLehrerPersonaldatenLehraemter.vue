@@ -116,15 +116,19 @@
 			<svws-ui-button @click="createLehramt"> Anlegen </svws-ui-button>
 		</template>
 	</svws-ui-modal>
-	<svws-ui-modal v-model:show="showLehrbefFachrHinzufuegen" size="small" class="hidden">
+	<svws-ui-modal v-model:show="showLehrbefFachrHinzufuegen" size="medium" class="hidden">
 		<template #modalTitle> Lehrbefähigung/Fachrichtung hinzufügen </template>
 		<template #modalContent>
-			<ui-select-multi label="Lehrbefähigungen" v-model="auswahlLehrbefaehigungenNeu" :manager="lehrbefaehigungenSelectManager" statistics required />
-			<ui-select-multi label="Fachrichtungen" v-model="auswahlFachrichtungenNeu" :manager="fachrichtungenSelectManager" statistics required />
-		</template>
-		<template #modalActions>
-			<svws-ui-button type="secondary" @click="showLehrbefFachrHinzufuegen = false"> Abbrechen </svws-ui-button>
-			<svws-ui-button @click="createLehrbefFachr"> Anlegen </svws-ui-button>
+			<div class="flex flex-row">
+				<div class="basis-3/4">
+					<ui-select-multi label="Lehrbefähigungen" v-model="auswahlLehrbefaehigungenNeu" :manager="lehrbefaehigungenSelectManager" statistics required />
+					<ui-select-multi label="Fachrichtungen" v-model="auswahlFachrichtungenNeu" :manager="fachrichtungenSelectManager" statistics required />
+				</div>
+				<div class="basis-1/4 flex flex-row justify-evenly items-end">
+					<svws-ui-button type="secondary" @click="showLehrbefFachrHinzufuegen = false"> Abbrechen </svws-ui-button>
+					<svws-ui-button @click="createLehrbefFachr"> Anlegen </svws-ui-button>
+				</div>
+			</div>
 		</template>
 	</svws-ui-modal>
 </template>
