@@ -73,15 +73,23 @@
 				</svws-ui-checkbox>
 			</template>
 			<svws-ui-input-wrapper :grid="2">
+				<svws-ui-checkbox v-if="ServerMode.DEV.checkServerMode(serverMode)" :model-value="wechselBevorstehend"
+					:indeterminate="manager().daten.aufnehmendBestaetigt === null" @update:model-value="wechselBevorstehend=!wechselBevorstehend">
+					Wechsel bevorstehend
+				</svws-ui-checkbox>
+				<ui-select v-if="ServerMode.DEV.checkServerMode(serverMode)" label="Wechselgrund" :manager="schulwechselGrundSelectManager" :disabled="!wechselBevorstehend" />
 				<svws-ui-select title="Schule" :items="manager().schulenById.values()" :item-text="textSchule" autocomplete :readonly
 					:model-value="manager().schulenById.get(manager().daten.idAufnehmendeSchule ?? -1)" :item-filter="filterSchulenEintraege" removable
-					@update:model-value="v => manager().patchSchule(v, 'idAufnehmendeSchule')" />
-				<svws-ui-button type="transparent" @click="goToSchule(manager().daten.idAufnehmendeSchule ?? -1)" :readonly>
+					@update:model-value="v => manager().patchSchule(v, 'idAufnehmendeSchule')"
+					:disabled="ServerMode.DEV.checkServerMode(serverMode) && !wechselBevorstehend" />
+				<svws-ui-button type="transparent" @click="goToSchule(manager().daten.idAufnehmendeSchule ?? -1)" :readonly
+					:disabled="ServerMode.DEV.checkServerMode(serverMode) && !wechselBevorstehend">
 					<span class="icon i-ri-link" />Zur Schule
 				</svws-ui-button>
 
 				<svws-ui-text-input placeholder="Wechseldatum" :model-value="manager().daten.aufnehmendWechseldatum" :readonly
-					@change="aufnehmendWechseldatum => manager().doPatch({ aufnehmendWechseldatum })" type="date" />
+					@change="aufnehmendWechseldatum => manager().doPatch({ aufnehmendWechseldatum })" type="date"
+					:disabled="ServerMode.DEV.checkServerMode(serverMode) && !wechselBevorstehend" />
 			</svws-ui-input-wrapper>
 		</svws-ui-content-card>
 		<svws-ui-content-card title="Grundschulbesuch">
@@ -230,10 +238,10 @@
 <script setup lang="ts">
 
 	import { BenutzerKompetenz, Einschulungsart, PrimarstufeSchuleingangsphaseBesuchsjahre, SchuelerSchulbesuchSchule, Schulform, Schulgliederung,
-		Uebergangsempfehlung, SchulEintrag, AdressenUtils, ArrayList, SchuelerSchulbesuchMerkmal, Kindergartenbesuch, Jahrgaenge } from "@core";
+		Uebergangsempfehlung, SchulEintrag, AdressenUtils, ArrayList, SchuelerSchulbesuchMerkmal, Kindergartenbesuch, Jahrgaenge, ServerMode } from "@core";
 	import type { Herkunftsarten, SchulformKatalogEintrag, SchulgliederungKatalogEintrag, Merkmal } from "@core";
 	import type { SchuelerSchulbesuchProps } from './SSchuelerSchulbesuchProps';
-	import { CoreTypeSelectManager, type DataTableColumn } from "@ui";
+	import { CoreTypeSelectManager, type DataTableColumn, SelectManager } from "@ui";
 	import { coreTypeDataFilter, filterSchulenEintraege, formatDate } from "~/utils/helfer";
 	import { ref, computed, watch } from "vue";
 
@@ -247,6 +255,14 @@
 		closeModalBisherigeSchule();
 		closeModalMerkmal();
 	}
+
+	const wechselBevorstehend = ref<boolean>(false);
+
+	const schulwechselGrundSelectManager = new SelectManager({
+		options: props.manager().entlassgruendeById.values(),
+		optionDisplayText: (option) => option.bezeichnung,
+		selectionDisplayText: (option) => option.bezeichnung,
+	});
 
 	// --- Tabelle Merkmale ---
 	const merkmale = computed(() => [...props.manager().daten.merkmale])

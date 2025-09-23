@@ -35,7 +35,7 @@ import { routeSchuleDatenaustauschKurs42 } from "./schule/datenaustausch/kurs42/
 import { routeSchuleDatenaustauschUntis } from "./schule/datenaustausch/untis/RouteSchuleDatenaustauschUntis";
 import { routeSchuleDatenaustauschENM } from "./schule/datenaustausch/enmNotenmanager/RouteSchuleDatenaustauschENM";
 import { routeSchuleDatenaustauschLaufbahnplanung } from "./schule/datenaustausch/laufbahnplanung/RouteSchuleDatenaustauschLupo";
-import { routeSchuleDatenaustauschSchulbewerbung } from "./schule/datenaustausch/schulbewerbung/RouteSchuleDatenaustauschSchulbewerbung";
+import { routeSchuleDatenaustauschSchulwechsel } from "./schule/datenaustausch/schulwechsel/RouteSchuleDatenaustauschSchulwechsel";
 import { routeSchuleDatenaustauschWenom } from "./schule/datenaustausch/webnotemanager/RouteSchuleDatenaustauschWenom";
 import { routeSchuleDatenaustauschLernplattformen } from "~/router/apps/schule/datenaustausch/lernplattformenExport/RouteSchuleDatenaustauschLernplattformen";
 import { routeSchuleStammdaten } from "./schule/schulbezogen/stammdaten/RouteSchuleStammdaten";
@@ -145,10 +145,10 @@ export class RouteApp extends RouteNode<RouteDataApp, any> {
 			routeSchuleFaecher,
 			routeFoerderschwerpunkte,
 			routeJahrgaenge,
-			routeKatalogLernplattformen,
 			routeMerkmale,
 			routeSportbefreiungen,
 			routeKatalogVermerkarten,
+			routeKatalogLernplattformen,
 			// Allgemein
 			routeBeschaeftigungsarten,
 			routeKatalogErzieherarten,
@@ -160,12 +160,12 @@ export class RouteApp extends RouteNode<RouteDataApp, any> {
 			routeKatalogTelefonArten,
 			// Datenaustausch
 			routeSchuleDatenaustauschENM,
-			routeSchuleDatenaustauschKurs42,
-			routeSchuleDatenaustauschLaufbahnplanung,
-			routeSchuleDatenaustauschLernplattformen,
-			routeSchuleDatenaustauschSchulbewerbung,
-			routeSchuleDatenaustauschUntis,
 			routeSchuleDatenaustauschWenom,
+			routeSchuleDatenaustauschSchulwechsel,
+			routeSchuleDatenaustauschLaufbahnplanung,
+			routeSchuleDatenaustauschKurs42,
+			routeSchuleDatenaustauschUntis,
+			routeSchuleDatenaustauschLernplattformen,
 			// Reporting
 			routeSchuleReporting,
 		];
