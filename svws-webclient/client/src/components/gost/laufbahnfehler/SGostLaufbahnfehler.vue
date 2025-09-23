@@ -10,7 +10,7 @@
 			</svws-ui-sub-nav>
 		</Teleport>
 		<Teleport to=".svws-ui-header--actions" defer>
-			<svws-ui-button-select type="secondary" :dropdown-actions :disabled="apiStatus.pending">
+			<svws-ui-button-select type="secondary" :dropdown-actions="dropdownActions" :disabled="apiStatus.pending">
 				<template #icon> <svws-ui-spinner spinning v-if="apiStatus.pending" /> <span class="icon i-ri-printer-line" v-else /> </template>
 			</svws-ui-button-select>
 		</Teleport>
@@ -74,6 +74,13 @@
 			</svws-ui-table>
 		</div>
 		<div v-if="!filtered.isEmpty() && schueler" class="min-w-120 h-full overflow-y-hidden flex flex-col">
+			<div class="flex flex-col mb-4">
+				<log-box :logs :status="statusAction">
+					<template #button>
+						<svws-ui-button v-if="statusAction !== undefined" type="transparent" @click="clearLog" title="Log verwerfen">Log verwerfen</svws-ui-button>
+					</template>
+				</log-box>
+			</div>
 			<div class="flex flex-row w-full mb-2">
 				<div class="grow">
 					<svws-ui-tooltip :indicator="false">
@@ -107,10 +114,13 @@
 	import { computed, ref, shallowRef } from 'vue';
 	import type { GostLaufbahnfehlerProps } from "./SGostLaufbahnfehlerProps";
 	import { useRegionSwitch, type DataTableColumn, type SortByAndOrder } from '@ui';
-	import type { List, GostBelegpruefungErgebnisFehler } from '@core';
-	import { ArrayList, GostBelegpruefungsArt, GostBelegungsfehlerArt, SchuelerStatus, GostBelegpruefungsErgebnisse, BenutzerKompetenz } from '@core';
+	import type { List, GostBelegpruefungErgebnisFehler} from '@core';
+	import { ArrayList, GostBelegpruefungsArt, GostBelegungsfehlerArt, SchuelerStatus, GostBelegpruefungsErgebnisse, BenutzerKompetenz, ReportingAusgabeformat, ReportingParameter, ReportingReportvorlage, ReportingEMailDaten, ReportingEMailEmpfaengerTyp } from '@core';
+	import { routeApp } from "~/router/apps/RouteApp";
 
 	const props = defineProps<GostLaufbahnfehlerProps>();
+	const logs = ref<List<string | null> | undefined>();
+	const statusAction = ref<boolean | undefined>();
 
 	const { focusHelpVisible, focusSwitchingEnabled } = useRegionSwitch();
 
@@ -239,15 +249,17 @@
 		return [
 			{ text: `Laufbahnwahlbogen (gesamt)`, action: () => downloadPDF("Laufbahnwahlbogen", 1, false), default: true },
 			{ text: `Laufbahnwahlbogen (einzeln)`, action: () => downloadPDF("Laufbahnwahlbogen", 1, true) },
-			{ text: `Laufbahnwahlbogen (gesamt, nur Belegung)`, action: () => downloadPDF("Laufbahnwahlbogen (nur Belegung)", 0, false) },
-			{ text: `Laufbahnwahlbogen (einzeln, nur Belegung)`, action: () => downloadPDF("Laufbahnwahlbogen (nur Belegung)", 0, true) },
-			{ text: `Ergebnisliste (nur Summen)`, action: () => downloadPDF("Ergebnisliste Laufbahnwahlen", 0, false) },
-			{ text: `Ergebnisliste (nur Summen und Fehler)`, action: () => downloadPDF("Ergebnisliste Laufbahnwahlen", 1, false) },
-			{ text: `Ergebnisliste (vollständig)`, action: () => downloadPDF("Ergebnisliste Laufbahnwahlen", 2, false) },
+			{ text: `Laufbahnwahlbogen (gesamt, nur Belegung)`, action: () => downloadPDF("Laufbahnwahlbogen", 0, false) },
+			{ text: `Laufbahnwahlbogen (einzeln, nur Belegung)`, action: () => downloadPDF("Laufbahnwahlbogen", 0, true) },
+			{ text: `E-Mail mit Laufbahnwahlbogen `, action: () => sendPdfByMail( 1) },
+			{ text: `E-Mail mit Laufbahnwahlbogen (nur Belegung)`, action: () => sendPdfByMail(0) },
+			{ text: `Ergebnisliste (nur Summen)`, action: () => downloadPDF("Ergebnisliste", 0, false) },
+			{ text: `Ergebnisliste (nur Summen und Fehler)`, action: () => downloadPDF("Ergebnisliste", 1, false) },
+			{ text: `Ergebnisliste (vollständig)`, action: () => downloadPDF("Ergebnisliste", 2, false) },
 		];
 	});
 
-	async function downloadPDF(title: string, detaillevel: number, einzelpdfs: boolean) {
+	async function downloadPDF(vorlage: string, detaillevel: number, einzelausgabe: boolean) {
 		const list = new ArrayList<number>();
 		if (auswahl.value.length > 0)
 			for (const e of filtered.value)
@@ -255,13 +267,55 @@
 					list.add(e.schueler.id);
 		if (list.isEmpty())
 			list.add(schueler.value.schueler.id);
-		const { data, name } = await props.getPdfLaufbahnplanung(title, list, detaillevel, einzelpdfs);
+
+		const reportingParameter = new ReportingParameter();
+		reportingParameter.idSchuljahresabschnitt = routeApp.data.aktAbschnitt.value.id;
+		reportingParameter.ausgabeformat = ReportingAusgabeformat.PDF.getId();
+		if (vorlage === "Laufbahnwahlbogen")
+			reportingParameter.reportvorlage = ReportingReportvorlage.SCHUELER_v_GOST_LAUFBAHNPLANUNG_WAHLBOGEN.getBezeichnung();
+		else if (vorlage === "Ergebnisliste")
+			reportingParameter.reportvorlage = ReportingReportvorlage.SCHUELER_v_GOST_LAUFBAHNPLANUNG_ERGEBNISUEBERSICHT.getBezeichnung();
+		reportingParameter.idsHauptdaten = list;
+		reportingParameter.einzelausgabeHauptdaten = einzelausgabe;
+		reportingParameter.detailLevel = detaillevel;
+
+		const { data, name } = await props.getPdfLaufbahnplanung(reportingParameter);
 		const link = document.createElement("a");
 		link.href = URL.createObjectURL(data);
 		link.download = name;
 		link.target = "_blank";
 		link.click();
 		URL.revokeObjectURL(link.href);
+	}
+
+	async function sendPdfByMail(detaillevel: number) {
+		const list = new ArrayList<number>();
+		if (auswahl.value.length > 0)
+			for (const e of filtered.value)
+				if (auswahl.value.includes(e))
+					list.add(e.schueler.id);
+		if (list.isEmpty())
+			list.add(schueler.value.schueler.id);
+
+		const reportingParameter = new ReportingParameter();
+		reportingParameter.idSchuljahresabschnitt = routeApp.data.aktAbschnitt.value.id;
+		reportingParameter.ausgabeformat = ReportingAusgabeformat.EMAIL.getId();
+		reportingParameter.reportvorlage = ReportingReportvorlage.SCHUELER_v_GOST_LAUFBAHNPLANUNG_WAHLBOGEN.getBezeichnung();
+		reportingParameter.idsHauptdaten = list;
+		reportingParameter.einzelausgabeHauptdaten = true;
+		reportingParameter.detailLevel = detaillevel;
+
+		const emailDaten = new ReportingEMailDaten();
+		emailDaten.empfaengerTyp = ReportingEMailEmpfaengerTyp.SCHUELER.getId();
+		emailDaten.istPrivateEmailAlternative = false;
+		emailDaten.betreff = "Wahlbogen zur Laufbahnplanung in der gymnasialen Oberstufe";
+		const laufbahnplanungMailText = props.jahrgangsdaten().textMailversand?.trim() ?? "";
+		emailDaten.text = (laufbahnplanungMailText.length !== 0) ? laufbahnplanungMailText : "Im Anhang dieser E-Mail ist der Wahlbogen zur Laufbahnplanung in der gymnasialen Oberstufe enthalten.";
+		reportingParameter.eMailDaten = emailDaten;
+
+		const result = await props.sendEmailPdfLaufbahnplanung(reportingParameter);
+		statusAction.value = result.success;
+		logs.value = result.log;
 	}
 
 	async function export_laufbahnplanung() {
@@ -276,6 +330,11 @@
 		link.target = "_blank";
 		link.click();
 		URL.revokeObjectURL(link.href);
+	}
+
+	function clearLog() {
+		logs.value = undefined;
+		statusAction.value = undefined;
 	}
 
 </script>

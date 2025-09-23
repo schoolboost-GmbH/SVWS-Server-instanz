@@ -92,6 +92,7 @@ export class RouteGostLaufbahnfehler extends RouteNode<RouteDataGostLaufbahnfehl
 			importLaufbahnplanung: this.data.importLaufbahnplanung,
 			exportLaufbahnplanung: this.data.exportLaufbahnplanung,
 			getPdfLaufbahnplanung: this.data.getPdfLaufbahnplanung,
+			sendEmailPdfLaufbahnplanung: this.data.sendEmailPdfLaufbahnplanung,
 			resetFachwahlenAlle: this.data.resetFachwahlenAlle,
 			jahrgangsdaten: () => routeGost.data.jahrgangsdaten,
 			filterFehler: () => this.data.filterFehler,

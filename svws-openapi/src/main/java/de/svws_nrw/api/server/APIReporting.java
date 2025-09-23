@@ -4,6 +4,7 @@ import de.svws_nrw.core.data.SimpleOperationResponse;
 import de.svws_nrw.core.data.reporting.ReportingParameter;
 import de.svws_nrw.core.types.ServerMode;
 import de.svws_nrw.core.types.benutzer.BenutzerKompetenz;
+import de.svws_nrw.core.types.reporting.ReportingAusgabeformat;
 import de.svws_nrw.data.benutzer.DBBenutzerUtils;
 import de.svws_nrw.module.reporting.factories.ReportingFactory;
 import io.swagger.v3.oas.annotations.Operation;
@@ -67,7 +68,7 @@ public class APIReporting {
 					content = @Content(mediaType = MediaType.APPLICATION_JSON,
 							schema = @Schema(implementation = ReportingParameter.class))) final ReportingParameter reportingParameter,
 			@Context final HttpServletRequest request) {
-		return DBBenutzerUtils.runWithTransaction(conn -> new ReportingFactory(conn, reportingParameter).createReportResponse(),
+		return DBBenutzerUtils.runWithTransaction(conn -> new ReportingFactory(conn, reportingParameter, ReportingAusgabeformat.PDF).createReportResponse(),
 				request, ServerMode.STABLE,
 				BenutzerKompetenz.BERICHTE_STANDARDFORMULARE_DRUCKEN,
 				BenutzerKompetenz.BERICHTE_ALLE_FORMULARE_DRUCKEN);
@@ -100,7 +101,7 @@ public class APIReporting {
 					content = @Content(mediaType = MediaType.APPLICATION_JSON,
 							schema = @Schema(implementation = ReportingParameter.class))) final ReportingParameter reportingParameter,
 			@Context final HttpServletRequest request) {
-		return DBBenutzerUtils.runWithTransaction(conn -> new ReportingFactory(conn, reportingParameter).createReportResponse(),
+		return DBBenutzerUtils.runWithTransaction(conn -> new ReportingFactory(conn, reportingParameter, ReportingAusgabeformat.EMAIL).createReportResponse(),
 				request, ServerMode.DEV,
 				BenutzerKompetenz.BERICHTE_STANDARDFORMULARE_DRUCKEN,
 				BenutzerKompetenz.BERICHTE_ALLE_FORMULARE_DRUCKEN);

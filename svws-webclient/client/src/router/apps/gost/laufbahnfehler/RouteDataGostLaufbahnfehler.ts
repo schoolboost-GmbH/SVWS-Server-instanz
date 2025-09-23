@@ -1,5 +1,5 @@
-import type { ApiFile, GostBelegpruefungsErgebnisse, List} from "@core";
-import { ArrayList, DeveloperNotificationException, GostBelegpruefungsArt, OpenApiError, ReportingParameter, ReportingReportvorlage, SimpleOperationResponse } from "@core";
+import type { ApiFile, GostBelegpruefungsErgebnisse, List, ReportingParameter} from "@core";
+import { ArrayList, DeveloperNotificationException, GostBelegpruefungsArt, OpenApiError, ReportingReportvorlage, SimpleOperationResponse } from "@core";
 
 import { api } from "~/router/Api";
 import { RouteManager } from "~/router/RouteManager";
@@ -112,28 +112,19 @@ export class RouteDataGostLaufbahnfehler extends RouteData<RouteStateDataGostLau
 		return res;
 	}
 
-	getPdfLaufbahnplanung = async(title: string, list: List<number>, detaillevel: number, einzelpdfs: boolean) => {
+	getPdfLaufbahnplanung = async(reportingParameter: ReportingParameter) => {
 		try {
 			api.status.start();
-			const reportingParameter = new ReportingParameter();
-			reportingParameter.idSchuljahresabschnitt = routeApp.data.aktAbschnitt.value.id;
-			reportingParameter.reportvorlage = ReportingReportvorlage.SCHUELER_v_GOST_LAUFBAHNPLANUNG_WAHLBOGEN.getBezeichnung();
-			reportingParameter.idsHauptdaten = list;
-			reportingParameter.einzelausgabeHauptdaten = einzelpdfs;
-			reportingParameter.detailLevel = detaillevel;
-			switch (title) {
-				case 'Laufbahnwahlbogen':
-					return await api.server.pdfReport(reportingParameter, api.schema);
-				case 'Laufbahnwahlbogen (nur Belegung)':
-					return await api.server.pdfReport(reportingParameter, api.schema);
-				case 'Ergebnisliste Laufbahnwahlen':
-					reportingParameter.reportvorlage = ReportingReportvorlage.SCHUELER_v_GOST_LAUFBAHNPLANUNG_ERGEBNISUEBERSICHT.getBezeichnung();
-					return await api.server.pdfReport(reportingParameter, api.schema);
-				default:
-					throw new DeveloperNotificationException('Es wurde kein passender Parameter zur Erzeugung des PDF übergeben.')
-			}
-		} catch(e) {
-			throw new DeveloperNotificationException("Fehler beim Herunterladen der PDF-Datei zur Laufbahnplanung");
+			return await api.server.pdfReport(reportingParameter, api.schema);
+		} finally {
+			api.status.stop();
+		}
+	}
+
+	sendEmailPdfLaufbahnplanung = async(reportingParameter: ReportingParameter) => {
+		try {
+			api.status.start();
+			return await api.server.emailReport(reportingParameter, api.schema);
 		} finally {
 			api.status.stop();
 		}

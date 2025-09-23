@@ -49,61 +49,86 @@ public final class ReportingFactory {
 	 *
 	 * @param conn 						Die Verbindung zur Datenbank.
 	 * @param reportingParameter 		Einstellungen und Daten zum Steuern der Report-Generierung.
+	 * @param reportingAusgabeformat	Ds Ausgabeformat, das verwendet werden soll. Dient zum Abgleich mit den ReportingParameter-Werten.
 	 *
 	 * @throws ApiOperationException   	im Fehlerfall
 	 */
-	public ReportingFactory(final DBEntityManager conn, final ReportingParameter reportingParameter) throws ApiOperationException {
+	public ReportingFactory(final DBEntityManager conn, final ReportingParameter reportingParameter, final ReportingAusgabeformat reportingAusgabeformat)
+			throws ApiOperationException {
 
-		// Initialisiere Log für Status- und Fehlermeldungen
-		this.logger.addConsumer(log);
+		try {
+			// Initialisiere Log für Status- und Fehlermeldungen
+			this.logger.addConsumer(log);
 
-		this.logger.logLn(LogLevel.DEBUG, 0, ">>> Beginn des Initialisierens der Reporting-Factory und des Validierens übergebener Daten.");
+			this.logger.logLn(LogLevel.DEBUG, 0, ">>> Beginn des Initialisierens der Reporting-Factory und des Validierens übergebener Daten.");
 
-		// Validiere Datenbankverbindung
-		if (conn == null) {
-			this.logger.logLn(LogLevel.ERROR, 4, "FEHLER: Es wurde keine Verbindung zur Datenbank für die Initialisierung der Reporting-Factory übergeben.");
-			throw new ApiOperationException(Status.NOT_FOUND,
-					"FEHLER: Es wurde keine Verbindung zur Datenbank für die Initialisierung der Reporting-Factory übergeben.");
+			// Validiere Datenbankverbindung
+			if (conn == null) {
+				this.logger.logLn(LogLevel.ERROR, 4, "### FEHLER: Es wurde keine Verbindung zur Datenbank für die Initialisierung der Reporting-Factory "
+						+ "übergeben.");
+				throw new ApiOperationException(Status.NOT_FOUND,
+						"### FEHLER: Es wurde keine Verbindung zur Datenbank für die Initialisierung der Reporting-Factory übergeben.");
+			}
+			this.conn = conn;
+
+			// Validiere Reporting-Parameter
+			if (reportingParameter == null) {
+				this.logger.logLn(LogLevel.ERROR, 4, "### FEHLER: Es wurden keine Reporting-Parameter für die Initialisierung der Reporting-Factory übergeben"
+						+ ".");
+				throw new ApiOperationException(Status.NOT_FOUND,
+						"### FEHLER: Es wurden keine Reporting-Parameter für die Initialisierung der Reporting-Factory übergeben.");
+			}
+			this.reportingParameter = reportingParameter;
+
+			if ((reportingAusgabeformat == null) || reportingAusgabeformat.equals(ReportingAusgabeformat.UNDEFINED)
+					|| (ReportingAusgabeformat.getByID(this.reportingParameter.ausgabeformat) == ReportingAusgabeformat.UNDEFINED)
+					|| (ReportingAusgabeformat.getByID(this.reportingParameter.ausgabeformat) != reportingAusgabeformat)) {
+				this.logger.logLn(LogLevel.ERROR, 4, "### FEHLER: Es wurde kein gültiges Ausgabeformat definiert oder in den Reporting-Parametern ist ein "
+						+ "anderes als für den API-Aufruf gültiges Ausgabeformat definiert worden.");
+				throw new ApiOperationException(Status.BAD_REQUEST,
+						"### FEHLER: Es wurde kein gültiges Ausgabeformat definiert oder in den Reporting-Parametern ist ein anderes als für den API-Aufruf "
+								+ "gültiges Ausgabeformat definiert worden.");
+			}
+
+			// Validiere die Angaben zur Vorlage für den Report.
+			if (ReportingReportvorlage.getByBezeichnung(this.reportingParameter.reportvorlage) == null) {
+				this.logger.logLn(LogLevel.ERROR, 4, "FEHLER: Es wurde keine gültige Report-Vorlage für die Initialisierung der Reporting-Factory übergeben.");
+				throw new ApiOperationException(Status.BAD_REQUEST,
+						"### FEHLER: Es wurde keine gültige Report-Vorlage für die Initialisierung der Reporting-Factory übergeben.");
+			}
+
+			// Validiere Hauptdaten-Angabe
+			if (this.reportingParameter.idsHauptdaten == null) {
+				this.reportingParameter.idsHauptdaten = new ArrayList<>();
+			} else {
+				// Evtl. vorhandene null-Elemente in der Liste entfernen.
+				this.reportingParameter.idsHauptdaten = new ArrayList<>(reportingParameter.idsHauptdaten.stream().filter(Objects::nonNull).distinct().toList());
+			}
+			if (this.reportingParameter.idsHauptdaten.isEmpty())
+				this.logger.logLn(LogLevel.INFO, 4, "HINWEIS: Die Liste der Hauptdaten ist leer an die Reporting-Factory übergeben worden.");
+
+			// Stelle sicher, dass bei nicht vorhandenen Detaildaten eine leere Liste statt null vorhanden ist.
+			if (this.reportingParameter.idsDetaildaten == null)
+				this.reportingParameter.idsDetaildaten = new ArrayList<>();
+			else {
+				// Evtl. vorhandene null-Elemente in der Liste entfernen.
+				this.reportingParameter.idsDetaildaten =
+						new ArrayList<>(reportingParameter.idsDetaildaten.stream().filter(Objects::nonNull).distinct().toList());
+			}
+
+			this.logger.logLn(LogLevel.DEBUG, 4, "Erzeugung des Reporting-Repository");
+			this.reportingRepository = new ReportingRepository(this.conn, this.reportingParameter, this.logger, this.log);
+
+			this.logger.logLn(LogLevel.DEBUG, 0, "<<< Ende des Initialisierens der Reporting-Factory und des Validierens übergebener Daten.");
+		} catch (final Exception e) {
+			logger.logLn(LogLevel.ERROR, 0,
+					"### FEHLER: Während der Initialisierung und Validierung der Daten der Reporting-Factory ist ein Fehler aufgetreten. "
+							+ "Fehlerdaten folgen.");
+			final SimpleOperationResponse sop = ReportingExceptionUtils.getSimpleOperationResponse(e, logger, log);
+			// Gebe das Log, das in der SimpleOperationResponse für Entwicklungszwecke auf der Console aus.
+			sop.log.forEach(System.out::println);
+			throw new ApiOperationException(Status.INTERNAL_SERVER_ERROR, e, sop, MediaType.APPLICATION_JSON);
 		}
-		this.conn = conn;
-
-		// Validiere Reporting-Parameter
-		if (reportingParameter == null) {
-			this.logger.logLn(LogLevel.ERROR, 4, "FEHLER: Es wurden keine Reporting-Parameter für die Initialisierung der Reporting-Factory übergeben.");
-			throw new ApiOperationException(Status.NOT_FOUND,
-					"FEHLER: Es wurden keine Reporting-Parameter für die Initialisierung der Reporting-Factory übergeben.");
-		}
-		this.reportingParameter = reportingParameter;
-
-		// Validiere die Angaben zur Vorlage für den Report.
-		if (ReportingReportvorlage.getByBezeichnung(this.reportingParameter.reportvorlage) == null) {
-			this.logger.logLn(LogLevel.ERROR, 4, "FEHLER: Es wurde keine gültige Report-Vorlage für die Initialisierung der Reporting-Factory übergeben.");
-			throw new ApiOperationException(Status.NOT_FOUND,
-					"FEHLER: Es wurde keine gültige Report-Vorlage für die Initialisierung der Reporting-Factory übergeben.");
-		}
-
-		// Validiere Hauptdaten-Angabe
-		if (this.reportingParameter.idsHauptdaten == null) {
-			this.reportingParameter.idsHauptdaten = new ArrayList<>();
-		} else {
-			// Evtl. vorhandene null-Elemente in der Liste entfernen.
-			this.reportingParameter.idsHauptdaten = new ArrayList<>(reportingParameter.idsHauptdaten.stream().filter(Objects::nonNull).distinct().toList());
-		}
-		if (this.reportingParameter.idsHauptdaten.isEmpty())
-			this.logger.logLn(LogLevel.INFO, 4, "HINWEIS: Die Liste der Hauptdaten ist leer an die Reporting-Factory übergeben worden.");
-
-		// Stelle sicher, dass bei nicht vorhandenen Detaildaten eine leere Liste statt null vorhanden ist.
-		if (this.reportingParameter.idsDetaildaten == null)
-			this.reportingParameter.idsDetaildaten = new ArrayList<>();
-		else {
-			// Evtl. vorhandene null-Elemente in der Liste entfernen.
-			this.reportingParameter.idsDetaildaten = new ArrayList<>(reportingParameter.idsDetaildaten.stream().filter(Objects::nonNull).distinct().toList());
-		}
-
-		this.logger.logLn(LogLevel.DEBUG, 4, "Erzeugung des Reporting-Repository");
-		this.reportingRepository = new ReportingRepository(this.conn, this.reportingParameter, this.logger, this.log);
-
-		this.logger.logLn(LogLevel.DEBUG, 0, "<<< Ende des Initialisierens der Reporting-Factory und des Validierens übergebener Daten.");
 	}
 
 	/**
@@ -132,7 +157,8 @@ public final class ReportingFactory {
 					// Erzeuge im try-Block eine temporäre Response, die bei einem Fehler automatisch geschlossen wird (SonarCube-Angabe)
 					try (Response autocloseResponse = htmlFactory.createHtmlResponse()) {
 						if (!log.getText(LogLevel.ERROR).isEmpty()) {
-							logger.logLn(LogLevel.ERROR, 0, "### FEHLER: Während der Erzeugung einer HTML-Response zur Report-Generierung ist ein Fehler geloggt worden. Fehlerdaten folgen.");
+							logger.logLn(LogLevel.ERROR, 0,
+									"### FEHLER: Während der Erzeugung einer HTML-Response zur Report-Generierung ist ein Fehler geloggt worden. Fehlerdaten folgen.");
 							final SimpleOperationResponse sop = ReportingExceptionUtils.getSimpleOperationResponse(null, logger, log);
 							throw new ApiOperationException(Status.INTERNAL_SERVER_ERROR, null, sop, MediaType.APPLICATION_JSON);
 						}
@@ -149,7 +175,8 @@ public final class ReportingFactory {
 					// Erzeuge im try-Block eine temporäre Response, die bei einem Fehler automatisch geschlossen wird (SonarCube-Angabe)
 					try (Response autocloseResponse = pdfFactory.createPdfResponse()) {
 						if (!log.getText(LogLevel.ERROR).isEmpty()) {
-							logger.logLn(LogLevel.ERROR, 0, "### FEHLER: Während der Erzeugung einer PDF-Response zur Report-Generierung ist ein Fehler geloggt worden. Fehlerdaten folgen.");
+							logger.logLn(LogLevel.ERROR, 0,
+									"### FEHLER: Während der Erzeugung einer PDF-Response zur Report-Generierung ist ein Fehler geloggt worden. Fehlerdaten folgen.");
 							final SimpleOperationResponse sop = ReportingExceptionUtils.getSimpleOperationResponse(null, logger, log);
 							throw new ApiOperationException(Status.INTERNAL_SERVER_ERROR, null, sop, MediaType.APPLICATION_JSON);
 						}
