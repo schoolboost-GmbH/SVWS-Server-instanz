@@ -133,6 +133,21 @@ class JavaLibPlugin implements Plugin<Project> {
 	}
 
 
+	void addJaxbRuntime() {
+		def jaxbVersion = "4.0.5";
+		def jakartaVersion = "4.0.2";
+		project.configurations.create('jaxbRuntime');
+		project.dependencies.add('jaxbRuntime', 'org.glassfish.jaxb:jaxb-runtime:' + jaxbVersion);
+		project.dependencies.add('jaxbRuntime', 'jakarta.xml.bind:jakarta.xml.bind-api:' + jakartaVersion);
+	}
+
+
+	void addXjc() {
+		def version = "4.0.5";
+		project.configurations.create('xjc');
+		project.dependencies.add('xjc', 'org.glassfish.jaxb:jaxb-xjc:' + version);
+	}
+
 
 	@Override
 	void apply(Project project) {
@@ -167,6 +182,8 @@ class JavaLibPlugin implements Plugin<Project> {
 		this.addSwagger();
 		this.addValidation();
 		this.addEmail();
+		this.addJaxbRuntime()
+		this.addXjc()
 	}
 
 }

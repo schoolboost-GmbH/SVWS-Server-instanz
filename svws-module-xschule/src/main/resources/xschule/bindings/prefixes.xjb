@@ -1,0 +1,23 @@
+<jxb:bindings
+    xmlns:jxb="https://jakarta.ee/xml/ns/jaxb"
+    version="3.0">
+
+    <jxb:bindings schemaLocation="../xschule.xsd">
+		<jxb:schemaBindings>
+			<jxb:nameXmlTransform>
+				<jxb:typeName prefix="XSchule" />
+				<jxb:elementName prefix="XSchule" />
+			</jxb:nameXmlTransform>
+		</jxb:schemaBindings>
+    </jxb:bindings>
+
+	<jxb:bindings schemaLocation="http://xbildung.de/def/xbildung/1.1/xsd/xbildung-baukasten.xsd">
+		<jxb:schemaBindings>
+			<jxb:nameXmlTransform>
+				<jxb:typeName prefix="XSchule" />
+				<jxb:elementName prefix="XSchule" />
+			</jxb:nameXmlTransform>
+		</jxb:schemaBindings>
+	</jxb:bindings>
+
+</jxb:bindings>

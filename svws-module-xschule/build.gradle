@@ -6,29 +6,62 @@ repositories {
 	mavenCentral()
 }
 
-dependencies {
-	implementation 'jakarta.xml.bind:jakarta.xml.bind-api:3.0.0' // Jakarta EE
-	implementation 'org.glassfish.jaxb:jaxb-runtime:3.0.0' // JAXB Runtime
-	implementation 'org.glassfish.jaxb:jaxb-xjc:3.0.0' // JAXB XJC
+configurations {
+	codeGen.extendsFrom(jaxbRuntime, xjc)
+	implementation.extendsFrom(jaxbRuntime)
 }
 
-tasks.register('generateJaxbClasses', JavaExec) {
-	group = 'build'
-	description = 'Generiert Java-Klassen aus XSD-Datei mithilfe von JAXB'
-	classpath = configurations.compileClasspath
-	mainClass = 'com.sun.tools.xjc.XJCFacade' // JAXB XJC-Main-Klasse
-	args = [
-			'-d', file('src/gen/java').absolutePath, // Ziel-Verzeichnis für generierte Dateien
-			file('src/main/resources/xsd/xschule.xsd').absolutePath // Pfad zur Schema-Datei (XSD)
-	]
+def genDir = layout.projectDirectory.dir('src/gen')
+def jaxbOutputDir = layout.projectDirectory.dir('src/gen/java')
+def schemaFileXSchule = layout.projectDirectory.file('src/main/resources/xschule/xschule.xsd')
+def prefixBindingFile = layout.projectDirectory.file('src/main/resources/xschule/bindings/prefixes.xjb')
 
-	systemProperties = [
-			'javax.xml.accessExternalDTD': 'all' // Zugriff auf externe DTDs erlauben
-	]
+tasks.register('generateSourcesXSchule', JavaExec) {
+	group = 'build'
+	description = 'Generiert Java-Klassen für den XSchule-Kontext aus XSD-Datei mithilfe von JAXB'
+	inputs.files(schemaFileXSchule, prefixBindingFile)
+	outputs.dir(jaxbOutputDir)
+	classpath = configurations.codeGen
+	mainClass = 'com.sun.tools.xjc.XJCFacade'
+	systemProperties = ['javax.xml.accessExternalDTD': 'all'] // Zugriff auf externe DTDs erlauben
 
 	doFirst {
-		mkdir('src/gen/java') // Anlegen des Verzeichnisses für generierte Klassen
+		args = [
+				'-d', jaxbOutputDir,
+				'-b', prefixBindingFile.getAsFile().absolutePath,
+				schemaFileXSchule.getAsFile().absolutePath
+		]
+		println "Generiere Java-Klassen für XSchule-Kontext aus Schema ${schemaFileXSchule.getAsFile().name}"
+		println "Ausgabe-Verzeichnis: ${jaxbOutputDir}"
 	}
 }
 
-checkstyleMain.exclude 'src/gen/java' // Exklusion der generierten Dateien vom Checkstyle-Task
+tasks.register('cleanSourcesXSchule', Delete) {
+	group = 'build'
+	description = 'Entfernt die für den XSchule-Kontext generierten Java-Klassen'
+	delete genDir
+
+	doFirst {
+		logger.lifecycle("Entferne Verzeichnis mit generierten XSchule-Dateien aus ${genDir.getAsFile()}")
+	}
+}
+
+sourceSets {
+	main {
+		java {
+			srcDirs += jaxbOutputDir
+		}
+	}
+}
+
+def filteredJavaTree = fileTree('src/gen/java') {
+	exclude '**/*.java'
+}
+
+tasks.named('checkstyleMain').configure {
+	source = filteredJavaTree
+}
+
+tasks.named('javadoc').configure {
+	source = filteredJavaTree
+}
