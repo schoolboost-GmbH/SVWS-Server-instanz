@@ -58,7 +58,7 @@ Lehrer;PANr;Personalnummer;S;;;;;ALLE
 Lehrer;Ort_ID;Ortsname;S;;;Bezeichnung;SELECT Bezeichnung FROM K_Ort WHERE ID=%;ALLE
 Lehrer;Ort_ID;Postleitzahl;S;;;PLZ;SELECT PLZ FROM K_Ort WHERE ID=%;ALLE
 Lehrer;Sichtbar;Sichtbar?;S;;;;;ALLE
-Lehrer;ID;Straße;S;;;Strasse;SELECT CONCAT(IFNULL(Strassenname,''), ' ',IFNULL(HausNr,'')) AS Strasse FROM K_Lehrer WHERE ID>0;ALLE
+Lehrer;ID;Straße;S;;;Strasse;SELECT CONCAT(IFNULL(Strassenname,''), ' ',IFNULL(HausNr,'')) AS Strasse FROM K_Lehrer WHERE ID=%;ALLE
 Lehrer;Tel;Telefon (Festnetz);S;;;;;ALLE
 Lehrer;Titel;Titel;S;;;;;ALLE
 Lehrer;Vorname;Vorname;S;;;;;ALLE
