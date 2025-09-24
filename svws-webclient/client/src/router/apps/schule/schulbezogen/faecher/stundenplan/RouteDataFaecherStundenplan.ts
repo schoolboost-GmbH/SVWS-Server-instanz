@@ -4,7 +4,7 @@ import { api } from "~/router/Api";
 import { RouteData, type RouteStateInterface } from "~/router/RouteData";
 import { RouteManager } from "~/router/RouteManager";
 import { routeApp } from "~/router/apps/RouteApp";
-import { routeFachStundenplan } from "./RouteFachStundenplan";
+import { routeFaecherStundenplan } from "./RouteFaecherStundenplan";
 
 
 interface RouteStateFachDataStundenplan extends RouteStateInterface {
@@ -28,7 +28,7 @@ const defaultState = <RouteStateFachDataStundenplan> {
 };
 
 
-export class RouteDataFachStundenplan extends RouteData<RouteStateFachDataStundenplan> {
+export class RouteDataFaecherStundenplan extends RouteData<RouteStateFachDataStundenplan> {
 
 	public constructor() {
 		super(defaultState);
@@ -148,17 +148,17 @@ export class RouteDataFachStundenplan extends RouteData<RouteStateFachDataStunde
 	}
 
 	public gotoStundenplan = async (value: StundenplanListeEintrag) => {
-		await RouteManager.doRoute(routeFachStundenplan.getRoute({ idStundenplan: value.id, wochentyp: 0, kw: "" }));
+		await RouteManager.doRoute(routeFaecherStundenplan.getRoute({ idStundenplan: value.id, wochentyp: 0, kw: "" }));
 	}
 
 	public gotoWochentyp = async (wochentyp: number) => {
-		await RouteManager.doRoute(routeFachStundenplan.getRoute({ wochentyp }));
+		await RouteManager.doRoute(routeFaecherStundenplan.getRoute({ wochentyp }));
 	}
 
 	public gotoKalenderwoche = async (value: StundenplanKalenderwochenzuordnung | undefined) => {
 		const kw = (value === undefined) ? "" : value.jahr + "." + value.kw;
 		const wochentyp = (value === undefined) ? "" : value.wochentyp;
-		await RouteManager.doRoute(routeFachStundenplan.getRoute({ wochentyp, kw }));
+		await RouteManager.doRoute(routeFaecherStundenplan.getRoute({ wochentyp, kw }));
 	}
 
 	getPDF = api.call(async (reportingParameter: ReportingParameter): Promise<ApiFile> => {

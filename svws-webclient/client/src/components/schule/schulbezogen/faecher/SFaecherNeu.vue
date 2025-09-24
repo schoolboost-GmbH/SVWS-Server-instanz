@@ -50,10 +50,10 @@
 	import { computed, ref, watch } from "vue";
 	import {BenutzerKompetenz, BilingualeSprache, Fach, FachDaten, GostFachbereich, JavaInteger, Schulform} from "@core";
 	import type { FachKatalogEintrag, CoreTypeData } from "@core";
-	import type { SchuleFachNeuProps } from "./SSchuleFachNeuProps";
+	import type { FaecherNeuProps } from "./SFaecherNeuProps";
 	import { coreTypeDataFilter } from "~/utils/helfer";
 
-	const props = defineProps<SchuleFachNeuProps>();
+	const props = defineProps<FaecherNeuProps>();
 
 	const schuljahr = computed<number>(() => props.manager().getSchuljahr());
 	const data = ref<FachDaten>(new FachDaten());

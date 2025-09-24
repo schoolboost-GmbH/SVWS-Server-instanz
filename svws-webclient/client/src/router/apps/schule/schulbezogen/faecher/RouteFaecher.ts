@@ -4,33 +4,33 @@ import { BenutzerKompetenz, Schulform, ServerMode } from "@core";
 import type { FachListeManager } from "@ui";
 import type { RouteNode } from "~/router/RouteNode";
 import type { RouteApp } from "~/router/apps/RouteApp";
-import { routeSchuleFachDaten } from "~/router/apps/schule/schulbezogen/faecher/RouteSchuleFachDaten";
+import { routeFaecherDaten } from "~/router/apps/schule/schulbezogen/faecher/RouteFaecherDaten";
 
 import type { FaecherAuswahlProps } from "~/components/schule/schulbezogen/faecher/SFaecherAuswahlProps";
-import { RouteDataSchuleFaecher } from "./RouteDataSchuleFaecher";
-import { routeFachStundenplan } from "./stundenplan/RouteFachStundenplan";
+import { RouteDataFaecher } from "./RouteDataFaecher";
+import { routeFaecherStundenplan } from "./stundenplan/RouteFaecherStundenplan";
 import { RouteSchuleMenuGroup } from "../../RouteSchuleMenuGroup";
-import { routeSchuleFachGruppenprozesse } from "./RouteSchuleFachGruppenprozesse";
-import { routeSchuleFachNeu } from "./RouteSchuleFachNeu";
+import { routeFaecherGruppenprozesse } from "./RouteFaecherGruppenprozesse";
+import { routeFaecherNeu } from "./RouteFaecherNeu";
 import { RouteAuswahlNode } from "~/router/RouteAuswahlNode";
 
 const SFaecherAuswahl = () => import("~/components/schule/schulbezogen/faecher/SFaecherAuswahl.vue")
 const SFaecherApp = () => import("~/components/schule/schulbezogen/faecher/SFaecherApp.vue")
 
-export class RouteSchuleFaecher extends RouteAuswahlNode<FachListeManager, RouteDataSchuleFaecher, RouteApp> {
+export class RouteFaecher extends RouteAuswahlNode<FachListeManager, RouteDataFaecher, RouteApp> {
 
 	public constructor() {
-		super(Schulform.values(), [ BenutzerKompetenz.KATALOG_EINTRAEGE_ANSEHEN, BenutzerKompetenz.KATALOG_EINTRAEGE_AENDERN ], "schule.faecher", "schule/faecher/:id(\\d+)?", SFaecherApp, SFaecherAuswahl, new RouteDataSchuleFaecher());
+		super(Schulform.values(), [ BenutzerKompetenz.KATALOG_EINTRAEGE_ANSEHEN, BenutzerKompetenz.KATALOG_EINTRAEGE_AENDERN ], "schule.faecher", "schule/faecher/:id(\\d+)?", SFaecherApp, SFaecherAuswahl, new RouteDataFaecher());
 		super.mode = ServerMode.STABLE;
 		super.text = "Fächer";
 		super.menugroup = RouteSchuleMenuGroup.SCHULBEZOGEN;
 		super.children = [
-			routeSchuleFachDaten,
-			routeFachStundenplan,
-			routeSchuleFachGruppenprozesse,
-			routeSchuleFachNeu,
+			routeFaecherDaten,
+			routeFaecherStundenplan,
+			routeFaecherGruppenprozesse,
+			routeFaecherNeu,
 		];
-		super.defaultChild = routeSchuleFachDaten;
+		super.defaultChild = routeFaecherDaten;
 		super.updateIfTarget = this.doUpdateIfTarget;
 		super.getAuswahlListProps = (props) => (<FaecherAuswahlProps>{
 			...props,
@@ -45,4 +45,4 @@ export class RouteSchuleFaecher extends RouteAuswahlNode<FachListeManager, Route
 	};
 }
 
-export const routeSchuleFaecher = new RouteSchuleFaecher();
+export const routeFaecher = new RouteFaecher();

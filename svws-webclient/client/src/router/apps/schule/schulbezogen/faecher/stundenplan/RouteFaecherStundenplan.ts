@@ -3,18 +3,18 @@ import { DeveloperNotificationException} from "@core";
 import { BenutzerKompetenz, Schulform, ServerMode } from "@core";
 import { RouteNode } from "~/router/RouteNode";
 import { routeError } from "~/router/error/RouteError";
-import { routeSchuleFaecher, type RouteSchuleFaecher } from "~/router/apps/schule/schulbezogen/faecher/RouteSchuleFaecher";
-import { RouteDataFachStundenplan } from "~/router/apps/schule/schulbezogen/faecher/stundenplan/RouteDataFachStundenplan";
+import { routeFaecher, type RouteFaecher } from "~/router/apps/schule/schulbezogen/faecher/RouteFaecher";
+import { RouteDataFaecherStundenplan } from "~/router/apps/schule/schulbezogen/faecher/stundenplan/RouteDataFaecherStundenplan";
 import { api } from "~/router/Api";
-import type { FachStundenplanProps } from "~/components/schule/schulbezogen/faecher/stundenplan/SFachStundenplanProps";
+import type { FaecherStundenplanProps } from "~/components/schule/schulbezogen/faecher/stundenplan/SFaecherStundenplanProps";
 import { ConfigElement } from "@ui";
 
-const SFachStundenplan = () => import("~/components/schule/schulbezogen/faecher/stundenplan/SFachStundenplan.vue");
+const SFaecherStundenplan = () => import("~/components/schule/schulbezogen/faecher/stundenplan/SFaecherStundenplan.vue");
 
-export class RouteFachStundenplan extends RouteNode<RouteDataFachStundenplan, RouteSchuleFaecher> {
+export class RouteFaecherStundenplan extends RouteNode<RouteDataFaecherStundenplan, RouteFaecher> {
 
 	public constructor() {
-		super(Schulform.values(), [ BenutzerKompetenz.STUNDENPLAN_ALLGEMEIN_ANSEHEN ], "schule.faecher.stundenplan", "stundenplan/:idStundenplan(\\d+)?/:wochentyp(\\d+)?/:kw(\\d+\\.\\d+)?", SFachStundenplan, new RouteDataFachStundenplan());
+		super(Schulform.values(), [ BenutzerKompetenz.STUNDENPLAN_ALLGEMEIN_ANSEHEN ], "schule.faecher.stundenplan", "stundenplan/:idStundenplan(\\d+)?/:wochentyp(\\d+)?/:kw(\\d+\\.\\d+)?", SFaecherStundenplan, new RouteDataFaecherStundenplan());
 		super.mode = ServerMode.STABLE;
 		super.propHandler = (route) => this.getProps(route);
 		super.text = "Stundenplan";
@@ -41,12 +41,12 @@ export class RouteFachStundenplan extends RouteNode<RouteDataFachStundenplan, Ro
 			}
 			// Prüfe, ob ein Schüler ausgewählt ist. Wenn nicht dann wechsele in die Schüler-Route zurück.
 			if (idFach === undefined)
-				return routeSchuleFaecher.getRoute();
+				return routeFaecher.getRoute();
 			// Lade die Stundenplandaten neu, wenn die ID des Schuljahresabschnittes sich ändert (das passiert beim Laden der Route automatisch)
 			if (await this.data.ladeListe())
 				return this.getRoute();
 			// Setze den Stundenplan ...
-			await routeFachStundenplan.data.setEintrag(idFach, idStundenplan, wochentyp ?? 0, kwjahr, kw);
+			await routeFaecherStundenplan.data.setEintrag(idFach, idStundenplan, wochentyp ?? 0, kwjahr, kw);
 		} catch (e) {
 			return await routeError.getErrorRoute(e as DeveloperNotificationException);
 		}
@@ -64,12 +64,12 @@ export class RouteFachStundenplan extends RouteNode<RouteDataFachStundenplan, Ro
 		};
 	}
 
-	public getProps(to: RouteLocationNormalized): FachStundenplanProps {
+	public getProps(to: RouteLocationNormalized): FaecherStundenplanProps {
 		return {
 			apiStatus: api.status,
 			getPDF: this.data.getPDF,
-			id: routeSchuleFaecher.data.manager.daten().id,
 			ignoreEmpty: this.data.ganzerStundenplan,
+			id: routeFaecher.data.manager.daten().id,
 			stundenplan: () => (this.data.mapStundenplaene.size === 0 || !this.data.hasManager) ? undefined : this.data.auswahl,
 			mapStundenplaene: this.data.mapStundenplaene,
 			gotoStundenplan: this.data.gotoStundenplan,
@@ -85,5 +85,5 @@ export class RouteFachStundenplan extends RouteNode<RouteDataFachStundenplan, Ro
 
 }
 
-export const routeFachStundenplan = new RouteFachStundenplan();
+export const routeFaecherStundenplan = new RouteFaecherStundenplan();
 

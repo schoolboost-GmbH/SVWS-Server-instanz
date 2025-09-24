@@ -86,9 +86,9 @@
 
 	import { computed } from "vue";
 	import {BilingualeSprache, Fach, Schulform, JavaInteger, BenutzerKompetenz} from "@core";
-	import type { FachDatenProps } from "./SFachDatenProps";
+	import type { FaecherDatenProps } from "./SFaecherDatenProps";
 
-	const props = defineProps<FachDatenProps>();
+	const props = defineProps<FaecherDatenProps>();
 
 	const schuljahr = computed<number>(() => props.manager().getSchuljahr());
 	const hatKompetenzUpdate = computed<boolean>(() => props.benutzerKompetenzen.has(BenutzerKompetenz.KATALOG_EINTRAEGE_AENDERN));

@@ -1,8 +1,8 @@
 <template>
 	<Teleport to=".svws-ui-header--actions" defer>
-		<s-fach-stundenplan-drucken-modal v-slot="{ openModal }" :get-p-d-f :api-status :id :manager="manager()">
+		<s-faecher-stundenplan-drucken-modal v-slot="{ openModal }" :get-p-d-f :api-status :id :manager="manager()">
 			<svws-ui-button @click="openModal" type="secondary"><span class="icon i-ri-printer-line" /> Stundenplan drucken</svws-ui-button>
-		</s-fach-stundenplan-drucken-modal>
+		</s-faecher-stundenplan-drucken-modal>
 		<svws-ui-modal-hilfe> <hilfe-lehrer-stundenplan /> </svws-ui-modal-hilfe>
 	</Teleport>
 	<div class="page page-flex-col overflow-x-auto">
@@ -21,8 +21,8 @@
 
 <script setup lang="ts">
 
-	import type { FachStundenplanProps } from "./SFachStundenplanProps";
+	import type { FaecherStundenplanProps } from "./SFaecherStundenplanProps";
 
-	defineProps<FachStundenplanProps>();
+	defineProps<FaecherStundenplanProps>();
 
 </script>

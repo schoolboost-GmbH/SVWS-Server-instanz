@@ -1,11 +1,11 @@
 <template>
 	<div class="page page-grid-cards">
 		<div class="flex flex-col gap-4" v-if="ServerMode.DEV.checkServerMode(serverMode)">
-			<ui-card v-if="hatKompetenzDrucken && (mapStundenplaene.size > 0)" icon="i-ri-printer-line" title="Stundenplan drucken" subtitle="Drucke die Stundenpläne der ausgewählten Klassen."
-				:is-open="currentAction === 'print'" @update:is-open="isOpen => setCurrentAction('print', isOpen)">
+			<ui-card v-if="hatKompetenzDrucken && (stundenplaeneById.size > 0)" icon="i-ri-printer-line" title="Stundenplan drucken" subtitle="Drucke die Stundenpläne der ausgewählten Klassen."
+					 :is-open="currentAction === 'print'" @update:is-open="isOpen => setCurrentAction('print', isOpen)">
 				<svws-ui-input-wrapper :grid="2" class="p-2">
 					<div>
-						<svws-ui-select title="Stundenplan" v-model="stundenplanAuswahl" :items="mapStundenplaene.values()"
+						<svws-ui-select title="Stundenplan" v-model="stundenplanAuswahl" :items="stundenplaeneById.values()"
 							:item-text="s => s.bezeichnung.replace('Stundenplan ', '') + ': ' + toDateStr(s.gueltigAb) + '—' + toDateStr(s.gueltigBis) + ' (KW ' + toKW(s.gueltigAb) + '—' + toKW(s.gueltigBis) + ')'" />
 					</div>
 					<div />
@@ -62,11 +62,11 @@
 <script setup lang="ts">
 
 	import { computed, ref } from "vue";
-	import type { SchuleFachGruppenprozesseProps } from "./SSchuleFachGruppenprozesseProps";
+	import type { FaecherGruppenprozesseProps } from "./SFaecherGruppenprozesseProps";
 	import type { List, StundenplanListeEintrag } from "@core";
 	import { ServerMode, BenutzerKompetenz, ReportingParameter, DateUtils, ReportingReportvorlage } from "@core";
 
-	const props = defineProps<SchuleFachGruppenprozesseProps>();
+	const props = defineProps<FaecherGruppenprozesseProps>();
 
 	const hatKompetenzLoeschen = computed(() => props.benutzerKompetenzen.has(BenutzerKompetenz.KATALOG_EINTRAEGE_LOESCHEN));
 	const hatKompetenzDrucken = computed(() => props.benutzerKompetenzen.has(BenutzerKompetenz.UNTERRICHTSVERTEILUNG_ANSEHEN));

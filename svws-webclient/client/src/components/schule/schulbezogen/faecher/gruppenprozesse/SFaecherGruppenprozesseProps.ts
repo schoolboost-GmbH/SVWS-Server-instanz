@@ -2,14 +2,11 @@ import type { Schulform, List, Schulgliederung, ServerMode, BenutzerKompetenz, A
 import type { ApiStatus } from "~/components/ApiStatus";
 import type { FachListeManager } from "@ui";
 
-export interface SchuleFachGruppenprozesseProps {
-	apiStatus: ApiStatus;
+export interface FaecherGruppenprozesseProps {
 	getPDF: (parameter: ReportingParameter, idStundenplan: number) => Promise<ApiFile>;
-	mapStundenplaene: Map<number, StundenplanListeEintrag>;
+	stundenplaeneById: Map<number, StundenplanListeEintrag>;
 	serverMode: ServerMode;
-	schulform: Schulform;
 	benutzerKompetenzen: Set<BenutzerKompetenz>;
-	schulgliederungen: List<Schulgliederung>;
 	manager: () => FachListeManager;
 	deleteFaecher: () => Promise<[boolean, List<string | null>]>;
 	deleteFaecherCheck: () => [boolean, List<string>];

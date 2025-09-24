@@ -2,7 +2,7 @@ import type { SchuleStammdaten } from "@core";
 import { BenutzerKompetenz, OpenApiError, SimpleOperationResponse, SMTPServerKonfiguration } from "@core";
 import { api } from "~/router/Api";
 import { RouteData, type RouteStateInterface } from "~/router/RouteData";
-import { routeSchuleFaecher } from "../faecher/RouteSchuleFaecher";
+import { routeFaecher } from "../faecher/RouteFaecher";
 import { AES } from "~/utils/crypto/aes";
 import { AESAlgo } from "~/utils/crypto/aesAlgo";
 
@@ -13,7 +13,7 @@ interface RouteStateSchule extends RouteStateInterface {
 
 const defaultState = <RouteStateSchule> {
 	smtpServerKonfiguration: new SMTPServerKonfiguration(),
-	view: routeSchuleFaecher,
+	view: routeFaecher,
 };
 
 export class RouteDataSchule extends RouteData<RouteStateSchule> {

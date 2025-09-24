@@ -3,40 +3,40 @@ import { ArrayList, BenutzerKompetenz, DeveloperNotificationException } from "@c
 
 import { api } from "~/router/Api";
 
-import { routeSchuleFachDaten } from "./RouteSchuleFachDaten";
-import { routeSchuleFachGruppenprozesse } from "./RouteSchuleFachGruppenprozesse";
-import { routeSchuleFachNeu } from "./RouteSchuleFachNeu";
+import { routeFaecherDaten } from "./RouteFaecherDaten";
+import { routeFaecherGruppenprozesse } from "./RouteFaecherGruppenprozesse";
+import { routeFaecherNeu } from "./RouteFaecherNeu";
 import { RouteDataAuswahl, type RouteStateAuswahlInterface } from "~/router/RouteDataAuswahl";
 import type { RouteParamsRawGeneric } from "vue-router";
 import { ViewType, FachListeManager } from "@ui";
 import type { RouteNode } from "~/router/RouteNode";
 
 interface RouteStateFaecher extends RouteStateAuswahlInterface<FachListeManager> {
-	mapStundenplaene: Map<number, StundenplanListeEintrag>;
+	stundenplaeneById: Map<number, StundenplanListeEintrag>;
 	oldView?: RouteNode<any, any>;
 }
 
 const defaultState: RouteStateFaecher = {
 	idSchuljahresabschnitt: -1,
-	mapStundenplaene: new Map(),
+	stundenplaeneById: new Map(),
 	manager: new FachListeManager(-1, -1, new ArrayList(), null, new ArrayList()),
-	view: routeSchuleFachDaten,
+	view: routeFaecherDaten,
 	oldView: undefined,
 	activeViewType: ViewType.DEFAULT,
 };
 
-export class RouteDataSchuleFaecher extends RouteDataAuswahl<FachListeManager, RouteStateFaecher> {
+export class RouteDataFaecher extends RouteDataAuswahl<FachListeManager, RouteStateFaecher> {
 
 	public constructor() {
-		super(defaultState, { gruppenprozesse: routeSchuleFachGruppenprozesse, hinzufuegen: routeSchuleFachNeu });
+		super(defaultState, { gruppenprozesse: routeFaecherGruppenprozesse, hinzufuegen: routeFaecherNeu });
 	}
 
 	public addID(param: RouteParamsRawGeneric, id: number): void {
 		param.id = id;
 	}
 
-	get mapStundenplaene(): Map<number, StundenplanListeEintrag> {
-		return this._state.value.mapStundenplaene;
+	get stundenplaeneById(): Map<number, StundenplanListeEintrag> {
+		return this._state.value.stundenplaeneById;
 	}
 
 	get idSchuljahresabschnitt(): number {
@@ -44,8 +44,8 @@ export class RouteDataSchuleFaecher extends RouteDataAuswahl<FachListeManager, R
 	}
 
 	protected async createManager(idSchuljahresabschnitt : number) : Promise<Partial<RouteStateAuswahlInterface<FachListeManager>>> {
-		const listKatalogeintraege = await api.server.getFaecher(api.schema);
-		const manager = new FachListeManager(idSchuljahresabschnitt, api.schuleStammdaten.idSchuljahresabschnitt, api.schuleStammdaten.abschnitte,	api.schulform, listKatalogeintraege);
+		const faecher = await api.server.getFaecher(api.schema);
+		const manager = new FachListeManager(idSchuljahresabschnitt, api.schuleStammdaten.idSchuljahresabschnitt, api.schuleStammdaten.abschnitte,	api.schulform, faecher);
 		if (this._state.value.manager === undefined) {
 			manager.setFilterAuswahlPermitted(true);
 			manager.setFilterNurSichtbar(false);
@@ -59,6 +59,7 @@ export class RouteDataSchuleFaecher extends RouteDataAuswahl<FachListeManager, R
 	public async ladeDaten(auswahl: FachDaten | null) : Promise<FachDaten | null> {
 		if (auswahl === null)
 			return null;
+
 		return await api.server.getFach(api.schema, auswahl.id);
 	}
 
@@ -67,7 +68,7 @@ export class RouteDataSchuleFaecher extends RouteDataAuswahl<FachListeManager, R
 		const mapStundenplaene = new Map<number, StundenplanListeEintrag>();
 		for (const l of listStundenplaene)
 			mapStundenplaene.set(l.id, l);
-		this.setPatchedState({ mapStundenplaene });
+		this.setPatchedState({ stundenplaeneById: mapStundenplaene });
 	}
 
 	protected async doPatch(data : Partial<FachDaten>, id: number) : Promise<void> {
@@ -100,16 +101,16 @@ export class RouteDataSchuleFaecher extends RouteDataAuswahl<FachListeManager, R
 		if (this.manager.liste.list().isEmpty())
 			return;
 		const idSchuljahresabschnitt = this._state.value.idSchuljahresabschnitt;
-		const auswahlId = this.manager.auswahl().id;
+		const idAuswahl = this.manager.auswahl().id;
 		await api.server.setFaecherSortierungSekII(api.schema);
 		await this.setSchuljahresabschnitt(idSchuljahresabschnitt, true);
-		await this.setDaten(this.manager.liste.get(auswahlId));
+		await this.setDaten(this.manager.liste.get(idAuswahl));
 	};
 
 	add = async (data: Partial<FachDaten>): Promise<void> => {
-		const fachDaten = await api.server.addFach(data, api.schema);
+		const fach = await api.server.addFach(data, api.schema);
 		await this.setSchuljahresabschnitt(this._state.value.idSchuljahresabschnitt, true);
-		await this.gotoDefaultView(fachDaten.id);
+		await this.gotoDefaultView(fach.id);
 	};
 
 	getPDF = api.call(async (reportingParameter: ReportingParameter, idStundenplan: number): Promise<ApiFile> => {
