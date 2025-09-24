@@ -35,7 +35,7 @@ task cleanUi(type: Delete) {
 clean.dependsOn cleanUi
 
 task publishNexusUi(type: NpmPublish) {
-	dependsOn build
+	dependsOn assembleUiHistoire
 	group = "publishing"
 	npmrc = "$rootDir/.npmrc.nexus"
 	repository = "https://artifactory.svws-nrw.de/repository/npm-private/"
@@ -45,7 +45,7 @@ task publishNexusUi(type: NpmPublish) {
 }
 
 task publishNpmUi(type: NpmPublish) {
-	dependsOn build
+	dependsOn assembleUiHistoire
 	group = "publishing"
 	npmrc = "$rootDir/.npmrc.npm"
 	repository = "https://registry.npmjs.org/"

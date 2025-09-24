@@ -52,7 +52,7 @@ task cleanEnmServer(type: Delete) {
 clean.dependsOn cleanEnmServer
 
 task publishNexusEnmServer(type: NpmPublish) {
-	dependsOn build
+	dependsOn doZip
 	group = "publishing"
 	npmrc = "$rootDir/.npmrc.nexus"
 	repository = "https://artifactory.svws-nrw.de/repository/npm-private/"
@@ -62,7 +62,7 @@ task publishNexusEnmServer(type: NpmPublish) {
 }
 
 task publishNpmEnmServer(type: NpmPublish) {
-	dependsOn build
+	dependsOn doZip
 	group = "publishing"
 	npmrc = "$rootDir/.npmrc.npm"
 	repository = "https://registry.npmjs.org/"

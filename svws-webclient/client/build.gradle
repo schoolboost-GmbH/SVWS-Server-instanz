@@ -39,7 +39,7 @@ task cleanClient(type: Delete) {
 clean.dependsOn cleanClient
 
 task publishNexusClient(type: NpmPublish) {
-	dependsOn build
+	dependsOn doZip
 	group = "publishing"
 	npmrc = "$rootDir/.npmrc.nexus"
 	repository = "https://artifactory.svws-nrw.de/repository/npm-private/"
@@ -49,7 +49,7 @@ task publishNexusClient(type: NpmPublish) {
 }
 
 task publishNpmClient(type: NpmPublish) {
-	dependsOn build
+	dependsOn doZip
 	group = "publishing"
 	npmrc = "$rootDir/.npmrc.npm"
 	repository = "https://registry.npmjs.org/"

@@ -41,7 +41,7 @@ task cleanLaufbahnplanung(type: Delete) {
 clean.dependsOn cleanLaufbahnplanung
 
 task publishNexusLaufbahnplanung(type: NpmPublish) {
-	dependsOn build
+	dependsOn doZip
 	group = "publishing"
 	npmrc = "$rootDir/.npmrc.nexus"
 	repository = "https://artifactory.svws-nrw.de/repository/npm-private/"
@@ -51,7 +51,7 @@ task publishNexusLaufbahnplanung(type: NpmPublish) {
 }
 
 task publishNpmLaufbahnplanung(type: NpmPublish) {
-	dependsOn build
+	dependsOn doZip
 	group = "publishing"
 	npmrc = "$rootDir/.npmrc.npm"
 	repository = "https://registry.npmjs.org/"
