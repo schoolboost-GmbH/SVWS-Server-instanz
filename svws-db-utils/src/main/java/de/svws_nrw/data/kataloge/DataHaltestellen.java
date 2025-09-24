@@ -93,7 +93,7 @@ public final class DataHaltestellen extends DataManagerRevised<Long, DTOHalteste
 			return;
 
 		final boolean bezeichnungAlreadyUsed = this.conn.queryAll(DTOHaltestellen.class).stream()
-				.anyMatch(h -> (h.ID != dto.ID) && h.Bezeichnung.equalsIgnoreCase(bezeichnung));
+				.anyMatch(h -> (h.ID != dto.ID) && bezeichnung.equalsIgnoreCase(h.Bezeichnung));
 		if (bezeichnungAlreadyUsed)
 			throw new ApiOperationException(Status.BAD_REQUEST, "Die Bezeichnung %s ist bereits vorhanden.".formatted(bezeichnung));
 

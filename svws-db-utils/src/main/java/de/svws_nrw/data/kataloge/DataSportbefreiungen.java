@@ -93,7 +93,7 @@ public final class DataSportbefreiungen extends DataManagerRevised<Long, DTOSpor
 			return;
 
 		final boolean bezeichnungAlreadyUsed = this.conn.queryAll(DTOSportbefreiung.class).stream()
-				.anyMatch(s -> (s.ID != dto.ID) && (s.Bezeichnung.equalsIgnoreCase(bezeichnung)));
+				.anyMatch(s -> (s.ID != dto.ID) && (bezeichnung.equalsIgnoreCase(s.Bezeichnung)));
 		if (bezeichnungAlreadyUsed)
 			throw new ApiOperationException(Status.BAD_REQUEST, "Die Bezeichnung %s ist bereits vorhanden.".formatted(bezeichnung));
 

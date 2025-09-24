@@ -93,7 +93,7 @@ public final class DataBeschaeftigungsarten extends DataManagerRevised<Long, DTO
 			return;
 
 		final boolean bezeichnungAlreadyUsed = this.conn.queryAll(DTOBeschaeftigungsart.class).stream()
-				.anyMatch(b -> (b.ID != dto.ID) && b.Bezeichnung.equalsIgnoreCase(bezeichnung));
+				.anyMatch(b -> (b.ID != dto.ID) && bezeichnung.equalsIgnoreCase(b.Bezeichnung));
 		if (bezeichnungAlreadyUsed)
 			throw new ApiOperationException(Status.BAD_REQUEST, "Die Bezeichnung %s ist bereits vorhanden.".formatted(bezeichnung));
 

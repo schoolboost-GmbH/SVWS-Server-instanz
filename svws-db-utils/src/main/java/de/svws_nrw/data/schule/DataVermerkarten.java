@@ -118,7 +118,7 @@ public final class DataVermerkarten extends DataManagerRevised<Long, DTOVermerkA
 			return;
 
 		final boolean alreadyUsed = this.conn.queryAll(DTOVermerkArt.class).stream()
-				.anyMatch(v -> (v.ID != dto.ID) && v.Bezeichnung.equalsIgnoreCase(bezeichnung));
+				.anyMatch(v -> (v.ID != dto.ID) && bezeichnung.equalsIgnoreCase(v.Bezeichnung));
 		if (alreadyUsed)
 			throw new ApiOperationException(Status.BAD_REQUEST, "Die Bezeichnung %s ist bereits vorhanden.".formatted(bezeichnung));
 

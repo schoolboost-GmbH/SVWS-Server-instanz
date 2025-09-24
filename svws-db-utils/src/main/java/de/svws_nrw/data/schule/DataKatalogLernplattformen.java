@@ -151,7 +151,7 @@ public final class DataKatalogLernplattformen extends DataManagerRevised<Long, D
 			return;
 
 		final boolean bezeichnungAlreadyUsed = this.conn.queryAll(DTOLernplattformen.class).stream()
-				.anyMatch(l -> (l.ID != dto.ID) && l.Bezeichnung.equalsIgnoreCase(bezeichnung));
+				.anyMatch(l -> (l.ID != dto.ID) && bezeichnung.equalsIgnoreCase(l.Bezeichnung));
 		if (bezeichnungAlreadyUsed)
 			throw new ApiOperationException(Status.BAD_REQUEST, "Die Bezeichnung %s ist bereits vorhanden.".formatted(bezeichnung));
 

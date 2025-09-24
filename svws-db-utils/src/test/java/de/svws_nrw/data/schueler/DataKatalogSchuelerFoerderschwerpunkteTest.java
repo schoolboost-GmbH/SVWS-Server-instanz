@@ -1,5 +1,9 @@
 package de.svws_nrw.data.schueler;
 
+import java.io.InputStream;
+import java.util.List;
+import java.util.Map;
+
 import de.svws_nrw.asd.types.schule.Foerderschwerpunkt;
 import de.svws_nrw.asd.utils.ASDCoreTypeUtils;
 import de.svws_nrw.core.data.schule.FoerderschwerpunktEintrag;
@@ -9,9 +13,6 @@ import de.svws_nrw.db.DBEntityManager;
 import de.svws_nrw.db.dto.current.schild.schueler.DTOFoerderschwerpunkt;
 import de.svws_nrw.db.utils.ApiOperationException;
 import jakarta.ws.rs.core.Response;
-import java.io.InputStream;
-import java.util.List;
-import java.util.Map;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -280,6 +281,19 @@ class DataKatalogSchuelerFoerderschwerpunkteTest {
 		this.data.mapAttribute(expectedDTO, "kuerzel", "TEST", null);
 
 		assertThat(expectedDTO.Bezeichnung).isEqualTo("TEST");
+	}
+
+	@Test
+	@DisplayName("mapAttribute | bezeichnung dto is null")
+	void mapAttributeTest_bezeichnungDtoISNull() throws ApiOperationException {
+		final var dto = new DTOFoerderschwerpunkt(1L, "123");
+		dto.Bezeichnung = null;
+		final var newDto = new DTOFoerderschwerpunkt(1L, "abc");
+		when(conn.queryAll(DTOFoerderschwerpunkt.class)).thenReturn(List.of(dto));
+
+		this.data.mapAttribute(newDto, "kuerzel", "test", null);
+
+		assertThat(newDto.Bezeichnung).isEqualTo("test");
 	}
 
 	@Test

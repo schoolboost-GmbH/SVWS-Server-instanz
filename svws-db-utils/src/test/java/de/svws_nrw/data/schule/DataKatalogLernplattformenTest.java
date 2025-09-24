@@ -27,8 +27,10 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatNoException;
 import static org.assertj.core.api.AssertionsForClassTypes.catchThrowable;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
+import static org.mockito.Mockito.verifyNoInteractions;
 import static org.mockito.Mockito.when;
 
 @DisplayName("Diese Testklasse testet die Klasse DataKatalogLernplattformen")
@@ -39,7 +41,7 @@ class DataKatalogLernplattformenTest {
 	private DBEntityManager conn;
 
 	@InjectMocks
-	private DataKatalogLernplattformen dataKatalogLernplattformen;
+	private DataKatalogLernplattformen data;
 
 	@BeforeAll
 	static void setUp() {
@@ -49,12 +51,12 @@ class DataKatalogLernplattformenTest {
 	@Test
 	@DisplayName("initDTO | setzt die Felder korrekt")
 	void initDTOTest() {
-		dataKatalogLernplattformen = new DataKatalogLernplattformen(conn);
+		data = new DataKatalogLernplattformen(conn);
 		final DTOLernplattformen dto = getDTOLernplattform();
 		final long id = 1L;
 		final Map<String, Object> initAttributes = new HashMap<>();
 
-		dataKatalogLernplattformen.initDTO(dto, id, initAttributes);
+		data.initDTO(dto, id, initAttributes);
 
 		assertThat(dto)
 				.hasFieldOrPropertyWithValue("ID", id)
@@ -71,7 +73,7 @@ class DataKatalogLernplattformenTest {
 	void mapTest() {
 		final DTOLernplattformen dto = getDTOLernplattform();
 
-		assertThat(this.dataKatalogLernplattformen.map(dto))
+		assertThat(this.data.map(dto))
 				.isInstanceOf(Lernplattform.class)
 				.hasFieldOrPropertyWithValue("id", 1L)
 				.hasFieldOrPropertyWithValue("bezeichnung", "Testbezeichnung")
@@ -96,7 +98,7 @@ class DataKatalogLernplattformenTest {
 
 		when(conn.queryAll(DTOLernplattformen.class)).thenReturn(dtoList);
 
-		final List<Lernplattform> result = dataKatalogLernplattformen.getAll();
+		final List<Lernplattform> result = data.getAll();
 		final Lernplattform expectedDto1 = result.stream().filter(lFirst -> lFirst.id == dto1.ID).findFirst().orElse(null);
 		final Lernplattform expectedDto2 = result.stream().filter(lSecond -> lSecond.id == dto2.ID).findFirst().orElse(null);
 
@@ -140,7 +142,7 @@ class DataKatalogLernplattformenTest {
 		when(conn.queryList((DTOLehrerLernplattform.QUERY_ALL.concat(" WHERE e.LernplattformID IS NOT NULL")), (DTOLehrerLernplattform.class)))
 				.thenReturn(List.of(lehrer, lehrer));
 
-		final List<Lernplattform> result = dataKatalogLernplattformen.getAll();
+		final List<Lernplattform> result = data.getAll();
 		final Lernplattform eaSchueler = result.stream().filter(ea -> ea.id == dtoSchueler.ID).findFirst().orElse(null);
 		final Lernplattform eaLehrer = result.stream().filter(ea -> ea.id == dtoLehrer.ID).findFirst().orElse(null);
 
@@ -156,7 +158,7 @@ class DataKatalogLernplattformenTest {
 	@DisplayName("getById | Lernplattform null")
 	void getByIdTest_notFound() {
 		when(conn.queryByKey(DTOLernplattformen.class, 1L)).thenReturn(null);
-		final var throwable = catchThrowable(() -> dataKatalogLernplattformen.getById(1L));
+		final var throwable = catchThrowable(() -> data.getById(1L));
 
 		assertThat(throwable)
 				.isInstanceOf(ApiOperationException.class)
@@ -169,7 +171,7 @@ class DataKatalogLernplattformenTest {
 		final DTOLernplattformen dto = getDTOLernplattform();
 		when(conn.queryByKey(DTOLernplattformen.class, dto.ID)).thenReturn(dto);
 
-		assertThat(dataKatalogLernplattformen.getById(dto.ID))
+		assertThat(data.getById(dto.ID))
 				.isNotNull()
 				.hasFieldOrPropertyWithValue("id", 1L)
 				.hasFieldOrPropertyWithValue("bezeichnung", "Testbezeichnung")
@@ -185,7 +187,7 @@ class DataKatalogLernplattformenTest {
 	void mapAttributeTest(final String key, final Object value) {
 		final var expectedDTO = getDTOLernplattform();
 		final Map<String, Object> map = new HashMap<>();
-		final var throwable = Assertions.catchThrowable(() -> this.dataKatalogLernplattformen.mapAttribute(expectedDTO, key, value, map));
+		final var throwable = Assertions.catchThrowable(() -> this.data.mapAttribute(expectedDTO, key, value, map));
 
 		switch (key) {
 			case "id" -> assertThat(expectedDTO.ID).isEqualTo(value);
@@ -221,5 +223,76 @@ class DataKatalogLernplattformenTest {
 		dtoKatalogLernplattform.BenutzernameSuffixSchueler = "";
 		dtoKatalogLernplattform.Konfiguration = "";
 		return dtoKatalogLernplattform;
+	}
+
+	@Test
+	@DisplayName("mapAttribute | bezeichnung bereits vorhanden")
+	void mapAttributeTest_bezeichnungDoppeltVergeben() {
+		final var dto = new DTOLernplattformen(1L, "abc");
+		when(this.conn.queryAll(DTOLernplattformen.class)).thenReturn(List.of(new DTOLernplattformen(2L, "abc")));
+
+		final var throwable = catchThrowable(() -> this.data.mapAttribute(dto, "bezeichnung", "ABC", null));
+
+		assertThat(throwable)
+				.isInstanceOf(ApiOperationException.class)
+				.hasMessage("Die Bezeichnung ABC ist bereits vorhanden.")
+				.hasFieldOrPropertyWithValue("status", Response.Status.BAD_REQUEST);
+	}
+
+	@Test
+	@DisplayName("mapAttribute | bezeichnung change case")
+	void mapAttributeTest_bezeichnungChangeCase() throws ApiOperationException {
+		final var dto = new DTOLernplattformen(1L, "abc");
+		when(this.conn.queryAll(DTOLernplattformen.class)).thenReturn(List.of(dto));
+
+		this.data.mapAttribute(dto, "bezeichnung", "ABC", null);
+
+		assertThat(dto.Bezeichnung).isEqualTo("ABC");
+	}
+
+	@Test
+	@DisplayName("mapAttribute | bezeichnung unverändert")
+	void mapAttributeTest_bezeichnungUnchanging() {
+		final var dto = new DTOLernplattformen(1L, "abc");
+
+		assertThatNoException().isThrownBy(() -> this.data.mapAttribute(dto, "bezeichnung", "abc", null));
+
+		verifyNoInteractions(this.conn);
+		assertThat(dto.Bezeichnung).isEqualTo("abc");
+	}
+
+	@Test
+	@DisplayName("mapAttribute | bezeichnung null")
+	void mapAttributeTest_bezeichnungNull() {
+		final var throwable = catchThrowable(() -> this.data.mapAttribute(new DTOLernplattformen(1L, "abc"), "bezeichnung", null, null));
+
+		assertThat(throwable)
+				.isInstanceOf(ApiOperationException.class)
+				.hasMessage("Attribut bezeichnung: Der Wert null ist nicht erlaubt.")
+				.hasFieldOrPropertyWithValue("status", Response.Status.BAD_REQUEST);
+	}
+
+	@Test
+	@DisplayName("mapAttribute | bezeichnung blank")
+	void mapAttributeTest_bezeichnungBlank() {
+		final var throwable = catchThrowable(() -> this.data.mapAttribute(new DTOLernplattformen(1L, "abc"), "bezeichnung", "", null));
+
+		assertThat(throwable)
+				.isInstanceOf(ApiOperationException.class)
+				.hasMessage("Attribut bezeichnung: Ein leerer String ist hier nicht erlaubt.")
+				.hasFieldOrPropertyWithValue("status", Response.Status.BAD_REQUEST);
+	}
+
+	@Test
+	@DisplayName("mapAttribute | bezeichnung dto is null")
+	void mapAttributeTest_bezeichnungDtoISNull() throws ApiOperationException {
+		final var dto = new DTOLernplattformen(1L, "123");
+		dto.Bezeichnung = null;
+		final var newDto = new DTOLernplattformen(1L, "abc");
+		when(conn.queryAll(DTOLernplattformen.class)).thenReturn(List.of(dto));
+
+		this.data.mapAttribute(newDto, "bezeichnung", "test", null);
+
+		assertThat(newDto.Bezeichnung).isEqualTo("test");
 	}
 }

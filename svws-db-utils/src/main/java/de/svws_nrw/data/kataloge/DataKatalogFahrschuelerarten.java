@@ -91,7 +91,7 @@ public final class DataKatalogFahrschuelerarten extends DataManagerRevised<Long,
 			return;
 
 		final boolean bezeichnungAlreadyUsed = this.conn.queryAll(DTOFahrschuelerart.class).stream()
-				.anyMatch(f -> (f.ID != dto.ID) && f.Bezeichnung.equalsIgnoreCase(bezeichnung));
+				.anyMatch(f -> (f.ID != dto.ID) && bezeichnung.equalsIgnoreCase(f.Bezeichnung));
 		if (bezeichnungAlreadyUsed)
 			throw new ApiOperationException(Status.BAD_REQUEST, "Die Bezeichnung %s ist bereits vorhanden.".formatted(bezeichnung));
 

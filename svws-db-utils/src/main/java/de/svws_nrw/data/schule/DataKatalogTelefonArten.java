@@ -117,7 +117,7 @@ public final class DataKatalogTelefonArten extends DataManagerRevised<Long, DTOT
 			return;
 
 		final boolean bezeichnungAlreadyUsed = this.conn.queryAll(DTOTelefonArt.class).stream()
-				.anyMatch(t -> (t.ID != dto.ID) && t.Bezeichnung.equalsIgnoreCase(bezeichnung));
+				.anyMatch(t -> (t.ID != dto.ID) && bezeichnung.equalsIgnoreCase(t.Bezeichnung));
 
 		if (bezeichnungAlreadyUsed)
 			throw new ApiOperationException(Response.Status.BAD_REQUEST, "Die Bezeichnung %s ist bereits vorhanden.".formatted(bezeichnung));

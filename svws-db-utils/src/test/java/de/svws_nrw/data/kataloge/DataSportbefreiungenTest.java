@@ -1,5 +1,10 @@
 package de.svws_nrw.data.kataloge;
 
+import java.io.InputStream;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Stream;
+
 import de.svws_nrw.asd.utils.ASDCoreTypeUtils;
 import de.svws_nrw.core.data.schule.Sportbefreiung;
 import de.svws_nrw.data.JSONMapper;
@@ -7,10 +12,6 @@ import de.svws_nrw.db.DBEntityManager;
 import de.svws_nrw.db.dto.current.schild.schueler.DTOSportbefreiung;
 import de.svws_nrw.db.utils.ApiOperationException;
 import jakarta.ws.rs.core.Response;
-import java.io.InputStream;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Stream;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -236,10 +237,7 @@ class DataSportbefreiungenTest {
 		this.data.mapAttribute(dto, "bezeichnung", "ABC", null);
 
 		assertThat(dto.Bezeichnung).isEqualTo("ABC");
-
-
 	}
-
 
 	@Test
 	@DisplayName("mapAttribute | bezeichnung unverändert")
@@ -272,6 +270,19 @@ class DataSportbefreiungenTest {
 				.isInstanceOf(ApiOperationException.class)
 				.hasMessage("Attribut bezeichnung: Ein leerer String ist hier nicht erlaubt.")
 				.hasFieldOrPropertyWithValue("status", Response.Status.BAD_REQUEST);
+	}
+
+	@Test
+	@DisplayName("mapAttribute | bezeichnung dto is null")
+	void mapAttributeTest_bezeichnungDtoISNull() throws ApiOperationException {
+		final var dto = new DTOSportbefreiung(1L, "123");
+		dto.Bezeichnung = null;
+		final var newDto = new DTOSportbefreiung(1L, "abc");
+		when(conn.queryAll(DTOSportbefreiung.class)).thenReturn(List.of(dto));
+
+		this.data.mapAttribute(newDto, "bezeichnung", "test", null);
+
+		assertThat(newDto.Bezeichnung).isEqualTo("test");
 	}
 
 	private static DTOSportbefreiung getDto() {

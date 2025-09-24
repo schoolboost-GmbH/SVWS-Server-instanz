@@ -100,7 +100,7 @@ public final class DataKatalogSchuelerFoerderschwerpunkte extends DataManagerRev
 			return;
 
 		final boolean bezeichnungAlreadyUsed = this.conn.queryAll(DTOFoerderschwerpunkt.class).stream()
-				.anyMatch(f -> (f.ID != dto.ID) && f.Bezeichnung.equalsIgnoreCase(bezeichnung));
+				.anyMatch(f -> (f.ID != dto.ID) && bezeichnung.equalsIgnoreCase(f.Bezeichnung));
 		if (bezeichnungAlreadyUsed)
 				throw new ApiOperationException(Status.BAD_REQUEST, "Das Kürzel %s darf nicht doppelt vergeben werden".formatted(bezeichnung));
 

@@ -91,7 +91,7 @@ public final class DataMerkmale extends DataManagerRevised<Long, DTOMerkmale, Me
 			return;
 
 		final boolean bezeichnungAlreadyUsed = this.conn.queryAll(DTOMerkmale.class).stream()
-				.anyMatch(m -> (m.ID != dto.ID) && m.Langtext.equalsIgnoreCase(bezeichnung));
+				.anyMatch(m -> (m.ID != dto.ID) && bezeichnung.equalsIgnoreCase(m.Langtext));
 		if (bezeichnungAlreadyUsed)
 			throw new ApiOperationException(Status.BAD_REQUEST, "Die Bezeichnung %s ist bereits vorhanden.".formatted(bezeichnung));
 
@@ -105,7 +105,7 @@ public final class DataMerkmale extends DataManagerRevised<Long, DTOMerkmale, Me
 			return;
 
 		final boolean kuerzelAlreadyUsed = this.conn.queryAll(DTOMerkmale.class).stream()
-				.anyMatch(m -> (m.ID != dto.ID) && m.Kurztext.equalsIgnoreCase(kuerzel));
+				.anyMatch(m -> (m.ID != dto.ID) && kuerzel.equalsIgnoreCase(m.Kurztext));
 		if (kuerzelAlreadyUsed)
 			throw new ApiOperationException(Status.BAD_REQUEST, "Das Kürzel %s ist bereits vorhanden.".formatted(kuerzel));
 

@@ -1,5 +1,10 @@
 package de.svws_nrw.data.betriebe;
 
+import java.io.InputStream;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Stream;
+
 import de.svws_nrw.asd.utils.ASDCoreTypeUtils;
 import de.svws_nrw.core.data.betrieb.Beschaeftigungsart;
 import de.svws_nrw.data.JSONMapper;
@@ -7,10 +12,6 @@ import de.svws_nrw.db.DBEntityManager;
 import de.svws_nrw.db.dto.current.schild.berufskolleg.DTOBeschaeftigungsart;
 import de.svws_nrw.db.utils.ApiOperationException;
 import jakarta.ws.rs.core.Response;
-import java.io.InputStream;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Stream;
 import org.assertj.core.api.ThrowableAssert;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
@@ -271,5 +272,28 @@ class DataBeschaeftigungsartenTest {
 		return new DTOBeschaeftigungsart(1L, "test");
 	}
 
+	@Test
+	@DisplayName("mapAttribute | bezeichnung change case")
+	void mapAttributeTest_bezeichnungChangeCase() throws ApiOperationException {
+		final var dto = new DTOBeschaeftigungsart(1L, "abc");
+		when(this.conn.queryAll(DTOBeschaeftigungsart.class)).thenReturn(List.of(dto));
+
+		this.data.mapAttribute(dto, "bezeichnung", "ABC", null);
+
+		assertThat(dto.Bezeichnung).isEqualTo("ABC");
+	}
+
+	@Test
+	@DisplayName("mapAttribute | bezeichnung dto is null")
+	void mapAttributeTest_bezeichnungDtoISNull() throws ApiOperationException {
+		final var dto = new DTOBeschaeftigungsart(1L, "123");
+		dto.Bezeichnung = null;
+		final var newDto = new DTOBeschaeftigungsart(1L, "abc");
+		when(conn.queryAll(DTOBeschaeftigungsart.class)).thenReturn(List.of(dto));
+
+		this.data.mapAttribute(newDto, "bezeichnung", "test", null);
+
+		assertThat(newDto.Bezeichnung).isEqualTo("test");
+	}
 
 }

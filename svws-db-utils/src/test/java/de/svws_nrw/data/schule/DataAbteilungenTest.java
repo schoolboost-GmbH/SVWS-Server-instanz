@@ -306,6 +306,43 @@ class DataAbteilungenTest {
 		assertThat(expectedDTO.Bezeichnung).isEqualTo("TEST");
 	}
 
+	@Test
+	@DisplayName("mapAttribute | bezeichnung dto is null")
+	void mapAttributeTest_bezeichnungDtoISNull() throws ApiOperationException {
+		final var dto = new DTOAbteilungen(1L, "123", 1L);
+		dto.Bezeichnung = null;
+		final var newDto = new DTOAbteilungen(2L, "abc", 1L);
+		when(conn.queryAll(DTOAbteilungen.class)).thenReturn(List.of(dto));
+
+		this.data.mapAttribute(newDto, "bezeichnung", "test", null);
+
+		assertThat(newDto.Bezeichnung).isEqualTo("test");
+	}
+
+	@Test
+	@DisplayName("mapAttribute | bezeichnung null")
+	void mapAttributeTest_bezeichnungNull() {
+		final var throwable = catchThrowable(() -> this.data
+				.mapAttribute(new DTOAbteilungen(1L, "abc", 1L), "bezeichnung", null, null));
+
+		assertThat(throwable)
+				.isInstanceOf(ApiOperationException.class)
+				.hasMessage("Attribut bezeichnung: Der Wert null ist nicht erlaubt.")
+				.hasFieldOrPropertyWithValue("status", Response.Status.BAD_REQUEST);
+	}
+
+	@Test
+	@DisplayName("mapAttribute | bezeichnung empty")
+	void mapAttributeTest_bezeichnungEmpty() {
+		final var throwable = catchThrowable(() -> this.data
+				.mapAttribute(new DTOAbteilungen(1L, "abc", 1L), "bezeichnung", "", null));
+
+		assertThat(throwable)
+				.isInstanceOf(ApiOperationException.class)
+				.hasMessage("Attribut bezeichnung: Ein leerer String ist hier nicht erlaubt.")
+				.hasFieldOrPropertyWithValue("status", Response.Status.BAD_REQUEST);
+	}
+
 	private DTOAbteilungen createDTOAbteilungen() {
 		final DTOAbteilungen dtoAbteilungen = new DTOAbteilungen(1L, "Bezeichnung", idSchuljahresabschnitt);
 		dtoAbteilungen.Sichtbar = true;

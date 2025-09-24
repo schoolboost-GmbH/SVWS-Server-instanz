@@ -94,7 +94,7 @@ public final class DataKatalogEntlassgruende extends DataManagerRevised<Long, DT
 			return;
 
 		final boolean bezeichnungAlreadyUsed = this.conn.queryAll(DTOEntlassarten.class).stream()
-				.anyMatch(e -> (e.ID != dto.ID) && e.Bezeichnung.equalsIgnoreCase(bezeichnung));
+				.anyMatch(e -> (e.ID != dto.ID) && bezeichnung.equalsIgnoreCase(e.Bezeichnung));
 		if (bezeichnungAlreadyUsed)
 			throw new ApiOperationException(Status.BAD_REQUEST, "Die Bezeichnung %s ist bereits vorhanden.".formatted(value));
 

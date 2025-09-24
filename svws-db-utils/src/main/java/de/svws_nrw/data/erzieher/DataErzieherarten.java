@@ -132,7 +132,7 @@ public final class DataErzieherarten extends DataManagerRevised<Long, DTOErziehe
 			return;
 
 		final boolean bezeichnungAlreadyUsed = this.conn.queryAll(DTOErzieherart.class).stream()
-				.anyMatch(e -> (e.ID != dto.ID) && e.Bezeichnung.equalsIgnoreCase(bezeichnung));
+				.anyMatch(e -> (e.ID != dto.ID) && bezeichnung.equalsIgnoreCase(e.Bezeichnung));
 
 		if (bezeichnungAlreadyUsed)
 			throw new ApiOperationException(Response.Status.BAD_REQUEST, "Die Bezeichnung %s ist bereits vorhanden.".formatted(bezeichnung));

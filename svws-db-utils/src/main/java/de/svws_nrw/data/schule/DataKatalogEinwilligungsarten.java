@@ -168,7 +168,7 @@ public final class DataKatalogEinwilligungsarten extends DataManagerRevised<Long
 			return dto.Bezeichnung;
 
 		final boolean bezeichnungAlreadyUsed =  this.conn.queryAll(DTOKatalogEinwilligungsart.class).stream()
-				.anyMatch(e -> (e.ID != dto.ID) && (e.personTyp == personTyp) && e.Bezeichnung.equalsIgnoreCase(bezeichnung));
+				.anyMatch(e -> (e.ID != dto.ID) && (e.personTyp == personTyp) && bezeichnung.equalsIgnoreCase(e.Bezeichnung));
 		if (bezeichnungAlreadyUsed)
 			throw new ApiOperationException(Status.BAD_REQUEST, "Die Bezeichnung %s ist bereits vorhanden.".formatted(bezeichnung));
 
@@ -178,14 +178,17 @@ public final class DataKatalogEinwilligungsarten extends DataManagerRevised<Long
 
 	private String validateSchluessel(final DTOKatalogEinwilligungsart dto, final Object value, final PersonTyp personTyp, final String name) throws ApiOperationException {
 		final String schluessel = JSONMapper.convertToString(value, true, true, Schema.tab_K_Datenschutz.col_Schluessel.datenlaenge(), name);
-		if (Objects.equals(dto.Schluessel, schluessel))
-			return dto.Schluessel;
+		if (Objects.isNull(schluessel))
+			return null;
 
 		if (schluessel.isBlank())
+			return "";
+
+		if (Objects.equals(dto.Schluessel, schluessel))
 			return schluessel;
 
 		final boolean schluesselAlreadyUsed =  this.conn.queryAll(DTOKatalogEinwilligungsart.class).stream()
-				.anyMatch(e -> (e.ID != dto.ID) && (e.personTyp == personTyp) && e.Schluessel.equalsIgnoreCase(schluessel));
+				.anyMatch(e -> (e.ID != dto.ID) && (e.personTyp == personTyp) && schluessel.equalsIgnoreCase(e.Schluessel));
 		if (schluesselAlreadyUsed)
 			throw new ApiOperationException(Status.BAD_REQUEST, "Der Schlüssel %s ist bereits vorhanden.".formatted(schluessel));
 

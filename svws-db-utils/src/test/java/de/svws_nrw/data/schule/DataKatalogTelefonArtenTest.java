@@ -207,6 +207,19 @@ class DataKatalogTelefonArtenTest {
 	}
 
 	@Test
+	@DisplayName("mapAttribute | bezeichnung dto is null")
+	void mapAttributeTest_bezeichnungDtoISNull() throws ApiOperationException {
+		final var dto = new DTOTelefonArt(1L, "123");
+		dto.Bezeichnung = null;
+		final var newDto = new DTOTelefonArt(1L, "abc");
+		when(conn.queryAll(DTOTelefonArt.class)).thenReturn(List.of(dto));
+
+		this.data.mapAttribute(newDto, "bezeichnung", "test", null);
+
+		assertThat(newDto.Bezeichnung).isEqualTo("test");
+	}
+
+	@Test
 	@DisplayName("checkBeforeDeletionWithSimpleOperationResponse")
 	void checkBeforeDeletionWithSimpleOperationResponseTest() {
 		final var response1 = new SimpleOperationResponse();

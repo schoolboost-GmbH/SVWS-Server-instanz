@@ -254,4 +254,17 @@ class DataKatalogEntlassgruendeTest {
 		assertThatNoException().isThrownBy(() -> this.data.mapAttribute(dto, "id", 1L, null));
 	}
 
+	@Test
+	@DisplayName("mapAttribute | bezeichnung dto is null")
+	void mapAttributeTest_bezeichnungDtoISNull() throws ApiOperationException {
+		final var dto = new DTOEntlassarten(1L, "123");
+		dto.Bezeichnung = null;
+		final var newDto = new DTOEntlassarten(1L, "abc");
+		when(conn.queryAll(DTOEntlassarten.class)).thenReturn(List.of(dto));
+
+		this.data.mapAttribute(newDto, "bezeichnung", "test", null);
+
+		assertThat(newDto.Bezeichnung).isEqualTo("test");
+	}
+
 }

@@ -30,10 +30,12 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatNoException;
 import static org.assertj.core.api.AssertionsForClassTypes.catchThrowable;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verifyNoInteractions;
 import static org.mockito.Mockito.when;
 
 @DisplayName("Diese Testklasse testet die Klasse DataErzieherarten")
@@ -205,5 +207,76 @@ class DataErzieherartenTest {
 		dtoErzieherart.Sortierung = 32000;
 		dtoErzieherart.ExportBez = "Export";
 		return dtoErzieherart;
+	}
+
+	@Test
+	@DisplayName("mapAttribute | bezeichnung bereits vorhanden")
+	void mapAttributeTest_bezeichnungDoppeltVergeben() {
+		final var dto = new DTOErzieherart(1L, "abc");
+		when(this.conn.queryAll(DTOErzieherart.class)).thenReturn(List.of(new DTOErzieherart(2L, "abc")));
+
+		final var throwable = catchThrowable(() -> this.data.mapAttribute(dto, "bezeichnung", "ABC", null));
+
+		assertThat(throwable)
+				.isInstanceOf(ApiOperationException.class)
+				.hasMessage("Die Bezeichnung ABC ist bereits vorhanden.")
+				.hasFieldOrPropertyWithValue("status", Response.Status.BAD_REQUEST);
+	}
+
+	@Test
+	@DisplayName("mapAttribute | bezeichnung change case")
+	void mapAttributeTest_bezeichnungChangeCase() throws ApiOperationException {
+		final var dto = new DTOErzieherart(1L, "abc");
+		when(this.conn.queryAll(DTOErzieherart.class)).thenReturn(List.of(dto));
+
+		this.data.mapAttribute(dto, "bezeichnung", "ABC", null);
+
+		assertThat(dto.Bezeichnung).isEqualTo("ABC");
+	}
+
+	@Test
+	@DisplayName("mapAttribute | bezeichnung unverändert")
+	void mapAttributeTest_bezeichnungUnchanging() {
+		final var dto = new DTOErzieherart(1L, "abc");
+
+		assertThatNoException().isThrownBy(() -> this.data.mapAttribute(dto, "bezeichnung", "abc", null));
+
+		verifyNoInteractions(this.conn);
+		assertThat(dto.Bezeichnung).isEqualTo("abc");
+	}
+
+	@Test
+	@DisplayName("mapAttribute | bezeichnung null")
+	void mapAttributeTest_bezeichnungNull() {
+		final var throwable = catchThrowable(() -> this.data.mapAttribute(new DTOErzieherart(1L, "abc"), "bezeichnung", null, null));
+
+		assertThat(throwable)
+				.isInstanceOf(ApiOperationException.class)
+				.hasMessage("Attribut bezeichnung: Der Wert null ist nicht erlaubt.")
+				.hasFieldOrPropertyWithValue("status", Response.Status.BAD_REQUEST);
+	}
+
+	@Test
+	@DisplayName("mapAttribute | bezeichnung blank")
+	void mapAttributeTest_bezeichnungBlank() {
+		final var throwable = catchThrowable(() -> this.data.mapAttribute(new DTOErzieherart(1L, "abc"), "bezeichnung", "", null));
+
+		assertThat(throwable)
+				.isInstanceOf(ApiOperationException.class)
+				.hasMessage("Attribut bezeichnung: Ein leerer String ist hier nicht erlaubt.")
+				.hasFieldOrPropertyWithValue("status", Response.Status.BAD_REQUEST);
+	}
+
+	@Test
+	@DisplayName("mapAttribute | bezeichnung dto is null")
+	void mapAttributeTest_bezeichnungDtoISNull() throws ApiOperationException {
+		final var dto = new DTOErzieherart(1L, "123");
+		dto.Bezeichnung = null;
+		final var newDto = new DTOErzieherart(1L, "abc");
+		when(conn.queryAll(DTOErzieherart.class)).thenReturn(List.of(dto));
+
+		this.data.mapAttribute(newDto, "bezeichnung", "test", null);
+
+		assertThat(newDto.Bezeichnung).isEqualTo("test");
 	}
 }

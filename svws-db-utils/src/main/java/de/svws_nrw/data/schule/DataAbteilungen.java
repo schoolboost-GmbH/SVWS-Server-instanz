@@ -1,6 +1,5 @@
 package de.svws_nrw.data.schule;
 
-import de.svws_nrw.db.schema.Schema;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -12,6 +11,7 @@ import de.svws_nrw.data.DataManagerRevised;
 import de.svws_nrw.data.JSONMapper;
 import de.svws_nrw.db.DBEntityManager;
 import de.svws_nrw.db.dto.current.schild.schule.DTOAbteilungen;
+import de.svws_nrw.db.schema.Schema;
 import de.svws_nrw.db.utils.ApiOperationException;
 import jakarta.ws.rs.core.Response.Status;
 
@@ -104,7 +104,7 @@ public final class DataAbteilungen extends DataManagerRevised<Long, DTOAbteilung
 			return;
 
 		final boolean bezeichnungAlreadyUsed = this.conn.queryAll(DTOAbteilungen.class).stream()
-				.anyMatch(a -> (a.ID != dto.ID) && a.Bezeichnung.equalsIgnoreCase(bezeichnung));
+				.anyMatch(a -> (a.ID != dto.ID) && bezeichnung.equalsIgnoreCase(a.Bezeichnung));
 		if (bezeichnungAlreadyUsed)
 			throw new ApiOperationException(Status.BAD_REQUEST, "Die Bezeichnung %s ist bereits vorhanden.".formatted(value));
 

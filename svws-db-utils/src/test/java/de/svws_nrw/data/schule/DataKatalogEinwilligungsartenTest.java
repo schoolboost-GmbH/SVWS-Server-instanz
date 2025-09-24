@@ -26,9 +26,12 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import static java.util.Collections.emptyMap;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatNoException;
 import static org.assertj.core.api.AssertionsForClassTypes.catchThrowable;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
+import static org.mockito.Mockito.verifyNoInteractions;
 import static org.mockito.Mockito.when;
 
 @DisplayName("Diese Testklasse testet die Klasse DataKatalogEinwilligungsarten")
@@ -39,7 +42,7 @@ class DataKatalogEinwilligungsartenTest {
 	private DBEntityManager conn;
 
 	@InjectMocks
-	private DataKatalogEinwilligungsarten dataKatalogEinwilligungsarten;
+	private DataKatalogEinwilligungsarten data;
 
 	@BeforeAll
 	static void setUp() {
@@ -49,12 +52,12 @@ class DataKatalogEinwilligungsartenTest {
 	@Test
 	@DisplayName("initDTO | setzt die Felder korrekt")
 	void initDTOTest() {
-		dataKatalogEinwilligungsarten = new DataKatalogEinwilligungsarten(conn);
+		data = new DataKatalogEinwilligungsarten(conn);
 		final DTOKatalogEinwilligungsart dto = getDTOKatalogEinwilligungsart();
 		final long id = 1L;
 		final Map<String, Object> initAttributes = new HashMap<>();
 
-		dataKatalogEinwilligungsarten.initDTO(dto, id, initAttributes);
+		data.initDTO(dto, id, initAttributes);
 
 		assertThat(dto)
 				.hasFieldOrPropertyWithValue("ID", id)
@@ -72,7 +75,7 @@ class DataKatalogEinwilligungsartenTest {
 	void mapTest() {
 		final DTOKatalogEinwilligungsart dto = getDTOKatalogEinwilligungsart();
 
-		assertThat(this.dataKatalogEinwilligungsarten.map(dto))
+		assertThat(this.data.map(dto))
 				.isInstanceOf(Einwilligungsart.class)
 				.hasFieldOrPropertyWithValue("id", 1L)
 				.hasFieldOrPropertyWithValue("bezeichnung", "Testbezeichnung")
@@ -91,7 +94,7 @@ class DataKatalogEinwilligungsartenTest {
 		dto.Beschreibung = null;
 		dto.Schluessel = null;
 
-		assertThat(this.dataKatalogEinwilligungsarten.map(dto))
+		assertThat(this.data.map(dto))
 				.isInstanceOf(Einwilligungsart.class)
 				.hasFieldOrPropertyWithValue("id", 1L)
 				.hasFieldOrPropertyWithValue("bezeichnung", "")
@@ -122,7 +125,7 @@ class DataKatalogEinwilligungsartenTest {
 		when(conn.queryList((DTOLehrerDatenschutz.QUERY_ALL.concat(" WHERE e.DatenschutzID IS NOT NULL")), (DTOLehrerDatenschutz.class)))
 				.thenReturn(List.of(lehrer, lehrer));
 
-		final List<Einwilligungsart> result = dataKatalogEinwilligungsarten.getAll();
+		final List<Einwilligungsart> result = data.getAll();
 		final Einwilligungsart eaSchueler = result.stream().filter(ea -> ea.id == dtoSchueler.ID).findFirst().orElse(null);
 		final Einwilligungsart eaLehrer = result.stream().filter(ea -> ea.id == dtoLehrer.ID).findFirst().orElse(null);
 
@@ -138,7 +141,7 @@ class DataKatalogEinwilligungsartenTest {
 	@DisplayName("getById | Einwilligungsart null")
 	void getByIdTest_notFound() {
 		when(conn.queryByKey(DTOKatalogEinwilligungsart.class, 1L)).thenReturn(null);
-		final var throwable = catchThrowable(() -> dataKatalogEinwilligungsarten.getById(1L));
+		final var throwable = catchThrowable(() -> data.getById(1L));
 		assertThat(throwable)
 				.isInstanceOf(ApiOperationException.class)
 				.hasMessageContaining("Die Einwilligungsart mit der ID 1 wurde nicht gefunden.");
@@ -155,7 +158,7 @@ class DataKatalogEinwilligungsartenTest {
 				(DTOSchuelerDatenschutz.class), (dto.ID)))
 				.thenReturn(List.of(schueler1, schueler2));
 
-		assertThat(dataKatalogEinwilligungsarten.getById(dto.ID))
+		assertThat(data.getById(dto.ID))
 				.isNotNull()
 				.hasFieldOrPropertyWithValue("anzahlEinwilligungen", 2);
 	}
@@ -173,7 +176,7 @@ class DataKatalogEinwilligungsartenTest {
 				(DTOLehrerDatenschutz.class), (dto.ID)))
 				.thenReturn(List.of(lehrer1, lehrer2));
 
-		assertThat(dataKatalogEinwilligungsarten.getById(dto.ID))
+		assertThat(data.getById(dto.ID))
 				.isNotNull()
 				.hasFieldOrPropertyWithValue("anzahlEinwilligungen", 2);
 	}
@@ -184,7 +187,7 @@ class DataKatalogEinwilligungsartenTest {
 	void mapAttributeTest(final String key, final Object value) {
 		final var expectedDTO = getDTOKatalogEinwilligungsart();
 		final Map<String, Object> map = new HashMap<>();
-		final var throwable = Assertions.catchThrowable(() -> this.dataKatalogEinwilligungsarten.mapAttribute(expectedDTO, key, value, map));
+		final var throwable = Assertions.catchThrowable(() -> this.data.mapAttribute(expectedDTO, key, value, map));
 
 		switch (key) {
 			case "id" -> assertThat(expectedDTO.ID).isEqualTo(value);
@@ -242,4 +245,140 @@ class DataKatalogEinwilligungsartenTest {
 		dtoLehrerDatenschutz.Abgefragt = false;
 		return dtoLehrerDatenschutz;
 	}
+
+	@Test
+	@DisplayName("mapAttribute | bezeichnung bereits vorhanden")
+	void mapAttributeTest_bezeichnungDoppeltVergeben() {
+		final var dto = new DTOKatalogEinwilligungsart(1L, "abc", true, 1);
+		when(this.conn.queryAll(DTOKatalogEinwilligungsart.class)).thenReturn(List.of(dto));
+
+		final var throwable = catchThrowable(
+				() -> this.data.mapAttribute(new DTOKatalogEinwilligungsart(2L, "test", true, 1), "bezeichnung", "ABC", emptyMap())
+		);
+
+		assertThat(throwable)
+				.isInstanceOf(ApiOperationException.class)
+				.hasMessage("Die Bezeichnung ABC ist bereits vorhanden.")
+				.hasFieldOrPropertyWithValue("status", Response.Status.BAD_REQUEST);
+	}
+
+	@Test
+	@DisplayName("mapAttribute | bezeichnung unverändert")
+	void mapAttributeTest_bezeichnungUnchanging() {
+		final var dto = new DTOKatalogEinwilligungsart(1L, "abc", true, 1);
+
+		assertThatNoException().isThrownBy(
+				() -> this.data.mapAttribute(dto, "bezeichnung", "abc", emptyMap())
+		);
+
+		verifyNoInteractions(this.conn);
+		assertThat(dto.Bezeichnung).isEqualTo("abc");
+	}
+
+	@Test
+	@DisplayName("mapAttribute | bezeichnung null")
+	void mapAttributeTest_bezeichnungNull() {
+		final var throwable = catchThrowable(
+				() -> this.data.mapAttribute(new DTOKatalogEinwilligungsart(1L, "abc", true, 1), "bezeichnung", null, emptyMap())
+		);
+
+		assertThat(throwable)
+				.isInstanceOf(ApiOperationException.class)
+				.hasMessage("Attribut bezeichnung: Der Wert null ist nicht erlaubt.")
+				.hasFieldOrPropertyWithValue("status", Response.Status.BAD_REQUEST);
+	}
+
+	@Test
+	@DisplayName("mapAttribute | bezeichnung blank")
+	void mapAttributeTest_bezeichnungBlank() {
+		final var throwable = catchThrowable(
+				() -> this.data.mapAttribute(new DTOKatalogEinwilligungsart(1L, "abc", true, 1), "bezeichnung", "", emptyMap())
+		);
+
+		assertThat(throwable)
+				.isInstanceOf(ApiOperationException.class)
+				.hasMessage("Attribut bezeichnung: Ein leerer String ist hier nicht erlaubt.")
+				.hasFieldOrPropertyWithValue("status", Response.Status.BAD_REQUEST);
+	}
+
+	@Test
+	@DisplayName("mapAttribute | bezeichnung dto is null")
+	void mapAttributeTest_bezeichnungDtoISNull() throws ApiOperationException {
+		final var dto = new DTOKatalogEinwilligungsart(1L, "1", true, 1);
+		dto.Bezeichnung = null;
+		final var newDto = new DTOKatalogEinwilligungsart(2L, "abc", true, 1);
+		when(conn.queryAll(DTOKatalogEinwilligungsart.class)).thenReturn(List.of(dto));
+
+		this.data.mapAttribute(newDto, "bezeichnung", "test", emptyMap());
+
+		assertThat(newDto.Bezeichnung).isEqualTo("test");
+	}
+
+	@Test
+	@DisplayName("mapAttribute | schluessel bereits vorhanden")
+	void mapAttributeTest_schluesselBereitsVorhanden() {
+		final var dto = new DTOKatalogEinwilligungsart(1L, "abc", true, 1);
+		dto.Schluessel = "abc";
+		when(this.conn.queryAll(DTOKatalogEinwilligungsart.class)).thenReturn(List.of(dto));
+
+		final var throwable = catchThrowable(
+				() -> this.data.mapAttribute(new DTOKatalogEinwilligungsart(2L, "test", true, 1), "schluessel", "ABC", emptyMap())
+		);
+
+		assertThat(throwable)
+				.isInstanceOf(ApiOperationException.class)
+				.hasMessage("Der Schlüssel ABC ist bereits vorhanden.")
+				.hasFieldOrPropertyWithValue("status", Response.Status.BAD_REQUEST);
+	}
+
+	@Test
+	@DisplayName("mapAttribute | Schlüssel unverändert")
+	void mapAttributeTest_schluesselUnchanging() {
+		final var dto = new DTOKatalogEinwilligungsart(1L, "abc", true, 1);
+		dto.Schluessel = "123";
+
+		assertThatNoException().isThrownBy(
+				() -> this.data.mapAttribute(dto, "schluessel", "123", emptyMap())
+		);
+
+		verifyNoInteractions(this.conn);
+		assertThat(dto.Bezeichnung).isEqualTo("abc");
+	}
+
+	@Test
+	@DisplayName("mapAttribute | schluessel null")
+	void mapAttributeTest_schluesselNull() throws ApiOperationException {
+		final var dto = new  DTOKatalogEinwilligungsart(1L, "abc", true, 1);
+		dto.Schluessel = "324";
+
+		this.data.mapAttribute(dto, "schluessel", null, emptyMap());
+
+		assertThat(dto.Schluessel).isNull();
+	}
+
+	@Test
+	@DisplayName("mapAttribute | schluessel blank")
+	void mapAttributeTest_schluesselBlank() throws ApiOperationException {
+		final var dto = new  DTOKatalogEinwilligungsart(1L, "abc", true, 1);
+		dto.Schluessel = "324";
+
+		this.data.mapAttribute(dto, "schluessel", " ", emptyMap());
+
+		assertThat(dto.Schluessel).isBlank();
+	}
+
+	@Test
+	@DisplayName("mapAttribute | schluessel dto is null")
+	void mapAttributeTest_schluesselDtoISNull() throws ApiOperationException {
+		final var dto = new DTOKatalogEinwilligungsart(1L, "1", true, 1);
+		dto.Schluessel = null;
+		final var newDto = new DTOKatalogEinwilligungsart(2L, "abc", true, 1);
+		when(conn.queryAll(DTOKatalogEinwilligungsart.class)).thenReturn(List.of(dto));
+
+		this.data.mapAttribute(newDto, "schluessel", "test", emptyMap());
+
+		assertThat(newDto.Schluessel).isEqualTo("test");
+	}
+
+
 }

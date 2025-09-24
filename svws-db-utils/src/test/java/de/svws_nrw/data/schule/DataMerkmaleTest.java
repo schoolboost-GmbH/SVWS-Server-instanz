@@ -1,5 +1,10 @@
 package de.svws_nrw.data.schule;
 
+import java.io.InputStream;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Stream;
+
 import de.svws_nrw.asd.utils.ASDCoreTypeUtils;
 import de.svws_nrw.core.data.schule.Merkmal;
 import de.svws_nrw.data.JSONMapper;
@@ -7,10 +12,6 @@ import de.svws_nrw.db.DBEntityManager;
 import de.svws_nrw.db.dto.current.schild.schule.DTOMerkmale;
 import de.svws_nrw.db.utils.ApiOperationException;
 import jakarta.ws.rs.core.Response;
-import java.io.InputStream;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Stream;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -250,6 +251,32 @@ class DataMerkmaleTest {
 		this.data.mapAttribute(dto, "bezeichnung", "ABC", null);
 
 		assertThat(dto.Langtext).isEqualTo("ABC");
+	}
+
+	@Test
+	@DisplayName("mapAttribute | bezeichnung dto is null")
+	void mapAttributeTest_bezeichnungDtoISNull() throws ApiOperationException {
+		final var dto = new DTOMerkmale(1L);
+		dto.Langtext = null;
+		final var newDto = new DTOMerkmale(1L);
+		when(conn.queryAll(DTOMerkmale.class)).thenReturn(List.of(dto));
+
+		this.data.mapAttribute(newDto, "bezeichnung", "test", null);
+
+		assertThat(newDto.Langtext).isEqualTo("test");
+	}
+
+	@Test
+	@DisplayName("mapAttribute | kuerzel dto is null")
+	void mapAttributeTest_kuerzelDtoISNull() throws ApiOperationException {
+		final var dto = new DTOMerkmale(1L);
+		dto.Kurztext = null;
+		final var newDto = new DTOMerkmale(1L);
+		when(conn.queryAll(DTOMerkmale.class)).thenReturn(List.of(dto));
+
+		this.data.mapAttribute(newDto, "kuerzel", "test", null);
+
+		assertThat(newDto.Kurztext).isEqualTo("test");
 	}
 
 }
