@@ -1,6 +1,5 @@
 package de.svws_nrw.data.jahrgaenge;
 
-import jakarta.persistence.TypedQuery;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -16,6 +15,7 @@ import de.svws_nrw.db.DBEntityManager;
 import de.svws_nrw.db.dto.current.schild.klassen.DTOKlassen;
 import de.svws_nrw.db.dto.current.schild.schule.DTOJahrgang;
 import de.svws_nrw.db.utils.ApiOperationException;
+import jakarta.persistence.TypedQuery;
 import jakarta.ws.rs.core.Response;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
@@ -29,12 +29,14 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatNoException;
 import static org.assertj.core.api.Assertions.catchThrowable;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verifyNoInteractions;
 import static org.mockito.Mockito.when;
 
 /**
@@ -381,5 +383,103 @@ class DataJahrgangsdatenTest {
 		dto.AnzahlRestabschnitte = 3;
 		dto.Folgejahrgang_ID = 1L;
 		return dto;
+	}
+
+	@Test
+	@DisplayName("mapAttribute | bezeichnung bereits vorhanden")
+	void mapAttributeTest_bezeichnungDoppeltVergeben() {
+		final var dto = new  DTOJahrgang(0L);
+		dto.ASDBezeichnung = "abc";
+		when(this.conn.queryAll(DTOJahrgang.class)).thenReturn(List.of(dto));
+
+		final var throwable = catchThrowable(() -> this.data.mapAttribute(new DTOJahrgang(1L), "bezeichnung", "ABC", null));
+
+		assertThat(throwable)
+				.isInstanceOf(ApiOperationException.class)
+				.hasMessage("Die Bezeichnung ABC ist bereits vorhanden.")
+				.hasFieldOrPropertyWithValue("status", Response.Status.BAD_REQUEST);
+	}
+
+	@Test
+	@DisplayName("mapAttribute | bezeichnung unverändert")
+	void mapAttributeTest_bezeichnungUnchanging() {
+		final var dto = new DTOJahrgang(0L);
+		dto.ASDBezeichnung = "abc";
+
+		assertThatNoException().isThrownBy(() -> this.data.mapAttribute(dto, "bezeichnung", "abc", null));
+
+		verifyNoInteractions(this.conn);
+		assertThat(dto.ASDBezeichnung).isEqualTo("abc");
+	}
+
+	@Test
+	@DisplayName("mapAttribute | bezeichnung null")
+	void mapAttributeTest_bezeichnungNull() {
+		final var throwable = catchThrowable(() -> this.data.mapAttribute(new DTOJahrgang(0L), "bezeichnung", null, null));
+
+		assertThat(throwable)
+				.isInstanceOf(ApiOperationException.class)
+				.hasMessage("Attribut bezeichnung: Der Wert null ist nicht erlaubt.")
+				.hasFieldOrPropertyWithValue("status", Response.Status.BAD_REQUEST);
+	}
+
+	@Test
+	@DisplayName("mapAttribute | bezeichnung blank")
+	void mapAttributeTest_bezeichnungBlank() {
+		final var throwable = catchThrowable(() -> this.data.mapAttribute(new DTOJahrgang(0L), "bezeichnung", "", null));
+
+		assertThat(throwable)
+				.isInstanceOf(ApiOperationException.class)
+				.hasMessage("Attribut bezeichnung: Ein leerer String ist hier nicht erlaubt.")
+				.hasFieldOrPropertyWithValue("status", Response.Status.BAD_REQUEST);
+	}
+
+	@Test
+	@DisplayName("mapAttribute | kuerzel bereits vorhanden")
+	void mapAttributeTest_kuerzelDoppeltVergeben() {
+		final var dto = new  DTOJahrgang(0L);
+		dto.InternKrz = "abc";
+		when(this.conn.queryAll(DTOJahrgang.class)).thenReturn(List.of(dto));
+
+		final var throwable = catchThrowable(() -> this.data.mapAttribute(new DTOJahrgang(1L), "kuerzel", "ABC", null));
+
+		assertThat(throwable)
+				.isInstanceOf(ApiOperationException.class)
+				.hasMessage("Das Kürzel ABC ist bereits vorhanden.")
+				.hasFieldOrPropertyWithValue("status", Response.Status.BAD_REQUEST);
+	}
+
+	@Test
+	@DisplayName("mapAttribute | kuerzel unverändert")
+	void mapAttributeTest_kuerzelUnchanging() {
+		final var dto = new DTOJahrgang(0L);
+		dto.InternKrz = "abc";
+
+		assertThatNoException().isThrownBy(() -> this.data.mapAttribute(dto, "kuerzel", "abc", null));
+
+		verifyNoInteractions(this.conn);
+		assertThat(dto.InternKrz).isEqualTo("abc");
+	}
+
+	@Test
+	@DisplayName("mapAttribute | kuerzel null")
+	void mapAttributeTest_kuerzelNull() {
+		final var throwable = catchThrowable(() -> this.data.mapAttribute(new DTOJahrgang(0L), "kuerzel", null, null));
+
+		assertThat(throwable)
+				.isInstanceOf(ApiOperationException.class)
+				.hasMessage("Attribut kuerzel: Der Wert null ist nicht erlaubt.")
+				.hasFieldOrPropertyWithValue("status", Response.Status.BAD_REQUEST);
+	}
+
+	@Test
+	@DisplayName("mapAttribute | kuerzel blank")
+	void mapAttributeTest_kuerzelBlank() {
+		final var throwable = catchThrowable(() -> this.data.mapAttribute(new DTOJahrgang(0L), "kuerzel", "", null));
+
+		assertThat(throwable)
+				.isInstanceOf(ApiOperationException.class)
+				.hasMessage("Attribut kuerzel: Ein leerer String ist hier nicht erlaubt.")
+				.hasFieldOrPropertyWithValue("status", Response.Status.BAD_REQUEST);
 	}
 }

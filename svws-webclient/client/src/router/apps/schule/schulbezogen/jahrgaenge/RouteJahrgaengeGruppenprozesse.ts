@@ -27,8 +27,6 @@ export class RouteJahrgaengeGruppenprozesse extends RouteNode<any, RouteJahrgaen
 	public getProps(to: RouteLocationNormalized): SchuleJahrgangGruppenprozesseProps {
 		return {
 			serverMode: api.mode,
-			schulform: api.schulform,
-			schulgliederungen: api.schulgliederungen,
 			manager: () => routeJahrgaenge.data.manager,
 			delete: routeJahrgaenge.data.delete,
 			deleteCheck: routeJahrgaenge.data.deleteCheck,

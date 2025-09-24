@@ -4,7 +4,29 @@
 			<svws-ui-input-wrapper :grid="2">
 				<svws-ui-text-input placeholder="Kürzel" :min-len="1" :max-len="20" v-model="data.kuerzel" :disabled :valid="fieldIsValid('kuerzel')"
 					required />
-				<svws-ui-text-input placeholder="Bezeichnung" :max-len="100" v-model="data.bezeichnung" :disabled :valid="fieldIsValid('bezeichnung')" />
+				<svws-ui-text-input placeholder="Bezeichnung" :max-len="100" :min-len="1" required v-model="data.bezeichnung" :disabled :valid="fieldIsValid('bezeichnung')" />
+				<div class="flex flex-col my-auto space-y-1">
+					<div v-if="!isUniqueInList(data.kuerzel, props.manager().liste.list(), 'kuerzel')" class="flex items-center">
+						<span class="icon i-ri-alert-line mx-0.5 mr-1" />
+						<p>Dieses Kürzel wird bereits verwendet.</p>
+					</div>
+					<div v-if="kuerzelIsTooLong" class="flex items-center">
+						<span class="icon i-ri-alert-line mx-0.5 mr-1" />
+						<p>Dieses Kürzel verwendet zu viele Zeichen.</p>
+					</div>
+				</div>
+				<div class="flex flex-col my-auto space-y-1">
+					<div v-if="!isUniqueInList(data.bezeichnung, props.manager().liste.list(), 'bezeichnung')" class="flex items-center">
+						<div />
+						<span class="icon i-ri-alert-line mx-0.5 mr-1" />
+						<p>Diese Bezeichnung wird bereits verwendet.</p>
+					</div>
+					<div v-if="data.bezeichnung.length > 100" class="flex items-center">
+						<div />
+						<span class="icon i-ri-alert-line mx-0.5 mr-1" />
+						<p>Diese Bezeichnung verwendet zu viele Zeichen.</p>
+					</div>
+				</div>
 				<svws-ui-text-input placeholder="Kurzbezeichnung" :max-len="2" v-model="data.kurzbezeichnung" :disabled :valid="fieldIsValid('kurzbezeichnung')" />
 				<svws-ui-select title="Schulgliederung" :items="Schulgliederung.getBySchuljahrAndSchulform(schuljahr, schulform)" :item-text="textSchulgliederung"
 					statistics :disabled v-model="schulgliederung" :valid="fieldIsValid('kuerzelSchulgliederung')" />
@@ -33,6 +55,7 @@
 	import type { SchuleJahrgangNeuProps } from "./SJahrgaengeNeuProps";
 	import { computed, ref, watch } from "vue";
 	import { BenutzerKompetenz, Jahrgaenge, JahrgangsDaten, JavaString, Schulgliederung } from "@core";
+	import {isUniqueInList, mandatoryInputIsValid, optionalInputIsValid} from "~/util/validation/Validation";
 
 	const props = defineProps<SchuleJahrgangNeuProps>();
 	const data = ref<JahrgangsDaten>(Object.assign(new JahrgangsDaten(), { istSichtbar: true, sortierung: 1, anzahlRestabschnitte: 0 }))
@@ -40,6 +63,13 @@
 	const isLoading = ref<boolean>(false);
 	const hatKompetenzAdd = computed<boolean>(() => props.benutzerKompetenzen.has(BenutzerKompetenz.KATALOG_EINTRAEGE_AENDERN));
 	const disabled = computed(() => !hatKompetenzAdd.value);
+
+	const kuerzelIsTooLong = computed(() => {
+		if (data.value.kuerzel === null)
+			return false;
+
+		return data.value.kuerzel.length > 20;
+	})
 
 	const schulgliederung = computed<Schulgliederung | null>({
 		get: () => {
@@ -84,7 +114,7 @@
 				case 'bezeichnung':
 					return bezeichnungIsValid(data.value.bezeichnung);
 				case 'kurzbezeichnung':
-					return kurzbezeichnungIsValid(data.value.kurzbezeichnung);
+					return optionalInputIsValid(data.value.kurzbezeichnung, 2);
 				case 'kuerzelSchulgliederung':
 					return kuerzelSchulgliederungIsValid(data.value.kuerzelSchulgliederung);
 				case 'kuerzelStatistik':
@@ -102,30 +132,17 @@
 	}
 
 	function kuerzelIsValid (kuerzel: string | null): boolean {
-		if ((kuerzel === null) || JavaString.isBlank(kuerzel) || (kuerzel.length > 20))
+		if (!mandatoryInputIsValid(kuerzel, 20))
 			return false;
 
-		// Prüfen, ob das Kürzel bereits vergeben ist
-		for (const jahrgang of props.manager().liste.list())
-			if ((jahrgang.kuerzel !== null) && JavaString.equalsIgnoreCase(jahrgang.kuerzel, kuerzel))
-				return false;
-
-		return true;
+		return isUniqueInList(kuerzel, props.manager().liste.list(), "kuerzel");
 	}
 
 	function bezeichnungIsValid(bezeichnung: string | null): boolean {
-		if ((bezeichnung !== null) && (bezeichnung.length > 100))
+		if (!mandatoryInputIsValid(bezeichnung, 100))
 			return false;
 
-		for (const jahrgang of props.manager().liste.list())
-			if (JavaString.equalsIgnoreCase(jahrgang.bezeichnung, bezeichnung))
-				return false;
-
-		return true;
-	}
-
-	function kurzbezeichnungIsValid(kurzbezeichnung: string | null): boolean {
-		return (kurzbezeichnung === null) || (kurzbezeichnung.length <= 2);
+		return isUniqueInList(bezeichnung, props.manager().liste.list(), "bezeichnung");
 	}
 
 	function kuerzelSchulgliederungIsValid(kuerzelSchulgliederung: string | null): boolean {
@@ -217,7 +234,8 @@
 	watch(() => data.value, async() => {
 		if (isLoading.value)
 			return;
+
 		props.checkpoint.active = true;
-	}, {immediate: false, deep: true});
+	}, { immediate: false, deep: true });
 
 </script>

@@ -96,7 +96,7 @@ public final class DataJahrgangsdaten extends DataManagerRevised<Long, DTOJahrga
 			throws ApiOperationException {
 		switch (name) {
 			case "id" -> {
-				final Long id = JSONMapper.convertToLong(value, false, "id");
+				final Long id = JSONMapper.convertToLong(value, false, name);
 				if (id != dtoJahrgang.ID)
 					throw new ApiOperationException(Status.BAD_REQUEST,
 							"Die ID %d des Patches ist null oder stimmt nicht mit der ID %d in der Datenbank überein.".formatted(id, dtoJahrgang.ID));
@@ -118,50 +118,28 @@ public final class DataJahrgangsdaten extends DataManagerRevised<Long, DTOJahrga
 	}
 
 	private void mapBezeichnung(final DTOJahrgang dto, final String name, final Object value) throws ApiOperationException {
-		final String bezeichnung = JSONMapper.convertToString(value, true, true,
-				Schema.tab_EigeneSchule_Jahrgaenge.col_ASDBezeichnung.datenlaenge(), name);
-		// Bezeichnung unverändert
-		if ((dto.ASDBezeichnung != null) && dto.ASDBezeichnung.equals(bezeichnung))
+		final String bezeichnung = JSONMapper.convertToString(
+				value, false, false, Schema.tab_EigeneSchule_Jahrgaenge.col_ASDBezeichnung.datenlaenge(), name);
+		if (Objects.equals(dto.ASDBezeichnung, bezeichnung) || bezeichnung.isBlank())
 			return;
 
-		//Bezeichnung null
-		if (bezeichnung == null) {
-			dto.ASDBezeichnung = null;
-			return;
-		}
-
-		//theoretischer Fall, der nicht eintreffen sollte
-		final List<DTOJahrgang> jahrgaenge = this.conn.queryList(DTOJahrgang.QUERY_BY_ASDBEZEICHNUNG, DTOJahrgang.class, bezeichnung);
-		if (jahrgaenge.size() > 1)
-			throw new ApiOperationException(Status.INTERNAL_SERVER_ERROR, "Mehr als ein Jahrgang mit der gleichen Bezeichnung vorhanden.");
-
-		//Jahrgang mit dieser Bezeichnung bereits vorhanden
-		if (jahrgaenge.size() == 1) {
-			final DTOJahrgang jahrgang = jahrgaenge.getFirst();
-			if ((jahrgang != null) && (jahrgang.ID != dto.ID))
-				throw new ApiOperationException(Status.BAD_REQUEST, "Die Bezeichnung %s ist bereits vorhanden.".formatted(bezeichnung));
-		}
+		final boolean bezeichnungAlreadyUsed = this.conn.queryAll(DTOJahrgang.class).stream()
+				.anyMatch(j -> (j.ID != dto.ID) && bezeichnung.equalsIgnoreCase(j.ASDBezeichnung));
+		if (bezeichnungAlreadyUsed)
+			throw new ApiOperationException(Status.BAD_REQUEST, "Die Bezeichnung %s ist bereits vorhanden.".formatted(bezeichnung));
 
 		dto.ASDBezeichnung = bezeichnung;
 	}
 
 	private void mapKuerzel(final DTOJahrgang dto, final String name, final Object value) throws ApiOperationException {
 		final String kuerzel = JSONMapper.convertToString(value, false, false, Schema.tab_EigeneSchule_Jahrgaenge.col_InternKrz.datenlaenge(), name);
-		// Kürzel unverändert
-		if ((dto.InternKrz != null) && dto.InternKrz.equals(kuerzel))
+		if (Objects.equals(dto.InternKrz, kuerzel) || kuerzel.isBlank())
 			return;
 
-		//theoretischer Fall, der nicht eintreffen sollte
-		final List<DTOJahrgang> jahrgaenge = this.conn.queryList(DTOJahrgang.QUERY_BY_INTERNKRZ, DTOJahrgang.class, kuerzel);
-		if (jahrgaenge.size() > 1)
-			throw new ApiOperationException(Status.INTERNAL_SERVER_ERROR, "Mehr als ein Jahrgang mit dem gleichen Kürzel vorhanden.");
-
-		//Jahrgang mit dieser Bezeichnung bereits vorhanden
-		if (jahrgaenge.size() == 1) {
-			final DTOJahrgang jahrgang = jahrgaenge.getFirst();
-			if ((jahrgang != null) && (jahrgang.ID != dto.ID))
-				throw new ApiOperationException(Status.BAD_REQUEST, "Das Kürzel %s ist bereits vorhanden.".formatted(kuerzel));
-		}
+		final boolean kuerzelAlreadyUsed = this.conn.queryAll(DTOJahrgang.class).stream()
+				.anyMatch(j -> (j.ID != dto.ID) && kuerzel.equalsIgnoreCase(j.InternKrz));
+		if (kuerzelAlreadyUsed)
+			throw new ApiOperationException(Status.BAD_REQUEST, "Das Kürzel %s ist bereits vorhanden.".formatted(kuerzel));
 
 		dto.InternKrz = kuerzel;
 	}
@@ -179,7 +157,7 @@ public final class DataJahrgangsdaten extends DataManagerRevised<Long, DTOJahrga
 	}
 
 	private void mapKuerzelSchulgliederung(final DTOJahrgang dtoJahrgang, final Object value, final String attrName) throws ApiOperationException {
-		final String kuerzelSchuldgliederung = JSONMapper.convertToString(value, true, false, null, attrName);
+		final String kuerzelSchuldgliederung = JSONMapper.convertToString(value, true, false, Schema.tab_EigeneSchule_Jahrgaenge.col_SGL.datenlaenge(), attrName);
 		if (kuerzelSchuldgliederung == null) {
 			dtoJahrgang.GliederungKuerzel = null;
 			return;
