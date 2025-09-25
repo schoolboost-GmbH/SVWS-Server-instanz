@@ -60,7 +60,6 @@
 | FachDaten                                      | [Ja](#FachDaten!A1)      |
 | FachgruppenKatalogEintrag                      | ?                        |
 | RGBFarbe                                       | Nein                     |
-| FaecherListeEintrag                            | Ja                       |
 | BilingualeSpracheKatalogEintrag                | ?                        |
 | FachKatalogEintrag                             | Ja                       |
 | SchulformSchulgliederung                       | Ja                       |

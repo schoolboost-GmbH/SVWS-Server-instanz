@@ -1,6 +1,6 @@
 import { describe, expect, test } from "vitest";
 import { privilegedApiServer } from "../../utils/APIUtils";
-import { FaecherListeEintrag } from "../../../svws-webclient/core/src/core/data/fach/FaecherListeEintrag";
+import { FachDaten } from "../../../svws-webclient/core/src/core/data/fach/FachDaten";
 
 describe("Feacher Tests", () => {
 	describe.each([{schema: "GymAbi01"}])('gegen %s', ({schema}) => {
@@ -9,7 +9,7 @@ describe("Feacher Tests", () => {
 		test("getFaecher", async () => {
 			const result = await api.getFaecher(schema);
 			expect(result).toMatchSnapshot();
-			expect(result.toArray()[0]).toBeInstanceOf(FaecherListeEintrag);
+			expect(result.toArray()[0]).toBeInstanceOf(FachDaten);
 		});
 
 		test("getFach", async () => {

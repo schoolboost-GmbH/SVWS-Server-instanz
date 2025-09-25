@@ -22,6 +22,7 @@ FachDaten {
   "kuerzel": "D",
   "kuerzelStatistik": "D",
   "maxZeichenInFachbemerkungen": 2147483647,
+  "referenziertInAnderenTabellen": null,
   "sortierung": 10,
 }
 `;
@@ -31,7 +32,7 @@ ArrayList {
   "addFirst": [Function],
   "addLast": [Function],
   "elementData": [
-    FaecherListeEintrag {
+    FachDaten {
       "aufZeugnis": true,
       "aufgabenfeld": "3",
       "bezeichnung": "Biologie",
@@ -40,7 +41,9 @@ ArrayList {
       "bilingualeSprache": "D",
       "holeAusAltenLernabschnitten": true,
       "id": 192,
-      "istFHRFach": false,
+      "istFHRFach": true,
+      "istFremdsprache": false,
+      "istMoeglichAlsNeueFremdspracheInSekII": false,
       "istNachpruefungErlaubt": true,
       "istOberstufenFach": true,
       "istPruefungsordnungsRelevant": true,
@@ -53,7 +56,7 @@ ArrayList {
       "referenziertInAnderenTabellen": true,
       "sortierung": 200,
     },
-    FaecherListeEintrag {
+    FachDaten {
       "aufZeugnis": true,
       "aufgabenfeld": "3",
       "bezeichnung": "Biologie bilingual",
@@ -62,7 +65,9 @@ ArrayList {
       "bilingualeSprache": "E",
       "holeAusAltenLernabschnitten": true,
       "id": 224,
-      "istFHRFach": false,
+      "istFHRFach": true,
+      "istFremdsprache": false,
+      "istMoeglichAlsNeueFremdspracheInSekII": false,
       "istNachpruefungErlaubt": true,
       "istOberstufenFach": true,
       "istPruefungsordnungsRelevant": true,
@@ -75,7 +80,7 @@ ArrayList {
       "referenziertInAnderenTabellen": true,
       "sortierung": 201,
     },
-    FaecherListeEintrag {
+    FachDaten {
       "aufZeugnis": true,
       "aufgabenfeld": "3",
       "bezeichnung": "Chemie",
@@ -84,7 +89,9 @@ ArrayList {
       "bilingualeSprache": "D",
       "holeAusAltenLernabschnitten": true,
       "id": 8,
-      "istFHRFach": false,
+      "istFHRFach": true,
+      "istFremdsprache": false,
+      "istMoeglichAlsNeueFremdspracheInSekII": false,
       "istNachpruefungErlaubt": true,
       "istOberstufenFach": true,
       "istPruefungsordnungsRelevant": true,
@@ -97,7 +104,7 @@ ArrayList {
       "referenziertInAnderenTabellen": true,
       "sortierung": 210,
     },
-    FaecherListeEintrag {
+    FachDaten {
       "aufZeugnis": true,
       "aufgabenfeld": "1",
       "bezeichnung": "Deutsch",
@@ -106,7 +113,9 @@ ArrayList {
       "bilingualeSprache": "D",
       "holeAusAltenLernabschnitten": true,
       "id": 16,
-      "istFHRFach": false,
+      "istFHRFach": true,
+      "istFremdsprache": false,
+      "istMoeglichAlsNeueFremdspracheInSekII": false,
       "istNachpruefungErlaubt": true,
       "istOberstufenFach": true,
       "istPruefungsordnungsRelevant": true,
@@ -119,7 +128,7 @@ ArrayList {
       "referenziertInAnderenTabellen": true,
       "sortierung": 10,
     },
-    FaecherListeEintrag {
+    FachDaten {
       "aufZeugnis": true,
       "aufgabenfeld": "1",
       "bezeichnung": "Englisch",
@@ -128,7 +137,9 @@ ArrayList {
       "bilingualeSprache": "D",
       "holeAusAltenLernabschnitten": true,
       "id": 17,
-      "istFHRFach": false,
+      "istFHRFach": true,
+      "istFremdsprache": true,
+      "istMoeglichAlsNeueFremdspracheInSekII": false,
       "istNachpruefungErlaubt": true,
       "istOberstufenFach": true,
       "istPruefungsordnungsRelevant": true,
@@ -141,7 +152,7 @@ ArrayList {
       "referenziertInAnderenTabellen": true,
       "sortierung": 50,
     },
-    FaecherListeEintrag {
+    FachDaten {
       "aufZeugnis": true,
       "aufgabenfeld": "2",
       "bezeichnung": "Erdkunde",
@@ -150,7 +161,9 @@ ArrayList {
       "bilingualeSprache": "D",
       "holeAusAltenLernabschnitten": true,
       "id": 24,
-      "istFHRFach": false,
+      "istFHRFach": true,
+      "istFremdsprache": false,
+      "istMoeglichAlsNeueFremdspracheInSekII": false,
       "istNachpruefungErlaubt": true,
       "istOberstufenFach": true,
       "istPruefungsordnungsRelevant": true,
@@ -163,7 +176,7 @@ ArrayList {
       "referenziertInAnderenTabellen": true,
       "sortierung": 120,
     },
-    FaecherListeEintrag {
+    FachDaten {
       "aufZeugnis": true,
       "aufgabenfeld": "2",
       "bezeichnung": "Erdkunde bilingual",
@@ -172,7 +185,9 @@ ArrayList {
       "bilingualeSprache": "E",
       "holeAusAltenLernabschnitten": true,
       "id": 228,
-      "istFHRFach": false,
+      "istFHRFach": true,
+      "istFremdsprache": false,
+      "istMoeglichAlsNeueFremdspracheInSekII": false,
       "istNachpruefungErlaubt": true,
       "istOberstufenFach": false,
       "istPruefungsordnungsRelevant": true,
@@ -185,7 +200,7 @@ ArrayList {
       "referenziertInAnderenTabellen": true,
       "sortierung": 121,
     },
-    FaecherListeEintrag {
+    FachDaten {
       "aufZeugnis": true,
       "aufgabenfeld": "2",
       "bezeichnung": "Ev. Religionslehre",
@@ -194,7 +209,9 @@ ArrayList {
       "bilingualeSprache": "D",
       "holeAusAltenLernabschnitten": true,
       "id": 27,
-      "istFHRFach": false,
+      "istFHRFach": true,
+      "istFremdsprache": false,
+      "istMoeglichAlsNeueFremdspracheInSekII": false,
       "istNachpruefungErlaubt": true,
       "istOberstufenFach": true,
       "istPruefungsordnungsRelevant": true,
@@ -207,7 +224,7 @@ ArrayList {
       "referenziertInAnderenTabellen": true,
       "sortierung": 185,
     },
-    FaecherListeEintrag {
+    FachDaten {
       "aufZeugnis": true,
       "aufgabenfeld": "1",
       "bezeichnung": "Französisch ab Klasse 6",
@@ -216,7 +233,9 @@ ArrayList {
       "bilingualeSprache": "D",
       "holeAusAltenLernabschnitten": true,
       "id": 30,
-      "istFHRFach": false,
+      "istFHRFach": true,
+      "istFremdsprache": true,
+      "istMoeglichAlsNeueFremdspracheInSekII": false,
       "istNachpruefungErlaubt": true,
       "istOberstufenFach": true,
       "istPruefungsordnungsRelevant": true,
@@ -229,7 +248,7 @@ ArrayList {
       "referenziertInAnderenTabellen": true,
       "sortierung": 30,
     },
-    FaecherListeEintrag {
+    FachDaten {
       "aufZeugnis": true,
       "aufgabenfeld": "2",
       "bezeichnung": "Geschichte",
@@ -238,7 +257,9 @@ ArrayList {
       "bilingualeSprache": "D",
       "holeAusAltenLernabschnitten": true,
       "id": 37,
-      "istFHRFach": false,
+      "istFHRFach": true,
+      "istFremdsprache": false,
+      "istMoeglichAlsNeueFremdspracheInSekII": false,
       "istNachpruefungErlaubt": true,
       "istOberstufenFach": true,
       "istPruefungsordnungsRelevant": true,
@@ -251,7 +272,7 @@ ArrayList {
       "referenziertInAnderenTabellen": true,
       "sortierung": 130,
     },
-    FaecherListeEintrag {
+    FachDaten {
       "aufZeugnis": true,
       "aufgabenfeld": "2",
       "bezeichnung": "Geschichte bilingual",
@@ -260,7 +281,9 @@ ArrayList {
       "bilingualeSprache": "E",
       "holeAusAltenLernabschnitten": true,
       "id": 225,
-      "istFHRFach": false,
+      "istFHRFach": true,
+      "istFremdsprache": false,
+      "istMoeglichAlsNeueFremdspracheInSekII": false,
       "istNachpruefungErlaubt": true,
       "istOberstufenFach": true,
       "istPruefungsordnungsRelevant": true,
@@ -273,7 +296,7 @@ ArrayList {
       "referenziertInAnderenTabellen": true,
       "sortierung": 131,
     },
-    FaecherListeEintrag {
+    FachDaten {
       "aufZeugnis": true,
       "aufgabenfeld": "3",
       "bezeichnung": "Informatik",
@@ -282,7 +305,9 @@ ArrayList {
       "bilingualeSprache": "D",
       "holeAusAltenLernabschnitten": true,
       "id": 193,
-      "istFHRFach": false,
+      "istFHRFach": true,
+      "istFremdsprache": false,
+      "istMoeglichAlsNeueFremdspracheInSekII": false,
       "istNachpruefungErlaubt": true,
       "istOberstufenFach": true,
       "istPruefungsordnungsRelevant": true,
@@ -295,7 +320,7 @@ ArrayList {
       "referenziertInAnderenTabellen": true,
       "sortierung": 230,
     },
-    FaecherListeEintrag {
+    FachDaten {
       "aufZeugnis": true,
       "aufgabenfeld": "1",
       "bezeichnung": "Instrumentalpraktischer Grundkurs",
@@ -304,7 +329,9 @@ ArrayList {
       "bilingualeSprache": "D",
       "holeAusAltenLernabschnitten": true,
       "id": 55,
-      "istFHRFach": false,
+      "istFHRFach": true,
+      "istFremdsprache": false,
+      "istMoeglichAlsNeueFremdspracheInSekII": false,
       "istNachpruefungErlaubt": true,
       "istOberstufenFach": true,
       "istPruefungsordnungsRelevant": true,
@@ -317,7 +344,7 @@ ArrayList {
       "referenziertInAnderenTabellen": true,
       "sortierung": 101,
     },
-    FaecherListeEintrag {
+    FachDaten {
       "aufZeugnis": true,
       "aufgabenfeld": "2",
       "bezeichnung": "Kath. Religionslehre",
@@ -326,7 +353,9 @@ ArrayList {
       "bilingualeSprache": "D",
       "holeAusAltenLernabschnitten": true,
       "id": 70,
-      "istFHRFach": false,
+      "istFHRFach": true,
+      "istFremdsprache": false,
+      "istMoeglichAlsNeueFremdspracheInSekII": false,
       "istNachpruefungErlaubt": true,
       "istOberstufenFach": true,
       "istPruefungsordnungsRelevant": true,
@@ -339,7 +368,7 @@ ArrayList {
       "referenziertInAnderenTabellen": true,
       "sortierung": 186,
     },
-    FaecherListeEintrag {
+    FachDaten {
       "aufZeugnis": true,
       "aufgabenfeld": "1",
       "bezeichnung": "Kunsterziehung",
@@ -348,7 +377,9 @@ ArrayList {
       "bilingualeSprache": "D",
       "holeAusAltenLernabschnitten": true,
       "id": 71,
-      "istFHRFach": false,
+      "istFHRFach": true,
+      "istFremdsprache": false,
+      "istMoeglichAlsNeueFremdspracheInSekII": false,
       "istNachpruefungErlaubt": true,
       "istOberstufenFach": true,
       "istPruefungsordnungsRelevant": true,
@@ -361,7 +392,7 @@ ArrayList {
       "referenziertInAnderenTabellen": true,
       "sortierung": 70,
     },
-    FaecherListeEintrag {
+    FachDaten {
       "aufZeugnis": true,
       "aufgabenfeld": "1",
       "bezeichnung": "Lateinisch ab Klasse 6",
@@ -370,7 +401,9 @@ ArrayList {
       "bilingualeSprache": "D",
       "holeAusAltenLernabschnitten": true,
       "id": 72,
-      "istFHRFach": false,
+      "istFHRFach": true,
+      "istFremdsprache": true,
+      "istMoeglichAlsNeueFremdspracheInSekII": false,
       "istNachpruefungErlaubt": true,
       "istOberstufenFach": true,
       "istPruefungsordnungsRelevant": true,
@@ -383,7 +416,7 @@ ArrayList {
       "referenziertInAnderenTabellen": true,
       "sortierung": 60,
     },
-    FaecherListeEintrag {
+    FachDaten {
       "aufZeugnis": true,
       "aufgabenfeld": "1",
       "bezeichnung": "Literatur",
@@ -392,7 +425,9 @@ ArrayList {
       "bilingualeSprache": "D",
       "holeAusAltenLernabschnitten": true,
       "id": 244,
-      "istFHRFach": false,
+      "istFHRFach": true,
+      "istFremdsprache": false,
+      "istMoeglichAlsNeueFremdspracheInSekII": false,
       "istNachpruefungErlaubt": false,
       "istOberstufenFach": true,
       "istPruefungsordnungsRelevant": true,
@@ -405,7 +440,7 @@ ArrayList {
       "referenziertInAnderenTabellen": true,
       "sortierung": 111,
     },
-    FaecherListeEintrag {
+    FachDaten {
       "aufZeugnis": true,
       "aufgabenfeld": "3",
       "bezeichnung": "Mathematik",
@@ -414,7 +449,9 @@ ArrayList {
       "bilingualeSprache": "D",
       "holeAusAltenLernabschnitten": true,
       "id": 79,
-      "istFHRFach": false,
+      "istFHRFach": true,
+      "istFremdsprache": false,
+      "istMoeglichAlsNeueFremdspracheInSekII": false,
       "istNachpruefungErlaubt": true,
       "istOberstufenFach": true,
       "istPruefungsordnungsRelevant": true,
@@ -427,7 +464,7 @@ ArrayList {
       "referenziertInAnderenTabellen": true,
       "sortierung": 190,
     },
-    FaecherListeEintrag {
+    FachDaten {
       "aufZeugnis": true,
       "aufgabenfeld": "1",
       "bezeichnung": "Musik",
@@ -436,7 +473,9 @@ ArrayList {
       "bilingualeSprache": "D",
       "holeAusAltenLernabschnitten": true,
       "id": 81,
-      "istFHRFach": false,
+      "istFHRFach": true,
+      "istFremdsprache": false,
+      "istMoeglichAlsNeueFremdspracheInSekII": false,
       "istNachpruefungErlaubt": true,
       "istOberstufenFach": true,
       "istPruefungsordnungsRelevant": true,
@@ -449,7 +488,7 @@ ArrayList {
       "referenziertInAnderenTabellen": true,
       "sortierung": 80,
     },
-    FaecherListeEintrag {
+    FachDaten {
       "aufZeugnis": true,
       "aufgabenfeld": "3",
       "bezeichnung": "Naturwissenschaften",
@@ -458,7 +497,9 @@ ArrayList {
       "bilingualeSprache": "D",
       "holeAusAltenLernabschnitten": true,
       "id": 191,
-      "istFHRFach": false,
+      "istFHRFach": true,
+      "istFremdsprache": false,
+      "istMoeglichAlsNeueFremdspracheInSekII": false,
       "istNachpruefungErlaubt": true,
       "istOberstufenFach": false,
       "istPruefungsordnungsRelevant": true,
@@ -471,7 +512,7 @@ ArrayList {
       "referenziertInAnderenTabellen": true,
       "sortierung": 195,
     },
-    FaecherListeEintrag {
+    FachDaten {
       "aufZeugnis": true,
       "aufgabenfeld": "2",
       "bezeichnung": "Erziehungswissenschaft",
@@ -480,7 +521,9 @@ ArrayList {
       "bilingualeSprache": "D",
       "holeAusAltenLernabschnitten": true,
       "id": 26,
-      "istFHRFach": false,
+      "istFHRFach": true,
+      "istFremdsprache": false,
+      "istMoeglichAlsNeueFremdspracheInSekII": false,
       "istNachpruefungErlaubt": true,
       "istOberstufenFach": true,
       "istPruefungsordnungsRelevant": true,
@@ -493,7 +536,7 @@ ArrayList {
       "referenziertInAnderenTabellen": true,
       "sortierung": 180,
     },
-    FaecherListeEintrag {
+    FachDaten {
       "aufZeugnis": true,
       "aufgabenfeld": "3",
       "bezeichnung": "Physik",
@@ -502,7 +545,9 @@ ArrayList {
       "bilingualeSprache": "D",
       "holeAusAltenLernabschnitten": true,
       "id": 128,
-      "istFHRFach": false,
+      "istFHRFach": true,
+      "istFremdsprache": false,
+      "istMoeglichAlsNeueFremdspracheInSekII": false,
       "istNachpruefungErlaubt": true,
       "istOberstufenFach": true,
       "istPruefungsordnungsRelevant": true,
@@ -515,7 +560,7 @@ ArrayList {
       "referenziertInAnderenTabellen": true,
       "sortierung": 220,
     },
-    FaecherListeEintrag {
+    FachDaten {
       "aufZeugnis": true,
       "aufgabenfeld": "2",
       "bezeichnung": "Politik",
@@ -524,7 +569,9 @@ ArrayList {
       "bilingualeSprache": "D",
       "holeAusAltenLernabschnitten": true,
       "id": 129,
-      "istFHRFach": false,
+      "istFHRFach": true,
+      "istFremdsprache": false,
+      "istMoeglichAlsNeueFremdspracheInSekII": false,
       "istNachpruefungErlaubt": true,
       "istOberstufenFach": false,
       "istPruefungsordnungsRelevant": true,
@@ -537,7 +584,7 @@ ArrayList {
       "referenziertInAnderenTabellen": true,
       "sortierung": 160,
     },
-    FaecherListeEintrag {
+    FachDaten {
       "aufZeugnis": true,
       "aufgabenfeld": "2",
       "bezeichnung": "Projektkurs Biologie",
@@ -547,6 +594,8 @@ ArrayList {
       "holeAusAltenLernabschnitten": true,
       "id": 234,
       "istFHRFach": false,
+      "istFremdsprache": false,
+      "istMoeglichAlsNeueFremdspracheInSekII": false,
       "istNachpruefungErlaubt": true,
       "istOberstufenFach": true,
       "istPruefungsordnungsRelevant": true,
@@ -559,7 +608,7 @@ ArrayList {
       "referenziertInAnderenTabellen": true,
       "sortierung": 2005,
     },
-    FaecherListeEintrag {
+    FachDaten {
       "aufZeugnis": true,
       "aufgabenfeld": "1",
       "bezeichnung": "Projektkurs Englisch",
@@ -569,6 +618,8 @@ ArrayList {
       "holeAusAltenLernabschnitten": true,
       "id": 233,
       "istFHRFach": false,
+      "istFremdsprache": true,
+      "istMoeglichAlsNeueFremdspracheInSekII": false,
       "istNachpruefungErlaubt": true,
       "istOberstufenFach": true,
       "istPruefungsordnungsRelevant": true,
@@ -581,7 +632,7 @@ ArrayList {
       "referenziertInAnderenTabellen": true,
       "sortierung": 2001,
     },
-    FaecherListeEintrag {
+    FachDaten {
       "aufZeugnis": true,
       "aufgabenfeld": "3",
       "bezeichnung": "Projektkurs Informatik",
@@ -591,6 +642,8 @@ ArrayList {
       "holeAusAltenLernabschnitten": true,
       "id": 235,
       "istFHRFach": false,
+      "istFremdsprache": false,
+      "istMoeglichAlsNeueFremdspracheInSekII": false,
       "istNachpruefungErlaubt": true,
       "istOberstufenFach": true,
       "istPruefungsordnungsRelevant": true,
@@ -603,7 +656,7 @@ ArrayList {
       "referenziertInAnderenTabellen": true,
       "sortierung": 2009,
     },
-    FaecherListeEintrag {
+    FachDaten {
       "aufZeugnis": true,
       "aufgabenfeld": "3",
       "bezeichnung": "Projektkurs",
@@ -613,6 +666,8 @@ ArrayList {
       "holeAusAltenLernabschnitten": true,
       "id": 240,
       "istFHRFach": false,
+      "istFremdsprache": false,
+      "istMoeglichAlsNeueFremdspracheInSekII": false,
       "istNachpruefungErlaubt": true,
       "istOberstufenFach": true,
       "istPruefungsordnungsRelevant": true,
@@ -625,7 +680,7 @@ ArrayList {
       "referenziertInAnderenTabellen": true,
       "sortierung": 2010,
     },
-    FaecherListeEintrag {
+    FachDaten {
       "aufZeugnis": true,
       "aufgabenfeld": null,
       "bezeichnung": "Projektkurs Sport",
@@ -635,6 +690,8 @@ ArrayList {
       "holeAusAltenLernabschnitten": true,
       "id": 237,
       "istFHRFach": false,
+      "istFremdsprache": false,
+      "istMoeglichAlsNeueFremdspracheInSekII": false,
       "istNachpruefungErlaubt": false,
       "istOberstufenFach": true,
       "istPruefungsordnungsRelevant": true,
@@ -647,7 +704,7 @@ ArrayList {
       "referenziertInAnderenTabellen": true,
       "sortierung": 2030,
     },
-    FaecherListeEintrag {
+    FachDaten {
       "aufZeugnis": true,
       "aufgabenfeld": null,
       "bezeichnung": "Projektkurs Tanz",
@@ -657,6 +714,8 @@ ArrayList {
       "holeAusAltenLernabschnitten": true,
       "id": 236,
       "istFHRFach": false,
+      "istFremdsprache": false,
+      "istMoeglichAlsNeueFremdspracheInSekII": false,
       "istNachpruefungErlaubt": false,
       "istOberstufenFach": true,
       "istPruefungsordnungsRelevant": true,
@@ -669,7 +728,7 @@ ArrayList {
       "referenziertInAnderenTabellen": true,
       "sortierung": 2020,
     },
-    FaecherListeEintrag {
+    FachDaten {
       "aufZeugnis": true,
       "aufgabenfeld": "2",
       "bezeichnung": "Philosophie",
@@ -678,7 +737,9 @@ ArrayList {
       "bilingualeSprache": "D",
       "holeAusAltenLernabschnitten": true,
       "id": 127,
-      "istFHRFach": false,
+      "istFHRFach": true,
+      "istFremdsprache": false,
+      "istMoeglichAlsNeueFremdspracheInSekII": false,
       "istNachpruefungErlaubt": true,
       "istOberstufenFach": true,
       "istPruefungsordnungsRelevant": true,
@@ -691,7 +752,7 @@ ArrayList {
       "referenziertInAnderenTabellen": true,
       "sortierung": 170,
     },
-    FaecherListeEintrag {
+    FachDaten {
       "aufZeugnis": true,
       "aufgabenfeld": "2",
       "bezeichnung": "Praktische Philosophie",
@@ -700,7 +761,9 @@ ArrayList {
       "bilingualeSprache": "D",
       "holeAusAltenLernabschnitten": true,
       "id": 144,
-      "istFHRFach": false,
+      "istFHRFach": true,
+      "istFremdsprache": false,
+      "istMoeglichAlsNeueFremdspracheInSekII": false,
       "istNachpruefungErlaubt": true,
       "istOberstufenFach": false,
       "istPruefungsordnungsRelevant": true,
@@ -713,7 +776,7 @@ ArrayList {
       "referenziertInAnderenTabellen": true,
       "sortierung": 171,
     },
-    FaecherListeEintrag {
+    FachDaten {
       "aufZeugnis": true,
       "aufgabenfeld": null,
       "bezeichnung": "Herkunftssprache anstelle einer Pflichtfremdsprache - Arabisch",
@@ -722,7 +785,9 @@ ArrayList {
       "bilingualeSprache": "D",
       "holeAusAltenLernabschnitten": false,
       "id": 4,
-      "istFHRFach": false,
+      "istFHRFach": true,
+      "istFremdsprache": true,
+      "istMoeglichAlsNeueFremdspracheInSekII": false,
       "istNachpruefungErlaubt": false,
       "istOberstufenFach": false,
       "istPruefungsordnungsRelevant": true,
@@ -735,7 +800,7 @@ ArrayList {
       "referenziertInAnderenTabellen": false,
       "sortierung": 30021,
     },
-    FaecherListeEintrag {
+    FachDaten {
       "aufZeugnis": true,
       "aufgabenfeld": "1",
       "bezeichnung": "Spanisch ab Klasse 8",
@@ -744,7 +809,9 @@ ArrayList {
       "bilingualeSprache": "D",
       "holeAusAltenLernabschnitten": true,
       "id": 165,
-      "istFHRFach": false,
+      "istFHRFach": true,
+      "istFremdsprache": true,
+      "istMoeglichAlsNeueFremdspracheInSekII": false,
       "istNachpruefungErlaubt": true,
       "istOberstufenFach": true,
       "istPruefungsordnungsRelevant": true,
@@ -757,7 +824,7 @@ ArrayList {
       "referenziertInAnderenTabellen": true,
       "sortierung": 40,
     },
-    FaecherListeEintrag {
+    FachDaten {
       "aufZeugnis": true,
       "aufgabenfeld": "1",
       "bezeichnung": "Spanisch ab EF",
@@ -766,7 +833,9 @@ ArrayList {
       "bilingualeSprache": "D",
       "holeAusAltenLernabschnitten": true,
       "id": 223,
-      "istFHRFach": false,
+      "istFHRFach": true,
+      "istFremdsprache": true,
+      "istMoeglichAlsNeueFremdspracheInSekII": true,
       "istNachpruefungErlaubt": true,
       "istOberstufenFach": true,
       "istPruefungsordnungsRelevant": true,
@@ -779,7 +848,7 @@ ArrayList {
       "referenziertInAnderenTabellen": true,
       "sortierung": 40,
     },
-    FaecherListeEintrag {
+    FachDaten {
       "aufZeugnis": true,
       "aufgabenfeld": null,
       "bezeichnung": "Sport",
@@ -788,7 +857,9 @@ ArrayList {
       "bilingualeSprache": "D",
       "holeAusAltenLernabschnitten": true,
       "id": 172,
-      "istFHRFach": false,
+      "istFHRFach": true,
+      "istFremdsprache": false,
+      "istMoeglichAlsNeueFremdspracheInSekII": false,
       "istNachpruefungErlaubt": false,
       "istOberstufenFach": true,
       "istPruefungsordnungsRelevant": true,
@@ -801,7 +872,7 @@ ArrayList {
       "referenziertInAnderenTabellen": true,
       "sortierung": 260,
     },
-    FaecherListeEintrag {
+    FachDaten {
       "aufZeugnis": true,
       "aufgabenfeld": "2",
       "bezeichnung": "Sozialwissenschaften",
@@ -810,7 +881,9 @@ ArrayList {
       "bilingualeSprache": "D",
       "holeAusAltenLernabschnitten": true,
       "id": 164,
-      "istFHRFach": false,
+      "istFHRFach": true,
+      "istFremdsprache": false,
+      "istMoeglichAlsNeueFremdspracheInSekII": false,
       "istNachpruefungErlaubt": true,
       "istOberstufenFach": true,
       "istPruefungsordnungsRelevant": true,
@@ -823,7 +896,7 @@ ArrayList {
       "referenziertInAnderenTabellen": true,
       "sortierung": 150,
     },
-    FaecherListeEintrag {
+    FachDaten {
       "aufZeugnis": true,
       "aufgabenfeld": null,
       "bezeichnung": "Vertiefungsfach Deutsch",
@@ -832,7 +905,9 @@ ArrayList {
       "bilingualeSprache": "D",
       "holeAusAltenLernabschnitten": true,
       "id": 210,
-      "istFHRFach": false,
+      "istFHRFach": true,
+      "istFremdsprache": false,
+      "istMoeglichAlsNeueFremdspracheInSekII": false,
       "istNachpruefungErlaubt": false,
       "istOberstufenFach": true,
       "istPruefungsordnungsRelevant": true,
@@ -845,7 +920,7 @@ ArrayList {
       "referenziertInAnderenTabellen": true,
       "sortierung": 280,
     },
-    FaecherListeEintrag {
+    FachDaten {
       "aufZeugnis": true,
       "aufgabenfeld": null,
       "bezeichnung": "Vertiefungsfach Englisch",
@@ -854,7 +929,9 @@ ArrayList {
       "bilingualeSprache": "D",
       "holeAusAltenLernabschnitten": true,
       "id": 212,
-      "istFHRFach": false,
+      "istFHRFach": true,
+      "istFremdsprache": false,
+      "istMoeglichAlsNeueFremdspracheInSekII": false,
       "istNachpruefungErlaubt": true,
       "istOberstufenFach": true,
       "istPruefungsordnungsRelevant": true,
@@ -867,7 +944,7 @@ ArrayList {
       "referenziertInAnderenTabellen": true,
       "sortierung": 290,
     },
-    FaecherListeEintrag {
+    FachDaten {
       "aufZeugnis": true,
       "aufgabenfeld": null,
       "bezeichnung": "Vertiefungsfach Mathematik",
@@ -876,7 +953,9 @@ ArrayList {
       "bilingualeSprache": "D",
       "holeAusAltenLernabschnitten": true,
       "id": 213,
-      "istFHRFach": false,
+      "istFHRFach": true,
+      "istFremdsprache": false,
+      "istMoeglichAlsNeueFremdspracheInSekII": false,
       "istNachpruefungErlaubt": true,
       "istOberstufenFach": true,
       "istPruefungsordnungsRelevant": true,
@@ -889,7 +968,7 @@ ArrayList {
       "referenziertInAnderenTabellen": true,
       "sortierung": 300,
     },
-    FaecherListeEintrag {
+    FachDaten {
       "aufZeugnis": true,
       "aufgabenfeld": "1",
       "bezeichnung": "Vokalpraktischer Grundkurs",
@@ -898,7 +977,9 @@ ArrayList {
       "bilingualeSprache": "D",
       "holeAusAltenLernabschnitten": true,
       "id": 239,
-      "istFHRFach": false,
+      "istFHRFach": true,
+      "istFremdsprache": false,
+      "istMoeglichAlsNeueFremdspracheInSekII": false,
       "istNachpruefungErlaubt": true,
       "istOberstufenFach": true,
       "istPruefungsordnungsRelevant": true,

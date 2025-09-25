@@ -36,14 +36,14 @@
 
 	import { computed } from "vue";
 	import type { FaecherAppProps } from "./SFaecherAppProps";
-	import type { FaecherListeEintrag } from "@core";
+	import type { FachDaten } from "@core";
 	import { useRegionSwitch, ViewType } from "@ui";
 
 	const props = defineProps<FaecherAppProps>();
 
 	const { focusHelpVisible, focusSwitchingEnabled } = useRegionSwitch();
 
-	const fach = computed<FaecherListeEintrag>(() => props.manager().auswahl());
+	const fach = computed<FachDaten>(() => props.manager().auswahl());
 
 	const faecherSubline = computed(() => {
 		const auswahlFaecherList = props.manager().liste.auswahlSorted();

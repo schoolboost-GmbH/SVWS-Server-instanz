@@ -46,7 +46,7 @@ import de.svws_nrw.core.adt.LongArrayKey;
 import de.svws_nrw.core.adt.map.HashMap2D;
 import de.svws_nrw.core.data.LongAndStringLists;
 import de.svws_nrw.core.data.SimpleOperationResponse;
-import de.svws_nrw.core.data.fach.FaecherListeEintrag;
+import de.svws_nrw.core.data.fach.FachDaten;
 import de.svws_nrw.core.data.gost.GostBlockungKurs;
 import de.svws_nrw.core.data.gost.GostBlockungsergebnisKurs;
 import de.svws_nrw.core.data.gost.GostBlockungsergebnisSchiene;
@@ -76,7 +76,7 @@ import de.svws_nrw.core.utils.gost.klausurplanung.GostKlausurplanManager;
 import de.svws_nrw.core.utils.stundenplan.StundenplanManager;
 import de.svws_nrw.data.JSONMapper;
 import de.svws_nrw.data.SimpleBinaryMultipartBody;
-import de.svws_nrw.data.faecher.DataFaecherliste;
+import de.svws_nrw.data.faecher.DataFaecher;
 import de.svws_nrw.data.gost.DataGostBlockungsergebnisse;
 import de.svws_nrw.data.gost.klausurplan.DataGostKlausuren;
 import de.svws_nrw.data.jahrgaenge.DataJahrgangsdaten;
@@ -145,8 +145,8 @@ public final class DataUntis {
 		final Map<String, LehrerListeEintrag> mapLehrerByKuerzel = new DataLehrerliste(conn, null).getLehrerListe(false).stream()
 				.collect(Collectors.toMap(l -> l.kuerzel, l -> l));
 		// Bestimme die Fächer
-		final Map<String, FaecherListeEintrag> mapFaecherByKuerzel =
-				new DataFaecherliste(conn).getFaecherListe(false).stream().collect(Collectors.toMap(f -> f.kuerzel, f -> f));
+		final Map<String, FachDaten> mapFaecherByKuerzel =
+				new DataFaecher(conn).getFaecherListe(false).stream().collect(Collectors.toMap(f -> f.kuerzel, f -> f));
 		// Bestimme die Klassen des Schuljahresabschnitts
 		final List<DTOKlassen> klassen = conn.queryList(DTOKlassen.QUERY_BY_SCHULJAHRESABSCHNITTS_ID, DTOKlassen.class, schuljahresabschnitt.id);
 		final Map<String, DTOKlassen> mapKlassenByKuerzel = klassen.stream().collect(Collectors.toMap(k -> k.Klasse, k -> k));
@@ -224,7 +224,7 @@ public final class DataUntis {
 			final KursDaten kurs = mapKurseByKuerzelUndJahrgang.getOrNull(u.fachKuerzel, klasse.Jahrgang_ID);
 			if (kurs == null) {
 				// Bestimme das Fach
-				final FaecherListeEintrag fach = mapFaecherByKuerzel.get(u.fachKuerzel);
+				final FachDaten fach = mapFaecherByKuerzel.get(u.fachKuerzel);
 				if (fach == null) {
 					logger.logLn(2, "[Fehler] - Das Fach bzw. der Kurs mit dem Kürzel %s konnte nicht in der Datenbank gefunden werden."
 							.formatted(u.fachKuerzel));

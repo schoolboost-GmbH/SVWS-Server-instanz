@@ -20,7 +20,6 @@ import { IllegalArgumentException } from '../../../../../core/src/java/lang/Ille
 import { Pair } from '../../../../../core/src/asd/adt/Pair';
 import { AttributMitAuswahl } from '../../../../../core/src/core/utils/AttributMitAuswahl';
 import { JahrgaengeListeManager } from '../kataloge/jahrgaenge/JahrgaengeListeManager';
-import type { FaecherListeEintrag } from '../../../../../core/src/core/data/fach/FaecherListeEintrag';
 import { AuswahlManager } from '../../AuswahlManager';
 import { JavaInteger } from '../../../../../core/src/java/lang/JavaInteger';
 import { LehrerUtils } from '../../../../../core/src/core/utils/lehrer/LehrerUtils';
@@ -31,6 +30,7 @@ import { Class } from '../../../../../core/src/java/lang/Class';
 import { KursUtils } from '../../../../../core/src/core/utils/kurse/KursUtils';
 import { Arrays } from '../../../../../core/src/java/util/Arrays';
 import type { Schuljahresabschnitt } from '../../../../../core/src/asd/data/schule/Schuljahresabschnitt';
+import type { FachDaten } from "../../../../../core/src/core/data/fach/FachDaten";
 
 export class KursListeManager extends AuswahlManager<number, KursDaten, KursDaten> {
 
@@ -73,9 +73,9 @@ export class KursListeManager extends AuswahlManager<number, KursDaten, KursDate
 	/**
 	 * Das Filter-Attribut für die Fächer
 	 */
-	public readonly faecher : AttributMitAuswahl<number, FaecherListeEintrag>;
+	public readonly faecher : AttributMitAuswahl<number, FachDaten>;
 
-	private static readonly _fachToId : JavaFunction<FaecherListeEintrag, number> = { apply : (f: FaecherListeEintrag) => f.id };
+	private static readonly _fachToId : JavaFunction<FachDaten, number> = { apply : (f: FachDaten) => f.id };
 
 	/**
 	 * Das Filter-Attribut für die Schüler
@@ -117,7 +117,7 @@ export class KursListeManager extends AuswahlManager<number, KursDaten, KursDate
 	/**
 	 * Ein Default-Comparator für den Vergleich von Fächern in Fächerlisten.
 	 */
-	public static readonly comparatorFaecherListe : Comparator<FaecherListeEintrag> = { compare : (a: FaecherListeEintrag, b: FaecherListeEintrag) => {
+	public static readonly comparatorFaecherListe : Comparator<FachDaten> = { compare : (a: FachDaten, b: FachDaten) => {
 		let cmp : number = a.sortierung - b.sortierung;
 		if (cmp !== 0)
 			return cmp;
@@ -151,7 +151,7 @@ export class KursListeManager extends AuswahlManager<number, KursDaten, KursDate
 	 * @param lehrer        die Liste der Lehrer
 	 * @param faecher       die Liste der Fächer
 	 */
-	public constructor(schuljahresabschnitt : number, schuljahresabschnittSchule : number, schuljahresabschnitte : List<Schuljahresabschnitt>, schulform : Schulform | null, kurse : List<KursDaten>, schueler : List<SchuelerListeEintrag>, jahrgaenge : List<JahrgangsDaten>, lehrer : List<LehrerListeEintrag>, faecher : List<FaecherListeEintrag>) {
+	public constructor(schuljahresabschnitt : number, schuljahresabschnittSchule : number, schuljahresabschnitte : List<Schuljahresabschnitt>, schulform : Schulform | null, kurse : List<KursDaten>, schueler : List<SchuelerListeEintrag>, jahrgaenge : List<JahrgangsDaten>, lehrer : List<LehrerListeEintrag>, faecher : List<FachDaten>) {
 		super(schuljahresabschnitt, schuljahresabschnittSchule, schuljahresabschnitte, schulform, kurse, KursUtils.comparator, KursListeManager._kursToId, KursListeManager._kursToId, Arrays.asList(new Pair("idJahrgaenge", true), new Pair("kuerzel", true)));
 		this.schuelerstatus = new AttributMitAuswahl(Arrays.asList(...SchuelerStatus.values()), this._schuelerstatusToId, KursListeManager._comparatorSchuelerStatus, this._eventHandlerFilterChanged);
 		this.schueler = new AttributMitAuswahl(schueler, KursListeManager._schuelerToId, SchuelerUtils.comparator, this._eventHandlerFilterChanged);

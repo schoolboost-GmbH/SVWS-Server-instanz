@@ -7,15 +7,13 @@ import de.svws_nrw.core.data.SimpleOperationResponse;
 import de.svws_nrw.core.data.fach.FachDaten;
 import de.svws_nrw.asd.data.fach.FachKatalogEintrag;
 import de.svws_nrw.asd.data.fach.FachgruppeKatalogEintrag;
-import de.svws_nrw.core.data.fach.FaecherListeEintrag;
 import de.svws_nrw.core.data.fach.SprachpruefungsniveauKatalogEintrag;
 import de.svws_nrw.asd.data.fach.SprachreferenzniveauKatalogEintrag;
 import de.svws_nrw.core.types.ServerMode;
 import de.svws_nrw.core.types.benutzer.BenutzerKompetenz;
 import de.svws_nrw.data.JSONMapper;
 import de.svws_nrw.data.benutzer.DBBenutzerUtils;
-import de.svws_nrw.data.faecher.DataFachdaten;
-import de.svws_nrw.data.faecher.DataFaecherliste;
+import de.svws_nrw.data.faecher.DataFaecher;
 import de.svws_nrw.data.faecher.DataKatalogBilingualeSprachen;
 import de.svws_nrw.data.faecher.DataKatalogFachgruppen;
 import de.svws_nrw.data.faecher.DataKatalogSprachpruefungsniveaus;
@@ -74,11 +72,11 @@ public class APIFaecher {
 					+ "einer Sortierreihenfolge und ob sie in der Anwendung sichtbar bzw. änderbar sein sollen. "
 					+ "Dabei wird geprüft, ob der SVWS-Benutzer die notwendige Berechtigung zum Ansehen von Fächerdaten besitzt.")
 	@ApiResponse(responseCode = "200", description = "Eine Liste von Fächer-Listen-Einträgen",
-			content = @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = FaecherListeEintrag.class))))
+			content = @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = FachDaten.class))))
 	@ApiResponse(responseCode = "403", description = "Der SVWS-Benutzer hat keine Rechte, um Fächerdaten anzusehen.")
 	@ApiResponse(responseCode = "404", description = "Keine Fächer-Einträge gefunden")
 	public Response getFaecher(@PathParam("schema") final String schema, @Context final HttpServletRequest request) {
-		return DBBenutzerUtils.runWithTransaction(conn -> new DataFaecherliste(conn).getAllAsResponse(),
+		return DBBenutzerUtils.runWithTransaction(conn -> new DataFaecher(conn).getAllAsResponse(),
 				request, ServerMode.STABLE, BenutzerKompetenz.KEINE);
 	}
 
@@ -105,7 +103,7 @@ public class APIFaecher {
 	@ApiResponse(responseCode = "404", description = "Kein Fach-Eintrag mit der angegebenen ID gefunden")
 	public Response getFach(@PathParam("schema") final String schema, @PathParam("id") final long id,
 			@Context final HttpServletRequest request) {
-		return DBBenutzerUtils.runWithTransaction(conn -> new DataFachdaten(conn).getByIdAsResponse(id), request, ServerMode.STABLE, BenutzerKompetenz.KEINE);
+		return DBBenutzerUtils.runWithTransaction(conn -> new DataFaecher(conn).getByIdAsResponse(id), request, ServerMode.STABLE, BenutzerKompetenz.KEINE);
 	}
 
 
@@ -136,7 +134,7 @@ public class APIFaecher {
 					content = @Content(mediaType = MediaType.APPLICATION_JSON, schema = @Schema(implementation = FachDaten.class))) final InputStream is,
 			@Context final HttpServletRequest request) {
 		return DBBenutzerUtils.runWithTransaction(
-				conn -> new DataFachdaten(conn).patchAsResponse(id, is), request, ServerMode.STABLE, BenutzerKompetenz.KATALOG_EINTRAEGE_AENDERN);
+				conn -> new DataFaecher(conn).patchAsResponse(id, is), request, ServerMode.STABLE, BenutzerKompetenz.KATALOG_EINTRAEGE_AENDERN);
 	}
 
 
@@ -164,7 +162,7 @@ public class APIFaecher {
 					content = @Content(mediaType = MediaType.APPLICATION_JSON, schema = @Schema(implementation = FachDaten.class))) final InputStream is,
 			@Context final HttpServletRequest request) {
 		return DBBenutzerUtils.runWithTransaction(
-				conn -> new DataFachdaten(conn).addAsResponse(is), request, ServerMode.STABLE, BenutzerKompetenz.KATALOG_EINTRAEGE_AENDERN);
+				conn -> new DataFaecher(conn).addAsResponse(is), request, ServerMode.STABLE, BenutzerKompetenz.KATALOG_EINTRAEGE_AENDERN);
 	}
 
 
@@ -190,7 +188,7 @@ public class APIFaecher {
 	public Response deleteFach(@PathParam("schema") final String schema, @PathParam("id") final long id,
 			@Context final HttpServletRequest request) {
 		return DBBenutzerUtils.runWithTransaction(
-				conn -> new DataFachdaten(conn).deleteAsResponse(id), request, ServerMode.STABLE, BenutzerKompetenz.KATALOG_EINTRAEGE_LOESCHEN);
+				conn -> new DataFaecher(conn).deleteAsResponse(id), request, ServerMode.STABLE, BenutzerKompetenz.KATALOG_EINTRAEGE_LOESCHEN);
 	}
 
 	/**
@@ -215,7 +213,7 @@ public class APIFaecher {
 					array = @ArraySchema(schema = @Schema(implementation = Long.class)))) final InputStream is,
 			@Context final HttpServletRequest request) {
 		return DBBenutzerUtils.runWithTransactionOnErrorSimpleResponse(
-				conn -> new DataFaecherliste(conn).deleteMultipleAsSimpleResponseList(JSONMapper.toListOfLong(is)),
+				conn -> new DataFaecher(conn).deleteMultipleAsSimpleResponseList(JSONMapper.toListOfLong(is)),
 				request, ServerMode.DEV,
 				BenutzerKompetenz.KATALOG_EINTRAEGE_LOESCHEN);
 	}
@@ -454,7 +452,7 @@ public class APIFaecher {
 	@ApiResponse(responseCode = "403", description = "Der SVWS-Benutzer hat keine Rechte, um die Fächerdaten anzupassen.")
 	@ApiResponse(responseCode = "404", description = "Keine Fächer-Einträge gefunden")
 	public Response setFaecherSortierungSekII(@PathParam("schema") final String schema, @Context final HttpServletRequest request) {
-		return DBBenutzerUtils.runWithTransaction(conn -> DataFaecherliste.setDefaultSortierungSekII(conn),
+		return DBBenutzerUtils.runWithTransaction(conn -> DataFaecher.setDefaultSortierungSekII(conn),
 				request, ServerMode.STABLE, BenutzerKompetenz.KATALOG_EINTRAEGE_AENDERN);
 	}
 

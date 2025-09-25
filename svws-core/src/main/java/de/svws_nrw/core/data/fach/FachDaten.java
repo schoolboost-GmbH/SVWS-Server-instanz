@@ -100,6 +100,10 @@ public class FachDaten {
 			example = "true")
 	public boolean holeAusAltenLernabschnitten = false;
 
+	/** Gibt an, ob das Fach in anderen Datenbanktabellen referenziert ist oder nicht. */
+	@Schema(description = "Gibt an, ob das Fach in anderen Datenbanktabellen referenziert ist oder nicht.", example = "true")
+	public Boolean referenziertInAnderenTabellen = null;
+
 	/**
 	 * Leerer Standardkonstruktor.
 	 */

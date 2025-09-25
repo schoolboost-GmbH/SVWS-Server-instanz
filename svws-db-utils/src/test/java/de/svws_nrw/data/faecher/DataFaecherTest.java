@@ -28,18 +28,18 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 /**
- * Diese Klasse testet die Klasse {@link DataFachdaten}.
+ * Diese Klasse testet die Klasse {@link DataFaecher}.
  */
 @DisplayName("Diese Klasse testet die Klasse DataFachdaten")
 @ExtendWith(MockitoExtension.class)
-class DataFachdatenTest {
+class DataFaecherTest {
 
 
 	@Mock
 	private DBEntityManager conn;
 
 	@InjectMocks
-	private DataFachdaten dataFachdaten;
+	private DataFaecher data;
 
 	@BeforeAll
 	static void setUpAll() {
@@ -51,7 +51,7 @@ class DataFachdatenTest {
 	void initDTOTest() throws ApiOperationException {
 		final var fachdaten = new DTOFach(1L, true);
 
-		this.dataFachdaten.initDTO(fachdaten, 2L, null);
+		this.data.initDTO(fachdaten, 2L, null);
 
 		assertThat(fachdaten.ID).isEqualTo(2L);
 	}
@@ -62,7 +62,7 @@ class DataFachdatenTest {
 		final var dtoFach = getDtoFach();
 		when(this.conn.queryByKey(DTOFach.class, dtoFach.ID)).thenReturn(dtoFach);
 
-		assertThat(dataFachdaten.getById(dtoFach.ID))
+		assertThat(data.getById(dtoFach.ID))
 				.isInstanceOf(FachDaten.class)
 				.hasFieldOrPropertyWithValue("id", dtoFach.ID);
 	}
@@ -72,7 +72,7 @@ class DataFachdatenTest {
 	void getByIdTest_wrongId() {
 		when(this.conn.queryByKey(any(), any())).thenReturn(null);
 
-		final var throwable = catchThrowable(() -> dataFachdaten.getById(1L));
+		final var throwable = catchThrowable(() -> data.getById(1L));
 
 		assertThat(throwable)
 				.isInstanceOf(ApiOperationException.class)
@@ -86,7 +86,7 @@ class DataFachdatenTest {
 	void mapTest() throws ApiOperationException {
 		final var dtoFach = getDtoFach();
 
-		assertThat(this.dataFachdaten.map(dtoFach))
+		assertThat(this.data.map(dtoFach))
 				.isInstanceOf(FachDaten.class)
 				.hasFieldOrPropertyWithValue("id", 1L)
 				.hasFieldOrPropertyWithValue("kuerzel", "kurz")
@@ -120,7 +120,7 @@ class DataFachdatenTest {
 		dtoFach.MaxBemZeichen = null;
 		dtoFach.GewichtungFHR = null;
 
-		assertThat(this.dataFachdaten.map(dtoFach))
+		assertThat(this.data.map(dtoFach))
 				.isInstanceOf(FachDaten.class)
 				.hasFieldOrPropertyWithValue("kuerzel", "")
 				.hasFieldOrPropertyWithValue("bezeichnung", "")
@@ -136,7 +136,7 @@ class DataFachdatenTest {
 	void mapAttributeTest(final String key, final Object value) {
 		final var expectedDTO = new DTOFach(1L, true);
 
-		final var throwable = catchThrowable(() -> this.dataFachdaten.mapAttribute(expectedDTO, key, value, null));
+		final var throwable = catchThrowable(() -> this.data.mapAttribute(expectedDTO, key, value, null));
 
 		switch (key) {
 			case "kuerzel" -> assertThat(expectedDTO.Kuerzel).isEqualTo(value);
@@ -169,7 +169,7 @@ class DataFachdatenTest {
 	void mapAttributeTest_WrongKuerzelStatistik() {
 		final var expectedDTO = new DTOFach(1L, true);
 
-		final var throwable = catchThrowable(() -> this.dataFachdaten.mapAttribute(expectedDTO, "kuerzelStatistik", "ZZ", null));
+		final var throwable = catchThrowable(() -> this.data.mapAttribute(expectedDTO, "kuerzelStatistik", "ZZ", null));
 
 		assertThat(throwable)
 				.isInstanceOf(ApiOperationException.class)
@@ -187,7 +187,7 @@ class DataFachdatenTest {
 		dtoFach3.ID = 3L;
 		final var dtoFacher = List.of(dtoFach1, dtoFach2, dtoFach3);
 
-		final var result = this.dataFachdaten.getMapFachdatenFromDTOFachList(dtoFacher);
+		final var result = this.data.getMapFachdatenFromDTOFachList(dtoFacher);
 
 		assertThat(result).hasSize(3);
 		assertThat(result.get(1L)).isInstanceOf(FachDaten.class);
@@ -196,7 +196,7 @@ class DataFachdatenTest {
 	@Test
 	@DisplayName("getMapFachdatenFromDTOFachList | input is Null")
 	void getMapFachdatenFromDTOFachListTest_inputNull() throws ApiOperationException {
-		final var result = this.dataFachdaten.getMapFachdatenFromDTOFachList(null);
+		final var result = this.data.getMapFachdatenFromDTOFachList(null);
 
 		assertThat(result).isEmpty();
 	}
@@ -204,7 +204,7 @@ class DataFachdatenTest {
 	@Test
 	@DisplayName("getMapFachdatenFromDTOFachList | emptyList")
 	void getMapFachdatenFromDTOFachListTest_emptyList() throws ApiOperationException {
-		final var result = this.dataFachdaten.getMapFachdatenFromDTOFachList(Collections.emptyList());
+		final var result = this.data.getMapFachdatenFromDTOFachList(Collections.emptyList());
 
 		assertThat(result).isEmpty();
 	}

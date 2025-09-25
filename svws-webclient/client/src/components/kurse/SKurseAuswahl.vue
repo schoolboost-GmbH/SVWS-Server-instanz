@@ -44,7 +44,7 @@
 	import { ref, computed } from "vue";
 	import type { KurseAuswahlProps } from "./SKurseAuswahlProps";
 	import { useRegionSwitch, ViewType, type DataTableColumn, type SortByAndOrder } from "@ui";
-	import type { FachDaten, FaecherListeEintrag, JahrgangsDaten, KursDaten, LehrerListeEintrag, List, SchuelerListeEintrag, Schulgliederung } from "@core";
+	import type { FachDaten, JahrgangsDaten, KursDaten, LehrerListeEintrag, List, SchuelerListeEintrag, Schulgliederung } from "@core";
 	import { ServerMode, BenutzerKompetenz } from "@core";
 
 	const props = defineProps<KurseAuswahlProps>();
@@ -87,11 +87,11 @@
 		},
 	})
 
-	function text(eintrag: LehrerListeEintrag | JahrgangsDaten | FaecherListeEintrag): string {
+	function text(eintrag: LehrerListeEintrag | JahrgangsDaten | FachDaten): string {
 		return eintrag.kuerzel ?? "";
 	}
 
-	function find(items: Iterable<LehrerListeEintrag | JahrgangsDaten | FaecherListeEintrag>, search: string) {
+	function find(items: Iterable<LehrerListeEintrag | JahrgangsDaten | FachDaten>, search: string) {
 		const list = [];
 		for (const i of items)
 			if ((i.kuerzel !== null) && i.kuerzel.toLocaleLowerCase().includes(search.toLocaleLowerCase()))
@@ -144,7 +144,7 @@
 		},
 	});
 
-	const filterFaecher = computed<FaecherListeEintrag[]>({
+	const filterFaecher = computed<FachDaten[]>({
 		get: () => [...props.manager().faecher.auswahl()],
 		set: (value) => {
 			props.manager().faecher.auswahlClear();

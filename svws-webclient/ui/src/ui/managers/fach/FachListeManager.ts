@@ -3,7 +3,6 @@ import { HashMap2D } from '../../../../../core/src/core/adt/map/HashMap2D';
 import type { JavaSet } from '../../../../../core/src/java/util/JavaSet';
 import { HashMap } from '../../../../../core/src/java/util/HashMap';
 import { Schulform } from '../../../../../core/src/asd/types/schule/Schulform';
-import { FaecherListeEintrag } from '../../../../../core/src/core/data/fach/FaecherListeEintrag';
 import { JavaString } from '../../../../../core/src/java/lang/JavaString';
 import { DeveloperNotificationException } from '../../../../../core/src/core/exceptions/DeveloperNotificationException';
 import type { Comparator } from '../../../../../core/src/../../core/src/java/util/Comparator';
@@ -18,21 +17,21 @@ import { Arrays } from '../../../../../core/src/java/util/Arrays';
 import { Schuljahresabschnitt } from '../../../../../core/src/asd/data/schule/Schuljahresabschnitt';
 import { HashSet } from '../../../../../core/src/java/util/HashSet';
 
-export class FachListeManager extends AuswahlManager<number, FaecherListeEintrag, FachDaten> {
+export class FachListeManager extends AuswahlManager<number, FachDaten, FachDaten> {
 
 	/**
 	 * Funktionen zum Mappen von Auswahl- bzw. Daten-Objekten auf deren ID-Typ
 	 */
-	private static readonly _fachToId : JavaFunction<FaecherListeEintrag, number> = { apply : (f: FaecherListeEintrag) => f.id };
+	private static readonly _fachToId : JavaFunction<FachDaten, number> = { apply : (f: FachDaten) => f.id };
 
 	private static readonly _fachDatenToId : JavaFunction<FachDaten, number> = { apply : (f: FachDaten) => f.id };
 
 	/**
 	 * Zusätzliche Maps, welche zum schnellen Zugriff auf Teilmengen der Liste verwendet werden können
 	 */
-	private readonly _mapFachIstSichtbar : HashMap2D<boolean, number, FaecherListeEintrag> = new HashMap2D<boolean, number, FaecherListeEintrag>();
+	private readonly _mapFachIstSichtbar : HashMap2D<boolean, number, FachDaten> = new HashMap2D<boolean, number, FachDaten>();
 
-	private readonly _mapFachByKuerzel : HashMap<string, FaecherListeEintrag> = new HashMap<string, FaecherListeEintrag>();
+	private readonly _mapFachByKuerzel : HashMap<string, FachDaten> = new HashMap<string, FachDaten>();
 
 	/**
 	 * Das Filter-Attribut auf nur sichtbare Fächer
@@ -47,7 +46,7 @@ export class FachListeManager extends AuswahlManager<number, FaecherListeEintrag
 	/**
 	 * Ein Default-Comparator für den Vergleich von Fächern in Fächerlisten.
 	 */
-	public static readonly comparator : Comparator<FaecherListeEintrag> = { compare : (a: FaecherListeEintrag, b: FaecherListeEintrag) => {
+	public static readonly comparator : Comparator<FachDaten> = { compare : (a: FachDaten, b: FachDaten) => {
 		let cmp : number = a.sortierung - b.sortierung;
 		if (cmp !== 0)
 			return cmp;
@@ -65,7 +64,7 @@ export class FachListeManager extends AuswahlManager<number, FaecherListeEintrag
 	 * @param schulform     die Schulform der Schule
 	 * @param faecher       die Liste der Fächer
 	 */
-	public constructor(schuljahresabschnitt : number, schuljahresabschnittSchule : number, schuljahresabschnitte : List<Schuljahresabschnitt>, schulform : Schulform | null, faecher : List<FaecherListeEintrag>) {
+	public constructor(schuljahresabschnitt : number, schuljahresabschnittSchule : number, schuljahresabschnitte : List<Schuljahresabschnitt>, schulform : Schulform | null, faecher : List<FachDaten>) {
 		super(schuljahresabschnitt, schuljahresabschnittSchule, schuljahresabschnitte, schulform, faecher, FachListeManager.comparator, FachListeManager._fachToId, FachListeManager._fachDatenToId, Arrays.asList());
 		this.initFaecher();
 	}
@@ -73,8 +72,7 @@ export class FachListeManager extends AuswahlManager<number, FaecherListeEintrag
 	private initFaecher() : void {
 		for (const f of this.liste.list()) {
 			this._mapFachIstSichtbar.put(f.istSichtbar, f.id, f);
-			if (f.kuerzel !== null)
-				this._mapFachByKuerzel.put(f.kuerzel, f);
+			this._mapFachByKuerzel.put(f.kuerzel, f);
 		}
 	}
 
@@ -84,7 +82,7 @@ export class FachListeManager extends AuswahlManager<number, FaecherListeEintrag
 	 * @param eintrag   der Auswahl-Eintrag
 	 * @param daten     das neue Daten-Objekt zu der Auswahl
 	 */
-	protected onSetDaten(eintrag : FaecherListeEintrag, daten : FachDaten) : boolean {
+	protected onSetDaten(eintrag : FachDaten, daten : FachDaten) : boolean {
 		let updateEintrag : boolean = false;
 		if (!JavaObject.equalsTranspiler(daten.kuerzel, (eintrag.kuerzel))) {
 			eintrag.kuerzel = daten.kuerzel;
@@ -124,7 +122,7 @@ export class FachListeManager extends AuswahlManager<number, FaecherListeEintrag
 	 *
 	 * @return das Ergebnis des Vergleichs (-1 kleine, 0 gleich und 1 größer)
 	 */
-	protected compareAuswahl(a : FaecherListeEintrag, b : FaecherListeEintrag) : number {
+	protected compareAuswahl(a : FachDaten, b : FachDaten) : number {
 		for (const criteria of this._order) {
 			const field : string | null = criteria.a;
 			const asc : boolean = (criteria.b === null) || criteria.b;
@@ -159,7 +157,7 @@ export class FachListeManager extends AuswahlManager<number, FaecherListeEintrag
 		return this.idsReferenzierterFaecher;
 	}
 
-	protected checkFilter(eintrag : FaecherListeEintrag) : boolean {
+	protected checkFilter(eintrag : FachDaten) : boolean {
 		if (this._filterNurSichtbar && !eintrag.istSichtbar)
 			return false;
 		return true;
@@ -173,7 +171,7 @@ export class FachListeManager extends AuswahlManager<number, FaecherListeEintrag
 	 *
 	 * @return die FachDaten oder null
 	 */
-	public getByKuerzelOrNull(kuerzel : string) : FaecherListeEintrag | null {
+	public getByKuerzelOrNull(kuerzel : string) : FachDaten | null {
 		return this._mapFachByKuerzel.get(kuerzel);
 	}
 

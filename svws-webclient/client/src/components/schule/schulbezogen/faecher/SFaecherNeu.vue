@@ -127,10 +127,9 @@
 		if (isLoading.value)
 			return;
 
-		isLoading.value = true;
 		props.checkpoint.active = false;
-		const partialData: Partial<FachDaten> = data.value;
-		delete partialData.id;
+		isLoading.value = true;
+		const { id, referenziertInAnderenTabellen, ...partialData } = data.value;
 		await props.add(partialData);
 		isLoading.value = false;
 	}

@@ -44,7 +44,6 @@ import { ErzieherStammdaten } from '../core/data/erzieher/ErzieherStammdaten';
 import { FachDaten } from '../core/data/fach/FachDaten';
 import { FachgruppeKatalogEintrag } from '../asd/data/fach/FachgruppeKatalogEintrag';
 import { FachKatalogEintrag } from '../asd/data/fach/FachKatalogEintrag';
-import { FaecherListeEintrag } from '../core/data/fach/FaecherListeEintrag';
 import { Fahrschuelerart } from '../core/data/schule/Fahrschuelerart';
 import { FoerderschwerpunktEintrag } from '../core/data/schule/FoerderschwerpunktEintrag';
 import { FoerderschwerpunktKatalogEintrag } from '../asd/data/schule/FoerderschwerpunktKatalogEintrag';
@@ -3425,7 +3424,7 @@ export class ApiServer extends BaseApi {
 	 * Mögliche HTTP-Antworten:
 	 *   Code 200: Eine Liste von Fächer-Listen-Einträgen
 	 *     - Mime-Type: application/json
-	 *     - Rückgabe-Typ: List<FaecherListeEintrag>
+	 *     - Rückgabe-Typ: List<FachDaten>
 	 *   Code 403: Der SVWS-Benutzer hat keine Rechte, um Fächerdaten anzusehen.
 	 *   Code 404: Keine Fächer-Einträge gefunden
 	 *
@@ -3433,13 +3432,13 @@ export class ApiServer extends BaseApi {
 	 *
 	 * @returns Eine Liste von Fächer-Listen-Einträgen
 	 */
-	public async getFaecher(schema : string) : Promise<List<FaecherListeEintrag>> {
+	public async getFaecher(schema : string) : Promise<List<FachDaten>> {
 		const path = "/db/{schema}/faecher/"
 			.replace(/{schema\s*(:[^{}]+({[^{}]+})*)?}/g, schema);
 		const result : string = await super.getJSON(path);
 		const obj = JSON.parse(result);
-		const ret = new ArrayList<FaecherListeEintrag>();
-		obj.forEach((elem: any) => { const text : string = JSON.stringify(elem); ret.add(FaecherListeEintrag.transpilerFromJSON(text)); });
+		const ret = new ArrayList<FachDaten>();
+		obj.forEach((elem: any) => { const text : string = JSON.stringify(elem); ret.add(FachDaten.transpilerFromJSON(text)); });
 		return ret;
 	}
 

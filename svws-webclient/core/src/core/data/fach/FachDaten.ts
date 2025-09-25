@@ -109,6 +109,11 @@ export class FachDaten extends JavaObject {
 	 */
 	public holeAusAltenLernabschnitten : boolean = false;
 
+	/**
+	 * Gibt an, ob das Fach in anderen Datenbanktabellen referenziert ist oder nicht.
+	 */
+	public referenziertInAnderenTabellen : boolean | null = null;
+
 
 	/**
 	 * Leerer Standardkonstruktor.
@@ -189,6 +194,7 @@ export class FachDaten extends JavaObject {
 		if (obj.holeAusAltenLernabschnitten === undefined)
 			throw new Error('invalid json format, missing attribute holeAusAltenLernabschnitten');
 		result.holeAusAltenLernabschnitten = obj.holeAusAltenLernabschnitten;
+		result.referenziertInAnderenTabellen = (obj.referenziertInAnderenTabellen === undefined) ? null : obj.referenziertInAnderenTabellen === null ? null : obj.referenziertInAnderenTabellen;
 		return result;
 	}
 
@@ -215,6 +221,7 @@ export class FachDaten extends JavaObject {
 		result += '"istSchriftlichBA" : ' + obj.istSchriftlichBA.toString() + ',';
 		result += '"istFHRFach" : ' + obj.istFHRFach.toString() + ',';
 		result += '"holeAusAltenLernabschnitten" : ' + obj.holeAusAltenLernabschnitten.toString() + ',';
+		result += '"referenziertInAnderenTabellen" : ' + ((obj.referenziertInAnderenTabellen === null) ? 'null' : obj.referenziertInAnderenTabellen.toString()) + ',';
 		result = result.slice(0, -1);
 		result += '}';
 		return result;
@@ -284,6 +291,9 @@ export class FachDaten extends JavaObject {
 		}
 		if (obj.holeAusAltenLernabschnitten !== undefined) {
 			result += '"holeAusAltenLernabschnitten" : ' + obj.holeAusAltenLernabschnitten.toString() + ',';
+		}
+		if (obj.referenziertInAnderenTabellen !== undefined) {
+			result += '"referenziertInAnderenTabellen" : ' + ((obj.referenziertInAnderenTabellen === null) ? 'null' : obj.referenziertInAnderenTabellen.toString()) + ',';
 		}
 		result = result.slice(0, -1);
 		result += '}';

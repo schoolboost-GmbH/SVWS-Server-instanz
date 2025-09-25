@@ -100,7 +100,7 @@
 	import type { DataTableColumn } from "@ui";
 	import type { KursDatenProps } from "./SKursDatenProps";
 	import type { JahrgangsDaten, LehrerListeEintrag, List } from "@core";
-	import { SchuelerStatus, ZulaessigeKursart, KursFortschreibungsart, ArrayList, BenutzerKompetenz, ServerMode, FaecherListeEintrag, KursLehrer } from "@core";
+	import { SchuelerStatus, ZulaessigeKursart, KursFortschreibungsart, ArrayList, BenutzerKompetenz, ServerMode, FachDaten, KursLehrer } from "@core";
 
 	const props = defineProps<KursDatenProps>();
 	const readonly = computed(() => !hatKompetenzUpdate.value);
@@ -135,8 +135,8 @@
 		return lehrer.kuerzel + ' - ' + lehrer.vorname + ' ' + lehrer.nachname;
 	}
 
-	const fach = computed<FaecherListeEintrag>({
-		get: () => props.manager().faecher.get(data().idFach) ?? new FaecherListeEintrag(),
+	const fach = computed<FachDaten>({
+		get: () => props.manager().faecher.get(data().idFach) ?? new FachDaten(),
 		set: (value) => void props.patch({ idFach: value.id }),
 	});
 

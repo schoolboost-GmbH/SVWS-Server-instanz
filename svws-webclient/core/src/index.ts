@@ -464,7 +464,6 @@ export { ErzieherListeEintrag } from './core/data/erzieher/ErzieherListeEintrag'
 export { ErzieherStammdaten } from './core/data/erzieher/ErzieherStammdaten';
 export { Erzieherart } from './core/data/erzieher/Erzieherart';
 export { FachDaten } from './core/data/fach/FachDaten';
-export { FaecherListeEintrag } from './core/data/fach/FaecherListeEintrag';
 export { SprachpruefungsniveauKatalogEintrag } from './core/data/fach/SprachpruefungsniveauKatalogEintrag';
 export { AbiturFachbelegung } from './core/data/gost/AbiturFachbelegung';
 export { AbiturFachbelegungHalbjahr } from './core/data/gost/AbiturFachbelegungHalbjahr';

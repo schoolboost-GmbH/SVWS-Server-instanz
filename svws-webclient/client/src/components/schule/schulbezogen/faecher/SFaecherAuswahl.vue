@@ -39,7 +39,7 @@
 	import { computed } from "vue";
 	import type { FaecherAuswahlProps } from "./SFaecherAuswahlProps";
 	import { useRegionSwitch, ViewType } from "@ui";
-	import type { FaecherListeEintrag} from "@core";
+	import type { FachDaten } from "@core";
 	import { BenutzerKompetenz } from "@core";
 
 	const props = defineProps<FaecherAuswahlProps>();
@@ -69,7 +69,7 @@
 		return props.manager().hasDaten() ? props.manager().auswahl() : null;
 	});
 
-	async function setAuswahl(items : FaecherListeEintrag[]) {
+	async function setAuswahl(items : FachDaten[]) {
 		props.manager().liste.auswahlClear();
 		for (const item of items)
 			if (props.manager().liste.hasValue(item))
