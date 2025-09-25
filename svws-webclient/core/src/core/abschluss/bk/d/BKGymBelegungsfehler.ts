@@ -38,7 +38,7 @@ export class BKGymBelegungsfehler extends JavaEnum<BKGymBelegungsfehler> {
 	/**
 	 * BelegungsfehlerArt AB_5
 	 */
-	public static readonly AB_5 : BKGymBelegungsfehler = new BKGymBelegungsfehler("AB_5", 5, "AB_5", BKGymBelegungsfehlerArt.BELEGUNG, "Die gewählte Kombination aus drittem und viertem Abiturfach is in dem Bildungsgang nicht zulässig.");
+	public static readonly AB_5 : BKGymBelegungsfehler = new BKGymBelegungsfehler("AB_5", 5, "AB_5", BKGymBelegungsfehlerArt.BELEGUNG, "Die gewählte Kombination aus drittem und viertem Abiturfach ist in dem Bildungsgang nicht zulässig.");
 
 	/**
 	 * BelegungsfehlerArt ABI_11
@@ -54,6 +54,26 @@ export class BKGymBelegungsfehler extends JavaEnum<BKGymBelegungsfehler> {
 	 * BelegungsfehlerArt 	ABI_13
 	 */
 	public static readonly ABI_13 : BKGymBelegungsfehler = new BKGymBelegungsfehler("ABI_13", 8, "ABI_13", BKGymBelegungsfehlerArt.SCHRIFTLICHKEIT, "In Q2.2 muss das 4. Abiturfach mündlich belegt sein.");
+
+	/**
+	 * BelegungsfehlerArt ST_1
+	 */
+	public static readonly ST_1 : BKGymBelegungsfehler = new BKGymBelegungsfehler("ST_1", 9, "ST_1", BKGymBelegungsfehlerArt.BELEGUNG, "Es konnte zu den Fachbelegungen keine passende Variante für die Stundentafel in dieser Anlage gefunden werden.");
+
+	/**
+	 * BelegungsfehlerArt ST_2
+	 */
+	public static readonly ST_2 : BKGymBelegungsfehler = new BKGymBelegungsfehler("ST_2", 10, "ST_2", BKGymBelegungsfehlerArt.BELEGUNG, "Es konnte zu den Fachbelegungen keine eindeutige Variante für die Stundentafel in dieser Anlage gefunden werden.");
+
+	/**
+	 * BelegungsfehlerArt ST_3_INFO
+	 */
+	public static readonly ST_3_INFO : BKGymBelegungsfehler = new BKGymBelegungsfehler("ST_3_INFO", 11, "ST_3_INFO", BKGymBelegungsfehlerArt.HINWEIS, "Es wurden mehrer potentielle Kandidaten von Fachbelegungen für einen Eintrag in der Stundetafel gefunden. Keiner von Ihnen passt optimal, so dass der geeignetste davon für die weitere Belegprüfung genutzt wurde.");
+
+	/**
+	 * BelegungsfehlerArt ST_4
+	 */
+	public static readonly ST_4 : BKGymBelegungsfehler = new BKGymBelegungsfehler("ST_4", 12, "ST_4", BKGymBelegungsfehlerArt.BELEGUNG, "");
 
 	/**
 	 * Der eindeutige Code des Belegungsfehlers

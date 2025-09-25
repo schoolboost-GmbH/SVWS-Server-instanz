@@ -11,6 +11,7 @@ import { BeruflichesGymnasiumPruefungsordnungAnlage } from '../../../../asd/type
 import { Schulgliederung } from '../../../../asd/types/schule/Schulgliederung';
 import type { List } from '../../../../java/util/List';
 import { BKGymBelegpruefungD3 } from '../../../../core/abschluss/bk/d/BKGymBelegpruefungD3';
+import { BKGymBelegpruefungD1 } from '../../../../core/abschluss/bk/d/BKGymBelegpruefungD1';
 import { BeruflichesGymnasiumStundentafelFach } from '../../../../asd/data/schule/BeruflichesGymnasiumStundentafelFach';
 import { BKGymBelegpruefungErgebnisFehler } from '../../../../core/abschluss/bk/d/BKGymBelegpruefungErgebnisFehler';
 import { BKGymFach } from '../../../../core/data/bk/abi/BKGymFach';
@@ -123,14 +124,16 @@ export class BKGymAbiturdatenManager extends JavaObject {
 	 * @return der Belegprüfungsalgorithmus
 	 */
 	private createBelegpruefungD01() : BKGymBelegpruefung {
-		let _sevar_1941673097 : any;
-		const _seexpr_1941673097 = (this.fks);
-		if (_seexpr_1941673097 === "10600") {
-			_sevar_1941673097 = new BKGymBelegpruefungD3(this);
+		let _sevar_255515148 : any;
+		const _seexpr_255515148 = (this.fks);
+		if (_seexpr_255515148 === "10200") {
+			_sevar_255515148 = new BKGymBelegpruefungD1(this);
+		} else if (_seexpr_255515148 === "10600") {
+			_sevar_255515148 = new BKGymBelegpruefungD3(this);
 		} else {
 			throw new DeveloperNotificationException("Die Belegprüfung für die Schulgliederung " + this.gliederung.name() + " und den Fachklassenschlüssel " + this.fks + " wird noch nicht unterstützt.");
 		}
-		return _sevar_1941673097;
+		return _sevar_255515148;
 	}
 
 	/**
@@ -223,6 +226,20 @@ export class BKGymAbiturdatenManager extends JavaObject {
 	}
 
 	/**
+	 * Prüft, ob es sich bei der Fachbelegung um eine Belegung einer Fremdsprache handelt.
+	 *
+	 * @param fb   die Fachbelegung
+	 *
+	 * @return true, wenn es sich um eine Fremdsprachenbelegung handelt, und ansonsten false
+	 */
+	public istFremdsprachenbelegung(fb : BKGymAbiturFachbelegung) : boolean {
+		const fbFach : BKGymFach | null = this.faecherManager.get(fb.fachID);
+		if ((fbFach === null) || (fbFach.bezeichnung === null))
+			return false;
+		return fbFach.istFremdsprache;
+	}
+
+	/**
 	 * Prüft, ob die übergebene Fachbelgung als Fach in der Stundentafel vorkommt bzw. vorkommen kann.
 	 *
 	 * @param tafel   die Stundentafel
@@ -230,7 +247,7 @@ export class BKGymAbiturdatenManager extends JavaObject {
 	 *
 	 * @return der Eintrag der Stundentafel, bei welchem die Fachbelegung vorkommt, oder null, wenn keine Zuordnung zur Stundentafel möglich ist
 	 */
-	private getFachByBelegung(tafel : BeruflichesGymnasiumStundentafel, fb : BKGymAbiturFachbelegung) : BeruflichesGymnasiumStundentafelFach | null {
+	public getFachByBelegung(tafel : BeruflichesGymnasiumStundentafel, fb : BKGymAbiturFachbelegung) : BeruflichesGymnasiumStundentafelFach | null {
 		const fbFach : BKGymFach | null = this.faecherManager.get(fb.fachID);
 		if ((fbFach === null) || (fbFach.bezeichnung === null))
 			return null;
@@ -355,7 +372,7 @@ export class BKGymAbiturdatenManager extends JavaObject {
 	 *
 	 * @return die Map
 	 */
-	public getWahlmoeglichekiten(tafeln : List<BeruflichesGymnasiumStundentafel>) : JavaMap<BeruflichesGymnasiumStundentafel, BeruflichesGymnasiumStundentafelAbiturfaecherWahlmoeglichkeit> {
+	public getWahlmoeglichekeiten(tafeln : List<BeruflichesGymnasiumStundentafel>) : JavaMap<BeruflichesGymnasiumStundentafel, BeruflichesGymnasiumStundentafelAbiturfaecherWahlmoeglichkeit> {
 		const result : JavaMap<BeruflichesGymnasiumStundentafel, BeruflichesGymnasiumStundentafelAbiturfaecherWahlmoeglichkeit> = new HashMap<BeruflichesGymnasiumStundentafel, BeruflichesGymnasiumStundentafelAbiturfaecherWahlmoeglichkeit>();
 		for (const tafel of tafeln) {
 			const wm : BeruflichesGymnasiumStundentafelAbiturfaecherWahlmoeglichkeit | null = this.getWahlmoeglichkeitAusStundentafel(tafel);
@@ -363,6 +380,27 @@ export class BKGymAbiturdatenManager extends JavaObject {
 				result.put(tafel, wm);
 		}
 		return result;
+	}
+
+	/**
+	 * Liefert eine Map, die zu jedem Index der Fachtafel die zugehörigen Fächer liefert.
+	 * Hier sind die Wahlmöglichkeiten enthalten, die eine Stundentafelvariante erlaubt.
+	 *
+	 * @param tafel   die Stundentafel mit der Liste der Fächer
+	 *
+	 * @return die Map
+	 */
+	public getMapFaecherFromTafelByIndex(tafel : BeruflichesGymnasiumStundentafel) : JavaMap<number, List<BeruflichesGymnasiumStundentafelFach>> {
+		const mapFaecher : JavaMap<number, List<BeruflichesGymnasiumStundentafelFach>> = new HashMap<number, List<BeruflichesGymnasiumStundentafelFach>>();
+		for (const fach of tafel.faecher) {
+			let faecher : List<BeruflichesGymnasiumStundentafelFach> | null = mapFaecher.get(fach.sortierung);
+			if (faecher === null) {
+				faecher = new ArrayList();
+				mapFaecher.put(fach.sortierung, faecher);
+			}
+			faecher.add(fach);
+		}
+		return mapFaecher;
 	}
 
 	transpilerCanonicalName(): string {

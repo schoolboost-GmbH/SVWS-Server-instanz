@@ -24,7 +24,7 @@ public enum BKGymBelegungsfehler {
 	AB_4("AB_4", BKGymBelegungsfehlerArt.BELEGUNG, "Es muss ein viertes Abiturfach gewählt werden."),
 
 	/** BelegungsfehlerArt AB_5 */
-	AB_5("AB_5", BKGymBelegungsfehlerArt.BELEGUNG, "Die gewählte Kombination aus drittem und viertem Abiturfach is in dem Bildungsgang nicht zulässig."),
+	AB_5("AB_5", BKGymBelegungsfehlerArt.BELEGUNG, "Die gewählte Kombination aus drittem und viertem Abiturfach ist in dem Bildungsgang nicht zulässig."),
 
 	/** BelegungsfehlerArt ABI_11 */
 	ABI_11("ABI_11", BKGymBelegungsfehlerArt.BELEGUNG, "Religionslehre und Sport dürfen nicht gleichzeitig Abiturfächer sein."),
@@ -33,7 +33,19 @@ public enum BKGymBelegungsfehler {
 	ABI_12("ABI_12", BKGymBelegungsfehlerArt.SCHRIFTLICHKEIT, "In Q2.2 muss das 3. Abiturfach schriftlich belegt sein."),
 
 	/** BelegungsfehlerArt 	ABI_13 */
-	ABI_13("ABI_13", BKGymBelegungsfehlerArt.SCHRIFTLICHKEIT, "In Q2.2 muss das 4. Abiturfach mündlich belegt sein.");
+	ABI_13("ABI_13", BKGymBelegungsfehlerArt.SCHRIFTLICHKEIT, "In Q2.2 muss das 4. Abiturfach mündlich belegt sein."),
+
+	/** BelegungsfehlerArt ST_1 */
+	ST_1("ST_1", BKGymBelegungsfehlerArt.BELEGUNG, "Es konnte zu den Fachbelegungen keine passende Variante für die Stundentafel in dieser Anlage gefunden werden."),
+
+	/** BelegungsfehlerArt ST_2 */
+	ST_2("ST_2", BKGymBelegungsfehlerArt.BELEGUNG, "Es konnte zu den Fachbelegungen keine eindeutige Variante für die Stundentafel in dieser Anlage gefunden werden."),
+
+	/** BelegungsfehlerArt ST_3_INFO */
+	ST_3_INFO("ST_3_INFO", BKGymBelegungsfehlerArt.HINWEIS, "Es wurden mehrer potentielle Kandidaten von Fachbelegungen für einen Eintrag in der Stundetafel gefunden. Keiner von Ihnen passt optimal, so dass der geeignetste davon für die weitere Belegprüfung genutzt wurde."),
+
+	/** BelegungsfehlerArt ST_4 */
+	ST_4("ST_4", BKGymBelegungsfehlerArt.BELEGUNG, "");
 
 
 	/** Der eindeutige Code des Belegungsfehlers */

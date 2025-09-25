@@ -1,10 +1,8 @@
-import { BKGymBelegungsfehler } from '../../../../core/abschluss/bk/d/BKGymBelegungsfehler';
 import { BeruflichesGymnasiumStundentafelAbiturfaecherWahlmoeglichkeit } from '../../../../asd/data/schule/BeruflichesGymnasiumStundentafelAbiturfaecherWahlmoeglichkeit';
+import { BKGymBelegungsfehler } from '../../../../core/abschluss/bk/d/BKGymBelegungsfehler';
 import { BKGymAbiturdatenManager } from '../../../../core/abschluss/bk/d/BKGymAbiturdatenManager';
-import { GostAbiturFach } from '../../../../core/types/gost/GostAbiturFach';
 import { BKGymBelegpruefung, cast_de_svws_nrw_core_abschluss_bk_d_BKGymBelegpruefung } from '../../../../core/abschluss/bk/d/BKGymBelegpruefung';
 import { BeruflichesGymnasiumPruefungsordnungAnlage } from '../../../../asd/types/schule/BeruflichesGymnasiumPruefungsordnungAnlage';
-import { BKGymAbiturFachbelegung } from '../../../../core/abschluss/bk/d/BKGymAbiturFachbelegung';
 import type { List } from '../../../../java/util/List';
 import { BeruflichesGymnasiumStundentafel } from '../../../../asd/data/schule/BeruflichesGymnasiumStundentafel';
 import { Class } from '../../../../java/lang/Class';
@@ -23,24 +21,10 @@ export class BKGymBelegpruefungD3 extends BKGymBelegpruefung {
 	}
 
 	public pruefe() : void {
-		const lk1 : BKGymAbiturFachbelegung | null = this.manager.getAbiFachbelegung(GostAbiturFach.LK1);
-		if (lk1 === null)
-			this.addFehler(BKGymBelegungsfehler.LK_1);
-		const lk2 : BKGymAbiturFachbelegung | null = this.manager.getAbiFachbelegung(GostAbiturFach.LK2);
-		if (lk2 === null)
-			this.addFehler(BKGymBelegungsfehler.LK_2);
-		const mglStundentafeln : List<BeruflichesGymnasiumStundentafel> = this.manager.getStundentafelByLeistungskurse(BeruflichesGymnasiumPruefungsordnungAnlage.D3);
-		if (mglStundentafeln.isEmpty())
-			this.addFehler(BKGymBelegungsfehler.LK_3);
-		const ab3 : BKGymAbiturFachbelegung | null = this.manager.getAbiFachbelegung(GostAbiturFach.AB3);
-		if (ab3 === null)
-			this.addFehler(BKGymBelegungsfehler.AB_3);
-		const ab4 : BKGymAbiturFachbelegung | null = this.manager.getAbiFachbelegung(GostAbiturFach.AB4);
-		if (ab4 === null)
-			this.addFehler(BKGymBelegungsfehler.AB_4);
+		const mglStundentafeln : List<BeruflichesGymnasiumStundentafel> = this.getStundentafelnByAbiturfaechern(BeruflichesGymnasiumPruefungsordnungAnlage.D3);
 		if (mglStundentafeln.isEmpty())
 			return;
-		const mapWahlmoeglichkeiten : JavaMap<BeruflichesGymnasiumStundentafel, BeruflichesGymnasiumStundentafelAbiturfaecherWahlmoeglichkeit> = this.manager.getWahlmoeglichekiten(mglStundentafeln);
+		const mapWahlmoeglichkeiten : JavaMap<BeruflichesGymnasiumStundentafel, BeruflichesGymnasiumStundentafelAbiturfaecherWahlmoeglichkeit> = this.manager.getWahlmoeglichekeiten(mglStundentafeln);
 		if (mapWahlmoeglichkeiten.isEmpty()) {
 			this.addFehler(BKGymBelegungsfehler.AB_5);
 			return;
