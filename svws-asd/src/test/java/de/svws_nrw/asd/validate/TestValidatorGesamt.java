@@ -24,7 +24,8 @@ import de.svws_nrw.asd.utils.json.JsonReader;
 class TestValidatorGesamt {
 
 	/** Statistikdaten der Schule */
-	static final SchuleStatistikdatenGesamt testdaten_001 = JsonReader.fromResource("de/svws_nrw/asd/validate/Testdaten_001_SchuleStatistikdatenGesamt.json", SchuleStatistikdatenGesamt.class);
+	static final SchuleStatistikdatenGesamt testdaten_001 =
+			JsonReader.fromResource("de/svws_nrw/asd/validate/Testdaten_001_SchuleStatistikdatenGesamt.json", SchuleStatistikdatenGesamt.class);
 
 	/**
 	 * Initialisiert die Core-Types, damit die Tests ausgeführt werden können.
@@ -35,6 +36,7 @@ class TestValidatorGesamt {
 	static void setup() {
 		ASDCoreTypeUtils.initAll();
 	}
+
 
 	/**
 	 * Test von ValidatorGesamt mit validen Daten

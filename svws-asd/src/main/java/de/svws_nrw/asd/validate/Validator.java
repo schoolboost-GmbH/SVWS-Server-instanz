@@ -92,6 +92,9 @@ public abstract class Validator {
 	 * @return true, wenn der Prüfschritt erfolgreich ausgeführt wurde oder nicht aktiv ist und false, wenn ein Fehler beim Prüfschritt auftritt
 	 */
 	protected final boolean exec(final int schrittNummer, final @NotNull BooleanSupplier fehlerbedingung, final @NotNull String error) {
+		if (schrittNummer < 0)
+			throw new ValidatorException(
+					"Ein negativer Wert als Nummer für einen Validator-Prüfschritt ist nicht zulässig. Die -1 wird in Fehlercodes nur für interne Fehler verwendet.");
 		final boolean isActive =
 				_kontext.getValidatorManager().isPruefschrittActiveInSchuljahr(_kontext.getSchuljahr(), this.getClass().getCanonicalName(), schrittNummer);
 		if (!isActive)

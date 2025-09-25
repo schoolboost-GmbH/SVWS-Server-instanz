@@ -1,4 +1,5 @@
 import { LehrerPersonaldaten } from '../../../asd/data/lehrer/LehrerPersonaldaten';
+import { ValidatorGesamtLehrerdatenDuplikate } from '../../../asd/validate/gesamt/ValidatorGesamtLehrerdatenDuplikate';
 import { LehrerStammdaten } from '../../../asd/data/lehrer/LehrerStammdaten';
 import type { List } from '../../../java/util/List';
 import { Class } from '../../../java/lang/Class';
@@ -17,6 +18,7 @@ export class ValidatorGesamtLehrerdaten extends Validator {
 	 */
 	public constructor(listStammdaten : List<LehrerStammdaten>, listPersonaldaten : List<LehrerPersonaldaten>, kontext : ValidatorKontext) {
 		super(kontext);
+		this._validatoren.add(new ValidatorGesamtLehrerdatenDuplikate(listStammdaten, kontext));
 	}
 
 	protected pruefe() : boolean {

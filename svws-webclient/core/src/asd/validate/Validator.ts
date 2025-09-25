@@ -1,12 +1,14 @@
 import { JavaObject } from '../../java/lang/JavaObject';
 import { ValidatorFehlerart } from '../../asd/validate/ValidatorFehlerart';
 import { ValidatorManager } from '../../asd/validate/ValidatorManager';
+import { ValidatorException } from '../../asd/validate/ValidatorException';
 import { ArrayList } from '../../java/util/ArrayList';
 import { ValidatorFehler } from '../../asd/validate/ValidatorFehler';
 import type { List } from '../../java/util/List';
 import { Class } from '../../java/lang/Class';
 import { ValidatorKontext } from '../../asd/validate/ValidatorKontext';
 import type { BooleanSupplier } from '../../java/util/function/BooleanSupplier';
+import { Exception } from '../../java/lang/Exception';
 
 export abstract class Validator extends JavaObject {
 
@@ -96,6 +98,8 @@ export abstract class Validator extends JavaObject {
 	 * @return true, wenn der Prüfschritt erfolgreich ausgeführt wurde oder nicht aktiv ist und false, wenn ein Fehler beim Prüfschritt auftritt
 	 */
 	protected exec(schrittNummer : number, fehlerbedingung : BooleanSupplier, error : string) : boolean {
+		if (schrittNummer < 0)
+			throw new ValidatorException("Ein negativer Wert als Nummer für einen Validator-Prüfschritt ist nicht zulässig. Die -1 wird in Fehlercodes nur für interne Fehler verwendet.")
 		const isActive : boolean = this._kontext.getValidatorManager().isPruefschrittActiveInSchuljahr(this._kontext.getSchuljahr(), this.getClass().getCanonicalName(), schrittNummer);
 		if (!isActive)
 			return true;

@@ -5,6 +5,7 @@ import { LehrerStammdaten } from '../../asd/data/lehrer/LehrerStammdaten';
 import { Class } from '../../java/lang/Class';
 import { ValidatorKontext } from '../../asd/validate/ValidatorKontext';
 import { ValidatorLehrerPersonaldaten } from '../../asd/validate/lehrer/ValidatorLehrerPersonaldaten';
+import { ValidatorGesamtLehrerdaten } from '../../asd/validate/gesamt/ValidatorGesamtLehrerdaten';
 import { Validator, cast_de_svws_nrw_asd_validate_Validator } from '../../asd/validate/Validator';
 import { SchuleStatistikdatenGesamt } from '../../asd/data/schule/SchuleStatistikdatenGesamt';
 import { ValidatorLehrerStammdaten } from '../../asd/validate/lehrer/ValidatorLehrerStammdaten';
@@ -35,6 +36,7 @@ export class ValidatorGesamt extends Validator {
 				continue;
 			this._validatoren.add(new ValidatorLehrerPersonaldaten(lehrerPersonaldaten, stammdaten, kontext));
 		}
+		this._validatoren.add(new ValidatorGesamtLehrerdaten(daten.lehrerStammdaten, daten.lehrerPersonaldaten, kontext));
 	}
 
 	protected pruefe() : boolean {

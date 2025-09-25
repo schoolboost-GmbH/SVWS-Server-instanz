@@ -5,6 +5,7 @@ import java.util.HashMap;
 import de.svws_nrw.asd.data.lehrer.LehrerPersonaldaten;
 import de.svws_nrw.asd.data.lehrer.LehrerStammdaten;
 import de.svws_nrw.asd.data.schule.SchuleStatistikdatenGesamt;
+import de.svws_nrw.asd.validate.gesamt.ValidatorGesamtLehrerdaten;
 import de.svws_nrw.asd.validate.lehrer.ValidatorLehrerPersonaldaten;
 import de.svws_nrw.asd.validate.lehrer.ValidatorLehrerStammdaten;
 import de.svws_nrw.asd.validate.schule.ValidatorSchuleStammdaten;
@@ -40,6 +41,8 @@ public final class ValidatorGesamt extends Validator {
 				continue;
 			_validatoren.add(new ValidatorLehrerPersonaldaten(lehrerPersonaldaten, stammdaten, kontext));
 		}
+
+		_validatoren.add(new ValidatorGesamtLehrerdaten(daten.lehrerStammdaten, daten.lehrerPersonaldaten, kontext));
 	}
 
 	@Override
