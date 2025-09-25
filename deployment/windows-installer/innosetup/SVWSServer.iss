@@ -611,7 +611,7 @@ procedure AdjustClasspathSVWSServer();
         codeService := code;
         Log('  -> Datei zum Ergänzen geladen:' + code);
         // Anpassungen für die Datei run_server.cmd
-        if StringChangeEx(code, '--class-path ', ExpandConstant('--class-path ' + SVWSDataDir + '\res;'), false) = 1 then
+        if StringChangeEx(code, '--class-path "', ExpandConstant('--class-path "' + SVWSDataDir + '\res;'), false) = 1 then
           begin
             Log('  -> Ergänzung hinzugefügt');
             code := ExpandConstant('cd {app}') + #13#10 + code;

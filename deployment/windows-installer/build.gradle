@@ -105,7 +105,7 @@ task downloadJarsAll(type: Copy) {
 	doLast {
 		file(downloadDir + "/run_server.cmd").text =
 			'@echo off' + System.lineSeparator() +
-			'.\\java\\bin\\java.exe --class-path ' + configurations.extendedImplementation.collect{ t -> 'svws-server/' + t.getName() }.join(';') + ' de.svws_nrw.server.jetty.Main' +
+			'.\\java\\bin\\java.exe --class-path "' + configurations.extendedImplementation.collect{ t -> 'svws-server/' + t.getName() }.join(';') + '" de.svws_nrw.server.jetty.Main' +
 			System.lineSeparator() +
 			'set exitcode=%ERRORLEVEL%' + System.lineSeparator() +
 			'IF %exitcode% EQU 42 (' + System.lineSeparator() +
