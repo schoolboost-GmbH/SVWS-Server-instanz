@@ -453,3 +453,6 @@ svws-module-pdf
 svws-server-app/Temp
 
 /config/tests/config.json
+
+# Lockfile, falls ein client mit deno gestartet wird
+deno.lock

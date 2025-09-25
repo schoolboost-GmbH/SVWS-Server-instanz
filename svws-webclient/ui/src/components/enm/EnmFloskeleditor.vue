@@ -8,17 +8,20 @@
 				<div class="min-w-fit overflow-auto border rounded-md border-uistatic-50">
 					<ui-table-grid name="Schüler" :manager="() => gridManagerSchueler">
 						<template #default="{ row, index }">
-							<td :ref="auswahlSchueler(index)" :class="['cursor-pointer text-left', gridManagerSchueler.focusRowLast === index ? 'bg-ui-selected':'']">
+							<td :ref="auswahlSchueler(index)" :class="[
+								'cursor-pointer text-left',
+								gridManagerSchueler.focusRowLast === index ? 'bg-ui-selected modalFocusField':'',
+							]">
 								{{ row.a }} {{ row.b.nachname }}, {{ row.b.vorname }}
 							</td>
 						</template>
 					</ui-table-grid>
 				</div>
-				<div class="overflow-hidden flex flex-col">
+				<div class="overflow-hidden flex flex-col w-full">
 					<div>
 						<div class="pb-4">
-							<svws-ui-textarea-input class="floskel-input" placeholder="Floskeln auswählen oder manuell eingeben"
-								:model-value="text" @input="onInput" autoresize is-content-focus-field />
+							<svws-ui-textarea-input class="floskel-input modalFocusField" placeholder="Floskeln auswählen oder manuell eingeben"
+								:model-value="text" @input="onInput" autoresize />
 						</div>
 						<div class="flex justify-between gap-2 w-full flex-row-reverse">
 							<div v-if="showButtons" class="flex gap-2">
@@ -36,8 +39,8 @@
 							</div>
 						</div>
 					</div>
-					<div class="overflow-y-auto">
-						<ui-table-grid :footer-count="0" :manager="() => gridManager">
+					<div v-if="gridManager.daten.size() > 0" class="overflow-y-auto">
+						<ui-table-grid :footer-count="0" :manager="() => gridManager" class="min-w-full">
 							<template #header>
 								<th>Kürzel</th>
 								<th>Text</th>
@@ -46,10 +49,10 @@
 							</template>
 							<template #default="{ row: data, index }">
 								<template v-if="data.floskel === null">
-									<td class="col-span-4 text-left bg-ui-50">{{ data.gruppe.bezeichnung }}</td>
+									<td class="col-span-4 text-left bg-ui-50"> {{ data.gruppe.bezeichnung }} </td>
 								</template>
 								<template v-else>
-									<td :ref="inputBemerkung(data.floskel, 1, index)" class="cursor-pointer"> {{ data.floskel.kuerzel }} </td>
+									<td :ref="inputBemerkung(data.floskel, 1, index)" :class="['cursor-pointer', index === (gridManager.focusRowLast ?? 1) ? 'modalFocusField':'']"> {{ data.floskel.kuerzel }} </td>
 									<td class="text-left" @click="ergaenzeFloskel(data.floskel)"> {{ data.floskel.text }} </td>
 									<td @click="ergaenzeFloskel(data.floskel)"> {{ data.floskel.niveau }} </td>
 									<td @click="ergaenzeFloskel(data.floskel)"> {{ data.floskel.jahrgangID }} </td>
@@ -57,6 +60,7 @@
 							</template>
 						</ui-table-grid>
 					</div>
+					<div v-else class="text-left">Es stehen für diese Bemerkungen keine Floskeln zur Auswahl</div>
 				</div>
 			</div>
 		</template>

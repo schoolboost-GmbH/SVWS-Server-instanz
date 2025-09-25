@@ -84,6 +84,9 @@ export class GridManager<KEY, DATA, LIST extends Collection<DATA> | List<DATA>> 
 	/** Die Liste der Spalten-Definitionen im Grid. */
 	private _cols: ShallowRef<JavaMap<string, GridColumn<DATA>>>;
 
+	/** Die Liste der Spalten-Definitionen im Grid anhand ihres Index */
+	private _colsByIndex: ShallowRef<JavaMap<number, GridColumn<DATA>>>;
+
 	/** Eine Map, um ggf. die Sichtbarkeit der Spalten zu verwalten. */
 	private _colsVisible: Ref<Map<string, boolean | null>>;
 
@@ -106,6 +109,7 @@ export class GridManager<KEY, DATA, LIST extends Collection<DATA> | List<DATA>> 
 		this._daten = config.daten;
 		this._getRowKey = config.getRowKey;
 		this._cols = shallowRef(new HashMap<string, GridColumn<DATA>>());
+		this._colsByIndex = shallowRef(new HashMap<number, GridColumn<DATA>>());
 		if (config.columns !== undefined)
 			this.setColumns(config.columns);
 		if (config.colsVisible === undefined)
@@ -132,8 +136,10 @@ export class GridManager<KEY, DATA, LIST extends Collection<DATA> | List<DATA>> 
 	 */
 	public setColumns(columns: Array<GridColumn<DATA>> | null) {
 		this._cols.value.clear();
+		this._colsByIndex.value.clear();
 		const hideableColumns = new ArrayList<GridColumn<DATA>>;
 		if (columns !== null) {
+			let index = 0;
 			for (const col of columns) {
 				if (col.hideable === undefined)
 					col.hideable = false;
@@ -142,9 +148,12 @@ export class GridManager<KEY, DATA, LIST extends Collection<DATA> | List<DATA>> 
 				if (col.width === undefined)
 					col.width = '4rem';
 				this._cols.value.put(col.kuerzel, col);
+				this._colsByIndex.value.put(index, col);
+				index++;
 			}
 		}
 		triggerRef(this._cols);
+		triggerRef(this._colsByIndex);
 		this._hideableColumns.value = hideableColumns;
 	}
 
@@ -155,10 +164,24 @@ export class GridManager<KEY, DATA, LIST extends Collection<DATA> | List<DATA>> 
 	 *
 	 * @param kuerzel   das Kürzel der Spalte
 	 *
-	 * @returns true, falls die Spalte sichtbar ist und ansonsten falsee
+	 * @returns true, falls die Spalte sichtbar ist und ansonsten false
 	 */
 	public isColVisible(kuerzel: string) {
 		return this._colsVisible.value.get(kuerzel) ?? true;
+	}
+
+
+	/**
+	 * Gibt die Sichtbarkeit der nach Index zurück. Ist diese bisher nicht festgelegt, so ist
+	 * die Spalte als Default sichtbar.
+	 *
+	 * @param index   die Spalte nach Index
+	 *
+	 * @returns true, falls die Spalte sichtbar ist und ansonsten false
+	 */
+	public isColVisibleByIndex(index: number) {
+		const col = this._colsByIndex.value.get(index);
+		return col === null ? false : this.isColVisible(col.kuerzel);
 	}
 
 
@@ -421,7 +444,7 @@ export class GridManager<KEY, DATA, LIST extends Collection<DATA> | List<DATA>> 
 
 
 	/**
-	 * Aktualisiert den internen State, nachdem eine Registierung von Inputs stattgefunden hat oder
+	 * Aktualisiert den internen State, nachdem eine Registrierung von Inputs stattgefunden hat oder
 	 * diese angepasst wurden.
 	 */
 	private updateState() {
@@ -885,6 +908,48 @@ export class GridManager<KEY, DATA, LIST extends Collection<DATA> | List<DATA>> 
 			return;
 		this._focusLastKey.value = input.key;
 		this._focusLastRow.value = row;
+	}
+
+	/**
+	 * Gib das erste gültige Input zurück
+	 *
+	 * @returns entweder das Input oder null
+	 */
+	private getFirstInput(): GridInput<KEY, any> | null {
+		if (!(0 in this.gridInputsRows))
+			return null;
+		const tempRow = this.gridInputsRows[0];
+		if ((tempRow === undefined) || !(0 in tempRow.cols))
+			return null;
+		for (let c = 0; c < tempRow.cols.length; c++) {
+			if (!(c in tempRow.cols))
+				continue;
+			if (this.isColVisibleByIndex(c))
+				return tempRow.cols[c];
+		}
+		return null;
+	}
+
+	/**
+	 * Gibt zurück, ob das über Spalte und Zeile übergebene Input das zuetzt fokussierte war.
+	 *
+	 * @param col   der Spalten-Index
+	 * @param row   der Zeilenindex
+	 * @returns true, wenn das zuletzt fokussierte Input übergeben wurde
+	 */
+	public isFocusLast(col: number, row: number): boolean {
+		const lastRow = this.focusRowLast;
+		const lastCol = this.focusColumnLast;
+		const column = this._colsByIndex.value.get(col);
+		if ((column === null) || !this.isColVisible(column.kuerzel))
+			return false;
+		if ((lastCol === null) || (lastRow === null)) {
+			const firstInput = this.getFirstInput();
+			if (firstInput === null)
+				return false;
+			return (firstInput.col === col) && (firstInput.row === row);
+		}
+		return (lastCol === col) && (lastRow === row);
 	}
 
 	/**

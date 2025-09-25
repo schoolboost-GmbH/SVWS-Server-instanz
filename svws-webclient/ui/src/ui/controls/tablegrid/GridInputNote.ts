@@ -149,7 +149,7 @@ export class GridInputNote<KEY> extends GridInputInnerText<KEY, string | null> {
 			return false; // Keine erfolgreiche Eingabe...
 		// Wenn es sich um eine neue Fokussierung handelt, dann ersetze den Wert bei einer Eingabe (sonst anhängen)
 		if (this._isNewFocus.value)
-			this.update(null);
+			this._noteTemp.value = "";
 		// Konvertiere automatisch in Großbuchstaben, um z.B. E3 zu erfassen, auch bei Eigabe von e3
 		return this.append(event.key.toLocaleUpperCase());
 	}

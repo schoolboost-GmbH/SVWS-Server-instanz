@@ -13,7 +13,7 @@
 			'col-span-full': span === 'full',
 			'grow': span === 'grow'
 		}">
-		<textarea ref="textarea" v-model="dataOrEmpty" @input="onInput" @blur="onBlur" class="textarea-input--control" :disabled :required :rows v-bind="{ ...$attrs }" :class="{ 'contentFocusField': isContentFocusField }" />
+		<textarea ref="textarea" v-model="dataOrEmpty" @input="onInput" @blur="onBlur" class="textarea-input--control" :disabled :required :rows v-bind="$attrs" :class="{ 'contentFocusField': isContentFocusField }" />
 		<span :id="idPlaceholder" v-if="placeholder.length > 0" class="textarea-input--placeholder">
 			<span :id="idStatistics" v-if="statistics" class="cursor-pointer">
 				<svws-ui-tooltip position="right">
@@ -85,6 +85,10 @@
 		"blur": [value: string | null];
 		"input": [value: string];
 	}>();
+
+	defineOptions({
+		inheritAttrs: false,
+	})
 
 	// eslint-disable-next-line vue/no-setup-props-reactivity-loss
 	const data = ref<string | null>(props.modelValue);

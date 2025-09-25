@@ -83,25 +83,30 @@
 				{{ enmManager().lerngruppeGetFachlehrerOrNull(pair.a.lerngruppenID) }}
 			</td>
 			<template v-if="gridManager.isColVisible('Quartal') ?? true">
-				<td v-if="enmManager().lerngruppeIstFachlehrer(pair.a.lerngruppenID)" :ref="inputNoteQuartal(pair, 1, index)" class="ui-table-grid-input"
+				<td v-if="enmManager().lerngruppeIstFachlehrer(pair.a.lerngruppenID)" :ref="inputNoteQuartal(pair, 6, index)" class="ui-table-grid-input"
 					:class="{
-						'bg-ui-selected': (gridManager.focusColumn === 1),
+						'bg-ui-selected': (gridManager.focusColumn === 6),
 						'text-ui-danger': Note.fromKuerzel(pair.a.noteQuartal).istDefizitSekII(),
+						'contentFocusField': gridManager.isFocusLast(6, index),
 					}" />
 				<td v-else :class="{ 'text-ui-danger': Note.fromKuerzel(pair.a.noteQuartal).istDefizitSekII() }">{{ pair.a.noteQuartal ?? "-" }}</td>
 			</template>
 			<template v-if="gridManager.isColVisible('Note') ?? true">
-				<td v-if="enmManager().lerngruppeIstFachlehrer(pair.a.lerngruppenID)" :ref="inputNote(pair, 2, index)" class="ui-table-grid-input"
+				<td v-if="enmManager().lerngruppeIstFachlehrer(pair.a.lerngruppenID)" :ref="inputNote(pair, 7, index)" class="ui-table-grid-input"
 					:class="{
-						'bg-ui-selected': (gridManager.focusColumn === 2),
+						'bg-ui-selected': (gridManager.focusColumn === 7),
 						'text-ui-danger': Note.fromKuerzel(pair.a.note).istDefizitSekII(),
+						'contentFocusField': gridManager.isFocusLast(7, index),
 					}" />
 				<td v-else :class="{ 'text-ui-danger': Note.fromKuerzel(pair.a.note).istDefizitSekII() }">{{ pair.a.note ?? "-" }}</td>
 			</template>
 			<template v-if="gridManager.isColVisible('Mahnung') ?? true">
 				<template v-if="enmManager().lerngruppeIstFachlehrer(pair.a.lerngruppenID)">
-					<td :ref="inputMahnung(pair, 3, index)" class="ui-table-grid-button"
-						:class="{ 'bg-ui-selected': (gridManager.focusColumn === 3) }">
+					<td :ref="inputMahnung(pair, 8, index)" class="ui-table-grid-button"
+						:class="{
+							'bg-ui-selected': (gridManager.focusColumn === 8),
+							'contentFocusField': gridManager.isFocusLast(8, index),
+						}">
 						<span v-if="pair.a.mahndatum !== null" class="icon-sm align-middle i-ri-checkbox-line bg-ui-50" />
 						<span v-else-if="pair.a.istGemahnt === true" class="icon-sm align-middle i-ri-checkbox-line bg-ui-danger" />
 						<span v-else class="icon-sm align-middle i-ri-checkbox-blank-line" />
@@ -117,21 +122,27 @@
 			</template>
 			<template v-if="gridManager.isColVisible('FS') ?? true">
 				<td v-if="enmManager().lerngruppeIstFachlehrer(pair.a.lerngruppenID)"
-					:ref="inputFehlstunden(pair, 4, index)" class="ui-table-grid-input"
-					:class="{ 'bg-ui-selected': (gridManager.focusColumn === 4) }" />
+					:ref="inputFehlstunden(pair, 9, index)" class="ui-table-grid-input"
+					:class="{
+						'bg-ui-selected': (gridManager.focusColumn === 9),
+						'contentFocusField': gridManager.isFocusLast(9, index),
+					}" />
 				<td v-else>{{ pair.a.fehlstundenFach ?? "—" }}</td>
 			</template>
 			<template v-if="gridManager.isColVisible('FSU') ?? true">
 				<td v-if="enmManager().lerngruppeIstFachlehrer(pair.a.lerngruppenID)"
-					:ref="inputFehlstundenUnendschuldigt(pair, 5, index)" class="ui-table-grid-input"
-					:class="{ 'bg-ui-selected': (gridManager.focusColumn === 5) }" />
+					:ref="inputFehlstundenUnendschuldigt(pair, 10, index)" class="ui-table-grid-input"
+					:class="{
+						'bg-ui-selected': (gridManager.focusColumn === 10),
+						'contentFocusField': gridManager.isFocusLast(10, index),
+					}" />
 				<td v-else>{{ pair.a.fehlstundenUnentschuldigtFach ?? "-" }}</td>
 			</template>
 			<template v-if="gridManager.isColVisible('Bemerkung') ?? true">
-				<td :ref="inputBemerkung(pair, 6, index)" class="ui-table-grid-button"
+				<td :ref="inputBemerkung(pair, 11, index)" class="ui-table-grid-button"
 					:class="{
-						'bg-ui-selected': (gridManager.focusColumn === 6),
-						'bg-ui-selected text-ui-onselected': ((gridManager.focusColumnLast === 6) && (gridManager.focusRowLast === index)),
+						'bg-ui-selected': (gridManager.focusColumn === 11),
+						'contentFocusField': gridManager.isFocusLast(11, index),
 					}">
 					<svws-ui-tooltip v-if="(pair.a.fachbezogeneBemerkungen !== null) && (pair.a.fachbezogeneBemerkungen.length > 20)" class="h-full w-full">
 						<span class="text-ellipsis overflow-hidden whitespace-nowrap w-full">{{ pair.a.fachbezogeneBemerkungen ?? "-" }}</span>
@@ -149,7 +160,7 @@
 
 <script setup lang="ts">
 
-	import type { ComponentPublicInstance} from 'vue';
+	import type { ComponentPublicInstance } from 'vue';
 	import { computed, watchEffect } from 'vue';
 	import type { EnmLeistungenUebersichtProps } from './EnmLeistungenUebersichtProps';
 	import type { ENMLeistung } from '../../../../core/src/core/data/enm/ENMLeistung';
@@ -205,8 +216,6 @@
 		void props.focusFloskelEditor(pair.b, pair.a, input.row, false);
 	}
 	defineExpose({ gridManager });
-
-
 
 	const notenKuerzel = computed(() => Note.values().map(e => e.daten(props.enmManager().schuljahr)?.kuerzel).filter(e => e !== ""));
 

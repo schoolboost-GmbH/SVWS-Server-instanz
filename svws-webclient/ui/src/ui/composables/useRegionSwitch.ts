@@ -3,6 +3,7 @@ import { type Ref, ref } from 'vue'
 const focusSwitchingEnabled = ref<boolean>(false);
 const focusHelpVisible = ref<boolean>(false);
 
+const currentModalIndex = ref(0);
 const currentContentIndex = ref(0);
 const currentListIndex = ref(0);
 
@@ -17,6 +18,7 @@ export function useRegionSwitch() {
 		["Digit6", "tabsSecondLevelFocusField"],
 		["Digit7", "tabsThirdLevelFocusField"],
 		["Digit8", "contentFocusField"],
+		["Digit9", "modalFocusField"],
 	]);
 
 	function handleKeyEvent(event: KeyboardEvent) {
@@ -33,7 +35,9 @@ export function useRegionSwitch() {
 	function switchRegion(event: KeyboardEvent) {
 		event.preventDefault();
 		const htmlElements = document.getElementsByClassName(regionMap.get(event.code) ?? "");
-		if (event.code === 'Digit8')
+		if (event.code === 'Digit9')
+			cycleFocusFields(htmlElements, currentModalIndex);
+		else if (event.code === 'Digit8')
 			cycleFocusFields(htmlElements, currentContentIndex);
 		else if (event.code === 'Digit4')
 			cycleFocusFields(htmlElements, currentListIndex);
@@ -41,6 +45,7 @@ export function useRegionSwitch() {
 			const focusField = htmlElements.item(0)
 			if (focusField !== null)
 				(focusField as HTMLElement).focus();
+			currentModalIndex.value = 0;
 			currentContentIndex.value = 0;
 			currentListIndex.value = 0;
 		}

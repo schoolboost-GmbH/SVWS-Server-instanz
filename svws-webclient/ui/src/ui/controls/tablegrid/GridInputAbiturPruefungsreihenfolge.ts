@@ -56,7 +56,7 @@ export class GridInputAbiturPruefungsreihenfolge<KEY> extends GridInputInnerText
 	 * @returns true, falls die Ziffer zulässig war und sonst false
 	 */
 	public check(ziffer : number): boolean {
-		if ((this._reihenfolge !== null) || (ziffer < 0) || (ziffer > 3))
+		if ((this._reihenfolge !== null) || (ziffer < 1) || (ziffer > 3))
 			return false;
 		this.update(ziffer);
 		return true;
@@ -90,9 +90,6 @@ export class GridInputAbiturPruefungsreihenfolge<KEY> extends GridInputInnerText
 		const ziffer = parseInt(event.key);
 		if (isNaN(ziffer))
 			return false; // Keine erfolgreiche Eingabe...
-		// Wenn es sich um eine neue Fokussierung handelt, dann ersetze den Wert bei einer Eingabe (sonst anhängen)
-		if (this._isNewFocus.value)
-			this.update(null);
 		return this.check(ziffer);
 	}
 
