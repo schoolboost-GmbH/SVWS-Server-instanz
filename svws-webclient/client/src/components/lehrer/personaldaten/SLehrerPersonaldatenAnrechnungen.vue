@@ -123,7 +123,7 @@
 		getRowKey: row => "-" + row.data.idGrund + "-" + row.data.id + "-" + row.typ,
 		columns: [
 			{ kuerzel: "typ", name: "Typ", width: "8rem", hideable: false },
-			{ kuerzel: "grund", name: "Grund", width: "minmax(40%,28rem)", hideable: false },
+			{ kuerzel: "grund", name: "Grund", width: "minmax(40%,100%)", hideable: false },
 			{ kuerzel: "anzahl", name: "Anzahl Stunden", width: "5rem", hideable: true },
 			{ kuerzel: "Buttons", name: "Buttons", width: "4rem", hideable:false},
 		],
