@@ -5,9 +5,9 @@ import type { List } from "../../../../../core/src/java/util/List";
 import type { Collection } from "../../../../../core/src/java/util/Collection";
 
 /**
- * Ein Grid-Input für die Schnelleingabe von Ganzzahlen einer bestimmten Länge.
+ * Ein Grid-Input für die Schnelleingabe von Ganzzahlen.
  */
-export class GridInputIntegerDiv<KEY> extends GridInputInnerText<KEY, string | null> {
+export class GridInputIntegerDiv<KEY> extends GridInputInnerText<KEY, number | null> {
 
 	// Der Setter zum Schreiben der Daten
 	protected _setter : (value: number | null) => void;
@@ -43,9 +43,9 @@ export class GridInputIntegerDiv<KEY> extends GridInputInnerText<KEY, string | n
 	 *
 	 * @param value   der Wert
 	 */
-	public update(value: string | null) {
-		this._zahl.value = ((value === null) || (value === "")) ? null : parseInt(value);
-		super.updateText(value);
+	public update(value: number | null) {
+		this._zahl.value = value;
+		super.updateText(value === null ? "" : "" + value);
 	}
 
 	/**
@@ -75,7 +75,7 @@ export class GridInputIntegerDiv<KEY> extends GridInputInnerText<KEY, string | n
 		const tmp = (this._zahl.value === null) ? ziffer : ((this._zahl.value * 10) + ziffer);
 		if ((this._max !== null) && (tmp > this._max))
 			return false;
-		this.update("" + tmp);
+		this.update(tmp);
 		return true;
 	}
 
@@ -91,7 +91,7 @@ export class GridInputIntegerDiv<KEY> extends GridInputInnerText<KEY, string | n
 			return;
 		}
 		const zahlNeu = Math.floor(this._zahl.value / 10);
-		this.update("" + zahlNeu);
+		this.update(zahlNeu);
 	}
 
 	/**
