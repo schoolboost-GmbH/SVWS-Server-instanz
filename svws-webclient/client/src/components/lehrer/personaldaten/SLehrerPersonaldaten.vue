@@ -157,11 +157,15 @@
 	const stammschuleSelectManager = new SelectManager({ options: moeglicheStammschulnummern.value, selectionDisplayText: getSchulnummerText,
 		optionDisplayText: getSchulnummerText });
 
-	const stammschulnummer = computed<string | null>({
-		get(): string | null {
+	const stammschulnummer = computed<string | null | undefined>({
+		get(): string | null | undefined {
 			return personalabschnittsdaten()?.stammschulnummer ?? null;
 		},
-		set(val: string | null) {
+		set(val: string | null | undefined) {
+			// Bugfix: Wenn dieser Check auf undefined nicht vorhanden ist, dann kommt es zu einem Fehler, wenn die Schulnummer nicht
+			//         im Katalog enthalten ist und zu einem anderen Lehrer gewechselt wird
+			if (val === undefined)
+				return;
 			const daten = personalabschnittsdaten();
 			if (daten !== null)
 				void props.patchAbschnittsdaten({ stammschulnummer: val }, daten.id);
