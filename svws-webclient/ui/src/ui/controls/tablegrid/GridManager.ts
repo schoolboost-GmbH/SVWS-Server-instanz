@@ -12,6 +12,7 @@ import type { List } from "../../../../../core/src/java/util/List";
 import type { JavaMap } from "../../../../../core/src/java/util/JavaMap";
 import { HashMap } from "../../../../../core/src/java/util/HashMap";
 import { ArrayList } from "../../../../../core/src/java/util/ArrayList";
+import { GridInputNumberFixed } from "./GridInputNumberFixed";
 
 
 /**
@@ -729,10 +730,37 @@ export class GridManager<KEY, DATA, LIST extends Collection<DATA> | List<DATA>> 
 			return this.unregister(key);
 		// Registriere das HTMLElement, sofern nicht bereits ein Grid-Input mit dem gleichen Schlüssel registriert ist
 		if (!(elem instanceof HTMLElement))
-			throw new DeveloperNotificationException("Der Grid-Input für Abitur-Notenpunkte erfordert ein HTMLElement");
+			throw new DeveloperNotificationException("Der Grid-Input für Ganzzahlen erfordert ein HTMLElement");
 		if (this.mapInputs.has(key))
 			return this.updateRegistration(key, col, row);
 		return this.register(new GridInputIntegerDiv(this, key, col, row, elem, max, setter));
+	}
+
+
+	/**
+	 * Fügt oder entfernt ein HTML-Element für den übergebenen Schlüssel hinzu
+	 *
+	 * @param key         der Schlüssel, welcher den Input-Manager identifiziert
+	 * @param col         die Nummer der Spalte im Grid
+	 * @param row         die Nummer der Zeile im Grid
+	 * @param elem        das HTML-Element, welches zum Manager hinzugefügt werden soll, oder null, falls es entfernt werden soll
+	 * @param max         die maximale Zahl, die erlaubt ist
+	 * @param dp          die Anzahl der zulässigen Nachkommastellen (decimal places)
+	 * @param setter      ein Setter für das Speichern der Daten des Input-Managers
+	 *
+	 * @returns das Input oder null
+	 */
+	public applyInputNumberFixed(key: KEY, col: number, row: number, elem: Element | ComponentPublicInstance<unknown> | null, max: number | null,
+		dp: number, setter : (value: number | null) => void) : GridInputNumberFixed<KEY> | null {
+		// Wenn elem null ist, dann entferne das Element
+		if (elem === null)
+			return this.unregister(key);
+		// Registriere das HTMLElement, sofern nicht bereits ein Grid-Input mit dem gleichen Schlüssel registriert ist
+		if (!(elem instanceof HTMLElement))
+			throw new DeveloperNotificationException("Der Grid-Input für Zahlen mit einer festen Anzahl von Nachkommastellen erfordert ein HTMLElement");
+		if (this.mapInputs.has(key))
+			return this.updateRegistration(key, col, row);
+		return this.register(new GridInputNumberFixed(this, key, col, row, elem, max, dp, setter));
 	}
 
 

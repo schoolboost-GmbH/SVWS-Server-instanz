@@ -144,7 +144,7 @@
 		const key = row.typ + "-" + row.data.idGrund + "-" + row.data.id;
 		const setter = (value: number | null) => updateAnzahl(row, value);
 		return (element: Element | ComponentPublicInstance<unknown> | null) => {
-			const input = gridManager.applyInputIntegerDiv(key, 4, index, element, 100, setter);
+			const input = gridManager.applyInputNumberFixed(key, 4, index, element, 100, 2, setter);
 			if (input !== null)
 				gridManager.update(key, row.data.anzahl);
 		};
