@@ -40,6 +40,7 @@ public final class DataKatalogHerkuenfte extends DataManager<Long> {
 				final HerkunftKatalogEintrag hke = new HerkunftKatalogEintrag();
 				hke.id = ke.id + 1000000000L;
 				hke.kuerzel = ke.kuerzel;
+				hke.schluessel = ke.kuerzel;
 				hke.schulformen = ke.schulformen;
 				hke.beschreibung = ke.beschreibung;
 				hke.gueltigVon = ke.gueltigVon;
@@ -52,6 +53,7 @@ public final class DataKatalogHerkuenfte extends DataManager<Long> {
 				final HerkunftKatalogEintrag hke = new HerkunftKatalogEintrag();
 				hke.id = ke.id + 2000000000L;
 				hke.kuerzel = ke.kuerzel;
+				hke.schluessel = ke.schluessel;
 				for (final @NotNull SchulformSchulgliederung sfsgl : ke.zulaessig)
 					if (!hke.schulformen.contains(sfsgl.schulform))
 						hke.schulformen.add(sfsgl.schulform);
@@ -66,6 +68,7 @@ public final class DataKatalogHerkuenfte extends DataManager<Long> {
 				final HerkunftKatalogEintrag hke = new HerkunftKatalogEintrag();
 				hke.id = ke.id + 3000000000L;
 				hke.kuerzel = ke.kuerzel;
+				hke.schluessel = ke.schluessel;
 				for (final @NotNull SchulformSchulgliederung sfsgl : ke.zulaessig)
 					if (!hke.schulformen.contains(sfsgl.schulform))
 						hke.schulformen.add(sfsgl.schulform);
@@ -80,6 +83,7 @@ public final class DataKatalogHerkuenfte extends DataManager<Long> {
 				final HerkunftKatalogEintrag hke = new HerkunftKatalogEintrag();
 				hke.id = ke.id + 4000000000L;
 				hke.kuerzel = ke.kuerzel;
+				hke.schluessel = ke.kuerzelStatistik;
 				hke.schulformen = ke.schulformen;
 				hke.beschreibung = ke.beschreibung;
 				hke.gueltigVon = ke.gueltigVon;

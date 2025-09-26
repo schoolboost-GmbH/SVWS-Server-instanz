@@ -24,9 +24,13 @@ public class HerkunftKatalogEintrag {
 	@Schema(description = "die ID des Katalog-Eintrags", example = "4711")
 	public long id = -1;
 
-	/** Das der Herkunft eines Schülers, welches im Rahmen der amtlichen Schulstatistik verwendet wird */
-	@Schema(description = "das der Herkunft eines Schülers, welches im Rahmen der amtlichen Schulstatistik verwendet wird", example = "UN")
+	/** Das Anzeigekürzel der Herkunft eines Schülers */
+	@Schema(description = "das Anzeigekürzel der Herkunft eines Schülers", example = "UN")
 	public @NotNull String kuerzel = "";
+
+	/** Der Schlüssel der Herkunft eines Schülers, welcher im Rahmen der amtlichen Schulstatistik verwendet wird */
+	@Schema(description = "der Schlüssel der Herkunft eines Schülers, welcher im Rahmen der amtlichen Schulstatistik verwendet wird", example = "UN")
+	public @NotNull String schluessel = "";
 
 	/** Die Kürzel der Schulformen, bei welchen die Herkunft des Schülers vorkommen kann. */
 	@Schema(description = "die Kürzel der Schulformen, bei welchen die Herkunft des Schülers vorkommen kann")

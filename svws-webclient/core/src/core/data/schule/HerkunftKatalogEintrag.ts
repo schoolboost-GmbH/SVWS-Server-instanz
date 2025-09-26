@@ -12,9 +12,14 @@ export class HerkunftKatalogEintrag extends JavaObject {
 	public id : number = -1;
 
 	/**
-	 * Das der Herkunft eines Schülers, welches im Rahmen der amtlichen Schulstatistik verwendet wird
+	 * Das Anzeigekürzel der Herkunft eines Schülers
 	 */
 	public kuerzel : string = "";
+
+	/**
+	 * Der Schlüssel der Herkunft eines Schülers, welcher im Rahmen der amtlichen Schulstatistik verwendet wird
+	 */
+	public schluessel : string = "";
 
 	/**
 	 * Die Kürzel der Schulformen, bei welchen die Herkunft des Schülers vorkommen kann.
@@ -96,6 +101,9 @@ export class HerkunftKatalogEintrag extends JavaObject {
 		if (obj.kuerzel === undefined)
 			throw new Error('invalid json format, missing attribute kuerzel');
 		result.kuerzel = obj.kuerzel;
+		if (obj.schluessel === undefined)
+			throw new Error('invalid json format, missing attribute schluessel');
+		result.schluessel = obj.schluessel;
 		if (obj.schulformen !== undefined) {
 			for (const elem of obj.schulformen) {
 				result.schulformen.add(elem);
@@ -113,6 +121,7 @@ export class HerkunftKatalogEintrag extends JavaObject {
 		let result = '{';
 		result += '"id" : ' + obj.id.toString() + ',';
 		result += '"kuerzel" : ' + JSON.stringify(obj.kuerzel) + ',';
+		result += '"schluessel" : ' + JSON.stringify(obj.schluessel) + ',';
 		result += '"schulformen" : [ ';
 		for (let i = 0; i < obj.schulformen.size(); i++) {
 			const elem = obj.schulformen.get(i);
@@ -136,6 +145,9 @@ export class HerkunftKatalogEintrag extends JavaObject {
 		}
 		if (obj.kuerzel !== undefined) {
 			result += '"kuerzel" : ' + JSON.stringify(obj.kuerzel) + ',';
+		}
+		if (obj.schluessel !== undefined) {
+			result += '"schluessel" : ' + JSON.stringify(obj.schluessel) + ',';
 		}
 		if (obj.schulformen !== undefined) {
 			result += '"schulformen" : [ ';
