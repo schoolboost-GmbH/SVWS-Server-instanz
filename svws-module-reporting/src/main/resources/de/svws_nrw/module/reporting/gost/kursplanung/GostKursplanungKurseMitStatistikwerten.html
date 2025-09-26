@@ -9,7 +9,8 @@
 		<link rel="stylesheet" th:href="@{gost/kursplanung/GostKursplanungKurseMitStatistikwerten.css}" href="../../gost/kursplanung/GostKursplanungKurseMitStatistikwerten.css" />
 	</head>
 
-	<body th:with="mediaPrint = ${Parameter.ausgabeformat >= 2}">
+	<body th:with="mediaPrint = ${Parameter.ausgabeformat >= 2},
+				   KursplanungKurse = ${GostBlockungsergebnis.kurseGefiltert()}">
 		<!--Beginn: Definition der Seitenköpfe und Seitenfüße. Diese werden per CSS in den @page-Boxen positioniert-->
 		<th:block th:if="${mediaPrint}">
 			<div class="pageTopLeft" th:utext="${Schule.bezeichnungSchuleMehrzeiligHtml}">schulbezeichnung1<br/>schulbezeichnung2<br/>schulbezeichnung3</div>
@@ -62,7 +63,7 @@
 				<th class="head-small-grey ta-c">Schienen</th>
 			</tr>
 			</thead>
-			<tr th:each="Kurs,iterationVarKurs : ${GostBlockungsergebnis.kurseGefiltert(Parameter.idsDetaildaten)}" th:classappend="${iterationVarKurs.odd} ? 'bg-lightgrey'">
+			<tr th:each="Kurs,iterationVarKurs : ${KursplanungKurse}" th:classappend="${iterationVarKurs.odd} ? 'bg-lightgrey'">
 				<td class="bo-b-grey p-tb-0 p-lr-1 f-small c-grey" th:text="${#numbers.formatInteger(iterationVarKurs.count,2)} + '.'">Nr.</td>
 				<td class="bo-b-grey p-tb-0 p-lr-1 ta-l" th:text="${Kurs.bezeichnung()}">GE-GK2</td>
 				<td class="bo-b-grey p-tb-0 p-lr-1 ta-l" th:text="${Kurs.lehrkraefteAuflistung()}">ABC</td>

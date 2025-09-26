@@ -19,7 +19,11 @@ public enum ReportingEMailEmpfaengerTyp {
 	KLASSENLEHRER(3),
 
 	/** Versand an Kurslehrer (im Kurs unterrichtende Lehrer). Die IDs werden als Kurs-IDs interpretiert, welche dann intern die Kurslehrer-IDs ermitteln. */
-	KURSLEHRER(4);
+	KURSLEHRER(4),
+
+	/** Versand an Kurslehrer (im Kurs unterrichtende Lehrer) im Rahmen der Kursplanung für die Oberstufe. Die IDs werden als Kurs-IDs in der Kursplanung
+	 * interpretiert, welche dann intern die Kurslehrer-IDs ermitteln. */
+	GOSTKURSPLANUNG_KURSLEHRER(5);
 
 	/** Die ID des Reporting-E-Mail-Empfaenger-Typs */
 	private final int id;

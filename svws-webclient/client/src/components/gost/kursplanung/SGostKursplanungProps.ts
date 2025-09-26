@@ -1,7 +1,10 @@
 import type { WritableComputedRef } from "vue";
-import type { GostBlockungsdatenManager, GostBlockungsergebnisManager, GostBlockungSchiene, GostBlockungKurs, GostBlockungKursLehrer, GostFaecherManager,
+import {
+	GostBlockungsdatenManager, GostBlockungsergebnisManager, GostBlockungSchiene, GostBlockungKurs, GostBlockungKursLehrer, GostFaecherManager,
 	GostHalbjahr, LehrerListeEintrag, GostStatistikFachwahl, GostBlockungsergebnisKurs, GostJahrgangsdaten, ApiFile,
-	GostBlockungsergebnisKursSchuelerZuordnungUpdate, GostBlockungRegelUpdate, JavaSet, BenutzerKompetenz, Schulform, ServerMode } from "@core";
+	GostBlockungsergebnisKursSchuelerZuordnungUpdate, GostBlockungRegelUpdate, JavaSet, BenutzerKompetenz, Schulform, ServerMode, ReportingParameter,
+	SimpleOperationResponse
+} from "@core";
 import type { GostKursplanungSchuelerFilter } from "./GostKursplanungSchuelerFilter";
 import type { ApiStatus } from "~/components/ApiStatus";
 import type { DownloadPDFTypen } from "./DownloadPDFTypen";
@@ -36,6 +39,7 @@ export interface GostKursplanungProps {
 	ergebnisAktivieren: () => Promise<boolean>;
 	ergebnisSynchronisieren: () => Promise<void>;
 	getPDF: (title: DownloadPDFTypen) => Promise<ApiFile>;
+	sendEmailPdf: (parameter: ReportingParameter) => Promise<SimpleOperationResponse>;
 	jahrgangsdaten: () => GostJahrgangsdaten;
 	kurssortierung: WritableComputedRef<'fach' | 'kursart'>;
 	existiertSchuljahresabschnitt: boolean;

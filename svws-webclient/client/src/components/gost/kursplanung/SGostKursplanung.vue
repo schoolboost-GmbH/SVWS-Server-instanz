@@ -129,8 +129,12 @@
 	import { computed, ref, onMounted } from "vue";
 	import type { GostKursplanungProps } from "./SGostKursplanungProps";
 	import type { DownloadPDFTypen } from "./DownloadPDFTypen";
-	import { BenutzerKompetenz, GostHalbjahr, HashSet, SetUtils } from "@core";
+	import {
+		BenutzerKompetenz, GostHalbjahr, HashSet, ReportingAusgabeformat,
+		ReportingEMailDaten, ReportingEMailEmpfaengerTyp, ReportingParameter, ReportingReportvorlage, SetUtils
+	} from "@core";
 	import { useRegionSwitch } from "@ui";
+	import {routeApp} from "~/router/apps/RouteApp";
 
 	const props = defineProps<GostKursplanungProps>();
 
@@ -168,6 +172,7 @@
 
 	const dropdownList = [
 		{ text: "Schülerliste markierte Kurse", action: () => downloadPDF("Schülerliste markierte Kurse"), default: true },
+		{ text: "E-Mail mit Schülerliste markierte Kurse", action: () => sendPdfByMail("E-Mail mit Schülerliste markierte Kurse") },
 		{ text: "Kurse mit Statistikwerten", action: () => downloadPDF("Kurse mit Statistikwerten") },
 		{ text: "Kurse-Schienen-Zuordnung", action: () => downloadPDF("Kurse-Schienen-Zuordnung") },
 		{ text: "Kurse-Schienen-Zuordnung markierter Schüler", action: () => downloadPDF("Kurse-Schienen-Zuordnung markierter Schüler") },
@@ -185,6 +190,24 @@
 		link.click();
 		URL.revokeObjectURL(link.href);
 	}
+
+	async function sendPdfByMail(title: DownloadPDFTypen) {
+		const reportingParameter = new ReportingParameter();
+		reportingParameter.idSchuljahresabschnitt = routeApp.data.aktAbschnitt.value.id;
+		reportingParameter.ausgabeformat = ReportingAusgabeformat.EMAIL.getId();
+		reportingParameter.reportvorlage = ReportingReportvorlage.GOST_KURSPLANUNG_v_KURS_MIT_KURSSCHUELERN.getBezeichnung();
+		reportingParameter.detailLevel = 0;
+
+		const emailDaten = new ReportingEMailDaten();
+		emailDaten.empfaengerTyp = ReportingEMailEmpfaengerTyp.GOSTKURSPLANUNG_KURSLEHRER.getId();
+		emailDaten.istPrivateEmailAlternative = false;
+		emailDaten.betreff = "Kurslisten der Kursplanung";
+		emailDaten.text = "Im Anhang dieser E-Mail sind die Kurslisten der Kursplanung enthalten.";
+		reportingParameter.eMailDaten = emailDaten;
+
+		const result = await props.sendEmailPdf(reportingParameter);
+	}
+
 
 	const actionsKursSchuelerzuordnung = computed(() => {
 		const filter = props.schuelerFilter();

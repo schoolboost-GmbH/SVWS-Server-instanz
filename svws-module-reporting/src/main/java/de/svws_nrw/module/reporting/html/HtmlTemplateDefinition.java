@@ -42,11 +42,13 @@ public enum HtmlTemplateDefinition {
 			"gost/klausurplanung/GostKlausurplanungSchuelerMitKlausuren.html",
 			"GOSt-Klausurplanung-Schueler-Klausuren",
 			"""
-			        <p th:if="${GostKlausurplan.schuelerGefiltert().isEmpty()}" th:text="${'GOSt-Klausurplanung-Schueler-Klausuren_' + #strings.replace(#strings.replace(Schule.auswahlSchuljahresabschnitt().textSchuljahresabschnittKurz(), '.', ''), '/', '-')}"></p>
-			        <th:block th:if="${!GostKlausurplan.schuelerGefiltert().isEmpty()}" th:each="schueler,iterState : ${GostKlausurplan.schuelerGefiltert()}">
-			            <p th:if="${iterState.first && (GostKlausurplan.schuelerGefiltert().size() == 1)}" th:text="${'GOSt-Klausurplanung-Schueler-Klausuren_' + #strings.replace(#strings.replace(Schule.auswahlSchuljahresabschnitt().textSchuljahresabschnittKurz(), '.', ''), '/', '-') + '_' + #strings.replace(schueler.nachname(), ' ', '_') + '__' + #strings.replace(schueler.vorname(), ' ', '_') + '_(' + schueler.id() + ')_' + #dates.format(#dates.createNow(), 'yyyyMMdd-HHmm')}"></p>
-			            <p th:if="${iterState.first && (GostKlausurplan.schuelerGefiltert().size() > 1)}" th:text="${'GOSt-Klausurplanung-Schueler-Klausuren_' + #strings.replace(#strings.replace(Schule.auswahlSchuljahresabschnitt().textSchuljahresabschnittKurz(), '.', ''), '/', '-')}"></p>
-			        </th:block>
+				<th:block th:with="gefilterteSchueler = ${GostKlausurplan.schuelerGefiltert()}, anzahlGefilterteSchueler = ${#lists.size(gefilterteSchueler)}">
+					<p th:if="${anzahlGefilterteSchueler == 0}" th:text="${'GOSt-Klausurplanung-Schueler-Klausuren_' + #strings.replace(#strings.replace(Schule.auswahlSchuljahresabschnitt().textSchuljahresabschnittKurz(), '.', ''), '/', '-')}"></p>
+					<th:block th:if="${anzahlGefilterteSchueler != 0}" th:each="schueler,iterState : ${gefilterteSchueler}">
+						<p th:if="${iterState.first && (anzahlGefilterteSchueler == 1)}" th:text="${'GOSt-Klausurplanung-Schueler-Klausuren_' + #strings.replace(#strings.replace(Schule.auswahlSchuljahresabschnitt().textSchuljahresabschnittKurz(), '.', ''), '/', '-') + '_' + #strings.replace(schueler.nachname(), ' ', '_') + '__' + #strings.replace(schueler.vorname(), ' ', '_') + '_(' + schueler.id() + ')_' + #dates.format(#dates.createNow(), 'yyyyMMdd-HHmm')}"></p>
+						<p th:if="${iterState.first && (anzahlGefilterteSchueler > 1)}" th:text="${'GOSt-Klausurplanung-Schueler-Klausuren_' + #strings.replace(#strings.replace(Schule.auswahlSchuljahresabschnitt().textSchuljahresabschnittKurz(), '.', ''), '/', '-')}"></p>
+					</th:block>
+				</th:block>
 			""",
 			Arrays.asList(BenutzerKompetenz.OBERSTUFE_KLAUSURPLANUNG_ANSEHEN_ALLGEMEIN, BenutzerKompetenz.OBERSTUFE_KLAUSURPLANUNG_AENDERN,
 					BenutzerKompetenz.OBERSTUFE_KLAUSURPLANUNG_ANSEHEN_FUNKTION)),
@@ -58,8 +60,14 @@ public enum HtmlTemplateDefinition {
 			"gost/kursplanung/GostKursplanungKursMitKursschuelern.html",
 			"GOSt-Blockungsergebnis-Kurs-Schueler",
 			"""
-			        <p th:text="${'GOSt-Blockungsergebnis-Kurs-Schueler_Abi' + GostBlockungsergebnis.abiturjahr() + '_' + #strings.replace(GostBlockungsergebnis.gostHalbjahr().kuerzel, '.', '') + '_(Erg-ID-' + GostBlockungsergebnis.id() + ')'}"></p>
-			""",
+             <th:block th:with="gefilterteKurse = ${GostBlockungsergebnis.kurseGefiltert()}, anzahlGefilterteKurse = ${#lists.size(gefilterteKurse)}">
+                 <p th:if="${anzahlGefilterteKurse == 0}">GOSt-Blockung-Kurs-Schueler</p>
+                 <th:block th:if="${anzahlGefilterteKurse != 0}" th:each="kurs,iterState : ${gefilterteKurse}">
+                     <p th:if="${iterState.first && (anzahlGefilterteKurse == 1)}" th:text="${'GOSt-Blockung-Kurs-Schueler_' + #strings.replace(kurs.gostHalbjahr().kuerzel, '.', '') + '_' + #strings.replace(kurs.bezeichnung(), ' ', '_') + '_' + #strings.replace(kurs.lehrkraefteAuflistung(), ',', '-') + '_Abi_' + GostBlockungsergebnis.abiturjahr()}"></p>
+                     <p th:if="${iterState.first && (anzahlGefilterteKurse > 1)}" th:text="${'GOSt-Blockung-Kurs-Schueler_' + #strings.replace(kurs.gostHalbjahr().kuerzel, '.', '') + '_Abi_' + GostBlockungsergebnis.abiturjahr()}"></p>
+                 </th:block>
+             </th:block>
+             """,
 			Arrays.asList(BenutzerKompetenz.OBERSTUFE_LAUFBAHNPLANUNG_ALLGEMEIN, BenutzerKompetenz.OBERSTUFE_LAUFBAHNPLANUNG_FUNKTIONSBEZOGEN,
 					BenutzerKompetenz.OBERSTUFE_KURSPLANUNG_ALLGEMEIN, BenutzerKompetenz.OBERSTUFE_KURSPLANUNG_FUNKTIONSBEZOGEN)),
 

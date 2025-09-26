@@ -14,6 +14,7 @@ import de.svws_nrw.core.utils.gost.GostBlockungsergebnisManager;
 import de.svws_nrw.data.gost.DataGostAbiturjahrgangFachwahlen;
 import de.svws_nrw.data.lehrer.DataLehrerStammdaten;
 import de.svws_nrw.db.utils.ApiOperationException;
+import de.svws_nrw.module.reporting.filterung.ReportingFilterDataType;
 import de.svws_nrw.module.reporting.proxytypes.gost.ProxyReportingGostFachwahlstatistikHalbjahr;
 import de.svws_nrw.module.reporting.utils.ReportingExceptionUtils;
 import de.svws_nrw.module.reporting.proxytypes.lehrer.ProxyReportingLehrer;
@@ -52,10 +53,13 @@ public class ProxyReportingGostKursplanungBlockungsergebnis extends ReportingGos
 	 * @param reportingRepository	Repository für das Reporting.
 	 * @param blockungsergebnis 	Das GOSt-Blockungsergebnis, welches für das Reporting genutzt werden soll.
 	 * @param datenManager 			Der zum Blockungsergebnis gehörige Datenmanager der Blockung.
+	 * @param idsFilter             Eine Liste von IDs, die die Ausgabe auf diese IDs beschränkt. Auf welchen Datentyp sich diese IDs beziehen, definiert der Wert der Eigenschaft idsFilterDataType.
+	 * @param idsFilterDataType     Der Typ von Daten, auf den sich die Filterung der IDs bezieht.
 	 */
 	public ProxyReportingGostKursplanungBlockungsergebnis(final ReportingRepository reportingRepository, final GostBlockungsergebnis blockungsergebnis,
-			final GostBlockungsdatenManager datenManager) {
-		super(0, 0, 0, 0, 0, 0, "", null, null, blockungsergebnis.id, new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
+			final GostBlockungsdatenManager datenManager, final List<Long> idsFilter, final ReportingFilterDataType idsFilterDataType) {
+		super(0, 0, 0, 0, 0, 0, "", null, null, blockungsergebnis.id, new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), idsFilter,
+				idsFilterDataType);
 		this.reportingRepository = reportingRepository;
 
 		// Initialisiere den Blockungsergebnis-Manager.
@@ -173,6 +177,11 @@ public class ProxyReportingGostKursplanungBlockungsergebnis extends ReportingGos
 
 			// Füge den neuen Kurs in die Liste der Kurse ein und initialisiere damit schrittweise die Liste der Super-Klasse.
 			super.kurse().add(reportingGostKursplanungKurs);
+
+			// Aktualisiere die Map der Kursplanungskurse im Repository.
+			this.reportingRepository.mapGostKursplanungKurse().clear();
+			this.reportingRepository.mapGostKursplanungKurse().putAll(super.kurse().stream().collect(Collectors.toMap(ReportingGostKursplanungKurs::id,
+					k -> k)));
 		}
 
 		// Erstelle eine Liste von Schienen aus dem Blockungsergebnis und initialisiere damit die Liste der Super-Klasse.
@@ -214,7 +223,8 @@ public class ProxyReportingGostKursplanungBlockungsergebnis extends ReportingGos
 									Collectors.toMap(
 											f -> f.id,
 											f -> (ReportingGostKursplanungFachwahlstatistik) new ProxyReportingGostKursplanungFachwahlstatistik(
-													new ProxyReportingGostFachwahlstatistikHalbjahr(this.reportingRepository, this.gostHalbjahr(), f), this.ergebnisManager))));
+													new ProxyReportingGostFachwahlstatistikHalbjahr(this.reportingRepository, this.gostHalbjahr(), f),
+													this.ergebnisManager))));
 				}
 			} catch (final ApiOperationException e) {
 				ReportingExceptionUtils.putStacktraceInLog(

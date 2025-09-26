@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import de.svws_nrw.module.reporting.filterung.ReportingFilterDataType;
 import org.thymeleaf.context.Context;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -16,7 +17,6 @@ import de.svws_nrw.db.utils.ApiOperationException;
 import de.svws_nrw.module.reporting.proxytypes.gost.klausurplanung.ProxyReportingGostKlausurplanungKlausurplan;
 import de.svws_nrw.module.reporting.repositories.ReportingRepository;
 import de.svws_nrw.module.reporting.types.gost.klausurplanung.ReportingGostKlausurplanungKlausurplan;
-import de.svws_nrw.module.reporting.types.schueler.ReportingSchueler;
 import jakarta.ws.rs.core.Response;
 
 
@@ -33,19 +33,30 @@ public final class HtmlContextGostKlausurplanungKlausurplan extends HtmlContext<
 	@JsonIgnore
 	private ReportingGostKlausurplanungKlausurplan gostKlausurplan;
 
+	/** Eine Liste von IDs, die die Ausgabe auf diese IDs beschränkt. Auf welchen Datentyp sich diese IDs beziehen, definiert der Wert der Eigenschaft
+	 * idsFilterDataType. Ist die Liste leer, dann erfolgt keine Filterung. */
+	private final List<Long> idsFilter;
+
+	/** Der Typ von Daten, auf den sich die Filterung der IDs bezieht. */
+	private final ReportingFilterDataType idsFilterDataType;
+
 	/**
 	 * Initialisiert einen neuen HtmlContext mit den übergebenen Daten.
 	 *
-	 * @param reportingRepository		Repository mit Parametern, Logger und Daten zum Reporting.
-	 * @param idsFilterSchueler 		Eine Liste, die die schülerbezogene Ausgabe auf die Schüler mit den enthaltenen IDs beschränkt.
+	 * @param reportingRepository	Repository mit Parametern, Logger und Daten zum Reporting.
+	 * @param idsFilter             Eine Liste von IDs, die die Ausgabe auf diese IDs beschränkt. Auf welchen Datentyp sich diese IDs beziehen, definiert der
+	 *                              Wert der Eigenschaft idsFilterDataType.
+	 * @param idsFilterDataType     Der Typ von Daten, auf den sich die Filterung der IDs bezieht.
 	 *
 	 * @throws ApiOperationException	Im Fehlerfall wird eine ApiOperationException ausgelöst und Log-Daten zusammen mit dieser zurückgegeben.
 	 */
- public HtmlContextGostKlausurplanungKlausurplan(final ReportingRepository reportingRepository, final List<Long> idsFilterSchueler)
-			throws ApiOperationException {
+	public HtmlContextGostKlausurplanungKlausurplan(final ReportingRepository reportingRepository, final List<Long> idsFilter,
+			final ReportingFilterDataType idsFilterDataType) throws ApiOperationException {
 		super(reportingRepository, true);
 		this.reportingRepository = reportingRepository;
-		erzeugeContext(idsFilterSchueler);
+		this.idsFilter = idsFilter;
+		this.idsFilterDataType = idsFilterDataType;
+		erzeugeContext();
 	}
 
 	/**
@@ -53,24 +64,26 @@ public final class HtmlContextGostKlausurplanungKlausurplan extends HtmlContext<
 	 *
 	 * @param reportingRepository	Repository mit Parametern, Logger und Daten zum Reporting.
 	 * @param gostKlausurplan		Ein GOSt-Klausurplan, auf dem dieser Kontext aufbauen soll.
-	 * @param idsFilterSchueler 	Eine Liste, die die schülerbezogene Ausgabe auf die Schüler mit den enthaltenen IDs beschränkt.
+	 * @param idsFilter             Eine Liste von IDs, die die Ausgabe auf diese IDs beschränkt. Auf welchen Datentyp sich diese IDs beziehen, definiert der
+	 *                              Wert der Eigenschaft idsFilterDataType.
+	 * @param idsFilterDataType     Der Typ von Daten, auf den sich die Filterung der IDs bezieht.
 	 */
 	public HtmlContextGostKlausurplanungKlausurplan(final ReportingRepository reportingRepository, final ReportingGostKlausurplanungKlausurplan gostKlausurplan,
-			final List<Long> idsFilterSchueler) {
+			final List<Long> idsFilter, final ReportingFilterDataType idsFilterDataType) {
 		super(reportingRepository, true);
 		this.reportingRepository = reportingRepository;
-		erzeugeContextFromKlausurplan(gostKlausurplan, idsFilterSchueler);
+		this.idsFilter = idsFilter;
+		this.idsFilterDataType = idsFilterDataType;
+		erzeugeContextFromKlausurplan(gostKlausurplan);
 	}
 
 
 	/**
 	 * Erzeugt den Context zur GOSt-Klausurplanung.
 	 *
-	 * @param idsFilterSchueler 		Eine Liste, die die schülerbezogene Ausgabe auf die Schüler mit den enthaltenen IDs beschränkt.
-	 *
 	 * @throws ApiOperationException   	im Fehlerfall
 	 */
-	private void erzeugeContext(final List<Long> idsFilterSchueler) throws ApiOperationException {
+	private void erzeugeContext() throws ApiOperationException {
 
 		// In den idsHauptdaten der Reporting-Parameter werden im Wechsel das Abiturjahr und das GostHalbjahr (0 = EF.1 bis 5 = Q2.2) übergeben.
 		// Hier werden die Daten NICHT validiert. Die Daten aus den Parametern müssen vorab validiert worden sein (ReportingValidierung).
@@ -96,11 +109,11 @@ public final class HtmlContextGostKlausurplanungKlausurplan extends HtmlContext<
 		}
 
 		try {
-			final GostKlausurenCollectionAllData allData = DataGostKlausuren.getAllData(reportingRepository.conn(), selection);
+			final GostKlausurenCollectionAllData allData = DataGostKlausuren.getAllData(this.reportingRepository.conn(), selection);
 			final GostKlausurplanManager gostKlausurManager =
 					new GostKlausurplanManager(allData);
 
-			this.gostKlausurplan = new ProxyReportingGostKlausurplanungKlausurplan(reportingRepository, gostKlausurManager, idsFilterSchueler);
+			this.gostKlausurplan = new ProxyReportingGostKlausurplanungKlausurplan(this.reportingRepository, gostKlausurManager, this.idsFilter, this.idsFilterDataType);
 
 			// Daten-Context für Thymeleaf erzeugen.
 			final Context context = new Context();
@@ -118,11 +131,10 @@ public final class HtmlContextGostKlausurplanungKlausurplan extends HtmlContext<
 	 * Erzeugt den Context zur GOSt-Klausurplanung auf Basis des Klausurplan-Objektes.
 	 *
 	 * @param gostKlausurplan		Ein GOSt-Klausurplan, auf dem dieser Kontext aufbauen soll.
-	 * @param idsFilterSchueler 	Eine Liste, die die schülerbezogene Ausgabe auf die Schüler mit den enthaltenen IDs beschränkt.
 	 */
-	private void erzeugeContextFromKlausurplan(final ReportingGostKlausurplanungKlausurplan gostKlausurplan, final List<Long> idsFilterSchueler) {
+	private void erzeugeContextFromKlausurplan(final ReportingGostKlausurplanungKlausurplan gostKlausurplan) {
 		this.gostKlausurplan = new ProxyReportingGostKlausurplanungKlausurplan(reportingRepository, gostKlausurplan.klausurtermine(), gostKlausurplan.kurse(),
-				gostKlausurplan.kursklausuren(), gostKlausurplan.schueler(), gostKlausurplan.schuelerklausuren(), idsFilterSchueler);
+				gostKlausurplan.kursklausuren(), gostKlausurplan.schueler(), gostKlausurplan.schuelerklausuren(), this.idsFilter, this.idsFilterDataType);
 
 		// Daten-Context für Thymeleaf erzeugen.
 		final Context context = new Context();
@@ -133,23 +145,30 @@ public final class HtmlContextGostKlausurplanungKlausurplan extends HtmlContext<
 
 
 	/**
-	 * Teile diesen Context mit allen Schülern in eine Liste von Contexts auf, die jeweils auf einen Schüler filtern. Damit können Ausgaben pro Schüler erzeugt werden.
+	 * Teile diesen Context mit allen Schülern in eine Liste von Contexts auf, die jeweils einen Schüler enthalten. Damit können Ausgaben pro Schüler erzeugt
+	 * werden.
 	 *
 	 * @return	Liste der Einzel-Contexts.
 	 */
-	public List<HtmlContextGostKlausurplanungKlausurplan> getEinzelSchuelerContexts() {
-		final List<HtmlContextGostKlausurplanungKlausurplan> resultContexts = new ArrayList<>();
+	public List<HtmlContextGostKlausurplanungKlausurplan> getEinzelContexts() {
+		final List<HtmlContextGostKlausurplanungKlausurplan> result = new ArrayList<>();
 
-		final List<Long> idsSchuelerImContext =
-				this.gostKlausurplan.idsFilterSchueler().isEmpty() ? this.gostKlausurplan.schueler().stream().map(ReportingSchueler::id).toList()
-						: this.gostKlausurplan.idsFilterSchueler();
-
-		for (final Long idSchueler : idsSchuelerImContext) {
-			final List<Long> einSchueler = new ArrayList<>();
-			einSchueler.add(idSchueler);
-			resultContexts.add(new HtmlContextGostKlausurplanungKlausurplan(this.reportingRepository, this.gostKlausurplan, einSchueler));
+		for (final Long idFilter : this.gostKlausurplan.idsGefiltert()) {
+			final HtmlContextGostKlausurplanungKlausurplan htmlContextGostKlausurplanungKlausurplan =
+					new HtmlContextGostKlausurplanungKlausurplan(this.reportingRepository, this.gostKlausurplan, List.of(idFilter), this.idsFilterDataType);
+			result.add(htmlContextGostKlausurplanungKlausurplan);
 		}
 
-		return resultContexts;
+		return result;
+	}
+
+	/**
+	 * Gibt eine Liste von IDs für die Ausgabe von Detaildaten zurück. Falls keine IDs definiert sind, wird eine leere Liste zurückgegeben.
+	 *
+	 * @return Eine Liste von Long-Werten, die die IDs der Detaildaten darstellen, oder eine leere Liste, wenn keine Detaildaten-IDs vorhanden sind.
+	 */
+	@Override
+	public List<Long> getIds() {
+		return this.gostKlausurplan.idsGefiltert();
 	}
 }

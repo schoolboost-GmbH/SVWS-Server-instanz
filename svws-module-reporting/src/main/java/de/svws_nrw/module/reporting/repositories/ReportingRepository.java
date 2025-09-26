@@ -74,6 +74,7 @@ import de.svws_nrw.module.reporting.proxytypes.stundenplanung.ProxyReportingStun
 import de.svws_nrw.module.reporting.sortierung.ComparatorFactory;
 import de.svws_nrw.module.reporting.sortierung.SortierungRegistryReportingLehrer;
 import de.svws_nrw.module.reporting.sortierung.SortierungRegistryReportingSchueler;
+import de.svws_nrw.module.reporting.types.gost.kursplanung.ReportingGostKursplanungKurs;
 import de.svws_nrw.module.reporting.types.klasse.ReportingKlasse;
 import de.svws_nrw.module.reporting.types.kurs.ReportingKurs;
 import de.svws_nrw.module.reporting.types.lehrer.ReportingLehrer;
@@ -204,6 +205,9 @@ public class ReportingRepository {
 
 	/** Stellt alle Kurse in den Schuljahresabschnitten über eine Map zur Kurs-ID zur Verfügung. */
 	private final Map<Long, ReportingKurs> mapKurse = new HashMap<>();
+
+	/** Stellt alle Kurse des aktuell geladenen Blockungsergebnisses über eine Map zur Kurs-ID zur Verfügung. */
+	private final Map<Long, ReportingGostKursplanungKurs> mapGostKursplanungKurse = new HashMap<>();
 
 	/** Stellt die Liste aller Lehrer über eine Map zur Lehrer-ID zur Verfügung */
 	private final Map<Long, ReportingLehrer> mapLehrer = new HashMap<>();
@@ -716,10 +720,19 @@ public class ReportingRepository {
 	/**
 	 * Stellt alle Kurse in den Schuljahresabschnitten über eine Map zur Kurs-ID zur Verfügung.
 	 *
-	 * @return Map der Stammdaten der Kurse.
+	 * @return Map der Daten der Kurse.
 	 */
 	public Map<Long, ReportingKurs> mapKurse() {
 		return mapKurse;
+	}
+
+	/**
+	 * Stellt alle Kurse des aktuell geladenen Blockungsergebnisses über eine Map zur Kurs-ID zur Verfügung.
+	 *
+	 * @return Map der Daten der aktuell geladenen Kursplanung-Kurse.
+	 */
+	public Map<Long, ReportingGostKursplanungKurs> mapGostKursplanungKurse() {
+		return mapGostKursplanungKurse;
 	}
 
 	/**

@@ -9,14 +9,15 @@
 		<link rel="stylesheet" th:href="@{gost/klausurplanung/GostKlausurplanungSchuelerMitKlausuren.css}" href="../../gost/klausurplanung/GostKlausurplanungSchuelerMitKlausuren.css" />
 	</head>
 
-	<body th:with="mediaPrint = ${Parameter.ausgabeformat >= 2}">
-		<div class="reset-page-counter start-new-page" th:each="schueler,iterationVarSchueler : ${GostKlausurplan.schuelerGefiltert()}">
+	<body th:with="mediaPrint = ${Parameter.ausgabeformat >= 2},
+	               Klausurschueler = ${GostKlausurplan.schuelerGefiltert()}">
+		<div class="reset-page-counter start-new-page" th:each="schueler,iterationVarSchueler : ${Klausurschueler}">
 			<!--Beginn: Definition der Seitenköpfe und Seitenfüße. Diese werden per CSS in den @page-Boxen positioniert-->
 			<th:block th:if="${mediaPrint}">
 				<div class="pageTopLeft" th:utext="${Schule.bezeichnungSchuleMehrzeiligHtml}">schulbezeichnung1<br/>schulbezeichnung2<br/>schulbezeichnung3</div>
 				<div class="pageTopRight" th:utext="'Klausurplanung ' + ${Schule.auswahlSchuljahresabschnitt().textSchuljahresabschnittKurz()} + '<br/>Schulnummer: ' + ${Schule.schulnummer()}">Klausurplanung<br/><br/>Schulnummer: 123456</div>
 				<div class="pageBottomLeft" th:text="'Gedruckt am ' + ${#dates.format(#dates.createNow(), 'dd.MM.yyyy HH:mm')} + ' von ' + ${Benutzer.benutzername()}">Gedruckt am 02.02.2022 von ABC</div>
-				<div class="pageBottomRight"><span class="page-nums-print" th:text="'Druck ' + ${iterationVarSchueler.count} + '/' + ${#lists.size(GostKlausurplan.schuelerGefiltert())} + ' - Seite '">Druck 13/57 - Seite </span></div>
+				<div class="pageBottomRight"><span class="page-nums-print" th:text="'Druck ' + ${iterationVarSchueler.count} + '/' + ${#lists.size(Klausurschueler)} + ' - Seite '">Druck 13/57 - Seite </span></div>
 			</th:block>
 			<!--Ende: Definition Seitenköpfe und Seitenfüße -->
 

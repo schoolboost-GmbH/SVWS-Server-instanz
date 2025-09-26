@@ -14,6 +14,7 @@ import de.svws_nrw.core.data.gost.klausurplanung.GostKlausurtermin;
 import de.svws_nrw.core.data.gost.klausurplanung.GostSchuelerklausur;
 import de.svws_nrw.core.data.gost.klausurplanung.GostSchuelerklausurTermin;
 import de.svws_nrw.core.utils.gost.klausurplanung.GostKlausurplanManager;
+import de.svws_nrw.module.reporting.filterung.ReportingFilterDataType;
 import de.svws_nrw.module.reporting.proxytypes.kurs.ProxyReportingKurs;
 import de.svws_nrw.module.reporting.repositories.ReportingRepository;
 import de.svws_nrw.module.reporting.sortierung.ComparatorFactory;
@@ -51,18 +52,21 @@ public class ProxyReportingGostKlausurplanungKlausurplan extends ReportingGostKl
 	 * @param kursklausuren 		Eine Liste, die alle Kursklausuren des Klausurplanes beinhaltet.
 	 * @param schueler 				Eine Liste, die alle Schüler des Klausurplanes beinhaltet.
 	 * @param schuelerklausuren 	Eine Liste, die alle Schülerklausuren des Klausurplanes beinhaltet.
-	 * @param idsFilterSchueler 	Eine Liste, die die schülerbezogene Ausgabe auf die Schüler mit den enthaltenen IDs beschränkt.
+	 * @param idsFilter             Eine Liste von IDs, die die Ausgabe auf diese IDs beschränkt. Auf welchen Datentyp sich diese IDs beziehen, definiert der
+	 *                              Wert der Eigenschaft idsFilterDataType.
+	 * @param idsFilterDataType     Der Typ von Daten, auf den sich die Filterung der IDs bezieht.
 	 */
 	public ProxyReportingGostKlausurplanungKlausurplan(final ReportingRepository reportingRepository,
 			final List<ReportingGostKlausurplanungKlausurtermin> klausurtermine, final List<ReportingKurs> kurse,
 			final List<ReportingGostKlausurplanungKursklausur> kursklausuren, final List<ReportingSchueler> schueler,
-			final List<ReportingGostKlausurplanungSchuelerklausur> schuelerklausuren, final List<Long> idsFilterSchueler) {
+			final List<ReportingGostKlausurplanungSchuelerklausur> schuelerklausuren, final List<Long> idsFilter, final ReportingFilterDataType idsFilterDataType) {
 		super(klausurtermine,
 				kurse,
 				kursklausuren,
 				schueler,
 				schuelerklausuren,
-				idsFilterSchueler);
+				idsFilter,
+				idsFilterDataType);
 		this.reportingRepository = reportingRepository;
 		this.gostKlausurplanManager = null;
 	}
@@ -73,11 +77,13 @@ public class ProxyReportingGostKlausurplanungKlausurplan extends ReportingGostKl
 	 *
 	 * @param reportingRepository		Repository für das Reporting.
 	 * @param gostKlausurplanManager 	Der Manager der Klausuren zu diesem Klausurplan
-	 * @param idsFilterSchueler 		Eine Liste, die die schülerbezogene Ausgabe auf die Schüler mit den enthaltenen IDs beschränkt.
+	 * @param idsFilter             Eine Liste von IDs, die die Ausgabe auf diese IDs beschränkt. Auf welchen Datentyp sich diese IDs beziehen, definiert der
+	 *                              Wert der Eigenschaft idsFilterDataType.
+	 * @param idsFilterDataType     Der Typ von Daten, auf den sich die Filterung der IDs bezieht.
 	 */
 	public ProxyReportingGostKlausurplanungKlausurplan(final ReportingRepository reportingRepository, final GostKlausurplanManager gostKlausurplanManager,
-			final List<Long> idsFilterSchueler) {
-		super(new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), idsFilterSchueler);
+			final List<Long> idsFilter, final ReportingFilterDataType idsFilterDataType) {
+		super(new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), idsFilter, idsFilterDataType);
 
 		this.reportingRepository = reportingRepository;
 		this.gostKlausurplanManager = gostKlausurplanManager;

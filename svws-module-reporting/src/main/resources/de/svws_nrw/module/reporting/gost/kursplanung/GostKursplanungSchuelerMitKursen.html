@@ -9,8 +9,9 @@
 		<link rel="stylesheet" th:href="@{gost/kursplanung/GostKursplanungSchuelerMitKursen.css}" href="../../gost/kursplanung/GostKursplanungSchuelerMitKursen.css" />
 	</head>
 
-	<body th:with="mediaPrint = ${Parameter.ausgabeformat >= 2}">
-		<div style="page-break-inside: avoid;" th:each="schueler,iterationVarSchueler : ${GostBlockungsergebnis.schuelerGefiltert(Parameter.idsDetaildaten)}">
+	<body th:with="mediaPrint = ${Parameter.ausgabeformat >= 2},
+				   KursplanungSchueler = ${GostBlockungsergebnis.schuelerGefiltert()}">
+		<div style="page-break-inside: avoid;" th:each="schueler,iterationVarSchueler : ${KursplanungSchueler}">
 			<!--Beginn: Definition der Seitenköpfe und Seitenfüße. Diese werden per CSS in den @page-Boxen positioniert-->
 			<th:block th:if="${mediaPrint}">
 				<div class="pageTopLeft" th:utext="${Schule.bezeichnungSchuleMehrzeiligHtml}">schulbezeichnung1<br/>schulbezeichnung2<br/>schulbezeichnung3</div>

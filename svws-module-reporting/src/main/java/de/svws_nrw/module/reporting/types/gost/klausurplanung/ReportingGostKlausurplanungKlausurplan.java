@@ -5,6 +5,8 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import de.svws_nrw.module.reporting.filterung.ReportingFilterDataType;
 import de.svws_nrw.module.reporting.types.ReportingBaseType;
 import de.svws_nrw.module.reporting.types.kurs.ReportingKurs;
 import de.svws_nrw.module.reporting.types.schueler.ReportingSchueler;
@@ -15,8 +17,18 @@ import de.svws_nrw.module.reporting.types.schueler.ReportingSchueler;
  */
 public class ReportingGostKlausurplanungKlausurplan extends ReportingBaseType {
 
-	/** Eine Liste, die die schülerbezogene Ausgabe auf die Schüler mit den enthaltenen IDs beschränkt. */
-	protected List<Long> idsFilterSchueler;
+	/** Eine Liste von IDs, die die Ausgabe auf diese IDs beschränkt. Auf welchen Datentyp sich diese IDs beziehen, definiert der Wert der Eigenschaft
+	 * idsFilterDataType. Ist die Liste leer, dann erfolgt keine Filterung. */
+	private List<Long> idsFilter;
+
+	/** Der Typ von Daten, auf den sich die Filterung der IDs bezieht. */
+	private final ReportingFilterDataType idsFilterDataType;
+
+	/** Eine Liste, die die gefilterten Schüler zwischenspeichert, wenn ein wiederholter Zugriff erfolgt. */
+	private List<ReportingSchueler> gefilterteSchueler;
+
+	/** Eine Liste, die die gefilterten Kurse zwischenspeichert, wenn ein wiederholter Zugriff erfolgt. */
+	private List<ReportingKurs> gefilterteKurse;
 
 	/** Eine Liste, die alle Termine des Klausurplanes beinhaltet. */
 	protected List<ReportingGostKlausurplanungKlausurtermin> klausurtermine;
@@ -42,11 +54,14 @@ public class ReportingGostKlausurplanungKlausurplan extends ReportingBaseType {
 	 * @param kursklausuren 	Eine Liste, die alle Kursklausuren des Klausurplanes beinhaltet.
 	 * @param schueler 			Eine Liste, die alle Schüler des Klausurplanes beinhaltet.
 	 * @param schuelerklausuren Eine Liste, die alle Schülerklausuren des Klausurplanes beinhaltet.
-	 * @param idsFilterSchueler Eine Liste, die die schülerbezogene Ausgabe auf die Schüler mit den enthaltenen IDs beschränkt.
+	 * @param idsFilter             Eine Liste von IDs, die die Ausgabe auf diese IDs beschränkt. Auf welchen Datentyp sich diese IDs beziehen, definiert der
+	 *                              Wert der Eigenschaft idsFilterDataType.
+	 * @param idsFilterDataType     Der Typ von Daten, auf den sich die Filterung der IDs bezieht.
 	 */
 	public ReportingGostKlausurplanungKlausurplan(final List<ReportingGostKlausurplanungKlausurtermin> klausurtermine, final List<ReportingKurs> kurse,
 			final List<ReportingGostKlausurplanungKursklausur> kursklausuren, final List<ReportingSchueler> schueler,
-			final List<ReportingGostKlausurplanungSchuelerklausur> schuelerklausuren, final List<Long> idsFilterSchueler) {
+			final List<ReportingGostKlausurplanungSchuelerklausur> schuelerklausuren, final List<Long> idsFilter,
+			final ReportingFilterDataType idsFilterDataType) {
 
 		// Fülle die Basislisten mit den übergebenen Daten.
 		this.schueler = (schueler != null) ? schueler : new ArrayList<>();
@@ -54,11 +69,125 @@ public class ReportingGostKlausurplanungKlausurplan extends ReportingBaseType {
 		this.klausurtermine = (klausurtermine != null) ? klausurtermine : new ArrayList<>();
 		this.kursklausuren = (kursklausuren != null) ? kursklausuren : new ArrayList<>();
 		this.schuelerklausuren = (schuelerklausuren != null) ? schuelerklausuren : new ArrayList<>();
-		this.idsFilterSchueler = (idsFilterSchueler != null) ? idsFilterSchueler : new ArrayList<>();
+
+		this.idsFilter = (idsFilter == null) ? new ArrayList<>() : idsFilter.stream().filter(Objects::nonNull).distinct().toList();
+		this.idsFilterDataType = idsFilterDataType;
+		filterDaten();
 	}
 
 
 	// ##### Berechnete Methoden #####
+
+	/**
+	 * Filtert die Daten entsprechend dem Typ der IDs (Schüler oder Kurse), die in der Eigenschaft idsFilterDataType angegeben sind,
+	 * und beschränkt die Ergebnisse auf die IDs in der Liste idsFilter. Falls die Filterliste leer ist, wird keine Filterung vorgenommen,
+	 * und alle entsprechenden Daten werden zurückgegeben.
+	 * Die gefilterten Ergebnisse werden in den entsprechenden Eigenschaften gefilterteSchueler und gefilterteKurse gespeichert.
+	 */
+	private void filterDaten() {
+		switch (this.idsFilterDataType) {
+			case SCHUELER -> {
+				if (this.idsFilter.isEmpty()) {
+					// Wenn die Liste der zu filterenden IDs leer ist, wird keine Filterung vorgenommen, also alle Schüler verwendet.
+					this.gefilterteSchueler = new ArrayList<>(this.schueler);
+				} else if (!this.schueler.isEmpty()) {
+					// Filtere die Schüler heraus, die gewünscht werden.
+					gefilterteSchueler = this.schueler.stream().filter(s -> idsFilter.contains(s.id())).toList();
+					// Bereinige anschließend unter Umständen die Liste der Filter-IDs.
+					this.idsFilter = gefilterteSchueler.stream().map(ReportingSchueler::id).toList();
+				}
+				gefilterteKurse = new ArrayList<>(this.kurse);
+			}
+			case KURSE -> {
+				gefilterteSchueler = new ArrayList<>(this.schueler);
+				if (this.idsFilter.isEmpty()) {
+					// Wenn die Liste der zu filterenden IDs leer ist, wird keine Filterung vorgenommen, also alle Kurse verwendet.
+					this.gefilterteKurse = new ArrayList<>(this.kurse);
+				} else  if (!this.kurse.isEmpty()) {
+					// Filtere die Kurse heraus, die gewünscht werden.
+					gefilterteKurse = this.kurse.stream().filter(k -> idsFilter.contains(k.id())).toList();
+					// Bereinige anschließend unter Umständen die Liste der Filter-IDs.
+					this.idsFilter = gefilterteKurse.stream().map(ReportingKurs::id).toList();
+				}
+			}
+			case null, default -> {
+				gefilterteSchueler = new ArrayList<>(this.schueler);
+				gefilterteKurse = new ArrayList<>(this.kurse);
+			}
+		}
+	}
+
+	/**
+	 * Gibt eine gefilterte Liste der Kurse zurück. Die Filterung basiert auf den Angaben
+	 * der IDs und des Datentyps, die in den Eigenschaften der Klasse gespeichert sind.
+	 * Vor der Rückgabe wird eine Filterung der Daten durchgeführt.
+	 *
+	 * @return Eine Liste vom Typ ReportingKurs mit den gefilterten Kursen.
+	 */
+	@JsonIgnore
+	public List<ReportingKurs> kurseGefiltert() {
+		filterDaten();
+		return this.gefilterteKurse;
+	}
+
+	/**
+	 * Gibt eine gefilterte Liste der Schüler zurück. Die Filterung basiert auf den Angaben
+	 * der IDs und des Datentyps, die in den Eigenschaften der Klasse gespeichert sind.
+	 * Vor der Rückgabe wird eine Filterung der Daten durchgeführt.
+	 *
+	 * @return Eine Liste vom Typ ReportingSchueler mit den gefilterten Schülern.
+	 */
+	@JsonIgnore
+	public List<ReportingSchueler> schuelerGefiltert() {
+		filterDaten();
+		return this.gefilterteSchueler;
+	}
+
+	/**
+	 * Gibt eine gefilterte Liste von IDs basierend auf dem aktuellen Filter-Datentyp zurück.
+	 * Der Filter kann auf Schüler, Kurse oder keinen spezifischen Datentyp angewendet werden.
+	 *
+	 * @return Eine Liste von Long-Werten, die die gefilterten IDs enthalten. Ist kein spezifischer
+	 *         Datentyp festgelegt oder sind keine passenden Einträge vorhanden, wird eine leere Liste zurückgegeben.
+	 */
+	@JsonIgnore
+	public List<Long> idsGefiltert() {
+		switch (this.idsFilterDataType) {
+			case SCHUELER -> {
+				return schuelerGefiltert().stream().map(ReportingSchueler::id).distinct().toList();
+			}
+			case KURSE -> {
+				return kurseGefiltert().stream().map(ReportingKurs::id).distinct().toList();
+			}
+			case null, default -> {
+				return new ArrayList<>();
+			}
+		}
+	}
+
+	/**
+	 * Gibt eine gefilterte Liste von Daten zurück, basierend auf dem Typ, der in der
+	 * Eigenschaft idsFilterDataType gespeichert ist. Aktuell werden folgende Typen unterstützt:
+	 * - SCHUELER: Rückgabe einer Liste gefilterter Schüler
+	 * - KURSE: Rückgabe einer Liste gefilterter Kurse
+	 * - Standardwert oder null: Rückgabe einer leeren Liste
+	 *
+	 * @return Eine Liste von Objekten des jeweiligen Typs, die den Filterkriterien entsprechen.
+	 */
+	@JsonIgnore
+	public List<?> datenGefiltert() {
+		switch (this.idsFilterDataType) {
+			case SCHUELER -> {
+				return schuelerGefiltert();
+			}
+			case KURSE -> {
+				return kurseGefiltert();
+			}
+			case null, default -> {
+				return new ArrayList<>();
+			}
+		}
+	}
 
 	/**
 	 * Eine Liste vom Typ String, die alle vorhandenen Datumsangaben der Termine des Klausurplanes beinhaltet (distinct).
@@ -157,17 +286,6 @@ public class ReportingGostKlausurplanungKlausurplan extends ReportingBaseType {
 	}
 
 	/**
-	 * Gibt eine Liste mit Schülern zurück, deren IDs in der Filterliste dieses Klausurplans enthalten sind. Ist die Liste leer, werden alle Schüler zurückgegeben.
-	 *
-	 * @return Die Liste der Schüler, die in der Filterliste enthalten waren. Oder alle Schüler bei leerer Filterliste.
-	 */
-	public List<ReportingSchueler> schuelerGefiltert() {
-		if (idsFilterSchueler.isEmpty())
-			return this.schueler;
-		return schueler.stream().filter(s -> idsFilterSchueler.contains(s.id())).toList();
-	}
-
-	/**
 	 * Gibt die Schülerklausur zur übergebenen ID zurück
 	 *
 	 * @param  id 	Die ID der Schülerklausur
@@ -182,15 +300,6 @@ public class ReportingGostKlausurplanungKlausurplan extends ReportingBaseType {
 
 
 	// ##### Getter #####
-
-	/**
-	 * Eine Liste, die die schülerbezogene Ausgabe auf die Schüler mit den enthaltenen IDs beschränkt.
-	 *
-	 * @return Inhalt des Feldes idsFilterSchueler
-	 */
-	public List<Long> idsFilterSchueler() {
-		return idsFilterSchueler;
-	}
 
 	/**
 	 * Eine Liste, die alle Termine des Klausurplanes beinhaltet.

@@ -760,7 +760,7 @@ export class RouteDataGostKursplanung extends RouteData<RouteStateGostKursplanun
 
 	getPDF = api.call(async (title: DownloadPDFTypen): Promise<ApiFile> => {
 		if (!this.hatErgebnis)
-			throw new DeveloperNotificationException("Die Kurs-Schienen-Zuordnung kann nur gedruckt werden, wenn ein Ergebnis ausgewählt ist.");
+			throw new DeveloperNotificationException("Die Ausgabe kann nur erfolgen, wenn ein Ergebnis ausgewählt ist.");
 		const reportingParameter = new ReportingParameter();
 		reportingParameter.idSchuljahresabschnitt = routeApp.data.aktAbschnitt.value.id;
 		reportingParameter.idsHauptdaten = new ArrayList<number>();
@@ -776,39 +776,54 @@ export class RouteDataGostKursplanung extends RouteData<RouteStateGostKursplanun
 					list.add(kurs);
 				reportingParameter.reportvorlage = ReportingReportvorlage.GOST_KURSPLANUNG_v_KURS_MIT_KURSSCHUELERN.getBezeichnung();
 				reportingParameter.idsDetaildaten = list;
-				return await api.server.pdfReport(reportingParameter, api.schema);
+				break;
 			case "Kurse mit Statistikwerten":
 				for (const kurs of this.kursAuswahl)
 					list.add(kurs);
 				reportingParameter.reportvorlage = ReportingReportvorlage.GOST_KURSPLANUNG_v_KURSE_MIT_STATISTIKWERTEN.getBezeichnung();
 				reportingParameter.idsDetaildaten = list;
-				return await api.server.pdfReport(reportingParameter, api.schema);
+				break;
 			case "Kurse-Schienen-Zuordnung":
 				reportingParameter.reportvorlage = ReportingReportvorlage.GOST_KURSPLANUNG_v_SCHUELER_MIT_SCHIENEN_KURSEN.getBezeichnung();
-				return await api.server.pdfReport(reportingParameter, api.schema);
+				break;
 			case "Kurse-Schienen-Zuordnung markierter Schüler":
 				list.add(this.auswahlSchueler.id);
 				reportingParameter.reportvorlage = ReportingReportvorlage.GOST_KURSPLANUNG_v_SCHUELER_MIT_SCHIENEN_KURSEN.getBezeichnung();
 				reportingParameter.idsDetaildaten = list;
-				return await api.server.pdfReport(reportingParameter, api.schema);
+				break;
 			case "Kurse-Schienen-Zuordnung gefilterte Schüler":
 				for (const schueler of this.schuelerFilter.filtered.value)
 					list.add(schueler.id);
 				reportingParameter.reportvorlage = ReportingReportvorlage.GOST_KURSPLANUNG_v_SCHUELER_MIT_SCHIENEN_KURSEN.getBezeichnung();
 				reportingParameter.idsDetaildaten = list;
-				return await api.server.pdfReport(reportingParameter, api.schema);
+				break;
 			case "Kursbelegung markierter Schüler":
 				list.add(this.auswahlSchueler.id);
 				reportingParameter.reportvorlage = ReportingReportvorlage.GOST_KURSPLANUNG_v_SCHUELER_MIT_KURSEN.getBezeichnung();
 				reportingParameter.idsDetaildaten = list;
-				return await api.server.pdfReport(reportingParameter, api.schema);
+				break;
 			case "Kursbelegung gefilterte Schüler":
 				for (const schueler of this.schuelerFilter.filtered.value)
 					list.add(schueler.id);
 				reportingParameter.reportvorlage = ReportingReportvorlage.GOST_KURSPLANUNG_v_SCHUELER_MIT_KURSEN.getBezeichnung();
 				reportingParameter.idsDetaildaten = list;
-				return await api.server.pdfReport(reportingParameter, api.schema);
+				break;
 		}
+		return await api.server.pdfReport(reportingParameter, api.schema);
+	})
+
+	sendEmailPdf = api.call(async(reportingParameter: ReportingParameter) => {
+		if (!this.hatErgebnis)
+			throw new DeveloperNotificationException("Die Ausgabe kann nur erfolgen, wenn ein Ergebnis ausgewählt ist.");
+		const list = new ArrayList<number>();
+		for (const kurs of this.kursAuswahl)
+			list.add(kurs);
+		reportingParameter.idSchuljahresabschnitt = routeApp.data.aktAbschnitt.value.id;
+		reportingParameter.idsHauptdaten = new ArrayList<number>();
+		reportingParameter.idsHauptdaten.add(this.ergebnismanager.getErgebnis().id);
+		reportingParameter.idsDetaildaten = list;
+		reportingParameter.einzelausgabeDetaildaten = true;
+		return await api.server.emailReport(reportingParameter, api.schema);
 	})
 
 	gotoErgebnis = async (value: GostBlockungsergebnis | number | undefined) => {

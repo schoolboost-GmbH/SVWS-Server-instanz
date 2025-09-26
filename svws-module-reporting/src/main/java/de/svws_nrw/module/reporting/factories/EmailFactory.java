@@ -12,6 +12,7 @@ import de.svws_nrw.data.email.DBEmailUtils;
 import de.svws_nrw.db.utils.ApiOperationException;
 import de.svws_nrw.module.reporting.pdf.PdfBuilder;
 import de.svws_nrw.module.reporting.repositories.ReportingRepository;
+import de.svws_nrw.module.reporting.types.gost.kursplanung.ReportingGostKursplanungKurs;
 import de.svws_nrw.module.reporting.types.klasse.ReportingKlasse;
 import de.svws_nrw.module.reporting.types.kurs.ReportingKurs;
 import de.svws_nrw.module.reporting.types.lehrer.ReportingLehrer;
@@ -330,6 +331,13 @@ public final class EmailFactory {
 			}
 			case KURSLEHRER -> {
 				final ReportingKurs kurs = reportingRepository.mapKurse().get(id);
+				if (kurs == null)
+					yield new ArrayList<>();
+				final List<ReportingLehrer> lehrer = (kurs.lehrkraefte() == null) ? new ArrayList<>() : kurs.lehrkraefte();
+				yield new ArrayList<>(lehrer);
+			}
+			case GOSTKURSPLANUNG_KURSLEHRER -> {
+				final ReportingGostKursplanungKurs kurs = reportingRepository.mapGostKursplanungKurse().get(id);
 				if (kurs == null)
 					yield new ArrayList<>();
 				final List<ReportingLehrer> lehrer = (kurs.lehrkraefte() == null) ? new ArrayList<>() : kurs.lehrkraefte();
