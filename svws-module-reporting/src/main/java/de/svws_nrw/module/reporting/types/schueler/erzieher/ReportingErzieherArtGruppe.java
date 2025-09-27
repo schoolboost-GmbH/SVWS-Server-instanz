@@ -139,7 +139,7 @@ public class ReportingErzieherArtGruppe extends ReportingBaseType {
 
 		// Maximal ein zweiter Erzieher kann noch in der Gruppe sein.
 		if (erzieher().size() > 1)
-			result += (!result.isEmpty() ? ";" : "") +  erzieher().getLast().emailPrivat();
+			result += (!result.isEmpty() ? ";" : "") + erzieher().getLast().emailPrivat();
 
 		return result;
 	}
@@ -150,8 +150,12 @@ public class ReportingErzieherArtGruppe extends ReportingBaseType {
 	 * @return true, wenn einer der Erzieher ein Schüler ist, sonst false
 	 */
 	public boolean istVolljaehrigerSchueler() {
-		return ((this.erzieher.size() == 1) && (this.erzieher().getFirst().art.bezeichnung().toLowerCase().contains("schüler"))
-				&& (this.erzieher().getFirst().art.bezeichnung().toLowerCase().contains("ist volljährig")));
+		if ((this.erzieher.size() != 1))
+			return false;
+		final ReportingErzieherArt erzieherArt = this.erzieher.getFirst().art;
+		if (erzieherArt == null)
+			return false;
+		return (erzieherArt.bezeichnung().toLowerCase().contains("schüler") && erzieherArt.bezeichnung().toLowerCase().contains("ist volljährig"));
 	}
 
 	/**

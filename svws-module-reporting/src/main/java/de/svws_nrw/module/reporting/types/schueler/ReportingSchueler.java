@@ -457,7 +457,7 @@ public class ReportingSchueler extends ReportingPerson {
 	}
 
 	/**
-	 * Die ID der Art des Fahr des Schülers.
+	 * Die ID der Fahrschülerart des Schülers.
 	 *
 	 * @return Inhalt des Feldes fahrschuelerArtID
 	 */
