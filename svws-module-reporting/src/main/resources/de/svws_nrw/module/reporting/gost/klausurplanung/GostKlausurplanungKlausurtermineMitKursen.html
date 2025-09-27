@@ -53,7 +53,7 @@
 							<td class="f-bold bo-b-grey" th:text="${termin.gostHalbjahr().kuerzel}">Q2.2</td>
 							<td colspan="2" class="f-bold bo-b-grey" th:text="${termin.startuhrzeit() + ' Uhr'}">08:00 Uhr</td>
 							<td colspan="4" class="f-bold bo-b-grey" th:text="${termin.bezeichnung()}">Kursgruppe M-PH</td>
-							<td colspan="2" class="f-bold bo-b-grey ta-r" th:text="${#convert.toDateDE(datum)}">15.03.2024</td>
+							<td colspan="2" class="f-bold bo-b-grey ta-r" th:text="${'Quartal ' + termin.quartal() + ' - ' + #convert.toDateDE(datum)}">Quartal 1 - 15.03.2024</td>
 						</tr>
 						<tr th:if="${!termin.raeumeUndStunden().isEmpty()}">
 							<td></td>
