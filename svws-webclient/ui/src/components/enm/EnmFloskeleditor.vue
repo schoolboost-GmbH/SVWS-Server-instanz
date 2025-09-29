@@ -154,7 +154,7 @@
 		daten: computed<List<RowType>>(() => {
 			const result = new ArrayList<RowType>();
 			const auswahl = props.auswahl;
-			if ((auswahl.schueler === null) || (auswahl.leistung === null))
+			if ((auswahl.schueler === null) || ((auswahl.leistung === null) && (auswahl.klasse === null)))
 				return result;
 			let floskelnHauptgruppe: ENMFloskelgruppe | null = null;
 			let floskelnAllgemein: ENMFloskelgruppe | null = null;
@@ -175,10 +175,15 @@
 				temp.push(floskelnAllgemein);
 			for (const gruppe of temp) {
 				result.add({ gruppe, floskel: null });
-				for (const floskel of gruppe.floskeln)
-					if ((floskel.fachID === null) || ((props.enmManager().lerngruppeByIDOrException(auswahl.leistung.lerngruppenID).fachID === floskel.fachID)
-						&& ((floskel.jahrgangID === null) || (floskel.jahrgangID === auswahl.schueler.jahrgangID))))
-						result.add({ gruppe, floskel });
+				for (const floskel of gruppe.floskeln) {
+					// Prüfe, ob der Jahrgang der Floskel zu dem Jahrgang des Schülers passt
+					if ((floskel.jahrgangID !== null) && (floskel.jahrgangID !== auswahl.schueler.jahrgangID))
+						continue;
+					// Prüfe, wenn es sich um fachbezogene Floskeln handelt auch das Fach der Floskel zu dem Fach der eistung passt
+					if ((auswahl.leistung !== null) && (floskel.fachID !== null) && ((props.enmManager().lerngruppeByIDOrException(auswahl.leistung.lerngruppenID).fachID !== floskel.fachID)))
+						continue;
+					result.add({ gruppe, floskel });
+				}
 			}
 			return result;
 		}),
