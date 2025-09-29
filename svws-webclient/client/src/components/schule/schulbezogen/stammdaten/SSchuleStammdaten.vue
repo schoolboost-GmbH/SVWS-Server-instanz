@@ -46,7 +46,7 @@
 					<svws-ui-input-number placeholder="Port" :model-value="smptServerKonfiguration().port" @change="port => (port !== null) && (port !== undefined) && patchSMTPServerKonfiguration({ port })" />
 					<svws-ui-checkbox type="toggle" :model-value="smptServerKonfiguration().useStartTLS" @update:model-value="value => patchSMTPServerKonfiguration({ useStartTLS : (value === true) ? true : false })">Nutze StartTLS</svws-ui-checkbox>
 					<svws-ui-checkbox type="toggle" :model-value="smptServerKonfiguration().useTLS" @update:model-value="value => patchSMTPServerKonfiguration({ useTLS : (value === true) ? true : false })">Nutze TLS</svws-ui-checkbox>
-					<svws-ui-text-input placeholder="Trust TLS Host" :model-value="smptServerKonfiguration().trustTLSHost" @change="trustTLSHost => patchSMTPServerKonfiguration({ trustTLSHost })" />
+					<svws-ui-text-input placeholder="Trust TLS Host" :model-value="smptServerKonfiguration().trustTLSHost" @change="trustTLSHost => patchSMTPServerKonfiguration({ trustTLSHost: trustTLSHost || null })" />
 				</svws-ui-input-wrapper>
 			</svws-ui-content-card>
 		</div>
