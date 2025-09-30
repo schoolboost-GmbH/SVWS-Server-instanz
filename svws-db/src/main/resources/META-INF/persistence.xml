@@ -438,6 +438,41 @@
         <class>de.svws_nrw.db.dto.current.svws.timestamps.DTOTimestampsSchuelerLeistungsdaten</class>
         <class>de.svws_nrw.db.dto.current.svws.timestamps.DTOTimestampsSchuelerLernabschnittsdaten</class>
         <class>de.svws_nrw.db.dto.current.svws.timestamps.DTOTimestampsSchuelerTeilleistungen</class>
+        <class>de.svws_nrw.db.dto.current.uv.DTOUvFach</class>
+        <class>de.svws_nrw.db.dto.current.uv.DTOUvKlasse</class>
+        <class>de.svws_nrw.db.dto.current.uv.DTOUvKurs</class>
+        <class>de.svws_nrw.db.dto.current.uv.DTOUvLehrer</class>
+        <class>de.svws_nrw.db.dto.current.uv.DTOUvLehrerAnrechnungsstunden</class>
+        <class>de.svws_nrw.db.dto.current.uv.DTOUvLehrerPflichtstundensoll</class>
+        <class>de.svws_nrw.db.dto.current.uv.DTOUvLerngruppe</class>
+        <class>de.svws_nrw.db.dto.current.uv.DTOUvLerngruppeSchiene</class>
+        <class>de.svws_nrw.db.dto.current.uv.DTOUvLerngruppenLehrer</class>
+        <class>de.svws_nrw.db.dto.current.uv.DTOUvPlanungsabschnitt</class>
+        <class>de.svws_nrw.db.dto.current.uv.DTOUvPlanungsabschnittLehrer</class>
+        <class>de.svws_nrw.db.dto.current.uv.DTOUvPlanungsabschnittSchueler</class>
+        <class>de.svws_nrw.db.dto.current.uv.DTOUvPlanungsabschnittZeitraster</class>
+        <class>de.svws_nrw.db.dto.current.uv.DTOUvRaum</class>
+        <class>de.svws_nrw.db.dto.current.uv.DTOUvSchiene</class>
+        <class>de.svws_nrw.db.dto.current.uv.DTOUvSchienenConstraintJahrgang</class>
+        <class>de.svws_nrw.db.dto.current.uv.DTOUvSchuelergruppe</class>
+        <class>de.svws_nrw.db.dto.current.uv.DTOUvSchuelergruppeConstraintJahrgang</class>
+        <class>de.svws_nrw.db.dto.current.uv.DTOUvSchuelergruppeConstraintSchuelergruppe</class>
+        <class>de.svws_nrw.db.dto.current.uv.DTOUvSchuelergruppeSchueler</class>
+        <class>de.svws_nrw.db.dto.current.uv.DTOUvStundenplanErgebnis</class>
+        <class>de.svws_nrw.db.dto.current.uv.DTOUvStundenplanErgebnisUnterrichtLehrer</class>
+        <class>de.svws_nrw.db.dto.current.uv.DTOUvStundenplanErgebnisUnterrichtRaum</class>
+        <class>de.svws_nrw.db.dto.current.uv.DTOUvStundenplanErgebnisUnterrichtZeitraster</class>
+        <class>de.svws_nrw.db.dto.current.uv.DTOUvStundenplanKonfiguration</class>
+        <class>de.svws_nrw.db.dto.current.uv.DTOUvStundenplanRegel</class>
+        <class>de.svws_nrw.db.dto.current.uv.DTOUvStundenplanRegelparameter</class>
+        <class>de.svws_nrw.db.dto.current.uv.DTOUvStundentafel</class>
+        <class>de.svws_nrw.db.dto.current.uv.DTOUvStundentafelFach</class>
+        <class>de.svws_nrw.db.dto.current.uv.DTOUvUnterricht</class>
+        <class>de.svws_nrw.db.dto.current.uv.DTOUvUnterrichtRaum</class>
+        <class>de.svws_nrw.db.dto.current.uv.DTOUvUnterrichteLerngruppenlehrer</class>
+        <class>de.svws_nrw.db.dto.current.uv.DTOUvZeitraster</class>
+        <class>de.svws_nrw.db.dto.current.uv.DTOUvZeitrasterEintrag</class>
+        <class>de.svws_nrw.db.dto.current.uv.DTOUv_PlanungsabschnittZeitraster_Constraint_Jahrgang</class>
         <class>de.svws_nrw.db.dto.current.views.benutzer.DTOViewBenutzer</class>
         <class>de.svws_nrw.db.dto.current.views.benutzer.DTOViewBenutzerKompetenz</class>
         <class>de.svws_nrw.db.dto.current.views.benutzer.DTOViewBenutzerdetails</class>

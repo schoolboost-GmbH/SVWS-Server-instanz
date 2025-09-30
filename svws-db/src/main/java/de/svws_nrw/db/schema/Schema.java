@@ -1,9 +1,9 @@
 package de.svws_nrw.db.schema;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.ArrayList;
 
 import de.svws_nrw.db.schema.tabellen.Tabelle_AllgAdrAnsprechpartner;
 import de.svws_nrw.db.schema.tabellen.Tabelle_AllgemeineMerkmaleKatalog_Keys;
@@ -19,6 +19,8 @@ import de.svws_nrw.db.schema.tabellen.Tabelle_Berufskolleg_Berufsebenen1;
 import de.svws_nrw.db.schema.tabellen.Tabelle_Berufskolleg_Berufsebenen2;
 import de.svws_nrw.db.schema.tabellen.Tabelle_Berufskolleg_Berufsebenen3;
 import de.svws_nrw.db.schema.tabellen.Tabelle_Berufskolleg_Fachklassen_Keys;
+import de.svws_nrw.db.schema.tabellen.Tabelle_Client_Konfiguration_Benutzer;
+import de.svws_nrw.db.schema.tabellen.Tabelle_Client_Konfiguration_Global;
 import de.svws_nrw.db.schema.tabellen.Tabelle_Credentials;
 import de.svws_nrw.db.schema.tabellen.Tabelle_CredentialsLernplattformen;
 import de.svws_nrw.db.schema.tabellen.Tabelle_DavRessourceCollections;
@@ -76,8 +78,8 @@ import de.svws_nrw.db.schema.tabellen.Tabelle_Gost_Klausuren_Raeume;
 import de.svws_nrw.db.schema.tabellen.Tabelle_Gost_Klausuren_Raumstunden;
 import de.svws_nrw.db.schema.tabellen.Tabelle_Gost_Klausuren_Raumstunden_Aufsichten;
 import de.svws_nrw.db.schema.tabellen.Tabelle_Gost_Klausuren_Schuelerklausuren;
-import de.svws_nrw.db.schema.tabellen.Tabelle_Gost_Klausuren_Schuelerklausuren_Termine;
 import de.svws_nrw.db.schema.tabellen.Tabelle_Gost_Klausuren_SchuelerklausurenTermine_Raumstunden;
+import de.svws_nrw.db.schema.tabellen.Tabelle_Gost_Klausuren_Schuelerklausuren_Termine;
 import de.svws_nrw.db.schema.tabellen.Tabelle_Gost_Klausuren_Termine;
 import de.svws_nrw.db.schema.tabellen.Tabelle_Gost_Klausuren_Termine_Jahrgaenge;
 import de.svws_nrw.db.schema.tabellen.Tabelle_Gost_Klausuren_Vorgaben;
@@ -166,10 +168,8 @@ import de.svws_nrw.db.schema.tabellen.Tabelle_PersonalTypen;
 import de.svws_nrw.db.schema.tabellen.Tabelle_Personengruppen;
 import de.svws_nrw.db.schema.tabellen.Tabelle_Personengruppen_Personen;
 import de.svws_nrw.db.schema.tabellen.Tabelle_Religionen_Keys;
-import de.svws_nrw.db.schema.tabellen.Tabelle_Client_Konfiguration_Benutzer;
-import de.svws_nrw.db.schema.tabellen.Tabelle_Client_Konfiguration_Global;
-import de.svws_nrw.db.schema.tabellen.Tabelle_Schema_Core_Type_Versionen;
 import de.svws_nrw.db.schema.tabellen.Tabelle_Schema_AutoInkremente;
+import de.svws_nrw.db.schema.tabellen.Tabelle_Schema_Core_Type_Versionen;
 import de.svws_nrw.db.schema.tabellen.Tabelle_Schema_Status;
 import de.svws_nrw.db.schema.tabellen.Tabelle_SchildFilter;
 import de.svws_nrw.db.schema.tabellen.Tabelle_Schild_Verwaltung;
@@ -207,9 +207,9 @@ import de.svws_nrw.db.schema.tabellen.Tabelle_SchuelerWiedervorlage;
 import de.svws_nrw.db.schema.tabellen.Tabelle_SchuelerZP10;
 import de.svws_nrw.db.schema.tabellen.Tabelle_SchuelerZuweisungen;
 import de.svws_nrw.db.schema.tabellen.Tabelle_Schueler_AllgAdr;
+import de.svws_nrw.db.schema.tabellen.Tabelle_Schulbewerbung_Importe;
 import de.svws_nrw.db.schema.tabellen.Tabelle_SchuleCredentials;
 import de.svws_nrw.db.schema.tabellen.Tabelle_SchuleOAuthSecrets;
-import de.svws_nrw.db.schema.tabellen.Tabelle_Schulbewerbung_Importe;
 import de.svws_nrw.db.schema.tabellen.Tabelle_Schulformen;
 import de.svws_nrw.db.schema.tabellen.Tabelle_Schuljahresabschnitte;
 import de.svws_nrw.db.schema.tabellen.Tabelle_Schulleitung;
@@ -236,6 +236,41 @@ import de.svws_nrw.db.schema.tabellen.Tabelle_TimestampsSchuelerAnkreuzkompetenz
 import de.svws_nrw.db.schema.tabellen.Tabelle_TimestampsSchuelerLeistungsdaten;
 import de.svws_nrw.db.schema.tabellen.Tabelle_TimestampsSchuelerLernabschnittsdaten;
 import de.svws_nrw.db.schema.tabellen.Tabelle_TimestampsSchuelerTeilleistungen;
+import de.svws_nrw.db.schema.tabellen.Tabelle_UV_Faecher;
+import de.svws_nrw.db.schema.tabellen.Tabelle_UV_Klassen;
+import de.svws_nrw.db.schema.tabellen.Tabelle_UV_Kurse;
+import de.svws_nrw.db.schema.tabellen.Tabelle_UV_Lehrer;
+import de.svws_nrw.db.schema.tabellen.Tabelle_UV_LehrerAnrechnungsstunden;
+import de.svws_nrw.db.schema.tabellen.Tabelle_UV_LehrerPflichtstundensoll;
+import de.svws_nrw.db.schema.tabellen.Tabelle_UV_Lerngruppen;
+import de.svws_nrw.db.schema.tabellen.Tabelle_UV_Lerngruppen_Lehrer;
+import de.svws_nrw.db.schema.tabellen.Tabelle_UV_Lerngruppen_Schienen;
+import de.svws_nrw.db.schema.tabellen.Tabelle_UV_Planungsabschnitte;
+import de.svws_nrw.db.schema.tabellen.Tabelle_UV_PlanungsabschnitteZeitraster_Constraint_Jahrgaenge;
+import de.svws_nrw.db.schema.tabellen.Tabelle_UV_Planungsabschnitte_Lehrer;
+import de.svws_nrw.db.schema.tabellen.Tabelle_UV_Planungsabschnitte_Schueler;
+import de.svws_nrw.db.schema.tabellen.Tabelle_UV_Planungsabschnitte_Zeitraster;
+import de.svws_nrw.db.schema.tabellen.Tabelle_UV_Raeume;
+import de.svws_nrw.db.schema.tabellen.Tabelle_UV_Schienen;
+import de.svws_nrw.db.schema.tabellen.Tabelle_UV_Schienen_Constraint_Jahrgaenge;
+import de.svws_nrw.db.schema.tabellen.Tabelle_UV_Schuelergruppen;
+import de.svws_nrw.db.schema.tabellen.Tabelle_UV_Schuelergruppen_Constraint_Jahrgaenge;
+import de.svws_nrw.db.schema.tabellen.Tabelle_UV_Schuelergruppen_Constraint_Schuelergruppen;
+import de.svws_nrw.db.schema.tabellen.Tabelle_UV_Schuelergruppen_Schueler;
+import de.svws_nrw.db.schema.tabellen.Tabelle_UV_StundenplanErgebnisse;
+import de.svws_nrw.db.schema.tabellen.Tabelle_UV_StundenplanErgebnisse_Unterricht_Lehrer;
+import de.svws_nrw.db.schema.tabellen.Tabelle_UV_StundenplanErgebnisse_Unterricht_Raeume;
+import de.svws_nrw.db.schema.tabellen.Tabelle_UV_StundenplanErgebnisse_Unterricht_Zeitraster;
+import de.svws_nrw.db.schema.tabellen.Tabelle_UV_StundenplanKonfigurationen;
+import de.svws_nrw.db.schema.tabellen.Tabelle_UV_StundenplanRegeln;
+import de.svws_nrw.db.schema.tabellen.Tabelle_UV_StundenplanRegelparameter;
+import de.svws_nrw.db.schema.tabellen.Tabelle_UV_Stundentafeln;
+import de.svws_nrw.db.schema.tabellen.Tabelle_UV_Stundentafeln_Faecher;
+import de.svws_nrw.db.schema.tabellen.Tabelle_UV_Unterrichte;
+import de.svws_nrw.db.schema.tabellen.Tabelle_UV_Unterrichte_Lerngruppenlehrer;
+import de.svws_nrw.db.schema.tabellen.Tabelle_UV_Unterrichte_Raeume;
+import de.svws_nrw.db.schema.tabellen.Tabelle_UV_Zeitraster;
+import de.svws_nrw.db.schema.tabellen.Tabelle_UV_ZeitrasterEintraege;
 import de.svws_nrw.db.schema.tabellen.Tabelle_Usergroups;
 import de.svws_nrw.db.schema.tabellen.Tabelle_Users;
 import de.svws_nrw.db.schema.tabellen.Tabelle_Versetzung;
@@ -909,6 +944,117 @@ public final class Schema {
 
 	/** Tabelle Users */
 	public static final Tabelle_Users tab_Users = add(new Tabelle_Users());
+
+	/** Tabelle Tabelle_UV_Zeitraster */
+	public static final Tabelle_UV_Zeitraster tab_UV_Zeitraster = add(new Tabelle_UV_Zeitraster());
+
+	/** Tabelle UV_Planungsabschnitte */
+	public static final Tabelle_UV_Planungsabschnitte tab_UV_Planungsabschnitte = add(new Tabelle_UV_Planungsabschnitte());
+
+	/** Tabelle UV_Lehrer */
+	public static final Tabelle_UV_Lehrer tab_UV_Lehrer = add(new Tabelle_UV_Lehrer());
+
+	/** Tabelle UV_LehrerAnrechnungsstunden */
+	public static final Tabelle_UV_LehrerAnrechnungsstunden tab_UV_LehrerAnrechnungsstunden = add(new Tabelle_UV_LehrerAnrechnungsstunden());
+
+	/** Tabelle UV_LehrerPflichstundensoll */
+	public static final Tabelle_UV_LehrerPflichtstundensoll tab_UV_LehrerPflichstundensoll = add(new Tabelle_UV_LehrerPflichtstundensoll());
+
+	/** Tabelle UV_Planungsabschnitte_Schueler */
+	public static final Tabelle_UV_Planungsabschnitte_Lehrer tab_UV_Planungsabschnitte_Lehrer = add(new Tabelle_UV_Planungsabschnitte_Lehrer());
+
+	/** Tabelle UV_Planungsabschnitte_Zeitraster */
+	public static final Tabelle_UV_Planungsabschnitte_Zeitraster tab_UV_Planungsabschnitte_Zeitraster = add(new Tabelle_UV_Planungsabschnitte_Zeitraster());
+
+	/** Tabelle UV_PlanungsabschnitteZeitraster_Constraint_Jahrgaenge */
+	public static final Tabelle_UV_PlanungsabschnitteZeitraster_Constraint_Jahrgaenge tab_UV_PlanungsabschnitteZeitraster_Constraint_Jahrgaenge =
+			add(new Tabelle_UV_PlanungsabschnitteZeitraster_Constraint_Jahrgaenge());
+
+	/** Tabelle UV_Schuelergruppen */
+	public static final Tabelle_UV_Schuelergruppen tab_UV_Schuelergruppen = add(new Tabelle_UV_Schuelergruppen());
+
+	/** Tabelle UV_Stundentafeln */
+	public static final Tabelle_UV_Stundentafeln tab_UV_Stundentafeln = add(new Tabelle_UV_Stundentafeln());
+
+	/** Tabelle UV_Klassen */
+	public static final Tabelle_UV_Klassen tab_UV_Klassen = add(new Tabelle_UV_Klassen());
+
+	/** Tabelle UV_Planungsabschnitte_Schueler */
+	public static final Tabelle_UV_Planungsabschnitte_Schueler tab_UV_Planungsabschnitte_Schueler = add(new Tabelle_UV_Planungsabschnitte_Schueler());
+
+	/** Tabelle UV_Schuelergruppen_Schueler */
+	public static final Tabelle_UV_Schuelergruppen_Schueler tab_UV_Schuelergruppen_Schueler = add(new Tabelle_UV_Schuelergruppen_Schueler());
+
+	/** Tabelle UV_Schuelergruppen_Schuelergruppen */
+	public static final Tabelle_UV_Schuelergruppen_Constraint_Schuelergruppen tab_UV_Schuelergruppen_Schuelergruppen =
+			add(new Tabelle_UV_Schuelergruppen_Constraint_Schuelergruppen());
+
+	/** Tabelle UV_Schuelergruppen_Jahrgaenge */
+	public static final Tabelle_UV_Schuelergruppen_Constraint_Jahrgaenge tab_UV_Schuelergruppen_Jahrgaenge =
+			add(new Tabelle_UV_Schuelergruppen_Constraint_Jahrgaenge());
+
+	/** Tabelle UV_Faecher */
+	public static final Tabelle_UV_Faecher tab_UV_Faecher = add(new Tabelle_UV_Faecher());
+
+	/** Tabelle UV_Stundentafeln_Faecher */
+	public static final Tabelle_UV_Stundentafeln_Faecher tab_UV_Stundentafeln_Faecher = add(new Tabelle_UV_Stundentafeln_Faecher());
+
+	/** Tabelle UV_Raeume */
+	public static final Tabelle_UV_Raeume tab_UV_Raeume = add(new Tabelle_UV_Raeume());
+
+	/** Tabelle UV_Schienen */
+	public static final Tabelle_UV_Schienen tab_UV_Schienen = add(new Tabelle_UV_Schienen());
+
+	/** Tabelle UV_Schienen_Constraint_Jahrgaenge */
+	public static final Tabelle_UV_Schienen_Constraint_Jahrgaenge tab_UV_Schienen_Constraint_Jahrgaenge = add(new Tabelle_UV_Schienen_Constraint_Jahrgaenge());
+
+	/** Tabelle UV_Kurse */
+	public static final Tabelle_UV_Kurse tab_UV_Kurse = add(new Tabelle_UV_Kurse());
+
+	/** Tabelle Tabelle_UV_Lerngruppen */
+	public static final Tabelle_UV_Lerngruppen tab_UV_Lerngruppen = add(new Tabelle_UV_Lerngruppen());
+
+	/** Tabelle Tabelle_UV_Lerngruppen_Lehrer */
+	public static final Tabelle_UV_Lerngruppen_Lehrer tab_UV_Lerngruppen_Lehrer = add(new Tabelle_UV_Lerngruppen_Lehrer());
+
+	/** Tabelle Tabelle_UV_Zeitraster_Eintraege */
+	public static final Tabelle_UV_ZeitrasterEintraege tab_UV_Zeitraster_Eintraege = add(new Tabelle_UV_ZeitrasterEintraege());
+
+	/** Tabelle Tabelle_UV_Unterrichte */
+	public static final Tabelle_UV_Unterrichte tab_UV_Unterrichte = add(new Tabelle_UV_Unterrichte());
+
+	/** Tabelle Tabelle_UV_Unterrichte_Raeume */
+	public static final Tabelle_UV_Unterrichte_Raeume tab_UV_Unterrichte_Raeume = add(new Tabelle_UV_Unterrichte_Raeume());
+
+	/** Tabelle Tabelle_UV_Unterrichte_Lerngruppenlehrer */
+	public static final Tabelle_UV_Unterrichte_Lerngruppenlehrer tab_UV_Unterrichte_Lerngruppenlehrer = add(new Tabelle_UV_Unterrichte_Lerngruppenlehrer());
+
+	/** Tabelle Tabelle_UV_Lerngruppen_Schienen */
+	public static final Tabelle_UV_Lerngruppen_Schienen tab_UV_Lerngruppen_Schienen = add(new Tabelle_UV_Lerngruppen_Schienen());
+
+	/** Tabelle Tabelle_UV_StundenplanKonfigurationen */
+	public static final Tabelle_UV_StundenplanKonfigurationen tab_UV_StundenplanKonfigurationen = add(new Tabelle_UV_StundenplanKonfigurationen());
+
+	/** Tabelle Tabelle_UV_StundenplanRegeln */
+	public static final Tabelle_UV_StundenplanRegeln tab_UV_StundenplanRegeln = add(new Tabelle_UV_StundenplanRegeln());
+
+	/** Tabelle Tabelle_UV_StundenplanRegelparameter */
+	public static final Tabelle_UV_StundenplanRegelparameter tab_UV_StundenplanRegelparameter = add(new Tabelle_UV_StundenplanRegelparameter());
+
+	/** Tabelle Tabelle_UV_StundenplanErgebnisse */
+	public static final Tabelle_UV_StundenplanErgebnisse tab_UV_StundenplanErgebnisse = add(new Tabelle_UV_StundenplanErgebnisse());
+
+	/** Tabelle Tabelle_UV_StundenplanErgebnisse_Unterricht_Zeitraster */
+	public static final Tabelle_UV_StundenplanErgebnisse_Unterricht_Zeitraster tab_UV_StundenplanErgebnisse_Unterricht_Zeitraster =
+			add(new Tabelle_UV_StundenplanErgebnisse_Unterricht_Zeitraster());
+
+	/** Tabelle Tabelle_UV_StundenplanErgebnisse_Unterricht_Lehrer */
+	public static final Tabelle_UV_StundenplanErgebnisse_Unterricht_Lehrer tab_UV_StundenplanErgebnisse_Unterricht_Lehrer =
+			add(new Tabelle_UV_StundenplanErgebnisse_Unterricht_Lehrer());
+
+	/** Tabelle Tabelle_UV_StundenplanErgebnisse_Unterricht_Raeume */
+	public static final Tabelle_UV_StundenplanErgebnisse_Unterricht_Raeume tab_UV_StundenplanErgebnisse_Unterricht_Raeume =
+			add(new Tabelle_UV_StundenplanErgebnisse_Unterricht_Raeume());
 
 	/** Tabelle Versetzung */
 	public static final Tabelle_Versetzung tab_Versetzung = add(new Tabelle_Versetzung());

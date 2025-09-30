@@ -1,0 +1,62 @@
+package de.svws_nrw.db.dto.current.uv;
+
+import java.io.Serializable;
+
+/**
+ * Diese Klasse dient als DTO für den Primärschlüssel der Datenbanktabelle UV_Schuelergruppen_Constraint_Schuelergruppen.
+ * Sie wurde automatisch per Skript generiert und sollte nicht verändert werden,
+ * da sie aufgrund von Änderungen am DB-Schema ggf. neu generiert und überschrieben wird.
+ */
+public final class DTOUvSchuelergruppeConstraintSchuelergruppePK implements Serializable {
+
+	/** Die UID für diese Klasse */
+	private static final long serialVersionUID = 1L;
+
+	/** ID der Schülergruppe */
+	public long Schuelergruppe_ID;
+
+	/** ID der Schülergruppe, deren Schüler dieser Schülergruppe angehören dürfen */
+	public long Schuelergruppe_Vaild_ID;
+
+	/**
+	 * Erstellt ein neues Objekt der Klasse DTOUvSchuelergruppeConstraintSchuelergruppePK ohne eine Initialisierung der Attribute.
+	 */
+	@SuppressWarnings("unused")
+	private DTOUvSchuelergruppeConstraintSchuelergruppePK() {
+	}
+
+	/**
+	 * Erstellt ein neues Objekt der Klasse DTOUvSchuelergruppeConstraintSchuelergruppePK.
+	 * @param Schuelergruppe_ID   der Wert für das Attribut Schuelergruppe_ID
+	 * @param Schuelergruppe_Vaild_ID   der Wert für das Attribut Schuelergruppe_Vaild_ID
+	 */
+	public DTOUvSchuelergruppeConstraintSchuelergruppePK(final long Schuelergruppe_ID, final long Schuelergruppe_Vaild_ID) {
+		this.Schuelergruppe_ID = Schuelergruppe_ID;
+		this.Schuelergruppe_Vaild_ID = Schuelergruppe_Vaild_ID;
+	}
+
+
+	@Override
+	public boolean equals(final Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		DTOUvSchuelergruppeConstraintSchuelergruppePK other = (DTOUvSchuelergruppeConstraintSchuelergruppePK) obj;
+		if (Schuelergruppe_ID != other.Schuelergruppe_ID)
+			return false;
+		return Schuelergruppe_Vaild_ID == other.Schuelergruppe_Vaild_ID;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + Long.hashCode(Schuelergruppe_ID);
+
+		result = prime * result + Long.hashCode(Schuelergruppe_Vaild_ID);
+		return result;
+	}
+}
