@@ -1,5 +1,5 @@
 <template>
-	<div v-if="(manager().hasDaten() && (activeViewType === ViewType.DEFAULT)) || (activeViewType !== ViewType.DEFAULT)" class="flex flex-col w-full h-full overflow-hidden">
+	<template v-if="(manager().hasDaten() && (activeViewType === ViewType.DEFAULT)) || (activeViewType !== ViewType.DEFAULT)">
 		<header class="svws-ui-header">
 			<div class="svws-ui-header--title">
 				<div class="svws-headline-wrapper">
@@ -28,7 +28,7 @@
 		<svws-ui-tab-bar :tab-manager :focus-switching-enabled :focus-help-visible>
 			<router-view />
 		</svws-ui-tab-bar>
-	</div>
+	</template>
 	<div v-else class="app--content--placeholder">
 		<span class="icon i-ri-team-line" />
 	</div>

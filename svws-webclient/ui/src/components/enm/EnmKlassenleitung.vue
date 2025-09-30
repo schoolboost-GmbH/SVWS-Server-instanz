@@ -1,11 +1,7 @@
 <template>
 	<div class="page page-flex-row">
-		<div class="flex flex-row h-full w-full overflow-hidden">
-			<div class="grow w-full h-full overflow-hidden">
-				<enm-klassenleitung-uebersicht ref="gridRef" :enm-manager :patch-bemerkungen :patch-lernabschnitt :columns-visible :set-columns-visible :floskel-editor-visible :focus-floskel-editor :auswahl />
-			</div>
-			<enm-floskeleditor ref="gridRefFlosekeleditor" v-if="show" v-model="show" :patch="doPatchBemerkungen" :erlaubte-hauptgruppe :enm-manager :auswahl="auswahlZelle" :lerngruppen-auswahl="auswahl" :on-update :initial-row />
-		</div>
+		<enm-klassenleitung-uebersicht ref="gridRef" :enm-manager :patch-bemerkungen :patch-lernabschnitt :columns-visible :set-columns-visible :floskel-editor-visible :focus-floskel-editor :auswahl />
+		<enm-floskeleditor ref="gridRefFlosekeleditor" v-if="show" v-model="show" :patch="doPatchBemerkungen" :erlaubte-hauptgruppe :enm-manager :auswahl="auswahlZelle" :lerngruppen-auswahl="auswahl" :on-update :initial-row />
 	</div>
 </template>
 <script setup lang="ts">

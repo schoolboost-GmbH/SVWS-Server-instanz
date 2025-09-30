@@ -12,7 +12,7 @@
 							<svws-ui-select title="Stundenplan" v-model="stundenplanAuswahl" :items="mapStundenplaene.values()"
 								:item-text="s => s.bezeichnung.replace('Stundenplan ', '') + ': ' + toDateStr(s.gueltigAb) + '—' + toDateStr(s.gueltigBis) + ' (KW ' + toKW(s.gueltigAb) + '—' + toKW(s.gueltigBis) + ')'" />
 						</div>
-						<div></div>
+						<div />
 						<div>
 							<svws-ui-radio-group>
 								<svws-ui-radio-option :value="0" v-model="gruppe1" name="Unterrichte" label="Unterrichte" />
