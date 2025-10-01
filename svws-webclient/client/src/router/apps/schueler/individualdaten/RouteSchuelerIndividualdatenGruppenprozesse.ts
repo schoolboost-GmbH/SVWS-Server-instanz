@@ -30,6 +30,8 @@ export class RouteSchuelerIndividualdatenGruppenprozesse extends RouteNode<Route
 		try {
 			if (api.mode === ServerMode.DEV)
 				return false;
+			//if (!api.benutzerKompetenzen.has(BenutzerKompetenz.SCHUELER_INDIVIDUALDATEN_AENDERN))
+			//	return false;
 			return this.getRoute(params);
 		} catch (e) {
 			return routeError.getSimpleErrorRoute(e as DeveloperNotificationException);

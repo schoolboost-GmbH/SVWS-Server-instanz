@@ -11,10 +11,10 @@
 						<svws-ui-select headless title="Wochentyp" v-model="wochentypAnzeige" :items="wochentypen()" class="print:!hidden" type="transparent"
 							:disabled="wochentypen().size() <= 0" :item-text="wt => stundenplanManager().stundenplanGetWochenTypAsString(wt)" />
 					</template>
-					<svws-ui-button v-if="hatUpdateKompetenz" type="transparent" @click.stop="doppelstundenModus = !doppelstundenModus" title="Doppelstundenmodus ein- und ausschalten" class="text-ui-100">
+					<svws-ui-button v-if="!readonly" type="transparent" @click.stop="doppelstundenModus = !doppelstundenModus" title="Doppelstundenmodus ein- und ausschalten" class="text-ui-100">
 						{{ doppelstundenModus ? 'Doppelstundenmodus' : 'Einzelstundenmodus' }}
 					</svws-ui-button>
-					<template v-if="(stundenplanManager().unterrichtsgruppenMergeableGet().size() > 0) || (stundenplanManager().unterrichtGetMengeUngueltigAsList().size() > 0) && hatUpdateKompetenz">
+					<template v-if="(stundenplanManager().unterrichtsgruppenMergeableGet().size() > 0) || (stundenplanManager().unterrichtGetMengeUngueltigAsList().size() > 0) && !readonly">
 						<span class="ml-4">Unterricht:</span>
 						<s-stundenplan-klasse-modal-ungueltige v-if="stundenplanManager().unterrichtGetMengeUngueltigAsList().size() > 0" :stundenplan-manager :remove-unterrichte v-slot="{ openModal }">
 							<svws-ui-button type="error" size="small" class="ml-1" @click="openTheModal(openModal)" title="Unterricht, der entfernt werden kann, weil es keinen Klassenunterricht dazu gibt">
@@ -34,7 +34,7 @@
 			<span>Für diesen Stundenplan ist keine Klasse vorhanden.</span>
 		</template>
 		<template v-else>
-			<div v-if="hatUpdateKompetenz" @dragover="checkDropZone($event)" @drop="onDrop(undefined, -1)" class="min-w-fit flex flex-col gap-4 justify-start mb-auto svws-table-offset h-full overflow-y-scroll overflow-x-hidden pr-6 border-2 rounded-xl border-dashed"
+			<div v-if="!readonly" @dragover="checkDropZone($event)" @drop="onDrop(undefined, -1)" class="min-w-fit flex flex-col gap-4 justify-start mb-auto svws-table-offset h-full overflow-y-scroll overflow-x-hidden pr-6 border-2 rounded-xl border-dashed"
 				:class="[dragData === undefined ? 'border-transparent' : ' border-ui-danger ring-4 ring-ui-danger/10']">
 				<svws-ui-table v-if="!stundenplanManager().klassenunterrichtGetMengeByKlasseIdAsList(klasse.id).isEmpty()" :items="stundenplanManager().klassenunterrichtGetMengeByKlasseIdAsList(klasse.id)" :columns="colsKlassenunterricht">
 					<template #body>
@@ -132,9 +132,9 @@
 			</div>
 			<!-- Das Zeitraster des Stundenplans, in welches von der linken Seite die Kurs-Unterrichte oder die Klassen-Unterricht hineingezogen werden können.-->
 			<stundenplan-klassen mode-pausenaufsichten="tooltip" :id="klasse.id" :manager="stundenplanManager" :wochentyp="()=>wochentypAnzeige" :kalenderwoche="() => undefined"
-				:use-drag-and-drop="hatUpdateKompetenz" :drag-data="() => dragData" :on-drag :on-drop class="h-full overflow-scroll pr-4" @update:click="u => toRaw(auswahl) !== u ? auswahl = u : auswahl = undefined" />
+				:use-drag-and-drop="!readonly" :drag-data="() => dragData" :on-drag :on-drop class="h-full overflow-scroll pr-4" @update:click="u => toRaw(auswahl) !== u ? auswahl = u : auswahl = undefined" />
 			<!-- Card für die zusätzlichen Einstellungen zum Unterricht -->
-			<div class="flex flex-col gap-4 w-96 min-w-96">
+			<div v-if="!readonly" class="flex flex-col gap-4 w-96 min-w-96">
 				<template v-if="(auswahl !== undefined)">
 					<div class="text-headline-md">Raumzuordnung {{ unterrichtBezeichnung }} ({{ schuelerzahl }} SuS)</div>
 					<div>{{ auswahl.lehrer.size() > 1 ? 'Lehrkräfte' : 'Lehrkraft' }} {{ [...auswahl.lehrer].map(l => stundenplanManager().lehrerGetByIdOrException(l).kuerzel).join(', ') }}</div>
@@ -183,7 +183,7 @@
 	const auswahl = ref<StundenplanKlassenunterricht|StundenplanUnterricht|StundenplanKurs|undefined>();
 	const refSelect = ref();
 
-	const hatUpdateKompetenz = computed<boolean>(() => props.benutzerKompetenzen.has(BenutzerKompetenz.STUNDENPLAN_AENDERN));
+	const readonly = computed<boolean>(() => !props.benutzerKompetenzen.has(BenutzerKompetenz.STUNDENPLAN_AENDERN));
 
 	const schuljahr = computed<number>(() => props.stundenplanManager().getSchuljahr());
 

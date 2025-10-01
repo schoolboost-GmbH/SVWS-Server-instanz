@@ -200,7 +200,7 @@
 
 	function isVisible(gpu: GPU) {
 		if (gpu === blockungGPUs)
-			return Schulform.getListMitGymOb(props.schuljahresabschnitt().schuljahr).contains(props.schulform);
+			return Schulform.getListMitGymOb(props.schuljahresabschnitt().schuljahr).contains(props.schulform.daten(props.schuljahresabschnitt().schuljahr));
 		return true;
 	}
 

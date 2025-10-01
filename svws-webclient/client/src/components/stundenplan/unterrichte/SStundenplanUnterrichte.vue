@@ -65,7 +65,7 @@
 					<svws-ui-multi-select v-if="checkFocusMultiselect({ type: 'lehrer', id: rowData.id })"
 						:model-value="modelValueLehrer(value)" @update:model-value="lehrer => patchLehrer(lehrer, rowData)"
 						autofocus @blur="setFocusMultiselect({type: null, id: null})" :item-text="i => i.kuerzel" :item-filter="findLehrer" headless
-						title="Fachlehrer" :items="stundenplanManager().lehrerGetMengeAsList()" />
+						title="Fachlehrer" :items="stundenplanManager().lehrerGetMengeAsList()" :readonly />
 					<button v-else @click="setFocusMultiselect({ type: 'lehrer', id: rowData.id })" class="w-full h-full text-left">
 						<span v-if="value.size() > 0" class="decoration-dotted underline">
 							{{ modelValueLehrer(value).map(i => i.kuerzel ?? '&mdash;').join(', ') }}
@@ -78,7 +78,7 @@
 						<svws-ui-multi-select v-if="checkFocusMultiselect({ type: 'klassen', id: rowData.id })"
 							:model-value="modelValueKlassen(value)" @update:model-value="klassen => patchKlassen(klassen, rowData)"
 							autofocus @blur="setFocusMultiselect({type: null, id: null})" :item-text="i => i.kuerzel" :item-filter="find" headless
-							title="Klassen" :items="stundenplanManager().klasseGetMengeAsList()" />
+							title="Klassen" :items="stundenplanManager().klasseGetMengeAsList()" :readonly />
 						<button v-else @click="setFocusMultiselect({ type: 'klassen', id: rowData.id })" class="w-full h-full text-left">
 							<span v-if="value.size() > 0" class="decoration-dotted underline">
 								{{ modelValueKlassen(value).map(i => i.kuerzel ?? '&mdash;').join(', ') }}
@@ -92,7 +92,7 @@
 					<svws-ui-multi-select v-if="checkFocusMultiselect({ type: 'raeume', id: rowData.id })"
 						:model-value="modelValueRaeume(value)" @update:model-value="raeume => patchRaeume(raeume, rowData)"
 						autofocus @blur="setFocusMultiselect({type: null, id: null})" :item-text="i => i.kuerzel" :item-filter="find" headless
-						title="Räume" :items="stundenplanManager().raumGetMengeAsList()" />
+						title="Räume" :items="stundenplanManager().raumGetMengeAsList()" :readonly />
 					<button v-else @click="setFocusMultiselect({ type: 'raeume', id: rowData.id })" class="w-full h-full text-left">
 						<span v-if="value.size() > 0" class="decoration-dotted underline">
 							{{ modelValueRaeume(value).map(i => i.kuerzel ?? '&mdash;').join(', ') }}
@@ -104,7 +104,7 @@
 					<svws-ui-multi-select v-if="checkFocusMultiselect({ type: 'schienen', id: rowData.id })"
 						:model-value="modelValueSchienen(value)" @update:model-value="schienen => patchSchienen(schienen, rowData)"
 						autofocus @blur="setFocusMultiselect({type: null, id: null})" :item-text="i => i.nummer.toString()" headless
-						title="Schienen" :items="stundenplanManager().schieneGetMengeAsList()" />
+						title="Schienen" :items="stundenplanManager().schieneGetMengeAsList()" :readonly />
 					<button v-else @click="setFocusMultiselect({ type: 'schienen', id: rowData.id })" class="w-full h-full text-left">
 						<span v-if="value.size() > 0" class="decoration-dotted underline">
 							{{ modelValueSchienen(value).map(i => i.nummer ?? '&mdash;').join(', ') }}
@@ -122,7 +122,7 @@
 	import { computed, ref } from "vue";
 	import type { StundenplanUnterrichteProps } from "./SStundenplanUnterrichteProps";
 	import type { List, StundenplanKlasse, StundenplanKurs, StundenplanRaum, StundenplanSchiene, StundenplanSchueler, StundenplanZeitraster, Wochentag, StundenplanLehrer, StundenplanFach, StundenplanUnterricht } from "@core";
-	import { ArrayList, ListUtils, Fach } from "@core";
+	import { ArrayList, ListUtils, Fach, BenutzerKompetenz } from "@core";
 
 	type FokusType = { type: 'lehrer' | 'klassen' | 'raeume' | 'schienen' | null, id: number | null };
 
@@ -138,11 +138,11 @@
 
 	const props = defineProps<StundenplanUnterrichteProps>();
 
+	const readonly = computed<boolean>(() => !props.benutzerKompetenzen.has(BenutzerKompetenz.STUNDENPLAN_AENDERN));
+
 	const schuljahr = computed<number>(() => props.stundenplanManager().getSchuljahr());
 
 	const wochentage = [null, 'Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa', 'So'];
-
-	// const hatUpdateKompetenz = computed<boolean>(() => props.benutzerKompetenzen.has(BenutzerKompetenz.STUNDENPLAN_AENDERN));
 
 	const wochentyprange = computed(() => {
 		const range = [];
