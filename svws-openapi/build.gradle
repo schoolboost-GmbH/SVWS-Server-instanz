@@ -33,6 +33,7 @@ dependencies {
  * Beispiel: SVWS_SWAGGER_UI_OUTPUT_DIR="/temp/swagger-ui" (Falls nicht gesetzt, Default: "[buildOutputDir]/resources/main/swagger-ui").
  */
 tasks.register('generateStaticSwaggerUI', JavaExec) {
+	group = "publishing"
 	description = "Erzeugt alle benötigten Ressourcen, um die SwaggerUI inklusive generierter OpenAPI Spezifikationen auszuliefern."
 	classpath = sourceSets.main.runtimeClasspath
 	mainClass = "de.svws_nrw.api.common.SwaggerUIGenerator"
