@@ -42,7 +42,7 @@ public class Tabelle_UV_StundenplanRegelparameter extends SchemaTabelle {
 
 	/** Die Definition des Non-Unique-Index UV_StundenplanRegelnparameter_IDX_StundenplanRegel_ID_Nummer_Parameter */
 	public SchemaTabelleIndex index_UV_StundenplanRegelnparameter_IDX_StundenplanRegel_ID_Nummer_Parameter =
-			addIndex("UV_StundenplanRegelnparameter_IDX_StundenplanRegel_ID_Nummer_Parameter",
+			addIndex("UV_StundenplanRegelnparameter_IDX_StundenplanRegel_ID_NrParam",
 					col_Regel_ID,
 					col_Nummer,
 					col_Parameter
