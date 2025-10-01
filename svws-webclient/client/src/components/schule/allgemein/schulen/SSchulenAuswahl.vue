@@ -9,6 +9,9 @@
 			<svws-ui-table :clickable="!manager().liste.auswahlExists()" :clicked="clickedEintrag" @update:clicked="schulEintrag => gotoDefaultView(schulEintrag.id)" :items="manager().filtered()"
 				:model-value="[...manager().liste.auswahl()]" @update:model-value="items => setAuswahl(items)" :columns :filter-open="true" selectable count scroll-into-view scroll allow-arrow-key-selection
 				:focus-switching-enabled :focus-help-visible>
+				<template #cell(kurzbezeichnung)="{rowData}">
+					{{ rowData.kurzbezeichnung || rowData.name || rowData.schulnummerStatistik || '—' }}
+				</template>
 				<template #actions>
 					<svws-ui-tooltip position="bottom" v-if="ServerMode.DEV.checkServerMode(serverMode) && hatKompetenzAendern">
 						<svws-ui-button :disabled="activeViewType === ViewType.HINZUFUEGEN" type="icon" @click="gotoHinzufuegenView(true)" :has-focus="manager().filtered().size() === 0">
