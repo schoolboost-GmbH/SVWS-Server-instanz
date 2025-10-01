@@ -35,7 +35,7 @@ dependencies {
 tasks.register('generateStaticSwaggerUI', JavaExec) {
 	description = "Erzeugt alle benötigten Ressourcen, um die SwaggerUI inklusive generierter OpenAPI Spezifikationen auszuliefern."
 	classpath = sourceSets.main.runtimeClasspath
-	mainClass = "de.svws_nrw.common.SwaggerUIGenerator"
+	mainClass = "de.svws_nrw.api.common.SwaggerUIGenerator"
 
 	String outputDir = System.getenv("SVWS_SWAGGER_UI_OUTPUT_DIR")
 	// Als Default werden die Files in den Build Output geschrieben werden
