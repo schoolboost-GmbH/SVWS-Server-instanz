@@ -1,4 +1,4 @@
-import {List, BenutzerKompetenz, ApiFile, ReportingParameter, StundenplanListeEintrag, SimpleOperationResponse} from "@core";
+import type { List, BenutzerKompetenz, ApiFile, ReportingParameter, StundenplanListeEintrag, SimpleOperationResponse } from "@core";
 import type { LehrerListeManager } from "@ui";
 import type { ApiStatus } from "~/components/ApiStatus";
 

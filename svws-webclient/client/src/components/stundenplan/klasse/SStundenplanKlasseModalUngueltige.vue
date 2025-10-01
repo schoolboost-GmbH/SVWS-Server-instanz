@@ -7,6 +7,7 @@
 			<svws-ui-table selectable v-model="selected" :items="stundenplanManager().unterrichtGetMengeUngueltigAsList()" :columns disable-footer>
 				<template #cell(idZeitraster)="{rowData: unterricht}">{{ zeitraster(unterricht) }}</template>
 				<template #cell(klassen)="{rowData: unterricht}">{{ klassen(unterricht) }}</template>
+				<template #cell(idFach)="{rowData: unterricht}">{{ fach(unterricht) }}</template>
 				<template #cell(lehrer)="{rowData: unterricht}">{{ lehrer(unterricht) }}</template>
 				<template #cell(raeume)="{rowData: unterricht}">{{ raeume(unterricht) }}</template>
 			</svws-ui-table>
@@ -32,6 +33,7 @@
 	const columns = [
 		{key: 'idZeitraster', label: 'Stunde'},
 		{key: 'klassen', label: 'Klassen'},
+		{key: 'idFach', label: 'Fach'},
 		{key: 'lehrer', label: 'Lehrer'},
 		{key: 'raeume', label: 'Räume'},
 	];
@@ -57,6 +59,16 @@
 		for (const id of unterricht.lehrer)
 			arr.push(props.stundenplanManager().lehrerGetByIdOrException(id).kuerzel);
 		return arr.join(', ');
+	}
+
+	function fach(unterricht: StundenplanUnterricht) {
+		let fach: string = "";
+		try {
+			fach = props.stundenplanManager().fachGetByIdOrException(unterricht.idFach).kuerzel;
+		} catch (e) {
+			fach = "???";
+		}
+		return fach;
 	}
 
 	function raeume(unterricht: StundenplanUnterricht) {
