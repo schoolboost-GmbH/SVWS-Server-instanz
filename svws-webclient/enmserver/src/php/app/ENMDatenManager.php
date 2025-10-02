@@ -23,6 +23,9 @@
 		/** Die Informationen zu den Schülern, deren Noten in dieser Notendatei verwaltet werden. */
 		protected array $enmSchueler;
 
+		/** Ein Cache für die Noten. */
+		protected array | null $mapNoten = null;
+
 		/** Ein Cache für die Klassen, bei denen ein angemeldeter Lehrer ein Klassenlehrer ist. */
 		protected array | null $mapKlassen = null;
 
@@ -144,6 +147,22 @@
 			// ... und die Schüler-Daten
 			$daten->schueler = $this->enmSchueler;
 			return json_encode($daten, JSON_UNESCAPED_SLASHES);
+		}
+
+		/**
+		 * Bestimme die Noten zugeordnet zu den Kürzeln.
+		 *
+		 * @param object $liste   die Notenliste
+		 *
+		 * @return array eine Map von dem Kürzel der Noten auf das zugehörige Notenobjekt
+		 */
+		public function getMapNoten(array $liste) : array {
+			if ($this->mapNoten === null) {
+				$this->mapNoten = [];
+				foreach ($this->enmDaten->noten as $note)
+					$this->mapNoten[$note->kuerzel] = $note;
+			}
+			return $this->mapNoten;
 		}
 
 		/**
@@ -316,13 +335,12 @@
 		 * Führt einen Patch auf ENM-Leistungen durch. Dabei wird die ID aus dem Patch verwendet, um die
 		 * zugehörigen Leistungsdaten aus der Datenbank zu ermitteln. Anschließend werden dies zusammen mit
 		 * dem Patch an die Datenbank zur Durchführung der Update-Methode übergeben.
+		 * Folgende Werte und Zeitstempel können durch das Patch Objekt überschrieben werden:
+		 *   note, noteQuartal, fehlstundenFach, fehlstundenUnentschuldigtFach, fachbezogeneBemerkungen, istGemahnt
 		 *
 		 * @param Database $db     das Datenbank-Objekt
 		 * @param object $lehrer   der angemeldete Lehrer
 		 * @param object $patch    der Patch
-		 * Folgende Werte können durch das Patch Objekt überschrieben werden: tsNote, tsNoteQuartal,
-		 *                                                                     tsFehlstundenFach, tsFehlstundenUnentschuldigtFach,
-		 *                                                                     fehlstundenUnentschuldigtFach, fachbezogeneBemerkungen, istGemahnt
 		 */
 		public function patchENMLeistung(Database $db, object $lehrer, object $patch): void {
 			// Prüfe, ob eine ID für die Leistungsdaten im Patch vorhanden ist
@@ -337,18 +355,20 @@
 			$mapLerngruppenFachlehrer = $this->getMapLerngruppenFachlehrer($lehrer);
 			if (!array_key_exists($leistung->lerngruppenID, $mapLerngruppenFachlehrer))
 				Http::exit403Forbidden("Es wurde keine Lerngruppe für die ID ".$leistung->lerngruppenID." zu der Leistung mit der ID ".$patch->id." gefunden, wo der angemeldete Lehrer Fachlehrer ist.");
-			$db->patchENMLeistung(date('Y-m-d H:i:s.v', time()), $leistung, $patch);
+			$mapNoten = $this->getMapNoten($this->enmDaten->noten);
+			$db->patchENMLeistung(date('Y-m-d H:i:s.v', time()), $leistung, $patch, $mapNoten);
 		}
 
 		/**
 		 * Führt einen Patch auf ENM-Lernabschnitte von Schülern durch. Dabei wird die ID aus dem Patch verwendet, um die
 		 * zugehörigen Lernabschnittsdaten aus der Datenbank zu ermitteln. Anschließend werden dies zusammen mit
 		 * dem Patch an die Datenbank zur Durchführung der Update-Methode übergeben.
+		 * Folgende Werte und Zeitstempel können durch das Patch Objekt überschrieben werden:
+		 *   fehlstundenGesamt, fehlstundenGesamtUnentschuldigt
 		 *
 		 * @param Database $db     das Datenbank-Objekt
 		 * @param object $lehrer   der angemeldete Lehrer
 		 * @param object $patch    der Patch
-		 * Folgende Werte können durch das Patch Objekt überschrieben werden: fehlstundenGesamt, fehlstundenGesamtUnentschuldigt
 		 */
 		public function patchENMSchuelerLernabschnitt(Database $db, object $lehrer, object $patch): void {
 			// Prüfe, ob eine ID für die Lernabschnittsdaten im Patch vorhanden ist
@@ -371,12 +391,13 @@
 		 * Führt einen Patch auf ENM-Bemerkungen von Schülern durch. Dabei muss die ID des Schülers mit dem Patch
 		 * übergeben verwendet, um die zugehörigen Bemerkungen aus der Datenbank zu ermitteln.
 		 * Anschließend werden dies zusammen mit dem Patch an die Datenbank zur Durchführung der Update-Methode übergeben.
+		 * Folgende Werte und Zeitstempel können durch das Patch Objekt überschrieben werden:
+		 *   ASV, AUE, ZB, LELS, schulformEmpf, individuelleVersetzungsbemerkungen, foerderbemerkungen
 		 *
 		 * @param Database $db      das Datenbank-Objekt
 		 * @param object $lehrer    der angemeldete Lehrer
 		 * @param int $idSchueler   die ID des Schülers
 		 * @param object $patch     der Patch
-		 * Folgende Werte können durch das Patch Objekt überschrieben werden: ASV, AUE, ZB, LELS, schulformEmpf, individuelleVersetzungsbemerkungen, foerderbemerkungen
 		 */
 		public function patchENMSchuelerBemerkungen(Database $db, object $lehrer, int $idSchueler, object $patch): void {
 			// Prüfe, ob Bemerkungen für die Schüler-ID vorhanden sind
@@ -395,11 +416,12 @@
 		 * Führt einen Patch auf ENM-Teilleistungen durch. Dabei wird die ID aus dem Patch verwendet, um die
 		 * zugehörigen Teilleistungen aus der Datenbank zu ermitteln. Anschließend werden dies zusammen mit
 		 * dem Patch an die Datenbank zur Durchführung der Update-Methode übergeben.
+		 * Folgende Werte und Zeitstempel können durch das Patch Objekt überschrieben werden:
+		 *   datum, bemerkung, note
 		 *
 		 * @param Database $db     das Datenbank-Objekt
 		 * @param object $lehrer   der angemeldete Lehrer
 		 * @param object $patch    der Patch
-		 * Folgende Werte können durch das Patch Objekt überschrieben werden: artID, datum, bemerkung, note
 		 */
 		public function patchENMTeilleistung(Database $db, object $lehrer, object $patch): void {
 			// Prüfe, ob eine ID für die Teilleistungen im Patch vorhanden ist
@@ -415,19 +437,20 @@
 			$mapLerngruppenFachlehrer = $this->getMapLerngruppenFachlehrer($lehrer);
 			if (!array_key_exists($teilleistungLeistung->lerngruppenID, $mapLerngruppenFachlehrer))
 				Http::exit403Forbidden("Es wurde keine Lerngruppe für die ID ".$teilleistungLeistung->lerngruppenID." zu der Teilleistung mit der ID ".$patch->id." gefunden, wo der angemeldete Lehrer Fachlehrer ist.");
-			$db->patchENMTeilleistung(date('Y-m-d H:i:s.v', time()), $teilleistung, $patch);
+			$mapNoten = $this->getMapNoten($this->enmDaten->noten);
+			$db->patchENMTeilleistung(date('Y-m-d H:i:s.v', time()), $teilleistung, $patch, $mapNoten);
 		}
 
 		/**
 		 * Führt einen Patch auf ENM-Ankreuzkompetenzen von Schülern durch. Dabei wird die ID aus dem Patch verwendet,
 		 * um die zugehörigen Ankreuzkompetenzen aus der Datenbank zu ermitteln. Anschließend werden dies zusammen mit
 		 * dem Patch an die Datenbank zur Durchführung der Update-Methode übergeben.
+		 * Folgende Werte und Zeitstempel können durch das Patch Objekt überschrieben werden:
+		 *   Stufen
 		 *
 		 * @param Database $db     das Datenbank-Objekt
 		 * @param object $lehrer   der angemeldete Lehrer
 		 * @param object $patch    der Patch
-		 *
-		 *  Folgende Werte können durch das Patch Objekt überschrieben werden: Stufen
 		 */
 		public function patchENMSchuelerAnkreuzkompetenzen(Database $db, object $lehrer, object $patch): void {
 			// Prüfe, ob eine ID für die Ankreuzkompetenz im Patch vorhanden ist

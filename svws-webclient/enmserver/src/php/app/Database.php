@@ -1045,32 +1045,42 @@
 		/**
 		 * Erstellt einen Update-Befehl für die Datenbank aus den übergebenen Daten für einen
 		 * Patch von Leistungsdaten.
+		 * Folgende Werte und Zeitstempel können durch das Patch Objekt überschrieben werden:
+		 *   note, noteQuartal, fehlstundenFach, fehlstundenUnentschuldigtFach, fachbezogeneBemerkungen, istGemahnt
 		 *
 		 * @param string $ts      der Zeitstempel der neu importierten Daten
 		 * @param object $daten   die Daten aus der Datenbank
 		 * @param object $patch   der Patch für die Daten
-		 * Folgende Werte können durch das Patch Objekt überschrieben werden: tsNote, tsNoteQuartal,
-		 * 																	  tsFehlstundenFach, tsFehlstundenUnentschuldigtFach,
-		 * 																	  fehlstundenUnentschuldigtFach, fachbezogeneBemerkungen, istGemahnt
+		 * @param array $mapNoten   eine Array, welches von dem Noten-Kürzel auf das Noten-Objekt der ENM-Daten verweist
 		 */
-		public function patchENMLeistung(string $ts, object $daten, object $patch): void {
+		public function patchENMLeistung(string $ts, object $daten, object $patch, array $mapNoten): void {
 			$update = "";
 			if (property_exists($patch, 'note') && $this->diffStringNullable($patch->note, $daten->note) && ($ts > $daten->tsNote)) {
+				$istNote = array_key_exists($patch->note, $mapNoten);
+				if (!$istNote)
+					Http::exit400BadRequest("Der Patch-Methode wurde eine ungültige Note übergeben.");
 				$update .= "tsNote='$ts',";
 				$daten->note = $patch->note;
 				$daten->tsNote = $ts;
 			}
 			if (property_exists($patch, 'noteQuartal') && $this->diffStringNullable($patch->noteQuartal, $daten->noteQuartal) && ($ts > $daten->tsNoteQuartal)) {
+				$istNote = array_key_exists($patch->noteQuartal, $mapNoten);
+				if (!$istNote)
+					Http::exit400BadRequest("Der Patch-Methode wurde eine ungültige Quartals-Note übergeben.");
 				$update .= "tsNoteQuartal='$ts',";
 				$daten->noteQuartal = $patch->noteQuartal;
 				$daten->tsNoteQuartal = $ts;
 			}
 			if (property_exists($patch, 'fehlstundenFach') && ($patch->fehlstundenFach !== $daten->fehlstundenFach) && ($ts > $daten->tsFehlstundenFach)) {
+				if (!is_int($patch->fehlstundenFach) or ($patch->fehlstundenFach < 0))
+					Http::exit400BadRequest("Es wurde eine fehlerhafter Wert für die Fehlstunden angegeben.");
 				$update .= "tsFehlstundenFach='$ts',";
 				$daten->fehlstundenFach = $patch->fehlstundenFach;
 				$daten->tsFehlstundenFach = $ts;
 			}
 			if (property_exists($patch, 'fehlstundenUnentschuldigtFach') && ($patch->fehlstundenUnentschuldigtFach !== $daten->fehlstundenUnentschuldigtFach) && ($ts > $daten->tsFehlstundenUnentschuldigtFach)) {
+				if (!is_int($patch->fehlstundenUnentschuldigtFach) or ($patch->fehlstundenUnentschuldigtFach < 0))
+					Http::exit400BadRequest("Es wurde eine fehlerhafter Wert für die unentschuldigten Fehlstunden angegeben.");
 				$update .= "tsFehlstundenUnentschuldigtFach='$ts',";
 				$daten->fehlstundenUnentschuldigtFach = $patch->fehlstundenUnentschuldigtFach;
 				$daten->tsFehlstundenUnentschuldigtFach = $ts;
@@ -1081,6 +1091,8 @@
 				$daten->tsFachbezogeneBemerkungen = $ts;
 			}
 			if (property_exists($patch, 'istGemahnt') && ($patch->istGemahnt !== $daten->istGemahnt) && ($ts > $daten->tsIstGemahnt)) {
+				if (($patch->istGemahnt !== null) and !is_bool($patch->istGemahnt))
+					Http::exit400BadRequest("Es wurde eine fehlerhafter Wert für das Feld istGemahnt angegeben.");
 				$update .= "tsIstGemahnt='$ts',";
 				$daten->istGemahnt = $patch->istGemahnt;
 				$daten->tsIstGemahnt = $ts;
@@ -1103,22 +1115,27 @@
 		/**
 		 * Erstellt einen Update-Befehl für die Datenbank aus den übergebenen Daten für einen
 		 * Patch von Lernabschnittsdaten eines Schülers.
+		 * Folgende Werte und Zeitstempel können durch das Patch Objekt überschrieben werden:
+		 *   fehlstundenGesamt, fehlstundenGesamtUnentschuldigt
 		 *
 		 * @param string $ts      der Zeitstempel der neu importierten Daten
 		 * @param object $daten   die Daten aus der Datenbank
 		 * @param object $patch   der Patch für die Daten
-		 * Folgende Werte können durch das Patch Objekt überschrieben werden: fehlstundenGesamt, fehlstundenGesamtUnentschuldigt
 		 */
 		public function patchENMSchuelerLernabschnitt(string $ts, object $daten, object $patch): void {
 			$update = "";
 			if (property_exists($patch, 'fehlstundenGesamt') && ($ts > $daten->lernabschnitt->tsFehlstundenGesamt)
 					&& ($patch->fehlstundenGesamt !== $daten->lernabschnitt->fehlstundenGesamt)) {
+				if (!is_int($patch->fehlstundenGesamt) or ($patch->fehlstundenGesamt < 0))
+					Http::exit400BadRequest("Es wurde eine fehlerhafter Wert für Gesamt-Fehlstunden angegeben.");
 				$update .= "tsFehlstundenGesamt='$ts',";
 				$daten->lernabschnitt->fehlstundenGesamt = $patch->fehlstundenGesamt;
 				$daten->lernabschnitt->tsFehlstundenGesamt = $ts;
 			}
 			if (property_exists($patch, 'fehlstundenGesamtUnentschuldigt') && ($ts > $daten->lernabschnitt->tsFehlstundenGesamtUnentschuldigt)
 					&& ($patch->fehlstundenGesamtUnentschuldigt !== $daten->lernabschnitt->fehlstundenGesamtUnentschuldigt)) {
+				if (!is_int($patch->fehlstundenGesamtUnentschuldigt) or ($patch->fehlstundenGesamtUnentschuldigt < 0))
+					Http::exit400BadRequest("Es wurde eine fehlerhafter Wert für unentschuldigten Gesamt-Fehlstunden angegeben.");
 				$update .= "tsFehlstundenGesamtUnentschuldigt='$ts',";
 				$daten->lernabschnitt->fehlstundenGesamtUnentschuldigt = $patch->fehlstundenGesamtUnentschuldigt;
 				$daten->lernabschnitt->tsFehlstundenGesamtUnentschuldigt = $ts;
@@ -1142,12 +1159,13 @@
 		/**
 		 * Erstellt einen Update-Befehl für die Datenbank aus den übergebenen Daten für einen
 		 * Patch von Bemerkungsdaten eines Schülers.
+		 * Folgende Werte und Zeitstempel können durch das Patch Objekt überschrieben werden:
+		 *   ASV, AUE, ZB, LELS, schulformEmpf, individuelleVersetzungsbemerkungen, foerderbemerkungen
 		 *
 		 * @param string $ts        der Zeitstempel der neu importierten Daten
 		 * @param int $idSchueler   die ID des Schülers
 		 * @param object $daten     die Daten aus der Datenbank
 		 * @param object $patch     der Patch für die Daten
-		 * Folgende Werte können durch das Patch Objekt überschrieben werden: ASV, AUE, ZB, LELS, schulformEmpf, individuelleVersetzungsbemerkungen, foerderbemerkungen
 		 */
 		public function patchENMSchuelerBemerkungen(string $ts, int $idSchueler, object $daten, object $patch): void {
 			$update = "";
@@ -1212,15 +1230,18 @@
 		/**
 		 * Erstellt einen Update-Befehl für die Datenbank aus den übergebenen Daten für einen
 		 * Patch von Daten zu Teilleistungen.
+		 * Folgende Werte und Zeitstempel können durch das Patch Objekt überschrieben werden:
+		 *   datum, bemerkung, note
 		 *
-		 * @param string $ts      der Zeitstempel der neu importierten Daten
-		 * @param object $daten   die Daten aus der Datenbank
-		 * @param object $patch   der Patch für die Daten
-		 * Folgende Werte können durch das Patch Objekt überschrieben werden: artID, datum, bemerkung, note
+		 * @param string $ts        der Zeitstempel der neu importierten Daten
+		 * @param object $daten     die Daten aus der Datenbank
+		 * @param object $patch     der Patch für die Daten
+		 * @param array $mapNoten   eine Array, welches von dem Noten-Kürzel auf das Noten-Objekt der ENM-Daten verweist
 		 */
-		public function patchENMTeilleistung(string $ts, object $daten, object $patch): void {
+		public function patchENMTeilleistung(string $ts, object $daten, object $patch, array $mapNoten): void {
 			$update = "";
 			if (property_exists($patch, 'artID') && ($patch->artID !== $daten->artID) && ($ts > $daten->tsArtID)) {
+				Http::exit400BadRequest("Das Verändern der Teilleistungsart ist nicht erlaubt.");
 				$update .= "tsArtID='$ts',";
 				$daten->artID = $patch->artID;
 				$daten->tsArtID = $ts;
@@ -1236,6 +1257,9 @@
 				$daten->tsBemerkung = $ts;
 			}
 			if (property_exists($patch, 'note') && $this->diffStringNullable($patch->note, $daten->note) && ($ts > $daten->tsNote)) {
+				$istNote = array_key_exists($patch->note, $mapNoten);
+				if (!$istNote)
+					Http::exit400BadRequest("Der Patch-Methode wurde eine ungültige Note übergeben.");
 				$update .= "tsNote='$ts',";
 				$daten->note = $patch->note;
 				$daten->tsNote = $ts;
@@ -1255,12 +1279,13 @@
 		/**
 		 * Erstellt einen Update-Befehl für die Datenbank aus den übergebenen Daten für einen
 		 * Patch von Schüler-Daten zu den Ankreuzkompetenzen.
+		 * Folgende Werte und Zeitstempel können durch das Patch Objekt überschrieben werden:
+		 *   Stufen
 		 *
 		 * @param string $ts      der Zeitstempel der neu importierten Daten
 		 * @param object $daten   die Daten aus der Datenbank
 		 * @param object $patch   der Patch für die Daten
 		 *
-		 * Folgende Werte können durch das Patch Objekt überschrieben werden: Stufen
 		 */
 		public function patchENMSchuelerAnkreuzkompetenzen(string $ts, object $daten, object $patch): void {
 			$update = "";

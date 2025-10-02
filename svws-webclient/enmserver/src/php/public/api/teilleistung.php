@@ -27,4 +27,5 @@
 	// Lese den Patch aus dem Request ein
 	$patch = Http::getBodyJsonObject();
 	$enmDatenManager->patchENMTeilleistung($db, $lehrer, $patch);
+
 ?>
