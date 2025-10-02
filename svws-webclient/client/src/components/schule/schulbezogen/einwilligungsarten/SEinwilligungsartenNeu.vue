@@ -22,7 +22,8 @@
 					<span class="icon i-ri-alert-line mx-0.5 mr-1 inline-flex" />
 					<p> Dieser Schlüssel verwendet zu viele Zeichen. </p>
 				</div>
-				<svws-ui-textarea-input v-model="data.beschreibung" placeholder="Beschreibung" class="col-span-full" :disabled />
+				<svws-ui-textarea-input v-model="data.beschreibung" placeholder="Beschreibung" class="col-span-full" :disabled
+					@change="value => data.beschreibung = value ?? null" />
 				<svws-ui-select title="Personenart" class="col-span-full" :items="[PersonTyp.LEHRER, PersonTyp.SCHUELER]" v-model="selectedPersonTyp"
 					:item-text="item => item.bezeichnung" :disabled />
 			</svws-ui-input-wrapper>
