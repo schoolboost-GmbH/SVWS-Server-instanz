@@ -58,7 +58,7 @@ describe(`SQL-Injections der POST-Endpunkte des ENM-Servers.`, () => {
 		const responseOfInjection = await apiServiceAuth.post(`/api/leistung`, {
 			body: JSON.stringify(bodyData),
 		});
-		expect(responseOfInjection.status).toBe(200)
+		expect(responseOfInjection.status).toBe(400)
 
 		// rufe Daten als M.Gehring@lmail.de ab
 		const responseAfterInjection = await apiServiceAuthInjected.get(`/api/daten`);
@@ -121,7 +121,7 @@ describe(`SQL-Injections der POST-Endpunkte des ENM-Servers.`, () => {
 			body: JSON.stringify(bodyData),
 		});
 
-		expect(responseOfInjection.status).toBe(200)
+		expect(responseOfInjection.status).toBe(400)
 
 		// rufe Daten als M.Gehring@lmail.de ab
 		const responseAfterInjection = await apiServiceAuthInjected.get(`/api/daten`);
@@ -281,7 +281,7 @@ describe(`SQL-Injections der POST-Endpunkte des ENM-Servers.`, () => {
 		const responseOfInjection = await apiServiceAuth.post(`/api/lernabschnitt`, {
 			body: JSON.stringify(bodyData),
 		});
-		expect(responseOfInjection.status).toBe(200)
+		expect(responseOfInjection.status).toBe(400)
 
 		// rufe Daten als M.Gehring@lmail.de ab
 		const responseAfterInjection = await apiServiceAuthInjected.get(`/api/daten`);
