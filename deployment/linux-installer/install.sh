@@ -17,7 +17,7 @@ fi
 # Überprüfe, ob der Service läuft
 if systemctl is-active --quiet svws.service; then
 	if [[ "$1" == "--update" ]]; then
-		  echo "SVWS ist bereits gestartet. Bende Service ..."
+		  echo "Der SVWS ist aktiv -> Der SVWS-Service wird nun für das Update beendet!"
 		  systemctl stop svws.service
 	else
 		   echo "SVWS ist bereits installiert und gestartet! Zum updaten bitte --update verwenden"
