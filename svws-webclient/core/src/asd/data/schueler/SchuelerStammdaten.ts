@@ -169,6 +169,11 @@ export class SchuelerStammdaten extends JavaObject {
 	public externeSchulNr : string | null = null;
 
 	/**
+	 * Die Nummer der Schülerausweises, sofern ein Schülerausweis verwendet wird, ansonsten null
+	 */
+	public idSchuelerausweis : string | null = null;
+
+	/**
 	 * Die ID der Art des Fahrschülers des Schülerdatensatzes.
 	 */
 	public fahrschuelerArtID : number | null = null;
@@ -300,6 +305,7 @@ export class SchuelerStammdaten extends JavaObject {
 			throw new Error('invalid json format, missing attribute istDuplikat');
 		result.istDuplikat = obj.istDuplikat;
 		result.externeSchulNr = (obj.externeSchulNr === undefined) ? null : obj.externeSchulNr === null ? null : obj.externeSchulNr;
+		result.idSchuelerausweis = (obj.idSchuelerausweis === undefined) ? null : obj.idSchuelerausweis === null ? null : obj.idSchuelerausweis;
 		result.fahrschuelerArtID = (obj.fahrschuelerArtID === undefined) ? null : obj.fahrschuelerArtID === null ? null : obj.fahrschuelerArtID;
 		result.haltestelleID = (obj.haltestelleID === undefined) ? null : obj.haltestelleID === null ? null : obj.haltestelleID;
 		result.anmeldedatum = (obj.anmeldedatum === undefined) ? null : obj.anmeldedatum === null ? null : obj.anmeldedatum;
@@ -364,6 +370,7 @@ export class SchuelerStammdaten extends JavaObject {
 		result += '"status" : ' + obj.status.toString() + ',';
 		result += '"istDuplikat" : ' + obj.istDuplikat.toString() + ',';
 		result += '"externeSchulNr" : ' + ((obj.externeSchulNr === null) ? 'null' : JSON.stringify(obj.externeSchulNr)) + ',';
+		result += '"idSchuelerausweis" : ' + ((obj.idSchuelerausweis === null) ? 'null' : JSON.stringify(obj.idSchuelerausweis)) + ',';
 		result += '"fahrschuelerArtID" : ' + ((obj.fahrschuelerArtID === null) ? 'null' : obj.fahrschuelerArtID.toString()) + ',';
 		result += '"haltestelleID" : ' + ((obj.haltestelleID === null) ? 'null' : obj.haltestelleID.toString()) + ',';
 		result += '"anmeldedatum" : ' + ((obj.anmeldedatum === null) ? 'null' : JSON.stringify(obj.anmeldedatum)) + ',';
@@ -481,6 +488,9 @@ export class SchuelerStammdaten extends JavaObject {
 		}
 		if (obj.externeSchulNr !== undefined) {
 			result += '"externeSchulNr" : ' + ((obj.externeSchulNr === null) ? 'null' : JSON.stringify(obj.externeSchulNr)) + ',';
+		}
+		if (obj.idSchuelerausweis !== undefined) {
+			result += '"idSchuelerausweis" : ' + ((obj.idSchuelerausweis === null) ? 'null' : JSON.stringify(obj.idSchuelerausweis)) + ',';
 		}
 		if (obj.fahrschuelerArtID !== undefined) {
 			result += '"fahrschuelerArtID" : ' + ((obj.fahrschuelerArtID === null) ? 'null' : obj.fahrschuelerArtID.toString()) + ',';

@@ -27956,6 +27956,7 @@ SchuelerStammdaten {
   "hausnummer": "302",
   "hausnummerZusatz": "",
   "id": 1199,
+  "idSchuelerausweis": null,
   "istBerufsschulpflichtErfuellt": false,
   "istDuplikat": false,
   "istSchulpflichtErfuellt": true,

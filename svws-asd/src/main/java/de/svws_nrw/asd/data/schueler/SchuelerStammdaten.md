@@ -34,6 +34,7 @@
 | status                        | int      |       | False    |          |             | die ID des aktuellen Schülerstatus                                                                                                |
 | istDuplikat                   | boolean  |       | False    |          |             | gibt an, ob es sich bei dem Schülerdatensatz um ein Duplikat handelt oder nicht                                                   |
 | externeSchulNr                | String   |       | True     |          |             | die Schulnummer eines externen Schülers oder null                                                                                 |
+| idSchuelerausweis             | String   |       | True     |          |             | die Nummer der Schülerausweises, sofern ein Schülerausweis verwendet wird, ansonsten null                                         |
 | fahrschuelerArtID             | Long     |       | True     |          |             | ggf. die ID der Art des Fahrschülers                                                                                              |
 | haltestelleID                 | Long     |       | True     |          |             | ggf. die ID der Haltestelle, ab der der Schüler das Transportmittel nimmt                                                         |
 | anmeldedatum                  | String   |       | True     |          |             | das Anmeldedatum                                                                                                                  |

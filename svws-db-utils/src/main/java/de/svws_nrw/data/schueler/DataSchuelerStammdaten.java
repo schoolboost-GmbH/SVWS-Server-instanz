@@ -192,6 +192,7 @@ public final class DataSchuelerStammdaten extends DataManagerRevised<Long, DTOSc
 		dto.idStatus = null;
 		dto.Duplikat = null;
 		dto.ExterneSchulNr = null;
+		dto.Ausweisnummer = null;
 		dto.Fahrschueler_ID = null;
 		dto.Haltestelle_ID = null;
 		dto.AnmeldeDatum = null;
@@ -255,6 +256,7 @@ public final class DataSchuelerStammdaten extends DataManagerRevised<Long, DTOSc
 		daten.status = dto.idStatus;
 		daten.istDuplikat = dto.Duplikat;
 		daten.externeSchulNr = dto.ExterneSchulNr;
+		daten.idSchuelerausweis = dto.Ausweisnummer;
 		daten.fahrschuelerArtID = dto.Fahrschueler_ID;
 		daten.haltestelleID = dto.Haltestelle_ID;
 		daten.anmeldedatum = dto.AnmeldeDatum;
@@ -324,6 +326,8 @@ public final class DataSchuelerStammdaten extends DataManagerRevised<Long, DTOSc
 			// Statusdaten
 			case "status" -> mapStatus(dto, value);
 			case "externeSchulNr" -> mapExterneSchulNr(dto, value);
+			case "idSchuelerausweis" ->
+				dto.Ausweisnummer = JSONMapper.convertToString(value, true, true, Schema.tab_Schueler.col_Ausweisnummer.datenlaenge(), "idSchuelerausweis");
 			case "fahrschuelerArtID" -> mapFahrschuelerArtID(dto, value);
 			case "haltestelleID" -> mapHaltestelleID(dto, value);
 			case "anmeldedatum" -> dto.AnmeldeDatum = JSONMapper.convertToString(value, true, false, null, "anmeldedatum");
@@ -337,8 +341,9 @@ public final class DataSchuelerStammdaten extends DataManagerRevised<Long, DTOSc
 			case "erhaeltMeisterBAFOEG" -> dto.MeisterBafoeg = JSONMapper.convertToBoolean(value, false, "erhaeltMeisterBAFOEG");
 			case "istDuplikat" -> dto.Duplikat = JSONMapper.convertToBoolean(value, false, "istDuplikat");
 
-			case "beginnBildungsgang" -> dto.BeginnBildungsgang = JSONMapper.convertToString(value, true, false, Schema.tab_Schueler.col_BeginnBildungsgang.datenlaenge(),
-					"beginnBildungsgang");
+			case "beginnBildungsgang" ->
+				dto.BeginnBildungsgang = JSONMapper.convertToString(value, true, false, Schema.tab_Schueler.col_BeginnBildungsgang.datenlaenge(),
+						"beginnBildungsgang");
 			default -> throw new ApiOperationException(Status.BAD_REQUEST, "Das Patchen des Attributes %s ist nicht implementiert.".formatted(name));
 		}
 	}

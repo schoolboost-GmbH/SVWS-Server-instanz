@@ -160,6 +160,10 @@ public class SchuelerStammdaten {
 	@Schema(description = "die Schulnummer eines externen Schülers oder null", example = "null")
 	public String externeSchulNr;
 
+	/** Die Nummer der Schülerausweises, sofern ein Schülerausweis verwendet wird, ansonsten null */
+	@Schema(description = "die Nummer der Schülerausweises, sofern ein Schülerausweis verwendet wird, ansonsten null", example = "null")
+	public String idSchuelerausweis;
+
 	/** Die ID der Art des Fahrschülers des Schülerdatensatzes. */
 	@Schema(description = "ggf. die ID der Art des Fahrschülers", example = "3")
 	public Long fahrschuelerArtID;

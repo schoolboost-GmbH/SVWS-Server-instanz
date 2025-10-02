@@ -34,6 +34,11 @@
 				<svws-ui-select v-if="schuelerListeManager().daten().status === SchuelerStatus.EXTERN.daten(schuljahr)?.id" :readonly
 					title="Stammschule" v-model="inputStammschule" :items="mapSchulen.values()" :item-text="i => i.kuerzel ?? i.schulnummerStatistik ?? i.kurzbezeichnung ?? i.name" removable />
 				<div v-else />
+				<template v-if="props.serverMode === ServerMode.DEV">
+					<svws-ui-text-input placeholder="Schülerausweis-Nummer" :readonly :model-value="data.idSchuelerausweis"
+						@change="value => patch({ idSchuelerausweis : value ?? null })" removable />
+					<div />
+				</template>
 				<svws-ui-select title="Fahrschüler" :readonly v-model="inputFahrschuelerArtID" :items="mapFahrschuelerarten"
 					:item-text="i => i.bezeichnung ?? ''" removable />
 				<svws-ui-select title="Haltestelle" :readonly v-model="inputHaltestelleID" :items="mapHaltestellen"
