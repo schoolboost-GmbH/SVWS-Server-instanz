@@ -10,7 +10,7 @@ import jakarta.validation.constraints.NotNull;
  * Sie beschreibt eine Auswahl von Daten eines Lehrereintrags aus einer Liste.
  */
 @XmlRootElement
-@Schema(description = "ein Eintrag eines Lehrers in der Lehrerliste.")
+@Schema(description = "ein Eintrag eines Lehrers in der Lehrerliste.", accessMode = Schema.AccessMode.READ_ONLY)
 @TranspilerDTO
 public class LehrerListeEintrag {
 
@@ -55,7 +55,7 @@ public class LehrerListeEintrag {
 	public boolean istRelevantFuerStatistik = false;
 
 	/** Gibt an, ob der Lehrer in anderen Datenbanktabellen referenziert ist oder nicht. */
-	@Schema(description = "Gibt an, ob der Lehrer in anderen Datenbanktabellen referenziert ist oder nicht.", example = "true")
+	@Schema(description = "Gibt an, ob der Lehrer in anderen Datenbanktabellen referenziert ist oder nicht.", example = "true", accessMode = Schema.AccessMode.READ_ONLY)
 	public Boolean referenziertInAnderenTabellen = null;
 
 	/**

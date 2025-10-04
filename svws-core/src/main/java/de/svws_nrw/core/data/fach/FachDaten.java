@@ -101,7 +101,7 @@ public class FachDaten {
 	public boolean holeAusAltenLernabschnitten = false;
 
 	/** Gibt an, ob das Fach in anderen Datenbanktabellen referenziert ist oder nicht. */
-	@Schema(description = "Gibt an, ob das Fach in anderen Datenbanktabellen referenziert ist oder nicht.", example = "true")
+	@Schema(description = "Gibt an, ob das Fach in anderen Datenbanktabellen referenziert ist oder nicht.", example = "true", accessMode = Schema.AccessMode.READ_ONLY)
 	public Boolean referenziertInAnderenTabellen = null;
 
 	/**

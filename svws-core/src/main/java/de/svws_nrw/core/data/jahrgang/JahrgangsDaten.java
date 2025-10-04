@@ -15,7 +15,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 public class JahrgangsDaten {
 
 	/** Die ID des Jahrgangs. */
-	@Schema(description = "die ID des Jahrgangs", example = "4711")
+	@Schema(description = "die ID des Jahrgangs", example = "4711", accessMode = Schema.AccessMode.READ_ONLY)
 	public long id;
 
 	/** Das schulinterne Kürzel des Jahrgangs. */
@@ -65,7 +65,7 @@ public class JahrgangsDaten {
 	public Long gueltigBis;
 
 	/** Gibt an, ob der Jahrgang in anderen Datenbanktabellen referenziert ist oder nicht. */
-	@Schema(description = "Gibt an, ob der Jahrgang in anderen Datenbanktabellen referenziert ist oder nicht.", example = "true")
+	@Schema(description = "Gibt an, ob der Jahrgang in anderen Datenbanktabellen referenziert ist oder nicht.", example = "true", accessMode = Schema.AccessMode.READ_ONLY)
 	public Boolean referenziertInAnderenTabellen = null;
 
 	// TODO Weitere Daten
