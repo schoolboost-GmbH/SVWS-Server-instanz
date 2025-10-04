@@ -502,6 +502,7 @@ public class APIClient {
 				case "LehrerPflichtstundensollVollzeit" -> JsonReader.fromResource("de/svws_nrw/asd/types/lehrer/LehrerPflichtstundensollVollzeit.json");
 				case "Nationalitaeten" -> JsonReader.fromResource("de/svws_nrw/asd/types/schule/Nationalitaeten.json");
 				case "ValidatorenFehlerartKontext" -> JsonReader.fromResource("de/svws_nrw/asd/validate/ValidatorenFehlerartKontext.json");
+				case "Floskelgruppenart" -> JsonReader.fromResource("de/svws_nrw/asd/types/schule/Floskelgruppenart.json");
 				default -> null;
 			};
 			if (json == null)

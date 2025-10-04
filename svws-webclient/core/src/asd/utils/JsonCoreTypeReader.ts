@@ -113,6 +113,8 @@ import { LehrerPflichtstundensollVollzeit } from "../types/lehrer/LehrerPflichts
 import { LehrerPflichtstundensollVollzeitKatalogEintrag } from "../data/lehrer/LehrerPflichtstundensollVollzeitKatalogEintrag";
 import { TerminKatalogEintrag } from "../data/schule/TerminKatalogEintrag";
 import { Termin } from "../types/schule/Termin";
+import { Floskelgruppenart } from "../types/schule/Floskelgruppenart";
+import { FloskelgruppenartKatalogEintrag } from "../data/schule/FloskelgruppenartKatalogEintrag";
 
 interface JsonCoreTypeEntry<T> {
 	bezeichner: string;
@@ -155,6 +157,7 @@ export class JsonCoreTypeReader {
 		"LehrerLehramtAnerkennung", "LehrerLehrbefaehigungAnerkennung", "LehrerLeitungsfunktion", "LehrerRechtsverhaeltnis", "LehrerZugangsgrund", "BilingualeSprache", "KAOABerufsfeld",
 		"KAOAMerkmaleOptionsarten", "KAOAZusatzmerkmaleOptionsarten", "KAOAEbene4", "KAOAZusatzmerkmal", "KAOAAnschlussoptionen", "KAOAKategorie", "KAOAMerkmal", "Klassenart", "Uebergangsempfehlung",
 		"ZulaessigeKursart", "Foerderschwerpunkt", "Termin", "LehrerAnrechnungsgrund", "LehrerMehrleistungsarten", "LehrerMinderleistungsarten", "LehrerPflichtstundensollVollzeit", "Nationalitaeten", "ValidatorenFehlerartKontext",
+		"Floskelgruppenart",
 	] as const;
 
 	public constructor(url?: string) {
@@ -532,6 +535,13 @@ export class JsonCoreTypeReader {
 		Nationalitaeten.init(manager);
 	}
 
+	public readFloskelgruppenart() {
+		const data = this.read('Floskelgruppenart', (json) => FloskelgruppenartKatalogEintrag.transpilerFromJSON(json));
+		CoreTypeSimple.initValues(new Floskelgruppenart(), Floskelgruppenart.class, data.mapData);
+		const manager = new CoreTypeDataManager<FloskelgruppenartKatalogEintrag, Floskelgruppenart>(data.version, Floskelgruppenart.class, Floskelgruppenart.values(), data.mapData, data.mapStatistikIDs);
+		Floskelgruppenart.init(manager);
+	}
+
 	public readValidatorenFehlerartKontext() {
 		const name = "ValidatorenFehlerartKontext";
 		const json: string | undefined = this.mapCoreTypeNameJsonData.get(name);
@@ -622,6 +632,7 @@ export class JsonCoreTypeReader {
 			this.readLehrerPflichtstundensollVollzeit();
 			this.readNationalitaeten();
 			this.readValidatorenFehlerartKontext();
+			this.readFloskelgruppenart();
 		} catch (e) {
 			console.log(e)
 		}

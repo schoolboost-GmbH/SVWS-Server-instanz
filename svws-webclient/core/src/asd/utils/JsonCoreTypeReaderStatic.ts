@@ -54,6 +54,7 @@ import LehrerMinderleistungsarten from "@json/lehrer/LehrerMinderleistungsarten.
 import LehrerPflichtstundensollVollzeit from "@json/lehrer/LehrerPflichtstundensollVollzeit.json";
 import Nationalitaeten from "@json/schule/Nationalitaeten.json";
 import ValidatorenFehlerartKontext from "@json/../validate/ValidatorenFehlerartKontext.json";
+import Floskelgruppenart from "@json/schule/Floskelgruppenart.json";
 
 export class JsonCoreTypeReaderStatic extends JsonCoreTypeReader {
 
@@ -116,6 +117,7 @@ export class JsonCoreTypeReaderStatic extends JsonCoreTypeReader {
 		this.mapCoreTypeNameJsonDataImport.set("LehrerPflichtstundensollVollzeit", LehrerPflichtstundensollVollzeit);
 		this.mapCoreTypeNameJsonDataImport.set("Nationalitaeten", Nationalitaeten);
 		this.mapCoreTypeNameJsonDataImport.set("ValidatorenFehlerartKontext", ValidatorenFehlerartKontext);
+		this.mapCoreTypeNameJsonDataImport.set("Floskelgruppenart", Floskelgruppenart);
 		for (const [k,v] of this.mapCoreTypeNameJsonDataImport.entries())
 			this.mapCoreTypeNameJsonData.set(k, JSON.stringify(v));
 	}

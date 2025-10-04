@@ -34,6 +34,13 @@ export class RGBFarbe extends JavaObject {
 	public constructor(red : number, green : number, blue : number);
 
 	/**
+	 * Erstellt eine neue Farbe mit den übergebenenen Komponenten
+	 *
+	 * @param decimal     Die Farbe in Dezimal
+	 */
+	public constructor(decimal : number);
+
+	/**
 	 * Implementation for method overloads of 'constructor'
 	 */
 	public constructor(__param0? : number, __param1? : number, __param2? : number) {
@@ -47,7 +54,21 @@ export class RGBFarbe extends JavaObject {
 			this.red = red;
 			this.green = green;
 			this.blue = blue;
+		} else if (((__param0 !== undefined) && typeof __param0 === "number") && (__param1 === undefined) && (__param2 === undefined)) {
+			const decimal : number = __param0 as number;
+			this.red = (decimal >> 16) & 255;
+			this.green = (decimal >> 8) & 255;
+			this.blue = decimal & 255;
 		} else throw new Error('invalid method overload');
+	}
+
+	/**
+	 * Gibt die Farbe als Dezimalwert zurück.
+	 *
+	 * @return		Farbwert in Dezimal
+	 */
+	public asDecimal() : number | null {
+		return (this.red << 16) | (this.green << 8) | this.blue;
 	}
 
 	/**

@@ -45,6 +45,7 @@ import { FachDaten } from '../core/data/fach/FachDaten';
 import { FachgruppeKatalogEintrag } from '../asd/data/fach/FachgruppeKatalogEintrag';
 import { FachKatalogEintrag } from '../asd/data/fach/FachKatalogEintrag';
 import { Fahrschuelerart } from '../core/data/schule/Fahrschuelerart';
+import { Floskelgruppe } from '../core/data/schule/Floskelgruppe';
 import { FoerderschwerpunktEintrag } from '../core/data/schule/FoerderschwerpunktEintrag';
 import { FoerderschwerpunktKatalogEintrag } from '../asd/data/schule/FoerderschwerpunktKatalogEintrag';
 import { GEAbschlussFaecher } from '../core/data/abschluss/GEAbschlussFaecher';
@@ -14704,6 +14705,86 @@ export class ApiServer extends BaseApi {
 		const ret = new ArrayList<SimpleOperationResponse>();
 		obj.forEach((elem: any) => { const text : string = JSON.stringify(elem); ret.add(SimpleOperationResponse.transpilerFromJSON(text)); });
 		return ret;
+	}
+
+
+	/**
+	 * Implementierung der GET-Methode getFloskelgruppen für den Zugriff auf die URL https://{hostname}/db/{schema}/schule/floskelgruppen
+	 *
+	 * Gibt die Floskelgruppen zurück, insofern der SVWS-Benutzer die erforderliche Berechtigung besitzt.
+	 *
+	 * Mögliche HTTP-Antworten:
+	 *   Code 200: Eine Liste der Floskelgruppen.
+	 *     - Mime-Type: application/json
+	 *     - Rückgabe-Typ: List<Floskelgruppe>
+	 *   Code 403: Der SVWS-Benutzer hat keine Rechte, um Katalog-Einträge anzusehen.
+	 *   Code 404: Keine Katalog-Einträge gefunden
+	 *
+	 * @param {string} schema - der Pfad-Parameter schema
+	 *
+	 * @returns Eine Liste der Floskelgruppen.
+	 */
+	public async getFloskelgruppen(schema : string) : Promise<List<Floskelgruppe>> {
+		const path = "/db/{schema}/schule/floskelgruppen"
+			.replace(/{schema\s*(:[^{}]+({[^{}]+})*)?}/g, schema);
+		const result : string = await super.getJSON(path);
+		const obj = JSON.parse(result);
+		const ret = new ArrayList<Floskelgruppe>();
+		obj.forEach((elem: any) => { const text : string = JSON.stringify(elem); ret.add(Floskelgruppe.transpilerFromJSON(text)); });
+		return ret;
+	}
+
+
+	/**
+	 * Implementierung der PATCH-Methode patchFloskelgruppe für den Zugriff auf die URL https://{hostname}/db/{schema}/schule/floskelgruppen/{kuerzel : \S+}
+	 *
+	 * Patched die Floskelgruppe mit dem angegebenen Kürzel, insofern die notwendigen Berechtigungen vorliegen.
+	 *
+	 * Mögliche HTTP-Antworten:
+	 *   Code 204: Der Patch wurde erfolgreich integriert.
+	 *   Code 400: Der Patch ist fehlerhaft aufgebaut.
+	 *   Code 403: Der SVWS-Benutzer hat keine Rechte, um die Daten zu ändern.
+	 *   Code 404: Kein Eintrag mit dem angegebenen Kürzel gefunden
+	 *   Code 409: Der Patch ist fehlerhaft, da zumindest eine Rahmenbedingung für einen Wert nicht erfüllt wurde (z.B. eine negative ID)
+	 *   Code 500: Unspezifizierter Fehler (z. B. beim Datenbankzugriff)
+	 *
+	 * @param {Partial<Floskelgruppe>} data - der Request-Body für die HTTP-Methode
+	 * @param {string} schema - der Pfad-Parameter schema
+	 * @param {string} kuerzel - der Pfad-Parameter kuerzel
+	 */
+	public async patchFloskelgruppe(data : Partial<Floskelgruppe>, schema : string, kuerzel : string) : Promise<void> {
+		const path = "/db/{schema}/schule/floskelgruppen/{kuerzel : \\S+}"
+			.replace(/{schema\s*(:[^{}]+({[^{}]+})*)?}/g, schema)
+			.replace(/{kuerzel\s*(:[^{}]+({[^{}]+})*)?}/g, kuerzel);
+		const body : string = Floskelgruppe.transpilerToJSONPatch(data);
+		return super.patchJSON(path, body);
+	}
+
+
+	/**
+	 * Implementierung der POST-Methode addFloskelgruppe für den Zugriff auf die URL https://{hostname}/db/{schema}/schule/floskelgruppen/create
+	 *
+	 * Erstellt eine neue Floskelgruppe, insofern die notwendigen Berechtigungen vorliegen
+	 *
+	 * Mögliche HTTP-Antworten:
+	 *   Code 201: Die Floskelgruppe wurde erfolgreich hinzugefügt.
+	 *     - Mime-Type: application/json
+	 *     - Rückgabe-Typ: Floskelgruppe
+	 *   Code 403: Der SVWS-Benutzer hat keine Rechte, um Floskelgruppen anzulegen.
+	 *   Code 500: Unspezifizierter Fehler (z.B. beim Datenbankzugriff)
+	 *
+	 * @param {Partial<Floskelgruppe>} data - der Request-Body für die HTTP-Methode
+	 * @param {string} schema - der Pfad-Parameter schema
+	 *
+	 * @returns Die Floskelgruppe wurde erfolgreich hinzugefügt.
+	 */
+	public async addFloskelgruppe(data : Partial<Floskelgruppe>, schema : string) : Promise<Floskelgruppe> {
+		const path = "/db/{schema}/schule/floskelgruppen/create"
+			.replace(/{schema\s*(:[^{}]+({[^{}]+})*)?}/g, schema);
+		const body : string = Floskelgruppe.transpilerToJSONPatch(data);
+		const result : string = await super.postJSON(path, body);
+		const text = result;
+		return Floskelgruppe.transpilerFromJSON(text);
 	}
 
 

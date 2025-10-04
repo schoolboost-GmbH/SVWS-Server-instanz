@@ -46,6 +46,27 @@ public class RGBFarbe {
 	}
 
 	/**
+	 * Erstellt eine neue Farbe mit den übergebenenen Komponenten
+	 *
+	 * @param decimal     Die Farbe in Dezimal
+	 */
+	public RGBFarbe(final int decimal) {
+		super();
+		this.red = (decimal >> 16) & 0xff;
+		this.green = (decimal >> 8) & 0xff;
+		this.blue = decimal & 0xff;
+	}
+
+	/**
+	 * Gibt die Farbe als Dezimalwert zurück.
+	 *
+	 * @return		Farbwert in Dezimal
+	 */
+	public Integer asDecimal() {
+		return (this.red << 16) | (this.green << 8) | this.blue;
+	}
+
+	/**
 	 * Gibt die Farbe als komma-separierten String zurück.
 	 *
 	 * @return der String

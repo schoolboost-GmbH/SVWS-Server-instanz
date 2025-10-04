@@ -1,9 +1,11 @@
 package de.svws_nrw.api.server;
 
 import de.svws_nrw.core.data.erzieher.Erzieherart;
+import de.svws_nrw.core.data.schule.Floskelgruppe;
 import de.svws_nrw.core.data.schule.Lernplattform;
 import de.svws_nrw.core.data.schule.TelefonArt;
 import de.svws_nrw.data.erzieher.DataErzieherarten;
+import de.svws_nrw.data.schule.DataFloskelgruppen;
 import de.svws_nrw.data.schule.DataKatalogLernplattformen;
 import de.svws_nrw.data.schule.DataKatalogTelefonArten;
 import java.io.InputStream;
@@ -108,6 +110,7 @@ import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+
 
 
 /**
@@ -3145,4 +3148,82 @@ public class APISchule {
 		return DBBenutzerUtils.runWithTransaction(conn -> new DataErzieherarten(conn).deleteMultipleAsSimpleResponseList(JSONMapper.toListOfLong(is)),
 				request, ServerMode.STABLE, BenutzerKompetenz.KATALOG_EINTRAEGE_LOESCHEN);
 	}
+
+
+	/**
+	 * Die OpenAPI-Methode für die Abfrage der Liste der Floskelgruppen.
+	 *
+	 * @param schema    das Datenbankschema, auf welches die Abfrage ausgeführt werden soll
+	 * @param request   die Informationen zur HTTP-Anfrage
+	 *
+	 * @return die Liste der Floskelgruppen
+	 */
+	@GET
+	@Path("/floskelgruppen")
+	@Operation(summary = "Gibt eine Liste der Floskelgruppen im Katalog zurück.",
+			description = "Gibt die Floskelgruppen zurück, insofern der SVWS-Benutzer die erforderliche Berechtigung besitzt.")
+	@ApiResponse(responseCode = "200", description = "Eine Liste der Floskelgruppen.",
+			content = @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = Floskelgruppe.class))))
+	@ApiResponse(responseCode = "403", description = "Der SVWS-Benutzer hat keine Rechte, um Katalog-Einträge anzusehen.")
+	@ApiResponse(responseCode = "404", description = "Keine Katalog-Einträge gefunden")
+	public Response getFloskelgruppen(@PathParam("schema") final String schema, @Context final HttpServletRequest request) {
+		return DBBenutzerUtils.runWithTransaction(conn -> new DataFloskelgruppen(conn).getAllAsResponse(),
+				request, ServerMode.STABLE, BenutzerKompetenz.KEINE);
+	}
+
+	/**
+	 * Die OpenAPI-Methode für das Patchen einer Floskelgruppe.
+	 *
+	 * @param schema    das Datenbankschema, auf welches der Patch ausgeführt werden soll
+	 * @param kuerzel   das Kürzel zur Identifikation der Floskelgruppe
+	 * @param is        der InputStream, mit dem JSON-Patch-Objekt nach RFC 7386
+	 * @param request   die Informationen zur HTTP-Anfrage
+	 *
+	 * @return das Ergebnis der Patch-Operation
+	 */
+	@PATCH
+	@Path("/floskelgruppen/{kuerzel : \\S+}")
+	@Operation(summary = "Patched die Floskelgruppe mit dem angegebenen Kürzel.",
+			description = "Patched die Floskelgruppe mit dem angegebenen Kürzel, insofern die notwendigen Berechtigungen vorliegen.")
+	@ApiResponse(responseCode = "204", description = "Der Patch wurde erfolgreich integriert.")
+	@ApiResponse(responseCode = "400", description = "Der Patch ist fehlerhaft aufgebaut.")
+	@ApiResponse(responseCode = "403", description = "Der SVWS-Benutzer hat keine Rechte, um die Daten zu ändern.")
+	@ApiResponse(responseCode = "404", description = "Kein Eintrag mit dem angegebenen Kürzel gefunden")
+	@ApiResponse(responseCode = "409", description = "Der Patch ist fehlerhaft, da zumindest eine Rahmenbedingung für einen Wert nicht erfüllt wurde"
+			+ " (z.B. eine negative ID)")
+	@ApiResponse(responseCode = "500", description = "Unspezifizierter Fehler (z. B. beim Datenbankzugriff)")
+	public Response patchFloskelgruppe(@PathParam("schema") final String schema, @PathParam("kuerzel") final String kuerzel,
+			@RequestBody(description = "Der Patch einer Floskelgruppe", required = true,
+					content = @Content(mediaType = MediaType.APPLICATION_JSON, schema = @Schema(implementation = Floskelgruppe.class))) final InputStream is,
+			@Context final HttpServletRequest request) {
+		return DBBenutzerUtils.runWithTransaction(
+				conn -> new DataFloskelgruppen(conn).patchAsResponse(kuerzel, is), request, ServerMode.STABLE,
+				BenutzerKompetenz.KATALOG_EINTRAEGE_AENDERN);
+	}
+
+	/**
+	 * Die OpenAPI-Methode für das Hinzufügen einer Floskelgruppe.
+	 *
+	 * @param schema       das Datenbankschema
+	 * @param is           der Input-Stream mit den Daten der Floskelgruppe
+	 * @param request      die Informationen zur HTTP-Anfrage
+	 *
+	 * @return die HTTP-Antwort mit der erstellten Floskelgruppe
+	 */
+	@POST
+	@Path("/floskelgruppen/create")
+	@Operation(summary = "Erstellt eine neue Floskelgruppe und gibt das erstellte Objekt zurück.",
+			description = "Erstellt eine neue Floskelgruppe, insofern die notwendigen Berechtigungen vorliegen")
+	@ApiResponse(responseCode = "201", description = "Die Floskelgruppe wurde erfolgreich hinzugefügt.",
+			content = @Content(mediaType = MediaType.APPLICATION_JSON, schema = @Schema(implementation = Floskelgruppe.class)))
+	@ApiResponse(responseCode = "403", description = "Der SVWS-Benutzer hat keine Rechte, um Floskelgruppen anzulegen.")
+	@ApiResponse(responseCode = "500", description = "Unspezifizierter Fehler (z.B. beim Datenbankzugriff)")
+	public Response addFloskelgruppe(@PathParam("schema") final String schema,
+			@RequestBody(description = "Die Daten der zu erstellenden Floskelgruppe", required = true,
+					content = @Content(mediaType = MediaType.APPLICATION_JSON, schema = @Schema(implementation = Floskelgruppe.class))) final InputStream is,
+			@Context final HttpServletRequest request) {
+		return DBBenutzerUtils.runWithTransaction(
+				conn -> new DataFloskelgruppen(conn).addAsResponse(is), request, ServerMode.STABLE, BenutzerKompetenz.KATALOG_EINTRAEGE_AENDERN);
+	}
+
 }
