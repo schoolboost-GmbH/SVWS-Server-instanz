@@ -53,4 +53,9 @@ public abstract class KursblockungAlgorithmusPermanentK {
 		return dynDaten;
 	}
 
+	/**
+	 * Lädt das beste Blockungsergebnis und verteilt SuS, falls diese aufgrund des Algorithmus zuvor nicht verteilt wurden.
+	 */
+	public abstract void ladeBestMitSchuelerverteilung();
+
 }

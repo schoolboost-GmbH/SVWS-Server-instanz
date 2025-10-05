@@ -3,10 +3,12 @@ import { AVLSet } from '../../core/adt/set/AVLSet';
 import { KursblockungDynStatistik } from '../../core/kursblockung/KursblockungDynStatistik';
 import { HashMap } from '../../java/util/HashMap';
 import { KursblockungDynKurs } from '../../core/kursblockung/KursblockungDynKurs';
-import { Class } from '../../java/lang/Class';
 import { DeveloperNotificationException } from '../../core/exceptions/DeveloperNotificationException';
 import { Logger } from '../../core/logger/Logger';
+import { GostKursart } from '../../core/types/gost/GostKursart';
 import { LogLevel } from '../../core/logger/LogLevel';
+import { KursblockungDynSchueler } from '../../core/kursblockung/KursblockungDynSchueler';
+import { Class } from '../../java/lang/Class';
 
 export class KursblockungDynSchiene extends JavaObject {
 
@@ -110,6 +112,22 @@ export class KursblockungDynSchiene extends JavaObject {
 	}
 
 	/**
+	 * Liefert die Anzahl an Kursen mit gleicher Fachart in dieser Schiene. Diese Anzahl wird als Bewertungskriterium
+	 * für die Blockung verwendet.
+	 *
+	 * @return die Anzahl an Kursen mit gleicher Fachart in dieser Schiene. Diese Anzahl wird als Bewertungskriterium
+	 *         für die Blockung verwendet.
+	 */
+	gibAnzahlGleicherFacharten() : number {
+		const setFachart : AVLSet<number> | null = new AVLSet<number>();
+		let summe : number = 0;
+		for (const kurs of this.kursMap.values())
+			if (!setFachart.add(kurs.gibFachart().gibNr()))
+				summe++;
+		return summe;
+	}
+
+	/**
 	 * Debug-Ausgabe. Nur für Testzwecke.
 	 *
 	 * @param nurMultikurse Falls TRUE, werden nur Multikurse angezeigt.
@@ -125,19 +143,51 @@ export class KursblockungDynSchiene extends JavaObject {
 	}
 
 	/**
-	 * Liefert die Anzahl an Kursen mit gleicher Fachart in dieser Schiene. Diese Anzahl wird als Bewertungskriterium
-	 * für die Blockung verwendet.
-	 *
-	 * @return die Anzahl an Kursen mit gleicher Fachart in dieser Schiene. Diese Anzahl wird als Bewertungskriterium
-	 *         für die Blockung verwendet.
+	 * Ausgabe der Kurse dieser Schiene (4 eingerückt).
 	 */
-	gibAnzahlGleicherFacharten() : number {
-		const setFachart : AVLSet<number> | null = new AVLSet<number>();
-		let summe : number = 0;
-		for (const kurs of this.kursMap.values())
-			if (!setFachart.add(kurs.gibFachart().gibNr()))
-				summe++;
-		return summe;
+	public printlnKurse() : void {
+		console.log(JSON.stringify("Schiene " + (this.nr + 1)));
+		for (const k of this.kursMap.values())
+			console.log(JSON.stringify("    ID " + k.gibDatenbankID() + ", " + k.gibFachart()));
+	}
+
+	/**
+	 * Ausgabe der Kurse (4 eingerückt) dieser Schiene zusammen mit den SuS (8 eingerückt) der Kurse.
+	 *
+	 * @param _schuelerArr  Die Menge alle SuS.
+	 */
+	public printlnKurseUndSchueler(_schuelerArr : Array<KursblockungDynSchueler>) : void {
+		console.log(JSON.stringify("Schiene " + (this.nr + 1)));
+		for (const k of this.kursMap.values()) {
+			console.log(JSON.stringify("    ID " + k.gibDatenbankID() + ", " + k.gibFachart() + ", Fach-ID=" + k.gibFachID()));
+			for (const s of _schuelerArr)
+				if (s.gibIstInKurs(k))
+					console.log(JSON.stringify("        ID " + s.gibDatenbankID() + ", " + s.gibRepresentation()));
+		}
+	}
+
+	/**
+	 * Liefert true, falls in der Schiene nur Kurse der Kursart LK sind (oder keine Kurse).
+	 *
+	 * @return true, falls in der Schiene nur Kurse der Kursart LK sind (oder keine Kurse).
+	 */
+	public gibHatNurLK() : boolean {
+		for (const k of this.kursMap.values())
+			if (k.gibFachart().gibKursart() as unknown !== GostKursart.LK as unknown)
+				return false;
+		return true;
+	}
+
+	/**
+	 * Liefert true, falls in der Schiene keine Kurse der Kursart LK sind.
+	 *
+	 * @return true, falls in der Schiene keine Kurse der Kursart LK sind.
+	 */
+	public gibHatKeineLK() : boolean {
+		for (const k of this.kursMap.values())
+			if (k.gibFachart().gibKursart() as unknown === GostKursart.LK as unknown)
+				return false;
+		return true;
 	}
 
 	transpilerCanonicalName(): string {

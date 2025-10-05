@@ -46,7 +46,7 @@ export class WorkerManagerKursblockung {
 	protected usedWorkerThreads = shallowRef<number>(0);
 
 	/** Das Intervall in Millisekunden, bei welchem die Threads kurzzeitig unterbrochen werden und mit dem Manager kommunizieren */
-	protected _interval = shallowRef<number>(100);
+	protected _interval = shallowRef<number>(200);
 
 	/* Gibt an, ob der Worker bereits terminiert wurde und somit keine neuen Berechnungen mehr ausgeführt werden können. */
 	protected terminated = shallowRef<boolean>(false);

@@ -72,7 +72,7 @@ public class Kurs42Converter {
 				final GostFach gFach = new GostFach();
 				gFach.id = mapFaecher.size();
 				gFach.kuerzelAnzeige = sFachKuerzel;
-				gFach.kuerzel = Fach.data().getWertBySchluessel(sFachKuerzel) == null ? Fach.D.daten(2024).kuerzel : sFachKuerzel;
+				gFach.kuerzel = Fach.data().getWertBySchluessel(sFachKuerzel) == null ? Fach.VT.daten(2024).kuerzel : sFachKuerzel;
 				mapFaecher.put(sFachKuerzel, gFach);
 			}
 
@@ -95,10 +95,10 @@ public class Kurs42Converter {
 			mapFachart.get(sFachart).addLast(gKurs);
 			gKurs.id = mapKurse.size();
 			gKurs.nummer = mapFachart.get(sFachart).size();
-			// System.out.println("Kursname "+sKursname+" --> "+gKurs.id);
 			gKurs.fach_id = mapFaecher.get(sFachKuerzel).id;
 			gKurs.kursart = mapKursarten.get(sKursartKuerzel).id;
 			gKurs.anzahlSchienen = k42kurs.Schienenzahl;
+			// System.out.println("Kursname " + sKursname + " --> " + gKurs.fach_id + ", " + gKurs.kursart + ", " + gKurs.nummer);
 			mapKurse.put(sKursname, gKurs);
 		}
 

@@ -1,8 +1,8 @@
 package de.svws_nrw.core.kursblockung;
 
-import java.util.Random;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import de.svws_nrw.core.logger.Logger;
 import de.svws_nrw.core.utils.gost.GostBlockungsdatenManager;
@@ -18,9 +18,8 @@ import jakarta.validation.constraints.NotNull;
  */
 public final class KursblockungAlgorithmusPermanent {
 
-	private static final long MILLIS_START = 1000;
-	// private static final long MILLIS_INCREMENT = 1000 --> lineares Wachstum doch nicht so gut.
-	private static final int TOP_ERGEBNISSE = 10;
+	private static final long MILLIS_START = 4000; // Lineare Inkrementierung ist nicht gut.
+	private static final int TOP_ERGEBNISSE = 3;
 
 	private final @NotNull Random _random = new Random();
 	private final @NotNull Logger _logger = new Logger();
@@ -40,6 +39,9 @@ public final class KursblockungAlgorithmusPermanent {
 	/** Die Zeitspanne reduziert sich schrittweise, da die GUI nur kurze Rechenintervalle dem Algorithmus gibt.*/
 	private long _zeitRest;
 
+	/** Der Index des aktuellen Algorithmus der als nächstes ausgeführt wird.*/
+	private int _currentIndex;
+
 	/**
 	 * Initialisiert den Blockungsalgorithmus für eine vom Clienten initiierte dauerhafte Berechnung.
 	 *
@@ -53,40 +55,47 @@ public final class KursblockungAlgorithmusPermanent {
 		_input = pInput;
 		_zeitMax = MILLIS_START;
 		_zeitRest = MILLIS_START;
+		_currentIndex = 0;
 		_top = new ArrayList<>();
 
 		algorithmenK = new KursblockungAlgorithmusPermanentK @NotNull [] {
 				// Alle Algorithmen zur Verteilung von Kursen auf ihre Schienen ...
-				new KursblockungAlgorithmusPermanentKSchnellW(_random, _logger, _input),
-				new KursblockungAlgorithmusPermanentKFachwahlmatrix(_random, _logger, _input),
+				// new KursblockungAlgorithmusPermanentKSchnellW(_random, _logger, _input),
+				// new KursblockungAlgorithmusPermanentKFachgruppe(_random, _logger, _input),
+				// new KursblockungAlgorithmusPermanentKFachwahlmatrix(_random, _logger, _input),
 				new KursblockungAlgorithmusPermanentKMatching(_random, _logger, _input),
 				new KursblockungAlgorithmusPermanentKSchuelervorschlag(_random, _logger, _input),
+				new KursblockungAlgorithmusPermanentKSchuelervorschlagSingle(_random, _logger, _input),
+				new KursblockungAlgorithmusPermanentKOptimiereBest(_random, _logger, _input, null),
 				new KursblockungAlgorithmusPermanentKOptimiereBest(_random, _logger, _input, null),
 				// ... Ende der K-Algorithmen.
 		};
 	}
 
 	/**
-	 * Liefert TRUE, falls der Blockungsalgorithmus innerhalb der erlaubten Zeit seine Ergebnisse verbessern konnte.
+	 * Liefert TRUE, falls die GUI die TOP-Liste aktualisieren soll.
 	 *
 	 * @param zeitProAufruf  Die zur Verfügung stehende Zeit (in Millisekunden), um die ehemaligen Ergebnisse zu optimieren.
-	 *
-	 * @return TRUE, falls der Blockungsalgorithmus innerhalb der erlaubten Zeit seine Ergebnisse verbessern konnte.
+	 * @return TRUE, falls die GUI die TOP-Liste aktualisieren soll.
 	 */
 	public boolean next(final long zeitProAufruf) {
+		// Rechnen innerhalb des Zeitlimits (ca.100 ms).
 		final long zeitStart = System.currentTimeMillis();
-		final long zeitFuerBerechnung = Math.min(zeitProAufruf, _zeitRest);
-		final long zeitEnde = zeitStart + zeitFuerBerechnung;
-
-		// Jeder Algorithmus optimiert innerhalb seiner Zeit sein eigenes "KursblockungDynDaten"-Objekt.
-		for (int iK = 0; (iK < algorithmenK.length) && (System.currentTimeMillis() < zeitEnde); iK++)
-			algorithmenK[iK].next(zeitStart + ((zeitFuerBerechnung * (iK + 1)) / algorithmenK.length)); // Übermittle die individuelle Endzeit.
-
-		// Die verwendete Zeit abziehen.
+		final long zeitEnde = zeitStart + zeitProAufruf;
+		algorithmenK[_currentIndex].next(zeitEnde);
+		_currentIndex = (_currentIndex + 1) % algorithmenK.length;
 		_zeitRest -= (System.currentTimeMillis() - zeitStart);
 
-		// Neustart aller Algorithmen, falls nur noch weniger als 100 Millisekunden zur Verfügung stehen.
-		return (_zeitRest <= 100) && _neustart();
+		// Neustart und GUI soll die Liste aktualisieren.
+		if (_zeitRest < 100) {
+			// DEBUG-AUSGABE
+			// System.out.println("    NEUSTART: " + _zeitRest + " / " + _zeitMax + " / " + System.currentTimeMillis());
+			_neustart();
+			return true;
+		}
+
+		// GUI soll nicht aktualisieren.
+		return false;
 	}
 
 	/**
@@ -94,87 +103,70 @@ public final class KursblockungAlgorithmusPermanent {
 	 *
 	 * @return TRUE, falls mindestens ein Algorithmus ein besseres Ergebnis gefunden hat.
 	 */
-	private boolean _neustart() {
-
-		// Verteile aber vorher die SuS.
-		int verbesserung = 0;
+	private int _neustart() {
+		int verbesserungen = 0;
 		for (int iK = 0; iK < algorithmenK.length; iK++) {
-			_verteileSuS(algorithmenK[iK]);
-			if (_fuegeHinzuFallsBesser(iK))
-				verbesserung++;
-		}
+			// Lädt beim Algorithmus den besten Zustand. Einige Algorithmen verteilen hier erst die SuS.
+			algorithmenK[iK].ladeBestMitSchuelerverteilung();
 
-		// Alle K-Algorithmen neu erzeugen, da jeweils ein neues "KursblockungDynDaten"-Objekt erzeugt werden muss.
-		algorithmenK[0] = new KursblockungAlgorithmusPermanentKSchnellW(_random, _logger, _input);
-		algorithmenK[1] = new KursblockungAlgorithmusPermanentKFachwahlmatrix(_random, _logger, _input);
-		algorithmenK[2] = new KursblockungAlgorithmusPermanentKMatching(_random, _logger, _input);
-		algorithmenK[3] = new KursblockungAlgorithmusPermanentKSchuelervorschlag(_random, _logger, _input);
-		algorithmenK[4] = new KursblockungAlgorithmusPermanentKOptimiereBest(_random, _logger, _input, _gibBestOrNull());
+			// DEBUG-AUSGABE
+			// System.out.println("        Algorithmus " + algorithmenK[iK].toString() + " hat " + algorithmenK[iK].gibDynDaten().gibStatistik().debugRowKurz());
 
-		// Die Berechnungszeit steigt exponentiell. Mehrere Tests ergaben, dass dies besser ist als linear.
-		_zeitMax = _zeitMax + (_zeitMax / 2);
-		_zeitRest = _zeitMax;
+			// Sortiert einfügen.
+			boolean eingefuegt = false;
+			for (int i = 0; (i < _top.size()) && (!eingefuegt); i++)
+				if (algorithmenK[iK].dynDaten.gibIstBesser_NW_KD_FW_Als(_top.get(i))) {
+					_top.add(i, algorithmenK[iK].dynDaten);
+					eingefuegt = true;
+				}
 
-		return verbesserung > 0;
-	}
-
-	private KursblockungDynDaten _gibBestOrNull() {
-		return _top.isEmpty() ? null : _top.get(0);
-	}
-
-	private boolean _fuegeHinzuFallsBesser(final int algNr) {
-		final @NotNull KursblockungDynDaten neueDynDaten = algorithmenK[algNr].gibDynDaten();
-
-		// Gibt es ein besseres Objekt als in der Liste?
-		for (int i = 0; i < _top.size(); i++)
-			if (neueDynDaten.gibIstBesser_NW_KD_FW_Als(_top.get(i))) {
-				// Besseres Element (sortiert) einfügen.
-				_top.add(i, neueDynDaten);
-				// Letztes Element entfernen?
+			// Sonderfälle
+			if (eingefuegt) {
+				verbesserungen++;
+				// Prüfe, ob die Liste zu groß ist.
 				if (_top.size() > TOP_ERGEBNISSE)
 					_top.removeLast();
-				return true;
+			} else {
+				// Prüfe, ob die Liste zu klein ist.
+				if (_top.size() < TOP_ERGEBNISSE) {
+					_top.addLast(algorithmenK[iK].dynDaten);
+					verbesserungen++;
+				}
 			}
 
-		// Ist die Liste noch nicht voll?
-		if (_top.size() < TOP_ERGEBNISSE) {
-			_top.add(neueDynDaten);
-			return true;
 		}
 
-		return false;
+		// DEBUG-AUSGABE
+		// for (int iTop = 0; iTop < _top.size(); iTop++)
+		//     System.out.println("        TOP " + iTop + ": " + _top.get(iTop).gibStatistik().debugRowKurz());
+
+		// Alle K-Algorithmen neu erzeugen, da jeweils ein neues "KursblockungDynDaten"-Objekt erzeugt werden muss.
+		// algorithmenK[0] = new KursblockungAlgorithmusPermanentKSchnellW(_random, _logger, _input);
+		// algorithmenK[4] = new KursblockungAlgorithmusPermanentKFachgruppe(_random, _logger, _input);
+		// algorithmenK[0] = new KursblockungAlgorithmusPermanentKFachwahlmatrix(_random, _logger, _input);
+		algorithmenK[0] = new KursblockungAlgorithmusPermanentKMatching(_random, _logger, _input);
+		algorithmenK[1] = new KursblockungAlgorithmusPermanentKSchuelervorschlag(_random, _logger, _input);
+		algorithmenK[2] = new KursblockungAlgorithmusPermanentKSchuelervorschlagSingle(_random, _logger, _input);
+		algorithmenK[3] = new KursblockungAlgorithmusPermanentKOptimiereBest(_random, _logger, _input, _gibTopElementOrNull());
+		algorithmenK[4] = new KursblockungAlgorithmusPermanentKOptimiereBest(_random, _logger, _input, _gibTopElementOrNull());
+
+		// Die Berechnungszeit steigt exponentiell. Mehrere Tests ergaben, dass dies besser ist als linear.
+		_zeitMax = (int) (_zeitMax * 1.5);
+		_zeitRest = _zeitMax;
+
+		return verbesserungen;
 	}
 
-	private void _verteileSuS(final @NotNull KursblockungAlgorithmusPermanentK k) {
-		final @NotNull KursblockungDynDaten dynDaten = k.gibDynDaten();
-
-		final @NotNull KursblockungAlgorithmusS @NotNull [] algorithmenS = new KursblockungAlgorithmusS @NotNull [] {
-				// Alle Algorithmen zur Verteilung von SuS auf ihre Kurse ...
-				new KursblockungAlgorithmusSSchnellW(_random, _logger, dynDaten),
-				new KursblockungAlgorithmusSZufaellig(_random, _logger, dynDaten),
-				new KursblockungAlgorithmusSMatching(_random, _logger, dynDaten),
-				new KursblockungAlgorithmusSMatchingW(_random, _logger, dynDaten),
-				// ... Ende der S-Algorithmen.
-		};
-
-		// Verteilung der SuS (nur die beste Verteilung bleibt im Zustand K).
-		dynDaten.aktionZustandSpeichernK();
-
-		for (final @NotNull KursblockungAlgorithmusS algorithmus : algorithmenS) {
-			// Verteilung der SuS
-			algorithmus.berechne();
-
-			// Bessere SuS-Verteilung gefunden?
-			if (dynDaten.gibCompareZustandK_NW_KD_FW() > 0)
-				dynDaten.aktionZustandSpeichernK();
-		}
-
-		// Bestes Ergebnis laden (Zustand K).
-		dynDaten.aktionZustandLadenK();
-
-		// Gibt es einen neuen besten globalen Zustand?
-		if (dynDaten.gibCompareZustandG_NW_KD_FW() > 0)
-			dynDaten.aktionZustandSpeichernG();
+	/**
+	 * Liefert ein zufälliges Element aus der TOP-Liste (oder NULL);
+	 *
+	 * @return ein zufälliges Element aus der TOP-Liste (oder NULL);
+	 */
+	private KursblockungDynDaten _gibTopElementOrNull() {
+		if (_top.isEmpty())
+			return null;
+		int index = _random.nextInt(_top.size());
+		return _top.get(index);
 	}
 
 	/**

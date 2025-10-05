@@ -8,47 +8,38 @@ import jakarta.validation.constraints.NotNull;
 
 /**
  * Dieser Algorithmus arbeitet wie folgt:
- * <pre>
- * init: (1) Lade das derzeit beste Ergebnis.
- *
- * next: (1) Einige wenige Kurse werden verändert.
- *       (2) SuS mit "gewichteten bipartiten Matching" verteilen.
- *       (3) Verschlechterung ggf. rückgängig machen.
- *
- * </pre>
+ * <br> Die Kurse werden Fachgruppenweise verändert.
+ * <br> Die SuS werden mit "gewichteten bipartiten Matching" verteilt.
  *
  * @author Benjamin A. Bartsch
  */
-public final class KursblockungAlgorithmusPermanentKOptimiereBest extends KursblockungAlgorithmusPermanentK {
+public final class KursblockungAlgorithmusPermanentKSchuelervorschlagSingle extends KursblockungAlgorithmusPermanentK {
 
 	/**
-	 * Im Konstruktor wird das derzeit beste Ergebnis geladen.
+	 * Im Konstruktor wird ein zufälliger Anfangszustand erzeugt.
 	 *
 	 * @param random  Ein {@link Random}-Objekt zur Steuerung des Zufalls über einen Anfangs-Seed.
 	 * @param logger  Logger für Benutzerhinweise, Warnungen und Fehler.
 	 * @param input   Die dynamischen Blockungsdaten.
-	 * @param best    Der Zustand des derzeit besten Ergebnisses.
 	 */
-	public KursblockungAlgorithmusPermanentKOptimiereBest(final @NotNull Random random, final @NotNull Logger logger,
-			final @NotNull GostBlockungsdatenManager input, final KursblockungDynDaten best) {
+	public KursblockungAlgorithmusPermanentKSchuelervorschlagSingle(final @NotNull Random random, final @NotNull Logger logger,
+			final @NotNull GostBlockungsdatenManager input) {
 		super(random, logger, input);
 
-		if (best == null) {
-			// Erzeuge einen zufälligen Startzustand für Kurse und SuS.
-			dynDaten.aktionSchuelerAusAllenKursenEntfernen();
-			dynDaten.aktionKurseFreieZufaelligVerteilen();
-			dynDaten.aktionSchuelerVerteilenMitGewichtetenBipartitemMatching();
-		} else {
-			// Laden des bisher besten Ergebnisses.
-			dynDaten.aktionZustandLadenVon(best);
-		}
+		// Keine Kursverteilung, wenn es keine freien Kurse gibt.
+		if (dynDaten.gibKurseDieFreiSindAnzahl() == 0)
+			return;
 
+		// Erzeuge einen zufälligen Startzustand-K für Kurse und SuS.
+		dynDaten.aktionSchuelerAusAllenKursenEntfernen();
+		dynDaten.aktionKurseFreieZufaelligVerteilen();
+		dynDaten.aktionSchuelerVerteilenMitGewichtetenBipartitemMatching();
 		dynDaten.aktionZustandSpeichernK();
 	}
 
 	@Override
 	public @NotNull String toString() {
-		return "KursblockungAlgorithmusPermanentKOptimiereBest";
+		return "KursblockungAlgorithmusPermanentKSchuelervorschlagSingle";
 	}
 
 	@Override
@@ -58,11 +49,18 @@ public final class KursblockungAlgorithmusPermanentKOptimiereBest extends Kursbl
 		} while (System.currentTimeMillis() < zeitEnde);
 	}
 
+	/**
+	 * Ein bestimmer Schüler entscheidet, wie die Kurse neuverteilt werden.
+	 */
 	private void verteileKurse() {
-		// Verteile einige wenige Kurse neu (mindestens einer) und prüfe, ob das Ergebnis besser wurde.
 		do {
-			dynDaten.aktionSchuelerAusAllenKursenEntfernen(); // Vor Kursverteilung müssen SuS entfernt sein.
-			dynDaten.aktionKursVerteilenEinenZufaelligenFreien(); // Verteile einen zufälligen Kurs neu.
+			// Vor Kursverteilung müssen SuS entfernt sein.
+			dynDaten.aktionSchuelerAusAllenKursenEntfernen();
+
+		 // Ein bestimmter S. entscheidet über die Neuverteilung der Kurse.
+			boolean kurslagenveraenderung = dynDaten.aktionKurseVerteilenNachSchuelerwunschSingle();
+			if (!kurslagenveraenderung)
+				dynDaten.aktionKursVerteilenEinenZufaelligenFreien();
 
 			// Schülerverteilungsstrategie 1
 			dynDaten.aktionSchuelerVerteilenMitGewichtetenBipartitemMatching();
@@ -78,6 +76,7 @@ public final class KursblockungAlgorithmusPermanentKOptimiereBest extends Kursbl
 				dynDaten.aktionZustandSpeichernK();
 				return; // Speichern und aufhören, da besser.
 			}
+
 		} while (_random.nextBoolean());
 
 		// Verschlechterung rückgängig machen.

@@ -545,6 +545,7 @@ export class KursblockungDynDaten extends JavaObject {
 
 	private fehlerBeiStatistikErstellung(fachartArr : Array<KursblockungDynFachart>, susArr : Array<KursblockungDynSchueler>, input : GostBlockungsdatenManager) : void {
 		const nFacharten : number = fachartArr.length;
+		const wahlenMatrixFachart : Array<Array<number>> = [...Array(nFacharten)].map(e => Array(nFacharten).fill(0));
 		const bewertungMatrixFachart : Array<Array<number>> = [...Array(nFacharten)].map(e => Array(nFacharten).fill(0));
 		for (const s of susArr) {
 			const fa : Array<KursblockungDynFachart> = s.gibFacharten();
@@ -552,27 +553,25 @@ export class KursblockungDynDaten extends JavaObject {
 				const nr1 : number = fa[i1].gibNr();
 				for (let i2 : number = i1 + 1; i2 < fa.length; i2++) {
 					const nr2 : number = fa[i2].gibNr();
-					bewertungMatrixFachart[nr1][nr2]++;
-					bewertungMatrixFachart[nr2][nr1]++;
+					wahlenMatrixFachart[nr1][nr2]++;
+					wahlenMatrixFachart[nr2][nr1]++;
 				}
 			}
 		}
-		for (let i1 : number = 0; i1 < nFacharten; i1++) {
-			const kursAnz1 : number = fachartArr[i1].gibKurseMax();
-			const nr1 : number = fachartArr[i1].gibNr();
+		const cMALUS_KOLLISION : number = 10000;
+		const cMALUS_DIAGONALE : number = 1000;
+		for (let i1 : number = 0; i1 < nFacharten; i1++)
 			for (let i2 : number = 0; i2 < nFacharten; i2++) {
-				const kursAnz2 : number = fachartArr[i2].gibKurseMax();
+				const kurseVonFachart1 : number = fachartArr[i1].gibKurseMax();
+				const kurseVonFachart2 : number = fachartArr[i2].gibKurseMax();
+				const nr1 : number = fachartArr[i1].gibNr();
 				const nr2 : number = fachartArr[i2].gibNr();
-				if ((kursAnz1 === 0) || (kursAnz2 === 0)) {
-					bewertungMatrixFachart[nr1][nr2] = 0;
+				bewertungMatrixFachart[nr1][nr2] = (nr1 === nr2) ? cMALUS_DIAGONALE : 0;
+				if ((wahlenMatrixFachart[nr1][nr2] === 0) || (kurseVonFachart1 === 0) || (kurseVonFachart2 === 0))
 					continue;
-				}
-				const nenner : number = ((kursAnz1 + kursAnz2) - 2);
-				const faktor : number = (nenner === 0) ? 1000000 : (Math.trunc(100 / nenner));
-				bewertungMatrixFachart[nr1][nr2] *= faktor;
+				const nenner : number = kurseVonFachart1 * kurseVonFachart2;
+				bewertungMatrixFachart[nr1][nr2] += Math.trunc(cMALUS_KOLLISION / nenner);
 			}
-			bewertungMatrixFachart[nr1][nr1] += 10000000;
-		}
 		this._statistik.aktionInitialisiere(bewertungMatrixFachart, susArr.length, fachartArr.length, input.kursGetAnzahl());
 	}
 
@@ -916,7 +915,7 @@ export class KursblockungDynDaten extends JavaObject {
 	 *
 	 * @return Das Statistik-Objekt (für Anfragen zu Nichtwahlen, Kursdifferenzen, etc.).
 	 */
-	gibStatistik() : KursblockungDynStatistik {
+	public gibStatistik() : KursblockungDynStatistik {
 		return this._statistik;
 	}
 
@@ -936,7 +935,7 @@ export class KursblockungDynDaten extends JavaObject {
 	 *
 	 * @return Liefert die maximal erlaubte Anzahl an Schienen.
 	 */
-	gibSchienenAnzahl() : number {
+	public gibSchienenAnzahl() : number {
 		return this._schienenArr.length;
 	}
 
@@ -1075,22 +1074,81 @@ export class KursblockungDynDaten extends JavaObject {
 	}
 
 	/**
-	 * Debug Ausgaben. Nur für Testzwecke.
+	 * Liefert true, falls der Kurs in der Schiene ist.
+	 *
+	 * @param idKursDB Die Datenbank-ID des Kurses.
+	 * @param schieneDB Die Datenbank-ID der Schiene (1-indiziert!).
+	 * @return true, falls der Kurs in der Schiene ist.
 	 */
-	debug() : void {
-		this._logger.modifyIndent(+4);
-		this._logger.logLn("########## Schienen ##########");
-		for (let i : number = 0; i < this._schienenArr.length; i++) {
-			this._logger.logLn("Schiene " + (i + 1));
-			this._schienenArr[i].debug(false);
-		}
-		this._logger.logLn("########## Facharten ##########");
-		for (const fa of this._fachartArr) {
-			this._logger.logLn("Fachart " + fa + " --> " + fa.gibKursdifferenz());
-			fa.debug(this._schuelerArr);
-		}
-		this._logger.modifyIndent(-4);
-		this._statistik.debug("");
+	public gibIstKursInSchiene(idKursDB : number, schieneDB : number) : boolean {
+		for (const k of this._kursArr)
+			if (k.gibDatenbankID() === idKursDB)
+				if (k.gibIstInSchiene(schieneDB - 1))
+					return true;
+		return false;
+	}
+
+	/**
+	 * Liefert true, falls der Schüler im Kurs ist.
+	 *
+	 * @param idSchuelerDB Die Datenbank-ID des Schülers.
+	 * @param idKursDB Die Datenbank-ID des Kurses.
+	 * @return true, falls der Kurs in der Schiene ist.
+	 */
+	public gibIstSchuelerInKurs(idSchuelerDB : number, idKursDB : number) : boolean {
+		for (const k of this._kursArr)
+			if (k.gibDatenbankID() === idKursDB)
+				for (const s of this._schuelerArr)
+					if (s.gibDatenbankID() === idSchuelerDB)
+						if (s.gibIstInKurs(k))
+							return true;
+		return false;
+	}
+
+	/**
+	 * Liefert true, falls die übergebene Schiene nur LK-Kurse enthält (oder keine Kurse).
+	 *
+	 * @param schienenNr1indiziert  Die Schienen-Nummer
+	 * @return true, falls die übergebene Schiene nur LK-Kurse enthält (oder keine Kurse).
+	 */
+	public gibHatSchieneNurLK(schienenNr1indiziert : number) : boolean {
+		return this._schienenArr[schienenNr1indiziert - 1].gibHatNurLK();
+	}
+
+	/**
+	 * Liefert true, falls die übergebene Schiene keine LK-Kurse enthält.
+	 *
+	 * @param schienenNr1indiziert  Die Schienen-Nummer
+	 * @return true, falls die übergebene Schiene keine LK-Kurse enthält.
+	 */
+	public gibHatSchieneKeineLK(schienenNr1indiziert : number) : boolean {
+		return this._schienenArr[schienenNr1indiziert - 1].gibHatKeineLK();
+	}
+
+	/**
+	 * Liefert die Anzahl an SuS in dem Kurs (oder -1 falls der Kurs nicht existiert).
+	 *
+	 * @param idKursDB Die Datenbank-ID des Kurses.
+	 * @return die Anzahl an SuS in dem Kurs (oder -1 falls der Kurs nicht existiert).
+	 */
+	public gibKursgroesseDesKurses(idKursDB : number) : number {
+		for (const k of this._kursArr)
+			if (k.gibDatenbankID() === idKursDB)
+				return k.gibSchuelerAnzahl();
+		return -1;
+	}
+
+	/**
+	 * Liefert die Kursdifferenz der Fachart des übergebenen Kurses (oder -1 falls der Kurs nicht existiert)..
+	 *
+	 * @param idKursDB Die Datenbank-ID des Kurses.
+	 * @return die Kursdifferenz der Fachart des übergebenen Kurses (oder -1 falls der Kurs nicht existiert)..
+	 */
+	public gibKursdifferenzDesKurses(idKursDB : number) : number {
+		for (const k of this._kursArr)
+			if (k.gibDatenbankID() === idKursDB)
+				return k.gibFachart().gibKursdifferenz();
+		return -1;
 	}
 
 	/**
@@ -1232,6 +1290,17 @@ export class KursblockungDynDaten extends JavaObject {
 	}
 
 	/**
+	 * Verändert die Lage der Kurse einer zufälligen Fachgruppe komplett neu.
+	 */
+	public aktionKursVerteilenEineZufaelligeFachgruppe() : void {
+		if (this._fachartArr.length === 0)
+			return;
+		let fachgruppenIndex : number = this._random.nextInt(this._fachartArr.length);
+		for (const kurs of this._fachartArr[fachgruppenIndex].gibKurse())
+			kurs.aktionZufaelligVerteilen();
+	}
+
+	/**
 	 * Verteilt die SuS auf die jetzige Kurslage. Pro S. werden erst die Multikurse verteilt, dann werden die übrigen
 	 * Kurse mit Hilfe eines spezielle bipartiten Matching-Algorithmus verteilt. Sobald ein S. seine Nichtwahlen durch
 	 * eine Veränderung der Kurslage reduzieren könnte, wird die Kurslage verändert.
@@ -1250,10 +1319,35 @@ export class KursblockungDynDaten extends JavaObject {
 	}
 
 	/**
+	 * Gesucht wird der Schüler, der unzufrieden ist. Nach seinem Wunsch werden die Kurse neuverteilt.
+	 * <br> Kurzzeitig wird der S. Kursen hinzugefügt, am Ende aber wieder entfernt.
+	 *
+	 * @return TRUE, falls es zu einer Veränderung der Kurslage kam.
+	 */
+	aktionKurseVerteilenNachSchuelerwunschSingle() : boolean {
+		let kurslagenVeraenderung : boolean = false;
+		const perm : Array<number> = KursblockungStatic.gibPermutation(this._random, this._schuelerArr.length);
+		for (const p of perm) {
+			const schueler : KursblockungDynSchueler | null = this._schuelerArr[p];
+			schueler.aktionKurseVerteilenNurMultikurseZufaellig();
+			schueler.aktionKurseVerteilenMitBipartiteMatching();
+			let nichtwahlen : number = schueler.gibNichtwahlen();
+			schueler.aktionKurseAlleEntfernen();
+			if (nichtwahlen > 0) {
+				schueler.aktionKurseVerteilenNurMultikurseZufaellig();
+				kurslagenVeraenderung = kurslagenVeraenderung || schueler.aktionKurseVerteilenNachDeinemWunsch();
+				schueler.aktionKurseAlleEntfernen();
+				break;
+			}
+		}
+		return kurslagenVeraenderung;
+	}
+
+	/**
 	 * Verteilt die SuS auf die jetzige Kurslage. Pro S. werden erst die Multikurse verteilt, dann werden die übrigen
 	 * Kurse mit Hilfe eines bipartiten Matching-Algorithmus verteilt. Bereits belegte Facharten werden übersprungen.
 	 */
-	aktionSchuelerVerteilenMitBipartitemMatching() : void {
+	public aktionSchuelerVerteilenMitBipartitemMatching() : void {
 		const perm : Array<number> = KursblockungStatic.gibPermutation(this._random, this._schuelerArr.length);
 		for (const i of perm) {
 			const schueler : KursblockungDynSchueler | null = this._schuelerArr[i];
@@ -1267,7 +1361,7 @@ export class KursblockungDynDaten extends JavaObject {
 	 * Verteilt die SuS auf die jetzige Kurslage. Pro S. werden erst die Multikurse verteilt, dann werden die übrigen
 	 * Kurse mit Hilfe eines gewichteten Bipartiten-Matching-Algorithmus verteilt.
 	 */
-	aktionSchuelerVerteilenMitGewichtetenBipartitemMatching() : void {
+	public aktionSchuelerVerteilenMitGewichtetenBipartitemMatching() : void {
 		const perm : Array<number> = KursblockungStatic.gibPermutation(this._random, this._schuelerArr.length);
 		for (const i of perm) {
 			const schueler : KursblockungDynSchueler | null = this._schuelerArr[i];
@@ -1275,6 +1369,85 @@ export class KursblockungDynDaten extends JavaObject {
 			schueler.aktionKurseVerteilenNurFachartenMitEinemErlaubtenKurs();
 			schueler.aktionKurseVerteilenMitBipartiteMatchingGewichtetem();
 		}
+	}
+
+	/**
+	 * Setzt den S. wenn möglich in den übergebenen Kurs.
+	 *
+	 * @param idSchuelerDB  Die Datenbank-ID des S.
+	 * @param idKursDB      Die Datenbank-ID des Kurses.
+	 */
+	public aktionSchuelerSetzenInKurs(idSchuelerDB : number, idKursDB : number) : void {
+		for (const schueler of this._schuelerArr)
+			if (schueler.gibDatenbankID() === idSchuelerDB)
+				schueler.aktionKursSetzen(idKursDB);
+	}
+
+	/**
+	 * Entfernt den S. wenn möglich aus den übergebenen Kurs.
+	 *
+	 * @param idSchuelerDB  Die Datenbank-ID des S.
+	 * @param idKursDB      Die Datenbank-ID des Kurses.
+	 */
+	public aktionSchuelerEntfernenAusKurs(idSchuelerDB : number, idKursDB : number) : void {
+		for (const schueler of this._schuelerArr)
+			if (schueler.gibDatenbankID() === idSchuelerDB)
+				schueler.aktionKursEntfernen(idKursDB);
+	}
+
+	/**
+	 * Verschiebt den Kurs in die Schiene.
+	 *
+	 * @param idKursDB  Die Datenbank-ID des Kurses.
+	 * @param schieneDB Die Datenbank-ID der Schiene (1-indiziert!).
+	 */
+	public aktionSetzeKursInSchiene(idKursDB : number, schieneDB : number) : void {
+		for (const k of this._kursArr)
+			if (k.gibDatenbankID() === idKursDB)
+				k.aktionSetzeInSchiene(schieneDB - 1);
+	}
+
+	/**
+	 * Debug Ausgaben. Nur für Testzwecke.
+	 */
+	public debug() : void {
+		this._logger.modifyIndent(+4);
+		this._logger.logLn("########## Schienen ##########");
+		for (let i : number = 0; i < this._schienenArr.length; i++) {
+			this._logger.logLn("Schiene " + (i + 1));
+			this._schienenArr[i].debug(false);
+		}
+		this._logger.logLn("########## Facharten ##########");
+		for (const fa of this._fachartArr) {
+			this._logger.logLn("Fachart " + fa + " --> " + fa.gibKursdifferenz());
+			fa.debug(this._schuelerArr);
+		}
+		this._logger.modifyIndent(-4);
+		this._statistik.debug("");
+	}
+
+	/**
+	 * Debug Ausgaben (Schienen und Kurse)
+	 */
+	public printlnSchienenUndKurse() : void {
+		for (let i : number = 0; i < this._schienenArr.length; i++)
+			this._schienenArr[i].printlnKurse();
+	}
+
+	/**
+	 * Debug-Ausgabe der Schienen mit ihre Kursen und ihren SuS.
+	 */
+	public printlnSchienenUndKurseUndSchueler() : void {
+		for (let i : number = 0; i < this._schienenArr.length; i++)
+			this._schienenArr[i].printlnKurseUndSchueler(this._schuelerArr);
+	}
+
+	/**
+	 * Debug-Ausgabe aller Facharten mit den zugehörigen Kursen.
+	 */
+	public printlnFacharten() : void {
+		for (const fachart of this._fachartArr)
+			fachart.printlnKurse();
 	}
 
 	transpilerCanonicalName(): string {

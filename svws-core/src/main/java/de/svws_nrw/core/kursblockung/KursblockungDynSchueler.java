@@ -54,6 +54,9 @@ public class KursblockungDynSchueler {
 	/** Verbotene Kurse des Schülers. Diese dürfen nicht belegt werden. */
 	final @NotNull boolean[] kursGesperrt;
 
+	/** Soll der Schüler ignoriert werden beim Verteilen?  */
+	boolean regel16schuelerIgnorieren;
+
 	/**
 	 * Im Konstruktor wird {@code pSchueler} in ein Objekt dieser Klasse umgewandelt.
 	 *
@@ -81,6 +84,7 @@ public class KursblockungDynSchueler {
 		nichtwahlen = 0;
 		schieneBelegt = new boolean[pSchienenAnzahl];
 		kursGesperrt = new boolean[pKursAnzahl];
+		regel16schuelerIgnorieren = false;
 		matrix = new KursblockungMatrix(_random, 0, 0);
 	}
 
@@ -168,7 +172,7 @@ public class KursblockungDynSchueler {
 	 *
 	 * @return TRUE, falls dieser Schüler dem übergebenen Kurs zugeordnet ist.
 	 */
-	boolean gibIstInKurs(final KursblockungDynKurs kurs) {
+	public boolean gibIstInKurs(final KursblockungDynKurs kurs) {
 		for (final KursblockungDynKurs zugeordneterKurs : fachartZuKurs)
 			if (zugeordneterKurs == kurs)
 				return true;
@@ -708,6 +712,7 @@ public class KursblockungDynSchueler {
 	void regel_16_sperre() {
 		for (int i = 0; i < schieneBelegt.length; i++)
 			schieneBelegt[i] = true;
+		regel16schuelerIgnorieren = true;
 	}
 
 	private void aktionZustandLaden(final @NotNull KursblockungDynKurs[] wahl) {
@@ -747,4 +752,39 @@ public class KursblockungDynSchueler {
 		fachartZuKurs[fachartIndex] = null;
 	}
 
+	/**
+	 * Versucht den S. in den Kurs zu setzen. Entfernt ggf. einen anderen Kurs der selben Fachart dafür.
+	 *
+	 * @param idKursDB  Die Datenbank-ID des Kurses.
+	 */
+	public void aktionKursSetzen(final int idKursDB) {
+		for (int fachartIndex = 0; fachartIndex < fachartArr.length; fachartIndex++) {
+			final @NotNull KursblockungDynFachart fachart = fachartArr[fachartIndex];
+			for (final @NotNull KursblockungDynKurs kurs : fachart.gibKurse())
+				if (kurs.gibDatenbankID() == idKursDB)
+					if (kurs.gibIstErlaubtFuerSchueler(this)) {
+						final KursblockungDynKurs kursVorher = fachartZuKurs[fachartIndex];
+						if (kursVorher != null)
+							aktionKursEntfernen(fachartIndex, kursVorher);
+						aktionKursHinzufuegen(fachartIndex, kurs);
+					}
+		}
+	}
+
+	/**
+	 * Versucht den S. aus dem Kurs zu entfernen.
+	 *
+	 * @param idKursDB  Die Datenbank-ID des Kurses.
+	 */
+	public void aktionKursEntfernen(final int idKursDB) {
+		for (int fachartIndex = 0; fachartIndex < fachartArr.length; fachartIndex++) {
+			final @NotNull KursblockungDynFachart fachart = fachartArr[fachartIndex];
+			for (final @NotNull KursblockungDynKurs kurs : fachart.gibKurse())
+				if (kurs.gibDatenbankID() == idKursDB) {
+					final KursblockungDynKurs kursVorher = fachartZuKurs[fachartIndex];
+					if (kursVorher != null)
+						aktionKursEntfernen(fachartIndex, kursVorher);
+				}
+		}
+	}
 }

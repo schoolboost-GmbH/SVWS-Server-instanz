@@ -194,11 +194,20 @@ export class KursblockungDynStatistik extends JavaObject {
 	}
 
 	/**
+	 * Liefert Debug-Informationen in einer Zeile (ohne ausführliche Kursdifferenzen).
+	 *
+	 * @return Debug-Informationen in einer Zeile (ohne ausführliche Kursdifferenzen).
+	 */
+	debugRowKurz() : string {
+		return " RV = " + this.bewertungRegelverletzungen + ", NW = " + this.bewertungNichtwahlen + ", FW = " + this.bewertungFachartPaar + ", KDs = " + this.bewertungKursdifferenzenMaxIndex;
+	}
+
+	/**
 	 * Liefert die aktuelle Fachart-Paar-Bewertung.
 	 *
 	 * @return Die aktuelle Fachart-Paar-Bewertung.
 	 */
-	gibBewertungFachartPaar() : number {
+	public gibBewertungFachartPaar() : number {
 		return this.bewertungFachartPaar;
 	}
 
@@ -208,7 +217,7 @@ export class KursblockungDynStatistik extends JavaObject {
 	 *
 	 * @return Die aktuelle Anzahl an Nichtwahlen.
 	 */
-	gibBewertungNichtwahlen() : number {
+	public gibBewertungNichtwahlen() : number {
 		return this.bewertungNichtwahlen;
 	}
 
@@ -217,8 +226,17 @@ export class KursblockungDynStatistik extends JavaObject {
 	 *
 	 * @return Die aktuell größte Kursdifferenz (über alle Facharten).
 	 */
-	gibBewertungKursdifferenz() : number {
+	public gibBewertungKursdifferenz() : number {
 		return this.bewertungKursdifferenzenMaxIndex;
+	}
+
+	/**
+	 * Liefert die aktuell Anzahl an Regelverletzungen.
+	 *
+	 * @return die aktuell Anzahl an Regelverletzungen.
+	 */
+	public gibBewertungRegelverletzungen() : number {
+		return this.bewertungRegelverletzungen;
 	}
 
 	/**
@@ -469,6 +487,7 @@ export class KursblockungDynStatistik extends JavaObject {
 
 	/**
 	 * Fügt die Regel {@link GostKursblockungRegelTyp#KURS_VERBIETEN_MIT_KURS} zur Bewertung hinzu.
+	 * <br> Erhöht den Malus 'bewertungRegelverletzungen', falls die Kurse bereits gemeinsam in einer Schiene sind.
 	 *
 	 * @param kurs1  Der 1. Kurs der Regel.
 	 * @param kurs2  Der 2. Kurs der Regel.
@@ -478,13 +497,12 @@ export class KursblockungDynStatistik extends JavaObject {
 		const nr2 : number = kurs2.gibInternalID();
 		this.regelVerletzungKursMitKurs[nr1][nr2] += 1;
 		this.regelVerletzungKursMitKurs[nr2][nr1] += 1;
+		this.bewertungRegelverletzungen += KursblockungDynStatistik.gibAnzahlGemeinsamerSchienen(kurs1, kurs2);
 	}
 
 	/**
 	 * Fügt die Regel {@link GostKursblockungRegelTyp#KURS_ZUSAMMEN_MIT_KURS} zur Bewertung hinzu.
-	 *
-	 * Erhöht direkt den Malus 'bewertungRegelverletzungen', da die Kurse anfangs noch nicht zusammen sind.
-	 * Geht ein Kurs über 2 Schienen, der andere über 3, dann können diese maximal 2 Mal zusammen sein.
+	 * <br>Erhöht den Malus 'bewertungRegelverletzungen' um den Wert, der bis zur maximalen Schnittmenge fehlt.
 	 *
 	 * @param kurs1  Der 1. Kurs der Regel.
 	 * @param kurs2  Der 2. Kurs der Regel.
@@ -494,7 +512,17 @@ export class KursblockungDynStatistik extends JavaObject {
 		const nr2 : number = kurs2.gibInternalID();
 		this.regelVerletzungKursMitKurs[nr1][nr2] -= 1;
 		this.regelVerletzungKursMitKurs[nr2][nr1] -= 1;
-		this.bewertungRegelverletzungen += Math.max(kurs1.gibSchienenAnzahl(), kurs2.gibSchienenAnzahl());
+		let maximaleSchnittmenge : number = Math.max(kurs1.gibSchienenAnzahl(), kurs2.gibSchienenAnzahl());
+		this.bewertungRegelverletzungen += maximaleSchnittmenge - KursblockungDynStatistik.gibAnzahlGemeinsamerSchienen(kurs1, kurs2);
+	}
+
+	private static gibAnzahlGemeinsamerSchienen(kurs1 : KursblockungDynKurs, kurs2 : KursblockungDynKurs) : number {
+		let summe : number = 0;
+		for (let schienenNr1 of kurs1.gibSchienenLage())
+			for (let schienenNr2 of kurs2.gibSchienenLage())
+				if (schienenNr1 === schienenNr2)
+					summe++;
+		return summe;
 	}
 
 	/**

@@ -42,10 +42,17 @@ export class KursblockungAlgorithmusPermanentKSchuelervorschlag extends Kursbloc
 
 	private verteileKurseMitSchuelerwunsch() : void {
 		this.dynDaten.aktionSchuelerAusAllenKursenEntfernen();
-		this.dynDaten.aktionKurseVerteilenNachSchuelerwunsch();
+		let kurslagenveraenderung : boolean = this.dynDaten.aktionKurseVerteilenNachSchuelerwunsch();
+		if (!kurslagenveraenderung)
+			this.dynDaten.aktionKursVerteilenEinenZufaelligenFreien();
 		this.dynDaten.aktionSchuelerVerteilenMitGewichtetenBipartitemMatching();
-		const compare : number = this.dynDaten.gibCompareZustandK_NW_KD_FW();
-		if (compare >= 0) {
+		if (this.dynDaten.gibCompareZustandK_NW_KD_FW() > 0) {
+			this.dynDaten.aktionZustandSpeichernK();
+			return;
+		}
+		this.dynDaten.aktionSchuelerAusAllenKursenEntfernen();
+		this.dynDaten.aktionSchuelerVerteilenMitBipartitemMatching();
+		if (this.dynDaten.gibCompareZustandK_NW_KD_FW() > 0) {
 			this.dynDaten.aktionZustandSpeichernK();
 			return;
 		}
@@ -62,6 +69,10 @@ export class KursblockungAlgorithmusPermanentKSchuelervorschlag extends Kursbloc
 				return;
 			}
 		} while (this._random.nextBoolean());
+		this.dynDaten.aktionZustandLadenK();
+	}
+
+	public ladeBestMitSchuelerverteilung() : void {
 		this.dynDaten.aktionZustandLadenK();
 	}
 

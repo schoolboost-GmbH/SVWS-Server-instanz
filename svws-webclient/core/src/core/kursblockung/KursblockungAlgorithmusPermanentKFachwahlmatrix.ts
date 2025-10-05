@@ -17,8 +17,6 @@ export class KursblockungAlgorithmusPermanentKFachwahlmatrix extends Kursblockun
 	 */
 	public constructor(random : Random, logger : Logger, input : GostBlockungsdatenManager) {
 		super(random, logger, input);
-		if (this.dynDaten.gibKurseDieFreiSindAnzahl() === 0)
-			return;
 		this.dynDaten.aktionSchuelerAusAllenKursenEntfernen();
 		this.dynDaten.aktionKurseFreieZufaelligVerteilen();
 		this.dynDaten.aktionZustandSpeichernK();
@@ -43,6 +41,11 @@ export class KursblockungAlgorithmusPermanentKFachwahlmatrix extends Kursblockun
 			}
 		} while (this._random.nextBoolean());
 		this.dynDaten.aktionZustandLadenK();
+	}
+
+	public ladeBestMitSchuelerverteilung() : void {
+		this.dynDaten.aktionZustandLadenK();
+		this.dynDaten.aktionSchuelerVerteilenMitGewichtetenBipartitemMatching();
 	}
 
 	transpilerCanonicalName(): string {

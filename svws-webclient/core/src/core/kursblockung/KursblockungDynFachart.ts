@@ -2,14 +2,14 @@ import { JavaObject } from '../../java/lang/JavaObject';
 import { GostFach } from '../../core/data/gost/GostFach';
 import { KursblockungDynStatistik } from '../../core/kursblockung/KursblockungDynStatistik';
 import { KursblockungStatic } from '../../core/kursblockung/KursblockungStatic';
-import { Random } from '../../java/util/Random';
 import { KursblockungDynSchiene } from '../../core/kursblockung/KursblockungDynSchiene';
-import { ArrayUtils } from '../../core/utils/ArrayUtils';
 import { KursblockungDynKurs } from '../../core/kursblockung/KursblockungDynKurs';
-import { KursblockungDynSchueler } from '../../core/kursblockung/KursblockungDynSchueler';
-import { Class } from '../../java/lang/Class';
 import { DeveloperNotificationException } from '../../core/exceptions/DeveloperNotificationException';
 import { GostKursart } from '../../core/types/gost/GostKursart';
+import { Random } from '../../java/util/Random';
+import { ArrayUtils } from '../../core/utils/ArrayUtils';
+import { KursblockungDynSchueler } from '../../core/kursblockung/KursblockungDynSchueler';
+import { Class } from '../../java/lang/Class';
 
 export class KursblockungDynFachart extends JavaObject {
 
@@ -109,7 +109,7 @@ export class KursblockungDynFachart extends JavaObject {
 	 * Durch das Überschreiben dieser Methode, liefert dieses Objekt eine automatische String-Darstellung, beispielsweise 'D;LK'.
 	 */
 	public toString() : string {
-		return this.gostFach.kuerzel + ";" + this.gostKursart.kuerzel;
+		return this.gostFach.kuerzel + ";" + this.gostKursart.kuerzel + " / " + this.gostFach.id + ";" + this.gostKursart.id;
 	}
 
 	/**
@@ -366,10 +366,8 @@ export class KursblockungDynFachart extends JavaObject {
 	 * @param schiene  Die Schiene um die es geht.
 	 */
 	aktionSchieneWurdeHinzugefuegt(schiene : KursblockungDynSchiene) : void {
-		if (this._maxKurseProSchiene <= 0)
-			return;
 		this._schienenCounter[schiene.gibNr()]++;
-		if (this._schienenCounter[schiene.gibNr()] === this._maxKurseProSchiene)
+		if ((this._maxKurseProSchiene >= 1) && (this._schienenCounter[schiene.gibNr()] > this._maxKurseProSchiene))
 			this.statistik.regelverletzungVeraendern(+1);
 	}
 
@@ -379,9 +377,7 @@ export class KursblockungDynFachart extends JavaObject {
 	 * @param schiene  Die Schiene um die es geht.
 	 */
 	aktionSchieneWurdeEntfernt(schiene : KursblockungDynSchiene) : void {
-		if (this._maxKurseProSchiene <= 0)
-			return;
-		if (this._schienenCounter[schiene.gibNr()] === this._maxKurseProSchiene)
+		if ((this._maxKurseProSchiene >= 1) && (this._schienenCounter[schiene.gibNr()] > this._maxKurseProSchiene))
 			this.statistik.regelverletzungVeraendern(-1);
 		this._schienenCounter[schiene.gibNr()]--;
 	}
@@ -425,6 +421,20 @@ export class KursblockungDynFachart extends JavaObject {
 	 */
 	regel_18_maximalProSchiene(maximalProSchiene : number) : void {
 		this._maxKurseProSchiene = maximalProSchiene;
+		for (let schienenNr : number = 0; schienenNr < this._schienenCounter.length; schienenNr++)
+			if (this._schienenCounter[schienenNr] > this._maxKurseProSchiene)
+				this.statistik.regelverletzungVeraendern(this._schienenCounter[schienenNr] - this._maxKurseProSchiene);
+	}
+
+	/**
+	 *  Debug-Ausgabe aller Kurse mit ihren SuS-Anzahlen.
+	 */
+	public printlnKurse() : void {
+		console.log(JSON.stringify("" + this.toString()));
+		for (const kurs of this.kursArr) {
+			console.log(JSON.stringify("    " + kurs.toString()));
+		}
+		console.log();
 	}
 
 	transpilerCanonicalName(): string {

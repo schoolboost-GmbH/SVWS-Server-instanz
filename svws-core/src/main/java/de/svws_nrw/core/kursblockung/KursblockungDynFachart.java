@@ -94,7 +94,7 @@ public class KursblockungDynFachart {
 	 */
 	@Override
 	public @NotNull String toString() {
-		return gostFach.kuerzel + ";" + gostKursart.kuerzel;
+		return gostFach.kuerzel + ";" + gostKursart.kuerzel + " / " + gostFach.id + ";" + gostKursart.id;
 	}
 
 	// ########################################
@@ -173,8 +173,7 @@ public class KursblockungDynFachart {
 	 *
 	 * @return Das Array aller Kurse dieser Fachart.
 	 */
-	@NotNull
-	KursblockungDynKurs @NotNull [] gibKurse() {
+	@NotNull KursblockungDynKurs @NotNull [] gibKurse() {
 		return kursArr;
 	}
 
@@ -373,15 +372,11 @@ public class KursblockungDynFachart {
 	 * @param schiene  Die Schiene um die es geht.
 	 */
 	void aktionSchieneWurdeHinzugefuegt(final @NotNull KursblockungDynSchiene schiene) {
-		// Ist die Regel deaktiviert?
-		if (_maxKurseProSchiene <= 0)
-			return;
-
 		// Erhöhen der Anzahl pro Schiene.
 		_schienenCounter[schiene.gibNr()]++;
 
-		// Erste Überschreitung der Maximalgrenze?
-		if (_schienenCounter[schiene.gibNr()] == _maxKurseProSchiene)
+		// Ist die Regel aktiviert und wird sie mehr verletzt?
+		if ((_maxKurseProSchiene >= 1) && (_schienenCounter[schiene.gibNr()] > _maxKurseProSchiene))
 			statistik.regelverletzungVeraendern(+1);
 	}
 
@@ -391,12 +386,8 @@ public class KursblockungDynFachart {
 	 * @param schiene  Die Schiene um die es geht.
 	 */
 	void aktionSchieneWurdeEntfernt(final @NotNull KursblockungDynSchiene schiene) {
-		// Ist die Regel deaktiviert?
-		if (_maxKurseProSchiene <= 0)
-			return;
-
-		// Erste Unterschreitung der Maximalgrenze?
-		if (_schienenCounter[schiene.gibNr()] == _maxKurseProSchiene)
+		// Ist die Regel aktiviert und wird sie nun weniger verletzt?
+		if ((_maxKurseProSchiene >= 1) && (_schienenCounter[schiene.gibNr()] > _maxKurseProSchiene))
 			statistik.regelverletzungVeraendern(-1);
 
 		// Reduzieren der Anzahl pro Schiene.
@@ -442,6 +433,22 @@ public class KursblockungDynFachart {
 	 */
 	void regel_18_maximalProSchiene(final int maximalProSchiene) {
 		_maxKurseProSchiene = maximalProSchiene;
+
+		// Die Regelverletzungen (pro Schiene) müssen neuberechnet werden.
+		for (int schienenNr = 0; schienenNr < _schienenCounter.length; schienenNr++)
+			if (_schienenCounter[schienenNr] > _maxKurseProSchiene)
+				statistik.regelverletzungVeraendern(_schienenCounter[schienenNr] - _maxKurseProSchiene);
+	}
+
+	/**
+	 *  Debug-Ausgabe aller Kurse mit ihren SuS-Anzahlen.
+	 */
+	public void printlnKurse() {
+		System.out.println("" + toString());
+		for (final @NotNull KursblockungDynKurs kurs : kursArr) {
+			System.out.println("    " + kurs.toString());
+		}
+		System.out.println();
 	}
 
 }

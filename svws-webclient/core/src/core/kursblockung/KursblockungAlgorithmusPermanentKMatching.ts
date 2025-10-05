@@ -66,6 +66,10 @@ export class KursblockungAlgorithmusPermanentKMatching extends KursblockungAlgor
 		this.dynDaten.aktionZustandLadenK();
 	}
 
+	public ladeBestMitSchuelerverteilung() : void {
+		this.dynDaten.aktionZustandLadenK();
+	}
+
 	transpilerCanonicalName(): string {
 		return 'de.svws_nrw.core.kursblockung.KursblockungAlgorithmusPermanentKMatching';
 	}

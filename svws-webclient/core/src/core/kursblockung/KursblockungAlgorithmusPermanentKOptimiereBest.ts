@@ -1,4 +1,3 @@
-import { KursblockungAlgorithmusSSchnellW } from '../../core/kursblockung/KursblockungAlgorithmusSSchnellW';
 import { KursblockungAlgorithmusPermanentK, cast_de_svws_nrw_core_kursblockung_KursblockungAlgorithmusPermanentK } from '../../core/kursblockung/KursblockungAlgorithmusPermanentK';
 import { Random } from '../../java/util/Random';
 import { GostBlockungsdatenManager } from '../../core/utils/gost/GostBlockungsdatenManager';
@@ -8,11 +7,6 @@ import { Logger } from '../../core/logger/Logger';
 import { System } from '../../java/lang/System';
 
 export class KursblockungAlgorithmusPermanentKOptimiereBest extends KursblockungAlgorithmusPermanentK {
-
-	/**
-	 * Mit diesem Algorithmus werden die SuS verteilt.
-	 */
-	private readonly algoS : KursblockungAlgorithmusSSchnellW;
 
 
 	/**
@@ -25,18 +19,14 @@ export class KursblockungAlgorithmusPermanentKOptimiereBest extends Kursblockung
 	 */
 	public constructor(random : Random, logger : Logger, input : GostBlockungsdatenManager, best : KursblockungDynDaten | null) {
 		super(random, logger, input);
-		this.algoS = new KursblockungAlgorithmusSSchnellW(random, logger, super.gibDynDaten());
-		if (this.dynDaten.gibKurseDieFreiSindAnzahl() === 0)
-			return;
 		if (best === null) {
 			this.dynDaten.aktionSchuelerAusAllenKursenEntfernen();
 			this.dynDaten.aktionKurseFreieZufaelligVerteilen();
 			this.dynDaten.aktionSchuelerVerteilenMitGewichtetenBipartitemMatching();
-			this.dynDaten.aktionZustandSpeichernK();
 		} else {
 			this.dynDaten.aktionZustandLadenVon(best);
-			this.dynDaten.aktionZustandSpeichernK();
 		}
+		this.dynDaten.aktionZustandSpeichernK();
 	}
 
 	public toString() : string {
@@ -53,12 +43,22 @@ export class KursblockungAlgorithmusPermanentKOptimiereBest extends Kursblockung
 		do {
 			this.dynDaten.aktionSchuelerAusAllenKursenEntfernen();
 			this.dynDaten.aktionKursVerteilenEinenZufaelligenFreien();
-			this.algoS.berechne();
+			this.dynDaten.aktionSchuelerVerteilenMitGewichtetenBipartitemMatching();
+			if (this.dynDaten.gibCompareZustandK_NW_KD_FW() > 0) {
+				this.dynDaten.aktionZustandSpeichernK();
+				return;
+			}
+			this.dynDaten.aktionSchuelerAusAllenKursenEntfernen();
+			this.dynDaten.aktionSchuelerVerteilenMitBipartitemMatching();
 			if (this.dynDaten.gibCompareZustandK_NW_KD_FW() > 0) {
 				this.dynDaten.aktionZustandSpeichernK();
 				return;
 			}
 		} while (this._random.nextBoolean());
+		this.dynDaten.aktionZustandLadenK();
+	}
+
+	public ladeBestMitSchuelerverteilung() : void {
 		this.dynDaten.aktionZustandLadenK();
 	}
 

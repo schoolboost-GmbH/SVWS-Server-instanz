@@ -178,11 +178,24 @@ public class KursblockungDynStatistik {
 	}
 
 	/**
+	 * Liefert Debug-Informationen in einer Zeile (ohne ausführliche Kursdifferenzen).
+	 *
+	 * @return Debug-Informationen in einer Zeile (ohne ausführliche Kursdifferenzen).
+	 */
+	@NotNull
+	String debugRowKurz() {
+		return " RV = " + bewertungRegelverletzungen
+				+ ", NW = " + bewertungNichtwahlen
+				+ ", FW = " + bewertungFachartPaar
+				+ ", KDs = " + bewertungKursdifferenzenMaxIndex;
+	}
+
+	/**
 	 * Liefert die aktuelle Fachart-Paar-Bewertung.
 	 *
 	 * @return Die aktuelle Fachart-Paar-Bewertung.
 	 */
-	long gibBewertungFachartPaar() {
+	public long gibBewertungFachartPaar() {
 		return bewertungFachartPaar;
 	}
 
@@ -192,7 +205,7 @@ public class KursblockungDynStatistik {
 	 *
 	 * @return Die aktuelle Anzahl an Nichtwahlen.
 	 */
-	int gibBewertungNichtwahlen() {
+	public int gibBewertungNichtwahlen() {
 		return bewertungNichtwahlen;
 	}
 
@@ -201,8 +214,18 @@ public class KursblockungDynStatistik {
 	 *
 	 * @return Die aktuell größte Kursdifferenz (über alle Facharten).
 	 */
-	int gibBewertungKursdifferenz() {
+	public int gibBewertungKursdifferenz() {
 		return bewertungKursdifferenzenMaxIndex;
+	}
+
+
+	/**
+	 * Liefert die aktuell Anzahl an Regelverletzungen.
+	 *
+	 * @return die aktuell Anzahl an Regelverletzungen.
+	 */
+	public int gibBewertungRegelverletzungen() {
+		return bewertungRegelverletzungen;
 	}
 
 	/**
@@ -499,6 +522,7 @@ public class KursblockungDynStatistik {
 
 	/**
 	 * Fügt die Regel {@link GostKursblockungRegelTyp#KURS_VERBIETEN_MIT_KURS} zur Bewertung hinzu.
+	 * <br> Erhöht den Malus 'bewertungRegelverletzungen', falls die Kurse bereits gemeinsam in einer Schiene sind.
 	 *
 	 * @param kurs1  Der 1. Kurs der Regel.
 	 * @param kurs2  Der 2. Kurs der Regel.
@@ -508,13 +532,14 @@ public class KursblockungDynStatistik {
 		final int nr2 = kurs2.gibInternalID();
 		regelVerletzungKursMitKurs[nr1][nr2] += 1;
 		regelVerletzungKursMitKurs[nr2][nr1] += 1;
+
+		// Wenn die Kurse jetzt bereits in einer gemeinsamen Schiene sind, müssen die Regelverletzungen erhöht werden.
+		bewertungRegelverletzungen += gibAnzahlGemeinsamerSchienen(kurs1, kurs2);
 	}
 
 	/**
 	 * Fügt die Regel {@link GostKursblockungRegelTyp#KURS_ZUSAMMEN_MIT_KURS} zur Bewertung hinzu.
-	 *
-	 * Erhöht direkt den Malus 'bewertungRegelverletzungen', da die Kurse anfangs noch nicht zusammen sind.
-	 * Geht ein Kurs über 2 Schienen, der andere über 3, dann können diese maximal 2 Mal zusammen sein.
+	 * <br>Erhöht den Malus 'bewertungRegelverletzungen' um den Wert, der bis zur maximalen Schnittmenge fehlt.
 	 *
 	 * @param kurs1  Der 1. Kurs der Regel.
 	 * @param kurs2  Der 2. Kurs der Regel.
@@ -524,7 +549,18 @@ public class KursblockungDynStatistik {
 		final int nr2 = kurs2.gibInternalID();
 		regelVerletzungKursMitKurs[nr1][nr2] -= 1;
 		regelVerletzungKursMitKurs[nr2][nr1] -= 1;
-		bewertungRegelverletzungen += Math.max(kurs1.gibSchienenAnzahl(), kurs2.gibSchienenAnzahl());
+
+		int maximaleSchnittmenge = Math.max(kurs1.gibSchienenAnzahl(), kurs2.gibSchienenAnzahl());
+		bewertungRegelverletzungen += maximaleSchnittmenge - gibAnzahlGemeinsamerSchienen(kurs1, kurs2);
+	}
+
+	private static int gibAnzahlGemeinsamerSchienen(final @NotNull KursblockungDynKurs kurs1, final @NotNull KursblockungDynKurs kurs2) {
+		int summe = 0;
+		for (int schienenNr1 : kurs1.gibSchienenLage())
+			for (int schienenNr2 : kurs2.gibSchienenLage())
+				if (schienenNr1 == schienenNr2)
+					summe++;
+		return summe;
 	}
 
 	/**

@@ -141,7 +141,10 @@ public class KursblockungDynKurs {
 	 */
 	@Override
 	public @NotNull String toString() {
-		return "Kurs (dbID=" + databaseID + ", intiD=" + internalKursID + ")";
+		String sSchienen = "";
+		for (int i = 0; i < schienenLage.length; i++)
+			sSchienen = (i == 0 ? "" : ", ") + (schienenLage[i].gibNr() + 1);
+		return "Kurs (dbID=" + databaseID + ", iID=" + internalKursID + ", SuS = " + gibSchuelerAnzahl() + ", Schienen = " + sSchienen + ")";
 	}
 
 	// ########################################
@@ -309,6 +312,10 @@ public class KursblockungDynKurs {
 		if (schuelerFixiert[s.internalSchuelerID])
 			return true;
 
+		// Soll der Schüler ignoriert werden bei der Kursverteilung?
+		if (s.regel16schuelerIgnorieren)
+			return false;
+
 		// Ist noch Platz für nicht fixierte SuS?
 		return ((schuelerAnzahlMaximal - schuelerAnzahl - schuelerAnzahlDummy) > 0);
 	}
@@ -429,9 +436,11 @@ public class KursblockungDynKurs {
 
 	}
 
-	/** Setzt die Lage des Kurses auf die übergebene Schiene.
+	/**
+	 * Setzt die Lage des Kurses auf die übergebene Schiene.
 	 *
-	 * @param pSchiene Die Schiene (0-indiziert), in der der Kurs liegen soll. */
+	 * @param pSchiene Die Schiene (0-indiziert), in der der Kurs liegen soll.
+	 */
 	void aktionSetzeInSchiene(final int pSchiene) {
 
 		for (int iLage = schienenLageFixiert; iLage < schienenLage.length; iLage++) {
@@ -571,6 +580,15 @@ public class KursblockungDynKurs {
 	private void aktionSchienenLageEntfernen() {
 		for (final @NotNull KursblockungDynSchiene schiene : schienenLage)
 			schiene.aktionKursEntfernen(this);
+	}
+
+	/**
+	 * Liefert die des Faches des Kurses.
+	 *
+	 * @return die des Faches des Kurses.
+	 */
+	public long gibFachID() {
+		return fachart.gibFach().id;
 	}
 
 }

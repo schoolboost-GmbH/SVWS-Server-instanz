@@ -60,21 +60,27 @@ public final class KursblockungAlgorithmusPermanentKSchuelervorschlag extends Ku
 	}
 
 	private void verteileKurseMitSchuelerwunsch() {
-
-		// Entferne SuS, sonst dürfen Kurse nicht die Schiene wechseln.
+		// Alle SuS vor der Kursverteilung entfernen.
 		dynDaten.aktionSchuelerAusAllenKursenEntfernen();
 
-		// Verteile die Kurse nach dem Wunsch der SuS.
-		dynDaten.aktionKurseVerteilenNachSchuelerwunsch();
+		// Verteile SuS nach Schülerwunsch.
+		boolean kurslagenveraenderung = dynDaten.aktionKurseVerteilenNachSchuelerwunsch();
+		if (!kurslagenveraenderung)
+			dynDaten.aktionKursVerteilenEinenZufaelligenFreien();
 
-		// SuS verteilen
+		// Schülerverteilungsstrategie 1
 		dynDaten.aktionSchuelerVerteilenMitGewichtetenBipartitemMatching();
-
-		// Besser oder gleich? --> Speichern.
-		final int compare = dynDaten.gibCompareZustandK_NW_KD_FW();
-		if (compare >= 0) {
+		if (dynDaten.gibCompareZustandK_NW_KD_FW() > 0) {
 			dynDaten.aktionZustandSpeichernK();
-			return;
+			return; // Speichern und aufhören, da besser.
+		}
+
+		// Schülerverteilungsstrategie 2
+		dynDaten.aktionSchuelerAusAllenKursenEntfernen();
+		dynDaten.aktionSchuelerVerteilenMitBipartitemMatching();
+		if (dynDaten.gibCompareZustandK_NW_KD_FW() > 0) {
+			dynDaten.aktionZustandSpeichernK();
+			return; // Speichern und aufhören, da besser.
 		}
 
 		// Verschlechterung rückgängig machen.
@@ -101,6 +107,11 @@ public final class KursblockungAlgorithmusPermanentKSchuelervorschlag extends Ku
 		} while (_random.nextBoolean());
 
 		// Verschlechterung rückgängig machen.
+		dynDaten.aktionZustandLadenK();
+	}
+
+	@Override
+	public void ladeBestMitSchuelerverteilung() {
 		dynDaten.aktionZustandLadenK();
 	}
 

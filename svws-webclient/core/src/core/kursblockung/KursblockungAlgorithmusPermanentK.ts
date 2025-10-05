@@ -54,6 +54,11 @@ export abstract class KursblockungAlgorithmusPermanentK extends JavaObject {
 		return this.dynDaten;
 	}
 
+	/**
+	 * Lädt das beste Blockungsergebnis und verteilt SuS, falls diese aufgrund des Algorithmus zuvor nicht verteilt wurden.
+	 */
+	public abstract ladeBestMitSchuelerverteilung() : void;
+
 	transpilerCanonicalName(): string {
 		return 'de.svws_nrw.core.kursblockung.KursblockungAlgorithmusPermanentK';
 	}

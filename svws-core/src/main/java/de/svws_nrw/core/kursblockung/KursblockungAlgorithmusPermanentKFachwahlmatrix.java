@@ -32,10 +32,6 @@ public final class KursblockungAlgorithmusPermanentKFachwahlmatrix extends Kursb
 			final @NotNull GostBlockungsdatenManager input) {
 		super(random, logger, input);
 
-		// Keine Kursverteilung, wenn es keine freien Kurse gibt.
-		if (dynDaten.gibKurseDieFreiSindAnzahl() == 0)
-			return;
-
 		// Erzeuge einen zufälligen Startzustand für Kurse. SuS werden bei diesem Algorithmus nicht verteilt.
 		dynDaten.aktionSchuelerAusAllenKursenEntfernen();
 		dynDaten.aktionKurseFreieZufaelligVerteilen();
@@ -71,6 +67,12 @@ public final class KursblockungAlgorithmusPermanentKFachwahlmatrix extends Kursb
 
 		// Verschlechterung rückgängig machen.
 		dynDaten.aktionZustandLadenK();
+	}
+
+	@Override
+	public void ladeBestMitSchuelerverteilung() {
+		dynDaten.aktionZustandLadenK();
+		dynDaten.aktionSchuelerVerteilenMitGewichtetenBipartitemMatching();
 	}
 
 }

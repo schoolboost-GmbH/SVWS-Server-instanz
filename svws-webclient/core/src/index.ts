@@ -682,11 +682,13 @@ export { KursblockungAlgorithmusKSchnellW } from './core/kursblockung/Kursblocku
 export { KursblockungAlgorithmusKSchuelervorschlag } from './core/kursblockung/KursblockungAlgorithmusKSchuelervorschlag';
 export { KursblockungAlgorithmusPermanent } from './core/kursblockung/KursblockungAlgorithmusPermanent';
 export { KursblockungAlgorithmusPermanentK } from './core/kursblockung/KursblockungAlgorithmusPermanentK';
+export { KursblockungAlgorithmusPermanentKFachgruppe } from './core/kursblockung/KursblockungAlgorithmusPermanentKFachgruppe';
 export { KursblockungAlgorithmusPermanentKFachwahlmatrix } from './core/kursblockung/KursblockungAlgorithmusPermanentKFachwahlmatrix';
 export { KursblockungAlgorithmusPermanentKMatching } from './core/kursblockung/KursblockungAlgorithmusPermanentKMatching';
 export { KursblockungAlgorithmusPermanentKOptimiereBest } from './core/kursblockung/KursblockungAlgorithmusPermanentKOptimiereBest';
 export { KursblockungAlgorithmusPermanentKSchnellW } from './core/kursblockung/KursblockungAlgorithmusPermanentKSchnellW';
 export { KursblockungAlgorithmusPermanentKSchuelervorschlag } from './core/kursblockung/KursblockungAlgorithmusPermanentKSchuelervorschlag';
+export { KursblockungAlgorithmusPermanentKSchuelervorschlagSingle } from './core/kursblockung/KursblockungAlgorithmusPermanentKSchuelervorschlagSingle';
 export { KursblockungAlgorithmusS } from './core/kursblockung/KursblockungAlgorithmusS';
 export { KursblockungAlgorithmusSMatching } from './core/kursblockung/KursblockungAlgorithmusSMatching';
 export { KursblockungAlgorithmusSMatchingW } from './core/kursblockung/KursblockungAlgorithmusSMatchingW';

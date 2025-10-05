@@ -166,7 +166,10 @@ export class KursblockungDynKurs extends JavaObject {
 	 * @return die String-Repräsentation des Kurses
 	 */
 	public toString() : string {
-		return "Kurs (dbID=" + this.databaseID + ", intiD=" + this.internalKursID + ")";
+		let sSchienen : string | null = "";
+		for (let i : number = 0; i < this.schienenLage.length; i++)
+			sSchienen = (i === 0 ? "" : ", ") + (this.schienenLage[i].gibNr() + 1);
+		return "Kurs (dbID=" + this.databaseID + ", iID=" + this.internalKursID + ", SuS = " + this.gibSchuelerAnzahl() + ", Schienen = " + sSchienen + ")";
 	}
 
 	/**
@@ -331,6 +334,8 @@ export class KursblockungDynKurs extends JavaObject {
 			return false;
 		if (this.schuelerFixiert[s.internalSchuelerID])
 			return true;
+		if (s.regel16schuelerIgnorieren)
+			return false;
 		return ((this.schuelerAnzahlMaximal - this.schuelerAnzahl - this.schuelerAnzahlDummy) > 0);
 	}
 
@@ -451,7 +456,7 @@ export class KursblockungDynKurs extends JavaObject {
 	}
 
 	/**
-	 *Setzt die Lage des Kurses auf die übergebene Schiene.
+	 * Setzt die Lage des Kurses auf die übergebene Schiene.
 	 *
 	 * @param pSchiene Die Schiene (0-indiziert), in der der Kurs liegen soll.
 	 */
@@ -569,6 +574,15 @@ export class KursblockungDynKurs extends JavaObject {
 	private aktionSchienenLageEntfernen() : void {
 		for (const schiene of this.schienenLage)
 			schiene.aktionKursEntfernen(this);
+	}
+
+	/**
+	 * Liefert die des Faches des Kurses.
+	 *
+	 * @return die des Faches des Kurses.
+	 */
+	public gibFachID() : number {
+		return this.fachart.gibFach().id;
 	}
 
 	transpilerCanonicalName(): string {

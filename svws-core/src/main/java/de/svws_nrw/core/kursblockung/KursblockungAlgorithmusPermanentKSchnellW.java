@@ -79,4 +79,9 @@ public final class KursblockungAlgorithmusPermanentKSchnellW extends Kursblockun
 		dynDaten.aktionZustandLadenK();
 	}
 
+	@Override
+	public void ladeBestMitSchuelerverteilung() {
+		dynDaten.aktionZustandLadenK();
+	}
+
 }

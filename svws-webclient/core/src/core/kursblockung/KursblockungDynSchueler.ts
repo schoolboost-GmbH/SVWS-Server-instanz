@@ -2,7 +2,7 @@ import { JavaObject } from '../../java/lang/JavaObject';
 import { KursblockungDynFachart } from '../../core/kursblockung/KursblockungDynFachart';
 import { KursblockungDynStatistik } from '../../core/kursblockung/KursblockungDynStatistik';
 import { KursblockungStatic } from '../../core/kursblockung/KursblockungStatic';
-import { KursblockungDynKurs } from '../../core/kursblockung/KursblockungDynKurs';
+import { KursblockungDynKurs, cast_de_svws_nrw_core_kursblockung_KursblockungDynKurs } from '../../core/kursblockung/KursblockungDynKurs';
 import { DeveloperNotificationException } from '../../core/exceptions/DeveloperNotificationException';
 import { Logger } from '../../core/logger/Logger';
 import { System } from '../../java/lang/System';
@@ -80,6 +80,11 @@ export class KursblockungDynSchueler extends JavaObject {
 	 */
 	readonly kursGesperrt : Array<boolean>;
 
+	/**
+	 * Soll der Schüler ignoriert werden beim Verteilen?
+	 */
+	regel16schuelerIgnorieren : boolean = false;
+
 
 	/**
 	 * Im Konstruktor wird {@code pSchueler} in ein Objekt dieser Klasse umgewandelt.
@@ -108,6 +113,7 @@ export class KursblockungDynSchueler extends JavaObject {
 		this.nichtwahlen = 0;
 		this.schieneBelegt = Array(pSchienenAnzahl).fill(false);
 		this.kursGesperrt = Array(pKursAnzahl).fill(false);
+		this.regel16schuelerIgnorieren = false;
 		this.matrix = new KursblockungMatrix(this._random, 0, 0);
 	}
 
@@ -185,7 +191,7 @@ export class KursblockungDynSchueler extends JavaObject {
 	 *
 	 * @return TRUE, falls dieser Schüler dem übergebenen Kurs zugeordnet ist.
 	 */
-	gibIstInKurs(kurs : KursblockungDynKurs | null) : boolean {
+	public gibIstInKurs(kurs : KursblockungDynKurs | null) : boolean {
 		for (const zugeordneterKurs of this.fachartZuKurs)
 			if (zugeordneterKurs as unknown === kurs as unknown)
 				return true;
@@ -603,6 +609,7 @@ export class KursblockungDynSchueler extends JavaObject {
 	regel_16_sperre() : void {
 		for (let i : number = 0; i < this.schieneBelegt.length; i++)
 			this.schieneBelegt[i] = true;
+		this.regel16schuelerIgnorieren = true;
 	}
 
 	private aktionZustandLaden(wahl : Array<KursblockungDynKurs | null>) : void {
@@ -629,15 +636,61 @@ export class KursblockungDynSchueler extends JavaObject {
 		this.fachartZuKurs[fachartIndex] = kurs;
 	}
 
-	private aktionKursEntfernen(fachartIndex : number, kurs : KursblockungDynKurs) : void {
-		kurs.aktionSchuelerEntfernen(this.internalSchuelerID);
-		this.statistik.aktionNichtwahlenVeraendern(+1);
-		this.nichtwahlen++;
-		for (const nr of kurs.gibSchienenLage()) {
-			DeveloperNotificationException.ifTrue("FEHLER: Kurs ist gar nicht in Schiene ! " + this.representation, !this.schieneBelegt[nr]);
-			this.schieneBelegt[nr] = false;
+	public aktionKursEntfernen(fachartIndex : number, kurs : KursblockungDynKurs) : void;
+
+	/**
+	 * Versucht den S. aus dem Kurs zu entfernen.
+	 *
+	 * @param idKursDB  Die Datenbank-ID des Kurses.
+	 */
+	public aktionKursEntfernen(idKursDB : number) : void;
+
+	/**
+	 * Implementation for method overloads of 'aktionKursEntfernen'
+	 */
+	public aktionKursEntfernen(__param0 : number, __param1? : KursblockungDynKurs) : void {
+		if (((__param0 !== undefined) && typeof __param0 === "number") && ((__param1 !== undefined) && ((__param1 instanceof JavaObject) && (__param1.isTranspiledInstanceOf('de.svws_nrw.core.kursblockung.KursblockungDynKurs'))))) {
+			const fachartIndex : number = __param0 as number;
+			const kurs : KursblockungDynKurs = cast_de_svws_nrw_core_kursblockung_KursblockungDynKurs(__param1);
+			kurs.aktionSchuelerEntfernen(this.internalSchuelerID);
+			this.statistik.aktionNichtwahlenVeraendern(+1);
+			this.nichtwahlen++;
+			for (const nr of kurs.gibSchienenLage()) {
+				DeveloperNotificationException.ifTrue("FEHLER: Kurs ist gar nicht in Schiene ! " + this.representation, !this.schieneBelegt[nr]);
+				this.schieneBelegt[nr] = false;
+			}
+			this.fachartZuKurs[fachartIndex] = null;
+		} else if (((__param0 !== undefined) && typeof __param0 === "number") && (__param1 === undefined)) {
+			const idKursDB : number = __param0 as number;
+			for (let fachartIndex : number = 0; fachartIndex < this.fachartArr.length; fachartIndex++) {
+				const fachart : KursblockungDynFachart = this.fachartArr[fachartIndex];
+				for (const kurs of fachart.gibKurse())
+					if (kurs.gibDatenbankID() === idKursDB) {
+						const kursVorher : KursblockungDynKurs | null = this.fachartZuKurs[fachartIndex];
+						if (kursVorher !== null)
+							this.aktionKursEntfernen(fachartIndex, kursVorher);
+					}
+			}
+		} else throw new Error('invalid method overload');
+	}
+
+	/**
+	 * Versucht den S. in den Kurs zu setzen. Entfernt ggf. einen anderen Kurs der selben Fachart dafür.
+	 *
+	 * @param idKursDB  Die Datenbank-ID des Kurses.
+	 */
+	public aktionKursSetzen(idKursDB : number) : void {
+		for (let fachartIndex : number = 0; fachartIndex < this.fachartArr.length; fachartIndex++) {
+			const fachart : KursblockungDynFachart = this.fachartArr[fachartIndex];
+			for (const kurs of fachart.gibKurse())
+				if (kurs.gibDatenbankID() === idKursDB)
+					if (kurs.gibIstErlaubtFuerSchueler(this)) {
+						const kursVorher : KursblockungDynKurs | null = this.fachartZuKurs[fachartIndex];
+						if (kursVorher !== null)
+							this.aktionKursEntfernen(fachartIndex, kursVorher);
+						this.aktionKursHinzufuegen(fachartIndex, kurs);
+					}
 		}
-		this.fachartZuKurs[fachartIndex] = null;
 	}
 
 	transpilerCanonicalName(): string {

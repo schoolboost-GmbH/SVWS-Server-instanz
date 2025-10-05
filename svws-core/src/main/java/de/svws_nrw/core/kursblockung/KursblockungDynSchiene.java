@@ -6,6 +6,7 @@ import de.svws_nrw.core.adt.set.AVLSet;
 import de.svws_nrw.core.exceptions.DeveloperNotificationException;
 import de.svws_nrw.core.logger.LogLevel;
 import de.svws_nrw.core.logger.Logger;
+import de.svws_nrw.core.types.gost.GostKursart;
 import jakarta.validation.constraints.NotNull;
 
 /**
@@ -116,21 +117,6 @@ public class KursblockungDynSchiene {
 	}
 
 	/**
-	 * Debug-Ausgabe. Nur für Testzwecke.
-	 *
-	 * @param nurMultikurse Falls TRUE, werden nur Multikurse angezeigt.
-	 */
-	public void debug(final boolean nurMultikurse) {
-		logger.modifyIndent(+4);
-		for (final @NotNull KursblockungDynKurs k : kursMap.values()) {
-			if ((nurMultikurse) && (k.gibSchienenAnzahl() < 2))
-				continue;
-			logger.logLn("    " + k.toString());
-		}
-		logger.modifyIndent(-4);
-	}
-
-	/**
 	 * Liefert die Anzahl an Kursen mit gleicher Fachart in dieser Schiene. Diese Anzahl wird als Bewertungskriterium
 	 * für die Blockung verwendet.
 	 *
@@ -148,4 +134,66 @@ public class KursblockungDynSchiene {
 		return summe;
 	}
 
+	/**
+	 * Debug-Ausgabe. Nur für Testzwecke.
+	 *
+	 * @param nurMultikurse Falls TRUE, werden nur Multikurse angezeigt.
+	 */
+	public void debug(final boolean nurMultikurse) {
+		logger.modifyIndent(+4);
+		for (final @NotNull KursblockungDynKurs k : kursMap.values()) {
+			if ((nurMultikurse) && (k.gibSchienenAnzahl() < 2))
+				continue;
+			logger.logLn("    " + k.toString());
+		}
+		logger.modifyIndent(-4);
+	}
+
+	/**
+	 * Ausgabe der Kurse dieser Schiene (4 eingerückt).
+	 */
+	public void printlnKurse() {
+		System.out.println("Schiene " + (nr + 1));
+		for (final @NotNull KursblockungDynKurs k : kursMap.values())
+			System.out.println("    ID " + k.gibDatenbankID() + ", " + k.gibFachart());
+	}
+
+	/**
+	 * Ausgabe der Kurse (4 eingerückt) dieser Schiene zusammen mit den SuS (8 eingerückt) der Kurse.
+	 *
+	 * @param _schuelerArr  Die Menge alle SuS.
+	 */
+	public void printlnKurseUndSchueler(final @NotNull KursblockungDynSchueler @NotNull [] _schuelerArr) {
+		System.out.println("Schiene " + (nr + 1));
+		for (final @NotNull KursblockungDynKurs k : kursMap.values()) {
+			System.out.println("    ID " + k.gibDatenbankID() + ", " + k.gibFachart() + ", Fach-ID=" + k.gibFachID());
+			for (final @NotNull KursblockungDynSchueler s : _schuelerArr)
+				if (s.gibIstInKurs(k))
+					System.out.println("        ID " + s.gibDatenbankID() + ", " + s.gibRepresentation());
+		}
+	}
+
+	/**
+	 * Liefert true, falls in der Schiene nur Kurse der Kursart LK sind (oder keine Kurse).
+	 *
+	 * @return true, falls in der Schiene nur Kurse der Kursart LK sind (oder keine Kurse).
+	 */
+	public boolean gibHatNurLK() {
+		for (final @NotNull KursblockungDynKurs k : kursMap.values())
+			if (k.gibFachart().gibKursart() != GostKursart.LK)
+				return false;
+		return true;
+	}
+
+	/**
+	 * Liefert true, falls in der Schiene keine Kurse der Kursart LK sind.
+	 *
+	 * @return true, falls in der Schiene keine Kurse der Kursart LK sind.
+	 */
+	public boolean gibHatKeineLK() {
+		for (final @NotNull KursblockungDynKurs k : kursMap.values())
+			if (k.gibFachart().gibKursart() == GostKursart.LK)
+				return false;
+		return true;
+	}
 }

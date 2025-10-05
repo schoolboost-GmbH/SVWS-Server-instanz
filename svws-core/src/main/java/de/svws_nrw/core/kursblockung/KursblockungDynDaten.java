@@ -1,12 +1,12 @@
 package de.svws_nrw.core.kursblockung;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.Set;
-import java.util.ArrayList;
 
 import de.svws_nrw.asd.data.schueler.Schueler;
 import de.svws_nrw.core.adt.LongArrayKey;
@@ -645,41 +645,40 @@ public class KursblockungDynDaten {
 	private void fehlerBeiStatistikErstellung(final @NotNull KursblockungDynFachart @NotNull [] fachartArr,
 			final @NotNull KursblockungDynSchueler @NotNull [] susArr, final @NotNull GostBlockungsdatenManager input) {
 		final int nFacharten = fachartArr.length;
+
+		final @NotNull int @NotNull [][] wahlenMatrixFachart = new int[nFacharten][nFacharten];
 		final @NotNull int @NotNull [][] bewertungMatrixFachart = new int[nFacharten][nFacharten];
 
-		// Zähle alle Fachart-Paare, die SuS gewählt haben.
+		// Berechne "wahlenMatrixFachart", d.h. zähle alle Fachart-Paare, die SuS gewählt haben.
 		for (final @NotNull KursblockungDynSchueler s : susArr) {
 			final @NotNull KursblockungDynFachart @NotNull [] fa = s.gibFacharten();
 			for (int i1 = 0; i1 < fa.length; i1++) {
 				final int nr1 = fa[i1].gibNr();
 				for (int i2 = i1 + 1; i2 < fa.length; i2++) {
 					final int nr2 = fa[i2].gibNr();
-					bewertungMatrixFachart[nr1][nr2]++;
-					bewertungMatrixFachart[nr2][nr1]++;
+					wahlenMatrixFachart[nr1][nr2]++;
+					wahlenMatrixFachart[nr2][nr1]++;
 				}
 			}
 		}
 
-		// Der Malus ist relativ zur Anzahl an Kursen.
-		// Beispiel: 7 SuS haben die Fachkombination PH-GK/CH-GK gewählt. PH-GK gibt es 2 Kurse. CH-GK gibt es 1 Kurs.
-		// Dann ist der Malus = 7 * 100 / (2 + 1 - 2)
-		for (int i1 = 0; i1 < nFacharten; i1++) {
-			final int kursAnz1 = fachartArr[i1].gibKurseMax();
-			final int nr1 = fachartArr[i1].gibNr();
+		// Berechne "bewertungMatrixFachart".
+		final int cMALUS_KOLLISION = 10000;
+		final int cMALUS_DIAGONALE = 1000;
+		for (int i1 = 0; i1 < nFacharten; i1++)
 			for (int i2 = 0; i2 < nFacharten; i2++) {
-				final int kursAnz2 = fachartArr[i2].gibKurseMax();
+				final int kurseVonFachart1 = fachartArr[i1].gibKurseMax();
+				final int kurseVonFachart2 = fachartArr[i2].gibKurseMax();
+				final int nr1 = fachartArr[i1].gibNr();
 				final int nr2 = fachartArr[i2].gibNr();
-				if ((kursAnz1 == 0) || (kursAnz2 == 0)) {
-					bewertungMatrixFachart[nr1][nr2] = 0;
+				bewertungMatrixFachart[nr1][nr2] = (nr1 == nr2) ? cMALUS_DIAGONALE : 0;
+				if ((wahlenMatrixFachart[nr1][nr2] == 0) || (kurseVonFachart1 == 0) || (kurseVonFachart2 == 0))
 					continue;
-				}
-				final int nenner = ((kursAnz1 + kursAnz2) - 2);
-				final int faktor = (nenner == 0) ? 1000000 : (100 / nenner);
-				bewertungMatrixFachart[nr1][nr2] *= faktor;
+				// Ab hier: Es gibt von beiden Facharten mindestens einen Kurs
+				//          und es gibt mindestens einen S. der beide Fächer gewählt hat.
+				final int nenner = kurseVonFachart1 * kurseVonFachart2; // mindestens 1
+				bewertungMatrixFachart[nr1][nr2] += cMALUS_KOLLISION / nenner;
 			}
-			// Gleiche Kurs-Arten in einer Schiene --> großer Malus
-			bewertungMatrixFachart[nr1][nr1] += 10000000;
-		}
 
 		_statistik.aktionInitialisiere(bewertungMatrixFachart, susArr.length, fachartArr.length, input.kursGetAnzahl());
 	}
@@ -894,6 +893,7 @@ public class KursblockungDynDaten {
 			final long kursID = regel9.parameter.get(0);
 			final int susAnzahl = regel9.parameter.get(1).intValue();
 			final @NotNull KursblockungDynKurs kurs = gibKurs(kursID);
+
 			for (int i = 0; i < susAnzahl; i++)
 				kurs.aktionSchuelerDummyHinzufuegen();
 		}
@@ -1123,8 +1123,7 @@ public class KursblockungDynDaten {
 	 *
 	 * @return Das Statistik-Objekt (für Anfragen zu Nichtwahlen, Kursdifferenzen, etc.).
 	 */
-	@NotNull
-	KursblockungDynStatistik gibStatistik() {
+	public @NotNull KursblockungDynStatistik gibStatistik() {
 		return _statistik;
 	}
 
@@ -1144,7 +1143,7 @@ public class KursblockungDynDaten {
 	 *
 	 * @return Liefert die maximal erlaubte Anzahl an Schienen.
 	 */
-	int gibSchienenAnzahl() {
+	public int gibSchienenAnzahl() {
 		return _schienenArr.length;
 	}
 
@@ -1292,26 +1291,80 @@ public class KursblockungDynDaten {
 	}
 
 	/**
-	 * Debug Ausgaben. Nur für Testzwecke.
+	 * Liefert true, falls der Kurs in der Schiene ist.
+	 *
+	 * @param idKursDB Die Datenbank-ID des Kurses.
+	 * @param schieneDB Die Datenbank-ID der Schiene (1-indiziert!).
+	 * @return true, falls der Kurs in der Schiene ist.
 	 */
-	void debug() {
-		_logger.modifyIndent(+4);
+	public boolean gibIstKursInSchiene(final int idKursDB, final int schieneDB) {
+		for (final @NotNull KursblockungDynKurs k : _kursArr)
+			if (k.gibDatenbankID() == idKursDB)
+				if (k.gibIstInSchiene(schieneDB - 1))
+					return true;
+		return false;
+	}
+	/**
+	 * Liefert true, falls der Schüler im Kurs ist.
+	 *
+	 * @param idSchuelerDB Die Datenbank-ID des Schülers.
+	 * @param idKursDB Die Datenbank-ID des Kurses.
+	 * @return true, falls der Kurs in der Schiene ist.
+	 */
+	public boolean gibIstSchuelerInKurs(final int idSchuelerDB, final int idKursDB) {
+		for (final @NotNull KursblockungDynKurs k : _kursArr)
+			if (k.gibDatenbankID() == idKursDB)
+				for (final @NotNull KursblockungDynSchueler s : _schuelerArr)
+					if (s.gibDatenbankID() == idSchuelerDB)
+						if (s.gibIstInKurs(k))
+							return true;
+		return false;
+	}
 
-		_logger.logLn("########## Schienen ##########");
-		for (int i = 0; i < _schienenArr.length; i++) {
-			_logger.logLn("Schiene " + (i + 1));
-			_schienenArr[i].debug(false);
-		}
+	/**
+	 * Liefert true, falls die übergebene Schiene nur LK-Kurse enthält (oder keine Kurse).
+	 *
+	 * @param schienenNr1indiziert  Die Schienen-Nummer
+	 * @return true, falls die übergebene Schiene nur LK-Kurse enthält (oder keine Kurse).
+	 */
+	public boolean gibHatSchieneNurLK(final int schienenNr1indiziert) {
+		return _schienenArr[schienenNr1indiziert - 1].gibHatNurLK();
+	}
 
-		_logger.logLn("########## Facharten ##########");
-		for (final @NotNull KursblockungDynFachart fa : _fachartArr) {
-			_logger.logLn("Fachart " + fa + " --> " + fa.gibKursdifferenz());
-			fa.debug(_schuelerArr);
-		}
+	/**
+	 * Liefert true, falls die übergebene Schiene keine LK-Kurse enthält.
+	 *
+	 * @param schienenNr1indiziert  Die Schienen-Nummer
+	 * @return true, falls die übergebene Schiene keine LK-Kurse enthält.
+	 */
+	public boolean gibHatSchieneKeineLK(final int schienenNr1indiziert) {
+		return _schienenArr[schienenNr1indiziert - 1].gibHatKeineLK();
+	}
 
-		_logger.modifyIndent(-4);
+	/**
+	 * Liefert die Anzahl an SuS in dem Kurs (oder -1 falls der Kurs nicht existiert).
+	 *
+	 * @param idKursDB Die Datenbank-ID des Kurses.
+	 * @return die Anzahl an SuS in dem Kurs (oder -1 falls der Kurs nicht existiert).
+	 */
+	public int gibKursgroesseDesKurses(final int idKursDB) {
+		for (final @NotNull KursblockungDynKurs k : _kursArr)
+			if (k.gibDatenbankID() == idKursDB)
+				return k.gibSchuelerAnzahl();
+		return -1;
+	}
 
-		_statistik.debug("");
+	/**
+	 * Liefert die Kursdifferenz der Fachart des übergebenen Kurses (oder -1 falls der Kurs nicht existiert)..
+	 *
+	 * @param idKursDB Die Datenbank-ID des Kurses.
+	 * @return die Kursdifferenz der Fachart des übergebenen Kurses (oder -1 falls der Kurs nicht existiert)..
+	 */
+	public int gibKursdifferenzDesKurses(final int idKursDB) {
+		for (final @NotNull KursblockungDynKurs k : _kursArr)
+			if (k.gibDatenbankID() == idKursDB)
+				return k.gibFachart().gibKursdifferenz();
+		return -1;
 	}
 
 	/**
@@ -1495,6 +1548,18 @@ public class KursblockungDynDaten {
 	}
 
 	/**
+	 * Verändert die Lage der Kurse einer zufälligen Fachgruppe komplett neu.
+	 */
+	public void aktionKursVerteilenEineZufaelligeFachgruppe() {
+		if (_fachartArr.length == 0)
+			return;
+
+		int fachgruppenIndex = _random.nextInt(_fachartArr.length);
+		for (final @NotNull KursblockungDynKurs kurs: _fachartArr[fachgruppenIndex].gibKurse())
+			kurs.aktionZufaelligVerteilen();
+	}
+
+	/**
 	 * Verteilt die SuS auf die jetzige Kurslage. Pro S. werden erst die Multikurse verteilt, dann werden die übrigen
 	 * Kurse mit Hilfe eines spezielle bipartiten Matching-Algorithmus verteilt. Sobald ein S. seine Nichtwahlen durch
 	 * eine Veränderung der Kurslage reduzieren könnte, wird die Kurslage verändert.
@@ -1515,11 +1580,43 @@ public class KursblockungDynDaten {
 		return kurslagenVeraenderung;
 	}
 
+
+	/**
+	 * Gesucht wird der Schüler, der unzufrieden ist. Nach seinem Wunsch werden die Kurse neuverteilt.
+	 * <br> Kurzzeitig wird der S. Kursen hinzugefügt, am Ende aber wieder entfernt.
+	 *
+	 * @return TRUE, falls es zu einer Veränderung der Kurslage kam.
+	 */
+	boolean aktionKurseVerteilenNachSchuelerwunschSingle() {
+		boolean kurslagenVeraenderung = false;
+
+		// Suche einen unzufriedenen Schüler...
+		final @NotNull int[] perm = KursblockungStatic.gibPermutation(_random, _schuelerArr.length);
+		for (final int p : perm) {
+			final KursblockungDynSchueler schueler = _schuelerArr[p];
+			// Berechne die Nichtwahlen des Schülers.
+			schueler.aktionKurseVerteilenNurMultikurseZufaellig();
+			schueler.aktionKurseVerteilenMitBipartiteMatching();
+			int nichtwahlen = schueler.gibNichtwahlen();
+			schueler.aktionKurseAlleEntfernen();
+
+			if (nichtwahlen > 0) {
+				schueler.aktionKurseVerteilenNurMultikurseZufaellig();
+				kurslagenVeraenderung |= schueler.aktionKurseVerteilenNachDeinemWunsch();
+				schueler.aktionKurseAlleEntfernen();
+				break;
+			}
+
+		}
+
+		return kurslagenVeraenderung;
+	}
+
 	/**
 	 * Verteilt die SuS auf die jetzige Kurslage. Pro S. werden erst die Multikurse verteilt, dann werden die übrigen
 	 * Kurse mit Hilfe eines bipartiten Matching-Algorithmus verteilt. Bereits belegte Facharten werden übersprungen.
 	 */
-	void aktionSchuelerVerteilenMitBipartitemMatching() {
+	public void aktionSchuelerVerteilenMitBipartitemMatching() {
 		final @NotNull int[] perm = KursblockungStatic.gibPermutation(_random, _schuelerArr.length);
 
 		for (final int i : perm) {
@@ -1534,7 +1631,7 @@ public class KursblockungDynDaten {
 	 * Verteilt die SuS auf die jetzige Kurslage. Pro S. werden erst die Multikurse verteilt, dann werden die übrigen
 	 * Kurse mit Hilfe eines gewichteten Bipartiten-Matching-Algorithmus verteilt.
 	 */
-	void aktionSchuelerVerteilenMitGewichtetenBipartitemMatching() {
+	public void aktionSchuelerVerteilenMitGewichtetenBipartitemMatching() {
 		final @NotNull int[] perm = KursblockungStatic.gibPermutation(_random, _schuelerArr.length);
 
 		for (final int i : perm) {
@@ -1544,4 +1641,88 @@ public class KursblockungDynDaten {
 			schueler.aktionKurseVerteilenMitBipartiteMatchingGewichtetem();
 		}
 	}
+
+	/**
+	 * Setzt den S. wenn möglich in den übergebenen Kurs.
+	 *
+	 * @param idSchuelerDB  Die Datenbank-ID des S.
+	 * @param idKursDB      Die Datenbank-ID des Kurses.
+	 */
+	public void aktionSchuelerSetzenInKurs(final int idSchuelerDB, final int idKursDB) {
+		for (final @NotNull KursblockungDynSchueler schueler : _schuelerArr)
+			if (schueler.gibDatenbankID() == idSchuelerDB)
+				schueler.aktionKursSetzen(idKursDB);
+	}
+
+	/**
+	 * Entfernt den S. wenn möglich aus den übergebenen Kurs.
+	 *
+	 * @param idSchuelerDB  Die Datenbank-ID des S.
+	 * @param idKursDB      Die Datenbank-ID des Kurses.
+	 */
+	public void aktionSchuelerEntfernenAusKurs(final int idSchuelerDB, final int idKursDB) {
+		for (final @NotNull KursblockungDynSchueler schueler : _schuelerArr)
+			if (schueler.gibDatenbankID() == idSchuelerDB)
+				schueler.aktionKursEntfernen(idKursDB);
+	}
+
+	/**
+	 * Verschiebt den Kurs in die Schiene.
+	 *
+	 * @param idKursDB  Die Datenbank-ID des Kurses.
+	 * @param schieneDB Die Datenbank-ID der Schiene (1-indiziert!).
+	 */
+	public void aktionSetzeKursInSchiene(final int idKursDB, final int schieneDB) {
+		for (final @NotNull KursblockungDynKurs k : _kursArr)
+			if (k.gibDatenbankID() == idKursDB)
+				k.aktionSetzeInSchiene(schieneDB - 1);
+	}
+
+	/**
+	 * Debug Ausgaben. Nur für Testzwecke.
+	 */
+	public void debug() {
+		_logger.modifyIndent(+4);
+
+		_logger.logLn("########## Schienen ##########");
+		for (int i = 0; i < _schienenArr.length; i++) {
+			_logger.logLn("Schiene " + (i + 1));
+			_schienenArr[i].debug(false);
+		}
+
+		_logger.logLn("########## Facharten ##########");
+		for (final @NotNull KursblockungDynFachart fa : _fachartArr) {
+			_logger.logLn("Fachart " + fa + " --> " + fa.gibKursdifferenz());
+			fa.debug(_schuelerArr);
+		}
+
+		_logger.modifyIndent(-4);
+
+		_statistik.debug("");
+	}
+
+	/**
+	 * Debug Ausgaben (Schienen und Kurse)
+	 */
+	public void printlnSchienenUndKurse() {
+		for (int i = 0; i < _schienenArr.length; i++)
+			_schienenArr[i].printlnKurse();
+	}
+
+	/**
+	 * Debug-Ausgabe der Schienen mit ihre Kursen und ihren SuS.
+	 */
+	public void printlnSchienenUndKurseUndSchueler() {
+		for (int i = 0; i < _schienenArr.length; i++)
+			_schienenArr[i].printlnKurseUndSchueler(_schuelerArr);
+	}
+
+	/**
+	 * Debug-Ausgabe aller Facharten mit den zugehörigen Kursen.
+	 */
+	public void printlnFacharten() {
+		for (final @NotNull KursblockungDynFachart fachart : _fachartArr)
+			fachart.printlnKurse();
+	}
+
 }
