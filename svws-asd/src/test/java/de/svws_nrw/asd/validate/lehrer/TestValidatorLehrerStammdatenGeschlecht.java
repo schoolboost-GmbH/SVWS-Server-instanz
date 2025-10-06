@@ -2,8 +2,6 @@ package de.svws_nrw.asd.validate.lehrer;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import java.io.IOException;
-
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -61,15 +59,6 @@ class TestValidatorLehrerStammdatenGeschlecht {
 	/** Stammdaten der Schule */
 	static final SchuleStammdaten schuleTestdaten_001 =
 			JsonReader.fromResource("de/svws_nrw/asd/validate/schule/Testdaten_001_SchuleStammdaten.json", SchuleStammdaten.class);
-
-	static String getResource(final String path) {
-		try {
-			return JsonReader.fromResource(path);
-		} catch (final IOException e) {
-			e.printStackTrace();
-			return "";
-		}
-	}
 
 	/**
 	 * Initialisiert die Core-Types, damit die Tests ausgeführt werden können.

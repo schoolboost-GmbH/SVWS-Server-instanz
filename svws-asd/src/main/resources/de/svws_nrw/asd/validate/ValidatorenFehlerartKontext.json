@@ -205,5 +205,31 @@
 			"gueltigVon": null,
 			"gueltigBis": null
 		} ]				
-	} ]
+	}, {
+		"validator": "de.svws_nrw.asd.validate.gesamt.ValidatorGesamtLehrerPersonaldatenLehramt",
+		"historie": [ {
+			"zebras": true,
+			"svws": true,
+			"praefix": "GLP",
+			"pruefschritte" : [ {
+				"nummer": -1,
+				"muss": [],
+			    "kann": [],
+				"hinweis": ["G","H","V","S","KS","R","PS","SK","GE","FW","HI","WF","GY","WB","BK","SR","SG","SB"]
+			}, {
+				"nummer": 0,
+				"muss": ["G","H","V","S","KS","R","PS","SK","GE","HI","WF","GY","WB","BK","SR","SG","SB"],
+			    "kann": [],
+				"hinweis": []
+			}, {
+				"nummer": 1,
+				"muss": [],
+				"kann": ["FW"],
+				"hinweis": []
+			}
+		 ],
+			"gueltigVon": null,
+			"gueltigBis": null
+		} ]				
+	}]
 }

@@ -1,0 +1,16 @@
+{
+  "stammdaten": {
+    "schulform": "GY",
+    "idSchuljahresabschnitt": 1,
+    "abschnitte": [
+      { "id": 1, "schuljahr": 2025, "abschnitt": 1 }
+    ]
+  },
+  "lehrerPersonaldaten": [
+    { "id": 1, "lehraemter": [] },
+    { "id": 2, "lehraemter": [] },
+    { "id": 3, "lehraemter": [] },
+    { "id": 4, "lehraemter": [] },
+    { "id": 5, "lehraemter": [] }
+  ]
+}

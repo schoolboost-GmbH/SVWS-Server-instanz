@@ -272,6 +272,7 @@ export { ValidatorFehlerartKontextPruefschritt } from './asd/validate/ValidatorF
 export { ValidatorGesamt } from './asd/validate/ValidatorGesamt';
 export { ValidatorKontext } from './asd/validate/ValidatorKontext';
 export { ValidatorManager } from './asd/validate/ValidatorManager';
+export { ValidatorGesamtLehrerPersonaldatenLehramt } from './asd/validate/gesamt/ValidatorGesamtLehrerPersonaldatenLehramt';
 export { ValidatorGesamtLehrerdaten } from './asd/validate/gesamt/ValidatorGesamtLehrerdaten';
 export { ValidatorGesamtLehrerdatenDuplikate } from './asd/validate/gesamt/ValidatorGesamtLehrerdatenDuplikate';
 export { ValidatorLehrerPersonalabschnittsdaten } from './asd/validate/lehrer/ValidatorLehrerPersonalabschnittsdaten';
