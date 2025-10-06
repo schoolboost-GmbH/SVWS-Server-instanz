@@ -116,7 +116,7 @@
 						<span class="icon i-ri-add-line" /> Neue Blockung hinzufügen
 					</svws-ui-button>
 					<div class="h-2" />
-					<svws-ui-button :disabled="apiStatus.pending" type="transparent" title="Erstelle eine Blockung aus der Persistierung in den Leistungsdaten" @click.stop="restoreBlockung">
+					<svws-ui-button v-if="persistiert" :disabled="apiStatus.pending" type="transparent" title="Erstelle eine Blockung aus der Persistierung in den Leistungsdaten" @click.stop="restoreBlockung">
 						<span class="icon i-ri-arrow-turn-back-line" /> Wiederherstellen einer Blockung aus den bestehenden Leistungsdaten
 					</svws-ui-button>
 				</div>
@@ -129,10 +129,7 @@
 	import { computed, ref, onMounted } from "vue";
 	import type { GostKursplanungProps } from "./SGostKursplanungProps";
 	import type { DownloadPDFTypen } from "./DownloadPDFTypen";
-	import {
-		BenutzerKompetenz, GostHalbjahr, HashSet, ReportingAusgabeformat,
-		ReportingEMailDaten, ReportingEMailEmpfaengerTyp, ReportingParameter, ReportingReportvorlage, SetUtils
-	} from "@core";
+	import { BenutzerKompetenz, GostHalbjahr, HashSet, ReportingAusgabeformat, ReportingEMailDaten, ReportingEMailEmpfaengerTyp, ReportingParameter, ReportingReportvorlage, SetUtils } from "@core";
 	import { useRegionSwitch } from "@ui";
 	import {routeApp} from "~/router/apps/RouteApp";
 
