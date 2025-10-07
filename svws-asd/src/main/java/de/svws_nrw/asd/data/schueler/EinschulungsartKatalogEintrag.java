@@ -25,6 +25,7 @@ public class EinschulungsartKatalogEintrag extends CoreTypeData {
 	 * Erstellt einen Eintrag mit Standardwerten
 	 */
 	public EinschulungsartKatalogEintrag() {
+		// leer
 	}
 
 }
