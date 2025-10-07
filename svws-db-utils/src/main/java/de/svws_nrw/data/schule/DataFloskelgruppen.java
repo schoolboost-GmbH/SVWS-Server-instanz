@@ -1,9 +1,7 @@
 package de.svws_nrw.data.schule;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 import de.svws_nrw.asd.data.RGBFarbe;
 import de.svws_nrw.asd.data.schule.FloskelgruppenartKatalogEintrag;
@@ -41,8 +39,7 @@ public final class DataFloskelgruppen extends DataManagerRevised<String, DTOFlos
 
 	@Override
 	public void checkBeforeCreation(final String newID, final Map<String, Object> initAttributes) throws ApiOperationException {
-		final String kuerzel =
-				JSONMapper.convertToString(initAttributes.get("kuerzel"), false, false, Schema.tab_Floskelgruppen.col_Kuerzel.datenlaenge(), "kuerzel");
+		final String kuerzel = JSONMapper.convertToString(initAttributes.get("kuerzel"), false, false, Schema.tab_Floskelgruppen.col_Kuerzel.datenlaenge(), "kuerzel");
 		final boolean alreadyUsed = this.conn
 				.queryAll(DTOFloskelgruppen.class).stream()
 				.anyMatch(f -> kuerzel.equalsIgnoreCase(f.Kuerzel));
@@ -61,18 +58,9 @@ public final class DataFloskelgruppen extends DataManagerRevised<String, DTOFlos
 		final Floskelgruppe floskelgruppe = new Floskelgruppe();
 		floskelgruppe.kuerzel = dto.Kuerzel;
 		floskelgruppe.bezeichnung = dto.Bezeichnung;
-		floskelgruppe.idFloskelgruppenart = mapIdFloskelgruppe(dto);
+		floskelgruppe.idFloskelgruppenart = mapIdFloskelgruppe(dto.Hauptgruppe);
 		floskelgruppe.farbe = (dto.Farbe == null) ? null : new RGBFarbe(dto.Farbe);
 		return floskelgruppe;
-	}
-
-	private Long mapIdFloskelgruppe(final DTOFloskelgruppen dto) {
-		if (dto.Hauptgruppe == null)
-			return null;
-
-		final int schuljahr = this.conn.getUser().schuleGetSchuljahresabschnitt().schuljahr;
-		final FloskelgruppenartKatalogEintrag eintrag = Floskelgruppenart.data().getEintragBySchuljahrUndSchluessel(schuljahr, dto.Hauptgruppe);
-		return (eintrag == null) ? null : eintrag.id;
 	}
 
 	@Override
@@ -89,11 +77,7 @@ public final class DataFloskelgruppen extends DataManagerRevised<String, DTOFlos
 
 	@Override
 	public List<Floskelgruppe> getAll() {
-		final List<DTOFloskelgruppen> floskelgruppen = Optional
-				.ofNullable(conn.queryAll(DTOFloskelgruppen.class))
-				.orElse(Collections.emptyList());
-
-		return floskelgruppen.stream()
+		return conn.queryAll(DTOFloskelgruppen.class).stream()
 				.map(this::map)
 				.toList();
 	}
@@ -103,7 +87,7 @@ public final class DataFloskelgruppen extends DataManagerRevised<String, DTOFlos
 			throws ApiOperationException {
 		switch (name) {
 			case "kuerzel" -> {
-				// nicht patchbar - wird beim neu erstellen in der Methode initDto gesetzt - nicht patchbar
+				// nicht patchbar - wird beim neu erstellen in der Methode initDto gesetzt
 			}
 			case "bezeichnung" -> dto.Bezeichnung =
 					JSONMapper.convertToString(value, false, false, Schema.tab_Floskelgruppen.col_Bezeichnung.datenlaenge(), name);
@@ -111,6 +95,12 @@ public final class DataFloskelgruppen extends DataManagerRevised<String, DTOFlos
 			case "farbe" -> updateFarbe(dto, value);
 			default -> throw new ApiOperationException(Status.BAD_REQUEST, "Die Daten des Patches enthalten das unbekannte Attribut %s.".formatted(name));
 		}
+	}
+
+	private Long mapIdFloskelgruppe(final String floskelgruppe) {
+		final int schuljahr = this.conn.getUser().schuleGetSchuljahresabschnitt().schuljahr;
+		final FloskelgruppenartKatalogEintrag eintrag = Floskelgruppenart.data().getEintragBySchuljahrUndSchluessel(schuljahr, floskelgruppe);
+		return (eintrag == null) ? null : eintrag.id;
 	}
 
 	private static void updateFloskelgruppenart(final DTOFloskelgruppen dto, final String name, final Object value) throws ApiOperationException {
