@@ -290,6 +290,30 @@ public final class JSONMapper {
 		return result;
 	}
 
+	/**
+	 * Wandelt die JSON-Daten aus dem {@link InputStream} in eine Liste von String-Werten um, sofern dies
+	 * möglich ist. Ist dies nicht möglich, so wird eine entsprechende ApiOperationException erzeugt.
+	 *
+	 * @param in   der Input-Stream mit dem JSON-Input
+	 *
+	 * @return die Liste von String-Werten
+	 *
+	 * @throws ApiOperationException   im Fehlerfall
+	 */
+	public static List<String> toListOfString(final InputStream in) throws ApiOperationException {
+		final JsonNode node = toJsonNode(in);
+		if (!node.isArray())
+			throw new ApiOperationException(Status.BAD_REQUEST, "Das übergebene JSON ist kein Array bzw. keine Liste");
+
+		final List<String> result = new ArrayList<>();
+		for (final JsonNode element : node) {
+			if (!element.isTextual())
+				throw new ApiOperationException(Status.BAD_REQUEST, "Das übergebene JSON-Array enthält keine Strings");
+			result.add(element.asText());
+		}
+		return result;
+	}
+
 
 	/**
 	 * Konvertiert das übergebene Objekt in einen Double-Wert, sofern es sich um ein

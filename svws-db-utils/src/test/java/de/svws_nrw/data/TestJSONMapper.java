@@ -1,9 +1,18 @@
 package de.svws_nrw.data;
 
+import java.util.List;
+import java.util.Map;
+
+import static de.svws_nrw.data.util.TestUtils.fromObject;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatException;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
+import de.svws_nrw.db.utils.ApiOperationException;
+import jakarta.ws.rs.core.Response;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import de.svws_nrw.base.compression.CompressionException;
@@ -62,6 +71,52 @@ class TestJSONMapper {
 		} catch (final CompressionException e) {
 			fail(e);
 		}
+	}
+
+	@Test
+	@DisplayName("ToListOfString | from List")
+	void toListOfString_fromList() throws ApiOperationException {
+		final var inputStream = fromObject(List.of("AB", "cd"));
+		assertThat(JSONMapper.toListOfString(inputStream))
+				.hasSize(2)
+				.satisfiesExactly(
+						a -> assertThat(a).isEqualTo("AB"),
+						b -> assertThat(b).isEqualTo("cd")
+				);
+	}
+
+	@Test
+	@DisplayName("ToListOfString | from Array")
+	void toListOfString_fromArray() throws ApiOperationException {
+		final var inputStream = fromObject(new String[] { "AB", "cd" });
+		assertThat(JSONMapper.toListOfString(inputStream))
+				.hasSize(2)
+				.satisfiesExactly(
+						a -> assertThat(a).isEqualTo("AB"),
+						b -> assertThat(b).isEqualTo("cd")
+				);
+	}
+
+	@Test
+	@DisplayName("ToListOfString | from Map | Exception")
+	void toListOfString_fromMap() throws ApiOperationException {
+		final var inputStream = fromObject(Map.of("ab", "ve"));
+		assertThatException()
+				.isThrownBy(() -> JSONMapper.toListOfString(inputStream))
+				.isInstanceOf(ApiOperationException.class)
+				.withMessage("Das übergebene JSON ist kein Array bzw. keine Liste")
+				.hasFieldOrPropertyWithValue("status", Response.Status.BAD_REQUEST);
+	}
+
+	@Test
+	@DisplayName("ToListOfString | from List but numbers | Exception")
+	void toListOfString_fromListButNumbers() throws ApiOperationException {
+		final var inputStream = fromObject(List.of(1, 2));
+		assertThatException()
+				.isThrownBy(() -> JSONMapper.toListOfString(inputStream))
+				.isInstanceOf(ApiOperationException.class)
+				.withMessage("Das übergebene JSON-Array enthält keine Strings")
+				.hasFieldOrPropertyWithValue("status", Response.Status.BAD_REQUEST);
 	}
 
 }
