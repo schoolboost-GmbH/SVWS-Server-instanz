@@ -47,7 +47,7 @@
 								<template v-if="showValidatorErrorMessage">
 									<div class="text-headline-sm text-center pt-1"> Validatorfehler </div>
 									<div v-for="fehler in validator().getFehler()" :key="fehler.getFehlermeldung() ?? '--'" class="pt-2 pb-2">
-										<div :class="[validatorErrorBgClasses, 'rounded-sm pl-2']">
+										<div :class="[validatorErrorBgClasses(fehler.getFehlerart()), 'rounded-sm pl-2']">
 											{{ fehler.getFehlerart() }}
 										</div>
 										<div class="pl-2"> {{ fehler.getFehlermeldung() }} </div>

@@ -775,13 +775,11 @@ export function useUiSelectUtils<T, V extends Validator>(
 	/**
 	 * Berechnet die Hintergrundfdarbe des Validatorfehlers
 	 */
-	const validatorErrorBgClasses = computed((): object => {
+	function validatorErrorBgClasses(fehler: ValidatorFehlerart): {} {
 		if (props.validator === undefined)
 			return {};
 
-		const fehlerart = props.validator().getFehlerart();
-
-		switch (fehlerart) {
+		switch (fehler) {
 			case ValidatorFehlerart.MUSS:
 				return { 'bg-ui-danger': true };
 			case ValidatorFehlerart.KANN:
@@ -791,7 +789,7 @@ export function useUiSelectUtils<T, V extends Validator>(
 			default:
 				return {};
 		}
-	});
+	}
 
 	/**
 	 * Berechnet, ob eine aktuelle Selektion angezeigt werden soll
