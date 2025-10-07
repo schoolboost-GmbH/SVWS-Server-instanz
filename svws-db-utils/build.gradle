@@ -82,7 +82,7 @@ task createScripts {
 			file("./import.sh").text =
 			  '#! /bin/bash\n' +
 			  'java --class-path ' + sourceSets.main.runtimeClasspath.getAsPath() + ' de.svws_nrw.db.utils.app.ImportDB "$@"\n'
-			project.exec {
+			providers.exec {
 				commandLine('chmod',  '+x', './migrate_db.sh')
 				commandLine('chmod',  '+x', './create_db.sh')
 				commandLine('chmod',  '+x', './lupo_import.sh')
@@ -122,7 +122,7 @@ task createScripts {
 			file("./import.sh").text =
 			  '#! /bin/zsh\n' +
 			  'java --class-path ' + sourceSets.main.runtimeClasspath.getAsPath() + ' de.svws_nrw.db.utils.app.ImportDB "$@"\n'
-			project.exec {
+			providers.exec {
 				commandLine('chmod',  '+x', './migrate_db.sh')
 				commandLine('chmod',  '+x', './create_db.sh')
 				commandLine('chmod',  '+x', './lupo_import.sh')

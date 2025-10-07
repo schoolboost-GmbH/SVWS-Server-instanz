@@ -54,7 +54,7 @@ task createScripts {
 			file("./start_server.sh").text =
 			  '#! /bin/bash\n' +
 			  'java --class-path ' + sourceSets.main.runtimeClasspath.getAsPath() + ' de.svws_nrw.server.jetty.Main\n'
-			project.exec {
+			providers.exec {
 				commandLine('chmod',  '+x', './start_server.sh')
 			}
 		} else if (OperatingSystem.current().isWindows()) {
@@ -64,7 +64,7 @@ task createScripts {
 			file("./start_server.sh").text =
 			  '#! /bin/zsh\n' +
 			  'java --class-path ' + sourceSets.main.runtimeClasspath.getAsPath() + ' de.svws_nrw.server.jetty.Main\n'
-			project.exec {
+			providers.exec {
 				commandLine('chmod',  '+x', './start_server.sh')
 			}
 		} else {
