@@ -1,11 +1,13 @@
 package de.svws_nrw.api.server;
 
 import de.svws_nrw.core.data.erzieher.Erzieherart;
+import de.svws_nrw.core.data.schule.Floskel;
 import de.svws_nrw.core.data.schule.Floskelgruppe;
 import de.svws_nrw.core.data.schule.Lernplattform;
 import de.svws_nrw.core.data.schule.TelefonArt;
 import de.svws_nrw.data.erzieher.DataErzieherarten;
 import de.svws_nrw.data.schule.DataFloskelgruppen;
+import de.svws_nrw.data.schule.DataFloskeln;
 import de.svws_nrw.data.schule.DataKatalogLernplattformen;
 import de.svws_nrw.data.schule.DataKatalogTelefonArten;
 import java.io.InputStream;
@@ -3224,6 +3226,83 @@ public class APISchule {
 			@Context final HttpServletRequest request) {
 		return DBBenutzerUtils.runWithTransaction(
 				conn -> new DataFloskelgruppen(conn).addAsResponse(is), request, ServerMode.STABLE, BenutzerKompetenz.KATALOG_EINTRAEGE_AENDERN);
+	}
+
+
+	/**
+	 * Die OpenAPI-Methode für die Abfrage der Liste der Floskeln.
+	 *
+	 * @param schema    das Datenbankschema, auf welches die Abfrage ausgeführt werden soll
+	 * @param request   die Informationen zur HTTP-Anfrage
+	 *
+	 * @return die Liste der Floskeln
+	 */
+	@GET
+	@Path("/floskeln")
+	@Operation(summary = "Gibt eine Liste der Floskeln im Katalog zurück.",
+			description = "Gibt die Floskeln zurück, insofern der SVWS-Benutzer die erforderliche Berechtigung besitzt.")
+	@ApiResponse(responseCode = "200", description = "Eine Liste der Floskeln.",
+			content = @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = Floskel.class))))
+	@ApiResponse(responseCode = "403", description = "Der SVWS-Benutzer hat keine Rechte, um Katalog-Einträge anzusehen.")
+	@ApiResponse(responseCode = "404", description = "Keine Katalog-Einträge gefunden")
+	public Response getFloskeln(@PathParam("schema") final String schema, @Context final HttpServletRequest request) {
+		return DBBenutzerUtils.runWithTransaction(conn -> new DataFloskeln(conn).getAllAsResponse(),
+				request, ServerMode.STABLE, BenutzerKompetenz.KEINE);
+	}
+
+	/**
+	 * Die OpenAPI-Methode für das Patchen einer Floskeln.
+	 *
+	 * @param schema    das Datenbankschema, auf welches der Patch ausgeführt werden soll
+	 * @param kuerzel   das Datenbank-Kürzel zur Identifikation der Floskeln
+	 * @param is        der InputStream, mit dem JSON-Patch-Objekt nach RFC 7386
+	 * @param request   die Informationen zur HTTP-Anfrage
+	 *
+	 * @return das Ergebnis der Patch-Operation
+	 */
+	@PATCH
+	@Path("/floskeln/{kuerzel : \\S+}")
+	@Operation(summary = "Patched die Floskeln mit dem angegebenen Kürzel",
+			description = "Patched die Floskeln mit dem angegebenen Kürzel, insofern die notwendigen Berechtigungen vorliegen.")
+	@ApiResponse(responseCode = "204", description = "Der Patch wurde erfolgreich integriert.")
+	@ApiResponse(responseCode = "400", description = "Der Patch ist fehlerhaft aufgebaut.")
+	@ApiResponse(responseCode = "403", description = "Der SVWS-Benutzer hat keine Rechte, um die Daten zu ändern.")
+	@ApiResponse(responseCode = "404", description = "Kein Eintrag mit dem angegebenen Kürzel gefunden")
+	@ApiResponse(responseCode = "409", description = "Der Patch ist fehlerhaft, da zumindest eine Rahmenbedingung für einen Wert nicht erfüllt wurde"
+			+ " (z.B. eine negative ID)")
+	@ApiResponse(responseCode = "500", description = "Unspezifizierter Fehler (z. B. beim Datenbankzugriff)")
+	public Response patchFloskeln(@PathParam("schema") final String schema, @PathParam("kuerzel") final String kuerzel,
+			@RequestBody(description = "Der Patch einer Floskeln", required = true,
+					content = @Content(mediaType = MediaType.APPLICATION_JSON, schema = @Schema(implementation = Floskel.class))) final InputStream is,
+			@Context final HttpServletRequest request) {
+		return DBBenutzerUtils.runWithTransaction(
+				conn -> new DataFloskeln(conn).patchAsResponse(kuerzel, is), request, ServerMode.STABLE,
+				BenutzerKompetenz.KATALOG_EINTRAEGE_AENDERN);
+	}
+
+	/**
+	 * Die OpenAPI-Methode für das Hinzufügen einer Floskel.
+	 *
+	 * @param schema       das Datenbankschema
+	 * @param is           der Input-Stream mit den Daten der Floskel
+	 * @param request      die Informationen zur HTTP-Anfrage
+	 *
+	 * @return die HTTP-Antwort mit der erstellten Floskel
+	 */
+	@POST
+	@Path("/floskeln/create")
+	@Operation(summary = "Erstellt einer neue Floskel und gibt das erstellte Objekt zurück.",
+			description = "Erstellt eine neue Floskel, insofern die notwendigen Berechtigungen vorliegen")
+	@ApiResponse(responseCode = "201", description = "Die Floskel wurde erfolgreich hinzugefügt.",
+			content = @Content(mediaType = MediaType.APPLICATION_JSON, schema = @Schema(implementation = Floskel.class)))
+	@ApiResponse(responseCode = "403", description = "Der SVWS-Benutzer hat keine Rechte, um Floskeln anzulegen.")
+	@ApiResponse(responseCode = "500", description = "Unspezifizierter Fehler (z.B. beim Datenbankzugriff)")
+	public Response addFloskel(@PathParam("schema") final String schema,
+			@RequestBody(description = "Die Daten der zu erstellenden Floskel.", required = true,
+					content = @Content(mediaType = MediaType.APPLICATION_JSON, schema = @Schema(implementation = Floskel.class))) final InputStream is,
+			@Context final HttpServletRequest request) {
+		return DBBenutzerUtils.runWithTransaction(
+				conn -> new DataFloskeln(conn).addAsResponse(is), request, ServerMode.STABLE, BenutzerKompetenz.KATALOG_EINTRAEGE_AENDERN);
 	}
 
 }

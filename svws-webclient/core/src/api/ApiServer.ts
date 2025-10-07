@@ -45,6 +45,7 @@ import { FachDaten } from '../core/data/fach/FachDaten';
 import { FachgruppeKatalogEintrag } from '../asd/data/fach/FachgruppeKatalogEintrag';
 import { FachKatalogEintrag } from '../asd/data/fach/FachKatalogEintrag';
 import { Fahrschuelerart } from '../core/data/schule/Fahrschuelerart';
+import { Floskel } from '../core/data/schule/Floskel';
 import { Floskelgruppe } from '../core/data/schule/Floskelgruppe';
 import { FoerderschwerpunktEintrag } from '../core/data/schule/FoerderschwerpunktEintrag';
 import { FoerderschwerpunktKatalogEintrag } from '../asd/data/schule/FoerderschwerpunktKatalogEintrag';
@@ -14785,6 +14786,86 @@ export class ApiServer extends BaseApi {
 		const result : string = await super.postJSON(path, body);
 		const text = result;
 		return Floskelgruppe.transpilerFromJSON(text);
+	}
+
+
+	/**
+	 * Implementierung der GET-Methode getFloskeln für den Zugriff auf die URL https://{hostname}/db/{schema}/schule/floskeln
+	 *
+	 * Gibt die Floskeln zurück, insofern der SVWS-Benutzer die erforderliche Berechtigung besitzt.
+	 *
+	 * Mögliche HTTP-Antworten:
+	 *   Code 200: Eine Liste der Floskeln.
+	 *     - Mime-Type: application/json
+	 *     - Rückgabe-Typ: List<Floskel>
+	 *   Code 403: Der SVWS-Benutzer hat keine Rechte, um Katalog-Einträge anzusehen.
+	 *   Code 404: Keine Katalog-Einträge gefunden
+	 *
+	 * @param {string} schema - der Pfad-Parameter schema
+	 *
+	 * @returns Eine Liste der Floskeln.
+	 */
+	public async getFloskeln(schema : string) : Promise<List<Floskel>> {
+		const path = "/db/{schema}/schule/floskeln"
+			.replace(/{schema\s*(:[^{}]+({[^{}]+})*)?}/g, schema);
+		const result : string = await super.getJSON(path);
+		const obj = JSON.parse(result);
+		const ret = new ArrayList<Floskel>();
+		obj.forEach((elem: any) => { const text : string = JSON.stringify(elem); ret.add(Floskel.transpilerFromJSON(text)); });
+		return ret;
+	}
+
+
+	/**
+	 * Implementierung der PATCH-Methode patchFloskeln für den Zugriff auf die URL https://{hostname}/db/{schema}/schule/floskeln/{kuerzel : \S+}
+	 *
+	 * Patched die Floskeln mit dem angegebenen Kürzel, insofern die notwendigen Berechtigungen vorliegen.
+	 *
+	 * Mögliche HTTP-Antworten:
+	 *   Code 204: Der Patch wurde erfolgreich integriert.
+	 *   Code 400: Der Patch ist fehlerhaft aufgebaut.
+	 *   Code 403: Der SVWS-Benutzer hat keine Rechte, um die Daten zu ändern.
+	 *   Code 404: Kein Eintrag mit dem angegebenen Kürzel gefunden
+	 *   Code 409: Der Patch ist fehlerhaft, da zumindest eine Rahmenbedingung für einen Wert nicht erfüllt wurde (z.B. eine negative ID)
+	 *   Code 500: Unspezifizierter Fehler (z. B. beim Datenbankzugriff)
+	 *
+	 * @param {Partial<Floskel>} data - der Request-Body für die HTTP-Methode
+	 * @param {string} schema - der Pfad-Parameter schema
+	 * @param {string} kuerzel - der Pfad-Parameter kuerzel
+	 */
+	public async patchFloskeln(data : Partial<Floskel>, schema : string, kuerzel : string) : Promise<void> {
+		const path = "/db/{schema}/schule/floskeln/{kuerzel : \\S+}"
+			.replace(/{schema\s*(:[^{}]+({[^{}]+})*)?}/g, schema)
+			.replace(/{kuerzel\s*(:[^{}]+({[^{}]+})*)?}/g, kuerzel);
+		const body : string = Floskel.transpilerToJSONPatch(data);
+		return super.patchJSON(path, body);
+	}
+
+
+	/**
+	 * Implementierung der POST-Methode addFloskel für den Zugriff auf die URL https://{hostname}/db/{schema}/schule/floskeln/create
+	 *
+	 * Erstellt eine neue Floskel, insofern die notwendigen Berechtigungen vorliegen
+	 *
+	 * Mögliche HTTP-Antworten:
+	 *   Code 201: Die Floskel wurde erfolgreich hinzugefügt.
+	 *     - Mime-Type: application/json
+	 *     - Rückgabe-Typ: Floskel
+	 *   Code 403: Der SVWS-Benutzer hat keine Rechte, um Floskeln anzulegen.
+	 *   Code 500: Unspezifizierter Fehler (z.B. beim Datenbankzugriff)
+	 *
+	 * @param {Partial<Floskel>} data - der Request-Body für die HTTP-Methode
+	 * @param {string} schema - der Pfad-Parameter schema
+	 *
+	 * @returns Die Floskel wurde erfolgreich hinzugefügt.
+	 */
+	public async addFloskel(data : Partial<Floskel>, schema : string) : Promise<Floskel> {
+		const path = "/db/{schema}/schule/floskeln/create"
+			.replace(/{schema\s*(:[^{}]+({[^{}]+})*)?}/g, schema);
+		const body : string = Floskel.transpilerToJSONPatch(data);
+		const result : string = await super.postJSON(path, body);
+		const text = result;
+		return Floskel.transpilerFromJSON(text);
 	}
 
 
