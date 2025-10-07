@@ -64,7 +64,7 @@ public class APIAlgoGesamtschuleAbschluss {
 							schema = @Schema(implementation = GEAbschlussFaecher.class))) final GEAbschlussFaecher faecher,
 			@Context final HttpServletRequest request) {
 		final ServiceAbschlussHA9 ha9 = new ServiceAbschlussHA9();
-		final AbschlussErgebnis daten = ha9.handle(faecher);
+		final AbschlussErgebnis daten = ha9.berechne(faecher);
 		if (daten == null)
 			return new ApiOperationException(Status.BAD_REQUEST).getResponse();
 		daten.log = ha9.getLog().getStrings();
@@ -94,7 +94,7 @@ public class APIAlgoGesamtschuleAbschluss {
 							schema = @Schema(implementation = GEAbschlussFaecher.class))) final GEAbschlussFaecher faecher,
 			@Context final HttpServletRequest request) {
 		final ServiceAbschlussHA10 ha10 = new ServiceAbschlussHA10();
-		final AbschlussErgebnis daten = ha10.handle(faecher);
+		final AbschlussErgebnis daten = ha10.berechne(faecher);
 		if (daten == null)
 			return new ApiOperationException(Status.BAD_REQUEST).getResponse();
 		daten.log = ha10.getLog().getStrings();
@@ -124,7 +124,7 @@ public class APIAlgoGesamtschuleAbschluss {
 							schema = @Schema(implementation = GEAbschlussFaecher.class))) final GEAbschlussFaecher faecher,
 			@Context final HttpServletRequest request) {
 		final ServiceAbschlussMSA msa = new ServiceAbschlussMSA();
-		final AbschlussErgebnis daten = msa.handle(faecher);
+		final AbschlussErgebnis daten = msa.berechne(faecher);
 		if (daten == null)
 			return new ApiOperationException(Status.BAD_REQUEST).getResponse();
 		daten.log = msa.getLog().getStrings();
@@ -154,7 +154,7 @@ public class APIAlgoGesamtschuleAbschluss {
 							schema = @Schema(implementation = GEAbschlussFaecher.class))) final GEAbschlussFaecher faecher,
 			@Context final HttpServletRequest request) {
 		final ServiceBerechtigungMSAQ msaq = new ServiceBerechtigungMSAQ();
-		final AbschlussErgebnis daten = msaq.handle(faecher);
+		final AbschlussErgebnis daten = msaq.berechne(faecher);
 		if (daten == null)
 			return new ApiOperationException(Status.BAD_REQUEST).getResponse();
 		daten.log = msaq.getLog().getStrings();
@@ -183,7 +183,7 @@ public class APIAlgoGesamtschuleAbschluss {
 							schema = @Schema(implementation = GEAbschlussFaecher.class))) final GEAbschlussFaecher faecher,
 			@Context final HttpServletRequest request) {
 		final ServicePrognose prognose = new ServicePrognose();
-		final AbschlussErgebnis daten = prognose.handle(faecher);
+		final AbschlussErgebnis daten = prognose.berechne(faecher);
 		if (daten == null)
 			return new ApiOperationException(Status.BAD_REQUEST).getResponse();
 		daten.log = prognose.getLog().getStrings();

@@ -18,7 +18,7 @@ import jakarta.validation.constraints.NotNull;
  *
  * @author Benjamin A. Bartsch
  */
-public final class KursblockungAlgorithmus extends Service<GostBlockungsdatenManager, ArrayList<GostBlockungsergebnisManager>> {
+public final class KursblockungAlgorithmus extends Service {
 
 	private final @NotNull Random _random = new Random();
 
@@ -29,7 +29,14 @@ public final class KursblockungAlgorithmus extends Service<GostBlockungsdatenMan
 		// leer
 	}
 
-	@Override
+	/**
+	 * Berechnet eine Menge von Blockungsergebnissen für den übergebenen Blockungsdaten-Manager und gib eine Liste
+	 * von Blockungsergebnis-Manager zurück.
+	 *
+	 * @param pInput   der Blockungsdaten-Manager
+	 *
+	 * @return die Liste mit den Blockungsergebnis-Managern
+	 */
 	public @NotNull ArrayList<@NotNull GostBlockungsergebnisManager> handle(final @NotNull GostBlockungsdatenManager pInput) {
 		// Logger-Einrückung (relativ +4).
 		logger.modifyIndent(+4);

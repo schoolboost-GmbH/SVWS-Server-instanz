@@ -3,7 +3,7 @@ import { LogConsumerList } from '../core/logger/LogConsumerList';
 import { Class } from '../java/lang/Class';
 import { Logger } from '../core/logger/Logger';
 
-export abstract class Service<T_IN, T_OUT> extends JavaObject {
+export abstract class Service extends JavaObject {
 
 	/**
 	 * Die Instanz des Logger, der von diesem Service genutzt wird
@@ -11,7 +11,7 @@ export abstract class Service<T_IN, T_OUT> extends JavaObject {
 	protected logger : Logger = new Logger();
 
 	/**
-	 * Die Instanz des Consumers von Log-Informationen. In diesem Fall ein einfacher Vektor
+	 * Die Instanz des Consumers von Log-Informationen. In diesem Fall eine einfache ArrayList
 	 */
 	protected log : LogConsumerList = new LogConsumerList();
 
@@ -23,17 +23,6 @@ export abstract class Service<T_IN, T_OUT> extends JavaObject {
 		super();
 		this.logger.addConsumer(this.log);
 	}
-
-	/**
-	 * Diese Methode muss von dem erbenden Service implementiert werden
-	 * und handhabt das übergebene Input-Objekt und erzeugt das zugehörige
-	 * Output-Objekt.
-	 *
-	 * @param input   das Input-Objekt
-	 *
-	 * @return das Output-Objekt
-	 */
-	public abstract handle(input : T_IN | null) : T_OUT | null;
 
 	/**
 	 * Gibt die Logger-Instanz von diesem Service zurück.
@@ -61,10 +50,10 @@ export abstract class Service<T_IN, T_OUT> extends JavaObject {
 		return ['de.svws_nrw.core.Service'].includes(name);
 	}
 
-	public static class = new Class<Service<any, any>>('de.svws_nrw.core.Service');
+	public static class = new Class<Service>('de.svws_nrw.core.Service');
 
 }
 
-export function cast_de_svws_nrw_core_Service<T_IN, T_OUT>(obj : unknown) : Service<T_IN, T_OUT> {
-	return obj as Service<T_IN, T_OUT>;
+export function cast_de_svws_nrw_core_Service(obj : unknown) : Service {
+	return obj as Service;
 }

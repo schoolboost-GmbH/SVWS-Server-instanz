@@ -12,10 +12,10 @@ describe.each(files)("Testfall %s", (file) => {
 	console.log(`${file}...`);
 	test(`Testfall ${file}`, () => {
 		const abschlussBerechnung = new ServicePrognose();
-		const output = abschlussBerechnung.handle(testfall.input);
+		const output = abschlussBerechnung.berechne(testfall.input);
 		const testAbschluss = AbschlussManager.equalsAbschluesse(output.abschluss, testfall.prognose.abschluss);
 		if (testAbschluss === false)
-			console.error("" + file + " -> " + JSON.stringify(output) + "\n" + JSON.stringify(testfall.input));
+			console.error(file + " -> " + JSON.stringify(output) + "\n" + JSON.stringify(testfall.input));
 		expect(testAbschluss).toBe(true);
 	});
 });

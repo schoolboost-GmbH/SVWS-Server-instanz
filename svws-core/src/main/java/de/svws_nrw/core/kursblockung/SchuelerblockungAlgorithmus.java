@@ -15,7 +15,7 @@ import jakarta.validation.constraints.NotNull;
  *
  * @author Benjamin A. Bartsch
  */
-public final class SchuelerblockungAlgorithmus extends Service<SchuelerblockungInput, SchuelerblockungOutput> {
+public final class SchuelerblockungAlgorithmus extends Service {
 
 	private static final @NotNull Random _random = new Random();
 
@@ -26,7 +26,13 @@ public final class SchuelerblockungAlgorithmus extends Service<SchuelerblockungI
 		// leer
 	}
 
-	@Override
+	/**
+	 * Berechnen die Kurs-Schülerfachwahl-Zuordnung für einen Schüler anhand seiner Fachwahlen.
+	 *
+	 * @param pInput   die Daten mit Informationen zu den Kursen und den Fachwahlen
+	 *
+	 * @return die Kurs-Schülerfachwahl-Zuordnung
+	 */
 	public @NotNull SchuelerblockungOutput handle(final @NotNull SchuelerblockungInput pInput) {
 		// Logger-Einrückung (relativ +4).
 		logger.modifyIndent(+4);

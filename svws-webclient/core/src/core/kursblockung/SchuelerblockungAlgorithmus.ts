@@ -6,7 +6,7 @@ import { Class } from '../../java/lang/Class';
 import { LogLevel } from '../../core/logger/LogLevel';
 import { SchuelerblockungDynDaten } from '../../core/kursblockung/SchuelerblockungDynDaten';
 
-export class SchuelerblockungAlgorithmus extends Service<SchuelerblockungInput, SchuelerblockungOutput> {
+export class SchuelerblockungAlgorithmus extends Service {
 
 	private static readonly _random : Random = new Random();
 
@@ -18,6 +18,13 @@ export class SchuelerblockungAlgorithmus extends Service<SchuelerblockungInput, 
 		super();
 	}
 
+	/**
+	 * Berechnen die Kurs-Schülerfachwahl-Zuordnung für einen Schüler anhand seiner Fachwahlen.
+	 *
+	 * @param pInput   die Daten mit Informationen zu den Kursen und den Fachwahlen
+	 *
+	 * @return die Kurs-Schülerfachwahl-Zuordnung
+	 */
 	public handle(pInput : SchuelerblockungInput) : SchuelerblockungOutput {
 		this.logger.modifyIndent(+4);
 		const seed : number = SchuelerblockungAlgorithmus._random.nextLong();

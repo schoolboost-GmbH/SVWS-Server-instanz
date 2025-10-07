@@ -5,8 +5,8 @@ import { GELeistungsdifferenzierteKursart } from '../../../core/types/ge/GELeist
 import { LogLevel } from '../../../core/logger/LogLevel';
 import type { Predicate } from '../../../java/util/function/Predicate';
 import { AbschlussFaecherGruppe } from '../../../core/abschluss/ge/AbschlussFaecherGruppe';
-import { GEAbschlussFaecher } from '../../../core/data/abschluss/GEAbschlussFaecher';
 import { AbschlussErgebnis } from '../../../core/data/abschluss/AbschlussErgebnis';
+import { GEAbschlussFaecher } from '../../../core/data/abschluss/GEAbschlussFaecher';
 import { SchulabschlussAllgemeinbildend } from '../../../asd/types/schule/SchulabschlussAllgemeinbildend';
 import type { List } from '../../../java/util/List';
 import { Class } from '../../../java/lang/Class';
@@ -14,7 +14,7 @@ import { Arrays } from '../../../java/util/Arrays';
 import { AbschlussManager } from '../../../core/abschluss/AbschlussManager';
 import { AbschlussFaecherGruppen } from '../../../core/abschluss/ge/AbschlussFaecherGruppen';
 
-export class ServiceAbschlussHA9 extends Service<GEAbschlussFaecher, AbschlussErgebnis> {
+export class ServiceAbschlussHA9 extends Service {
 
 	/**
 	 * Filter für alle nicht ausgeglichenen Defizite
@@ -62,7 +62,7 @@ export class ServiceAbschlussHA9 extends Service<GEAbschlussFaecher, AbschlussEr
 	 *
 	 * @return das Ergebnis der Abschlussberechnung
 	 */
-	public handle(input : GEAbschlussFaecher) : AbschlussErgebnis {
+	public berechne(input : GEAbschlussFaecher) : AbschlussErgebnis {
 		if (JavaObject.equalsTranspiler("10", (input.jahrgang))) {
 			this.logger.logLn(LogLevel.INFO, "Im Jahrgang 10 gibt es keinen HA9-Abschluss mehr.");
 			return AbschlussManager.getErgebnis(null, false);

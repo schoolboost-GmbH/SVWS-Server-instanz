@@ -6,18 +6,14 @@ import jakarta.validation.constraints.NotNull;
 
 /**
  * Diese generische Klasse dient als Basisklasse für einfache Dienste bzw. Algorithmen,
- * die im SVWS-Core definiert werden und zu einem Input-Objekt vom Typ T_IN ein
- * Output-Objekt vom Typ T_OUT erzeugen.
- *
- * @param <T_IN>    die Klasse des Input-Objektes
- * @param <T_OUT>   die Klasse des Output-Objektes
+ * welche einen Listen-basierten Logger verwenden.
  */
-public abstract class Service<T_IN, T_OUT> {
+public abstract class Service {
 
 	/** Die Instanz des Logger, der von diesem Service genutzt wird */
 	protected @NotNull Logger logger = new Logger();
 
-	/** Die Instanz des Consumers von Log-Informationen. In diesem Fall ein einfacher Vektor */
+	/** Die Instanz des Consumers von Log-Informationen. In diesem Fall eine einfache ArrayList */
 	protected @NotNull LogConsumerList log = new LogConsumerList();
 
 	/**
@@ -26,19 +22,6 @@ public abstract class Service<T_IN, T_OUT> {
 	protected Service() {
 		this.logger.addConsumer(log);
 	}
-
-
-	/**
-	 * Diese Methode muss von dem erbenden Service implementiert werden
-	 * und handhabt das übergebene Input-Objekt und erzeugt das zugehörige
-	 * Output-Objekt.
-	 *
-	 * @param input   das Input-Objekt
-	 *
-	 * @return das Output-Objekt
-	 */
-	public abstract T_OUT handle(T_IN input);
-
 
 	/**
 	 * Gibt die Logger-Instanz von diesem Service zurück.

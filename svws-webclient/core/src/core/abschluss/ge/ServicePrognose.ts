@@ -13,7 +13,7 @@ import { Class } from '../../../java/lang/Class';
 import { AbschlussManager } from '../../../core/abschluss/AbschlussManager';
 import { ServiceAbschlussHA9 } from '../../../core/abschluss/ge/ServiceAbschlussHA9';
 
-export class ServicePrognose extends Service<GEAbschlussFaecher, AbschlussErgebnis> {
+export class ServicePrognose extends Service {
 
 
 	/**
@@ -53,7 +53,7 @@ export class ServicePrognose extends Service<GEAbschlussFaecher, AbschlussErgebn
 	 *
 	 * @return das Ergebnis der Prognoseberechnung
 	 */
-	public handle(input : GEAbschlussFaecher) : AbschlussErgebnis {
+	public berechne(input : GEAbschlussFaecher) : AbschlussErgebnis {
 		if (!AbschlussManager.pruefeHat4LeistungsdifferenzierteFaecher(input)) {
 			this.logger.logLn(LogLevel.DEBUG, "Fehler: Es wurden nicht genügend leistungsdiffernzierte Fächer gefunden.");
 			const prognose : AbschlussErgebnis = AbschlussManager.getErgebnis(null, false);
@@ -70,7 +70,7 @@ export class ServicePrognose extends Service<GEAbschlussFaecher, AbschlussErgebn
 		let np_faecher : List<string> | null = null;
 		if (!JavaObject.equalsTranspiler("10", (input.jahrgang))) {
 			const ha9 : ServiceAbschlussHA9 = new ServiceAbschlussHA9();
-			const ha9output : AbschlussErgebnis = ha9.handle(input);
+			const ha9output : AbschlussErgebnis = ha9.berechne(input);
 			np_faecher = ha9output.npFaecher;
 			if (ha9output.erworben)
 				abschluss = SchulabschlussAllgemeinbildend.HA9;
@@ -81,7 +81,7 @@ export class ServicePrognose extends Service<GEAbschlussFaecher, AbschlussErgebn
 				abschluss = SchulabschlussAllgemeinbildend.HA9;
 			}
 		const ha10 : ServiceAbschlussHA10 = new ServiceAbschlussHA10();
-		const ha10output : AbschlussErgebnis = ha10.handle(input);
+		const ha10output : AbschlussErgebnis = ha10.berechne(input);
 		if (ha10output.erworben)
 			abschluss = SchulabschlussAllgemeinbildend.HA10;
 		else
@@ -90,13 +90,13 @@ export class ServicePrognose extends Service<GEAbschlussFaecher, AbschlussErgebn
 		this.log.append(ha10.getLog());
 		if ((!JavaObject.equalsTranspiler(SchulabschlussAllgemeinbildend.OA, (abschluss))) || (!ServicePrognose.hatLernbereichsnoten(input))) {
 			const msa : ServiceAbschlussMSA = new ServiceAbschlussMSA();
-			const msaOutput : AbschlussErgebnis = msa.handle(input);
+			const msaOutput : AbschlussErgebnis = msa.berechne(input);
 			this.logger.logLn(LogLevel.INFO, "");
 			this.log.append(msa.getLog());
 			if (msaOutput.erworben) {
 				abschluss = SchulabschlussAllgemeinbildend.MSA;
 				const msaq : ServiceBerechtigungMSAQ = new ServiceBerechtigungMSAQ();
-				const msaqOutput : AbschlussErgebnis = msaq.handle(input);
+				const msaqOutput : AbschlussErgebnis = msaq.berechne(input);
 				if (msaqOutput.erworben) {
 					abschluss = SchulabschlussAllgemeinbildend.MSA_Q;
 				} else {

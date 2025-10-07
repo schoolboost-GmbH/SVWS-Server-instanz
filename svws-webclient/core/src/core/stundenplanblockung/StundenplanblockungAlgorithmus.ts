@@ -1,8 +1,7 @@
 import { Service } from '../../core/Service';
 import { Class } from '../../java/lang/Class';
-import { StundenplanblockungManager } from '../../core/utils/stundenplanblockung/StundenplanblockungManager';
 
-export class StundenplanblockungAlgorithmus extends Service<StundenplanblockungManager, StundenplanblockungManager> {
+export class StundenplanblockungAlgorithmus extends Service {
 
 
 	/**
@@ -10,10 +9,7 @@ export class StundenplanblockungAlgorithmus extends Service<StundenplanblockungM
 	 */
 	public constructor() {
 		super();
-	}
-
-	public handle(pInput : StundenplanblockungManager) : StundenplanblockungManager {
-		return pInput;
+		// empty block
 	}
 
 	transpilerCanonicalName(): string {

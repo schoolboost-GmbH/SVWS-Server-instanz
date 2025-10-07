@@ -69,7 +69,7 @@ class TestGEAbschluesse {
 						System.out.println();
 						System.out.println("    - Prüfe Notenbild mit der ID " + name + ":");
 						final ServicePrognose abschlussBerechnung = new ServicePrognose();
-						final AbschlussErgebnis output = abschlussBerechnung.handle(data.input);
+						final AbschlussErgebnis output = abschlussBerechnung.berechne(data.input);
 						System.out.println(abschlussBerechnung.getLog().getText(LogLevel.DEBUG, "        "));
 
 						// Ausgabe überprüfen
@@ -104,7 +104,7 @@ class TestGEAbschluesse {
 							System.out.println();
 							System.out.println("    - Prüfe Notenbild mit der ID " + name + ":");
 							final ServiceAbschlussHA9 ha9 = new ServiceAbschlussHA9();
-							final AbschlussErgebnis output = ha9.handle(data.input);
+							final AbschlussErgebnis output = ha9.berechne(data.input);
 							System.out.println(ha9.getLog().getText(LogLevel.DEBUG, "        "));
 
 							// Ausgabe überprüfen
@@ -141,7 +141,7 @@ class TestGEAbschluesse {
 							System.out.println();
 							System.out.println("    - Prüfe Notenbild mit der ID " + name + ":");
 							final ServiceAbschlussHA10 ha10 = new ServiceAbschlussHA10();
-							final AbschlussErgebnis output = ha10.handle(data.input);
+							final AbschlussErgebnis output = ha10.berechne(data.input);
 							System.out.println(ha10.getLog().getText(LogLevel.DEBUG, "        "));
 							// Ausgabe überprüfen
 							final boolean testAbschluss = (output.erworben == data.ha10.erworben);
@@ -177,7 +177,7 @@ class TestGEAbschluesse {
 							System.out.println();
 							System.out.println("    - Prüfe Notenbild mit der ID " + name + ":");
 							final ServiceAbschlussMSA msa = new ServiceAbschlussMSA();
-							final AbschlussErgebnis output = msa.handle(data.input);
+							final AbschlussErgebnis output = msa.berechne(data.input);
 							System.out.println(msa.getLog().getText(LogLevel.DEBUG, "        "));
 							// Ausgabe überprüfen
 							final boolean testAbschluss = (output.erworben == data.msa.erworben);
@@ -213,7 +213,7 @@ class TestGEAbschluesse {
 							System.out.println();
 							System.out.println("    - Prüfe Notenbild mit der ID " + name + ":");
 							final ServiceBerechtigungMSAQ msaq = new ServiceBerechtigungMSAQ();
-							final AbschlussErgebnis output = msaq.handle(data.input);
+							final AbschlussErgebnis output = msaq.berechne(data.input);
 							System.out.println(msaq.getLog().getText(LogLevel.DEBUG, "        "));
 							// Ausgabe überprüfen
 							final boolean testAbschluss = (output.erworben == data.msa_q.erworben);

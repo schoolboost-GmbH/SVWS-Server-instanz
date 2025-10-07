@@ -17,7 +17,7 @@ import jakarta.validation.constraints.NotNull;
  * Diese Klasse stellt einen Service zur Prognoseberechnung in Bezug auf die Gesamtschulabschlüsse
  * zur Verfügung.
  */
-public class ServicePrognose extends Service<GEAbschlussFaecher, AbschlussErgebnis> {
+public class ServicePrognose extends Service {
 
 	/**
 	 * Leerer Standardkonstruktor.
@@ -57,8 +57,7 @@ public class ServicePrognose extends Service<GEAbschlussFaecher, AbschlussErgebn
 	 *
 	 * @return das Ergebnis der Prognoseberechnung
 	 */
-	@Override
-	public @NotNull AbschlussErgebnis handle(final @NotNull GEAbschlussFaecher input) {
+	public @NotNull AbschlussErgebnis berechne(final @NotNull GEAbschlussFaecher input) {
 		// Prüfe, ob genügend leistungsdifferenzierte Kurse vorkommen
 		if (!AbschlussManager.pruefeHat4LeistungsdifferenzierteFaecher(input)) {
 			logger.logLn(LogLevel.DEBUG, "Fehler: Es wurden nicht genügend leistungsdiffernzierte Fächer gefunden.");
@@ -80,7 +79,7 @@ public class ServicePrognose extends Service<GEAbschlussFaecher, AbschlussErgebn
 		List<String> np_faecher = null;
 		if (!"10".equals(input.jahrgang)) {
 			final @NotNull ServiceAbschlussHA9 ha9 = new ServiceAbschlussHA9();
-			final @NotNull AbschlussErgebnis ha9output = ha9.handle(input);
+			final @NotNull AbschlussErgebnis ha9output = ha9.berechne(input);
 			np_faecher = ha9output.npFaecher;
 			if (ha9output.erworben)
 				abschluss = SchulabschlussAllgemeinbildend.HA9;
@@ -92,7 +91,7 @@ public class ServicePrognose extends Service<GEAbschlussFaecher, AbschlussErgebn
 		}
 
 		final @NotNull ServiceAbschlussHA10 ha10 = new ServiceAbschlussHA10();
-		final @NotNull AbschlussErgebnis ha10output = ha10.handle(input);
+		final @NotNull AbschlussErgebnis ha10output = ha10.berechne(input);
 		if (ha10output.erworben)
 			abschluss = SchulabschlussAllgemeinbildend.HA10;
 		else if ("10".equals(input.jahrgang) || (SchulabschlussAllgemeinbildend.HA9.equals(abschluss)))
@@ -101,14 +100,14 @@ public class ServicePrognose extends Service<GEAbschlussFaecher, AbschlussErgebn
 
 		if ((!SchulabschlussAllgemeinbildend.OA.equals(abschluss)) || (!hatLernbereichsnoten(input))) {
 			final @NotNull ServiceAbschlussMSA msa = new ServiceAbschlussMSA();
-			final @NotNull AbschlussErgebnis msaOutput = msa.handle(input);
+			final @NotNull AbschlussErgebnis msaOutput = msa.berechne(input);
 			logger.logLn(LogLevel.INFO, "");
 			log.append(msa.getLog());
 			if (msaOutput.erworben) {
 				abschluss = SchulabschlussAllgemeinbildend.MSA;
 
 				final @NotNull ServiceBerechtigungMSAQ msaq = new ServiceBerechtigungMSAQ();
-				final @NotNull AbschlussErgebnis msaqOutput = msaq.handle(input);
+				final @NotNull AbschlussErgebnis msaqOutput = msaq.berechne(input);
 				if (msaqOutput.erworben) {
 					abschluss = SchulabschlussAllgemeinbildend.MSA_Q;
 				} else {

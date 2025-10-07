@@ -2,8 +2,6 @@ package de.svws_nrw.core.stundenplanblockung;
 
 import de.svws_nrw.core.Service;
 import de.svws_nrw.core.utils.gost.GostBlockungsdatenManager;
-import de.svws_nrw.core.utils.stundenplanblockung.StundenplanblockungManager;
-import jakarta.validation.constraints.NotNull;
 
 /**
  * Dieser Service wandelt die Eingabedaten {@link GostBlockungsdatenManager}. <br>
@@ -11,18 +9,13 @@ import jakarta.validation.constraints.NotNull;
  *
  * @author Benjamin A. Bartsch
  */
-public final class StundenplanblockungAlgorithmus extends Service<StundenplanblockungManager, StundenplanblockungManager> {
+public final class StundenplanblockungAlgorithmus extends Service {
 
 	/**
 	 * Leerer Standardkonstruktor.
 	 */
 	public StundenplanblockungAlgorithmus() {
 		// leer
-	}
-
-	@Override
-	public @NotNull StundenplanblockungManager handle(final @NotNull StundenplanblockungManager pInput) {
-		return pInput;
 	}
 
 }

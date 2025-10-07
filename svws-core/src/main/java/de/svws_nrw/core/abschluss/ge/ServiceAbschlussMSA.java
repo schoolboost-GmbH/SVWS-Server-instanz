@@ -19,7 +19,7 @@ import jakarta.validation.constraints.NotNull;
  * Diese Klasse stellt einen Service zur Abschlussberechnung in Bezug auf den Mittleren Schulabschluss
  * nach Klasse 10 zur Verfügung.
  */
-public class ServiceAbschlussMSA extends Service<GEAbschlussFaecher, AbschlussErgebnis> {
+public class ServiceAbschlussMSA extends Service {
 
 	private static final @NotNull Predicate<GEAbschlussFach> filterDefizite =
 			(final @NotNull GEAbschlussFach f) -> !f.ausgeglichen && ((f.note > 4) || ((GELeistungsdifferenzierteKursart.G.hat(f.kursart)) && (f.note > 3)));
@@ -89,8 +89,7 @@ public class ServiceAbschlussMSA extends Service<GEAbschlussFaecher, AbschlussEr
 	 *
 	 * @return das Ergebnis der Abschlussberechnung
 	 */
-	@Override
-	public @NotNull AbschlussErgebnis handle(final @NotNull GEAbschlussFaecher input) {
+	public @NotNull AbschlussErgebnis berechne(final @NotNull GEAbschlussFaecher input) {
 		logger.logLn(LogLevel.INFO, "Prüfe MSA:");
 		logger.logLn(LogLevel.DEBUG, "==========");
 

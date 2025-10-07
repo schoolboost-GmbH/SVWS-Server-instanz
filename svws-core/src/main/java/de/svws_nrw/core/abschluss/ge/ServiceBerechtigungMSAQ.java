@@ -21,7 +21,7 @@ import jakarta.validation.constraints.NotNull;
  * Besuch der Gymnasialen Oberstufe in Kombination mit dem Mittleren Schulabschluss
  * nach Klasse 10 erworben wurde.
  */
-public class ServiceBerechtigungMSAQ extends Service<GEAbschlussFaecher, AbschlussErgebnis> {
+public class ServiceBerechtigungMSAQ extends Service {
 
 	private static final @NotNull Predicate<GEAbschlussFach> filterDefizite =
 			(final @NotNull GEAbschlussFach f) -> (f.note > 3) || ((GELeistungsdifferenzierteKursart.G.hat(f.kursart)) && (f.note > 2));
@@ -65,8 +65,7 @@ public class ServiceBerechtigungMSAQ extends Service<GEAbschlussFaecher, Abschlu
 	 *
 	 * @return das Ergebnis der Abschlussberechnung
 	 */
-	@Override
-	public @NotNull AbschlussErgebnis handle(final @NotNull GEAbschlussFaecher input) {
+	public @NotNull AbschlussErgebnis berechne(final @NotNull GEAbschlussFaecher input) {
 		logger.logLn(LogLevel.INFO, "Prüfe MSA-Q:");
 		logger.logLn(LogLevel.DEBUG, "============");
 

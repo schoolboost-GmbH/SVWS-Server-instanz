@@ -5,8 +5,8 @@ import { JavaString } from '../../../java/lang/JavaString';
 import { GELeistungsdifferenzierteKursart } from '../../../core/types/ge/GELeistungsdifferenzierteKursart';
 import { LogLevel } from '../../../core/logger/LogLevel';
 import type { Predicate } from '../../../java/util/function/Predicate';
-import { GEAbschlussFaecher } from '../../../core/data/abschluss/GEAbschlussFaecher';
 import { AbschlussErgebnis } from '../../../core/data/abschluss/AbschlussErgebnis';
+import { GEAbschlussFaecher } from '../../../core/data/abschluss/GEAbschlussFaecher';
 import { SchulabschlussAllgemeinbildend } from '../../../asd/types/schule/SchulabschlussAllgemeinbildend';
 import { NullPointerException } from '../../../java/lang/NullPointerException';
 import { ServiceAbschlussMSA } from '../../../core/abschluss/ge/ServiceAbschlussMSA';
@@ -16,7 +16,7 @@ import { Arrays } from '../../../java/util/Arrays';
 import { AbschlussManager } from '../../../core/abschluss/AbschlussManager';
 import { AbschlussFaecherGruppen } from '../../../core/abschluss/ge/AbschlussFaecherGruppen';
 
-export class ServiceBerechtigungMSAQ extends Service<GEAbschlussFaecher, AbschlussErgebnis> {
+export class ServiceBerechtigungMSAQ extends Service {
 
 	private static readonly filterDefizite : Predicate<GEAbschlussFach> = { test : (f: GEAbschlussFach) => (f.note > 3) || ((GELeistungsdifferenzierteKursart.G.hat(f.kursart)) && (f.note > 2)) };
 
@@ -57,7 +57,7 @@ export class ServiceBerechtigungMSAQ extends Service<GEAbschlussFaecher, Abschlu
 	 *
 	 * @return das Ergebnis der Abschlussberechnung
 	 */
-	public handle(input : GEAbschlussFaecher) : AbschlussErgebnis {
+	public berechne(input : GEAbschlussFaecher) : AbschlussErgebnis {
 		this.logger.logLn(LogLevel.INFO, "Prüfe MSA-Q:");
 		this.logger.logLn(LogLevel.DEBUG, "============");
 		if ((input.faecher === null) || (!AbschlussManager.pruefeHat4LeistungsdifferenzierteFaecher(input))) {

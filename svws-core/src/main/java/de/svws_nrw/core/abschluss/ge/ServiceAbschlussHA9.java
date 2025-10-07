@@ -18,7 +18,7 @@ import jakarta.validation.constraints.NotNull;
  * Diese Klasse stellt einen Service zur Abschlussberechnung in Bezug auf den Hauptschulabschluss
  * nach Klasse 9 zur Verfügung.
  */
-public class ServiceAbschlussHA9 extends Service<GEAbschlussFaecher, AbschlussErgebnis> {
+public class ServiceAbschlussHA9 extends Service {
 
 	/** Filter für alle nicht ausgeglichenen Defizite */
 	private static final @NotNull Predicate<GEAbschlussFach> filterDefizit = (final @NotNull GEAbschlussFach f) -> (f.note > 4) && (!f.ausgeglichen);
@@ -55,8 +55,7 @@ public class ServiceAbschlussHA9 extends Service<GEAbschlussFaecher, AbschlussEr
 	 *
 	 * @return das Ergebnis der Abschlussberechnung
 	 */
-	@Override
-	public @NotNull AbschlussErgebnis handle(final @NotNull GEAbschlussFaecher input) {
+	public @NotNull AbschlussErgebnis berechne(final @NotNull GEAbschlussFaecher input) {
 		if ("10".equals(input.jahrgang)) {
 			logger.logLn(LogLevel.INFO, "Im Jahrgang 10 gibt es keinen HA9-Abschluss mehr.");
 			return AbschlussManager.getErgebnis(null, false);

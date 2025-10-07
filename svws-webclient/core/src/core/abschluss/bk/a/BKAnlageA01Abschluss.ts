@@ -7,7 +7,7 @@ import { AbschlussErgebnisBerufsbildend } from '../../../../core/data/abschluss/
 import { BKAnlageAFaecher } from '../../../../core/abschluss/bk/a/BKAnlageAFaecher';
 import { LogLevel } from '../../../../core/logger/LogLevel';
 
-export class BKAnlageA01Abschluss extends Service<BKAnlageAFaecher, AbschlussErgebnisBerufsbildend> {
+export class BKAnlageA01Abschluss extends Service {
 
 
 	/**
@@ -24,7 +24,7 @@ export class BKAnlageA01Abschluss extends Service<BKAnlageAFaecher, AbschlussErg
 	 *
 	 * @return das Ergebnis der Abschlussprüfung
 	 */
-	public handle(input : BKAnlageAFaecher) : AbschlussErgebnisBerufsbildend {
+	public berechne(input : BKAnlageAFaecher) : AbschlussErgebnisBerufsbildend {
 		this.logger.log(LogLevel.INFO, "Prüfe BSA:");
 		if (AbschlussManagerBerufsbildend.getAnzahlUngenuegend(input) > 0) {
 			this.logger.logLn(LogLevel.INFO, " nicht erreicht (kein ungenügend erlaubt, insgesamt " + AbschlussManagerBerufsbildend.getAnzahlUngenuegend(input) + ").");

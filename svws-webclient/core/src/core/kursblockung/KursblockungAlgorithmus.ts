@@ -19,7 +19,7 @@ import { KursblockungAlgorithmusSZufaellig } from '../../core/kursblockung/Kursb
 import { KursblockungAlgorithmusK } from '../../core/kursblockung/KursblockungAlgorithmusK';
 import { Class } from '../../java/lang/Class';
 
-export class KursblockungAlgorithmus extends Service<GostBlockungsdatenManager, ArrayList<GostBlockungsergebnisManager>> {
+export class KursblockungAlgorithmus extends Service {
 
 	private readonly _random : Random = new Random();
 
@@ -31,6 +31,14 @@ export class KursblockungAlgorithmus extends Service<GostBlockungsdatenManager, 
 		super();
 	}
 
+	/**
+	 * Berechnet eine Menge von Blockungsergebnissen für den übergebenen Blockungsdaten-Manager und gib eine Liste
+	 * von Blockungsergebnis-Manager zurück.
+	 *
+	 * @param pInput   der Blockungsdaten-Manager
+	 *
+	 * @return die Liste mit den Blockungsergebnis-Managern
+	 */
 	public handle(pInput : GostBlockungsdatenManager) : ArrayList<GostBlockungsergebnisManager> {
 		this.logger.modifyIndent(+4);
 		const seed : number = this._random.nextLong();
