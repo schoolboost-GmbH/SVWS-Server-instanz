@@ -13,7 +13,10 @@ public class Floskelgruppenart extends CoreTypeSimple<FloskelgruppenartKatalogEi
 	/**
 	 * Erstellt eine Floskelgruppenart mit Standardwerten
 	 */
-	public Floskelgruppenart() { }
+	public Floskelgruppenart() {
+		// leer
+	}
+
 
 	/**
 	 * Initialisiert den Core-Type mit dem angegebenen Manager.
