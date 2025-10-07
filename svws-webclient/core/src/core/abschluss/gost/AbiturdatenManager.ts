@@ -2552,7 +2552,7 @@ export class AbiturdatenManager extends JavaObject {
 				}
 			}
 		}
-		return summe / count;
+		return (count <= 0) ? 0 : summe / count;
 	}
 
 	/**

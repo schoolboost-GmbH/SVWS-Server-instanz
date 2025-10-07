@@ -2739,7 +2739,7 @@ public class AbiturdatenManager {
 				}
 			}
 		}
-		return summe / count;
+		return (count <= 0) ? 0 : summe / count;
 	}
 
 

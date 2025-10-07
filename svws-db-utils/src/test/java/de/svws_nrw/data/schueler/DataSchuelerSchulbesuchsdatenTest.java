@@ -899,7 +899,7 @@ class DataSchuelerSchulbesuchsdatenTest {
 		final var key = PrimarstufeSchuleingangsphaseBesuchsjahre.E2.daten(2025);
 		schulbesuchsdaten.mapAttribute(dtoSchueler, "idGrundschuleJahreEingangsphase", key.id, null);
 
-		assertThat(dtoSchueler.EPJahre).isEqualTo(key.id);
+		assertThat(dtoSchueler.EPJahre == null ? null : Long.valueOf(dtoSchueler.EPJahre)).isEqualTo(key.id);
 	}
 
 	@Test
