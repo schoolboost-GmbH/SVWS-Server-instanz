@@ -167,13 +167,30 @@ public class CoreTypeDataManager<T extends CoreTypeData, U extends CoreType<T, U
 				throw new CoreTypeException(_name + ": Der Bezeichner " + bezeichner
 						+ " kann keinem Core-Type-Wert zugeordnet werden. Der Core-Type konnte nicht vollständig initialisiert werden.");
 		}
-		// Prüfe alle Historien-Einträge auf Plausibilität und erzeugen jeweils eine Zuordnung des Core-Type-Wertes bzw. des Historieneintrages zu der ID des Eintrags
+
+		// Prüfe alle Historien-Einträge auf Plausibilität
+		initCheckHistorien();
+
+		// Erzeugen jeweils eine Zuordnung des Core-Type-Wertes bzw. des Historieneintrages zu der ID des Eintrags (und weitere Maps)
+		initMaps();
+	}
+
+	/**
+	 * Prüft alle Historieneinträge bei dem Erstellen eines neuen Managers.
+	 */
+	private void initCheckHistorien() {
 		final Set<Long> setIDs = new HashSet<>();
 		for (final Map.Entry<U, List<T>> entry : _mapEnumToHistorie.entrySet()) {
 			final @NotNull U coreTypeEntry = entry.getKey();
 			final @NotNull List<T> historie = entry.getValue();
 			checkHistorie(setIDs, _name, coreTypeEntry.name(), historie);
 		}
+	}
+
+	/**
+	 * Initialisiert die Maps, welches für den schnellen Zugriff als Cache verwendet werden.
+	 */
+	private void initMaps() {
 		for (final Map.Entry<U, List<T>> entry : _mapEnumToHistorie.entrySet()) {
 			final @NotNull U coreTypeEntry = entry.getKey();
 			final @NotNull List<T> historie = entry.getValue();
@@ -185,15 +202,11 @@ public class CoreTypeDataManager<T extends CoreTypeData, U extends CoreType<T, U
 				_mapKuerzelToEnum.put(eintrag.kuerzel, coreTypeEntry);
 				// Ergänze die Menge der zulässigen Schulformen, sofern eine Einschränkung vorliegt
 				final Set<Schulform> setSchulformen = new HashSet<>();
-				if (eintrag instanceof CoreTypeDataNurSchulformen) {
-					final @NotNull List<String> list = ((CoreTypeDataNurSchulformen) eintrag).schulformen;
-					setSchulformen.addAll(Schulform.data().getWerteByBezeichnerAsSet(list));
-				}
-				if (eintrag instanceof CoreTypeDataNurSchulformenUndSchulgliederungen) {
-					final @NotNull List<SchulformSchulgliederung> list = ((CoreTypeDataNurSchulformenUndSchulgliederungen) eintrag).zulaessig;
-					for (final @NotNull SchulformSchulgliederung sfsgl : list)
+				if (eintrag instanceof final CoreTypeDataNurSchulformen eintragNurSchulformen)
+					setSchulformen.addAll(Schulform.data().getWerteByBezeichnerAsSet(eintragNurSchulformen.schulformen));
+				if (eintrag instanceof final CoreTypeDataNurSchulformenUndSchulgliederungen eintragNurSchulformenUndSchulgliederungen)
+					for (final @NotNull SchulformSchulgliederung sfsgl : eintragNurSchulformenUndSchulgliederungen.zulaessig)
 						setSchulformen.add(Schulform.data().getWertByBezeichner(sfsgl.schulform));
-				}
 				_mapSchulformenByID.put(eintrag.id, setSchulformen);
 			}
 		}

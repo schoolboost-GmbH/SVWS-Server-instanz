@@ -431,7 +431,7 @@ public final class TranspilerTypeScriptPlugin extends TranspilerLanguagePlugin {
 					case final InstanceOfTree iot -> {
 						final VariableTree varNode = bpt.getVariable();
 						final TypeNode typeNode = new TypeNode(this, varNode.getType(), true, true);
-						yield "(" + convertExpression(iot.getExpression()) + " as " + typeNode.transpile(false) + ")";
+						yield "(" + convertExpression(iot.getExpression()) + " as unknown as " + typeNode.transpile(false) + ")";
 					}
 					default -> throw new TranspilerException("");
 				};

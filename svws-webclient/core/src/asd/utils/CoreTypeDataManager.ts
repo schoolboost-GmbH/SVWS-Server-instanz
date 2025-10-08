@@ -1,18 +1,17 @@
 import { JavaObject } from '../../java/lang/JavaObject';
 import type { JavaSet } from '../../java/util/JavaSet';
-import { CoreTypeDataNurSchulformen, cast_de_svws_nrw_asd_data_CoreTypeDataNurSchulformen } from '../../asd/data/CoreTypeDataNurSchulformen';
+import { CoreTypeDataNurSchulformen } from '../../asd/data/CoreTypeDataNurSchulformen';
 import { HashMap } from '../../java/util/HashMap';
 import { Schulform } from '../../asd/types/schule/Schulform';
 import { ArrayList } from '../../java/util/ArrayList';
 import { JavaString } from '../../java/lang/JavaString';
 import { JavaInteger } from '../../java/lang/JavaInteger';
-import { SchulformSchulgliederung } from '../../asd/data/schule/SchulformSchulgliederung';
-import { CoreTypeDataNurSchulformenUndSchulgliederungen, cast_de_svws_nrw_asd_data_CoreTypeDataNurSchulformenUndSchulgliederungen } from '../../asd/data/CoreTypeDataNurSchulformenUndSchulgliederungen';
+import { CoreTypeDataNurSchulformenUndSchulgliederungen } from '../../asd/data/CoreTypeDataNurSchulformenUndSchulgliederungen';
 import { NullPointerException } from '../../java/lang/NullPointerException';
 import { Class } from '../../java/lang/Class';
 import type { List } from '../../java/util/List';
 import type { CoreType } from '../../asd/types/CoreType';
-import { CoreTypeData, cast_de_svws_nrw_asd_data_CoreTypeData } from '../../asd/data/CoreTypeData';
+import { CoreTypeData } from '../../asd/data/CoreTypeData';
 import { Arrays } from '../../java/util/Arrays';
 import type { JavaMap } from '../../java/util/JavaMap';
 import { CoreTypeException } from '../../asd/data/CoreTypeException';
@@ -155,33 +154,8 @@ export class CoreTypeDataManager<T extends CoreTypeData, U extends CoreType<T, U
 			if (coreTypeValue === null)
 				throw new CoreTypeException(this._name + ": Der Bezeichner " + bezeichner + " kann keinem Core-Type-Wert zugeordnet werden. Der Core-Type konnte nicht vollständig initialisiert werden.")
 		}
-		const setIDs : JavaSet<number> | null = new HashSet<number>();
-		for (const entry of this._mapEnumToHistorie.entrySet()) {
-			const coreTypeEntry : U = entry.getKey();
-			const historie : List<T> = entry.getValue();
-			CoreTypeDataManager.checkHistorie(setIDs, this._name, coreTypeEntry.name(), historie);
-		}
-		for (const entry of this._mapEnumToHistorie.entrySet()) {
-			const coreTypeEntry : U = entry.getKey();
-			const historie : List<T> = entry.getValue();
-			for (const eintrag of historie) {
-				this._mapIDToEintrag.put(eintrag.id, eintrag);
-				this._mapIDToEnum.put(eintrag.id, coreTypeEntry);
-				this._mapSchluesselToEnum.put(eintrag.schluessel, coreTypeEntry);
-				this._mapKuerzelToEnum.put(eintrag.kuerzel, coreTypeEntry);
-				const setSchulformen : JavaSet<Schulform> | null = new HashSet<Schulform>();
-				if (((eintrag instanceof JavaObject) && (eintrag.isTranspiledInstanceOf('de.svws_nrw.asd.data.CoreTypeDataNurSchulformen')))) {
-					const list : List<string> = (cast_de_svws_nrw_asd_data_CoreTypeDataNurSchulformen(eintrag)).schulformen;
-					setSchulformen.addAll(Schulform.data().getWerteByBezeichnerAsSet(list));
-				}
-				if (((eintrag instanceof JavaObject) && (eintrag.isTranspiledInstanceOf('de.svws_nrw.asd.data.CoreTypeDataNurSchulformenUndSchulgliederungen')))) {
-					const list : List<SchulformSchulgliederung> = (cast_de_svws_nrw_asd_data_CoreTypeDataNurSchulformenUndSchulgliederungen(eintrag)).zulaessig;
-					for (const sfsgl of list)
-						setSchulformen.add(Schulform.data().getWertByBezeichner(sfsgl.schulform));
-				}
-				this._mapSchulformenByID.put(eintrag.id, setSchulformen);
-			}
-		}
+		this.initCheckHistorien();
+		this.initMaps();
 	}
 
 	/**
@@ -211,6 +185,41 @@ export class CoreTypeDataManager<T extends CoreTypeData, U extends CoreType<T, U
 		if (manager === null)
 			throw new CoreTypeException("Der Core-Type " + clazz.getSimpleName() + " wurde noch nicht initialisiert.")
 		return manager;
+	}
+
+	/**
+	 * Prüft alle Historieneinträge bei dem Erstellen eines neuen Managers.
+	 */
+	private initCheckHistorien() : void {
+		const setIDs : JavaSet<number> | null = new HashSet<number>();
+		for (const entry of this._mapEnumToHistorie.entrySet()) {
+			const coreTypeEntry : U = entry.getKey();
+			const historie : List<T> = entry.getValue();
+			CoreTypeDataManager.checkHistorie(setIDs, this._name, coreTypeEntry.name(), historie);
+		}
+	}
+
+	/**
+	 * Initialisiert die Maps, welches für den schnellen Zugriff als Cache verwendet werden.
+	 */
+	private initMaps() : void {
+		for (const entry of this._mapEnumToHistorie.entrySet()) {
+			const coreTypeEntry : U = entry.getKey();
+			const historie : List<T> = entry.getValue();
+			for (const eintrag of historie) {
+				this._mapIDToEintrag.put(eintrag.id, eintrag);
+				this._mapIDToEnum.put(eintrag.id, coreTypeEntry);
+				this._mapSchluesselToEnum.put(eintrag.schluessel, coreTypeEntry);
+				this._mapKuerzelToEnum.put(eintrag.kuerzel, coreTypeEntry);
+				const setSchulformen : JavaSet<Schulform> | null = new HashSet<Schulform>();
+				if (((eintrag instanceof JavaObject) && (eintrag.isTranspiledInstanceOf('de.svws_nrw.asd.data.CoreTypeDataNurSchulformen'))))
+					setSchulformen.addAll(Schulform.data().getWerteByBezeichnerAsSet((eintrag as unknown as CoreTypeDataNurSchulformen).schulformen));
+				if (((eintrag instanceof JavaObject) && (eintrag.isTranspiledInstanceOf('de.svws_nrw.asd.data.CoreTypeDataNurSchulformenUndSchulgliederungen'))))
+					for (const sfsgl of (eintrag as unknown as CoreTypeDataNurSchulformenUndSchulgliederungen).zulaessig)
+						setSchulformen.add(Schulform.data().getWertByBezeichner(sfsgl.schulform));
+				this._mapSchulformenByID.put(eintrag.id, setSchulformen);
+			}
+		}
 	}
 
 	/**
