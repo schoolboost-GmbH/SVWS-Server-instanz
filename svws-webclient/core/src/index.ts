@@ -566,6 +566,7 @@ export { OAuth2ClientConnection } from './core/data/oauth2/OAuth2ClientConnectio
 export { ReportingEMailDaten } from './core/data/reporting/ReportingEMailDaten';
 export { ReportingParameter } from './core/data/reporting/ReportingParameter';
 export { ReportingSortierungDefinition } from './core/data/reporting/ReportingSortierungDefinition';
+export { ReportingVorlageParameter } from './core/data/reporting/ReportingVorlageParameter';
 export { DatenbankVerbindungsdaten } from './core/data/schema/DatenbankVerbindungsdaten';
 export { Schild3KatalogEintragAbiturInfos } from './core/data/schild3/Schild3KatalogEintragAbiturInfos';
 export { Schild3KatalogEintragDQRNiveaus } from './core/data/schild3/Schild3KatalogEintragDQRNiveaus';
@@ -742,6 +743,7 @@ export { OAuth2ServerTyp } from './core/types/oauth2/OAuth2ServerTyp';
 export { ReportingAusgabeformat } from './core/types/reporting/ReportingAusgabeformat';
 export { ReportingEMailEmpfaengerTyp } from './core/types/reporting/ReportingEMailEmpfaengerTyp';
 export { ReportingReportvorlage } from './core/types/reporting/ReportingReportvorlage';
+export { ReportingVorlageParameterTyp } from './core/types/reporting/ReportingVorlageParameterTyp';
 export { SchildReportingAttributTyp } from './core/types/schild3/SchildReportingAttributTyp';
 export { HerkunftSchulform } from './core/types/schueler/HerkunftSchulform';
 export { HerkunftSonstige } from './core/types/schueler/HerkunftSonstige';

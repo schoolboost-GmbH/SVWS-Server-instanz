@@ -68,7 +68,7 @@ public class PdfFactory {
 		this.htmlBuilders = htmlBuilders;
 
 		// Validiere die Angaben zur HTML-Vorlage.
-		this.htmlTemplateDefinition = HtmlTemplateDefinition.getByType(ReportingReportvorlage.getByBezeichnung(this.reportingParameter.reportvorlage));
+		this.htmlTemplateDefinition = HtmlTemplateDefinition.getByReportvorlage(ReportingReportvorlage.getByBezeichnung(this.reportingParameter.reportvorlage));
 		if (this.htmlTemplateDefinition == null) {
 			this.reportingRepository.logger()
 					.logLn(LogLevel.ERROR, 4, "FEHLER: Die Template-Definitionen für die PDF-Factory sind inkonsistent.");

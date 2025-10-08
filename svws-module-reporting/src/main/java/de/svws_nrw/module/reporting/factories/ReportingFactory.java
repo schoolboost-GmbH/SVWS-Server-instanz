@@ -1,11 +1,13 @@
 package de.svws_nrw.module.reporting.factories;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 
 import de.svws_nrw.core.data.SimpleOperationResponse;
 import de.svws_nrw.core.data.reporting.ReportingParameter;
+import de.svws_nrw.core.data.reporting.ReportingVorlageParameter;
 import de.svws_nrw.core.logger.LogConsumerList;
 import de.svws_nrw.core.logger.LogLevel;
 import de.svws_nrw.core.logger.Logger;
@@ -63,6 +65,7 @@ public final class ReportingFactory {
 			this.logger.logLn(LogLevel.DEBUG, 0, ">>> Beginn des Initialisierens der Reporting-Factory und des Validierens übergebener Daten.");
 
 			// Validiere Datenbankverbindung
+			this.logger.logLn(LogLevel.DEBUG, 4, "Validiere Datenbankverbindung.");
 			if (conn == null) {
 				this.logger.logLn(LogLevel.ERROR, 4, "### FEHLER: Es wurde keine Verbindung zur Datenbank für die Initialisierung der Reporting-Factory "
 						+ "übergeben.");
@@ -72,6 +75,7 @@ public final class ReportingFactory {
 			this.conn = conn;
 
 			// Validiere Reporting-Parameter
+			this.logger.logLn(LogLevel.DEBUG, 4, "Validiere Reporting-Parameter.");
 			if (reportingParameter == null) {
 				this.logger.logLn(LogLevel.ERROR, 4, "### FEHLER: Es wurden keine Reporting-Parameter für die Initialisierung der Reporting-Factory übergeben"
 						+ ".");
@@ -91,6 +95,7 @@ public final class ReportingFactory {
 			}
 
 			// Validiere die Angaben zur Vorlage für den Report.
+			this.logger.logLn(LogLevel.DEBUG, 4, "Validiere Report-Vorlage.");
 			if (ReportingReportvorlage.getByBezeichnung(this.reportingParameter.reportvorlage) == null) {
 				this.logger.logLn(LogLevel.ERROR, 4, "FEHLER: Es wurde keine gültige Report-Vorlage für die Initialisierung der Reporting-Factory übergeben.");
 				throw new ApiOperationException(Status.BAD_REQUEST,
@@ -98,6 +103,7 @@ public final class ReportingFactory {
 			}
 
 			// Validiere Hauptdaten-Angabe
+			this.logger.logLn(LogLevel.DEBUG, 4, "Validiere Hauptdaten.");
 			if (this.reportingParameter.idsHauptdaten == null) {
 				this.reportingParameter.idsHauptdaten = new ArrayList<>();
 			} else {
@@ -108,6 +114,7 @@ public final class ReportingFactory {
 				this.logger.logLn(LogLevel.INFO, 4, "HINWEIS: Die Liste der Hauptdaten ist leer an die Reporting-Factory übergeben worden.");
 
 			// Stelle sicher, dass bei nicht vorhandenen Detaildaten eine leere Liste statt null vorhanden ist.
+			this.logger.logLn(LogLevel.DEBUG, 4, "Validiere Detaildaten.");
 			if (this.reportingParameter.idsDetaildaten == null)
 				this.reportingParameter.idsDetaildaten = new ArrayList<>();
 			else {
@@ -115,6 +122,11 @@ public final class ReportingFactory {
 				this.reportingParameter.idsDetaildaten =
 						new ArrayList<>(reportingParameter.idsDetaildaten.stream().filter(Objects::nonNull).distinct().toList());
 			}
+
+			// Validiere die Liste mit den Vorlage-Parametern. Lade dazu die definierten Vorlagen aus der ReportingReportvorlage-Klasse und weise diesen
+			// definierten Parametern evtl. übergebene Werte zu. So ist sichergestellt, dass imm die richtigen Vorlagen-Parameter vorhanden sind.
+			this.logger.logLn(LogLevel.DEBUG, 4, "Validiere Vorlage-Parameter.");
+			validiereVorlageParameter(reportingParameter);
 
 			this.logger.logLn(LogLevel.DEBUG, 4, "Erzeugung des Reporting-Repository");
 			this.reportingRepository = new ReportingRepository(this.conn, this.reportingParameter, this.logger, this.log);
@@ -126,10 +138,54 @@ public final class ReportingFactory {
 							+ "Fehlerdaten folgen.");
 			final SimpleOperationResponse sop = ReportingExceptionUtils.getSimpleOperationResponse(e, logger, log);
 			// Gebe das Log, das in der SimpleOperationResponse für Entwicklungszwecke auf der Console aus.
-			sop.log.forEach(System.out::println);
+			sop.log.forEach(Logger.global()::logLn);
 			throw new ApiOperationException(Status.INTERNAL_SERVER_ERROR, e, sop, MediaType.APPLICATION_JSON);
 		}
 	}
+
+	/**
+	 * Validiert die übergebenen Vorlage-Parameter gegen die definierten Vorlage-Parameter einer Reportvorlage und kombiniert diese bei Übereinstimmung.
+	 * Fehlende oder ungültige Parameter werden ignoriert. Die kombinierten Parameter werden anschließend zurückgeschrieben.
+	 *
+	 * @param reportingParameter Das ReportingParameter-Objekt, welches die zu validierenden und kombinierten Vorlage-Parameter beinhaltet.
+	 */
+	private void validiereVorlageParameter(final ReportingParameter reportingParameter) {
+		final List<ReportingVorlageParameter> uebergebeneVorlageParameter = (reportingParameter.vorlageParameter == null) ? new ArrayList<>()
+				: new ArrayList<>(reportingParameter.vorlageParameter.stream().filter(Objects::nonNull)
+						.filter(reportingVorlageParameter -> ((reportingVorlageParameter.name != null) && !reportingVorlageParameter.name.isBlank()))
+						.distinct().toList());
+
+		// Map der übergebenen Parameter nach Name zur schnellen Suche anlegen.
+		final java.util.Map<String, ReportingVorlageParameter> uebergebeneVorlageParameterMap = new HashMap<>();
+		uebergebeneVorlageParameter.forEach(p -> uebergebeneVorlageParameterMap.put(p.name, p));
+
+		final List<ReportingVorlageParameter> definierteVorlageParameter =
+				ReportingReportvorlage.getByBezeichnung(this.reportingParameter.reportvorlage).getVorlageParameterList();
+
+		final List<ReportingVorlageParameter> vorlageParameter = new ArrayList<>();
+
+		for (final ReportingVorlageParameter definierteVorlageParameterEintrag : definierteVorlageParameter) {
+			// Neuen Parameter auf Basis des definierten erstellen, aber den Wert aus dem übergebenen setzen
+			final ReportingVorlageParameter kombinierterEintrag = new ReportingVorlageParameter();
+			// Name aus der Definition
+			kombinierterEintrag.name = definierteVorlageParameterEintrag.name;
+			// Typ aus der Definition
+			kombinierterEintrag.typ = definierteVorlageParameterEintrag.typ;
+			// Zunächst den Standardwert der Definition setzen.
+			kombinierterEintrag.wert = definierteVorlageParameterEintrag.wert;
+
+			// Suche den gleichnamigen Parameter in den übergebenen Einträgen und setze dessen Wert auf den kombinierten Wert.
+			final ReportingVorlageParameter uebergebenerEintrag = uebergebeneVorlageParameterMap.get(definierteVorlageParameterEintrag.name);
+			if ((uebergebenerEintrag != null) && (uebergebenerEintrag.wert != null))
+				kombinierterEintrag.wert = uebergebenerEintrag.wert;
+
+			vorlageParameter.add(kombinierterEintrag);
+		}
+
+		// Ergebnis in die Reporting-Parameter zurückschreiben
+		this.reportingParameter.vorlageParameter = vorlageParameter;
+	}
+
 
 	/**
 	 * Erstellt eine Response in Form einer einzelnen Datei oder ZIP-Datei mit den mehreren generierten Report-Dateien.
@@ -224,7 +280,7 @@ public final class ReportingFactory {
 					+ "Fehlerdaten folgen.");
 			final SimpleOperationResponse sop = ReportingExceptionUtils.getSimpleOperationResponse(e, logger, log);
 			// Gebe das Log, das in der SimpleOperationResponse für Entwicklungszwecke auf der Console aus.
-			sop.log.forEach(System.out::println);
+			sop.log.forEach(Logger.global()::logLn);
 			throw new ApiOperationException(Status.INTERNAL_SERVER_ERROR, e, sop, MediaType.APPLICATION_JSON);
 		}
 	}

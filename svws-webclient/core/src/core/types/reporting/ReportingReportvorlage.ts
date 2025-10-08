@@ -1,7 +1,14 @@
 import { JavaEnum } from '../../../java/lang/JavaEnum';
 import { JavaObject } from '../../../java/lang/JavaObject';
+import { HashMap } from '../../../java/util/HashMap';
+import { ReportingVorlageParameter } from '../../../core/data/reporting/ReportingVorlageParameter';
+import { ReportingVorlageParameterTyp } from '../../../core/types/reporting/ReportingVorlageParameterTyp';
+import { ArrayList } from '../../../java/util/ArrayList';
+import type { List } from '../../../java/util/List';
 import { Class } from '../../../java/lang/Class';
 import { JavaString } from '../../../java/lang/JavaString';
+import { Arrays } from '../../../java/util/Arrays';
+import type { JavaMap } from '../../../java/util/JavaMap';
 
 export class ReportingReportvorlage extends JavaEnum<ReportingReportvorlage> {
 
@@ -14,136 +21,185 @@ export class ReportingReportvorlage extends JavaEnum<ReportingReportvorlage> {
 	/**
 	 * Report-Vorlage: GOSt - Klausurplanung - Klausurtermine-Kurse
 	 */
-	public static readonly GOST_KLAUSURPLANUNG_v_KLAUSURTERMINE_MIT_KURSEN : ReportingReportvorlage = new ReportingReportvorlage("GOST_KLAUSURPLANUNG_v_KLAUSURTERMINE_MIT_KURSEN", 0, "GostKlausurplanung-KlausurtermineMitKursen");
+	public static readonly GOST_KLAUSURPLANUNG_v_KLAUSURTERMINE_MIT_KURSEN : ReportingReportvorlage = new ReportingReportvorlage("GOST_KLAUSURPLANUNG_v_KLAUSURTERMINE_MIT_KURSEN", 0, "GostKlausurplanung-KlausurtermineMitKursen", Arrays.asList(ReportingReportvorlage.erzeugeVorlageParameter("mitKursklausuren", ReportingVorlageParameterTyp.BOOLEAN, "false"), ReportingReportvorlage.erzeugeVorlageParameter("mitNachschreibern", ReportingVorlageParameterTyp.BOOLEAN, "false"), ReportingReportvorlage.erzeugeVorlageParameter("mitKlausurschreiberNamen", ReportingVorlageParameterTyp.BOOLEAN, "false")));
 
 	/**
 	 * Report-Vorlage: GOSt - Klausurplanung - Schueler-Klausuren
 	 */
-	public static readonly GOST_KLAUSURPLANUNG_v_SCHUELER_MIT_KLAUSUREN : ReportingReportvorlage = new ReportingReportvorlage("GOST_KLAUSURPLANUNG_v_SCHUELER_MIT_KLAUSUREN", 1, "GostKlausurplanung-SchuelerMitKlausuren");
+	public static readonly GOST_KLAUSURPLANUNG_v_SCHUELER_MIT_KLAUSUREN : ReportingReportvorlage = new ReportingReportvorlage("GOST_KLAUSURPLANUNG_v_SCHUELER_MIT_KLAUSUREN", 1, "GostKlausurplanung-SchuelerMitKlausuren", new ArrayList());
 
 	/**
 	 * Report-Vorlage: GOSt - Kursplanung - Kurs-Kurschüler
 	 */
-	public static readonly GOST_KURSPLANUNG_v_KURS_MIT_KURSSCHUELERN : ReportingReportvorlage = new ReportingReportvorlage("GOST_KURSPLANUNG_v_KURS_MIT_KURSSCHUELERN", 2, "GostKursplanung-KursMitKursschuelern");
+	public static readonly GOST_KURSPLANUNG_v_KURS_MIT_KURSSCHUELERN : ReportingReportvorlage = new ReportingReportvorlage("GOST_KURSPLANUNG_v_KURS_MIT_KURSSCHUELERN", 2, "GostKursplanung-KursMitKursschuelern", new ArrayList());
 
 	/**
 	 * Report-Vorlage: GOSt - Kursplanung - Kurse-Statistikwerte
 	 */
-	public static readonly GOST_KURSPLANUNG_v_KURSE_MIT_STATISTIKWERTEN : ReportingReportvorlage = new ReportingReportvorlage("GOST_KURSPLANUNG_v_KURSE_MIT_STATISTIKWERTEN", 3, "GostKursplanung-KurseMitStatistikwerten");
+	public static readonly GOST_KURSPLANUNG_v_KURSE_MIT_STATISTIKWERTEN : ReportingReportvorlage = new ReportingReportvorlage("GOST_KURSPLANUNG_v_KURSE_MIT_STATISTIKWERTEN", 3, "GostKursplanung-KurseMitStatistikwerten", new ArrayList());
 
 	/**
 	 * Report-Vorlage: GOSt - Kursplanung - Schüler-Kurse
 	 */
-	public static readonly GOST_KURSPLANUNG_v_SCHUELER_MIT_KURSEN : ReportingReportvorlage = new ReportingReportvorlage("GOST_KURSPLANUNG_v_SCHUELER_MIT_KURSEN", 4, "GostKursplanung-SchuelerMitKursen");
+	public static readonly GOST_KURSPLANUNG_v_SCHUELER_MIT_KURSEN : ReportingReportvorlage = new ReportingReportvorlage("GOST_KURSPLANUNG_v_SCHUELER_MIT_KURSEN", 4, "GostKursplanung-SchuelerMitKursen", new ArrayList());
 
 	/**
 	 * Report-Vorlage: GOSt - Kursplanung - Schüler-Schienen-Kurse
 	 */
-	public static readonly GOST_KURSPLANUNG_v_SCHUELER_MIT_SCHIENEN_KURSEN : ReportingReportvorlage = new ReportingReportvorlage("GOST_KURSPLANUNG_v_SCHUELER_MIT_SCHIENEN_KURSEN", 5, "GostKursplanung-SchuelerMitSchienenKursen");
+	public static readonly GOST_KURSPLANUNG_v_SCHUELER_MIT_SCHIENEN_KURSEN : ReportingReportvorlage = new ReportingReportvorlage("GOST_KURSPLANUNG_v_SCHUELER_MIT_SCHIENEN_KURSEN", 5, "GostKursplanung-SchuelerMitSchienenKursen", new ArrayList());
 
 	/**
 	 * Report-Vorlage: GOSt - Laufbahnplanung - Abiturjahrgang - Fachwahlstatistiken
 	 */
-	public static readonly GOST_LAUFBAHNPLANUNG_ABITURJAHRGANG_v_FACHWAHLSTATISTIKEN : ReportingReportvorlage = new ReportingReportvorlage("GOST_LAUFBAHNPLANUNG_ABITURJAHRGANG_v_FACHWAHLSTATISTIKEN", 6, "GostLaufbahnplanung-Abiturjahrgang-Fachwahlstatistiken");
+	public static readonly GOST_LAUFBAHNPLANUNG_ABITURJAHRGANG_v_FACHWAHLSTATISTIKEN : ReportingReportvorlage = new ReportingReportvorlage("GOST_LAUFBAHNPLANUNG_ABITURJAHRGANG_v_FACHWAHLSTATISTIKEN", 6, "GostLaufbahnplanung-Abiturjahrgang-Fachwahlstatistiken", new ArrayList());
 
 	/**
 	 * Report-Vorlage: Klasse - Liste - Schüler - Kontaktdaten - Erzieher
 	 */
-	public static readonly KLASSEN_v_LISTE_SCHUELER_KONTAKTDATENERZIEHER : ReportingReportvorlage = new ReportingReportvorlage("KLASSEN_v_LISTE_SCHUELER_KONTAKTDATENERZIEHER", 7, "Klasse-Liste-Schueler-Kontaktdaten-Erzieher");
+	public static readonly KLASSEN_v_LISTE_SCHUELER_KONTAKTDATENERZIEHER : ReportingReportvorlage = new ReportingReportvorlage("KLASSEN_v_LISTE_SCHUELER_KONTAKTDATENERZIEHER", 7, "Klasse-Liste-Schueler-Kontaktdaten-Erzieher", Arrays.asList(ReportingReportvorlage.erzeugeVorlageParameter("nurSchuelerRufname", ReportingVorlageParameterTyp.BOOLEAN, "false"), ReportingReportvorlage.erzeugeVorlageParameter("mitSchuelerGeschlecht", ReportingVorlageParameterTyp.BOOLEAN, "false"), ReportingReportvorlage.erzeugeVorlageParameter("mitSchuelerGebDat", ReportingVorlageParameterTyp.BOOLEAN, "false"), ReportingReportvorlage.erzeugeVorlageParameter("mitSchuelerStaat", ReportingVorlageParameterTyp.BOOLEAN, "false"), ReportingReportvorlage.erzeugeVorlageParameter("mitSchuelerAnschrift", ReportingVorlageParameterTyp.BOOLEAN, "false"), ReportingReportvorlage.erzeugeVorlageParameter("mitSchuelerTelefonPrivat", ReportingVorlageParameterTyp.BOOLEAN, "false"), ReportingReportvorlage.erzeugeVorlageParameter("mitSchuelerEmailSchule", ReportingVorlageParameterTyp.BOOLEAN, "false"), ReportingReportvorlage.erzeugeVorlageParameter("mitSchuelerEmailPrivat", ReportingVorlageParameterTyp.BOOLEAN, "false"), ReportingReportvorlage.erzeugeVorlageParameter("mitSpalteSchuelerTelefonKontakte", ReportingVorlageParameterTyp.BOOLEAN, "false"), ReportingReportvorlage.erzeugeVorlageParameter("mitErzieher", ReportingVorlageParameterTyp.BOOLEAN, "false"), ReportingReportvorlage.erzeugeVorlageParameter("mitErzieherAnschrift", ReportingVorlageParameterTyp.BOOLEAN, "false"), ReportingReportvorlage.erzeugeVorlageParameter("mitErzieherEmailPrivat", ReportingVorlageParameterTyp.BOOLEAN, "false")));
 
 	/**
 	 * Report-Vorlage: Kurs - Liste - Schüler - Kontaktdaten - Erzieher
 	 */
-	public static readonly KURSE_v_LISTE_SCHUELER_KONTAKTDATENERZIEHER : ReportingReportvorlage = new ReportingReportvorlage("KURSE_v_LISTE_SCHUELER_KONTAKTDATENERZIEHER", 8, "Kurs-Liste-Schueler-Kontaktdaten-Erzieher");
+	public static readonly KURSE_v_LISTE_SCHUELER_KONTAKTDATENERZIEHER : ReportingReportvorlage = new ReportingReportvorlage("KURSE_v_LISTE_SCHUELER_KONTAKTDATENERZIEHER", 8, "Kurs-Liste-Schueler-Kontaktdaten-Erzieher", Arrays.asList(ReportingReportvorlage.erzeugeVorlageParameter("mitSchuelerKlasse", ReportingVorlageParameterTyp.BOOLEAN, "false"), ReportingReportvorlage.erzeugeVorlageParameter("nurSchuelerRufname", ReportingVorlageParameterTyp.BOOLEAN, "false"), ReportingReportvorlage.erzeugeVorlageParameter("mitSchuelerGeschlecht", ReportingVorlageParameterTyp.BOOLEAN, "false"), ReportingReportvorlage.erzeugeVorlageParameter("mitSchuelerGebDat", ReportingVorlageParameterTyp.BOOLEAN, "false"), ReportingReportvorlage.erzeugeVorlageParameter("mitSchuelerStaat", ReportingVorlageParameterTyp.BOOLEAN, "false"), ReportingReportvorlage.erzeugeVorlageParameter("mitSchuelerAnschrift", ReportingVorlageParameterTyp.BOOLEAN, "false"), ReportingReportvorlage.erzeugeVorlageParameter("mitSchuelerTelefonPrivat", ReportingVorlageParameterTyp.BOOLEAN, "false"), ReportingReportvorlage.erzeugeVorlageParameter("mitSchuelerEmailSchule", ReportingVorlageParameterTyp.BOOLEAN, "false"), ReportingReportvorlage.erzeugeVorlageParameter("mitSchuelerEmailPrivat", ReportingVorlageParameterTyp.BOOLEAN, "false"), ReportingReportvorlage.erzeugeVorlageParameter("mitSpalteSchuelerTelefonKontakte", ReportingVorlageParameterTyp.BOOLEAN, "false"), ReportingReportvorlage.erzeugeVorlageParameter("mitErzieher", ReportingVorlageParameterTyp.BOOLEAN, "false"), ReportingReportvorlage.erzeugeVorlageParameter("mitErzieherAnschrift", ReportingVorlageParameterTyp.BOOLEAN, "false"), ReportingReportvorlage.erzeugeVorlageParameter("mitErzieherEmailPrivat", ReportingVorlageParameterTyp.BOOLEAN, "false")));
 
 	/**
 	 * Report-Vorlage: Kurs - Schülerstammdaten - Liste
 	 */
-	public static readonly KURSE_v_KURS_SCHUELER_STAMMDATENLISTE : ReportingReportvorlage = new ReportingReportvorlage("KURSE_v_KURS_SCHUELER_STAMMDATENLISTE", 9, "Kurs-Schueler-Stammdatenliste");
+	public static readonly KURSE_v_KURS_SCHUELER_STAMMDATENLISTE : ReportingReportvorlage = new ReportingReportvorlage("KURSE_v_KURS_SCHUELER_STAMMDATENLISTE", 9, "Kurs-Schueler-Stammdatenliste", Arrays.asList(ReportingReportvorlage.erzeugeVorlageParameter("nurSchuelerRufname", ReportingVorlageParameterTyp.BOOLEAN, "false")));
 
 	/**
 	 * Report-Vorlage: Lehrer - Stammdaten - Liste
 	 */
-	public static readonly LEHRER_v_STAMMDATENLISTE : ReportingReportvorlage = new ReportingReportvorlage("LEHRER_v_STAMMDATENLISTE", 10, "Lehrer-Stammdatenliste");
+	public static readonly LEHRER_v_STAMMDATENLISTE : ReportingReportvorlage = new ReportingReportvorlage("LEHRER_v_STAMMDATENLISTE", 10, "Lehrer-Stammdatenliste", new ArrayList());
 
 	/**
 	 * Report-Vorlage: GOSt - Abitur - APO - Anlage 12 (Abiturzeugnis) - Din-A4
 	 */
-	public static readonly SCHUELER_v_GOST_ABITUR_APO_ANLAGE_12_A4 : ReportingReportvorlage = new ReportingReportvorlage("SCHUELER_v_GOST_ABITUR_APO_ANLAGE_12_A4", 11, "Schueler-GostAbiturApoAnlage12-A4");
+	public static readonly SCHUELER_v_GOST_ABITUR_APO_ANLAGE_12_A4 : ReportingReportvorlage = new ReportingReportvorlage("SCHUELER_v_GOST_ABITUR_APO_ANLAGE_12_A4", 11, "Schueler-GostAbiturApoAnlage12-A4", new ArrayList());
 
 	/**
 	 * Report-Vorlage: GOSt - Abitur - APO - Anlage 12 (Abiturzeugnis) - Din-A3
 	 */
-	public static readonly SCHUELER_v_GOST_ABITUR_APO_ANLAGE_12_A3 : ReportingReportvorlage = new ReportingReportvorlage("SCHUELER_v_GOST_ABITUR_APO_ANLAGE_12_A3", 12, "Schueler-GostAbiturApoAnlage12-A3");
+	public static readonly SCHUELER_v_GOST_ABITUR_APO_ANLAGE_12_A3 : ReportingReportvorlage = new ReportingReportvorlage("SCHUELER_v_GOST_ABITUR_APO_ANLAGE_12_A3", 12, "Schueler-GostAbiturApoAnlage12-A3", new ArrayList());
 
 	/**
 	 * Report-Vorlage: GOSt - Laufbahnplanung - Ergebnisübersicht
 	 */
-	public static readonly SCHUELER_v_GOST_LAUFBAHNPLANUNG_ERGEBNISUEBERSICHT : ReportingReportvorlage = new ReportingReportvorlage("SCHUELER_v_GOST_LAUFBAHNPLANUNG_ERGEBNISUEBERSICHT", 13, "Schueler-GostLaufbahnplanungErgebnisuebersicht");
+	public static readonly SCHUELER_v_GOST_LAUFBAHNPLANUNG_ERGEBNISUEBERSICHT : ReportingReportvorlage = new ReportingReportvorlage("SCHUELER_v_GOST_LAUFBAHNPLANUNG_ERGEBNISUEBERSICHT", 13, "Schueler-GostLaufbahnplanungErgebnisuebersicht", Arrays.asList(ReportingReportvorlage.erzeugeVorlageParameter("mitFehlerKommentare", ReportingVorlageParameterTyp.BOOLEAN, "false"), ReportingReportvorlage.erzeugeVorlageParameter("mitHinweise", ReportingVorlageParameterTyp.BOOLEAN, "false")));
 
 	/**
 	 * Report-Vorlage: GOSt - Laufbahnplanung - Wahlbogen
 	 */
-	public static readonly SCHUELER_v_GOST_LAUFBAHNPLANUNG_WAHLBOGEN : ReportingReportvorlage = new ReportingReportvorlage("SCHUELER_v_GOST_LAUFBAHNPLANUNG_WAHLBOGEN", 14, "Schueler-GostLaufbahnplanungWahlbogen");
+	public static readonly SCHUELER_v_GOST_LAUFBAHNPLANUNG_WAHLBOGEN : ReportingReportvorlage = new ReportingReportvorlage("SCHUELER_v_GOST_LAUFBAHNPLANUNG_WAHLBOGEN", 14, "Schueler-GostLaufbahnplanungWahlbogen", Arrays.asList(ReportingReportvorlage.erzeugeVorlageParameter("nurBelegteFaecher", ReportingVorlageParameterTyp.BOOLEAN, "false")));
 
 	/**
 	 * Report-Vorlage: Schüler - Schulbescheinigung
 	 */
-	public static readonly SCHUELER_v_SCHULBESCHEINIGUNG : ReportingReportvorlage = new ReportingReportvorlage("SCHUELER_v_SCHULBESCHEINIGUNG", 15, "Schueler-Schulbescheinigung");
+	public static readonly SCHUELER_v_SCHULBESCHEINIGUNG : ReportingReportvorlage = new ReportingReportvorlage("SCHUELER_v_SCHULBESCHEINIGUNG", 15, "Schueler-Schulbescheinigung", Arrays.asList(ReportingReportvorlage.erzeugeVorlageParameter("fuerErzieher", ReportingVorlageParameterTyp.BOOLEAN, "false"), ReportingReportvorlage.erzeugeVorlageParameter("mitBildBriefkopf", ReportingVorlageParameterTyp.BOOLEAN, "false"), ReportingReportvorlage.erzeugeVorlageParameter("mitSchullogo", ReportingVorlageParameterTyp.BOOLEAN, "false"), ReportingReportvorlage.erzeugeVorlageParameter("keineAnschrift", ReportingVorlageParameterTyp.BOOLEAN, "false"), ReportingReportvorlage.erzeugeVorlageParameter("keinInfoblock", ReportingVorlageParameterTyp.BOOLEAN, "false"), ReportingReportvorlage.erzeugeVorlageParameter("keineUnterschrift", ReportingVorlageParameterTyp.BOOLEAN, "false")));
 
 	/**
 	 * Report-Vorlage: Schüler - Liste - Kontaktdaten - Erzieher
 	 */
-	public static readonly SCHUELER_v_LISTE_KONTAKTDATENERZIEHER : ReportingReportvorlage = new ReportingReportvorlage("SCHUELER_v_LISTE_KONTAKTDATENERZIEHER", 16, "Schueler-Liste-Kontaktdaten-Erzieher");
+	public static readonly SCHUELER_v_LISTE_KONTAKTDATENERZIEHER : ReportingReportvorlage = new ReportingReportvorlage("SCHUELER_v_LISTE_KONTAKTDATENERZIEHER", 16, "Schueler-Liste-Kontaktdaten-Erzieher", Arrays.asList(ReportingReportvorlage.erzeugeVorlageParameter("mitSchuelerKlasse", ReportingVorlageParameterTyp.BOOLEAN, "false"), ReportingReportvorlage.erzeugeVorlageParameter("nurSchuelerRufname", ReportingVorlageParameterTyp.BOOLEAN, "false"), ReportingReportvorlage.erzeugeVorlageParameter("mitSchuelerGeschlecht", ReportingVorlageParameterTyp.BOOLEAN, "false"), ReportingReportvorlage.erzeugeVorlageParameter("mitSchuelerGebDat", ReportingVorlageParameterTyp.BOOLEAN, "false"), ReportingReportvorlage.erzeugeVorlageParameter("mitSchuelerStaat", ReportingVorlageParameterTyp.BOOLEAN, "false"), ReportingReportvorlage.erzeugeVorlageParameter("mitSchuelerAnschrift", ReportingVorlageParameterTyp.BOOLEAN, "false"), ReportingReportvorlage.erzeugeVorlageParameter("mitSchuelerTelefonPrivat", ReportingVorlageParameterTyp.BOOLEAN, "false"), ReportingReportvorlage.erzeugeVorlageParameter("mitSchuelerEmailSchule", ReportingVorlageParameterTyp.BOOLEAN, "false"), ReportingReportvorlage.erzeugeVorlageParameter("mitSchuelerEmailPrivat", ReportingVorlageParameterTyp.BOOLEAN, "false"), ReportingReportvorlage.erzeugeVorlageParameter("mitSpalteSchuelerTelefonKontakte", ReportingVorlageParameterTyp.BOOLEAN, "false"), ReportingReportvorlage.erzeugeVorlageParameter("mitErzieher", ReportingVorlageParameterTyp.BOOLEAN, "false"), ReportingReportvorlage.erzeugeVorlageParameter("mitErzieherAnschrift", ReportingVorlageParameterTyp.BOOLEAN, "false"), ReportingReportvorlage.erzeugeVorlageParameter("mitErzieherEmailPrivat", ReportingVorlageParameterTyp.BOOLEAN, "false")));
 
 	/**
 	 * Report-Vorlage: Stundenplanung - Fach - Stundenplan
 	 */
-	public static readonly STUNDENPLANUNG_v_FACH_STUNDENPLAN : ReportingReportvorlage = new ReportingReportvorlage("STUNDENPLANUNG_v_FACH_STUNDENPLAN", 17, "Stundenplanung-FachStundenplan");
+	public static readonly STUNDENPLANUNG_v_FACH_STUNDENPLAN : ReportingReportvorlage = new ReportingReportvorlage("STUNDENPLANUNG_v_FACH_STUNDENPLAN", 17, "Stundenplanung-FachStundenplan", Arrays.asList(ReportingReportvorlage.erzeugeVorlageParameter("mitPausenzeiten", ReportingVorlageParameterTyp.BOOLEAN, "false")));
 
 	/**
 	 * Report-Vorlage: Stundenplanung - Klasse - Stundenplan
 	 */
-	public static readonly STUNDENPLANUNG_v_KLASSEN_STUNDENPLAN : ReportingReportvorlage = new ReportingReportvorlage("STUNDENPLANUNG_v_KLASSEN_STUNDENPLAN", 18, "Stundenplanung-KlassenStundenplan");
+	public static readonly STUNDENPLANUNG_v_KLASSEN_STUNDENPLAN : ReportingReportvorlage = new ReportingReportvorlage("STUNDENPLANUNG_v_KLASSEN_STUNDENPLAN", 18, "Stundenplanung-KlassenStundenplan", Arrays.asList(ReportingReportvorlage.erzeugeVorlageParameter("mitPausenzeiten", ReportingVorlageParameterTyp.BOOLEAN, "false"), ReportingReportvorlage.erzeugeVorlageParameter("mitFachStattKursbezeichnung", ReportingVorlageParameterTyp.BOOLEAN, "false"), ReportingReportvorlage.erzeugeVorlageParameter("mitFachkuerzelStattFachbezeichnung", ReportingVorlageParameterTyp.BOOLEAN, "false")));
 
 	/**
 	 * Report-Vorlage: Stundenplanung - Lehrer - Stundenplan
 	 */
-	public static readonly STUNDENPLANUNG_v_LEHRER_STUNDENPLAN : ReportingReportvorlage = new ReportingReportvorlage("STUNDENPLANUNG_v_LEHRER_STUNDENPLAN", 19, "Stundenplanung-LehrerStundenplan");
+	public static readonly STUNDENPLANUNG_v_LEHRER_STUNDENPLAN : ReportingReportvorlage = new ReportingReportvorlage("STUNDENPLANUNG_v_LEHRER_STUNDENPLAN", 19, "Stundenplanung-LehrerStundenplan", Arrays.asList(ReportingReportvorlage.erzeugeVorlageParameter("mitPausenaufsichten", ReportingVorlageParameterTyp.BOOLEAN, "false"), ReportingReportvorlage.erzeugeVorlageParameter("mitPausenzeiten", ReportingVorlageParameterTyp.BOOLEAN, "false"), ReportingReportvorlage.erzeugeVorlageParameter("mitFachkuerzelStattFachbezeichnung", ReportingVorlageParameterTyp.BOOLEAN, "false")));
 
 	/**
 	 * Report-Vorlage: Stundenplanung - Lehrer - Stundenplan - Kombiniert
 	 */
-	public static readonly STUNDENPLANUNG_v_LEHRER_STUNDENPLAN_KOMBINIERT : ReportingReportvorlage = new ReportingReportvorlage("STUNDENPLANUNG_v_LEHRER_STUNDENPLAN_KOMBINIERT", 20, "Stundenplanung-LehrerStundenplanKombiniert");
+	public static readonly STUNDENPLANUNG_v_LEHRER_STUNDENPLAN_KOMBINIERT : ReportingReportvorlage = new ReportingReportvorlage("STUNDENPLANUNG_v_LEHRER_STUNDENPLAN_KOMBINIERT", 20, "Stundenplanung-LehrerStundenplanKombiniert", Arrays.asList(ReportingReportvorlage.erzeugeVorlageParameter("mitPausenaufsichten", ReportingVorlageParameterTyp.BOOLEAN, "false"), ReportingReportvorlage.erzeugeVorlageParameter("mitPausenzeiten", ReportingVorlageParameterTyp.BOOLEAN, "false"), ReportingReportvorlage.erzeugeVorlageParameter("mitFachkuerzelStattFachbezeichnung", ReportingVorlageParameterTyp.BOOLEAN, "false")));
 
 	/**
 	 * Report-Vorlage: Stundenplanung - Fach - Stundenplan
 	 */
-	public static readonly STUNDENPLANUNG_v_RAUM_STUNDENPLAN : ReportingReportvorlage = new ReportingReportvorlage("STUNDENPLANUNG_v_RAUM_STUNDENPLAN", 21, "Stundenplanung-RaumStundenplan");
+	public static readonly STUNDENPLANUNG_v_RAUM_STUNDENPLAN : ReportingReportvorlage = new ReportingReportvorlage("STUNDENPLANUNG_v_RAUM_STUNDENPLAN", 21, "Stundenplanung-RaumStundenplan", Arrays.asList(ReportingReportvorlage.erzeugeVorlageParameter("mitPausenzeiten", ReportingVorlageParameterTyp.BOOLEAN, "false")));
 
 	/**
 	 * Report-Vorlage: Stundenplanung - Schüler - Stundenplan
 	 */
-	public static readonly STUNDENPLANUNG_v_SCHUELER_STUNDENPLAN : ReportingReportvorlage = new ReportingReportvorlage("STUNDENPLANUNG_v_SCHUELER_STUNDENPLAN", 22, "Stundenplanung-SchuelerStundenplan");
+	public static readonly STUNDENPLANUNG_v_SCHUELER_STUNDENPLAN : ReportingReportvorlage = new ReportingReportvorlage("STUNDENPLANUNG_v_SCHUELER_STUNDENPLAN", 22, "Stundenplanung-SchuelerStundenplan", Arrays.asList(ReportingReportvorlage.erzeugeVorlageParameter("mitPausenzeiten", ReportingVorlageParameterTyp.BOOLEAN, "false"), ReportingReportvorlage.erzeugeVorlageParameter("mitFachStattKursbezeichnung", ReportingVorlageParameterTyp.BOOLEAN, "false"), ReportingReportvorlage.erzeugeVorlageParameter("mitFachkuerzelStattFachbezeichnung", ReportingVorlageParameterTyp.BOOLEAN, "false"), ReportingReportvorlage.erzeugeVorlageParameter("mitIndividuelleKursart", ReportingVorlageParameterTyp.BOOLEAN, "false")));
 
 	/**
 	 * Die Bezeichnung der Report-Vorlage
 	 */
-	private readonly bezeichnung : string | null;
+	private readonly bezeichnung : string;
 
 	/**
-	 * Erstellt eine neue Report-Vorlage
-	 * @param bezeichnung Der Name der Report-Vorlage
+	 * Eine Liste, in der die gültigen Vorlage-Parameter der Report-Vorlage enthalten sind.
 	 */
-	private constructor(name : string, ordinal : number, bezeichnung : string | null) {
+	private readonly vorlageParameterList : List<ReportingVorlageParameter> = new ArrayList<ReportingVorlageParameter>();
+
+	/**
+	 * Eine Map, die die gültigen Vorlage-Parameter der Report-Vorlage zum Namen des Parameters enthält.
+	 */
+	private readonly vorlageParameterMap : JavaMap<string, ReportingVorlageParameter> = new HashMap<string, ReportingVorlageParameter>();
+
+	/**
+	 * Konstruktor für eine Reporting-Reportvorlage.
+	 *
+	 * @param bezeichnung Die Bezeichnung der Reportvorlage. Darf nicht null sein.
+	 * @param vorlageParameterList Eine Liste mit den Vorlage-Parametern, basierend auf der jeweiligen Definition. Darf nicht null sein.
+	 */
+	private constructor(name : string, ordinal : number, bezeichnung : string, vorlageParameterList : List<ReportingVorlageParameter>) {
 		super(name, ordinal);
 		ReportingReportvorlage.all_values_by_ordinal.push(this);
 		ReportingReportvorlage.all_values_by_name.set(name, this);
 		this.bezeichnung = bezeichnung;
+		this.vorlageParameterList.addAll(vorlageParameterList);
+		for (const vp of vorlageParameterList)
+			this.vorlageParameterMap.put(vp.name, vp);
+	}
+
+	/**
+	 * Erstellt einen neuen Vorlage-Parameter mit dem angegebenen Namen, Typ und Wert.
+	 *
+	 * @param name   der Name des Vorlage-Parameters. Darf nicht null sein.
+	 * @param typ    der Typ des Vorlage-Parameters. Darf nicht null sein.
+	 * @param wert   der Wert des Vorlage-Parameters. Darf nicht null sein.
+	 *
+	 * @return Ein neues Objekt der Klasse {@link ReportingVorlageParameter}, das den angegebenen Namen, Typ und Wert enthält.
+	 */
+	private static erzeugeVorlageParameter(name : string, typ : ReportingVorlageParameterTyp, wert : string) : ReportingVorlageParameter {
+		const reportingVorlageParameter : ReportingVorlageParameter | null = new ReportingVorlageParameter();
+		reportingVorlageParameter.name = name;
+		reportingVorlageParameter.typ = typ.getId();
+		reportingVorlageParameter.wert = wert;
+		return reportingVorlageParameter;
+	}
+
+	/**
+	 * Diese Methode ermittelt die Report-Vorlage anhand der übergebenen Bezeichnung.
+	 *
+	 * @param bezeichnung Die Bezeichnung der Report-Vorlage
+	 *
+	 * @return Die Report-Vorlage
+	 */
+	public static getByBezeichnung(bezeichnung : string) : ReportingReportvorlage | null {
+		if (JavaString.isEmpty(bezeichnung))
+			return null;
+		for (const rv of ReportingReportvorlage.values())
+			if (JavaObject.equalsTranspiler(rv.bezeichnung, (bezeichnung)))
+				return rv;
+		return null;
 	}
 
 	/**
 	 * Gibt die Bezeichnung dieser Report-Vorlage zurück
+	 *
 	 * @return Die Bezeichnung dieser Report-Vorlage
 	 */
 	public getBezeichnung() : string {
@@ -151,17 +207,21 @@ export class ReportingReportvorlage extends JavaEnum<ReportingReportvorlage> {
 	}
 
 	/**
-	 * Diese Methode ermittelt die Report-Vorlage anhand der übergebenen Bezeichnung.
-	 * @param bezeichnung Die Bezeichnung der Report-Vorlage
-	 * @return Die Report-Vorlage
+	 * Gibt die Liste der Report-Parameter für diese Report-Vorlage zurück.
+	 *
+	 * @return Die Liste der Report-Parameter für diese Report-Vorlage.
 	 */
-	public static getByBezeichnung(bezeichnung : string | null) : ReportingReportvorlage | null {
-		if ((bezeichnung === null) || (JavaString.isEmpty(bezeichnung)))
-			return null;
-		for (const rv of ReportingReportvorlage.values())
-			if (JavaObject.equalsTranspiler(rv.bezeichnung, (bezeichnung)))
-				return rv;
-		return null;
+	public getVorlageParameterList() : List<ReportingVorlageParameter> {
+		return this.vorlageParameterList;
+	}
+
+	/**
+	 * Gibt die Map der Report-Parameter für diese Report-Vorlage zurück.
+	 *
+	 * @return Die Map der Report-Parameter für diese Report-Vorlage.
+	 */
+	public getVorlageParameterMap() : JavaMap<string, ReportingVorlageParameter> {
+		return this.vorlageParameterMap;
 	}
 
 	/**

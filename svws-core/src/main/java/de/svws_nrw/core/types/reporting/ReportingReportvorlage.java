@@ -1,106 +1,219 @@
 package de.svws_nrw.core.types.reporting;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import de.svws_nrw.core.data.reporting.ReportingVorlageParameter;
 import jakarta.validation.constraints.NotNull;
 
 /**
- * Eine ENUM der integrierten Report-Vorlagen des SVWS-Servers.
- * Im Rahmen des Reportings werden auf Basis dieses CoreTyps Template-Definitionen vorgenommen.
- * --------
- * Hinweis:
- * --------
- * Es ist NICHT ausreichend eine neue Vorlage nur hier einzubinden. Es muss in jedem Fall auch eine neue
- * HTML-Template-Definition im Reporting-Modul erstellt werden.
- * ----------
- * Anmerkung:
- * ----------
- * Die Benennung der Vorlagen erfolgt nach dem Schema Hauptdaten_v_Detaildaten. Bei der Report-Generierung erfolgt in
- * Teilen ein entsprechendes Füllen der Datenkontexte anhand der Benennung.
+ * Eine ENUM der integrierten Report-Vorlagen des SVWS-Servers. Im Rahmen des Reportings werden auf Basis dieses CoreTyps Template-Definitionen vorgenommen.
+ * Hinweis: Es ist nicht ausreichend, eine neue Vorlage nur hier einzubinden. Es muss in jedem Fall auch eine neue HTML-Template-Definition im
+ * Reporting-Modul erstellt werden.
+ * Anmerkung: Die Benennung der Vorlagen erfolgt nach dem Schema Hauptdaten_v_Detaildaten. Bei der Report-Generierung erfolgt in Teilen ein entsprechendes
+ * Füllen der Datenkontexte anhand der Benennung.
  */
 public enum ReportingReportvorlage {
 
 	/** Report-Vorlage: GOSt - Klausurplanung - Klausurtermine-Kurse */
-	GOST_KLAUSURPLANUNG_v_KLAUSURTERMINE_MIT_KURSEN("GostKlausurplanung-KlausurtermineMitKursen"),
+	GOST_KLAUSURPLANUNG_v_KLAUSURTERMINE_MIT_KURSEN("GostKlausurplanung-KlausurtermineMitKursen", Arrays.asList(
+			erzeugeVorlageParameter("mitKursklausuren", ReportingVorlageParameterTyp.BOOLEAN, "false"),
+			erzeugeVorlageParameter("mitNachschreibern", ReportingVorlageParameterTyp.BOOLEAN, "false"),
+			erzeugeVorlageParameter("mitKlausurschreiberNamen", ReportingVorlageParameterTyp.BOOLEAN, "false"))),
 
 	/** Report-Vorlage: GOSt - Klausurplanung - Schueler-Klausuren */
-	GOST_KLAUSURPLANUNG_v_SCHUELER_MIT_KLAUSUREN("GostKlausurplanung-SchuelerMitKlausuren"),
+	GOST_KLAUSURPLANUNG_v_SCHUELER_MIT_KLAUSUREN("GostKlausurplanung-SchuelerMitKlausuren", new ArrayList<>()),
 
 	/** Report-Vorlage: GOSt - Kursplanung - Kurs-Kurschüler */
-	GOST_KURSPLANUNG_v_KURS_MIT_KURSSCHUELERN("GostKursplanung-KursMitKursschuelern"),
+	GOST_KURSPLANUNG_v_KURS_MIT_KURSSCHUELERN("GostKursplanung-KursMitKursschuelern", new ArrayList<>()),
 
 	/** Report-Vorlage: GOSt - Kursplanung - Kurse-Statistikwerte */
-	GOST_KURSPLANUNG_v_KURSE_MIT_STATISTIKWERTEN("GostKursplanung-KurseMitStatistikwerten"),
+	GOST_KURSPLANUNG_v_KURSE_MIT_STATISTIKWERTEN("GostKursplanung-KurseMitStatistikwerten", new ArrayList<>()),
 
 	/** Report-Vorlage: GOSt - Kursplanung - Schüler-Kurse */
-	GOST_KURSPLANUNG_v_SCHUELER_MIT_KURSEN("GostKursplanung-SchuelerMitKursen"),
+	GOST_KURSPLANUNG_v_SCHUELER_MIT_KURSEN("GostKursplanung-SchuelerMitKursen", new ArrayList<>()),
 
 	/** Report-Vorlage: GOSt - Kursplanung - Schüler-Schienen-Kurse */
-	GOST_KURSPLANUNG_v_SCHUELER_MIT_SCHIENEN_KURSEN("GostKursplanung-SchuelerMitSchienenKursen"),
+	GOST_KURSPLANUNG_v_SCHUELER_MIT_SCHIENEN_KURSEN("GostKursplanung-SchuelerMitSchienenKursen", new ArrayList<>()),
 
 	/** Report-Vorlage: GOSt - Laufbahnplanung - Abiturjahrgang - Fachwahlstatistiken */
-	GOST_LAUFBAHNPLANUNG_ABITURJAHRGANG_v_FACHWAHLSTATISTIKEN("GostLaufbahnplanung-Abiturjahrgang-Fachwahlstatistiken"),
+	GOST_LAUFBAHNPLANUNG_ABITURJAHRGANG_v_FACHWAHLSTATISTIKEN("GostLaufbahnplanung-Abiturjahrgang-Fachwahlstatistiken", new ArrayList<>()),
 
 	/** Report-Vorlage: Klasse - Liste - Schüler - Kontaktdaten - Erzieher */
-	KLASSEN_v_LISTE_SCHUELER_KONTAKTDATENERZIEHER("Klasse-Liste-Schueler-Kontaktdaten-Erzieher"),
+	KLASSEN_v_LISTE_SCHUELER_KONTAKTDATENERZIEHER("Klasse-Liste-Schueler-Kontaktdaten-Erzieher", Arrays.asList(
+			erzeugeVorlageParameter("nurSchuelerRufname", ReportingVorlageParameterTyp.BOOLEAN, "false"),
+			erzeugeVorlageParameter("mitSchuelerGeschlecht", ReportingVorlageParameterTyp.BOOLEAN, "false"),
+			erzeugeVorlageParameter("mitSchuelerGebDat", ReportingVorlageParameterTyp.BOOLEAN, "false"),
+			erzeugeVorlageParameter("mitSchuelerStaat", ReportingVorlageParameterTyp.BOOLEAN, "false"),
+			erzeugeVorlageParameter("mitSchuelerAnschrift", ReportingVorlageParameterTyp.BOOLEAN, "false"),
+			erzeugeVorlageParameter("mitSchuelerTelefonPrivat", ReportingVorlageParameterTyp.BOOLEAN, "false"),
+			erzeugeVorlageParameter("mitSchuelerEmailSchule", ReportingVorlageParameterTyp.BOOLEAN, "false"),
+			erzeugeVorlageParameter("mitSchuelerEmailPrivat", ReportingVorlageParameterTyp.BOOLEAN, "false"),
+			erzeugeVorlageParameter("mitSpalteSchuelerTelefonKontakte", ReportingVorlageParameterTyp.BOOLEAN, "false"),
+			erzeugeVorlageParameter("mitErzieher", ReportingVorlageParameterTyp.BOOLEAN, "false"),
+			erzeugeVorlageParameter("mitErzieherAnschrift", ReportingVorlageParameterTyp.BOOLEAN, "false"),
+			erzeugeVorlageParameter("mitErzieherEmailPrivat", ReportingVorlageParameterTyp.BOOLEAN, "false"))),
 
 	/** Report-Vorlage: Kurs - Liste - Schüler - Kontaktdaten - Erzieher */
-	KURSE_v_LISTE_SCHUELER_KONTAKTDATENERZIEHER("Kurs-Liste-Schueler-Kontaktdaten-Erzieher"),
+	KURSE_v_LISTE_SCHUELER_KONTAKTDATENERZIEHER("Kurs-Liste-Schueler-Kontaktdaten-Erzieher", Arrays.asList(
+			erzeugeVorlageParameter("mitSchuelerKlasse", ReportingVorlageParameterTyp.BOOLEAN, "false"),
+			erzeugeVorlageParameter("nurSchuelerRufname", ReportingVorlageParameterTyp.BOOLEAN, "false"),
+			erzeugeVorlageParameter("mitSchuelerGeschlecht", ReportingVorlageParameterTyp.BOOLEAN, "false"),
+			erzeugeVorlageParameter("mitSchuelerGebDat", ReportingVorlageParameterTyp.BOOLEAN, "false"),
+			erzeugeVorlageParameter("mitSchuelerStaat", ReportingVorlageParameterTyp.BOOLEAN, "false"),
+			erzeugeVorlageParameter("mitSchuelerAnschrift", ReportingVorlageParameterTyp.BOOLEAN, "false"),
+			erzeugeVorlageParameter("mitSchuelerTelefonPrivat", ReportingVorlageParameterTyp.BOOLEAN, "false"),
+			erzeugeVorlageParameter("mitSchuelerEmailSchule", ReportingVorlageParameterTyp.BOOLEAN, "false"),
+			erzeugeVorlageParameter("mitSchuelerEmailPrivat", ReportingVorlageParameterTyp.BOOLEAN, "false"),
+			erzeugeVorlageParameter("mitSpalteSchuelerTelefonKontakte", ReportingVorlageParameterTyp.BOOLEAN, "false"),
+			erzeugeVorlageParameter("mitErzieher", ReportingVorlageParameterTyp.BOOLEAN, "false"),
+			erzeugeVorlageParameter("mitErzieherAnschrift", ReportingVorlageParameterTyp.BOOLEAN, "false"),
+			erzeugeVorlageParameter("mitErzieherEmailPrivat", ReportingVorlageParameterTyp.BOOLEAN, "false"))),
 
 	/** Report-Vorlage: Kurs - Schülerstammdaten - Liste */
-	KURSE_v_KURS_SCHUELER_STAMMDATENLISTE("Kurs-Schueler-Stammdatenliste"),
+	KURSE_v_KURS_SCHUELER_STAMMDATENLISTE("Kurs-Schueler-Stammdatenliste", Arrays.asList(
+			erzeugeVorlageParameter("nurSchuelerRufname", ReportingVorlageParameterTyp.BOOLEAN, "false"))),
 
 	/** Report-Vorlage: Lehrer - Stammdaten - Liste */
-	LEHRER_v_STAMMDATENLISTE("Lehrer-Stammdatenliste"),
+	LEHRER_v_STAMMDATENLISTE("Lehrer-Stammdatenliste", new ArrayList<>()),
 
 	/** Report-Vorlage: GOSt - Abitur - APO - Anlage 12 (Abiturzeugnis) - Din-A4 */
-	SCHUELER_v_GOST_ABITUR_APO_ANLAGE_12_A4("Schueler-GostAbiturApoAnlage12-A4"),
+	SCHUELER_v_GOST_ABITUR_APO_ANLAGE_12_A4("Schueler-GostAbiturApoAnlage12-A4", new ArrayList<>()),
 
 	/** Report-Vorlage: GOSt - Abitur - APO - Anlage 12 (Abiturzeugnis) - Din-A3 */
-	SCHUELER_v_GOST_ABITUR_APO_ANLAGE_12_A3("Schueler-GostAbiturApoAnlage12-A3"),
+	SCHUELER_v_GOST_ABITUR_APO_ANLAGE_12_A3("Schueler-GostAbiturApoAnlage12-A3", new ArrayList<>()),
 
 	/** Report-Vorlage: GOSt - Laufbahnplanung - Ergebnisübersicht */
-	SCHUELER_v_GOST_LAUFBAHNPLANUNG_ERGEBNISUEBERSICHT("Schueler-GostLaufbahnplanungErgebnisuebersicht"),
+	SCHUELER_v_GOST_LAUFBAHNPLANUNG_ERGEBNISUEBERSICHT("Schueler-GostLaufbahnplanungErgebnisuebersicht", Arrays.asList(
+			erzeugeVorlageParameter("mitFehlerKommentare", ReportingVorlageParameterTyp.BOOLEAN, "false"),
+			erzeugeVorlageParameter("mitHinweise", ReportingVorlageParameterTyp.BOOLEAN, "false"))),
 
 	/** Report-Vorlage: GOSt - Laufbahnplanung - Wahlbogen */
-	SCHUELER_v_GOST_LAUFBAHNPLANUNG_WAHLBOGEN("Schueler-GostLaufbahnplanungWahlbogen"),
+	SCHUELER_v_GOST_LAUFBAHNPLANUNG_WAHLBOGEN("Schueler-GostLaufbahnplanungWahlbogen", Arrays.asList(
+			erzeugeVorlageParameter("nurBelegteFaecher", ReportingVorlageParameterTyp.BOOLEAN, "false"))),
 
 	/** Report-Vorlage: Schüler - Schulbescheinigung */
-	SCHUELER_v_SCHULBESCHEINIGUNG("Schueler-Schulbescheinigung"),
+	SCHUELER_v_SCHULBESCHEINIGUNG("Schueler-Schulbescheinigung", Arrays.asList(
+			erzeugeVorlageParameter("fuerErzieher", ReportingVorlageParameterTyp.BOOLEAN, "false"),
+			erzeugeVorlageParameter("mitBildBriefkopf", ReportingVorlageParameterTyp.BOOLEAN, "false"),
+			erzeugeVorlageParameter("mitSchullogo", ReportingVorlageParameterTyp.BOOLEAN, "false"),
+			erzeugeVorlageParameter("keineAnschrift", ReportingVorlageParameterTyp.BOOLEAN, "false"),
+			erzeugeVorlageParameter("keinInfoblock", ReportingVorlageParameterTyp.BOOLEAN, "false"),
+			erzeugeVorlageParameter("keineUnterschrift", ReportingVorlageParameterTyp.BOOLEAN, "false"))),
 
 	/** Report-Vorlage: Schüler - Liste - Kontaktdaten - Erzieher */
-	SCHUELER_v_LISTE_KONTAKTDATENERZIEHER("Schueler-Liste-Kontaktdaten-Erzieher"),
+	SCHUELER_v_LISTE_KONTAKTDATENERZIEHER("Schueler-Liste-Kontaktdaten-Erzieher", Arrays.asList(
+			erzeugeVorlageParameter("mitSchuelerKlasse", ReportingVorlageParameterTyp.BOOLEAN, "false"),
+			erzeugeVorlageParameter("nurSchuelerRufname", ReportingVorlageParameterTyp.BOOLEAN, "false"),
+			erzeugeVorlageParameter("mitSchuelerGeschlecht", ReportingVorlageParameterTyp.BOOLEAN, "false"),
+			erzeugeVorlageParameter("mitSchuelerGebDat", ReportingVorlageParameterTyp.BOOLEAN, "false"),
+			erzeugeVorlageParameter("mitSchuelerStaat", ReportingVorlageParameterTyp.BOOLEAN, "false"),
+			erzeugeVorlageParameter("mitSchuelerAnschrift", ReportingVorlageParameterTyp.BOOLEAN, "false"),
+			erzeugeVorlageParameter("mitSchuelerTelefonPrivat", ReportingVorlageParameterTyp.BOOLEAN, "false"),
+			erzeugeVorlageParameter("mitSchuelerEmailSchule", ReportingVorlageParameterTyp.BOOLEAN, "false"),
+			erzeugeVorlageParameter("mitSchuelerEmailPrivat", ReportingVorlageParameterTyp.BOOLEAN, "false"),
+			erzeugeVorlageParameter("mitSpalteSchuelerTelefonKontakte", ReportingVorlageParameterTyp.BOOLEAN, "false"),
+			erzeugeVorlageParameter("mitErzieher", ReportingVorlageParameterTyp.BOOLEAN, "false"),
+			erzeugeVorlageParameter("mitErzieherAnschrift", ReportingVorlageParameterTyp.BOOLEAN, "false"),
+			erzeugeVorlageParameter("mitErzieherEmailPrivat", ReportingVorlageParameterTyp.BOOLEAN, "false"))),
 
 	/** Report-Vorlage: Stundenplanung - Fach - Stundenplan */
-	STUNDENPLANUNG_v_FACH_STUNDENPLAN("Stundenplanung-FachStundenplan"),
+	STUNDENPLANUNG_v_FACH_STUNDENPLAN("Stundenplanung-FachStundenplan", Arrays.asList(
+			erzeugeVorlageParameter("mitPausenzeiten", ReportingVorlageParameterTyp.BOOLEAN, "false"))),
 
 	/** Report-Vorlage: Stundenplanung - Klasse - Stundenplan */
-	STUNDENPLANUNG_v_KLASSEN_STUNDENPLAN("Stundenplanung-KlassenStundenplan"),
+	STUNDENPLANUNG_v_KLASSEN_STUNDENPLAN("Stundenplanung-KlassenStundenplan", Arrays.asList(
+			erzeugeVorlageParameter("mitPausenzeiten", ReportingVorlageParameterTyp.BOOLEAN, "false"),
+			erzeugeVorlageParameter("mitFachStattKursbezeichnung", ReportingVorlageParameterTyp.BOOLEAN, "false"),
+			erzeugeVorlageParameter("mitFachkuerzelStattFachbezeichnung", ReportingVorlageParameterTyp.BOOLEAN, "false"))),
 
 	/** Report-Vorlage: Stundenplanung - Lehrer - Stundenplan */
-	STUNDENPLANUNG_v_LEHRER_STUNDENPLAN("Stundenplanung-LehrerStundenplan"),
+	STUNDENPLANUNG_v_LEHRER_STUNDENPLAN("Stundenplanung-LehrerStundenplan", Arrays.asList(
+			erzeugeVorlageParameter("mitPausenaufsichten", ReportingVorlageParameterTyp.BOOLEAN, "false"),
+			erzeugeVorlageParameter("mitPausenzeiten", ReportingVorlageParameterTyp.BOOLEAN, "false"),
+			erzeugeVorlageParameter("mitFachkuerzelStattFachbezeichnung", ReportingVorlageParameterTyp.BOOLEAN, "false"))),
 
 	/** Report-Vorlage: Stundenplanung - Lehrer - Stundenplan - Kombiniert */
-	STUNDENPLANUNG_v_LEHRER_STUNDENPLAN_KOMBINIERT("Stundenplanung-LehrerStundenplanKombiniert"),
+	STUNDENPLANUNG_v_LEHRER_STUNDENPLAN_KOMBINIERT("Stundenplanung-LehrerStundenplanKombiniert", Arrays.asList(
+			erzeugeVorlageParameter("mitPausenaufsichten", ReportingVorlageParameterTyp.BOOLEAN, "false"),
+			erzeugeVorlageParameter("mitPausenzeiten", ReportingVorlageParameterTyp.BOOLEAN, "false"),
+			erzeugeVorlageParameter("mitFachkuerzelStattFachbezeichnung", ReportingVorlageParameterTyp.BOOLEAN, "false"))),
 
 	/** Report-Vorlage: Stundenplanung - Fach - Stundenplan */
-	STUNDENPLANUNG_v_RAUM_STUNDENPLAN("Stundenplanung-RaumStundenplan"),
+	STUNDENPLANUNG_v_RAUM_STUNDENPLAN("Stundenplanung-RaumStundenplan", Arrays.asList(
+			erzeugeVorlageParameter("mitPausenzeiten", ReportingVorlageParameterTyp.BOOLEAN, "false"))),
 
 	/** Report-Vorlage: Stundenplanung - Schüler - Stundenplan */
-	STUNDENPLANUNG_v_SCHUELER_STUNDENPLAN("Stundenplanung-SchuelerStundenplan");
+	STUNDENPLANUNG_v_SCHUELER_STUNDENPLAN("Stundenplanung-SchuelerStundenplan", Arrays.asList(
+			erzeugeVorlageParameter("mitPausenzeiten", ReportingVorlageParameterTyp.BOOLEAN, "false"),
+			erzeugeVorlageParameter("mitFachStattKursbezeichnung", ReportingVorlageParameterTyp.BOOLEAN, "false"),
+			erzeugeVorlageParameter("mitFachkuerzelStattFachbezeichnung", ReportingVorlageParameterTyp.BOOLEAN, "false"),
+			erzeugeVorlageParameter("mitIndividuelleKursart", ReportingVorlageParameterTyp.BOOLEAN, "false")));
+
+
+	/**
+	 * Erstellt einen neuen Vorlage-Parameter mit dem angegebenen Namen, Typ und Wert.
+	 *
+	 * @param name   der Name des Vorlage-Parameters. Darf nicht null sein.
+	 * @param typ    der Typ des Vorlage-Parameters. Darf nicht null sein.
+	 * @param wert   der Wert des Vorlage-Parameters. Darf nicht null sein.
+	 *
+	 * @return Ein neues Objekt der Klasse {@link ReportingVorlageParameter}, das den angegebenen Namen, Typ und Wert enthält.
+	 */
+	private static @NotNull ReportingVorlageParameter erzeugeVorlageParameter(final @NotNull String name, final @NotNull ReportingVorlageParameterTyp typ,
+			final @NotNull String wert) {
+		final ReportingVorlageParameter reportingVorlageParameter = new ReportingVorlageParameter();
+		reportingVorlageParameter.name = name;
+		reportingVorlageParameter.typ = typ.getId();
+		reportingVorlageParameter.wert = wert;
+		return reportingVorlageParameter;
+	}
 
 
 	/** Die Bezeichnung der Report-Vorlage */
-	private final String bezeichnung;
+	private final @NotNull String bezeichnung;
+
+	/** Eine Liste, in der die gültigen Vorlage-Parameter der Report-Vorlage enthalten sind. */
+	private final @NotNull List<ReportingVorlageParameter> vorlageParameterList = new ArrayList<>();
+
+	/** Eine Map, die die gültigen Vorlage-Parameter der Report-Vorlage zum Namen des Parameters enthält. */
+	private final @NotNull Map<String, ReportingVorlageParameter> vorlageParameterMap = new HashMap<>();
 
 	/**
-	 * Erstellt eine neue Report-Vorlage
-	 * @param bezeichnung Der Name der Report-Vorlage
+	 * Konstruktor für eine Reporting-Reportvorlage.
+	 *
+	 * @param bezeichnung Die Bezeichnung der Reportvorlage. Darf nicht null sein.
+	 * @param vorlageParameterList Eine Liste mit den Vorlage-Parametern, basierend auf der jeweiligen Definition. Darf nicht null sein.
 	 */
-	ReportingReportvorlage(final String bezeichnung) {
+	ReportingReportvorlage(final @NotNull String bezeichnung, final @NotNull List<ReportingVorlageParameter> vorlageParameterList) {
 		this.bezeichnung = bezeichnung;
+		this.vorlageParameterList.addAll(vorlageParameterList);
+		for (final ReportingVorlageParameter vp : vorlageParameterList)
+			this.vorlageParameterMap.put(vp.name, vp);
+	}
+
+	/**
+	 * Diese Methode ermittelt die Report-Vorlage anhand der übergebenen Bezeichnung.
+	 *
+	 * @param bezeichnung Die Bezeichnung der Report-Vorlage
+	 *
+	 * @return Die Report-Vorlage
+	 */
+	public static ReportingReportvorlage getByBezeichnung(final @NotNull String bezeichnung) {
+		if (bezeichnung.isEmpty())
+			return null;
+		for (final ReportingReportvorlage rv : ReportingReportvorlage.values())
+			if (rv.bezeichnung.equals(bezeichnung))
+				return rv;
+		return null;
 	}
 
 	/**
 	 * Gibt die Bezeichnung dieser Report-Vorlage zurück
+	 *
 	 * @return Die Bezeichnung dieser Report-Vorlage
 	 */
 	public @NotNull String getBezeichnung() {
@@ -108,17 +221,21 @@ public enum ReportingReportvorlage {
 	}
 
 	/**
-	 * Diese Methode ermittelt die Report-Vorlage anhand der übergebenen Bezeichnung.
-	 * @param bezeichnung Die Bezeichnung der Report-Vorlage
-	 * @return Die Report-Vorlage
+	 * Gibt die Liste der Report-Parameter für diese Report-Vorlage zurück.
+	 *
+	 * @return Die Liste der Report-Parameter für diese Report-Vorlage.
 	 */
-	public static ReportingReportvorlage getByBezeichnung(final String bezeichnung) {
-		if ((bezeichnung == null) || (bezeichnung.isEmpty()))
-			return null;
-		for (final ReportingReportvorlage rv : ReportingReportvorlage.values())
-			if (rv.bezeichnung.equals(bezeichnung))
-				return rv;
-		return null;
+	public @NotNull List<ReportingVorlageParameter> getVorlageParameterList() {
+		return this.vorlageParameterList;
+	}
+
+	/**
+	 * Gibt die Map der Report-Parameter für diese Report-Vorlage zurück.
+	 *
+	 * @return Die Map der Report-Parameter für diese Report-Vorlage.
+	 */
+	public @NotNull Map<String, ReportingVorlageParameter> getVorlageParameterMap() {
+		return this.vorlageParameterMap;
 	}
 
 }

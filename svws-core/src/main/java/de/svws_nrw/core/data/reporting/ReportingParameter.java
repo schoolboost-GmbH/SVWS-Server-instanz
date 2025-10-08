@@ -74,8 +74,12 @@ public class ReportingParameter {
 	@Schema(description = "Legt fest, ob die Seiteneinstellungen für einen Duplexdruck verwendet werden sollen.", example = "false")
 	public boolean duplexdruck = false;
 
-	/** Parameter, der in Templates verwendet werden kann, um den Detailgrad der Darstellung zu steuern. */
-	@Schema(description = "Parameter, der in Templates verwendet werden kann, um den Detailgrad der Darstellung zu steuern.", example = "0")
+	/** Eine Liste mit freien, typisierten Report-Parameter-Werten, die in Templates direkt über ihren Namen nutzbar sind. */
+	@Schema(description = "Eine Liste mit freien, typisierten Report-Parameter-Werten, die in Templates direkt über ihren Namen nutzbar sind.")
+	public @NotNull List<ReportingVorlageParameter> vorlageParameter = new ArrayList<>();
+
+	/** Veraltet: Parameter, der in Templates verwendet werden kann, um den Detailgrad der Darstellung zu steuern. */
+	@Schema(description = "VERALTET: alter Parameter zur Steuerung des Detailgrads. Bitte statt dessen reportParameter verwenden.", example = "0", deprecated = true)
 	public int detailLevel = 0;
 
 

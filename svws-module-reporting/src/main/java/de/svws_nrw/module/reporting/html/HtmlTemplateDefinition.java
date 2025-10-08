@@ -1,6 +1,5 @@
 package de.svws_nrw.module.reporting.html;
 
-import java.util.Arrays;
 import java.util.List;
 
 import de.svws_nrw.core.types.benutzer.BenutzerKompetenz;
@@ -32,7 +31,7 @@ public enum HtmlTemplateDefinition {
 			"""
 			        <p th:text="${'GOSt-Klausurplanung-Klausurtermine-Kurse_' + #strings.replace(#strings.replace(Schule.auswahlSchuljahresabschnitt().textSchuljahresabschnittKurz(), '.', ''), '/', '-')}"></p>
 			""",
-			Arrays.asList(BenutzerKompetenz.OBERSTUFE_KLAUSURPLANUNG_ANSEHEN_ALLGEMEIN, BenutzerKompetenz.OBERSTUFE_KLAUSURPLANUNG_AENDERN,
+			List.of(BenutzerKompetenz.OBERSTUFE_KLAUSURPLANUNG_ANSEHEN_ALLGEMEIN, BenutzerKompetenz.OBERSTUFE_KLAUSURPLANUNG_AENDERN,
 					BenutzerKompetenz.OBERSTUFE_KLAUSURPLANUNG_ANSEHEN_FUNKTION)),
 
 	/** Report-Vorlage: GOSt - Klausurplanung - Schueler - Klausuren */
@@ -42,15 +41,15 @@ public enum HtmlTemplateDefinition {
 			"gost/klausurplanung/GostKlausurplanungSchuelerMitKlausuren.html",
 			"GOSt-Klausurplanung-Schueler-Klausuren",
 			"""
-				<th:block th:with="gefilterteSchueler = ${GostKlausurplan.schuelerGefiltert()}, anzahlGefilterteSchueler = ${#lists.size(gefilterteSchueler)}">
-					<p th:if="${anzahlGefilterteSchueler == 0}" th:text="${'GOSt-Klausurplanung-Schueler-Klausuren_' + #strings.replace(#strings.replace(Schule.auswahlSchuljahresabschnitt().textSchuljahresabschnittKurz(), '.', ''), '/', '-')}"></p>
-					<th:block th:if="${anzahlGefilterteSchueler != 0}" th:each="schueler,iterState : ${gefilterteSchueler}">
-						<p th:if="${iterState.first && (anzahlGefilterteSchueler == 1)}" th:text="${'GOSt-Klausurplanung-Schueler-Klausuren_' + #strings.replace(#strings.replace(Schule.auswahlSchuljahresabschnitt().textSchuljahresabschnittKurz(), '.', ''), '/', '-') + '_' + #strings.replace(schueler.nachname(), ' ', '_') + '__' + #strings.replace(schueler.vorname(), ' ', '_') + '_(' + schueler.id() + ')_' + #dates.format(#dates.createNow(), 'yyyyMMdd-HHmm')}"></p>
-						<p th:if="${iterState.first && (anzahlGefilterteSchueler > 1)}" th:text="${'GOSt-Klausurplanung-Schueler-Klausuren_' + #strings.replace(#strings.replace(Schule.auswahlSchuljahresabschnitt().textSchuljahresabschnittKurz(), '.', ''), '/', '-')}"></p>
-					</th:block>
-				</th:block>
-			""",
-			Arrays.asList(BenutzerKompetenz.OBERSTUFE_KLAUSURPLANUNG_ANSEHEN_ALLGEMEIN, BenutzerKompetenz.OBERSTUFE_KLAUSURPLANUNG_AENDERN,
+                <th:block th:with="gefilterteSchueler = ${GostKlausurplan.schuelerGefiltert()}, anzahlGefilterteSchueler = ${#lists.size(gefilterteSchueler)}">
+                    <p th:if="${anzahlGefilterteSchueler == 0}" th:text="${'GOSt-Klausurplanung-Schueler-Klausuren_' + #strings.replace(#strings.replace(Schule.auswahlSchuljahresabschnitt().textSchuljahresabschnittKurz(), '.', ''), '/', '-')}"></p>
+                    <th:block th:if="${anzahlGefilterteSchueler != 0}" th:each="schueler,iterState : ${gefilterteSchueler}">
+                        <p th:if="${iterState.first && (anzahlGefilterteSchueler == 1)}" th:text="${'GOSt-Klausurplanung-Schueler-Klausuren_' + #strings.replace(#strings.replace(Schule.auswahlSchuljahresabschnitt().textSchuljahresabschnittKurz(), '.', ''), '/', '-') + '_' + #strings.replace(schueler.nachname(), ' ', '_') + '__' + #strings.replace(schueler.vorname(), ' ', '_') + '_(' + schueler.id() + ')_' + #dates.format(#dates.createNow(), 'yyyyMMdd-HHmm')}"></p>
+                        <p th:if="${iterState.first && (anzahlGefilterteSchueler > 1)}" th:text="${'GOSt-Klausurplanung-Schueler-Klausuren_' + #strings.replace(#strings.replace(Schule.auswahlSchuljahresabschnitt().textSchuljahresabschnittKurz(), '.', ''), '/', '-')}"></p>
+                    </th:block>
+                </th:block>
+            """,
+			List.of(BenutzerKompetenz.OBERSTUFE_KLAUSURPLANUNG_ANSEHEN_ALLGEMEIN, BenutzerKompetenz.OBERSTUFE_KLAUSURPLANUNG_AENDERN,
 					BenutzerKompetenz.OBERSTUFE_KLAUSURPLANUNG_ANSEHEN_FUNKTION)),
 
 	/** Report-Vorlage: GOSt - Kursplanung - Kurs - Kurschüler */
@@ -68,7 +67,7 @@ public enum HtmlTemplateDefinition {
                  </th:block>
              </th:block>
              """,
-			Arrays.asList(BenutzerKompetenz.OBERSTUFE_LAUFBAHNPLANUNG_ALLGEMEIN, BenutzerKompetenz.OBERSTUFE_LAUFBAHNPLANUNG_FUNKTIONSBEZOGEN,
+			List.of(BenutzerKompetenz.OBERSTUFE_LAUFBAHNPLANUNG_ALLGEMEIN, BenutzerKompetenz.OBERSTUFE_LAUFBAHNPLANUNG_FUNKTIONSBEZOGEN,
 					BenutzerKompetenz.OBERSTUFE_KURSPLANUNG_ALLGEMEIN, BenutzerKompetenz.OBERSTUFE_KURSPLANUNG_FUNKTIONSBEZOGEN)),
 
 	/** Report-Vorlage: GOSt - Kursplanung - Kurse - Statistikwerte */
@@ -80,7 +79,7 @@ public enum HtmlTemplateDefinition {
 			"""
 			        <p th:text="${'GOSt-Blockungsergebnis-Kurse-Statistikwerte_Abi' + GostBlockungsergebnis.abiturjahr() + '_' + #strings.replace(GostBlockungsergebnis.gostHalbjahr().kuerzel, '.', '') + '_(Erg-ID-' + GostBlockungsergebnis.id() + ')'}"></p>
 			""",
-			Arrays.asList(BenutzerKompetenz.OBERSTUFE_LAUFBAHNPLANUNG_ALLGEMEIN, BenutzerKompetenz.OBERSTUFE_LAUFBAHNPLANUNG_FUNKTIONSBEZOGEN,
+			List.of(BenutzerKompetenz.OBERSTUFE_LAUFBAHNPLANUNG_ALLGEMEIN, BenutzerKompetenz.OBERSTUFE_LAUFBAHNPLANUNG_FUNKTIONSBEZOGEN,
 					BenutzerKompetenz.OBERSTUFE_KURSPLANUNG_ALLGEMEIN, BenutzerKompetenz.OBERSTUFE_KURSPLANUNG_FUNKTIONSBEZOGEN)),
 
 	/** Report-Vorlage: GOSt - Kursplanung - Schüler - Kurse */
@@ -92,7 +91,7 @@ public enum HtmlTemplateDefinition {
 			"""
 			        <p th:text="${'GOSt-Blockungsergebnis-Schueler-Kurse_Abi' + GostBlockungsergebnis.abiturjahr() + '_' + #strings.replace(GostBlockungsergebnis.gostHalbjahr().kuerzel, '.', '') + '_(Erg-ID-' + GostBlockungsergebnis.id() + ')'}"></p>
 			""",
-			Arrays.asList(BenutzerKompetenz.OBERSTUFE_LAUFBAHNPLANUNG_ALLGEMEIN, BenutzerKompetenz.OBERSTUFE_LAUFBAHNPLANUNG_FUNKTIONSBEZOGEN,
+			List.of(BenutzerKompetenz.OBERSTUFE_LAUFBAHNPLANUNG_ALLGEMEIN, BenutzerKompetenz.OBERSTUFE_LAUFBAHNPLANUNG_FUNKTIONSBEZOGEN,
 					BenutzerKompetenz.OBERSTUFE_KURSPLANUNG_ALLGEMEIN, BenutzerKompetenz.OBERSTUFE_KURSPLANUNG_FUNKTIONSBEZOGEN)),
 
 	/** Report-Vorlage: GOSt - Kursplanung - Schüler - Schienen-Kurse */
@@ -104,7 +103,7 @@ public enum HtmlTemplateDefinition {
 			"""
 			        <p th:text="${'GOSt-Blockungsergebnis-Schueler-Schienen-Kurse_Abi' + GostBlockungsergebnis.abiturjahr() + '_' + #strings.replace(GostBlockungsergebnis.gostHalbjahr().kuerzel, '.', '') + '_(Erg-ID-' + GostBlockungsergebnis.id() + ')'}"></p>
 			""",
-			Arrays.asList(BenutzerKompetenz.OBERSTUFE_LAUFBAHNPLANUNG_ALLGEMEIN, BenutzerKompetenz.OBERSTUFE_LAUFBAHNPLANUNG_FUNKTIONSBEZOGEN,
+			List.of(BenutzerKompetenz.OBERSTUFE_LAUFBAHNPLANUNG_ALLGEMEIN, BenutzerKompetenz.OBERSTUFE_LAUFBAHNPLANUNG_FUNKTIONSBEZOGEN,
 					BenutzerKompetenz.OBERSTUFE_KURSPLANUNG_ALLGEMEIN, BenutzerKompetenz.OBERSTUFE_KURSPLANUNG_FUNKTIONSBEZOGEN)),
 
 	/** Report-Vorlage: GOSt - Laufbahnplanung - Abiturjahrgang - Fachwahlstatistiken */
@@ -116,7 +115,7 @@ public enum HtmlTemplateDefinition {
 			"""
 			        <p th:text="${'GOSt-Laufbahnplanung-Abiturjahrgang-Fachwahlstatistiken_Abi' + GostLaufbahnplanungAbiturjahrgangFachwahlstatistikenAbiturjahr + '_' + #dates.format(#dates.createNow(), 'yyyyMMdd-HHmm')}"></p>
 			""",
-			Arrays.asList(BenutzerKompetenz.OBERSTUFE_LAUFBAHNPLANUNG_ALLGEMEIN, BenutzerKompetenz.OBERSTUFE_LAUFBAHNPLANUNG_FUNKTIONSBEZOGEN,
+			List.of(BenutzerKompetenz.OBERSTUFE_LAUFBAHNPLANUNG_ALLGEMEIN, BenutzerKompetenz.OBERSTUFE_LAUFBAHNPLANUNG_FUNKTIONSBEZOGEN,
 					BenutzerKompetenz.OBERSTUFE_KURSPLANUNG_ALLGEMEIN, BenutzerKompetenz.OBERSTUFE_KURSPLANUNG_FUNKTIONSBEZOGEN)),
 
 	/** Report-Vorlage: Klasse - Liste - Schüler - Kontaktdaten - Erzieher */
@@ -132,7 +131,7 @@ public enum HtmlTemplateDefinition {
 			            <p th:if="${iterState.first && (Klassen.size() > 1)}" th:text="${'Klasse-Liste-Schueler-Kontaktdaten-Erzieher'}"></p>
 			        </th:block>
 			""",
-			Arrays.asList(BenutzerKompetenz.SCHUELER_INDIVIDUALDATEN_ANSEHEN)),
+			List.of(BenutzerKompetenz.SCHUELER_INDIVIDUALDATEN_ANSEHEN)),
 
 	/** Report-Vorlage: Kurs - Liste - Schüler - Kontaktdaten - Erzieher */
 	KURSE_v_LISTE_SCHUELER_KONTAKTDATENERZIEHER(
@@ -147,7 +146,7 @@ public enum HtmlTemplateDefinition {
 			            <p th:if="${iterState.first && (Kurse.size() > 1)}" th:text="${'Kurs-Liste-Schueler-Kontaktdaten-Erzieher'}"></p>
 			        </th:block>
 			""",
-			Arrays.asList(BenutzerKompetenz.SCHUELER_INDIVIDUALDATEN_ANSEHEN)),
+			List.of(BenutzerKompetenz.SCHUELER_INDIVIDUALDATEN_ANSEHEN)),
 
 	/** Report-Vorlage: GOSt - Kursplanung - Kurs - Kurschüler */
 	KURSE_v_KURS_SCHUELER_STAMMDATENLISTE(
@@ -161,7 +160,7 @@ public enum HtmlTemplateDefinition {
 			            <p th:if="${iterState.first}" th:text="${'Kurs-Schueler-Stammdatenliste_' + #dates.format(#dates.createNow(), 'yyyyMMdd-HHmm')}"></p>
 			        </th:block>
 			""",
-			Arrays.asList(BenutzerKompetenz.SCHUELER_INDIVIDUALDATEN_ANSEHEN)),
+			List.of(BenutzerKompetenz.SCHUELER_INDIVIDUALDATEN_ANSEHEN)),
 
 	/** Report-Vorlage: Lehrer - Stammdaten - Liste */
 	LEHRER_v_STAMMDATENLISTE(
@@ -175,7 +174,7 @@ public enum HtmlTemplateDefinition {
 			            <p th:if="${iterState.first}" th:text="${'Lehrer-Stammdatenliste' + #dates.format(#dates.createNow(), 'yyyyMMdd-HHmm')}"></p>
 			        </th:block>
 			""",
-			Arrays.asList(BenutzerKompetenz.LEHRERDATEN_ANSEHEN)),
+			List.of(BenutzerKompetenz.LEHRERDATEN_ANSEHEN)),
 
 	/** Report-Vorlage: Schüler - GOSt - Abitur - APO - Anlage 12 (Abiturzeugnis) - Din-A4 */
 	SCHUELER_v_GOST_ABITUR_APO_ANLAGE_12_A4(
@@ -190,7 +189,7 @@ public enum HtmlTemplateDefinition {
 			            <p th:if="${iterState.first && (Schueler.size() > 1)}" th:text="${'Abitur' + schueler.gostAbitur().abiturjahr() + '_APO-GOSt-Anlage12'}"></p>
 			        </th:block>
 			""",
-			Arrays.asList(BenutzerKompetenz.ABITUR_ANSEHEN_ALLGEMEIN, BenutzerKompetenz.ABITUR_ANSEHEN_FUNKTIONSBEZOGEN)),
+			List.of(BenutzerKompetenz.ABITUR_ANSEHEN_ALLGEMEIN, BenutzerKompetenz.ABITUR_ANSEHEN_FUNKTIONSBEZOGEN)),
 
 
 	/** Report-Vorlage: Schüler - GOSt - Abitur - APO - Anlage 12 (Abiturzeugnis) - Din-A3 */
@@ -206,7 +205,7 @@ public enum HtmlTemplateDefinition {
 			            <p th:if="${iterState.first && (Schueler.size() > 1)}" th:text="${'Abitur' + schueler.gostAbitur().abiturjahr() + '_APO-GOSt-Anlage12'}"></p>
 			        </th:block>
 			""",
-			Arrays.asList(BenutzerKompetenz.ABITUR_ANSEHEN_ALLGEMEIN, BenutzerKompetenz.ABITUR_ANSEHEN_FUNKTIONSBEZOGEN)),
+			List.of(BenutzerKompetenz.ABITUR_ANSEHEN_ALLGEMEIN, BenutzerKompetenz.ABITUR_ANSEHEN_FUNKTIONSBEZOGEN)),
 
 	/** Report-Vorlage: Schüler - GOSt - Laufbahnplanung - Ergebnisübersicht */
 	SCHUELER_v_GOST_LAUFBAHNPLANUNG_ERGEBNISUEBERSICHT(
@@ -220,7 +219,7 @@ public enum HtmlTemplateDefinition {
 			            <p th:if="${iterState.first}" th:text="${'GOSt-Laufbahnplanung-Pruefungsergebnisse_Abi' + schueler.gostLaufbahnplanung().abiturjahr() + '_' + #strings.replace(schueler.gostLaufbahnplanung().auswahlGOStHalbjahr(), '.', '')}"></p>
 			        </th:block>
 			""",
-			Arrays.asList(BenutzerKompetenz.OBERSTUFE_LAUFBAHNPLANUNG_ALLGEMEIN, BenutzerKompetenz.OBERSTUFE_LAUFBAHNPLANUNG_FUNKTIONSBEZOGEN,
+			List.of(BenutzerKompetenz.OBERSTUFE_LAUFBAHNPLANUNG_ALLGEMEIN, BenutzerKompetenz.OBERSTUFE_LAUFBAHNPLANUNG_FUNKTIONSBEZOGEN,
 					BenutzerKompetenz.OBERSTUFE_KURSPLANUNG_ALLGEMEIN, BenutzerKompetenz.OBERSTUFE_KURSPLANUNG_FUNKTIONSBEZOGEN)),
 
 	/** Report-Vorlage: Schüler - GOSt - Laufbahnplanung - Wahlbogen */
@@ -236,7 +235,7 @@ public enum HtmlTemplateDefinition {
 			            <p th:if="${iterState.first && (Schueler.size() > 1)}" th:text="${'GOSt-Laufbahnwahl_Abi' + schueler.gostLaufbahnplanung().abiturjahr() + '_' + #strings.replace(schueler.gostLaufbahnplanung().folgeAuswahlGOStHalbjahr(), '.', '')}"></p>
 			        </th:block>
 			""",
-			Arrays.asList(BenutzerKompetenz.OBERSTUFE_LAUFBAHNPLANUNG_ALLGEMEIN, BenutzerKompetenz.OBERSTUFE_LAUFBAHNPLANUNG_FUNKTIONSBEZOGEN,
+			List.of(BenutzerKompetenz.OBERSTUFE_LAUFBAHNPLANUNG_ALLGEMEIN, BenutzerKompetenz.OBERSTUFE_LAUFBAHNPLANUNG_FUNKTIONSBEZOGEN,
 					BenutzerKompetenz.OBERSTUFE_KURSPLANUNG_ALLGEMEIN, BenutzerKompetenz.OBERSTUFE_KURSPLANUNG_FUNKTIONSBEZOGEN)),
 
 	/** Report-Vorlage: Schüler - Schulbescheinigung */
@@ -252,7 +251,7 @@ public enum HtmlTemplateDefinition {
 			            <p th:if="${iterState.first && (Schueler.size() > 1)}" th:text="${'Schulbescheinigungen'}"></p>
 			        </th:block>
 			""",
-			Arrays.asList(BenutzerKompetenz.SCHUELER_INDIVIDUALDATEN_ANSEHEN)),
+			List.of(BenutzerKompetenz.SCHUELER_INDIVIDUALDATEN_ANSEHEN)),
 
 	/** Report-Vorlage: Schüler - Stammdaten - Liste */
 	SCHUELER_v_LISTE_KONTAKTDATENERZIEHER(
@@ -266,7 +265,7 @@ public enum HtmlTemplateDefinition {
 			            <p th:if="${iterState.first}" th:text="${'Schueler-Liste-Kontaktdaten-Erzieher_' + #dates.format(#dates.createNow(), 'yyyyMMdd-HHmm')}"></p>
 			        </th:block>
 			""",
-			Arrays.asList(BenutzerKompetenz.SCHUELER_INDIVIDUALDATEN_ANSEHEN)),
+			List.of(BenutzerKompetenz.SCHUELER_INDIVIDUALDATEN_ANSEHEN)),
 
 	/** Report-Vorlage: Stundenplanung - Fach - Stundenplan */
 	STUNDENPLANUNG_v_FACH_STUNDENPLAN(
@@ -281,7 +280,7 @@ public enum HtmlTemplateDefinition {
 			            <p th:if="${iterState.first && (FaecherStundenplaene.size() > 1)}" th:text="${'Fach-Stundenplaene_' + #strings.replace(#strings.replace(fachstundenplan.stundenplan().schuljahresabschnitt().textSchuljahresabschnittKurz(), '.', ''), '/', '-')}"></p>
 			        </th:block>
 			""",
-			Arrays.asList(BenutzerKompetenz.STUNDENPLAN_ALLGEMEIN_ANSEHEN)),
+			List.of(BenutzerKompetenz.STUNDENPLAN_ALLGEMEIN_ANSEHEN)),
 
 	/** Report-Vorlage: Stundenplanung - Klasse - Stundenplan */
 	STUNDENPLANUNG_v_KLASSEN_STUNDENPLAN(
@@ -296,7 +295,7 @@ public enum HtmlTemplateDefinition {
 			            <p th:if="${iterState.first && (KlassenStundenplaene.size() > 1)}" th:text="${'Klassen-Stundenplaene_' + #strings.replace(#strings.replace(klassenstundenplan.stundenplan().schuljahresabschnitt().textSchuljahresabschnittKurz(), '.', ''), '/', '-')}"></p>
 			        </th:block>
 			""",
-			Arrays.asList(BenutzerKompetenz.STUNDENPLAN_ALLGEMEIN_ANSEHEN)),
+			List.of(BenutzerKompetenz.STUNDENPLAN_ALLGEMEIN_ANSEHEN)),
 
 	/** Report-Vorlage: Stundenplanung - Lehrer - Stundenplan */
 	STUNDENPLANUNG_v_LEHRER_STUNDENPLAN(
@@ -311,7 +310,7 @@ public enum HtmlTemplateDefinition {
 			            <p th:if="${iterState.first && (LehrerStundenplaene.size() > 1)}" th:text="${'Lehrer-Stundenplaene_' + #strings.replace(#strings.replace(lehrerstundenplan.stundenplan().schuljahresabschnitt().textSchuljahresabschnittKurz(), '.', ''), '/', '-')}"></p>
 			        </th:block>
 			""",
-			Arrays.asList(BenutzerKompetenz.STUNDENPLAN_ALLGEMEIN_ANSEHEN)),
+			List.of(BenutzerKompetenz.STUNDENPLAN_ALLGEMEIN_ANSEHEN)),
 
 	/** Report-Vorlage: Stundenplanung - Lehrer - Stundenplan */
 	STUNDENPLANUNG_v_LEHRER_STUNDENPLAN_KOMBINIERT(
@@ -326,7 +325,7 @@ public enum HtmlTemplateDefinition {
 			            <p th:if="${iterState.first && (LehrerStundenplaene.size() > 1)}" th:text="${'Lehrer-Stundenplaene-Kombiniert_' + #strings.replace(#strings.replace(lehrerstundenplan.stundenplan().schuljahresabschnitt().textSchuljahresabschnittKurz(), '.', ''), '/', '-')}"></p>
 			        </th:block>
 			""",
-			Arrays.asList(BenutzerKompetenz.STUNDENPLAN_ALLGEMEIN_ANSEHEN)),
+			List.of(BenutzerKompetenz.STUNDENPLAN_ALLGEMEIN_ANSEHEN)),
 
 	/** Report-Vorlage: Stundenplanung - Raum - Stundenplan */
 	STUNDENPLANUNG_v_RAUM_STUNDENPLAN(
@@ -341,7 +340,7 @@ public enum HtmlTemplateDefinition {
 			            <p th:if="${iterState.first && (RaeumeStundenplaene.size() > 1)}" th:text="${'Raum-Stundenplaene_' + #strings.replace(#strings.replace(raumstundenplan.stundenplan().schuljahresabschnitt().textSchuljahresabschnittKurz(), '.', ''), '/', '-')}"></p>
 			        </th:block>
 			""",
-			Arrays.asList(BenutzerKompetenz.STUNDENPLAN_ALLGEMEIN_ANSEHEN)),
+			List.of(BenutzerKompetenz.STUNDENPLAN_ALLGEMEIN_ANSEHEN)),
 
 	/** Report-Vorlage: Stundenplanung - Schüler - Stundenplan */
 	STUNDENPLANUNG_v_SCHUELER_STUNDENPLAN(
@@ -356,7 +355,7 @@ public enum HtmlTemplateDefinition {
 			            <p th:if="${iterState.first && (SchuelerStundenplaene.size() > 1)}" th:text="${'Schueler-Stundenplaene_' + #strings.replace(#strings.replace(schuelerstundenplan.stundenplan().schuljahresabschnitt().textSchuljahresabschnittKurz(), '.', ''), '/', '-')}"></p>
 			        </th:block>
 			""",
-			Arrays.asList(BenutzerKompetenz.STUNDENPLAN_ALLGEMEIN_ANSEHEN));
+			List.of(BenutzerKompetenz.STUNDENPLAN_ALLGEMEIN_ANSEHEN));
 
 
 
@@ -479,13 +478,13 @@ public enum HtmlTemplateDefinition {
 
 
 	/**
-	 * Diese Methode ermittelt die Report-Vorlage anhand des übergebenen Namens.
+	 * Diese Methode ermittelt die HtmlTemplateDefinition anhand der Reportvorlage.
 	 *
 	 * @param reportingReportvorlage  Der CoreType der Report-Vorlage
 	 *
 	 * @return Die Template-Definition
 	 */
-	public static HtmlTemplateDefinition getByType(final ReportingReportvorlage reportingReportvorlage) {
+	public static HtmlTemplateDefinition getByReportvorlage(final ReportingReportvorlage reportingReportvorlage) {
 		for (final HtmlTemplateDefinition td : HtmlTemplateDefinition.values())
 			if (td.reportingReportvorlage == reportingReportvorlage)
 				return td;

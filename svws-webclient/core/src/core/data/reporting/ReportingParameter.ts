@@ -1,4 +1,5 @@
 import { JavaObject } from '../../../java/lang/JavaObject';
+import { ReportingVorlageParameter } from '../../../core/data/reporting/ReportingVorlageParameter';
 import { ReportingEMailDaten } from '../../../core/data/reporting/ReportingEMailDaten';
 import { ArrayList } from '../../../java/util/ArrayList';
 import type { List } from '../../../java/util/List';
@@ -69,7 +70,12 @@ export class ReportingParameter extends JavaObject {
 	public duplexdruck : boolean = false;
 
 	/**
-	 * Parameter, der in Templates verwendet werden kann, um den Detailgrad der Darstellung zu steuern.
+	 * Eine Liste mit freien, typisierten Report-Parameter-Werten, die in Templates direkt über ihren Namen nutzbar sind.
+	 */
+	public vorlageParameter : List<ReportingVorlageParameter> = new ArrayList<ReportingVorlageParameter>();
+
+	/**
+	 * Veraltet: Parameter, der in Templates verwendet werden kann, um den Detailgrad der Darstellung zu steuern.
 	 */
 	public detailLevel : number = 0;
 
@@ -134,6 +140,11 @@ export class ReportingParameter extends JavaObject {
 		if (obj.duplexdruck === undefined)
 			throw new Error('invalid json format, missing attribute duplexdruck');
 		result.duplexdruck = obj.duplexdruck;
+		if (obj.vorlageParameter !== undefined) {
+			for (const elem of obj.vorlageParameter) {
+				result.vorlageParameter.add(ReportingVorlageParameter.transpilerFromJSON(JSON.stringify(elem)));
+			}
+		}
 		if (obj.detailLevel === undefined)
 			throw new Error('invalid json format, missing attribute detailLevel');
 		result.detailLevel = obj.detailLevel;
@@ -179,6 +190,14 @@ export class ReportingParameter extends JavaObject {
 		}
 		result += '"eMailDaten" : ' + ((obj.eMailDaten === null) ? 'null' : ReportingEMailDaten.transpilerToJSON(obj.eMailDaten)) + ',';
 		result += '"duplexdruck" : ' + obj.duplexdruck.toString() + ',';
+		result += '"vorlageParameter" : [ ';
+		for (let i = 0; i < obj.vorlageParameter.size(); i++) {
+			const elem = obj.vorlageParameter.get(i);
+			result += ReportingVorlageParameter.transpilerToJSON(elem);
+			if (i < obj.vorlageParameter.size() - 1)
+				result += ',';
+		}
+		result += ' ]' + ',';
 		result += '"detailLevel" : ' + obj.detailLevel.toString() + ',';
 		result = result.slice(0, -1);
 		result += '}';
@@ -247,6 +266,16 @@ export class ReportingParameter extends JavaObject {
 		}
 		if (obj.duplexdruck !== undefined) {
 			result += '"duplexdruck" : ' + obj.duplexdruck.toString() + ',';
+		}
+		if (obj.vorlageParameter !== undefined) {
+			result += '"vorlageParameter" : [ ';
+			for (let i = 0; i < obj.vorlageParameter.size(); i++) {
+				const elem = obj.vorlageParameter.get(i);
+				result += ReportingVorlageParameter.transpilerToJSON(elem);
+				if (i < obj.vorlageParameter.size() - 1)
+					result += ',';
+			}
+			result += ' ]' + ',';
 		}
 		if (obj.detailLevel !== undefined) {
 			result += '"detailLevel" : ' + obj.detailLevel.toString() + ',';

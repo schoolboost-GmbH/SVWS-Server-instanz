@@ -1,6 +1,6 @@
 
-import type { GostJahrgangsdaten, GostKlausurvorgabe, GostKlausurraum, Schuljahresabschnitt, GostKlausurterminblockungDaten, GostNachschreibterminblockungKonfiguration, GostKlausurenUpdate, List, GostKlausurraumRich, ApiFile, GostSchuelerklausur} from "@core";
-import { GostKlausurtermin, ArrayList, StundenplanManager, GostFaecherManager, GostHalbjahr, GostKlausurplanManager, DeveloperNotificationException, GostSchuelerklausurTermin, GostKlausurenCollectionAllData, GostKlausurenCollectionHjData, ReportingParameter, ReportingReportvorlage, GostKlausurenCollectionSkrsKrsData, GostKursklausur } from "@core";
+import type { GostJahrgangsdaten, GostKlausurvorgabe, GostKlausurraum, Schuljahresabschnitt, GostKlausurterminblockungDaten, GostNachschreibterminblockungKonfiguration, GostKlausurenUpdate, List, GostKlausurraumRich, ApiFile, GostSchuelerklausur } from "@core";
+import { GostKlausurtermin, ArrayList, StundenplanManager, GostFaecherManager, GostHalbjahr, GostKlausurplanManager, DeveloperNotificationException, GostSchuelerklausurTermin, GostKlausurenCollectionAllData, GostKlausurenCollectionHjData, ReportingParameter, ReportingReportvorlage, GostKursklausur} from "@core";
 import type { RouteNode } from "~/router/RouteNode";
 import { computed } from "vue";
 
@@ -106,7 +106,7 @@ export class RouteDataGostKlausurplanung extends RouteData<RouteStateGostKlausur
 				jahrgangsdaten: jahrgangsdaten,
 				halbjahr: this._state.value.halbjahr,
 				view: view,
-				abschnitt: this._state.value.abschnitt
+				abschnitt: this._state.value.abschnitt,
 			}
 			Object.assign(result, {manager: this._state.value.manager, kalenderdatum: this._state.value.kalenderdatum});
 			// Setze den State neu
@@ -233,7 +233,7 @@ export class RouteDataGostKlausurplanung extends RouteData<RouteStateGostKlausur
 				void this.setConfigValue("quartal", value.toString());
 				this.commit();
 			}
-		}
+		},
 	});
 
 	reloadFehlendData = async () => {
@@ -251,7 +251,7 @@ export class RouteDataGostKlausurplanung extends RouteData<RouteStateGostKlausur
 				this._state.value.kalenderdatum = value;
 				this.commit();
 			}
-		}
+		},
 	});
 
 	terminSelected = computed<GostKlausurtermin | undefined>({
@@ -261,7 +261,7 @@ export class RouteDataGostKlausurplanung extends RouteData<RouteStateGostKlausur
 				this._state.value.termin = value;
 				this.commit();
 			}
-		}
+		},
 	});
 
 	gotoVorgaben = async () => {
@@ -552,21 +552,23 @@ export class RouteDataGostKlausurplanung extends RouteData<RouteStateGostKlausur
 		reportingParameter.detailLevel = 1;
 		if (title.startsWith("Klausurplan", 0)) {
 			reportingParameter.reportvorlage = ReportingReportvorlage.GOST_KLAUSURPLANUNG_v_KLAUSURTERMINE_MIT_KURSEN.getBezeichnung()!;
+			reportingParameter.vorlageParameter = new ArrayList(ReportingReportvorlage.GOST_KLAUSURPLANUNG_v_KLAUSURTERMINE_MIT_KURSEN.getVorlageParameterList());
+			for (const vp of reportingParameter.vorlageParameter) {
+				if (vp.name === "mitKursklausuren")
+					vp.wert = ((title.indexOf("Kurse") > 0) || (title.indexOf("detailliert") > 0)).toString();
+				if (vp.name === "mitNachschreibern")
+					vp.wert = ((title.indexOf("Nachschreiber") > 0) || (title.indexOf("detailliert") > 0)).toString();
+				if (vp.name === "mitKlausurschreiberNamen")
+					vp.wert = (title.indexOf("detailliert") > 0).toString();
+			}
 		} else {
 			reportingParameter.reportvorlage = ReportingReportvorlage.GOST_KLAUSURPLANUNG_v_SCHUELER_MIT_KLAUSUREN.getBezeichnung()!;
+			reportingParameter.vorlageParameter = new ArrayList(ReportingReportvorlage.GOST_KLAUSURPLANUNG_v_SCHUELER_MIT_KLAUSUREN.getVorlageParameterList());
+			// Keine Vorlagen spezifischen Parameter vorhanden.
 		}
 		if (title.indexOf(" alle ") <= 0) {
 			reportingParameter.idsHauptdaten.add(this.abiturjahr);
 			reportingParameter.idsHauptdaten.add(this.halbjahr.id);
-		}
-		if (title.indexOf("Kurse") > 0) {
-			reportingParameter.detailLevel = reportingParameter.detailLevel * 2;
-		}
-		if (title.indexOf("Nachschreiber") > 0) {
-			reportingParameter.detailLevel = reportingParameter.detailLevel * 3;
-		}
-		if (title.indexOf("detailliert") > 0) {
-			reportingParameter.detailLevel = reportingParameter.detailLevel * 30;
 		}
 		if (title.indexOf("einzeln") > 0) {
 			reportingParameter.einzelausgabeDetaildaten = true;

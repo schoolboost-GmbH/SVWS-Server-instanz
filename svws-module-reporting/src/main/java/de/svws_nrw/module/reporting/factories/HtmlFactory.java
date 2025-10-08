@@ -31,7 +31,7 @@ import de.svws_nrw.module.reporting.html.contexts.HtmlContextKlassen;
 import de.svws_nrw.module.reporting.html.contexts.HtmlContextKurse;
 import de.svws_nrw.module.reporting.html.contexts.HtmlContextLehrer;
 import de.svws_nrw.module.reporting.html.contexts.HtmlContextSchueler;
-import de.svws_nrw.module.reporting.html.contexts.HtmlContextSchule;
+import de.svws_nrw.module.reporting.html.contexts.HtmlContextBasisdaten;
 import de.svws_nrw.module.reporting.html.contexts.HtmlContextStundenplanungFachStundenplan;
 import de.svws_nrw.module.reporting.html.contexts.HtmlContextStundenplanungKlassenStundenplan;
 import de.svws_nrw.module.reporting.html.contexts.HtmlContextStundenplanungLehrerStundenplan;
@@ -81,7 +81,7 @@ public class HtmlFactory {
 				">>> Beginn der Initialisierung der HTML-Factory und der Validierung der übergebenen Daten.");
 
 		// Validiere die Angaben zur HTML-Vorlage.
-		this.htmlTemplateDefinition = HtmlTemplateDefinition.getByType(ReportingReportvorlage.getByBezeichnung(this.reportingParameter.reportvorlage));
+		this.htmlTemplateDefinition = HtmlTemplateDefinition.getByReportvorlage(ReportingReportvorlage.getByBezeichnung(this.reportingParameter.reportvorlage));
 		if (this.htmlTemplateDefinition == null) {
 			this.reportingRepository.logger()
 					.logLn(LogLevel.ERROR, 4, "FEHLER: Die Template-Definitionen für die HTML-Factory sind inkonsistent.");
@@ -115,8 +115,8 @@ public class HtmlFactory {
 		reportingRepository.logger().logLn(LogLevel.DEBUG, 0, ">>> Beginn der Erzeugung der Datenkontexte für die HTML-Generierung.");
 		reportingRepository.logger().logLn(LogLevel.DEBUG, 4, "Erzeuge Datenkontext Schule für die HTML-Generierung.");
 
-		final HtmlContextSchule htmlContextSchule = new HtmlContextSchule(reportingRepository);
-		mapHtmlContexts.put("Schule", htmlContextSchule);
+		final HtmlContextBasisdaten htmlContextBasisdaten = new HtmlContextBasisdaten(reportingRepository);
+		mapHtmlContexts.put("Basisdaten", htmlContextBasisdaten);
 
 		// Betrachte die HTML-Template-Definition und erzeuge damit die korrekten Contexts der Hauptdaten
 		switch (htmlTemplateDefinition.name().substring(0, htmlTemplateDefinition.name().indexOf("_v_"))) {
