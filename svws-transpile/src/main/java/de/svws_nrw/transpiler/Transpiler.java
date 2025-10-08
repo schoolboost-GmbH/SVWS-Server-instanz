@@ -53,6 +53,7 @@ import com.sun.source.tree.ClassTree;
 import com.sun.source.tree.CompilationUnitTree;
 import com.sun.source.tree.ExpressionTree;
 import com.sun.source.tree.IdentifierTree;
+import com.sun.source.tree.InstanceOfTree;
 import com.sun.source.tree.LambdaExpressionTree;
 import com.sun.source.tree.MemberSelectTree;
 import com.sun.source.tree.MethodInvocationTree;
@@ -366,6 +367,26 @@ public final class Transpiler extends AbstractProcessor {
 				if (vars == null) {
 					vars = new HashMap<>();
 					getTranspilerUnit(path).allLocalVariablesByScope.put(ct, vars);
+				}
+				vars.put("" + varNode.getName(), varNode);
+			}
+			case final InstanceOfTree iot -> {
+				// find parent for binding tree
+				TreePath scopePath = path.getParentPath();
+				while (scopePath.getLeaf() instanceof ExpressionTree)
+					scopePath = scopePath.getParentPath();
+				Tree scope = scopePath.getLeaf();
+				// BinaryTree
+				Set<Tree> scopes = getTranspilerUnit(path).allLocalVariables.get("" + varNode.getName());
+				if (scopes == null) {
+					scopes = new HashSet<>();
+					getTranspilerUnit(path).allLocalVariables.put("" + varNode.getName(), scopes);
+				}
+				scopes.add(scope);
+				Map<String, VariableTree> vars = getTranspilerUnit(path).allLocalVariablesByScope.get(scope);
+				if (vars == null) {
+					vars = new HashMap<>();
+					getTranspilerUnit(path).allLocalVariablesByScope.put(scope, vars);
 				}
 				vars.put("" + varNode.getName(), varNode);
 			}

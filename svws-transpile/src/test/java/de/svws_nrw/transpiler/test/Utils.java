@@ -97,5 +97,15 @@ public class Utils {
 	}
 
 
+	/**
+	 * Eine Test-Methode für das Pattern Matching for instanceof
+	 *
+	 * @param other   ein anderes Objekt, wo die Instanz ermittel werden soll
+	 *
+	 * @return ein boolean-Wert
+	 */
+	public static boolean testInstanceOf(final Object other) {
+		return (other != null) && (other instanceof final Schulform iosf) && ("BK".equals(iosf.daten(2020).kuerzel));
+	}
 
 }

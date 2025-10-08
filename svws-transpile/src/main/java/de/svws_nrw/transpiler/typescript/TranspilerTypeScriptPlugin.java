@@ -423,8 +423,21 @@ public final class TranspilerTypeScriptPlugin extends TranspilerLanguagePlugin {
 				&& ((transpiler.getParent(node) instanceof CaseTree) || (transpiler.getParent(node) instanceof ConstantCaseLabelTree))) {
 			return classType.toString() + "." + node.getName().toString();
 		}
-		if (!transpiler.isClassMember(node))
+		if (!transpiler.isClassMember(node)) {
+			final VariableTree varTree = transpiler.getDeclaration(node);
+			if ((varTree != null) && (transpiler.getParent(varTree) instanceof BindingPatternTree bpt)) {
+				return switch (transpiler.getParent(bpt)) {
+					case final PatternCaseLabelTree pclt -> node.getName().toString();
+					case final InstanceOfTree iot -> {
+						final VariableTree varNode = bpt.getVariable();
+						final TypeNode typeNode = new TypeNode(this, varNode.getType(), true, true);
+						yield "(" + convertExpression(iot.getExpression()) + " as " + typeNode.transpile(false) + ")";
+					}
+					default -> throw new TranspilerException("");
+				};
+			}
 			return node.getName().toString();
+		}
 		if (transpiler.isStaticClassMember(node))
 			return transpiler.getClass(node).getSimpleName().toString() + "." + node.getName().toString();
 		return "this." + node.getName().toString();
