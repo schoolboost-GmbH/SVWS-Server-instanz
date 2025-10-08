@@ -6,20 +6,15 @@ package de.svws_nrw.module.reporting.types.schueler;
 public enum ReportingSchuelerDatenstatus {
 
 	/** Erzieherdaten wurden bereits geladen. */
-	ERZIEHER(1),
+	ERZIEHER,
 
 	/** Lernabschnittsdaten wurden bereits geladen. */
-	LERNABSCHNITTE(2),
+	LERNABSCHNITTE,
 
 	/** Leistungsdaten wurden bereits geladen. */
-	LEISTUNGSDATEN(4),
+	LEISTUNGSDATEN,
 
 	/** Leistungsdaten wurden bereits geladen. */
-	SPRACHBELEGUNGEN(8);
+	SPRACHBELEGUNGEN;
 
-	private final int state;
-
-	ReportingSchuelerDatenstatus(final int state) {
-		this.state = state;
-	}
 }
