@@ -14,6 +14,8 @@ import org.eclipse.jetty.server.Session;
 import org.eclipse.jetty.util.component.AbstractLifeCycle;
 import org.eclipse.jetty.util.security.Password;
 
+import de.svws_nrw.core.logger.LogLevel;
+import de.svws_nrw.core.logger.Logger;
 import de.svws_nrw.data.benutzer.BenutzerApiPrincipal;
 import de.svws_nrw.db.utils.ApiOperationException;
 
@@ -55,18 +57,18 @@ public final class SVWSLoginService extends AbstractLifeCycle implements LoginSe
 		// Akzeptiere nur HTTP-Anfragen der richtigen Versionen
 		final HttpVersion version = req.getConnectionMetaData().getHttpVersion();
 		if ((version != HttpVersion.HTTP_1_0) && (version != HttpVersion.HTTP_1_1) && (version != HttpVersion.HTTP_2) && (version != HttpVersion.HTTP_3)) {
-			System.err.println("Fehler bei dem Verbindungsaufbau. Die Protokolle Version %s wird nicht unterstützt.".formatted(version.toString()));
+			Logger.global().logLn(LogLevel.WARNING, "Fehler bei dem Verbindungsaufbau. Die Protokolle Version %s wird nicht unterstützt.".formatted(version.toString()));
 			return null;
 		}
 
 		// Wandle die Crendentials in einen Passwort-String um
 		final String password;
-		if (credentials instanceof char[])
-			password = new String((char[]) credentials);
+		if (credentials instanceof char[] chars)
+			password = new String(chars);
 		else if ((credentials instanceof String) || (credentials instanceof Password))
 			password = credentials.toString();
 		else {
-			System.err.println("Fehler beim Prüfen des Kennwortes! " + credentials.getClass());
+			Logger.global().logLn(LogLevel.WARNING, "Fehler beim Prüfen des Kennwortes! " + credentials.getClass());
 			return null;
 		}
 
