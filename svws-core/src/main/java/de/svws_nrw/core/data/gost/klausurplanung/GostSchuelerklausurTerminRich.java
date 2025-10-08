@@ -90,7 +90,7 @@ public class GostSchuelerklausurTerminRich {
 	 */
 	@Override
 	public boolean equals(final Object another) {
-		return (another != null) && (another instanceof GostSchuelerklausurTerminRich) && (this.id == ((GostSchuelerklausurTerminRich) another).id);
+		return (another != null) && (another instanceof final GostSchuelerklausurTerminRich skt) && (this.id == skt.id);
 	}
 
 	/**

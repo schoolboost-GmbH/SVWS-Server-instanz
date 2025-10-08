@@ -157,10 +157,10 @@ public final class GostAbiturMarkierungsalgorithmus {
 		Projektkurse tmpBelegpruefungProjektkurse = null;
 		AbiFaecher tmpBelegpruefungAbiturfaecher = null;
 		for (final @NotNull GostBelegpruefung pruefung : belegpruefungen) {
-			if (pruefung instanceof Projektkurse)
-				tmpBelegpruefungProjektkurse = (Projektkurse) pruefung;
-			if (pruefung instanceof AbiFaecher)
-				tmpBelegpruefungAbiturfaecher = (AbiFaecher) pruefung;
+			if (pruefung instanceof final Projektkurse projektkurse)
+				tmpBelegpruefungProjektkurse = projektkurse;
+			if (pruefung instanceof final AbiFaecher abiturfaecher)
+				tmpBelegpruefungAbiturfaecher = abiturfaecher;
 		}
 		if (tmpBelegpruefungProjektkurse == null)
 			throw new DeveloperNotificationException("Die Projektkursprüfung muss als Belegprüfung vorhanden sein.");

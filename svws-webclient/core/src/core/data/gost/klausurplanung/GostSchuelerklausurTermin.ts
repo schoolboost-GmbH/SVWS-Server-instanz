@@ -49,7 +49,7 @@ export class GostSchuelerklausurTermin extends JavaObject {
 	 * @return true, falls die Objekte indentisch sind, sonst false
 	 */
 	public equals(another : unknown | null) : boolean {
-		return (((another instanceof JavaObject) && (another.isTranspiledInstanceOf('de.svws_nrw.core.data.gost.klausurplanung.GostSchuelerklausurTermin')))) && (this.id === (cast_de_svws_nrw_core_data_gost_klausurplanung_GostSchuelerklausurTermin(another)).id);
+		return (another !== null) && (((another instanceof JavaObject) && (another.isTranspiledInstanceOf('de.svws_nrw.core.data.gost.klausurplanung.GostSchuelerklausurTermin')))) && (this.id === (another as unknown as GostSchuelerklausurTermin).id);
 	}
 
 	/**

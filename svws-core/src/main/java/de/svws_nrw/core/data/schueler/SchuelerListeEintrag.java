@@ -103,7 +103,7 @@ public class SchuelerListeEintrag {
 	 */
 	@Override
 	public boolean equals(final Object another) {
-		return (another != null) && (another instanceof SchuelerListeEintrag) && (this.id == ((SchuelerListeEintrag) another).id);
+		return (another != null) && (another instanceof final SchuelerListeEintrag sle) && (this.id == sle.id);
 	}
 
 	/**

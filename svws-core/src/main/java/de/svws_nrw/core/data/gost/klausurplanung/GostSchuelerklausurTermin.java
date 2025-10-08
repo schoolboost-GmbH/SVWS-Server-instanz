@@ -45,8 +45,7 @@ public class GostSchuelerklausurTermin {
 	 */
 	@Override
 	public boolean equals(final Object another) {
-		// return another != null && another instanceof GostSchuelerklausurTermin skt && this.id == skt.id; (Syntax von Transpiler nicht unterstützt)
-		return (another instanceof GostSchuelerklausurTermin) && (this.id == ((GostSchuelerklausurTermin) another).id);
+		return (another != null) && (another instanceof final GostSchuelerklausurTermin skt) && (this.id == skt.id);
 	}
 
 	/**

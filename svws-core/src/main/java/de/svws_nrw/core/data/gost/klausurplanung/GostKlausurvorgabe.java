@@ -70,7 +70,7 @@ public class GostKlausurvorgabe {
 	 */
 	@Override
 	public boolean equals(final Object another) {
-		return (another != null) && (another instanceof GostKlausurvorgabe) && (this.id == ((GostKlausurvorgabe) another).id);
+		return (another != null) && (another instanceof final GostKlausurvorgabe vorgabe) && (this.id == vorgabe.id);
 	}
 
 	/**

@@ -104,7 +104,7 @@ export class GostSchuelerklausurTerminRich extends JavaObject {
 	 * @return true, falls die Objekte identisch sind, sonst false
 	 */
 	public equals(another : unknown | null) : boolean {
-		return (another !== null) && (((another instanceof JavaObject) && (another.isTranspiledInstanceOf('de.svws_nrw.core.data.gost.klausurplanung.GostSchuelerklausurTerminRich')))) && (this.id === (cast_de_svws_nrw_core_data_gost_klausurplanung_GostSchuelerklausurTerminRich(another)).id);
+		return (another !== null) && (((another instanceof JavaObject) && (another.isTranspiledInstanceOf('de.svws_nrw.core.data.gost.klausurplanung.GostSchuelerklausurTerminRich')))) && (this.id === (another as unknown as GostSchuelerklausurTerminRich).id);
 	}
 
 	/**

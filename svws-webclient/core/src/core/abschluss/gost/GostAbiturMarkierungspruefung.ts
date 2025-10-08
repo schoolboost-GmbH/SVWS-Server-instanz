@@ -10,7 +10,7 @@ import { JavaString } from '../../../java/lang/JavaString';
 import { AbiturdatenManager } from '../../../core/abschluss/gost/AbiturdatenManager';
 import { GostBelegpruefung } from '../../../core/abschluss/gost/GostBelegpruefung';
 import { DeveloperNotificationException } from '../../../core/exceptions/DeveloperNotificationException';
-import { Projektkurse, cast_de_svws_nrw_core_abschluss_gost_belegpruefung_Projektkurse } from '../../../core/abschluss/gost/belegpruefung/Projektkurse';
+import { Projektkurse } from '../../../core/abschluss/gost/belegpruefung/Projektkurse';
 import { SprachendatenUtils } from '../../../core/utils/schueler/SprachendatenUtils';
 import { GostAbiturMarkierungsalgorithmusBelegung } from '../../../core/abschluss/gost/GostAbiturMarkierungsalgorithmusBelegung';
 import type { Comparator } from '../../../java/util/Comparator';
@@ -19,7 +19,7 @@ import { GostAbiturMarkierungspruefungErgebnis } from '../../../core/abschluss/g
 import { GostHalbjahr } from '../../../core/types/gost/GostHalbjahr';
 import type { List } from '../../../java/util/List';
 import { Class } from '../../../java/lang/Class';
-import { AbiFaecher, cast_de_svws_nrw_core_abschluss_gost_belegpruefung_AbiFaecher } from '../../../core/abschluss/gost/belegpruefung/AbiFaecher';
+import { AbiFaecher } from '../../../core/abschluss/gost/belegpruefung/AbiFaecher';
 
 export class GostAbiturMarkierungspruefung extends JavaObject {
 
@@ -89,9 +89,9 @@ export class GostAbiturMarkierungspruefung extends JavaObject {
 		let tmpBelegpruefungAbiturfaecher : AbiFaecher | null = null;
 		for (const pruefung of belegpruefungen) {
 			if (((pruefung instanceof JavaObject) && (pruefung.isTranspiledInstanceOf('de.svws_nrw.core.abschluss.gost.belegpruefung.Projektkurse'))))
-				tmpBelegpruefungProjektkurse = cast_de_svws_nrw_core_abschluss_gost_belegpruefung_Projektkurse(pruefung);
+				tmpBelegpruefungProjektkurse = (pruefung as unknown as Projektkurse);
 			if (((pruefung instanceof JavaObject) && (pruefung.isTranspiledInstanceOf('de.svws_nrw.core.abschluss.gost.belegpruefung.AbiFaecher'))))
-				tmpBelegpruefungAbiturfaecher = cast_de_svws_nrw_core_abschluss_gost_belegpruefung_AbiFaecher(pruefung);
+				tmpBelegpruefungAbiturfaecher = (pruefung as unknown as AbiFaecher);
 		}
 		if (tmpBelegpruefungProjektkurse === null)
 			throw new DeveloperNotificationException("Die Projektkursprüfung muss als Belegprüfung vorhanden sein.")

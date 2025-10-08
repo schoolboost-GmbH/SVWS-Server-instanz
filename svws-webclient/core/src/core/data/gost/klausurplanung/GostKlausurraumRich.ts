@@ -60,7 +60,7 @@ export class GostKlausurraumRich extends JavaObject {
 	 * @return true, falls die Objekte identisch sind, sonst false
 	 */
 	public equals(another : unknown | null) : boolean {
-		return (another !== null) && (((another instanceof JavaObject) && (another.isTranspiledInstanceOf('de.svws_nrw.core.data.gost.klausurplanung.GostKlausurraumRich')))) && (JavaObject.equalsTranspiler(this.klausurraum, ((cast_de_svws_nrw_core_data_gost_klausurplanung_GostKlausurraumRich(another)).klausurraum)));
+		return (another !== null) && (((another instanceof JavaObject) && (another.isTranspiledInstanceOf('de.svws_nrw.core.data.gost.klausurplanung.GostKlausurraumRich')))) && (JavaObject.equalsTranspiler(this.klausurraum, ((another as unknown as GostKlausurraumRich).klausurraum)));
 	}
 
 	/**

@@ -107,7 +107,7 @@ export class SchuelerListeEintrag extends JavaObject {
 	 * @return true, falls die Objekte indentisch sind, sonst false
 	 */
 	public equals(another : unknown | null) : boolean {
-		return (another !== null) && (((another instanceof JavaObject) && (another.isTranspiledInstanceOf('de.svws_nrw.core.data.schueler.SchuelerListeEintrag')))) && (this.id === (cast_de_svws_nrw_core_data_schueler_SchuelerListeEintrag(another)).id);
+		return (another !== null) && (((another instanceof JavaObject) && (another.isTranspiledInstanceOf('de.svws_nrw.core.data.schueler.SchuelerListeEintrag')))) && (this.id === (another as unknown as SchuelerListeEintrag).id);
 	}
 
 	/**

@@ -59,7 +59,7 @@ public class GostKlausurraumRich {
 	 */
 	@Override
 	public boolean equals(final Object another) {
-		return (another != null) && (another instanceof GostKlausurraumRich) && (this.klausurraum.equals(((GostKlausurraumRich) another).klausurraum));
+		return (another != null) && (another instanceof final GostKlausurraumRich raum) && (this.klausurraum.equals(raum.klausurraum));
 	}
 
 	/**

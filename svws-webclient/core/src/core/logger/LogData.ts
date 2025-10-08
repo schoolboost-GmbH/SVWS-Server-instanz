@@ -128,7 +128,7 @@ export class LogData extends JavaObject implements Comparable<LogData> {
 		if (obj === null)
 			return false;
 		if (((obj instanceof JavaObject) && (obj.isTranspiledInstanceOf('de.svws_nrw.core.logger.LogData'))))
-			return this.compareTo(cast_de_svws_nrw_core_logger_LogData(obj)) === 0;
+			return this.compareTo((obj as unknown as LogData)) === 0;
 		return super.equals((obj));
 	}
 

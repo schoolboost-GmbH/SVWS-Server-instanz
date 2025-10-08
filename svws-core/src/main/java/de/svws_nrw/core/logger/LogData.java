@@ -151,8 +151,8 @@ public final class LogData implements Comparable<LogData> {
 	public boolean equals(final Object obj) {
 		if (obj == null)
 			return false;
-		if (obj instanceof LogData)
-			return compareTo((LogData) obj) == 0;
+		if (obj instanceof final LogData data)
+			return compareTo(data) == 0;
 		return super.equals(obj);
 	}
 
