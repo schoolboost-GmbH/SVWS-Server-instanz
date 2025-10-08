@@ -1,4 +1,4 @@
-import type { RouteLocationNormalized, RouteParams, RouteParamsRawGeneric } from "vue-router";
+import type { RouteLocationNormalized, RouteLocationRaw, RouteParams, RouteParamsRawGeneric } from "vue-router";
 
 import type { DeveloperNotificationException } from "@core";
 import { BenutzerKompetenz, Schulform, ServerMode } from "@core";
@@ -42,6 +42,13 @@ export class RouteSchuelerNeu extends RouteNode<any, RouteSchueler> {
 		}
 	}
 
+	protected async update(to: RouteNode<any, any>, to_params: RouteParams, from: RouteNode<any, any> | undefined, from_params: RouteParams, isEntering: boolean, redirected: RouteNode<any, any> | undefined): Promise<void | Error | RouteLocationRaw> {
+		// if (from === routeSchuelerNeuSchnelleingabe) {
+		// 	routeSchueler.data.manager.getVorherigeAuswahl();
+		// 	console.log(from_params.id)
+		// }
+	}
+
 	public addRouteParamsFromState() : RouteParamsRawGeneric {
 		return { id : "" };
 	}
@@ -50,6 +57,7 @@ export class RouteSchuelerNeu extends RouteNode<any, RouteSchueler> {
 		return {
 			schuelerListeManager: () => routeSchueler.data.manager,
 			addSchueler: routeSchueler.data.addSchueler,
+			getSchuelerKlassenFuerAbschnitt: routeSchueler.data.getSchuelerKlassenFuerAbschnitt,
 			patchSchuelerSchulbesuchdaten: routeSchueler.data.patchSchuelerSchulbesuchdaten,
 			mapKindergaerten: routeApp.data.mapKindergaerten,
 			mapEinschulungsarten: routeApp.data.mapEinschulungsarten,

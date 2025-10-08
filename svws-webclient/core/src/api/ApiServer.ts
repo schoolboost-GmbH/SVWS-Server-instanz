@@ -179,6 +179,7 @@ import { SchuelerSchulbesuchMerkmal } from '../asd/data/schueler/SchuelerSchulbe
 import { SchuelerSchulbesuchSchule } from '../asd/data/schueler/SchuelerSchulbesuchSchule';
 import { SchuelerSchulbesuchsdaten } from '../asd/data/schueler/SchuelerSchulbesuchsdaten';
 import { SchuelerStammdaten } from '../asd/data/schueler/SchuelerStammdaten';
+import { SchuelerStammdatenNeu } from '../asd/data/schueler/SchuelerStammdatenNeu';
 import { SchuelerStatusKatalogEintrag } from '../asd/data/schueler/SchuelerStatusKatalogEintrag';
 import { SchuelerTelefon } from '../core/data/schueler/SchuelerTelefon';
 import { SchuelerVermerkartZusammenfassung } from '../core/data/schueler/SchuelerVermerkartZusammenfassung';
@@ -12313,17 +12314,17 @@ export class ApiServer extends BaseApi {
 	 *   Code 403: Der SVWS-Benutzer hat keine Rechte, um SchülerStammdaten anzulegen.
 	 *   Code 500: Unspezifizierter Fehler (z.B. beim Datenbankzugriff)
 	 *
-	 * @param {Partial<SchuelerStammdaten>} data - der Request-Body für die HTTP-Methode
+	 * @param {Partial<SchuelerStammdatenNeu>} data - der Request-Body für die HTTP-Methode
 	 * @param {string} schema - der Pfad-Parameter schema
 	 * @param {number} idSchuljahresabschnitt - der Pfad-Parameter idSchuljahresabschnitt
 	 *
 	 * @returns Die SchülerStammdaten wurden erfolgreich hinzugefügt.
 	 */
-	public async addSchuelerStammdaten(data : Partial<SchuelerStammdaten>, schema : string, idSchuljahresabschnitt : number) : Promise<SchuelerStammdaten> {
+	public async addSchuelerStammdaten(data : Partial<SchuelerStammdatenNeu>, schema : string, idSchuljahresabschnitt : number) : Promise<SchuelerStammdaten> {
 		const path = "/db/{schema}/schueler/{idSchuljahresabschnitt : \\d+}/stammdaten/create"
 			.replace(/{schema\s*(:[^{}]+({[^{}]+})*)?}/g, schema)
 			.replace(/{idSchuljahresabschnitt\s*(:[^{}]+({[^{}]+})*)?}/g, idSchuljahresabschnitt.toString());
-		const body : string = SchuelerStammdaten.transpilerToJSONPatch(data);
+		const body : string = SchuelerStammdatenNeu.transpilerToJSONPatch(data);
 		const result : string = await super.postJSON(path, body);
 		const text = result;
 		return SchuelerStammdaten.transpilerFromJSON(text);

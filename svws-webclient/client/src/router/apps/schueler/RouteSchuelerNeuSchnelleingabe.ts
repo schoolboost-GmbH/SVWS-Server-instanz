@@ -40,7 +40,8 @@ export class RouteSchuelerNeuSchnelleingabe extends RouteNode<RouteDataSchuelerN
 	public getProps(to: RouteLocationNormalized): SchuelerNeuSchnelleingabeProps {
 		return {
 			schuelerListeManager: () => routeSchueler.data.manager,
-			schuelerSchulbesuchsManager: () => routeSchueler.data.schuelerSchulbesuchManager,
+			schuelerSchulbesuchsManager: () => this.data.schuelerSchulbesuchManager,
+			schuelerLernabschnittManager: () => this.data.schuelerLernabschnittManager,
 			patch: routeSchueler.data.patch,
 			mapSchulen: this.data.mapSchulen,
 			mapOrte: this.data.mapOrte,
@@ -62,8 +63,11 @@ export class RouteSchuelerNeuSchnelleingabe extends RouteNode<RouteDataSchuelerN
 			patchSchuelerTelefoneintrag: routeSchueler.data.patchSchuelerTelefoneintrag,
 			deleteSchuelerTelefoneintrage: routeSchueler.data.deleteSchuelerTelefoneintrage,
 			patchSchuelerSchulbesuchsdaten: routeSchueler.data.patchSchuelerSchulbesuchdaten,
+			patchSchuelerLernabschnittsdaten: routeSchueler.data.patchSchuelerLernabschnitt,
+			getSchuelerKlassenFuerAbschnitt: routeSchueler.data.getSchuelerKlassenFuerAbschnitt,
 			gotoDefaultView: routeSchueler.data.gotoDefaultView,
 			aktAbschnitt: routeApp.data.aktAbschnitt.value,
+			serverMode: api.mode,
 			schulform: api.schulform,
 			benutzerKompetenzen: api.benutzerKompetenzen,
 		};

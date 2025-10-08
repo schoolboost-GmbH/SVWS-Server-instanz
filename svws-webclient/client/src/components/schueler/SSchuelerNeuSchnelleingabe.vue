@@ -3,77 +3,87 @@
 		<svws-ui-content-card title="Anmeldedaten" class="col-span-full">
 			<svws-ui-input-wrapper :grid="4">
 				<ui-select label="Status" v-model="selectedStatus" :manager="statusManager" :removable="false" searchable />
-				<svws-ui-text-input placeholder="Schuljahr" type="text" :disabled="true" />
-				<svws-ui-text-input placeholder="Halbjahr" type="text" :disabled="true" />
-				<svws-ui-text-input placeholder="Jahrgang" type="text" :disabled="true" />
-				<svws-ui-text-input placeholder="Klasse" type="text" :disabled="true" />
+				<ui-select label="Schuljahresabschnitt" v-model="schuljahresabschnitt" :manager="schuljahresabschnittsManager" readonly required />
+				<ui-select label="Jahrgang" v-model="jahrgang" :manager="jahrgangManager" readonly required />
+				<ui-select label="Klasse" v-model="klasse" :manager="klassenManager" readonly required />
 				<svws-ui-spacing />
 				<ui-select label="Einschulungsart" v-model="einschulungsart" :manager="einschulungsartManager" :removable="false" v-if="schulenMitPrimaerstufe" />
-				<!--TODO Anmeldedatum darf nicht in der Zukunft liegen-->
-				<svws-ui-text-input placeholder="Anmeldedatum" type="date" :model-value="data.anmeldedatum"
-					@change="anmeldedatum => patch({ anmeldedatum }, data.id)" />
-				<!--TODO Aufnahmedatum darf nicht vor dem Anmeldedatum liegen-->
-				<svws-ui-text-input placeholder="Aufnahmedatum" type="date" :model-value="data.aufnahmedatum"
-					@change="aufnahmedatum => patch({ aufnahmedatum }, data.id)" />
-				<!--TODO Beginn Bildungsgang darf nicht vor dem Aufnahmedatum liegen-->
-				<svws-ui-text-input placeholder="Beginn Bildungsgang" type="date" :model-value="data.beginnBildungsgang"
-					@change="beginnBildungsgang => patch({ beginnBildungsgang }, data.id)" />
-				<svws-ui-text-input placeholder="Dauer Bildungsgang" type="date" readonly />
+				<svws-ui-text-input placeholder="Anmeldedatum" type="date" :model-value="data.anmeldedatum" :valid="istAnmeldedatumGueltig"
+					@change="anmeldedatum => patchAnmeldedatum(anmeldedatum)" :readonly />
+				<div v-if="anmeldedatumError" class="flex mt-1">
+					<span class="icon i-ri-alert-line mx-0.5 mr-1 inline-flex" />
+					<p>{{ anmeldedatumError }}</p>
+				</div>
+				<svws-ui-text-input placeholder="Aufnahmedatum" type="date" :model-value="data.aufnahmedatum" :valid="istAufnahmedatumGueltig"
+					@change="aufnahmedatum => patchAufnahmedatum(aufnahmedatum)" :readonly />
+				<div v-if="aufnahmedatumError" class="flex mt-1">
+					<span class="icon i-ri-alert-line mx-0.5 mr-1 inline-flex" />
+					<p>{{ aufnahmedatumError }}</p>
+				</div>
+				<svws-ui-text-input placeholder="Beginn Bildungsgang" type="date" :model-value="data.beginnBildungsgang" :valid="istBeginnBildungsgangGueltig" v-if="schulenMitBKoderSK"
+					@change="beginnBildungsgang => patchBeginnBildungsgang(beginnBildungsgang)" :readonly />
+				<div v-if="(beginnBildungsgangError && schulenMitBKoderSK)" class="flex mt-1">
+					<span class="icon i-ri-alert-line mx-0.5 mr-1 inline-flex" />
+					<p>{{ beginnBildungsgangError }}</p>
+				</div>
+				<svws-ui-input-number placeholder="Dauer Bildungsgang" :model-value="data.dauerBildungsgang" @change="dauerBildungsgang => patch({ dauerBildungsgang }, data.id)" v-if="schulenMitBKoderSK" :readonly />
 			</svws-ui-input-wrapper>
 		</svws-ui-content-card>
 
 		<svws-ui-content-card title="Persönliche Daten" class="col-span-full">
 			<svws-ui-input-wrapper :grid="4">
-				<!--TODO Leere Inputfelder unterbinden-->
 				<svws-ui-text-input placeholder="Name" required :model-value="data.nachname"
-					@change="nachname => patch({ nachname: nachname ?? undefined }, data.id)" :valid="fieldIsValid('vorname')" />
+					@change="nachname => patchIfValid('nachname', nachname)" :valid="fieldIsValid('nachname')" :max-len="120" :readonly />
 				<svws-ui-text-input placeholder="Vorname" required :model-value="data.vorname"
-					@change="vorname => patch({ vorname: vorname ?? undefined }, data.id)" :valid="fieldIsValid('vorname')" />
+					@change="vorname => patchIfValid('vorname', vorname)" :valid="fieldIsValid('vorname')" :max-len="120" :readonly />
 				<svws-ui-text-input placeholder="Weitere Vornamen" :model-value="data.alleVornamen"
-					@change="alleVornamen => patch({ alleVornamen: alleVornamen ?? undefined }, data.id)" :valid="fieldIsValid('alleVornamen')" />
-				<ui-select label="Geschlecht" :model-value="geschlecht" @update:model-value="setGeschlecht" :manager="geschlechtManager" :removable="false" />
+					@change="alleVornamen => patch({ alleVornamen: alleVornamen ?? undefined }, data.id)" :valid="fieldIsValid('alleVornamen')" :max-len="120" :readonly />
+				<ui-select label="Geschlecht" :model-value="geschlecht" @update:model-value="setGeschlecht" :manager="geschlechtManager" :removable="false" :readonly />
 				<svws-ui-spacing />
-				<svws-ui-text-input placeholder="Straße" type="text" :model-value="strasseSchueler" @change="patchStrasse" :valid="fieldIsValid('strassenname')" />
-				<ui-select label="Wohnort" v-model="wohnortID" :manager="wohnortManager" searchable />
+				<svws-ui-text-input placeholder="Straße" type="text" :model-value="strasseSchueler" @change="patchStrasse" :valid="fieldIsValid('strassenname')" :max-len="55" :readonly />
+				<ui-select label="Wohnort" v-model="wohnortID" :manager="wohnortManager" searchable :readonly />
 				<svws-ui-spacing />
-				<ui-select label="Ortsteil" v-model="ortsteilSelected" :manager="ortsteilManager" searchable />
-				<svws-ui-text-input placeholder="Geburtsdatum" required type="date" :model-value="data.geburtsdatum"
-					@change="geburtsdatum => geburtsdatum && patch({ geburtsdatum }, data.id)" :valid="fieldIsValid('geburtsdatum')" />
-				<svws-ui-text-input placeholder="Geburtsort" :model-value="data.geburtsort" @change="geburtsort => patch({ geburtsort }, data.id)" />
+				<ui-select label="Ortsteil" v-model="ortsteilSelected" :manager="ortsteilManager" searchable :readonly />
+				<svws-ui-text-input placeholder="Geburtsdatum" required type="date" :model-value="data.geburtsdatum" :valid="istGeburtsdatumGueltig"
+					@change="geburtsdatum => (istGeburtsdatumGueltig(geburtsdatum) && patch({ geburtsdatum }, data.id))" :readonly />
+				<div v-if="!istGeburtsdatumGueltig(data.geburtsdatum)" class="flex my-auto">
+					<span class="icon i-ri-alert-line mx-0.5 mr-1 inline-flex" />
+					<p>Das Alter muss zwischen 4 und 50 Jahren liegen.</p>
+				</div>
+				<svws-ui-text-input placeholder="Geburtsort" :model-value="data.geburtsort" @change="geburtsort => patch({ geburtsort }, data.id)" :readonly />
 				<svws-ui-spacing />
-				<svws-ui-text-input placeholder="Telefon" type="tel" :model-value="data.telefon" @change="telefon => patch({ telefon }, data.id)"
-					:valid="fieldIsValid('telefon')" :max-len="20" />
+				<svws-ui-text-input placeholder="Telefon" type="tel" :model-value="data.telefon" @change="telefon => patchIfValid('telefon', telefon)" :valid="fieldIsValid('telefon')" :max-len="20" :readonly />
 				<svws-ui-text-input placeholder="Mobil/Fax" type="tel" :model-value="data.telefonMobil"
-					@change="telefonMobil => patch({ telefonMobil }, data.id)" :valid="fieldIsValid('telefonMobil')" :max-len="20" />
+					@change="telefonMobil => patchIfValid('telefonMobil', telefonMobil)" :valid="fieldIsValid('telefonMobil')" :max-len="20" :readonly />
 				<svws-ui-text-input placeholder="E-Mail" type="email" :model-value="data.emailPrivat"
-					@change="emailPrivat => patch({ emailPrivat }, data.id)" :valid="fieldIsValid('emailPrivat')" />
+					@change="emailPrivat => patchIfValid('emailPrivat', emailPrivat)" :readonly />
 				<svws-ui-spacing />
-				<ui-select label="1. Staatsangehörigkeit" v-model="staatsangehoerigkeit" :manager="staatsangehoerigkeitenManager" searchable />
-				<ui-select label="2. Staatsangehörigkeit" v-model="staatsangehoerigkeit2" :manager="staatsangehoerigkeitenManager" searchable />
-				<ui-select label="Konfession" v-model="religion" :manager="religionManager" :removable="false" searchable />
+				<ui-select label="1. Staatsangehörigkeit" v-model="staatsangehoerigkeit" :manager="staatsangehoerigkeitenManager" searchable :readonly />
+				<ui-select label="2. Staatsangehörigkeit" v-model="staatsangehoerigkeit2" :manager="staatsangehoerigkeitenManager" searchable :readonly />
+				<ui-select label="Konfession" v-model="religion" :manager="religionManager" :removable="false" searchable :readonly />
 				<svws-ui-spacing />
-				<svws-ui-checkbox v-model="hatMigrationshintergrund" type="checkbox" title="Migrationshintergrund">
+				<svws-ui-checkbox v-model="hatMigrationshintergrund" type="checkbox" title="Migrationshintergrund" :readonly>
 					Migrationshintergrund vorhanden
 				</svws-ui-checkbox>
 				<svws-ui-input-number placeholder="Zuzugsjahr" :model-value="data.zuzugsjahr" @change="zuzugsjahr => patch({ zuzugsjahr }, data.id)"
-					:readonly="!auswahlMigrationsHintergrund" />
-				<ui-select label="Geburtsland" v-model="geburtsland" :manager="geburtslandManager" :readonly="!auswahlMigrationsHintergrund" :removable="false" searchable />
+					:readonly="(!auswahlMigrationsHintergrund || readonly)" />
+				<ui-select label="Geburtsland" v-model="geburtsland" :manager="geburtslandManager" :readonly="(!auswahlMigrationsHintergrund || readonly)" :removable="false" searchable />
 				<svws-ui-spacing />
-				<ui-select label="Geburtsland Mutter" v-model="geburtslandMutter" :manager="geburtslandManager" :readonly="!auswahlMigrationsHintergrund" :removable="false" searchable />
-				<ui-select label="Geburtsland Vater" v-model="geburtslandVater" :manager="geburtslandManager" :readonly="!auswahlMigrationsHintergrund" :removable="false" searchable />
-				<ui-select label="Verkehrssprache" v-model="verkehrssprache" :manager="verkehrsspracheManager" :readonly="!auswahlMigrationsHintergrund" :removable="false" searchable />
+				<ui-select label="Geburtsland Mutter" v-model="geburtslandMutter" :manager="geburtslandManager" :readonly="(!auswahlMigrationsHintergrund || readonly)" :removable="false" searchable />
+				<ui-select label="Geburtsland Vater" v-model="geburtslandVater" :manager="geburtslandManager" :readonly="(!auswahlMigrationsHintergrund || readonly)" :removable="false" searchable />
+				<ui-select label="Verkehrssprache" v-model="verkehrssprache" :manager="verkehrsspracheManager" :readonly="(!auswahlMigrationsHintergrund || readonly)" :removable="false" searchable />
 				<svws-ui-spacing />
-				<ui-select label="Fahrschüler" v-model="fahrschuelerart" :manager="fahrschuelerartManager" :removable="false" searchable />
-				<ui-select label="Haltestelle" v-model="haltestelle" :manager="haltestellenManager" :removable="false" searchable />
+				<ui-select label="Fahrschüler" v-model="fahrschuelerart" :manager="fahrschuelerartManager" :removable="false" searchable :readonly />
+				<ui-select label="Haltestelle" v-model="haltestelle" :manager="haltestellenManager" :removable="false" searchable :readonly />
 				<svws-ui-text-input placeholder="Abmeldung vom Religionsunterricht" :model-value="data.religionabmeldung"
-					@change="religionabmeldung => patch({ religionabmeldung }, data.id)" type="date" />
+					@change="religionabmeldung => patch({ religionabmeldung }, data.id)" type="date" :readonly />
 				<svws-ui-spacing />
-				<ui-select label="Ext. ID-Nr." v-model="externeSchulNr" :manager="externeIDNrManager" :removable="false" searchable />
-				<!--TODO Ausweisnummer, Schwerbehindertenausweis, Bemerkumng zu SchuelerStammdaten hinzufügen-->
-				<svws-ui-text-input placeholder="NR. Schülerausweis" :disabled="true" />
-				<svws-ui-text-input placeholder="Schwerbehindertenausweis" type="text" :disabled="true" />
-				<svws-ui-spacing />
-				<svws-ui-text-input placeholder="Bemerkung" type="text" :disabled="true" />
+				<ui-select label="Ext. ID-Nr." v-model="externeSchulNr" :manager="externeIDNrManager" :removable="false" searchable :readonly />
+				<template v-if="props.serverMode === ServerMode.DEV">
+					<svws-ui-text-input placeholder="Schülerausweis-Nummer" :model-value="data.idSchuelerausweis"
+						@change="value => patch({ idSchuelerausweis : value ?? null }, data.id)" removable :readonly />
+				</template>
+				<svws-ui-checkbox v-model="schwerbehinderung" span="full">Schwerstbehinderung</svws-ui-checkbox>
 			</svws-ui-input-wrapper>
 		</svws-ui-content-card>
 
@@ -111,8 +121,8 @@
 					</svws-ui-button>
 				</template>
 				<template #actions>
-					<svws-ui-button @click="deleteErzieherRequest" type="trash" :disabled="(selectedErz.length === 0) || (!hatKompetenzUpdate)" />
-					<svws-ui-button @click="addErzieher" type="icon" title="Erziehungsberechtigten hinzufügen" :disabled="!hatKompetenzUpdate">
+					<svws-ui-button @click="deleteErzieherRequest" type="trash" :disabled="(selectedErz.length === 0) || (readonly)" />
+					<svws-ui-button @click="addErzieher" type="icon" title="Erziehungsberechtigten hinzufügen" :disabled="readonly">
 						<span class="icon i-ri-add-line" />
 					</svws-ui-button>
 				</template>
@@ -142,12 +152,12 @@
 					<svws-ui-spacing />
 					<ui-select label="Staatsangehörigkeit" v-model="ersterErzStaatsangehoerigkeit" :manager="staatsangehoerigkeitenManager" searchable />
 					<svws-ui-text-input placeholder="Straße und Hausnummer" :model-value="strasseErzieher(erzieher)" @change="patchStrasseErzieher" type="text" />
-					<ui-select label="Wohnort" v-model="erzWohnort" :manager="wohnortManager" searchable />
-					<ui-select label="Ortsteil" v-model="erzOrtsteil" :manager="erzOrtsteilManager" :readonly="!erzieher.wohnortID" searchable />
+					<ui-select label="Wohnort" v-model="erzWohnort" :manager="wohnortManager" searchable :readonly />
+					<ui-select label="Ortsteil" v-model="erzOrtsteil" :manager="erzOrtsteilManager" :readonly="(!erzieher.wohnortID || readonly)" searchable />
 					<svws-ui-spacing />
 					<svws-ui-textarea-input placeholder="Bemerkungen" :model-value="erzieher?.bemerkungen" span="full" autoresize
 						@change="bemerkungen => (erzieher !== undefined) && patchSchuelerErziehereintrag({ bemerkungen: bemerkungen === null ? '' : bemerkungen }, erzieher.id)"
-						:readonly="!hatKompetenzUpdate" />
+						:readonly />
 				</svws-ui-input-wrapper>
 			</svws-ui-content-card>
 			<!-- Modal zum Hinzufügen eines zweiten Erziehungsberechtigten (Position 2) über den "+"-Button -->
@@ -164,8 +174,8 @@
 					</svws-ui-input-wrapper>
 					<div class="mt-7 flex flex-row gap-4 justify-end">
 						<svws-ui-button type="secondary" @click="showPatchPosModalErz = false">Abbrechen</svws-ui-button>
-						<svws-ui-button @click="saveSecondErzieher" :disabled="(!stringIsValid(zweiterErz.vorname, true, 120))
-							|| (!stringIsValid(zweiterErz.nachname, true, 120)) || (!hatKompetenzUpdate)">
+						<svws-ui-button @click="saveSecondErzieher" :disabled="(!mandatoryInputIsValid(zweiterErz.vorname, 120))
+							|| (!mandatoryInputIsValid(zweiterErz.nachname, 120)) || (!hatKompetenzUpdate)">
 							Zweiten Erzieher speichern
 						</svws-ui-button>
 					</div>
@@ -258,7 +268,11 @@
 					Teilnahme an Sprachförderkurs
 				</svws-ui-checkbox>
 			</svws-ui-input-wrapper>
-			<div class="mt-7 flex flex-row gap-4 justify-end">
+		</svws-ui-content-card>
+		<svws-ui-content-card>
+		</svws-ui-content-card>
+		<svws-ui-content-card class="col-span-full">
+			<div class="-mt-16 flex flex-row gap-4 justify-end w-full">
 				<svws-ui-button type="secondary" @click="cancel">Neuaufnahme beenden</svws-ui-button>
 			</div>
 		</svws-ui-content-card>
@@ -267,17 +281,20 @@
 
 <script setup lang="ts">
 
-	import type { SchuelerStammdaten, TelefonArt, OrtsteilKatalogEintrag, EinschulungsartKatalogEintrag, NationalitaetenKatalogEintrag, SchuelerStatusKatalogEintrag, VerkehrsspracheKatalogEintrag} from "@core";
-	import { BenutzerKompetenz, SchuelerTelefon, ArrayList, ErzieherStammdaten, AdressenUtils, Geschlecht, JavaString, Kindergartenbesuch, Nationalitaeten, SchuelerStatus, Schulform, Verkehrssprache } from "@core";
+	import type { SchuelerStammdaten, TelefonArt, OrtsteilKatalogEintrag, EinschulungsartKatalogEintrag, NationalitaetenKatalogEintrag, SchuelerStatusKatalogEintrag, VerkehrsspracheKatalogEintrag, KlassenDaten } from "@core";
+	import { ServerMode, DateUtils } from "@core";
+	import { BenutzerKompetenz, SchuelerTelefon, ArrayList, ErzieherStammdaten, AdressenUtils, Geschlecht, Kindergartenbesuch, Nationalitaeten, SchuelerStatus, Schulform, Verkehrssprache } from "@core";
 	import { computed, ref, watch } from "vue";
 	import type { SchuelerNeuSchnelleingabeProps } from "~/components/schueler/SSchuelerNeuSchnelleingabeProps";
 	import { erzieherArtSort,orte_sort, ortsteilSort } from "~/utils/helfer";
 	import type { DataTableColumn } from "@ui";
 	import { CoreTypeSelectManager, SelectManager } from "@ui";
+	import { emailIsValid, mandatoryInputIsValid, optionalInputIsValid, phoneNumberIsValid } from "~/util/validation/Validation";
 
 	const props = defineProps<SchuelerNeuSchnelleingabeProps>();
 
 	const hatKompetenzUpdate = computed<boolean>(() => props.benutzerKompetenzen.has(BenutzerKompetenz.SCHUELER_INDIVIDUALDATEN_AENDERN));
+	const readonly = computed<boolean>(() => !props.benutzerKompetenzen.has(BenutzerKompetenz.SCHUELER_INDIVIDUALDATEN_AENDERN));
 
 	const schuljahr = computed<number>(() => props.aktAbschnitt.schuljahr);
 
@@ -285,10 +302,71 @@
 
 	const dataSchulbesuchsdaten = computed(() => props.schuelerSchulbesuchsManager().daten);
 
-	//TODO Schulform.GY aus dem Array entfernen
+	const dataSchuelerLernabschnittdaten = computed(() => props.schuelerLernabschnittManager().lernabschnittGet());
+
 	const schulenMitPrimaerstufe = computed(() => {
-		const erlaubteSchulformen = [ Schulform.G, Schulform.FW, Schulform.WF, Schulform.GM, Schulform.KS, Schulform.S, Schulform.GE, Schulform.V, Schulform.GY];
+		const erlaubteSchulformen = [ Schulform.G, Schulform.FW, Schulform.WF, Schulform.GM, Schulform.KS, Schulform.S, Schulform.GE, Schulform.V];
 		return erlaubteSchulformen.includes(props.schulform);
+	});
+
+	const schulenMitBKoderSK = computed(() => props.schulform === Schulform.BK || props.schulform === Schulform.SK);
+
+	const schuljahresabschnitte = computed(() => Array.from(props.schuelerListeManager().schuljahresabschnitte.list()));
+
+	const schuljahresabschnittsManager = new SelectManager({ options: schuljahresabschnitte.value, optionDisplayText: i => `${i.schuljahr}/${(i.schuljahr + 1) % 100}.${i.abschnitt}`, selectionDisplayText: i => `${i.schuljahr}/${(i.schuljahr + 1) % 100}.${i.abschnitt}`});
+
+	const schuljahresabschnitt = computed({
+		get: () => {
+			const id = dataSchuelerLernabschnittdaten.value.schuljahresabschnitt;
+			return schuljahresabschnitte.value.find(i => i.id === id) ?? null;
+		},
+		set:(value) => {
+			dataSchuelerLernabschnittdaten.value.schuljahresabschnitt = value?.id ?? -1;
+			void loadKlassenFuerAbschnitt(value?.id ?? -1);
+		},
+	});
+
+	const jahrgaenge = computed(() => Array.from(props.schuelerListeManager().jahrgaenge.list()));
+
+	const jahrgangManager = new SelectManager({ options: jahrgaenge.value, optionDisplayText: i => i.kuerzel ?? '' , selectionDisplayText: i => i.kuerzel ?? '' });
+
+	const jahrgang = computed({
+		get: () => {
+			const id = dataSchuelerLernabschnittdaten.value.jahrgangID ?? -1;
+			return jahrgaenge.value.find(i => i.id === id) ?? null;
+		},
+		set:(value) => dataSchuelerLernabschnittdaten.value.jahrgangID = value?.id ?? -1,
+	});
+
+	const klassenFuerAbschnitt = ref<KlassenDaten[]>([]);
+
+	async function loadKlassenFuerAbschnitt(idAbschnitt: number) {
+		if (idAbschnitt <= 0) {
+			klassenFuerAbschnitt.value = [];
+			return;
+		}
+		klassenFuerAbschnitt.value = Array.from(await props.getSchuelerKlassenFuerAbschnitt(idAbschnitt));
+	}
+
+	const klassen = computed(() => {
+		const global = Array.from(props.schuelerListeManager().klassen.list());
+		return klassenFuerAbschnitt.value.length > 0 ? klassenFuerAbschnitt.value : global;
+	});
+
+	const klassenManager = new SelectManager({ options: klassen.value, optionDisplayText: i => i.kuerzel ?? '' , selectionDisplayText: i => i.kuerzel ?? '' });
+
+	const klasse = computed({
+		get: () => {
+			const id = dataSchuelerLernabschnittdaten.value.klassenID ?? -1;
+			return klassen.value.find(i => i.id === id) ?? null;
+		},
+		set:(value) => dataSchuelerLernabschnittdaten.value.klassenID = value?.id ?? -1,
+	});
+
+
+	const schwerbehinderung = computed<boolean>({
+		get: () => dataSchuelerLernabschnittdaten.value.hatSchwerbehinderungsNachweis,
+		set: (value) => void props.patchSchuelerLernabschnittsdaten({ hatSchwerbehinderungsNachweis: value }, dataSchuelerLernabschnittdaten.value.id),
 	});
 
 	const kindergaerten = computed(() => props.mapKindergaerten.values());
@@ -576,28 +654,30 @@
 		},
 	});
 
+	const anmeldedatumError = ref<string | null>();
+	const aufnahmedatumError = ref<string | null>();
+	const beginnBildungsgangError = ref<string | null>();
+
 	//validation logic
 	function fieldIsValid(field: keyof SchuelerStammdaten | null):(v: string | null) => boolean {
 		return (v: string | null) => {
 			switch (field) {
 				case 'nachname':
-					return stringIsValid(data.value.nachname, true, 120);
+					return mandatoryInputIsValid(data.value.nachname, 120);
 				case 'vorname':
-					return stringIsValid(data.value.vorname, true, 120);
+					return mandatoryInputIsValid(data.value.vorname, 120);
 				case 'alleVornamen':
-					return stringIsValid(data.value.alleVornamen, false, 120);
-				case 'geburtsdatum':
-					return data.value.geburtsdatum !== null;
+					return optionalInputIsValid(data.value.alleVornamen, 120);
 				case 'geschlecht':
 					return Geschlecht.fromValue(data.value.geschlecht) !== null;
 				case 'strassenname':
 					return adresseIsValid();
 				case 'telefon':
-					return phoneNumberIsValid(data.value.telefon, false, 20);
+					return phoneNumberIsValid(data.value.telefon, 20);
 				case 'telefonMobil':
-					return phoneNumberIsValid(data.value.telefon, false, 20);
+					return phoneNumberIsValid(data.value.telefon, 20);
 				case 'emailPrivat':
-					return stringIsValid(data.value.emailPrivat, false, 20);
+					return emailIsValid(data.value.emailPrivat, 20);
 				case 'geburtsland':
 					return (data.value.geburtsland === null) || (Nationalitaeten.getByISO3(data.value.geburtsland) !== null);
 				case 'geburtslandMutter':
@@ -610,23 +690,133 @@
 		}
 	}
 
+	async function patchIfValid(field: string, value: string | null | undefined) {
+		const v = (value === undefined) ? null : value;
+		switch (field) {
+			case 'nachname':
+				if (!mandatoryInputIsValid(v ?? null, 120))
+					return;
+				await props.patch({ nachname: v ?? undefined }, data.value.id);
+				return;
+			case 'vorname':
+				if (!mandatoryInputIsValid(v ?? null, 120))
+					return;
+				await props.patch({ vorname: v ?? undefined }, data.value.id);
+				return;
+			case 'telefon':
+				if ((v !== null) && (v.length > 0) && !phoneNumberIsValid(v, 20))
+					return;
+				await props.patch({ telefon: v ?? null }, data.value.id);
+				return;
+			case 'telefonMobil':
+				if ((v !== null) && (v.length > 0) && !phoneNumberIsValid(v, 20)) return;
+				await props.patch({ telefonMobil: v ?? null }, data.value.id);
+				return;
+			case 'emailPrivat':
+				if ((v !== null) && (v.length > 0) && !emailIsValid(v, 100)) return;
+				await props.patch({ emailPrivat: v ?? null }, data.value.id);
+				return;
+			default:
+			{
+				const obj: any = {};
+				obj[field] = v ?? null;
+				await props.patch(obj, data.value.id);
+			}
+		}
+	}
+
 	function adresseIsValid() {
-		return stringIsValid(data.value.strassenname, false, 55) &&
-			stringIsValid(data.value.hausnummer, false, 10) &&
-			stringIsValid(data.value.hausnummerZusatz, false, 30);
+		return optionalInputIsValid(data.value.strassenname, 55) &&
+			optionalInputIsValid(data.value.hausnummer, 10) &&
+			optionalInputIsValid(data.value.hausnummerZusatz, 30);
 	}
 
-	function phoneNumberIsValid(input: string | null, mandatory: boolean, maxLength: number) {
-		if ((input === null) || (JavaString.isBlank(input)))
-			return !mandatory;
-		// folgende Formate sind erlaubt: 0151123456, 0151/123456, 0151-123456, +49/176-456456 -> Buchstaben sind nicht erlaubt
-		return /^\+?\d+([-/]?\d+)*$/.test(input) && input.length <= maxLength;
+	function parseISOToDate(strDate: string | null) {
+		if (strDate === null)
+			return null;
+		try {
+			const d = DateUtils.extractFromDateISO8601(strDate);
+			return new Date(d[0], d[1] - 1, d[2]);
+		} catch (e) {
+			return null;
+		}
 	}
 
-	function stringIsValid(input: string | null, mandatory: boolean, maxLength: number) {
-		if (mandatory)
-			return (input !== null) && (!JavaString.isBlank(input)) && (input.length <= maxLength);
-		return (input === null) || (input.length <= maxLength);
+	function istAnmeldedatumGueltig(strDate: string | null) {
+		if (strDate === null)
+			return true;
+		const d = parseISOToDate(strDate);
+		if (d === null)
+			return false;
+		const today = new Date();
+		// Datum darf nicht in der Zukunft liegen (heutige Datum ist erlaubt)
+		return d.getTime() <= new Date(today.getFullYear(), today.getMonth(), today.getDate()).getTime();
+	}
+
+	async function patchAnmeldedatum(value: string | null) {
+		if (!istAnmeldedatumGueltig(value)) {
+			anmeldedatumError.value = "Das Anmeldedatum darf nicht in der Zukunft liegen";
+			return;
+		}
+		anmeldedatumError.value = null;
+		await props.patch({ anmeldedatum: value ?? null }, data.value.id);
+	}
+
+	function istAufnahmedatumGueltig(strDate: string | null) {
+		if (strDate === null)
+			return true;
+		const aufnahme = parseISOToDate(strDate);
+		if (aufnahme === null)
+			return false;
+		// Aufnahmedatum darf nicht vor Anmeldedatum liegen
+		const anmeld = parseISOToDate(data.value.anmeldedatum);
+		if (anmeld !== null)
+			return aufnahme.getTime() >= anmeld.getTime();
+		return true;
+	}
+
+	async function patchAufnahmedatum(value: string | null) {
+		if (!istAufnahmedatumGueltig(value)) {
+			aufnahmedatumError.value = "Das Aufnahmedatum darf nicht vor dem Anmeldedatum liegen";
+			return;
+		}
+		aufnahmedatumError.value = null;
+		await props.patch({ aufnahmedatum: value ?? null }, data.value.id);
+	}
+
+	function istBeginnBildungsgangGueltig(strDate: string | null) {
+		if (strDate === null)
+			return true;
+		const beginn = parseISOToDate(strDate);
+		if (beginn === null)
+			return false;
+		// Beginn des Bildungsgangs darf nicht vor Aufnahmedatum liegen
+		const aufnahme = parseISOToDate(data.value.aufnahmedatum);
+		if (aufnahme !== null)
+			return beginn.getTime() >= aufnahme.getTime();
+		return true;
+	}
+
+	async function patchBeginnBildungsgang(value: string | null) {
+		if (!istBeginnBildungsgangGueltig(value)) {
+			beginnBildungsgangError.value = "Der Beginn des Bildungsgangs darf nicht vor dem Aufnahmedatum liegen";
+			return;
+		}
+		beginnBildungsgangError.value = null;
+		await props.patch({ beginnBildungsgang: value ?? null }, data.value.id);
+	}
+
+	function istGeburtsdatumGueltig(strDate: string | null) {
+		if (strDate === null)
+			return true;
+		try {
+			const date = DateUtils.extractFromDateISO8601(strDate);
+			const curDate = new Date();
+			const diffYear = curDate.getFullYear() - date[0];
+			return (diffYear > 3) && (diffYear < 51);
+		} catch (e) {
+			return false;
+		}
 	}
 
 	// Anlegen von Erziehungsberechtigten
@@ -786,6 +976,9 @@
 		zweiterErz.value.ortsteilID = item.ortsteilID;
 		zweiterErz.value.bemerkungen = item.bemerkungen;
 		zweiterErz.value.erhaeltAnschreiben = item.erhaeltAnschreiben;
+		zweiterErz.value.strassenname = item.strassenname;
+		zweiterErz.value.hausnummer = item.hausnummer;
+		zweiterErz.value.hausnummerZusatz = item.hausnummerZusatz;
 	}
 
 	function openModalErzieher() {
@@ -841,6 +1034,9 @@
 		zweiterErz.value.wohnortID = ersterErz.value.wohnortID;
 		zweiterErz.value.ortsteilID = ersterErz.value.ortsteilID;
 		zweiterErz.value.bemerkungen = ersterErz.value.bemerkungen;
+		zweiterErz.value.strassenname = ersterErz.value.strassenname;
+		zweiterErz.value.hausnummer = ersterErz.value.hausnummer;
+		zweiterErz.value.hausnummerZusatz = ersterErz.value.hausnummerZusatz;
 		istErsterErzGespeichert.value = true;
 	}
 
@@ -981,5 +1177,7 @@
 		props.schuelerListeManager().schuelerstatus.auswahlAdd(SchuelerStatus.NEUAUFNAHME);
 		void props.gotoDefaultView(props.schuelerListeManager().auswahl().id);
 	}
+
+	void loadKlassenFuerAbschnitt(schuljahresabschnitt.value?.id ?? -1);
 
 </script>

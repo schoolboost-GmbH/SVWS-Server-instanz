@@ -118,7 +118,7 @@ export abstract class BaseSelectManager<T> {
 
 		this._watcher.push(
 			watch(() => config?.options, newOptions => {
-				this.unfilteredOptions = toValue(newOptions) ?? new ArrayList();
+				this.unfilteredOptions = (newOptions === undefined) ? new ArrayList() : this.getRawIterable(toValue(newOptions));
 			}, { deep: true }
 			)
 		);
@@ -138,6 +138,16 @@ export abstract class BaseSelectManager<T> {
 		);
 	}
 
+	/**
+	 * Generiert ein Raw-Array von einem übergebenen Iterable. Löst Proxies innerhalb der Liste auf.
+	 *
+	 * @param list   das Iterable
+	 *
+	 * @return das Array/Liste ohne Proxy
+	 */
+	private getRawIterable(list: Iterable<T>): T[] {
+		return [...toRaw(list)].map(e => toRaw(e));
+	}
 
 	/**
 	 * Erzeugt ein ShallowRef aus dem übergebenen Objekt. Es berücksichtigt dabei, ob das Objekt bereits ein Ref ist und wandelt es ggf. um.

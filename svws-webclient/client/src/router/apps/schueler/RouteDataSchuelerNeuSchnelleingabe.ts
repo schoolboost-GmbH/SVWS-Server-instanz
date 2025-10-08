@@ -1,7 +1,13 @@
 import { RouteData, type RouteStateInterface } from "~/router/RouteData";
-import type { Fahrschuelerart, Haltestelle, Kindergarten, ReligionEintrag, SchuelerListeEintrag, SchuelerStammdaten, SchulEintrag, SchulformKatalogEintrag, TelefonArt, EinschulungsartKatalogEintrag, Erzieherart, OrtKatalogEintrag, OrtsteilKatalogEintrag } from "@core";
+import type { Fahrschuelerart, Haltestelle, Kindergarten, ReligionEintrag, SchuelerListeEintrag, SchuelerStammdaten, SchulEintrag, SchulformKatalogEintrag, TelefonArt, EinschulungsartKatalogEintrag, Erzieherart, OrtKatalogEintrag, OrtsteilKatalogEintrag, SchuelerLernabschnittListeEintrag, } from "@core";
+import { ArrayList, type SchuelerSchulbesuchsdaten, type Merkmal, type KatalogEntlassgrund, DeveloperNotificationException,
+} from "@core";
 import { Schulform } from "@core";
 import { api } from "~/router/Api";
+import { routeSchueler } from "~/router/apps/schueler/RouteSchueler";
+import { SchuelerSchulbesuchManager } from "~/components/schueler/schulbesuch/SchuelerSchulbesuchManager";
+import { routeSchuelerSchulbesuch } from "~/router/apps/schueler/schulbesuch/RouteSchuelerSchulbesuch";
+import { SchuelerLernabschnittManager } from "~/components/schueler/lernabschnitte/SchuelerLernabschnittManager";
 
 interface RouteStateDataSchuelerNeuSchnelleingabe extends RouteStateInterface {
 	mapKindergaerten: Map<number, Kindergarten>;
@@ -14,6 +20,8 @@ interface RouteStateDataSchuelerNeuSchnelleingabe extends RouteStateInterface {
 	mapEinschulungsarten: Map<number, EinschulungsartKatalogEintrag>;
 	mapOrte: Map<number, OrtKatalogEintrag>;
 	mapOrtsteile: Map<number, OrtsteilKatalogEintrag>;
+	schuelerSchulbesuchManager: SchuelerSchulbesuchManager | undefined;
+	schuelerLernabschnittsManager: SchuelerLernabschnittManager | undefined;
 }
 
 const defaultState = <RouteStateDataSchuelerNeuSchnelleingabe> {
@@ -27,6 +35,8 @@ const defaultState = <RouteStateDataSchuelerNeuSchnelleingabe> {
 	mapEinschulungsarten: new Map(),
 	mapOrte: new Map(),
 	mapOrtsteile: new Map(),
+	schuelerSchulbesuchManager: undefined,
+	schuelerLernabschnittsManager: undefined,
 }
 
 export class RouteDataSchuelerNeuSchnelleingabe extends RouteData<RouteStateDataSchuelerNeuSchnelleingabe> {
@@ -97,7 +107,50 @@ export class RouteDataSchuelerNeuSchnelleingabe extends RouteData<RouteStateData
 	public async ladeDaten(auswahl: SchuelerListeEintrag | null) : Promise<SchuelerStammdaten | null> {
 		if (auswahl === null)
 			return null;
-		return await api.server.getSchuelerStammdaten(api.schema, auswahl.id);
+		const res = await api.server.getSchuelerStammdaten(api.schema, auswahl.id);
+		const schuelerSchulbesuchsdaten: SchuelerSchulbesuchsdaten = await api.server.getSchuelerSchulbesuch(api.schema, auswahl.id);
+		const kindergaerten = await api.server.getKindergaerten(api.schema)
+		const schulen = new ArrayList<SchulEintrag>();
+		const merkmale = new ArrayList<Merkmal>();
+		const entlassgruende = new ArrayList<KatalogEntlassgrund>();
+		const schuelerSchulbesuchManager = new SchuelerSchulbesuchManager(
+			schuelerSchulbesuchsdaten, auswahl, api.schuleStammdaten.abschnitte, schulen, merkmale, entlassgruende, kindergaerten, routeSchuelerSchulbesuch.data.patch);
+
+		let schuelerLernabschnittsManager: SchuelerLernabschnittManager | undefined = undefined;
+		const listAbschnitte = await api.server.getSchuelerLernabschnittsliste(api.schema, auswahl.id);
+		// wähle bevorzugt einen Eintrag für den aktuellen Schuljahresabschnitt, WechselNr = 0, sonst letzten Eintrag
+		let found : SchuelerLernabschnittListeEintrag | undefined = undefined;
+
+		for (const a of listAbschnitte) {
+			if (a.schuljahresabschnitt === routeSchueler.data.idSchuljahresabschnitt && a.wechselNr === 0) {
+				found = a;
+				break;
+			}
+		}
+		if (found === undefined && !listAbschnitte.isEmpty())
+			found = listAbschnitte.get(listAbschnitte.size()-1);
+		if (found !== undefined) {
+			const daten = await api.server.getSchuelerLernabschnittsdatenByID(api.schema, found.id);
+			const [ listKurse, listKlassen, listLehrer, listFaecher, listFoerderschwerpunkte, listJahrgaenge ] = await Promise.all([
+				api.server.getKurseFuerAbschnitt(api.schema, found.schuljahresabschnitt),
+				api.server.getKlassenFuerAbschnitt(api.schema, found.schuljahresabschnitt),
+				api.server.getLehrerFuerAbschnitt(api.schema, found.schuljahresabschnitt),
+				api.server.getFaecher(api.schema),
+				api.server.getKatalogFoerderschwerpunkte(api.schema),
+				api.server.getJahrgaenge(api.schema),
+			]);
+			const schuljahresabschnitt = api.mapAbschnitte.value.get(daten.schuljahresabschnitt);
+			if (schuljahresabschnitt !== undefined) {
+				schuelerLernabschnittsManager = new SchuelerLernabschnittManager(
+					api.schulform, auswahl, daten, schuljahresabschnitt,
+					listFaecher, listFoerderschwerpunkte, listJahrgaenge,
+					listKlassen, listKurse, listLehrer
+				);
+			}
+		}
+
+		this.setPatchedState({ schuelerSchulbesuchManager, schuelerLernabschnittsManager });
+		return res;
 	}
 
 	get mapFahrschuelerarten(): Map<number, Fahrschuelerart> {
@@ -138,5 +191,17 @@ export class RouteDataSchuelerNeuSchnelleingabe extends RouteData<RouteStateData
 
 	public get mapOrtsteile(): Map<number, OrtsteilKatalogEintrag> {
 		return this._state.value.mapOrtsteile;
+	}
+
+	get schuelerLernabschnittManager(): SchuelerLernabschnittManager {
+		if (this._state.value.schuelerLernabschnittsManager === undefined)
+			throw new DeveloperNotificationException("Unerwarteter Fehler: Schüler-Lernabschnittsdaten nicht initialisiert");
+		return this._state.value.schuelerLernabschnittsManager;
+	}
+
+	get schuelerSchulbesuchManager(): SchuelerSchulbesuchManager {
+		if (this._state.value.schuelerSchulbesuchManager === undefined)
+			throw new DeveloperNotificationException("SchülerSchulbesuchManager nicht initialisiert.")
+		return this._state.value.schuelerSchulbesuchManager;
 	}
 }

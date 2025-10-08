@@ -1,5 +1,6 @@
 package de.svws_nrw.api.server;
 
+import de.svws_nrw.asd.data.schueler.SchuelerStammdatenNeu;
 import de.svws_nrw.core.data.schule.Fahrschuelerart;
 import de.svws_nrw.data.kataloge.DataKatalogFahrschuelerarten;
 import java.io.InputStream;
@@ -228,7 +229,6 @@ public class APISchueler {
 				request, ServerMode.STABLE, BenutzerKompetenz.KEINE);
 	}
 
-
 	/**
 	 * Die OpenAPI-Methode für das Hinzufügen neuer SchülerStammdaten.
 	 *
@@ -250,10 +250,10 @@ public class APISchueler {
 	@ApiResponse(responseCode = "500", description = "Unspezifizierter Fehler (z.B. beim Datenbankzugriff)")
 	public Response addSchuelerStammdaten(@PathParam("schema") final String schema, @PathParam("idSchuljahresabschnitt") final long idSchuljahresabschnitt,
 			@RequestBody(description = "Die Daten der zu erstellenden SchülerStammdaten ohne ID, da diese automatisch generiert wird", required = true,
-					content = @Content(mediaType = MediaType.APPLICATION_JSON, schema = @Schema(implementation = SchuelerStammdaten.class))) final InputStream is,
+					content = @Content(mediaType = MediaType.APPLICATION_JSON, schema = @Schema(implementation = SchuelerStammdatenNeu.class))) final InputStream is,
 			@Context final HttpServletRequest request) {
 		return DBBenutzerUtils.runWithTransaction(
-				conn -> new DataSchuelerStammdaten(conn, idSchuljahresabschnitt).addAsResponse(is), request, ServerMode.STABLE, BenutzerKompetenz.SCHUELER_INDIVIDUALDATEN_AENDERN);
+				conn -> new DataSchuelerStammdaten(conn, idSchuljahresabschnitt).createNewSchuelerWithLernabschnitt(is), request, ServerMode.STABLE, BenutzerKompetenz.SCHUELER_INDIVIDUALDATEN_AENDERN);
 	}
 
 	/**

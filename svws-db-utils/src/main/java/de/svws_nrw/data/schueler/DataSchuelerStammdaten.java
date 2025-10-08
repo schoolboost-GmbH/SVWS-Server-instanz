@@ -1,6 +1,8 @@
 package de.svws_nrw.data.schueler;
 
+import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -15,15 +17,20 @@ import de.svws_nrw.asd.types.Geschlecht;
 import de.svws_nrw.asd.types.schueler.SchuelerStatus;
 import de.svws_nrw.asd.types.schule.Nationalitaeten;
 import de.svws_nrw.asd.types.schule.Verkehrssprache;
+import de.svws_nrw.core.types.schule.PersonTyp;
 import de.svws_nrw.data.DataManagerRevised;
 import de.svws_nrw.data.JSONMapper;
 import de.svws_nrw.db.DBEntityManager;
 import de.svws_nrw.db.dto.current.schild.katalog.DTOFahrschuelerart;
 import de.svws_nrw.db.dto.current.schild.katalog.DTOHaltestellen;
+import de.svws_nrw.db.dto.current.schild.katalog.DTOKatalogEinwilligungsart;
 import de.svws_nrw.db.dto.current.schild.katalog.DTOKonfession;
 import de.svws_nrw.db.dto.current.schild.katalog.DTOOrtsteil;
 import de.svws_nrw.db.dto.current.schild.schueler.DTOSchueler;
+import de.svws_nrw.db.dto.current.schild.schueler.DTOSchuelerDatenschutz;
 import de.svws_nrw.db.dto.current.schild.schueler.DTOSchuelerFoto;
+import de.svws_nrw.db.dto.current.schild.schueler.DTOSchuelerLernplattform;
+import de.svws_nrw.db.dto.current.svws.auth.DTOLernplattformen;
 import de.svws_nrw.db.schema.Schema;
 import de.svws_nrw.db.utils.ApiOperationException;
 import jakarta.ws.rs.core.MediaType;
@@ -190,7 +197,7 @@ public final class DataSchuelerStammdaten extends DataManagerRevised<Long, DTOSc
 		dto.GeburtslandMutter = null;
 		// Statusdaten
 		dto.idStatus = null;
-		dto.Duplikat = null;
+		dto.Duplikat = false;
 		dto.ExterneSchulNr = null;
 		dto.Ausweisnummer = null;
 		dto.Fahrschueler_ID = null;
@@ -204,8 +211,10 @@ public final class DataSchuelerStammdaten extends DataManagerRevised<Long, DTOSc
 		dto.MasernImpfnachweis = false;
 		dto.Bafoeg = false;
 		dto.MeisterBafoeg = false;
+		dto.KeineAuskunft = false;
 
 		dto.BeginnBildungsgang = null;
+		dto.DauerBildungsgang = null;
 	}
 
 
@@ -214,6 +223,59 @@ public final class DataSchuelerStammdaten extends DataManagerRevised<Long, DTOSc
 		return JSONMapper.convertToLong(attributes.get("id"), false);
 	}
 
+	/**
+	 * Erstellt einen Schüler aus dem InputStream und liefert das erstellte Core-DTO zurück.
+	 * Für den Schüler wird ein Lernabschnitt angelegt. Außerdem werden dem Schüler alle Einwilligungen und Lernplattformen hinzugefügt.
+	 *
+	 * @param is InputStream mit den JSON-Daten
+	 * @return das erstellte SchuelerStammdaten Core-DTO
+	 *
+	 * @throws ApiOperationException im Fehlerfall
+	 */
+	public Response createNewSchuelerWithLernabschnitt(final InputStream is) throws ApiOperationException {
+		final Map<String, Object> initAttributes = JSONMapper.toMap(is);
+
+		final Map<String, Object> lernAbschnittAttributes = new HashMap<>();
+		final String[] keysToExtract = { "schuljahresabschnitt", "jahrgangID", "klassenID" };
+		for (final String k : keysToExtract)
+			if (initAttributes.containsKey(k))
+				lernAbschnittAttributes.put(k, initAttributes.remove(k));
+
+		// Schüler wird angelegt
+		final SchuelerStammdaten created = this.add(initAttributes);
+		conn.transactionFlush();
+
+		// Anlegen aller Einwilligungen für den Schüler
+		final List<DTOKatalogEinwilligungsart> katalogEinwilligungsarten = conn.queryAll(DTOKatalogEinwilligungsart.class);
+		final List<DTOSchuelerDatenschutz> listEinwilligungen = katalogEinwilligungsarten.stream()
+				.filter(e -> e.personTyp == PersonTyp.SCHUELER)
+				.map(e -> new DTOSchuelerDatenschutz(created.id, e.ID, false, false))
+				.toList();
+		if (!listEinwilligungen.isEmpty())
+			conn.transactionPersistAll(listEinwilligungen);
+
+		// Anlegen aller Lernplattformen für den Schüler
+		final List<DTOLernplattformen> katalogLernplattformen = conn.queryAll(DTOLernplattformen.class);
+		final List<DTOSchuelerLernplattform> listLernplattformen = katalogLernplattformen.stream()
+				.map(e -> new DTOSchuelerLernplattform(created.id, e.ID, false, false, false, false))
+				.toList();
+		if (!listLernplattformen.isEmpty())
+			conn.transactionPersistAll(listLernplattformen);
+
+		// Anlegen des Lernabschnitts für den Schüler
+		if (!lernAbschnittAttributes.isEmpty()) {
+			Long tmpIdSchuljahresabschnitt = null;
+			if (lernAbschnittAttributes.containsKey("schuljahresabschnitt"))
+				tmpIdSchuljahresabschnitt = JSONMapper.convertToLong(lernAbschnittAttributes.remove("schuljahresabschnitt"), false, "schuljahresabschnitt");
+			final DataSchuelerLernabschnittsdaten data = new DataSchuelerLernabschnittsdaten(conn);
+			lernAbschnittAttributes.put("schuelerID", created.id);
+			if (tmpIdSchuljahresabschnitt != null)
+				lernAbschnittAttributes.put("schuljahresabschnitt", tmpIdSchuljahresabschnitt);
+			data.add(lernAbschnittAttributes);
+		}
+
+		return Response.status(Response.Status.CREATED).entity(created).build();
+	}
 
 	@Override
 	protected SchuelerStammdaten map(final DTOSchueler dto) throws ApiOperationException {
@@ -269,7 +331,7 @@ public final class DataSchuelerStammdaten extends DataManagerRevised<Long, DTOSc
 		daten.erhaeltSchuelerBAFOEG = dto.Bafoeg;
 		daten.erhaeltMeisterBAFOEG = dto.MeisterBafoeg;
 		daten.beginnBildungsgang = dto.BeginnBildungsgang; // Schulform BK und SB
-		// TODO DauerBildungsgang // Schulform BK und SB
+		daten.dauerBildungsgang = dto.DauerBildungsgang; // Schulform BK und SB
 		return daten;
 	}
 
@@ -344,6 +406,7 @@ public final class DataSchuelerStammdaten extends DataManagerRevised<Long, DTOSc
 			case "beginnBildungsgang" ->
 				dto.BeginnBildungsgang = JSONMapper.convertToString(value, true, false, Schema.tab_Schueler.col_BeginnBildungsgang.datenlaenge(),
 						"beginnBildungsgang");
+			case "dauerBildungsgang" -> dto.DauerBildungsgang = JSONMapper.convertToInteger(value, true, "dauerBildungsgang");
 			default -> throw new ApiOperationException(Status.BAD_REQUEST, "Das Patchen des Attributes %s ist nicht implementiert.".formatted(name));
 		}
 	}

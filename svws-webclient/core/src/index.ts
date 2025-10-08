@@ -171,6 +171,7 @@ export { SchuelerSchulbesuchMerkmal } from './asd/data/schueler/SchuelerSchulbes
 export { SchuelerSchulbesuchSchule } from './asd/data/schueler/SchuelerSchulbesuchSchule';
 export { SchuelerSchulbesuchsdaten } from './asd/data/schueler/SchuelerSchulbesuchsdaten';
 export { SchuelerStammdaten } from './asd/data/schueler/SchuelerStammdaten';
+export { SchuelerStammdatenNeu } from './asd/data/schueler/SchuelerStammdatenNeu';
 export { SchuelerStatusKatalogEintrag } from './asd/data/schueler/SchuelerStatusKatalogEintrag';
 export { Sprachbelegung } from './asd/data/schueler/Sprachbelegung';
 export { Sprachendaten } from './asd/data/schueler/Sprachendaten';

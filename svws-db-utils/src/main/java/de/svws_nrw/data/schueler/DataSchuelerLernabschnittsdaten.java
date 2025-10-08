@@ -58,11 +58,20 @@ public final class DataSchuelerLernabschnittsdaten extends DataManagerRevised<Lo
 	public DataSchuelerLernabschnittsdaten(final DBEntityManager conn) {
 		super(conn);
 		setAttributesRequiredOnCreation("schuelerID", "schuljahresabschnitt");
+		setAttributesDelayedOnCreation("klassenID", "jahrgangID");
 	}
 
 	@Override
 	protected void initDTO(final DTOSchuelerLernabschnittsdaten dto, final Long newId, final Map<String, Object> initAttributes) throws ApiOperationException {
 		dto.ID = newId;
+		dto.Schwerbehinderung = false;
+		dto.AOSF = false;
+		dto.Autist = false;
+		dto.ZieldifferentesLernen = false;
+		dto.SemesterWertung = false;
+		dto.Wiederholung = false;
+		dto.FachPraktAnteilAusr = true;
+		dto.WechselNr = 0;
 	}
 
 
@@ -173,7 +182,7 @@ public final class DataSchuelerLernabschnittsdaten extends DataManagerRevised<Lo
 		final Note noteLernbereichNW = (dto.Gesamtnote_NW == null) ? null : Note.fromNoteSekI(dto.Gesamtnote_NW);
 		daten.noteLernbereichNW = (noteLernbereichNW == null) ? null : dto.Gesamtnote_NW;
 		daten.abschlussart = dto.AbschlussArt;
-		daten.istAbschlussPrognose = dto.AbschlIstPrognose;
+		daten.istAbschlussPrognose = (dto.AbschlIstPrognose != null) && dto.AbschlIstPrognose;
 		daten.abschluss = dto.Abschluss;
 		daten.abschlussBerufsbildend = dto.Abschluss_B;
 		daten.textErgebnisPruefungsalgorithmus = dto.PruefAlgoErgebnis;
@@ -273,9 +282,7 @@ public final class DataSchuelerLernabschnittsdaten extends DataManagerRevised<Lo
 			}
 			case "klassenID" -> {
 				final Long idKlasse = JSONMapper.convertToLong(value, true);
-				if ((idKlasse != null) && (conn.queryByKey(DTOKlassen.class, idKlasse) == null))
-					throw new ApiOperationException(Status.CONFLICT);
-				dto.Klassen_ID = idKlasse;
+				validateKlassenID(dto, idKlasse);
 			}
 			case "folgeklassenID" -> {
 				final Long idKlasse = JSONMapper.convertToLong(value, true);
@@ -297,9 +304,7 @@ public final class DataSchuelerLernabschnittsdaten extends DataManagerRevised<Lo
 			}
 			case "jahrgangID" -> {
 				final Long idJahrgang = JSONMapper.convertToLong(value, true);
-				if ((idJahrgang != null) && (conn.queryByKey(DTOJahrgang.class, idJahrgang) == null))
-					throw new ApiOperationException(Status.CONFLICT);
-				dto.Jahrgang_ID = idJahrgang;
+				validateJahrgangID(dto, idJahrgang);
 			}
 			case "epJahre" -> dto.EPJahre = JSONMapper.convertToIntegerInRange(value, true, 1, 4);
 			case "fachklasseID" -> {
@@ -425,6 +430,51 @@ public final class DataSchuelerLernabschnittsdaten extends DataManagerRevised<Lo
 		}
 	}
 
+	private void validateKlassenID(final DTOSchuelerLernabschnittsdaten dto, final Long idKlasse) throws ApiOperationException {
+		if (idKlasse != null) {
+			final DTOKlassen klasse = conn.queryByKey(DTOKlassen.class, idKlasse);
+			if (klasse == null)
+				throw new ApiOperationException(Status.CONFLICT, "Die angegebene Klasse existiert nicht.");
+
+			// Klasse gehört zum aktuellen Schuljahresabschnitt
+			if (klasse.Schuljahresabschnitts_ID != dto.Schuljahresabschnitts_ID)
+				throw new ApiOperationException(Status.CONFLICT, "Die Klasse gehört nicht zum angegebenen Schuljahresabschnitt.");
+
+			// falls Jahrgang gesetzt, muss Klasse denselben Jahrgang haben (oder Klasse.Jahrgang_ID null)
+			if ((dto.Jahrgang_ID != null) && (klasse.Jahrgang_ID != null) && (!dto.Jahrgang_ID.equals(klasse.Jahrgang_ID)))
+				throw new ApiOperationException(Status.CONFLICT, "Die Klasse gehört nicht zum angegebenen Jahrgang.");
+
+			checkFunktionsbezogeneKompetenzAufKlasse(List.of(idKlasse));
+		}
+		dto.Klassen_ID = idKlasse;
+	}
+
+	private void validateJahrgangID(final DTOSchuelerLernabschnittsdaten dto, final Long idJahrgang) throws ApiOperationException {
+		if ((idJahrgang != null) && (conn.queryByKey(DTOJahrgang.class, idJahrgang) == null))
+			throw new ApiOperationException(Status.CONFLICT, "Der angegebene Jahrgang existiert nicht.");
+		dto.Jahrgang_ID = idJahrgang;
+
+		if ((dto.Klassen_ID == null) && (idJahrgang != null)) {
+			final List<DTOKlassen> matches = conn.queryList(
+					"SELECT e FROM DTOKlassen e WHERE e.Schuljahresabschnitts_ID = ?1 AND e.Jahrgang_ID = ?2",
+					DTOKlassen.class, dto.Schuljahresabschnitts_ID, idJahrgang);
+
+			if (matches.isEmpty()) {
+				throw new ApiOperationException(Status.CONFLICT,
+						"Keine passende Klasse für Jahrgang %d im Schuljahresabschnitt %d gefunden."
+								.formatted(idJahrgang, dto.Schuljahresabschnitts_ID));
+			}
+
+			final DTOKlassen ausgewaehlte = matches.stream().min(Comparator.comparingLong(k -> k.ID)).orElseThrow(() -> new ApiOperationException(Status.CONFLICT,
+					"Keine passende Klasse für Jahrgang %d im Schuljahresabschnitt %d gefunden.".formatted(idJahrgang, dto.Schuljahresabschnitts_ID)));
+			dto.Klassen_ID = ausgewaehlte.ID;
+		} else if ((dto.Klassen_ID != null) && (idJahrgang != null)) {
+			final DTOKlassen kl = conn.queryByKey(DTOKlassen.class, dto.Klassen_ID);
+
+			if ((kl != null) && (kl.Jahrgang_ID != null) && (!idJahrgang.equals(kl.Jahrgang_ID)))
+				throw new ApiOperationException(Status.CONFLICT, "Die gesetzte Klasse passt nicht zum neuen Jahrgang.");
+		}
+	}
 
 	@Override
 	public void checkBeforeCreation(final Long newID, final Map<String, Object> initAttributes) throws ApiOperationException {

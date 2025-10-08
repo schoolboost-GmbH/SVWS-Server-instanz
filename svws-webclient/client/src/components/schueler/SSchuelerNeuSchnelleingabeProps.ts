@@ -1,10 +1,12 @@
 import type { SchuelerListeManager } from "@ui";
-import type { BenutzerKompetenz, EinschulungsartKatalogEintrag, Erzieherart, ErzieherStammdaten, Fahrschuelerart, Haltestelle, Kindergarten, List, OrtKatalogEintrag, OrtsteilKatalogEintrag, ReligionEintrag, SchuelerSchulbesuchsdaten, SchuelerStammdaten, SchuelerTelefon, SchulEintrag, Schulform, Schuljahresabschnitt, TelefonArt } from "@core";
+import type { BenutzerKompetenz, EinschulungsartKatalogEintrag, Erzieherart, ErzieherStammdaten, Fahrschuelerart, Haltestelle, Kindergarten, KlassenDaten, List, OrtKatalogEintrag, OrtsteilKatalogEintrag, ReligionEintrag, SchuelerLernabschnittsdaten, SchuelerSchulbesuchsdaten, SchuelerStammdaten, SchuelerTelefon, SchulEintrag, Schulform, Schuljahresabschnitt, ServerMode, TelefonArt } from "@core";
 import type { SchuelerSchulbesuchManager } from "~/components/schueler/schulbesuch/SchuelerSchulbesuchManager";
+import type { SchuelerLernabschnittManager } from "~/components/schueler/lernabschnitte/SchuelerLernabschnittManager";
 
 export interface SchuelerNeuSchnelleingabeProps {
 	schuelerListeManager: () => SchuelerListeManager;
 	schuelerSchulbesuchsManager: () => SchuelerSchulbesuchManager;
+	schuelerLernabschnittManager: () => SchuelerLernabschnittManager;
 	patch: (patchObject: Partial<SchuelerStammdaten>, id: number) => Promise<void>;
 	mapSchulen: Map<string, SchulEintrag>;
 	mapOrte: Map<number, OrtKatalogEintrag>;
@@ -26,8 +28,11 @@ export interface SchuelerNeuSchnelleingabeProps {
 	patchSchuelerTelefoneintrag: (data: Partial<SchuelerTelefon>, idEintrag: number) => Promise<void>;
 	deleteSchuelerTelefoneintrage: (idsEintraege: List<number>) => Promise<void>;
 	patchSchuelerSchulbesuchsdaten: (data: Partial<SchuelerSchulbesuchsdaten>, idSchueler: number) => Promise<void>;
+	patchSchuelerLernabschnittsdaten: (data : Partial<SchuelerLernabschnittsdaten>, idEintrag: number) => Promise<void>;
+	getSchuelerKlassenFuerAbschnitt: (idAbschnitt: number) => Promise<List<KlassenDaten>>;
 	gotoDefaultView: (idEintrag?: number | null) => Promise<void>;
 	aktAbschnitt: Schuljahresabschnitt;
+	serverMode: ServerMode;
 	schulform: Schulform,
 	benutzerKompetenzen: Set<BenutzerKompetenz>,
 }

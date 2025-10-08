@@ -336,7 +336,6 @@ export abstract class RouteDataAuswahl<TAuswahlManager extends AuswahlManager<nu
 		}
 		if (!eintraegeToRemove.isEmpty()) {
 			this.manager.liste.auswahlClear();
-			this.manager.setDaten(null);
 			await this.ladeSchuljahresabschnitt(this._state.value.idSchuljahresabschnitt);
 		}
 
@@ -498,5 +497,6 @@ export abstract class RouteDataAuswahl<TAuswahlManager extends AuswahlManager<nu
 		}
 
 		this._state.value.view = this._routeSchnelleingabe;
+		this.commit();
 	}
 }

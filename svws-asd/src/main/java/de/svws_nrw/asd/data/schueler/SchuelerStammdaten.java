@@ -214,6 +214,10 @@ public class SchuelerStammdaten {
 	@Schema(description = "der Beginn des Bildungsgangs eines Schülers", example = "null")
 	public String beginnBildungsgang;
 
+	/** Dauer des Bildungsgangs am BK eines Schülers. */
+	@Schema(description = "die Dauer des Bildungsgangs am BK eines Schülers", example = "null")
+	public Integer dauerBildungsgang;
+
 	/**
 	 * Leerer Standardkonstruktor.
 	 */

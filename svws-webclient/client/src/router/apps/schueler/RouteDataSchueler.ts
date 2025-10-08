@@ -1,5 +1,6 @@
-import type { ApiFile, List, ReportingParameter, SchuelerListeEintrag, SchuelerStammdaten, SimpleOperationResponse, StundenplanListeEintrag, SchuelerTelefon, SchuelerSchulbesuchsdaten, ErzieherStammdaten, Merkmal, KatalogEntlassgrund, SchulEintrag } from "@core";
-import { BenutzerKompetenz, ArrayList, SchuelerListe, SchuelerStatus, DeveloperNotificationException, ServerMode, UserNotificationException } from "@core";
+import type { ApiFile, List, ReportingParameter, SchuelerListeEintrag, SchuelerStammdaten, SimpleOperationResponse, StundenplanListeEintrag, SchuelerTelefon, SchuelerSchulbesuchsdaten, ErzieherStammdaten, SchuelerStammdatenNeu, SchuelerLernabschnittsdaten, KlassenDaten } from "@core";
+
+import { BenutzerKompetenz, ArrayList, SchuelerListe, SchuelerStatus, ServerMode, UserNotificationException } from "@core";
 
 import { api } from "~/router/Api";
 import { RouteDataAuswahl, type RouteStateAuswahlInterface } from "~/router/RouteDataAuswahl";
@@ -10,13 +11,10 @@ import type { RouteParamsRawGeneric } from "vue-router";
 import { routeSchuelerIndividualdatenGruppenprozesse } from "~/router/apps/schueler/individualdaten/RouteSchuelerIndividualdatenGruppenprozesse";
 import { routeSchuelerAllgemeinesGruppenprozesse } from "~/router/apps/schueler/allgemeines/RouteSchuelerAllgemeinesGruppenprozesse";
 import { routeSchuelerNeuSchnelleingabe } from "~/router/apps/schueler/RouteSchuelerNeuSchnelleingabe";
-import { SchuelerSchulbesuchManager } from "~/components/schueler/schulbesuch/SchuelerSchulbesuchManager";
-import { routeSchuelerSchulbesuch } from "~/router/apps/schueler/schulbesuch/RouteSchuelerSchulbesuch";
 
 
 interface RouteStateSchueler extends RouteStateAuswahlInterface<SchuelerListeManager> {
 	mapStundenplaene: Map<number, StundenplanListeEintrag>;
-	schuelerSchulbesuchManager: SchuelerSchulbesuchManager | undefined;
 	listSchuelerErziehereintraege: List<ErzieherStammdaten>;
 	listSchuelerTelefoneintraege: List<SchuelerTelefon>;
 }
@@ -28,7 +26,6 @@ const defaultState = <RouteStateSchueler> {
 	gruppenprozesseView: routeSchuelerIndividualdatenGruppenprozesse,
 	activeViewType: ViewType.DEFAULT,
 	mapStundenplaene: new Map(),
-	schuelerSchulbesuchManager: undefined,
 	listSchuelerErziehereintraege: new ArrayList(),
 	listSchuelerTelefoneintraege: new ArrayList(),
 	pendingStateRegistry: undefined,
@@ -87,16 +84,8 @@ export class RouteDataSchueler extends RouteDataAuswahl<SchuelerListeManager, Ro
 		const listSchuelerTelefoneintraege = await api.server.getSchuelerTelefone(api.schema, auswahl.id);
 		const listSchuelerErziehereintraege = await api.server.getSchuelerErzieher(api.schema, auswahl.id);
 
-		const schuelerSchulbesuchsdaten: SchuelerSchulbesuchsdaten = await api.server.getSchuelerSchulbesuch(api.schema, auswahl.id);
-		const kindergaerten = await api.server.getKindergaerten(api.schema)
-		const schulen = new ArrayList<SchulEintrag>();
-		const merkmale = new ArrayList<Merkmal>();
-		const entlassgruende = new ArrayList<KatalogEntlassgrund>();
-		const schuelerSchulbesuchManager = new SchuelerSchulbesuchManager(
-			schuelerSchulbesuchsdaten, auswahl, api.schuleStammdaten.abschnitte, schulen, merkmale, entlassgruende, kindergaerten, routeSchuelerSchulbesuch.data.patch);
-
 		this.manager.schuelerstatus.auswahlAdd(SchuelerStatus.data().getWertByID(res.status));
-		this.setPatchedState({ listSchuelerErziehereintraege, listSchuelerTelefoneintraege, schuelerSchulbesuchManager });
+		this.setPatchedState({ listSchuelerErziehereintraege, listSchuelerTelefoneintraege });
 		return res;
 	}
 
@@ -134,16 +123,21 @@ export class RouteDataSchueler extends RouteDataAuswahl<SchuelerListeManager, Ro
 	// 	return new SchuelerListeManager(api.schulform, new SchuelerListe(), new ArrayList(), api.schuleStammdaten.abschnitte, api.schuleStammdaten.idSchuljahresabschnitt);
 	// }
 
-	addSchueler = async (data: Partial<SchuelerStammdaten>): Promise<SchuelerStammdaten> => {
-		const schuelerStammdaten = await api.server.addSchuelerStammdaten(data, api.schema, this._state.value.idSchuljahresabschnitt);
-		await this.setSchuljahresabschnitt(this._state.value.idSchuljahresabschnitt, true);
+	addSchueler = async (data: Partial<SchuelerStammdatenNeu>, idSchulJahresabschnitt: number): Promise<SchuelerStammdaten> => {
+		const schuelerStammdaten = await api.server.addSchuelerStammdaten(data, api.schema, idSchulJahresabschnitt);
+		await this.setSchuljahresabschnitt(idSchulJahresabschnitt, true);
+		this.manager.setDaten(schuelerStammdaten);
 		return schuelerStammdaten;
 	}
 
-	get schuelerSchulbesuchManager(): SchuelerSchulbesuchManager {
-		if (this._state.value.schuelerSchulbesuchManager === undefined)
-			throw new DeveloperNotificationException("SchülerSchulbesuchManager nicht initialisiert.")
-		return this._state.value.schuelerSchulbesuchManager;
+	getSchuelerKlassenFuerAbschnitt = async (idAbschnitt: number): Promise<List<KlassenDaten>> => {
+		return await api.server.getKlassenFuerAbschnitt(api.schema, idAbschnitt);
+	}
+
+	patchSchuelerLernabschnitt = async (data : Partial<SchuelerLernabschnittsdaten>, idEintrag: number) : Promise<void> => {
+		await api.server.patchSchuelerLernabschnittsdaten(data, api.schema, idEintrag);
+		Object.assign(idEintrag, data);
+		this.commit();
 	}
 
 	patchSchuelerSchulbesuchdaten = async (data: Partial<SchuelerSchulbesuchsdaten>, idEintrag: number) : Promise<void> => {

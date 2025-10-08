@@ -295,6 +295,9 @@
 		zweiterErz.value.wohnortID = item.wohnortID;
 		zweiterErz.value.ortsteilID = item.ortsteilID;
 		zweiterErz.value.bemerkungen = item.bemerkungen;
+		zweiterErz.value.strassenname = item.strassenname;
+		zweiterErz.value.hausnummer = item.hausnummer;
+		zweiterErz.value.hausnummerZusatz = item.hausnummerZusatz;
 	}
 
 	function openModal() {
@@ -369,6 +372,9 @@
 		zweiterErz.value.wohnortID = ersterErz.value.wohnortID;
 		zweiterErz.value.ortsteilID = ersterErz.value.ortsteilID;
 		zweiterErz.value.bemerkungen = ersterErz.value.bemerkungen;
+		zweiterErz.value.strassenname = ersterErz.value.strassenname;
+		zweiterErz.value.hausnummer = ersterErz.value.hausnummer;
+		zweiterErz.value.hausnummerZusatz = ersterErz.value.hausnummerZusatz;
 		istErsterErzGespeichert.value = true;
 	}
 
