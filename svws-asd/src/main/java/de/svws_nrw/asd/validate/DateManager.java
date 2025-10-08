@@ -20,13 +20,13 @@ public final class DateManager implements Comparable<DateManager> {
 	private final int jahr;
 
 	/** Gibt an, on das Datum in einem Schaltjahr liegt oder nicht. */
-	private final boolean istSchaltjahr;
+	private boolean istSchaltjahr;
 
 	/** Der Tag im Jahr (1-365/366) - je nach Schaltjahr */
 	private final int tagImJahr;
 
-	/** Die maximale Anzahl an Tagen in dem Monat (ein Schlatjahr ist hier ggf. berücksichtigt) */
-	private final int maxTageImMonat;
+	/** Die maximale Anzahl an Tagen in dem Monat (ein Schaltjahr ist hier ggf. berücksichtigt) */
+	private int maxTageImMonat;
 
 	/** Der Wochentag: 1 für Montag, ..., 7 für Sonntag */
 	private final int wochentag;
@@ -51,34 +51,12 @@ public final class DateManager implements Comparable<DateManager> {
 		this.tag = tag;
 		this.monat = monat;
 		this.jahr = jahr;
-		if (jahr < 0)
-			throw new InvalidDateException("Die Jahresangabe muss positiv sein.");
-		if (jahr > 9999)
-			throw new InvalidDateException("Die Jahresangabe ist größer als 9999.");
 
-		// Prüfe, ob es sich um ein Schaltjahr handelt
-		final int schalttageBisVorjahr = getSchalttageBisJahr(jahr - 1);
-		final int schalttageBisJahr = getSchalttageBisJahr(jahr);
-		final int schalttag = (schalttageBisJahr - schalttageBisVorjahr);
-		this.istSchaltjahr = (schalttag == 1);
-
-		// Prüfe, ob der Monat im gültigen Bereich liegt
-		if ((monat < 1) || (monat > 12))
-			throw new InvalidDateException("Der Monat muss zwischen 1 und 12 liegen.");
-
-		// Prüfe, ob die Angabe des Tages im Monat korrekt ist
-		if (tag < 1)
-			throw new InvalidDateException("Der Tag im Monat muss größer als 0 sein.");
-		this.maxTageImMonat = switch (monat) {
-			case 1, 3, 5, 7, 8, 10, 12 -> 31;
-			case 4, 6, 9, 11 -> 30;
-			case 2 -> 28 + (istSchaltjahr ? 1 : 0);
-			default -> 0;
-		};
-		if (tag > maxTageImMonat)
-			throw new InvalidDateException("Im Monat " + monat + " muss der Tag im Bereicht von 1 bis " + maxTageImMonat + " liegen.");
+		// Prüfe, ob die Werte für Tag, Monat und Jahr im gültigen Bereich liegen und initialisiere istSchaljahr und maxTageImMonat
+		initPruefeTagMonatUndJahr();
 
 		// Bestimme den Tag im Jahr in Abhängigkeit davon, ob es sich um ein Schaltjahr handelt oder nicht
+		final int schalttag = this.istSchaltjahr ? 1 : 0;
 		this.tagImJahr = switch (monat) {
 			case 1 -> tag;
 			case 2 -> tag + 31;
@@ -106,7 +84,7 @@ public final class DateManager implements Comparable<DateManager> {
 		if (tagImJahr < tagImJahrMontagKW1) {
 			// letzte KW des Vorjahres
 			this.kalenderwochenjahr = jahr - 1;
-			final boolean istVjSchaltjahr = (schalttageBisVorjahr - getSchalttageBisJahr(jahr - 2)) == 1;
+			final boolean istVjSchaltjahr = (getSchalttageBisJahr(jahr - 1) - getSchalttageBisJahr(jahr - 2)) == 1;
 			final int wt1vj = getWochentagOfTagImJahr(jahr, 1);
 			final int kwVjAnzahl = ((wt1vj == 4) || (istVjSchaltjahr && (wt1vj == 3))) ? 53 : 52;
 			kalenderwoche = kwVjAnzahl;
@@ -122,6 +100,43 @@ public final class DateManager implements Comparable<DateManager> {
 				this.kalenderwoche = tmpKW;
 			}
 		}
+	}
+
+
+	/**
+	 * Prüft im Rahmen der Erstellung des Date-Managers, ob die Werte für Tag, Monat und Jahr
+	 * gültig sind. Außerdem wird ermittelt, ob es sich um ein Schaltjahr handelt, und wieviel
+	 * Tage im Monat existieren.
+	 *
+	 * @throws InvalidDateException   wenn die Werte für Tag, Monat oder Jahr fehlerhaft sind
+	 */
+	private void initPruefeTagMonatUndJahr() throws InvalidDateException {
+		if (jahr < 0)
+			throw new InvalidDateException("Die Jahresangabe muss positiv sein.");
+		if (jahr > 9999)
+			throw new InvalidDateException("Die Jahresangabe ist größer als 9999.");
+
+		// Prüfe, ob es sich um ein Schaltjahr handelt
+		final int schalttageBisVorjahr = getSchalttageBisJahr(jahr - 1);
+		final int schalttageBisJahr = getSchalttageBisJahr(jahr);
+		final int schalttag = (schalttageBisJahr - schalttageBisVorjahr);
+		istSchaltjahr = (schalttag == 1);
+
+		// Prüfe, ob der Monat im gültigen Bereich liegt
+		if ((monat < 1) || (monat > 12))
+			throw new InvalidDateException("Der Monat muss zwischen 1 und 12 liegen.");
+
+		// Prüfe, ob die Angabe des Tages im Monat korrekt ist
+		if (tag < 1)
+			throw new InvalidDateException("Der Tag im Monat muss größer als 0 sein.");
+		maxTageImMonat = switch (monat) {
+			case 1, 3, 5, 7, 8, 10, 12 -> 31;
+			case 4, 6, 9, 11 -> 30;
+			case 2 -> 28 + (istSchaltjahr ? 1 : 0);
+			default -> 0;
+		};
+		if (tag > maxTageImMonat)
+			throw new InvalidDateException("Im Monat " + monat + " muss der Tag im Bereicht von 1 bis " + maxTageImMonat + " liegen.");
 	}
 
 
@@ -242,8 +257,8 @@ public final class DateManager implements Comparable<DateManager> {
 	public boolean equals(final Object obj) {
 		if (this == obj)
 			return true;
-		if ((obj != null) && (obj instanceof DateManager))
-			return (this.compareTo((DateManager) obj) == 0);
+		if ((obj != null) && (obj instanceof final DateManager dm))
+			return (this.compareTo(dm) == 0);
 		return false;
 	}
 

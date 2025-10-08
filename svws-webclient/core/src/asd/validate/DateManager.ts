@@ -24,7 +24,7 @@ export class DateManager extends JavaObject implements Comparable<DateManager> {
 	/**
 	 * Gibt an, on das Datum in einem Schaltjahr liegt oder nicht.
 	 */
-	private readonly istSchaltjahr : boolean;
+	private istSchaltjahr : boolean = false;
 
 	/**
 	 * Der Tag im Jahr (1-365/366) - je nach Schaltjahr
@@ -32,9 +32,9 @@ export class DateManager extends JavaObject implements Comparable<DateManager> {
 	private readonly tagImJahr : number;
 
 	/**
-	 * Die maximale Anzahl an Tagen in dem Monat (ein Schlatjahr ist hier ggf. berücksichtigt)
+	 * Die maximale Anzahl an Tagen in dem Monat (ein Schaltjahr ist hier ggf. berücksichtigt)
 	 */
-	private readonly maxTageImMonat : number;
+	private maxTageImMonat : number = 0;
 
 	/**
 	 * Der Wochentag: 1 für Montag, ..., 7 für Sonntag
@@ -66,49 +66,8 @@ export class DateManager extends JavaObject implements Comparable<DateManager> {
 		this.tag = tag;
 		this.monat = monat;
 		this.jahr = jahr;
-		if (jahr < 0)
-			throw new InvalidDateException("Die Jahresangabe muss positiv sein.")
-		if (jahr > 9999)
-			throw new InvalidDateException("Die Jahresangabe ist größer als 9999.")
-		const schalttageBisVorjahr : number = DateManager.getSchalttageBisJahr(jahr - 1);
-		const schalttageBisJahr : number = DateManager.getSchalttageBisJahr(jahr);
-		const schalttag : number = (schalttageBisJahr - schalttageBisVorjahr);
-		this.istSchaltjahr = (schalttag === 1);
-		if ((monat < 1) || (monat > 12))
-			throw new InvalidDateException("Der Monat muss zwischen 1 und 12 liegen.")
-		if (tag < 1)
-			throw new InvalidDateException("Der Tag im Monat muss größer als 0 sein.")
-		const _seexpr_1558458123 = (monat);
-		if (_seexpr_1558458123 === 1) {
-			this.maxTageImMonat = 31;
-		} else if (_seexpr_1558458123 === 3) {
-			this.maxTageImMonat = 31;
-		} else if (_seexpr_1558458123 === 5) {
-			this.maxTageImMonat = 31;
-		} else if (_seexpr_1558458123 === 7) {
-			this.maxTageImMonat = 31;
-		} else if (_seexpr_1558458123 === 8) {
-			this.maxTageImMonat = 31;
-		} else if (_seexpr_1558458123 === 10) {
-			this.maxTageImMonat = 31;
-		} else if (_seexpr_1558458123 === 12) {
-			this.maxTageImMonat = 31;
-		} else if (_seexpr_1558458123 === 4) {
-			this.maxTageImMonat = 30;
-		} else if (_seexpr_1558458123 === 6) {
-			this.maxTageImMonat = 30;
-		} else if (_seexpr_1558458123 === 9) {
-			this.maxTageImMonat = 30;
-		} else if (_seexpr_1558458123 === 11) {
-			this.maxTageImMonat = 30;
-		} else if (_seexpr_1558458123 === 2) {
-			this.maxTageImMonat = 28 + (this.istSchaltjahr ? 1 : 0);
-		} else {
-			this.maxTageImMonat = 0;
-		}
-		;
-		if (tag > this.maxTageImMonat)
-			throw new InvalidDateException("Im Monat " + monat + " muss der Tag im Bereicht von 1 bis " + this.maxTageImMonat + " liegen.")
+		this.initPruefeTagMonatUndJahr();
+		const schalttag : number = this.istSchaltjahr ? 1 : 0;
 		const _seexpr_670811900 = (monat);
 		if (_seexpr_670811900 === 1) {
 			this.tagImJahr = tag;
@@ -144,7 +103,7 @@ export class DateManager extends JavaObject implements Comparable<DateManager> {
 		const tagImJahrMontagKW1 : number = (4 - DateManager.getWochentagOfTagImJahr(jahr, 4)) + 1;
 		if (this.tagImJahr < tagImJahrMontagKW1) {
 			this.kalenderwochenjahr = jahr - 1;
-			const istVjSchaltjahr : boolean = (schalttageBisVorjahr - DateManager.getSchalttageBisJahr(jahr - 2)) === 1;
+			const istVjSchaltjahr : boolean = (DateManager.getSchalttageBisJahr(jahr - 1) - DateManager.getSchalttageBisJahr(jahr - 2)) === 1;
 			const wt1vj : number = DateManager.getWochentagOfTagImJahr(jahr, 1);
 			const kwVjAnzahl : number = ((wt1vj === 4) || (istVjSchaltjahr && (wt1vj === 3))) ? 53 : 52;
 			this.kalenderwoche = kwVjAnzahl;
@@ -158,6 +117,59 @@ export class DateManager extends JavaObject implements Comparable<DateManager> {
 				this.kalenderwoche = tmpKW;
 			}
 		}
+	}
+
+	/**
+	 * Prüft im Rahmen der Erstellung des Date-Managers, ob die Werte für Tag, Monat und Jahr
+	 * gültig sind. Außerdem wird ermittelt, ob es sich um ein Schaltjahr handelt, und wieviel
+	 * Tage im Monat existieren.
+	 *
+	 * @throws InvalidDateException   wenn die Werte für Tag, Monat oder Jahr fehlerhaft sind
+	 */
+	private initPruefeTagMonatUndJahr() : void {
+		if (this.jahr < 0)
+			throw new InvalidDateException("Die Jahresangabe muss positiv sein.")
+		if (this.jahr > 9999)
+			throw new InvalidDateException("Die Jahresangabe ist größer als 9999.")
+		const schalttageBisVorjahr : number = DateManager.getSchalttageBisJahr(this.jahr - 1);
+		const schalttageBisJahr : number = DateManager.getSchalttageBisJahr(this.jahr);
+		const schalttag : number = (schalttageBisJahr - schalttageBisVorjahr);
+		this.istSchaltjahr = (schalttag === 1);
+		if ((this.monat < 1) || (this.monat > 12))
+			throw new InvalidDateException("Der Monat muss zwischen 1 und 12 liegen.")
+		if (this.tag < 1)
+			throw new InvalidDateException("Der Tag im Monat muss größer als 0 sein.")
+		const _seexpr_1558458123 = (this.monat);
+		if (_seexpr_1558458123 === 1) {
+			this.maxTageImMonat = 31;
+		} else if (_seexpr_1558458123 === 3) {
+			this.maxTageImMonat = 31;
+		} else if (_seexpr_1558458123 === 5) {
+			this.maxTageImMonat = 31;
+		} else if (_seexpr_1558458123 === 7) {
+			this.maxTageImMonat = 31;
+		} else if (_seexpr_1558458123 === 8) {
+			this.maxTageImMonat = 31;
+		} else if (_seexpr_1558458123 === 10) {
+			this.maxTageImMonat = 31;
+		} else if (_seexpr_1558458123 === 12) {
+			this.maxTageImMonat = 31;
+		} else if (_seexpr_1558458123 === 4) {
+			this.maxTageImMonat = 30;
+		} else if (_seexpr_1558458123 === 6) {
+			this.maxTageImMonat = 30;
+		} else if (_seexpr_1558458123 === 9) {
+			this.maxTageImMonat = 30;
+		} else if (_seexpr_1558458123 === 11) {
+			this.maxTageImMonat = 30;
+		} else if (_seexpr_1558458123 === 2) {
+			this.maxTageImMonat = 28 + (this.istSchaltjahr ? 1 : 0);
+		} else {
+			this.maxTageImMonat = 0;
+		}
+		;
+		if (this.tag > this.maxTageImMonat)
+			throw new InvalidDateException("Im Monat " + this.monat + " muss der Tag im Bereicht von 1 bis " + this.maxTageImMonat + " liegen.")
 	}
 
 	/**
@@ -264,7 +276,7 @@ export class DateManager extends JavaObject implements Comparable<DateManager> {
 		if (this as unknown === obj as unknown)
 			return true;
 		if ((obj !== null) && (((obj instanceof JavaObject) && (obj.isTranspiledInstanceOf('de.svws_nrw.asd.validate.DateManager')))))
-			return (this.compareTo(cast_de_svws_nrw_asd_validate_DateManager(obj)) === 0);
+			return (this.compareTo((obj as unknown as DateManager)) === 0);
 		return false;
 	}
 
