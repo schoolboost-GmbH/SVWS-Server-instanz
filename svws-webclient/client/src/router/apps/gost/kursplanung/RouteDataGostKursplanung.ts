@@ -768,7 +768,6 @@ export class RouteDataGostKursplanung extends RouteData<RouteStateGostKursplanun
 		reportingParameter.einzelausgabeHauptdaten = false;
 		reportingParameter.idsDetaildaten = new ArrayList<number>();
 		reportingParameter.einzelausgabeDetaildaten = false;
-		reportingParameter.detailLevel = 0;
 		const list = new ArrayList<number>();
 		switch (title) {
 			case "Schülerliste markierte Kurse":

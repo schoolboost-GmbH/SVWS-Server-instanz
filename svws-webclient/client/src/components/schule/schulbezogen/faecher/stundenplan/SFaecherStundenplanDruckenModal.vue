@@ -23,6 +23,7 @@
 	import { ref } from 'vue';
 	import type { ApiStatus } from '~/components/ApiStatus';
 	import type { ApiFile, StundenplanManager } from '@core';
+	import { ArrayList } from '@core';
 	import { ReportingParameter, ReportingReportvorlage } from '@core';
 
 	const props = defineProps<{
@@ -48,7 +49,12 @@
 		reportingParameter.idsHauptdaten.add(props.manager.stundenplanGetID());
 		reportingParameter.idsDetaildaten.add(props.id);
 		reportingParameter.einzelausgabeDetaildaten = false;
-		reportingParameter.detailLevel = (option2.value ? 2 : 0);
+		reportingParameter.vorlageParameter = new ArrayList(ReportingReportvorlage.STUNDENPLANUNG_v_FACH_STUNDENPLAN.getVorlageParameterList());
+		for (const vp of reportingParameter.vorlageParameter) {
+			if (vp.name === "mitPausenzeiten") {
+				vp.wert = option2.value.toString();
+			}
+		}
 		const { data, name } = await props.getPDF(reportingParameter);
 		const link = document.createElement("a");
 		link.href = URL.createObjectURL(data);

@@ -12,12 +12,22 @@
 <body>
 <div th:each="schueler,iterationVarSchueler : ${Schueler}"
 	 th:with="schuljahr = ${schueler.gostAbitur().abiturSchuljahr()},
-	 abiturLernabschnitt = ${schueler.aktiverLernabschnittInSchuljahresabschnitt(schueler.gostAbitur().abiturSchuljahresabschnitt())},
-	 fachbelegungenAbiturfaecher = ${schueler.gostAbitur().fachbelegungenAbiturfaecher()},
-	 religionVorhanden = ${schueler.gostAbitur().religionVorhanden()},
-	 projektkursVorhanden = ${schueler.gostAbitur().projektkursVorhanden()},
-	 vertiefungskursVorhanden = ${schueler.gostAbitur().vertiefungskursVorhanden()},
-	 bblVorhanden = ${((schueler.gostAbitur().besondereLernleistungArt().equalsIgnoreCase('E')) || (schueler.gostAbitur().besondereLernleistungArt().equalsIgnoreCase('P')))}">
+	          abiturLernabschnitt = ${schueler.aktiverLernabschnittInSchuljahresabschnitt(schueler.gostAbitur().abiturSchuljahresabschnitt())},
+	          fachbelegungenAbiturfaecher = ${schueler.gostAbitur().fachbelegungenAbiturfaecher()},
+	          religionVorhanden = ${schueler.gostAbitur().religionVorhanden()},
+	          projektkursVorhanden = ${schueler.gostAbitur().projektkursVorhanden()},
+	          vertiefungskursVorhanden = ${schueler.gostAbitur().vertiefungskursVorhanden()},
+	          bblVorhanden = ${((schueler.gostAbitur().besondereLernleistungArt().equalsIgnoreCase('E')) || (schueler.gostAbitur().besondereLernleistungArt().equalsIgnoreCase('P')))},
+              mitPersoenlichenUnterschriften = ${VorlageParameter.get('mitPersoenlichenUnterschriften')},
+              mitZweiterBeratungslehrerUnterschrift = ${VorlageParameter.get('mitZweiterBeratungslehrerUnterschrift')},
+	          textZAAVorsitzUnterschrift = ${VorlageParameter.get('textZAAVorsitzUnterschrift')},
+	          textZAAVorsitzUnterschriftBezeichnung = ${VorlageParameter.get('textZAAVorsitzUnterschriftBezeichnung')},
+	          textSchulleitungUnterschrift = ${VorlageParameter.get('textSchulleitungUnterschrift')},
+	          textSchulleitungUnterschriftBezeichnung = ${VorlageParameter.get('textSchulleitungUnterschriftBezeichnung')},
+	          textSchultraegerUnterschrift = ${VorlageParameter.get('textSchultraegerUnterschrift')},
+	          textSchultraegerUnterschriftBezeichnung = ${VorlageParameter.get('textSchultraegerUnterschriftBezeichnung')},
+	          textBeratungslehrerUnterschrift = ${VorlageParameter.get('textBeratungslehrerUnterschrift')},
+	          textBeratungslehrerUnterschriftBezeichnung = ${VorlageParameter.get('textBeratungslehrerUnterschriftBezeichnung')}">
 
 	<!-- Seite 1 Beginn #################################################################################################################################### -->
 	<table class="fixed-100 m-tb-0 m-l-6 m-r-4 p-0 start-new-page">
@@ -659,7 +669,7 @@
 									<td class="ta-cb f-very-tiny">(Siegel)</td>
 									<td class="ta-cb f-very-tiny"></td>
 								</tr>
-								<tr style="height: 8mm" th:if="${((Parameter.detailLevel == 0) || (Schule.schulleitung() == null)) }">
+								<tr style="height: 8mm" th:if="${(!mitPersoenlichenUnterschriften) }">
 									<td class="bo-t-black-strong ta-ct f-very-tiny">
 										Vorsitzende/r des Zentralen Abiturausschusses
 									</td>
@@ -668,30 +678,54 @@
 										Schulleiter/in
 									</td>
 								</tr>
-								<tr th:if="${((Parameter.detailLevel > 0) && (Schule.schulleitung() != null))}">
-									<td class="bo-t-black-strong ta-ct f-very-tiny" th:text="${Schule.schulleitung().unterschriftfeld(true, true)}">
-										N. N., OStD
-									</td>
-									<td class="ta-ct f-very-tiny"></td>
-									<td class="bo-t-black-strong ta-ct f-very-tiny" th:text="${Schule.schulleitung().unterschriftfeld(true, true)}">
-										N. N., OStD
-									</td>
-								</tr>
-								<tr th:if="${((Parameter.detailLevel > 0) && (Schule.schulleitung() != null))}">
-									<td class="ta-ct f-very-tiny" th:text="${Schule.schulleitung().geschlecht().kuerzel.equalsIgnoreCase('W') ? '(Vorsitzende des Zentralen Abiturausschusses)' : (Schule.schulleitung().geschlecht().kuerzel.equalsIgnoreCase('M') ?  '(Vorsitzender des Zentralen Abiturausschusses)' : '(Vorsitz des Zentralen Abiturausschusses)')}">
-										(Vorsitzende/r des Zentralen Abiturausschusses)
-									</td>
-									<td class="ta-ct f-very-tiny"></td>
-									<td class="ta-ct f-very-tiny" th:text="${'(' + Schule.schulleitung().schulleitungsfunktion().bezeichnung() + ')'}">
-										(Schulleiter/in)
-									</td>
-								</tr>
+								<th:block th:if="${mitPersoenlichenUnterschriften}">
+									<th:block th:if="${Schule.schulleitung() != null}">
+										<tr>
+											<td class="bo-t-black-strong ta-ct f-very-tiny" th:text="${(textZAAVorsitzUnterschrift == '') ? Schule.schulleitung().unterschriftfeld(true, true) : textZAAVorsitzUnterschrift}">
+												N. N., OStD
+											</td>
+											<td class="ta-ct f-very-tiny"></td>
+											<td class="bo-t-black-strong ta-ct f-very-tiny" th:text="${(textSchulleitungUnterschrift == '') ? Schule.schulleitung().unterschriftfeld(true, true) : textSchulleitungUnterschrift}">
+												N. N., OStD
+											</td>
+										</tr>
+										<tr>
+											<td class="ta-ct f-very-tiny" th:text="${(textZAAVorsitzUnterschriftBezeichnung == '') ? (Schule.schulleitung().geschlecht().kuerzel.equalsIgnoreCase('W') ? '(Vorsitzende des Zentralen Abiturausschusses)' : (Schule.schulleitung().geschlecht().kuerzel.equalsIgnoreCase('M') ?  '(Vorsitzender des Zentralen Abiturausschusses)' : '(Vorsitz des Zentralen Abiturausschusses)')) : textZAAVorsitzUnterschriftBezeichnung}">
+												(Vorsitzende/r des Zentralen Abiturausschusses)
+											</td>
+											<td class="ta-ct f-very-tiny"></td>
+											<td class="ta-ct f-very-tiny" th:text="${(textSchulleitungUnterschriftBezeichnung == '') ? '(' + Schule.schulleitung().schulleitungsfunktion().bezeichnung() + ')' : textSchulleitungUnterschriftBezeichnung}">
+												(Schulleiter/in)
+											</td>
+										</tr>
+									</th:block>
+									<th:block th:if="${Schule.schulleitung() == null}">
+										<tr>
+											<td class="bo-t-black-strong ta-ct f-very-tiny" th:text="${textZAAVorsitzUnterschrift}">
+												N. N., OStD
+											</td>
+											<td class="ta-ct f-very-tiny"></td>
+											<td class="bo-t-black-strong ta-ct f-very-tiny" th:text="${textSchulleitungUnterschrift}">
+												N. N., OStD
+											</td>
+										</tr>
+										<tr>
+											<td class="ta-ct f-very-tiny" th:text="${textZAAVorsitzUnterschriftBezeichnung}">
+												(Vorsitzende/r des Zentralen Abiturausschusses)
+											</td>
+											<td class="ta-ct f-very-tiny"></td>
+											<td class="ta-ct f-very-tiny" th:text="${textSchulleitungUnterschriftBezeichnung}">
+												(Schulleiter/in)
+											</td>
+										</tr>
+									</th:block>
+								</th:block>
 								<tr style="height: 20mm;">
 									<td class="ta-cb f-very-tiny"></td>
 									<td class="ta-cb f-very-tiny"></td>
 									<td class="ta-cb f-very-tiny"></td>
 								</tr>
-								<tr style="height: 8mm" th:if="${((Parameter.detailLevel == 0) || (abiturLernabschnitt.klasse().klassenleitungen().isEmpty()))}">
+								<tr style="height: 8mm" th:if="${!mitPersoenlichenUnterschriften}">
 									<td class="bo-t-black-strong ta-ct f-very-tiny">
 										Vertreter/in des Schulträgers
 									</td>
@@ -700,39 +734,71 @@
 										Beratungslehrer/in
 									</td>
 								</tr>
-								<th:block th:if="${((Parameter.detailLevel == 1)  && (!abiturLernabschnitt.klasse().klassenleitungen().isEmpty()))}">
+								<th:block th:if="${(mitPersoenlichenUnterschriften && (abiturLernabschnitt.klasse().klassenleitungen().size() > 1))}"
+										  th:with="unterschriftLinks = ${(textSchultraegerUnterschrift == '') ? (mitZweiterBeratungslehrerUnterschrift ? abiturLernabschnitt.klasse().klassenleitungen().get(0).unterschriftfeld(true, true) : textSchultraegerUnterschrift) : textSchultraegerUnterschrift},
+									               unterschriftLinksBezeichnung = ${(textSchultraegerUnterschriftBezeichnung == '') ? (mitZweiterBeratungslehrerUnterschrift ? (abiturLernabschnitt.klasse().klassenleitungen().get(0).geschlecht().kuerzel.equalsIgnoreCase('W') ? '(Beratungslehrerin)' : (abiturLernabschnitt.klasse().klassenleitungen().get(0).geschlecht().kuerzel.equalsIgnoreCase('M') ?  '(Beratungslehrer)' : '(Beratungslehrkraft)')) : textSchultraegerUnterschriftBezeichnung) : textSchultraegerUnterschriftBezeichnung},
+                                                   unterschriftRechts = ${(textBeratungslehrerUnterschrift == '') ? (mitZweiterBeratungslehrerUnterschrift ? abiturLernabschnitt.klasse().klassenleitungen().get(1).unterschriftfeld(true, true) : textBeratungslehrerUnterschrift) : textBeratungslehrerUnterschrift},
+				                                   unterschriftRechtsBezeichnung = ${(textBeratungslehrerUnterschriftBezeichnung == '') ? (mitZweiterBeratungslehrerUnterschrift ? (abiturLernabschnitt.klasse().klassenleitungen().get(1).geschlecht().kuerzel.equalsIgnoreCase('W') ? '(Beratungslehrerin)' : (abiturLernabschnitt.klasse().klassenleitungen().get(1).geschlecht().kuerzel.equalsIgnoreCase('M') ?  '(Beratungslehrer)' : '(Beratungslehrkraft)')) : textBeratungslehrerUnterschriftBezeichnung) : textBeratungslehrerUnterschriftBezeichnung}">
 									<tr>
-										<td class="bo-t-black-strong ta-ct f-very-tiny">
-											Vertreter/in des Schulträgers
+										<td class="bo-t-black-strong ta-ct f-very-tiny" th:text="${unterschriftLinks}">
+											N. N., OStR
 										</td>
 										<td class="ta-tm f-very-tiny"></td>
-										<td class="bo-t-black-strong ta-ct f-very-tiny" th:text="${abiturLernabschnitt.klasse().klassenleitungen().getFirst().unterschriftfeld(true, true)}">
+										<td class="bo-t-black-strong ta-ct f-very-tiny" th:text="${unterschriftRechts}">
 											N. N., OStR
 										</td>
 									</tr>
 									<tr>
-										<td class="ta-ct f-very-tiny"></td>
-										<td class="ta-tm f-very-tiny"></td>
-										<td class="ta-ct f-very-tiny" th:text="${abiturLernabschnitt.klasse().klassenleitungen().getFirst().geschlecht().kuerzel.equalsIgnoreCase('W') ? '(Beratungslehrerin)' : (abiturLernabschnitt.klasse().klassenleitungen().getFirst().geschlecht().kuerzel.equalsIgnoreCase('M') ?  '(Beratungslehrer)' : '(Beratungslehrkraft)')}">
+										<td class="ta-ct f-very-tiny" th:text="${unterschriftLinksBezeichnung}">
+											(Beratungslehrer/in)
+										</td><td class="ta-tm f-very-tiny"></td>
+										<td class="ta-ct f-very-tiny" th:text="${unterschriftRechtsBezeichnung}">
 											(Beratungslehrer/in)
 										</td>
 									</tr>
 								</th:block>
-								<th:block th:if="${((Parameter.detailLevel == 2)  && (abiturLernabschnitt.klasse().klassenleitungen().size() > 1))}">
+								<th:block th:if="${(mitPersoenlichenUnterschriften && (abiturLernabschnitt.klasse().klassenleitungen().size() == 1))}"
+										  th:with="unterschriftLinks = ${textSchultraegerUnterschrift},
+										           unterschriftLinksBezeichnung = ${textSchultraegerUnterschriftBezeichnung},
+                                                   unterschriftRechts = ${(textBeratungslehrerUnterschrift == '') ? (mitZweiterBeratungslehrerUnterschrift ? abiturLernabschnitt.klasse().klassenleitungen().get(0).unterschriftfeld(true, true) : textBeratungslehrerUnterschrift) : textBeratungslehrerUnterschrift},
+				                                   unterschriftRechtsBezeichnung = ${(textBeratungslehrerUnterschriftBezeichnung == '') ? (mitZweiterBeratungslehrerUnterschrift ? (abiturLernabschnitt.klasse().klassenleitungen().get(0).geschlecht().kuerzel.equalsIgnoreCase('W') ? '(Beratungslehrerin)' : (abiturLernabschnitt.klasse().klassenleitungen().get(0).geschlecht().kuerzel.equalsIgnoreCase('M') ?  '(Beratungslehrer)' : '(Beratungslehrkraft)')) : textBeratungslehrerUnterschriftBezeichnung) : textBeratungslehrerUnterschriftBezeichnung}">
 									<tr>
-										<td class="bo-t-black-strong ta-ct f-very-tiny" th:text="${abiturLernabschnitt.klasse().klassenleitungen().get(0).unterschriftfeld(true, true)}">
+										<td class="bo-t-black-strong ta-ct f-very-tiny" th:text="${unterschriftLinks}">
 											N. N., OStR
 										</td>
 										<td class="ta-tm f-very-tiny"></td>
-										<td class="bo-t-black-strong ta-ct f-very-tiny" th:text="${abiturLernabschnitt.klasse().klassenleitungen().get(1).unterschriftfeld(true, true)}">
+										<td class="bo-t-black-strong ta-ct f-very-tiny" th:text="${unterschriftRechts}">
 											N. N., OStR
 										</td>
 									</tr>
 									<tr>
-										<td class="ta-ct f-very-tiny" th:text="${abiturLernabschnitt.klasse().klassenleitungen().get(0).geschlecht().kuerzel.equalsIgnoreCase('W') ? '(Beratungslehrerin)' : (abiturLernabschnitt.klasse().klassenleitungen().get(0).geschlecht().kuerzel.equalsIgnoreCase('M') ?  '(Beratungslehrer)' : '(Beratungslehrkraft)')}">
+										<td class="ta-ct f-very-tiny" th:text="${unterschriftLinksBezeichnung}">
 											(Beratungslehrer/in)
 										</td><td class="ta-tm f-very-tiny"></td>
-										<td class="ta-ct f-very-tiny" th:text="${abiturLernabschnitt.klasse().klassenleitungen().get(1).geschlecht().kuerzel.equalsIgnoreCase('W') ? '(Beratungslehrerin)' : (abiturLernabschnitt.klasse().klassenleitungen().get(1).geschlecht().kuerzel.equalsIgnoreCase('M') ?  '(Beratungslehrer)' : '(Beratungslehrkraft)')}">
+										<td class="ta-ct f-very-tiny" th:text="${unterschriftRechtsBezeichnung}">
+											(Beratungslehrer/in)
+										</td>
+									</tr>
+								</th:block>
+								<th:block th:if="${(mitPersoenlichenUnterschriften && (abiturLernabschnitt.klasse().klassenleitungen().size() == 0))}"
+										  th:with="unterschriftLinks = ${textSchultraegerUnterschrift},
+										           unterschriftLinksBezeichnung = ${textSchultraegerUnterschriftBezeichnung},
+                                                   unterschriftRechts = ${textBeratungslehrerUnterschrift},
+				                                   unterschriftRechtsBezeichnung = ${textBeratungslehrerUnterschriftBezeichnung}">
+									<tr>
+										<td class="bo-t-black-strong ta-ct f-very-tiny" th:text="${unterschriftLinks}">
+											N. N., OStR
+										</td>
+										<td class="ta-tm f-very-tiny"></td>
+										<td class="bo-t-black-strong ta-ct f-very-tiny" th:text="${unterschriftRechts}">
+											N. N., OStR
+										</td>
+									</tr>
+									<tr>
+										<td class="ta-ct f-very-tiny" th:text="${unterschriftLinksBezeichnung}">
+											(Beratungslehrer/in)
+										</td><td class="ta-tm f-very-tiny"></td>
+										<td class="ta-ct f-very-tiny" th:text="${unterschriftRechtsBezeichnung}">
 											(Beratungslehrer/in)
 										</td>
 									</tr>
@@ -750,6 +816,7 @@
 							<p class="f-very-tiny"><span class="f-bold">Rechtsbehelfsbelehrung: </span><span th:text="${'Gegen die Leistungen in der Abiturprüfung und die Berechnung der Gesamtqualifikation einschließlich der Durchschnittsnote kann innerhalb eines Monats nach Bekanntgabe des Zeugnisses Widerspruch erhoben werden. Der Widerspruch ist bei der Schule ' + Schule.anschriftEinzeilig() + ' schriftlich oder zur Niederschrift zu erheben.'}">
 								Gegen die Leistungen in der Abiturprüfung und die Berechnung der Gesamtqualifikation einschließlich der Durchschnittsnote kann innerhalb eines Monats nach Bekanntgabe des Zeugnisses Widerspruch erhoben werden. Der Widerspruch ist bei der Schule N. N. schriftlich oder zur Niederschrift zu erheben.</span>
 							</p>
+							<p class="f-very-tiny ta-r" th:text="${'Schulnummer: ' + Schule.schulnummer()}">(Schulnummer: 123456)</p>
 						</td>
 					</tr>
 				</table>

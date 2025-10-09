@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="de" xmlns:th="http://www.thymeleaf.org">
 	<head th:with="mediaPrint = ${Parameter.ausgabeformat >= 2}">
 		<meta charset="utf-8" />
@@ -9,7 +10,8 @@
 		<link rel="stylesheet" th:href="@{schueler/gost/laufbahnplanung/SchuelerGostLaufbahnplanungWahlbogen.css}" href="../../../schueler/gost/laufbahnplanung/SchuelerGostLaufbahnplanungWahlbogen.css" />
 	</head>
 
-	<body th:with="mediaPrint = ${Parameter.ausgabeformat >= 2}">
+	<body th:with="mediaPrint = ${Parameter.ausgabeformat >= 2},
+                   nurBelegteFaecher = ${VorlageParameter.get('nurBelegteFaecher')}">
 		<div class="reset-page-counter start-new-page" th:each="schueler,iterationVarSchueler : ${Schueler}">
 			<!--Beginn: Definition der Seitenköpfe und Seitenfüße. Diese werden per CSS in den @page-Boxen positioniert-->
 			<th:block th:if="${mediaPrint}">
@@ -31,7 +33,7 @@
 					<td style="text-align: right; font-size: 8pt; vertical-align: top;" th:text="${schueler.gostLaufbahnplanung().aktuelleKlasse() != '' ? 'Klasse ' + schueler.gostLaufbahnplanung().aktuelleKlasse() : schueler.status().toString()}">Klasse: Q1</td>
 				</tr>
 				<tr>
-					<td style="border-bottom: 1px grey solid; text-align: left; vertical-align: middle;"><h3>Wahlbogen <span th:if="${Parameter.detailLevel == 0}" class="f-very-tiny">(nur belegte Fächer)</span></h3></td>
+					<td style="border-bottom: 1px grey solid; text-align: left; vertical-align: middle;"><h3>Wahlbogen <span th:if="${nurBelegteFaecher}" class="f-very-tiny">(nur belegte Fächer)</span></h3></td>
 					<td colspan="2" style="border-bottom: 1px grey solid; text-align: right; vertical-align: middle"><h3 th:text="${schueler.nachname() + ', ' + schueler.vorname()}">Musterfrau, Anna</h3></td>
 				</tr>
 			</table>
@@ -62,7 +64,7 @@
 					<td class="ta-c f-bold bo-b-black-strong p-tb-0 p-lr-1 m-0" style="border-left: 1px grey solid; border-right: 1px grey solid;">Abitur</td>
 				</tr>
 				</thead>
-				<tr th:each="Fachwahl : ${schueler.gostLaufbahnplanung().fachwahlen()}" th:if="${(Parameter.detailLevel > 0 || Fachwahl.fachIstBelegtInGOSt()) && Fachwahl.fach().istPruefungsordnungsRelevant()}"  th:style="'background-color: ' + ${Fachwahl.fach().statistikfach().htmlFarbeRGB()} + ';'">
+				<tr th:each="Fachwahl : ${schueler.gostLaufbahnplanung().fachwahlen()}" th:if="${(!nurBelegteFaecher || Fachwahl.fachIstBelegtInGOSt()) && Fachwahl.fach().istPruefungsordnungsRelevant()}"  th:style="'background-color: ' + ${Fachwahl.fach().statistikfach().htmlFarbeRGB()} + ';'">
 					<td class="ta-l f-bold bo-b-grey p-tb-0 p-lr-1 m-0" th:text="${Fachwahl.fach().kuerzel()}"><b>D</b></td>
 					<td class="ta-l f-bold bo-b-grey p-tb-0 p-lr-1 m-0" th:text="${Fachwahl.fach().bezeichnung()}"><b>Deutsch</b></td>
 					<td class="ta-c bo-b-grey p-tb-0 p-lr-1 m-0" style="border-left: 1px grey solid;" th:switch="${Fachwahl.jahrgangFremdsprachenbeginn()}">
@@ -111,7 +113,7 @@
 						<td colspan="4" class="p-tb-0 p-lr-1 m-0 ta-c bo-grey" style="border-left: 1px grey solid;" th:text="${#numbers.formatDecimal(schueler.gostLaufbahnplanung().wochenstundenDurchschnittQPh(), 1, 2)}"><b>34,75</b></td>
 						<td class="p-tb-0 p-lr-1 m-0" style="border-left: 1px grey solid;"></td>
 					</tr>
-					<tr th:if="${Parameter.detailLevel == 0}">
+					<tr th:if="${nurBelegteFaecher}">
 						<td colspan="10" class="f-tiny" style="font-style: italic">
 							<p class="f-small">Wählbare Fächer des Abiturjahrgangs: <span th:each="Fachwahl,iterationVarFach : ${schueler.gostLaufbahnplanung().fachwahlen()}" th:text="${Fachwahl.fach().bezeichnung()} + ${iterationVarFach.count != iterationVarFach.size ? ', ' : ''}">Deutsch, Englisch</span></p>
 						</td>

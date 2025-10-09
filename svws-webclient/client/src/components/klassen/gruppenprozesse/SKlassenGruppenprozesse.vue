@@ -259,6 +259,47 @@
 				reportingParameter.idsHauptdaten = listeIdsKlassen;
 				reportingParameter.einzelausgabeHauptdaten = ((druckoptionKlasseListeSchuelerKontaktdatenErzieher.value === 2) || (druckoptionKlasseListeSchuelerKontaktdatenErzieher.value === 4));
 				reportingParameter.einzelausgabeDetaildaten = false;
+				reportingParameter.vorlageParameter = new ArrayList(ReportingReportvorlage.KLASSEN_v_LISTE_SCHUELER_KONTAKTDATENERZIEHER.getVorlageParameterList());
+				for (const vp of reportingParameter.vorlageParameter) {
+					switch (vp.name) {
+						case "nurSchuelerRufname":
+							vp.wert = option2.value.toString();
+							break;
+						case "mitSchuelerGeschlecht":
+							vp.wert = option4.value.toString();
+							break;
+						case "mitSchuelerGebDat":
+							vp.wert = option8.value.toString();
+							break;
+						case "mitSchuelerStaat":
+							vp.wert = option16.value.toString();
+							break;
+						case "mitSchuelerAnschrift":
+							vp.wert = option32.value.toString();
+							break;
+						case "mitSchuelerTelefonPrivat":
+							vp.wert = option64.value.toString();
+							break;
+						case "mitSchuelerEmailSchule":
+							vp.wert = option128.value.toString();
+							break;
+						case "mitSchuelerEmailPrivat":
+							vp.wert = option256.value.toString();
+							break;
+						case "mitSpalteSchuelerTelefonKontakte":
+							vp.wert = option512.value.toString();
+							break;
+						case "mitErzieher":
+							vp.wert = option1024.value.toString();
+							break;
+						case "mitErzieherAnschrift":
+							vp.wert = option2048.value.toString();
+							break;
+						case "mitErzieherEmailPrivat":
+							vp.wert = option4096.value.toString();
+							break;
+					}
+				}
 				break;
 			case 'druckKlasseStundenplan':
 				if (stundenplanAuswahl.value === undefined)
@@ -268,15 +309,25 @@
 				reportingParameter.idsDetaildaten = listeIdsKlassen;
 				reportingParameter.einzelausgabeHauptdaten = false;
 				reportingParameter.einzelausgabeDetaildaten = (druckoptionKlasseStundenplan.value === 2);
+				reportingParameter.vorlageParameter = new ArrayList(ReportingReportvorlage.STUNDENPLANUNG_v_KLASSEN_STUNDENPLAN.getVorlageParameterList());
+				for (const vp of reportingParameter.vorlageParameter) {
+					switch (vp.name) {
+						case "mitPausenzeiten":
+							vp.wert = option2.value.toString();
+							break;
+						case "mitFachStattKursbezeichnung":
+							vp.wert = option4.value.toString();
+							break;
+						case "mitFachkuerzelStattFachbezeichnung":
+							vp.wert = option8.value.toString();
+							break;
+					}
+				}
 				break;
 			default:
 				return;
 		}
 		reportingParameter.duplexdruck = ((druckoptionKlasseListeSchuelerKontaktdatenErzieher.value === 3) || (druckoptionKlasseListeSchuelerKontaktdatenErzieher.value === 4));
-		reportingParameter.detailLevel = ((option2.value ? 2 : 0) + (option4.value ? 4 : 0) + (option8.value ? 8 : 0)
-			+ (option16.value ? 16 : 0) + (option32.value ? 32 : 0) + (option64.value ? 64 : 0)
-			+ (option128.value ? 128 : 0) + (option256.value ? 256 : 0) + (option512.value ? 512 : 0)
-			+ (option1024.value ? 1024 : 0) + (option2048.value ? 2048 : 0) + (option4096.value ? 4096 : 0));
 		loading.value = true;
 		const { data, name } = await props.getPDF(reportingParameter);
 		const link = document.createElement("a");
@@ -309,8 +360,49 @@
 				reportingParameter.einzelausgabeDetaildaten = false;
 				emailDaten.empfaengerTyp = ReportingEMailEmpfaengerTyp.KLASSENLEHRER.getId();
 				emailDaten.istPrivateEmailAlternative = istPrivateEmailAlternative.value;
+				reportingParameter.vorlageParameter = new ArrayList(ReportingReportvorlage.KLASSEN_v_LISTE_SCHUELER_KONTAKTDATENERZIEHER.getVorlageParameterList());
+				for (const vp of reportingParameter.vorlageParameter) {
+					switch (vp.name) {
+						case "nurSchuelerRufname":
+							vp.wert = option2.value.toString();
+							break;
+						case "mitSchuelerGeschlecht":
+							vp.wert = option4.value.toString();
+							break;
+						case "mitSchuelerGebDat":
+							vp.wert = option8.value.toString();
+							break;
+						case "mitSchuelerStaat":
+							vp.wert = option16.value.toString();
+							break;
+						case "mitSchuelerAnschrift":
+							vp.wert = option32.value.toString();
+							break;
+						case "mitSchuelerTelefonPrivat":
+							vp.wert = option64.value.toString();
+							break;
+						case "mitSchuelerEmailSchule":
+							vp.wert = option128.value.toString();
+							break;
+						case "mitSchuelerEmailPrivat":
+							vp.wert = option256.value.toString();
+							break;
+						case "mitSpalteSchuelerTelefonKontakte":
+							vp.wert = option512.value.toString();
+							break;
+						case "mitErzieher":
+							vp.wert = option1024.value.toString();
+							break;
+						case "mitErzieherAnschrift":
+							vp.wert = option2048.value.toString();
+							break;
+						case "mitErzieherEmailPrivat":
+							vp.wert = option4096.value.toString();
+							break;
+					}
+				}
 				emailDaten.betreff = (((emailBetreff.value.trim().length) !== 0) ? emailBetreff.value : ("Klassenliste mit Kontaktdaten"));
-				emailDaten.text = (((emailText.value.trim().length) !== 0) ? emailText.value : ("Im Anhang dieser E-Mail ist die Klassenlsite mit Kontaktdaten enthalten."));
+				emailDaten.text = (((emailText.value.trim().length) !== 0) ? emailText.value : ("Im Anhang dieser E-Mail ist die Klassenliste mit Kontaktdaten enthalten."));
 				break;
 			case 'druckKlasseStundenplan':
 				if (stundenplanAuswahl.value === undefined)
@@ -320,6 +412,20 @@
 				reportingParameter.idsDetaildaten = listeIdsKlassen;
 				reportingParameter.einzelausgabeHauptdaten = false;
 				reportingParameter.einzelausgabeDetaildaten = true;
+				reportingParameter.vorlageParameter = new ArrayList(ReportingReportvorlage.STUNDENPLANUNG_v_KLASSEN_STUNDENPLAN.getVorlageParameterList());
+				for (const vp of reportingParameter.vorlageParameter) {
+					switch (vp.name) {
+						case "mitPausenzeiten":
+							vp.wert = option2.value.toString();
+							break;
+						case "mitFachStattKursbezeichnung":
+							vp.wert = option4.value.toString();
+							break;
+						case "mitFachkuerzelStattFachbezeichnung":
+							vp.wert = option8.value.toString();
+							break;
+					}
+				}
 				emailDaten.betreff = (((emailBetreff.value.trim().length) !== 0) ? emailBetreff.value : ("Stundenplan " + stundenplanAuswahl.value.bezeichnung));
 				emailDaten.text = (((emailText.value.trim().length) !== 0) ? emailText.value : ("Im Anhang dieser E-Mail ist der Stundenplan " + stundenplanAuswahl.value.bezeichnung + " enthalten."));
 				break;
@@ -327,12 +433,7 @@
 				return;
 		}
 		reportingParameter.eMailDaten = emailDaten;
-
 		reportingParameter.duplexdruck = ((druckoptionKlasseStundenplan.value === 3) || (druckoptionKlasseStundenplan.value === 4));
-		reportingParameter.detailLevel = ((option2.value ? 2 : 0) + (option4.value ? 4 : 0)
-			+ (option8.value ? 8 : 0) + (option16.value ? 16 : 0) + (option32.value ? 32 : 0) + (option64.value ? 64 : 0)
-			+ (option128.value ? 128 : 0) + (option256.value ? 256 : 0) + (option512.value ? 512 : 0)
-			+ (option1024.value ? 1024 : 0) + (option2048.value ? 2048 : 0) + (option4096.value ? 4096 : 0));
 		loading.value = true;
 		const result = await props.sendEMail(reportingParameter);
 		status.value = result.success;

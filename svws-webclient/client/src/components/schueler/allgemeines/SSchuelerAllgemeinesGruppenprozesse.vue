@@ -8,7 +8,7 @@
 						<p class="font-bold underline">Elemente der Liste:</p>
 					</div>
 					<div class="text-left">
-						<svws-ui-checkbox v-model="option1" name="nurSchuelerKlasse">Klasse</svws-ui-checkbox><br>
+						<svws-ui-checkbox v-model="option1" name="mitSchuelerKlasse">Klasse</svws-ui-checkbox><br>
 						<svws-ui-checkbox v-model="option2" name="nurSchuelerRufname">Nur Rufname</svws-ui-checkbox><br>
 						<svws-ui-checkbox v-model="option4" name="mitSchuelerGeschlecht">Geschlecht</svws-ui-checkbox><br>
 						<svws-ui-checkbox v-model="option8" name="mitSchuelerGebDat">Geburtsdatum</svws-ui-checkbox><br>
@@ -63,7 +63,7 @@
 				:is-open="currentAction === 'druckSchuelerSchulbescheinigung'" @update:is-open="isOpen => setCurrentAction('druckSchuelerSchulbescheinigung', isOpen)">
 				<svws-ui-input-wrapper :grid="2" class="p-2">
 					<div class="text-left">
-						<svws-ui-checkbox v-model="option2" name="anErzieher">Erzieher als Adressat</svws-ui-checkbox><br>
+						<svws-ui-checkbox v-model="option2" name="fuerErzieher">Erzieher als Adressat</svws-ui-checkbox><br>
 						<svws-ui-checkbox v-model="option4" name="mitBildBriefkopf">Bild des Briefkopfes verwenden</svws-ui-checkbox><br>
 						<svws-ui-checkbox v-model="option8" name="mitSchullogo">Schullogo verwenden</svws-ui-checkbox><br>
 					</div>
@@ -271,6 +271,50 @@
 					reportingParameter.sortierungHauptdaten.attribute = attribute;
 
 				}
+				reportingParameter.vorlageParameter = new ArrayList(ReportingReportvorlage.SCHUELER_v_LISTE_KONTAKTDATENERZIEHER.getVorlageParameterList());
+				for (const vp of reportingParameter.vorlageParameter) {
+					switch (vp.name) {
+						case "mitSchuelerKlasse":
+							vp.wert = option1.value.toString();
+							break;
+						case "nurSchuelerRufname":
+							vp.wert = option2.value.toString();
+							break;
+						case "mitSchuelerGeschlecht":
+							vp.wert = option4.value.toString();
+							break;
+						case "mitSchuelerGebDat":
+							vp.wert = option8.value.toString();
+							break;
+						case "mitSchuelerStaat":
+							vp.wert = option16.value.toString();
+							break;
+						case "mitSchuelerAnschrift":
+							vp.wert = option32.value.toString();
+							break;
+						case "mitSchuelerTelefonPrivat":
+							vp.wert = option64.value.toString();
+							break;
+						case "mitSchuelerEmailSchule":
+							vp.wert = option128.value.toString();
+							break;
+						case "mitSchuelerEmailPrivat":
+							vp.wert = option256.value.toString();
+							break;
+						case "mitSpalteSchuelerTelefonKontakte":
+							vp.wert = option512.value.toString();
+							break;
+						case "mitErzieher":
+							vp.wert = option1024.value.toString();
+							break;
+						case "mitErzieherAnschrift":
+							vp.wert = option2048.value.toString();
+							break;
+						case "mitErzieherEmailPrivat":
+							vp.wert = option4096.value.toString();
+							break;
+					}
+				}
 				break;
 			case 'druckSchuelerSchulbescheinigung':
 				reportingParameter.reportvorlage = ReportingReportvorlage.SCHUELER_v_SCHULBESCHEINIGUNG.getBezeichnung();
@@ -288,6 +332,29 @@
 					attribute.add("geburtsdatum");
 					attribute.add("id");
 					reportingParameter.sortierungHauptdaten.attribute = attribute;
+				}
+				reportingParameter.vorlageParameter = new ArrayList(ReportingReportvorlage.SCHUELER_v_SCHULBESCHEINIGUNG.getVorlageParameterList());
+				for (const vp of reportingParameter.vorlageParameter) {
+					switch (vp.name) {
+						case "fuerErzieher":
+							vp.wert = option2.value.toString();
+							break;
+						case "mitBildBriefkopf":
+							vp.wert = option4.value.toString();
+							break;
+						case "mitSchullogo":
+							vp.wert = option8.value.toString();
+							break;
+						case "keineAnschrift":
+							vp.wert = option16.value.toString();
+							break;
+						case "keinInfoblock":
+							vp.wert = option32.value.toString();
+							break;
+						case "keineUnterschrift":
+							vp.wert = option64.value.toString();
+							break;
+					}
 				}
 				break;
 			case 'druckSchuelerStundenplan':
@@ -311,6 +378,23 @@
 					attribute.add("schueler.id");
 					reportingParameter.sortierungDetaildaten.attribute = attribute;
 				}
+				reportingParameter.vorlageParameter = new ArrayList(ReportingReportvorlage.STUNDENPLANUNG_v_SCHUELER_STUNDENPLAN.getVorlageParameterList());
+				for (const vp of reportingParameter.vorlageParameter) {
+					switch (vp.name) {
+						case "mitPausenzeiten":
+							vp.wert = option2.value.toString();
+							break;
+						case "mitFachStattKursbezeichnung":
+							vp.wert = option4.value.toString();
+							break;
+						case "mitFachkuerzelStattFachbezeichnung":
+							vp.wert = option8.value.toString();
+							break;
+						case "mitIndividuelleKursart":
+							vp.wert = option16.value.toString();
+							break;
+					}
+				}
 				break;
 			default:
 				return;
@@ -318,10 +402,6 @@
 		reportingParameter.duplexdruck = ((druckoptionSchuelerStundenplan.value === 3) || (druckoptionSchuelerStundenplan.value === 4)
 			|| (druckoptionSchuelerSchulbescheinigung.value === 3) || (druckoptionSchuelerSchulbescheinigung.value === 4)
 			|| (druckoptionSchuelerListeKontaktdatenErzieher.value === 3) || (druckoptionSchuelerListeKontaktdatenErzieher.value === 4));
-		reportingParameter.detailLevel = ((option1.value ? 1 : 0) + (option2.value ? 2 : 0) + (option4.value ? 4 : 0)
-			+ (option8.value ? 8 : 0) + (option16.value ? 16 : 0) + (option32.value ? 32 : 0) + (option64.value ? 64 : 0)
-			+ (option128.value ? 128 : 0) + (option256.value ? 256 : 0) + (option512.value ? 512 : 0)
-			+ (option1024.value ? 1024 : 0) + (option2048.value ? 2048 : 0) + (option4096.value ? 4096 : 0));
 		loading.value = true;
 		const { data, name } = await props.getPDF(reportingParameter);
 		const link = document.createElement("a");
@@ -356,11 +436,25 @@
 		emailDaten.text = (((emailText.value.trim().length) !== 0) ? emailText.value : ("Im Anhang dieser E-Mail ist der Stundenplan " + stundenplanAuswahl.value.bezeichnung + " enthalten."));
 		reportingParameter.eMailDaten = emailDaten;
 
+		reportingParameter.vorlageParameter = new ArrayList(ReportingReportvorlage.STUNDENPLANUNG_v_SCHUELER_STUNDENPLAN.getVorlageParameterList());
+		for (const vp of reportingParameter.vorlageParameter) {
+			switch (vp.name) {
+				case "mitPausenzeiten":
+					vp.wert = option2.value.toString();
+					break;
+				case "mitFachStattKursbezeichnung":
+					vp.wert = option4.value.toString();
+					break;
+				case "mitFachkuerzelStattFachbezeichnung":
+					vp.wert = option8.value.toString();
+					break;
+				case "mitIndividuelleKursart":
+					vp.wert = option16.value.toString();
+					break;
+			}
+		}
+
 		reportingParameter.duplexdruck = ((druckoptionSchuelerStundenplan.value === 3) || (druckoptionSchuelerStundenplan.value === 4));
-		reportingParameter.detailLevel = ((option1.value ? 1 : 0) + (option2.value ? 2 : 0) + (option4.value ? 4 : 0)
-			+ (option8.value ? 8 : 0) + (option16.value ? 16 : 0) + (option32.value ? 32 : 0) + (option64.value ? 64 : 0)
-			+ (option128.value ? 128 : 0) + (option256.value ? 256 : 0) + (option512.value ? 512 : 0)
-			+ (option1024.value ? 1024 : 0) + (option2048.value ? 2048 : 0) + (option4096.value ? 4096 : 0));
 		loading.value = true;
 		const result = await props.sendEMail(reportingParameter);
 		statusAction.value = result.success;

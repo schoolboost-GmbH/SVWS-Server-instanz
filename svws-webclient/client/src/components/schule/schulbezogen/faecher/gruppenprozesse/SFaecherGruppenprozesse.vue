@@ -2,7 +2,7 @@
 	<div class="page page-grid-cards">
 		<div class="flex flex-col gap-4" v-if="ServerMode.DEV.checkServerMode(serverMode)">
 			<ui-card v-if="hatKompetenzDrucken && (stundenplaeneById.size > 0)" icon="i-ri-printer-line" title="Stundenplan drucken" subtitle="Drucke die Stundenpläne der ausgewählten Klassen."
-					 :is-open="currentAction === 'print'" @update:is-open="isOpen => setCurrentAction('print', isOpen)">
+				:is-open="currentAction === 'print'" @update:is-open="isOpen => setCurrentAction('print', isOpen)">
 				<svws-ui-input-wrapper :grid="2" class="p-2">
 					<div>
 						<svws-ui-select title="Stundenplan" v-model="stundenplanAuswahl" :items="stundenplaeneById.values()"
@@ -63,7 +63,8 @@
 
 	import { computed, ref } from "vue";
 	import type { FaecherGruppenprozesseProps } from "./SFaecherGruppenprozesseProps";
-	import type { List, StundenplanListeEintrag } from "@core";
+	import type { List, StundenplanListeEintrag} from "@core";
+	import {ArrayList} from "@core";
 	import { ServerMode, BenutzerKompetenz, ReportingParameter, DateUtils, ReportingReportvorlage } from "@core";
 
 	const props = defineProps<FaecherGruppenprozesseProps>();
@@ -129,7 +130,12 @@
 		const reportingParameter = new ReportingParameter();
 		reportingParameter.reportvorlage = ReportingReportvorlage.STUNDENPLANUNG_v_FACH_STUNDENPLAN.getBezeichnung();
 		reportingParameter.einzelausgabeDetaildaten = gruppe2.value;
-		reportingParameter.detailLevel = (option2.value ? 2 : 0);
+		reportingParameter.vorlageParameter = new ArrayList(ReportingReportvorlage.STUNDENPLANUNG_v_FACH_STUNDENPLAN.getVorlageParameterList());
+		for (const vp of reportingParameter.vorlageParameter) {
+			if (vp.name === "mitPausenzeiten") {
+				vp.wert = option2.value.toString();
+			}
+		}
 		const { data, name } = await props.getPDF(reportingParameter, stundenplanAuswahl.value.id);
 		const link = document.createElement("a");
 		link.href = URL.createObjectURL(data);

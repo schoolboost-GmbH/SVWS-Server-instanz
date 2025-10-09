@@ -10,14 +10,15 @@
 					</div>
 					<div class="text-left col-span-2 mb-2">
 						<svws-ui-checkbox v-model="option2">Pausenzeiten anzeigen</svws-ui-checkbox><br>
-						<svws-ui-checkbox v-model="option4">Fach- statt Kursbezeichnung verwenden (nicht Sek-II)</svws-ui-checkbox><br>
+						<svws-ui-checkbox v-model="option4">Pausenaufsichten anzeigen</svws-ui-checkbox><br>
 						<svws-ui-checkbox v-model="option8">Fachkürzel statt Fachbezeichnung verwenden</svws-ui-checkbox><br>
 					</div>
 					<div class="text-left mb-2">
 						<br><p class="font-bold underline mb-2">Optionen zur Druckausgabe:</p>
 						<svws-ui-radio-group>
-							<svws-ui-radio-option :value="1" v-model="druckoptionLehrerStundenplan" name="druckoptionLehrerStundenplanGesamtausdruckEinseitig" label="Gesamtausdruck einseitig" />
-							<svws-ui-radio-option :value="2" v-model="druckoptionLehrerStundenplan" name="druckoptionLehrerStundenplanEinzelausdruckEinseitig" label="Einzelausdruck einseitig" />
+							<svws-ui-radio-option :value="0" v-model="druckoptionLehrerStundenplan" name="druckoptionLehrerStundenplanGesamtausdruckEinseitig" label="Gesamtausdruck einseitig" />
+							<svws-ui-radio-option :value="1" v-model="druckoptionLehrerStundenplan" name="druckoptionLehrerStundenplanEinzelausdruckEinseitig" label="Einzelausdruck einseitig" />
+							<svws-ui-radio-option :value="2" v-model="druckoptionLehrerStundenplan" name="druckoptionLehrerStundenplanKombinierterAusdruck" label="Kombinierter Ausdruck" />
 						</svws-ui-radio-group>
 					</div>
 					<div class="text-left mb-2">
@@ -35,7 +36,7 @@
 						</svws-ui-button>
 					</div>
 					<!-- E-Mail-Eingabefelder -->
-					<div class="text-left col-span-2 mb-2">
+					<div class="text-left col-span-2 mb-2" v-if="ServerMode.DEV.checkServerMode(serverMode)">
 						<br><p class="font-bold mb-2">Den individuellen Stundenplan per E-Mail an die Lehrkräfte versenden.</p>
 						<div class="flex flex-col gap-2">
 							<input type="text" v-model="emailBetreff" placeholder="Betreff eingeben" class="w-full border rounded px-2 py-1">
@@ -45,7 +46,7 @@
 							</svws-ui-checkbox>
 						</div>
 					</div>
-					<div class="text-left col-span-2">
+					<div class="text-left col-span-2" v-if="ServerMode.DEV.checkServerMode(serverMode)">
 						<svws-ui-button :disabled="isEmailStundenplanDisabled" @click="sendPdfByEmail" :is-loading="loading" class="mt-4">
 							<svws-ui-spinner v-if="loading" spinning />
 							<span v-else class="icon i-ri-mail-send-line" />
@@ -88,8 +89,8 @@
 
 	import { ref, computed } from "vue";
 	import type { SLehrerAllgemeinesGruppenprozesseProps } from "./SLehrerAllgemeinesGruppenprozesseProps";
-	import type { StundenplanListeEintrag, List } from "@core";
-	import { DateUtils, ReportingParameter, ReportingReportvorlage, ListUtils, ArrayList, BenutzerKompetenz, ReportingSortierungDefinition, ReportingEMailDaten, ReportingEMailEmpfaengerTyp, ReportingAusgabeformat } from "@core";
+	import type { List, StundenplanListeEintrag} from "@core";
+	import { DateUtils, ReportingParameter, ReportingReportvorlage, ListUtils, ArrayList, BenutzerKompetenz, ReportingSortierungDefinition, ReportingEMailDaten, ReportingEMailEmpfaengerTyp, ReportingAusgabeformat, ServerMode } from "@core";
 	import { SelectManager } from "@ui";
 
 	type Action = 'druckLehrerStundenplan' | 'delete' | '';
@@ -124,19 +125,9 @@
 		options: stundenplaene, optionDisplayText: stundenplanDisplayText, selectionDisplayText: stundenplanDisplayText,
 	})
 
-	const option1 = ref(false);
 	const option2 = ref(false);
 	const option4 = ref(false);
 	const option8 = ref(false);
-	const option16 = ref(false);
-	const option32 = ref(false);
-	const option64 = ref(false);
-	const option128 = ref(false);
-	const option256 = ref(false);
-	const option512 = ref(false);
-	const option1024 = ref(false);
-	const option2048 = ref(false);
-	const option4096 = ref(false);
 
 	const druckoptionLehrerStundenplan = ref(1);
 	const sortieroptionLehrerStundenplan = ref(1);
@@ -154,11 +145,43 @@
 			listeIdsLehrer.add(lehrer.id);
 
 		const reportingParameter = new ReportingParameter();
-		reportingParameter.reportvorlage = ReportingReportvorlage.STUNDENPLANUNG_v_LEHRER_STUNDENPLAN.getBezeichnung();
+		if (druckoptionLehrerStundenplan.value === 2) {
+			reportingParameter.reportvorlage = ReportingReportvorlage.STUNDENPLANUNG_v_LEHRER_STUNDENPLAN_KOMBINIERT.getBezeichnung();
+			reportingParameter.vorlageParameter = new ArrayList(ReportingReportvorlage.STUNDENPLANUNG_v_LEHRER_STUNDENPLAN_KOMBINIERT.getVorlageParameterList());
+			for (const vp of reportingParameter.vorlageParameter) {
+				switch (vp.name) {
+					case "mitPausenzeiten":
+						vp.wert = option2.value.toString();
+						break;
+					case "mitPausenaufsichten":
+						vp.wert = option4.value.toString();
+						break;
+					case "mitFachkuerzelStattFachbezeichnung":
+						vp.wert = option8.value.toString();
+						break;
+				}
+			}
+		} else {
+			reportingParameter.reportvorlage = ReportingReportvorlage.STUNDENPLANUNG_v_LEHRER_STUNDENPLAN.getBezeichnung();
+			reportingParameter.vorlageParameter = new ArrayList(ReportingReportvorlage.STUNDENPLANUNG_v_LEHRER_STUNDENPLAN.getVorlageParameterList());
+			for (const vp of reportingParameter.vorlageParameter) {
+				switch (vp.name) {
+					case "mitPausenzeiten":
+						vp.wert = option2.value.toString();
+						break;
+					case "mitPausenaufsichten":
+						vp.wert = option4.value.toString();
+						break;
+					case "mitFachkuerzelStattFachbezeichnung":
+						vp.wert = option8.value.toString();
+						break;
+				}
+			}
+		}
 		reportingParameter.idsHauptdaten = ListUtils.create1(stundenplanAuswahl.value.id);
 		reportingParameter.idsDetaildaten = listeIdsLehrer;
 		reportingParameter.einzelausgabeHauptdaten = false;
-		reportingParameter.einzelausgabeDetaildaten = (druckoptionLehrerStundenplan.value === 2);
+		reportingParameter.einzelausgabeDetaildaten = (druckoptionLehrerStundenplan.value === 1);
 		reportingParameter.sortierungDetaildaten = new ReportingSortierungDefinition();
 		reportingParameter.sortierungDetaildaten.verwendeStandardsortierung = (sortieroptionLehrerStundenplan.value === 1);
 		if (sortieroptionLehrerStundenplan.value === 2) {
@@ -171,11 +194,6 @@
 			attribute.add("lehrer.id");
 			reportingParameter.sortierungDetaildaten.attribute = attribute;
 		}
-		reportingParameter.detailLevel = ((option1.value ? 1 : 0) + (option2.value ? 2 : 0) + (option4.value ? 4 : 0)
-			+ (option8.value ? 8 : 0) + (option16.value ? 16 : 0) + (option32.value ? 32 : 0) + (option64.value ? 64 : 0)
-			+ (option128.value ? 128 : 0) + (option256.value ? 256 : 0) + (option512.value ? 512 : 0)
-			+ (option1024.value ? 1024 : 0) + (option2048.value ? 2048 : 0) + (option4096.value ? 4096 : 0));
-
 		loading.value = true;
 		const { data, name } = await props.getPDF(reportingParameter, stundenplanAuswahl.value.id);
 		const link = document.createElement("a");
@@ -209,11 +227,20 @@
 		emailDaten.betreff = (((emailBetreff.value.trim().length) !== 0) ? emailBetreff.value : ("Stundenplan " + stundenplanAuswahl.value.bezeichnung));
 		emailDaten.text = (((emailText.value.trim().length) !== 0) ? emailText.value : ("Im Anhang dieser E-Mail ist der Stundenplan " + stundenplanAuswahl.value.bezeichnung + " enthalten."));
 		reportingParameter.eMailDaten = emailDaten;
-
-		reportingParameter.detailLevel = ((option1.value ? 1 : 0) + (option2.value ? 2 : 0) + (option4.value ? 4 : 0)
-			+ (option8.value ? 8 : 0) + (option16.value ? 16 : 0) + (option32.value ? 32 : 0) + (option64.value ? 64 : 0)
-			+ (option128.value ? 128 : 0) + (option256.value ? 256 : 0) + (option512.value ? 512 : 0)
-			+ (option1024.value ? 1024 : 0) + (option2048.value ? 2048 : 0) + (option4096.value ? 4096 : 0));
+		reportingParameter.vorlageParameter = new ArrayList(ReportingReportvorlage.STUNDENPLANUNG_v_LEHRER_STUNDENPLAN.getVorlageParameterList());
+		for (const vp of reportingParameter.vorlageParameter) {
+			switch (vp.name) {
+				case "mitPausenzeiten":
+					vp.wert = option2.value.toString();
+					break;
+				case "mitPausenaufsichten":
+					vp.wert = option4.value.toString();
+					break;
+				case "mitFachkuerzelStattFachbezeichnung":
+					vp.wert = option8.value.toString();
+					break;
+			}
+		}
 
 		loading.value = true;
 		const result = await props.sendEMail(reportingParameter);
@@ -232,19 +259,9 @@
 		if ((newAction !== currentAction.value) && !open)
 			return;
 
-		option1.value = false;
 		option2.value = false;
 		option4.value = false;
 		option8.value = false;
-		option16.value = false;
-		option32.value = false;
-		option64.value = false;
-		option128.value = false;
-		option256.value = false;
-		option512.value = false;
-		option1024.value = false;
-		option2048.value = false;
-		option4096.value = false;
 		druckoptionLehrerStundenplan.value = 1;
 		sortieroptionLehrerStundenplan.value = 1;
 		emailBetreff.value = '';

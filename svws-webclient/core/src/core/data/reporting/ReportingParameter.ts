@@ -74,11 +74,6 @@ export class ReportingParameter extends JavaObject {
 	 */
 	public vorlageParameter : List<ReportingVorlageParameter> = new ArrayList<ReportingVorlageParameter>();
 
-	/**
-	 * Veraltet: Parameter, der in Templates verwendet werden kann, um den Detailgrad der Darstellung zu steuern.
-	 */
-	public detailLevel : number = 0;
-
 
 	/**
 	 * Diese Klasse wird bei der Kommunikation über die Open-API-Schnittstelle verwendet.
@@ -145,9 +140,6 @@ export class ReportingParameter extends JavaObject {
 				result.vorlageParameter.add(ReportingVorlageParameter.transpilerFromJSON(JSON.stringify(elem)));
 			}
 		}
-		if (obj.detailLevel === undefined)
-			throw new Error('invalid json format, missing attribute detailLevel');
-		result.detailLevel = obj.detailLevel;
 		return result;
 	}
 
@@ -198,7 +190,6 @@ export class ReportingParameter extends JavaObject {
 				result += ',';
 		}
 		result += ' ]' + ',';
-		result += '"detailLevel" : ' + obj.detailLevel.toString() + ',';
 		result = result.slice(0, -1);
 		result += '}';
 		return result;
@@ -276,9 +267,6 @@ export class ReportingParameter extends JavaObject {
 					result += ',';
 			}
 			result += ' ]' + ',';
-		}
-		if (obj.detailLevel !== undefined) {
-			result += '"detailLevel" : ' + obj.detailLevel.toString() + ',';
 		}
 		result = result.slice(0, -1);
 		result += '}';

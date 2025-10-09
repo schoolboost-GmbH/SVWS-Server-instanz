@@ -114,8 +114,8 @@
 	import { computed, ref, shallowRef } from 'vue';
 	import type { GostLaufbahnfehlerProps } from "./SGostLaufbahnfehlerProps";
 	import { useRegionSwitch, type DataTableColumn, type SortByAndOrder } from '@ui';
-	import type { List, GostBelegpruefungErgebnisFehler} from '@core';
-	import { ArrayList, GostBelegpruefungsArt, GostBelegungsfehlerArt, SchuelerStatus, GostBelegpruefungsErgebnisse, BenutzerKompetenz, ReportingAusgabeformat, ReportingParameter, ReportingReportvorlage, ReportingEMailDaten, ReportingEMailEmpfaengerTyp } from '@core';
+	import type { List, GostBelegpruefungErgebnisFehler } from '@core';
+	import { ArrayList, GostBelegpruefungsArt, GostBelegungsfehlerArt, SchuelerStatus, GostBelegpruefungsErgebnisse, BenutzerKompetenz, ReportingAusgabeformat, ReportingParameter, ReportingReportvorlage, ReportingEMailDaten, ReportingEMailEmpfaengerTyp, ServerMode } from '@core';
 	import { routeApp } from "~/router/apps/RouteApp";
 
 	const props = defineProps<GostLaufbahnfehlerProps>();
@@ -246,20 +246,24 @@
 	}
 
 	const dropdownActions = computed(() => {
-		return [
-			{ text: `Laufbahnwahlbogen (gesamt)`, action: () => downloadPDF("Laufbahnwahlbogen", 1, false), default: true },
-			{ text: `Laufbahnwahlbogen (einzeln)`, action: () => downloadPDF("Laufbahnwahlbogen", 1, true) },
-			{ text: `Laufbahnwahlbogen (gesamt, nur Belegung)`, action: () => downloadPDF("Laufbahnwahlbogen", 0, false) },
-			{ text: `Laufbahnwahlbogen (einzeln, nur Belegung)`, action: () => downloadPDF("Laufbahnwahlbogen", 0, true) },
-			{ text: `E-Mail mit Laufbahnwahlbogen `, action: () => sendPdfByMail( 1) },
-			{ text: `E-Mail mit Laufbahnwahlbogen (nur Belegung)`, action: () => sendPdfByMail(0) },
-			{ text: `Ergebnisliste (nur Summen)`, action: () => downloadPDF("Ergebnisliste", 0, false) },
-			{ text: `Ergebnisliste (nur Summen und Fehler)`, action: () => downloadPDF("Ergebnisliste", 1, false) },
-			{ text: `Ergebnisliste (vollständig)`, action: () => downloadPDF("Ergebnisliste", 2, false) },
+		const actions = [
+			{ text: `Laufbahnwahlbogen (gesamt)`, action: () => downloadPDF("Laufbahnwahlbogen", false, false, false, false), default: true },
+			{ text: `Laufbahnwahlbogen (einzeln)`, action: () => downloadPDF("Laufbahnwahlbogen", false, false, false, true) },
+			{ text: `Laufbahnwahlbogen (gesamt, nur Belegung)`, action: () => downloadPDF("Laufbahnwahlbogen", true, false, false, false) },
+			{ text: `Laufbahnwahlbogen (einzeln, nur Belegung)`, action: () => downloadPDF("Laufbahnwahlbogen", true, false, false, true) },
 		];
+		if (ServerMode.DEV.checkServerMode(props.serverMode)) {
+			actions.push({ text: `E-Mail mit Laufbahnwahlbogen`, action: () => sendPdfByMail(false) });
+			actions.push({ text: `E-Mail mit Laufbahnwahlbogen (nur Belegung)`, action: () => sendPdfByMail(true) });
+		}
+		actions.push({ text: `Ergebnisliste (nur Summen)`, action: () => downloadPDF("Ergebnisliste", false, false, false, false) });
+		actions.push({ text: `Ergebnisliste (nur Summen und Fehler)`, action: () => downloadPDF("Ergebnisliste", false, true, false, false) });
+		actions.push({ text: `Ergebnisliste (vollständig)`, action: () => downloadPDF("Ergebnisliste", false, true, true, false) });
+
+		return actions;
 	});
 
-	async function downloadPDF(vorlage: string, detaillevel: number, einzelausgabe: boolean) {
+	async function downloadPDF(vorlage: string, nurBelegung: boolean, mitFehlern: boolean, mitHinweisen: boolean, einzelausgabe: boolean) {
 		const list = new ArrayList<number>();
 		if (auswahl.value.length > 0)
 			for (const e of filtered.value)
@@ -271,13 +275,31 @@
 		const reportingParameter = new ReportingParameter();
 		reportingParameter.idSchuljahresabschnitt = routeApp.data.aktAbschnitt.value.id;
 		reportingParameter.ausgabeformat = ReportingAusgabeformat.PDF.getId();
-		if (vorlage === "Laufbahnwahlbogen")
+		if (vorlage === "Laufbahnwahlbogen") {
 			reportingParameter.reportvorlage = ReportingReportvorlage.SCHUELER_v_GOST_LAUFBAHNPLANUNG_WAHLBOGEN.getBezeichnung();
-		else if (vorlage === "Ergebnisliste")
+			reportingParameter.vorlageParameter = new ArrayList(ReportingReportvorlage.SCHUELER_v_GOST_LAUFBAHNPLANUNG_WAHLBOGEN.getVorlageParameterList());
+			for (const vp of reportingParameter.vorlageParameter) {
+				if (vp.name === "nurBelegteFaecher") {
+					vp.wert = nurBelegung.toString();
+				}
+			}
+		} else if (vorlage === "Ergebnisliste") {
 			reportingParameter.reportvorlage = ReportingReportvorlage.SCHUELER_v_GOST_LAUFBAHNPLANUNG_ERGEBNISUEBERSICHT.getBezeichnung();
+			reportingParameter.vorlageParameter = new ArrayList(ReportingReportvorlage.SCHUELER_v_GOST_LAUFBAHNPLANUNG_ERGEBNISUEBERSICHT.getVorlageParameterList());
+			for (const vp of reportingParameter.vorlageParameter) {
+				switch (vp.name) {
+					case "mitFehlernKommentaren":
+						vp.wert = mitFehlern.toString();
+						break;
+					case "mitHinweisen":
+						vp.wert = mitHinweisen.toString();
+						break;
+				}
+			}
+		}
 		reportingParameter.idsHauptdaten = list;
 		reportingParameter.einzelausgabeHauptdaten = einzelausgabe;
-		reportingParameter.detailLevel = detaillevel;
+
 
 		const { data, name } = await props.getPdfLaufbahnplanung(reportingParameter);
 		const link = document.createElement("a");
@@ -288,7 +310,7 @@
 		URL.revokeObjectURL(link.href);
 	}
 
-	async function sendPdfByMail(detaillevel: number) {
+	async function sendPdfByMail(nurBelegung: boolean) {
 		const list = new ArrayList<number>();
 		if (auswahl.value.length > 0)
 			for (const e of filtered.value)
@@ -301,9 +323,14 @@
 		reportingParameter.idSchuljahresabschnitt = routeApp.data.aktAbschnitt.value.id;
 		reportingParameter.ausgabeformat = ReportingAusgabeformat.EMAIL.getId();
 		reportingParameter.reportvorlage = ReportingReportvorlage.SCHUELER_v_GOST_LAUFBAHNPLANUNG_WAHLBOGEN.getBezeichnung();
+		reportingParameter.vorlageParameter = new ArrayList(ReportingReportvorlage.SCHUELER_v_GOST_LAUFBAHNPLANUNG_WAHLBOGEN.getVorlageParameterList());
+		for (const vp of reportingParameter.vorlageParameter) {
+			if (vp.name === "nurBelegteFaecher") {
+				vp.wert = nurBelegung.toString();
+			}
+		}
 		reportingParameter.idsHauptdaten = list;
 		reportingParameter.einzelausgabeHauptdaten = true;
-		reportingParameter.detailLevel = detaillevel;
 
 		const emailDaten = new ReportingEMailDaten();
 		emailDaten.empfaengerTyp = ReportingEMailEmpfaengerTyp.SCHUELER.getId();

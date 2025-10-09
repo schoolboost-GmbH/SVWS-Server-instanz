@@ -78,10 +78,6 @@ public class ReportingParameter {
 	@Schema(description = "Eine Liste mit freien, typisierten Report-Parameter-Werten, die in Templates direkt über ihren Namen nutzbar sind.")
 	public @NotNull List<ReportingVorlageParameter> vorlageParameter = new ArrayList<>();
 
-	/** Veraltet: Parameter, der in Templates verwendet werden kann, um den Detailgrad der Darstellung zu steuern. */
-	@Schema(description = "VERALTET: alter Parameter zur Steuerung des Detailgrads. Bitte statt dessen reportParameter verwenden.", example = "0", deprecated = true)
-	public int detailLevel = 0;
-
 
 	/**
 	 * Diese Klasse wird bei der Kommunikation über die Open-API-Schnittstelle verwendet.

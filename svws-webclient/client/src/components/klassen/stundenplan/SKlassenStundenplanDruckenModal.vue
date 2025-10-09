@@ -28,7 +28,8 @@
 <script setup lang="ts">
 	import { ref } from 'vue';
 	import type { ApiStatus } from '~/components/ApiStatus';
-	import type { StundenplanListeEintrag, ApiFile} from '@core';
+	import type { StundenplanListeEintrag, ApiFile } from '@core';
+	import { ArrayList} from '@core';
 	import { DateUtils, ReportingParameter, ReportingReportvorlage } from '@core';
 
 	const props = defineProps<{
@@ -56,7 +57,20 @@
 		const reportingParameter = new ReportingParameter();
 		reportingParameter.reportvorlage = ReportingReportvorlage.STUNDENPLANUNG_v_KLASSEN_STUNDENPLAN.getBezeichnung();
 		reportingParameter.einzelausgabeDetaildaten = false;
-		reportingParameter.detailLevel = (option2.value ? 2 : 0) + (option4.value ? 4 : 0) + (option8.value ? 8 : 0);
+		reportingParameter.vorlageParameter = new ArrayList(ReportingReportvorlage.STUNDENPLANUNG_v_KLASSEN_STUNDENPLAN.getVorlageParameterList());
+		for (const vp of reportingParameter.vorlageParameter) {
+			switch (vp.name) {
+				case "mitPausenzeiten":
+					vp.wert = option2.value.toString();
+					break;
+				case "mitFachStattKursbezeichnung":
+					vp.wert = option4.value.toString();
+					break;
+				case "mitFachkuerzelStattFachbezeichnung":
+					vp.wert = option8.value.toString();
+					break;
+			}
+		}
 		const { data, name } = await props.getPDF(reportingParameter, stundenplanAuswahl.value.id);
 		const link = document.createElement("a");
 		link.href = URL.createObjectURL(data);

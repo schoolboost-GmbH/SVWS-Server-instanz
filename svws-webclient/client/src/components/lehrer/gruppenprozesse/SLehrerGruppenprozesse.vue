@@ -21,7 +21,6 @@
 							</svws-ui-radio-group>
 						</div>
 						<div class="text-left">
-							<svws-ui-checkbox v-model="option4">Fach- statt Kursbezeichnung verwenden (nicht Sek-II)</svws-ui-checkbox><br>
 							<svws-ui-checkbox v-model="option8">Fachkürzel statt Fachbezeichnung verwenden</svws-ui-checkbox>
 						</div>
 						<div>
@@ -76,7 +75,8 @@
 <script setup lang="ts">
 
 	import { ref, computed } from "vue";
-	import type { List, StundenplanListeEintrag } from "@core";
+	import type { List, StundenplanListeEintrag} from "@core";
+	import { ArrayList } from "@core";
 	import { BenutzerKompetenz, DateUtils, ReportingParameter, ReportingReportvorlage, ServerMode } from "@core";
 	import type { LehrerGruppenprozesseProps } from "~/components/lehrer/gruppenprozesse/SLehrerGruppenprozesseProps";
 
@@ -138,7 +138,6 @@
 	}
 
 	const stundenplanAuswahl = ref<StundenplanListeEintrag>();
-	const option4 = ref(false);
 	const option8 = ref(false);
 
 	async function downloadPDF() {
@@ -146,13 +145,41 @@
 			return;
 		loading.value = true;
 		const reportingParameter = new ReportingParameter();
-		if (gruppe2.value === 2)
+		if (gruppe2.value === 2) {
 			reportingParameter.reportvorlage = ReportingReportvorlage.STUNDENPLANUNG_v_LEHRER_STUNDENPLAN_KOMBINIERT.getBezeichnung();
-		else
+			reportingParameter.vorlageParameter = new ArrayList(ReportingReportvorlage.STUNDENPLANUNG_v_LEHRER_STUNDENPLAN_KOMBINIERT.getVorlageParameterList());
+			for (const vp of reportingParameter.vorlageParameter) {
+				switch (vp.name) {
+					case "mitPausenaufsichten":
+						vp.wert = (gruppe1.value === 1).toString();
+						break;
+					case "mitPausenzeiten":
+						vp.wert = (gruppe1.value === 2).toString()
+						break;
+					case "mitFachkuerzelStattFachbezeichnung":
+						vp.wert = option8.value.toString();
+						break;
+				}
+			}
+		} else {
 			reportingParameter.reportvorlage = ReportingReportvorlage.STUNDENPLANUNG_v_LEHRER_STUNDENPLAN.getBezeichnung();
+			reportingParameter.vorlageParameter = new ArrayList(ReportingReportvorlage.STUNDENPLANUNG_v_LEHRER_STUNDENPLAN.getVorlageParameterList());
+			for (const vp of reportingParameter.vorlageParameter) {
+				switch (vp.name) {
+					case "mitPausenaufsichten":
+						vp.wert = (gruppe1.value === 1).toString();
+						break;
+					case "mitPausenzeiten":
+						vp.wert = (gruppe1.value === 2).toString()
+						break;
+					case "mitFachkuerzelStattFachbezeichnung":
+						vp.wert = option8.value.toString();
+						break;
+				}
+			}
+		}
 		if (gruppe2.value === 1)
 			reportingParameter.einzelausgabeDetaildaten = true;
-		reportingParameter.detailLevel = gruppe1.value + (option4.value ? 4 : 0) + (option8.value ? 8 : 0);
 		const { data, name } = await props.getPDF(reportingParameter, stundenplanAuswahl.value.id);
 		const link = document.createElement("a");
 		link.href = URL.createObjectURL(data);

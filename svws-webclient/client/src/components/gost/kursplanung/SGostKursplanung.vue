@@ -129,7 +129,7 @@
 	import { computed, ref, onMounted } from "vue";
 	import type { GostKursplanungProps } from "./SGostKursplanungProps";
 	import type { DownloadPDFTypen } from "./DownloadPDFTypen";
-	import { BenutzerKompetenz, GostHalbjahr, HashSet, ReportingAusgabeformat, ReportingEMailDaten, ReportingEMailEmpfaengerTyp, ReportingParameter, ReportingReportvorlage, SetUtils } from "@core";
+	import { BenutzerKompetenz, GostHalbjahr, HashSet, ReportingAusgabeformat, ReportingEMailDaten, ReportingEMailEmpfaengerTyp, ReportingParameter, ReportingReportvorlage, ServerMode, SetUtils } from "@core";
 	import { useRegionSwitch } from "@ui";
 	import {routeApp} from "~/router/apps/RouteApp";
 
@@ -167,16 +167,21 @@
 		return collapsed.value = !collapsed.value;
 	}
 
-	const dropdownList = [
-		{ text: "Schülerliste markierte Kurse", action: () => downloadPDF("Schülerliste markierte Kurse"), default: true },
-		{ text: "E-Mail mit Schülerliste markierte Kurse", action: () => sendPdfByMail("E-Mail mit Schülerliste markierte Kurse") },
-		{ text: "Kurse mit Statistikwerten", action: () => downloadPDF("Kurse mit Statistikwerten") },
-		{ text: "Kurse-Schienen-Zuordnung", action: () => downloadPDF("Kurse-Schienen-Zuordnung") },
-		{ text: "Kurse-Schienen-Zuordnung markierter Schüler", action: () => downloadPDF("Kurse-Schienen-Zuordnung markierter Schüler") },
-		{ text: "Kurse-Schienen-Zuordnung gefilterte Schüler", action: () => downloadPDF("Kurse-Schienen-Zuordnung gefilterte Schüler") },
-		{ text: "Kursbelegung markierter Schüler", action: () => downloadPDF("Kursbelegung markierter Schüler") },
-		{ text: "Kursbelegung gefilterte Schüler", action: () => downloadPDF("Kursbelegung gefilterte Schüler") },
-	];
+	const dropdownList = computed(() => {
+		const actions = [ {text: "Schülerliste markierte Kurse", action: () => downloadPDF("Schülerliste markierte Kurse"), default: true}];
+
+		if (ServerMode.DEV.checkServerMode(props.serverMode))
+			actions.push({text: "E-Mail mit Schülerliste markierte Kurse", action: () => sendPdfByMail(), default: false});
+
+		actions.push({text: "Kurse mit Statistikwerten", action: () => downloadPDF("Kurse mit Statistikwerten"), default: false});
+		actions.push({text: "Kurse-Schienen-Zuordnung", action: () => downloadPDF("Kurse-Schienen-Zuordnung"), default: false});
+		actions.push({text: "Kurse-Schienen-Zuordnung markierter Schüler", action: () => downloadPDF("Kurse-Schienen-Zuordnung markierter Schüler"), default: false});
+		actions.push({text: "Kurse-Schienen-Zuordnung gefilterte Schüler", action: () => downloadPDF("Kurse-Schienen-Zuordnung gefilterte Schüler"), default: false});
+		actions.push({text: "Kursbelegung markierter Schüler", action: () => downloadPDF("Kursbelegung markierter Schüler"), default: false});
+		actions.push({text: "Kursbelegung gefilterte Schüler", action: () => downloadPDF("Kursbelegung gefilterte Schüler"), default: false});
+
+		return actions;
+	});
 
 	async function downloadPDF(title: DownloadPDFTypen) {
 		const { data, name } = await props.getPDF(title);
@@ -188,12 +193,11 @@
 		URL.revokeObjectURL(link.href);
 	}
 
-	async function sendPdfByMail(title: DownloadPDFTypen) {
+	async function sendPdfByMail() {
 		const reportingParameter = new ReportingParameter();
 		reportingParameter.idSchuljahresabschnitt = routeApp.data.aktAbschnitt.value.id;
 		reportingParameter.ausgabeformat = ReportingAusgabeformat.EMAIL.getId();
 		reportingParameter.reportvorlage = ReportingReportvorlage.GOST_KURSPLANUNG_v_KURS_MIT_KURSSCHUELERN.getBezeichnung();
-		reportingParameter.detailLevel = 0;
 
 		const emailDaten = new ReportingEMailDaten();
 		emailDaten.empfaengerTyp = ReportingEMailEmpfaengerTyp.GOSTKURSPLANUNG_KURSLEHRER.getId();
@@ -202,7 +206,7 @@
 		emailDaten.text = "Im Anhang dieser E-Mail sind die Kurslisten der Kursplanung enthalten.";
 		reportingParameter.eMailDaten = emailDaten;
 
-		const result = await props.sendEmailPdf(reportingParameter);
+		await props.sendEmailPdf(reportingParameter);
 	}
 
 

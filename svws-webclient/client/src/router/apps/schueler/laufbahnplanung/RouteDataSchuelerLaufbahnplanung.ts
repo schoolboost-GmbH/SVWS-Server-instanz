@@ -130,10 +130,20 @@ export class RouteDataSchuelerLaufbahnplanung extends RouteData<RouteStateSchuel
 		reportingParameter.einzelausgabeHauptdaten = false;
 		switch (title) {
 			case 'Laufbahnwahlbogen':
-				reportingParameter.detailLevel = 1;
+				reportingParameter.vorlageParameter = new ArrayList(ReportingReportvorlage.SCHUELER_v_GOST_LAUFBAHNPLANUNG_WAHLBOGEN.getVorlageParameterList());
+				for (const vp of reportingParameter.vorlageParameter) {
+					if (vp.name === "nurBelegteFaecher") {
+						vp.wert = false.toString();
+					}
+				}
 				return await api.server.pdfReport(reportingParameter, api.schema);
 			case 'Laufbahnwahlbogen (nur Belegung)':
-				reportingParameter.detailLevel = 0;
+				reportingParameter.vorlageParameter = new ArrayList(ReportingReportvorlage.SCHUELER_v_GOST_LAUFBAHNPLANUNG_WAHLBOGEN.getVorlageParameterList());
+				for (const vp of reportingParameter.vorlageParameter) {
+					if (vp.name === "nurBelegteFaecher") {
+						vp.wert = true.toString();
+					}
+				}
 				return await api.server.pdfReport(reportingParameter, api.schema);
 			default:
 				throw new DeveloperNotificationException('Es wurde kein passender Parameter zur Erzeugung des PDF übergeben.');

@@ -9,6 +9,7 @@
 						<p class="font-bold underline">Elemente der Liste:</p>
 					</div>
 					<div class="text-left">
+						<svws-ui-checkbox v-model="option1" name="mitSchuelerKlasse">Klasse</svws-ui-checkbox><br>
 						<svws-ui-checkbox v-model="option2" name="nurSchuelerRufname">Nur Rufname</svws-ui-checkbox><br>
 						<svws-ui-checkbox v-model="option4" name="mitSchuelerGeschlecht">Geschlecht</svws-ui-checkbox><br>
 						<svws-ui-checkbox v-model="option8" name="mitSchuelerGebDat">Geburtsdatum</svws-ui-checkbox><br>
@@ -131,6 +132,7 @@
 	const istPrivateEmailAlternative = ref<boolean>(false);
 
 	// Detail-Optionen und Druckoption analog
+	const option1 = ref(false);
 	const option2 = ref(false);
 	const option4 = ref(false);
 	const option8 = ref(false);
@@ -154,6 +156,7 @@
 	function setCurrentAction(newAction: Action, open: boolean) {
 		if(newAction !== currentAction.value && !open)
 			return;
+		option1.value = false;
 		option2.value = false;
 		option4.value = false;
 		option8.value = false;
@@ -203,14 +206,54 @@
 			reportingParameter.idsHauptdaten = listeIdsKurse;
 			reportingParameter.einzelausgabeHauptdaten = ((druckoptionListeSchuelerKontaktdatenErzieher.value === 2) || (druckoptionListeSchuelerKontaktdatenErzieher.value === 4));
 			reportingParameter.einzelausgabeDetaildaten = false;
+			reportingParameter.vorlageParameter = new ArrayList(ReportingReportvorlage.KURSE_v_LISTE_SCHUELER_KONTAKTDATENERZIEHER.getVorlageParameterList());
+			for (const vp of reportingParameter.vorlageParameter) {
+				switch (vp.name) {
+					case "mitSchuelerKlasse":
+						vp.wert = option1.value.toString();
+						break;
+					case "nurSchuelerRufname":
+						vp.wert = option2.value.toString();
+						break;
+					case "mitSchuelerGeschlecht":
+						vp.wert = option4.value.toString();
+						break;
+					case "mitSchuelerGebDat":
+						vp.wert = option8.value.toString();
+						break;
+					case "mitSchuelerStaat":
+						vp.wert = option16.value.toString();
+						break;
+					case "mitSchuelerAnschrift":
+						vp.wert = option32.value.toString();
+						break;
+					case "mitSchuelerTelefonPrivat":
+						vp.wert = option64.value.toString();
+						break;
+					case "mitSchuelerEmailSchule":
+						vp.wert = option128.value.toString();
+						break;
+					case "mitSchuelerEmailPrivat":
+						vp.wert = option256.value.toString();
+						break;
+					case "mitSpalteSchuelerTelefonKontakte":
+						vp.wert = option512.value.toString();
+						break;
+					case "mitErzieher":
+						vp.wert = option1024.value.toString();
+						break;
+					case "mitErzieherAnschrift":
+						vp.wert = option2048.value.toString();
+						break;
+					case "mitErzieherEmailPrivat":
+						vp.wert = option4096.value.toString();
+						break;
+				}
+			}
 		} else {
 			return;
 		}
 		reportingParameter.duplexdruck = ((druckoptionListeSchuelerKontaktdatenErzieher.value === 3) || (druckoptionListeSchuelerKontaktdatenErzieher.value === 4));
-		reportingParameter.detailLevel = ((option2.value ? 2 : 0) + (option4.value ? 4 : 0) + (option8.value ? 8 : 0)
-			+ (option16.value ? 16 : 0) + (option32.value ? 32 : 0) + (option64.value ? 64 : 0)
-			+ (option128.value ? 128 : 0) + (option256.value ? 256 : 0) + (option512.value ? 512 : 0)
-			+ (option1024.value ? 1024 : 0) + (option2048.value ? 2048 : 0) + (option4096.value ? 4096 : 0));
 		loading.value = true;
 		const { data, name } = await props.getPDF(reportingParameter);
 		const link = document.createElement("a");
@@ -240,6 +283,50 @@
 			reportingParameter.idsHauptdaten = listeIdsKurse;
 			reportingParameter.einzelausgabeHauptdaten = true;
 			reportingParameter.einzelausgabeDetaildaten = false;
+			reportingParameter.vorlageParameter = new ArrayList(ReportingReportvorlage.KURSE_v_LISTE_SCHUELER_KONTAKTDATENERZIEHER.getVorlageParameterList());
+			for (const vp of reportingParameter.vorlageParameter) {
+				switch (vp.name) {
+					case "mitSchuelerKlasse":
+						vp.wert = option1.value.toString();
+						break;
+					case "nurSchuelerRufname":
+						vp.wert = option2.value.toString();
+						break;
+					case "mitSchuelerGeschlecht":
+						vp.wert = option4.value.toString();
+						break;
+					case "mitSchuelerGebDat":
+						vp.wert = option8.value.toString();
+						break;
+					case "mitSchuelerStaat":
+						vp.wert = option16.value.toString();
+						break;
+					case "mitSchuelerAnschrift":
+						vp.wert = option32.value.toString();
+						break;
+					case "mitSchuelerTelefonPrivat":
+						vp.wert = option64.value.toString();
+						break;
+					case "mitSchuelerEmailSchule":
+						vp.wert = option128.value.toString();
+						break;
+					case "mitSchuelerEmailPrivat":
+						vp.wert = option256.value.toString();
+						break;
+					case "mitSpalteSchuelerTelefonKontakte":
+						vp.wert = option512.value.toString();
+						break;
+					case "mitErzieher":
+						vp.wert = option1024.value.toString();
+						break;
+					case "mitErzieherAnschrift":
+						vp.wert = option2048.value.toString();
+						break;
+					case "mitErzieherEmailPrivat":
+						vp.wert = option4096.value.toString();
+						break;
+				}
+			}
 			emailDaten.betreff = (((emailBetreff.value.trim().length) !== 0) ? emailBetreff.value : ("Kursliste mit Kontaktdaten"));
 			emailDaten.text = (((emailText.value.trim().length) !== 0) ? emailText.value : ("Im Anhang dieser E-Mail ist die Kursliste mit Kontaktdaten enthalten."));
 		} else {
@@ -248,10 +335,6 @@
 		reportingParameter.eMailDaten = emailDaten;
 
 		reportingParameter.duplexdruck = ((druckoptionListeSchuelerKontaktdatenErzieher.value === 3) || (druckoptionListeSchuelerKontaktdatenErzieher.value === 4));
-		reportingParameter.detailLevel = ((option2.value ? 2 : 0) + (option4.value ? 4 : 0)
-			+ (option8.value ? 8 : 0) + (option16.value ? 16 : 0) + (option32.value ? 32 : 0) + (option64.value ? 64 : 0)
-			+ (option128.value ? 128 : 0) + (option256.value ? 256 : 0) + (option512.value ? 512 : 0)
-			+ (option1024.value ? 1024 : 0) + (option2048.value ? 2048 : 0) + (option4096.value ? 4096 : 0));
 		loading.value = true;
 		const result = await props.sendEMail(reportingParameter);
 		status.value = result.success;
@@ -260,6 +343,7 @@
 	}
 
 	async function selectAll() {
+		option1.value = true;
 		option2.value = true;
 		option4.value = true;
 		option8.value = true;
@@ -275,6 +359,7 @@
 	}
 
 	async function deselectAll() {
+		option1.value = false;
 		option2.value = false;
 		option4.value = false;
 		option8.value = false;

@@ -73,23 +73,39 @@ public enum ReportingReportvorlage {
 			erzeugeVorlageParameter("mitErzieherAnschrift", ReportingVorlageParameterTyp.BOOLEAN, "false"),
 			erzeugeVorlageParameter("mitErzieherEmailPrivat", ReportingVorlageParameterTyp.BOOLEAN, "false"))),
 
-	/** Report-Vorlage: Kurs - Schülerstammdaten - Liste */
-	KURSE_v_KURS_SCHUELER_STAMMDATENLISTE("Kurs-Schueler-Stammdatenliste", Arrays.asList(
-			erzeugeVorlageParameter("nurSchuelerRufname", ReportingVorlageParameterTyp.BOOLEAN, "false"))),
-
 	/** Report-Vorlage: Lehrer - Stammdaten - Liste */
 	LEHRER_v_STAMMDATENLISTE("Lehrer-Stammdatenliste", new ArrayList<>()),
 
 	/** Report-Vorlage: GOSt - Abitur - APO - Anlage 12 (Abiturzeugnis) - Din-A4 */
-	SCHUELER_v_GOST_ABITUR_APO_ANLAGE_12_A4("Schueler-GostAbiturApoAnlage12-A4", new ArrayList<>()),
+	SCHUELER_v_GOST_ABITUR_APO_ANLAGE_12_A4("Schueler-GostAbiturApoAnlage12-A4", Arrays.asList(
+			erzeugeVorlageParameter("mitPersoenlichenUnterschriften", ReportingVorlageParameterTyp.BOOLEAN, "false"),
+			erzeugeVorlageParameter("mitZweiterBeratungslehrerUnterschrift", ReportingVorlageParameterTyp.BOOLEAN, "false"),
+			erzeugeVorlageParameter("textZAAVorsitzUnterschrift", ReportingVorlageParameterTyp.STRING, ""),
+			erzeugeVorlageParameter("textZAAVorsitzUnterschriftBezeichnung", ReportingVorlageParameterTyp.STRING, ""),
+			erzeugeVorlageParameter("textSchulleitungUnterschrift", ReportingVorlageParameterTyp.STRING, ""),
+			erzeugeVorlageParameter("textSchulleitungUnterschriftBezeichnung", ReportingVorlageParameterTyp.STRING, ""),
+			erzeugeVorlageParameter("textSchultraegerUnterschrift", ReportingVorlageParameterTyp.STRING, ""),
+			erzeugeVorlageParameter("textSchultraegerUnterschriftBezeichnung", ReportingVorlageParameterTyp.STRING, ""),
+			erzeugeVorlageParameter("textBeratungslehrerUnterschrift", ReportingVorlageParameterTyp.STRING, ""),
+			erzeugeVorlageParameter("textBeratungslehrerUnterschriftBezeichnung", ReportingVorlageParameterTyp.STRING, ""))),
 
 	/** Report-Vorlage: GOSt - Abitur - APO - Anlage 12 (Abiturzeugnis) - Din-A3 */
-	SCHUELER_v_GOST_ABITUR_APO_ANLAGE_12_A3("Schueler-GostAbiturApoAnlage12-A3", new ArrayList<>()),
+	SCHUELER_v_GOST_ABITUR_APO_ANLAGE_12_A3("Schueler-GostAbiturApoAnlage12-A3", Arrays.asList(
+			erzeugeVorlageParameter("mitPersoenlichenUnterschriften", ReportingVorlageParameterTyp.BOOLEAN, "false"),
+			erzeugeVorlageParameter("mitZweiterBeratungslehrerUnterschrift", ReportingVorlageParameterTyp.BOOLEAN, "false"),
+			erzeugeVorlageParameter("textZAAVorsitzUnterschrift", ReportingVorlageParameterTyp.STRING, ""),
+			erzeugeVorlageParameter("textZAAVorsitzUnterschriftBezeichnung", ReportingVorlageParameterTyp.STRING, ""),
+			erzeugeVorlageParameter("textSchulleitungUnterschrift", ReportingVorlageParameterTyp.STRING, ""),
+			erzeugeVorlageParameter("textSchulleitungUnterschriftBezeichnung", ReportingVorlageParameterTyp.STRING, ""),
+			erzeugeVorlageParameter("textSchultraegerUnterschrift", ReportingVorlageParameterTyp.STRING, ""),
+			erzeugeVorlageParameter("textSchultraegerUnterschriftBezeichnung", ReportingVorlageParameterTyp.STRING, ""),
+			erzeugeVorlageParameter("textBeratungslehrerUnterschrift", ReportingVorlageParameterTyp.STRING, ""),
+			erzeugeVorlageParameter("textBeratungslehrerUnterschriftBezeichnung", ReportingVorlageParameterTyp.STRING, ""))),
 
 	/** Report-Vorlage: GOSt - Laufbahnplanung - Ergebnisübersicht */
 	SCHUELER_v_GOST_LAUFBAHNPLANUNG_ERGEBNISUEBERSICHT("Schueler-GostLaufbahnplanungErgebnisuebersicht", Arrays.asList(
-			erzeugeVorlageParameter("mitFehlerKommentare", ReportingVorlageParameterTyp.BOOLEAN, "false"),
-			erzeugeVorlageParameter("mitHinweise", ReportingVorlageParameterTyp.BOOLEAN, "false"))),
+			erzeugeVorlageParameter("mitFehlernKommentaren", ReportingVorlageParameterTyp.BOOLEAN, "false"),
+			erzeugeVorlageParameter("mitHinweisen", ReportingVorlageParameterTyp.BOOLEAN, "false"))),
 
 	/** Report-Vorlage: GOSt - Laufbahnplanung - Wahlbogen */
 	SCHUELER_v_GOST_LAUFBAHNPLANUNG_WAHLBOGEN("Schueler-GostLaufbahnplanungWahlbogen", Arrays.asList(
@@ -132,14 +148,14 @@ public enum ReportingReportvorlage {
 
 	/** Report-Vorlage: Stundenplanung - Lehrer - Stundenplan */
 	STUNDENPLANUNG_v_LEHRER_STUNDENPLAN("Stundenplanung-LehrerStundenplan", Arrays.asList(
-			erzeugeVorlageParameter("mitPausenaufsichten", ReportingVorlageParameterTyp.BOOLEAN, "false"),
 			erzeugeVorlageParameter("mitPausenzeiten", ReportingVorlageParameterTyp.BOOLEAN, "false"),
+			erzeugeVorlageParameter("mitPausenaufsichten", ReportingVorlageParameterTyp.BOOLEAN, "false"),
 			erzeugeVorlageParameter("mitFachkuerzelStattFachbezeichnung", ReportingVorlageParameterTyp.BOOLEAN, "false"))),
 
 	/** Report-Vorlage: Stundenplanung - Lehrer - Stundenplan - Kombiniert */
 	STUNDENPLANUNG_v_LEHRER_STUNDENPLAN_KOMBINIERT("Stundenplanung-LehrerStundenplanKombiniert", Arrays.asList(
-			erzeugeVorlageParameter("mitPausenaufsichten", ReportingVorlageParameterTyp.BOOLEAN, "false"),
 			erzeugeVorlageParameter("mitPausenzeiten", ReportingVorlageParameterTyp.BOOLEAN, "false"),
+			erzeugeVorlageParameter("mitPausenaufsichten", ReportingVorlageParameterTyp.BOOLEAN, "false"),
 			erzeugeVorlageParameter("mitFachkuerzelStattFachbezeichnung", ReportingVorlageParameterTyp.BOOLEAN, "false"))),
 
 	/** Report-Vorlage: Stundenplanung - Fach - Stundenplan */

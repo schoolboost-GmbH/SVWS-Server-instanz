@@ -16,7 +16,6 @@
 					</svws-ui-radio-group>
 				</div>
 				<div class="text-left">
-					<svws-ui-checkbox v-model="option4">Fach- statt Kursbezeichnung verwenden (nicht Sek-II)</svws-ui-checkbox><br>
 					<svws-ui-checkbox v-model="option8">Fachkürzel statt Fachbezeichnung verwenden</svws-ui-checkbox>
 				</div>
 			</svws-ui-input-wrapper>
@@ -34,7 +33,8 @@
 <script setup lang="ts">
 	import { ref } from 'vue';
 	import type { ApiStatus } from '~/components/ApiStatus';
-	import type { StundenplanListeEintrag, ApiFile} from '@core';
+	import type { StundenplanListeEintrag, ApiFile } from '@core';
+	import { ArrayList} from '@core';
 	import { DateUtils, ReportingParameter, ReportingReportvorlage } from '@core';
 
 	const props = defineProps<{
@@ -52,7 +52,6 @@
 	const loading = ref<boolean>(false);
 	const stundenplanAuswahl = ref<StundenplanListeEintrag>();
 	const gruppe1 = ref<0|1|2>(0);
-	const option4 = ref(false);
 	const option8 = ref(false);
 
 	async function downloadPDF() {
@@ -62,7 +61,20 @@
 		const reportingParameter = new ReportingParameter();
 		reportingParameter.reportvorlage = ReportingReportvorlage.STUNDENPLANUNG_v_LEHRER_STUNDENPLAN.getBezeichnung();
 		reportingParameter.einzelausgabeDetaildaten = false;
-		reportingParameter.detailLevel = gruppe1.value + (option4.value ? 4 : 0) + (option8.value ? 8 : 0);
+		reportingParameter.vorlageParameter = new ArrayList(ReportingReportvorlage.STUNDENPLANUNG_v_LEHRER_STUNDENPLAN.getVorlageParameterList());
+		for (const vp of reportingParameter.vorlageParameter) {
+			switch (vp.name) {
+				case "mitPausenaufsichten":
+					vp.wert = (gruppe1.value === 1).toString();
+					break;
+				case "mitPausenzeiten":
+					vp.wert = (gruppe1.value === 2).toString()
+					break;
+				case "mitFachkuerzelStattFachbezeichnung":
+					vp.wert = option8.value.toString();
+					break;
+			}
+		}
 		const { data, name } = await props.getPDF(reportingParameter, stundenplanAuswahl.value.id);
 		const link = document.createElement("a");
 		link.href = URL.createObjectURL(data);

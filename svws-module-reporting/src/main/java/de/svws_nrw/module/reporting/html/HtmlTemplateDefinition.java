@@ -148,20 +148,6 @@ public enum HtmlTemplateDefinition {
 			""",
 			List.of(BenutzerKompetenz.SCHUELER_INDIVIDUALDATEN_ANSEHEN)),
 
-	/** Report-Vorlage: GOSt - Kursplanung - Kurs - Kurschüler */
-	KURSE_v_KURS_SCHUELER_STAMMDATENLISTE(
-			ReportingReportvorlage.KURSE_v_KURS_SCHUELER_STAMMDATENLISTE,
-			"de/svws_nrw/module/reporting/",
-			"kurse/KursSchuelerStammdatenliste.html",
-			"Kurs-Schueler-Stammdatenliste",
-			"""
-			        <p th:if="${Kurse.isEmpty()}">Kurs-Schueler-Stammdatenliste"</p>
-			        <th:block th:if="${!Kurse.isEmpty()}" th:each="kurs,iterState : ${Kurse}">
-			            <p th:if="${iterState.first}" th:text="${'Kurs-Schueler-Stammdatenliste_' + #dates.format(#dates.createNow(), 'yyyyMMdd-HHmm')}"></p>
-			        </th:block>
-			""",
-			List.of(BenutzerKompetenz.SCHUELER_INDIVIDUALDATEN_ANSEHEN)),
-
 	/** Report-Vorlage: Lehrer - Stammdaten - Liste */
 	LEHRER_v_STAMMDATENLISTE(
 			ReportingReportvorlage.LEHRER_v_STAMMDATENLISTE,

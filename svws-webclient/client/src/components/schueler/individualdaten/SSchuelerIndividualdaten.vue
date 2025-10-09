@@ -421,7 +421,29 @@
 		reportingParameter.einzelausgabeDetaildaten = false;
 		reportingParameter.sortierungHauptdaten = new ReportingSortierungDefinition();
 		reportingParameter.sortierungHauptdaten.verwendeStandardsortierung = true;
-		reportingParameter.detailLevel = 8;
+		reportingParameter.vorlageParameter = new ArrayList(ReportingReportvorlage.SCHUELER_v_SCHULBESCHEINIGUNG.getVorlageParameterList());
+		for (const vp of reportingParameter.vorlageParameter) {
+			switch (vp.name) {
+				case "fuerErzieher":
+					vp.wert = false.toString();
+					break;
+				case "mitBildBriefkopf":
+					vp.wert = false.toString();
+					break;
+				case "mitSchullogo":
+					vp.wert = true.toString();
+					break;
+				case "keineAnschrift":
+					vp.wert = false.toString();
+					break;
+				case "keinInfoblock":
+					vp.wert = false.toString();
+					break;
+				case "keineUnterschrift":
+					vp.wert = false.toString();
+					break;
+			}
+		}
 
 		loading.value = true;
 		const { data, name } = await props.getPDF(reportingParameter);

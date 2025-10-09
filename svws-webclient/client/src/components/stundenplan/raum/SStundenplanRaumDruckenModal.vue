@@ -22,7 +22,8 @@
 <script setup lang="ts">
 	import { ref } from 'vue';
 	import type { ApiStatus } from '~/components/ApiStatus';
-	import type { ApiFile, StundenplanManager, StundenplanRaum} from '@core';
+	import type {ApiFile, StundenplanManager, StundenplanRaum} from '@core';
+	import { ArrayList} from '@core';
 	import { ReportingParameter, ReportingReportvorlage } from '@core';
 
 	const props = defineProps<{
@@ -46,7 +47,12 @@
 		const reportingParameter = new ReportingParameter();
 		reportingParameter.reportvorlage = ReportingReportvorlage.STUNDENPLANUNG_v_RAUM_STUNDENPLAN.getBezeichnung();
 		reportingParameter.einzelausgabeDetaildaten = false;
-		reportingParameter.detailLevel = (option2.value ? 2 : 0);
+		reportingParameter.vorlageParameter = new ArrayList(ReportingReportvorlage.STUNDENPLANUNG_v_LEHRER_STUNDENPLAN.getVorlageParameterList());
+		for (const vp of reportingParameter.vorlageParameter) {
+			if (vp.name === "mitPausenzeiten") {
+				vp.wert = option2.value.toString();
+			}
+		}
 		const { data, name } = await props.getPDF(reportingParameter, props.raum.id);
 		const link = document.createElement("a");
 		link.href = URL.createObjectURL(data);
