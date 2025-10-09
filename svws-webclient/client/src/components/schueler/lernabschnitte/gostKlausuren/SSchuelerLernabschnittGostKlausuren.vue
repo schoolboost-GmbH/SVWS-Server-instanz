@@ -63,7 +63,7 @@
 			</div>
 		</svws-ui-content-card>
 		<div v-else>
-			Es ist kein Lernabschnitt der gymnasialen Oberstufe ausgewält.
+			Es ist kein Lernabschnitt der gymnasialen Oberstufe ausgewählt.
 		</div>
 	</div>
 </template>
@@ -73,8 +73,7 @@
 	import { ref } from "vue";
 	import type { DataTableColumn } from "@ui";
 	import type { SchuelerLernabschnittGostKlausurenProps } from "./SSchuelerLernabschnittGostKlausurenProps";
-	import { GostHalbjahr, GostSchuelerklausurTermin } from "@core";
-	import { DateUtils } from "@core";
+	import { GostHalbjahr, GostSchuelerklausurTermin, DateUtils } from "@core";
 
 	const props = defineProps<SchuelerLernabschnittGostKlausurenProps>();
 
@@ -85,7 +84,9 @@
 	const createTermin = async (create: boolean) => {
 		if (create) {
 			await props.patchSchuelerklausurTermin(terminSelected.value.id, { bemerkung: terminSelected.value.bemerkung } );
-			await props.createSchuelerklausurTermin(terminSelected.value.idSchuelerklausur);
+			const sktNeu = new GostSchuelerklausurTermin();
+			sktNeu.idSchuelerklausur = terminSelected.value.idSchuelerklausur;
+			await props.createSchuelerklausurTermin(sktNeu);
 		}
 		showModalTerminGrund.value = false;
 		terminSelected.value = new GostSchuelerklausurTermin();

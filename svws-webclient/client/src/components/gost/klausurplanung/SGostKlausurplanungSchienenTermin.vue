@@ -48,9 +48,8 @@
 
 <script setup lang="ts">
 	import type { GostKlausurplanungDragData, GostKlausurplanungDropZone } from "./SGostKlausurplanung";
-	import type { GostHalbjahr, GostKlausurenCollectionSkrsKrsData} from "@core";
 	import { BenutzerKompetenz} from "@core";
-	import { type GostKlausurplanManager, GostKursklausur, type GostKlausurtermin, type List, Arrays, GostSchuelerklausurTermin} from "@core";
+	import { type GostKlausurplanManager, GostKursklausur, type GostKlausurtermin, type List, type GostHalbjahr, Arrays, GostSchuelerklausurTermin} from "@core";
 	import { computed } from 'vue';
 
 	const props = withDefaults(defineProps<{
@@ -65,7 +64,7 @@
 		onDrop: (event: DragEvent | undefined, zone: GostKlausurplanungDropZone) => Promise<void>;
 		draggable: (data: GostKlausurplanungDragData) => boolean;
 		patchKlausur: (klausur: GostKursklausur | GostSchuelerklausurTermin, patch: Partial<GostKursklausur | GostSchuelerklausurTermin>) => Promise<void>;
-		createSchuelerklausurTermin: (id: number) => Promise<void>;
+		createSchuelerklausurTermin: (skt: Partial<GostSchuelerklausurTermin>) => Promise<void>;
 		terminSelected?: boolean;
 		showSchuelerklausuren?: boolean;
 		gotoKalenderdatum: (datum: string | undefined, termin: GostKlausurtermin | undefined) => Promise<void>;

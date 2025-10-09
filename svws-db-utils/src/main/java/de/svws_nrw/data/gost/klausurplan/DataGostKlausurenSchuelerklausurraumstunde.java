@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -232,6 +233,7 @@ public final class DataGostKlausurenSchuelerklausurraumstunde
 		conn.transactionRemoveAll(stundenAlt);
 		conn.transactionFlush();
 		result.raumstundenGeloescht = new DataGostKlausurenRaumstunde(conn).removeRaumStundenInDb();
+		result.schuelerklausurterminraumstundenGeloescht = mapList(stundenAlt);
 
 		return result;
 	}
@@ -431,7 +433,7 @@ public final class DataGostKlausurenSchuelerklausurraumstunde
 
 		final GostKlausurplanManager manager = createKlausurManagerMitStundenplan(null, skts, null);
 
-		final Set<GostKlausurraum> raeume = skts.stream().map(manager::raumGetBySchuelerklausurtermin).collect(Collectors.toSet());
+		final Set<GostKlausurraum> raeume = skts.stream().map(manager::raumGetBySchuelerklausurtermin).filter(Objects::nonNull).collect(Collectors.toSet());
 
 		for (final GostKlausurraum raum : raeume)
 			result.addAll(recreateRaumstunden(new GostKlausurraumRich(raum, null), manager));

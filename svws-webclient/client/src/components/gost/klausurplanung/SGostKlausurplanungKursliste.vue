@@ -53,7 +53,7 @@
 
 <script setup lang="ts">
 	import { computed, ref, watchEffect } from 'vue';
-	import type { GostKlausurplanManager, GostKursklausur, GostKlausurtermin, GostKlausurenCollectionSkrsKrsData } from '@core';
+	import type { GostKlausurplanManager, GostKursklausur, GostKlausurtermin } from '@core';
 	import { BenutzerKompetenz, GostSchuelerklausurTermin } from '@core';
 
 	const hatKompetenzUpdate = computed<boolean>(() => props.benutzerKompetenzen.has(BenutzerKompetenz.OBERSTUFE_KLAUSURPLANUNG_AENDERN));
@@ -62,7 +62,7 @@
 		kMan: () => GostKlausurplanManager;
 		kursklausur: GostKursklausur;
 		termin?: GostKlausurtermin;
-		createSchuelerklausurTermin?: (id: number) => Promise<void>;
+		createSchuelerklausurTermin?: (skt: Partial<GostSchuelerklausurTermin>) => Promise<void>;
 		patchKlausur?: (klausur: GostKursklausur | GostSchuelerklausurTermin, patch: Partial<GostKursklausur | GostSchuelerklausurTermin>) => Promise<void>;
 		benutzerKompetenzen: Set<BenutzerKompetenz>,
 	}>(), {
@@ -89,7 +89,9 @@
 	const createTermin = async (create: boolean) => {
 		if (props.patchKlausur && props.createSchuelerklausurTermin && create) {
 			await props.patchKlausur(terminSelected.value, { bemerkung: terminSelected.value.bemerkung } );
-			await props.createSchuelerklausurTermin(terminSelected.value.idSchuelerklausur);
+			const sktNeu = new GostSchuelerklausurTermin();
+			sktNeu.idSchuelerklausur = terminSelected.value.idSchuelerklausur;
+			await props.createSchuelerklausurTermin(sktNeu);
 		}
 		show.value = false;
 		terminSelected.value = new GostSchuelerklausurTermin();

@@ -6296,7 +6296,7 @@ export class ApiServer extends BaseApi {
 
 
 	/**
-	 * Implementierung der POST-Methode getGostKlausurenCollectionAlldata für den Zugriff auf die URL https://{hostname}/db/{schema}/gost/klausuren/collection/alldata
+	 * Implementierung der POST-Methode getGostKlausurenCollectionAlldata für den Zugriff auf die URL https://{hostname}/db/{schema}/gost/klausuren/collections/alldata
 	 *
 	 * Liefert alle zur Klausurplanung gehörenden Daten in einem GostKlausurenCollectionAllData-Objekt.Dabei wird geprüft, ob der SVWS-Benutzer die notwendige Berechtigung zum Auslesen der Daten besitzt.
 	 *
@@ -6314,7 +6314,7 @@ export class ApiServer extends BaseApi {
 	 * @returns Das GostKlausurenCollectionAllData-Objekt mit den Daten der Klausurplanung für den angegebenen Abiturjahrgang und das Halbjahr.
 	 */
 	public async getGostKlausurenCollectionAlldata(data : List<GostKlausurenCollectionHjData>, schema : string) : Promise<GostKlausurenCollectionAllData> {
-		const path = "/db/{schema}/gost/klausuren/collection/alldata"
+		const path = "/db/{schema}/gost/klausuren/collections/alldata"
 			.replace(/{schema\s*(:[^{}]+({[^{}]+})*)?}/g, schema);
 		const body : string = "[" + (data.toArray() as Array<GostKlausurenCollectionHjData>).map(d => GostKlausurenCollectionHjData.transpilerToJSON(d)).join() + "]";
 		const result : string = await super.postJSON(path, body);
@@ -6324,7 +6324,7 @@ export class ApiServer extends BaseApi {
 
 
 	/**
-	 * Implementierung der POST-Methode getGostKlausurenCollectionAlldataGZip für den Zugriff auf die URL https://{hostname}/db/{schema}/gost/klausuren/collection/alldata/gzip
+	 * Implementierung der POST-Methode getGostKlausurenCollectionAlldataGZip für den Zugriff auf die URL https://{hostname}/db/{schema}/gost/klausuren/collections/alldata/gzip
 	 *
 	 * Liefert alle zur Klausurplanung gehörenden Daten in einem komprimierten GostKlausurenCollectionAllData-Objekt. Dabei wird geprüft, ob der SVWS-Benutzer die notwendige Berechtigung zum Auslesen der Daten besitzt.
 	 *
@@ -6345,7 +6345,7 @@ export class ApiServer extends BaseApi {
 	 * @returns Die GZip-komprimierten Daten der Klausurplanung für den angegebenen Abiturjahrgang und das Halbjahr.
 	 */
 	public async getGostKlausurenCollectionAlldataGZip(data : List<GostKlausurenCollectionHjData>, schema : string) : Promise<ApiFile> {
-		const path = "/db/{schema}/gost/klausuren/collection/alldata/gzip"
+		const path = "/db/{schema}/gost/klausuren/collections/alldata/gzip"
 			.replace(/{schema\s*(:[^{}]+({[^{}]+})*)?}/g, schema);
 		const body : string = "[" + (data.toArray() as Array<GostKlausurenCollectionHjData>).map(d => GostKlausurenCollectionHjData.transpilerToJSON(d)).join() + "]";
 		const result : ApiFile = await super.postJSONtoOctetStream(path, body);
@@ -6354,7 +6354,7 @@ export class ApiServer extends BaseApi {
 
 
 	/**
-	 * Implementierung der GET-Methode getGostKlausurenCollectionAllIssues für den Zugriff auf die URL https://{hostname}/db/{schema}/gost/klausuren/collection/issues/abiturjahrgang/{abiturjahr : -?\d+}/halbjahr/{halbjahr : \d+}
+	 * Implementierung der GET-Methode getGostKlausurenCollectionAllIssues für den Zugriff auf die URL https://{hostname}/db/{schema}/gost/klausuren/collections/issues/abiturjahrgang/{abiturjahr : -?\d+}/halbjahr/{halbjahr : \d+}
 	 *
 	 * Liefert alle zur Klausurplanung gehörenden Fehler und Probleme in einem GostKlausurenCollectionHjData-Objekt.Dabei wird geprüft, ob der SVWS-Benutzer die notwendige Berechtigung zum Auslesen besitzt.
 	 *
@@ -6372,7 +6372,7 @@ export class ApiServer extends BaseApi {
 	 * @returns Das GostKlausurenCollectionAllData-Objekt mit den Fehlern und Problemen der Klausurplanung für den angegebenen Abiturjahrgang und das Halbjahr.
 	 */
 	public async getGostKlausurenCollectionAllIssues(schema : string, abiturjahr : number, halbjahr : number) : Promise<GostKlausurenCollectionHjData> {
-		const path = "/db/{schema}/gost/klausuren/collection/issues/abiturjahrgang/{abiturjahr : -?\\d+}/halbjahr/{halbjahr : \\d+}"
+		const path = "/db/{schema}/gost/klausuren/collections/issues/abiturjahrgang/{abiturjahr : -?\\d+}/halbjahr/{halbjahr : \\d+}"
 			.replace(/{schema\s*(:[^{}]+({[^{}]+})*)?}/g, schema)
 			.replace(/{abiturjahr\s*(:[^{}]+({[^{}]+})*)?}/g, abiturjahr.toString())
 			.replace(/{halbjahr\s*(:[^{}]+({[^{}]+})*)?}/g, halbjahr.toString());
@@ -6383,7 +6383,7 @@ export class ApiServer extends BaseApi {
 
 
 	/**
-	 * Implementierung der GET-Methode getGostKlausurenCollectionAllIssuesGZip für den Zugriff auf die URL https://{hostname}/db/{schema}/gost/klausuren/collection/issues/abiturjahrgang/{abiturjahr : -?\d+}/halbjahr/{halbjahr : \d+}/gzip
+	 * Implementierung der GET-Methode getGostKlausurenCollectionAllIssuesGZip für den Zugriff auf die URL https://{hostname}/db/{schema}/gost/klausuren/collections/issues/abiturjahrgang/{abiturjahr : -?\d+}/halbjahr/{halbjahr : \d+}/gzip
 	 *
 	 * Liefert alle zur Klausurplanung gehörenden Fehler und Probleme in einem komprimierten GostKlausurenCollectionHjData-Objekt.Dabei wird geprüft, ob der SVWS-Benutzer die notwendige Berechtigung zum Auslesen der Blockungsdaten besitzt.
 	 *
@@ -6405,7 +6405,7 @@ export class ApiServer extends BaseApi {
 	 * @returns Das komprimierte GostKlausurenCollectionHjData-Objekt mit den Fehlern und Problemen der Klausurplanung für den angegebenen Abiturjahrgang und das Halbjahr.
 	 */
 	public async getGostKlausurenCollectionAllIssuesGZip(schema : string, abiturjahr : number, halbjahr : number) : Promise<ApiFile> {
-		const path = "/db/{schema}/gost/klausuren/collection/issues/abiturjahrgang/{abiturjahr : -?\\d+}/halbjahr/{halbjahr : \\d+}/gzip"
+		const path = "/db/{schema}/gost/klausuren/collections/issues/abiturjahrgang/{abiturjahr : -?\\d+}/halbjahr/{halbjahr : \\d+}/gzip"
 			.replace(/{schema\s*(:[^{}]+({[^{}]+})*)?}/g, schema)
 			.replace(/{abiturjahr\s*(:[^{}]+({[^{}]+})*)?}/g, abiturjahr.toString())
 			.replace(/{halbjahr\s*(:[^{}]+({[^{}]+})*)?}/g, halbjahr.toString());
@@ -6508,7 +6508,7 @@ export class ApiServer extends BaseApi {
 
 
 	/**
-	 * Implementierung der DELETE-Methode deleteGostKlausurenKursklausuren für den Zugriff auf die URL https://{hostname}/db/{schema}/gost/klausuren/kursklausuren/delete
+	 * Implementierung der DELETE-Methode deleteGostKlausurenKursklausuren für den Zugriff auf die URL https://{hostname}/db/{schema}/gost/klausuren/kursklausuren/delete/multiple
 	 *
 	 * Löscht mehrere GostKursklausuren.Dabei wird geprüft, ob der SVWS-Benutzer die notwendige Berechtigung zum Löschen einer GostKursklausur besitzt.
 	 *
@@ -6525,7 +6525,7 @@ export class ApiServer extends BaseApi {
 	 * @returns Die Kursklausuren für die angegebenen IDs wurden erfolgreich gelöscht.
 	 */
 	public async deleteGostKlausurenKursklausuren(data : List<number>, schema : string) : Promise<List<number>> {
-		const path = "/db/{schema}/gost/klausuren/kursklausuren/delete"
+		const path = "/db/{schema}/gost/klausuren/kursklausuren/delete/multiple"
 			.replace(/{schema\s*(:[^{}]+({[^{}]+})*)?}/g, schema);
 		const body : string = "[" + (data.toArray() as Array<number>).map(d => JSON.stringify(d)).join() + "]";
 		const result : string = await super.deleteJSON(path, body);
@@ -6562,6 +6562,34 @@ export class ApiServer extends BaseApi {
 
 
 	/**
+	 * Implementierung der POST-Methode createGostKlausurenRaum für den Zugriff auf die URL https://{hostname}/db/{schema}/gost/klausuren/raeume/create
+	 *
+	 * Erstellt einen neue GostKlausurraum und gibt ihn zurück.Dabei wird geprüft, ob der SVWS-Benutzer die notwendige Berechtigung zum Erstellen eines GostKlausurraums besitzt.
+	 *
+	 * Mögliche HTTP-Antworten:
+	 *   Code 201: GostKlausurraum wurde erfolgreich angelegt.
+	 *     - Mime-Type: application/json
+	 *     - Rückgabe-Typ: GostKlausurraum
+	 *   Code 400: Die Daten sind fehlerhaft aufgebaut.
+	 *   Code 403: Der SVWS-Benutzer hat keine Rechte, um einen GostKlausurraum anzulegen.
+	 *   Code 500: Unspezifizierter Fehler (z.B. beim Datenbankzugriff)
+	 *
+	 * @param {Partial<GostKlausurraum>} data - der Request-Body für die HTTP-Methode
+	 * @param {string} schema - der Pfad-Parameter schema
+	 *
+	 * @returns GostKlausurraum wurde erfolgreich angelegt.
+	 */
+	public async createGostKlausurenRaum(data : Partial<GostKlausurraum>, schema : string) : Promise<GostKlausurraum> {
+		const path = "/db/{schema}/gost/klausuren/raeume/create"
+			.replace(/{schema\s*(:[^{}]+({[^{}]+})*)?}/g, schema);
+		const body : string = GostKlausurraum.transpilerToJSONPatch(data);
+		const result : string = await super.postJSON(path, body);
+		const text = result;
+		return GostKlausurraum.transpilerFromJSON(text);
+	}
+
+
+	/**
 	 * Implementierung der DELETE-Methode deleteGostKlausurenRaum für den Zugriff auf die URL https://{hostname}/db/{schema}/gost/klausuren/raeume/delete/{id : \d+}
 	 *
 	 * Löscht einen Gost-Klausurraum.Dabei wird geprüft, ob der SVWS-Benutzer die notwendige Berechtigung zum Löschen eines Gost-Klausurraums besitzt.
@@ -6589,35 +6617,7 @@ export class ApiServer extends BaseApi {
 
 
 	/**
-	 * Implementierung der POST-Methode createGostKlausurenRaum für den Zugriff auf die URL https://{hostname}/db/{schema}/gost/klausuren/raeume/new
-	 *
-	 * Erstellt einen neue GostKlausurraum und gibt ihn zurück.Dabei wird geprüft, ob der SVWS-Benutzer die notwendige Berechtigung zum Erstellen eines GostKlausurraums besitzt.
-	 *
-	 * Mögliche HTTP-Antworten:
-	 *   Code 201: GostKlausurraum wurde erfolgreich angelegt.
-	 *     - Mime-Type: application/json
-	 *     - Rückgabe-Typ: GostKlausurraum
-	 *   Code 400: Die Daten sind fehlerhaft aufgebaut.
-	 *   Code 403: Der SVWS-Benutzer hat keine Rechte, um einen GostKlausurraum anzulegen.
-	 *   Code 500: Unspezifizierter Fehler (z.B. beim Datenbankzugriff)
-	 *
-	 * @param {Partial<GostKlausurraum>} data - der Request-Body für die HTTP-Methode
-	 * @param {string} schema - der Pfad-Parameter schema
-	 *
-	 * @returns GostKlausurraum wurde erfolgreich angelegt.
-	 */
-	public async createGostKlausurenRaum(data : Partial<GostKlausurraum>, schema : string) : Promise<GostKlausurraum> {
-		const path = "/db/{schema}/gost/klausuren/raeume/new"
-			.replace(/{schema\s*(:[^{}]+({[^{}]+})*)?}/g, schema);
-		const body : string = GostKlausurraum.transpilerToJSONPatch(data);
-		const result : string = await super.postJSON(path, body);
-		const text = result;
-		return GostKlausurraum.transpilerFromJSON(text);
-	}
-
-
-	/**
-	 * Implementierung der GET-Methode getGostKlausurenCollectionBySchuelerid für den Zugriff auf die URL https://{hostname}/db/{schema}/gost/klausuren/schueler/{sid : -?\d+}/abiturjahrgang/{abiturjahr : -?\d+}/schuljahr/{halbjahr : \d+}
+	 * Implementierung der GET-Methode getGostKlausurenCollectionBySchuelerid für den Zugriff auf die URL https://{hostname}/db/{schema}/gost/klausuren/schueler/{sid : -?\d+}/abiturjahrgang/{abiturjahr : -?\d+}/halbjahr/{halbjahr : \d+}
 	 *
 	 * Fragt die Klausurdaten eines Schülers ab.Dabei wird geprüft, ob der SVWS-Benutzer die notwendige Berechtigung zum Auslesen besitzt.
 	 *
@@ -6637,7 +6637,7 @@ export class ApiServer extends BaseApi {
 	 * @returns Abfrage war erfolgreich.
 	 */
 	public async getGostKlausurenCollectionBySchuelerid(schema : string, sid : number, abiturjahr : number, halbjahr : number) : Promise<GostKlausurenCollectionData> {
-		const path = "/db/{schema}/gost/klausuren/schueler/{sid : -?\\d+}/abiturjahrgang/{abiturjahr : -?\\d+}/schuljahr/{halbjahr : \\d+}"
+		const path = "/db/{schema}/gost/klausuren/schueler/{sid : -?\\d+}/abiturjahrgang/{abiturjahr : -?\\d+}/halbjahr/{halbjahr : \\d+}"
 			.replace(/{schema\s*(:[^{}]+({[^{}]+})*)?}/g, schema)
 			.replace(/{sid\s*(:[^{}]+({[^{}]+})*)?}/g, sid.toString())
 			.replace(/{abiturjahr\s*(:[^{}]+({[^{}]+})*)?}/g, abiturjahr.toString())
@@ -6675,36 +6675,7 @@ export class ApiServer extends BaseApi {
 
 
 	/**
-	 * Implementierung der DELETE-Methode deleteGostKlausurenSchuelerklausuren für den Zugriff auf die URL https://{hostname}/db/{schema}/gost/klausuren/schuelerklausuren/delete
-	 *
-	 * Löscht mehrere GostSchuelerklausuren.Dabei wird geprüft, ob der SVWS-Benutzer die notwendige Berechtigung zum Löschen einer GostSchuelerklausur besitzt.
-	 *
-	 * Mögliche HTTP-Antworten:
-	 *   Code 200: Die Schülerklausuren für die angegebenen IDs wurden erfolgreich gelöscht.
-	 *     - Mime-Type: application/json
-	 *     - Rückgabe-Typ: List<Long>
-	 *   Code 403: Der SVWS-Benutzer hat keine Rechte, um eine GostSchuelerklausur zu löschen.
-	 *   Code 500: Unspezifizierter Fehler (z.B. beim Datenbankzugriff)
-	 *
-	 * @param {List<number>} data - der Request-Body für die HTTP-Methode
-	 * @param {string} schema - der Pfad-Parameter schema
-	 *
-	 * @returns Die Schülerklausuren für die angegebenen IDs wurden erfolgreich gelöscht.
-	 */
-	public async deleteGostKlausurenSchuelerklausuren(data : List<number>, schema : string) : Promise<List<number>> {
-		const path = "/db/{schema}/gost/klausuren/schuelerklausuren/delete"
-			.replace(/{schema\s*(:[^{}]+({[^{}]+})*)?}/g, schema);
-		const body : string = "[" + (data.toArray() as Array<number>).map(d => JSON.stringify(d)).join() + "]";
-		const result : string = await super.deleteJSON(path, body);
-		const obj = JSON.parse(result);
-		const ret = new ArrayList<number>();
-		obj.forEach((elem: any) => { const text : string = JSON.stringify(elem); ret.add(parseFloat(JSON.parse(text))); });
-		return ret;
-	}
-
-
-	/**
-	 * Implementierung der POST-Methode createGostKlausurenSchuelerklausuren für den Zugriff auf die URL https://{hostname}/db/{schema}/gost/klausuren/schuelerklausuren/new
+	 * Implementierung der POST-Methode createGostKlausurenSchuelerklausuren für den Zugriff auf die URL https://{hostname}/db/{schema}/gost/klausuren/schuelerklausuren/create/multiple
 	 *
 	 * Erstellt mehrere neue GostSchuelerklausuren inklusive der zugehörigen GostSchuelerklausurTermine.Dabei wird geprüft, ob der SVWS-Benutzer die notwendige Berechtigung zum Erstellen der Daten besitzt.
 	 *
@@ -6722,12 +6693,68 @@ export class ApiServer extends BaseApi {
 	 * @returns Daten wurde erfolgreich angelegt.
 	 */
 	public async createGostKlausurenSchuelerklausuren(data : List<Partial<GostSchuelerklausur>>, schema : string) : Promise<GostKlausurenCollectionData> {
-		const path = "/db/{schema}/gost/klausuren/schuelerklausuren/new"
+		const path = "/db/{schema}/gost/klausuren/schuelerklausuren/create/multiple"
 			.replace(/{schema\s*(:[^{}]+({[^{}]+})*)?}/g, schema);
 		const body : string = "[" + (data.toArray() as Array<GostSchuelerklausur>).map(d => GostSchuelerklausur.transpilerToJSONPatch(d)).join() + "]";
 		const result : string = await super.postJSON(path, body);
 		const text = result;
 		return GostKlausurenCollectionData.transpilerFromJSON(text);
+	}
+
+
+	/**
+	 * Implementierung der DELETE-Methode deleteGostKlausurenSchuelerklausuren für den Zugriff auf die URL https://{hostname}/db/{schema}/gost/klausuren/schuelerklausuren/delete/multiple
+	 *
+	 * Löscht mehrere GostSchuelerklausuren.Dabei wird geprüft, ob der SVWS-Benutzer die notwendige Berechtigung zum Löschen einer GostSchuelerklausur besitzt.
+	 *
+	 * Mögliche HTTP-Antworten:
+	 *   Code 200: Die Schülerklausuren für die angegebenen IDs wurden erfolgreich gelöscht.
+	 *     - Mime-Type: application/json
+	 *     - Rückgabe-Typ: List<Long>
+	 *   Code 403: Der SVWS-Benutzer hat keine Rechte, um eine GostSchuelerklausur zu löschen.
+	 *   Code 500: Unspezifizierter Fehler (z.B. beim Datenbankzugriff)
+	 *
+	 * @param {List<number>} data - der Request-Body für die HTTP-Methode
+	 * @param {string} schema - der Pfad-Parameter schema
+	 *
+	 * @returns Die Schülerklausuren für die angegebenen IDs wurden erfolgreich gelöscht.
+	 */
+	public async deleteGostKlausurenSchuelerklausuren(data : List<number>, schema : string) : Promise<List<number>> {
+		const path = "/db/{schema}/gost/klausuren/schuelerklausuren/delete/multiple"
+			.replace(/{schema\s*(:[^{}]+({[^{}]+})*)?}/g, schema);
+		const body : string = "[" + (data.toArray() as Array<number>).map(d => JSON.stringify(d)).join() + "]";
+		const result : string = await super.deleteJSON(path, body);
+		const obj = JSON.parse(result);
+		const ret = new ArrayList<number>();
+		obj.forEach((elem: any) => { const text : string = JSON.stringify(elem); ret.add(parseFloat(JSON.parse(text))); });
+		return ret;
+	}
+
+
+	/**
+	 * Implementierung der DELETE-Methode deleteGostKlausurenSchuelerklausurtermin für den Zugriff auf die URL https://{hostname}/db/{schema}/gost/klausuren/schuelerklausuren/termine/{id : \d+}
+	 *
+	 * Löscht einen GostSchuelerklausurTermin.Dabei wird geprüft, ob der SVWS-Benutzer die notwendige Berechtigung zum Löschen eines GostSchuelerklausurTermins besitzt.
+	 *
+	 * Mögliche HTTP-Antworten:
+	 *   Code 200: GostSchuelerklausurTermin wurde erfolgreich gelöscht.
+	 *     - Mime-Type: application/json
+	 *     - Rückgabe-Typ: Boolean
+	 *   Code 403: Der SVWS-Benutzer hat keine Rechte, um einen GostSchuelerklausurTermin zu löschen.
+	 *   Code 500: Unspezifizierter Fehler (z.B. beim Datenbankzugriff)
+	 *
+	 * @param {string} schema - der Pfad-Parameter schema
+	 * @param {number} id - der Pfad-Parameter id
+	 *
+	 * @returns GostSchuelerklausurTermin wurde erfolgreich gelöscht.
+	 */
+	public async deleteGostKlausurenSchuelerklausurtermin(schema : string, id : number) : Promise<boolean | null> {
+		const path = "/db/{schema}/gost/klausuren/schuelerklausuren/termine/{id : \\d+}"
+			.replace(/{schema\s*(:[^{}]+({[^{}]+})*)?}/g, schema)
+			.replace(/{id\s*(:[^{}]+({[^{}]+})*)?}/g, id.toString());
+		const result : string = await super.deleteJSON(path, null);
+		const text = result;
+		return (text === "true");
 	}
 
 
@@ -6791,29 +6818,30 @@ export class ApiServer extends BaseApi {
 
 
 	/**
-	 * Implementierung der DELETE-Methode deleteGostKlausurenSchuelerklausurtermin für den Zugriff auf die URL https://{hostname}/db/{schema}/gost/klausuren/schuelerklausuren/termine/delete/{id : \d+}
+	 * Implementierung der POST-Methode createGostKlausurenSchuelerklausurtermin für den Zugriff auf die URL https://{hostname}/db/{schema}/gost/klausuren/schuelerklausuren/termine/create
 	 *
-	 * Löscht einen GostSchuelerklausurTermin.Dabei wird geprüft, ob der SVWS-Benutzer die notwendige Berechtigung zum Löschen eines GostSchuelerklausurTermins besitzt.
+	 * Erstellt einen neuen GostSchuelerklausurTermin.Dabei wird geprüft, ob der SVWS-Benutzer die notwendige Berechtigung zum Erstellen eines GostSchuelerklausurTermins besitzt.
 	 *
 	 * Mögliche HTTP-Antworten:
-	 *   Code 200: GostSchuelerklausurTermin wurde erfolgreich gelöscht.
+	 *   Code 201: GostSchuelerklausurTermin wurde erfolgreich angelegt.
 	 *     - Mime-Type: application/json
-	 *     - Rückgabe-Typ: Boolean
-	 *   Code 403: Der SVWS-Benutzer hat keine Rechte, um einen GostSchuelerklausurTermin zu löschen.
+	 *     - Rückgabe-Typ: GostSchuelerklausurTermin
+	 *   Code 400: Die Daten sind fehlerhaft aufgebaut.
+	 *   Code 403: Der SVWS-Benutzer hat keine Rechte, um einen GostSchuelerklausurTermin anzulegen.
 	 *   Code 500: Unspezifizierter Fehler (z.B. beim Datenbankzugriff)
 	 *
+	 * @param {Partial<GostSchuelerklausurTermin>} data - der Request-Body für die HTTP-Methode
 	 * @param {string} schema - der Pfad-Parameter schema
-	 * @param {number} id - der Pfad-Parameter id
 	 *
-	 * @returns GostSchuelerklausurTermin wurde erfolgreich gelöscht.
+	 * @returns GostSchuelerklausurTermin wurde erfolgreich angelegt.
 	 */
-	public async deleteGostKlausurenSchuelerklausurtermin(schema : string, id : number) : Promise<boolean | null> {
-		const path = "/db/{schema}/gost/klausuren/schuelerklausuren/termine/delete/{id : \\d+}"
-			.replace(/{schema\s*(:[^{}]+({[^{}]+})*)?}/g, schema)
-			.replace(/{id\s*(:[^{}]+({[^{}]+})*)?}/g, id.toString());
-		const result : string = await super.deleteJSON(path, null);
+	public async createGostKlausurenSchuelerklausurtermin(data : Partial<GostSchuelerklausurTermin>, schema : string) : Promise<GostSchuelerklausurTermin> {
+		const path = "/db/{schema}/gost/klausuren/schuelerklausuren/termine/create"
+			.replace(/{schema\s*(:[^{}]+({[^{}]+})*)?}/g, schema);
+		const body : string = GostSchuelerklausurTermin.transpilerToJSONPatch(data);
+		const result : string = await super.postJSON(path, body);
 		const text = result;
-		return (text === "true");
+		return GostSchuelerklausurTermin.transpilerFromJSON(text);
 	}
 
 
@@ -6841,34 +6869,6 @@ export class ApiServer extends BaseApi {
 		const result : string = await super.postJSON(path, body);
 		const text = result;
 		return GostKlausurenCollectionSkrsKrsData.transpilerFromJSON(text);
-	}
-
-
-	/**
-	 * Implementierung der GET-Methode createGostKlausurenSchuelerklausurtermin für den Zugriff auf die URL https://{hostname}/db/{schema}/gost/klausuren/schuelerklausuren/termine/new/{id : \d+}
-	 *
-	 * Erstellt einen neuen GostSchuelerklausurTermin für die als ID übergebene GostSchuelerklausur und gibt ihn zurück.Dabei wird geprüft, ob der SVWS-Benutzer die notwendige Berechtigung zum Erstellen eines GostSchuelerklausurTermins besitzt.
-	 *
-	 * Mögliche HTTP-Antworten:
-	 *   Code 201: GostSchuelerklausurTermin wurde erfolgreich angelegt.
-	 *     - Mime-Type: application/json
-	 *     - Rückgabe-Typ: GostSchuelerklausurTermin
-	 *   Code 400: Die Daten sind fehlerhaft aufgebaut.
-	 *   Code 403: Der SVWS-Benutzer hat keine Rechte, um einen GostSchuelerklausurTermin anzulegen.
-	 *   Code 500: Unspezifizierter Fehler (z.B. beim Datenbankzugriff)
-	 *
-	 * @param {string} schema - der Pfad-Parameter schema
-	 * @param {number} id - der Pfad-Parameter id
-	 *
-	 * @returns GostSchuelerklausurTermin wurde erfolgreich angelegt.
-	 */
-	public async createGostKlausurenSchuelerklausurtermin(schema : string, id : number) : Promise<GostSchuelerklausurTermin> {
-		const path = "/db/{schema}/gost/klausuren/schuelerklausuren/termine/new/{id : \\d+}"
-			.replace(/{schema\s*(:[^{}]+({[^{}]+})*)?}/g, schema)
-			.replace(/{id\s*(:[^{}]+({[^{}]+})*)?}/g, id.toString());
-		const result : string = await super.getJSON(path);
-		const text = result;
-		return GostSchuelerklausurTermin.transpilerFromJSON(text);
 	}
 
 
@@ -6932,36 +6932,7 @@ export class ApiServer extends BaseApi {
 
 
 	/**
-	 * Implementierung der DELETE-Methode deleteGostKlausurenKlausurtermine für den Zugriff auf die URL https://{hostname}/db/{schema}/gost/klausuren/termine/delete
-	 *
-	 * Löscht mehrere GostKlausurtermine.Dabei wird geprüft, ob der SVWS-Benutzer die notwendige Berechtigung zum Löschen eines GostKlausurtermins besitzt.
-	 *
-	 * Mögliche HTTP-Antworten:
-	 *   Code 200: Die Klausurtermine für die angegebenen IDs wurden erfolgreich gelöscht.
-	 *     - Mime-Type: application/json
-	 *     - Rückgabe-Typ: List<Long>
-	 *   Code 403: Der SVWS-Benutzer hat keine Rechte, um einen GostKlausurtermin zu löschen.
-	 *   Code 500: Unspezifizierter Fehler (z.B. beim Datenbankzugriff)
-	 *
-	 * @param {List<number>} data - der Request-Body für die HTTP-Methode
-	 * @param {string} schema - der Pfad-Parameter schema
-	 *
-	 * @returns Die Klausurtermine für die angegebenen IDs wurden erfolgreich gelöscht.
-	 */
-	public async deleteGostKlausurenKlausurtermine(data : List<number>, schema : string) : Promise<List<number>> {
-		const path = "/db/{schema}/gost/klausuren/termine/delete"
-			.replace(/{schema\s*(:[^{}]+({[^{}]+})*)?}/g, schema);
-		const body : string = "[" + (data.toArray() as Array<number>).map(d => JSON.stringify(d)).join() + "]";
-		const result : string = await super.deleteJSON(path, body);
-		const obj = JSON.parse(result);
-		const ret = new ArrayList<number>();
-		obj.forEach((elem: any) => { const text : string = JSON.stringify(elem); ret.add(parseFloat(JSON.parse(text))); });
-		return ret;
-	}
-
-
-	/**
-	 * Implementierung der POST-Methode createGostKlausurenKlausurtermin für den Zugriff auf die URL https://{hostname}/db/{schema}/gost/klausuren/termine/new
+	 * Implementierung der POST-Methode createGostKlausurenKlausurtermin für den Zugriff auf die URL https://{hostname}/db/{schema}/gost/klausuren/termine/create
 	 *
 	 * Erstellt einen neuen Gost-Klausurtermin und gibt ihn zurück.Dabei wird geprüft, ob der SVWS-Benutzer die notwendige Berechtigung zum Erstellen eines Gost-Klausurtermins besitzt.
 	 *
@@ -6979,12 +6950,41 @@ export class ApiServer extends BaseApi {
 	 * @returns Gost-Klausurtermin wurde erfolgreich angelegt.
 	 */
 	public async createGostKlausurenKlausurtermin(data : Partial<GostKlausurtermin>, schema : string) : Promise<GostKlausurtermin> {
-		const path = "/db/{schema}/gost/klausuren/termine/new"
+		const path = "/db/{schema}/gost/klausuren/termine/create"
 			.replace(/{schema\s*(:[^{}]+({[^{}]+})*)?}/g, schema);
 		const body : string = GostKlausurtermin.transpilerToJSONPatch(data);
 		const result : string = await super.postJSON(path, body);
 		const text = result;
 		return GostKlausurtermin.transpilerFromJSON(text);
+	}
+
+
+	/**
+	 * Implementierung der DELETE-Methode deleteGostKlausurenKlausurtermine für den Zugriff auf die URL https://{hostname}/db/{schema}/gost/klausuren/termine/delete/multiple
+	 *
+	 * Löscht mehrere GostKlausurtermine.Dabei wird geprüft, ob der SVWS-Benutzer die notwendige Berechtigung zum Löschen eines GostKlausurtermins besitzt.
+	 *
+	 * Mögliche HTTP-Antworten:
+	 *   Code 200: Die Klausurtermine für die angegebenen IDs wurden erfolgreich gelöscht.
+	 *     - Mime-Type: application/json
+	 *     - Rückgabe-Typ: List<Long>
+	 *   Code 403: Der SVWS-Benutzer hat keine Rechte, um einen GostKlausurtermin zu löschen.
+	 *   Code 500: Unspezifizierter Fehler (z.B. beim Datenbankzugriff)
+	 *
+	 * @param {List<number>} data - der Request-Body für die HTTP-Methode
+	 * @param {string} schema - der Pfad-Parameter schema
+	 *
+	 * @returns Die Klausurtermine für die angegebenen IDs wurden erfolgreich gelöscht.
+	 */
+	public async deleteGostKlausurenKlausurtermine(data : List<number>, schema : string) : Promise<List<number>> {
+		const path = "/db/{schema}/gost/klausuren/termine/delete/multiple"
+			.replace(/{schema\s*(:[^{}]+({[^{}]+})*)?}/g, schema);
+		const body : string = "[" + (data.toArray() as Array<number>).map(d => JSON.stringify(d)).join() + "]";
+		const result : string = await super.deleteJSON(path, body);
+		const obj = JSON.parse(result);
+		const ret = new ArrayList<number>();
+		obj.forEach((elem: any) => { const text : string = JSON.stringify(elem); ret.add(parseFloat(JSON.parse(text))); });
+		return ret;
 	}
 
 
@@ -7037,6 +7037,29 @@ export class ApiServer extends BaseApi {
 
 
 	/**
+	 * Implementierung der DELETE-Methode deleteGostKlausurenVorgabe für den Zugriff auf die URL https://{hostname}/db/{schema}/gost/klausuren/vorgaben/{id : \d+}
+	 *
+	 * Löscht eine Gost-Klausurvorgabe.Dabei wird geprüft, ob der SVWS-Benutzer die notwendige Berechtigung zum Löschen einer Gost-Klausurvorgabe besitzt.
+	 *
+	 * Mögliche HTTP-Antworten:
+	 *   Code 200: Die Klausurvorgabe für die angegebene ID wurden erfolgreich gelöscht.
+	 *   Code 403: Der SVWS-Benutzer hat keine Rechte, um eine Gost-Klausurvorgabe zu löschen.
+	 *   Code 404: Die Gost-Klausurvorgabe wurde nicht gefunden.
+	 *   Code 500: Unspezifizierter Fehler (z.B. beim Datenbankzugriff)
+	 *
+	 * @param {string} schema - der Pfad-Parameter schema
+	 * @param {number} id - der Pfad-Parameter id
+	 */
+	public async deleteGostKlausurenVorgabe(schema : string, id : number) : Promise<void> {
+		const path = "/db/{schema}/gost/klausuren/vorgaben/{id : \\d+}"
+			.replace(/{schema\s*(:[^{}]+({[^{}]+})*)?}/g, schema)
+			.replace(/{id\s*(:[^{}]+({[^{}]+})*)?}/g, id.toString());
+		await super.deleteJSON(path, null);
+		return;
+	}
+
+
+	/**
 	 * Implementierung der GET-Methode getGostKlausurenVorgabenJahrgang für den Zugriff auf die URL https://{hostname}/db/{schema}/gost/klausuren/vorgaben/abiturjahrgang/{abiturjahr : -?\d+}
 	 *
 	 * Liefert die Klausurvorgaben eines Abiturjahrgangs der gymnasialen Oberstufe. Dabei wird geprüft, ob der SVWS-Benutzer die notwendige Berechtigung zum Auslesen besitzt.
@@ -7067,7 +7090,36 @@ export class ApiServer extends BaseApi {
 
 
 	/**
-	 * Implementierung der GET-Methode copyGostKlausurenVorgaben für den Zugriff auf die URL https://{hostname}/db/{schema}/gost/klausuren/vorgaben/copyVorlagen/abiturjahrgang/{abiturjahr : -?\d+}/halbjahr/{halbjahr : -?\d+}/quartal/{quartal : -?\d+}
+	 * Implementierung der POST-Methode createGostKlausurenVorgabe für den Zugriff auf die URL https://{hostname}/db/{schema}/gost/klausuren/vorgaben/create
+	 *
+	 * Erstellt eine neue Gost-Klausurvorgabe und gibt sie zurück.Dabei wird geprüft, ob der SVWS-Benutzer die notwendige Berechtigung zum Erstellen einer Gost-Klausurvorgabe besitzt.
+	 *
+	 * Mögliche HTTP-Antworten:
+	 *   Code 201: Gost-Klausurvorgabe wurde erfolgreich angelegt.
+	 *     - Mime-Type: application/json
+	 *     - Rückgabe-Typ: GostKlausurvorgabe
+	 *   Code 400: Die Daten sind fehlerhaft aufgebaut.
+	 *   Code 403: Der SVWS-Benutzer hat keine Rechte, um eine Gost-Klausurvorgabe anzulegen.
+	 *   Code 409: Die Gost-Klausurvorgabe ist schon in der Datenbank enthalten.
+	 *   Code 500: Unspezifizierter Fehler (z.B. beim Datenbankzugriff)
+	 *
+	 * @param {Partial<GostKlausurvorgabe>} data - der Request-Body für die HTTP-Methode
+	 * @param {string} schema - der Pfad-Parameter schema
+	 *
+	 * @returns Gost-Klausurvorgabe wurde erfolgreich angelegt.
+	 */
+	public async createGostKlausurenVorgabe(data : Partial<GostKlausurvorgabe>, schema : string) : Promise<GostKlausurvorgabe> {
+		const path = "/db/{schema}/gost/klausuren/vorgaben/create"
+			.replace(/{schema\s*(:[^{}]+({[^{}]+})*)?}/g, schema);
+		const body : string = GostKlausurvorgabe.transpilerToJSONPatch(data);
+		const result : string = await super.postJSON(path, body);
+		const text = result;
+		return GostKlausurvorgabe.transpilerFromJSON(text);
+	}
+
+
+	/**
+	 * Implementierung der GET-Methode copyGostKlausurenVorgaben für den Zugriff auf die URL https://{hostname}/db/{schema}/gost/klausuren/vorgaben/vorlagen/copyto/abiturjahrgang/{abiturjahr : -?\d+}/halbjahr/{halbjahr : -?\d+}/quartal/{quartal : -?\d+}
 	 *
 	 * Kopiert die Klausurvorgabe-Vorlagen in einen konkreten Abiturjahrgang und gibt sie zurück.Dabei wird geprüft, ob der SVWS-Benutzer die notwendige Berechtigung zum Anlegen der Gost-Klausurvorgaben besitzt.
 	 *
@@ -7087,7 +7139,7 @@ export class ApiServer extends BaseApi {
 	 * @returns Die Liste der neuen Klausurvorgaben.
 	 */
 	public async copyGostKlausurenVorgaben(schema : string, abiturjahr : number, halbjahr : number, quartal : number) : Promise<List<GostKlausurvorgabe>> {
-		const path = "/db/{schema}/gost/klausuren/vorgaben/copyVorlagen/abiturjahrgang/{abiturjahr : -?\\d+}/halbjahr/{halbjahr : -?\\d+}/quartal/{quartal : -?\\d+}"
+		const path = "/db/{schema}/gost/klausuren/vorgaben/vorlagen/copyto/abiturjahrgang/{abiturjahr : -?\\d+}/halbjahr/{halbjahr : -?\\d+}/quartal/{quartal : -?\\d+}"
 			.replace(/{schema\s*(:[^{}]+({[^{}]+})*)?}/g, schema)
 			.replace(/{abiturjahr\s*(:[^{}]+({[^{}]+})*)?}/g, abiturjahr.toString())
 			.replace(/{halbjahr\s*(:[^{}]+({[^{}]+})*)?}/g, halbjahr.toString())
@@ -7101,7 +7153,7 @@ export class ApiServer extends BaseApi {
 
 
 	/**
-	 * Implementierung der GET-Methode createGostKlausurenDefaultVorgaben für den Zugriff auf die URL https://{hostname}/db/{schema}/gost/klausuren/vorgaben/createDefault/halbjahr/{halbjahr : -?\d+}/quartal/{quartal : -?\d+}
+	 * Implementierung der GET-Methode createGostKlausurenDefaultVorgaben für den Zugriff auf die URL https://{hostname}/db/{schema}/gost/klausuren/vorgaben/vorlagen/create/halbjahr/{halbjahr : -?\d+}/quartal/{quartal : -?\d+}
 	 *
 	 * Legt die Default-Klausurvorgaben im Vorlagen-Jahrgang an und gibt sie zurück.Dabei wird geprüft, ob der SVWS-Benutzer die notwendige Berechtigung zum Erstellen einer Gost-Klausurvorgabe besitzt.
 	 *
@@ -7120,7 +7172,7 @@ export class ApiServer extends BaseApi {
 	 * @returns Die Liste der neuen Klausurvorgaben.
 	 */
 	public async createGostKlausurenDefaultVorgaben(schema : string, halbjahr : number, quartal : number) : Promise<List<GostKlausurvorgabe>> {
-		const path = "/db/{schema}/gost/klausuren/vorgaben/createDefault/halbjahr/{halbjahr : -?\\d+}/quartal/{quartal : -?\\d+}"
+		const path = "/db/{schema}/gost/klausuren/vorgaben/vorlagen/create/halbjahr/{halbjahr : -?\\d+}/quartal/{quartal : -?\\d+}"
 			.replace(/{schema\s*(:[^{}]+({[^{}]+})*)?}/g, schema)
 			.replace(/{halbjahr\s*(:[^{}]+({[^{}]+})*)?}/g, halbjahr.toString())
 			.replace(/{quartal\s*(:[^{}]+({[^{}]+})*)?}/g, quartal.toString());
@@ -7129,58 +7181,6 @@ export class ApiServer extends BaseApi {
 		const ret = new ArrayList<GostKlausurvorgabe>();
 		obj.forEach((elem: any) => { const text : string = JSON.stringify(elem); ret.add(GostKlausurvorgabe.transpilerFromJSON(text)); });
 		return ret;
-	}
-
-
-	/**
-	 * Implementierung der DELETE-Methode deleteGostKlausurenVorgabe für den Zugriff auf die URL https://{hostname}/db/{schema}/gost/klausuren/vorgaben/delete/{id : \d+}
-	 *
-	 * Löscht eine Gost-Klausurvorgabe.Dabei wird geprüft, ob der SVWS-Benutzer die notwendige Berechtigung zum Löschen einer Gost-Klausurvorgabe besitzt.
-	 *
-	 * Mögliche HTTP-Antworten:
-	 *   Code 200: Die Klausurvorgabe für die angegebene ID wurden erfolgreich gelöscht.
-	 *   Code 403: Der SVWS-Benutzer hat keine Rechte, um eine Gost-Klausurvorgabe zu löschen.
-	 *   Code 404: Die Gost-Klausurvorgabe wurde nicht gefunden.
-	 *   Code 500: Unspezifizierter Fehler (z.B. beim Datenbankzugriff)
-	 *
-	 * @param {string} schema - der Pfad-Parameter schema
-	 * @param {number} id - der Pfad-Parameter id
-	 */
-	public async deleteGostKlausurenVorgabe(schema : string, id : number) : Promise<void> {
-		const path = "/db/{schema}/gost/klausuren/vorgaben/delete/{id : \\d+}"
-			.replace(/{schema\s*(:[^{}]+({[^{}]+})*)?}/g, schema)
-			.replace(/{id\s*(:[^{}]+({[^{}]+})*)?}/g, id.toString());
-		await super.deleteJSON(path, null);
-		return;
-	}
-
-
-	/**
-	 * Implementierung der POST-Methode createGostKlausurenVorgabe für den Zugriff auf die URL https://{hostname}/db/{schema}/gost/klausuren/vorgaben/new
-	 *
-	 * Erstellt eine neue Gost-Klausurvorgabe und gibt sie zurück.Dabei wird geprüft, ob der SVWS-Benutzer die notwendige Berechtigung zum Erstellen einer Gost-Klausurvorgabe besitzt.
-	 *
-	 * Mögliche HTTP-Antworten:
-	 *   Code 201: Gost-Klausurvorgabe wurde erfolgreich angelegt.
-	 *     - Mime-Type: application/json
-	 *     - Rückgabe-Typ: GostKlausurvorgabe
-	 *   Code 400: Die Daten sind fehlerhaft aufgebaut.
-	 *   Code 403: Der SVWS-Benutzer hat keine Rechte, um eine Gost-Klausurvorgabe anzulegen.
-	 *   Code 409: Die Gost-Klausurvorgabe ist schon in der Datenbank enthalten.
-	 *   Code 500: Unspezifizierter Fehler (z.B. beim Datenbankzugriff)
-	 *
-	 * @param {Partial<GostKlausurvorgabe>} data - der Request-Body für die HTTP-Methode
-	 * @param {string} schema - der Pfad-Parameter schema
-	 *
-	 * @returns Gost-Klausurvorgabe wurde erfolgreich angelegt.
-	 */
-	public async createGostKlausurenVorgabe(data : Partial<GostKlausurvorgabe>, schema : string) : Promise<GostKlausurvorgabe> {
-		const path = "/db/{schema}/gost/klausuren/vorgaben/new"
-			.replace(/{schema\s*(:[^{}]+({[^{}]+})*)?}/g, schema);
-		const body : string = GostKlausurvorgabe.transpilerToJSONPatch(data);
-		const result : string = await super.postJSON(path, body);
-		const text = result;
-		return GostKlausurvorgabe.transpilerFromJSON(text);
 	}
 
 

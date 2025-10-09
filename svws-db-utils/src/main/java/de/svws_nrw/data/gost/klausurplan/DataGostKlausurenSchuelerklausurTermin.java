@@ -56,7 +56,7 @@ public final class DataGostKlausurenSchuelerklausurTermin
 	public DataGostKlausurenSchuelerklausurTermin(final DBEntityManager conn) {
 		super(conn);
 		super.setAttributesNotPatchable("id", "idSchuelerklausur", "folgeNr");
-		super.setAttributesRequiredOnCreation("idSchuelerklausur", "folgeNr");
+		super.setAttributesRequiredOnCreation("idSchuelerklausur");
 	}
 
 	@Override
@@ -130,30 +130,23 @@ public final class DataGostKlausurenSchuelerklausurTermin
 	}
 
 	/**
-	 * Erstellt einen neuen Gost-Schuelerklausurtermin
-	 *
-	 * @param id   die ID der Schülerklausur
-	 *
-	 * @return Eine Response mit dem neuen Gost-Klausurtermin
-	 *
-	 * @throws ApiOperationException   im Fehlerfall
+	 * Liest für die Schülerklausur den letzten Schülerklausurtermin aus, löscht die Raumstunden für diesen Termin und setzt die neue Folgenummer des Termins.
+	 * @param newID die neue ID für das DTO
+	 * @param initAttributes   die Map mit den initialen Attributen für das neue DTO
 	 */
-	public Response create(final long id) throws ApiOperationException {
+	@Override
+	public void checkBeforeCreation(final Long newID, final Map<String, Object> initAttributes) throws ApiOperationException {
 		final DTOGostKlausurenSchuelerklausurenTermine lastTermin = conn
 				.query("SELECT skt FROM DTOGostKlausurenSchuelerklausurenTermine skt WHERE skt.Schuelerklausur_ID = :skid ORDER BY skt.Folge_Nr DESC",
 						DTOGostKlausurenSchuelerklausurenTermine.class)
-				.setParameter("skid", id)
+				.setParameter("skid", initAttributes.get("idSchuelerklausur"))
 				.setMaxResults(1)
 				.getSingleResult();
 		final List<DTOGostKlausurenSchuelerklausurenTermineRaumstunden> raumstunden = conn.queryList(
 				DTOGostKlausurenSchuelerklausurenTermineRaumstunden.QUERY_BY_SCHUELERKLAUSURTERMIN_ID,
 				DTOGostKlausurenSchuelerklausurenTermineRaumstunden.class, lastTermin.ID);
 		conn.transactionRemoveAll(raumstunden);
-
-		final Map<String, Object> initAttributes = new HashMap<>();
-		initAttributes.put("idSchuelerklausur", id);
 		initAttributes.put("folgeNr", lastTermin.Folge_Nr + 1);
-		return addFromMapAsResponse(initAttributes);
 	}
 
 	/**

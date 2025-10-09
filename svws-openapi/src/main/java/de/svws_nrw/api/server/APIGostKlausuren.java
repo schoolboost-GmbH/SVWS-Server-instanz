@@ -112,7 +112,7 @@ public class APIGostKlausuren {
 	 * @return 			 die HTTP-Antwort mit der neuen {@link GostKlausurvorgabe}
 	 */
 	@POST
-	@Path("/vorgaben/new")
+	@Path("/vorgaben/create")
 	@Operation(summary = "Erstellt eine neue Gost-Klausurvorgabe und gibt sie zurück.",
 			description = "Erstellt eine neue Gost-Klausurvorgabe und gibt sie zurück."
 					+ "Dabei wird geprüft, ob der SVWS-Benutzer die notwendige Berechtigung zum Erstellen einer Gost-Klausurvorgabe besitzt.")
@@ -172,7 +172,7 @@ public class APIGostKlausuren {
 	 * @return die HTTP-Antwort
 	 */
 	@DELETE
-	@Path("/vorgaben/delete/{id : \\d+}")
+	@Path("/vorgaben/{id : \\d+}")
 	@Operation(summary = "Löscht eine Gost-Klausurvorgabe.", description = "Löscht eine Gost-Klausurvorgabe."
 			+ "Dabei wird geprüft, ob der SVWS-Benutzer die notwendige Berechtigung zum Löschen einer Gost-Klausurvorgabe besitzt.")
 	@ApiResponse(responseCode = "200", description = "Die Klausurvorgabe für die angegebene ID wurden erfolgreich gelöscht.")
@@ -199,7 +199,7 @@ public class APIGostKlausuren {
 	 * @return die Liste der neuen {@link GostKlausurvorgabe}n im angegebenen Abiturjahrgang, GostHalbjahr und Quartal
 	 */
 	@GET
-	@Path("/vorgaben/copyVorlagen/abiturjahrgang/{abiturjahr : -?\\d+}/halbjahr/{halbjahr : -?\\d+}/quartal/{quartal : -?\\d+}")
+	@Path("/vorgaben/vorlagen/copyto/abiturjahrgang/{abiturjahr : -?\\d+}/halbjahr/{halbjahr : -?\\d+}/quartal/{quartal : -?\\d+}")
 	@Operation(summary = "Kopiert die Klausurvorgabe-Vorlagen in einen konkreten Abiturjahrgang und gibt sie zurück.",
 			description = "Kopiert die Klausurvorgabe-Vorlagen in einen konkreten Abiturjahrgang und gibt sie zurück."
 					+ "Dabei wird geprüft, ob der SVWS-Benutzer die notwendige Berechtigung zum Anlegen der Gost-Klausurvorgaben besitzt.")
@@ -229,7 +229,7 @@ public class APIGostKlausuren {
 	 * @return die Liste der neuen {@link GostKlausurvorgabe}n im Vorlagen-Jahrgang, GostHalbjahr und Quartal
 	 */
 	@GET
-	@Path("/vorgaben/createDefault/halbjahr/{halbjahr : -?\\d+}/quartal/{quartal : -?\\d+}")
+	@Path("/vorgaben/vorlagen/create/halbjahr/{halbjahr : -?\\d+}/quartal/{quartal : -?\\d+}")
 	@Operation(summary = "Legt die Default-Klausurvorgaben im Vorlagen-Jahrgang an und gibt sie zurück.",
 			description = "Legt die Default-Klausurvorgaben im Vorlagen-Jahrgang an und gibt sie zurück."
 					+ "Dabei wird geprüft, ob der SVWS-Benutzer die notwendige Berechtigung zum Erstellen einer Gost-Klausurvorgabe besitzt.")
@@ -353,7 +353,7 @@ public class APIGostKlausuren {
 	 * @return das {@link GostKlausurenCollectionAllData}-Objekt mit den Daten zur Klausurplanung
 	 */
 	@POST
-	@Path("/collection/alldata")
+	@Path("/collections/alldata")
 	@Operation(summary = "Liefert alle zur Klausurplanung gehörenden Daten in einem GostKlausurenCollectionAllData-Objekt.",
 			description = "Liefert alle zur Klausurplanung gehörenden Daten in einem GostKlausurenCollectionAllData-Objekt."
 					+ "Dabei wird geprüft, ob der SVWS-Benutzer die notwendige Berechtigung zum Auslesen der Daten besitzt.")
@@ -385,7 +385,7 @@ public class APIGostKlausuren {
 	 */
 	@POST
 	@Produces(MediaType.APPLICATION_OCTET_STREAM)
-	@Path("/collection/alldata/gzip")
+	@Path("/collections/alldata/gzip")
 	@Operation(summary = "Liefert alle zur Klausurplanung gehörenden Daten in einem komprimierten GostKlausurenCollectionAllData-Objekt.",
 			description = "Liefert alle zur Klausurplanung gehörenden Daten in einem komprimierten GostKlausurenCollectionAllData-Objekt. "
 					+ "Dabei wird geprüft, ob der SVWS-Benutzer die notwendige Berechtigung zum Auslesen der Daten besitzt.")
@@ -417,7 +417,7 @@ public class APIGostKlausuren {
 	 * @return das {@link GostKlausurenCollectionHjData}-Objekt mit den Fehlern und Problemen zur Klausurplanung
 	 */
 	@GET
-	@Path("/collection/issues/abiturjahrgang/{abiturjahr : -?\\d+}/halbjahr/{halbjahr : \\d+}")
+	@Path("/collections/issues/abiturjahrgang/{abiturjahr : -?\\d+}/halbjahr/{halbjahr : \\d+}")
 	@Operation(summary = "Liefert alle zur Klausurplanung gehörenden Fehler und Probleme in einem GostKlausurenCollectionHjData-Objekt.",
 			description = "Liefert alle zur Klausurplanung gehörenden Fehler und Probleme in einem GostKlausurenCollectionHjData-Objekt."
 					+ "Dabei wird geprüft, ob der SVWS-Benutzer die notwendige Berechtigung zum Auslesen besitzt.")
@@ -449,7 +449,7 @@ public class APIGostKlausuren {
 	 */
 	@GET
 	@Produces(MediaType.APPLICATION_OCTET_STREAM)
-	@Path("/collection/issues/abiturjahrgang/{abiturjahr : -?\\d+}/halbjahr/{halbjahr : \\d+}/gzip")
+	@Path("/collections/issues/abiturjahrgang/{abiturjahr : -?\\d+}/halbjahr/{halbjahr : \\d+}/gzip")
 	@Operation(summary = "Liefert alle zur Klausurplanung gehörenden Fehler und Probleme in einem komprimierten GostKlausurenCollectionHjData-Objekt.",
 			description = "Liefert alle zur Klausurplanung gehörenden Fehler und Probleme in einem komprimierten GostKlausurenCollectionHjData-Objekt."
 					+ "Dabei wird geprüft, ob der SVWS-Benutzer die notwendige Berechtigung zum Auslesen der Blockungsdaten besitzt.")
@@ -479,7 +479,7 @@ public class APIGostKlausuren {
 	 * @return der neue {@link GostKlausurtermin}
 	 */
 	@POST
-	@Path("/termine/new")
+	@Path("/termine/create")
 	@Operation(summary = "Erstellt einen neuen Gost-Klausurtermin und gibt ihn zurück.",
 			description = "Erstellt einen neuen Gost-Klausurtermin und gibt ihn zurück."
 					+ "Dabei wird geprüft, ob der SVWS-Benutzer die notwendige Berechtigung zum Erstellen eines Gost-Klausurtermins " + "besitzt.")
@@ -507,7 +507,7 @@ public class APIGostKlausuren {
 	 * @return das {@link GostKlausurenCollectionData}-Objekt mit den neuen {@link GostSchuelerklausur}en inklusive der zugehörigen {@link GostSchuelerklausurTermin}e
 	 */
 	@POST
-	@Path("/schuelerklausuren/new")
+	@Path("/schuelerklausuren/create/multiple")
 	@Operation(summary = "Erstellt mehrere neue GostSchuelerklausuren inklusive der zugehörigen GostSchuelerklausurTermine.",
 			description = "Erstellt mehrere neue GostSchuelerklausuren inklusive der zugehörigen GostSchuelerklausurTermine."
 					+ "Dabei wird geprüft, ob der SVWS-Benutzer die notwendige Berechtigung zum Erstellen der Daten besitzt.")
@@ -536,7 +536,7 @@ public class APIGostKlausuren {
 	 * @return die HTTP-Antwort mit dem Status und ggf. den gelöschten GostKursklausuren
 	 */
 	@DELETE
-	@Path("/kursklausuren/delete")
+	@Path("/kursklausuren/delete/multiple")
 	@Operation(summary = "Löscht mehrere GostKursklausuren.", description = "Löscht mehrere GostKursklausuren."
 			+ "Dabei wird geprüft, ob der SVWS-Benutzer die notwendige Berechtigung zum Löschen einer GostKursklausur " + "besitzt.")
 	@ApiResponse(responseCode = "200", description = "Die Kursklausuren für die angegebenen IDs wurden erfolgreich gelöscht.",
@@ -563,7 +563,7 @@ public class APIGostKlausuren {
 	 * @return die HTTP-Antwort mit dem Status und ggf. den gelöschten Klausurterminen
 	 */
 	@DELETE
-	@Path("/termine/delete")
+	@Path("/termine/delete/multiple")
 	@Operation(summary = "Löscht mehrere GostKlausurtermine.", description = "Löscht mehrere GostKlausurtermine."
 			+ "Dabei wird geprüft, ob der SVWS-Benutzer die notwendige Berechtigung zum Löschen eines GostKlausurtermins " + "besitzt.")
 	@ApiResponse(responseCode = "200", description = "Die Klausurtermine für die angegebenen IDs wurden erfolgreich gelöscht.",
@@ -590,7 +590,7 @@ public class APIGostKlausuren {
 	 * @return die HTTP-Antwort mit dem Status und ggf. den gelöschten Schuelerklausuren
 	 */
 	@DELETE
-	@Path("/schuelerklausuren/delete")
+	@Path("/schuelerklausuren/delete/multiple")
 	@Operation(summary = "Löscht mehrere GostSchuelerklausuren.", description = "Löscht mehrere GostSchuelerklausuren."
 			+ "Dabei wird geprüft, ob der SVWS-Benutzer die notwendige Berechtigung zum Löschen einer GostSchuelerklausur " + "besitzt.")
 	@ApiResponse(responseCode = "200", description = "Die Schülerklausuren für die angegebenen IDs wurden erfolgreich gelöscht.",
@@ -648,7 +648,7 @@ public class APIGostKlausuren {
 	 * @return der neue {@link GostKlausurraum}
 	 */
 	@POST
-	@Path("/raeume/new")
+	@Path("/raeume/create")
 	@Operation(summary = "Erstellt einen neue GostKlausurraum und gibt ihn zurück.", description = "Erstellt einen neue GostKlausurraum und gibt ihn zurück."
 			+ "Dabei wird geprüft, ob der SVWS-Benutzer die notwendige Berechtigung zum Erstellen eines GostKlausurraums besitzt.")
 	@ApiResponse(responseCode = "201", description = "GostKlausurraum wurde erfolgreich angelegt.",
@@ -656,7 +656,8 @@ public class APIGostKlausuren {
 	@ApiResponse(responseCode = "400", description = "Die Daten sind fehlerhaft aufgebaut.")
 	@ApiResponse(responseCode = "403", description = "Der SVWS-Benutzer hat keine Rechte, um einen GostKlausurraum anzulegen.")
 	@ApiResponse(responseCode = "500", description = "Unspezifizierter Fehler (z.B. beim Datenbankzugriff)")
-	public Response createGostKlausurenRaum(@PathParam("schema") final String schema,
+	public Response createGostKlausurenRaum(
+			@PathParam("schema") final String schema,
 			@RequestBody(description = "Der Post für den GostKlausurraum", required = true, content = @Content(mediaType = MediaType.APPLICATION_JSON,
 					schema = @Schema(implementation = GostKlausurraum.class))) final InputStream is,
 			@Context final HttpServletRequest request) {
@@ -847,7 +848,7 @@ public class APIGostKlausuren {
 	 * @return das {@link GostKlausurenCollectionData}-Objekt mit den Klausurdaten des Schülers
 	 */
 	@GET
-	@Path("/schueler/{sid : -?\\d+}/abiturjahrgang/{abiturjahr : -?\\d+}/schuljahr/{halbjahr : \\d+}")
+	@Path("/schueler/{sid : -?\\d+}/abiturjahrgang/{abiturjahr : -?\\d+}/halbjahr/{halbjahr : \\d+}")
 	@Operation(summary = "Fragt die Klausurdaten eines Schülers ab.",
 			description = "Fragt die Klausurdaten eines Schülers ab."
 					+ "Dabei wird geprüft, ob der SVWS-Benutzer die notwendige Berechtigung zum Auslesen besitzt.")
@@ -871,24 +872,28 @@ public class APIGostKlausuren {
 	 *
 	 * @param schema    das Datenbankschema, in welchem der {@link GostSchuelerklausurTermin} erstellt wird
 	 * @param request   die Informationen zur HTTP-Anfrage
-	 * @param id        die ID der {@link GostSchuelerklausur}, zu der ein neuer {@link GostSchuelerklausurTermin} generiert werden soll.
+	 * @param is         JSON-Objekt mit den Daten
 	 *
 	 * @return die HTTP-Antwort mit dem neuen {@link GostSchuelerklausurTermin}
 	 */
-	@GET
-	@Path("/schuelerklausuren/termine/new/{id : \\d+}")
-	@Operation(summary = "Erstellt einen neuen GostSchuelerklausurTermin für die als ID übergebene GostSchuelerklausur und gibt ihn zurück.",
-			description = "Erstellt einen neuen GostSchuelerklausurTermin für die als ID übergebene GostSchuelerklausur und gibt ihn zurück."
+	@POST
+	@Path("/schuelerklausuren/termine/create")
+	@Operation(summary = "Erstellt einen neuen GostSchuelerklausurTermin.",
+			description = "Erstellt einen neuen GostSchuelerklausurTermin."
 					+ "Dabei wird geprüft, ob der SVWS-Benutzer die notwendige Berechtigung zum Erstellen eines GostSchuelerklausurTermins " + "besitzt.")
 	@ApiResponse(responseCode = "201", description = "GostSchuelerklausurTermin wurde erfolgreich angelegt.",
 			content = @Content(mediaType = MediaType.APPLICATION_JSON, schema = @Schema(implementation = GostSchuelerklausurTermin.class)))
 	@ApiResponse(responseCode = "400", description = "Die Daten sind fehlerhaft aufgebaut.")
 	@ApiResponse(responseCode = "403", description = "Der SVWS-Benutzer hat keine Rechte, um einen GostSchuelerklausurTermin anzulegen.")
 	@ApiResponse(responseCode = "500", description = "Unspezifizierter Fehler (z.B. beim Datenbankzugriff)")
-	public Response createGostKlausurenSchuelerklausurtermin(@PathParam("schema") final String schema, @PathParam("id") final long id,
+	public Response createGostKlausurenSchuelerklausurtermin(
+			@PathParam("schema") final String schema,
+			@RequestBody(description = "Der Post für den GostKlausurraum", required = true, content = @Content(mediaType = MediaType.APPLICATION_JSON,
+					schema = @Schema(implementation = GostSchuelerklausurTermin.class))) final InputStream is,
 			@Context final HttpServletRequest request) {
-		return DBBenutzerUtils.runWithTransaction(conn -> new DataGostKlausurenSchuelerklausurTermin(conn).create(id),
-				request, ServerMode.STABLE,
+		return DBBenutzerUtils.runWithTransaction(conn -> new DataGostKlausurenSchuelerklausurTermin(conn).addAsResponse(is),
+				request,
+				ServerMode.STABLE,
 				BenutzerKompetenz.OBERSTUFE_KLAUSURPLANUNG_AENDERN);
 	}
 
@@ -902,7 +907,7 @@ public class APIGostKlausuren {
 	 * @return die HTTP-Antwort mit dem Status und ggf. dem gelöschten Schuelerklausurtermin
 	 */
 	@DELETE
-	@Path("/schuelerklausuren/termine/delete/{id : \\d+}")
+	@Path("/schuelerklausuren/termine/{id : \\d+}")
 	@Operation(summary = "Löscht einen GostSchuelerklausurTermin.", description = "Löscht einen GostSchuelerklausurTermin."
 			+ "Dabei wird geprüft, ob der SVWS-Benutzer die notwendige Berechtigung zum Löschen eines GostSchuelerklausurTermins " + "besitzt.")
 	@ApiResponse(responseCode = "200", description = "GostSchuelerklausurTermin wurde erfolgreich gelöscht.",

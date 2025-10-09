@@ -538,9 +538,10 @@ export class RouteDataGostKlausurplanung extends RouteData<RouteStateGostKlausur
 		api.status.stop();
 	}
 
-	createSchuelerklausurTermin = async (id: number) => {
+	createSchuelerklausurTermin = async (skt: Partial<GostSchuelerklausurTermin>) => {
 		api.status.start();
-		const skNeu = await api.server.createGostKlausurenSchuelerklausurtermin(api.schema, id);
+		delete skt.id;
+		const skNeu = await api.server.createGostKlausurenSchuelerklausurtermin(skt, api.schema);
 		this.manager.schuelerklausurterminAdd(skNeu);
 		this.commit();
 		api.status.stop();

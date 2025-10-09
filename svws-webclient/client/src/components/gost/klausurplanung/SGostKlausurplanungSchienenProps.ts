@@ -1,7 +1,6 @@
 import type {
 	GostHalbjahr,
 	GostJahrgangsdaten,
-	GostKlausurenCollectionSkrsKrsData,
 	GostKlausurtermin,
 	GostKlausurterminblockungDaten,
 	GostKursklausur,
@@ -20,7 +19,7 @@ export interface GostKlausurplanungSchienenProps {
 	kMan: () => GostKlausurplanManager;
 	terminSelected: WritableComputedRef<GostKlausurtermin | undefined>;
 	patchKlausur: (klausur: GostKursklausur | GostSchuelerklausurTermin, patch: Partial<GostKursklausur | GostSchuelerklausurTermin>) => Promise<void>;
-	createSchuelerklausurTermin: (id: number) => Promise<void>;
+	createSchuelerklausurTermin: (skt: Partial<GostSchuelerklausurTermin>) => Promise<void>;
 	erzeugeKlausurtermin: (quartal: number, istHaupttermin: boolean) => Promise<GostKlausurtermin>;
 	loescheKlausurtermine: (termine: List<GostKlausurtermin>) => Promise<void>;
 	erzeugeKursklausurenAusVorgaben: (quartal: number) => Promise<GostKlausurenCollectionData>;

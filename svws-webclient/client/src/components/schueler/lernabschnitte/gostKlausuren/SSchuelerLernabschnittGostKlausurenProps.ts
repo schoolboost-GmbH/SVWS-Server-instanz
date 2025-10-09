@@ -6,7 +6,7 @@ export interface SchuelerLernabschnittGostKlausurenProps {
 	manager: () => SchuelerLernabschnittManager;
 	kMan: () => GostKlausurplanManager;
 	hatKlausurManager: () => boolean;
-	createSchuelerklausurTermin: (id: number) => Promise<void>;
+	createSchuelerklausurTermin: (skt: Partial<GostSchuelerklausurTermin>) => Promise<void>;
 	deleteSchuelerklausurTermin: (sk : GostSchuelerklausurTermin) => Promise<void>;
 	patchSchuelerklausurTermin: (id: number, data : Partial<GostSchuelerklausurTermin>) => Promise<void>;
 	gotoPlanung: () => Promise<void>;

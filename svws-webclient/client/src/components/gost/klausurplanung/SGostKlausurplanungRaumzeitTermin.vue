@@ -109,7 +109,7 @@
 
 	import { computed, ref } from 'vue';
 	import type { GostKlausurplanungDragData, GostKlausurplanungDropZone } from './SGostKlausurplanung';
-	import type { GostKlausurplanManager, GostKlausurtermin, GostKursklausur, GostKlausurraum, GostKlausurenCollectionSkrsKrsData, List, GostSchuelerklausurTermin, GostSchuelerklausurTerminRich} from '@core';
+	import type { GostKlausurplanManager, GostKlausurtermin, GostKursklausur, GostKlausurraum, List, GostSchuelerklausurTermin, GostSchuelerklausurTerminRich} from '@core';
 	import { ArrayList, DateUtils, GostHalbjahr, GostKlausurraumblockungKonfiguration, KlausurraumblockungAlgorithmus, ListUtils, BenutzerKompetenz, GostKlausurraumRich } from '@core';
 
 	const props = defineProps<{

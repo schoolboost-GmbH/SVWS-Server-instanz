@@ -1,4 +1,4 @@
-import type { List, FachDaten, LehrerListeEintrag, SchuelerLeistungsdaten, SchuelerLernabschnittListeEintrag,
+import type { List, FachDaten, SchuelerLeistungsdaten, SchuelerLernabschnittListeEintrag,
 	SchuelerLernabschnittsdaten, FoerderschwerpunktEintrag, JahrgangsDaten, SchuelerLernabschnittBemerkungen,
 	GostSchuelerklausurTermin} from "@core";
 import { ArrayList, DeveloperNotificationException, GostHalbjahr, GostKlausurplanManager } from "@core";
@@ -249,8 +249,9 @@ export class RouteDataSchuelerLernabschnitte extends RouteData<RouteStateDataSch
 		this.commit();
 	}
 
-	createSchuelerklausurTermin = async (id: number) => {
-		const skNeu = await api.server.createGostKlausurenSchuelerklausurtermin(api.schema, id);
+	createSchuelerklausurTermin = async (skt: Partial<GostSchuelerklausurTermin>) => {
+		delete skt.id;
+		const skNeu = await api.server.createGostKlausurenSchuelerklausurtermin(skt, api.schema);
 		this.klausurManager.schuelerklausurterminAdd(skNeu);
 		this.commit();
 	}

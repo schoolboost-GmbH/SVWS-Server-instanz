@@ -160,7 +160,7 @@
 
 	import { computed, ref } from "vue";
 	import type { GostKlausurplanungDragData } from "./SGostKlausurplanung";
-	import type { GostKlausurplanManager, GostKursklausur, GostKlausurtermin, GostSchuelerklausurTermin, GostKlausurenCollectionSkrsKrsData} from "@core";
+	import type { GostKlausurplanManager, GostKursklausur, GostKlausurtermin, GostSchuelerklausurTermin } from "@core";
 	import { GostHalbjahr, BenutzerKompetenz, DateUtils } from "@core";
 
 	const props = withDefaults(defineProps<{
@@ -182,7 +182,7 @@
 		showKursklausurenNachschreiber?: boolean;
 		showKlausurenSelbesDatum?: boolean;
 		hideButtonRaeumePlanen?: boolean;
-		createSchuelerklausurTermin?: (id: number) => Promise<void>;
+		createSchuelerklausurTermin?: (skt: Partial<GostSchuelerklausurTermin>) => Promise<void>;
 		patchKlausur?: (klausur: GostKursklausur | GostSchuelerklausurTermin, patch: Partial<GostKursklausur | GostSchuelerklausurTermin>) => Promise<void>;
 		patchKlausurtermin: (id: number, termin: Partial<GostKlausurtermin>) => Promise<void>;
 		inTooltip?: boolean;
