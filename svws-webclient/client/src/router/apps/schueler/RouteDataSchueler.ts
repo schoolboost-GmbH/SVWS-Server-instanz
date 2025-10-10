@@ -1,5 +1,4 @@
-import type { ApiFile, List, ReportingParameter, SchuelerListeEintrag, SchuelerStammdaten, SimpleOperationResponse, StundenplanListeEintrag, SchuelerTelefon, SchuelerSchulbesuchsdaten, ErzieherStammdaten, SchuelerStammdatenNeu, SchuelerLernabschnittsdaten, KlassenDaten } from "@core";
-
+import type { ApiFile, List, ReportingParameter, SchuelerListeEintrag, SchuelerStammdaten, SimpleOperationResponse, StundenplanListeEintrag, SchuelerTelefon, SchuelerSchulbesuchsdaten, ErzieherStammdaten, SchuelerStammdatenNeu, SchuelerLernabschnittsdaten, KlassenDaten, SchuelerVermerke } from "@core";
 import { BenutzerKompetenz, ArrayList, SchuelerListe, SchuelerStatus, ServerMode, UserNotificationException } from "@core";
 
 import { api } from "~/router/Api";
@@ -17,6 +16,7 @@ interface RouteStateSchueler extends RouteStateAuswahlInterface<SchuelerListeMan
 	mapStundenplaene: Map<number, StundenplanListeEintrag>;
 	listSchuelerErziehereintraege: List<ErzieherStammdaten>;
 	listSchuelerTelefoneintraege: List<SchuelerTelefon>;
+	listSchuelerVermerkeintraege: List<SchuelerVermerke>;
 }
 
 const defaultState = <RouteStateSchueler> {
@@ -28,6 +28,7 @@ const defaultState = <RouteStateSchueler> {
 	mapStundenplaene: new Map(),
 	listSchuelerErziehereintraege: new ArrayList(),
 	listSchuelerTelefoneintraege: new ArrayList(),
+	listSchuelerVermerkeintraege: new ArrayList(),
 	pendingStateRegistry: undefined,
 };
 
@@ -83,9 +84,10 @@ export class RouteDataSchueler extends RouteDataAuswahl<SchuelerListeManager, Ro
 		const res = await api.server.getSchuelerStammdaten(api.schema, auswahl.id);
 		const listSchuelerTelefoneintraege = await api.server.getSchuelerTelefone(api.schema, auswahl.id);
 		const listSchuelerErziehereintraege = await api.server.getSchuelerErzieher(api.schema, auswahl.id);
+		const listSchuelerVermerkeintraege = await api.server.getVermerkdaten(api.schema, auswahl.id);
 
 		this.manager.schuelerstatus.auswahlAdd(SchuelerStatus.data().getWertByID(res.status));
-		this.setPatchedState({ listSchuelerErziehereintraege, listSchuelerTelefoneintraege });
+		this.setPatchedState({ listSchuelerErziehereintraege, listSchuelerTelefoneintraege, listSchuelerVermerkeintraege });
 		return res;
 	}
 
@@ -153,6 +155,12 @@ export class RouteDataSchueler extends RouteDataAuswahl<SchuelerListeManager, Ro
 	get getListSchuelerErziehereintraege(): List<ErzieherStammdaten> {
 		const list = new ArrayList<ErzieherStammdaten>();
 		list.addAll(this._state.value.listSchuelerErziehereintraege);
+		return list;
+	}
+
+	get getListSchuelerVermerkeintraege(): List<SchuelerVermerke> {
+		const list = new ArrayList<SchuelerVermerke>();
+		list.addAll(this._state.value.listSchuelerVermerkeintraege);
 		return list;
 	}
 
@@ -227,6 +235,39 @@ export class RouteDataSchueler extends RouteDataAuswahl<SchuelerListeManager, Ro
 			}
 		}
 		this.setPatchedState({ listSchuelerTelefoneintraege });
+	}
+
+	addSchuelerVermerkeintrag = async (data: Partial<SchuelerVermerke>): Promise<void> => {
+		const vermerk = await api.server.addVermerk(data, api.schema);
+		const listSchuelerVermerkeintraege = this.getListSchuelerVermerkeintraege;
+		listSchuelerVermerkeintraege.add(vermerk);
+		this.setPatchedState({ listSchuelerVermerkeintraege });
+	}
+
+	patchSchuelerVermerkeintrag = async (data: Partial<SchuelerVermerke>, idEintrag: number): Promise<void> => {
+		await api.server.patchSchuelerVermerke(data, api.schema, idEintrag);
+		const listSchuelerVermerkeintraege = this.getListSchuelerVermerkeintraege;
+		for (const l of listSchuelerVermerkeintraege)
+			if (l.id === idEintrag) {
+				Object.assign(l, data);
+				break;
+			}
+		this.setPatchedState({ listSchuelerVermerkeintraege });
+	}
+
+	deleteSchuelerVermerkeintrage = async (idsEintraege: List<number>): Promise<void> => {
+		await api.server.deleteSchuelerVermerke(idsEintraege, api.schema);
+		const listSchuelerVermerkeintraege = this.getListSchuelerVermerkeintraege;
+		for (const id of idsEintraege) {
+			for (let i = 0; i < listSchuelerVermerkeintraege .size(); i++) {
+				const eintrag = listSchuelerVermerkeintraege .get(i);
+				if (eintrag.id === id) {
+					listSchuelerVermerkeintraege.removeElementAt(i);
+					break;
+				}
+			}
+		}
+		this.setPatchedState({ listSchuelerVermerkeintraege });
 	}
 
 	protected async doPatch(data : Partial<SchuelerStammdaten>, id: number) : Promise<void> {

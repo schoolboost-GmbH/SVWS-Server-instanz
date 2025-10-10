@@ -13223,6 +13223,37 @@ export class ApiServer extends BaseApi {
 
 
 	/**
+	 * Implementierung der DELETE-Methode deleteSchuelerVermerke für den Zugriff auf die URL https://{hostname}/db/{schema}/schueler/vermerk/multiple
+	 *
+	 * Entfernt einen oder mehrerer Vermerkeinträge bei Schülern, insofern der SVWS-Benutzer die erforderliche Berechtigung besitzt.
+	 *
+	 * Mögliche HTTP-Antworten:
+	 *   Code 200: Die Vermerkeinträge wurden erfolgreich entfernt.
+	 *     - Mime-Type: application/json
+	 *     - Rückgabe-Typ: List<Long>
+	 *   Code 403: Der SVWS-Benutzer hat keine Rechte, um Vermerkeinträge zu entfernen.
+	 *   Code 404: Mindestens ein Vermerkeintrag ist nicht vorhanden
+	 *   Code 409: Die übergebenen Daten sind fehlerhaft
+	 *   Code 500: Unspezifizierter Fehler (z.B. beim Datenbankzugriff)
+	 *
+	 * @param {List<number>} data - der Request-Body für die HTTP-Methode
+	 * @param {string} schema - der Pfad-Parameter schema
+	 *
+	 * @returns Die Vermerkeinträge wurden erfolgreich entfernt.
+	 */
+	public async deleteSchuelerVermerke(data : List<number>, schema : string) : Promise<List<number>> {
+		const path = "/db/{schema}/schueler/vermerk/multiple"
+			.replace(/{schema\s*(:[^{}]+({[^{}]+})*)?}/g, schema);
+		const body : string = "[" + (data.toArray() as Array<number>).map(d => JSON.stringify(d)).join() + "]";
+		const result : string = await super.deleteJSON(path, body);
+		const obj = JSON.parse(result);
+		const ret = new ArrayList<number>();
+		obj.forEach((elem: any) => { const text : string = JSON.stringify(elem); ret.add(parseFloat(JSON.parse(text))); });
+		return ret;
+	}
+
+
+	/**
 	 * Implementierung der POST-Methode addVermerk für den Zugriff auf die URL https://{hostname}/db/{schema}/schueler/vermerke
 	 *
 	 * Erstellt einen neuen Vermerk EintragDabei wird geprüft, ob der SVWS-Benutzer die notwendige Berechtigung zum Ändern von Vermerkdaten besitzt.

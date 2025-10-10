@@ -1275,6 +1275,32 @@ public class APISchueler {
 				BenutzerKompetenz.SCHUELER_INDIVIDUALDATEN_VERMERKE_AENDERN);
 	}
 
+	/**
+	 * Die OpenAPI-Methode für das Entfernen mehrerer Vermerkeinträge von Schülern.
+	 *
+	 * @param schema    das Datenbankschema
+	 * @param ids       die IDs der Vermerkeinträge
+	 * @param request   die Informationen zur HTTP-Anfrage
+	 *
+	 * @return die HTTP-Antwort mit dem Status und ggf. der gelöschten Vermerkeinträge
+	 */
+	@DELETE
+	@Path("/vermerk/multiple")
+	@Operation(summary = "Entfernt einen oder mehrerer Vermerkeinträge bei Schülern.",
+			description = "Entfernt einen oder mehrerer Vermerkeinträge bei Schülern, insofern der SVWS-Benutzer die erforderliche Berechtigung besitzt.")
+	@ApiResponse(responseCode = "200", description = "Die Vermerkeinträge wurden erfolgreich entfernt.",
+			content = @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = Long.class))))
+	@ApiResponse(responseCode = "403", description = "Der SVWS-Benutzer hat keine Rechte, um Vermerkeinträge zu entfernen.")
+	@ApiResponse(responseCode = "404", description = "Mindestens ein Vermerkeintrag ist nicht vorhanden")
+	@ApiResponse(responseCode = "409", description = "Die übergebenen Daten sind fehlerhaft")
+	@ApiResponse(responseCode = "500", description = "Unspezifizierter Fehler (z.B. beim Datenbankzugriff)")
+	public Response deleteSchuelerVermerke(@PathParam("schema") final String schema, @RequestBody(description = "Die IDs der zu löschenden Vermerkeinträge",
+					required = true, content = @Content(mediaType = MediaType.APPLICATION_JSON,
+					array = @ArraySchema(schema = @Schema(implementation = Long.class)))) final InputStream ids,
+			@Context final HttpServletRequest request) {
+		return DBBenutzerUtils.runWithTransaction(conn -> new DataSchuelerVermerke(conn).deleteMultipleAsResponse(JSONMapper.toListOfLong(ids)),
+				request, ServerMode.STABLE, BenutzerKompetenz.SCHUELER_INDIVIDUALDATEN_VERMERKE_AENDERN);
+	}
 
 	/**
 	 * Die OpenAPI-Methode für die Abfrage der Einwilligungen eines Schülers.

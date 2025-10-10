@@ -1,8 +1,6 @@
 import { RouteData, type RouteStateInterface } from "~/router/RouteData";
-import type { Fahrschuelerart, Haltestelle, Kindergarten, ReligionEintrag, SchuelerListeEintrag, SchuelerStammdaten, SchulEintrag, SchulformKatalogEintrag, TelefonArt, EinschulungsartKatalogEintrag, Erzieherart, OrtKatalogEintrag, OrtsteilKatalogEintrag, SchuelerLernabschnittListeEintrag, } from "@core";
-import { ArrayList, type SchuelerSchulbesuchsdaten, type Merkmal, type KatalogEntlassgrund, DeveloperNotificationException,
-} from "@core";
-import { Schulform } from "@core";
+import type { Fahrschuelerart, Haltestelle, Kindergarten, ReligionEintrag, SchuelerListeEintrag, SchuelerStammdaten, SchulEintrag, SchulformKatalogEintrag, TelefonArt, EinschulungsartKatalogEintrag, Erzieherart, OrtKatalogEintrag, OrtsteilKatalogEintrag, SchuelerLernabschnittListeEintrag, VermerkartEintrag, SchuelerSchulbesuchsdaten, Merkmal, KatalogEntlassgrund } from "@core";
+import { ArrayList, DeveloperNotificationException, Schulform } from "@core";
 import { api } from "~/router/Api";
 import { routeSchueler } from "~/router/apps/schueler/RouteSchueler";
 import { SchuelerSchulbesuchManager } from "~/components/schueler/schulbesuch/SchuelerSchulbesuchManager";
@@ -17,6 +15,7 @@ interface RouteStateDataSchuelerNeuSchnelleingabe extends RouteStateInterface {
 	mapSchulen: Map<string, SchulEintrag>;
 	mapTelefonArten: Map<number, TelefonArt>;
 	mapErzieherarten: Map<number, Erzieherart>;
+	mapVermerkArten: Map<number, VermerkartEintrag>;
 	mapEinschulungsarten: Map<number, EinschulungsartKatalogEintrag>;
 	mapOrte: Map<number, OrtKatalogEintrag>;
 	mapOrtsteile: Map<number, OrtsteilKatalogEintrag>;
@@ -32,6 +31,7 @@ const defaultState = <RouteStateDataSchuelerNeuSchnelleingabe> {
 	mapSchulen: new Map<string, SchulEintrag>(),
 	mapTelefonArten: new Map(),
 	mapErzieherarten: new Map(),
+	mapVermerkArten: new Map(),
 	mapEinschulungsarten: new Map(),
 	mapOrte: new Map(),
 	mapOrtsteile: new Map(),
@@ -75,6 +75,11 @@ export class RouteDataSchuelerNeuSchnelleingabe extends RouteData<RouteStateData
 		const mapErzieherarten = new Map();
 		for (const ea of erzieherarten)
 			mapErzieherarten.set(ea.id, ea);
+		// Lade den Katalog der Vermerkarten
+		const vermerkArten = await api.server.getVermerkarten(api.schema);
+		const mapVermerkArten = new Map();
+		for (const va of vermerkArten)
+			mapVermerkArten.set(va.id, va);
 		// Lade den Katalog der Einschulungsarten
 		const einschulungsarten = await api.server.getEinschulungsarten(api.schema)
 		const mapEinschulungsarten = new Map();
@@ -90,7 +95,7 @@ export class RouteDataSchuelerNeuSchnelleingabe extends RouteData<RouteStateData
 		const mapOrtsteile = new Map();
 		for (const o of ortsteile)
 			mapOrtsteile.set(o.id, o);
-		// Ermittle den Katalog der Schulen, welche ein Kürzel haben und als Stammschulen für Schüler in Frage kommen
+		// Ermittle den Katalog der Schulen, welche ein Kürzel haben und als Stammschulen für Schüler infrage kommen
 		const schulen = await api.server.getSchulen(api.schema);
 		const mapSchulen = new Map<string, SchulEintrag>();
 		for (const schule of schulen) {
@@ -101,7 +106,7 @@ export class RouteDataSchuelerNeuSchnelleingabe extends RouteData<RouteStateData
 			if (sf === api.schulform)
 				mapSchulen.set(schule.schulnummerStatistik, schule);
 		}
-		this.setPatchedState({ mapFahrschuelerarten, mapKindergaerten, mapHaltestellen, mapReligionen, mapTelefonArten, mapSchulen, mapErzieherarten, mapEinschulungsarten, mapOrte, mapOrtsteile });
+		this.setPatchedState({ mapFahrschuelerarten, mapKindergaerten, mapHaltestellen, mapReligionen, mapTelefonArten, mapSchulen, mapErzieherarten, mapEinschulungsarten, mapOrte, mapOrtsteile, mapVermerkArten });
 
 	}
 	public async ladeDaten(auswahl: SchuelerListeEintrag | null) : Promise<SchuelerStammdaten | null> {
@@ -175,6 +180,10 @@ export class RouteDataSchuelerNeuSchnelleingabe extends RouteData<RouteStateData
 
 	get mapErzieherarten(): Map<number, Erzieherart> {
 		return this._state.value.mapErzieherarten;
+	}
+
+	get mapVermerkArten(): Map<number, VermerkartEintrag> {
+		return this._state.value.mapVermerkArten;
 	}
 
 	get mapKindergaerten(): Map<number, Kindergarten> {

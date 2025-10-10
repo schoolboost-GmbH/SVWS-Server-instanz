@@ -269,8 +269,44 @@
 				</svws-ui-checkbox>
 			</svws-ui-input-wrapper>
 		</svws-ui-content-card>
-		<svws-ui-content-card>
+
+		<svws-ui-content-card title="Vermerke anlegen" class="col-span-full">
+			<svws-ui-table clickable
+				@update:clicked="patchVermerk" :items="getListSchuelerVermerkeintraege()" :no-data="getListSchuelerVermerkeintraege().size() === 0"
+				:columns="columnsVermerke" :selectable="true" v-model="selectedVermerk">
+				<template #cell(idVermerkart)="{ value }">
+					{{ getBezeichnungVermerkArt(value) }}
+				</template>
+				<template #actions>
+					<div class="inline-flex gap-4">
+						<svws-ui-button @click="deleteVermerke" type="trash" :disabled="(selectedVermerk.length === 0) || (!hatKompetenzUpdate)" />
+						<svws-ui-button @click="addVermerk" type="icon" title="Vermerk hinzufügen" :disabled="!hatKompetenzUpdate">
+							<span class="icon i-ri-add-line" />
+						</svws-ui-button>
+					</div>
+				</template>
+			</svws-ui-table>
+
+			<svws-ui-modal :show="showModalVermerke" @update:show="closeModalVermerke">
+				<template #modalTitle>Vermerk hinzufügen</template>
+				<template #modalContent>
+					<ui-select label="Vermerkart" v-model="vermerkArt" :manager="VermerkArtManager" :removable="false" searchable />
+					<svws-ui-textarea-input class="col-span-full" :model-value="newEntryVermerk.bemerkung" @input="v => newEntryVermerk.bemerkung = v ?? ''" placeholder="Bemerkung" :autoresize="true" />
+					<svws-ui-notification type="warning" v-if="mapVermerkArten.size === 0">
+						Die Liste der Vermerkarten ist leer. Es sollte mindestens eine Vermerkart unter Schule/Kataloge angelegt werden, damit zusätzliche Vermerke eine gültige Zuordnung haben.
+					</svws-ui-notification>
+					<div class="mt-7 flex flex-row gap-4 justify-end">
+						<svws-ui-button type="secondary" @click="closeModalVermerke">Abbrechen</svws-ui-button>
+						<svws-ui-button @click="sendRequestVermerk"
+							:disabled="(vermerkArt === null) || (mapVermerkArten.size === 0) || (newEntryVermerk.bemerkung === '') || (!hatKompetenzUpdate)">
+							Speichern
+						</svws-ui-button>
+					</div>
+				</template>
+			</svws-ui-modal>
 		</svws-ui-content-card>
+
+		<svws-ui-content-card />
 		<svws-ui-content-card class="col-span-full">
 			<div class="-mt-16 flex flex-row gap-4 justify-end w-full">
 				<svws-ui-button type="secondary" @click="cancel">Neuaufnahme beenden</svws-ui-button>
@@ -281,9 +317,8 @@
 
 <script setup lang="ts">
 
-	import type { SchuelerStammdaten, TelefonArt, OrtsteilKatalogEintrag, EinschulungsartKatalogEintrag, NationalitaetenKatalogEintrag, SchuelerStatusKatalogEintrag, VerkehrsspracheKatalogEintrag, KlassenDaten } from "@core";
-	import { ServerMode, DateUtils } from "@core";
-	import { BenutzerKompetenz, SchuelerTelefon, ArrayList, ErzieherStammdaten, AdressenUtils, Geschlecht, Kindergartenbesuch, Nationalitaeten, SchuelerStatus, Schulform, Verkehrssprache } from "@core";
+	import type { SchuelerStammdaten, TelefonArt, OrtsteilKatalogEintrag, EinschulungsartKatalogEintrag, NationalitaetenKatalogEintrag, SchuelerStatusKatalogEintrag, VerkehrsspracheKatalogEintrag, KlassenDaten, VermerkartEintrag } from "@core";
+	import { BenutzerKompetenz, SchuelerTelefon, ArrayList, ErzieherStammdaten, AdressenUtils, Geschlecht, Kindergartenbesuch, Nationalitaeten, SchuelerStatus, Schulform, Verkehrssprache, ServerMode, DateUtils, SchuelerVermerke } from "@core";
 	import { computed, ref, watch } from "vue";
 	import type { SchuelerNeuSchnelleingabeProps } from "~/components/schueler/SSchuelerNeuSchnelleingabeProps";
 	import { erzieherArtSort,orte_sort, ortsteilSort } from "~/utils/helfer";
@@ -952,7 +987,7 @@
 	function addErzieher() {
 		resetErzieher();
 		setModeErzieher(Mode.ADD);
-		openModalErzieher()
+		openModalErzieher();
 		ersterErz.value.id = 0;
 	}
 
@@ -960,8 +995,10 @@
 		setMode(Mode.DEFAULT);
 		resetTelefonnummer();
 		closeModalTelefonnummer();
-		resetErzieher()
-		closeModalErzieher()
+		resetErzieher();
+		closeModalErzieher();
+		resetVermerk();
+		closeModalVermerke();
 	}
 
 	// Patch-Modal um an der zweiten Postion in einem Eintrag einen Erziehungsberechtigten anzulegen
@@ -1169,6 +1206,87 @@
 	function getBezeichnungTelefonart(idTelefonArt: number): string {
 		return props.mapTelefonArten.get(idTelefonArt)?.bezeichnung ?? "";
 	}
+
+	// Anlegen von Vermerken
+	const selectedVermerk = ref<SchuelerVermerke[]>([]);
+	const newEntryVermerk = ref<SchuelerVermerke>(new SchuelerVermerke());
+	const showModalVermerke = ref<boolean>(false);
+
+	const columnsVermerke: DataTableColumn[] = [
+		{ key: "idVermerkart", label: "Vermerkart" },
+		{ key: "bemerkung", label: "Bemerkung", span: 2 },
+		{ key: "angelegtVon", label: "Angelegt von" },
+		{ key: "geaendertVon", label: "Geändert von" },
+		{ key: "datum", label: "Erstellt am", span: 1, align: "right" },
+	]
+
+	const vermerkArten = computed(() => props.mapVermerkArten.values());
+
+	const VermerkArtManager = new SelectManager({ options: vermerkArten.value, optionDisplayText: i => i.bezeichnung, selectionDisplayText: i => i.bezeichnung });
+
+	const vermerkArt = computed<VermerkartEintrag | undefined>({
+		get: () => props.mapVermerkArten.get(newEntryVermerk.value.idVermerkart ?? -1),
+		set: (value) => newEntryVermerk.value.idVermerkart = value?.id ?? -1,
+	});
+
+	function addVermerk() {
+		resetVermerk();
+		setMode(Mode.ADD);
+		openModalVermerke();
+	}
+
+	async function sendRequestVermerk() {
+		const { id, datum, angelegtVon, geaendertVon, ...partialDataWithoutId } = newEntryVermerk.value;
+		partialDataWithoutId.idSchueler = data.value.id;
+		showModalVermerke.value = false;
+		if (currentMode.value === Mode.ADD)
+			await props.addSchuelerVermerkeintrag(partialDataWithoutId);
+		if (currentMode.value === Mode.PATCH)
+			await props.patchSchuelerVermerkeintrag(partialDataWithoutId, newEntryVermerk.value.id);
+		enterDefaultMode();
+	}
+
+	function patchVermerk(vermerkEintrag: SchuelerVermerke) {
+		resetVermerk();
+		setMode(Mode.PATCH);
+		newEntryVermerk.value.id = vermerkEintrag.id;
+		newEntryVermerk.value.idVermerkart = vermerkEintrag.idVermerkart;
+		newEntryVermerk.value.bemerkung = vermerkEintrag.bemerkung;
+		openModalVermerke();
+	}
+
+	async function deleteVermerke() {
+		if (selectedVermerk.value.length === 0)
+			return;
+		const ids = new ArrayList<number>();
+		for (const s of selectedVermerk.value)
+			ids.add(s.id);
+		await props.deleteSchuelerVermerkeintraege(ids);
+		selectedVermerk.value = [];
+	}
+
+	function openModalVermerke() {
+		showModalVermerke.value = true;
+	}
+
+	function closeModalVermerke() {
+		resetVermerk();
+		setMode(Mode.DEFAULT);
+		showModalVermerke.value = false;
+	}
+
+	function resetVermerk() {
+		const defaultVermerk = new SchuelerVermerke();
+		const ersteVermerkArt = props.mapVermerkArten.values().next().value;
+		defaultVermerk.idVermerkart = ersteVermerkArt?.id ?? 0;
+		defaultVermerk.bemerkung = '';
+		newEntryVermerk.value = defaultVermerk;
+	}
+
+	function getBezeichnungVermerkArt(idVermerkArt: number): string {
+		return props.mapVermerkArten.get(idVermerkArt)?.bezeichnung ?? "";
+	}
+
 
 	function cancel() {
 		props.schuelerListeManager().schuelerstatus.auswahlClear();
