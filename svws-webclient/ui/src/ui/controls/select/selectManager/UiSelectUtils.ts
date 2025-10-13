@@ -27,8 +27,7 @@ export function useUiSelectUtils<T, V extends Validator>(
 	// ID zur Eindeutigen Kennzeichnung der Komponente. Wird für die HTML IDs benötigt
 	const instanceId = crypto.randomUUID();
 
-	// Flag das anzeigt, ob eine neue Selektion gesetzt wurde
-	const showDropdown = ref(false);
+	const dropdownIsOpen = ref(false);
 
 	// Definiert, ob das Inputfeld gerade den visuellen bzw. den DOM-Fokus hat
 	const visualFocusOnCombobox = ref(false);
@@ -43,6 +42,12 @@ export function useUiSelectUtils<T, V extends Validator>(
 
 	// Index des visuell hervorghobenen Dropdownlistenelements bei Tastennavigation
 	const highlightedIndex = ref(-1);
+
+	// duch die Suche gefilterte Optionenliste
+	const searchFilteredOptions = computed(() => {
+		return props.searchable! ? getMatchingOptions(search.value) : props.manager!.filteredOptions;
+	});
+
 
 
 	onMounted(() => {
@@ -60,8 +65,8 @@ export function useUiSelectUtils<T, V extends Validator>(
 		// Das Dropdown schließt sich zb. automatisch durch Klicks außerhalb des Popovers. Diese Zustandsänderung wird hiermit synchronisiert
 		uiSelectDropdown.value?.addEventListener("toggle", (event: Event) => {
 			if ((event as ToggleEvent).newState === "closed") {
-				showDropdown.value = false;
-				highlightedIndex.value = -1;
+				dropdownIsOpen.value = false;
+				removeOptionHighlighting();
 				handleBlur();
 			}
 		});
@@ -210,9 +215,9 @@ export function useUiSelectUtils<T, V extends Validator>(
 			'aria-labelledby': `uiSelectLabel_${instanceId}`,
 			'aria-controls': isEditable? `uiSelectDropdown_${instanceId}` : undefined,
 			'aria-autocomplete': isEditable ? 'none' as const : undefined,
-			'aria-expanded': isEditable ? showDropdown.value : undefined,
+			'aria-expanded': isEditable ? dropdownIsOpen.value : undefined,
 			'aria-disabled': props.disabled! ? true : undefined,
-			'aria-activedescendant': (isEditable && highlightedIndex.value !== -1) ? `uiSelectOption_${highlightedIndex.value}_${instanceId}` : undefined,
+			'aria-activedescendant': (isEditable && hasHighlightedOption()) ? `uiSelectOption_${highlightedIndex.value}_${instanceId}` : undefined,
 		}
 	});
 
@@ -223,8 +228,8 @@ export function useUiSelectUtils<T, V extends Validator>(
 		'aria-labelledby': `uiSelectLabel_${instanceId}`,
 		'aria-controls': `uiSelectDropdown_${instanceId}`,
 		'aria-autocomplete': 'none' as const,
-		'aria-expanded': showDropdown.value,
-		'aria-activedescendant': (highlightedIndex.value !== -1) ? `uiSelectOption_${highlightedIndex.value}_${instanceId}` : undefined,
+		'aria-expanded': dropdownIsOpen.value,
+		'aria-activedescendant': (hasHighlightedOption()) ? `uiSelectOption_${highlightedIndex.value}_${instanceId}` : undefined,
 	}));
 
 	/**
@@ -281,7 +286,7 @@ export function useUiSelectUtils<T, V extends Validator>(
 	 * Berechnet, ab wann das Dropdown über der Combobox positioniert wird, statt darunter
 	 */
 	const flip = computed (() => {
-		if (!showDropdown.value)
+		if (!dropdownIsOpen.value)
 			return false;
 		const below = windowHeight.value - (top.value + height.value);
 		const above = top.value;
@@ -307,7 +312,7 @@ export function useUiSelectUtils<T, V extends Validator>(
 	 * Öffnet oder schließt das Dropdown
 	 */
 	function toggleDropdown() {
-		if (showDropdown.value)
+		if (dropdownIsOpen.value)
 			closeDropdown();
 		else
 			openDropdown();
@@ -330,14 +335,14 @@ export function useUiSelectUtils<T, V extends Validator>(
 	 * Öffnet das Dropdown
 	 */
 	function openDropdown() {
+		if ((uiSelectDropdown.value === null) || dropdownIsOpen.value)
+			return;
 		updatePosition();
 		handleComboboxFocus();
-		if ((uiSelectDropdown.value === null) || showDropdown.value)
-			return;
-		showDropdown.value = true;
+		dropdownIsOpen.value = true;
 		uiSelectDropdown.value.showPopover();
 		visualFocusOnCombobox.value = false;
-		if (highlightedIndex.value === -1)
+		if (!hasHighlightedOption())
 			uiSelectDropdown.value.scrollTop = 0;
 	}
 
@@ -347,21 +352,21 @@ export function useUiSelectUtils<T, V extends Validator>(
 	 * @param comboBoxFocus   true, wenn die Combobox fokussiert werden soll. Default ist true
 	 */
 	function closeDropdown(comboBoxFocus: boolean = true) {
-		if (!showDropdown.value)
+		if (!dropdownIsOpen.value)
 			return;
-		showDropdown.value = false;
+		dropdownIsOpen.value = false;
 		uiSelectDropdown.value?.hidePopover();
 		if (comboBoxFocus)
 			handleComboboxFocus();
 		else
 			handleBlur();
-		highlightedIndex.value = -1;
+		removeOptionHighlighting();
 	}
 
 	// Passt die Scrollposition des Dropdowns an, falls der visuelle Fokus außerhalb des Sichtfelds landet
 	watch(highlightedIndex, async () => {
 		await nextTick(() => {
-			if (highlightedIndex.value === -1) {
+			if (!hasHighlightedOption()) {
 				if (uiSelectDropdown.value)
 					uiSelectDropdown.value.scrollTop = 0;
 				return;
@@ -400,113 +405,127 @@ export function useUiSelectUtils<T, V extends Validator>(
 			return;
 
 		// Nur bei geöffnetem Dropdown, oder wenn Navigation ausgelöst wird. Verhindert, dass die Seite beim Navigieren des Dropdowns gescrollt wird.
-		const keysToPrevent = ['ArrowUp', 'ArrowDown', 'PageUp', 'PageDown', ' '];
-		const isNavigationKey = keysToPrevent.includes(event.key);
-		const shouldPrevent = (	isNavigationKey || (event.altKey && event.key === 'ArrowDown') );
+		const isNavigationKey = ['ArrowUp', 'ArrowDown', 'PageUp', 'PageDown'].includes(event.key);
 
-		if (shouldPrevent)
+		if (isNavigationKey)
 			event.preventDefault();
-		if (!showDropdown.value) {
-			// Alt + Arrow Down
-			if (event.altKey && (event.key === "ArrowDown")) {
-				highlightedIndex.value = -1;
-				openDropdown();
-			}
-			// Arrow Down
-			else if ((event.key === "ArrowDown")) {
-				openDropdown();
-				highlightedIndex.value = 0;
-			}
-			// Arrow Up
-			else if (event.key === "ArrowUp") {
-				openDropdown();
-				highlightedIndex.value = props.manager!.filteredOptions.size() -1;
-			}
-			// Enter, Space
-			else if ((event.key === "Enter") || (event.key === " "))
-				openDropdown();
-			// Home
-			else if (event.key === "Home") {
-				openDropdown();
-				highlightedIndex.value = 0;
-			}
-			// End
-			else if (event.key === "End") {
-				openDropdown();
-				highlightedIndex.value = props.manager!.filteredOptions.size() - 1;
-			}
-			// Escape
-			else if ((event.key === "Escape") && props.searchable!)
-				resetSearch();
-			// Printable Characters
-			else if (isPrintableChar(event.key))
-				// Wenn searchable = false wird der visuelle Fokus in der Liste verändert. Andernfalls wird nur das Suchfeld befüllt und es ist hier keine
-				// gesonderte Behandlung nötig.
-				if (!props.searchable!) {
-					openDropdown();
-					handlePrintableKeyInput(event);
-				}
-		} else {
-			// Enter, Space
-			if ((event.key === "Enter") || (event.key === " ")) {
-				selectFocussedOption();
-				if (!multi)
-					closeDropdown();
-			}
-			// Tab (verhält sich wie Enter und Space, aber verschiebt automatisch auch den Focus auf das nächste Element und schließt immer die Liste)
-			else if (event.key === "Tab")
-				selectFocussedOption();
-			// Arrow Down
-			else if (event.key === "ArrowDown")
-				await navigateList(1);
-			// Alt + Arrow Up
-			else if (event.altKey && event.key === "ArrowUp") {
-				selectFocussedOption();
-				if (!multi)
-					closeDropdown();
-			}
-			// Arrow Up
-			else if (event.key === "ArrowUp")
-				await navigateList(-1);
-			// PageUp
-			else if (event.key === "PageUp")
-				await navigateList(-10);
-			// PageDown
-			else if (event.key === "PageDown")
-				await navigateList(10);
-			// Home (bezieht sich auf die Listenposition (searchable = false) oder auf das Suchfeld (searchable = true))
-			else if (event.key === "Home")
-				if (props.searchable!)
-					highlightedIndex.value = -1; // Der Cursor wird versetzt un der visuelle Fokus dafür entfernt
-				else
-					highlightedIndex.value = 0; // Der visuelle Fokus wird versetzt
+		await handleKeyEvent(event);
+	}
 
-			// End (bezieht sich auf die Listenposition (searchable = false) oder auf das Suchfeld (searchable = true))
-			else if (event.key === "End")
-				if (props.searchable!)
-					highlightedIndex.value = -1; // Der Cursor wird automatisch versetzt und der visuelle Fokus dafür entfernt
-				else
-					highlightedIndex.value = props.manager!.filteredOptions.size() - 1;
-			else if (event.key === "Escape") {
-				closeDropdown();
-				resetSearch();
-			}
-			// Printable Characters
-			else if (isPrintableChar(event.key))
-				// Wenn searchable = false wird der visuelle Fokus in der Liste verändert. Andernfalls wird nur das Suchfeld befüllt und es ist hier keine
-				// gesonderte Behandlung nötig.
-				if (!props.searchable!)
-					handlePrintableKeyInput(event);
+	async function handleKeyEvent(event: KeyboardEvent) {
+
+		const handlers: Record<string, () => Promise<void> | void> = {
+			"Enter": () => handleEnter(),
+			" ": () => handleSpace(),
+			"Tab": () => handleTab(event),
+			"ArrowDown": async () => await handleArrowDown(),
+			"ArrowUp": async () => await handleArrowUp(event),
+			"PageUp": async () => await handlePageUp(),
+			"PageDown": async () => await handlePageDown(),
+			"Home": () => handleHome(),
+			"End": () => handleEnd(),
+			"Escape": () => handleEscape(),
+			"*": () => handleDefault(event),
+		};
+		const handler = handlers[event.key] ?? handlers["*"];
+		await handler();
+	}
+
+	function handleEnter() {
+		if (!dropdownIsOpen.value) {
+			openDropdown();
+			return;
+		}
+		selectHighlightedOption();
+		if (!multi || !hasHighlightedOption())
+			closeDropdown();
+	}
+
+	function handleSpace() {
+		if (!dropdownIsOpen.value) {
+			openDropdown();
+			return;
+		}
+		if (props.searchable!) {
+			return;
+		}
+		selectHighlightedOption();
+		if (!multi || !hasHighlightedOption())
+			closeDropdown();
+	}
+
+	function handleTab(event: KeyboardEvent) {
+		if (!event.shiftKey) {
+			selectHighlightedOption();
+		}
+		closeDropdown();
+	}
+
+	async function handleArrowDown() {
+		if (!dropdownIsOpen.value) {
+			openDropdown();
+			return;
+		}
+		await navigateList(1);
+	}
+
+	async function handleArrowUp(event: KeyboardEvent) {
+		if (!dropdownIsOpen.value) {
+			openDropdown();
+			return;
+		}
+		if (event.altKey) {
+			selectHighlightedOption();
+			closeDropdown();
+			return;
+		}
+		await navigateList(-1);
+	}
+
+	function handleHome() {
+		openDropdown();
+		if (!props.searchable!) {
+			highlightFirstOption();
+		}
+	}
+
+	function handleEnd() {
+		openDropdown();
+		if (!props.searchable!) {
+			highlightLastOption();
+		}
+	}
+
+	function handleEscape() {
+		closeDropdown()
+		resetSearch();
+	}
+
+	async function handlePageUp() {
+		if (!props.searchable!) {
+			await navigateList(-10);
+		}
+	}
+
+	async function handlePageDown() {
+		if (!props.searchable!) {
+			await navigateList(10);
 		}
 	}
 
 	/**
-	 * Prüft, ob das Zeichen ein druckbares Zeichen ist
+	 * KeyboardEvent Handler für alle restlichen Keys.
 	 *
-	 * @param char das zu prüfende Zeichen
+	 * @param event   das Event mit der grdrückten Taste
 	 */
-	function isPrintableChar(char: string) {
-		return /^[\x20-\x7E]$/.test(char);
+	function handleDefault(event: KeyboardEvent) {
+		// Wenn searchable = true -> Suchfeld befüllen -> keine gesonderte Behandlung notwendig
+		// Wenn serchable = false -> visueller Fokus der Liste verändern
+		if (props.searchable! || !isPrintableChar(event.key)) {
+			return;
+		}
+		openDropdown();
+		handlePrintableKeyInput(event);
 	}
 
 	/**
@@ -520,8 +539,8 @@ export function useUiSelectUtils<T, V extends Validator>(
 	let timer: any = null;
 	let lastInput: any = null;
 	function handlePrintableKeyInput(event: KeyboardEvent) {
-		if ((lastInput === event.key) && (highlightedIndex.value !== -1)) {
-			if ((highlightedIndex.value + 1) >= props.manager!.filteredOptions.size()) {
+		if ((lastInput === event.key) && hasHighlightedOption()) {
+			if ((highlightedIndex.value + 1) >= searchFilteredOptions.value.size()) {
 				focusOptionThatStartsWith(lastInput);
 				return;
 			}
@@ -554,6 +573,15 @@ export function useUiSelectUtils<T, V extends Validator>(
 	}
 
 	/**
+	 * Prüft, ob das Zeichen ein druckbares Zeichen ist
+	 *
+	 * @param char   das zu prüfende Zeichen
+	 */
+	function isPrintableChar(char: string) {
+		return /^[\x20-\x7E]$/.test(char);
+	}
+
+	/**
 	 * Ermittelt die Option, die mit dem übergebenen String beginnt und fokussiert diese visuell. Falls keine gefunden wurde, wird nichts fokussiert bzw. der
 	 * vorhandene Fokus wird entfernt.
 	 *
@@ -561,8 +589,8 @@ export function useUiSelectUtils<T, V extends Validator>(
 	 */
 	function focusOptionThatStartsWith(start: string) {
 		const char = start.toLowerCase();
-		const startIndex = (highlightedIndex.value === -1) ? 0 : highlightedIndex.value + 1;
-		const optionsSize = props.manager!.filteredOptions.size();
+		const startIndex = (hasHighlightedOption()) ? 0 : highlightedIndex.value + 1;
+		const optionsSize = searchFilteredOptions.value.size();
 
 		// Suche nach einer Option, die mit 'char' beginnt
 		for (let i = startIndex; i < optionsSize + startIndex; i++) {
@@ -574,7 +602,7 @@ export function useUiSelectUtils<T, V extends Validator>(
 			}
 		}
 		// Wurde keine passende Option gefunden, dann wird der visuelle Fokus entfernt
-		highlightedIndex.value = -1;
+		removeOptionHighlighting();
 	}
 
 	/**
@@ -633,16 +661,16 @@ export function useUiSelectUtils<T, V extends Validator>(
 	/**
 	 * Navigiert den visuellen Fokus im Dropdown.
 	 *
-	 * @param direction   die Richtung der Navigation. Wenn negativ, dann wird rückwärts navigiert. Die Zahl gibt die Anzahl der Schritte an.
+	 * @param steps   Wenn negativ, dann wird rückwärts navigiert. Die Zahl gibt die Anzahl der Schritte an.
 	 */
-	async function navigateList (direction: number) {
-		let newIndex = highlightedIndex.value + direction;
-		if (newIndex >= props.manager!.filteredOptions.size())
+	async function navigateList(steps: number) {
+		let newIndex = highlightedIndex.value + steps;
+		if (newIndex >= searchFilteredOptions.value.size())
 			newIndex = 0;
 		else if (newIndex < 0)
-			newIndex = props.manager!.filteredOptions.size() - 1;
+			newIndex = searchFilteredOptions.value.size() - 1;
 		highlightedIndex.value = newIndex;
-	};
+	}
 
 	/**
 	 * Schließt das Dropdown bei einem Klick außerhalb der Komponente und resettet den Suchtext und den Fokus.
@@ -667,6 +695,28 @@ export function useUiSelectUtils<T, V extends Validator>(
 			return;
 		handleComboboxFocus();
 		toggleDropdown();
+	}
+
+	/**
+	 * Highlighting der Optionen im Dropdown für die Navigation durch Tastensteuerung darin.
+	 */
+
+	function hasHighlightedOption() {
+		return highlightedIndex.value !== -1;
+	}
+
+	function highlightFirstOption() {
+		highlightedIndex.value = 0;
+	}
+
+	function highlightLastOption() {
+		highlightedIndex.value = searchFilteredOptions.value.size() - 1;
+	}
+
+	function removeOptionHighlighting() {
+		if (hasHighlightedOption()) {
+			highlightedIndex.value = -1;
+		}
 	}
 
 	/**
@@ -723,6 +773,7 @@ export function useUiSelectUtils<T, V extends Validator>(
 		isSelected(option) ? 'bg-ui-selected text-ui-onselected font-medium border border-ui-selected' : 'text-ui',
 		{ 'bg-ui-hover inset-ring-2 inset-ring-ui-neutral ': highlightedIndex.value === optionIndex },
 	]);
+
 	/**
 	 * CSS- und Tailwindklassen für Validatorfehlericons
 	 */
@@ -929,6 +980,7 @@ export function useUiSelectUtils<T, V extends Validator>(
 	 */
 	function handleInput() {
 		openDropdown();
+		removeOptionHighlighting();
 	}
 
 	/**
@@ -990,16 +1042,12 @@ export function useUiSelectUtils<T, V extends Validator>(
 		resetSearch();
 	}
 
-	/**
-	 * Selektiert eine visuell fokussierte Option
-	 */
-	function selectFocussedOption () {
-		if (highlightedIndex.value !== -1) {
-			const option = props.manager!.filteredOptions.get(highlightedIndex.value);
-			toggleSelection(option);
+	function selectHighlightedOption() {
+		if (!hasHighlightedOption()) {
+			return;
 		}
-		closeDropdown();
-		handleComboboxFocus();
+		const option = searchFilteredOptions.value.get(highlightedIndex.value);
+		toggleSelection(option);
 	}
 
 	return {
@@ -1007,7 +1055,7 @@ export function useUiSelectUtils<T, V extends Validator>(
 		searchAriaAttrs, comboboxTabindex, searchInputTabindex, comboboxRole, dropdownPositionStyles, onKeyDown, searchInputFocusClass, handleComboboxFocus,
 		handleBlur, handleComponentClick, comboboxClasses, headlessPadding, labelClasses, labelTextColorClass, labelIconClass, optionClasses, validatorErrorIcon, showLabel,
 		showValidatorError, showValidatorErrorMessage, validatorErrorBgClasses, showSelection, splitText, getSecondaryTextColor, handleInput,
-		toggleSelection, getMatchingOptions, resetSearch,
+		toggleSelection, searchFilteredOptions, resetSearch,
 	}
 
 }

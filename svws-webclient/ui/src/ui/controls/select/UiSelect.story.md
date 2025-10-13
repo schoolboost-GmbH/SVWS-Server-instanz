@@ -55,17 +55,12 @@ Die Komponente kann mit der Tastatur bedient werden. Wichtig bei der Navigation 
 
 | Eingabe                          | Aktion |
 |----------------------------------|--------|
-| Alt + ↓                          | Öffnet das Dropdown |
-| ↓                                | Öffnet das Dropdown und setzt den visuellen Fokus auf das erste Element |
-| ↑                                | Öffnet das Dropdown und setzt den Fokus auf das letzte Element |
-| Enter oder Leertaste             | Öffnet das Dropdown |
-| Tab                              | Fokussiert das nächste Element (nicht im Dropdown) |
-| Home                             | Öffnet das Dropdown und setzt den Fokus auf das erste Element |
-| End                              | Öffnet das Dropdown und setzt den Fokus auf das letzte Element |
-| Escape (searchable = false)      | Nichts passiert |
-| Escape (searchable = true)       | Setzt den Suchtext zurück |
-| Druckbare Zeichen (searchable = false) | Öffnet das Dropdown und startet eine Suche nach passenden Einträgen. Mehrfach derselbe Buchstabe: nächster passender Eintrag. Unterschiedliche Buchstaben kurz nacheinander: Suche nach Begriff mit diesen Anfangsbuchstaben. Liste wird nicht gefiltert, sondern passende Einträge fokussiert. |
-| Druckbare Zeichen (searchable = true) | Öffnet das Dropdown und filtert die Optionen nach dem eingegebenen Suchbegriff. Nur einfache Suchen möglich. Übereinstimmende Textstücke werden hervorgehoben. |
+| ↓ / ↑ / Enter / Leertaste                              | Öffnet das Dropdown |
+| Tab                              | Fokussiert das nächste Element im DOM (nicht im Dropdown) |
+| Home                             | Öffnet das Dropdown und setzt den Fokus auf die erste Option|
+| End                              | Öffnet das Dropdown und setzt den Fokus auf die letzte Option |
+| Escape | `searchable = true`: Setzt den Suchtext zurück |
+| Druckbare Zeichen | `searchable = false`: Öffnet das Dropdown und startet eine Suche nach passenden Einträgen. Mehrfach derselbe Buchstabe: nächster passender Eintrag. Unterschiedliche Buchstaben kurz nacheinander: Suche nach Begriff mit diesen Anfangsbuchstaben. Liste wird nicht gefiltert, sondern passende Einträge fokussiert. <br> `searchable = true`:  Öffnet das Dropdown und filtert die Optionen nach dem eingegebenen Suchbegriff. Übereinstimmende Textstücke werden hervorgehoben.|
 
 
 </details>
@@ -74,25 +69,16 @@ Die Komponente kann mit der Tastatur bedient werden. Wichtig bei der Navigation 
 
 | Eingabe                          | Aktion |
 |----------------------------------|--------|
-| Enter oder Leertaste (Element fokussiert) | Wählt das Element aus und schließt das Dropdown |
-| Enter oder Leertaste (kein Element fokussiert) | Schließt das Dropdown |
-| Tab                              | Wählt das markierte Element aus und schließt das Dropdown |
-| Escape                           | Schließt das Dropdown |
-| ↓                                | Springt zum nächsten Element in der Liste. Ist bereits das Letzte visuell fokussiert, dann springt es zum Letzten. |
-| ↑                                | Springt zum vorherigen Element in der Liste. Ist bereits das Erste visuell fokussiert, dann springt es zum Letzten. |
-| Alt + ↑                          | Wählt das markierte Element. Schließt das Dropdown |
-| → / ← (`searchable = false`)       | Nichts passiert |
-| → / ← (`searchable = true`)        | Entfernt den visuellen Fokus im Dropdown |
-| Home (`searchable = false`)        | Springt zum ersten Element in der Liste |
-| Home (`searchable = true`)         | Bewegt den Cursor im Suchtext an die erste Stelle |
-| End (`searchable = false`)         | Springt zum letzten Element in der Liste |
-| End (`searchable = true`)          | Bewegt den Cursor im Suchtext an die letzte Stelle |
-| Page Up                          | Springt 10 Elemente nach oben |
-| Page Down                        | Springt 10 Elemente nach unten |
-| Druckbare Zeichen (`searchable = false`) | Startet eine Suche nach passenden Einträgen. Mehrfach derselbe Buchstabe: nächster passender Eintrag. Unterschiedliche Buchstaben kurz nacheinander: Suche nach Begriff mit diesen Anfangsbuchstaben. Liste wird nicht gefiltert, sondern passende Einträge fokussiert. |
-| Druckbare Zeichen (`searchable = true`) | Filtert die Optionen nach dem eingegebenen Suchbegriff. Nur einfache Suchen möglich. Übereinstimmende Textstücke werden hervorgehoben. Visueller Fokus wird entfernt. |
-| Escape (`searchable = false`)      | Das Dropdown schließt sich |
-| Escape (`searchable = true`)       | Setzt den Suchtext zurück und das Dropdown schließt sich |
+| Enter / Leertaste / Tab | Selektiert die fokussierte Option (falls eine fokussiert ist) und schließt das Dropdown |
+| Escape                           | `searchable = false`: Schließt das Dropdown <br> `searchable = true`: Schließt das Dropdown und löscht den Suchtext |
+| ↓                                | Fokussiert die nächste Option in der Liste. Ist bereits die Letzte fokussiert, dann wird die erste Option fokussiert. |
+| ↑                                | Fokussiert die vorherige Option in der Liste. Ist bereits die Erste fokussiert, dann wird die letzte Option fokussiert. |
+| Alt + ↑                          | Wählt die fokussierte Option. Schließt das Dropdown |
+| Home        | `searchable = false`: Fokussiert die erste Option in der Liste <br> `searchable = true`: Bewegt den Cursor im Suchtext an die erste Stelle |
+| End         | `searchable = false`: Fokussiert die letzte Option in der Liste <br> `searchable = true`: Bewegt den Cursor im Suchtext an die letzte Stelle |
+| PageUp         |  `searchable = false`: Setzt den Fokus 10 Optionen nach oben <br> `searchable = true`: Bewegt den Cursor im Suchtext an die erste Stelle|
+| PageDown          | `searchable = false`: Setzt den Fokus 10 Optionen nach unten <br> `searchable = true`: Bewegt den Cursor im Suchtext an die letzte Stelle |
+| Druckbare Zeichen | `searchable = false`: Startet eine Suche nach passenden Einträgen. Mehrfach derselbe Buchstabe: nächster passender Eintrag. Unterschiedliche Buchstaben kurz nacheinander: Suche nach Begriff mit diesen Anfangsbuchstaben. Liste wird nicht gefiltert, sondern passende Einträge fokussiert. <br> `searchable = true`: Filtert die Optionen nach dem eingegebenen Suchbegriff. Übereinstimmende Textstücke werden hervorgehoben. Fokus im Dropdown wird entfernt. |
 
 
 </details>

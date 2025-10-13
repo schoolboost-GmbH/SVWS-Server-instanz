@@ -199,11 +199,8 @@
 	defineOptions({ inheritAttrs: false });
 	const attrs = useAttrs();
 
-	// Der aktuelle Suchbegriff mit dazu passenden Optionen
+	// Der aktuelle Suchbegriff
 	const search = ref("");
-	const searchFilteredOptions = computed(() => {
-		return props.searchable ? getMatchingOptions(search.value) : props.manager.filteredOptions;
-	});
 
 	// refs
 	const uiSelect = ref<HTMLElement | null>(null);
@@ -359,7 +356,7 @@
 		instanceId, filteredAttributes, textColorClass, iconColorClass, comboboxAriaAttrs, searchAriaAttrs, comboboxTabindex, searchInputTabindex,
 		comboboxRole, dropdownPositionStyles, onKeyDown, searchInputFocusClass, handleComboboxFocus, handleBlur, handleComponentClick, comboboxClasses,
 		headlessPadding, labelClasses, labelTextColorClass, labelIconClass, optionClasses, validatorErrorIcon, showLabel, showValidatorError,
-		showValidatorErrorMessage, validatorErrorBgClasses, splitText, getSecondaryTextColor, handleInput, toggleSelection, getMatchingOptions, resetSearch,
+		showValidatorErrorMessage, validatorErrorBgClasses, splitText, getSecondaryTextColor, handleInput, toggleSelection, searchFilteredOptions, resetSearch,
 
 	} = useUiSelectUtils(
 		true,
