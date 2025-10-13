@@ -1,6 +1,6 @@
 import type { RouteLocationNormalized, RouteLocationRaw, RouteParams } from "vue-router";
 import type { BenutzerprofilAppProps } from "~/components/benutzerprofil/SBenutzerprofilAppProps";
-import { routeApp, type RouteApp} from "~/router/apps/RouteApp";
+import type { RouteApp} from "~/router/apps/RouteApp";
 import { BenutzerKompetenz, Schulform, ServerMode } from "@core";
 import { RouteNode } from "~/router/RouteNode";
 import { RouteDataBenutzerprofil } from "~/router/apps/benutzerprofil/RouteDataBenutzerprofil";
@@ -28,11 +28,14 @@ export class RouteBenutzerprofil extends RouteNode<RouteDataBenutzerprofil, Rout
 	public getProps(to: RouteLocationNormalized): BenutzerprofilAppProps {
 		return {
 			benutzer: () => this.data.benutzer,
+			benutzertyp: api.benutzertyp,
 			mode: api.mode,
 			patch: this.data.patch,
 			benutzerEMailDaten: () => this.data.benutzerEMailDaten,
 			patchBenutzerEMailDaten: this.data.patchBenutzerEMailDaten,
 			patchPasswort: this.data.patchPasswort,
+			patchPasswortWenom: this.data.patchPasswortWenom,
+			resetPasswordWenom: this.data.passwordResetWenom,
 			aes: api.aes,
 		};
 	}

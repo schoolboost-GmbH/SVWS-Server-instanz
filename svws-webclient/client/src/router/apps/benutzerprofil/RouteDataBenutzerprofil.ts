@@ -1,4 +1,4 @@
-import { BenutzerEMailDaten, type BenutzerDaten } from "@core";
+import { BenutzerEMailDaten, BenutzerTyp, type BenutzerDaten } from "@core";
 
 import { api } from "~/router/Api";
 import { RouteData, type RouteStateInterface } from "~/router/RouteData";
@@ -37,6 +37,29 @@ export class RouteDataBenutzerprofil extends RouteData<RouteStateBenutzerprofil>
 		const password = eins.length > 0 ? eins : null;
 		try {
 			await api.server.setPassword(password, api.schema, api.benutzerdaten.id);
+			return true;
+		} catch (e) {
+			return false;
+		}
+	}
+
+	public patchPasswortWenom = async (eins: string, zwei: string): Promise<boolean> => {
+		if ((eins !== zwei) || (api.benutzertyp !== BenutzerTyp.LEHRER))
+			return false;
+		const password = eins.length > 0 ? eins : null;
+		try {
+			await api.server.setENMLehrerPassword(password, api.schema, api.benutzerIDLehrer);
+			return true;
+		} catch (e) {
+			return false;
+		}
+	}
+
+	public passwordResetWenom = async () => {
+		try {
+			if (api.benutzertyp !== BenutzerTyp.LEHRER)
+				return false;
+			await api.server.resetENMLehrerPasswordToInitial(api.schema, api.benutzerIDLehrer);
 			return true;
 		} catch (e) {
 			return false;

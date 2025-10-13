@@ -25,6 +25,18 @@
 				<svws-ui-textarea-input placeholder="Signatur"	:model-value="benutzerEMailDaten().signatur" @change="signatur => patchBenutzerEMailDaten({ signatur: signatur ?? '' })" resizeable="vertical" autoresize />
 			</svws-ui-input-wrapper>
 		</svws-ui-content-card>
+		<svws-ui-content-card v-if="benutzertyp === BenutzerTyp.LEHRER" title="Webnotenmanager-Passwort ändern">
+			<svws-ui-input-wrapper :grid="2">
+				<svws-ui-text-input class="contentFocusField" placeholder="Erste Eingabe neues Passwort" v-model.trim="erstesPasswortWenom" type="password" :min-len="6" />
+				<svws-ui-text-input placeholder="Zweite Eingabe neues Passwort" v-model.trim="zweitesPasswortWenom" type="password" :min-len="6" />
+			</svws-ui-input-wrapper>
+			<div class="flex gap-4">
+				<svws-ui-button :type="okWenom === null ? 'secondary': ok === true ? 'primary' : 'danger'" @click="passwordWenom" :disabled="(erstesPasswortWenom !== zweitesPasswortWenom) || (erstesPasswortWenom.length < 6)"> Passwort ändern </svws-ui-button>
+				<svws-ui-button :type="okResetWenom === null ? 'secondary': ok === true ? 'primary' : 'danger'" @click="passwordResetWenom"> Passwort zurücksetzen </svws-ui-button>
+			</div>
+			{{ okWenom === true ? "Das Passwort wurde geändert" : okWenom === false ? 'Es gab einen Fehler bei der Passwortänderung' : '' }}
+			{{ okResetWenom === true ? "Das Passwort wurde zurückgesetzt" : okResetWenom === false ? 'Es gab einen Fehler beim Zurücksetzen des Passworts' : '' }}
+		</svws-ui-content-card>
 		<svws-ui-content-card title="Ansicht">
 			<div class="flex flex-col gap-5">
 				<div class="flex flex-col gap-2 text-left">
@@ -35,7 +47,7 @@
 						<svws-ui-radio-option value="large" v-model="fontSize" name="fontSize" label="Größer" @click="updateFontSize('large')" />
 					</svws-ui-radio-group>
 				</div>
-				<ui-color-mode v-if="mode !== ServerMode.STABLE" warning mode="radio" auto />
+				<ui-color-mode v-if="mode !== ServerMode.STABLE" mode="radio" auto />
 			</div>
 		</svws-ui-content-card>
 	</div>
@@ -45,13 +57,18 @@
 
 	import { computed, ref, watch } from "vue";
 	import type { BenutzerprofilAppProps } from "./SBenutzerprofilAppProps";
-	import { ServerMode } from "@core";
+	import { BenutzerTyp, ServerMode } from "@core";
 
 	const props = defineProps<BenutzerprofilAppProps>();
 
 	const erstesPasswort = ref('');
 	const zweitesPasswort = ref('');
 	const ok = ref<boolean | null>(null);
+
+	const erstesPasswortWenom = ref('');
+	const zweitesPasswortWenom = ref('');
+	const okWenom = ref<boolean | null>(null);
+	const okResetWenom = ref<boolean | null>(null);
 
 	const _smtpPassword = ref<string>('');
 
@@ -64,6 +81,20 @@
 
 	async function password() {
 		ok.value = await props.patchPasswort(erstesPasswort.value, zweitesPasswort.value);
+		erstesPasswort.value = "";
+		zweitesPasswort.value = "";
+	}
+
+	async function passwordWenom() {
+		okResetWenom.value = null;
+		okWenom.value = await props.patchPasswortWenom(erstesPasswortWenom.value, zweitesPasswortWenom.value);
+		erstesPasswortWenom.value = "";
+		zweitesPasswortWenom.value = "";
+	}
+
+	async function passwordResetWenom() {
+		okWenom.value = null;
+		okResetWenom.value = await props.resetPasswordWenom();
 	}
 
 	async function decryptSMTPPassword() {
