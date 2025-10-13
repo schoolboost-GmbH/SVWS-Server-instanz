@@ -204,6 +204,32 @@ public final class DBBenutzerUtils {
 
 	/**
 	 * Ermittelt den aktuellen SVWS-Benutzer anhand des HTTP-Requests und überprüft, ob der Benutzer
+	 * entweder Admin-Rechte oder einer der übergebenen Kompetenzen besitzt. Erlaubt wird auch der Zugriff von
+	 * dem Benutzer mit der übergebenen Benutzer-ID.
+	 *
+	 * @param request       das HTTP-Request-Objekt
+	 * @param mode          der benötigte Server-Mode für den API-Zugriff
+	 * @param idLehrer      die zu prüfende Lehrer-ID (ist der angemeldetet Benutzer Lehrer und dies seine Lehrer-ID?)
+	 * @param kompetenzen   die zu prüfenden Kompetenzen
+	 *
+	 * @return der aktuelle SVWS-Benutzer, falls ein Benutzer mit der Kompetenz angemeldet ist
+	 *
+	 * @throws ApiOperationException   Ist kein Benutzer angemeldet oder besitzt nicht die erforderliche Kompetenz,
+	 *                                 so wird eine ApiOperationException mit dem HTTP Status Code FORBIDDEN (403) generiert
+	 */
+	private static Benutzer getSVWSUserAllowSelfLehrer(final HttpServletRequest request, final ServerMode mode, final long idLehrer,
+			final BenutzerKompetenz... kompetenzen) throws ApiOperationException {
+		final Benutzer user = getSVWSUser(request, mode);
+		final Set<BenutzerKompetenz> setKompetenzen = new HashSet<>(Arrays.asList(kompetenzen));
+		if ((user == null)
+				|| ((!setKompetenzen.contains(BenutzerKompetenz.KEINE)) && (!user.pruefeKompetenz(setKompetenzen)) && (user.getIdLehrer() != idLehrer)))
+			throw new ApiOperationException(Status.FORBIDDEN);
+		return user;
+	}
+
+
+	/**
+	 * Ermittelt den aktuellen SVWS-Benutzer anhand des HTTP-Requests und überprüft, ob der Benutzer
 	 * entweder Admin-Rechte oder eine der übergebenen Kompetenzen besitzt. Anschließend wird eine
 	 * {@link DBEntityManager} Instanz für den Datenbankzugriff zurückgegeben.
 	 *
@@ -246,6 +272,32 @@ public final class DBBenutzerUtils {
 			final BenutzerKompetenz... kompetenzen) throws ApiOperationException {
 		try {
 			return getSVWSUserAllowSelf(request, mode, user_id, kompetenzen).getEntityManager();
+		} catch (final DBException e) {
+			throw new ApiOperationException(Status.FORBIDDEN, e, "Fehler beim Aufbau der Datenbank-Verbindung.");
+		}
+	}
+
+
+	/**
+	 * Ermittelt den aktuellen SVWS-Benutzer anhand des HTTP-Requests und überprüft, ob der Benutzer
+	 * entweder Admin-Rechte oder eine der übergebenen Kompetenzen besitzt. Erlaubt wird auch der Zugriff von
+	 * dem Benutzer mit der übergebenen Benutzer-ID.
+	 * Anschließend wird eine {@link DBEntityManager} Instanz für den Datenbankzugriff zurückgegeben.
+	 *
+	 * @param request       das HTTP-Request-Objekt
+	 * @param mode          der benötigte Server-Mode für den API-Zugriff
+	 * @param idLehrer      die zu prüfende Lehrer-ID (ist der angemeldetet Benutzer Lehrer und dies seine Lehrer-ID?)
+	 * @param kompetenzen   die zu prüfenden Kompetenzen
+	 *
+	 * @return die Datenbankverbindung für den aktuellen SVWS-Benutzer, falls ein Benutzer mit der Kompetenz angemeldet ist
+	 *
+	 * @throws ApiOperationException   Ist kein Benutzer angemeldet oder besitzt nicht die erforderliche Kompetenz,
+	 *                                 so wird eine ApiOperationException mit dem HTTP Status Code FORBIDDEN (403) generiert
+	 */
+	public static DBEntityManager getDBConnectionAllowSelfLehrer(final HttpServletRequest request, final ServerMode mode, final long idLehrer,
+			final BenutzerKompetenz... kompetenzen) throws ApiOperationException {
+		try {
+			return getSVWSUserAllowSelfLehrer(request, mode, idLehrer, kompetenzen).getEntityManager();
 		} catch (final DBException e) {
 			throw new ApiOperationException(Status.FORBIDDEN, e, "Fehler beim Aufbau der Datenbank-Verbindung.");
 		}
@@ -418,5 +470,33 @@ public final class DBBenutzerUtils {
 			return e.getResponse();
 		}
 	}
+
+
+	/**
+	 * Führt die übergebene Aufgabe auf der Datenbank aus und gibt bei Erfolg die Response der Aufgabe zurück.
+	 * Hierfür wird der aktuelle SVWS-Benutzer anhand des HTTP-Requests ermittelt und überprüft, ob der
+	 * Benutzer entweder Admin-Rechte oder eine der übergebenen Kompetenzen besitzt.
+	 * Bei dieser Methode wird auch der Zugriff von dem Benutzer mit der übergebenen Benutzer-ID erlaubt.
+	 * Die dabei erstellte {@link DBEntityManager}-Instanz wird dabei für den Datenbankzugriff genutzt.
+	 *
+	 * Wichtig: Eine Transaktion für die Aufgabe wird erzeugt und von dieser Methode gehandhabt!
+	 *
+	 * @param task          die auszuführende Aufgabe
+	 * @param request       das HTTP-Request-Objekt
+	 * @param mode          der benötigte Server-Mode für den API-Zugriff
+	 * @param idLehrer      die zu prüfende Lehrer-ID (ist der angemeldetet Benutzer Lehrer und dies seine Lehrer-ID?)
+	 * @param kompetenzen   die zu prüfenden Kompetenzen
+	 *
+	 * @return die Response zu der Aufgabe
+	 */
+	public static Response runWithTransactionAllowSelfLehrer(final ThrowingFunction<DBEntityManager, Response> task, final HttpServletRequest request,
+			final ServerMode mode, final long idLehrer, final BenutzerKompetenz... kompetenzen) {
+		try (DBEntityManager conn = getDBConnectionAllowSelfLehrer(request, mode, idLehrer, kompetenzen)) {
+			return runWithTransaction(task, conn);
+		} catch (final ApiOperationException e) {
+			return e.getResponse();
+		}
+	}
+
 
 }

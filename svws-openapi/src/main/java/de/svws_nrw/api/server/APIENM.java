@@ -340,10 +340,10 @@ public class APIENM {
 	@ApiResponse(responseCode = "500", description = "Unspezifizierter Fehler (z.B. beim Datenbankzugriff)")
 	public Response resetENMLehrerPasswordToInitial(@PathParam("schema") final String schema, @PathParam("id") final long id,
 			@Context final HttpServletRequest request) {
-		return DBBenutzerUtils.runWithTransaction(conn -> {
+		return DBBenutzerUtils.runWithTransactionAllowSelfLehrer(conn -> {
 			DataENMDaten.resetInitialPassword(conn, id);
 			return Response.status(Status.NO_CONTENT).build();
-		}, request, ServerMode.STABLE, BenutzerKompetenz.NOTENMODUL_ADMINISTRATION);
+		}, request, ServerMode.STABLE, id, BenutzerKompetenz.NOTENMODUL_ADMINISTRATION);
 	}
 
 
@@ -373,11 +373,11 @@ public class APIENM {
 			@RequestBody(description = "Das Kennwort", required = true, content = @Content(mediaType = MediaType.APPLICATION_JSON,
 					schema = @Schema(implementation = String.class))) final InputStream is,
 			@Context final HttpServletRequest request) {
-		return DBBenutzerUtils.runWithTransaction(conn -> {
+		return DBBenutzerUtils.runWithTransactionAllowSelfLehrer(conn -> {
 			final String password = JSONMapper.toString(is);
 			DataENMDaten.setPassword(conn, id, password);
 			return Response.status(Status.NO_CONTENT).build();
-		}, request, ServerMode.STABLE, BenutzerKompetenz.NOTENMODUL_ADMINISTRATION);
+		}, request, ServerMode.STABLE, id, BenutzerKompetenz.NOTENMODUL_ADMINISTRATION);
 	}
 
 
