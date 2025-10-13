@@ -44,7 +44,7 @@
 				</template>
 				<!-- <template v-if="primarstufe" #cell(epJahre)="{ rowData }"> {{ rowData.jahrgang }} </template> -->
 				<template #actions>
-					<svws-ui-tooltip position="bottom" v-if="((ServerMode.DEV.checkServerMode(serverMode)) && (hatKompetenzAendern) && (manager().auswahl()?.status === SchuelerStatus.NEUAUFNAHME.daten(schuljahr)?.id))">
+					<svws-ui-tooltip position="bottom" v-if="showSchnelleingabe">
 						<svws-ui-button :disabled="((activeViewType === ViewType.NEU) || (activeViewType === ViewType.HINZUFUEGEN))" type="icon" @click="startQuickCreationMode"
 							:has-focus="rowsFiltered.length === 0">
 							<span class="icon i-ri-edit-2-line" />
@@ -93,7 +93,7 @@
 	import type { JahrgangsDaten, KlassenDaten, KursDaten, SchuelerListeEintrag, Schulgliederung } from "@core";
 	import { BenutzerKompetenz, SchuelerStatus, ServerMode } from "@core";
 	import type { SortByAndOrder } from "@ui";
-	import { useRegionSwitch, ViewType} from "@ui";
+	import { useRegionSwitch, ViewType } from "@ui";
 	import type { SchuelerAuswahlProps } from "./SSchuelerAuswahlProps";
 
 	const props = defineProps<SchuelerAuswahlProps>();
@@ -115,6 +115,8 @@
 	const showModalGruppenaktionen = ref<boolean>(false);
 
 	const schuljahr = computed<number>(() => props.schuljahresabschnittsauswahl().aktuell.schuljahr);
+
+	const showSchnelleingabe = computed(() => ServerMode.DEV.checkServerMode(props.serverMode) && props.manager().hasDaten() && (props.manager().auswahl().status === SchuelerStatus.NEUAUFNAHME.daten(schuljahr.value)?.id) && hatKompetenzAendern.value);
 
 	const search = ref<string>("");
 
