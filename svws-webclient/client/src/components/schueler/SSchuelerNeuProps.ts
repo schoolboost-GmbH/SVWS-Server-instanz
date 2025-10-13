@@ -9,6 +9,7 @@ export interface SchuelerNeuProps {
 	patchSchuelerSchulbesuchdaten: (addObject: Partial<SchuelerSchulbesuchsdaten>, idEintrag: number) => Promise<void>;
 	mapKindergaerten: Map<number, Kindergarten>;
 	mapEinschulungsarten: Map<number, EinschulungsartKatalogEintrag>;
+	initialeSchuelerDaten: () => SchuelerStammdatenNeu | null;
 	gotoSchnelleingabeView: (navigate: boolean, idEintrag?: number | null) => Promise<void>;
 	gotoDefaultView: (idEintrag?: number | null) => Promise<void>;
 	aktAbschnitt: Schuljahresabschnitt;

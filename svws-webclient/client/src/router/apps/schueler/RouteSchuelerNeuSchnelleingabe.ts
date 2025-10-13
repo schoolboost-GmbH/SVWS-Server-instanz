@@ -71,6 +71,7 @@ export class RouteSchuelerNeuSchnelleingabe extends RouteNode<RouteDataSchuelerN
 			patchSchuelerLernabschnittsdaten: routeSchueler.data.patchSchuelerLernabschnitt,
 			getSchuelerKlassenFuerAbschnitt: routeSchueler.data.getSchuelerKlassenFuerAbschnitt,
 			gotoDefaultView: routeSchueler.data.gotoDefaultView,
+			gotoSchuelerNeuView: routeSchueler.data.gotoHinzufuegenView,
 			aktAbschnitt: routeApp.data.aktAbschnitt.value,
 			serverMode: api.mode,
 			schulform: api.schulform,

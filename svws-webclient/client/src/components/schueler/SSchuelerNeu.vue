@@ -52,7 +52,7 @@
 	import type { SchuelerNeuProps } from "~/components/schueler/SSchuelerNeuProps";
 	import type { KlassenDaten, SchuelerStatusKatalogEintrag } from "@core";
 	import { Geschlecht, SchuelerStatus, Schulform, SchuelerSchulbesuchsdaten, BenutzerKompetenz, SchuelerStammdatenNeu, DateUtils } from "@core";
-	import { computed, ref, toRaw, watch } from "vue";
+	import { computed, ref, watch } from "vue";
 	import { CoreTypeSelectManager, SelectManager } from "@ui";
 	import { mandatoryInputIsValid, optionalInputIsValid } from "~/util/validation/Validation";
 
@@ -72,14 +72,12 @@
 		props.checkpoint.active = true;
 	}, {immediate: false, deep: true});
 
-	//TODO Schulform.GY aus dem Array entfernen
 	const schulenMitPrimaerstufe = computed(() => {
-		const erlaubteSchulformen = [ Schulform.G, Schulform.FW, Schulform.WF, Schulform.GM, Schulform.KS, Schulform.S, Schulform.GE, Schulform.V, Schulform.GY];
+		const erlaubteSchulformen = [ Schulform.G, Schulform.FW, Schulform.WF, Schulform.GM, Schulform.KS, Schulform.S, Schulform.GE, Schulform.V];
 		return erlaubteSchulformen.includes(props.schulform);
 	});
 
-	//TODO Schulform.GY entfernen
-	const schulenMitBKoderSK = computed(() => props.schulform === Schulform.BK || props.schulform === Schulform.SK || props.schulform === Schulform.GY);
+	const schulenMitBKoderSK = computed(() => props.schulform === Schulform.BK || props.schulform === Schulform.SK);
 
 	//validation logic
 	function fieldIsValid(field: keyof SchuelerStammdatenNeu | null):(v: string | null) => boolean {
@@ -328,5 +326,29 @@
 		props.schuelerListeManager().schuelerstatus.auswahlAdd(SchuelerStatus.EXTERN);
 		void props.gotoDefaultView(null);
 	}
+
+	const initialeSchuelerDaten = computed(() => props.initialeSchuelerDaten() ?? null);
+
+	watch(initialeSchuelerDaten, async (val) => {
+		if (val === null)
+			return;
+
+		if (val.anmeldedatum !== null)
+			data.value.anmeldedatum = val.anmeldedatum;
+		if (val.aufnahmedatum !== null)
+			data.value.aufnahmedatum = val.aufnahmedatum;
+		if (val.beginnBildungsgang !== null)
+			data.value.beginnBildungsgang = val.beginnBildungsgang;
+		if (val.dauerBildungsgang !== null)
+			data.value.dauerBildungsgang = val.dauerBildungsgang;
+
+		schuljahresabschnitt.value = gefilterteSchuljahresabschnitte.value.find(s => s.id === val.schuljahresabschnitt) ?? null;
+		await loadKlassenFuerAbschnitt(val.schuljahresabschnitt);
+		if (val.jahrgangID !== null)
+			data.value.jahrgangID = val.jahrgangID;
+		if (val.klassenID !== null)
+			data.value.klassenID = val.klassenID;
+
+	}, { immediate: true });
 
 </script>

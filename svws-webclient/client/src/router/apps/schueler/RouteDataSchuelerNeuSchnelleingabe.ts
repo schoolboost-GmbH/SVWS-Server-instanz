@@ -1,6 +1,6 @@
 import { RouteData, type RouteStateInterface } from "~/router/RouteData";
-import type { Fahrschuelerart, Haltestelle, Kindergarten, ReligionEintrag, SchuelerListeEintrag, SchuelerStammdaten, SchulEintrag, SchulformKatalogEintrag, TelefonArt, EinschulungsartKatalogEintrag, Erzieherart, OrtKatalogEintrag, OrtsteilKatalogEintrag, SchuelerLernabschnittListeEintrag, VermerkartEintrag, SchuelerSchulbesuchsdaten, Merkmal, KatalogEntlassgrund } from "@core";
-import { ArrayList, DeveloperNotificationException, Schulform } from "@core";
+import type { Fahrschuelerart, Haltestelle, Kindergarten, ReligionEintrag, SchuelerListeEintrag, SchuelerStammdaten, SchulEintrag, SchulformKatalogEintrag, TelefonArt, EinschulungsartKatalogEintrag, Erzieherart, OrtKatalogEintrag, OrtsteilKatalogEintrag, SchuelerLernabschnittListeEintrag, VermerkartEintrag, SchuelerSchulbesuchsdaten, Merkmal, KatalogEntlassgrund, List } from "@core";
+import { ArrayList, DeveloperNotificationException, Schulform, SchuelerStammdatenNeu } from "@core";
 import { api } from "~/router/Api";
 import { routeSchueler } from "~/router/apps/schueler/RouteSchueler";
 import { SchuelerSchulbesuchManager } from "~/components/schueler/schulbesuch/SchuelerSchulbesuchManager";
@@ -109,32 +109,37 @@ export class RouteDataSchuelerNeuSchnelleingabe extends RouteData<RouteStateData
 		this.setPatchedState({ mapFahrschuelerarten, mapKindergaerten, mapHaltestellen, mapReligionen, mapTelefonArten, mapSchulen, mapErzieherarten, mapEinschulungsarten, mapOrte, mapOrtsteile, mapVermerkArten });
 
 	}
-	public async ladeDaten(auswahl: SchuelerListeEintrag | null) : Promise<SchuelerStammdaten | null> {
-		if (auswahl === null)
-			return null;
-		const res = await api.server.getSchuelerStammdaten(api.schema, auswahl.id);
+
+	private async createSchuelerSchulbesuchManager(auswahl: SchuelerListeEintrag): Promise<SchuelerSchulbesuchManager> {
 		const schuelerSchulbesuchsdaten: SchuelerSchulbesuchsdaten = await api.server.getSchuelerSchulbesuch(api.schema, auswahl.id);
 		const kindergaerten = await api.server.getKindergaerten(api.schema)
 		const schulen = new ArrayList<SchulEintrag>();
 		const merkmale = new ArrayList<Merkmal>();
 		const entlassgruende = new ArrayList<KatalogEntlassgrund>();
-		const schuelerSchulbesuchManager = new SchuelerSchulbesuchManager(
-			schuelerSchulbesuchsdaten, auswahl, api.schuleStammdaten.abschnitte, schulen, merkmale, entlassgruende, kindergaerten, routeSchuelerSchulbesuch.data.patch);
+		return new SchuelerSchulbesuchManager(schuelerSchulbesuchsdaten, auswahl, api.schuleStammdaten.abschnitte, schulen, merkmale, entlassgruende, kindergaerten, routeSchuelerSchulbesuch.data.patch);
+	}
+
+	private selectBevorzugtenAbschnitt(listAbschnitte: List<SchuelerLernabschnittListeEintrag>): SchuelerLernabschnittListeEintrag | null {
+		for (const a of listAbschnitte) {
+			if ((a.schuljahresabschnitt === routeSchueler.data.idSchuljahresabschnitt) && (a.wechselNr === 0))
+				return a;
+		}
+		if (!listAbschnitte.isEmpty())
+			return listAbschnitte.get(listAbschnitte.size() - 1);
+		return null;
+	}
+
+	public async ladeDaten(auswahl: SchuelerListeEintrag | null): Promise<SchuelerStammdaten | null> {
+		if (auswahl === null)
+			return null;
+		const res = await api.server.getSchuelerStammdaten(api.schema, auswahl.id);
+		const schuelerSchulbesuchManager = await this.createSchuelerSchulbesuchManager(auswahl);
 
 		let schuelerLernabschnittsManager: SchuelerLernabschnittManager | undefined = undefined;
 		const listAbschnitte = await api.server.getSchuelerLernabschnittsliste(api.schema, auswahl.id);
 		// wähle bevorzugt einen Eintrag für den aktuellen Schuljahresabschnitt, WechselNr = 0, sonst letzten Eintrag
-		let found : SchuelerLernabschnittListeEintrag | undefined = undefined;
-
-		for (const a of listAbschnitte) {
-			if (a.schuljahresabschnitt === routeSchueler.data.idSchuljahresabschnitt && a.wechselNr === 0) {
-				found = a;
-				break;
-			}
-		}
-		if (found === undefined && !listAbschnitte.isEmpty())
-			found = listAbschnitte.get(listAbschnitte.size()-1);
-		if (found !== undefined) {
+		const found = this.selectBevorzugtenAbschnitt(listAbschnitte);
+		if (found !== null) {
 			const daten = await api.server.getSchuelerLernabschnittsdatenByID(api.schema, found.id);
 			const [ listKurse, listKlassen, listLehrer, listFaecher, listFoerderschwerpunkte, listJahrgaenge ] = await Promise.all([
 				api.server.getKurseFuerAbschnitt(api.schema, found.schuljahresabschnitt),
@@ -156,6 +161,30 @@ export class RouteDataSchuelerNeuSchnelleingabe extends RouteData<RouteStateData
 
 		this.setPatchedState({ schuelerSchulbesuchManager, schuelerLernabschnittsManager });
 		return res;
+	}
+
+	public async ladeInitialeDatenFuerWeiterenSchueler(auswahl: SchuelerListeEintrag | null): Promise<SchuelerStammdatenNeu | null> {
+		if (auswahl === null)
+			return null;
+		const schuelerDaten: SchuelerStammdatenNeu = new SchuelerStammdatenNeu();
+		const result = await api.server.getSchuelerStammdaten(api.schema, auswahl.id);
+
+		schuelerDaten.anmeldedatum = result.anmeldedatum;
+		schuelerDaten.aufnahmedatum = result.aufnahmedatum;
+		schuelerDaten.beginnBildungsgang = result.beginnBildungsgang;
+		schuelerDaten.dauerBildungsgang = result.dauerBildungsgang;
+
+		const listAbschnitte = await api.server.getSchuelerLernabschnittsliste(api.schema, auswahl.id);
+		// wähle bevorzugt einen Eintrag für den aktuellen Schuljahresabschnitt, WechselNr = 0, sonst letzten Eintrag
+		const found = this.selectBevorzugtenAbschnitt(listAbschnitte);
+		if (found !== null) {
+			const daten = await api.server.getSchuelerLernabschnittsdatenByID(api.schema, found.id);
+
+			schuelerDaten.schuljahresabschnitt = daten.schuljahresabschnitt;
+			schuelerDaten.jahrgangID = daten.jahrgangID;
+			schuelerDaten.klassenID = daten.klassenID;
+		}
+		return schuelerDaten;
 	}
 
 	get mapFahrschuelerarten(): Map<number, Fahrschuelerart> {

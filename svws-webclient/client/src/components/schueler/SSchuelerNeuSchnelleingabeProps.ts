@@ -36,6 +36,7 @@ export interface SchuelerNeuSchnelleingabeProps {
 	patchSchuelerLernabschnittsdaten: (data : Partial<SchuelerLernabschnittsdaten>, idEintrag: number) => Promise<void>;
 	getSchuelerKlassenFuerAbschnitt: (idAbschnitt: number) => Promise<List<KlassenDaten>>;
 	gotoDefaultView: (idEintrag?: number | null) => Promise<void>;
+	gotoSchuelerNeuView: (navigate: boolean) => Promise<void>;
 	aktAbschnitt: Schuljahresabschnitt;
 	serverMode: ServerMode;
 	schulform: Schulform,

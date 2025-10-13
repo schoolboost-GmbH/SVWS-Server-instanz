@@ -1,6 +1,6 @@
 import type { RouteLocationNormalized, RouteLocationRaw, RouteParams, RouteParamsRawGeneric } from "vue-router";
 
-import type { DeveloperNotificationException } from "@core";
+import type { DeveloperNotificationException, SchuelerStammdatenNeu } from "@core";
 import { BenutzerKompetenz, Schulform, ServerMode } from "@core";
 
 import { RouteNode } from "~/router/RouteNode";
@@ -12,6 +12,7 @@ import { routeSchueler } from "~/router/apps/schueler/RouteSchueler";
 import { routeApp } from "~/router/apps/RouteApp";
 import { api } from "~/router/Api";
 import { routeError } from "~/router/error/RouteError";
+import { routeSchuelerNeuSchnelleingabe } from "~/router/apps/schueler/RouteSchuelerNeuSchnelleingabe";
 
 const SSchuelerNeu = () => import("~/components/schueler/SSchuelerNeu.vue");
 
@@ -42,11 +43,23 @@ export class RouteSchuelerNeu extends RouteNode<any, RouteSchueler> {
 		}
 	}
 
+	private initialeSchuelerDaten: SchuelerStammdatenNeu | null = null;
+
+	public async getSchuelerDaten(idSchueler: number): Promise<void> {
+		const auswahl = routeSchueler.data.manager.liste.get(idSchueler);
+		this.initialeSchuelerDaten = await routeSchuelerNeuSchnelleingabe.data.ladeInitialeDatenFuerWeiterenSchueler(auswahl) ?? null;
+	}
+
+	public clearInitialeSchuelerDaten(): void {
+		this.initialeSchuelerDaten = null;
+	}
+
 	protected async update(to: RouteNode<any, any>, to_params: RouteParams, from: RouteNode<any, any> | undefined, from_params: RouteParams, isEntering: boolean, redirected: RouteNode<any, any> | undefined): Promise<void | Error | RouteLocationRaw> {
-		// if (from === routeSchuelerNeuSchnelleingabe) {
-		// 	routeSchueler.data.manager.getVorherigeAuswahl();
-		// 	console.log(from_params.id)
-		// }
+		if (from === routeSchuelerNeuSchnelleingabe) {
+			const idSchueler = routeSchueler.data.manager.daten().id;
+			await this.getSchuelerDaten(idSchueler);
+		} else
+			this.clearInitialeSchuelerDaten();
 	}
 
 	public addRouteParamsFromState() : RouteParamsRawGeneric {
@@ -61,6 +74,7 @@ export class RouteSchuelerNeu extends RouteNode<any, RouteSchueler> {
 			patchSchuelerSchulbesuchdaten: routeSchueler.data.patchSchuelerSchulbesuchdaten,
 			mapKindergaerten: routeApp.data.mapKindergaerten,
 			mapEinschulungsarten: routeApp.data.mapEinschulungsarten,
+			initialeSchuelerDaten: () => this.initialeSchuelerDaten,
 			gotoSchnelleingabeView: routeSchueler.data.gotoSchnelleingabeView,
 			gotoDefaultView: routeSchueler.data.gotoDefaultView,
 			aktAbschnitt: routeApp.data.aktAbschnitt.value,

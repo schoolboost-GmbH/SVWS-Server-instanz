@@ -309,6 +309,7 @@
 		<svws-ui-content-card />
 		<svws-ui-content-card class="col-span-full">
 			<div class="-mt-16 flex flex-row gap-4 justify-end w-full">
+				<svws-ui-button type="primary" @click="gotoSchuelerNeuView">Weiteren Schüler anlegen</svws-ui-button>
 				<svws-ui-button type="secondary" @click="cancel">Neuaufnahme beenden</svws-ui-button>
 			</div>
 		</svws-ui-content-card>
