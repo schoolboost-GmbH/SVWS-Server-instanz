@@ -40,12 +40,20 @@
 						</div>
 					</div>
 					<div v-if="gridManager.daten.size() > 0" class="overflow-y-auto">
-						<ui-table-grid :footer-count="0" :manager="() => gridManager" class="min-w-full">
-							<template #header>
-								<th>Kürzel</th>
-								<th>Text</th>
-								<th>Niveau</th>
-								<th>Jg</th>
+						<ui-table-grid :header-count="(niveauSet.size + jahrgangSet.size > 0) ? 2 : 1" :manager="() => gridManager" class="min-w-full">
+							<template #header="params">
+								<template v-if="params.i === 1">
+									<th>Kürzel</th>
+									<th>Text</th>
+									<th>Niveau</th>
+									<th>Jg</th>
+								</template>
+								<template v-else>
+									<th />
+									<th />
+									<th> <ui-select v-if="niveauSet.size > 0" headless :manager="niveauManager" v-model="niveauSelected" removable /> </th>
+									<th> <ui-select v-if="jahrgangSet.size > 0" headless :manager="jahrgangManager" v-model="jahrgangSelected" :removable="false" /> </th>
+								</template>
 							</template>
 							<template #default="{ row: data, index }">
 								<template v-if="data.floskel === null">
@@ -55,7 +63,7 @@
 									<td :ref="inputBemerkung(data.floskel, 1, index)" :class="['cursor-pointer', index === (gridManager.focusRowLast ?? 1) ? 'modalFocusField':'']"> {{ data.floskel.kuerzel }} </td>
 									<td class="text-left" @click="ergaenzeFloskel(data.floskel)"> {{ data.floskel.text }} </td>
 									<td @click="ergaenzeFloskel(data.floskel)"> {{ data.floskel.niveau }} </td>
-									<td @click="ergaenzeFloskel(data.floskel)"> {{ data.floskel.jahrgangID }} </td>
+									<td @click="ergaenzeFloskel(data.floskel)"> {{ enmManager().mapJahrgaenge.get(data.floskel.jahrgangID)?.kuerzel ?? '' }} </td>
 								</template>
 							</template>
 						</ui-table-grid>
@@ -84,6 +92,7 @@
 	import type { List } from '../../../../core/src/java/util/List';
 	import type { EnmManager, BemerkungenHauptgruppe, EnmLerngruppenAuswahlEintrag } from './EnmManager';
 	import { PairNN } from '../../../../core/src/asd/adt/PairNN';
+	import { SelectManager } from '../../ui/controls/select/selectManager/SelectManager';
 
 	type RowType = { gruppe: ENMFloskelgruppe, floskel: ENMFloskel | null };
 	type StrOrUndef = string|undefined;
@@ -148,7 +157,7 @@
 		}),
 		getRowKey: row => `${row.a}_${row.b.id}`,
 		columns: [ { kuerzel: "Name", name: "Name, Vorname", width: '15rem' } ],
-	})
+	});
 
 	const gridManager = new GridManager<string, RowType, List<RowType>>({
 		daten: computed<List<RowType>>(() => {
@@ -156,31 +165,14 @@
 			const auswahl = props.auswahl;
 			if ((auswahl.schueler === null) || ((auswahl.leistung === null) && (auswahl.klasse === null)))
 				return result;
-			let floskelnHauptgruppe: ENMFloskelgruppe | null = null;
-			let floskelnAllgemein: ENMFloskelgruppe | null = null;
-			for (const gruppe of props.enmManager().listFloskelgruppen) {
-				if (gruppe.floskeln.isEmpty())
-					continue;
-				if (gruppe.hauptgruppe === props.erlaubteHauptgruppe)
-					floskelnHauptgruppe = gruppe;
-				else if (gruppe.hauptgruppe === 'ALLG')
-					floskelnAllgemein = gruppe;
-			}
-			if ((floskelnHauptgruppe === null) && (floskelnAllgemein === null))
-				return result;
-			const temp = [];
-			if (floskelnHauptgruppe !== null)
-				temp.push(floskelnHauptgruppe);
-			if (floskelnAllgemein !== null)
-				temp.push(floskelnAllgemein);
-			for (const gruppe of temp) {
+			for (const gruppe of floskelgruppen.value) {
 				result.add({ gruppe, floskel: null });
 				for (const floskel of gruppe.floskeln) {
-					// Prüfe, ob der Jahrgang der Floskel zu dem Jahrgang des Schülers passt
-					if ((floskel.jahrgangID !== null) && (floskel.jahrgangID !== auswahl.schueler.jahrgangID))
+					// wende den Filter für den Jahrgang an
+					if ((jahrgangSelected.value !== undefined) && (floskel.jahrgangID !== null) && (jahrgangSelected.value !== floskel.jahrgangID))
 						continue;
-					// Prüfe, wenn es sich um fachbezogene Floskeln handelt auch das Fach der Floskel zu dem Fach der eistung passt
-					if ((auswahl.leistung !== null) && (floskel.fachID !== null) && ((props.enmManager().lerngruppeByIDOrException(auswahl.leistung.lerngruppenID).fachID !== floskel.fachID)))
+					// wenden den Filter für das Niveau an
+					if ((niveauSelected.value !== undefined) && (floskel.niveau !== niveauSelected.value))
 						continue;
 					result.add({ gruppe, floskel });
 				}
@@ -189,12 +181,58 @@
 		}),
 		getRowKey: row => `${row.gruppe.hauptgruppe}_${row.gruppe.kuerzel}_${row.floskel?.kuerzel}`,
 		columns: [
-			{ kuerzel: "Kürzel", name: "Kürzel", width: "4rem", hideable: false },
+			{ kuerzel: "Kürzel", name: "Kürzel", width: "6rem", hideable: false },
 			{ kuerzel: "Text", name: "Text", width: "1fr", hideable: false },
-			{ kuerzel: "Niveau", name: "Niveau", width: "6rem", hideable: false },
-			{ kuerzel: "Jg", name: "Jahrgang", width: "4rem", hideable: false },
+			{ kuerzel: "Niveau", name: "Niveau", width: "5rem", hideable: false },
+			{ kuerzel: "Jg", name: "Jahrgang", width: "5rem", hideable: false },
 		],
 	});
+
+	const { niveauSet, jahrgangSet, floskelgruppen } = computed(() => {
+		const jahrgangSet = ref(new Set<number>());
+		const niveauSet = ref(new Set<number>());
+		const floskelnHauptgruppe: ENMFloskelgruppe[] = [];
+		const floskelnAllgemein: ENMFloskelgruppe[] = [];
+		for (const gruppe of props.enmManager().listFloskelgruppen) {
+			if (gruppe.floskeln.isEmpty())
+				continue;
+			if (gruppe.hauptgruppe === props.erlaubteHauptgruppe)
+				floskelnHauptgruppe.push(gruppe);
+			else if (gruppe.hauptgruppe === 'ALLG')
+				floskelnAllgemein.push(gruppe);
+		}
+		const floskelgruppen = ref(floskelnHauptgruppe.concat(floskelnAllgemein));
+		for (const gruppe of floskelgruppen.value)
+			for (const floskel of gruppe.floskeln) {
+				// Prüfe, wenn es sich um fachbezogene Floskeln handelt auch das Fach der Floskel zu dem Fach der Leistung passt
+				if ((props.auswahl.leistung !== null) && (floskel.fachID !== null) && ((props.enmManager().lerngruppeByIDOrException(props.auswahl.leistung.lerngruppenID).fachID !== floskel.fachID)))
+					continue;
+				if (floskel.jahrgangID !== null)
+					jahrgangSet.value.add(floskel.jahrgangID);
+				if (floskel.niveau !== null)
+					niveauSet.value.add(floskel.niveau);
+			}
+		return { jahrgangSet, niveauSet, floskelgruppen }
+	}).value;
+
+	const jahrgangManager = computed(() => new SelectManager({
+		options: jahrgangSet.value,
+		optionDisplayText: id => props.enmManager().mapJahrgaenge.get(id)?.kuerzel ?? '???',
+		selectionDisplayText: id => props.enmManager().mapJahrgaenge.get(id)?.kuerzel ?? '???',
+	}));
+
+	const niveauManager = computed(() => new SelectManager({ options: niveauSet.value }));
+	const niveauSelected = ref<number>();
+
+	const jahrgangSelectedMemo = ref<number>();
+	const jahrgangSelected = computed({
+		get() {
+			if (jahrgangSelectedMemo.value === undefined)
+				return props.auswahl.schueler?.jahrgangID;
+			return jahrgangSelectedMemo.value;
+		},
+		set: (value) => jahrgangSelectedMemo.value = value,
+	})
 
 	function inputBemerkung(floskel: ENMFloskel, col: number, index: number) {
 		const key = `Floskel_${floskel.kuerzel}`;
