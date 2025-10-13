@@ -45,13 +45,25 @@ export class RouteDataSchuleDatenaustauschUntis extends RouteData<RouteStateDate
 	}
 
 	exportUntisKlassenGPU003 = async(): Promise<string[]> => {
-		const apifile = await api.server.exportUntisKlassenGPU003(api.schema, routeApp.data.aktAbschnitt.value.id);
-		return [ await apifile.data.text() ];
+		try {
+			const apifile = await api.server.exportUntisKlassenGPU003(api.schema, routeApp.data.aktAbschnitt.value.id);
+			return [ await apifile.data.text() ];
+		} catch (e) {
+			if ((e instanceof OpenApiError) && (e.response instanceof Response) && (e.response.status === 404))
+				return [];
+			throw e;
+		}
 	}
 
 	exportUntisLehrerGPU004 = async(): Promise<string[]> => {
-		const apifile = await api.server.exportUntisLehrerGPU004(api.schema, routeApp.data.aktAbschnitt.value.id);
-		return [ await apifile.data.text() ];
+		try {
+			const apifile = await api.server.exportUntisLehrerGPU004(api.schema, routeApp.data.aktAbschnitt.value.id);
+			return [ await apifile.data.text() ];
+		} catch (e) {
+			if ((e instanceof OpenApiError) && (e.response instanceof Response) && (e.response.status === 404))
+				return [];
+			throw e;
+		}
 	}
 
 	exportUntisFaecherGPU006 = async(): Promise<string[]> => {
@@ -60,8 +72,14 @@ export class RouteDataSchuleDatenaustauschUntis extends RouteData<RouteStateDate
 	}
 
 	exportUntisSchuelerGPU010 = async(sidvariante: number): Promise<string []> => {
-		const apifile = await api.server.exportUntisSchuelerGPU010(api.schema, routeApp.data.aktAbschnitt.value.id, sidvariante);
-		return [ await apifile.data.text() ];
+		try {
+			const apifile = await api.server.exportUntisSchuelerGPU010(api.schema, routeApp.data.aktAbschnitt.value.id, sidvariante);
+			return [ await apifile.data.text() ];
+		} catch (e) {
+			if ((e instanceof OpenApiError) && (e.response instanceof Response) && (e.response.status === 404))
+				return [ ];
+			throw e;
+		}
 	}
 
 	exportUntisFachwahlenGPU015 = async(sidvariante: number, gpu002 : string): Promise<string[]> => {

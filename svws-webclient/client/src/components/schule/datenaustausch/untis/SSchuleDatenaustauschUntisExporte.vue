@@ -65,22 +65,27 @@
 			</div>
 		</div>
 		<div v-if="zeigeDateiSpeichern" class="w-full h-full overflow-hidden flex flex-col gap-4">
-			<template v-for="(value, index) of daten" :key="index">
-				<!-- Angabe des Dateinamen und Speichermöglichkeit -->
-				<div class="flex flex-row gap-2 mt-2">
-					<div class="grow max-w-128">
-						<svws-ui-text-input placeholder="Dateiname" :model-value="filenames[index]" @change="(value) => filenames[index] = value ?? ''" type="text" required />
+			<template v-if="daten?.length === 0">
+				<div> Keine Daten vorhanden </div>
+			</template>
+			<template v-else>
+				<template v-for="(value, index) of daten" :key="index">
+					<!-- Angabe des Dateinamen und Speichermöglichkeit -->
+					<div class="flex flex-row gap-2 mt-2">
+						<div class="grow max-w-128">
+							<svws-ui-text-input placeholder="Dateiname" :model-value="filenames[index]" @change="(value) => filenames[index] = value ?? ''" type="text" required />
+						</div>
+						<svws-ui-button type="primary" :disabled="(value === null) || (filenames[index].trim() === '')" @click="() => onSave(index)">
+							Speichern
+						</svws-ui-button>
+						<div class="grow" />
 					</div>
-					<svws-ui-button type="primary" :disabled="(value === null) || (filenames[index].trim() === '')" @click="() => onSave(index)">
-						Speichern
-					</svws-ui-button>
-					<div class="grow" />
-				</div>
 
-				<!-- Visualisierung der zuvor vom SVWS-Server geladenen Daten -->
-				<div class="h-full w-full overflow-scroll grow bg-ui border border-ui text-ui rounded-md text-base pt-2 pl-2 pr-6 pb-6">
-					<pre>{{ value }}</pre>
-				</div>
+					<!-- Visualisierung der zuvor vom SVWS-Server geladenen Daten -->
+					<div class="h-full w-full overflow-scroll grow bg-ui border border-ui text-ui rounded-md text-base pt-2 pl-2 pr-6 pb-6">
+						<pre>{{ value }}</pre>
+					</div>
+				</template>
 			</template>
 		</div>
 	</div>
