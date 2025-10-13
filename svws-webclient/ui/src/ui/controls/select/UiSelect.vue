@@ -1,9 +1,9 @@
 <template>
-	<div ref="uiSelect" class="ui-select relative rounded-md text-base inline-flex h-fit w-full" v-bind="filteredAttributes">
+	<div ref="uiSelect" @focusout="onFocusOut" class="ui-select relative rounded-md text-base inline-flex h-fit w-full group" v-bind="filteredAttributes">
 		<!-- Combobox -->
 		<div :id="`uiSelectInput_${instanceId}`" ref="uiSelectCombobox" :tabindex="comboboxTabindex" :role="comboboxRole" v-bind="comboboxAriaAttrs"
-			:class="[comboboxClasses, 'relative outline-none ring-ui-neutral w-full rounded-md flex items-center gap-1 min-w-16 m-[0.2em] select-none']"
-			@click.stop="handleComponentClick" @focus="handleComboboxFocus" @keydown.stop="onKeyDown">
+			:class="[comboboxClasses, 'relative outline-none ring-ui-neutral w-full rounded-md flex items-center gap-1 min-w-16 m-[0.2em] select-none group-focus-within:ring-2 hover:ring-2']"
+			@click.stop="handleComponentClick" @focus="handleDomFocus" @keydown.stop="onKeyDown">
 			<div :class="[headlessPadding, 'flex']">
 				<!-- Expand-Icon + Clear-Button headless -->
 				<div v-if="headless && !readonly" class="flex items-center">
@@ -84,7 +84,7 @@
 						<input v-if="searchable && !disabled && !readonly" :id="`uiSelectinput_${instanceId}`" ref="uiSelectSearch" type="text" role="combobox"
 							:tabindex="searchInputTabindex" v-bind="searchAriaAttrs" v-model="search"
 							:class="[searchInputFocusClass, 'row-start-1 col-start-1 outline-none font-normal h-5']"
-							@focus="handleComboboxFocus" @blur="handleBlur" @input="handleInput">
+							@focus="handleDomFocus" @blur="handleBlur" @input="handleInput">
 					</div>
 				</div>
 			</div>
@@ -101,7 +101,7 @@
 		</div>
 
 		<!-- Dropdown -->
-		<ul v-if="!disabled && !readonly" popover :aria-labelledby="`uiSelectLabel_${instanceId}`" :id="`uiSelectDropdown_${instanceId}`" ref="uiSelectDropdown" role="listbox"
+		<ul v-if="!disabled && !readonly" popover="manual" :aria-labelledby="`uiSelectLabel_${instanceId}`" :id="`uiSelectDropdown_${instanceId}`" ref="uiSelectDropdown" role="listbox"
 			class="overflow-auto bg-ui select-none scrollbar-thin p-1 rounded-md border border-ui font-normal" :style="dropdownPositionStyles">
 			<li v-if="manager.filteredOptions.isEmpty() || (searchFilteredOptions.size() === 0)" class="cursor-not-allowed p-2 hover:bg-ui-hover text-ui-secondary italic text-left">
 				{{ "Keine passenden Einträge gefunden" }}
@@ -109,7 +109,7 @@
 			<li v-else :id="`uiSelectOption_${optionIndex}_${instanceId}`" v-for="(option, optionIndex) in searchFilteredOptions" :key="optionIndex"
 				role="option" :aria-selected="isSelected(option)"
 				:class="[optionClasses(option, optionIndex), 'cursor-pointer m-1 p-1 hover:bg-ui-hover hover:inset-ring-2 hover:inset-ring-ui-neutral rounded-lg text-left']"
-				@click.stop="toggleSelection(option)">
+				@mousedown.stop="toggleSelection(option)">
 				<template v-for="(part, index) in splitText(manager.getOptionText(option))" :key="index">
 					<span v-if="part.hit" class="bg-ui-selected">{{ part.text }}</span>
 					<span v-else>{{ part.text }}</span>
@@ -262,9 +262,10 @@
 	// Helperklasse für einige Funktionen, die in Single- und Multi-Select-Komponenten benötigt werden.
 	const {
 		instanceId, filteredAttributes, iconColorClass, focusBasedTextColorClass, comboboxAriaAttrs, searchAriaAttrs, comboboxTabindex,
-		searchInputTabindex, comboboxRole, dropdownPositionStyles, onKeyDown, searchInputFocusClass, handleComboboxFocus, handleBlur, handleComponentClick,
+		searchInputTabindex, comboboxRole, dropdownPositionStyles, onKeyDown, searchInputFocusClass, handleDomFocus, handleBlur, handleComponentClick,
 		comboboxClasses, headlessPadding, labelClasses, labelTextColorClass, labelIconClass, optionClasses, validatorErrorIcon, showLabel, showValidatorError,
 		showValidatorErrorMessage, validatorErrorBgClasses, showSelection, splitText, handleInput, toggleSelection, searchFilteredOptions, resetSearch,
+		onFocusOut,
 
 	} = useUiSelectUtils(
 		false,

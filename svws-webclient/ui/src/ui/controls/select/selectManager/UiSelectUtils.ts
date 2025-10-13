@@ -29,9 +29,8 @@ export function useUiSelectUtils<T, V extends Validator>(
 
 	const dropdownIsOpen = ref(false);
 
-	// Definiert, ob das Inputfeld gerade den visuellen bzw. den DOM-Fokus hat
-	const visualFocusOnCombobox = ref(false);
-	const domFocusOnCombobox = ref(false);
+	// Definiert, ob das Inputfeld gerade den Fokus hat (im Falle von searchable === true)
+	const domFocusOnInput = ref(false);
 
 	// Größen und Positionen zur Berechnung des Dropdowns
 	const top = ref(0);
@@ -59,25 +58,7 @@ export function useUiSelectUtils<T, V extends Validator>(
 			else if (!props.searchable! && stringClass.includes('contentFocusField'))
 				uiSelectCombobox.value?.classList.add('contentFocusField');
 
-		document.addEventListener('click', handleClickOutside);
-		window.addEventListener('resize', () => closeDropdown());
-
-		// Das Dropdown schließt sich zb. automatisch durch Klicks außerhalb des Popovers. Diese Zustandsänderung wird hiermit synchronisiert
-		uiSelectDropdown.value?.addEventListener("toggle", (event: Event) => {
-			if ((event as ToggleEvent).newState === "closed") {
-				dropdownIsOpen.value = false;
-				removeOptionHighlighting();
-				handleBlur();
-			}
-		});
-
 	});
-
-	onBeforeUnmount(() => {
-		document.removeEventListener('click', handleClickOutside);
-		window.removeEventListener('resize', () => closeDropdown());
-	});
-
 
 	/**
 	 * Farben und Attribute
@@ -198,10 +179,11 @@ export function useUiSelectUtils<T, V extends Validator>(
 	});
 
 	/**
-	 * Berechnet die Textfarbe abhängig vom Fokus
+	 * Berechnet die Textfarbe abhängig vom Fokus. Ist das Select searchable und der Fokus ist im Input, dann wird die aktuelle Selektion nur in
+	 * Sekundärfarbe angezeigt.
 	 */
-	const focusBasedTextColorClass = computed((): string =>
-		(visualFocusOnCombobox.value || !domFocusOnCombobox.value) ? textColorClass.value : getSecondaryTextColor(textColorClass.value)
+	const singleSelectionTextColor = computed((): string =>
+		((uiSelectSearch.value !== null) && (domFocusOnInput.value)) ? getSecondaryTextColor(textColorClass.value) : textColorClass.value
 	);
 
 	/**
@@ -338,12 +320,12 @@ export function useUiSelectUtils<T, V extends Validator>(
 		if ((uiSelectDropdown.value === null) || dropdownIsOpen.value)
 			return;
 		updatePosition();
-		handleComboboxFocus();
+		handleDomFocus();
 		dropdownIsOpen.value = true;
 		uiSelectDropdown.value.showPopover();
-		visualFocusOnCombobox.value = false;
 		if (!hasHighlightedOption())
 			uiSelectDropdown.value.scrollTop = 0;
+		window.addEventListener('resize', () => closeDropdown());
 	}
 
 	/**
@@ -357,10 +339,9 @@ export function useUiSelectUtils<T, V extends Validator>(
 		dropdownIsOpen.value = false;
 		uiSelectDropdown.value?.hidePopover();
 		if (comboBoxFocus)
-			handleComboboxFocus();
-		else
-			handleBlur();
+			handleDomFocus();
 		removeOptionHighlighting();
+		window.removeEventListener('resize', () => closeDropdown());
 	}
 
 	// Passt die Scrollposition des Dropdowns an, falls der visuelle Fokus außerhalb des Sichtfelds landet
@@ -456,7 +437,7 @@ export function useUiSelectUtils<T, V extends Validator>(
 
 	function handleTab(event: KeyboardEvent) {
 		if (!event.shiftKey) {
-			selectHighlightedOption();
+			selectHighlightedOption(false);
 		}
 		closeDropdown();
 	}
@@ -641,21 +622,34 @@ export function useUiSelectUtils<T, V extends Validator>(
 	 * Je nachdem, ob das Select durchsuchbar ist (searchable), wird der Dom-Fokus auf die Combobox oder das darin befindliche Suchfeld gesetzt. Auch die Flags
 	 * für den visuellen Fokus (visualFocusOnCombobox) und den Dom-Fokus (domFocusOnCombobox) werden auf true gesetzt.
 	 */
-	function handleComboboxFocus() {
-		if (props.searchable!)
+	function handleDomFocus() {
+		if (props.searchable!) {
 			uiSelectSearch.value?.focus();
-		else
+			domFocusOnInput.value = true;
+		} else
 			uiSelectCombobox.value?.focus();
-		visualFocusOnCombobox.value = true;
-		domFocusOnCombobox.value = true;
+		document.addEventListener('click', handleClickOutside);
 	}
 
 	/**
-	 * Entfernt die Flags für den Fokus von der Combobox.
+	 * Entfernt die Flags für den Fokus von dem Input.
 	 */
 	function handleBlur() {
-		visualFocusOnCombobox.value = false;
-		domFocusOnCombobox.value = false;
+		domFocusOnInput.value = false;
+	}
+
+	/**
+	 * Löscht den aktuellen SearchInput, wenn der Fokus außerhalb der Combobox landet und schließt das Dropdown
+	 */
+	function onFocusOut() {
+		// Bei einem Fokuswechsel ist der Fokus kurz auf dem Body. Das muss hiermit abgewartet werden
+		requestAnimationFrame(() => {
+			if (!((uiSelectCombobox.value?.contains(document.activeElement)) ?? false)) {
+				closeDropdown();
+				resetSearch();
+				document.removeEventListener('click', handleClickOutside);
+			}
+		});
 	}
 
 	/**
@@ -678,10 +672,10 @@ export function useUiSelectUtils<T, V extends Validator>(
 	 * @param event   das Klickevent
 	 */
 	function handleClickOutside(event: MouseEvent) {
-		if (uiSelect.value && !uiSelect.value.contains(event.target as Node)) {
+		if ((uiSelect.value !== null) && !uiSelect.value.contains(event.target as Node)) {
 			closeDropdown(false);
 			resetSearch();
-			handleBlur();
+			document.removeEventListener('click', handleClickOutside);
 		}
 	}
 
@@ -693,7 +687,7 @@ export function useUiSelectUtils<T, V extends Validator>(
 	function handleComponentClick() {
 		if (props.readonly!)
 			return;
-		handleComboboxFocus();
+		handleDomFocus();
 		toggleDropdown();
 	}
 
@@ -729,8 +723,8 @@ export function useUiSelectUtils<T, V extends Validator>(
 	const comboboxClasses = computed((): (string | object)[] => [
 		props.headless! ? 'pl-1 min-h-6' : 'border mt-[0.8em] pl-3 pr-1 min-h-9',
 		props.disabled! ? 'border-ui-disabled' : borderColorClass.value,
-		props.readonly! ? 'cursor-not-allowed' : props.searchable! ? 'cursor-text hover:ring-2 focus-within:ring-2' : 'cursor-pointer hover:ring-2 focus-within:ring-2',
 		backgroundColorClass.value,
+		props.readonly! ? 'cursor-not-allowed' : props.searchable! ? 'cursor-text' : 'cursor-pointer',
 		{
 			'pointer-events-none': props.disabled!,
 		},
@@ -979,8 +973,8 @@ export function useUiSelectUtils<T, V extends Validator>(
 	 * Beginnt eine Suche bei der Eingabe von Zeichen in das Suchfeld. Dabei wird außerdem auch das Dropdown geöffnet, falls dies nicht bereits der Fall ist.
 	 */
 	function handleInput() {
-		openDropdown();
 		removeOptionHighlighting();
+		openDropdown();
 	}
 
 	/**
@@ -1030,9 +1024,9 @@ export function useUiSelectUtils<T, V extends Validator>(
 	 *
 	 * @param option   die Option, die selektiert bzw. deselektiert werden soll
 	 */
-	function toggleSelection(option: T) {
+	function toggleSelection(option: T, comboboxFocus: boolean = true) {
 		if (!multi)
-			closeDropdown();
+			closeDropdown(comboboxFocus);
 
 		if (isSelected(option)) {
 			if (deselectAllowed())
@@ -1040,21 +1034,30 @@ export function useUiSelectUtils<T, V extends Validator>(
 		} else
 			selectOption(option);
 		resetSearch();
+		// Bei der Selektion landet der Fokus auf dem Body und muss ggf. wieder auf die Combobox gesetzt werden
+		if (comboboxFocus) {
+			requestAnimationFrame(() => {
+				handleDomFocus();
+			});
+		}
 	}
 
-	function selectHighlightedOption() {
+	/**
+	 * Selektiert die hervorghobene Option
+	 */
+	function selectHighlightedOption(comboboxFocus: boolean = true) {
 		if (!hasHighlightedOption()) {
 			return;
 		}
 		const option = searchFilteredOptions.value.get(highlightedIndex.value);
-		toggleSelection(option);
+		toggleSelection(option, comboboxFocus);
 	}
 
 	return {
-		instanceId, search, filteredAttributes, textColorClass, iconColorClass, focusBasedTextColorClass, comboboxAriaAttrs,
-		searchAriaAttrs, comboboxTabindex, searchInputTabindex, comboboxRole, dropdownPositionStyles, onKeyDown, searchInputFocusClass, handleComboboxFocus,
+		instanceId, search, filteredAttributes, textColorClass, iconColorClass, focusBasedTextColorClass: singleSelectionTextColor, comboboxAriaAttrs,
+		searchAriaAttrs, comboboxTabindex, searchInputTabindex, comboboxRole, dropdownPositionStyles, onKeyDown, searchInputFocusClass, handleDomFocus,
 		handleBlur, handleComponentClick, comboboxClasses, headlessPadding, labelClasses, labelTextColorClass, labelIconClass, optionClasses, validatorErrorIcon, showLabel,
-		showValidatorError, showValidatorErrorMessage, validatorErrorBgClasses, showSelection, splitText, getSecondaryTextColor, handleInput,
+		showValidatorError, showValidatorErrorMessage, validatorErrorBgClasses, showSelection, splitText, getSecondaryTextColor, handleInput, onFocusOut,
 		toggleSelection, searchFilteredOptions, resetSearch,
 	}
 
