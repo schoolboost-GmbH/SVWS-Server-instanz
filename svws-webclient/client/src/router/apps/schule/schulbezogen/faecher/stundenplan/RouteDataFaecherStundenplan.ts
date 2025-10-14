@@ -68,7 +68,7 @@ export class RouteDataFaecherStundenplan extends RouteData<RouteStateFachDataStu
 
 	get manager(): StundenplanManager {
 		if (this._state.value.manager === undefined)
-			throw new DeveloperNotificationException("Unerwarteter Fehler: Stunden-Manager nicht vorhanden, es können keine Informationen zum Stundenplan abgerufen oder eingegeben werden.");
+			throw new DeveloperNotificationException("Unerwarteter Fehler: Stundenplan-Manager nicht vorhanden, es können keine Informationen zum Stundenplan abgerufen oder eingegeben werden.");
 		return this._state.value.manager;
 	}
 
