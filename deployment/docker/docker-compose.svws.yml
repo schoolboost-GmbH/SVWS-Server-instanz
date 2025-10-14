@@ -1,0 +1,57 @@
+services:
+  svws-db:
+    image: mariadb:10.7.3
+    restart: unless-stopped
+    environment:
+      MARIADB_ROOT_PASSWORD: ${SERVICE_PASSWORD_ROOT:-svws_root_2024}
+      MARIADB_DATABASE: ${SVWS_DATABASE:-svwsdb}
+      MARIADB_USER: ${SERVICE_DB_USER:-svwsuser}
+      MARIADB_PASSWORD: ${SERVICE_PASSWORD_DB:-svws_db_2024}
+      MARIADB_CHARSET: utf8mb4
+      MARIADB_COLLATE: utf8mb4_bin
+      MARIADB_INITDB_SKIP_TZINFO: 1
+    volumes:
+      - svws-db-data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1", "-u", "root", "--password=${SERVICE_PASSWORD_ROOT:-svws_root_2024}"]
+      interval: 10s
+      timeout: 5s
+      retries: 30
+      start_period: 60s
+
+  svws-server:
+    image: ${SVWS_SERVER_IMAGE:-svwsnrw/svws-server:1.0.10}
+    restart: unless-stopped
+    depends_on:
+      svws-db:
+        condition: service_healthy
+    ports:
+      - "${SVWS_HTTP_PORT:-8080}:8080"
+      - "${SVWS_HTTPS_PORT:-8443}:8443"
+    environment:
+      MARIADB_HOST: svws-db
+      MARIADB_DATABASE: ${SVWS_DATABASE:-svwsdb}
+      MARIADB_USER: ${SERVICE_DB_USER:-svwsuser}
+      MARIADB_PASSWORD: ${SERVICE_PASSWORD_DB:-svws_db_2024}
+      MARIADB_ROOT_PASSWORD: ${SERVICE_PASSWORD_ROOT:-svws_root_2024}
+      SVWS_TLS_KEY_ALIAS: ${SVWS_TLS_KEY_ALIAS:-svwscert}
+      SVWS_TLS_KEYSTORE_PATH: /opt/app/svws/conf/keystore
+      SVWS_TLS_KEYSTORE_PASSWORD: ${SVWS_TLS_KEYSTORE_PASSWORD:-svwskeystore}
+      SVWS_INIT_ON_STARTUP: "true"
+      SVWS_SCHEMA_USERNAME: ${SERVICE_DB_USER:-svwsuser}
+      SVWS_SCHEMA_USERPASSWORD: ${SERVICE_PASSWORD_DB:-svws_db_2024}
+      JAVA_OPTS: "${SVWS_JAVA_OPTS:--Xmx2G -Xms512M}"
+    volumes:
+      - svws-keystore:/opt/app/svws/conf/keystore
+      - svws-app-data:/opt/app/svws/data
+      - svws-app-logs:/opt/app/svws/conf/logs
+
+volumes:
+  svws-db-data:
+    driver: local
+  svws-keystore:
+    driver: local
+  svws-app-data:
+    driver: local
+  svws-app-logs:
+    driver: local
