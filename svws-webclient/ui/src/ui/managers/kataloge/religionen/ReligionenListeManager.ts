@@ -1,6 +1,4 @@
-import type { ReligionKatalogEintrag } from "../../../../../../core/src/asd/data/schule/ReligionKatalogEintrag";
 import type { Schuljahresabschnitt } from "../../../../../../core/src/asd/data/schule/Schuljahresabschnitt";
-import { Religion } from "../../../../../../core/src/asd/types/schule/Religion";
 import type { Schulform } from "../../../../../../core/src/asd/types/schule/Schulform";
 import { HashMap2D } from "../../../../../../core/src/core/adt/map/HashMap2D";
 import type { ReligionEintrag } from "../../../../../../core/src/core/data/schule/ReligionEintrag";
@@ -9,13 +7,12 @@ import { Class } from "../../../../../../core/src/java/lang/Class";
 import { JavaLong } from "../../../../../../core/src/java/lang/JavaLong";
 import { JavaObject } from "../../../../../../core/src/java/lang/JavaObject";
 import { JavaString } from "../../../../../../core/src/java/lang/JavaString";
-import { ArrayList } from "../../../../../../core/src/java/util/ArrayList";
 import { Arrays } from "../../../../../../core/src/java/util/Arrays";
 import type { Comparator } from "../../../../../../core/src/java/util/Comparator";
 import type { JavaFunction } from "../../../../../../core/src/java/util/function/JavaFunction";
 import { HashMap } from "../../../../../../core/src/java/util/HashMap";
 import type { List } from "../../../../../../core/src/java/util/List";
-import {AuswahlManager} from "../../../AuswahlManager";
+import { AuswahlManager } from "../../../AuswahlManager";
 
 
 export class ReligionenListeManager extends AuswahlManager<number, ReligionEintrag, ReligionEintrag> {
@@ -85,42 +82,6 @@ export class ReligionenListeManager extends AuswahlManager<number, ReligionEintr
 			if (r.kuerzel !== null)
 				this._religionenByKuerzel.put(r.kuerzel, r);
 		}
-	}
-
-	/**
-	 * Gibt die Liste der bislang nicht für diese Schule erstellten Förderschwerpunkte zurück
-	 *
-	 * @return Liste der bislang nicht für diese Schule erstellten Förderschwerpunkte
-	 */
-	public getAvailableReligionenForCreate(): List<Religion> {
-		const result = new ArrayList<Religion>()
-		for (const r of Religion.data().getListBySchuljahrAndSchulform(this.getSchuljahr(), this.schulform())) {
-			let alreadyInList: boolean = false;
-			for (const religionEintrag of this.liste.list()) {
-				const daten: ReligionKatalogEintrag | null = r.daten(this.getSchuljahr());
-				if (daten === null)
-					continue;
-				if (JavaObject.equalsTranspiler(daten.kuerzel, religionEintrag.kuerzel)) {
-					alreadyInList = true;
-					break;
-				}
-			}
-			if (!alreadyInList)
-				result.add(r);
-		}
-		return result;
-	}
-
-	/**
-	 * Gibt die Liste der bislang nicht für diese Schule erstellten Förderschwerpunkte inklusive des ausgewählten Eintrags zurück
-	 *
-	 * @return Liste der bislang nicht für diese Schule erstellten Förderschwerpunkte inklusive des ausgewählten Eintrags
-	 */
-	public getAvailableReligionenForPatch(): List<Religion> {
-		const result = this.getAvailableReligionenForCreate();
-		if (this.hasDaten())
-			result.add(Religion.data().getWertBySchluessel(this.auswahl().kuerzel ?? ""));
-		return result;
 	}
 
 	/**

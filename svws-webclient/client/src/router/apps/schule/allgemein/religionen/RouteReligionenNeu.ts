@@ -34,6 +34,7 @@ export class RouteReligionenNeu extends RouteNode<any, RouteReligionen> {
 			checkpoint: this.checkpoint,
 			continueRoutingAfterCheckpoint: () => RouteManager.continueRoutingAfterCheckpoint(),
 			benutzerKompetenzen: api.benutzerKompetenzen,
+			schulform: api.schulform,
 		};
 	}
 }

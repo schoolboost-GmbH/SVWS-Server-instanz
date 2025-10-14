@@ -10,7 +10,7 @@
 					@change="v => props.patch({ kurzbezeichnung : v?.trim() ?? undefined })" :readonly />
 				<svws-ui-select title="Schulgliederung" v-model="schulgliederung" :items="Schulgliederung.getBySchuljahrAndSchulform(schuljahr, schulform)"
 					:item-text="textSchulgliederung" statistics :readonly />
-				<svws-ui-select title="Jahrgang" v-model="statistikJahrgang" :items="manager().getAvailableJahrgaenge(statistikJahrgang)"
+				<svws-ui-select title="Jahrgang" v-model="statistikJahrgang" :items="Jahrgaenge.getListBySchuljahrAndSchulform(schuljahr, schulform)"
 					:item-text="textStatistikJahrgang" removable statistics :readonly required />
 				<svws-ui-select title="Folgejahrgang" v-model="folgejahrgang" :items="folgejahrgaenge" :item-text="textFolgejahrgang" :readonly />
 				<svws-ui-input-number placeholder="Anzahl der Restabschnitte" :model-value="manager().daten().anzahlRestabschnitte"

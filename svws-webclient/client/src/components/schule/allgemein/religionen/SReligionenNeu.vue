@@ -2,7 +2,7 @@
 	<div class="page page-grid-cards">
 		<svws-ui-content-card title="Allgemein">
 			<svws-ui-input-wrapper>
-				<svws-ui-select label="ASD-Statistik-Religion" v-model="selectedReligion" :items="props.manager().getAvailableReligionenForCreate()" :disabled statistics
+				<svws-ui-select label="ASD-Statistik-Religion" v-model="selectedReligion" :items="Religion.data().getListBySchuljahrAndSchulform(schuljahr, schulform)" :disabled statistics
 					:item-text="religionText" required :valid="fieldIsValid('kuerzel')" />
 				<svws-ui-text-input v-model="data.bezeichnung" placeholder="Bezeichnung" :disabled :min-len="1" :max-len="30" required
 					:valid="fieldIsValid('bezeichnung')" />

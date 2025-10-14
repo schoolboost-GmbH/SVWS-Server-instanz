@@ -2,7 +2,7 @@
 	<div class="page page-grid-cards">
 		<svws-ui-content-card title="Allgemein">
 			<svws-ui-input-wrapper>
-				<svws-ui-select title="ASD-Statistik-Religion" v-model="selectedReligion" :items="manager().getAvailableReligionenForPatch()" :item-text="religionText"
+				<svws-ui-select title="ASD-Statistik-Religion" v-model="selectedReligion" :items="Religion.data().getListBySchuljahrAndSchulform(schuljahr, schulform)" :item-text="religionText"
 					required statistics focus-class-content :readonly />
 				<svws-ui-text-input placeholder="Bezeichnung" :model-value="auswahl.bezeichnung" :readonly required :min-len="1" :max-len="30"
 					@change="v => patch({ bezeichnung: v?.trim() ?? '' })" />

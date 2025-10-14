@@ -29,6 +29,7 @@ export class RouteReligionenDaten extends RouteNode<any, RouteReligionen> {
 			manager: () => routeReligionen.data.manager,
 			patch: routeReligionen.data.patch,
 			benutzerKompetenzen: api.benutzerKompetenzen,
+			schulform: api.schulform,
 		};
 	}
 

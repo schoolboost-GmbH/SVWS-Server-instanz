@@ -30,7 +30,7 @@
 				<svws-ui-text-input placeholder="Kurzbezeichnung" :max-len="2" v-model="data.kurzbezeichnung" :disabled :valid="fieldIsValid('kurzbezeichnung')" />
 				<svws-ui-select title="Schulgliederung" :items="Schulgliederung.getBySchuljahrAndSchulform(schuljahr, schulform)" :item-text="textSchulgliederung"
 					statistics :disabled v-model="schulgliederung" :valid="fieldIsValid('kuerzelSchulgliederung')" />
-				<svws-ui-select title="Jahrgang" :items="manager().getAvailableJahrgaenge(null)" :item-text="textStatistikJahrgang"
+				<svws-ui-select title="Jahrgang" :items="Jahrgaenge.getListBySchuljahrAndSchulform(schuljahr, schulform)" :item-text="textStatistikJahrgang"
 					statistics :disabled v-model="statistikJahrgang" :valid="fieldIsValid('kuerzelStatistik')" required />
 				<svws-ui-select title="Folgejahrgang" :items="folgejahrgaenge" :item-text="textFolgejahrgang"
 					:disabled="!hatKompetenzAdd || !data.kuerzelStatistik" v-model="folgejahrgang" :valid="fieldIsValid('idFolgejahrgang')" />
@@ -54,8 +54,8 @@
 <script setup lang="ts">
 	import type { SchuleJahrgangNeuProps } from "./SJahrgaengeNeuProps";
 	import { computed, ref, watch } from "vue";
-	import { BenutzerKompetenz, Jahrgaenge, JahrgangsDaten, JavaString, Schulgliederung } from "@core";
-	import {isUniqueInList, mandatoryInputIsValid, optionalInputIsValid} from "~/util/validation/Validation";
+	import { BenutzerKompetenz, Jahrgaenge, JahrgangsDaten, Schulgliederung } from "@core";
+	import { isUniqueInList, mandatoryInputIsValid, optionalInputIsValid } from "~/util/validation/Validation";
 
 	const props = defineProps<SchuleJahrgangNeuProps>();
 	const data = ref<JahrgangsDaten>(Object.assign(new JahrgangsDaten(), { istSichtbar: true, sortierung: 1, anzahlRestabschnitte: 0 }))

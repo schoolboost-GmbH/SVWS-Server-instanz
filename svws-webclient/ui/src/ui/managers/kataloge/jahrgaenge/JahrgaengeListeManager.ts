@@ -13,7 +13,6 @@ import { Arrays } from '../../../../../../core/src/java/util/Arrays';
 import type { Schuljahresabschnitt } from '../../../../../../core/src/asd/data/schule/Schuljahresabschnitt';
 import { HashSet } from '../../../../../../core/src/java/util/HashSet';
 import type { JavaSet } from '../../../../../../core/src/java/util/JavaSet';
-import { Jahrgaenge } from '../../../../../../core/src/asd/types/jahrgang/Jahrgaenge';
 
 
 
@@ -128,22 +127,6 @@ export class JahrgaengeListeManager extends AuswahlManager<number, JahrgangsDate
 		for (const l of this.liste.auswahl())
 			if ((l.referenziertInAnderenTabellen !== null) && l.referenziertInAnderenTabellen)
 				this.idsReferencedJahrgaenge.add(l.id);
-	}
-
-	/**
-	 * Gibt alle bislang nicht in der Datenbank gespeicherten Einträge des Coretypes Jahrgaenge zurück.
-	 *
-	 * @param currentJahrgang Der Jahrgang des aktuellen Eintrags oder null
-	 *
-	 * @return Die bislang nicht in der Datenbank gespeicherten Einträge des Coretypes Jahrgaenge zurück.
-	 */
-	public getAvailableJahrgaenge(currentJahrgang : Jahrgaenge | null) : Jahrgaenge[] {
-		const alleJahrgaenge = [...Jahrgaenge.getListBySchuljahrAndSchulform(this.getSchuljahr(), this.schulform())];
-		const verwendeteJahrgaenge = [... this.liste.list()].map((j : JahrgangsDaten) => j.kuerzelStatistik);
-		const result = alleJahrgaenge.filter((j: Jahrgaenge) => !verwendeteJahrgaenge.includes(j.daten(this.getSchuljahr())?.kuerzel ?? ''));
-		if (currentJahrgang !== null)
-			result.push(currentJahrgang)
-		return result
 	}
 
 	protected checkFilter(eintrag : JahrgangsDaten) : boolean {
