@@ -1,7 +1,4 @@
-import type { TabManager, ViewType, FachListeManager } from "@ui";
+import type { FachListeManager } from "@ui";
+import type { RouteAuswahlProps } from "~/router/RouteAuswahlNode";
 
-export interface FaecherAppProps {
-	manager: () => FachListeManager;
-	tabManager: () => TabManager;
-	activeViewType: ViewType;
-}
+export type FaecherAppProps = RouteAuswahlProps<FachListeManager>;
