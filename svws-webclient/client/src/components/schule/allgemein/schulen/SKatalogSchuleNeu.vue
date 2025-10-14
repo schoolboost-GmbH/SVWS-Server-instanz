@@ -20,7 +20,7 @@
 				<svws-ui-input-wrapper :grid="2">
 					<svws-ui-checkbox v-model="data.istSichtbar" :disabled="schuleAlreadyCreated || !hatKompetenzAdd">Ist Sichtbar</svws-ui-checkbox>
 					<svws-ui-input-number placeholder="Sortierung" v-model="data.sortierung" :disabled="schuleAlreadyCreated || hatKompetenzAdd" />
-					<svws-ui-select title="Schulform" :items="Schulform.values()" :item-text="i => i.daten(schuljahr)?.text?? '_'" removable
+					<svws-ui-select title="Schulform" :items="Schulform.data().getListBySchuljahrAndSchulform(schuljahr, schulform)" :item-text="i => i.daten(schuljahr)?.text?? '_'" removable
 						v-model="selectedSchulform" />
 					<svws-ui-text-input placeholder="Statistik-Schulnummer" required :valid="fieldIsValid('schulnummerStatistik')" readonly
 						:model-value="data.schulnummerStatistik" :disabled />
@@ -64,10 +64,10 @@
 	const disabled = computed(() => !hatKompetenzAdd.value);
 	const isInternal = ref<boolean>(true);
 	const data = ref<SchulEintrag>(Object.assign(new SchulEintrag(), {istSichtbar: true}));
-	const schulenKatalogEintraege= computed<List<SchulenKatalogEintrag>>(() => props.schuleListeManager().getSchulenKatalogEintraege());
+	const schulenKatalogEintraege= computed<List<SchulenKatalogEintrag>>(() => props.manager().getSchulenKatalogEintraege());
 	const selectedSchule = ref<SchulenKatalogEintrag>();
 	const externalSchulnummer = ref<Herkunftsschulnummern>();
-	const schuljahr = computed<number>(() => props.schuleListeManager().getSchuljahr());
+	const schuljahr = computed<number>(() => props.manager().getSchuljahr());
 	const selectedSchulform = computed({
 		get: () => data.value.idSchulform !== null ? Schulform.data().getWertByID(data.value.idSchulform) : null,
 		set: (val: Schulform | null) => {
@@ -128,9 +128,9 @@
 		isLoading.value = false;
 	}
 
-	function cancel() {
+	async function cancel() {
 		props.checkpoint.active = false;
-		void props.gotoDefaultView(null);
+		await props.gotoDefaultView(null);
 	}
 
 	// ---util---
@@ -144,16 +144,16 @@
 		selectedSchule.value = undefined;
 	}
 
-	function navigateToSelectedSchule() {
+	async function navigateToSelectedSchule() {
 		props.checkpoint.active = false;
 		const schuleintrag = findSchuleByPredicate((schuleintrag : SchulEintrag) =>
 			JavaObject.equalsTranspiler(schuleintrag.schulnummerStatistik, selectedSchule.value?.SchulNr));
 		if (schuleintrag)
-			void props.gotoDefaultView(schuleintrag.id);
+			await props.gotoDefaultView(schuleintrag.id);
 	}
 
 	function findSchuleByPredicate(predicate: (schuleintrag: any) => boolean) {
-		for (const schuleintrag of props.schuleListeManager().liste.list()) {
+		for (const schuleintrag of props.manager().liste.list()) {
 			if (predicate(schuleintrag))
 				return schuleintrag;
 		}

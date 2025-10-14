@@ -8,9 +8,9 @@
 				</svws-ui-checkbox>
 				<svws-ui-input-number placeholder="Sortierung" :model-value="manager().daten().sortierung" :readonly
 					@change="sortierung => sortierung && patch({ sortierung })" />
-				<svws-ui-select title="Schulform" :items="Schulform.values()" :item-text="i => i.daten(schuljahr)?.text ?? '—'" :readonly
+				<svws-ui-select title="Schulform" :items="Schulform.data().getListBySchuljahrAndSchulform(schuljahr, schulform)" :item-text="i => i.daten(schuljahr)?.text ?? '—'" :readonly
 					:model-value="manager().daten().idSchulform ? Schulform.data().getWertByID(manager().daten().idSchulform ?? -1) : undefined"
-					@update:model-value="schulform => patch({ idSchulform: schulform?.daten(schuljahr)?.id ?? null})" removable />
+					@update:model-value="value => patch({ idSchulform: value?.daten(schuljahr)?.id ?? null})" removable />
 				<svws-ui-text-input placeholder="Statistik-Schulnummer" :model-value="manager().daten().schulnummerStatistik" readonly statistics />
 				<svws-ui-text-input class="contentFocusField" placeholder="Kürzel" :model-value="manager().daten().kuerzel"
 					@change="v => patch({ kuerzel: v?.trim() ?? undefined })" :max-len="10" :readonly />
@@ -55,10 +55,10 @@
 			optionalInputIsValid(vals[2], 30);
 	}
 
-	function patchStrasse(value: string | null) {
+	async function patchStrasse(value: string | null) {
 		const vals = AdressenUtils.splitStrasse(value);
 		if (adresseIsValid(vals))
-			void props.patch({ strassenname: vals[0], hausnummer: vals[1], zusatzHausnummer: vals[2] });
+			await props.patch({ strassenname: vals[0], hausnummer: vals[1], zusatzHausnummer: vals[2] });
 	}
 
 </script>

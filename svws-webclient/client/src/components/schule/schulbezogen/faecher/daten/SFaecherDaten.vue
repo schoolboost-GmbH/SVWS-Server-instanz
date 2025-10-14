@@ -6,7 +6,7 @@
 					@change="kuerzel => patch({ kuerzel: kuerzel ?? undefined })" :readonly />
 				<svws-ui-select title="Statistik-Fach" :model-value="Fach.getBySchluesselOrDefault(manager().daten().kuerzelStatistik)" statistics
 					@update:model-value="value => patch({ kuerzelStatistik: (value === undefined) || (value === null) ? undefined : value.daten(schuljahr)?.schluessel })"
-					:items="Fach.values()" :item-text="(z: Fach) => z.daten(schuljahr)?.schluessel + ' : ' + z.daten(schuljahr)?.text" :readonly />
+					:items="Fach.data().getListBySchuljahrAndSchulform(schuljahr, schulform)" :item-text="(z: Fach) => z.daten(schuljahr)?.schluessel + ' : ' + z.daten(schuljahr)?.text" :readonly />
 				<svws-ui-text-input placeholder="Bezeichnung" :model-value="manager().daten().bezeichnung" statistics
 					@change="bezeichnung => patch({ bezeichnung: bezeichnung ?? undefined })" :readonly />
 				<svws-ui-text-input placeholder="Fachgruppe" statistics :readonly disabled

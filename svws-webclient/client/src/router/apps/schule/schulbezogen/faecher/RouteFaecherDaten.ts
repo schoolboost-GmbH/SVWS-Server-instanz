@@ -26,6 +26,7 @@ export class RouteFaecherDaten extends RouteNode<any, RouteFaecher> {
 			patch: routeFaecher.data.patch,
 			manager: () => routeFaecher.data.manager,
 			benutzerKompetenzen: api.benutzerKompetenzen,
+			schulform: api.schulform,
 		};
 	}
 

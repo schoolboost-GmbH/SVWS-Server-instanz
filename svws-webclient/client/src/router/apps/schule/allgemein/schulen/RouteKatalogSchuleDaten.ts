@@ -23,6 +23,7 @@ export class RouteKatalogSchuleDaten extends RouteNode<any, RouteKatalogSchulen>
 			manager: () => routeKatalogSchulen.data.manager,
 			patch: routeKatalogSchulen.data.patch,
 			benutzerKompetenzen: api.benutzerKompetenzen,
+			schulform: api.schulform,
 		};
 	}
 

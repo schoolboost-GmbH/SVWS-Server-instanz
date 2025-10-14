@@ -28,12 +28,13 @@ export class RouteKatalogSchuleNeu extends RouteNode<any, RouteKatalogSchulen> {
 
 	public getProps(to: RouteLocationNormalized): KatalogSchuleNeuProps {
 		return {
-			schuleListeManager: () => routeKatalogSchulen.data.manager,
+			manager: () => routeKatalogSchulen.data.manager,
 			add: routeKatalogSchulen.data.add,
 			gotoDefaultView: routeKatalogSchulen.data.gotoDefaultView,
 			checkpoint: this.checkpoint,
 			continueRoutingAfterCheckpoint: () => RouteManager.continueRoutingAfterCheckpoint(),
 			benutzerKompetenzen: api.benutzerKompetenzen,
+			schulform: api.schulform,
 		};
 	}
 }
