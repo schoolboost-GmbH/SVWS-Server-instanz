@@ -1,4 +1,4 @@
-package de.svws_nrw.db.dto.current.schild.katalog;
+package de.svws_nrw.db.dto.current.katalog;
 
 import de.svws_nrw.db.DBEntityManager;
 
@@ -11,27 +11,33 @@ import jakarta.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 /**
- * Diese Klasse dient als DTO für die Datenbanktabelle Floskelgruppen.
+ * Diese Klasse dient als DTO für die Datenbanktabelle Katalog_Floskeln_Gruppen.
  * Sie wurde automatisch per Skript generiert und sollte nicht verändert werden,
  * da sie aufgrund von Änderungen am DB-Schema ggf. neu generiert und überschrieben wird.
  */
 @Entity
 @Cacheable(DBEntityManager.use_db_caching)
-@Table(name = "Floskelgruppen")
-@JsonPropertyOrder({"Kuerzel", "Hauptgruppe", "Bezeichnung", "Farbe"})
+@Table(name = "Katalog_Floskeln_Gruppen")
+@JsonPropertyOrder({"ID", "Kuerzel", "Hauptgruppe_ID", "Bezeichnung", "Farbe"})
 public final class DTOFloskelgruppen {
 
 	/** Die Datenbankabfrage für alle DTOs */
 	public static final String QUERY_ALL = "SELECT e FROM DTOFloskelgruppen e";
 
 	/** Die Datenbankabfrage für DTOs anhand der Primärschlüsselattribute */
-	public static final String QUERY_PK = "SELECT e FROM DTOFloskelgruppen e WHERE e.Kuerzel = ?1";
+	public static final String QUERY_PK = "SELECT e FROM DTOFloskelgruppen e WHERE e.ID = ?1";
 
 	/** Die Datenbankabfrage für DTOs anhand einer Liste von Primärschlüsselattributwerten */
-	public static final String QUERY_LIST_PK = "SELECT e FROM DTOFloskelgruppen e WHERE e.Kuerzel IN ?1";
+	public static final String QUERY_LIST_PK = "SELECT e FROM DTOFloskelgruppen e WHERE e.ID IN ?1";
 
 	/** Die Datenbankabfrage für alle DTOs im Rahmen der Migration, wobei die Einträge entfernt werden, die nicht der Primärschlüssel-Constraint entsprechen */
-	public static final String QUERY_MIGRATION_ALL = "SELECT e FROM DTOFloskelgruppen e WHERE e.Kuerzel IS NOT NULL";
+	public static final String QUERY_MIGRATION_ALL = "SELECT e FROM DTOFloskelgruppen e WHERE e.ID IS NOT NULL";
+
+	/** Die Datenbankabfrage für DTOs anhand des Attributes ID */
+	public static final String QUERY_BY_ID = "SELECT e FROM DTOFloskelgruppen e WHERE e.ID = ?1";
+
+	/** Die Datenbankabfrage für DTOs anhand einer Liste von Werten des Attributes ID */
+	public static final String QUERY_LIST_BY_ID = "SELECT e FROM DTOFloskelgruppen e WHERE e.ID IN ?1";
 
 	/** Die Datenbankabfrage für DTOs anhand des Attributes Kuerzel */
 	public static final String QUERY_BY_KUERZEL = "SELECT e FROM DTOFloskelgruppen e WHERE e.Kuerzel = ?1";
@@ -39,11 +45,11 @@ public final class DTOFloskelgruppen {
 	/** Die Datenbankabfrage für DTOs anhand einer Liste von Werten des Attributes Kuerzel */
 	public static final String QUERY_LIST_BY_KUERZEL = "SELECT e FROM DTOFloskelgruppen e WHERE e.Kuerzel IN ?1";
 
-	/** Die Datenbankabfrage für DTOs anhand des Attributes Hauptgruppe */
-	public static final String QUERY_BY_HAUPTGRUPPE = "SELECT e FROM DTOFloskelgruppen e WHERE e.Hauptgruppe = ?1";
+	/** Die Datenbankabfrage für DTOs anhand des Attributes Hauptgruppe_ID */
+	public static final String QUERY_BY_HAUPTGRUPPE_ID = "SELECT e FROM DTOFloskelgruppen e WHERE e.Hauptgruppe_ID = ?1";
 
-	/** Die Datenbankabfrage für DTOs anhand einer Liste von Werten des Attributes Hauptgruppe */
-	public static final String QUERY_LIST_BY_HAUPTGRUPPE = "SELECT e FROM DTOFloskelgruppen e WHERE e.Hauptgruppe IN ?1";
+	/** Die Datenbankabfrage für DTOs anhand einer Liste von Werten des Attributes Hauptgruppe_ID */
+	public static final String QUERY_LIST_BY_HAUPTGRUPPE_ID = "SELECT e FROM DTOFloskelgruppen e WHERE e.Hauptgruppe_ID IN ?1";
 
 	/** Die Datenbankabfrage für DTOs anhand des Attributes Bezeichnung */
 	public static final String QUERY_BY_BEZEICHNUNG = "SELECT e FROM DTOFloskelgruppen e WHERE e.Bezeichnung = ?1";
@@ -57,23 +63,28 @@ public final class DTOFloskelgruppen {
 	/** Die Datenbankabfrage für DTOs anhand einer Liste von Werten des Attributes Farbe */
 	public static final String QUERY_LIST_BY_FARBE = "SELECT e FROM DTOFloskelgruppen e WHERE e.Farbe IN ?1";
 
-	/** Kürzel der Floskelgruppe */
+	/** ID der Floskelgruppe (generiert) */
 	@Id
+	@Column(name = "ID")
+	@JsonProperty
+	public long ID;
+
+	/** Das Kürzel der Floskelgruppe */
 	@Column(name = "Kuerzel")
 	@JsonProperty
 	public String Kuerzel;
 
-	/** Hauptgruppe der Floskelgruppe ermöglich es Floskel Unterkategorien zuzuordnen */
-	@Column(name = "Hauptgruppe")
+	/** Die übergeordnete Hauptgruppe, welche spezifiziert zu welchem Bemerkungskatalog die Floskeln der Floskelgruppe gehören. (siehe Core-Type) */
+	@Column(name = "Hauptgruppe_ID")
 	@JsonProperty
-	public String Hauptgruppe;
+	public Long Hauptgruppe_ID;
 
-	/** Bezeichnung der Floskelgruppe */
+	/** Die Bezeichnung der Floskelgruppe */
 	@Column(name = "Bezeichnung")
 	@JsonProperty
 	public String Bezeichnung;
 
-	/** Farbe für die Flsokelgruppe */
+	/** Die Farbe für die Floskelgruppe */
 	@Column(name = "Farbe")
 	@JsonProperty
 	public Integer Farbe;
@@ -87,10 +98,12 @@ public final class DTOFloskelgruppen {
 
 	/**
 	 * Erstellt ein neues Objekt der Klasse DTOFloskelgruppen ohne eine Initialisierung der Attribute.
+	 * @param ID   der Wert für das Attribut ID
 	 * @param Kuerzel   der Wert für das Attribut Kuerzel
 	 * @param Bezeichnung   der Wert für das Attribut Bezeichnung
 	 */
-	public DTOFloskelgruppen(final String Kuerzel, final String Bezeichnung) {
+	public DTOFloskelgruppen(final long ID, final String Kuerzel, final String Bezeichnung) {
+		this.ID = ID;
 		if (Kuerzel == null) {
 			throw new NullPointerException("Kuerzel must not be null");
 		}
@@ -111,19 +124,14 @@ public final class DTOFloskelgruppen {
 		if (getClass() != obj.getClass())
 			return false;
 		DTOFloskelgruppen other = (DTOFloskelgruppen) obj;
-		if (Kuerzel == null) {
-			if (other.Kuerzel != null)
-				return false;
-		} else if (!Kuerzel.equals(other.Kuerzel))
-			return false;
-		return true;
+		return ID == other.ID;
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((Kuerzel == null) ? 0 : Kuerzel.hashCode());
+		result = prime * result + Long.hashCode(ID);
 		return result;
 	}
 
@@ -135,7 +143,7 @@ public final class DTOFloskelgruppen {
 	 */
 	@Override
 	public String toString() {
-		return "DTOFloskelgruppen(Kuerzel=" + this.Kuerzel + ", Hauptgruppe=" + this.Hauptgruppe + ", Bezeichnung=" + this.Bezeichnung + ", Farbe=" + this.Farbe + ")";
+		return "DTOFloskelgruppen(ID=" + this.ID + ", Kuerzel=" + this.Kuerzel + ", Hauptgruppe_ID=" + this.Hauptgruppe_ID + ", Bezeichnung=" + this.Bezeichnung + ", Farbe=" + this.Farbe + ")";
 	}
 
 }

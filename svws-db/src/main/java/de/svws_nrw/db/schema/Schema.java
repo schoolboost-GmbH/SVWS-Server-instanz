@@ -127,6 +127,9 @@ import de.svws_nrw.db.schema.tabellen.Tabelle_K_Textdateien;
 import de.svws_nrw.db.schema.tabellen.Tabelle_K_Vermerkart;
 import de.svws_nrw.db.schema.tabellen.Tabelle_K_Zertifikate;
 import de.svws_nrw.db.schema.tabellen.Tabelle_Katalog_Aufsichtsbereich;
+import de.svws_nrw.db.schema.tabellen.Tabelle_Katalog_Floskeln;
+import de.svws_nrw.db.schema.tabellen.Tabelle_Katalog_Floskeln_Gruppen;
+import de.svws_nrw.db.schema.tabellen.Tabelle_Katalog_Floskeln_Jahrgaenge;
 import de.svws_nrw.db.schema.tabellen.Tabelle_Katalog_Pausenzeiten;
 import de.svws_nrw.db.schema.tabellen.Tabelle_Katalog_Raeume;
 import de.svws_nrw.db.schema.tabellen.Tabelle_Katalog_Zeitraster;
@@ -935,6 +938,15 @@ public final class Schema {
 
 	/** Tabelle Floskeln */
 	public static final Tabelle_Floskeln tab_Floskeln = add(new Tabelle_Floskeln());
+
+	/** Tabelle Katalog_Floskeln_Gruppen */
+	public static final Tabelle_Katalog_Floskeln_Gruppen tab_Katalog_Floskeln_Gruppen = add(new Tabelle_Katalog_Floskeln_Gruppen());
+
+	/** Tabelle Katalog_Floskeln */
+	public static final Tabelle_Katalog_Floskeln tab_Katalog_Floskeln = add(new Tabelle_Katalog_Floskeln());
+
+	/** Tabelle Katalog_Floskeln_Jahrgaenge */
+	public static final Tabelle_Katalog_Floskeln_Jahrgaenge tab_Katalog_Floskeln_Jahrgaenge = add(new Tabelle_Katalog_Floskeln_Jahrgaenge());
 
 	/** Tabelle TextExportVorlagen */
 	public static final Tabelle_TextExportVorlagen tab_TextExportVorlagen = add(new Tabelle_TextExportVorlagen());

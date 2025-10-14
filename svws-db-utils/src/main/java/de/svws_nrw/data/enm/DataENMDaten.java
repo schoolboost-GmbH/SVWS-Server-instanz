@@ -18,11 +18,13 @@ import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
 import de.svws_nrw.asd.data.kurse.ZulaessigeKursartKatalogEintrag;
+import de.svws_nrw.asd.data.schule.FloskelgruppenartKatalogEintrag;
 import de.svws_nrw.asd.data.schule.SchuleStammdaten;
 import de.svws_nrw.asd.data.schule.Schuljahresabschnitt;
 import de.svws_nrw.asd.types.Note;
 import de.svws_nrw.asd.types.kurse.ZulaessigeKursart;
 import de.svws_nrw.asd.types.schueler.SchuelerStatus;
+import de.svws_nrw.asd.types.schule.Floskelgruppenart;
 import de.svws_nrw.asd.types.schule.Schulform;
 import de.svws_nrw.base.compression.CompressionException;
 import de.svws_nrw.base.crypto.Passwords;
@@ -53,13 +55,14 @@ import de.svws_nrw.data.DataManager;
 import de.svws_nrw.data.JSONMapper;
 import de.svws_nrw.data.oauth2.OAuth2Client;
 import de.svws_nrw.db.DBEntityManager;
+import de.svws_nrw.db.dto.current.katalog.DTOFloskelnJahrgaenge;
 import de.svws_nrw.db.dto.current.lehrer.DTOLehrerNotenmodulCredentials;
 import de.svws_nrw.db.dto.current.schild.faecher.DTOFach;
 import de.svws_nrw.db.dto.current.schild.grundschule.DTOAnkreuzdaten;
 import de.svws_nrw.db.dto.current.schild.grundschule.DTOAnkreuzfloskeln;
 import de.svws_nrw.db.dto.current.schild.grundschule.DTOSchuelerAnkreuzfloskeln;
-import de.svws_nrw.db.dto.current.schild.katalog.DTOFloskelgruppen;
-import de.svws_nrw.db.dto.current.schild.katalog.DTOFloskeln;
+import de.svws_nrw.db.dto.current.katalog.DTOFloskelgruppen;
+import de.svws_nrw.db.dto.current.katalog.DTOFloskeln;
 import de.svws_nrw.db.dto.current.schild.klassen.DTOKlassen;
 import de.svws_nrw.db.dto.current.schild.klassen.DTOKlassenLeitung;
 import de.svws_nrw.db.dto.current.schild.kurse.DTOKurs;
@@ -475,7 +478,7 @@ public final class DataENMDaten extends DataManager<Long> {
 		}
 
 		// Kopiere den Floskel-Katalog in die ENM-Daten
-		getFloskeln(conn, manager, mapJahrgaenge);
+		getFloskeln(conn, manager);
 
 		return manager.daten;
 	}
@@ -945,49 +948,55 @@ public final class DataENMDaten extends DataManager<Long> {
 	 *
 	 * @param conn            die Datenbank-Verbindung
 	 * @param manager         der ENM-Daten-Manager
-	 * @param mapJahrgaenge   eine Map mit den jeweiligen Jahrgängen
 	 */
-	private static void getFloskeln(final DBEntityManager conn, final ENMDatenManager manager, final Map<Long, DTOJahrgang> mapJahrgaenge) {
-		final Map<String, List<DTOJahrgang>> mapJG = mapJahrgaenge.values().stream().collect(Collectors.groupingBy(j -> j.ASDJahrgang));
+	private static void getFloskeln(final DBEntityManager conn, final ENMDatenManager manager) {
 		final List<DTOFloskelgruppen> dtoFloskelgruppen = conn.queryAll(DTOFloskelgruppen.class);
-		final HashMap<String, ENMFloskelgruppe> map = new HashMap<>();
+		final HashMap<Long, ENMFloskelgruppe> map = new HashMap<>();
 		for (final DTOFloskelgruppen dto : dtoFloskelgruppen) {
 			final ENMFloskelgruppe enmFG = new ENMFloskelgruppe();
 			enmFG.kuerzel = dto.Kuerzel;
 			enmFG.bezeichnung = dto.Bezeichnung;
-			enmFG.hauptgruppe = dto.Hauptgruppe;
-			map.put(enmFG.kuerzel, enmFG);
+			final FloskelgruppenartKatalogEintrag eintrag = Floskelgruppenart.data().getEintragByID(dto.Hauptgruppe_ID);
+			enmFG.hauptgruppe = (eintrag == null) ? null : eintrag.schluessel;
+			map.put(dto.ID, enmFG);
 			manager.daten.floskelgruppen.add(enmFG);
 		}
+		final Map<Long, List<Long>> jahrgangIdsByFloskelIds = conn
+				.queryAll(DTOFloskelnJahrgaenge.class).stream()
+				.collect(Collectors.groupingBy(
+						fj -> fj.Floskel_ID,
+						Collectors.mapping(f -> f.Jahrgang_ID, Collectors.toList())
+				));
+
 		final List<DTOFloskeln> dtoFloskeln = conn.queryAll(DTOFloskeln.class);
 		for (final DTOFloskeln dto : dtoFloskeln) {
-			final ENMFloskelgruppe enmFG = map.get(dto.FloskelGruppe);
+			final ENMFloskelgruppe enmFG = map.get(dto.Gruppe_ID);
 			if (enmFG == null) // TODO alternativ Fehlerbehandlung: Wie ordnet man die Floskel zu? -> allgemein ?
 				continue;
-			final ENMFach fach = manager.getFachByKuerzel(dto.FloskelFach);
-			final List<DTOJahrgang> jahrgaenge = mapJG.get(dto.FloskelJahrgang);
+			final ENMFach fach = (dto.Fach_ID == null) ? null : manager.getFach(dto.Fach_ID);
+			final List<Long> jahrgangsIds = jahrgangIdsByFloskelIds.get(dto.ID);
 			Long niveau;
 			try {
-				niveau = Long.parseLong(dto.FloskelNiveau);
+				niveau = (dto.Niveau == null) ? null : dto.Niveau.longValue();
 			} catch (@SuppressWarnings("unused") final NumberFormatException e) {
 				niveau = null;
 			}
-			if ((jahrgaenge == null) || jahrgaenge.isEmpty()) {
+			if ((jahrgangsIds == null) || jahrgangsIds.isEmpty()) {
 				final ENMFloskel enmFl = new ENMFloskel();
 				enmFl.kuerzel = dto.Kuerzel;
-				enmFl.text = dto.FloskelText;
+				enmFl.text = dto.Text;
 				enmFl.fachID = (fach == null) ? null : fach.id;
 				enmFl.niveau = niveau;
 				enmFl.jahrgangID = null;
 				enmFG.floskeln.add(enmFl);
 			} else {
-				for (final DTOJahrgang jg : jahrgaenge) {
+				for (final Long jg : jahrgangsIds) {
 					final ENMFloskel enmFl = new ENMFloskel();
 					enmFl.kuerzel = dto.Kuerzel;
-					enmFl.text = dto.FloskelText;
+					enmFl.text = dto.Text;
 					enmFl.fachID = (fach == null) ? null : fach.id;
 					enmFl.niveau = niveau;
-					enmFl.jahrgangID = jg.ID;
+					enmFl.jahrgangID = jg;
 					enmFG.floskeln.add(enmFl);
 				}
 			}

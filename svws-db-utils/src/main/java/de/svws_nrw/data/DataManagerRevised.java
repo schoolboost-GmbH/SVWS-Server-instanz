@@ -501,18 +501,16 @@ public abstract class DataManagerRevised<ID, DatabaseDTO, CoreDTO> {
 		return daten;
 	}
 
-
 	/**
-	 * Entfernt das Datenbank-DTO mit der angegebenen ID und gibt das zugehörige
-	 * Core-DTO in der Response zurück.
+	 * Entfernt das Datenbank-DTO mit der angegebenen ID und gibt das zugehörige Core-DTO zurück.
 	 *
 	 * @param id         die ID
 	 *
-	 * @return die Response - im Erfolgsfall mit dem gelöschten Core-DTO
+	 * @return das Core-DTO - im Erfolgsfall das gelöschte Core-DTO
 	 *
 	 * @throws ApiOperationException   im Fehlerfall
 	 */
-	public Response deleteAsResponse(final ID id) throws ApiOperationException {
+	public CoreDTO delete(final ID id) throws ApiOperationException {
 		if (id == null)
 			throw new ApiOperationException(Status.BAD_REQUEST, "Für das Löschen muss eine ID angegeben werden. Null ist nicht zulässig.");
 
@@ -528,6 +526,21 @@ public abstract class DataManagerRevised<ID, DatabaseDTO, CoreDTO> {
 		final CoreDTO deletedCoreDTO = map(dbDTO);
 		deleteDatabaseDTO(dbDTO);
 
+		return deletedCoreDTO;
+	}
+
+	/**
+	 * Entfernt das Datenbank-DTO mit der angegebenen ID und gibt das zugehörige
+	 * Core-DTO in der Response zurück.
+	 *
+	 * @param id         die ID
+	 *
+	 * @return die Response - im Erfolgsfall mit dem gelöschten Core-DTO
+	 *
+	 * @throws ApiOperationException   im Fehlerfall
+	 */
+	public Response deleteAsResponse(final ID id) throws ApiOperationException {
+		final CoreDTO deletedCoreDTO = this.delete(id);
 		return Response.status(Status.OK).type(MediaType.APPLICATION_JSON).entity(deletedCoreDTO).build();
 	}
 

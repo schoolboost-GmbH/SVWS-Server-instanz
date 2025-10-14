@@ -40,6 +40,7 @@ import de.svws_nrw.db.schema.revisionen.Revision45Updates;
 import de.svws_nrw.db.schema.revisionen.Revision46Updates;
 import de.svws_nrw.db.schema.revisionen.Revision4Updates;
 import de.svws_nrw.db.schema.revisionen.Revision51Updates;
+import de.svws_nrw.db.schema.revisionen.Revision52Updates;
 import de.svws_nrw.db.schema.revisionen.Revision6Updates;
 import de.svws_nrw.db.schema.revisionen.RevisionNoUpdates;
 
@@ -274,7 +275,10 @@ public enum SchemaRevisionen {
 	REV_50(50, "2025-11-06"),
 
 	/** Tabelle K_Sportbefreiung überführt in SchuelerVermerke */
-	REV_51(51, "2025-11-06");
+	REV_51(51, "2025-11-06"),
+
+	/** Tabellen für Floskeln und Floskelgruppen überarbeitet */
+	REV_52(52, "2025-10-14");
 
 
 	/**
@@ -282,14 +286,14 @@ public enum SchemaRevisionen {
 	 * bis zu welcher alle Schema-Revision als stabil gelten und ab Version 1.0 des SVWS-Servers
 	 * nicht mehr verändert werden.
 	 */
-	public static final SchemaRevisionen maxRevision = REV_51;
+	public static final SchemaRevisionen maxRevision = REV_52;
 
 	/**
 	 * Gibt die größte Revisions-Nummer an, welche in diese Enumeration definiert wurde.
 	 * Dies dient dazu Revisionen als Entwickler-Revisionen zu kennzeichnen, die noch nicht
 	 * stabil sind. Dieser Wert ist also größer oder gleich {@link SchemaRevisionen#maxRevision}.
 	 */
-	public static final SchemaRevisionen maxDeveloperRevision = REV_51;
+	public static final SchemaRevisionen maxDeveloperRevision = REV_52;
 
 	/** Eine Map, welche von der Revisionsnummer auf das Objekt der Aufzählung abbildet. */
 	private static Map<Long, SchemaRevisionen> _mapByNumber = null;
@@ -386,6 +390,7 @@ public enum SchemaRevisionen {
 				case REV_45 -> new Revision45Updates();
 				case REV_46 -> new Revision46Updates();
 				case REV_51 -> new Revision51Updates();
+				case REV_52 -> new Revision52Updates();
 				default -> new RevisionNoUpdates(this);
 			};
 		}

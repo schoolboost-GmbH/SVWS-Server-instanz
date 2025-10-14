@@ -14869,26 +14869,26 @@ export class ApiServer extends BaseApi {
 
 
 	/**
-	 * Implementierung der PATCH-Methode patchFloskelgruppe für den Zugriff auf die URL https://{hostname}/db/{schema}/schule/floskelgruppen/{kuerzel : \S+}
+	 * Implementierung der PATCH-Methode patchFloskelgruppe für den Zugriff auf die URL https://{hostname}/db/{schema}/schule/floskelgruppen/{id : \d+}
 	 *
-	 * Patched die Floskelgruppe mit dem angegebenen Kürzel, insofern die notwendigen Berechtigungen vorliegen.
+	 * Patched die Floskelgruppe mit der angegebenen ID, insofern die notwendigen Berechtigungen vorliegen.
 	 *
 	 * Mögliche HTTP-Antworten:
 	 *   Code 204: Der Patch wurde erfolgreich integriert.
 	 *   Code 400: Der Patch ist fehlerhaft aufgebaut.
 	 *   Code 403: Der SVWS-Benutzer hat keine Rechte, um die Daten zu ändern.
-	 *   Code 404: Kein Eintrag mit dem angegebenen Kürzel gefunden
+	 *   Code 404: Kein Eintrag mit der angegebenen ID gefunden
 	 *   Code 409: Der Patch ist fehlerhaft, da zumindest eine Rahmenbedingung für einen Wert nicht erfüllt wurde (z.B. eine negative ID)
 	 *   Code 500: Unspezifizierter Fehler (z. B. beim Datenbankzugriff)
 	 *
 	 * @param {Partial<Floskelgruppe>} data - der Request-Body für die HTTP-Methode
 	 * @param {string} schema - der Pfad-Parameter schema
-	 * @param {string} kuerzel - der Pfad-Parameter kuerzel
+	 * @param {number} id - der Pfad-Parameter id
 	 */
-	public async patchFloskelgruppe(data : Partial<Floskelgruppe>, schema : string, kuerzel : string) : Promise<void> {
-		const path = "/db/{schema}/schule/floskelgruppen/{kuerzel : \\S+}"
+	public async patchFloskelgruppe(data : Partial<Floskelgruppe>, schema : string, id : number) : Promise<void> {
+		const path = "/db/{schema}/schule/floskelgruppen/{id : \\d+}"
 			.replace(/{schema\s*(:[^{}]+({[^{}]+})*)?}/g, schema)
-			.replace(/{kuerzel\s*(:[^{}]+({[^{}]+})*)?}/g, kuerzel);
+			.replace(/{id\s*(:[^{}]+({[^{}]+})*)?}/g, id.toString());
 		const body : string = Floskelgruppe.transpilerToJSONPatch(data);
 		return super.patchJSON(path, body);
 	}
@@ -14934,15 +14934,15 @@ export class ApiServer extends BaseApi {
 	 *   Code 404: Floskelgruppen nicht vorhanden
 	 *   Code 500: Unspezifizierter Fehler (z.B. beim Datenbankzugriff)
 	 *
-	 * @param {List<string>} data - der Request-Body für die HTTP-Methode
+	 * @param {List<number>} data - der Request-Body für die HTTP-Methode
 	 * @param {string} schema - der Pfad-Parameter schema
 	 *
 	 * @returns Die Lösch-Operationen wurden ausgeführt.
 	 */
-	public async deleteFloskelgruppen(data : List<string>, schema : string) : Promise<List<SimpleOperationResponse>> {
+	public async deleteFloskelgruppen(data : List<number>, schema : string) : Promise<List<SimpleOperationResponse>> {
 		const path = "/db/{schema}/schule/floskelgruppen/delete/multiple"
 			.replace(/{schema\s*(:[^{}]+({[^{}]+})*)?}/g, schema);
-		const body : string = "[" + (data.toArray() as Array<string>).map(d => JSON.stringify(d)).join() + "]";
+		const body : string = "[" + (data.toArray() as Array<number>).map(d => JSON.stringify(d)).join() + "]";
 		const result : string = await super.deleteJSON(path, body);
 		const obj = JSON.parse(result);
 		const ret = new ArrayList<SimpleOperationResponse>();
@@ -14979,26 +14979,26 @@ export class ApiServer extends BaseApi {
 
 
 	/**
-	 * Implementierung der PATCH-Methode patchFloskeln für den Zugriff auf die URL https://{hostname}/db/{schema}/schule/floskeln/{kuerzel : \S+}
+	 * Implementierung der PATCH-Methode patchFloskeln für den Zugriff auf die URL https://{hostname}/db/{schema}/schule/floskeln/{id : \d+}
 	 *
-	 * Patched die Floskeln mit dem angegebenen Kürzel, insofern die notwendigen Berechtigungen vorliegen.
+	 * Patched die Floskeln mit der angegebenen ID, insofern die notwendigen Berechtigungen vorliegen.
 	 *
 	 * Mögliche HTTP-Antworten:
 	 *   Code 204: Der Patch wurde erfolgreich integriert.
 	 *   Code 400: Der Patch ist fehlerhaft aufgebaut.
 	 *   Code 403: Der SVWS-Benutzer hat keine Rechte, um die Daten zu ändern.
-	 *   Code 404: Kein Eintrag mit dem angegebenen Kürzel gefunden
+	 *   Code 404: Kein Eintrag mit der angegebenen ID gefunden
 	 *   Code 409: Der Patch ist fehlerhaft, da zumindest eine Rahmenbedingung für einen Wert nicht erfüllt wurde (z.B. eine negative ID)
 	 *   Code 500: Unspezifizierter Fehler (z. B. beim Datenbankzugriff)
 	 *
 	 * @param {Partial<Floskel>} data - der Request-Body für die HTTP-Methode
 	 * @param {string} schema - der Pfad-Parameter schema
-	 * @param {string} kuerzel - der Pfad-Parameter kuerzel
+	 * @param {number} id - der Pfad-Parameter id
 	 */
-	public async patchFloskeln(data : Partial<Floskel>, schema : string, kuerzel : string) : Promise<void> {
-		const path = "/db/{schema}/schule/floskeln/{kuerzel : \\S+}"
+	public async patchFloskeln(data : Partial<Floskel>, schema : string, id : number) : Promise<void> {
+		const path = "/db/{schema}/schule/floskeln/{id : \\d+}"
 			.replace(/{schema\s*(:[^{}]+({[^{}]+})*)?}/g, schema)
-			.replace(/{kuerzel\s*(:[^{}]+({[^{}]+})*)?}/g, kuerzel);
+			.replace(/{id\s*(:[^{}]+({[^{}]+})*)?}/g, id.toString());
 		const body : string = Floskel.transpilerToJSONPatch(data);
 		return super.patchJSON(path, body);
 	}
@@ -15044,15 +15044,15 @@ export class ApiServer extends BaseApi {
 	 *   Code 404: Floskeln nicht vorhanden
 	 *   Code 500: Unspezifizierter Fehler (z.B. beim Datenbankzugriff)
 	 *
-	 * @param {List<string>} data - der Request-Body für die HTTP-Methode
+	 * @param {List<number>} data - der Request-Body für die HTTP-Methode
 	 * @param {string} schema - der Pfad-Parameter schema
 	 *
 	 * @returns Die Lösch-Operationen wurden ausgeführt.
 	 */
-	public async deleteFloskeln(data : List<string>, schema : string) : Promise<List<SimpleOperationResponse>> {
+	public async deleteFloskeln(data : List<number>, schema : string) : Promise<List<SimpleOperationResponse>> {
 		const path = "/db/{schema}/schule/floskeln/delete/multiple"
 			.replace(/{schema\s*(:[^{}]+({[^{}]+})*)?}/g, schema);
-		const body : string = "[" + (data.toArray() as Array<string>).map(d => JSON.stringify(d)).join() + "]";
+		const body : string = "[" + (data.toArray() as Array<number>).map(d => JSON.stringify(d)).join() + "]";
 		const result : string = await super.deleteJSON(path, body);
 		const obj = JSON.parse(result);
 		const ret = new ArrayList<SimpleOperationResponse>();

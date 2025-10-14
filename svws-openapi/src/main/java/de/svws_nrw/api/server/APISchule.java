@@ -6,6 +6,7 @@ import de.svws_nrw.core.data.schule.Floskelgruppe;
 import de.svws_nrw.core.data.schule.Lernplattform;
 import de.svws_nrw.core.data.schule.TelefonArt;
 import de.svws_nrw.data.erzieher.DataErzieherarten;
+import de.svws_nrw.data.schule.DataFloskelJahrgangZuordnung;
 import de.svws_nrw.data.schule.DataFloskelgruppen;
 import de.svws_nrw.data.schule.DataFloskeln;
 import de.svws_nrw.data.schule.DataKatalogLernplattformen;
@@ -3177,29 +3178,29 @@ public class APISchule {
 	 * Die OpenAPI-Methode für das Patchen einer Floskelgruppe.
 	 *
 	 * @param schema    das Datenbankschema, auf welches der Patch ausgeführt werden soll
-	 * @param kuerzel   das Kürzel zur Identifikation der Floskelgruppe
+	 * @param id	    die ID zur Identifikation der Floskelgruppe
 	 * @param is        der InputStream, mit dem JSON-Patch-Objekt nach RFC 7386
 	 * @param request   die Informationen zur HTTP-Anfrage
 	 *
 	 * @return das Ergebnis der Patch-Operation
 	 */
 	@PATCH
-	@Path("/floskelgruppen/{kuerzel : \\S+}")
-	@Operation(summary = "Patched die Floskelgruppe mit dem angegebenen Kürzel.",
-			description = "Patched die Floskelgruppe mit dem angegebenen Kürzel, insofern die notwendigen Berechtigungen vorliegen.")
+	@Path("/floskelgruppen/{id : \\d+}")
+	@Operation(summary = "Patched die Floskelgruppe mit der angegebenen ID.",
+			description = "Patched die Floskelgruppe mit der angegebenen ID, insofern die notwendigen Berechtigungen vorliegen.")
 	@ApiResponse(responseCode = "204", description = "Der Patch wurde erfolgreich integriert.")
 	@ApiResponse(responseCode = "400", description = "Der Patch ist fehlerhaft aufgebaut.")
 	@ApiResponse(responseCode = "403", description = "Der SVWS-Benutzer hat keine Rechte, um die Daten zu ändern.")
-	@ApiResponse(responseCode = "404", description = "Kein Eintrag mit dem angegebenen Kürzel gefunden")
+	@ApiResponse(responseCode = "404", description = "Kein Eintrag mit der angegebenen ID gefunden")
 	@ApiResponse(responseCode = "409", description = "Der Patch ist fehlerhaft, da zumindest eine Rahmenbedingung für einen Wert nicht erfüllt wurde"
 			+ " (z.B. eine negative ID)")
 	@ApiResponse(responseCode = "500", description = "Unspezifizierter Fehler (z. B. beim Datenbankzugriff)")
-	public Response patchFloskelgruppe(@PathParam("schema") final String schema, @PathParam("kuerzel") final String kuerzel,
+	public Response patchFloskelgruppe(@PathParam("schema") final String schema, @PathParam("id") final long id,
 			@RequestBody(description = "Der Patch einer Floskelgruppe", required = true,
 					content = @Content(mediaType = MediaType.APPLICATION_JSON, schema = @Schema(implementation = Floskelgruppe.class))) final InputStream is,
 			@Context final HttpServletRequest request) {
 		return DBBenutzerUtils.runWithTransaction(
-				conn -> new DataFloskelgruppen(conn).patchAsResponse(kuerzel, is), request, ServerMode.STABLE,
+				conn -> new DataFloskelgruppen(conn).patchAsResponse(id, is), request, ServerMode.STABLE,
 				BenutzerKompetenz.KATALOG_EINTRAEGE_AENDERN);
 	}
 
@@ -3232,7 +3233,7 @@ public class APISchule {
 	 * Die OpenAPI-Methode für das Entfernen mehrerer Floskelgruppen.
 	 *
 	 * @param schema    das Datenbankschema
-	 * @param is        der InputStream, mit der Liste der zu löschenden Kürzel
+	 * @param is        der InputStream, mit der Liste der zu löschenden ids
 	 * @param request   die Informationen zur HTTP-Anfrage
 	 *
 	 * @return die HTTP-Antwort mit dem Status der Lösch-Operationen
@@ -3245,11 +3246,11 @@ public class APISchule {
 	@ApiResponse(responseCode = "403", description = "Der SVWS-Benutzer hat keine Rechte, um Floskelgruppen zu entfernen.")
 	@ApiResponse(responseCode = "404", description = "Floskelgruppen nicht vorhanden")
 	@ApiResponse(responseCode = "500", description = "Unspezifizierter Fehler (z.B. beim Datenbankzugriff)")
-	public Response deleteFloskelgruppen(@PathParam("schema") final String schema, @RequestBody(description = "Die Kürzel der zu löschenden Floskelgruppen",
+	public Response deleteFloskelgruppen(@PathParam("schema") final String schema, @RequestBody(description = "Die IDs der zu löschenden Floskelgruppen",
 			required = true, content = @Content(mediaType = MediaType.APPLICATION_JSON,
-			array = @ArraySchema(schema = @Schema(implementation = String.class)))) final InputStream is, @Context final HttpServletRequest request) {
+			array = @ArraySchema(schema = @Schema(implementation = Long.class)))) final InputStream is, @Context final HttpServletRequest request) {
 		return DBBenutzerUtils.runWithTransactionOnErrorSimpleResponse(
-				conn -> new DataFloskelgruppen(conn).deleteMultipleAsResponse(JSONMapper.toListOfString(is)),
+				conn -> new DataFloskelgruppen(conn).deleteMultipleAsSimpleResponseList(JSONMapper.toListOfLong(is)),
 				request, ServerMode.STABLE,
 				BenutzerKompetenz.KATALOG_EINTRAEGE_LOESCHEN);
 	}
@@ -3272,7 +3273,7 @@ public class APISchule {
 	@ApiResponse(responseCode = "403", description = "Der SVWS-Benutzer hat keine Rechte, um Katalog-Einträge anzusehen.")
 	@ApiResponse(responseCode = "404", description = "Keine Katalog-Einträge gefunden")
 	public Response getFloskeln(@PathParam("schema") final String schema, @Context final HttpServletRequest request) {
-		return DBBenutzerUtils.runWithTransaction(conn -> new DataFloskeln(conn).getAllAsResponse(),
+		return DBBenutzerUtils.runWithTransaction(conn -> new DataFloskeln(conn, new DataFloskelJahrgangZuordnung(conn)).getAllAsResponse(),
 				request, ServerMode.STABLE, BenutzerKompetenz.KEINE);
 	}
 
@@ -3280,29 +3281,29 @@ public class APISchule {
 	 * Die OpenAPI-Methode für das Patchen einer Floskeln.
 	 *
 	 * @param schema    das Datenbankschema, auf welches der Patch ausgeführt werden soll
-	 * @param kuerzel   das Datenbank-Kürzel zur Identifikation der Floskeln
+	 * @param id		die ID zur Identifikation der Floskeln
 	 * @param is        der InputStream, mit dem JSON-Patch-Objekt nach RFC 7386
 	 * @param request   die Informationen zur HTTP-Anfrage
 	 *
 	 * @return das Ergebnis der Patch-Operation
 	 */
 	@PATCH
-	@Path("/floskeln/{kuerzel : \\S+}")
-	@Operation(summary = "Patched die Floskeln mit dem angegebenen Kürzel",
-			description = "Patched die Floskeln mit dem angegebenen Kürzel, insofern die notwendigen Berechtigungen vorliegen.")
+	@Path("/floskeln/{id : \\d+}")
+	@Operation(summary = "Patched die Floskeln mit der angegebenen ID",
+			description = "Patched die Floskeln mit der angegebenen ID, insofern die notwendigen Berechtigungen vorliegen.")
 	@ApiResponse(responseCode = "204", description = "Der Patch wurde erfolgreich integriert.")
 	@ApiResponse(responseCode = "400", description = "Der Patch ist fehlerhaft aufgebaut.")
 	@ApiResponse(responseCode = "403", description = "Der SVWS-Benutzer hat keine Rechte, um die Daten zu ändern.")
-	@ApiResponse(responseCode = "404", description = "Kein Eintrag mit dem angegebenen Kürzel gefunden")
+	@ApiResponse(responseCode = "404", description = "Kein Eintrag mit der angegebenen ID gefunden")
 	@ApiResponse(responseCode = "409", description = "Der Patch ist fehlerhaft, da zumindest eine Rahmenbedingung für einen Wert nicht erfüllt wurde"
 			+ " (z.B. eine negative ID)")
 	@ApiResponse(responseCode = "500", description = "Unspezifizierter Fehler (z. B. beim Datenbankzugriff)")
-	public Response patchFloskeln(@PathParam("schema") final String schema, @PathParam("kuerzel") final String kuerzel,
+	public Response patchFloskeln(@PathParam("schema") final String schema, @PathParam("id") final long id,
 			@RequestBody(description = "Der Patch einer Floskeln", required = true,
 					content = @Content(mediaType = MediaType.APPLICATION_JSON, schema = @Schema(implementation = Floskel.class))) final InputStream is,
 			@Context final HttpServletRequest request) {
 		return DBBenutzerUtils.runWithTransaction(
-				conn -> new DataFloskeln(conn).patchAsResponse(kuerzel, is), request, ServerMode.STABLE,
+				conn -> new DataFloskeln(conn, new DataFloskelJahrgangZuordnung(conn)).patchAsResponse(id, is), request, ServerMode.STABLE,
 				BenutzerKompetenz.KATALOG_EINTRAEGE_AENDERN);
 	}
 
@@ -3328,14 +3329,15 @@ public class APISchule {
 					content = @Content(mediaType = MediaType.APPLICATION_JSON, schema = @Schema(implementation = Floskel.class))) final InputStream is,
 			@Context final HttpServletRequest request) {
 		return DBBenutzerUtils.runWithTransaction(
-				conn -> new DataFloskeln(conn).addAsResponse(is), request, ServerMode.STABLE, BenutzerKompetenz.KATALOG_EINTRAEGE_AENDERN);
+				conn -> new DataFloskeln(conn, new DataFloskelJahrgangZuordnung(conn)).addAsResponse(is), request, ServerMode.STABLE,
+				BenutzerKompetenz.KATALOG_EINTRAEGE_AENDERN);
 	}
 
 	/**
 	 * Die OpenAPI-Methode für das Entfernen mehrerer Floskeln.
 	 *
 	 * @param schema    das Datenbankschema
-	 * @param is        der InputStream, mit der Liste der zu löschenden Kürzel
+	 * @param is        der InputStream, mit der Liste der zu löschenden IDs
 	 * @param request   die Informationen zur HTTP-Anfrage
 	 *
 	 * @return die HTTP-Antwort mit dem Status der Lösch-Operationen
@@ -3348,11 +3350,11 @@ public class APISchule {
 	@ApiResponse(responseCode = "403", description = "Der SVWS-Benutzer hat keine Rechte, um Floskeln zu entfernen.")
 	@ApiResponse(responseCode = "404", description = "Floskeln nicht vorhanden")
 	@ApiResponse(responseCode = "500", description = "Unspezifizierter Fehler (z.B. beim Datenbankzugriff)")
-	public Response deleteFloskeln(@PathParam("schema") final String schema, @RequestBody(description = "Die Kürzel der zu löschenden Floskeln",
+	public Response deleteFloskeln(@PathParam("schema") final String schema, @RequestBody(description = "Die IDs der zu löschenden Floskeln",
 			required = true, content = @Content(mediaType = MediaType.APPLICATION_JSON,
-			array = @ArraySchema(schema = @Schema(implementation = String.class)))) final InputStream is, @Context final HttpServletRequest request) {
+			array = @ArraySchema(schema = @Schema(implementation = Long.class)))) final InputStream is, @Context final HttpServletRequest request) {
 		return DBBenutzerUtils.runWithTransactionOnErrorSimpleResponse(
-				conn -> new DataFloskeln(conn).deleteMultipleAsResponse(JSONMapper.toListOfString(is)),
+				conn -> new DataFloskeln(conn, new DataFloskelJahrgangZuordnung(conn)).deleteMultipleAsResponse(JSONMapper.toListOfLong(is)),
 				request, ServerMode.STABLE,
 				BenutzerKompetenz.KATALOG_EINTRAEGE_LOESCHEN);
 	}

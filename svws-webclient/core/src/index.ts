@@ -652,6 +652,7 @@ export { BerufskollegFachklassenKatalogIndex } from './core/data/schule/Berufsko
 export { Einwilligungsart } from './core/data/schule/Einwilligungsart';
 export { Fahrschuelerart } from './core/data/schule/Fahrschuelerart';
 export { Floskel } from './core/data/schule/Floskel';
+export { FloskelJahrgangZuordnung } from './core/data/schule/FloskelJahrgangZuordnung';
 export { Floskelgruppe } from './core/data/schule/Floskelgruppe';
 export { FoerderschwerpunktEintrag } from './core/data/schule/FoerderschwerpunktEintrag';
 export { Haltestelle } from './core/data/schule/Haltestelle';

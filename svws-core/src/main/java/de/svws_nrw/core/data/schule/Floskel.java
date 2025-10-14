@@ -1,7 +1,11 @@
 package de.svws_nrw.core.data.schule;
 
 
+import java.util.ArrayList;
+import java.util.List;
+
 import de.svws_nrw.transpiler.TranspilerDTO;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.xml.bind.annotation.XmlRootElement;
 
@@ -14,6 +18,10 @@ import jakarta.xml.bind.annotation.XmlRootElement;
 @TranspilerDTO
 public class Floskel {
 
+	/** Die ID der Floskel */
+	@Schema(description = "Die ID der Floskel", example = "1", accessMode = Schema.AccessMode.READ_ONLY)
+	public long id;
+
 	/** Das Kürzel der Floskel */
 	@Schema(description = "Das Kürzel der Floskel", example = "#103")
 	public String kuerzel;
@@ -22,24 +30,29 @@ public class Floskel {
 	@Schema(description = "Der Text", example = "#$Vorname$ bringt sich bei Teamarbeit sehr produktiv in die Gruppe ein.")
 	public String text;
 
-	/** Das Kürzel der Floskelgruppe */
-	@Schema(description = "Das Kürzel der Floskelgruppe", example = "ZB")
-	public String kuerzelFloskelgruppe;
+	/** Die ID der Floskelgruppe */
+	@Schema(description = "Die ID der Floskelgruppe", example = "1")
+	public Long idFloskelgruppe;
 
 	/** Die ID des Fachs */
 	@Schema(description = "Die ID des Fachs", example = "8")
 	public Long idFach;
 
 	/** Das Niveau */
-	@Schema(description = "Das Niveau", example = "AB")
-	public String niveau;
+	@Schema(description = "Das Niveau", example = "1")
+	public Integer niveau;
 
-	/** Die ID des Jahrgangs */
-	@Schema(description = "Die ID des Jahrgangs", example = "9000000")
-	public Long idJahrgang;
+	/** Gibt an, ob der Eintrag in der Anwendung sichtbar sein soll oder nicht. */
+	@Schema(description = "gibt an, ob der Eintrag in der Anwendung sichtbar sein soll oder nicht", example = "true")
+	public boolean istSichtbar = true;
 
-	/** Gibt an, ob die Floskel in anderen Datenbanktabellen referenziert ist. */
-	@Schema(description = "Gibt an, ob die Floskel in anderen Datenbanktabellen referenziert ist.", example = "true", accessMode = Schema.AccessMode.READ_ONLY)
-	public Boolean referenziertInAnderenTabellen;
+	/** Gibt die Position in der Sortierreihenfolge für die Katalog-Einträge an. */
+	@Schema(description = "gibt die Position in der Sortierreihenfolge für die Katalog-Einträge an", example = "1")
+	public int sortierung = 32000;
+
+	/** Die IDs der Jahrgänge, falls die Floskel auf bestimmte Jahrgänge eingeschränkt ist. Liegt keine Einschränkung vor so ist die Liste leer */
+	@ArraySchema(schema = @Schema(implementation = Long.class,
+			description = "Die IDs der Jahrgänge, falls die Floskel auf bestimmte Jahrgänge eingeschränkt ist. Liegt keine Einschränkung vor so ist die Liste leer"))
+	public List<Long> idsJahrgaenge = new ArrayList<>();
 
 }
