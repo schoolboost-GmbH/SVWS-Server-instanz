@@ -3,13 +3,14 @@ SVWS Docker Compose Deployment
 
 1. Erstelle eine `.env` Datei (oder setze die Variablen in deiner Umgebung) und definiere mindestens:
    - `SERVICE_PASSWORD_ROOT`
-   - `SERVICE_PASSWORD_DB`
-   - optional `SERVICE_DB_USER`, `SVWS_HTTP_PORT`, `SVWS_HTTPS_PORT`, `SVWS_SERVER_IMAGE`
-2. Starte die Umgebung mit:
+- `SERVICE_PASSWORD_DB`
+- optional `SERVICE_DB_USER`, `SVWS_HTTP_PORT`, `SVWS_HTTPS_PORT`, `SVWS_SERVER_IMAGE`
+2. Nutze das vorbereitete Initialisierungs-SQL unter `deployment/docker/init-db/` oder ergänze eigene Dateien in diesem Ordner (sie werden automatisch beim ersten DB-Start ausgeführt).
+3. Starte die Umgebung mit:
    ```bash
-   docker compose -f deployment/docker/docker-compose.svws.yml up -d
+   docker compose -f deployment/docker/docker-compose.yaml up -d
    ```
-3. Nach dem Start ist der Server über `http://localhost:8080` bzw. `https://localhost:8443` erreichbar (Ports konfigurierbar).
+4. Nach dem Start ist der Server über `http://localhost:8080` bzw. `https://localhost:8443` erreichbar (Ports konfigurierbar).
 
 Hinweise:
 - Passe die Passwörter/Portwerte vor dem ersten Start an.
