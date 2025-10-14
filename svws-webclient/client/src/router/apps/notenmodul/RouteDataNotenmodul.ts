@@ -1,5 +1,5 @@
 import type { ENMKlasse, ENMLeistung, ENMLeistungBemerkungen, ENMLernabschnitt, ENMTeilleistung } from "@core";
-import { ENMDaten} from "@core";
+import { ENMDaten, OpenApiError} from "@core";
 import { BenutzerKompetenz, BenutzerTyp, DeveloperNotificationException } from "@core";
 import { api } from "~/router/Api";
 import { RouteData, type RouteStateInterface } from "~/router/RouteData";
@@ -44,7 +44,7 @@ export class RouteDataNotenmodul extends RouteData<RouteStateNotenmodul> {
 	}
 
 	public async ladeDaten() {
-		const patchedState = <Partial<RouteStateNotenmodul>>{};
+		const patchedState = <Partial<RouteStateNotenmodul>>{ daten: null, manager: null, auswahlKlassen: [], auswahlLerngruppen: [] };
 		try {
 			if (!api.benutzerIstAdmin && !api.benutzerHatEineKompetenz([
 				BenutzerKompetenz.NOTENMODUL_ADMINISTRATION,
@@ -64,14 +64,14 @@ export class RouteDataNotenmodul extends RouteData<RouteStateNotenmodul> {
 			patchedState.manager = new EnmManager(patchedState.daten, patchedState.daten.lehrerID);
 			const lerngruppen = patchedState.manager.mapLerngruppenAuswahl.values();
 			patchedState.auswahlLerngruppe = lerngruppen.isEmpty() ? null : lerngruppen.iterator().next();
-			patchedState.auswahlLerngruppen = [];
 			const klassen = patchedState.manager.listKlassenKlassenlehrer;
 			patchedState.auswahlKlasse = klassen.isEmpty() ? null : klassen.getFirst();
-			patchedState.auswahlKlassen = [];
 
 		} catch (error) {
-			patchedState.daten = null;
-			patchedState.manager = null;
+			if ((error instanceof OpenApiError) && (error.response instanceof Response) && (error.response.status === 404)) {
+				patchedState.daten = new ENMDaten();
+				patchedState.manager = new EnmManager(patchedState.daten, patchedState.daten.lehrerID);
+			}
 		}
 		this.setPatchedState(patchedState);
 	}

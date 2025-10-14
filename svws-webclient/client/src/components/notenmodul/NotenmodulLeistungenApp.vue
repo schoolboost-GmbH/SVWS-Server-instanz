@@ -1,5 +1,5 @@
 <template>
-	<template v-if="(activeViewType === ViewType.DEFAULT)">
+	<template v-if="(activeViewType === ViewType.DEFAULT) && enmManager().daten.schulnummer !== 0">
 		<header class="svws-ui-header">
 			<div class="svws-ui-header--title">
 				<div class="svws-headline-wrapper">
