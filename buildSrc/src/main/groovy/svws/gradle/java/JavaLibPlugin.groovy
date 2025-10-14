@@ -103,7 +103,7 @@ class JavaLibPlugin implements Plugin<Project> {
 		project.dependencies.add('resteasy', 'org.jboss.resteasy:resteasy-multipart-provider:' + version);
 		project.dependencies.add('resteasy', 'org.jboss.resteasy:resteasy-jaxb-provider:' + version);
 		// vulnerability fix for: org.jboss.resteasy:resteasy-multipart-provider:6.2.12.Final -> pin org.eclipse.angus:angus-mail:2.0.4
-		project.dependencies.add('resteasy', 'org.eclipse.angus:angus-mail:2.0.4');
+		project.dependencies.add('resteasy', 'org.eclipse.angus:angus-mail:2.0.5');
 	}
 
 

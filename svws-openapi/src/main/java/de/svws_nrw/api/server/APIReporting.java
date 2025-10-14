@@ -84,7 +84,7 @@ public class APIReporting {
 	 * @return Informationen zum Versand der E-Mails.
 	 */
 	@POST
-	@Produces({"application/json"})
+	@Produces({ "application/json" })
 	@Path("/email")
 	@Operation(summary = "Erstellt einen Report als PDF-Datei gemäß den übergebenen Daten und versendet ihn per E-Mail.",
 			description = "Erstellt den angeforderten Report gemäß den in den Reporting-Parametern angegebenen Daten und Einstellungen und versendet ihn als PDF-Datei per E-Mail. "

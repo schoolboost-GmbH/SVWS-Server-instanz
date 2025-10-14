@@ -2432,6 +2432,58 @@ export class ApiServer extends BaseApi {
 
 
 	/**
+	 * Implementierung der GET-Methode getEmailJobLog für den Zugriff auf die URL https://{hostname}/db/{schema}/email/email-jobs/{jobId}/log
+	 *
+	 * Liefert die gesammelten Logeinträge (Hinweise, Fehler) des angegebenen E-Mail-Jobs.
+	 *
+	 * Mögliche HTTP-Antworten:
+	 *   Code 200: Log wurde ermittelt.
+	 *     - Mime-Type: application/json
+	 *     - Rückgabe-Typ: SimpleOperationResponse
+	 *   Code 404: Job nicht gefunden.
+	 *
+	 * @param {string} schema - der Pfad-Parameter schema
+	 * @param {number} jobId - der Pfad-Parameter jobId
+	 *
+	 * @returns Log wurde ermittelt.
+	 */
+	public async getEmailJobLog(schema : string, jobId : number) : Promise<SimpleOperationResponse> {
+		const path = "/db/{schema}/email/email-jobs/{jobId}/log"
+			.replace(/{schema\s*(:[^{}]+({[^{}]+})*)?}/g, schema)
+			.replace(/{jobId\s*(:[^{}]+({[^{}]+})*)?}/g, jobId.toString());
+		const result : string = await super.getJSON(path);
+		const text = result;
+		return SimpleOperationResponse.transpilerFromJSON(text);
+	}
+
+
+	/**
+	 * Implementierung der GET-Methode getEmailJobStatus für den Zugriff auf die URL https://{hostname}/db/{schema}/email/email-jobs/{jobId}/status
+	 *
+	 * Liefert den aktuellen Status und Kennzahlen (Gesamt, Gesendete, Übersprungene, Fehler) des angegebenen E-Mail-Jobs.
+	 *
+	 * Mögliche HTTP-Antworten:
+	 *   Code 200: Status wurde ermittelt.
+	 *     - Mime-Type: application/json
+	 *     - Rückgabe-Typ: SimpleOperationResponse
+	 *   Code 404: Job nicht gefunden.
+	 *
+	 * @param {string} schema - der Pfad-Parameter schema
+	 * @param {number} jobId - der Pfad-Parameter jobId
+	 *
+	 * @returns Status wurde ermittelt.
+	 */
+	public async getEmailJobStatus(schema : string, jobId : number) : Promise<SimpleOperationResponse> {
+		const path = "/db/{schema}/email/email-jobs/{jobId}/status"
+			.replace(/{schema\s*(:[^{}]+({[^{}]+})*)?}/g, schema)
+			.replace(/{jobId\s*(:[^{}]+({[^{}]+})*)?}/g, jobId.toString());
+		const result : string = await super.getJSON(path);
+		const text = result;
+		return SimpleOperationResponse.transpilerFromJSON(text);
+	}
+
+
+	/**
 	 * Implementierung der GET-Methode getSMTPServerKonfiguration für den Zugriff auf die URL https://{hostname}/db/{schema}/email/smtp/server/konfiguration
 	 *
 	 * Gibt die SMTP-Server-Konfiguration der Schule zurück.

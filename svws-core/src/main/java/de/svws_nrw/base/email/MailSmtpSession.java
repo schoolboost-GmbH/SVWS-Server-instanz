@@ -1,7 +1,12 @@
 package de.svws_nrw.base.email;
 
+import java.io.UnsupportedEncodingException;
+import java.net.IDN;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Properties;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import jakarta.activation.DataHandler;
 import jakarta.mail.Authenticator;
@@ -54,32 +59,61 @@ public class MailSmtpSession {
 	}
 
 
-	private static void addAttachment(final Multipart multipart, final @NotNull byte[] data, final @NotNull String mimeType, final @NotNull String filename)
+	private static void addAttachment(final Multipart multipart, final @NotNull EmailJobAttachment attachment)
 			throws MessagingException {
-		final MimeBodyPart attachment = new MimeBodyPart();
-		final ByteArrayDataSource ds = new ByteArrayDataSource(data, mimeType);
-		attachment.setDataHandler(new DataHandler(ds));
-		attachment.setFileName(filename);
-		multipart.addBodyPart(attachment);
+		final MimeBodyPart part = new MimeBodyPart();
+		final ByteArrayDataSource ds = new ByteArrayDataSource(attachment.data, attachment.mimetype);
+		part.setDataHandler(new DataHandler(ds));
+		part.setFileName(attachment.filename);
+		multipart.addBodyPart(part);
+	}
+
+
+	private static @NotNull InternetAddress[] convertMailAddresses(final String addresses) throws MessagingException {
+		try {
+			if (addresses == null)
+				return new InternetAddress[0];
+			final String[] arrayAddresses = addresses.split(",");
+			final Pattern p = Pattern.compile("(.*)<([^<>]*)>\\s*");
+			final InternetAddress[] result = new InternetAddress[arrayAddresses.length];
+			for (int i = 0; i < arrayAddresses.length; i++) {
+				final String addr = arrayAddresses[i];
+				final Matcher m = p.matcher(addr);
+				result[i] = m.hasMatch()
+						? new InternetAddress(IDN.toASCII(m.group(2)), m.group(1), StandardCharsets.UTF_8.name())
+						: new InternetAddress(IDN.toASCII(addr));
+			}
+			return result;
+		} catch (final UnsupportedEncodingException e) {
+			throw new MessagingException("UTF-8 encoding not supported", e);
+		}
+	}
+
+
+	private @NotNull Message createMimeMessage(final @NotNull String from, final @NotNull String to, final @NotNull String cc, final @NotNull String bcc, final @NotNull String subject) throws MessagingException {
+		final Message message = new MimeMessage(this.session);
+		message.addFrom(convertMailAddresses(from));
+		message.setRecipients(Message.RecipientType.TO, convertMailAddresses(to));
+		message.addRecipients(Message.RecipientType.CC, convertMailAddresses(cc));
+		message.addRecipients(Message.RecipientType.BCC, convertMailAddresses(bcc));
+		message.setSubject(subject);
+		return message;
 	}
 
 
 	/**
 	 * Sendet eine Text-Nachricht über diese Session, mit den angegebenen Informationen
 	 *
-	 * @param from      Die Adresse, von der die Mail versendet wird.
-	 * @param to        Die Adresse, zu der die Mail gesendet wird.
-	 * @param subject   Der Betreff der Nachricht.
-	 * @param text      Der Text der Nachricht.
+	 * @param from      die Adresse, von der die Mail versendet wird.
+	 * @param to        die Adresse, zu der die Mail gesendet wird.
+	 * @param subject   der Betreff der Nachricht.
+	 * @param text      der Text der Nachricht.
 	 *
-	 * @throws MessagingException   Falls ein Fehler bei dem Versenden der Nachricht auftritt.
+	 * @throws MessagingException   falls ein Fehler bei dem Versenden der Nachricht auftritt.
 	 */
 	public void sendTextMessage(final @NotNull String from, final @NotNull String to, final @NotNull String subject, final @NotNull String text)
 			throws MessagingException {
-		final Message message = new MimeMessage(this.session);
-		message.setFrom(new InternetAddress(from));
-		message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(to));
-		message.setSubject(subject);
+		final @NotNull Message message = createMimeMessage(from, to, "", "", subject);
 
 		final Multipart multipart = new MimeMultipart();
 		addBody(multipart, text);
@@ -92,26 +126,21 @@ public class MailSmtpSession {
 	/**
 	 * Sendet eine Text-Nachricht über diese Session, mit den angegebenen Informationen und einem Anhang
 	 *
-	 * @param from      Die Adresse, von der die Mail versendet wird.
-	 * @param to        Die Adresse, zu der die Mail gesendet wird.
-	 * @param subject   Der Betreff der Nachricht.
-	 * @param text      Der Text der Nachricht.
-	 * @param data      Die Binärdaten für das Attachment.
-	 * @param mimeType  Der Mime-Type des Attachments.
-	 * @param filename  Der Datei-Name des Attachments.
+	 * @param from         die Adresse, von der die Mail versendet wird.
+	 * @param to           die Adresse, zu der die Mail gesendet wird.
+	 * @param subject      der Betreff der Nachricht.
+	 * @param text         der Text der Nachricht.
+	 * @param attachment   die Informationen zum Email-Attachement
 	 *
-	 * @throws MessagingException   Falls ein Fehler bei dem Versenden der Nachricht auftritt.
+	 * @throws MessagingException   falls ein Fehler bei dem Versenden der Nachricht auftritt.
 	 */
 	public void sendTextMessageWithAttachment(final @NotNull String from, final @NotNull String to, final @NotNull String subject, final @NotNull String text,
-			final @NotNull byte[] data, final @NotNull String mimeType, final @NotNull String filename) throws MessagingException {
-		final Message message = new MimeMessage(this.session);
-		message.setFrom(new InternetAddress(from));
-		message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(to));
-		message.setSubject(subject);
+			final @NotNull EmailJobAttachment attachment) throws MessagingException {
+		final @NotNull Message message = createMimeMessage(from, to, "", "", subject);
 
 		final Multipart multipart = new MimeMultipart();
 		addBody(multipart, text);
-		addAttachment(multipart, data, mimeType, filename);
+		addAttachment(multipart, attachment);
 		message.setContent(multipart);
 
 		Transport.send(message);
@@ -120,33 +149,23 @@ public class MailSmtpSession {
 	/**
 	 * Sendet eine Text-Nachricht über diese Session mit mehreren Anhängen.
 	 *
-	 * @param from       Die Adresse, von der die Mail versendet wird.
-	 * @param to         Die Adresse, zu der die Mail gesendet wird.
-	 * @param subject    Der Betreff der Nachricht.
-	 * @param text       Der Text der Nachricht.
-	 * @param data       Liste der Binärdaten der Attachments.
-	 * @param mimeTypes  Liste der Mime-Types der Attachments.
-	 * @param filenames  Liste der Dateinamen der Attachments.
+	 * @param from          die Adresse, von der die Mail versendet wird.
+	 * @param to            die Adresse, zu der die Mail gesendet wird.
+	 * @param subject       der Betreff der Nachricht.
+	 * @param text          der Text der Nachricht.
+	 * @param attachments   die Liste mit den Attachments.
 	 *
-	 * @throws MessagingException Falls ein Fehler beim Versenden auftritt.
+	 * @throws MessagingException   falls ein Fehler beim Versenden auftritt.
 	 */
 	public void sendTextMessageWithAttachments(final @NotNull String from, final @NotNull String to, final @NotNull String subject,
-			final @NotNull String text, final @NotNull List<byte[]> data, final @NotNull List<String> mimeTypes,
-			final @NotNull List<String> filenames) throws MessagingException {
-
-		if ((data.size() != mimeTypes.size()) || (data.size() != filenames.size()))
-			throw new MessagingException("Anzahl der Attachment-Listen (data/mimeTypes/filenames) ist inkonsistent.");
-
-		final Message message = new MimeMessage(this.session);
-		message.setFrom(new InternetAddress(from));
-		message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(to));
-		message.setSubject(subject);
+			final @NotNull String text, final @NotNull List<EmailJobAttachment> attachments) throws MessagingException {
+		final @NotNull Message message = createMimeMessage(from, to, "", "", subject);
 
 		final Multipart multipart = new MimeMultipart();
 		addBody(multipart, text);
 
-		for (int i = 0; i < data.size(); i++)
-			addAttachment(multipart, data.get(i), mimeTypes.get(i), filenames.get(i));
+		for (int i = 0; i < attachments.size(); i++)
+			addAttachment(multipart, attachments.get(i));
 
 		message.setContent(multipart);
 		Transport.send(message);

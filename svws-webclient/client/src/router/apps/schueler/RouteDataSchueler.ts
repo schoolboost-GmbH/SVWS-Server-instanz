@@ -309,6 +309,18 @@ export class RouteDataSchueler extends RouteDataAuswahl<SchuelerListeManager, Ro
 		throw new UserNotificationException("Dieser Report kann nur versendet werden, wenn mindestens ein Schüler ausgewählt ist.");
 	})
 
+	fetchEMailJobStatus = api.call(async (jobId: number): Promise<SimpleOperationResponse> => {
+		if (this.manager.liste.auswahlExists() || this.manager.hasDaten())
+			return await api.server.getEmailJobStatus(api.schema, jobId);
+		throw new UserNotificationException("Dieser Report kann nur versendet werden, wenn mindestens ein Schüler ausgewählt ist.");
+	})
+
+	fetchEMailJobLog = api.call(async (jobId: number): Promise<SimpleOperationResponse> => {
+		if (this.manager.liste.auswahlExists() || this.manager.hasDaten())
+			return await api.server.getEmailJobLog(api.schema, jobId);
+		throw new UserNotificationException("Dieser Report kann nur versendet werden, wenn mindestens ein Schüler ausgewählt ist.");
+	})
+
 	patchMultiple = async (pendingStateManager: PendingStateManager<any>): Promise<void> => {
 		api.status.start();
 

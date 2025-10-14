@@ -25,18 +25,6 @@ public class ReportingEMailDaten {
 			example = "false")
 	public boolean istPrivateEmailAlternative = false;
 
-	/** Gibt die Größe in Kilobyte an, die die E-Mail-Anhänge in Summe maximal haben dürfen. Ein Wert von 0 bedeutet, dass es kein Limit gibt. Eine einzelne
-	 * Datei als Anhang kann diese Grenze je nach Wert von "istMaxAnhangGesamtgroesseInKBAbsolut" überschreiten. */
-	@Schema(description = "Gibt die Größe in Kilobyte an, die die E-Mail-Anhänge in Summe maximal haben dürfen. Ein Wert von 0 bedeutet, dass es kein Limit "
-			+ "gibt. Eine einzelne Datei als Anhang kann diese Grenze je nach Wert von \"istMaxAnhangGesamtgroesseInKBAbsoult\" überschreiten.",
-			example = "8192")
-	public int maxAnhangGesamtgroesseInKB = 8192;
-
-	/** Legt fest, ob die gesetzte Obergrenze absolut ist, d. h., dass einzelne Dateien, die größer sind, nicht versendet werden, wenn die Grenze absolut ist. */
-	@Schema(description = "Legt fest, ob die gesetzte Obergrenze absolut ist, d. h., dass einzelne Dateien, die größer sind, nicht versendet werden, wenn die"
-			+ " Grenze absolut ist.", example = "false")
-	public boolean istMaxAnhangGesamtgroesseInKBAbsolut = false;
-
 	/** Der Betreff der E-Mail. */
 	@Schema(description = "Der Betreff der E-Mail.", example = "Persönlicher Stundenplan")
 	public @NotNull String betreff = "";

@@ -132,24 +132,33 @@
 						</svws-ui-button>
 					</div>
 					<!-- E-Mail-Eingabefelder -->
-					<div class="text-left col-span-2 mb-2" v-if="ServerMode.DEV.checkServerMode(serverMode)">
-						<br><p class="font-bold mb-2">Den individuellen Stundenplan als E-Mail an die Schülerinnen und Schüler versenden.</p>
-						<div class="flex flex-col gap-2">
-							<input type="text" v-model="emailBetreff" placeholder="Betreff eingeben" class="w-full border rounded px-2 py-1">
-							<textarea v-model="emailText" rows="5" placeholder="E-Mail-Text eingeben" class="w-full border rounded px-2 py-1" />
-							<svws-ui-checkbox v-model="istPrivateEmailAlternative" name="istPrivateEmailAlternative">
-								Private E-Mail verwenden, wenn keine schulische E-Mail-Adresse vorhanden ist.
-							</svws-ui-checkbox>
+					<template v-if="ServerMode.DEV.checkServerMode(serverMode)">
+						<div class="text-left col-span-2 mb-2">
+							<br><p class="font-bold mb-2">Den individuellen Stundenplan als E-Mail an die Schülerinnen und Schüler versenden.</p>
+							<div class="flex flex-col gap-2">
+								<input type="text" v-model="emailBetreff" placeholder="Betreff eingeben" class="w-full border rounded px-2 py-1">
+								<textarea v-model="emailText" rows="5" placeholder="E-Mail-Text eingeben" class="w-full border rounded px-2 py-1" />
+								<svws-ui-checkbox v-model="istPrivateEmailAlternative" name="istPrivateEmailAlternative">
+									Private E-Mail verwenden, wenn keine schulische E-Mail-Adresse vorhanden ist.
+								</svws-ui-checkbox>
+							</div>
 						</div>
-					</div>
-					<div class="text-left col-span-2" v-if="ServerMode.DEV.checkServerMode(serverMode)">
-						<svws-ui-button :disabled="isEmailStundenplanDisabled" @click="sendPdfByEmail" :is-loading="loading" class="mt-4">
-							<svws-ui-spinner v-if="loading" spinning />
-							<span v-else class="icon i-ri-mail-send-line" />
-							E-Mail senden
-						</svws-ui-button>
-					</div>
-					<!-- Ende: E-Mail-Eingabefelder -->
+						<div class="flex gap-2 text-left col-span-2" v-if="ServerMode.DEV.checkServerMode(serverMode)">
+							<svws-ui-button :disabled="isEmailStundenplanDisabled" @click="sendPdfByEmail" :is-loading="loading" class="mt-4">
+								<svws-ui-spinner v-if="loading" spinning />
+								<span v-else class="icon i-ri-mail-send-line" />
+								E-Mail senden
+							</svws-ui-button>
+							<!-- TODO Job-Management sollte an andere Stelle im Client allgemeiner implementiert werden -> Code entsprechend verschieben
+							<svws-ui-button :disabled="!jobId || isEmailStundenplanDisabled" :is-loading="loading" @click="fetchStatus" class="mt-4">
+								Job-Status abfragen
+							</svws-ui-button>
+							<svws-ui-button :disabled="!jobId || isEmailStundenplanDisabled" :is-loading="loading" @click="fetchLog" class="mt-4">
+								Job-Log abfragen
+							</svws-ui-button>
+							-->
+						</div>
+					</template>
 					<div v-if="!schuelerListeManager().liste.auswahlExists()">
 						<span class="text-ui-danger">Es ist kein Schüler ausgewählt.</span>
 					</div>
@@ -185,7 +194,7 @@
 
 	import { ref, computed } from "vue";
 	import type { SSchuelerAllgemeinesGruppenprozesseProps } from "./SSchuelerAllgemeinesGruppenprozesseProps";
-	import type { StundenplanListeEintrag, List} from "@core";
+	import type { StundenplanListeEintrag, List } from "@core";
 	import { DateUtils, ReportingParameter, ReportingReportvorlage, ListUtils, ArrayList, BenutzerKompetenz, ReportingSortierungDefinition, ReportingEMailDaten, ReportingEMailEmpfaengerTyp, ReportingAusgabeformat, ServerMode } from "@core";
 	import { SelectManager } from "@ui";
 
@@ -413,6 +422,8 @@
 		loading.value = false;
 	}
 
+	const jobId = ref<number | null>(null)
+
 	async function sendPdfByEmail() {
 		if (stundenplanAuswahl.value === undefined)
 			return;
@@ -456,10 +467,37 @@
 
 		reportingParameter.duplexdruck = ((druckoptionSchuelerStundenplan.value === 3) || (druckoptionSchuelerStundenplan.value === 4));
 		loading.value = true;
+		jobId.value = null;
+		if (logs.value === undefined)
+			logs.value = new ArrayList();
 		const result = await props.sendEMail(reportingParameter);
+		jobId.value = result.id;
 		statusAction.value = result.success;
-		logs.value = result.log;
-		loading.value = false;
+		logs.value.addAll(result.log);
+		try {
+			// Erste Statusabfrage durchführen
+			await fetchStatus();
+		} catch (e: any) {
+			logs.value.add(`Fehler: ${e?.message ?? 'Unbekannter Fehler'}`);
+		} finally {
+			loading.value = false;
+		}
+	}
+
+	async function fetchStatus() {
+		if (jobId.value === null)
+			return;
+		const result = await props.fetchEMailJobStatus(jobId.value);
+		logs.value?.addAll(result.log);
+		logs.value?.add("");
+	}
+
+	async function fetchLog() {
+		if (jobId.value === null)
+			return;
+		const result = await props.fetchEMailJobLog(jobId.value);
+		logs.value?.addAll(result.log);
+		logs.value?.add("");
 	}
 
 	async function entferneSchueler() {

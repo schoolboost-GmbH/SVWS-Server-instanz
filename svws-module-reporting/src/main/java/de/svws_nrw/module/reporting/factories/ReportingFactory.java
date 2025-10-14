@@ -247,7 +247,7 @@ public final class ReportingFactory {
 					this.logger.logLn(LogLevel.DEBUG, 4, "HTML-Builder wurden erzeugt.");
 					final PdfFactory pdfFactory = new PdfFactory(htmlBuilders, reportingRepository);
 					final EmailFactory emailFactory = new EmailFactory(reportingRepository);
-					// Erzeuge im try-Block eine temporäre Response, die bei einem Fehler automatisch geschlossen wird (SonarCube-Angabe)
+					// Erzeuge im try-Block eine temporäre Response, die bei einem Fehler automatisch geschlossen wird (SonarQube-Angabe)
 					try (Response autocloseResponse = emailFactory.sendEmails(pdfFactory)) {
 						if (!log.getText(LogLevel.ERROR).isEmpty()) {
 							logger.logLn(LogLevel.ERROR, 0, "### FEHLER: Während des E-Mail-Versands (Response) wurde ein Fehler geloggt. Fehlerdaten folgen.");

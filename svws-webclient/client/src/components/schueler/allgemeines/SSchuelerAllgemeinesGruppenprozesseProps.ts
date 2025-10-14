@@ -1,4 +1,4 @@
-import {List, BenutzerKompetenz, ApiFile, ReportingParameter, StundenplanListeEintrag, SimpleOperationResponse, ServerMode } from "@core";
+import type {List, BenutzerKompetenz, ApiFile, ReportingParameter, StundenplanListeEintrag, SimpleOperationResponse, ServerMode } from "@core";
 import type { ApiStatus } from "~/components/ApiStatus";
 import type { SchuelerListeManager } from "@ui";
 
@@ -7,6 +7,8 @@ export interface SSchuelerAllgemeinesGruppenprozesseProps {
 	serverMode: ServerMode;
 	getPDF: (parameter: ReportingParameter) => Promise<ApiFile>;
 	sendEMail: (parameter: ReportingParameter) => Promise<SimpleOperationResponse>;
+	fetchEMailJobStatus: (jobId: number) => Promise<SimpleOperationResponse>;
+	fetchEMailJobLog: (jobId: number) => Promise<SimpleOperationResponse>;
 	mapStundenplaene: Map<number, StundenplanListeEintrag>;
 	benutzerKompetenzen: Set<BenutzerKompetenz>;
 	schuelerListeManager: () => SchuelerListeManager;

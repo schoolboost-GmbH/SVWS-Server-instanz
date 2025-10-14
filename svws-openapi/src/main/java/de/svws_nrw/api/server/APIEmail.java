@@ -2,10 +2,12 @@ package de.svws_nrw.api.server;
 
 import java.io.InputStream;
 
+import de.svws_nrw.core.data.SimpleOperationResponse;
 import de.svws_nrw.core.data.email.SMTPServerKonfiguration;
 import de.svws_nrw.core.types.ServerMode;
 import de.svws_nrw.core.types.benutzer.BenutzerKompetenz;
 import de.svws_nrw.data.benutzer.DBBenutzerUtils;
+import de.svws_nrw.data.email.DataEmailJobs;
 import de.svws_nrw.data.email.DataEmailSMTPServerKonfiguration;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -90,6 +92,58 @@ public class APIEmail {
 			@Context final HttpServletRequest request) {
 		return DBBenutzerUtils.runWithTransaction(conn -> new DataEmailSMTPServerKonfiguration(conn).patch(is),
 				request, ServerMode.STABLE, BenutzerKompetenz.SCHULBEZOGENE_DATEN_AENDERN);
+	}
+
+
+
+	/**
+	 * Liefert den Status eines gestarteten E-Mail-Jobs.
+	 *
+	 * @param schema das Datenbankschema
+	 * @param jobId  die Job-ID
+	 * @param request HTTP-Request
+	 *
+	 * @return SimpleOperationResponse mit Status-Informationen oder NOT_FOUND
+	 */
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	@Path("/email-jobs/{jobId}/status")
+	@Operation(summary = "Gibt den Status eines E-Mail-Versandjobs zurück.",
+			description = "Liefert den aktuellen Status und Kennzahlen (Gesamt, Gesendete, Übersprungene, Fehler) des angegebenen E-Mail-Jobs.")
+	@ApiResponse(responseCode = "200", description = "Status wurde ermittelt.",
+			content = @Content(mediaType = "application/json", schema = @Schema(implementation = SimpleOperationResponse.class)))
+	@ApiResponse(responseCode = "404", description = "Job nicht gefunden.")
+	public Response getEmailJobStatus(@PathParam("schema") final String schema,
+			@PathParam("jobId") final long jobId,
+			@Context final HttpServletRequest request) {
+		return DBBenutzerUtils.runWithTransaction(conn -> new DataEmailJobs(conn).getEmailJobStatus(jobId), request, ServerMode.DEV,
+				BenutzerKompetenz.BERICHTE_STANDARDFORMULARE_DRUCKEN,
+				BenutzerKompetenz.BERICHTE_ALLE_FORMULARE_DRUCKEN);
+	}
+
+	/**
+	 * Liefert das Log eines gestarteten E-Mail-Jobs.
+	 *
+	 * @param schema das Datenbankschema
+	 * @param jobId  die Job-ID
+	 * @param request HTTP-Request
+	 *
+	 * @return SimpleOperationResponse mit Logeinträgen oder NOT_FOUND
+	 */
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	@Path("/email-jobs/{jobId}/log")
+	@Operation(summary = "Gibt das Log eines E-Mail-Versandjobs zurück.",
+			description = "Liefert die gesammelten Logeinträge (Hinweise, Fehler) des angegebenen E-Mail-Jobs.")
+	@ApiResponse(responseCode = "200", description = "Log wurde ermittelt.",
+			content = @Content(mediaType = "application/json", schema = @Schema(implementation = SimpleOperationResponse.class)))
+	@ApiResponse(responseCode = "404", description = "Job nicht gefunden.")
+	public Response getEmailJobLog(@PathParam("schema") final String schema,
+			@PathParam("jobId") final long jobId,
+			@Context final HttpServletRequest request) {
+		return DBBenutzerUtils.runWithTransaction(conn -> new DataEmailJobs(conn).getEmailJobLog(jobId), request, ServerMode.DEV,
+				BenutzerKompetenz.BERICHTE_STANDARDFORMULARE_DRUCKEN,
+				BenutzerKompetenz.BERICHTE_ALLE_FORMULARE_DRUCKEN);
 	}
 
 }

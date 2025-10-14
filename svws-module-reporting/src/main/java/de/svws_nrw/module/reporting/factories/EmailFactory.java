@@ -1,14 +1,18 @@
 package de.svws_nrw.module.reporting.factories;
 
-import de.svws_nrw.base.email.MailSmtpSession;
-import de.svws_nrw.base.email.MailSmtpSessionConfig;
+import de.svws_nrw.base.email.EmailJob;
+import de.svws_nrw.base.email.EmailJobAttachment;
+import de.svws_nrw.base.email.EmailJobManagerContext;
+import de.svws_nrw.base.email.EmailJobManagerFactory;
+import de.svws_nrw.base.email.EmailJobStatus;
+import de.svws_nrw.base.email.EmailJobRecipient;
 import de.svws_nrw.core.data.SimpleOperationResponse;
 import de.svws_nrw.core.data.benutzer.BenutzerEMailDaten;
 import de.svws_nrw.core.data.reporting.ReportingParameter;
 import de.svws_nrw.core.logger.LogLevel;
 import de.svws_nrw.core.types.reporting.ReportingEMailEmpfaengerTyp;
 import de.svws_nrw.data.benutzer.DataBenutzerEMailDaten;
-import de.svws_nrw.data.email.DBEmailUtils;
+import de.svws_nrw.data.email.DataEmailJobs;
 import de.svws_nrw.db.utils.ApiOperationException;
 import de.svws_nrw.module.reporting.pdf.PdfBuilder;
 import de.svws_nrw.module.reporting.repositories.ReportingRepository;
@@ -20,6 +24,7 @@ import de.svws_nrw.module.reporting.types.person.ReportingPerson;
 import de.svws_nrw.module.reporting.types.schueler.ReportingSchueler;
 import jakarta.mail.internet.AddressException;
 import jakarta.mail.internet.InternetAddress;
+import jakarta.validation.constraints.NotNull;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.Response.Status;
@@ -28,7 +33,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * Versendet Report-Ergebnisse in Form von PDF-Dateien per E-Mail an die zugehörigen Personen.
@@ -55,49 +59,88 @@ public final class EmailFactory {
 	}
 
 	/**
-	 * Versendet E-Mails mit individuellen PDF-Anhängen an Schüler basierend auf den bereitgestellten Daten.
-	 * Die Methode ermittelt Empfängerdaten, erstellt die E-Mails und versendet diese über eine SMTP-Sitzung.
-	 * Dabei wird für jeden Schüler geprüft, ob eine gültige E-Mail-Adresse und Anhänge vorliegen.
-	 * Es wird ein Bericht über die Anzahl der erfolgreichen, übersprungenen und fehlgeschlagenen Versendungen zurückgegeben.
+	 * Startet den E-Mail-Versand asynchron als Hintergrundjob. Es wird eine Job-ID zurückgegeben,
+	 * mit der der Status und das Log später abgefragt werden können. Der eigentliche Versand
+	 * erfolgt durch einen Hintergrund-Worker.
 	 *
-	 * @param pdfFactory Eine Instanz von PdfFactory, die die zu versendenden PDF-Dokumente bereitstellt
+	 * @param pdfFactory Eine Instanz von PdfFactory, die die zu versendenden PDF-Dokumente bereitstellt.
 	 *
-	 * @return Eine Response mit der Operationsergebniszusammenfassung, inklusive Erfolgszustand, Logs und möglicher Fehler.
+	 * @return Response mit Informationen zum gestarteten Job (HTTP 202 Accepted)
 	 *
-	 * @throws ApiOperationException Falls ein schwerwiegender Fehler beim E-Mail-Versand auftritt.
+	 * @throws ApiOperationException Falls ein schwerwiegender Fehler bei der Job-Initialisierung auftritt.
 	 */
 	public Response sendEmails(final PdfFactory pdfFactory) throws ApiOperationException {
 		try {
-			reportingRepository.logger().logLn(LogLevel.DEBUG, 0, ">>> Beginn des E-Mail-Versands.");
+			reportingRepository.logger().logLn(LogLevel.DEBUG, 0, ">>> Beginne den Job für den asynchronen E-Mail-Versand zu starten.");
 
-			final ReportingParameter parameter = pruefeUndLiesParameter();
+			final ReportingParameter parameter = pruefeParameter();
+			reportingRepository.logger().logLn(LogLevel.DEBUG, 4, "Parameter wurden geprüft und erfolgreich ermittelt.");
 
-			final MailSmtpSession session = createSession();
+			final String subject = buildEMailBetreff(parameter);
+			final String body = buildEMailHTMLBody(parameter);
+
+			final @NotNull EmailJobManagerContext context = DataEmailJobs.getDefaultJobManagerContext(reportingRepository.conn());
+			reportingRepository.logger().logLn(LogLevel.DEBUG, 4, "SMTP Sitzung erstellt.");
 
 			final String absenderEmail = ermittleAbsenderEmail();
+			reportingRepository.logger().logLn(LogLevel.DEBUG, 4, "Absender-E-Mail-Adresse ermittelt.");
+
 			final ReportingEMailEmpfaengerTyp empfaengerTyp = ermittleEmpfaengerTyp();
+			reportingRepository.logger().logLn(LogLevel.DEBUG, 4, "Empfänger-Typ der E-Mail ermittelt.");
 
 			final Map<Long, List<PdfBuilder>> mapGruppiertePdfs = pdfFactory.getPdfBuildersById();
+			reportingRepository.logger().logLn(LogLevel.DEBUG, 4, "PDF-Builder in gruppierter Form erhalten.");
 
 			final List<String> listUebersprungen = new ArrayList<>();
-			final List<String> listFehler = new ArrayList<>();
-
-			final Map<String, EmpfaengerEmailAnhaenge> mapEmpfaengerEmailAnhaenge =
+			final List<EmailJobRecipient> mapEmpfaengerEmailAnhaenge =
 					sammleEmpfaengerUndAnhaenge(parameter, empfaengerTyp, mapGruppiertePdfs, listUebersprungen);
+			reportingRepository.logger().logLn(LogLevel.DEBUG, 4, "Empfänger und ihre Anhänge wurden zusammengestellt.");
 
-			final int erfolgreich = versendeAnAlleEmpfaenger(session, absenderEmail, parameter, mapEmpfaengerEmailAnhaenge, listUebersprungen, listFehler);
+			final var manager = EmailJobManagerFactory.getInstance().getManager(context);
+			final @NotNull EmailJob job = new EmailJob(absenderEmail)
+					.withSubject(subject)
+					.withBody(body)
+					.addRecipients(mapEmpfaengerEmailAnhaenge);
+			job.logSkipped.addAll(listUebersprungen);
+			final long jobId = manager.enqueue(job);
 
-			final Response response = baueResponse(erfolgreich, listUebersprungen, listFehler);
+			final SimpleOperationResponse simple = new SimpleOperationResponse();
+			simple.id = jobId;
+			simple.success = true;
+			simple.log.add("Der E-Mail-Versand wurde als Hintergrundjob gestartet mit Job-ID " + jobId);
+			reportingRepository.logger().logLn(LogLevel.DEBUG, 0, "<<< Job für den asynchronen E-Mail-Versand wurde gestartet. Job-ID: " + jobId);
 
-			reportingRepository.logger().logLn(LogLevel.DEBUG, 0, "<<< Ende E-Mail-Versand von Report-PDFs pro Schüler.");
-
-			return response;
-		} catch (final ApiOperationException e) {
-			throw e;
+			return Response.status(Status.ACCEPTED).type(MediaType.APPLICATION_JSON).entity(simple).build();
 		} catch (final Exception e) {
-			reportingRepository.logger().logLn(LogLevel.ERROR, 4, "### FEHLER: Der E-Mail-Versand wurde aufgrund eines Fehlers abgebrochen.");
-			throw new ApiOperationException(Status.INTERNAL_SERVER_ERROR, e, "### FEHLER: Fehler beim E-Mail-Versand.");
+			reportingRepository.logger().logLn(LogLevel.ERROR, 4, "### FEHLER: Der E-Mail-Versand konnte nicht als Job gestartet werden.");
+			throw new ApiOperationException(Status.INTERNAL_SERVER_ERROR, e, "### FEHLER: Fehler beim Starten des E-Mail-Jobs.");
 		}
+	}
+
+
+	/**
+	 * Prüft, ob die notwendigen Parameter und E-Mail-Daten für den E-Mail-Versand vorhanden und korrekt gesetzt sind, und liest diese aus. Sollte eine der
+	 * notwendigen Informationen fehlen oder nicht valide sein, wird eine Ausnahme ausgelöst.
+	 *
+	 * @return Das ReportingParameter-Objekt, das die nötigen Parameter und E-Mail-Daten enthält
+	 *
+	 * @throws ApiOperationException Fehler werfen, falls die benötigten Parameter oder E-Mail-Daten nicht vorhanden sind, unvollständig oder ungültig sind.
+	 */
+	private ReportingParameter pruefeParameter() throws ApiOperationException {
+		if ((this.reportingRepository.reportingParameter() == null) || (this.reportingRepository.reportingParameter().eMailDaten == null)) {
+			reportingRepository.logger().logLn(LogLevel.ERROR, 4,
+					"### FEHLER: Der E-Mail-Versand wurde abgebrochen, da die notwendigen Parameter und E-Mail-Daten nicht übergeben wurden.");
+			throw new ApiOperationException(Status.BAD_REQUEST, null, null, MediaType.APPLICATION_JSON);
+		}
+		final ReportingParameter parameter = this.reportingRepository.reportingParameter();
+		if ((parameter.eMailDaten.betreff == null) || parameter.eMailDaten.betreff.isBlank()
+				|| (parameter.eMailDaten.text == null) || parameter.eMailDaten.text.isBlank()) {
+			reportingRepository.logger().logLn(LogLevel.ERROR, 4,
+					"### FEHLER: Der E-Mail-Versand wurde abgebrochen, da kein Betreff oder Text für die E-Mail angegeben wurde.");
+			throw new ApiOperationException(Status.BAD_REQUEST, null, null, MediaType.APPLICATION_JSON);
+		}
+
+		return parameter;
 	}
 
 	/**
@@ -116,10 +159,10 @@ public final class EmailFactory {
 			benutzerEMailDaten = new DataBenutzerEMailDaten(reportingRepository.conn()).getById(reportingRepository.conn().getUser().getId());
 			if ((benutzerEMailDaten != null) && (benutzerEMailDaten.address != null) && !benutzerEMailDaten.address.isBlank())
 				emailAdresse = benutzerEMailDaten.address.trim();
-		} catch (final Exception ignore) {
+		} catch (@SuppressWarnings("unused") final Exception ignore) {
 			emailAdresse = "";
 		}
-		emailAdresse = valideEmail(emailAdresse);
+		emailAdresse = validateEmail(emailAdresse);
 
 		if (emailAdresse.isBlank()) {
 			reportingRepository.logger().logLn(LogLevel.ERROR, 4,
@@ -145,52 +188,11 @@ public final class EmailFactory {
 			reportingRepository.logger().logLn(LogLevel.DEBUG, 4,
 					"Der E-Mail-Empfänger-Typ wurde ermittelt: " + ReportingEMailEmpfaengerTyp.getByID(parameter.eMailDaten.empfaengerTyp).name());
 			return ReportingEMailEmpfaengerTyp.getByID(parameter.eMailDaten.empfaengerTyp);
-		} else {
-			reportingRepository.logger().logLn(LogLevel.ERROR, 4, "### FEHLER: Es wurde kein gültiger Empfängertyp festgelegt");
-			throw new ApiOperationException(Status.BAD_REQUEST, "### FEHLER: Es wurde kein gültiger Empfängertyp festgelegt.");
 		}
+		reportingRepository.logger().logLn(LogLevel.ERROR, 4, "### FEHLER: Es wurde kein gültiger Empfängertyp festgelegt");
+		throw new ApiOperationException(Status.BAD_REQUEST, "### FEHLER: Es wurde kein gültiger Empfängertyp festgelegt.");
 	}
 
-	/**
-	 * Prüft, ob die notwendigen Parameter und E-Mail-Daten für den E-Mail-Versand vorhanden und korrekt gesetzt sind, und liest diese aus. Sollte eine der
-	 * notwendigen Informationen fehlen oder nicht valide sein, wird eine Ausnahme ausgelöst.
-	 *
-	 * @return Das ReportingParameter-Objekt, das die nötigen Parameter und E-Mail-Daten enthält
-	 *
-	 * @throws ApiOperationException Fehler werfen, falls die benötigten Parameter oder E-Mail-Daten nicht vorhanden sind, unvollständig oder ungültig sind.
-	 */
-	private ReportingParameter pruefeUndLiesParameter() throws ApiOperationException {
-		if ((this.reportingRepository.reportingParameter() == null) || (this.reportingRepository.reportingParameter().eMailDaten == null)) {
-			reportingRepository.logger().logLn(LogLevel.ERROR, 4,
-					"### FEHLER: Der E-Mail-Versand wurde abgebrochen, da die notwendigen Parameter und E-Mail-Daten nicht übergeben wurden.");
-			throw new ApiOperationException(Status.BAD_REQUEST, null, null, MediaType.APPLICATION_JSON);
-		}
-		final ReportingParameter parameter = this.reportingRepository.reportingParameter();
-		if ((parameter.eMailDaten.betreff == null) || parameter.eMailDaten.betreff.isBlank()
-				|| (parameter.eMailDaten.text == null) || parameter.eMailDaten.text.isBlank()) {
-			reportingRepository.logger().logLn(LogLevel.ERROR, 4,
-					"### FEHLER: Der E-Mail-Versand wurde abgebrochen, da kein Betreff oder Text für die E-Mail angegeben wurde.");
-			throw new ApiOperationException(Status.BAD_REQUEST, null, null, MediaType.APPLICATION_JSON);
-		}
-		return parameter;
-	}
-
-	/**
-	 * Erstellt eine neue SMTP-Sitzung basierend auf der SMTP-Konfiguration, die aus den Schul- und Benutzereinstellungen ermittelt wird.
-	 *
-	 * @return Eine Instanz von MailSmtpSession, die die SMTP-Sitzung repräsentiert.
-	 *
-	 * @throws ApiOperationException Falls keine gültige SMTP-Konfiguration erstellt werden konnte oder ein anderer Fehler auftritt.
-	 */
-	private MailSmtpSession createSession() throws ApiOperationException {
-		// SMTP-Konfiguration aus Schul- und Benutzer-Einstellungen laden
-		final MailSmtpSessionConfig smtpConfig = DBEmailUtils.getSMTPConfig(reportingRepository.conn());
-		if (smtpConfig == null) {
-			reportingRepository.logger().logLn(LogLevel.ERROR, 4, "### FEHLER: Es konnte keine gültige SMTP-Konfiguration erstellt werden.");
-			throw new ApiOperationException(Status.BAD_REQUEST, "### FEHLER: Es konnte keine gültige SMTP-Konfiguration erstellt werden.");
-		}
-		return new MailSmtpSession(smtpConfig);
-	}
 
 	/**
 	 * Sammelt E-Mail-Empfänger und ihre zugehörigen Anhänge anhand der bereitgestellten Parameter. Diese Methode verarbeitet eine Gruppierung von PDFs und
@@ -206,12 +208,12 @@ public final class EmailFactory {
 	 *
 	 * @throws ApiOperationException Wenn beim Prozessieren der Daten ein Fehler auftritt, wird diese Exception geworfen.
 	 */
-	private Map<String, EmpfaengerEmailAnhaenge> sammleEmpfaengerUndAnhaenge(final ReportingParameter parameter,
+	private List<EmailJobRecipient> sammleEmpfaengerUndAnhaenge(final ReportingParameter parameter,
 			final ReportingEMailEmpfaengerTyp empfaengerTyp, final Map<Long, List<PdfBuilder>> mapGruppiertePdfs, final List<String> listUebersprungen)
 			throws ApiOperationException {
 
-		final Map<String, EmpfaengerEmailAnhaenge> mapEmpfaengerEmailAnhaenge = new HashMap<>();
-
+		final List<EmailJobRecipient> result = new ArrayList<>();
+		final Map<String, EmailJobRecipient> mapEmpfaengerEmailAnhaenge = new HashMap<>();
 		for (final Map.Entry<Long, List<PdfBuilder>> entry : mapGruppiertePdfs.entrySet()) {
 
 			final Long id = entry.getKey();
@@ -236,39 +238,54 @@ public final class EmailFactory {
 				continue;
 			}
 
-			final List<byte[]> attachmentsData = new ArrayList<>();
-			final List<String> attachmentsMime = new ArrayList<>();
-			final List<String> attachmentsNames = new ArrayList<>();
-			for (final PdfBuilder pdfBuilder : pdfBuilders) {
-				attachmentsData.add(pdfBuilder.getPdfByteArray());
-				attachmentsMime.add("application/pdf");
-				attachmentsNames.add(pdfBuilder.getDateinameMitEndung());
-			}
+			final List<EmailJobAttachment> attachments = pdfBuilders.stream()
+					.map(pdfBuilder -> new EmailJobAttachment(pdfBuilder.getDateinameMitEndung(), pdfBuilder.getPdfByteArray(), "application/pdf"))
+					.toList();
 
-			for (final ReportingPerson empfaengerPerson : empfaengerPersonen) {
-				final String empfaengerEmail = ermittleEmpfaengerEmail(empfaengerPerson, parameter.eMailDaten.istPrivateEmailAlternative);
-
-				if (empfaengerEmail.isBlank()) {
-					listUebersprungen.add("- Für die ID " + id + " konnte keine gültige E-Mail-Adresse des Empfängers ermittelt werden. Sie wird beim "
-							+ "E-Mail-Versand übersprungen.");
-					continue;
-				}
-
-				if (BLOCKED_EMAIL_DOMAINS.contains(empfaengerEmail.toLowerCase().substring(empfaengerEmail.indexOf('@') + 1))) {
-					listUebersprungen.add("- Die E-Mail an " + empfaengerEmail + " konnte nicht versendet werden, da die Domain als unzulässig markiert "
-							+ "wurde.");
-					continue;
-				}
-
-				final EmpfaengerEmailAnhaenge empfaengerEmailAnhaenge =
-						mapEmpfaengerEmailAnhaenge.computeIfAbsent(empfaengerEmail, k -> new EmpfaengerEmailAnhaenge(empfaengerPerson));
-				empfaengerEmailAnhaenge.attachmentsData.addAll(attachmentsData);
-				empfaengerEmailAnhaenge.attachmentsMime.addAll(attachmentsMime);
-				empfaengerEmailAnhaenge.attachmentsNames.addAll(attachmentsNames);
-			}
+			sammleEmpfaengerUndAnhaengeFuerAttachments(id, empfaengerPersonen, parameter.eMailDaten.istPrivateEmailAlternative, attachments,
+					mapEmpfaengerEmailAnhaenge, listUebersprungen);
 		}
-		return mapEmpfaengerEmailAnhaenge;
+		result.addAll(mapEmpfaengerEmailAnhaenge.values());
+		return result;
 	}
+
+
+	/**
+	 * Hilfsmethode zu sammleEmpfaengerUndAnhaenge, welche für die Anhänge eines PDF-Builders die Email-Empfänger bestimmt und diesen zuordnet.
+	 * Die Zuordnung erfolgt über die in dem Parameter mapEmpfaengerEmailAnhaenge übergebene Map, welche im Allgemeinen schon durch vorige
+	 * Aufrufe Zuordnung von anderen Anhängen beinhaltet.
+	 *
+	 * @param id                            die ID
+	 * @param empfaengerPersonen            die Personen-Onjekte für den Empfänger
+	 * @param nutzeAlternativPrivateEmail   gibt an, ob von der Person auch die private Email-Adresse genutzt werden kann
+	 * @param attachments                   die Anhänge, die den Empfänger-Personen zugeordnet werden können
+	 * @param mapEmpfaengerEmailAnhaenge    die Map, welche mit dieser Methode schrittweise aufgebaut wird und die die Zuordnung der Anhänge beinhaltet
+	 * @param listUebersprungen             die Liste, in der Informationen über übersprungene Datensätze gesammelt werden
+	 */
+	private static void sammleEmpfaengerUndAnhaengeFuerAttachments(final long id, final List<ReportingPerson> empfaengerPersonen,
+			final boolean nutzeAlternativPrivateEmail, final List<EmailJobAttachment> attachments,
+			final Map<String, EmailJobRecipient> mapEmpfaengerEmailAnhaenge, final List<String> listUebersprungen) {
+		for (final ReportingPerson empfaengerPerson : empfaengerPersonen) {
+			final String empfaengerEmail = ermittleEmpfaengerEmail(empfaengerPerson, nutzeAlternativPrivateEmail);
+
+			if (empfaengerEmail.isBlank()) {
+				listUebersprungen.add("- Für die ID " + id + " konnte keine gültige E-Mail-Adresse des Empfängers ermittelt werden. Sie wird beim "
+						+ "E-Mail-Versand übersprungen.");
+				continue;
+			}
+
+			if (BLOCKED_EMAIL_DOMAINS.contains(empfaengerEmail.toLowerCase().substring(empfaengerEmail.indexOf('@') + 1))) {
+				listUebersprungen.add("- Die E-Mail an " + empfaengerEmail + " konnte nicht versendet werden, da die Domain als unzulässig markiert "
+						+ "wurde.");
+				continue;
+			}
+
+			final EmailJobRecipient empfaengerEmailAnhaenge =
+					mapEmpfaengerEmailAnhaenge.computeIfAbsent(empfaengerEmail, k -> new EmailJobRecipient(normalisierteEmail(empfaengerPerson)));
+			empfaengerEmailAnhaenge.attachments.addAll(attachments);
+		}
+	}
+
 
 	/**
 	 * Ermittelt die E-Mail-Adresse eines Empfängers basierend auf den bereitgestellten Daten. Standardmäßig wird die schulische E-Mail-Adresse verwendet.
@@ -279,14 +296,14 @@ public final class EmailFactory {
 	 *
 	 * @return Die gültige E-Mail-Adresse des Empfängers als String. Falls keine Adresse verfügbar ist, wird ein leerer String zurückgegeben.
 	 */
-	private String ermittleEmpfaengerEmail(final ReportingPerson reportingPerson, final boolean istPrivateEmailAlternative) {
+	private static String ermittleEmpfaengerEmail(final ReportingPerson reportingPerson, final boolean istPrivateEmailAlternative) {
 		if (reportingPerson == null)
 			return "";
 
 		// Im Regelfall wird die schulische E-Mail-Adresse verwendet.
 		String emailAdresse = reportingPerson.emailSchule();
 		if ((emailAdresse != null) && !emailAdresse.isBlank())
-			emailAdresse = valideEmail(emailAdresse);
+			emailAdresse = validateEmail(emailAdresse);
 		else
 			emailAdresse = "";
 
@@ -295,7 +312,7 @@ public final class EmailFactory {
 		if ((emailAdresse.isBlank()) && istPrivateEmailAlternative) {
 			emailAdresse = reportingPerson.emailPrivat();
 			if ((emailAdresse != null) && !emailAdresse.isBlank())
-				emailAdresse = valideEmail(emailAdresse);
+				emailAdresse = validateEmail(emailAdresse);
 			else
 				emailAdresse = "";
 		}
@@ -351,226 +368,57 @@ public final class EmailFactory {
 		};
 	}
 
-	/**
-	 * Sendet E-Mails an alle Empfänger, die in der angegebenen Map definiert sind, mit den entsprechenden Anhängen und Parametern. Es wird der Erfolg der
-	 * gesendeten E-Mails gezählt.
-	 *
-	 * @param session Die SMTP-Sitzung, die für den E-Mail-Versand verwendet wird.
-	 * @param absenderEmail Die E-Mail-Adresse des Absenders.
-	 * @param parameter Die Parameter, die spezifische Einstellungen für den E-Mail-Versand enthalten.
-	 * @param mapEmpfaengerEmailAnhaenge Eine Map, die die Empfänger-E-Mails als Schlüssel und die korrespondierenden
-	 *                                   E-Mail-Anhänge als Wert enthält.
-	 * @param listUebersprungen Eine Liste, die benutzt wird, um die E-Mail-Adressen der Empfänger zu protokollieren,
-	 *                          deren E-Mails übersprungen wurden.
-	 * @param listFehler Eine Liste, die Fehlertexte protokolliert, die beim E-Mail-Versand aufgetreten sind.
-	 *
-	 * @return Die Anzahl der erfolgreich gesendeten E-Mails.
-	 *
-	 * @throws ApiOperationException Wenn ein Fehler während der Operation auftritt, wird dies Exception geworfen.
-	 */
-	private int versendeAnAlleEmpfaenger(final MailSmtpSession session, final String absenderEmail, final ReportingParameter parameter,
-			final Map<String, EmpfaengerEmailAnhaenge> mapEmpfaengerEmailAnhaenge, final List<String> listUebersprungen, final List<String> listFehler)
-			throws ApiOperationException {
-
-		int erfolgreich = 0;
-
-		for (final Map.Entry<String, EmpfaengerEmailAnhaenge> anhaengeEntry : mapEmpfaengerEmailAnhaenge.entrySet()) {
-			final String empfaengerEmail = anhaengeEntry.getKey();
-			final EmpfaengerEmailAnhaenge anhaenge = anhaengeEntry.getValue();
-
-			final String subject = buildEMailBetreff(parameter);
-			final String body = buildEMailHTMLBody(parameter);
-
-			final int maxAnhangGesamtgroesseInKB = parameter.eMailDaten.maxAnhangGesamtgroesseInKB;
-			final boolean istMaxAnhangGesamtgroesseInKBAbsolut = parameter.eMailDaten.istMaxAnhangGesamtgroesseInKBAbsolut;
-
-			if (maxAnhangGesamtgroesseInKB > 0) {
-				final List<List<Integer>> pakete = bildePaketeMitAnhaengenNachMaxGroesse(
-						anhaenge.attachmentsData, maxAnhangGesamtgroesseInKB, istMaxAnhangGesamtgroesseInKBAbsolut, empfaengerEmail, listFehler);
-
-				if (pakete.isEmpty()) {
-					listUebersprungen.add("- Für Empfänger " + empfaengerEmail + " konnten keine versendbaren Anhänge ermittelt werden. Er wird beim "
-							+ "Versand übersprungen.");
-					continue;
-				}
-
-				for (final List<Integer> paket : pakete) {
-					final List<byte[]> paketData = new ArrayList<>(paket.size());
-					final List<String> paketMime = new ArrayList<>(paket.size());
-					final List<String> paketNames = new ArrayList<>(paket.size());
-					for (final Integer index : paket) {
-						paketData.add(anhaenge.attachmentsData.get(index));
-						paketMime.add(anhaenge.attachmentsMime.get(index));
-						paketNames.add(anhaenge.attachmentsNames.get(index));
-					}
-					erfolgreich += sendeEmail(session, absenderEmail, empfaengerEmail, subject, body, paketData, paketMime, paketNames, listFehler) ? 1 : 0;
-				}
-			} else {
-				erfolgreich += sendeEmail(session, absenderEmail, empfaengerEmail, subject, body,
-						anhaenge.attachmentsData, anhaenge.attachmentsMime, anhaenge.attachmentsNames, listFehler) ? 1 : 0;
-			}
-		}
-		return erfolgreich;
-	}
 
 	/**
-	 * Bildet Pakete aus einer Liste von Anhängen basierend auf einer maximalen Paketgröße. Anhänge, die größer sind als die Paketgröße, können entweder
-	 * verworfen oder in separate Pakete aufgenommen werden, abhängig von der Konfiguration für absolute Maximalgrößen.
+	 * Bricht einen laufenden oder geplanten E-Mail-Job ab.
 	 *
-	 * @param attachmentsData Eine Liste von Byte-Arrays, wobei jedes Element die Daten eines Anhangs darstellt.
-	 *                        Diese Anhänge werden in Pakete gruppiert.
-	 * @param maxPaketgroesseInKB Die maximale Größe eines Pakets in Kilobyte. Wenn 0 oder negativ, werden keine Pakete gebildet.
-	 * @param istMaxPaketgroesseInKBAbsolut Gibt an, ob die maximale Paketgröße absolut ist (true, Anhänge, die zu groß sind,
-	 *                                      werden verworfen) oder flexibel (false, zu große Anhänge werden in eigenen Paketen gespeichert).
-	 * @param empfaengerEmail Die E-Mail-Adresse des Empfängers, die bei Fehlern in der Fehlerliste referenziert wird.
-	 * @param listFehler Eine Liste, in die Fehlerprotokolle eingetragen werden können, falls Anhänge verworfen oder nicht erfolgreich verarbeitet werden.
+	 * @param idJob   die Job-ID
 	 *
-	 * @return Eine Liste von Listen, wobei jede innere Liste die Indizes der Anhänge enthält, die in einem Paket gruppiert wurden.
-	 *         Die Reihenfolge der Indizes entspricht der ursprünglichen Reihenfolge der Anhänge in der Eingabeliste.
+	 * @return Response mit Ergebnis der Abbruch-Anforderung
 	 */
-	private static List<List<Integer>> bildePaketeMitAnhaengenNachMaxGroesse(final List<byte[]> attachmentsData, final int maxPaketgroesseInKB,
-			final boolean istMaxPaketgroesseInKBAbsolut, final String empfaengerEmail, final List<String> listFehler) {
-
-		// Die Liste für die Rückgabe führt nachher Listen von Indices von Anhängen aus der Anhänge-Liste. Jeder dieser List<Integer> enthält die Indices
-		// der Anhänge für eine E-Mail.
-		final List<List<Integer>> pakete = new ArrayList<>();
-
-		// Die Anhänge sind als Byte-Arrays abgelegt. Bestimme daher die max. Paketgröße in Bytes (1 Kilobyte entspricht 1 024 Byte).
-		final long maxPaketgroesseInByte = Math.max(0, (long) maxPaketgroesseInKB) * 1024L;
-
-		if ((attachmentsData == null) || attachmentsData.isEmpty() || (maxPaketgroesseInByte <= 0))
-			return pakete;
-
-		// Ein Array anlegen, das die Größen der Anhänge in Byte sammelt.
-		final int anzahlAnhaenge = attachmentsData.size();
-		final int[] groessenAnhaenge = new int[anzahlAnhaenge];
-		for (int i = 0; i < anzahlAnhaenge; i++) {
-			final byte[] anhangsdaten = attachmentsData.get(i);
-			groessenAnhaenge[i] = (anhangsdaten == null) ? 0 : anhangsdaten.length;
+	public Response cancelEmailJob(final long idJob) {
+		final var manager =
+				EmailJobManagerFactory.getInstance().getManagerByUser(reportingRepository.conn().getDBSchema(), reportingRepository.conn().getUser().getId());
+		final EmailJob job = manager.getJob(idJob);
+		if (job == null) {
+			final SimpleOperationResponse notFound = new SimpleOperationResponse();
+			notFound.success = false;
+			notFound.log.add("Job nicht gefunden: " + idJob);
+			return Response.status(Status.NOT_FOUND).type(MediaType.APPLICATION_JSON).entity(notFound).build();
 		}
-
-		// Erstelle eine Liste von Indices der Anhänge und sortiere dann die Liste der Indizes absteigend nach der Größe der Anhänge.
-		final List<Integer> indices = new ArrayList<>(anzahlAnhaenge);
-		for (int i = 0; i < anzahlAnhaenge; i++)
-			indices.add(i);
-		indices.sort((a, b) -> Integer.compare(groessenAnhaenge[b], groessenAnhaenge[a]));
-
-		// Fülle nun die Pakete nach dem Prinzip "First-Fit": Packe jeden Index in das erste Paket, das noch Platz hat, ansonsten eröffne ein neues Paket.
-		// Anhänge, die größer sind als die Paketgröße, werden in eigene Pakete gepackt, deren Größe damit größer ist als das Limit.
-		final List<Long> aktuellePaketgroessen = new ArrayList<>();
-		for (final int index : indices) {
-			final long groesseZumAktuellenIndex = groessenAnhaenge[index];
-
-			// Wenn die Größe über dem Limit liegt, wird ein eigenständiges Paket erstellt oder der Anhang verworfen, je nach Einstellung.
-			if (groesseZumAktuellenIndex > maxPaketgroesseInByte) {
-				if (istMaxPaketgroesseInKBAbsolut) {
-					// Die maximale Paketgröße darf nicht überschritten werden, verwerfe daher den Anhang und logge das Problem.
-					if (listFehler != null) {
-						listFehler.add("- Fehler: Anhang wurde nicht an " + empfaengerEmail + " versendet, da er das maximale Größenlimit des Anhangs "
-								+ "überschreitet.");
-					}
-				} else {
-					final List<Integer> einzelanhang = new ArrayList<>(1);
-					einzelanhang.add(index);
-					pakete.add(einzelanhang);
-					aktuellePaketgroessen.add(groesseZumAktuellenIndex);
-				}
-				continue;
-			}
-
-			// Versuche den aktuellen Anhang in einem bestehenden Paket zu platzieren.
-			boolean platziert = false;
-			for (int paket = 0; paket < pakete.size(); paket++) {
-				if ((aktuellePaketgroessen.get(paket) + groesseZumAktuellenIndex) <= maxPaketgroesseInByte) {
-					pakete.get(paket).add(index);
-					aktuellePaketgroessen.set(paket, aktuellePaketgroessen.get(paket) + groesseZumAktuellenIndex);
-					platziert = true;
-					break;
-				}
-			}
-
-			// Wenn der Anhang nicht in einem Paket platziert wurde, wird ein neues Paket erstellt.
-			if (!platziert) {
-				final List<Integer> newBin = new ArrayList<>();
-				newBin.add(index);
-				pakete.add(newBin);
-				aktuellePaketgroessen.add(groesseZumAktuellenIndex);
-			}
+		final boolean ok = manager.cancelJob(idJob);
+		final SimpleOperationResponse simple = new SimpleOperationResponse();
+		simple.success = ok;
+		if (!ok) {
+			simple.log.add("Abbruch fehlgeschlagen für Job: " + idJob);
+			return Response.status(Status.CONFLICT).type(MediaType.APPLICATION_JSON).entity(simple).build();
 		}
-		return pakete;
-	}
-
-	/**
-	 * Versendet eine E-Mail mit optionalen Anhängen und behandelt eventuelle Fehler.
-	 *
-	 * @param session Die SMTP-Session, die für den Versand der E-Mail verwendet wird.
-	 * @param absenderEmail Die E-Mail-Adresse des Absenders.
-	 * @param empfaengerEmail Die E-Mail-Adresse des Empfängers.
-	 * @param subject Der Betreff der E-Mail.
-	 * @param body Der Textinhalt der E-Mail.
-	 * @param attachmentsData Eine Liste mit den Byte-Daten der Anhänge.
-	 * @param attachmentsMime Eine Liste mit den MIME-Typen der Anhänge.
-	 * @param attachmentsNames Eine Liste mit den Dateinamen der Anhänge.
-	 * @param listFehler Eine Liste zur Speicherung von Fehlernachrichten, falls der Versand fehlschlägt.
-	 *
-	 * @return True, wenn die E-Mail erfolgreich versendet wurde, andernfalls false.
-	 */
-	private static boolean sendeEmail(final MailSmtpSession session, final String absenderEmail, final String empfaengerEmail, final String subject,
-			final String body, final List<byte[]> attachmentsData, final List<String> attachmentsMime, final List<String> attachmentsNames,
-			final List<String> listFehler) {
-		try {
-			session.sendTextMessageWithAttachments(absenderEmail, empfaengerEmail, subject, body, attachmentsData, attachmentsMime, attachmentsNames);
-		} catch (final Exception e) {
-			listFehler.add("- Fehler beim Versand an Empfänger " + empfaengerEmail + ": " + e.getMessage());
-			return false;
-		}
-		return true;
-	}
-
-	/**
-	 * Baut eine HTTP-Response basierend auf den Ergebnissen eines E-Mail-Versands.
-	 *
-	 * @param erfolgreich Die Anzahl der erfolgreich versendeten E-Mails.
-	 * @param listUebersprungen Eine Liste mit E-Mails, die übersprungen wurden.
-	 * @param listFehler Eine Liste mit E-Mails, bei deren Versand Fehler aufgetreten sind.
-	 *
-	 * @return Eine Response mit den entsprechenden Statusinformationen und Log-Einträgen.
-	 */
-	private Response baueResponse(final int erfolgreich, final List<String> listUebersprungen, final List<String> listFehler) {
-		final SimpleOperationResponse sop = new SimpleOperationResponse();
-		sop.success = listFehler.isEmpty();
-		sop.log = new ArrayList<>();
-		sop.log.add("E-Mail-Versand abgeschlossen. Erfolgreich: " + erfolgreich + ", Übersprungen: " + listUebersprungen.size() + ", Fehler: "
-				+ listFehler.size() + ".");
-		if (!listUebersprungen.isEmpty()) {
-			sop.log.add("Übersprungen beim E-Mail-Versand:");
-			sop.log.addAll(listUebersprungen);
-		}
-		if (!listFehler.isEmpty()) {
-			sop.log.add("Fehler während des E-Mail-Versands:");
-			sop.log.addAll(listFehler);
-		}
-		return Response.status(listFehler.isEmpty() ? Status.OK : Status.ACCEPTED).type(MediaType.APPLICATION_JSON).entity(sop).build();
+		if ((job.getStatus() == EmailJobStatus.COMPLETED) || (job.getStatus() == EmailJobStatus.FAILED) || (job.getStatus() == EmailJobStatus.CANCELED))
+			simple.log.add("Job war bereits beendet (Status=" + job.getStatus() + ").");
+		else
+			simple.log.add("Abbruch wurde veranlasst.");
+		return Response.ok(simple).type(MediaType.APPLICATION_JSON).build();
 	}
 
 
-	// ##### Hilfsmethoden
+
+	// ##### Hilfsmethoden #####
 
 	/**
 	 * Überprüft, ob die angegebene E-Mail-Adresse gültig ist.
 	 *
-	 * @param emailAddress Die E-Mail-Adresse, die überprüft werden soll.
+	 * @param emailAddress   die E-Mail-Adresse, die überprüft werden soll.
 	 *
-	 * @return True, wenn die E-Mail-Adresse gültig ist, andernfalls false.
+	 * @return true, wenn die E-Mail-Adresse gültig ist, andernfalls false.
 	 */
-	private boolean istValideEmail(final String emailAddress) {
+	private static boolean isValidEmail(final String emailAddress) {
 		if ((emailAddress == null) || emailAddress.isBlank())
 			return false;
 		try {
 			final InternetAddress address = new InternetAddress(emailAddress);
 			address.validate();
 			return true;
-		} catch (final AddressException addressException) {
+		} catch (@SuppressWarnings("unused") final AddressException addressException) {
 			return false;
 		}
 	}
@@ -579,20 +427,19 @@ public final class EmailFactory {
 	 * Validiert eine gegebene E-Mail-Adresse. Falls die E-Mail-Adresse gültig ist,
 	 * wird sie zurückgegeben, andernfalls wird ein leerer String zurückgegeben.
 	 *
-	 * @param emailAddress Die E-Mail-Adresse, die validiert werden soll. Kann {@code null} oder leer sein.
+	 * @param emailAddress   die E-Mail-Adresse, die validiert werden soll. Kann {@code null} oder leer sein.
 	 *
-	 * @return Die validierte E-Mail-Adresse, wenn sie gültig ist, ansonsten ein leerer String.
+	 * @return die validierte E-Mail-Adresse, wenn sie gültig ist, ansonsten ein leerer String.
 	 */
-	private String valideEmail(final String emailAddress) {
+	private static String validateEmail(final String emailAddress) {
 		if ((emailAddress == null) || emailAddress.isBlank())
 			return "";
 		// E-Mail-Adresse bearbeiten ...
 		final String resultEmailAddress = emailAddress.trim().toLowerCase();
 		// ... und dann validieren.
-		if (istValideEmail(resultEmailAddress))
+		if (isValidEmail(resultEmailAddress))
 			return resultEmailAddress;
-		else
-			return "";
+		return "";
 	}
 
 	/**
@@ -609,11 +456,10 @@ public final class EmailFactory {
 	private String buildEMailBetreff(final ReportingParameter parameter) throws ApiOperationException {
 		if ((parameter != null) && (parameter.eMailDaten != null) && (parameter.eMailDaten.betreff != null) && (!parameter.eMailDaten.betreff.isBlank())) {
 			return parameter.eMailDaten.betreff;
-		} else {
-			reportingRepository.logger().logLn(LogLevel.ERROR, 4,
-					"### FEHLER: Der E-Mail-Versand wurde abgebrochen, da kein Betreff für die E-Mail angegeben wurde.");
-			throw new ApiOperationException(Status.BAD_REQUEST, null, null, MediaType.APPLICATION_JSON);
 		}
+		reportingRepository.logger().logLn(LogLevel.ERROR, 4,
+				"### FEHLER: Der E-Mail-Versand wurde abgebrochen, da kein Betreff für die E-Mail angegeben wurde.");
+		throw new ApiOperationException(Status.BAD_REQUEST, null, null, MediaType.APPLICATION_JSON);
 	}
 
 	/**
@@ -621,11 +467,11 @@ public final class EmailFactory {
 	 * Der Text wird aus einem Plain-Text-Feld entnommen, normalisiert, in HTML umgewandelt und strukturiert.
 	 * Leerzeilen und Zeilenumbrüche werden dabei entsprechend formatiert.
 	 *
-	 * @param parameter die Parameter, die die E-Mail-Daten, einschließlich des Textes, enthalten
+	 * @param parameter Die Parameter, die die E-Mail-Daten, einschließlich des Textes, enthalten
 	 *
 	 * @return der generierte E-Mail-Text als HTML-String
 	 *
-	 * @throws ApiOperationException falls die übergebenen Parameter ungültig sind oder der Text fehlt
+	 * @throws ApiOperationException Falls die übergebenen Parameter ungültig sind oder der Text fehlt
 	 */
 	private String buildEMailHTMLBody(final ReportingParameter parameter) throws ApiOperationException {
 		if ((parameter != null) && (parameter.eMailDaten != null) && (parameter.eMailDaten.text != null) && (!parameter.eMailDaten.text.isBlank())) {
@@ -656,16 +502,15 @@ public final class EmailFactory {
 			html.append("</body></html>");
 
 			return html.toString();
-		} else {
-			reportingRepository.logger().logLn(LogLevel.ERROR, 4,
-					"### FEHLER: Der E-Mail-Versand wurde abgebrochen, da kein Text für die E-Mail angegeben wurde.");
-			throw new ApiOperationException(Status.BAD_REQUEST, null, null, MediaType.APPLICATION_JSON);
 		}
+		reportingRepository.logger().logLn(LogLevel.ERROR, 4,
+				"### FEHLER: Der E-Mail-Versand wurde abgebrochen, da kein Text für die E-Mail angegeben wurde.");
+		throw new ApiOperationException(Status.BAD_REQUEST, null, null, MediaType.APPLICATION_JSON);
 	}
 
 	/**
 	 * Normalisiert den gegebenen Text, indem Zeilenumbrüche vereinheitlicht, überflüssige Leerzeilen reduziert,
-	 * Tabs durch Leerzeichen ersetzt und abschließende Leerzeilen sicherstellt werden.
+	 * Tabs durch Leerzeichen ersetzt und abschließende Leerzeilen sichergestellt werden.
 	 * Der Rückgabewert enthält abschließend Zeilenumbrüche im CRLF-Format zur maximalen Kompatibilität.
 	 *
 	 * @param plainText Der ursprüngliche Text, der normalisiert werden soll.
@@ -737,81 +582,28 @@ public final class EmailFactory {
 		return stringBuilder.toString();
 	}
 
+
 	/**
-	 * Diese Klasse repräsentiert eine Sammlung von E-Mail-Anhängen, die einer bestimmten empfangenden Person zugeordnet sind. Sie dient dazu, die
-	 * Informationen des Empfängers sowie die zugehörigen Dateianhänge und deren Eigenschaften zu speichern und zu verwalten. Die Klasse steht im Kontext
-	 * einer internen Verarbeitung und ist daher als `private` und `static` deklariert.
+	 * Normalisiert die E-Mail-Adresse eines ReportingPerson-Objekts. Dabei wird versucht, zuerst die schulische E-Mail-Adresse zu verwenden. Ist diese
+	 * nicht vorhanden oder leer, wird stattdessen die private E-Mail-Adresse verwendet. Die gefundene E-Mail-Adresse wird getrimmt, in Kleinbuchstaben
+	 * umgewandelt und zurückgegeben. Falls keine gültige E-Mail-Adresse verfügbar ist, wird ein leerer String zurückgegeben.
+	 *
+	 * @param reportingPerson Das ReportingPerson-Objekt, dessen E-Mail-Adresse normalisiert werden soll.
+	 *          Wenn null übergeben wird, wird ein leerer String zurückgegeben.
+	 *
+	 * @return Die normalisierte E-Mail-Adresse als String. Wenn weder eine schulische noch eine private
+	 *         E-Mail-Adresse verfügbar ist, wird ein leerer String zurückgegeben.
 	 */
-	private static final class EmpfaengerEmailAnhaenge {
-
-		/**
-		 * Eine Instanz von ReportingPerson, die den Empfänger dieser Aggregation repräsentiert. Dieses Feld enthält Informationen über die Person, die die
-		 * zugehörigen Daten und Anhänge erhalten soll.
-		 * Die ReportingPerson wird verwendet, um den Empfänger eindeutig zu identifizieren und eventuell weitere, mit der E-Mail oder den Daten
-		 * zusammenhängende Informationen darzustellen.
-		 */
-		final ReportingPerson reportingPerson;
-
-		/**
-		 * Eine Liste, die die binären Daten von Dateianhängen speichert.
-		 * Jeder Eintrag in der Liste repräsentiert die Rohdaten eines Dateianhangs in Form eines Byte-Arrays.
-		 */
-		final List<byte[]> attachmentsData = new ArrayList<>();
-
-		/**
-		 * Eine Liste, die die MIME-Typen der Dateianhänge speichert.
-		 * Jeder Eintrag in der Liste repräsentiert den MIME-Typ (z. B. "application/pdf" oder "image/png") eines entsprechenden Dateianhangs.
-		 * Diese Liste wird verwendet, um die Art der angehängten Dateien zu kennzeichnen, damit der Empfänger die Dateien korrekt interpretieren oder
-		 * verarbeiten kann.
-		 */
-		final List<String> attachmentsMime = new ArrayList<>();
-
-		/**
-		 * Eine Liste, die die Namen der Dateianhänge speichert. Jeder Eintrag in der Liste repräsentiert den Dateinamen eines entsprechenden Anhangs.
-		 * Diese Liste wird verwendet, um die Namen der angehängten Dateien bereitzustellen, die dem Empfänger angezeigt werden sollen.
-		 */
-		final List<String> attachmentsNames = new ArrayList<>();
-
-		EmpfaengerEmailAnhaenge(final ReportingPerson reportingPerson) {
-			this.reportingPerson = reportingPerson;
-		}
-
-		/**
-		 * Normalisiert die E-Mail-Adresse eines ReportingPerson-Objekts. Dabei wird versucht, zuerst die schulische E-Mail-Adresse zu verwenden. Ist diese
-		 * nicht vorhanden oder leer, wird stattdessen die private E-Mail-Adresse verwendet. Die gefundene E-Mail-Adresse wird getrimmt, in Kleinbuchstaben
-		 * umgewandelt und zurückgegeben. Falls keine gültige E-Mail-Adresse verfügbar ist, wird ein leerer String zurückgegeben.
-		 *
-		 * @param reportingPerson Das ReportingPerson-Objekt, dessen E-Mail-Adresse normalisiert werden soll.
-		 *          Wenn null übergeben wird, wird ein leerer String zurückgegeben.
-		 *
-		 * @return Die normalisierte E-Mail-Adresse als String. Wenn weder eine schulische noch eine private
-		 *         E-Mail-Adresse verfügbar ist, wird ein leerer String zurückgegeben.
-		 */
-		private static String normalisierteEmail(final ReportingPerson reportingPerson) {
-			if (reportingPerson == null)
-				return "";
-			final String schulMail = reportingPerson.emailSchule();
-			if ((schulMail != null) && !schulMail.isBlank())
-				return schulMail.trim().toLowerCase();
-			final String privatMail = reportingPerson.emailPrivat();
-			if ((privatMail != null) && !privatMail.isBlank())
-				return privatMail.trim().toLowerCase();
+	private static String normalisierteEmail(final ReportingPerson reportingPerson) {
+		if (reportingPerson == null)
 			return "";
-		}
-
-		@Override
-		public int hashCode() {
-			return Objects.hash(normalisierteEmail(this.reportingPerson));
-		}
-
-		@Override
-		public boolean equals(final Object obj) {
-			if (this == obj)
-				return true;
-			if ((obj == null) || (getClass() != obj.getClass()))
-				return false;
-			final EmpfaengerEmailAnhaenge other = (EmpfaengerEmailAnhaenge) obj;
-			return Objects.equals(normalisierteEmail(this.reportingPerson), normalisierteEmail(other.reportingPerson));
-		}
+		final String schulMail = reportingPerson.emailSchule();
+		if ((schulMail != null) && !schulMail.isBlank())
+			return schulMail.trim().toLowerCase();
+		final String privatMail = reportingPerson.emailPrivat();
+		if ((privatMail != null) && !privatMail.isBlank())
+			return privatMail.trim().toLowerCase();
+		return "";
 	}
+
 }
