@@ -9,10 +9,10 @@ SVWS Docker Compose Deployment
    ```bash
    docker compose -f deployment/docker/docker-compose.svws.yml up -d
    ```
-3. Nach dem Start ist der Server über `http://localhost:18080` bzw. `https://localhost:18443` erreichbar (Ports konfigurierbar).
+3. Nach dem Start ist der Server über `http://localhost:8080` bzw. `https://localhost:8443` erreichbar (Ports konfigurierbar).
 
 Hinweise:
 - Passe die Passwörter/Portwerte vor dem ersten Start an.
-- Standard-Host-Ports sind 18080/18443, um Konflikte zu vermeiden. Überschreibe sie bei Bedarf per `SVWS_HTTP_PORT` und `SVWS_HTTPS_PORT`.
+- Standard-Host-Ports sind 8080/8443. Falls diese bereits belegt sind, überschreibe sie per `SVWS_HTTP_PORT` und `SVWS_HTTPS_PORT` (z. B. 18080/18443).
 - Der Keystore wird beim ersten Start automatisch im Volume `svws-keystore` erzeugt.
 - Für ein komplettes Zurücksetzen: `docker compose -f deployment/docker/docker-compose.svws.yml down -v`
