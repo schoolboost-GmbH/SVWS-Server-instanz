@@ -1,4 +1,3 @@
-import { AttributMitAuswahl } from '../../../../../core/src/core/utils/AttributMitAuswahl';
 import type { StundenplanKlasse } from '../../../../../core/src/core/data/stundenplan/StundenplanKlasse';
 import type { Schulform } from '../../../../../core/src/asd/types/schule/Schulform';
 import { ArrayList } from '../../../../../core/src/java/util/ArrayList';
@@ -7,6 +6,7 @@ import type { StundenplanKurs } from '../../../../../core/src/core/data/stundenp
 import type { StundenplanZeitraster } from '../../../../../core/src/core/data/stundenplan/StundenplanZeitraster';
 import { StundenplanUnterrichtUtils } from '../../../../../core/src/core/utils/stundenplan/StundenplanUnterrichtUtils';
 import { AuswahlManager } from '../../AuswahlManager';
+import { AttributMitAuswahl } from '../../AttributMitAuswahl';
 import type { JavaFunction } from '../../../../../core/src/java/util/function/JavaFunction';
 import type { StundenplanSchueler } from '../../../../../core/src/core/data/stundenplan/StundenplanSchueler';
 import type { StundenplanRaum } from '../../../../../core/src/core/data/stundenplan/StundenplanRaum';

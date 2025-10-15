@@ -17,10 +17,10 @@ import { KAOAMerkmal } from '../../../../../core/src/asd/types/kaoa/KAOAMerkmal'
 import { IllegalArgumentException } from '../../../../../core/src/java/lang/IllegalArgumentException';
 import { HashSet } from '../../../../../core/src/java/util/HashSet';
 import { Pair } from '../../../../../core/src/asd/adt/Pair';
-import { AttributMitAuswahl } from '../../../../../core/src/core/utils/AttributMitAuswahl';
 import { KAOAAnschlussoptionen } from '../../../../../core/src/asd/types/kaoa/KAOAAnschlussoptionen';
 import type { SchuelerLernabschnittListeEintrag } from '../../../../../core/src/core/data/schueler/SchuelerLernabschnittListeEintrag';
 import { AuswahlManager } from '../../AuswahlManager';
+import { AttributMitAuswahl } from '../../AttributMitAuswahl';
 import type { KAOABerufsfeld } from '../../../../../core/src/asd/types/kaoa/KAOABerufsfeld';
 import { JavaLong } from '../../../../../core/src/java/lang/JavaLong';
 import type { KAOAAnschlussoptionenKatalogEintrag } from '../../../../../core/src/asd/data/kaoa/KAOAAnschlussoptionenKatalogEintrag';
@@ -95,8 +95,6 @@ export class SchuelerKAoAManager extends AuswahlManager<number, SchuelerKAoADate
 
 	private static readonly _comparatorEbene4: Comparator<KAOAEbene4> = { compare: (a: KAOAEbene4, b: KAOAEbene4) => a.ordinal() - b.ordinal() };
 
-	private static readonly _comparatorBerufsfelder: Comparator<KAOABerufsfeld> = { compare: (a: KAOABerufsfeld, b: KAOABerufsfeld) => a.ordinal() - b.ordinal() };
-
 	/**
 	 * Das Filter-Attribut für die Kategorien
 	 */
@@ -137,21 +135,22 @@ export class SchuelerKAoAManager extends AuswahlManager<number, SchuelerKAoADate
 	/**
 	 * Erstellt einen neuen Manager mit den übergebenen KAoA Daten
 	 *
-	 * @param schuljahresabschnitt            Der Schuljahresabschnitt, auf den sich dien KAoA-Daten bezieht
+	 * @param schuljahresabschnitt            Der Schuljahresabschnitt, auf den sich die KAoA-Daten beziehen
 	 * @param schuljahresabschnittSchule      Die Liste der Schuljahresabschnitte
 	 * @param schuljahresabschnitte           Der Schuljahresabschnitt, in welchem sich die Schule aktuell befindet.
 	 * @param schulform                       Die Schulform der Schule
 	 * @param schuelerKAoA                    KAoA Daten des Schülers
-	 * @param lernabschnitteAuswahl    Lernabschnittsdaten des Schülers
+	 * @param lernabschnitteAuswahl           die Lernabschnittsdaten des Schülers
 	 */
 	public constructor(schuljahresabschnitt: number, schuljahresabschnittSchule: number, schuljahresabschnitte: List<Schuljahresabschnitt>, schulform: Schulform | null, schuelerKAoA: List<SchuelerKAoADaten>, lernabschnitteAuswahl: List<SchuelerLernabschnittListeEintrag>) {
 		super(schuljahresabschnitt, schuljahresabschnittSchule, schuljahresabschnitte, schulform, schuelerKAoA, SchuelerKAoAManager.comparator, SchuelerKAoAManager._kaoaToId, SchuelerKAoAManager._kaoaToId, Arrays.asList(new Pair("schuljahr", true), new Pair("kategorie", true)));
-		this._kategorien = new AttributMitAuswahl(Arrays.asList(...KAOAKategorie.values()), this._kategorieToId, SchuelerKAoAManager._comparatorKategorie, this._eventHandlerFilterChanged);
-		this._merkmale = new AttributMitAuswahl(Arrays.asList(...KAOAMerkmal.values()), this._merkmalToId, SchuelerKAoAManager._comparatorMerkmal, this._eventHandlerFilterChanged);
-		this._zusatzmerkmale = new AttributMitAuswahl(Arrays.asList(...KAOAZusatzmerkmal.values()), this._zusatzmerkmalToId, SchuelerKAoAManager._comparatorZusatzmerkmal, this._eventHandlerFilterChanged);
-		this._anschlussoptionen = new AttributMitAuswahl(Arrays.asList(...KAOAAnschlussoptionen.values()), this._anschlussoptionToId, SchuelerKAoAManager._comparatorAnschlussoptionen, this._eventHandlerFilterChanged);
+		const schuljahr = super.getSchuljahresabschnittAuswahl()?.schuljahr ?? super.getSchuljahr();
+		this._kategorien = new AttributMitAuswahl(Arrays.asList(...KAOAKategorie.data().getWerteBySchuljahr(schuljahr)), this._kategorieToId, SchuelerKAoAManager._comparatorKategorie, this._eventHandlerFilterChanged);
+		this._merkmale = new AttributMitAuswahl(Arrays.asList(...KAOAMerkmal.data().getWerteBySchuljahr(schuljahr)), this._merkmalToId, SchuelerKAoAManager._comparatorMerkmal, this._eventHandlerFilterChanged);
+		this._zusatzmerkmale = new AttributMitAuswahl(Arrays.asList(...KAOAZusatzmerkmal.data().getWerteBySchuljahr(schuljahr)), this._zusatzmerkmalToId, SchuelerKAoAManager._comparatorZusatzmerkmal, this._eventHandlerFilterChanged);
+		this._anschlussoptionen = new AttributMitAuswahl(Arrays.asList(...KAOAAnschlussoptionen.data().getWerteBySchuljahr(schuljahr)), this._anschlussoptionToId, SchuelerKAoAManager._comparatorAnschlussoptionen, this._eventHandlerFilterChanged);
 		this._lernabschnitteAuswahl = lernabschnitteAuswahl;
-		this._ebene4 = new AttributMitAuswahl(Arrays.asList(...KAOAEbene4.values()), this._ebene4ToId, SchuelerKAoAManager._comparatorEbene4, this._eventHandlerFilterChanged);
+		this._ebene4 = new AttributMitAuswahl(Arrays.asList(...KAOAEbene4.data().getWerteBySchuljahr(schuljahr)), this._ebene4ToId, SchuelerKAoAManager._comparatorEbene4, this._eventHandlerFilterChanged);
 		this.processSchuljahresabschnitte();
 	}
 

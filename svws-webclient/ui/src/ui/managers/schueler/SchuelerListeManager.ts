@@ -22,12 +22,12 @@ import type { SchulgliederungKatalogEintrag } from '../../../../../core/src/asd/
 import type { List } from '../../../../../core/src/java/util/List';
 import { IllegalArgumentException } from '../../../../../core/src/java/lang/IllegalArgumentException';
 import { Pair } from '../../../../../core/src/asd/adt/Pair';
-import { AttributMitAuswahl } from '../../../../../core/src/core/utils/AttributMitAuswahl';
 import type { SchuelerStammdaten } from '../../../../../core/src/asd/data/schueler/SchuelerStammdaten';
 import { JahrgaengeListeManager } from '../kataloge/jahrgaenge/JahrgaengeListeManager';
 import { GostAbiturjahrUtils } from '../../../../../core/src/core/utils/gost/GostAbiturjahrUtils';
 import type { GostJahrgang } from '../../../../../core/src/core/data/gost/GostJahrgang';
 import { AuswahlManager } from '../../AuswahlManager';
+import { AttributMitAuswahl } from '../../AttributMitAuswahl';
 import { JavaInteger } from '../../../../../core/src/java/lang/JavaInteger';
 import { LehrerUtils } from '../../../../../core/src/core/utils/lehrer/LehrerUtils';
 import { JavaLong } from '../../../../../core/src/java/lang/JavaLong';

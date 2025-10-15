@@ -1,12 +1,12 @@
 import { JavaObject } from '../../../../../core/src/java/lang/JavaObject';
 import type { JavaSet } from '../../../../../core/src/java/util/JavaSet';
-import { AttributMitAuswahl } from '../../../../../core/src/core/utils/AttributMitAuswahl';
 import type { Schulform } from '../../../../../core/src/asd/types/schule/Schulform';
 import { JavaString } from '../../../../../core/src/java/lang/JavaString';
 import { DeveloperNotificationException } from '../../../../../core/src/core/exceptions/DeveloperNotificationException';
 import type { SchuelerEinwilligungsartenZusammenfassung } from '../../../../../core/src/core/data/schueler/SchuelerEinwilligungsartenZusammenfassung';
 import type { Comparator } from '../../../../../core/src/java/util/Comparator';
 import { AuswahlManager } from '../../AuswahlManager';
+import { AttributMitAuswahl } from '../../AttributMitAuswahl';
 import { JavaInteger } from '../../../../../core/src/java/lang/JavaInteger';
 import type { JavaFunction } from '../../../../../core/src/java/util/function/JavaFunction';
 import type { Einwilligungsart } from '../../../../../core/src/core/data/schule/Einwilligungsart';

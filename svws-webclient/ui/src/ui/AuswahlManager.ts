@@ -1,5 +1,4 @@
 import { JavaObject } from '../../../core/src/java/lang/JavaObject';
-import { AttributMitAuswahl } from '../../../core/src/core/utils/AttributMitAuswahl';
 import { HashMap } from '../../../core/src/java/util/HashMap';
 import type { Schulform } from '../../../core/src/asd/types/schule/Schulform';
 import { ArrayList } from '../../../core/src/java/util/ArrayList';
@@ -15,6 +14,15 @@ import type { Schuljahresabschnitt } from '../../../core/src/asd/data/schule/Sch
 import type { JavaMap } from '../../../core/src/java/util/JavaMap';
 import { Pair } from '../../../core/src/asd/adt/Pair';
 
+import { AttributMitAuswahl } from './AttributMitAuswahl';
+
+/**
+ * Ein abstrakter Auswahl-Manager, welcher für die Auswahllisten im Client verwendet wird
+ *
+ * @param <TID>        der Typ der ID des Auswahl-Elemente
+ * @param <TAuswahl>   der Typ der Auswahl-Einträge
+ * @param <TDaten>     der Typ der mit der aktuellen Auswahl verknüpften Daten
+ */
 export abstract class AuswahlManager<TID, TAuswahl, TDaten> extends JavaObject {
 
 	/**

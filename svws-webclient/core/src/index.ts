@@ -758,7 +758,6 @@ export { Pruefungsordnung } from './core/types/schule/Pruefungsordnung';
 export { Reformpaedagogik } from './core/types/schule/Reformpaedagogik';
 export { AdressenUtils } from './core/utils/AdressenUtils';
 export { ArrayUtils } from './core/utils/ArrayUtils';
-export { AttributMitAuswahl } from './core/utils/AttributMitAuswahl';
 export { BlockungsUtils } from './core/utils/BlockungsUtils';
 export { CollectionUtils } from './core/utils/CollectionUtils';
 export { DTOUtils } from './core/utils/DTOUtils';

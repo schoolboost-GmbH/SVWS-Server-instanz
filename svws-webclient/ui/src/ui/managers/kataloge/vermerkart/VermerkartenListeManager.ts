@@ -1,7 +1,6 @@
 import { JavaObject } from '../../../../../../core/src/java/lang/JavaObject';
 import type { JavaSet } from '../../../../../../core/src/java/util/JavaSet';
 import type { VermerkartEintrag } from '../../../../../../core/src/core/data/schule/VermerkartEintrag';
-import { AttributMitAuswahl } from '../../../../../../core/src/core/utils/AttributMitAuswahl';
 import type { Schulform } from '../../../../../../core/src/asd/types/schule/Schulform';
 import { SchuelerUtils } from '../../../../../../core/src/core/utils/schueler/SchuelerUtils';
 import { JavaString } from '../../../../../../core/src/java/lang/JavaString';
@@ -9,6 +8,7 @@ import { DeveloperNotificationException } from '../../../../../../core/src/core/
 import type { SchuelerVermerkartZusammenfassung } from '../../../../../../core/src/core/data/schueler/SchuelerVermerkartZusammenfassung';
 import type { Comparator } from '../../../../../../core/src/java/util/Comparator';
 import { AuswahlManager } from '../../../AuswahlManager';
+import { AttributMitAuswahl } from '../../../AttributMitAuswahl';
 import { JavaInteger } from '../../../../../../core/src/java/lang/JavaInteger';
 import type { JavaFunction } from '../../../../../../core/src/java/util/function/JavaFunction';
 import type { Runnable } from '../../../../../../core/src/java/lang/Runnable';
