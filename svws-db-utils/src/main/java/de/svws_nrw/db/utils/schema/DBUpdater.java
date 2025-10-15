@@ -1,6 +1,7 @@
 package de.svws_nrw.db.utils.schema;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import de.svws_nrw.config.SVWSKonfiguration;
 import de.svws_nrw.core.logger.Logger;
@@ -43,7 +44,7 @@ public class DBUpdater {
 	 * Erzeugt einen neuen {@link DBUpdater}.
 	 *
 	 * @param schemaManager   der Schema-Manager, welcher verwendet wird
-	 * @param returnOnError   gibt an, ob Operatioen bei Einzelfehlern abgebrochen werden sollen
+	 * @param returnOnError   gibt an, ob Operationen bei Einzelfehlern abgebrochen werden sollen
 	 */
 	DBUpdater(final DBSchemaManager schemaManager, final boolean returnOnError) {
 		this.schemaManager = schemaManager;
@@ -522,6 +523,8 @@ public class DBUpdater {
 					break;
 			}
 		}
+		final String names = tabs.stream().map(t -> String.format("\"%s\"", t.name())).collect(Collectors.joining(","));
+		conn.transactionNativeUpdate("DELETE FROM Schema_AutoInkremente WHERE NameTabelle IN (" + names + ")");
 		logger.modifyIndent(-2);
 		return result;
 	}
@@ -631,11 +634,11 @@ public class DBUpdater {
 		}
 		final List<View> views = DBSchemaViews.getInstance().getViewsCreated(revision);
 		if ((views == null) || (views.isEmpty())) {
-			logger.logLn(0, "0 Tabellen");
+			logger.logLn(0, "0 Views");
 			return true;
 		}
 		boolean result = true;
-		logger.logLn(0, views.size() + " Tabellen...");
+		logger.logLn(0, views.size() + " Views...");
 		logger.modifyIndent(2);
 		for (final View view : views) {
 			final String sql = view.getSQLCreate(conn.getDBDriver());

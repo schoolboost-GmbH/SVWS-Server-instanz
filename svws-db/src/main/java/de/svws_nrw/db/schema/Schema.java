@@ -1,9 +1,7 @@
 package de.svws_nrw.db.schema;
 
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 import de.svws_nrw.db.schema.tabellen.Tabelle_AllgAdrAnsprechpartner;
 import de.svws_nrw.db.schema.tabellen.Tabelle_AllgemeineMerkmaleKatalog_Keys;
@@ -293,8 +291,8 @@ public final class Schema {
 	/** Das Java-Unterpaket, welches die Klassen für die generierten DTOs für den Dantebankzugriff beinhaltet */
 	public static final String javaDTOPackage = "dto";
 
-	/** Eine Map von dem Namen der Tabelle auf die einzelnen Tabellen. */
-	private static final Map<String, SchemaTabelle> _tabellen = new LinkedHashMap<>();
+	/** Eine Liste der einzelnen Tabellen. */
+	private static final List<SchemaTabelle> _tabellen = new ArrayList<>();
 
 	/** Die Liste mit allen Tabellen aus allen Schema-Revisionen */
 	private static List<SchemaTabelle> _alleTabellen = null;
@@ -309,7 +307,7 @@ public final class Schema {
 	 * @return die Instanz der Tabellen-Definitions-Klasse
 	 */
 	public static <T extends SchemaTabelle> T add(final T t) {
-		_tabellen.put(t.name(), t);
+		_tabellen.add(t);
 		return t;
 	}
 
@@ -1193,7 +1191,7 @@ public final class Schema {
 	 * @return eine Liste mit den definierten Tabellen
 	 */
 	public static @NotNull List<SchemaTabelle> getTabellen(final long rev) {
-		return _tabellen.values().stream()
+		return _tabellen.stream()
 				.filter(t -> ((rev == -1) && (t.veraltet().revision == -1))
 						|| ((rev != -1) && (rev >= t.revision().revision) && ((t.veraltet().revision == -1) || (rev < t.veraltet().revision))))
 				.toList();
@@ -1207,7 +1205,7 @@ public final class Schema {
 	 */
 	public static @NotNull List<SchemaTabelle> tabellen() {
 		if (_alleTabellen == null)
-			_alleTabellen = new ArrayList<>(_tabellen.values());
+			_alleTabellen = new ArrayList<>(_tabellen);
 		return _alleTabellen;
 	}
 
