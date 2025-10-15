@@ -201,7 +201,7 @@ public class SchemaTabelleFremdschluessel {
 	 */
 	public String getSQL() {
 		return "CONSTRAINT " + this.name() + " FOREIGN KEY ("
-				+ getSpalten().stream().map(spalte -> spalte.name()).collect(Collectors.joining(", "))
+				+ _spalten.stream().map(spalte -> spalte.name()).collect(Collectors.joining(", "))
 				+ ") REFERENCES " + this._tabelleReferenziert.name() + '('
 				+ _spaltenReferenziert.stream().map(spalte -> spalte.name()).collect(Collectors.joining(", "))
 				+ ")"
