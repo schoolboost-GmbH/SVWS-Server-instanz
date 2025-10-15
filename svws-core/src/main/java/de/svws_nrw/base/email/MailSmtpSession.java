@@ -73,7 +73,10 @@ public class MailSmtpSession {
 		try {
 			if (addresses == null)
 				return new InternetAddress[0];
-			final String[] arrayAddresses = addresses.split(",");
+			final String tmp = addresses.trim().replace(" ", "");
+			if (tmp.isBlank())
+				return new InternetAddress[0];
+			final String[] arrayAddresses = tmp.split(",");
 			final Pattern p = Pattern.compile("(.*)<([^<>]*)>\\s*");
 			final InternetAddress[] result = new InternetAddress[arrayAddresses.length];
 			for (int i = 0; i < arrayAddresses.length; i++) {
