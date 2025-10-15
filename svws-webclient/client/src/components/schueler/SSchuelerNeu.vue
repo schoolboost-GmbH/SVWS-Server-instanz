@@ -1,11 +1,20 @@
 <template>
-	<div class="page page-grid-cards">
+	<div class="page page-grid-cards" v-if="keineKlassenVorhanden">
+		<div class="col-span-1 font-bold">
+			Neue Schüler können erst angelegt werden, wenn Klassen vorhanden sind.
+			Legen Sie bitte vor der Eingabe von Schülern die benötigten Klassen an.
+			<div class="mt-7 flex flex-row gap-4 justify-end">
+				<svws-ui-button type="secondary" @click="cancel">Abbrechen</svws-ui-button>
+			</div>
+		</div>
+	</div>
+	<div class="page page-grid-cards" v-else>
 		<svws-ui-content-card title="Anmeldedaten" class="col-span-full">
 			<svws-ui-input-wrapper :grid="4">
 				<ui-select label="Status" v-model="selectedStatus" :manager="statusManager" :removable="false" :readonly="true" />
-				<ui-select label="Schuljahresabschnitt" v-model="schuljahresabschnitt" :manager="schuljahresabschnittsManager" required />
-				<ui-select label="Jahrgang" v-model="jahrgang" :manager="jahrgangManager" :readonly="(data.schuljahresabschnitt <= 0)" required />
-				<ui-select label="Klasse" v-model="klasse" :manager="klassenManager" :readonly="((data.schuljahresabschnitt <= 0) || ((data.jahrgangID === null) || (data.jahrgangID <= 0)))" required />
+				<ui-select label="Schuljahresabschnitt" v-model="schuljahresabschnitt" :manager="schuljahresabschnittsManager" :readonly="routedFromSchnelleingabe" required />
+				<ui-select label="Jahrgang" v-model="jahrgang" :manager="jahrgangManager" :readonly="(data.schuljahresabschnitt <= 0) || (routedFromSchnelleingabe)" required />
+				<ui-select label="Klasse" v-model="klasse" :manager="klassenManager" :readonly="((data.schuljahresabschnitt <= 0) || ((data.jahrgangID === null) || (data.jahrgangID <= 0)) || (routedFromSchnelleingabe))" required />
 				<svws-ui-spacing />
 				<ui-select label="Einschulungsart" v-model="einschulungsart" :manager="einschulungsartManager" :removable="true" v-if="schulenMitPrimaerstufe" />
 				<svws-ui-text-input placeholder="Anmeldedatum" type="date" v-model="data.anmeldedatum" :valid="istAnmeldedatumGueltig" />
@@ -66,6 +75,8 @@
 	const dataSchulbesuchsdaten = ref(new SchuelerSchulbesuchsdaten());
 	const isLoading = ref<boolean>(false);
 
+	const keineKlassenVorhanden = computed(() => props.schuelerListeManager().klassen.list().isEmpty());
+
 	watch(() => data.value, async() => {
 		if (isLoading.value)
 			return;
@@ -73,7 +84,7 @@
 	}, {immediate: false, deep: true});
 
 	const schulenMitPrimaerstufe = computed(() => {
-		const erlaubteSchulformen = [ Schulform.G, Schulform.FW, Schulform.WF, Schulform.GM, Schulform.KS, Schulform.S, Schulform.GE, Schulform.V];
+		const erlaubteSchulformen = [Schulform.G, Schulform.FW, Schulform.WF, Schulform.GM, Schulform.KS, Schulform.S, Schulform.GE, Schulform.V];
 		return erlaubteSchulformen.includes(props.schulform);
 	});
 
@@ -328,6 +339,7 @@
 	}
 
 	const initialeSchuelerDaten = computed(() => props.initialeSchuelerDaten() ?? null);
+	const routedFromSchnelleingabe = computed(() => initialeSchuelerDaten.value !== null);
 
 	watch(initialeSchuelerDaten, async (val) => {
 		if (val === null)
