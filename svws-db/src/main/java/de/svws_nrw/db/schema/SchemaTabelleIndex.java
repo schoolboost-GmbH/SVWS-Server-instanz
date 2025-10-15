@@ -146,7 +146,7 @@ public class SchemaTabelleIndex {
 	 */
 	public String getSQL() {
 		return "CREATE INDEX " + this._name + " ON " + this._tabelle.name() + '('
-				+ getSpalten().stream().map(spalte -> spalte.name()).collect(Collectors.joining(", "))
+				+ _spalten.stream().map(spalte -> spalte.name()).collect(Collectors.joining(", "))
 				+ ");";
 	}
 

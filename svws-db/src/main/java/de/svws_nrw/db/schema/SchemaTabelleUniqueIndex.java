@@ -145,7 +145,7 @@ public class SchemaTabelleUniqueIndex {
 	 */
 	public String getSQL() {
 		return "CONSTRAINT " + this._name + " UNIQUE ("
-				+ getSpalten().stream().map(spalte -> spalte.name()).collect(Collectors.joining(", "))
+				+ _spalten.stream().map(spalte -> spalte.name()).collect(Collectors.joining(", "))
 				+ ")";
 	}
 

@@ -76,13 +76,13 @@ public class DBUpdater {
 			if (!dropIndices(conn, neue_revision))
 				throw new DBException("Fehler beim Verwerfen der Indizes");
 
-			// 3. Update-Schritt: DROP_UNIQUE_CONSTRAINTS
-			if (!dropUniqueConstraints(conn, neue_revision))
-				throw new DBException("Fehler beim Verwerfen der Unique-Constraints");
-
-			// 4. Update-Schritt: DROP_FOREIGN_KEYS
+			// 3. Update-Schritt: DROP_FOREIGN_KEYS
 			if (!dropForeignKeys(conn, neue_revision))
 				throw new DBException("Fehler beim Verwerfen der Fremdschlüssel");
+
+			// 4. Update-Schritt: DROP_UNIQUE_CONSTRAINTS
+			if (!dropUniqueConstraints(conn, neue_revision))
+				throw new DBException("Fehler beim Verwerfen der Unique-Constraints");
 
 			// 5. Update-Schritt: CREATE_TABLES
 			if (!createNewTables(conn, neue_revision))
@@ -100,17 +100,17 @@ public class DBUpdater {
 			if (!executeManualSQLCommands(conn, neue_revision))
 				throw new DBException("Fehler beim Ausführen der manuellen SQL-Befehle");
 
-			// 9. Update-Schritt: ADD_FOREIGN_KEYS
-			if (!addNewForeignKeys(conn, neue_revision))
-				throw new DBException("Fehler beim Hinzufügen der neuen Fremdschlüssel");
-
-			// 10. Update-Schritt: ADD_UNIQUE_CONSTRAINTS
+			// 9. Update-Schritt: ADD_UNIQUE_CONSTRAINTS
 			if (!addNewUniqueConstraints(conn, neue_revision))
 				throw new DBException("Fehler beim Hinzufügen der neuen Unique-Constraints");
 
-			// 11. Update-Schritt: ADD_INDICES
+			// 10. Update-Schritt: ADD_INDICES
 			if (!addNewIndices(conn, neue_revision))
 				throw new DBException("Fehler beim Hinzufügen der neuen Indizes");
+
+			// 11. Update-Schritt: ADD_FOREIGN_KEYS
+			if (!addNewForeignKeys(conn, neue_revision))
+				throw new DBException("Fehler beim Hinzufügen der neuen Fremdschlüssel");
 
 			// 12. Update-Schritt: ADD_TRIGGER
 			if (!createNewTrigger(conn, neue_revision))
