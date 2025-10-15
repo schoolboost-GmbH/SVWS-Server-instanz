@@ -9,7 +9,7 @@ import { RouteSchuleMenuGroup } from "../../RouteSchuleMenuGroup";
 import { RouteAuswahlNode } from "~/router/RouteAuswahlNode";
 import { routeReligionenGruppenprozesse } from "~/router/apps/schule/allgemein/religionen/RouteReligionenGruppenprozesse";
 import { routeReligionenNeu } from "~/router/apps/schule/allgemein/religionen/RouteReligionenNeu";
-import { routeApp} from "~/router/apps/RouteApp";
+import { routeApp } from "~/router/apps/RouteApp";
 import type { ReligionenAuswahlProps } from "~/components/schule/allgemein/religionen/SReligionenAuswahlPops";
 
 const SReligionenAuswahl = () => import("~/components/schule/allgemein/religionen/SReligionenAuswahl.vue");
@@ -18,7 +18,7 @@ const SReligionenApp = () => import("~/components/schule/allgemein/religionen/SR
 export class RouteReligionen extends RouteAuswahlNode<ReligionenListeManager, RouteDataReligionen, RouteApp> {
 
 	public constructor() {
-		super(Schulform.values(), [ BenutzerKompetenz.KATALOG_EINTRAEGE_ANSEHEN, BenutzerKompetenz.KATALOG_EINTRAEGE_AENDERN ], "schule.religionen",
+		super(Schulform.values(), [BenutzerKompetenz.KATALOG_EINTRAEGE_ANSEHEN, BenutzerKompetenz.KATALOG_EINTRAEGE_AENDERN], "schule.religionen",
 			"schule/religion/:id(\\d+)?", SReligionenApp, SReligionenAuswahl, new RouteDataReligionen());
 		super.mode = ServerMode.STABLE;
 		super.text = "Religionen";
@@ -33,7 +33,7 @@ export class RouteReligionen extends RouteAuswahlNode<ReligionenListeManager, Ro
 		super.getAuswahlListProps = (props) => (<ReligionenAuswahlProps> {
 			...props,
 			schuljahresabschnittsauswahl: () => routeApp.data.getSchuljahresabschnittsauswahl(false),
-		})
+		});
 	}
 
 	protected doUpdateIfTarget = async (to: RouteNode<any, any>, to_params: RouteParams, from: RouteNode<any, any> | undefined) => {

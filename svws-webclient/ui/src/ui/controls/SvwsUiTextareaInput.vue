@@ -77,7 +77,7 @@
 		span: undefined,
 		headless: false,
 		isContentFocusField: false,
-	})
+	});
 
 	const emit = defineEmits<{
 		"update:modelValue": [value: string | null];
@@ -88,7 +88,7 @@
 
 	defineOptions({
 		inheritAttrs: false,
-	})
+	});
 
 	// eslint-disable-next-line vue/no-setup-props-reactivity-loss
 	const data = ref<string | null>(props.modelValue);
@@ -114,7 +114,7 @@
 		if (tmpIsValid)
 			tmpIsValid = props.valid(data.value);
 		return tmpIsValid;
-	})
+	});
 
 	function updateData(value: string | null) {
 		if (data.value !== value) {
@@ -127,12 +127,12 @@
 		if ((props.maxLen === undefined) || (data.value === null))
 			return true;
 		return data.value.toLocaleString().length <= props.maxLen;
-	})
+	});
 
 	watch(data, () => {
 		if (textarea.value !== null) {
 			textarea.value.style.height = 'auto';
-			textarea.value.style.height = `${textarea.value.scrollHeight+12}px`;
+			textarea.value.style.height = `${textarea.value.scrollHeight + 12}px`;
 		}
 	}, { immediate: true });
 

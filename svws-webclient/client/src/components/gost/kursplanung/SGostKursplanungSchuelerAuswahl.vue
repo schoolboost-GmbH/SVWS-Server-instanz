@@ -198,7 +198,7 @@
 
 	const schuljahr = computed<number>(() => props.getDatenmanager().faecherManager().getSchuljahr());
 
-	const fach = computed<GostFach|undefined>({
+	const fach = computed<GostFach | undefined>({
 		get: () => {
 			for (const fach of props.faecherManager.faecher())
 				if (fach.id === props.schuelerFilter().fach)
@@ -206,14 +206,14 @@
 			return undefined;
 		},
 		set: (value) => props.schuelerFilter().fach = value?.id,
-	})
+	});
 
 	const selected = computed<Schueler | undefined>({
 		get: () => {
 			if (props.schueler !== undefined && props.schuelerFilter().filtered.value.includes(props.schueler))
-				return props.schueler
+				return props.schueler;
 			if (props.schuelerFilter().filtered.value.length > 0) {
-				void props.setSchueler(props.schuelerFilter().filtered.value[0])
+				void props.setSchueler(props.schuelerFilter().filtered.value[0]);
 			}
 			return undefined;
 		},
@@ -238,14 +238,14 @@
 			return '';
 		const anzahl = props.getErgebnismanager().getOfKursAnzahlSchuelerDummy(kurs.id);
 		return anzahl > 0 ? `+${anzahl} weitere` : '';
-	})
+	});
 
 
 	function istSchriftlich(id: number) {
 		const kurs = props.schuelerFilter().kurs;
 		if ((fach.value === undefined) && (kurs === undefined))
 			return undefined;
-		let idFach : number;
+		let idFach: number;
 		if (fach.value !== undefined)
 			idFach = fach.value.id;
 		else if (kurs !== undefined)
@@ -254,23 +254,23 @@
 			return undefined;
 		if (!props.getErgebnismanager().getParent().schuelerGetHatFach(id, idFach))
 			return undefined;
-		return props.getErgebnismanager().getParent().schuelerGetOfFachFachwahl(id, idFach).istSchriftlich ? 's':'m';
+		return props.getErgebnismanager().getParent().schuelerGetOfFachFachwahl(id, idFach).istSchriftlich ? 's' : 'm';
 	}
 
 	const columns = computed<DataTableColumn[]>(() => {
 		const cols: DataTableColumn[] = [
-			{key: 'status', label: '  ', fixedWidth: 1.75},
-			{key: 'fixiert', label: 'F', tooltip: "Kursfixierung", fixedWidth: 2, align: "center"},
-			{key: 'schuelerAuswahl', label: 'Schüler', span: 1},
+			{ key: 'status', label: '  ', fixedWidth: 1.75 },
+			{ key: 'fixiert', label: 'F', tooltip: "Kursfixierung", fixedWidth: 2, align: "center" },
+			{ key: 'schuelerAuswahl', label: 'Schüler', span: 1 },
 		];
 		if (props.showGeschlecht())
-			cols.push({key: 'geschlecht', label: 'G', tooltip: "Geschlecht", fixedWidth: 2, align: "center"});
+			cols.push({ key: 'geschlecht', label: 'G', tooltip: "Geschlecht", fixedWidth: 2, align: "center" });
 		if ((fach.value !== undefined) || (props.schuelerFilter().kurs !== undefined))
-			cols.push({key: 'schriftlichkeit', label: 'W', tooltip: 'Wahl: schriftlich oder mündlich', fixedWidth: 2, align: "center"});
+			cols.push({ key: 'schriftlichkeit', label: 'W', tooltip: 'Wahl: schriftlich oder mündlich', fixedWidth: 2, align: "center" });
 		return cols;
-	})
+	});
 
-	const gridTemplateColumns = computed<string> (() => "grid-template-columns: 1.75rem 2rem minmax(4rem, 1fr)" + (props.showGeschlecht() ? " 2rem" : "") +
+	const gridTemplateColumns = computed<string>(() => "grid-template-columns: 1.75rem 2rem minmax(4rem, 1fr)" + (props.showGeschlecht() ? " 2rem" : "") +
 		(((fach.value !== undefined) || (props.schuelerFilter().kurs !== undefined)) ? " 2rem" : ""));
 
 	const fixierRegeln = computed(() => {
@@ -278,14 +278,14 @@
 		const map = new Map<number, Set<number>>();
 		for (const r of regeln)
 			if (r.typ === GostKursblockungRegelTyp.SCHUELER_FIXIEREN_IN_KURS.typ) {
-				const entry = map.get(r.parameter.get(0))
+				const entry = map.get(r.parameter.get(0));
 				if (entry !== undefined)
 					entry.add(r.parameter.get(1));
 				else
 					map.set(r.parameter.get(0), new Set([r.parameter.get(1)]));
 			}
 		return map;
-	})
+	});
 
 	const fixierRegelKurs = (idKurs: number | undefined, idSchueler: number) => computed<boolean>(() =>
 		(typeof idKurs === 'number') && props.getDatenmanager().schuelerGetIstFixiertInKurs(idSchueler, idKurs)
@@ -293,7 +293,7 @@
 
 	const fixierRegelFach = (idFach: number | undefined, idSchueler: number) => computed<boolean>(() => {
 		if (idFach === undefined)
-			return false
+			return false;
 		const kurs = props.getErgebnismanager().getOfSchuelerOfFachZugeordneterKurs(idSchueler, idFach);
 		const idKurs = kurs?.id;
 		if (idKurs === undefined)
@@ -329,7 +329,7 @@
 			return;
 		const idKurs = kurs.id;
 		if (fixier_regel(idKurs, idSchueler).value === undefined)
-			await fixieren_regel_hinzufuegen(idKurs, idSchueler)
+			await fixieren_regel_hinzufuegen(idKurs, idSchueler);
 		else
 			await fixieren_regel_entfernen(idKurs, idSchueler);
 	}

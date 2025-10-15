@@ -63,7 +63,7 @@
 				default:
 					return true;
 			}
-		}
+		};
 	}
 
 	function bezeichnungIsValid(value: string | null) {
@@ -86,7 +86,7 @@
 			const validateField = fieldIsValid(field as keyof ReligionEintrag);
 			const fieldValue = data.value[field as keyof ReligionEintrag] as string | null;
 			return validateField(fieldValue);
-		})
+		});
 	});
 
 	async function cancel() {

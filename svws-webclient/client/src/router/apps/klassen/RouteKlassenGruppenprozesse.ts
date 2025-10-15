@@ -13,19 +13,19 @@ const SKlassenGruppenprozesse = () => import("~/components/klassen/gruppenprozes
 export class RouteKlasseGruppenprozesse extends RouteNode<any, RouteKlassen> {
 
 	public constructor() {
-		super(Schulform.values(), [ BenutzerKompetenz.UNTERRICHTSVERTEILUNG_ANSEHEN ], "klassen.gruppenprozesse", "gruppenprozesse", SKlassenGruppenprozesse);
-		super.types = new Set([ ViewType.GRUPPENPROZESSE ]);
+		super(Schulform.values(), [BenutzerKompetenz.UNTERRICHTSVERTEILUNG_ANSEHEN], "klassen.gruppenprozesse", "gruppenprozesse", SKlassenGruppenprozesse);
+		super.types = new Set([ViewType.GRUPPENPROZESSE]);
 		super.mode = ServerMode.STABLE;
 		super.propHandler = (route) => this.getProps(route);
 		super.text = "Gruppenprozesse";
 	}
 
-	protected async update() : Promise<void | Error | RouteLocationRaw> {
+	protected async update(): Promise<void | Error | RouteLocationRaw> {
 		await routeKlassen.data.updateMapStundenplaene();
 	}
 
-	public addRouteParamsFromState() : RouteParamsRawGeneric {
-		return { id : "" };
+	public addRouteParamsFromState(): RouteParamsRawGeneric {
+		return { id: "" };
 	}
 
 	public getProps(to: RouteLocationNormalized): KlassenGruppenprozesseProps {

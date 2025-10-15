@@ -14,16 +14,16 @@ const SLehrerNeu = () => import("~/components/lehrer/SLehrerNeu.vue");
 export class RouteLehrerNeu extends RouteNode<any, RouteLehrer> {
 
 	public constructor() {
-		super(Schulform.values(), [ BenutzerKompetenz.LEHRERDATEN_AENDERN ], "lehrer.neu", "neu", SLehrerNeu);
-		super.types = new Set([ ViewType.HINZUFUEGEN ]);
+		super(Schulform.values(), [BenutzerKompetenz.LEHRERDATEN_AENDERN], "lehrer.neu", "neu", SLehrerNeu);
+		super.types = new Set([ViewType.HINZUFUEGEN]);
 		super.mode = ServerMode.DEV;
 		super.propHandler = (route) => this.getProps(route);
 		super.text = "Lehrer Neu";
 		super.setCheckpoint = true;
 	}
 
-	public addRouteParamsFromState() : RouteParamsRawGeneric {
-		return { id : "" };
+	public addRouteParamsFromState(): RouteParamsRawGeneric {
+		return { id: "" };
 	}
 
 	public getProps(to: RouteLocationNormalized): LehrerNeuProps {

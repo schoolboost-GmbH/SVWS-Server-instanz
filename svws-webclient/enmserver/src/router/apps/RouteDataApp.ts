@@ -5,9 +5,9 @@ import type { ENMLeistung } from "@core/core/data/enm/ENMLeistung";
 import type { ENMLeistungBemerkungen } from "@core/core/data/enm/ENMLeistungBemerkungen";
 import type { ENMLernabschnitt } from "@core/core/data/enm/ENMLernabschnitt";
 import type { ENMTeilleistung } from "@core/core/data/enm/ENMTeilleistung";
-import type { ENMKlasse} from "@core/index";
+import type { ENMKlasse } from "@core/index";
 import { DeveloperNotificationException, ENMDaten, Schulform } from "@core/index";
-import { EnmManager} from "@ui/components/enm/EnmManager";
+import { EnmManager } from "@ui/components/enm/EnmManager";
 import { type EnmLerngruppenAuswahlEintrag } from "@ui/components/enm/EnmManager";
 import { shallowRef } from "vue";
 import { Config, ConfigElement } from "@ui/utils/Config";
@@ -102,7 +102,7 @@ export class RouteDataApp extends RouteData<RouteStateApp> {
 			}, async (key: string, value: string): Promise<void> => {
 				// Schreiben der benutzerspezifischen Konfiguration
 				await api.server.setClientConfigUserKey(value, key);
-			})
+			});
 			newState.config.mapGlobal = mapGlobal;
 			newState.config.mapUser = mapUser;
 			newState.config.addElements([
@@ -143,7 +143,7 @@ export class RouteDataApp extends RouteData<RouteStateApp> {
 				])),
 			]);
 			// Nicht-persistente Config leer anlegen
-			newState.nonPersistentConfig = new Config(async (_,__) => {}, async (_,__) => { });
+			newState.nonPersistentConfig = new Config(async (_, __) => {}, async (_, __) => { });
 			newState.nonPersistentConfig.mapGlobal = new Map<string, string>();
 			newState.nonPersistentConfig.mapUser = new Map<string, string>();
 			this.setPatchedDefaultState(newState);
@@ -235,7 +235,7 @@ export class RouteDataApp extends RouteData<RouteStateApp> {
 	 * @return eine Map, welche vom Spalten-Kürzel auf einen boolean-Wert oder null abbildet
 	 */
 	get klassenleitungColumnsVisible(): Map<string, boolean | null> {
-		return new Map<string, boolean|null>(JSON.parse(this.config.getValue("klassenleitung.table.columns")));
+		return new Map<string, boolean | null>(JSON.parse(this.config.getValue("klassenleitung.table.columns")));
 	}
 
 	/**
@@ -246,7 +246,7 @@ export class RouteDataApp extends RouteData<RouteStateApp> {
 	setKlassenleitungColumnsVisible = async (value: Map<string, boolean | null>) => {
 		await this.config.setValue('klassenleitung.table.columns', JSON.stringify([...value]));
 		this.commit();
-	}
+	};
 
 	/**
 	 * Gibt die Map mit den sichtbaren Spalten in der Leistungs-Ansicht
@@ -255,7 +255,7 @@ export class RouteDataApp extends RouteData<RouteStateApp> {
 	 * @return eine Map, welche vom Spalten-Kürzel auf einen boolean-Wert oder null abbildet
 	 */
 	get leistungenColumnsVisible(): Map<string, boolean | null> {
-		return new Map<string, boolean|null>(JSON.parse(this.config.getValue("leistungen.table.columns")));
+		return new Map<string, boolean | null>(JSON.parse(this.config.getValue("leistungen.table.columns")));
 	}
 
 	/**
@@ -266,7 +266,7 @@ export class RouteDataApp extends RouteData<RouteStateApp> {
 	setLeistungenColumnsVisible = async (value: Map<string, boolean | null>) => {
 		await this.config.setValue('leistungen.table.columns', JSON.stringify([...value]));
 		this.commit();
-	}
+	};
 
 	/**
 	 * Gibt die Map mit den sichtbaren Spalten in der Teilleistungs-Ansicht
@@ -275,7 +275,7 @@ export class RouteDataApp extends RouteData<RouteStateApp> {
 	 * @return eine Map, welche vom Spalten-Kürzel auf einen boolean-Wert oder null abbildet
 	 */
 	get teilleistungenColumnsVisible(): Map<string, boolean | null> {
-		return new Map<string, boolean|null>(JSON.parse(this.config.getValue("teilleistungen.table.columns")));
+		return new Map<string, boolean | null>(JSON.parse(this.config.getValue("teilleistungen.table.columns")));
 	}
 
 	/**
@@ -286,7 +286,7 @@ export class RouteDataApp extends RouteData<RouteStateApp> {
 	setTeilleistungenColumnsVisible = async (value: Map<string, boolean | null>) => {
 		await this.config.setValue('teilleistungen.table.columns', JSON.stringify([...value]));
 		this.commit();
-	}
+	};
 
 	/**
 	 * Gibt die Information aus der benutzerspezifischen Konfiguration zurück, ob
@@ -307,7 +307,7 @@ export class RouteDataApp extends RouteData<RouteStateApp> {
 	setFloskelEditorVisible = async (value: boolean) => {
 		await this.config.setValue('floskelEditorVisible', value ? 'true' : 'false');
 		this.commit();
-	}
+	};
 
 	/**
 	 * Gibt die aktuelle Lerngruppen-Auswahl für die Ansicht der Leistungen und Teilleistungen zurück. (die Einzelauswahl)
@@ -327,7 +327,7 @@ export class RouteDataApp extends RouteData<RouteStateApp> {
 	get auswahlLerngruppen(): Array<EnmLerngruppenAuswahlEintrag> {
 		if (this._auswahlLerngruppe.value === null)
 			return this._auswahlLerngruppen.value;
-		return [ this._auswahlLerngruppe.value ];
+		return [this._auswahlLerngruppe.value];
 	}
 
 	/**
@@ -375,7 +375,7 @@ export class RouteDataApp extends RouteData<RouteStateApp> {
 	get auswahlKlassen(): Array<ENMKlasse> {
 		if (this._auswahlKlasse.value === null)
 			return this._auswahlKlassen.value;
-		return [ this._auswahlKlasse.value ];
+		return [this._auswahlKlasse.value];
 	}
 
 	/**
@@ -383,7 +383,7 @@ export class RouteDataApp extends RouteData<RouteStateApp> {
 	 *
 	 * @returns die Klassen-Auswahl
 	 */
-	get auswahlKlassenNurMehrfachauswahl() : Array<ENMKlasse> {
+	get auswahlKlassenNurMehrfachauswahl(): Array<ENMKlasse> {
 		return this._auswahlKlassen.value;
 	}
 
@@ -417,7 +417,7 @@ export class RouteDataApp extends RouteData<RouteStateApp> {
 		await api.server.patchENMLeistung(patch);
 		Object.assign(data, patch);
 		this.commit();
-	}
+	};
 
 	/**
 	 * Patch-Methode für ENM-Teilleistungen.
@@ -430,7 +430,7 @@ export class RouteDataApp extends RouteData<RouteStateApp> {
 		await api.server.patchENMTeilleistung(patch);
 		Object.assign(data, patch);
 		this.commit();
-	}
+	};
 
 	/**
 	 * Patch-Methode für ENM-Bemerkungen.
@@ -443,7 +443,7 @@ export class RouteDataApp extends RouteData<RouteStateApp> {
 		await api.server.patchENMSchuelerBemerkungen(id, patch);
 		Object.assign(data, patch);
 		this.commit();
-	}
+	};
 
 	/**
 	 * Patch-Methode für ENM-Lernabschnitt.
@@ -456,6 +456,6 @@ export class RouteDataApp extends RouteData<RouteStateApp> {
 		await api.server.patchENMSchuelerLernabschnitt(patch);
 		Object.assign(data, patch);
 		this.commit();
-	}
+	};
 
 }

@@ -55,13 +55,13 @@
 		isMounted.value = true;
 	});
 
-	const sortByAndOrder = ref<SortByAndOrder | undefined>()
+	const sortByAndOrder = ref<SortByAndOrder | undefined>();
 
 	const itemsSorted = computed(() => {
 		const arr = props.kMan().schuelerklausurterminNtAktuellMitTerminUndDatumGetMengeByHalbjahrAndQuartal(props.jahrgangsdaten.abiturjahr, props.halbjahr, props.quartalsauswahl.value).toArray() as GostSchuelerklausurTermin[];
 		let temp = sortByAndOrder.value;
 		if (temp === undefined || temp.order === null)
-			temp = {key: 'nachname', order: true};
+			temp = { key: 'nachname', order: true };
 		arr.sort((a, b) => {
 			switch (temp.key) {
 				case 'nachname':
@@ -77,9 +77,9 @@
 				default:
 					return 0;
 			}
-		})
+		});
 		return temp.order === true ? arr : arr.reverse();
-	})
+	});
 
 	function calculateColumns() {
 		const cols: DataTableColumn[] = [

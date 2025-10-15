@@ -13,14 +13,14 @@ const SSchuelerAllgemeinesGruppenprozesse = () => import("~/components/schueler/
 export class RouteSchuelerAllgemeinesGruppenprozesse extends RouteNode<any, RouteSchueler> {
 
 	public constructor() {
-		super(Schulform.values(), [ BenutzerKompetenz.KEINE ], "schueler.gruppenprozesse.allgemeines", "gruppenprozesse/allgemeines", SSchuelerAllgemeinesGruppenprozesse);
-		super.types = new Set([ ViewType.GRUPPENPROZESSE ]);
+		super(Schulform.values(), [BenutzerKompetenz.KEINE], "schueler.gruppenprozesse.allgemeines", "gruppenprozesse/allgemeines", SSchuelerAllgemeinesGruppenprozesse);
+		super.types = new Set([ViewType.GRUPPENPROZESSE]);
 		super.mode = ServerMode.STABLE;
 		super.propHandler = (route) => this.getProps(route);
 		super.text = "Allgemeines";
 	}
 
-	protected async update() : Promise<void | Error | RouteLocationRaw> {
+	protected async update(): Promise<void | Error | RouteLocationRaw> {
 		await routeSchueler.data.updateMapStundenplaene();
 	}
 
@@ -29,14 +29,14 @@ export class RouteSchuelerAllgemeinesGruppenprozesse extends RouteNode<any, Rout
 			serverMode: api.mode,
 			apiStatus: api.status,
 			getPDF: routeSchueler.data.getPDF,
-			sendEMail : routeSchueler.data.sendEMail,
-			fetchEMailJobStatus : routeSchueler.data.fetchEMailJobStatus,
-			fetchEMailJobLog : routeSchueler.data.fetchEMailJobLog,
+			sendEMail: routeSchueler.data.sendEMail,
+			fetchEMailJobStatus: routeSchueler.data.fetchEMailJobStatus,
+			fetchEMailJobLog: routeSchueler.data.fetchEMailJobLog,
 			mapStundenplaene: routeSchueler.data.mapStundenplaene,
 			benutzerKompetenzen: api.benutzerKompetenzen,
 			schuelerListeManager: () => routeSchueler.data.manager,
 			deleteSchueler: routeSchueler.data.delete,
-			deleteSchuelerCheck: routeSchueler.data.deleteSchuelerCheck
+			deleteSchuelerCheck: routeSchueler.data.deleteSchuelerCheck,
 		};
 	}
 

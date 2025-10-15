@@ -40,7 +40,7 @@
 		action: () => void | Promise<any>;
 		default?: boolean;
 		separator?: boolean;
-	}
+	};
 
 	const props = withDefaults(defineProps<{
 		type?: ButtonType;
@@ -48,7 +48,7 @@
 		dropdownActions: Iterable<Item>;
 		defaultAction?: Item | undefined;
 		noDefault?: boolean;
-	}>(),{
+	}>(), {
 		type: 'primary',
 		disabled: false,
 		defaultAction: undefined,
@@ -67,7 +67,7 @@
 			defaultItem.value = item;
 		if (item.default === true) {
 			defaultItem.value = item;
-			break
+			break;
 		}
 	}
 
@@ -75,20 +75,21 @@
 		for (const _ of props.dropdownActions)
 			return false;
 		return true;
-	})
+	});
 
 	function action(item: Item) {
 		defaultItem.value = item;
 		void item.action();
 	}
 
-	const { x, y, strategy } = useFloating( inputEl, refList, {
+	const { x, y, strategy } = useFloating(inputEl, refList, {
 		placement: 'bottom-start',
 		middleware: [flip(), shift(), offset(2), size({
-			apply({rects, elements}) {
+			apply({ rects, elements }) {
 				Object.assign(elements.floating.style, {
 					width: `${rects.reference.width}px`,
-				})}})],
+				});
+			} })],
 		whileElementsMounted: autoUpdate,
 	});
 

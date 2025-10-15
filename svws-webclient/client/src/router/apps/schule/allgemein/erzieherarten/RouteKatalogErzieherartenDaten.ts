@@ -11,7 +11,7 @@ const SErzieherartenDaten = () => import("~/components/schule/allgemein/erzieher
 export class RouteKatalogErzieherartenDaten extends RouteNode<any, RouteKatalogErzieherarten> {
 
 	public constructor() {
-		super(Schulform.values(), [ BenutzerKompetenz.KATALOG_EINTRAEGE_ANSEHEN, BenutzerKompetenz.KATALOG_EINTRAEGE_AENDERN ], "schule.erzieherarten.daten", "daten", SErzieherartenDaten);
+		super(Schulform.values(), [BenutzerKompetenz.KATALOG_EINTRAEGE_ANSEHEN, BenutzerKompetenz.KATALOG_EINTRAEGE_AENDERN], "schule.erzieherarten.daten", "daten", SErzieherartenDaten);
 		super.mode = ServerMode.DEV;
 		super.propHandler = (route) => this.getProps(route);
 		super.text = "Erzieherarten";

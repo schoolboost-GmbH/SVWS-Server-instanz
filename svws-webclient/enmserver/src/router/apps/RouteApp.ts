@@ -24,7 +24,7 @@ export class RouteApp extends RouteNode<RouteDataApp, any> {
 	private _menuMain: RouteNode<any, any>[];
 
 	public constructor() {
-		super(Schulform.values(), [ BenutzerKompetenz.KEINE ], "app", "/", SApp, new RouteDataApp());
+		super(Schulform.values(), [BenutzerKompetenz.KEINE], "app", "/", SApp, new RouteDataApp());
 		super.mode = ServerMode.STABLE;
 		super.propHandler = (route) => this.getProps();
 		super.text = "ENM-Client";
@@ -40,7 +40,7 @@ export class RouteApp extends RouteNode<RouteDataApp, any> {
 		super.defaultChild = routeLeistungen;
 	}
 
-	public async update(to: RouteNode<any, any>, to_params: RouteParams, from: RouteNode<any, any> | undefined, from_params: RouteParams, isEntering: boolean) : Promise<void | Error | RouteLocationRaw> {
+	public async update(to: RouteNode<any, any>, to_params: RouteParams, from: RouteNode<any, any> | undefined, from_params: RouteParams, isEntering: boolean): Promise<void | Error | RouteLocationRaw> {
 		try {
 			// Lade die ENM-Daten
 			if (isEntering)
@@ -104,7 +104,7 @@ export class RouteApp extends RouteNode<RouteDataApp, any> {
 		const result = await RouteManager.doRoute(node.getRoute());
 		if (result === RoutingStatus.SUCCESS)
 			this.data.setView(node, this.children);
-	}
+	};
 
 }
 

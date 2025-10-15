@@ -46,6 +46,6 @@
 		if (auswahlReligionenList.size() > 5)
 			return `${auswahlReligionenList.size()} Religionen ausgewählt`;
 		return [...auswahlReligionenList].map(k => k.kuerzel).join(', ');
-	})
+	});
 
 </script>

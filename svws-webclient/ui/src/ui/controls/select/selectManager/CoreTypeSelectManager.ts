@@ -36,7 +36,7 @@ export class CoreTypeSelectManager<T extends CoreTypeData, U extends CoreType<T,
 	 * Der CoreTypeDataManager für den Zugriff auf die Daten der CoreTypes.
 	 * Bei null werden keine Optionen im Select angezeigt.
 	 */
-	protected _clazz= shallowRef<Class<U> | null>(null);
+	protected _clazz = shallowRef<Class<U> | null>(null);
 
 	/**
 	 * Der CoreTypeDataManager für den Zugriff auf die Daten der CoreTypes.
@@ -212,7 +212,7 @@ export class CoreTypeSelectManager<T extends CoreTypeData, U extends CoreType<T,
 	 *
 	 * @param value   der neue Manager
 	 */
-	private set manager(value: CoreTypeDataManager<T, U> | null){
+	private set manager(value: CoreTypeDataManager<T, U> | null) {
 		this._manager = value;
 		this.updateOptions();
 	}
@@ -231,7 +231,7 @@ export class CoreTypeSelectManager<T extends CoreTypeData, U extends CoreType<T,
 	 *
 	 * @param value   die neue Klasse
 	 */
-	public set clazz(value: Class<U> | null | undefined){
+	public set clazz(value: Class<U> | null | undefined) {
 		if (value === this.clazz)
 			return;
 		this._clazz.value = toValue(value ?? null);

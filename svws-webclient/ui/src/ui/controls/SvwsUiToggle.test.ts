@@ -1,4 +1,4 @@
-import { describe, test, expect} from "vitest";
+import { describe, test, expect } from "vitest";
 
 import SvwsUiToggle from "./SvwsUiToggle.vue";
 import { mount, shallowMount } from "@vue/test-utils";

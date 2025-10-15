@@ -38,8 +38,8 @@
 
 <script setup lang="ts">
 	import type { SchuleEinwilligungsartenNeuProps } from "~/components/schule/schulbezogen/einwilligungsarten/SEinwilligungsartenNeuProps";
-	import { computed, ref, watch} from "vue";
-	import { BenutzerKompetenz, Einwilligungsart, PersonTyp} from "@core";
+	import { computed, ref, watch } from "vue";
+	import { BenutzerKompetenz, Einwilligungsart, PersonTyp } from "@core";
 	import { isUniqueInList, mandatoryInputIsValid, optionalInputIsValid } from "~/util/validation/Validation";
 
 	const props = defineProps<SchuleEinwilligungsartenNeuProps>();
@@ -54,7 +54,7 @@
 		set: (value) => data.value.personTyp = value.id,
 	});
 
-	function fieldIsValid(field: keyof Einwilligungsart | null) : (v: string | null) => boolean {
+	function fieldIsValid(field: keyof Einwilligungsart | null): (v: string | null) => boolean {
 		return (v: string | null) => {
 			switch (field) {
 				case 'bezeichnung':
@@ -64,7 +64,7 @@
 				default:
 					return true;
 			}
-		}
+		};
 	}
 
 	const formIsValid = computed(() => {
@@ -73,8 +73,8 @@
 			const validateField = fieldIsValid(field as keyof Einwilligungsart);
 			const fieldValue = data.value[field as keyof Einwilligungsart] as string | null;
 			return validateField(fieldValue);
-		})
-	})
+		});
+	});
 
 	function bezeichnungIsValid(value: string | null): boolean {
 		if (!mandatoryInputIsValid(value, 250))
@@ -104,11 +104,11 @@
 		await props.gotoDefaultView(null);
 	}
 
-	watch(() => data.value, async() => {
+	watch(() => data.value, async () => {
 		if (isLoading.value)
 			return;
 		props.checkpoint.active = true;
-	}, {immediate: false, deep: true});
+	}, { immediate: false, deep: true });
 
 
 </script>

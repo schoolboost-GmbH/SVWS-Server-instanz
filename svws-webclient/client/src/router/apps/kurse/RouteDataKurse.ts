@@ -1,4 +1,5 @@
-import {ApiFile, KursDaten, KursLehrer, List, ReportingParameter, Schueler, SimpleOperationResponse, UserNotificationException} from "@core";
+import type { ApiFile, KursDaten, KursLehrer, List, ReportingParameter, Schueler, SimpleOperationResponse } from "@core";
+import { UserNotificationException } from "@core";
 import { DeveloperNotificationException } from "@core";
 import { KursListeManager } from "@ui";
 
@@ -42,9 +43,9 @@ export class RouteDataKurse extends RouteDataAuswahl<KursListeManager, RouteStat
 
 	setFilterNurSichtbar = async (value: boolean) => {
 		await api.config.setValue('kurse.auswahl.filterNurSichtbar', value ? "true" : "false");
-	}
+	};
 
-	protected async createManager(idSchuljahresabschnitt : number) : Promise<Partial<RouteStateKurse>> {
+	protected async createManager(idSchuljahresabschnitt: number): Promise<Partial<RouteStateKurse>> {
 		const schuljahresabschnitt = api.mapAbschnitte.value.get(idSchuljahresabschnitt);
 		if (schuljahresabschnitt === undefined)
 			throw new DeveloperNotificationException('Es ist kein gültiger Schuljahresabschnitt ausgewählt');
@@ -65,12 +66,12 @@ export class RouteDataKurse extends RouteDataAuswahl<KursListeManager, RouteStat
 		return { manager };
 	}
 
-	public async ladeDaten(auswahl: KursDaten | null) : Promise<KursDaten | null> {
+	public async ladeDaten(auswahl: KursDaten | null): Promise<KursDaten | null> {
 		// Die Daten sind vollständig in der Liste enthalten, kein Aufruf der API notwendig
 		return auswahl;
 	}
 
-	protected async doPatch(data : Partial<KursDaten>, id: number) : Promise<void> {
+	protected async doPatch(data: Partial<KursDaten>, id: number): Promise<void> {
 		await api.server.patchKurs(data, api.schema, id);
 	}
 
@@ -78,19 +79,19 @@ export class RouteDataKurse extends RouteDataAuswahl<KursListeManager, RouteStat
 		return await api.server.deleteKurse(ids, api.schema);
 	}
 
-	protected deleteMessage(id: number, kurs: KursDaten | null) : string {
+	protected deleteMessage(id: number, kurs: KursDaten | null): string {
 		return `Kurs ${kurs?.kuerzel ?? '???'} (ID: ${id}) wurde erfolgreich gelöscht.`;
 	}
 
 	gotoSchueler = async (eintrag: Schueler) => {
 		await RouteManager.doRoute(routeSchueler.getRoute({ id: eintrag.id }));
-	}
+	};
 
 	add = async (partialKurs: Partial<KursDaten>): Promise<void> => {
 		const neuerKurs = await api.server.addKurs({ ...partialKurs, idSchuljahresabschnitt: routeApp.data.idSchuljahresabschnitt }, api.schema);
 		await this.setSchuljahresabschnitt(this._state.value.idSchuljahresabschnitt, true);
 		await this.gotoDefaultView(neuerKurs.id);
-	}
+	};
 
 	addKurLehrer = async (data: Partial<KursLehrer>, idKurs: number): Promise<void> => {
 		api.status.start();
@@ -98,7 +99,7 @@ export class RouteDataKurse extends RouteDataAuswahl<KursListeManager, RouteStat
 		this.manager.daten().weitereLehrer.add(result);
 		this.commit();
 		api.status.stop();
-	}
+	};
 
 	patchKursLehrer = async (data: Partial<KursLehrer>, idKurs: number, idLehrer: number): Promise<void> => {
 		api.status.start();
@@ -108,7 +109,7 @@ export class RouteDataKurse extends RouteDataAuswahl<KursListeManager, RouteStat
 				Object.assign(k, data);
 		this.commit();
 		api.status.stop();
-	}
+	};
 
 	deleteKursLehrer = async (lehrerIds: List<number>, idKurs: number): Promise<void> => {
 		await api.server.deleteKursLehrer(lehrerIds, api.schema, idKurs);
@@ -117,21 +118,21 @@ export class RouteDataKurse extends RouteDataAuswahl<KursListeManager, RouteStat
 			if (lehrerIds.contains(weitereLehrer.get(i).idLehrer))
 				weitereLehrer.removeElementAt(i);
 		this.commit();
-	}
+	};
 
 	getPDF = api.call(async (reportingParameter: ReportingParameter): Promise<ApiFile> => {
 		if (!this.manager.liste.auswahlExists())
 			throw new DeveloperNotificationException("Die Ausgabe kann nur erfolgen, wenn mindestens ein Kurs ausgewählt ist.");
 		reportingParameter.idSchuljahresabschnitt = this.idSchuljahresabschnitt;
 		return await api.server.pdfReport(reportingParameter, api.schema);
-	})
+	});
 
 	sendEMail = api.call(async (reportingParameter: ReportingParameter): Promise<SimpleOperationResponse> => {
 		if (!this.manager.liste.auswahlExists())
 			throw new UserNotificationException("Dieser Report kann nur versendet werden, wenn mindestens ein Kurs ausgewählt ist.");
 		reportingParameter.idSchuljahresabschnitt = this.idSchuljahresabschnitt;
 		return await api.server.emailReport(reportingParameter, api.schema);
-	})
+	});
 
 	/* TODO
 	setzeDefaultSortierung = async () => {

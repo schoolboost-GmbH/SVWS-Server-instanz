@@ -178,7 +178,7 @@
 	import type { Schuljahresabschnitt, CoreTypeData, JahrgaengeKatalogEintrag, KAOAZusatzmerkmalKatalogEintrag } from "@core";
 	import { ref, computed, watch } from 'vue';
 	import { BenutzerKompetenz } from "@core";
-	import { JavaString, KAOAAnschlussoptionen, KAOABerufsfeld, KAOAEbene4 , Jahrgaenge, KAOAKategorie, KAOAMerkmal, KAOAZusatzmerkmal, SchuelerKAoADaten } from "@core";
+	import { JavaString, KAOAAnschlussoptionen, KAOABerufsfeld, KAOAEbene4, Jahrgaenge, KAOAKategorie, KAOAMerkmal, KAOAZusatzmerkmal, SchuelerKAoADaten } from "@core";
 	import { coreTypeDataFilter } from "~/utils/helfer";
 
 	const props = defineProps<SchuelerKAoAProps>();
@@ -187,7 +187,7 @@
 	const hatKompetenzUpdate = computed<boolean>(() => props.benutzerKompetenzen.has(BenutzerKompetenz.SCHUELER_INDIVIDUALDATEN_KAOA_DATEN_AENDERN));
 	const readonly = computed(() => !hatKompetenzUpdate.value);
 	const schuljahr = computed<number>(() => (schuljahresabschnitt.value?.schuljahr !== undefined) ? schuljahresabschnitt.value.schuljahr : -1);
-	const jahrgang = computed<JahrgaengeKatalogEintrag | null> (
+	const jahrgang = computed<JahrgaengeKatalogEintrag | null>(
 		() => Jahrgaenge.data().getWertByKuerzel(props.schuelerKaoaManager().getKuerzelJahrgangBySchuljahr(schuljahr.value))?.daten(schuljahr.value) ?? null);
 	const zusatzmerkmal = computed<KAOAZusatzmerkmalKatalogEintrag | null>(() => KAOAZusatzmerkmal.data().getEintragByID(schuelerKAoADaten.value.idZusatzmerkmal) ?? null);
 	const schuljahresabschnitt = computed<Schuljahresabschnitt | null>(() => {
@@ -196,16 +196,16 @@
 		return props.schuelerKaoaManager().schuljahresabschnitte.get(schuelerKAoADaten.value.idSchuljahresabschnitt) ?? null;
 	});
 
-	const showEbene4 = computed<boolean>(() => zusatzmerkmal.value?.optionsart ==='SBO_EBENE_4');
-	const showAnschlussoption = computed<boolean>(() => zusatzmerkmal.value?.optionsart ==='ANSCHLUSSOPTION');
-	const showBerufsfeld = computed<boolean>(() => zusatzmerkmal.value?.optionsart ==='BERUFSFELD');
-	const showFreitext = computed<boolean>(() => (zusatzmerkmal.value?.optionsart ==='FREITEXT') || (zusatzmerkmal.value?.optionsart ==='FREITEXT_BERUF'));
+	const showEbene4 = computed<boolean>(() => zusatzmerkmal.value?.optionsart === 'SBO_EBENE_4');
+	const showAnschlussoption = computed<boolean>(() => zusatzmerkmal.value?.optionsart === 'ANSCHLUSSOPTION');
+	const showBerufsfeld = computed<boolean>(() => zusatzmerkmal.value?.optionsart === 'BERUFSFELD');
+	const showFreitext = computed<boolean>(() => (zusatzmerkmal.value?.optionsart === 'FREITEXT') || (zusatzmerkmal.value?.optionsart === 'FREITEXT_BERUF'));
 
 	// setzt die selektierten Felder abhängig vom Ziellevel zurück
 	function updateModel(targetLevel: number, value: number) {
 		if (targetLevel <= 1) {
 			schuelerKAoADaten.value.idSchuljahresabschnitt = value;
-			schuelerKAoADaten.value.idJahrgang = jahrgang.value? jahrgang.value.id : -1;
+			schuelerKAoADaten.value.idJahrgang = jahrgang.value ? jahrgang.value.id : -1;
 		}
 		if (targetLevel <= 2)
 			schuelerKAoADaten.value.idKategorie = targetLevel === 2 ? value : -1;
@@ -243,7 +243,7 @@
 	}
 
 	// api call für Create und Patch
-	async function sendRequest(type : Mode) {
+	async function sendRequest(type: Mode) {
 		if (!validateRequiredFieldsFilled())
 			return;
 		if (type === Mode.ADD)
@@ -261,12 +261,12 @@
 	}
 
 	// Validierung
-	const optionsart = computed<string | null> (() => zusatzmerkmal.value?.optionsart ?? null);
+	const optionsart = computed<string | null>(() => zusatzmerkmal.value?.optionsart ?? null);
 
 	function validateRequiredFieldsFilled() {
 		if ((schuelerKAoADaten.value.idKategorie === -1) || (schuelerKAoADaten.value.idMerkmal === -1) || (schuelerKAoADaten.value.idZusatzmerkmal === -1))
 			return false;
-		switch(optionsart.value) {
+		switch (optionsart.value) {
 			case 'SBO_EBENE_4':
 				return schuelerKAoADaten.value.idEbene4 !== null;
 			case 'ANSCHLUSSOPTION':
@@ -283,13 +283,13 @@
 		}
 	}
 
-	function validateBemerkung(bemerkung : string | null) {
+	function validateBemerkung(bemerkung: string | null) {
 		return ((bemerkung !== null) && (!JavaString.isBlank(bemerkung))) ? (bemerkung.trim().length <= 255) : true;
 	}
 
 	// Bezeichnungen
 	function itemText(i: CoreTypeData) {
-		return i.kuerzel + '- ' + i.text
+		return i.kuerzel + '- ' + i.text;
 	}
 
 	function schuljahresabschnittText(value: Schuljahresabschnitt) {
@@ -301,7 +301,7 @@
 		return abschnitt ? schuljahresabschnittText(abschnitt) : "-";
 	}
 
-	const dynamicHeader = computed<string> (() => {
+	const dynamicHeader = computed<string>(() => {
 		let eintrag;
 		if (schuelerKAoADaten.value.idZusatzmerkmal !== -1)
 			eintrag = KAOAZusatzmerkmal.data().getEintragByID(schuelerKAoADaten.value.idZusatzmerkmal);
@@ -312,16 +312,16 @@
 		else if (schuelerKAoADaten.value.idSchuljahresabschnitt !== -1)
 			return "SBO";
 		return eintrag?.kuerzel ?? "";
-	})
+	});
 
-	function kaoaDatenHeader(kaoaDaten : SchuelerKAoADaten) {
-		const kuerzel = KAOAZusatzmerkmal.data().getWertByID(kaoaDaten.idZusatzmerkmal).daten(schuljahr.value)?.kuerzel
+	function kaoaDatenHeader(kaoaDaten: SchuelerKAoADaten) {
+		const kuerzel = KAOAZusatzmerkmal.data().getWertByID(kaoaDaten.idZusatzmerkmal).daten(schuljahr.value)?.kuerzel;
 		const text = KAOAKategorie.data().getWertByID(kaoaDaten.idKategorie).daten(schuljahr.value)?.text;
 		return kuerzel + " " + text;
 	}
 
 	// Modus
-	enum Mode { ADD, PATCH , DEFAULT }
+	enum Mode { ADD, PATCH, DEFAULT }
 	const currentMode = ref<Mode>(Mode.DEFAULT);
 
 	function deselectEntry() {
@@ -336,7 +336,7 @@
 		schuelerKAoADaten.value = new SchuelerKAoADaten();
 	}
 
-	function enterPatchMode(kaoaDaten : SchuelerKAoADaten) {
+	function enterPatchMode(kaoaDaten: SchuelerKAoADaten) {
 		resetSchuelerKaoaFields();
 		transferPatchValues(kaoaDaten);
 		setMode(Mode.PATCH);

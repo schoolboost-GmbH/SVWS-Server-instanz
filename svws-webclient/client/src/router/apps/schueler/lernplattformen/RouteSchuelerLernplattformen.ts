@@ -16,13 +16,13 @@ const SSchuelerLernplattformen = () => import("~/components/schueler/lernplattfo
 export class RouteSchuelerLernplattformen extends RouteNode<RouteDataSchuelerLernplattformen, RouteSchueler> {
 
 	public constructor() {
-		super(Schulform.values(), [ BenutzerKompetenz.SCHUELER_INDIVIDUALDATEN_ANSEHEN ], "schueler.lernplattformen", "lernplattformen", SSchuelerLernplattformen, new RouteDataSchuelerLernplattformen());
+		super(Schulform.values(), [BenutzerKompetenz.SCHUELER_INDIVIDUALDATEN_ANSEHEN], "schueler.lernplattformen", "lernplattformen", SSchuelerLernplattformen, new RouteDataSchuelerLernplattformen());
 		super.mode = ServerMode.DEV;
 		super.propHandler = (route) => this.getProps(route);
 		super.text = "Lernplattformen";
 	}
 
-	public async update(to: RouteNode<any, any>, to_params: RouteParams) : Promise<void | Error | RouteLocationRaw> {
+	public async update(to: RouteNode<any, any>, to_params: RouteParams): Promise<void | Error | RouteLocationRaw> {
 		try {
 			if (this.parent === undefined)
 				throw new DeveloperNotificationException("Fehler: Die Route ist ungültig - Parent ist nicht definiert");

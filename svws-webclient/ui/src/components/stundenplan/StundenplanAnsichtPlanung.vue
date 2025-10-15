@@ -106,7 +106,7 @@
 	const showZeitachse = true;
 	const actionZeitraster = ref<boolean>(false);
 
-	function updateSelected(event: Wochentag|number|StundenplanZeitraster|StundenplanPausenzeit) {
+	function updateSelected(event: Wochentag | number | StundenplanZeitraster | StundenplanPausenzeit) {
 		if (event === props.selected)
 			props.setSelection(undefined);
 		else
@@ -140,7 +140,7 @@
 		const stunden = props.manager().zeitrasterGetStundenRange();
 		// Prüfe noch, ob in den Stunden überhaupt Zeitraster-Einträge vorliegen
 		return stunden.filter((stunde) => !props.manager().getListZeitrasterZuStunde(stunde).isEmpty());
-	})
+	});
 
 	const gesamtzeit = computed(() => {
 		const tmp = ende.value - beginn.value;
@@ -205,7 +205,7 @@
 		const arr = [];
 		for (const e of props.manager().getListZeitraster())
 			arr.push(StundenplanZeitraster.transpilerToJSON(e));
-		const blob = new Blob(['['+arr.toString()+']'], { type: "application/json" });
+		const blob = new Blob(['[' + arr.toString() + ']'], { type: "application/json" });
 		const link = document.createElement("a");
 		link.href = URL.createObjectURL(blob);
 		link.download = "ExportZeitraster.json";

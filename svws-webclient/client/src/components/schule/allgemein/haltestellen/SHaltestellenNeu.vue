@@ -34,7 +34,7 @@
 	import { isUniqueInList, mandatoryInputIsValid } from "~/util/validation/Validation";
 
 	const props = defineProps<HaltestellenNeuProps>();
-	const data = ref<Haltestelle>(Object.assign( new Haltestelle(), { istSichtbar: true, entfernungSchule: 0 }))
+	const data = ref<Haltestelle>(Object.assign(new Haltestelle(), { istSichtbar: true, entfernungSchule: 0 }));
 	const isLoading = ref<boolean>(false);
 	const hatKompetenzAdd = computed<boolean>(() => props.benutzerKompetenzen.has(BenutzerKompetenz.KATALOG_EINTRAEGE_AENDERN));
 	const disabled = computed(() => !hatKompetenzAdd.value);
@@ -46,7 +46,7 @@
 		return data.value.bezeichnung.length > 30;
 	});
 
-	function fieldIsValid(field: keyof Haltestelle | null) : (v: string | null) => boolean {
+	function fieldIsValid(field: keyof Haltestelle | null): (v: string | null) => boolean {
 		return (v: string | null) => {
 			switch (field) {
 				case 'bezeichnung':
@@ -54,7 +54,7 @@
 				default:
 					return true;
 			}
-		}
+		};
 	}
 
 	const formIsValid = computed(() => {
@@ -63,8 +63,8 @@
 			const validateField = fieldIsValid(field as keyof Haltestelle);
 			const fieldValue = data.value[field as keyof Haltestelle] as string | null;
 			return validateField(fieldValue);
-		})
-	})
+		});
+	});
 
 	function bezeichnungIsValid(value: string | null) {
 		if (!mandatoryInputIsValid(value, 30))
@@ -89,7 +89,7 @@
 		void props.goToDefaultView(null);
 	}
 
-	watch(() => data.value, async() => {
+	watch(() => data.value, async () => {
 		if (isLoading.value)
 			return;
 

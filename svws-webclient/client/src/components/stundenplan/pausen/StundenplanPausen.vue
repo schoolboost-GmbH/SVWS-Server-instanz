@@ -88,12 +88,12 @@
 <script setup lang="ts">
 
 	import { computed, onMounted, ref } from "vue";
-	import type { Wochentag, List, StundenplanPausenzeit, StundenplanKlasse, StundenplanPausenaufsicht, StundenplanLehrer} from "@core";
+	import type { Wochentag, List, StundenplanPausenzeit, StundenplanKlasse, StundenplanPausenaufsicht, StundenplanLehrer } from "@core";
 	import { StundenplanPausenaufsichtBereich, StundenplanPausenaufsichtBereichUpdate, HashMap3D, ArrayList, BenutzerKompetenz } from "@core";
 	import { useRegionSwitch } from "@ui";
 	import type { StundenplanPausenProps } from "./StundenplanPausenProps";
 
-	type PausenzeitBereichTyp = {pauseID: number; aufsichtsbereichID: number; typ: number, lehrerID?: number};
+	type PausenzeitBereichTyp = { pauseID: number; aufsichtsbereichID: number; typ: number, lehrerID?: number };
 
 	const props = defineProps<StundenplanPausenProps>();
 
@@ -110,7 +110,7 @@
 
 	const hatUpdateKompetenz = computed<boolean>(() => props.benutzerKompetenzen.has(BenutzerKompetenz.STUNDENPLAN_AENDERN));
 
-	function onDrag(data: StundenplanLehrer|undefined, fromPausenzeit?: PausenzeitBereichTyp) {
+	function onDrag(data: StundenplanLehrer | undefined, fromPausenzeit?: PausenzeitBereichTyp) {
 		dragLehrer.value = data;
 		dragFromPausenzeit.value = fromPausenzeit;
 	}
@@ -137,7 +137,7 @@
 		if (typ !== undefined)
 			return (pauseID === pID && aufsichtsbereichID === aID && typ === t);
 		return (pauseID === pID && aufsichtsbereichID === aID);
-	})
+	});
 
 	const bereichGesperrt = (pauseID: number, bereichID: number) => computed(() => {
 		if (!isDraggingOver(pauseID, bereichID).value || (dragOverPausenzeit.value === undefined))
@@ -164,8 +164,8 @@
 		const typ0 = mapAufsichtBereichTyp.value.getOrNull(aufsicht.id, bereichID, 0);
 		if (typ0)
 			return true;
-		return ((isDraggingOver(pauseID, bereichID, 0).value) && (mapAufsichtBereichTyp.value.containsKey1AndKey2(aufsicht.id, bereichID)))
-	})
+		return ((isDraggingOver(pauseID, bereichID, 0).value) && (mapAufsichtBereichTyp.value.containsKey1AndKey2(aufsicht.id, bereichID)));
+	});
 
 	function dragEnd() {
 		if (!dropZone.value)
@@ -181,7 +181,7 @@
 	async function onDrop() {
 		if (dragOverPausenzeit.value && bereichGesperrt(dragOverPausenzeit.value.pauseID, dragOverPausenzeit.value.aufsichtsbereichID).value)
 			return dragReset();
-		const update = new StundenplanPausenaufsichtBereichUpdate()
+		const update = new StundenplanPausenaufsichtBereichUpdate();
 		if (dragFromPausenzeit.value !== undefined) {
 			const { aufsichtsbereichID, pauseID, typ } = dragFromPausenzeit.value;
 			const aufsichtFrom = lehrerAufsichten.value.get(pauseID);
@@ -212,7 +212,7 @@
 		for (let n = 0; n <= modell; n++)
 			result.add(n);
 		return result;
-	})
+	});
 
 	const klasse = computed<StundenplanKlasse | undefined>({
 		get: () => {
@@ -230,7 +230,7 @@
 		for (const aufsicht of props.stundenplanManager().pausenaufsichtGetMengeByLehrerId(dragLehrer.value.id))
 			map.set(aufsicht.idPausenzeit, aufsicht);
 		return map;
-	})
+	});
 
 	const mapAufsichtBereichTyp = computed<HashMap3D<number, number, number, StundenplanPausenaufsichtBereich>>(() => {
 		const map = new HashMap3D<number, number, number, StundenplanPausenaufsichtBereich>();
@@ -238,14 +238,14 @@
 			for (const e of aufsicht.bereiche)
 				map.put(e.idPausenaufsicht, e.idAufsichtsbereich, e.wochentyp, e);
 		return map;
-	})
+	});
 
 	const getPausenzeitenWochentag = (wochentag: Wochentag) => computed<StundenplanPausenzeit[]>(() => {
 		if (klasse.value !== undefined)
 			return [...props.stundenplanManager().pausenzeitGetMengeByKlasseIdAndWochentagAsList(klasse.value.id, wochentag.id)];
 		else
 			return [...props.stundenplanManager().pausenzeitGetMengeByWochentagOrEmptyList(wochentag.id)];
-	})
+	});
 
 	const beginn = computed(() => {
 		return props.stundenplanManager().pausenzeitUndZeitrasterGetMinutenMinOhneLeere();
@@ -269,6 +269,6 @@
 		for (const aufsicht of props.stundenplanManager().pausenaufsichtGetMengeAsList())
 			map.get(aufsicht.idLehrer)?.add(aufsicht);
 		return map;
-	})
+	});
 
 </script>

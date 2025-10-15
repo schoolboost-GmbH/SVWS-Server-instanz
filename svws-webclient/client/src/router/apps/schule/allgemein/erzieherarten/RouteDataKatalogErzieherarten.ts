@@ -1,4 +1,4 @@
-import type { List, SimpleOperationResponse , Erzieherart } from "@core";
+import type { List, SimpleOperationResponse, Erzieherart } from "@core";
 import { ArrayList } from "@core";
 import { api } from "~/router/Api";
 import { ViewType, ErzieherartListeManager } from "@ui";
@@ -27,7 +27,7 @@ export class RouteDataKatalogErzieherarten extends RouteDataAuswahl<ErzieherartL
 		param.id = id;
 	}
 
-	protected async createManager(_ : number) : Promise<Partial<RouteStateAuswahlInterface<ErzieherartListeManager>>> {
+	protected async createManager(_: number): Promise<Partial<RouteStateAuswahlInterface<ErzieherartListeManager>>> {
 		const erzieherarten = await api.server.getErzieherArten(api.schema);
 		const manager = new ErzieherartListeManager(api.abschnitt.id, api.schuleStammdaten.idSchuljahresabschnitt, api.schuleStammdaten.abschnitte, api.schulform, erzieherarten);
 		return { manager };
@@ -41,7 +41,7 @@ export class RouteDataKatalogErzieherarten extends RouteDataAuswahl<ErzieherartL
 		return auswahl;
 	}
 
-	protected async doPatch(data : Partial<Erzieherart>, id: number) : Promise<void> {
+	protected async doPatch(data: Partial<Erzieherart>, id: number): Promise<void> {
 		await api.server.patchErzieherart(data, api.schema, id);
 	}
 
@@ -53,9 +53,9 @@ export class RouteDataKatalogErzieherarten extends RouteDataAuswahl<ErzieherartL
 		const res = await api.server.addErzieherart(data, api.schema);
 		await this.setSchuljahresabschnitt(this._state.value.idSchuljahresabschnitt, true);
 		await this.gotoDefaultView(res.id);
-	}
+	};
 
-	protected deleteMessage(id: number, erzieherart: Erzieherart | null) : string {
+	protected deleteMessage(id: number, erzieherart: Erzieherart | null): string {
 		return `Erzieherart ${erzieherart?.bezeichnung ?? '???'} (ID: ${id}) wurde erfolgreich gelöscht.`;
 	}
 }

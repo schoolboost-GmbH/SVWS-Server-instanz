@@ -33,7 +33,7 @@ export abstract class RouteData<RouteState extends RouteStateInterface> extends 
 	 *
 	 * @param defaultState   der Default-State
 	 */
-	protected constructor(defaultState : RouteState) {
+	protected constructor(defaultState: RouteState) {
 		super(defaultState);
 	}
 
@@ -81,7 +81,7 @@ export abstract class RouteData<RouteState extends RouteStateInterface> extends 
 	/**
 	 * Getter für die aktuelle Ansicht/Child Route.
 	 */
-	public get view(): RouteNode<any,any> {
+	public get view(): RouteNode<any, any> {
 		if (this._state.value.view === undefined)
 			throw new DeveloperNotificationException("Bei dieser Route wurde keine Ansicht im Default-State definiert.");
 		return this._state.value.view;
@@ -90,13 +90,13 @@ export abstract class RouteData<RouteState extends RouteStateInterface> extends 
 	/**
 	 * Getter für die Default-View
 	 */
-	public get defaultView(): RouteNode<any,any> {
+	public get defaultView(): RouteNode<any, any> {
 		if (this._defaultState.view === undefined)
 			throw new DeveloperNotificationException("Bei dieser Route wurde keine Ansicht im Default-State definiert.");
 		return this._defaultState.view;
 	}
 
-	public get defaultGruppenprozesseView(): RouteNode<any,any> {
+	public get defaultGruppenprozesseView(): RouteNode<any, any> {
 		if (this._defaultState.gruppenprozesseView === undefined)
 			throw new DeveloperNotificationException("Bei dieser Route wurde keine Gruppenprozess Ansicht im Default-State definiert.");
 		return this._defaultState.gruppenprozesseView;
@@ -106,7 +106,7 @@ export abstract class RouteData<RouteState extends RouteStateInterface> extends 
 	 * Gibt die aktuelle Art der View zurück (Default, Hinzufügen oder Gruppenprozess).
 	 * Ist keiner spezifiziert, so wird DEFAULT zurückgegeben.
 	 */
-	get activeViewType() : ViewType {
+	get activeViewType(): ViewType {
 		if (this._state.value.activeViewType === undefined)
 			return ViewType.DEFAULT;
 		return this._state.value.activeViewType;
@@ -117,7 +117,7 @@ export abstract class RouteData<RouteState extends RouteStateInterface> extends 
 	 *
 	 * @param value   die Art der View
 	 */
-	set activeViewType(value : ViewType) {
+	set activeViewType(value: ViewType) {
 		this._state.value.activeViewType = value;
 	}
 

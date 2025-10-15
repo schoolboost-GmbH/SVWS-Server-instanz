@@ -54,7 +54,7 @@
 	const modus = ref<boolean>(true);
 
 	const summen = computed<Array<{ wochentyp: string, anzahl: number }>>(() => {
-		const result : Array<{ wochentyp: string, anzahl: number }> = [];
+		const result: Array<{ wochentyp: string, anzahl: number }> = [];
 		for (let wt = 1; wt <= props.stundenplanManager().getWochenTypModell(); wt++)
 			result.push({
 				wochentyp: props.stundenplanManager().stundenplanGetWochenTypAsString(wt),
@@ -68,10 +68,10 @@
 		{ key: "montag", label: "Montag", span: 1 },
 		{ key: "sonntag", label: "Sonntag", span: 1 },
 		{ key: "wochentyp", label: "Wochentyp", span: 1 },
-	]
+	];
 
 	const items = computed<Array<{ zuordnung: StundenplanKalenderwochenzuordnung, kalenderwoche: number, montag: string, sonntag: string, wochentyp: string }>>(() => {
-		const result : Array<{ zuordnung: StundenplanKalenderwochenzuordnung, kalenderwoche: number, montag: string, sonntag: string, wochentyp: string }> = [];
+		const result: Array<{ zuordnung: StundenplanKalenderwochenzuordnung, kalenderwoche: number, montag: string, sonntag: string, wochentyp: string }> = [];
 		for (const zuordnung of props.stundenplanManager().kalenderwochenzuordnungGetMengeAsList())
 			result.push({
 				zuordnung: zuordnung,

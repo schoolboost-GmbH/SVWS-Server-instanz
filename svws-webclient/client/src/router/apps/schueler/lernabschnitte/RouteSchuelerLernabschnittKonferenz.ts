@@ -13,7 +13,7 @@ const SSchuelerLernabschnittAllgmein = () => import("~/components/schueler/lerna
 export class RouteSchuelerLernabschnittKonferenz extends RouteNode<any, RouteSchuelerLernabschnitte> {
 
 	public constructor() {
-		super(Schulform.values(), [ BenutzerKompetenz.SCHUELER_LEISTUNGSDATEN_ANSEHEN ], "schueler.lernabschnitt.konferenz", "konferenz", SSchuelerLernabschnittAllgmein);
+		super(Schulform.values(), [BenutzerKompetenz.SCHUELER_LEISTUNGSDATEN_ANSEHEN], "schueler.lernabschnitt.konferenz", "konferenz", SSchuelerLernabschnittAllgmein);
 		super.mode = ServerMode.DEV;
 		super.propHandler = (route) => this.getProps(route);
 		super.text = "Konferenz";
@@ -21,7 +21,7 @@ export class RouteSchuelerLernabschnittKonferenz extends RouteNode<any, RouteSch
 		];
 	}
 
-	protected async update(to: RouteNode<any, any>, to_params: RouteParams) : Promise<void | Error | RouteLocationRaw> {
+	protected async update(to: RouteNode<any, any>, to_params: RouteParams): Promise<void | Error | RouteLocationRaw> {
 	}
 
 	public getProps(to: RouteLocationNormalized): SchuelerLernabschnittKonferenzProps {
@@ -30,7 +30,7 @@ export class RouteSchuelerLernabschnittKonferenz extends RouteNode<any, RouteSch
 			manager: () => routeSchuelerLernabschnitte.data.manager,
 			patch: routeSchuelerLernabschnitte.data.patchLernabschnitt,
 			patchBemerkungen: routeSchuelerLernabschnitte.data.patchBemerkungen,
-			benutzerKompetenzen: api.benutzerKompetenzen
+			benutzerKompetenzen: api.benutzerKompetenzen,
 		};
 	}
 

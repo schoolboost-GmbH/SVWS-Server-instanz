@@ -70,7 +70,7 @@
 				liste.add(item);
 		}
 		return liste;
-	})
+	});
 
 	function getDate(vermerk: SchuelerVermerke) {
 		return DateUtils.gibDatumGermanFormat(vermerk.datum ?? new Date().toISOString());
@@ -82,16 +82,16 @@
 	}
 
 	function getTitle(vermerk: SchuelerVermerke) {
-		const title = `${props.mapVermerkArten.get(vermerk.idVermerkart ?? -1)?.bezeichnung ?? "Neuer Vermerk"}: ${vermerk.bemerkung}`
+		const title = `${props.mapVermerkArten.get(vermerk.idVermerkart ?? -1)?.bezeichnung ?? "Neuer Vermerk"}: ${vermerk.bemerkung}`;
 		return title.length > 50 ? title.substring(0, 50) + "..." : title;
 	}
 
 	function getItemText(item: VermerkartEintrag) {
 		const vermerkArtIsVisible = !item.istSichtbar;
-		return `${item.bezeichnung} ${vermerkArtIsVisible ? '(nicht sichtbar)' : ''}`
+		return `${item.bezeichnung} ${vermerkArtIsVisible ? '(nicht sichtbar)' : ''}`;
 	}
 
-	function getDescription(vermerk: SchuelerVermerke) : string {
+	function getDescription(vermerk: SchuelerVermerke): string {
 		return `${vermerk.geaendertVon ?? vermerk.angelegtVon} - ${getDate(vermerk)}`;
 	}
 

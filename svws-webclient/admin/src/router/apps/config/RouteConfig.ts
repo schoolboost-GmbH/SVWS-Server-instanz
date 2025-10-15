@@ -10,7 +10,7 @@ import type { ConfigAppProps } from "~/components/config/SConfigAppProps";
 import { api } from "~/router/Api";
 import { ServerMode } from "@core/core/types/ServerMode";
 
-const SConfigApp = () => import("~/components/config/SConfigApp.vue")
+const SConfigApp = () => import("~/components/config/SConfigApp.vue");
 
 
 export class RouteConfig extends RouteNode<RouteDataConfig, RouteApp> {
@@ -20,10 +20,10 @@ export class RouteConfig extends RouteNode<RouteDataConfig, RouteApp> {
 		super.mode = ServerMode.STABLE;
 		super.propHandler = (route) => this.getProps(route);
 		super.text = "Konfiguration";
-		super.children = [ ];
+		super.children = [];
 	}
 
-	protected async update(to: RouteNode<unknown, any>, to_params: RouteParams, from: RouteNode<unknown, any> | undefined, from_params: RouteParams, isEntering: boolean) : Promise<void | Error | RouteLocationRaw> {
+	protected async update(to: RouteNode<unknown, any>, to_params: RouteParams, from: RouteNode<unknown, any> | undefined, from_params: RouteParams, isEntering: boolean): Promise<void | Error | RouteLocationRaw> {
 		// Prüfe, ob diese Route von den Rechten des angemeldeten Benutzers überhaupt angesteuert werden darf
 		if (!api.isServerAdmin)
 			return routeApp.getRoute();

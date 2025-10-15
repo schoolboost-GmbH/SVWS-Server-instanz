@@ -26,7 +26,7 @@
 
 	const emit = defineEmits<{
 		change: [val: boolean | undefined];
-	}>()
+	}>();
 
 	const show = ref<boolean>(true);
 

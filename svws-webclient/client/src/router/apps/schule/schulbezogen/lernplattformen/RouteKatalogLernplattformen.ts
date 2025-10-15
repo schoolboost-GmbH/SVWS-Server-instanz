@@ -16,7 +16,7 @@ const SLernplattformenApp = () => import("~/components/schule/schulbezogen/lernp
 export class RouteKatalogLernplattformen extends RouteAuswahlNode<LernplattformListeManager, RouteDataKatalogLernplattformen, RouteApp> {
 
 	public constructor() {
-		super(Schulform.values(), [ BenutzerKompetenz.KATALOG_EINTRAEGE_ANSEHEN, BenutzerKompetenz.KATALOG_EINTRAEGE_AENDERN ], "schule.lernplattformen", "schule/lernplattformen/:id(\\d+)?", SLernplattformenApp, SLernplattformenAuswahl, new RouteDataKatalogLernplattformen());
+		super(Schulform.values(), [BenutzerKompetenz.KATALOG_EINTRAEGE_ANSEHEN, BenutzerKompetenz.KATALOG_EINTRAEGE_AENDERN], "schule.lernplattformen", "schule/lernplattformen/:id(\\d+)?", SLernplattformenApp, SLernplattformenAuswahl, new RouteDataKatalogLernplattformen());
 		super.mode = ServerMode.DEV;
 		super.text = "Lernplattformen";
 		super.menugroup = RouteSchuleMenuGroup.SCHULBEZOGEN;

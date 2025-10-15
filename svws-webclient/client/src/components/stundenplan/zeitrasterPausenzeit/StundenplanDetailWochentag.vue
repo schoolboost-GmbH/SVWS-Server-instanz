@@ -13,7 +13,7 @@
 
 <script setup lang="ts">
 	import { computed } from "vue";
-	import type { StundenplanManager, StundenplanPausenzeit, StundenplanZeitraster} from "@core";
+	import type { StundenplanManager, StundenplanPausenzeit, StundenplanZeitraster } from "@core";
 	import { Wochentag } from "@core";
 
 	const props = defineProps<{
@@ -30,7 +30,7 @@
 		if (size === 0)
 			return 1;
 		return stunden.get(size - 1).unterrichtstunde + 1;
-	})
+	});
 
 	const fehlendeZeitraster = computed<number[]>(() => {
 		const arr = [];
@@ -38,7 +38,7 @@
 			if (props.stundenplanManager().zeitrasterGetByWochentagAndStundeOrNull(props.selected.id, s) === null)
 				arr.push(s);
 		return arr;
-	})
+	});
 
 	async function add(w: Wochentag, stunde: number) {
 		const list = props.stundenplanManager().zeitrasterGetDummyListe(w.id, w.id, stunde, stunde);

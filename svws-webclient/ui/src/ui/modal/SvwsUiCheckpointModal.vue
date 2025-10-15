@@ -24,16 +24,16 @@
 	const props = withDefaults(defineProps<{
 		checkpoint: Checkpoint;
 		continueRouting: () => Promise<unknown>;
-	}>(),{ });
+	}>(), { });
 
 	defineSlots();
 	const show = ref<boolean>(false);
 
 	onMounted(() => {
 		props.checkpoint.callback = async () => { show.value = true };
-	})
+	});
 
-	function cancel () {
+	function cancel() {
 		show.value = false;
 		props.checkpoint.active = true;
 	}

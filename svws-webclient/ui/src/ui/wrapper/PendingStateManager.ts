@@ -1,10 +1,10 @@
-import { StateManager} from "../StateManager";
+import { StateManager } from "../StateManager";
 import { Arrays } from "../../../../core/src/java/util/Arrays";
 import { ArrayList } from "../../../../core/src/java/util/ArrayList";
 import type { List } from "../../../../core/src/java/util/List";
 import type { AuswahlManager } from "../AuswahlManager";
 
-import { computed } from 'vue'
+import { computed } from 'vue';
 
 /**
  * Schnittstelle, die den Zustand der ausstehenden Patches darstellt.
@@ -38,7 +38,7 @@ export class PendingStateManager<T> extends StateManager<PendingState<T>> {
 	protected readonly _defaultDateDisplayMapper = (value: string) => new Date(value).toLocaleDateString("de-DE", {
 		day: "2-digit",
 		month: "2-digit",
-		year: "numeric"
+		year: "numeric",
 	});
 
 	/**
@@ -63,17 +63,17 @@ export class PendingStateManager<T> extends StateManager<PendingState<T>> {
 	 */
 	public genComputed<Type>(attributeName: keyof T, defaultValue: Type, getMapper: ((value: any) => Type) | null, setMapper: ((value: Type) => any) | null) {
 		return computed<Type>({
-					get: () => {
-						const value = this.pendingValues[attributeName];
-						if (value === undefined)
-							return defaultValue;
-						return getMapper ? getMapper(value) : value as Type;
-					},
-					set: (value: Type) => {
-						this.setPendingState(attributeName, setMapper ? setMapper(value) : value, this._auswahlManager().liste.auswahlKeyList());
-					},
-				}
-		)
+			get: () => {
+				const value = this.pendingValues[attributeName];
+				if (value === undefined)
+					return defaultValue;
+				return getMapper ? getMapper(value) : value as Type;
+			},
+			set: (value: Type) => {
+				this.setPendingState(attributeName, setMapper ? setMapper(value) : value, this._auswahlManager().liste.auswahlKeyList());
+			},
+		}
+		);
 	}
 
 	/**
@@ -110,7 +110,7 @@ export class PendingStateManager<T> extends StateManager<PendingState<T>> {
 	 */
 	get partials(): List<Partial<T>> {
 		return Arrays.asList(this._state.value.pendingIDs.toArray().map((id: any) => {
-			return {[this._idFieldName]: id, ...this._state.value.pendingValues} as Partial<T>;
+			return { [this._idFieldName]: id, ...this._state.value.pendingValues } as Partial<T>;
 		}));
 	}
 
@@ -143,8 +143,8 @@ export class PendingStateManager<T> extends StateManager<PendingState<T>> {
 	 * Setzt alle ausstehenden Patches zurück.
 	 */
 	public resetPendingState(): void {
-		this._defaultState.pendingValues = {}
-		this._defaultState.pendingIDs = new ArrayList<number>()
+		this._defaultState.pendingValues = {};
+		this._defaultState.pendingIDs = new ArrayList<number>();
 		this.reset();
 		this.commit();
 	}
@@ -157,8 +157,8 @@ export class PendingStateManager<T> extends StateManager<PendingState<T>> {
 	 * @param changedIds - Die Liste der geänderten IDs.
 	 */
 	public setPendingState(fieldName: keyof T, newValue: any, changedIds: List<number>): void {
-		const patch = <T>{[fieldName]: newValue};
-		this._state.value.pendingValues = Object.assign({...this.pendingValues}, patch);
+		const patch = <T>{ [fieldName]: newValue };
+		this._state.value.pendingValues = Object.assign({ ...this.pendingValues }, patch);
 		this._state.value.pendingIDs = changedIds;
 		this.commit();
 	}
@@ -169,7 +169,7 @@ export class PendingStateManager<T> extends StateManager<PendingState<T>> {
 	 * @param fieldName - Der Name des Feldes, das aus dem ausstehenden Zustand entfernt werden soll.
 	 */
 	public removePendingState(fieldName: keyof T): void {
-		const {[fieldName]: _, ...patch} = this.pendingValues as Record<string, any>;
+		const { [fieldName]: _, ...patch } = this.pendingValues as Record<string, any>;
 		this._state.value.pendingValues = patch as unknown as Partial<T>;
 		this.commit();
 	}

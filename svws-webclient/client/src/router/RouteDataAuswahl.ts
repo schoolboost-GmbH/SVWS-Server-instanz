@@ -216,7 +216,7 @@ export abstract class RouteDataAuswahl<TAuswahlManager extends AuswahlManager<nu
 	 * @throws DeveloperNotificationException wenn Methode aufgerufen aber nicht überschrieben wurde
 	 */
 	public async ladeDatenMultiple(auswahlList: List<TAuswahl> | null, state: Partial<RouteState>): Promise<List<TDaten> | null> {
-		throw new DeveloperNotificationException("Die Methode ladeDatenMultiple() ist nicht implementiert.")
+		throw new DeveloperNotificationException("Die Methode ladeDatenMultiple() ist nicht implementiert.");
 	}
 
 
@@ -269,7 +269,7 @@ export abstract class RouteDataAuswahl<TAuswahlManager extends AuswahlManager<nu
 			}
 		}
 		this.commit();
-	}
+	};
 
 
 	/**
@@ -294,7 +294,7 @@ export abstract class RouteDataAuswahl<TAuswahlManager extends AuswahlManager<nu
 		Object.assign(daten as object, data);
 		this.manager.setDaten(daten);
 		this.commit();
-	}
+	};
 
 
 	protected abstract doDelete(ids: List<number>): Promise<List<SimpleOperationResponse>>;
@@ -340,7 +340,7 @@ export abstract class RouteDataAuswahl<TAuswahlManager extends AuswahlManager<nu
 		}
 
 		return [status, logMessages];
-	}
+	};
 
 
 	/**
@@ -348,7 +348,7 @@ export abstract class RouteDataAuswahl<TAuswahlManager extends AuswahlManager<nu
 	 */
 	private setDefaults() {
 		this.manager.liste.auswahlClear();
-		this.activeViewType = ViewType.DEFAULT
+		this.activeViewType = ViewType.DEFAULT;
 		this._state.value.view = (this._state.value.view?.name === this.view.name) ? this.view : this.defaultView;
 		this.commit();
 	}
@@ -390,7 +390,7 @@ export abstract class RouteDataAuswahl<TAuswahlManager extends AuswahlManager<nu
 
 			await this.setDaten(eintrag);
 		}
-	}
+	};
 
 	/**
 	 * Lädt die Gruppenprozess-Ansicht
@@ -440,12 +440,12 @@ export abstract class RouteDataAuswahl<TAuswahlManager extends AuswahlManager<nu
 				this._state.value.view = (this._state.value.view?.name === this.view.name) ? this.view : this.defaultGruppenprozesseView;
 			} else if (this._routeGruppenprozesse !== undefined) {
 				await RouteManager.doRoute(this._routeGruppenprozesse.getRoute());
-				this._state.value.view = this._routeGruppenprozesse
+				this._state.value.view = this._routeGruppenprozesse;
 			} else
 				throw new DeveloperNotificationException('Es wurde keine Standard Route für Gruppenprozesse festgelegt!');
 		}
 		this.commit();
-	}
+	};
 
 	/**
 	 * Lädt die Ansicht für das Hinzufügen von Daten
@@ -470,7 +470,7 @@ export abstract class RouteDataAuswahl<TAuswahlManager extends AuswahlManager<nu
 
 		this._state.value.view = this._routeHinzufuegen;
 		this.commit();
-	}
+	};
 
 	/**
 	 * Lädt die Ansicht für die Schnelleingabe von Daten
@@ -498,5 +498,5 @@ export abstract class RouteDataAuswahl<TAuswahlManager extends AuswahlManager<nu
 
 		this._state.value.view = this._routeSchnelleingabe;
 		this.commit();
-	}
+	};
 }

@@ -63,8 +63,8 @@
 
 	import { computed, ref } from "vue";
 	import type { FaecherGruppenprozesseProps } from "./SFaecherGruppenprozesseProps";
-	import type { List, StundenplanListeEintrag} from "@core";
-	import {ArrayList} from "@core";
+	import type { List, StundenplanListeEintrag } from "@core";
+	import { ArrayList } from "@core";
 	import { ServerMode, BenutzerKompetenz, ReportingParameter, DateUtils, ReportingReportvorlage } from "@core";
 
 	const props = defineProps<FaecherGruppenprozesseProps>();
@@ -89,15 +89,15 @@
 		if (currentAction.value === 'delete')
 			return props.deleteFaecherCheck();
 		return [true, []];
-	})
+	});
 
 	function setCurrentAction(newAction: string, open: boolean) {
-		if(newAction === oldAction.value.name && !open)
+		if (newAction === oldAction.value.name && !open)
 			return;
 		oldAction.value.name = currentAction.value;
 		oldAction.value.open = (currentAction.value === "") ? false : true;
-		if(open === true)
-			currentAction.value= newAction;
+		if (open === true)
+			currentAction.value = newAction;
 		else
 			currentAction.value = "";
 	}
@@ -146,14 +146,14 @@
 		loading.value = false;
 	}
 
-	const wochentag = ['So.', 'Mo.', 'Di.', 'Mi.', 'Do.', 'Fr.', 'Sa.', 'So.' ];
+	const wochentag = ['So.', 'Mo.', 'Di.', 'Mi.', 'Do.', 'Fr.', 'Sa.', 'So.'];
 
-	function toDateStr(iso: string) : string {
+	function toDateStr(iso: string): string {
 		const date = DateUtils.extractFromDateISO8601(iso);
 		return wochentag[date[3] % 7] + " " + date[2] + "." + date[1] + "." + date[0];
 	}
 
-	function toKW(iso: string) : string {
+	function toKW(iso: string): string {
 		const date = DateUtils.extractFromDateISO8601(iso);
 		return "" + date[5];
 	}

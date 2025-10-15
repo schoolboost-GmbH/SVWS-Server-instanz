@@ -19,7 +19,7 @@ export class RouteLaufbahnplanung extends RouteNode<unknown, RouteApp> {
 		super.text = "Laufbahnplanung";
 	}
 
-	public async update(to: RouteNode<unknown, any>, to_params: RouteParams) : Promise<void | Error | RouteLocationRaw> {
+	public async update(to: RouteNode<unknown, any>, to_params: RouteParams): Promise<void | Error | RouteLocationRaw> {
 		if (this.parent === undefined)
 			return routeError.getRoute(new Error("Fehler: Die Route ist ungültig - Parent ist nicht definiert"));
 		if (!routeApp.data.hatAuswahl)
@@ -30,8 +30,8 @@ export class RouteLaufbahnplanung extends RouteNode<unknown, RouteApp> {
 		routeApp.data.reset();
 	}
 
-	public getRoute() : RouteLocationRaw {
-		return { name: this.name, params: { }};
+	public getRoute(): RouteLocationRaw {
+		return { name: this.name, params: { } };
 	}
 
 	public getProps(to: RouteLocationNormalized): LaufbahnplanungOberstufeProps {

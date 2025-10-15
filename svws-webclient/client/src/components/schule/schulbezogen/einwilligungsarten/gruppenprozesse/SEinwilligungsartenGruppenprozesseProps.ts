@@ -1,5 +1,5 @@
 import type { Schulform, List, Schulgliederung, ServerMode, BenutzerKompetenz } from "@core";
-import type { EinwilligungsartenListeManager} from "@ui";
+import type { EinwilligungsartenListeManager } from "@ui";
 
 export interface SchuleEinwilligungsartenGruppenprozesseProps {
 	serverMode: ServerMode;

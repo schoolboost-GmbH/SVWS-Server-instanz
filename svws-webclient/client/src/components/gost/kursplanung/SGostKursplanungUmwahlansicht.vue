@@ -167,7 +167,7 @@
 	const hatUpdateKompetenz = computed<boolean>(() => {
 		return props.benutzerKompetenzen.has(BenutzerKompetenz.OBERSTUFE_KURSPLANUNG_ALLGEMEIN)
 			|| (props.benutzerKompetenzen.has(BenutzerKompetenz.OBERSTUFE_KURSPLANUNG_FUNKTIONSBEZOGEN)
-				&& props.benutzerKompetenzenAbiturjahrgaenge.has(props.getDatenmanager().daten().abijahrgang))
+				&& props.benutzerKompetenzenAbiturjahrgaenge.has(props.getDatenmanager().daten().abijahrgang));
 	});
 
 	const dragAndDropData = ref<DndData | undefined>(undefined);
@@ -175,7 +175,7 @@
 	const leereZellen = (id: number) => computed<number>(() => {
 		const diff = props.getErgebnismanager().getOfSchieneMaxKursanzahl() - props.getErgebnismanager().getOfSchieneKursmengeSortiert(id).size();
 		return diff < 0 ? 0 : diff;
-	})
+	});
 
 	async function auto_verteilen() {
 		await props.autoKursSchuelerZuordnung(idSchueler.value);
@@ -192,9 +192,9 @@
 	const cols = computed(() => {
 		const cols: DataTableColumn[] = [{ key: "schiene", label: "Schiene", minWidth: 8, span: 1, align: 'left' }];
 		for (let i = 0; i < props.getErgebnismanager().getOfSchieneMaxKursanzahl(); i++)
-			cols.push({ key: "kurs_" + (i+1), label: "Kurs " + (i+1), align: 'center', minWidth: 7, span: 1 });
+			cols.push({ key: "kurs_" + (i + 1), label: "Kurs " + (i + 1), align: 'center', minWidth: 7, span: 1 });
 		return cols;
-	})
+	});
 
 	const gridTemplateColumns = computed<string>(() => "grid-template-columns: minmax(8rem, 1fr) repeat(" + props.getErgebnismanager().getOfSchieneMaxKursanzahl() + ", minmax(7rem, 1fr))");
 
@@ -219,7 +219,7 @@
 
 	const is_drop_zone = (kurs: GostBlockungsergebnisKurs) => computed<boolean>(() => {
 		if (dragAndDropData.value === undefined)
-			return false
+			return false;
 		const { id, fachID, kursart } = dragAndDropData.value;
 		if ((id !== undefined) && (id === kurs.id))
 			return false;
@@ -230,7 +230,7 @@
 		return true;
 	});
 
-	function drag_started(id : number | undefined, fachID: number, kursart: number) {
+	function drag_started(id: number | undefined, fachID: number, kursart: number) {
 		dragAndDropData.value = { id, fachID, kursart };
 	}
 
@@ -261,7 +261,7 @@
 		await props.updateKursSchuelerZuordnungen(update);
 	}
 
-	function bgColor(idKurs : number) : string {
+	function bgColor(idKurs: number): string {
 		if (props.getErgebnismanager().getOfSchuelerOfKursIstZugeordnet(idSchueler.value, idKurs)) {
 			const k = props.getDatenmanager().kursGet(idKurs);
 			const f = props.getDatenmanager().faecherManager().get(k.fach_id);
@@ -271,17 +271,17 @@
 		return "";
 	}
 
-	function fach_gewaehlt(kurs: GostBlockungsergebnisKurs) : boolean {
+	function fach_gewaehlt(kurs: GostBlockungsergebnisKurs): boolean {
 		return props.getErgebnismanager().getOfSchuelerHatFachwahl(idSchueler.value, kurs.fachID, kurs.kursart);
 	}
 
-	function fixier_regel(idKurs: number) : GostBlockungRegel | null {
+	function fixier_regel(idKurs: number): GostBlockungRegel | null {
 		if (props.getDatenmanager().schuelerGetIstFixiertInKurs(idSchueler.value, idKurs))
 			return props.getDatenmanager().schuelerGetRegelFixiertInKurs(idSchueler.value, idKurs);
 		return null;
 	}
 
-	function verbieten_regel(idKurs: number) : GostBlockungRegel | null {
+	function verbieten_regel(idKurs: number): GostBlockungRegel | null {
 		if (props.getDatenmanager().schuelerGetIstVerbotenInKurs(idSchueler.value, idKurs))
 			return props.getDatenmanager().schuelerGetRegelVerbotenInKurs(idSchueler.value, idKurs);
 		return null;
@@ -330,7 +330,7 @@
 		return kursarten;
 	});
 
-	function bgColorFachwahl(idFach: number) : string {
+	function bgColorFachwahl(idFach: number): string {
 		const fwKurszuordnung = fachwahlKurszuordnungen.value.get(idFach);
 		if (fwKurszuordnung !== undefined)
 			return "white";

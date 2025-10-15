@@ -1,3 +1,3 @@
 export enum RouteEinstellungenMenuGroup {
-	BENUTZERVERWALTUNG = "Benutzerverwaltung",
+	BENUTZERVERWALTUNG = "Benutzerverwaltung"
 }

@@ -149,9 +149,9 @@
 
 <script setup lang="ts">
 
-	import {ref, computed } from "vue";
+	import { ref, computed } from "vue";
 	import type { KlassenGruppenprozesseProps } from "./SKlassenGruppenprozesseProps";
-	import type { StundenplanListeEintrag, List} from "@core";
+	import type { StundenplanListeEintrag, List } from "@core";
 	import { ServerMode, ReportingAusgabeformat, ReportingEMailDaten, ReportingEMailEmpfaengerTyp, ArrayList, BenutzerKompetenz, DateUtils, ReportingParameter, ReportingReportvorlage, ListUtils } from "@core";
 
 	type Action = 'druckKlasseListeSchuelerKontaktdatenErzieher' | 'druckKlasseStundenplan' | 'delete' | '';
@@ -163,10 +163,10 @@
 	const hatKompetenzDruckenSchuelerIndividualdaten = computed(() => (props.benutzerKompetenzen.has(BenutzerKompetenz.SCHUELER_INDIVIDUALDATEN_ANSEHEN) && hatKompetenzDrucken.value));
 	const hatKompetenzLoeschen = computed(() => props.benutzerKompetenzen.has(BenutzerKompetenz.UNTERRICHTSVERTEILUNG_ALLGEMEIN_AENDERN));
 
-	const isPrintDisabled = computed<boolean>(() => !props.manager().liste.auswahlExists() || loading.value)
-	const isPrintStundenplanDisabled = computed<boolean>(() => isPrintDisabled.value || stundenplanAuswahl.value === undefined)
-	const isEmailDisabled = computed<boolean>(() => isPrintDisabled.value || ((emailBetreff.value.trim().length) === 0) || ((emailText.value.trim().length) === 0))
-	const isEmailStundenplanDisabled = computed<boolean>(() => isEmailDisabled.value || ((emailBetreff.value.trim().length) === 0) || ((emailText.value.trim().length) === 0))
+	const isPrintDisabled = computed<boolean>(() => !props.manager().liste.auswahlExists() || loading.value);
+	const isPrintStundenplanDisabled = computed<boolean>(() => isPrintDisabled.value || stundenplanAuswahl.value === undefined);
+	const isEmailDisabled = computed<boolean>(() => isPrintDisabled.value || ((emailBetreff.value.trim().length) === 0) || ((emailText.value.trim().length) === 0));
+	const isEmailStundenplanDisabled = computed<boolean>(() => isEmailDisabled.value || ((emailBetreff.value.trim().length) === 0) || ((emailText.value.trim().length) === 0));
 
 	const currentAction = ref<Action>('');
 
@@ -182,13 +182,13 @@
 			for (const klasse of props.manager().getKlassenIDsMitSchuelern())
 				errorLog.add(`Klasse ${props.manager().liste.get(klasse)?.kuerzel ?? '???'} (ID: ${klasse}) kann nicht gelöscht werden, da ihr noch Schüler zugeordnet sind.`);
 		return errorLog;
-	})
+	});
 
 	const leereKlassenVorhanden = computed(() =>
 		!alleKlassenLeer.value && (props.manager().getKlassenIDsMitSchuelern().size() !== props.manager().liste.auswahlSize()));
 
 	function setCurrentAction(newAction: Action, open: boolean) {
-		if(newAction !== currentAction.value && !open)
+		if (newAction !== currentAction.value && !open)
 			return;
 		option2.value = false;
 		option4.value = false;
@@ -471,14 +471,14 @@
 		option4096.value = false;
 	}
 
-	const wochentag = ['So.', 'Mo.', 'Di.', 'Mi.', 'Do.', 'Fr.', 'Sa.', 'So.' ];
+	const wochentag = ['So.', 'Mo.', 'Di.', 'Mi.', 'Do.', 'Fr.', 'Sa.', 'So.'];
 
-	function toDateStr(iso: string) : string {
+	function toDateStr(iso: string): string {
 		const date = DateUtils.extractFromDateISO8601(iso);
 		return wochentag[date[3] % 7] + " " + date[2] + "." + date[1] + "." + date[0];
 	}
 
-	function toKW(iso: string) : string {
+	function toKW(iso: string): string {
 		const date = DateUtils.extractFromDateISO8601(iso);
 		return "" + date[5];
 	}

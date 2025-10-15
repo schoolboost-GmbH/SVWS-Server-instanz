@@ -2,11 +2,11 @@ import { computed } from "vue";
 
 import type { AES } from "~/utils/crypto/aes";
 import type { Config } from "../../../ui/src/utils/Config";
-import type { List, DBSchemaListeEintrag, ApiServer, ApiExternal, LehrerListeEintrag, SchuelerListeEintrag, KlassenDaten, KursDaten, JahrgangsDaten, SchuleStammdaten, Schuljahresabschnitt, BenutzerDaten, BenutzerKompetenz, ServerMode, ValidatorKontext} from "@core";
+import type { List, DBSchemaListeEintrag, ApiServer, ApiExternal, LehrerListeEintrag, SchuelerListeEintrag, KlassenDaten, KursDaten, JahrgangsDaten, SchuleStammdaten, Schuljahresabschnitt, BenutzerDaten, BenutzerKompetenz, ServerMode, ValidatorKontext } from "@core";
 import { Schulform, Schulgliederung, BenutzerTyp, DeveloperNotificationException } from "@core";
 
 import { ApiConnection } from "~/router/ApiConnection";
-import type { ApiPendingData} from "~/components/ApiStatus";
+import type { ApiPendingData } from "~/components/ApiStatus";
 import { ApiStatus } from "~/components/ApiStatus";
 import { version } from '../../version';
 import { githash } from "../../githash";
@@ -46,17 +46,17 @@ class Api {
 	}
 
 	/** Gibt den Hostnamen zurück des SVWS-Servers zurück */
-	get hostname() : string {
+	get hostname(): string {
 		return this.conn.hostname;
 	}
 
 	/** Gibt den Status zurück, ob der Benutzer authentifiziert wurde */
-	get authenticated() : boolean {
+	get authenticated(): boolean {
 		return this.conn.authenticated;
 	}
 
 	/** Gibt den Benutzernamen für die Verbindung zum SVWS-Server zurück **/
-	get username() : string {
+	get username(): string {
 		return this.conn.username;
 	}
 
@@ -77,13 +77,13 @@ class Api {
 
 	/** Gibt die Map der CoreTypeDaten zurück */
 	get mapCoreTypeNameJsonData(): Map<string, string> {
-		return this.conn.mapCoreTypeNameJsonData
+		return this.conn.mapCoreTypeNameJsonData;
 	}
 
 	/** Setzt die Map der CoreTypeDaten zurück */
 	setMapCoreTypeNameJsonData = (map: Map<string, string>) => {
 		this.conn.mapCoreTypeNameJsonData = map;
-	}
+	};
 
 	/**
 	 * Setzt den Hostnamen des SVWS-Server für den Verbindungsaufbau.
@@ -92,7 +92,7 @@ class Api {
 	 */
 	setHostname = (hostname: string): void => {
 		return this.conn.setHostname(hostname);
-	}
+	};
 
 	/**
 	 * Versucht eine Verbindung zu der angegebenen Adresse herzustellen.
@@ -103,7 +103,7 @@ class Api {
 	 */
 	connectTo = async (adresse: string): Promise<List<DBSchemaListeEintrag>> => {
 		return await this.conn.connectTo(adresse);
-	}
+	};
 
 	/**
 	 * Authentifiziert den Benutzer mit dem angebenen Benutzernamen und Kennwort bei dem
@@ -117,7 +117,7 @@ class Api {
 	 */
 	login = async (schema: string, username: string, password: string): Promise<void> => {
 		return await this.conn.login(schema, username, password);
-	}
+	};
 
 	/**
 	 * Initialialisiert die Daten, die beim Login geladen )erden sollen
@@ -126,14 +126,14 @@ class Api {
 	 */
 	init = async (): Promise<boolean> => {
 		return await this.conn.init();
-	}
+	};
 
 	/**
 	 * Meldet den angemeldeten Benutzer bei der Api ab.
 	 */
 	logout = async (): Promise<void> => {
 		await this.conn.logout();
-	}
+	};
 
 
 	/// --- Informationen zu dem Benutzer, der angemeldet ist
@@ -251,14 +251,14 @@ class Api {
 	/**
 	 * Gibt die benutzerspezifische und globale Konfiguration zurück.
 	 */
-	public get config() : Config {
+	public get config(): Config {
 		return this.conn.config;
 	}
 
 	/**
 	 * Gibt die benutzerspezifische und globale nicht persistierte Konfiguration zurück.
 	 */
-	public get nonPersistentConfig() : Config {
+	public get nonPersistentConfig(): Config {
 		return this.conn.nonPersistentConfig;
 	}
 
@@ -342,7 +342,7 @@ class Api {
 	 * @returns der Schuljahresabschnitt
 	 */
 	public getAbschnittBySchuljahrUndAbschnitt(schuljahr: number, abschnitt: number): Schuljahresabschnitt | undefined {
-		let result : Schuljahresabschnitt | undefined = undefined;
+		let result: Schuljahresabschnitt | undefined = undefined;
 		for (const a of this.schuleStammdaten.abschnitte) {
 			if ((a.schuljahr === schuljahr) && (a.abschnitt === abschnitt)) {
 				result = a;
@@ -373,7 +373,7 @@ class Api {
 	 */
 	updatedApiData = () => {
 		this.conn.updatedApiData();
-	}
+	};
 
 	/// --- Methoden für den einfachen Api-Zugriff
 
@@ -419,7 +419,7 @@ class Api {
 		const listKlassen = await this.server.getKlassenFuerAbschnitt(this.schema, idSchuljahresabschnitt);
 		const mapKlassen = new Map<number, KlassenDaten>();
 		for (const k of listKlassen)
-			mapKlassen.set(k.id, k)
+			mapKlassen.set(k.id, k);
 		return mapKlassen;
 	}
 
@@ -435,7 +435,7 @@ class Api {
 		const listKurse = await this.server.getKurseFuerAbschnitt(this.schema, idSchuljahresabschnitt);
 		const mapKurse: Map<number, KursDaten> = new Map();
 		for (const k of listKurse)
-			mapKurse.set(k.id, k)
+			mapKurse.set(k.id, k);
 		return mapKurse;
 	}
 
@@ -448,9 +448,9 @@ class Api {
 	public async getJahrgangsListe(): Promise<Map<number, JahrgangsDaten>> {
 		// aktualisiere die Jahrgänge und erstelle Map
 		const listJahrgaenge = await this.server.getJahrgaenge(this.schema);
-		const mapJahrgaenge: Map<number, JahrgangsDaten> = new Map()
+		const mapJahrgaenge: Map<number, JahrgangsDaten> = new Map();
 		for (const j of listJahrgaenge)
-			mapJahrgaenge.set(j.id, j)
+			mapJahrgaenge.set(j.id, j);
 		return mapJahrgaenge;
 	}
 
@@ -474,8 +474,8 @@ class Api {
 			} finally {
 				this.status.stop();
 			}
-		}
-	}
+		};
+	};
 
 }
 

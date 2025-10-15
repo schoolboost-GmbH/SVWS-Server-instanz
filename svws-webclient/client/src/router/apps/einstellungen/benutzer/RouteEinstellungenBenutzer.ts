@@ -34,23 +34,24 @@ export class RouteEinstellungenBenutzer extends RouteNode<RouteDataEinstellungen
 		super.defaultChild = routeEinstellungenBenutzerDaten;
 	}
 
-	public async beforeEach(to: RouteNode<any, any>, to_params: RouteParams, from: RouteNode<any, any> | undefined, from_params: RouteParams) : Promise<boolean | void | Error | RouteLocationRaw> {
+	public async beforeEach(to: RouteNode<any, any>, to_params: RouteParams, from: RouteNode<any, any> | undefined, from_params: RouteParams): Promise<boolean | void | Error | RouteLocationRaw> {
 		try {
 			const { id } = RouteNode.getIntParams(to_params, ["id"]);
 			if (id !== undefined)
 				return routeEinstellungenBenutzer.getRoute({ id });
 			return true;
-		} catch(e) {
+		} catch (e) {
 			return await routeError.getErrorRoute(e as DeveloperNotificationException);
 		}
 	}
 
-	protected async update(to: RouteNode<any, any>, to_params: RouteParams) : Promise<void | Error | RouteLocationRaw> {
+	protected async update(to: RouteNode<any, any>, to_params: RouteParams): Promise<void | Error | RouteLocationRaw> {
 		try {
 			const { id } = RouteNode.getIntParams(to_params, ["id"]);
 			await this.data.ladeListe();
 			if (to.name === this.name) {
-				if (this.data.mapBenutzer.size === 0) return;
+				if (this.data.mapBenutzer.size === 0)
+					return;
 				const [next] = this.data.mapBenutzer.values();
 				return this.getRouteDefaultChild({ id: next.id });
 			}
@@ -61,7 +62,7 @@ export class RouteEinstellungenBenutzer extends RouteNode<RouteDataEinstellungen
 				return routeEinstellungenBenutzerDaten.getRoute({ id: next.id });
 			}
 			await this.data.setBenutzer(eintrag);
-		} catch(e) {
+		} catch (e) {
 			return await routeError.getErrorRoute(e as DeveloperNotificationException);
 		}
 

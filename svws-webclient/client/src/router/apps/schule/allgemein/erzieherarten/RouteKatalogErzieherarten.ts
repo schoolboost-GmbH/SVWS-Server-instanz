@@ -16,7 +16,7 @@ const SErzieherartenApp = () => import("~/components/schule/allgemein/erzieherar
 export class RouteKatalogErzieherarten extends RouteAuswahlNode<ErzieherartListeManager, RouteDataKatalogErzieherarten, RouteApp> {
 
 	public constructor() {
-		super(Schulform.values(), [ BenutzerKompetenz.KATALOG_EINTRAEGE_ANSEHEN, BenutzerKompetenz.KATALOG_EINTRAEGE_AENDERN ], "schule.erzieherarten", "schule/erzieherarten/:id(\\d+)?", SErzieherartenApp, SErzieherartenAuswahl, new RouteDataKatalogErzieherarten());
+		super(Schulform.values(), [BenutzerKompetenz.KATALOG_EINTRAEGE_ANSEHEN, BenutzerKompetenz.KATALOG_EINTRAEGE_AENDERN], "schule.erzieherarten", "schule/erzieherarten/:id(\\d+)?", SErzieherartenApp, SErzieherartenAuswahl, new RouteDataKatalogErzieherarten());
 		super.mode = ServerMode.DEV;
 		super.text = "Erzieherarten";
 		super.menugroup = RouteSchuleMenuGroup.ALLGEMEIN;

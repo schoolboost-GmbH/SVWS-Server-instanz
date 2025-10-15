@@ -135,7 +135,7 @@
 
 	const selectedErz = ref<ErzieherStammdaten[]>([]);
 
-	const ersterErz = ref<ErzieherStammdaten>(new ErzieherStammdaten())
+	const ersterErz = ref<ErzieherStammdaten>(new ErzieherStammdaten());
 	const zweiterErz = ref<ErzieherStammdaten>(new ErzieherStammdaten());
 
 	enum Mode { ADD, PATCH, PATCH_POS2, DEFAULT }
@@ -247,11 +247,11 @@
 	}, { immediate: true });
 
 	const columns: DataTableColumn[] = [
-		{ key: "idErzieherArt", label: "Art"},
-		{ key: "name", label: "Name"},
-		{ key: "eMail", label: "E-Mail"},
-		{ key: "adresse", label: "Adresse"},
-		{ key: "erhaeltAnschreiben", label: "Anschreiben", tooltip: "Erhält Anschreiben", fixedWidth: 3, align: "center"},
+		{ key: "idErzieherArt", label: "Art" },
+		{ key: "name", label: "Name" },
+		{ key: "eMail", label: "E-Mail" },
+		{ key: "adresse", label: "Adresse" },
+		{ key: "erhaeltAnschreiben", label: "Anschreiben", tooltip: "Erhält Anschreiben", fixedWidth: 3, align: "center" },
 		{ key: "actions", label: "2. Person", tooltip: "Weiteres Elternteil hinzufügen", fixedWidth: 10, align: "center" },
 	];
 
@@ -279,7 +279,7 @@
 	function addModal() {
 		resetForm();
 		setMode(Mode.ADD);
-		openModal()
+		openModal();
 		ersterErz.value.id = 0;
 	}
 

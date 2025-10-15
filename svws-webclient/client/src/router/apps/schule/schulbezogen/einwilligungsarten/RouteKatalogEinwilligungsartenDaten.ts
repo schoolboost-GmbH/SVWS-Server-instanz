@@ -13,7 +13,7 @@ const SEinwilligungsartDaten = () => import("~/components/schule/schulbezogen/ei
 export class RouteKatalogEinwilligungsartenDaten extends RouteNode<any, RouteKatalogEinwilligungsarten> {
 
 	public constructor() {
-		super(Schulform.values(), [ BenutzerKompetenz.KATALOG_EINTRAEGE_ANSEHEN, BenutzerKompetenz.KATALOG_EINTRAEGE_AENDERN ], "schule.einwilligungsarten.daten", "daten", SEinwilligungsartDaten);
+		super(Schulform.values(), [BenutzerKompetenz.KATALOG_EINTRAEGE_ANSEHEN, BenutzerKompetenz.KATALOG_EINTRAEGE_AENDERN], "schule.einwilligungsarten.daten", "daten", SEinwilligungsartDaten);
 		super.mode = ServerMode.DEV;
 		super.propHandler = (route) => this.getProps(route);
 		super.text = "Einwilligungsart";
@@ -21,7 +21,7 @@ export class RouteKatalogEinwilligungsartenDaten extends RouteNode<any, RouteKat
 
 	gotoSchueler = async (schuelerEinwilligungsartenZusammenfassung: SchuelerEinwilligungsartenZusammenfassung) => {
 		await RouteManager.doRoute(routeSchuelerEinwilligungen.getRoute({ id: schuelerEinwilligungsartenZusammenfassung.id }));
-	}
+	};
 
 	public getProps(to: RouteLocationNormalized): EinwilligungsartenDatenProps {
 		return {

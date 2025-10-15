@@ -15,7 +15,7 @@ export interface PaneSplitterConfig {
  * Dazu werden ein paar Config-Daten übergeben, z.B. die Ausgangsbreite des Panels, die Mindest- und Maximalgröße eines Panels.
  * Dazu, ob es ein horizontaler oder ein vertikaler Split sein soll. Unis werden aktuell nicht berücksichtigt.
  */
-export function usePaneSplitter({ defaultSplit= 80, minSplit= 20, maxSplit= 80, snap= 100, unit= '%', mode= 'vertical', dragger= ref(null) }: PaneSplitterConfig= {}) {
+export function usePaneSplitter({ defaultSplit = 80, minSplit = 20, maxSplit = 80, snap = 100, unit = '%', mode = 'vertical', dragger = ref(null) }: PaneSplitterConfig = {}) {
 
 	const currentSplit = ref(defaultSplit);
 
@@ -30,10 +30,10 @@ export function usePaneSplitter({ defaultSplit= 80, minSplit= 20, maxSplit= 80, 
 			return currentSplit.value;
 	});
 
-	const thisStyle = computed(() => `${mode === 'vertical' ? 'width':'height'}: ${boundSplit.value}%;`);
-	const thatStyle = computed(() => `${mode === 'vertical' ? 'width':'height'}: ${100 - boundSplit.value}%;`);
+	const thisStyle = computed(() => `${mode === 'vertical' ? 'width' : 'height'}: ${boundSplit.value}%;`);
+	const thatStyle = computed(() => `${mode === 'vertical' ? 'width' : 'height'}: ${100 - boundSplit.value}%;`);
 
-	const dragging = ref(false)
+	const dragging = ref(false);
 	let startPosition = 0;
 	let startSplit = 0;
 
@@ -52,8 +52,7 @@ export function usePaneSplitter({ defaultSplit= 80, minSplit= 20, maxSplit= 80, 
 			if (mode === 'vertical') {
 				position = e.pageX;
 				totalSize = dragger.value.offsetWidth;
-			}
-			else {
+			} else {
 				position = e.pageY;
 				totalSize = dragger.value.offsetHeight;
 			}

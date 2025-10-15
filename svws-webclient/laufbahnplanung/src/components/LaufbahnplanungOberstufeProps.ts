@@ -12,12 +12,12 @@ export interface LaufbahnplanungOberstufeProps {
 	serverMode: ServerMode;
 	config: () => Config;
 	setWahl: (fachID: number, wahl: GostSchuelerFachwahl) => Promise<void>;
-	setGostBelegpruefungsArt: (value: 'ef1'|'gesamt'|'auto') => Promise<void>;
+	setGostBelegpruefungsArt: (value: 'ef1' | 'gesamt' | 'auto') => Promise<void>;
 	exportLaufbahnplanung: () => Promise<ApiFile>;
 	importLaufbahnplanung: (data: FormData) => Promise<void>;
 	schueler: SchuelerListeEintrag,
 	gostJahrgangsdaten: GostJahrgangsdaten;
-	gostBelegpruefungsArt: () => 'ef1'|'gesamt'|'auto';
+	gostBelegpruefungsArt: () => 'ef1' | 'gesamt' | 'auto';
 	gostBelegpruefungErgebnis: () => GostBelegpruefungErgebnis;
 	abiturdatenManager: () => AbiturdatenManager;
 	id?: number;

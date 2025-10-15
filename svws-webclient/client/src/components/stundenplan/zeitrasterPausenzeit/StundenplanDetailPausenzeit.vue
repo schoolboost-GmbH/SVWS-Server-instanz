@@ -43,7 +43,7 @@
 	function getColumns() {
 		const cols = [
 			{ key: "id", label: "Aufsicht" },
-			{ key: 'bereiche', label: "Bereich", span: 1 }
+			{ key: 'bereiche', label: "Bereich", span: 1 },
 		];
 		if (hatWochentypen.value)
 			cols.push({ key: 'wochentyp', label: "Wochentyp", span: 0.5 });

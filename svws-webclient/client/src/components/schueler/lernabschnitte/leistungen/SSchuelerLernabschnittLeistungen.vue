@@ -124,7 +124,7 @@
 
 	import { computed, ref, watch } from "vue";
 	import type { SchuelerLernabschnittLeistungenProps } from "./SSchuelerLernabschnittLeistungenProps";
-	import type { SchuelerLeistungsdaten, List, KursDaten, FachDaten, LehrerListeEintrag} from "@core";
+	import type { SchuelerLeistungsdaten, List, KursDaten, FachDaten, LehrerListeEintrag } from "@core";
 	import { Note, ZulaessigeKursart, ArrayList, Fach, BenutzerKompetenz, BenutzerTyp, Jahrgaenge } from "@core";
 
 	const props = defineProps<SchuelerLernabschnittLeistungenProps>();
@@ -178,7 +178,7 @@
 	 *
 	 * @param idFachlehrer   die ID des Fachlehrers
 	 */
-	function hatFachlehrerKompetenz(idFachlehrer : number | null) : boolean {
+	function hatFachlehrerKompetenz(idFachlehrer: number | null): boolean {
 		// Prüfe, ob der Benutzer sowieso eine übergeordnete funktionsbezogene Kompetenz hat
 		if (hatUpdateKompetenz.value)
 			return true;
@@ -198,7 +198,7 @@
 			const tmpSetIDs = new Set<number>();
 			for (const l of oldLeistungen)
 				tmpSetIDs.add(l.id);
-			let changed : boolean = false;
+			let changed: boolean = false;
 			for (const l of newLeistungen)
 				if (!tmpSetIDs.has(l.id)) {
 					changed = true;
@@ -212,7 +212,7 @@
 
 	const auswahl = ref<Set<SchuelerLeistungsdaten>>(new Set());
 
-	function textLehrer(lehrer : LehrerListeEintrag | null) : string {
+	function textLehrer(lehrer: LehrerListeEintrag | null): string {
 		if (lehrer === null)
 			return '—';
 		return lehrer.kuerzel + ' (' + lehrer.nachname + ', ' + lehrer.vorname + ')';
@@ -228,7 +228,7 @@
 		}
 	}
 
-	function someSelected() : boolean {
+	function someSelected(): boolean {
 		return (auswahl.value.size > 0) && (auswahl.value.size < leistungen.value.size());
 	}
 
@@ -241,8 +241,8 @@
 		await props.deleteLeistungen(leistungenIDs);
 	};
 
-	function getLernbereichsnoten() : Note[] {
-		return [ Note.KEINE, Note.SEHR_GUT, Note.GUT, Note.BEFRIEDIGEND, Note.AUSREICHEND, Note.MANGELHAFT, Note.UNGENUEGEND ];
+	function getLernbereichsnoten(): Note[] {
+		return [Note.KEINE, Note.SEHR_GUT, Note.GUT, Note.BEFRIEDIGEND, Note.AUSREICHEND, Note.MANGELHAFT, Note.UNGENUEGEND];
 	}
 
 	const lernbereichsnoteGSbzwAL = computed<Note | undefined>({
@@ -268,7 +268,7 @@
 			return;
 		}
 		// Spezialfälle
-		const f : Fach = Fach.getBySchluesselOrDefault(fach.kuerzelStatistik);
+		const f: Fach = Fach.getBySchluesselOrDefault(fach.kuerzelStatistik);
 		if (f === Fach.VX) { // Speziallfall Gymnasiale Oberstufe - Vertiefungsfach
 			await props.patchLeistung({ fachID: fach.id, kursID: null, kursart: ZulaessigeKursart.VTF.daten(schuljahr.value)?.kuerzel }, leistung.id);
 		} else if (f === Fach.PX) { // Speziallfall Gymnasiale Oberstufe - Projektkursfach
@@ -288,9 +288,9 @@
 		}
 		const kursart = (leistung.kursart === null) ? ZulaessigeKursart.PUK : ZulaessigeKursart.data().getWertByKuerzel(leistung.kursart);
 		if (kurs.kursartAllg !== kursart?.daten(schuljahr.value)?.kuerzelAllg) {
-			const kursarten : List<ZulaessigeKursart> = ZulaessigeKursart.getByAllgemeinerKursart(schuljahr.value, kurs.kursartAllg);
-			let neueKursart : ZulaessigeKursart | null = kursart;
-			let neuesAbifach : number | null = leistung.abifach;
+			const kursarten: List<ZulaessigeKursart> = ZulaessigeKursart.getByAllgemeinerKursart(schuljahr.value, kurs.kursartAllg);
+			let neueKursart: ZulaessigeKursart | null = kursart;
+			let neuesAbifach: number | null = leistung.abifach;
 			if (kurs.kursartAllg === ZulaessigeKursart.E.daten(schuljahr.value)?.kuerzel) { // Speziallfall Gesamtschule E-Kurs
 				neueKursart = ZulaessigeKursart.E;
 			} else if (kurs.kursartAllg === ZulaessigeKursart.G.daten(schuljahr.value)?.kuerzel) { // Speziallfall Gesamtschule G-Kurs

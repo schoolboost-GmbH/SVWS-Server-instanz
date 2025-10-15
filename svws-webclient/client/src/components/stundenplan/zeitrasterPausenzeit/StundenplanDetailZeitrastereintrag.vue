@@ -48,7 +48,7 @@
 	import { computed, ref } from "vue";
 	import type { ComponentExposed } from "vue-component-type-helpers";
 	import type { StundenplanManager } from "@core";
-	import { DateUtils, Wochentag, Fach , StundenplanZeitraster, ListUtils } from "@core";
+	import { DateUtils, Wochentag, Fach, StundenplanZeitraster, ListUtils } from "@core";
 	import { SvwsUiTextInput } from "@ui";
 
 	const props = defineProps<{
@@ -69,7 +69,7 @@
 		{ key: 'idFach', label: 'Unterricht' },
 		{ key: 'jahrgang', label: 'Jahrgang' },
 		{ key: 'klassen', label: 'Klassen' },
-		{ key: 'raeume', label: 'Räume'},
+		{ key: 'raeume', label: 'Räume' },
 	];
 
 	function getBgColor(fach: string): string {

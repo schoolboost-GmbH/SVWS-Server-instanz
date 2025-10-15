@@ -15,7 +15,7 @@ export class RouteBeschaeftigungsartenGruppenprozesse extends RouteNode<any, Rou
 
 	public constructor() {
 		super([Schulform.BK, Schulform.SB, Schulform.WB], [BenutzerKompetenz.KATALOG_EINTRAEGE_ANSEHEN, BenutzerKompetenz.KATALOG_EINTRAEGE_AENDERN,
-			BenutzerKompetenz.KATALOG_EINTRAEGE_LOESCHEN], "schule.beschaeftigungsarten.gruppenprozesse" , "gruppenprozesse", SBeschaeftigungsartenGruppenprozesse);
+			BenutzerKompetenz.KATALOG_EINTRAEGE_LOESCHEN], "schule.beschaeftigungsarten.gruppenprozesse", "gruppenprozesse", SBeschaeftigungsartenGruppenprozesse);
 		super.types = new Set([ViewType.GRUPPENPROZESSE]);
 		super.mode = ServerMode.DEV;
 		super.propHandler = (route) => this.getProps(route);
@@ -23,7 +23,7 @@ export class RouteBeschaeftigungsartenGruppenprozesse extends RouteNode<any, Rou
 	}
 
 	public getRoute(): RouteLocationRaw {
-		return { name: this.name, params: {idSchuljahresabschnitt: routeApp.data.idSchuljahresabschnitt, id: ""}};
+		return { name: this.name, params: { idSchuljahresabschnitt: routeApp.data.idSchuljahresabschnitt, id: "" } };
 	}
 
 	public getProps(to: RouteLocationNormalized): BeschaeftigungsartenGruppenprozesseProps {
@@ -32,7 +32,7 @@ export class RouteBeschaeftigungsartenGruppenprozesse extends RouteNode<any, Rou
 			benutzerKompetenzen: api.benutzerKompetenzen,
 			deleteBeschaeftigungsarten: routeBeschaeftigungsarten.data.delete,
 			manager: () => routeBeschaeftigungsarten.data.manager,
-		}
+		};
 	}
 }
 

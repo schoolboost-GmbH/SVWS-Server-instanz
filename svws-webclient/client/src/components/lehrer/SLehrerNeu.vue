@@ -64,10 +64,10 @@
 	const hatKompetenzAdd = computed<boolean>(() => props.benutzerKompetenzen.has(BenutzerKompetenz.LEHRERDATEN_AENDERN));
 	const disabled = computed(() => !hatKompetenzAdd.value);
 	const data = ref<LehrerStammdaten>(
-		Object.assign(new LehrerStammdaten(), {personalTyp: "LEHRKRAFT"})
+		Object.assign(new LehrerStammdaten(), { personalTyp: "LEHRKRAFT" })
 	);
 	const ortsteile = computed<Array<OrtsteilKatalogEintrag>>(() => {
-		const result : Array<OrtsteilKatalogEintrag> = [];
+		const result: Array<OrtsteilKatalogEintrag> = [];
 		for (const ortsteil of props.mapOrtsteile.values())
 			if (ortsteil.ort_id === data.value.wohnortID)
 				result.push(ortsteil);
@@ -75,16 +75,16 @@
 	});
 	const adresse = computed({
 		get: () => AdressenUtils.combineStrasse(data.value.strassenname, data.value.hausnummer, data.value.hausnummerZusatz),
-		set: (adresse : string) => {
+		set: (adresse: string) => {
 			const vals = AdressenUtils.splitStrasse(adresse);
 			data.value.strassenname = vals[0];
 			data.value.hausnummer = vals[1];
 			data.value.hausnummerZusatz = vals[2];
 		},
-	})
+	});
 
-	//validation logic
-	function fieldIsValid(field: keyof LehrerStammdaten | null):(v: string | null) => boolean {
+	// validation logic
+	function fieldIsValid(field: keyof LehrerStammdaten | null): (v: string | null) => boolean {
 		return (v: string | null) => {
 			switch (field) {
 				case 'kuerzel':
@@ -120,7 +120,7 @@
 				default:
 					return true;
 			}
-		}
+		};
 	}
 
 	const formIsValid = computed(() => {
@@ -137,7 +137,7 @@
 			stringIsValid(data.value.hausnummerZusatz, false, 30);
 	}
 
-	function kuerzelIsValid(kuerzel : string | null) {
+	function kuerzelIsValid(kuerzel: string | null) {
 		if ((kuerzel === null) || JavaString.isBlank(kuerzel) || (kuerzel.length > 10))
 			return false;
 		for (const lehrerStammdaten of props.lehrerListeManager().liste.list()) {
@@ -162,15 +162,15 @@
 
 	const isLoading = ref<boolean>(false);
 
-	watch(() => data.value, async() => {
+	watch(() => data.value, async () => {
 		if (isLoading.value)
 			return;
 
 		props.checkpoint.active = true;
-	}, {immediate: false, deep: true})
+	}, { immediate: false, deep: true });
 
 
-	//api call
+	// api call
 	async function addLehrerStammdaten() {
 		if (isLoading.value)
 			return;
@@ -182,7 +182,7 @@
 		isLoading.value = false;
 	}
 
-	//other
+	// other
 	function cancel() {
 		props.checkpoint.active = false;
 		void props.gotoDefaultView(null);

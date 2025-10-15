@@ -19,20 +19,20 @@ const SSchuelerNeu = () => import("~/components/schueler/SSchuelerNeu.vue");
 export class RouteSchuelerNeu extends RouteNode<any, RouteSchueler> {
 
 	public constructor() {
-		super(Schulform.values(), [ BenutzerKompetenz.SCHUELER_INDIVIDUALDATEN_AENDERN ], "schueler.neu", "neu", SSchuelerNeu);
-		super.types = new Set([ ViewType.HINZUFUEGEN ]);
+		super(Schulform.values(), [BenutzerKompetenz.SCHUELER_INDIVIDUALDATEN_AENDERN], "schueler.neu", "neu", SSchuelerNeu);
+		super.types = new Set([ViewType.HINZUFUEGEN]);
 		super.mode = ServerMode.DEV;
 		super.propHandler = (route) => this.getProps(route);
 		super.text = "Schüler Neu";
 		this.isHidden = (params?: RouteParams) => {
 			return this.checkHidden(params);
-		}
+		};
 		super.setCheckpoint = true;
 	}
 
 	protected checkHidden(params?: RouteParams) {
 		try {
-			const { id } = (params !== undefined) ? RouteNode.getIntParams(params, ["id"]) : {id: undefined};
+			const { id } = (params !== undefined) ? RouteNode.getIntParams(params, ["id"]) : { id: undefined };
 			if (!routeSchueler.data.manager.hasDaten())
 				return false;
 			if (api.benutzerHatKompetenz(BenutzerKompetenz.SCHUELER_INDIVIDUALDATEN_AENDERN))
@@ -62,8 +62,8 @@ export class RouteSchuelerNeu extends RouteNode<any, RouteSchueler> {
 			this.clearInitialeSchuelerDaten();
 	}
 
-	public addRouteParamsFromState() : RouteParamsRawGeneric {
-		return { id : "" };
+	public addRouteParamsFromState(): RouteParamsRawGeneric {
+		return { id: "" };
 	}
 
 	public getProps(to: RouteLocationNormalized): SchuelerNeuProps {

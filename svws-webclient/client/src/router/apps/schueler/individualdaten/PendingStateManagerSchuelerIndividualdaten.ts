@@ -1,7 +1,7 @@
 import type { AuswahlManager } from "@ui";
 import { PendingStateManager } from "@ui";
 import type { Fahrschuelerart, Haltestelle, ReligionEintrag, NationalitaetenKatalogEintrag, SchuelerStammdaten, SchulEintrag, SchuelerStatusKatalogEintrag,
-	VerkehrsspracheKatalogEintrag} from "@core";
+	VerkehrsspracheKatalogEintrag } from "@core";
 import { Nationalitaeten, SchuelerStatus, Verkehrssprache } from "@core";
 import { computed } from "vue";
 

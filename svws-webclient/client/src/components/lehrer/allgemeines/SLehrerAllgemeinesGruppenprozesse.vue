@@ -89,7 +89,7 @@
 
 	import { ref, computed } from "vue";
 	import type { SLehrerAllgemeinesGruppenprozesseProps } from "./SLehrerAllgemeinesGruppenprozesseProps";
-	import type { List, StundenplanListeEintrag} from "@core";
+	import type { List, StundenplanListeEintrag } from "@core";
 	import { DateUtils, ReportingParameter, ReportingReportvorlage, ListUtils, ArrayList, BenutzerKompetenz, ReportingSortierungDefinition, ReportingEMailDaten, ReportingEMailEmpfaengerTyp, ReportingAusgabeformat, ServerMode } from "@core";
 	import { SelectManager } from "@ui";
 
@@ -101,10 +101,10 @@
 	const hatKompetenzDruckenStundenplan = computed(() => (props.benutzerKompetenzen.has(BenutzerKompetenz.UNTERRICHTSVERTEILUNG_ANSEHEN) && hatKompetenzDrucken.value));
 	const hatKompetenzLoeschen = computed(() => props.benutzerKompetenzen.has(BenutzerKompetenz.SCHUELER_LOESCHEN));
 
-	const isPrintDisabled = computed<boolean>(() => !props.lehrerListeManager().liste.auswahlExists() || loading.value)
-	const isPrintStundenplanDisabled = computed<boolean>(() => isPrintDisabled.value || stundenplanAuswahl.value === undefined)
-	const isEmailStundenplanDisabled = computed<boolean>(() => isPrintStundenplanDisabled.value || ((emailBetreff.value.trim().length) === 0) || ((emailText.value.trim().length) === 0))
-	const isDeleteDisabled = computed<boolean>(() => !hatKompetenzLoeschen.value || !props.lehrerListeManager().liste.auswahlExists() || !props.deleteLehrerCheck().success || loading.value)
+	const isPrintDisabled = computed<boolean>(() => !props.lehrerListeManager().liste.auswahlExists() || loading.value);
+	const isPrintStundenplanDisabled = computed<boolean>(() => isPrintDisabled.value || stundenplanAuswahl.value === undefined);
+	const isEmailStundenplanDisabled = computed<boolean>(() => isPrintStundenplanDisabled.value || ((emailBetreff.value.trim().length) === 0) || ((emailText.value.trim().length) === 0));
+	const isDeleteDisabled = computed<boolean>(() => !hatKompetenzLoeschen.value || !props.lehrerListeManager().liste.auswahlExists() || !props.deleteLehrerCheck().success || loading.value);
 
 	const stundenplanAuswahl = ref<StundenplanListeEintrag>();
 	const currentAction = ref<Action>('');
@@ -117,13 +117,13 @@
 			+ toDateStr(eintrag.gueltigAb) + '—'
 			+ toDateStr(eintrag.gueltigBis)
 			+ ' (KW ' + toKW(eintrag.gueltigAb) + '—'
-			+ toKW(eintrag.gueltigBis) + ')'
-	}
+			+ toKW(eintrag.gueltigBis) + ')';
+	};
 
-	const stundenplaene = computed<Array<StundenplanListeEintrag>>(() => [...props.mapStundenplaene.values()])
+	const stundenplaene = computed<Array<StundenplanListeEintrag>>(() => [...props.mapStundenplaene.values()]);
 	const stundenplanSelectManager = new SelectManager({
 		options: stundenplaene, optionDisplayText: stundenplanDisplayText, selectionDisplayText: stundenplanDisplayText,
-	})
+	});
 
 	const option2 = ref(false);
 	const option4 = ref(false);
@@ -277,14 +277,14 @@
 		statusAction.value = undefined;
 	}
 
-	const wochentag = ['So.', 'Mo.', 'Di.', 'Mi.', 'Do.', 'Fr.', 'Sa.', 'So.' ];
+	const wochentag = ['So.', 'Mo.', 'Di.', 'Mi.', 'Do.', 'Fr.', 'Sa.', 'So.'];
 
-	function toDateStr(iso: string) : string {
+	function toDateStr(iso: string): string {
 		const date = DateUtils.extractFromDateISO8601(iso);
 		return wochentag[date[3] % 7] + " " + date[2] + "." + date[1] + "." + date[0];
 	}
 
-	function toKW(iso: string) : string {
+	function toKW(iso: string): string {
 		const date = DateUtils.extractFromDateISO8601(iso);
 		return "" + date[5];
 	}

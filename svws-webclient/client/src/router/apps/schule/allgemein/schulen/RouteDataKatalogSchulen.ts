@@ -28,7 +28,7 @@ export class RouteDataKatalogSchulen extends RouteDataAuswahl<KatalogSchuleListe
 		param.id = id;
 	}
 
-	protected async createManager(_ : number) : Promise<Partial<RouteStateAuswahlInterface<KatalogSchuleListeManager>>> {
+	protected async createManager(_: number): Promise<Partial<RouteStateAuswahlInterface<KatalogSchuleListeManager>>> {
 		const schulen = await api.server.getSchulen(api.schema);
 		const katalogSchulen = await api.server.getKatalogSchulen(api.schema);
 		const manager = new KatalogSchuleListeManager(
@@ -40,7 +40,7 @@ export class RouteDataKatalogSchulen extends RouteDataAuswahl<KatalogSchuleListe
 		return auswahl;
 	}
 
-	protected async doPatch(data : Partial<SchulEintrag>, id: number) : Promise<void> {
+	protected async doPatch(data: Partial<SchulEintrag>, id: number): Promise<void> {
 		await api.server.patchSchuleAusKatalog(data, api.schema, id);
 	}
 
@@ -54,9 +54,9 @@ export class RouteDataKatalogSchulen extends RouteDataAuswahl<KatalogSchuleListe
 		const schule = await api.server.addSchuleZuKatalog(data, api.schema);
 		await this.setSchuljahresabschnitt(this._state.value.idSchuljahresabschnitt, true);
 		await this.gotoDefaultView(schule.id);
-	}
+	};
 
-	protected deleteMessage(id: number, schule: SchulEintrag | null) : string {
+	protected deleteMessage(id: number, schule: SchulEintrag | null): string {
 		return `Schule ${schule?.kuerzel ?? '???'} (ID: ${id}) wurde erfolgreich gelöscht.`;
 	}
 }

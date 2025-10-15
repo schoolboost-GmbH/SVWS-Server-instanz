@@ -23,7 +23,7 @@ export class GostKursplanungSchuelerFilter {
 		this.faecher = faecher;
 	}
 
-	public getKurse() : List<GostBlockungKurs> {
+	public getKurse(): List<GostBlockungKurs> {
 		return new ArrayList(this.datenmanager.kursGetListeSortiertNachKursartFachNummer());
 	}
 
@@ -68,21 +68,21 @@ export class GostKursplanungSchuelerFilter {
 	public filtered = computed<Schueler[]>(() => {
 		const gefiltert: Schueler[] = [];
 		// ... wenn sie definiert sind, dann findet die Filterung statt
-		const pKonfliktTyp = 0 + (this.kollisionen.value ? 1 : 0) + (this.nichtwahlen.value ? 2 : 0)
+		const pKonfliktTyp = 0 + (this.kollisionen.value ? 1 : 0) + (this.nichtwahlen.value ? 2 : 0);
 		const res = this.ergebnismanager().getOfSchuelerMengeGefiltert(this.kurs?.id ?? -1, this.fach ?? -1, this.kursart?.id ?? -1, pKonfliktTyp, this._name.value);
 		for (const s of res) {
 			const ss = this.datenmanager.schuelerGet(s.id);
 			gefiltert.push(ss);
 		}
 		return gefiltert;
-	})
+	});
 
 	public statistics = computed(() => {
 		// ... ansonsten bestimme die Statistik aus dem Ergebnis-Manager
 		const kurs = this.kurs?.id ?? -1;
 		const fach = this.fach ?? -1;
 		const kursart = this.kursart?.id ?? -1;
-		const konfliktTyp = 0 + (this.kollisionen.value ? 1 : 0) + (this.nichtwahlen.value ? 2 : 0)
+		const konfliktTyp = 0 + (this.kollisionen.value ? 1 : 0) + (this.nichtwahlen.value ? 2 : 0);
 		return {
 			m: this.ergebnismanager().getOfSchuelerAnzahlGefiltert(kurs, fach, kursart, konfliktTyp, '', Geschlecht.M, null),
 			w: this.ergebnismanager().getOfSchuelerAnzahlGefiltert(kurs, fach, kursart, konfliktTyp, '', Geschlecht.W, null),
@@ -90,8 +90,8 @@ export class GostKursplanungSchuelerFilter {
 			x: this.ergebnismanager().getOfSchuelerAnzahlGefiltert(kurs, fach, kursart, konfliktTyp, '', Geschlecht.X, null),
 			schriftlich: this.ergebnismanager().getOfSchuelerAnzahlGefiltert(kurs, fach, kursart, konfliktTyp, '', null, GostSchriftlichkeit.SCHRIFTLICH),
 			muendlich: this.ergebnismanager().getOfSchuelerAnzahlGefiltert(kurs, fach, kursart, konfliktTyp, '', null, GostSchriftlichkeit.MUENDLICH),
-		}
-	})
+		};
+	});
 
 	public reset() {
 		this.kollisionen.value = false;
@@ -118,8 +118,8 @@ export class GostKursplanungSchuelerFilter {
 		get: () => (this._fach.value === undefined && this._kurs.value === undefined) ? "alle" : undefined,
 		set: (value) =>	{
 			if (value === 'alle') {
-				this.setFachFilter(false)
-				this.setKursFilter(false)
+				this.setFachFilter(false);
+				this.setKursFilter(false);
 			}
 		},
 	});
@@ -132,7 +132,7 @@ export class GostKursplanungSchuelerFilter {
 	public kurs_toggle = computed({
 		get: () => (this._kurs.value !== undefined) ? "kurs" : undefined,
 		set: () => this.setKursFilter(true),
-	})
+	});
 
 	private setKursFilter(value: boolean) {
 		if (value && (this.faecher.size() > 0)) {

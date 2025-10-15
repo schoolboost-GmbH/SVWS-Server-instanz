@@ -151,7 +151,7 @@
 	});
 
 	const ortsteile = computed<Array<OrtsteilKatalogEintrag>>(() => {
-		const result : Array<OrtsteilKatalogEintrag> = [];
+		const result: Array<OrtsteilKatalogEintrag> = [];
 		for (const ortsteil of props.mapOrtsteile.values())
 			if (ortsteil.ort_id === data().wohnortID)
 				result.push(ortsteil);
@@ -167,9 +167,9 @@
 	});
 
 	const colsLeitungsfunktionen = [
-		{key: 'idLeitungsfunktion', label: 'Funktion', span: 2 },
-		{key: 'beginn', label: 'Von', span: 1 },
-		{key: 'ende', label: 'Bis', span: 1 },
+		{ key: 'idLeitungsfunktion', label: 'Funktion', span: 2 },
+		{ key: 'beginn', label: 'Von', span: 1 },
+		{ key: 'ende', label: 'Bis', span: 1 },
 	];
 
 </script>

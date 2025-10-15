@@ -2,7 +2,7 @@ import type { RouteLocationNormalized, RouteParams } from "vue-router";
 import type { StundenplanKlasseProps } from "~/components/stundenplan/klasse/SStundenplanKlasseProps";
 import { BenutzerKompetenz, Schulform, ServerMode } from "@core";
 import { RouteNode } from "~/router/RouteNode";
-import { RouteStundenplan, routeStundenplan} from "~/router/apps/stundenplan/RouteStundenplan";
+import { RouteStundenplan, routeStundenplan } from "~/router/apps/stundenplan/RouteStundenplan";
 import { api } from "~/router/Api";
 
 const SStundenplanKlasse = () => import("~/components/stundenplan/klasse/SStundenplanKlasse.vue");

@@ -79,7 +79,7 @@
 
 	import { erzieherArtSort, orte_sort, ortsteilSort } from "~/utils/helfer";
 	import { AdressenUtils, JavaString, Nationalitaeten } from "@core";
-	import type { OrtKatalogEintrag, OrtsteilKatalogEintrag , ErzieherStammdaten, Erzieherart , NationalitaetenKatalogEintrag } from "@core";
+	import type { OrtKatalogEintrag, OrtsteilKatalogEintrag, ErzieherStammdaten, Erzieherart, NationalitaetenKatalogEintrag } from "@core";
 	import { computed } from "vue";
 	import { CoreTypeSelectManager, SelectManager } from "@ui";
 
@@ -107,7 +107,7 @@
 	const selectedErzieherart = computed<Erzieherart | null>({
 		get: () => props.mapErzieherarten.get(props.ersterErz.idErzieherArt ?? -1) ?? null,
 		set: (erzieherart) => props.ersterErz.idErzieherArt = (erzieherart !== null) ? erzieherart.id : 0,
-	})
+	});
 
 	const staatsangehoerigkeitManager = new CoreTypeSelectManager({ clazz: Nationalitaeten.class, schuljahr: props.schuljahr, optionDisplayText: "text", selectionDisplayText: "text" });
 
@@ -117,7 +117,7 @@
 			return Nationalitaeten.getByISO3(iso3)?.daten(props.schuljahr) ?? null;
 		},
 		set: (value) => {
-			props.ersterErz.staatsangehoerigkeitID = value?.iso3 ?? null
+			props.ersterErz.staatsangehoerigkeitID = value?.iso3 ?? null;
 		},
 	});
 
@@ -127,19 +127,19 @@
 			return Nationalitaeten.getByISO3(iso3)?.daten(props.schuljahr) ?? null;
 		},
 		set: (value) => {
-			props.zweiterErz.staatsangehoerigkeitID = value?.iso3 ?? null
+			props.zweiterErz.staatsangehoerigkeitID = value?.iso3 ?? null;
 		},
 	});
 
 	const adresse = computed({
 		get: () => AdressenUtils.combineStrasse(props.ersterErz.strassenname, props.ersterErz.hausnummer, props.ersterErz.hausnummerZusatz),
-		set: (adresse : string) => {
+		set: (adresse: string) => {
 			const vals = AdressenUtils.splitStrasse(adresse);
 			props.ersterErz.strassenname = vals[0];
 			props.ersterErz.hausnummer = vals[1];
 			props.ersterErz.hausnummerZusatz = vals[2];
 		},
-	})
+	});
 
 	const orte = computed(() => props.mapOrte.values());
 
@@ -173,10 +173,10 @@
 			const validateField = fieldIsValid(field as keyof ErzieherStammdaten);
 			const fieldValue = props.ersterErz[field as keyof ErzieherStammdaten] as string | null;
 			return validateField(fieldValue);
-		})
-	})
+		});
+	});
 
-	function fieldIsValid(field: keyof ErzieherStammdaten | null):(v: string | null) => boolean {
+	function fieldIsValid(field: keyof ErzieherStammdaten | null): (v: string | null) => boolean {
 		return (v: string | null) => {
 			switch (field) {
 				case 'nachname':
@@ -190,7 +190,7 @@
 				default:
 					return true;
 			}
-		}
+		};
 	}
 
 	function stringIsValid(input: string | null, mandatory: boolean, maxLength: number) {

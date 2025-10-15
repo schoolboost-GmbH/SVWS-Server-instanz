@@ -22,7 +22,7 @@ export class Checkpoint {
 	/**
 	 * Gibt den definierten callback für diesen Checkpoint zurück.
 	 */
-	public get callback() : (() => Promise<void>) | undefined {
+	public get callback(): (() => Promise<void>) | undefined {
 		return this._callback;
 	}
 
@@ -49,14 +49,14 @@ export class Checkpoint {
 	 *
 	 * @return <code>true</code> Checkpoint aktiv oder <code>false</code> Checkpoint inaktiv
 	 */
-	public get active() : boolean {
+	public get active(): boolean {
 		return this._active;
 	}
 
 	/**
 	 * Gibt das ursprüngliche Ziel des Routings vor dem Checkpoint zurück.
 	 */
-	public get originallyDestinationRoute() : RouteLocationRaw | undefined {
+	public get originallyDestinationRoute(): RouteLocationRaw | undefined {
 		return this._originallyDestinationRoute;
 	}
 

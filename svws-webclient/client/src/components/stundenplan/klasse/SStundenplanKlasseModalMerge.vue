@@ -31,18 +31,18 @@
 	}>();
 
 	const columns = [
-		{key: 'id', label: 'Unterricht'},
-		{key: 'idZeitraster', label: 'Stunde'},
-		{key: 'klassen', label: 'Klassen'},
-		{key: 'lehrer', label: 'Lehrer'},
-		{key: 'raeume', label: 'Räume'},
+		{ key: 'id', label: 'Unterricht' },
+		{ key: 'idZeitraster', label: 'Stunde' },
+		{ key: 'klassen', label: 'Klassen' },
+		{ key: 'lehrer', label: 'Lehrer' },
+		{ key: 'raeume', label: 'Räume' },
 	];
 
 	const selected = ref([]);
 
 	function kuerzel(list: List<StundenplanUnterricht>) {
 		const [item] = list;
-		return props.stundenplanManager().unterrichtGetByIDStringOfFachOderKurs(item.id, true)
+		return props.stundenplanManager().unterrichtGetByIDStringOfFachOderKurs(item.id, true);
 	}
 
 	function klassen(list: List<StundenplanUnterricht>) {

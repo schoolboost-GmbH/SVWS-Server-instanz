@@ -211,9 +211,9 @@
 	}>();
 
 	const dragOverPos = shallowRef<{
-		wochentag : number | undefined,
-		stunde : number | undefined,
-		wochentyp : number | undefined,
+		wochentag: number | undefined,
+		stunde: number | undefined,
+		wochentyp: number | undefined,
 	}>({
 		wochentag: undefined,
 		stunde: undefined,
@@ -243,7 +243,7 @@
 		return result;
 	});
 
-	function getUnterrichte(wochentag: number, stunde: number, wochentyp: number, schiene: number | null) : List<StundenplanUnterricht> {
+	function getUnterrichte(wochentag: number, stunde: number, wochentyp: number, schiene: number | null): List<StundenplanUnterricht> {
 		const result = (schiene === null)
 			? mapUnterrichte.value.getOrNull(wochentag, stunde, wochentyp)
 			: mapUnterrichteBySchiene.value.getOrNull(wochentag, stunde, wochentyp, schiene);
@@ -327,16 +327,16 @@
 		dragOverPos.value = { wochentag: undefined, stunde: undefined, wochentyp: undefined };
 	}
 
-	function updateDragOverPosition(event: DragEvent, wochentag : number, stunde : number, wochentyp : number | undefined) {
+	function updateDragOverPosition(event: DragEvent, wochentag: number, stunde: number, wochentyp: number | undefined) {
 		if ((dragOverPos.value.wochentag !== wochentag) || (dragOverPos.value.stunde !== stunde) || (dragOverPos.value.wochentyp !== wochentyp))
 			dragOverPos.value = { wochentag, stunde, wochentyp };
 	}
 
-	function isDragOverPosition(wochentag : Wochentag, stunde : number) : boolean {
+	function isDragOverPosition(wochentag: Wochentag, stunde: number): boolean {
 		return (dragOverPos.value.wochentag === wochentag.id) && (dragOverPos.value.stunde === stunde);
 	}
 
-	const getWochentyp = computed(() => props.wochentyp() === 0 ? props.manager().getWochenTypModell() : [props.wochentyp()])
+	const getWochentyp = computed(() => props.wochentyp() === 0 ? props.manager().getWochenTypModell() : [props.wochentyp()]);
 
 	const hatWochentypen = computed<boolean>(() => (props.manager().getWochenTypModell() > 0));
 
@@ -402,7 +402,7 @@
 		return result;
 	});
 
-	function getZeitrasterGridPos(wochentag: number | undefined, stunde: number) : string {
+	function getZeitrasterGridPos(wochentag: number | undefined, stunde: number): string {
 		const result = (wochentag === undefined)
 			? mapZeitrasterStundeGridPos.value.get(stunde)
 			: mapZeitrasterGridPos.value.getOrNull(wochentag, stunde);
@@ -421,7 +421,7 @@
 					zende = z.stundenende;
 			}
 		}
-		const rowStart = props.hideZeitachse ? (stunde -1) : (zbeginn - beginn.value) / props.zeitrasterSteps;
+		const rowStart = props.hideZeitachse ? (stunde - 1) : (zbeginn - beginn.value) / props.zeitrasterSteps;
 		const rowEnd = props.hideZeitachse ? stunde : (zende - beginn.value) / props.zeitrasterSteps;
 
 		return "grid-row-start: " + (Math.round(rowStart) + 1) + "; grid-row-end: " + (Math.round(rowEnd) + 1) + "; grid-column: 1;";
@@ -470,7 +470,7 @@
 	 * @param stunde      die Stunde für das Zeitraster-Element
 	 * @param wt          der zu prüfende Wochentyp
 	 */
-	function isDropZoneZeitrasterKurs(kurs: StundenplanKurs, wochentag: number, stunde: number, wt : number) : boolean {
+	function isDropZoneZeitrasterKurs(kurs: StundenplanKurs, wochentag: number, stunde: number, wt: number): boolean {
 		// Prüfe, ob der Kurs in einem der Unterrichte vorkommt. In diesem Fall ist ein Drop hier nicht erlaubt
 		for (let w = 0; w < props.manager().getWochenTypModell() + 1; w++) {
 			if (hatWochentypen.value && (wt !== 0) && ((w !== 0) && (w !== wt)))
@@ -491,7 +491,7 @@
 	 * @param stunde      die Stunde für das Zeitraster-Element
 	 * @param wt          der zu prüfende Wochentyp
 	 */
-	function isDropZoneZeitrasterKlassenunterricht(klassenunterricht: StundenplanKlassenunterricht, wochentag: number, stunde: number, wt : number) : boolean {
+	function isDropZoneZeitrasterKlassenunterricht(klassenunterricht: StundenplanKlassenunterricht, wochentag: number, stunde: number, wt: number): boolean {
 		// Prüfe, ob der Klassenunterricht in einem der Unterrichte vorkommt. In diesem Fall ist ein Drop hier nicht erlaubt
 		for (let w = 0; w < props.manager().getWochenTypModell() + 1; w++) {
 			if (hatWochentypen.value && (wt !== 0) && ((w !== 0) && (w !== wt)))
@@ -518,7 +518,7 @@
 	 * @param stunde      die Stunde für das Zeitraster-Element
 	 * @param wt          der zu prüfende Wochentyp
 	 */
-	function isDropZoneZeitrasterSchiene(schiene: StundenplanSchiene, wochentag: number, stunde: number, wt : number) : boolean {
+	function isDropZoneZeitrasterSchiene(schiene: StundenplanSchiene, wochentag: number, stunde: number, wt: number): boolean {
 		// Prüfe, ob die Schiene in einem der Unterrichte vorkommt. In diesem Fall ist ein Drop hier nicht erlaubt
 		for (let w = 0; w < props.manager().getWochenTypModell() + 1; w++) {
 			if (hatWochentypen.value && (wt !== 0) && ((w !== 0) && (w !== wt)))
@@ -539,7 +539,7 @@
 	 * @param stunde       die Stunde für das Zeitraster-Element
 	 * @param wt           der zu prüfende Wochentyp
 	 */
-	function isDropZoneZeitrasterUnterricht(unterricht: StundenplanUnterricht, wochentag: number, stunde: number, wt : number) : boolean {
+	function isDropZoneZeitrasterUnterricht(unterricht: StundenplanUnterricht, wochentag: number, stunde: number, wt: number): boolean {
 		const z = props.manager().zeitrasterGetByIdOrException(unterricht.idZeitraster);
 		const uwt = unterricht.wochentyp;
 		// Prüfe, ob der Unterricht in das gleiche Zeitraster-Element gelegt werden soll...
@@ -568,7 +568,7 @@
 	 * @param stunde        die Stunde für das Zeitraster-Element
 	 * @param wt            der zu prüfende Wochentyp
 	 */
-	function isDropZoneZeitrasterUnterrichtListe(unterrichte: List<StundenplanUnterricht>, wochentag: number, stunde: number, wt : number) : boolean {
+	function isDropZoneZeitrasterUnterrichtListe(unterrichte: List<StundenplanUnterricht>, wochentag: number, stunde: number, wt: number): boolean {
 		let z = new StundenplanZeitraster();
 		let uwt = 0;
 		for (const unterricht of unterrichte) {
@@ -605,7 +605,7 @@
 	 * @param stunde      die Stunde für das Zeitraster-Element
 	 * @param wt          der zu prüfende Wochentyp
 	 */
-	function isDropZoneZeitraster(wochentag: number, stunde: number, wt : number) {
+	function isDropZoneZeitraster(wochentag: number, stunde: number, wt: number) {
 		const data = draggedData.value;
 		if ((data === undefined) || (data instanceof StundenplanPausenaufsicht))
 			return false;
@@ -684,7 +684,7 @@
 	 * @param wochentag   der Wochentag, über dem sich der Mouse-Pointer befindet
 	 * @param stunde      die Stunde, über der sich der Mouse-Pointer befindet
 	 */
-	function checkDropZoneZeitraster(event: DragEvent, wochentag: number, stunde: number) : void {
+	function checkDropZoneZeitraster(event: DragEvent, wochentag: number, stunde: number): void {
 		const container = event.currentTarget instanceof HTMLDivElement ? event.currentTarget : null;
 		if (container === null)
 			return;
@@ -699,7 +699,7 @@
 			event.preventDefault();
 	}
 
-	function isDropZonePausenzeit(pause : StundenplanPausenzeit) : boolean {
+	function isDropZonePausenzeit(pause: StundenplanPausenzeit): boolean {
 		const data = draggedData.value;
 		if ((data === undefined) || (!(data instanceof StundenplanPausenaufsicht)))
 			return false;
@@ -708,7 +708,7 @@
 		return true;
 	}
 
-	function checkDropZonePausenzeit(event: DragEvent, pause : StundenplanPausenzeit) {
+	function checkDropZonePausenzeit(event: DragEvent, pause: StundenplanPausenzeit) {
 		if (isDropZonePausenzeit(pause))
 			event.preventDefault();
 	}

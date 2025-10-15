@@ -44,7 +44,7 @@
 
 	function export_raeume() {
 		const arr = selected.value.map(r => Raum.transpilerToJSON(r));
-		const blob = new Blob(['['+arr.toString()+']'], {
+		const blob = new Blob(['[' + arr.toString() + ']'], {
 			type: "application/json",
 		});
 		const link = document.createElement("a");

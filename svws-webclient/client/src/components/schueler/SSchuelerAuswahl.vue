@@ -137,7 +137,7 @@
 			if (pair.b !== null)
 				map.set(pair.a === "klassen" ? "idKlasse" : pair.a, pair.b);
 		return map;
-	})
+	});
 
 	const sortByAndOrder = computed<SortByAndOrder | undefined>({
 		get: () => {
@@ -156,7 +156,7 @@
 			props.manager().orderUpdate(key, value.order);
 			void props.setFilter();
 		},
-	})
+	});
 
 	const cols = computed(() => {
 		const arr = [{ key: "idKlasse", label: "Klasse", sortable: true, span: 1 },
@@ -166,7 +166,7 @@
 		// if (primarstufe.value)
 		// 	arr.push({ key: "epJahre", label: "Jg", sortable: false, span: 1 });
 		return arr;
-	})
+	});
 
 	const rowsFiltered = computed<SchuelerListeEintrag[]>(() => {
 		const arr = [];
@@ -256,7 +256,7 @@
 			return true;
 		return (!(props.manager().schuelerstatus.auswahlSize() === 2
 			&& props.manager().schuelerstatus.auswahlHas(SchuelerStatus.AKTIV)
-			&& props.manager().schuelerstatus.auswahlHas(SchuelerStatus.EXTERN)))
+			&& props.manager().schuelerstatus.auswahlHas(SchuelerStatus.EXTERN)));
 	}
 
 	function textKurs(kurs: KursDaten): string {

@@ -56,13 +56,13 @@ export class Config {
 	private _mapGlobal: Map<string, string> = new Map();
 
 	// Der Setter-Callback für die globale Konfiguration
-	private _setGlobal: ConfigSetter
+	private _setGlobal: ConfigSetter;
 
 	// Die benutzerspezifische Konfiguration
 	private _mapUser: Map<string, string> = new Map();
 
 	// Der Setter-Callback für die benutzers-pezifische Konfiguration
-	private _setUser: ConfigSetter
+	private _setUser: ConfigSetter;
 
 	// Alle bekannten Konfigurationselemente
 	private _mapElements: Map<string, ConfigElement> = new Map();
@@ -208,7 +208,7 @@ export class Config {
 		// Lese den Wert aus der entsprechenden Konfiguration (Benutzer oder Global) aus - falls vorhanden...
 		const value: string | undefined = (elem.type === 'global') ? this._mapGlobal.get(key) : this._mapUser.get(key);
 		// Ist ein Wert kein vorhanden, so gebe den Default-Wert zurück und im anderen Fall den gespeicherten Wert
-		return Number((value === undefined) ? elem.default : value)
+		return Number((value === undefined) ? elem.default : value);
 	}
 
 	/**
@@ -250,7 +250,7 @@ export class Config {
 		// Lese den Wert aus der entsprechenden Konfiguration (Benutzer oder Global) aus - falls vorhanden...
 		const value: string | undefined = (elem.type === 'global') ? this._mapGlobal.get(key) : this._mapUser.get(key);
 		// Ist ein Wert kein vorhanden, so gebe den Default-Wert zurück und im anderen Fall den gespeicherten Wert
-		return Boolean((value === undefined) ? elem.default : value)
+		return Boolean((value === undefined) ? elem.default : value);
 	}
 
 	/**
@@ -286,7 +286,7 @@ export class Config {
 	 *
 	 * @throws wenn das Konfigurationselement nicht existiert
 	 */
-	public getObjectValue<TObject>(key: string, fromJSON: (json : string) => TObject): TObject | null {
+	public getObjectValue<TObject>(key: string, fromJSON: (json: string) => TObject): TObject | null {
 		// Prüfe, ob das Konfigurationselement bekannt ist oder nicht
 		const elem: ConfigElement | undefined = this._mapElements.get(key);
 		if (elem === undefined)
@@ -311,7 +311,7 @@ export class Config {
 	 *
 	 * @throws wenn das Konfigurationselement nicht existiert
 	 */
-	public async setObjectValue<TObject>(key: string, value: TObject | null, toJSON: (obj : TObject) => string): Promise<void> {
+	public async setObjectValue<TObject>(key: string, value: TObject | null, toJSON: (obj: TObject) => string): Promise<void> {
 		// Prüfe, ob das Konfigurationselement bekannt ist oder nicht
 		const elem: ConfigElement | undefined = this._mapElements.get(key);
 		if (elem === undefined)

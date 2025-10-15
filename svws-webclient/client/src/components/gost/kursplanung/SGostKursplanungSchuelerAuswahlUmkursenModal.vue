@@ -114,7 +114,7 @@
 	import { computed, ref, toRaw } from 'vue';
 	import type { GostKursplanungSchuelerFilter } from './GostKursplanungSchuelerFilter';
 	import type { ApiStatus } from '~/components/ApiStatus';
-	import type { GostBlockungsergebnisManager, Schueler, List, GostBlockungsdatenManager , GostBlockungsergebnisKursSchuelerZuordnungUpdate} from '@core';
+	import type { GostBlockungsergebnisManager, Schueler, List, GostBlockungsdatenManager, GostBlockungsergebnisKursSchuelerZuordnungUpdate } from '@core';
 	import { ArrayList, GostKursart, GostBlockungsergebnisKurs, GostBlockungRegelUpdate, SetUtils, HashSet, DTOUtils } from '@core';
 
 	const props = defineProps<{
@@ -225,7 +225,7 @@
 			if (!liste.has(w.id))
 				arr.push(w);
 		return arr;
-	})
+	});
 
 	async function remove(id: number) {
 		const kurs = props.schuelerFilter().kurs;
@@ -272,7 +272,7 @@
 		}
 	}
 
-	function getKurs(schueler: Schueler) : GostBlockungsergebnisKurs | undefined {
+	function getKurs(schueler: Schueler): GostBlockungsergebnisKurs | undefined {
 		const kurs = props.schuelerFilter().kurs;
 		if (kurs === undefined)
 			return;
@@ -280,7 +280,7 @@
 		return alter_kurs ?? undefined;
 	}
 
-	function getKursBezeichnung(k : GostBlockungsergebnisKurs | undefined) : string {
+	function getKursBezeichnung(k: GostBlockungsergebnisKurs | undefined): string {
 		if (k === undefined)
 			return '———';
 		return props.getErgebnismanager().getOfKursName(k.id);
@@ -290,7 +290,7 @@
 		return show.value = true;
 	}
 
-	async function toggleFixierRegelKursSchueler(idKurs: number | null, idSchueler: number) : Promise<void> {
+	async function toggleFixierRegelKursSchueler(idKurs: number | null, idSchueler: number): Promise<void> {
 		if ((idKurs === null) || (props.apiStatus.pending))
 			return;
 		let update = new GostBlockungRegelUpdate();
@@ -311,7 +311,7 @@
 			setSchueler.add(s.id);
 		const update = (kursSchuelerFixierungen.value === true)
 			? props.getErgebnismanager().regelupdateRemove_04_SCHUELER_FIXIEREN_IN_KURS(setSchueler, SetUtils.create1(kurs.id))
-			: props.getErgebnismanager().regelupdateCreate_04_SCHUELER_FIXIEREN_IN_KURS(setSchueler, SetUtils.create1(kurs.id))
+			: props.getErgebnismanager().regelupdateCreate_04_SCHUELER_FIXIEREN_IN_KURS(setSchueler, SetUtils.create1(kurs.id));
 		await props.regelnUpdate(update);
 	}
 

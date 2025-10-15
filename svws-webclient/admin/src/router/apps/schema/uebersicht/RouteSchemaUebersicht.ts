@@ -17,8 +17,8 @@ export class RouteSchemaUebersicht extends RouteNode<unknown, RouteSchema> {
 		super.text = "Übersicht";
 	}
 
-	public getRoute(id: number) : RouteLocationRaw {
-		return { name: this.name, params: { id }};
+	public getRoute(id: number): RouteLocationRaw {
+		return { name: this.name, params: { id } };
 	}
 
 	public getProps(to: RouteLocationNormalized): SchemaUebersichtProps {

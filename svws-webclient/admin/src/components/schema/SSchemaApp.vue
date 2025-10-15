@@ -36,6 +36,6 @@
 
 	const props = defineProps<SchemaAppProps>();
 
-	const info = computed(() => props.schuleInfo())
+	const info = computed(() => props.schuleInfo());
 
 </script>

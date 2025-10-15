@@ -121,7 +121,7 @@
 	const select = ref<ComponentExposed<typeof SvwsUiSelect<typeof wochenTypModell>>>();
 	const subActionPausenzeiten = ref<boolean>(false);
 
-	const gueltigData = ref<{gueltigAb: string , gueltigBis: string, aktiv: boolean }>({ gueltigAb: "", gueltigBis: "", aktiv: false });
+	const gueltigData = ref<{ gueltigAb: string, gueltigBis: string, aktiv: boolean }>({ gueltigAb: "", gueltigBis: "", aktiv: false });
 	const validAb = ref<boolean>(true);
 	const validBis = ref<boolean>(true);
 
@@ -133,7 +133,7 @@
 				aktiv: props.manager().auswahl().aktiv,
 			};
 		}, { immediate: true, deep: false });
-	})
+	});
 
 	const cols: DataTableColumn[] = [
 		{ key: "kuerzel", label: "Jahrgang", sortable: true, defaultSort: "asc", span: 0.25 },
@@ -154,7 +154,7 @@
 		for (const j of list)
 			a.push(j.id);
 		return a;
-	})
+	});
 
 	async function updateJahrgaenge(id: number) {
 		if (jahrgaenge.value.includes(id))
@@ -205,11 +205,10 @@
 		if ((wochenTypModell === null) || (wochenTypModell === undefined) || (wochenTypModell === 1))
 			return;
 		if (((props.manager().daten().stundenplanGetWochenTypModellSimulation(wochenTypModell) === 0)) || (wtmOK.value === true)) {
-			await props.patch({wochenTypModell});
+			await props.patch({ wochenTypModell });
 			// wtmOK.value === undefined;
 			newWTM.value = -1;
-		}
-		else if (wtmOK.value === false) {
+		} else if (wtmOK.value === false) {
 			select.value?.reset(true);
 			wtmOK.value = undefined;
 			newWTM.value = -1;
@@ -235,10 +234,10 @@
 	}
 
 	const colsRaeume = [
-		{key: 'kuerzel', label: 'Kürzel', span: 1},
-		{key: 'beschreibung', label: 'Beschreibung', span: 3},
-		{key: 'groesse', label: 'Größe', span: 1},
-	]
+		{ key: 'kuerzel', label: 'Kürzel', span: 1 },
+		{ key: 'beschreibung', label: 'Beschreibung', span: 3 },
+		{ key: 'groesse', label: 'Größe', span: 1 },
+	];
 
 	const zeit = ref<StundenplanPausenzeit | undefined>();
 	const selectedPausenzeiten = ref<StundenplanPausenzeit[]>([]);
@@ -246,27 +245,27 @@
 	const itemsPausenzeit = computed(() => [...props.manager().daten().pausenzeitGetMengeAsList()]);
 
 	const colsPausenzeiten = [
-		{key: 'wochentag', label: 'Wochentag', span: 1, sortable: true },
-		{key: 'beginn', label: 'Beginn', span: 1, sortable: true },
-		{key: 'ende', label: 'Ende', span: 1},
-		{key: 'klassen', label: 'Nur in Klassen', span: 2},
-	]
+		{ key: 'wochentag', label: 'Wochentag', span: 1, sortable: true },
+		{ key: 'beginn', label: 'Beginn', span: 1, sortable: true },
+		{ key: 'ende', label: 'Ende', span: 1 },
+		{ key: 'klassen', label: 'Nur in Klassen', span: 2 },
+	];
 
 	async function patchPausenBeginn(minuten: string, id: number) {
 		const beginn = DateUtils.gibMinutenOfZeitAsString(minuten);
-		await props.patchPausenzeit({beginn}, id);
+		await props.patchPausenzeit({ beginn }, id);
 	}
 
 	async function patchPausenEnde(minuten: string, id: number) {
 		const ende = DateUtils.gibMinutenOfZeitAsString(minuten);
-		await props.patchPausenzeit({ende}, id);
+		await props.patchPausenzeit({ ende }, id);
 	}
 
 	async function patchPausenKlassen(ids: number[], id: number) {
 		const klassen = new ArrayList<number>();
 		for (const klassenID of ids)
 			klassen.add(klassenID);
-		await props.patchPausenzeit({klassen}, id);
+		await props.patchPausenzeit({ klassen }, id);
 	}
 
 	async function delPausenzeiten() {
@@ -285,7 +284,7 @@
 			if (!props.manager().daten().pausenzeitExistsByWochentagAndBeginnAndEnde(e.wochentag, e.beginn, e.ende))
 				moeglich.add(e);
 		return moeglich;
-	})
+	});
 
 	const sortByAndOrder = ref<SortByAndOrder | undefined>();
 
@@ -303,17 +302,17 @@
 				default:
 					return 0;
 			}
-		})
+		});
 		return temp.order === true ? arr : arr.reverse();
-	})
+	});
 
 	const bereich = ref<StundenplanAufsichtsbereich | undefined>();
 	const selectedAufsichtsbereiche = ref<StundenplanAufsichtsbereich[]>([]);
 
 	const colsAufsichtsbereiche = [
-		{key: 'kuerzel', label: 'Kürzel', span: 1},
-		{key: 'beschreibung', label: 'Beschreibung', span: 3},
-	]
+		{ key: 'kuerzel', label: 'Kürzel', span: 1 },
+		{ key: 'beschreibung', label: 'Beschreibung', span: 3 },
+	];
 
 	async function delAufsichtsbereiche() {
 		await props.removeAufsichtsbereiche(selectedAufsichtsbereiche.value);

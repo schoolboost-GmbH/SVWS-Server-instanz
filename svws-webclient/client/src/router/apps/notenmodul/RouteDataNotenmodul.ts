@@ -1,10 +1,10 @@
 import type { ENMKlasse, ENMLeistung, ENMLeistungBemerkungen, ENMLernabschnitt, ENMTeilleistung } from "@core";
-import { ENMDaten, OpenApiError} from "@core";
+import { ENMDaten, OpenApiError } from "@core";
 import { BenutzerKompetenz, BenutzerTyp, DeveloperNotificationException } from "@core";
 import { api } from "~/router/Api";
 import { RouteData, type RouteStateInterface } from "~/router/RouteData";
 import { routeNotenmodulLeistungen } from "./RouteNotenmodulLeistungen";
-import type { EnmLerngruppenAuswahlEintrag} from "@ui";
+import type { EnmLerngruppenAuswahlEintrag } from "@ui";
 import { EnmManager } from "@ui";
 
 
@@ -51,7 +51,7 @@ export class RouteDataNotenmodul extends RouteData<RouteStateNotenmodul> {
 				BenutzerKompetenz.NOTENMODUL_NOTEN_ANSEHEN_ALLGEMEIN,
 				BenutzerKompetenz.NOTENMODUL_NOTEN_ANSEHEN_FUNKTION,
 				BenutzerKompetenz.NOTENMODUL_NOTEN_AENDERN_ALLGEMEIN,
-				BenutzerKompetenz.NOTENMODUL_NOTEN_AENDERN_FUNKTION ])) {
+				BenutzerKompetenz.NOTENMODUL_NOTEN_AENDERN_FUNKTION])) {
 				throw new DeveloperNotificationException("Der Benutzer hat keine Berechtigung, um auf das Notenmodul zuzugreifen. Diese Stelle sollte daher nicht erreichbar sein und es handelt sich um einen Programmierfehler.");
 			}
 			if (api.benutzertyp === BenutzerTyp.LEHRER) {
@@ -87,7 +87,7 @@ export class RouteDataNotenmodul extends RouteData<RouteStateNotenmodul> {
 		});
 	}
 
-	public get manager() : EnmManager {
+	public get manager(): EnmManager {
 		if (this._state.value.manager === null)
 			throw new DeveloperNotificationException("Die ENM-Daten wurden nicht geladen.");
 		return this._state.value.manager;
@@ -111,7 +111,7 @@ export class RouteDataNotenmodul extends RouteData<RouteStateNotenmodul> {
 	get auswahlLerngruppen(): Array<EnmLerngruppenAuswahlEintrag> {
 		if (this._state.value.auswahlLerngruppe === null)
 			return this._state.value.auswahlLerngruppen;
-		return [ this._state.value.auswahlLerngruppe ];
+		return [this._state.value.auswahlLerngruppe];
 	}
 
 	/**
@@ -161,7 +161,7 @@ export class RouteDataNotenmodul extends RouteData<RouteStateNotenmodul> {
 	get auswahlKlassen(): Array<ENMKlasse> {
 		if (this._state.value.auswahlKlasse === null)
 			return this._state.value.auswahlKlassen;
-		return [ this._state.value.auswahlKlasse ];
+		return [this._state.value.auswahlKlasse];
 	}
 
 	/**
@@ -169,7 +169,7 @@ export class RouteDataNotenmodul extends RouteData<RouteStateNotenmodul> {
 	 *
 	 * @returns die Klassen-Auswahl
 	 */
-	get auswahlKlassenNurMehrfachauswahl() : Array<ENMKlasse> {
+	get auswahlKlassenNurMehrfachauswahl(): Array<ENMKlasse> {
 		return this._state.value.auswahlKlassen;
 	}
 
@@ -205,7 +205,7 @@ export class RouteDataNotenmodul extends RouteData<RouteStateNotenmodul> {
 		await api.server.patchENMLeistung(patch, api.schema);
 		Object.assign(data, patch);
 		this.commit();
-	}
+	};
 
 	/**
 	 * Passt die übergebenen Teilleistungen an.
@@ -219,7 +219,7 @@ export class RouteDataNotenmodul extends RouteData<RouteStateNotenmodul> {
 		await api.server.patchENMTeilleistung(patch, api.schema);
 		Object.assign(data, patch);
 		this.commit();
-	}
+	};
 
 	/**
 	 * Passt die übergebenen Bemerkungen zu dem Lernabschnitt an.
@@ -232,7 +232,7 @@ export class RouteDataNotenmodul extends RouteData<RouteStateNotenmodul> {
 		await api.server.patchENMSchuelerBemerkungen(patch, api.schema, id);
 		Object.assign(data, patch);
 		this.commit();
-	}
+	};
 
 	/**
 	 * Passt die übergebenen Lernabschnittsdaten an.
@@ -246,6 +246,6 @@ export class RouteDataNotenmodul extends RouteData<RouteStateNotenmodul> {
 		await api.server.patchENMSchuelerLernabschnitt(patch, api.schema);
 		Object.assign(data, patch);
 		this.commit();
-	}
+	};
 
 }

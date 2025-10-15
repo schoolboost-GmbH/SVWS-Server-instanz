@@ -40,7 +40,7 @@
 	const hatKompetenzAdd = computed<boolean>(() => props.benutzerKompetenzen.has(BenutzerKompetenz.KATALOG_EINTRAEGE_AENDERN));
 	const disabled = computed(() => !hatKompetenzAdd.value);
 
-	function fieldIsValid(field: keyof KatalogEntlassgrund | null) : (v: string | null) => boolean {
+	function fieldIsValid(field: keyof KatalogEntlassgrund | null): (v: string | null) => boolean {
 		return (v: string | null) => {
 			switch (field) {
 				case 'bezeichnung':
@@ -48,13 +48,13 @@
 				default:
 					return true;
 			}
-		}
+		};
 	}
 
 	function bezeichnungIsValid(value: string | null) {
 		if (!mandatoryInputIsValid(value, 30))
 			return false;
-		return isUniqueInList(value, props.manager().liste.list(), 'bezeichnung')
+		return isUniqueInList(value, props.manager().liste.list(), 'bezeichnung');
 	}
 
 	const formIsValid = computed(() => {
@@ -63,8 +63,8 @@
 			const validateField = fieldIsValid(field as keyof KatalogEntlassgrund);
 			const fieldValue = data.value[field as keyof KatalogEntlassgrund] as string | null;
 			return validateField(fieldValue);
-		})
-	})
+		});
+	});
 
 	async function add() {
 		if (isLoading.value)
@@ -82,10 +82,10 @@
 		await props.goToDefaultView(null);
 	}
 
-	watch(() => data.value, async() => {
+	watch(() => data.value, async () => {
 		if (isLoading.value)
 			return;
 		props.checkpoint.active = true;
-	}, {immediate: false, deep: true});
+	}, { immediate: false, deep: true });
 
 </script>

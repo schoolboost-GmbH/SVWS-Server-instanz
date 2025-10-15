@@ -237,7 +237,7 @@
 		{ name: "Unterrichts", text: "Unterricht" },
 	], { name: "dashboard", text: "Übersicht" }, setTab));
 
-	function tabManager() : TabManager {
+	function tabManager(): TabManager {
 		return refTabManager.value;
 	}
 

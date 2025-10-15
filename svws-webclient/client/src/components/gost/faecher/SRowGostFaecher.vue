@@ -71,8 +71,8 @@
 
 	import type { ComputedRef, WritableComputedRef } from "vue";
 	import { computed } from "vue";
-	import type { List, GostFach, GostFaecherManager} from "@core";
-	import { ServerMode, ArrayList, DeveloperNotificationException, Fachgruppe, Jahrgaenge, Fach, AbiturdatenManager } from "@core";
+	import type { List, GostFach, GostFaecherManager, ServerMode } from "@core";
+	import { ArrayList, DeveloperNotificationException, Fachgruppe, Jahrgaenge, Fach, AbiturdatenManager } from "@core";
 
 	const props = defineProps<{
 		serverMode: ServerMode;
@@ -94,9 +94,9 @@
 		if (fach === null)
 			throw new DeveloperNotificationException("Fehler, es gibt kein gültiges Fach.");
 		return fach;
-	})
+	});
 
-	function istPJK(fach: GostFach) : boolean {
+	function istPJK(fach: GostFach): boolean {
 		return Fach.getBySchluesselOrDefault(fach.kuerzel).getFachgruppe(schuljahr.value) === Fachgruppe.FG_PX;
 	}
 
@@ -171,42 +171,42 @@
 	const ef1 = computed({
 		get: () => fach.value.istMoeglichEF1,
 		set: (value) => void doPatch({ istMoeglichEF1: !fach.value.istMoeglichEF1 }),
-	})
+	});
 
 	const ef2 = computed({
 		get: () => fach.value.istMoeglichEF2,
 		set: (value) => void doPatch({ istMoeglichEF2: !fach.value.istMoeglichEF2 }),
-	})
+	});
 
 	const q11 = computed({
 		get: () => fach.value.istMoeglichQ11,
 		set: (value) => void doPatch({ istMoeglichQ11: !fach.value.istMoeglichQ11 }),
-	})
+	});
 
 	const q12 = computed({
 		get: () => fach.value.istMoeglichQ12,
 		set: (value) => void doPatch({ istMoeglichQ12: !fach.value.istMoeglichQ12 }),
-	})
+	});
 
 	const q21 = computed({
 		get: () => fach.value.istMoeglichQ21,
 		set: (value) => void doPatch({ istMoeglichQ21: !fach.value.istMoeglichQ21 }),
-	})
+	});
 
 	const q22 = computed({
 		get: () => fach.value.istMoeglichQ22,
 		set: (value) => void doPatch({ istMoeglichQ22: !fach.value.istMoeglichQ22 }),
-	})
+	});
 
 	const abiGK = computed({
 		get: () => fach.value.istMoeglichAbiGK,
 		set: (value) => void doPatch({ istMoeglichAbiGK: !fach.value.istMoeglichAbiGK }),
-	})
+	});
 
 	const abiLK = computed({
 		get: () => fach.value.istMoeglichAbiLK,
 		set: (value) => void doPatch({ istMoeglichAbiLK: !fach.value.istMoeglichAbiLK }),
-	})
+	});
 
 	async function set_pjk_stunden() {
 		if (!istPJK(fach.value))

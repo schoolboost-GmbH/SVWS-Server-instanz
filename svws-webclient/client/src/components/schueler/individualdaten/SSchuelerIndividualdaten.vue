@@ -220,7 +220,7 @@
 		return props.mapTelefonArten.get(idTelefonArt)?.bezeichnung ?? "";
 	}
 
-	const selectedTelefonArt = computed<TelefonArt|null>({
+	const selectedTelefonArt = computed<TelefonArt | null>({
 		get: () => props.mapTelefonArten.get(newEntryTelefonnummer.value.idTelefonArt) ?? null,
 		set: (selected) => newEntryTelefonnummer.value.idTelefonArt = (selected !== null) ? selected.id : 0,
 	});
@@ -272,7 +272,7 @@
 
 	function closeModalTelefonnummer() {
 		resetTelefonnummer();
-		setMode(Mode.DEFAULT)
+		setMode(Mode.DEFAULT);
 		showModalTelefonnummer.value = false;
 	}
 
@@ -306,7 +306,7 @@
 		set: (value) => void props.patch({ geschlecht: value.id }),
 	});
 
-	const strasse = computed(() => AdressenUtils.combineStrasse(data.value.strassenname ?? "", data.value.hausnummer ?? "", data.value.hausnummerZusatz ?? ""))
+	const strasse = computed(() => AdressenUtils.combineStrasse(data.value.strassenname ?? "", data.value.hausnummer ?? "", data.value.hausnummerZusatz ?? ""));
 
 	async function patchStrasse(value: string | null) {
 		if (value !== null) {
@@ -324,7 +324,7 @@
 	});
 
 	const ortsteile = computed<Array<OrtsteilKatalogEintrag>>(() => {
-		const result : Array<OrtsteilKatalogEintrag> = [];
+		const result: Array<OrtsteilKatalogEintrag> = [];
 		for (const ortsteil of props.mapOrtsteile.values())
 			if ((ortsteil.ort_id === null) || (ortsteil.ort_id === data.value.wohnortID))
 				result.push(ortsteil);

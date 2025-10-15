@@ -55,7 +55,7 @@
 	const hatKompetenzAendern = computed<boolean>(() => props.benutzerKompetenzen.has(BenutzerKompetenz.UNTERRICHTSVERTEILUNG_ALLGEMEIN_AENDERN));
 
 	const columns: DataTableColumn[] = [
-		{ key: "kuerzel", label: "Kürzel", sortable: true, defaultSort: "asc"},
+		{ key: "kuerzel", label: "Kürzel", sortable: true, defaultSort: "asc" },
 		{ key: "lehrer", label: "Fachlehrer", sortable: true },
 		{ key: "idJahrgaenge", label: "JG", tooltip: "Jahrgang", sortable: true, span: 0.5 },
 		{ key: "schueler", label: "Schüler", span: 0.5, align: "right" },
@@ -67,7 +67,7 @@
 			if (pair.b !== null)
 				map.set(pair.a === "kuerzel" ? "kurse" : pair.a, pair.b);
 		return map;
-	})
+	});
 
 	const sortByAndOrder = computed<SortByAndOrder | undefined>({
 		get: () => {
@@ -75,7 +75,7 @@
 			if (list.isEmpty())
 				return undefined;
 			else {
-				const { a: key, b: order} = list.get(0);
+				const { a: key, b: order } = list.get(0);
 				return { key, order };
 			}
 		},
@@ -85,7 +85,7 @@
 			props.manager().orderUpdate(value.key, value.order);
 			void props.setFilter();
 		},
-	})
+	});
 
 	function text(eintrag: LehrerListeEintrag | JahrgangsDaten | FachDaten): string {
 		return eintrag.kuerzel ?? "";
@@ -109,7 +109,7 @@
 			if ((i.nachname.toLocaleLowerCase().includes(search.toLocaleLowerCase())) || (i.vorname.toLocaleLowerCase().includes(search.toLocaleLowerCase())))
 				list.push(i);
 		return list;
-	}
+	};
 
 	function text_schulgliederung(schulgliederung: Schulgliederung): string {
 		return schulgliederung.daten(schuljahr.value)?.kuerzel ?? '—';
@@ -208,7 +208,7 @@
 		return props.manager().hasDaten() ? props.manager().auswahl() : null;
 	});
 
-	async function setAuswahl(items : KursDaten[]) {
+	async function setAuswahl(items: KursDaten[]) {
 		props.manager().liste.auswahlClear();
 		for (const item of items)
 			if (props.manager().liste.hasValue(item))

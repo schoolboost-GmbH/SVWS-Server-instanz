@@ -34,15 +34,15 @@ const defaultProps: Partial<{
 beforeEach(() => {
 	wrapper = mount(SvwsUiRadioOption);
 
-	idComponent ="#"+wrapper.findComponent({ name: "SvwsUiRadioOption" }).vm.idComponent;
-	idInputField ="#"+wrapper.findComponent({ name: "SvwsUiRadioOption" }).vm.idInputField;
-	idIcon ="#"+wrapper.findComponent({ name: "SvwsUiRadioOption" }).vm.idIcon;
-	idLabel ="#"+wrapper.findComponent({ name: "SvwsUiRadioOption" }).vm.idLabel;
+	idComponent = "#" + wrapper.findComponent({ name: "SvwsUiRadioOption" }).vm.idComponent;
+	idInputField = "#" + wrapper.findComponent({ name: "SvwsUiRadioOption" }).vm.idInputField;
+	idIcon = "#" + wrapper.findComponent({ name: "SvwsUiRadioOption" }).vm.idIcon;
+	idLabel = "#" + wrapper.findComponent({ name: "SvwsUiRadioOption" }).vm.idLabel;
 });
 
 afterEach(() => {
 	wrapper.unmount();
-})
+});
 
 test("Rendert HTML korrekt", async () => {
 	expect(wrapper.find(idComponent).exists()).toBeTruthy();
@@ -149,7 +149,7 @@ describe("Bedingtes Rendern der HTML-Elemenete", () => {
 		// Vorbereiten
 		expect(wrapper.props("icon")).toBe(true);
 
-		//Testen
+		// Testen
 		expect(wrapper.find(idIcon).exists()).toBeTruthy();
 	});
 
@@ -158,7 +158,7 @@ describe("Bedingtes Rendern der HTML-Elemenete", () => {
 		await wrapper.setProps({ icon: false });
 		expect(wrapper.props("icon")).toBe(false);
 
-		//Testen
+		// Testen
 		expect(wrapper.find(idIcon).exists()).toBeFalsy();
 	});
 
@@ -167,7 +167,7 @@ describe("Bedingtes Rendern der HTML-Elemenete", () => {
 		expect(wrapper.props("icon")).toBe(true);
 		await wrapper.setProps({ iconType: "view" });
 
-		//Testen
+		// Testen
 		expect(wrapper.find(idIcon).find("span.i-ri-eye-line").exists()).toBeTruthy();
 	});
 
@@ -175,7 +175,7 @@ describe("Bedingtes Rendern der HTML-Elemenete", () => {
 		// Vorbereiten
 		expect(wrapper.props("icon")).toBe(true);
 
-		//Testen
+		// Testen
 		expect(wrapper.find(idIcon).find("span.i-ri-eye-line").exists()).toBeFalsy();
 	});
 
@@ -183,8 +183,8 @@ describe("Bedingtes Rendern der HTML-Elemenete", () => {
 		// Vorbereiten
 		expect(wrapper.props("icon")).toBe(true);
 
-		//Testen
-		expect(wrapper.find(idIcon).find("span.i-ri-eye-line").exists()).toBeFalsy()
+		// Testen
+		expect(wrapper.find(idIcon).find("span.i-ri-eye-line").exists()).toBeFalsy();
 	});
 
 	test("Slot-Inhalt wird korrekt gerendert, wenn er übergeben wird.", () => {
@@ -192,11 +192,11 @@ describe("Bedingtes Rendern der HTML-Elemenete", () => {
 		const wrapper = mount(SvwsUiRadioOption, { slots: { default: "Custom label" } });
 
 		// Testen
-		expect(wrapper.find("#"+wrapper.findComponent({ name: "SvwsUiRadioOption" }).vm.idIcon).text()).toContain("Custom label");
+		expect(wrapper.find("#" + wrapper.findComponent({ name: "SvwsUiRadioOption" }).vm.idIcon).text()).toContain("Custom label");
 	});
 
 	test("span-label wird mit einem leeren Wert für prop->label gerendert", async () => {
-		//Testen
+		// Testen
 		expect(wrapper.find(idLabel).text()).toBe("");
 	});
 
@@ -205,19 +205,19 @@ describe("Bedingtes Rendern der HTML-Elemenete", () => {
 		expect(wrapper.find(idLabel).text()).toBe("");
 		await wrapper.setProps({ label: "Test" });
 
-		//Testen
+		// Testen
 		expect(wrapper.find(idLabel).text()).toBe("Test");
 	});
 
 	test("statistics-icon wird nicht gerendert, weil prop-statistic false ist", () => {
-		//Testen
-		expect(wrapper.find(idLabel).find("icon").exists()).toBeFalsy()
+		// Testen
+		expect(wrapper.find(idLabel).find("icon").exists()).toBeFalsy();
 	});
 
 	test("statistics-icon wird gerendert, weil prop-statistic true ist", async () => {
 		// Vorbereiten
 		await wrapper.setProps({ statistics: true });
-		//Testen
+		// Testen
 		expect(wrapper.find(idLabel).find("span.icon.i-ri-bar-chart-2-line.radio--statistic-icon").exists()).toBeTruthy();
 	});
 });
@@ -226,7 +226,7 @@ test("computed->checked->get liefert props.modelValue", async () => {
 	// Vorbereiten
 	await wrapper.setProps({ modelValue: "Test" });
 
-	//Testen
+	// Testen
 	expect(wrapper.findComponent({ name: "SvwsUiRadioOption" }).vm.checked).toBe("Test");
 });
 

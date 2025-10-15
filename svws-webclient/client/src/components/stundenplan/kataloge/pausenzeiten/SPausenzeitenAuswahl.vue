@@ -49,10 +49,10 @@
 	const actionPausenzeiten = ref<boolean>(false);
 
 	const columns = [
-		{key: 'wochentag', label: 'Wochentag', span: 2},
-		{key: 'beginn', label: 'Beginn', span: 1},
-		{key: 'ende', label: 'Ende', span: 1},
-	]
+		{ key: 'wochentag', label: 'Wochentag', span: 2 },
+		{ key: 'beginn', label: 'Beginn', span: 1 },
+		{ key: 'ende', label: 'Ende', span: 1 },
+	];
 
 	async function doDeleteEintraege() {
 		await props.deleteEintraege(selected.value);
@@ -61,7 +61,7 @@
 
 	function export_pausenzeiten() {
 		const arr = selected.value.map(r => StundenplanPausenzeit.transpilerToJSON(r));
-		const blob = new Blob(['['+arr.toString()+']'], { type: "application/json" });
+		const blob = new Blob(['[' + arr.toString() + ']'], { type: "application/json" });
 		const link = document.createElement("a");
 		link.href = URL.createObjectURL(blob);
 		link.download = "ExportPausenzeiten.json";

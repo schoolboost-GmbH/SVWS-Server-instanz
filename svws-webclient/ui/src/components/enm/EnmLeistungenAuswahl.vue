@@ -30,7 +30,7 @@
 
 	onBeforeMount(() => props.setAuswahlEinzel(getFirst()));
 
-	function getFirst() : EnmLerngruppenAuswahlEintrag | null {
+	function getFirst(): EnmLerngruppenAuswahlEintrag | null {
 		const map = props.enmManager().mapLerngruppenAuswahl.values();
 		if (map.isEmpty())
 			return null;

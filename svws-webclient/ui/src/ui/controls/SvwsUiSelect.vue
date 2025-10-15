@@ -110,13 +110,13 @@
 		focusClassContent: false,
 		focusClassSubNav: false,
 		noItemsText: undefined,
-	})
+	});
 
 	const emit = defineEmits<{
 		(e: "update:modelValue", items: SelectDataType): void;
 	}>();
 
-	const refList = ref<ComponentExposed<typeof SvwsUiDropdownList>|null|undefined>(null);
+	const refList = ref<ComponentExposed<typeof SvwsUiDropdownList> | null | undefined>(null);
 	const showList = ref(false);
 	const inputEl = ref();
 	const hasFocus = ref(false);
@@ -173,7 +173,7 @@
 
 	watch(() => props.modelValue, (value: SelectDataType) => updateData(toRaw(value), true), { immediate: false });
 
-	function updateData(value: SelectDataType, fromModelValue : boolean) {
+	function updateData(value: SelectDataType, fromModelValue: boolean) {
 		if (((value === null) || (value === undefined)) && ((data.value === null) || (data.value === undefined)))
 			return;
 		if (data.value === value)
@@ -222,7 +222,7 @@
 	}
 
 	const sortedList = computed<Item[]>(() => {
-		let arr
+		let arr;
 		if (Array.isArray(props.items))
 			arr = props.items;
 		else if (props.items instanceof Map)
@@ -241,7 +241,7 @@
 
 	const filteredList = computed<Item[]>(() => {
 		if (props.autocomplete) {
-			const isCurrent : boolean = (selectedItem.value !== null) && (selectedItem.value !== undefined) && (props.itemText(selectedItem.value) === searchText.value);
+			const isCurrent: boolean = (selectedItem.value !== null) && (selectedItem.value !== undefined) && (props.itemText(selectedItem.value) === searchText.value);
 			if (isCurrent)
 				return sortedList.value;
 			return props.itemFilter(sortedList.value, searchText.value);
@@ -334,7 +334,7 @@
 
 	const { x, y, strategy } = useFloating(inputEl, refList as Readonly<Ref<MaybeElement<HTMLElement>>>, {
 		placement: 'bottom',
-		middleware: [flip(), shift(), offset(2), size({ apply({rects, elements}) { Object.assign(elements.floating.style, { width: `${rects.reference.width}px` }); } })],
+		middleware: [flip(), shift(), offset(2), size({ apply({ rects, elements }) { Object.assign(elements.floating.style, { width: `${rects.reference.width}px` }) } })],
 		whileElementsMounted: autoUpdate,
 	});
 

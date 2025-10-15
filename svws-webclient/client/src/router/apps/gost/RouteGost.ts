@@ -29,8 +29,8 @@ import { routeGostAbiturjahrNeu } from "./RouteGostAbiturjahrNeu";
 import { routeGostGruppenprozesse } from "./RouteGostGruppenprozesse";
 import { AppMenuGroup } from "@ui";
 
-const SGostAuswahl = () => import("~/components/gost/SGostAuswahl.vue")
-const SGostApp = () => import("~/components/gost/SGostApp.vue")
+const SGostAuswahl = () => import("~/components/gost/SGostAuswahl.vue");
+const SGostApp = () => import("~/components/gost/SGostApp.vue");
 
 export class RouteGost extends RouteNode<RouteDataGost, RouteApp> {
 
@@ -70,7 +70,7 @@ export class RouteGost extends RouteNode<RouteDataGost, RouteApp> {
 		]);
 	}
 
-	protected async update(to: RouteNode<any, any>, to_params: RouteParams, from: RouteNode<any, any> | undefined, from_params: RouteParams, isEntering: boolean) : Promise<void | Error | RouteLocationRaw> {
+	protected async update(to: RouteNode<any, any>, to_params: RouteParams, from: RouteNode<any, any> | undefined, from_params: RouteParams, isEntering: boolean): Promise<void | Error | RouteLocationRaw> {
 		try {
 			if (isEntering || (this.data.idSchuljahresabschnitt !== routeApp.data.aktAbschnitt.value.id)) {
 				if (isEntering && (this.data.oldView !== undefined))
@@ -98,7 +98,7 @@ export class RouteGost extends RouteNode<RouteDataGost, RouteApp> {
 				return;
 			const redirect: RouteNode<any, any> = (this.selectedChild === undefined) ? this.defaultChild! : this.selectedChild;
 			if (redirect.hidden({ abiturjahr: abiturjahr.toString() }) !== false)
-				return { name: this.defaultChild!.name, params: { idSchuljahresabschnitt: routeApp.data.idSchuljahresabschnitt, abiturjahr }};
+				return { name: this.defaultChild!.name, params: { idSchuljahresabschnitt: routeApp.data.idSchuljahresabschnitt, abiturjahr } };
 		} catch (e) {
 			return await routeError.getErrorRoute(e as DeveloperNotificationException);
 		}
@@ -109,7 +109,7 @@ export class RouteGost extends RouteNode<RouteDataGost, RouteApp> {
 		routeGost.data.oldView = from;
 	}
 
-	public addRouteParamsFromState() : RouteParamsRawGeneric {
+	public addRouteParamsFromState(): RouteParamsRawGeneric {
 		return { abiturjahr: this.data.abiturjahrFromConfig };
 	}
 
@@ -147,7 +147,7 @@ export class RouteGost extends RouteNode<RouteDataGost, RouteApp> {
 		};
 	}
 
-	private getType() : ViewType {
+	private getType(): ViewType {
 		if (this.data.gruppenprozesseEnabled)
 			return ViewType.GRUPPENPROZESSE;
 		if (this.data.creationModeEnabled)
@@ -166,7 +166,7 @@ export class RouteGost extends RouteNode<RouteDataGost, RouteApp> {
 			await this.data.setSelectedTabToConfig(value);
 		await RouteManager.doRoute(node.getRoute());
 		this.data.setView(node, this.children);
-	}
+	};
 
 }
 

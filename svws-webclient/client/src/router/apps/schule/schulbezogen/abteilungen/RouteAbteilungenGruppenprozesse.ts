@@ -9,21 +9,21 @@ import { routeApp } from "../../../RouteApp";
 import { api } from "~/router/Api";
 
 const SAbteilungenGruppenprozesse = () =>
-	import("~/components/schule/schulbezogen/abteilungen/gruppenprozesse/SAbteilungenGruppenprozesse.vue")
+	import("~/components/schule/schulbezogen/abteilungen/gruppenprozesse/SAbteilungenGruppenprozesse.vue");
 
 export class RouteAbteilungenGruppenprozesse extends RouteNode<any, RouteAbteilungen> {
 
 	public constructor() {
-		super(Schulform.values(), [ BenutzerKompetenz.KATALOG_EINTRAEGE_ANSEHEN, BenutzerKompetenz.KATALOG_EINTRAEGE_AENDERN, BenutzerKompetenz.KATALOG_EINTRAEGE_LOESCHEN ],
+		super(Schulform.values(), [BenutzerKompetenz.KATALOG_EINTRAEGE_ANSEHEN, BenutzerKompetenz.KATALOG_EINTRAEGE_AENDERN, BenutzerKompetenz.KATALOG_EINTRAEGE_LOESCHEN],
 			"schule.abteilungen.gruppenprozesse", "gruppenprozesse", SAbteilungenGruppenprozesse);
-		super.types = new Set([ ViewType.GRUPPENPROZESSE ]);
+		super.types = new Set([ViewType.GRUPPENPROZESSE]);
 		super.mode = ServerMode.DEV;
 		super.propHandler = (route) => this.getProps(route);
 		super.text = "Gruppenprozesse";
 	}
 
-	public getRoute() : RouteLocationRaw {
-		return { name: this.name, params: { idSchuljahresabschnitt: routeApp.data.idSchuljahresabschnitt, id: "" }}
+	public getRoute(): RouteLocationRaw {
+		return { name: this.name, params: { idSchuljahresabschnitt: routeApp.data.idSchuljahresabschnitt, id: "" } };
 	}
 
 	public getProps(to: RouteLocationNormalized): AbteilungenGruppenprozesseProps {
@@ -33,7 +33,7 @@ export class RouteAbteilungenGruppenprozesse extends RouteNode<any, RouteAbteilu
 			benutzerKompetenzen: api.benutzerKompetenzen,
 			manager: () => routeAbteilungen.data.manager,
 			deleteAbteilungen: routeAbteilungen.data.delete,
-		}
+		};
 	};
 }
 

@@ -24,7 +24,7 @@ export class RouteEntlassgruende extends RouteAuswahlNode<EntlassgruendeListeMan
 		super.children = [
 			routeEntlassgruendeDaten,
 			routeEntlassgruendeNeu,
-			routeEntlassgruendeGruppenprozesse
+			routeEntlassgruendeGruppenprozesse,
 		];
 		super.defaultChild = routeEntlassgruendeDaten;
 		super.updateIfTarget = this.doUpdateIfTarget;

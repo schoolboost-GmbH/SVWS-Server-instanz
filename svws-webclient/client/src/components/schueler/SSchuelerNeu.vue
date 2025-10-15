@@ -77,11 +77,11 @@
 
 	const keineKlassenVorhanden = computed(() => props.schuelerListeManager().klassen.list().isEmpty());
 
-	watch(() => data.value, async() => {
+	watch(() => data.value, async () => {
 		if (isLoading.value)
 			return;
 		props.checkpoint.active = true;
-	}, {immediate: false, deep: true});
+	}, { immediate: false, deep: true });
 
 	const schulenMitPrimaerstufe = computed(() => {
 		const erlaubteSchulformen = [Schulform.G, Schulform.FW, Schulform.WF, Schulform.GM, Schulform.KS, Schulform.S, Schulform.GE, Schulform.V];
@@ -90,8 +90,8 @@
 
 	const schulenMitBKoderSK = computed(() => props.schulform === Schulform.BK || props.schulform === Schulform.SK);
 
-	//validation logic
-	function fieldIsValid(field: keyof SchuelerStammdatenNeu | null):(v: string | null) => boolean {
+	// validation logic
+	function fieldIsValid(field: keyof SchuelerStammdatenNeu | null): (v: string | null) => boolean {
 		return (v: string | null) => {
 			switch (field) {
 				case 'schuljahresabschnitt': {
@@ -110,7 +110,7 @@
 					const id = data.value.klassenID;
 					if (id === null || id <= 0)
 						return false;
-					return gefilterteKlassen.value.some(i => i.id === id)
+					return gefilterteKlassen.value.some(i => i.id === id);
 				}
 				case 'nachname':
 					return mandatoryInputIsValid(data.value.nachname, 120);
@@ -131,7 +131,7 @@
 				default:
 					return true;
 			}
-		}
+		};
 	}
 
 	const formIsValid = computed(() => {
@@ -145,7 +145,7 @@
 	const statusManager = new CoreTypeSelectManager({ clazz: SchuelerStatus.class, schuljahr: schuljahr, schulformen: props.schulform, optionDisplayText: "text", selectionDisplayText: "text" });
 
 	const selectedStatus = computed<SchuelerStatusKatalogEintrag | null>({
-		get: () :SchuelerStatusKatalogEintrag | null => SchuelerStatus.data().getWertByKuerzel('' + data.value.status)?.daten(schuljahr.value) ?? null,
+		get: (): SchuelerStatusKatalogEintrag | null => SchuelerStatus.data().getWertByKuerzel('' + data.value.status)?.daten(schuljahr.value) ?? null,
 		set: (value) => data.value.status = value?.id ?? -1,
 	});
 
@@ -160,7 +160,7 @@
 		return schuljahresabschnitte.value.filter(s => ids.has(s.id));
 	});
 
-	const schuljahresabschnittsManager = new SelectManager({ options: gefilterteSchuljahresabschnitte, optionDisplayText: i => `${i.schuljahr}/${(i.schuljahr + 1) % 100}.${i.abschnitt}`, selectionDisplayText: i => `${i.schuljahr}/${(i.schuljahr + 1) % 100}.${i.abschnitt}`});
+	const schuljahresabschnittsManager = new SelectManager({ options: gefilterteSchuljahresabschnitte, optionDisplayText: i => `${i.schuljahr}/${(i.schuljahr + 1) % 100}.${i.abschnitt}`, selectionDisplayText: i => `${i.schuljahr}/${(i.schuljahr + 1) % 100}.${i.abschnitt}` });
 
 	const schuljahresabschnitt = computed({
 		get: () => gefilterteSchuljahresabschnitte.value.find(i => i.id === data.value.schuljahresabschnitt) ?? null,
@@ -191,7 +191,7 @@
 		});
 	});
 
-	const jahrgangManager = new SelectManager({ options: gefilterteJahrgaenge, optionDisplayText: i => i.kuerzel ?? '', selectionDisplayText: i => i.kuerzel ?? ''});
+	const jahrgangManager = new SelectManager({ options: gefilterteJahrgaenge, optionDisplayText: i => i.kuerzel ?? '', selectionDisplayText: i => i.kuerzel ?? '' });
 
 	const jahrgang = computed({
 		get: () => gefilterteJahrgaenge.value.find(i => i.id === data.value.jahrgangID) ?? null,

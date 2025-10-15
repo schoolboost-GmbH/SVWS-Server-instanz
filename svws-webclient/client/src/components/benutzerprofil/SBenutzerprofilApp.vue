@@ -74,8 +74,8 @@
 
 	const smtpPassword = computed<string>({
 		get: () => _smtpPassword.value,
-		set: (passwordSMTP) => void props.patchBenutzerEMailDaten({passwordSMTP}),
-	})
+		set: (passwordSMTP) => void props.patchBenutzerEMailDaten({ passwordSMTP }),
+	});
 
 	watch(() => props.benutzerEMailDaten(), async () => await decryptSMTPPassword());
 
@@ -106,7 +106,7 @@
 			}
 			const encoded = await props.aes.decryptBase64(password);
 			_smtpPassword.value = new TextDecoder().decode(encoded);
-		} catch(e) {
+		} catch (e) {
 			_smtpPassword.value = "";
 		}
 	}

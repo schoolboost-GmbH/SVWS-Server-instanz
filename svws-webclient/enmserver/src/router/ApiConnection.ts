@@ -35,22 +35,22 @@ export class ApiConnection {
 	// Gibt die Server-API zurück.
 	get api(): ApiEnmServer {
 		if (this._api === undefined)
-			throw new DeveloperNotificationException("Es wurde kein Api-Objekt angelegt - Verbindungen zum Server können nicht erfolgen")
+			throw new DeveloperNotificationException("Es wurde kein Api-Objekt angelegt - Verbindungen zum Server können nicht erfolgen");
 		return this._api;
 	}
 
 	// Gibt den Hostname zurück
-	get hostname() : string {
+	get hostname(): string {
 		return this._hostname.value;
 	}
 
 	// Gibt den Status zurück, ob der Benutzer authentifiziert wurde
-	get authenticated() : boolean {
+	get authenticated(): boolean {
 		return this._authenticated.value;
 	}
 
 	// Gibt den Benutzernamen zurück
-	get username() : string {
+	get username(): string {
 		return this._username;
 	}
 
@@ -59,7 +59,7 @@ export class ApiConnection {
 	 *
 	 * @param hostname   der Hostname, evtl. mit Port-Adresse
 	 */
-	protected async connect(hostname : string): Promise<void> {
+	protected async connect(hostname: string): Promise<void> {
 		const url = `https://${hostname}`;
 		const api = new ApiEnmServer(url, "", "");
 		await api.isAlive();
@@ -74,7 +74,7 @@ export class ApiConnection {
 	 */
 	setHostname = (hostname: string): void => {
 		this._hostname.value = hostname;
-	}
+	};
 
 	/**
 	 * Versucht eine Verbindung zu dem ENM-Server mit dem angegebenen Hostnamen aufzubauen.
@@ -114,7 +114,7 @@ export class ApiConnection {
 			}
 		}
 		throw new UserNotificationException('Es konnte keine Verbindung hergestellt werden.');
-	}
+	};
 
 	/**
 	 * Authentifiziert den angebenen Benutzer mit dem angegebenen Kennwort.
@@ -142,7 +142,7 @@ export class ApiConnection {
 			this._authenticated.value = false;
 		}
 		return this._authenticated.value;
-	}
+	};
 
 	/**
 	 * Initialialisiert die Daten, die beim Login geladen werden sollen
@@ -151,7 +151,7 @@ export class ApiConnection {
 	 */
 	init = async (): Promise<boolean> => {
 		return true;
-	}
+	};
 
 	/**
 	 * Trennt die Verbindung für den aktuell angemeldeten Benutzer
@@ -163,7 +163,7 @@ export class ApiConnection {
 		this._api = undefined;
 		this._serverMode.value = ServerMode.STABLE;
 		this._schulform.value = null;
-	}
+	};
 
 	// Gibt den Modus zurück, in welchem der Server betrieben wird.
 	get mode(): ServerMode {

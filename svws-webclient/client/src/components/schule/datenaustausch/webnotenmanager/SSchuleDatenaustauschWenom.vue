@@ -239,7 +239,7 @@
 		spinning.value = false;
 	}
 
-	async function tryConnect(connInfo : OAuth2ClientConnection) {
+	async function tryConnect(connInfo: OAuth2ClientConnection) {
 		if (JavaString.isBlank(connInfo.authServer) || JavaString.isBlank(connInfo.clientSecret))
 			return;
 		const res = await props.connect();
@@ -269,12 +269,12 @@
 	const status = ref<SimpleOperationResponse | null>(null);
 	const spinning = ref<boolean>(false);
 
-	const validatorEmail = (value: string | null) : boolean => ((value === null) || (value === '')) ? true : (
+	const validatorEmail = (value: string | null): boolean => ((value === null) || (value === '')) ? true : (
 		/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))[^@]?$/.test(value) ||
 		/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(value)
 	);
 
-	function onSelect(value : WENOM): void {
+	function onSelect(value: WENOM): void {
 		if (aktuell.value === value)
 			return;
 		aktuell.value = value;

@@ -33,7 +33,7 @@
 <script setup lang="ts">
 	import { useFloating, autoUpdate, arrow, flip, offset, shift } from "@floating-ui/vue";
 	import { ref, computed, toRefs } from "vue";
-	import { onClickOutside } from '@vueuse/core'
+	import { onClickOutside } from '@vueuse/core';
 
 	const props = withDefaults(defineProps<{
 		position?: "top" | "top-start" | "top-end" | "bottom" | "bottom-start" | "bottom-end" | "left" | "left-start" | "left-end" | "right" | "right-start" | "right-end";
@@ -80,7 +80,7 @@
 		floating,
 		{
 			placement: position.value,
-			middleware: [flip(), shift(), offset(showArrow.value ? 6 : 2), arrow({element: floatingArrow})],
+			middleware: [flip(), shift(), offset(showArrow.value ? 6 : 2), arrow({ element: floatingArrow })],
 			whileElementsMounted: autoUpdate,
 		}
 	);
@@ -95,7 +95,7 @@
 			left: "right",
 		};
 		const side = placement.value.split('-')[0] as keyof typeof flipped;
-		return {[flipped[side]]: '-4px'};
+		return { [flipped[side]]: '-4px' };
 	});
 
 	function showTooltip() {

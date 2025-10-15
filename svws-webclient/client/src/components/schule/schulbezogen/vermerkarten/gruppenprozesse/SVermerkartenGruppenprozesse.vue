@@ -60,18 +60,18 @@
 			for (const vermerkart of props.manager().getVermerkartenIDsMitSchuelern())
 				errorLog.add(`Vermerkart ${props.manager().liste.get(vermerkart)?.bezeichnung ?? '???'} (ID: ${vermerkart}) kann nicht gelöscht werden, da ihr noch Schüler zugeordnet sind.`);
 		return errorLog;
-	})
+	});
 
 	const leereVermerkartenVorhanden = computed(() =>
 		(alleVermerkartenLeer.value === false) && (props.manager().getVermerkartenIDsMitSchuelern().size() !== props.manager().liste.auswahlSize()));
 
 	function setCurrentAction(newAction: string, open: boolean) {
-		if(newAction === oldAction.value.name && !open)
+		if (newAction === oldAction.value.name && !open)
 			return;
 		oldAction.value.name = currentAction.value;
 		oldAction.value.open = (currentAction.value === "") ? false : true;
-		if(open === true)
-			currentAction.value= newAction;
+		if (open === true)
+			currentAction.value = newAction;
 		else
 			currentAction.value = "";
 	}

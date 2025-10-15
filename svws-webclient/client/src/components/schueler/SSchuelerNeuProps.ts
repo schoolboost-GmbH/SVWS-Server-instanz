@@ -1,4 +1,4 @@
-import type { Checkpoint, SchuelerListeManager} from "@ui";
+import type { Checkpoint, SchuelerListeManager } from "@ui";
 import type { RoutingStatus } from "~/router/RoutingStatus";
 import type { SchuelerStammdaten, Kindergarten, EinschulungsartKatalogEintrag, Schuljahresabschnitt, Schulform, SchuelerSchulbesuchsdaten, BenutzerKompetenz, SchuelerStammdatenNeu, KlassenDaten, List } from "@core";
 

@@ -54,14 +54,14 @@
 
 	const props = defineProps<EnmLehrerCredentialsProps>();
 
-	const validatorEmail = (value: string | null) : boolean => ((value === null) || (value === '')) ? true : (
+	const validatorEmail = (value: string | null): boolean => ((value === null) || (value === '')) ? true : (
 		/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))[^@]?$/.test(value) ||
 		/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(value)
 	);
 
 	const lehrerListe = computed<List<ENMLehrer>>(() => {
 		const result = new ArrayList<ENMLehrer>(props.enmDaten().lehrer);
-		result.sort({ compare: (a : ENMLehrer, b : ENMLehrer) : number => {
+		result.sort({ compare: (a: ENMLehrer, b: ENMLehrer): number => {
 			if ((a.nachname !== null) && (b.nachname !== null)) {
 				let tmp = a.nachname.localeCompare(b.nachname);
 				if (tmp !== 0)
@@ -83,7 +83,7 @@
 			if (b.nachname === null)
 				return 1;
 			return a.id - b.id;
-		}});
+		} });
 		return result;
 	});
 
@@ -108,7 +108,7 @@
 				throw new DeveloperNotificationException("Initial-Kennwort ist nicht vorhanden und kann daher nicht in die Zwischenablage kopiert werden.");
 			else
 				await navigator.clipboard.writeText(kennwort);
-		} catch(e) {
+		} catch (e) {
 			throw new DeveloperNotificationException("Initial-Kennwort konnte nicht in die Zwischenablage kopiert werden.");
 		}
 	}

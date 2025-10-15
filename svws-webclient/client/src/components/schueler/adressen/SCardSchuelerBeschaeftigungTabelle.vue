@@ -37,7 +37,7 @@
 	import type { Beschaeftigungsart, BetriebAnsprechpartner, BetriebListeEintrag, LehrerListeEintrag, SchuelerBetriebsdaten } from "@core";
 
 	const props = defineProps<{
-		patchSchuelerBetriebsdaten: (data : Partial<SchuelerBetriebsdaten>, id : number) => Promise<void>;
+		patchSchuelerBetriebsdaten: (data: Partial<SchuelerBetriebsdaten>, id: number) => Promise<void>;
 		betrieb: SchuelerBetriebsdaten;
 		mapBeschaeftigungsarten: Map<number, Beschaeftigungsart>;
 		mapLehrer: Map<number, LehrerListeEintrag>;
@@ -47,37 +47,37 @@
 
 	const inputBetreuungslehrer = computed<LehrerListeEintrag | undefined>({
 		get: () => props.betrieb.betreuungslehrer_id === null ? undefined : props.mapLehrer.get(props.betrieb.betreuungslehrer_id),
-		set: (value) => void props.patchSchuelerBetriebsdaten({ betreuungslehrer_id: value === undefined ? null : value.id }, props.betrieb.id)
+		set: (value) => void props.patchSchuelerBetriebsdaten({ betreuungslehrer_id: value === undefined ? null : value.id }, props.betrieb.id),
 	});
 
 	const inputBetrieb = computed<BetriebListeEintrag | undefined>({
 		get: () => props.mapBetriebe.get(props.betrieb.betrieb_id),
 		set: (value) => {
 			if (value !== undefined)
-				void props.patchSchuelerBetriebsdaten({ betrieb_id: value.id , ansprechpartner_id: null }, props.betrieb.id);
-		}
+				void props.patchSchuelerBetriebsdaten({ betrieb_id: value.id, ansprechpartner_id: null }, props.betrieb.id);
+		},
 	});
 
 	const beschaeftigungsart = computed<Beschaeftigungsart | undefined>({
 		get: () => (props.betrieb.beschaeftigungsart_id === null) ? undefined : props.mapBeschaeftigungsarten.get(props.betrieb.beschaeftigungsart_id),
-		set: (value) => void props.patchSchuelerBetriebsdaten({ beschaeftigungsart_id: value === undefined ? null : value.id }, props.betrieb.id)
+		set: (value) => void props.patchSchuelerBetriebsdaten({ beschaeftigungsart_id: value === undefined ? null : value.id }, props.betrieb.id),
 	});
 
 	const praktikum = computed<boolean>({
 		get: () => props.betrieb.praktikum,
-		set: (value) => void props.patchSchuelerBetriebsdaten({ praktikum: value }, props.betrieb.id)
+		set: (value) => void props.patchSchuelerBetriebsdaten({ praktikum: value }, props.betrieb.id),
 	});
 
 	const anschreiben = computed<boolean>({
 		get: () => props.betrieb.allgadranschreiben,
-		set: (value) => void props.patchSchuelerBetriebsdaten({ allgadranschreiben: value }, props.betrieb.id)
+		set: (value) => void props.patchSchuelerBetriebsdaten({ allgadranschreiben: value }, props.betrieb.id),
 	});
 
 	const ansprechpartner = computed<BetriebAnsprechpartner | undefined>({
 		get: () => props.betrieb.ansprechpartner_id === null ? undefined : props.mapAnsprechpartner.get(props.betrieb.ansprechpartner_id),
 		set: (value) => {
 			void props.patchSchuelerBetriebsdaten({ ansprechpartner_id: value === undefined ? null : value.id }, props.betrieb.id);
-		}
+		},
 	});
 
 </script>

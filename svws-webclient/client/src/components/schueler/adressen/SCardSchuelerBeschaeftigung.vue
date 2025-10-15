@@ -25,8 +25,8 @@
 	import type { DataTableColumn } from "@ui";
 
 	const props = defineProps<{
-		patchSchuelerBetriebsdaten: (data : Partial<SchuelerBetriebsdaten>, id : number) => Promise<void>;
-		setSchuelerBetrieb: (betrieb : SchuelerBetriebsdaten | undefined) => Promise<void>;
+		patchSchuelerBetriebsdaten: (data: Partial<SchuelerBetriebsdaten>, id: number) => Promise<void>;
+		setSchuelerBetrieb: (betrieb: SchuelerBetriebsdaten | undefined) => Promise<void>;
 		listSchuelerbetriebe: () => List<SchuelerBetriebsdaten>;
 		mapBeschaeftigungsarten: Map<number, Beschaeftigungsart>;
 		mapLehrer: Map<number, LehrerListeEintrag>;
@@ -38,28 +38,28 @@
 	const clickedBetrieb = ref<number | undefined>(undefined);
 
 	const columns: DataTableColumn[] = [
-		{ key: "Betrieb", label: "Betrieb"},
-		{ key: "Beschäftigungsart", label: "Beschäftigungsart"},
+		{ key: "Betrieb", label: "Betrieb" },
+		{ key: "Beschäftigungsart", label: "Beschäftigungsart" },
 		{ key: "Beginn", label: "Beginn", span: 0.5, statistic: true },
 		{ key: "Ende", label: "Ende", span: 0.5, statistic: true },
-		{ key: "Praktikum", label: "Praktikum", span: 0.25, tooltip: 'Praktikum', align: "center"},
-		{ key: "Betreuungslehrer", label: "Betreuungslehrer"},
-		{ key: "Ansprechpartner", label: "Ansprechpartner"},
-		{ key: "Ausbilder", label: "Sonstiger Betreuer"},
-		{ key: "Anschreiben", label: "Anschreiben", tooltip: "Betrieb erhält Anschreiben", fixedWidth: 3, align: "center"}
+		{ key: "Praktikum", label: "Praktikum", span: 0.25, tooltip: 'Praktikum', align: "center" },
+		{ key: "Betreuungslehrer", label: "Betreuungslehrer" },
+		{ key: "Ansprechpartner", label: "Ansprechpartner" },
+		{ key: "Ausbilder", label: "Sonstiger Betreuer" },
+		{ key: "Anschreiben", label: "Anschreiben", tooltip: "Betrieb erhält Anschreiben", fixedWidth: 3, align: "center" },
 	];
 
-	async function select(betrieb : SchuelerBetriebsdaten) {
+	async function select(betrieb: SchuelerBetriebsdaten) {
 		await props.setSchuelerBetrieb(betrieb);
 		clickedBetrieb.value = betrieb.id;
 	}
-	function getAnsprechpartnervonBetrieb ( id : number): Map<number, BetriebAnsprechpartner>{
+	function getAnsprechpartnervonBetrieb(id: number): Map<number, BetriebAnsprechpartner> {
 		const t = new Map<number, BetriebAnsprechpartner>();
 		for (const entry of props.mapAnsprechpartner.entries()) {
 			const mapKey = entry[0];
 			const mapValue = entry[1];
 			if (mapValue.betrieb_id === id)
-				t.set(mapKey,mapValue)
+				t.set(mapKey, mapValue);
 		}
 		return t;
 	}

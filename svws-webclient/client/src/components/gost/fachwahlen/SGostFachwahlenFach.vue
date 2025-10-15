@@ -113,14 +113,14 @@
 
 	const schuljahr = computed<number>(() => props.faecherManager.getSchuljahr());
 
-	function getBgColor(fws: GostStatistikFachwahl) : string {
+	function getBgColor(fws: GostStatistikFachwahl): string {
 		if (fws.kuerzelStatistik === null)
 			return 'rgb(220,220,220)';
 		return Fach.getBySchluesselOrDefault(fws.kuerzelStatistik).getHMTLFarbeRGBA(schuljahr.value, 1.0);
 	}
 
-	function doSortSchuelerListeByNachnameAndVornameAndId(liste : List<SchuelerListeEintrag>): List<SchuelerListeEintrag> {
-		liste.sort({ compare(a : SchuelerListeEintrag, b : SchuelerListeEintrag) : number {
+	function doSortSchuelerListeByNachnameAndVornameAndId(liste: List<SchuelerListeEintrag>): List<SchuelerListeEintrag> {
+		liste.sort({ compare(a: SchuelerListeEintrag, b: SchuelerListeEintrag): number {
 			let cmp = a.nachname.localeCompare(b.nachname);
 			if (cmp !== 0)
 				return cmp;
@@ -132,9 +132,9 @@
 		return liste;
 	}
 
-	function getSchuelerListe(idFach : number, halbjahr: GostHalbjahr, col: number) : List<SchuelerListeEintrag> {
+	function getSchuelerListe(idFach: number, halbjahr: GostHalbjahr, col: number): List<SchuelerListeEintrag> {
 		const result = new ArrayList<SchuelerListeEintrag>();
-		let schuelermenge : List<number> = new ArrayList<number>();
+		let schuelermenge: List<number> = new ArrayList<number>();
 		if (col === 1)
 			schuelermenge = props.fachwahlenManager.schuelerGetMengeGKSchriftlichByFachAndHalbjahrAsListOrException(idFach, halbjahr);
 		else if (col === 2)
@@ -156,7 +156,7 @@
 	}
 
 	const cols = computed<Array<DataTableColumn>>(() => {
-		const result : DataTableColumn[] = [
+		const result: DataTableColumn[] = [
 			{ key: "HJ", label: "HJ", fixedWidth: 6 },
 			{ key: "GKS", label: "GKS", span: 1 },
 			{ key: "GKM", label: "GKM", span: 1 },

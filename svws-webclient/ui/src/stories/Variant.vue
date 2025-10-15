@@ -35,7 +35,7 @@
 	const props = withDefaults(defineProps<{
 		title: string;
 		id: string;
-		layout?: {type?: 'grid'|'iframe'; width?: string};
+		layout?: { type?: 'grid' | 'iframe'; width?: string };
 		icon?: string;
 		source?: string;
 		responsiveDisabled?: boolean;
@@ -60,7 +60,7 @@
 			storyManager.setVariantById(props.id);
 	}
 
-	const dragger = ref<HTMLElement|null>(null);
+	const dragger = ref<HTMLElement | null>(null);
 
 	const configV = <PaneSplitterConfig>({ minSplit: 0, maxSplit: 100, defaultSplit: 100, snap: 99, mode: 'vertical', dragger });
 	const configH = <PaneSplitterConfig>({ minSplit: 0, maxSplit: 100, defaultSplit: 100, snap: 99, mode: 'horizontal', dragger });

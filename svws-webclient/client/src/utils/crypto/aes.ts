@@ -11,7 +11,7 @@ import { AESException } from "./aesException";
 export class AES {
 
 	/** Ein Zufallszahlen-Generator für kryptographisch starke Zufallszahlen (RNG). */
-	//private static random = crypto.getRandomValues(new Uint8Array(16));
+	// private static random = crypto.getRandomValues(new Uint8Array(16));
 
 	/** Das zu verwendende AES-Verfahren */
 	private readonly algo: AESAlgo;
@@ -43,7 +43,7 @@ export class AES {
 	public async encrypt(input: BufferSource): Promise<Uint8Array<ArrayBuffer>> {
 		try {
 			const iv = crypto.getRandomValues(new Uint8Array(16));
-			const encrypted = await crypto.subtle.encrypt({name: this.algo.value, iv}, this.key, input);
+			const encrypted = await crypto.subtle.encrypt({ name: this.algo.value, iv }, this.key, input);
 			const len = encrypted.byteLength + 16;
 			const output = new Uint8Array(len);
 			output.set(iv, 0);
@@ -74,7 +74,7 @@ export class AES {
 				throw new ArrayIndexOutOfBoundsException("Das übegebene Array ist zu klein und kann noch nicht einmal einen Initialisierungsvektor enthalten.");
 			const iv = input.slice(0, 16);
 			const data = input.slice(16);
-			const decryptedData = await crypto.subtle.decrypt({name: this.algo.value, iv}, this.key, data);
+			const decryptedData = await crypto.subtle.decrypt({ name: this.algo.value, iv }, this.key, data);
 			return new Uint8Array(decryptedData);
 		} catch (e: unknown) {
 			if (e instanceof Error)
@@ -130,7 +130,7 @@ export class AES {
 				reader.readAsDataURL(data);
 			else
 				reader.readAsDataURL(new Blob([data]));
-		})
+		});
 		if (typeof base64url === 'string')
 			return base64url.split(",", 2)[1];
 		else
@@ -159,7 +159,7 @@ export class AES {
 	 */
 	public static async getRandomKey256(): Promise<CryptoKey> {
 		try {
-			return await crypto.subtle.generateKey({name: "AEA-CBC", length: 256}, true, ["encrypt", "decrypt"]);
+			return await crypto.subtle.generateKey({ name: "AEA-CBC", length: 256 }, true, ["encrypt", "decrypt"]);
 		} catch (e: unknown) {
 			if (e instanceof Error)
 				throw new AESException("Fehler beim Erstellen eines zufälligen AES-Schlüssels.", e);
@@ -184,9 +184,9 @@ export class AES {
 		try {
 			const encoder = new TextEncoder();
 			const salt = encoder.encode(_salt);
-			const keySpec: Pbkdf2Params = { name: "PBKDF2", salt: salt, iterations: 65536, hash: "SHA-256" }
+			const keySpec: Pbkdf2Params = { name: "PBKDF2", salt: salt, iterations: 65536, hash: "SHA-256" };
 			const passwordKey = await crypto.subtle.importKey("raw", encoder.encode(password), "PBKDF2", false, ["deriveBits", "deriveKey"]);
-			const derivedKeyType = { name: "AES-CBC", length: 256}
+			const derivedKeyType = { name: "AES-CBC", length: 256 };
 			const key = await crypto.subtle.deriveKey(keySpec, passwordKey, derivedKeyType, true, ["encrypt", "decrypt"]);
 			return key;
 		} catch (e: unknown) {

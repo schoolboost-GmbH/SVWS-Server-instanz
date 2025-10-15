@@ -126,13 +126,13 @@
 
 	type FokusType = { type: 'lehrer' | 'klassen' | 'raeume' | 'schienen' | null, id: number | null };
 
-	const focusMultiselect = ref<FokusType>({ type: null, id : null });
+	const focusMultiselect = ref<FokusType>({ type: null, id: null });
 
-	function setFocusMultiselect(fokusType : FokusType) : void {
+	function setFocusMultiselect(fokusType: FokusType): void {
 		focusMultiselect.value = fokusType;
 	}
 
-	function checkFocusMultiselect(fokusType : FokusType) : boolean {
+	function checkFocusMultiselect(fokusType: FokusType): boolean {
 		return (focusMultiselect.value.type === fokusType.type) && (focusMultiselect.value.id === fokusType.id);
 	}
 
@@ -150,16 +150,16 @@
 		for (let i = 0; i <= modell; i++)
 			range.push(i);
 		return range;
-	})
+	});
 
 	const columns = [
-		{key: 'idZeitraster', label: 'Stunde', sortable: true},
-		...(wochentyprange.value.length > 1 ? [{key: 'wochentyp', label: 'Wochentyp', sortable: true}] : []),
-		{key: 'idKurs', label: 'Kurs oder Fach', span: 2, sortable: true},
-		{key: 'lehrer', label: 'Lehrer', sortable: true},
-		{key: 'klassen', label: 'Klassen', sortable: true},
-		{key: 'raeume', label: 'Räume', sortable: true},
-		{key: 'schienen', label: 'Schienen', sortable: true},
+		{ key: 'idZeitraster', label: 'Stunde', sortable: true },
+		...(wochentyprange.value.length > 1 ? [{ key: 'wochentyp', label: 'Wochentyp', sortable: true }] : []),
+		{ key: 'idKurs', label: 'Kurs oder Fach', span: 2, sortable: true },
+		{ key: 'lehrer', label: 'Lehrer', sortable: true },
+		{ key: 'klassen', label: 'Klassen', sortable: true },
+		{ key: 'raeume', label: 'Räume', sortable: true },
+		{ key: 'schienen', label: 'Schienen', sortable: true },
 	];
 
 	function getBgColor(kuerzel: string | null) {
@@ -180,7 +180,7 @@
 			|| props.stundenplanUnterrichtListeManager().wochentage.auswahlExists()
 			|| props.stundenplanUnterrichtListeManager().stunden.auswahlExists()
 			|| props.stundenplanUnterrichtListeManager().zeitraster.auswahlExists();
-	})
+	});
 
 	async function filterReset(table = true) {
 		if (table) {
@@ -281,7 +281,7 @@
 		void props.setFilter();
 	}
 
-	function filterZeiraster(zeitraster: StundenplanZeitraster|null) {
+	function filterZeiraster(zeitraster: StundenplanZeitraster | null) {
 		if (zeitraster === null)
 			return;
 		props.stundenplanUnterrichtListeManager().zeitraster.auswahlToggle(zeitraster);
@@ -345,7 +345,7 @@
 		const list = new ArrayList<number>();
 		unterricht.schienen.clear();
 		for (const s of schienen)
-			unterricht.schienen. add(s.id);
+			unterricht.schienen.add(s.id);
 		await props.patchUnterricht(ListUtils.create1(unterricht));
 	}
 

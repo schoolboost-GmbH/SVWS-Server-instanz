@@ -1,5 +1,5 @@
 import type { RouteLocationNormalized, RouteLocationRaw } from "vue-router";
-import type { RouteKatalogVermerkarten} from "./RouteKatalogVermerkarten";
+import type { RouteKatalogVermerkarten } from "./RouteKatalogVermerkarten";
 import type { SchuleVermerkartenGruppenprozesseProps } from "~/components/schule/schulbezogen/vermerkarten/gruppenprozesse/SVermerkartenGruppenprozesseProps";
 import { BenutzerKompetenz, Schulform, ServerMode } from "@core";
 import { api } from "~/router/Api";
@@ -13,15 +13,15 @@ const SVermerkartenGruppenprozesse = () => import("~/components/schule/schulbezo
 export class RouteKatalogVermerkartenGruppenprozesse extends RouteNode<any, RouteKatalogVermerkarten> {
 
 	public constructor() {
-		super(Schulform.values(), [ BenutzerKompetenz.KATALOG_EINTRAEGE_ANSEHEN, BenutzerKompetenz.KATALOG_EINTRAEGE_AENDERN, BenutzerKompetenz.KATALOG_EINTRAEGE_LOESCHEN ], "schule.vermerkarten.gruppenprozesse", "gruppenprozesse", SVermerkartenGruppenprozesse);
-		super.types = new Set([ ViewType.GRUPPENPROZESSE ]);
+		super(Schulform.values(), [BenutzerKompetenz.KATALOG_EINTRAEGE_ANSEHEN, BenutzerKompetenz.KATALOG_EINTRAEGE_AENDERN, BenutzerKompetenz.KATALOG_EINTRAEGE_LOESCHEN], "schule.vermerkarten.gruppenprozesse", "gruppenprozesse", SVermerkartenGruppenprozesse);
+		super.types = new Set([ViewType.GRUPPENPROZESSE]);
 		super.mode = ServerMode.STABLE;
 		super.propHandler = (route) => this.getProps(route);
 		super.text = "Gruppenprozesse";
 	}
 
-	public getRoute() : RouteLocationRaw {
-		return { name: this.name, params: { idSchuljahresabschnitt: routeApp.data.idSchuljahresabschnitt, id: "" }};
+	public getRoute(): RouteLocationRaw {
+		return { name: this.name, params: { idSchuljahresabschnitt: routeApp.data.idSchuljahresabschnitt, id: "" } };
 	}
 
 	public getProps(to: RouteLocationNormalized): SchuleVermerkartenGruppenprozesseProps {

@@ -41,7 +41,7 @@ export class RouteDataSchuelerErziehungsberechtigte extends RouteData<RouteState
 		this.setPatchedState({ idSchueler, daten });
 	}
 
-	public get mapErzieherarten() : Map<number, Erzieherart> {
+	public get mapErzieherarten(): Map<number, Erzieherart> {
 		if (this._state.value.mapErzieherarten.size === 0)
 			throw new DeveloperNotificationException("Zugriff auf den Katalog der Erzieherarten, bevor dieser geladen werden konnte.");
 		return this._state.value.mapErzieherarten;
@@ -55,24 +55,24 @@ export class RouteDataSchuelerErziehungsberechtigte extends RouteData<RouteState
 		this.setPatchedDefaultState({ mapErzieherarten });
 	}
 
-	patchErzieher = async (data : Partial<ErzieherStammdaten>, id: number) => {
+	patchErzieher = async (data: Partial<ErzieherStammdaten>, id: number) => {
 		await api.server.patchErzieherStammdaten(data, api.schema, id);
 		const daten = await api.server.getSchuelerErzieher(api.schema, this.idSchueler);
 		this.setPatchedState({ daten });
-	}
+	};
 
-	patchErzieherAnPosition = async (data : Partial<ErzieherStammdaten>, id: number, pos: number) => {
+	patchErzieherAnPosition = async (data: Partial<ErzieherStammdaten>, id: number, pos: number) => {
 		await api.server.patchErzieherStammdatenZweitePosition(data, api.schema, id, pos);
 		const daten = await api.server.getSchuelerErzieher(api.schema, this.idSchueler);
 		this.setPatchedState({ daten });
-	}
+	};
 
 	addErzieher = async (data: Partial<ErzieherStammdaten>, pos: number): Promise<ErzieherStammdaten> => {
 		const neu = await api.server.addSchuelerErzieher(data, api.schema, this.idSchueler, pos);
 		const daten = await api.server.getSchuelerErzieher(api.schema, this.idSchueler);
 		this.setPatchedState({ daten });
 		return neu;
-	}
+	};
 
 	deleteErzieher = async (idEintraege: List<number>): Promise<void> => {
 		api.status.start();
@@ -80,7 +80,7 @@ export class RouteDataSchuelerErziehungsberechtigte extends RouteData<RouteState
 		const daten = await api.server.getSchuelerErzieher(api.schema, this.idSchueler);
 		this.setPatchedState({ daten });
 		api.status.stop();
-	}
+	};
 
 }
 

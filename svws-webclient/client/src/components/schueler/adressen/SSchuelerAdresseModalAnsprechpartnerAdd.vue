@@ -36,7 +36,7 @@
 
 	const show = ref<boolean>(false);
 
-	const ansprechpartner = ref<BetriebAnsprechpartner>(new BetriebAnsprechpartner())
+	const ansprechpartner = ref<BetriebAnsprechpartner>(new BetriebAnsprechpartner());
 
 	async function save() {
 		ansprechpartner.value.betrieb_id = props.betriebsStammdaten.id;

@@ -27,7 +27,7 @@ export class RouteDataKatalogTelefonArten extends RouteDataAuswahl<TelefonArtLis
 		param.id = id;
 	}
 
-	protected async createManager(_ : number) : Promise<Partial<RouteStateAuswahlInterface<TelefonArtListeManager>>> {
+	protected async createManager(_: number): Promise<Partial<RouteStateAuswahlInterface<TelefonArtListeManager>>> {
 		const telefonArten = await api.server.getTelefonarten(api.schema);
 		const manager = new TelefonArtListeManager(api.abschnitt.id, api.schuleStammdaten.idSchuljahresabschnitt, api.schuleStammdaten.abschnitte, api.schulform, telefonArten);
 		return { manager };
@@ -41,7 +41,7 @@ export class RouteDataKatalogTelefonArten extends RouteDataAuswahl<TelefonArtLis
 		return auswahl;
 	}
 
-	protected async doPatch(data : Partial<TelefonArt>, id: number) : Promise<void> {
+	protected async doPatch(data: Partial<TelefonArt>, id: number): Promise<void> {
 		await api.server.patchTelefonart(data, api.schema, id);
 	}
 
@@ -53,9 +53,9 @@ export class RouteDataKatalogTelefonArten extends RouteDataAuswahl<TelefonArtLis
 		const res = await api.server.addTelefonart(data, api.schema);
 		await this.setSchuljahresabschnitt(this._state.value.idSchuljahresabschnitt, true);
 		await this.gotoDefaultView(res.id);
-	}
+	};
 
-	protected deleteMessage(id: number, TelefonArt: TelefonArt | null) : string {
+	protected deleteMessage(id: number, TelefonArt: TelefonArt | null): string {
 		return `Telefonart ${TelefonArt?.bezeichnung ?? '???'} (ID: ${id}) wurde erfolgreich gelöscht.`;
 	}
 }

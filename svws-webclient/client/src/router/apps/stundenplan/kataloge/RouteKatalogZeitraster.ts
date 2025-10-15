@@ -1,6 +1,6 @@
 import type { RouteParams, RouteLocationRaw, RouteLocationNormalized } from "vue-router";
 import type { ZeitrasterAuswahlProps } from "~/components/stundenplan/kataloge/zeitraster/SZeitrasterAuswahlProps";
-import type { LehrerListeEintrag} from "@core";
+import type { LehrerListeEintrag } from "@core";
 import { ArrayList, BenutzerKompetenz, Schulform, ServerMode } from "@core";
 import { RouteNode } from "~/router/RouteNode";
 import { routeApp } from "../../RouteApp";
@@ -9,13 +9,13 @@ import type { StundenplanZeitrasterPausenzeitProps } from "~/components/stundenp
 import { api } from "~/router/Api";
 import { RouteStundenplan, routeStundenplan } from "../RouteStundenplan";
 
-const SZeitrasterAuswahl = () => import("~/components/stundenplan/kataloge/zeitraster/SZeitrasterAuswahl.vue")
+const SZeitrasterAuswahl = () => import("~/components/stundenplan/kataloge/zeitraster/SZeitrasterAuswahl.vue");
 const SStundenplanZeitrasterPausenzeit = () => import("~/components/stundenplan/zeitrasterPausenzeit/SStundenplanZeitrasterPausenzeit.vue");
 
 export class RouteKatalogZeitraster extends RouteNode<any, RouteStundenplan> {
 
 	public constructor() {
-		super(Schulform.values(), [ BenutzerKompetenz.KEINE ], "stundenplan.kataloge.zeitraster", "zeitraster", SStundenplanZeitrasterPausenzeit, new RouteDataKatalogZeitraster());
+		super(Schulform.values(), [BenutzerKompetenz.KEINE], "stundenplan.kataloge.zeitraster", "zeitraster", SStundenplanZeitrasterPausenzeit, new RouteDataKatalogZeitraster());
 		super.mode = ServerMode.STABLE;
 		super.propHandler = (route) => this.getProps(route);
 		super.text = "Zeitraster";
@@ -24,7 +24,7 @@ export class RouteKatalogZeitraster extends RouteNode<any, RouteStundenplan> {
 	}
 
 	protected async update(to: RouteNode<any, any>, to_params: RouteParams, from: RouteNode<any, any> | undefined, from_params: RouteParams,
-		isEntering: boolean, redirected: RouteNode<any, any> | undefined) : Promise<void | Error | RouteLocationRaw> {
+		isEntering: boolean, redirected: RouteNode<any, any> | undefined): Promise<void | Error | RouteLocationRaw> {
 		if (isEntering)
 			await this.data.ladeListe();
 		return super.update(to, to_params, from, from_params, isEntering, redirected);

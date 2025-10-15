@@ -11,10 +11,10 @@ export abstract class StateManager<State extends Record<string, any>> {
 
 
 	/** Der Default-State, welcher über den Konstruktor gesetzt wird */
-	protected _defaultState : State;
+	protected _defaultState: State;
 
 	/** Der aktuelle State */
-	protected _state : ShallowRef<State>;
+	protected _state: ShallowRef<State>;
 
 	/**
 	 * Erzeugt ein neues Route-Daten-Objekt mit dem übergebenen Default-State.
@@ -23,7 +23,7 @@ export abstract class StateManager<State extends Record<string, any>> {
 	 *
 	 * @param defaultState   der Default-State
 	 */
-	protected constructor(defaultState : State) {
+	protected constructor(defaultState: State) {
 		this._defaultState = defaultState;
 		this._state = shallowRef<State>(this._defaultState);
 	}

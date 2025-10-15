@@ -6,24 +6,24 @@ import { RouteNode } from "~/router/RouteNode";
 import { routeApp } from "~/router/apps/RouteApp";
 
 import type { BetriebeDatenProps } from "~/components/schule/schulbezogen/betriebe/daten/SBetriebeDatenProps";
-import type { RouteSchuleBetriebe} from "./RouteSchuleBetriebe";
+import type { RouteSchuleBetriebe } from "./RouteSchuleBetriebe";
 import { routeSchuleBetriebe } from "./RouteSchuleBetriebe";
 import { api } from "~/router/Api";
 
-const SBetriebeDaten = () => import("~/components/schule/schulbezogen/betriebe/daten/SBetriebeDaten.vue")
+const SBetriebeDaten = () => import("~/components/schule/schulbezogen/betriebe/daten/SBetriebeDaten.vue");
 
 export class RouteSchuleBetriebeDaten extends RouteNode<any, RouteSchuleBetriebe> {
 
 	public constructor() {
-		super(Schulform.values(), [ BenutzerKompetenz.KATALOG_EINTRAEGE_ANSEHEN, BenutzerKompetenz.KATALOG_EINTRAEGE_AENDERN ], "schule.betriebe.daten", "daten", SBetriebeDaten);
+		super(Schulform.values(), [BenutzerKompetenz.KATALOG_EINTRAEGE_ANSEHEN, BenutzerKompetenz.KATALOG_EINTRAEGE_AENDERN], "schule.betriebe.daten", "daten", SBetriebeDaten);
 		super.mode = ServerMode.STABLE;
 		super.propHandler = (route) => this.getProps(route);
 		super.text = "Betrieb";
 	}
 
-	public async update(to: RouteNode<any, any>, to_params: RouteParams) : Promise<void | Error | RouteLocationRaw> {
+	public async update(to: RouteNode<any, any>, to_params: RouteParams): Promise<void | Error | RouteLocationRaw> {
 		if (routeSchuleBetriebe.data.auswahl === undefined)
-			return routeSchuleBetriebe.getRoute(undefined)
+			return routeSchuleBetriebe.getRoute(undefined);
 	}
 
 	public getProps(to: RouteLocationNormalized): BetriebeDatenProps {

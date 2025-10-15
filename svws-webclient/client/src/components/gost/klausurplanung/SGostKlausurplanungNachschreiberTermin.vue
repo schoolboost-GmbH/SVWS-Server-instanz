@@ -43,10 +43,10 @@
 <script setup lang="ts">
 
 	import type { GostKlausurplanungDragData, GostKlausurplanungDropZone } from "./SGostKlausurplanung";
-	import type { GostHalbjahr, GostKlausurenCollectionSkrsKrsData, GostKlausurenUpdate} from "@core";
-	import { BenutzerKompetenz} from "@core";
-	import { GostKursklausur} from "@core";
-	import { type GostKlausurplanManager, type GostKlausurtermin, type List, Arrays, GostSchuelerklausurTermin} from "@core";
+	import type { GostHalbjahr, GostKlausurenCollectionSkrsKrsData, GostKlausurenUpdate } from "@core";
+	import { BenutzerKompetenz } from "@core";
+	import { GostKursklausur } from "@core";
+	import { type GostKlausurplanManager, type GostKlausurtermin, type List, Arrays, GostSchuelerklausurTermin } from "@core";
 	import { computed } from 'vue';
 
 	const props = withDefaults(defineProps<{
@@ -89,12 +89,12 @@
 			else
 				return; // TODO Fehlermeldung, Klausuren mit unterschiedlichen Quartale enthalten
 		else if (props.termin().quartal > 0 && props.kMan().schuelerklausurterminGetMengeByTermin(props.termin()).size() > 0)
-			await props.patchKlausurtermin(props.termin().id, {quartal: 0});
+			await props.patchKlausurtermin(props.termin().id, { quartal: 0 });
 		else
-			await props.patchKlausurtermin(props.termin().id, {quartal: (props.termin().quartal + 1) % 3});
+			await props.patchKlausurtermin(props.termin().id, { quartal: (props.termin().quartal + 1) % 3 });
 	}
 
-	function isDropZone(termin: GostKlausurtermin) : boolean {
+	function isDropZone(termin: GostKlausurtermin): boolean {
 		if (props.dragData !== undefined) {
 			if (props.dragData instanceof GostKursklausur) {
 				return false;
@@ -112,9 +112,9 @@
 
 	const konflikteTerminDragKlausur = computed(() => {
 		if (props.dragData instanceof GostSchuelerklausurTermin) {
-			return props.kMan().konfliktPaarGetMengeTerminAndSchuelerklausurtermin(props.termin(), props.dragData).size()
+			return props.kMan().konfliktPaarGetMengeTerminAndSchuelerklausurtermin(props.termin(), props.dragData).size();
 		} else
-			return -1
+			return -1;
 	});
 
 </script>

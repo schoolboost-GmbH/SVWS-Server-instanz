@@ -1,4 +1,4 @@
-import type { Ref, ShallowRef, WritableComputedRef} from "vue";
+import type { Ref, ShallowRef, WritableComputedRef } from "vue";
 import { ref, shallowRef, triggerRef, type ComponentPublicInstance } from "vue";
 import type { GridInput } from "./GridInput";
 import { GridInputAbiturNotenpunkte } from "./GridInputAbiturNotenpunkte";
@@ -98,7 +98,7 @@ export class GridManager<KEY, DATA, LIST extends Collection<DATA> | List<DATA>> 
 	private _getRowKey: (row: DATA) => KEY;
 
 	/** Ein Handler, der jedes mal aufgerufen wird, wenn ein input ausgewählt wird */
-	private _onFocusInputHandler : ((input: GridInput<any, any> | null) => void) | null = null;
+	private _onFocusInputHandler: ((input: GridInput<any, any> | null) => void) | null = null;
 
 
 	/**
@@ -125,7 +125,7 @@ export class GridManager<KEY, DATA, LIST extends Collection<DATA> | List<DATA>> 
 	 *
 	 * @returns die Map mit den Spaltendefinitionen
 	 */
-	public get cols() : JavaMap<string, GridColumn<DATA>> {
+	public get cols(): JavaMap<string, GridColumn<DATA>> {
 		return this._cols.value;
 	}
 
@@ -266,7 +266,7 @@ export class GridManager<KEY, DATA, LIST extends Collection<DATA> | List<DATA>> 
 	 *
 	 * @returns die Daten
 	 */
-	public get daten() : LIST {
+	public get daten(): LIST {
 		return this._daten.value;
 	}
 
@@ -279,7 +279,7 @@ export class GridManager<KEY, DATA, LIST extends Collection<DATA> | List<DATA>> 
 	 *
 	 * @returns der Key für die Datenzeile
 	 */
-	public getRowKey(row: DATA) : KEY {
+	public getRowKey(row: DATA): KEY {
 		return this._getRowKey(row);
 	}
 
@@ -291,7 +291,7 @@ export class GridManager<KEY, DATA, LIST extends Collection<DATA> | List<DATA>> 
 	 *
 	 * @returns das INput für den Key oder null, falls der Key ungültig ist
 	 */
-	public getInputByKey(key: KEY) : GridInput<KEY, any> | null {
+	public getInputByKey(key: KEY): GridInput<KEY, any> | null {
 		return this.mapInputs.get(key) ?? null;
 	}
 
@@ -373,7 +373,7 @@ export class GridManager<KEY, DATA, LIST extends Collection<DATA> | List<DATA>> 
 	 *
 	 * @returns der Input-Manager
 	 */
-	private register<T extends GridInput<KEY, any>>(input: T) : T {
+	private register<T extends GridInput<KEY, any>>(input: T): T {
 		this._stateUpToDate = false;
 		// Entferne ggf. ein Input, der zuvor dem Schlüssel zugewiesen war
 		if (this.mapInputs.get(input.key) !== undefined)
@@ -394,7 +394,7 @@ export class GridManager<KEY, DATA, LIST extends Collection<DATA> | List<DATA>> 
 	 *
 	 * @returns immer null
 	 */
-	private updateRegistration(key: KEY, col: number, row: number) : null {
+	private updateRegistration(key: KEY, col: number, row: number): null {
 		// Bestimme zunächst das Input, welches ggf. angepasst werden muss
 		const input = this.mapInputs.get(key);
 		if (input === undefined)
@@ -424,7 +424,7 @@ export class GridManager<KEY, DATA, LIST extends Collection<DATA> | List<DATA>> 
 	 *
 	 * @returns null
 	 */
-	private unregister(key: KEY) : null {
+	private unregister(key: KEY): null {
 		// Prüfe, ob ein Input-Manager mit dem Key überhaupt registiert ist...
 		const input = this.mapInputs.get(key);
 		if (input === undefined)
@@ -485,7 +485,7 @@ export class GridManager<KEY, DATA, LIST extends Collection<DATA> | List<DATA>> 
 	 *
 	 * @param input   das Input, von dem ausgegangen wird
 	 */
-	public focusPrevRowElement(input: GridInput<KEY, any>) : void {
+	public focusPrevRowElement(input: GridInput<KEY, any>): void {
 		this.updateState();
 		const index = this.gridInputsCols[input.col]!.rows.indexOf(input);
 		if (index < 1)
@@ -499,7 +499,7 @@ export class GridManager<KEY, DATA, LIST extends Collection<DATA> | List<DATA>> 
 	 *
 	 * @param input   das Input, von dem ausgegangen wird
 	 */
-	public focusNextRowElement(input: GridInput<KEY, any>) : void {
+	public focusNextRowElement(input: GridInput<KEY, any>): void {
 		this.updateState();
 		const index = this.gridInputsCols[input.col]!.rows.indexOf(input);
 		if ((index < 0) || (index >= this.gridInputsCols[input.col]!.rows.length - 1))
@@ -515,7 +515,7 @@ export class GridManager<KEY, DATA, LIST extends Collection<DATA> | List<DATA>> 
 	 * @returns das tbody-HTMLElement
 	 */
 	private getTBody(input: GridInput<KEY, any>): HTMLElement {
-		let cur : HTMLElement | null = input.element;
+		let cur: HTMLElement | null = input.element;
 		while (cur.parentElement !== null) {
 			cur = cur.parentElement;
 			const computedStyle = window.getComputedStyle(cur);
@@ -534,7 +534,7 @@ export class GridManager<KEY, DATA, LIST extends Collection<DATA> | List<DATA>> 
 	 *
 	 * @returns true, wenn das Input in dem Overflow-Bereich liegt, und ansonsten false
 	 */
-	private isOverflowTop(input: GridInput<KEY, any>, tbody: HTMLElement) : boolean {
+	private isOverflowTop(input: GridInput<KEY, any>, tbody: HTMLElement): boolean {
 		const scrollBound = tbody.getBoundingClientRect();
 		const elemBound = input.element.getBoundingClientRect();
 		return (elemBound.top < scrollBound.top);
@@ -549,7 +549,7 @@ export class GridManager<KEY, DATA, LIST extends Collection<DATA> | List<DATA>> 
 	 *
 	 * @returns das Input im Overflow-Bereich oder das erste Element. Der Spezialfall null kommt nicht vor.
 	 */
-	private getPrevOverflowTopInput(input: GridInput<KEY, any>, tbody: HTMLElement) : GridInput<KEY, any> | null {
+	private getPrevOverflowTopInput(input: GridInput<KEY, any>, tbody: HTMLElement): GridInput<KEY, any> | null {
 		let index = this.gridInputsCols[input.col]!.rows.indexOf(input);
 		if (index > this.gridInputsCols[input.col]!.rows.length - 1)
 			return this.gridInputsCols[input.col]!.rows[this.gridInputsCols[input.col]!.rows.length - 1] ?? null;
@@ -568,7 +568,7 @@ export class GridManager<KEY, DATA, LIST extends Collection<DATA> | List<DATA>> 
 	 *
 	 * @param input   das Grid-Input
 	 */
-	public focusPrevRowElementPageUp(input: GridInput<KEY, any>) : void {
+	public focusPrevRowElementPageUp(input: GridInput<KEY, any>): void {
 		const tbody = this.getTBody(input);
 		this.updateState();
 		this.getPrevOverflowTopInput(input, tbody)?.element.focus();
@@ -583,7 +583,7 @@ export class GridManager<KEY, DATA, LIST extends Collection<DATA> | List<DATA>> 
 	 *
 	 * @returns true, wenn das Input in dem Overflow-Bereich liegt, und ansonsten false
 	 */
-	private isOverflowBottom(input: GridInput<KEY, any>, tbody: HTMLElement) : boolean {
+	private isOverflowBottom(input: GridInput<KEY, any>, tbody: HTMLElement): boolean {
 		const scrollBound = tbody.getBoundingClientRect();
 		const elemBound = input.element.getBoundingClientRect();
 		return (elemBound.bottom > scrollBound.bottom);
@@ -598,7 +598,7 @@ export class GridManager<KEY, DATA, LIST extends Collection<DATA> | List<DATA>> 
 	 *
 	 * @returns das Input im Overflow-Bereich oder das letzte Element. Der Spezialfall null kommt nicht vor.
 	 */
-	private getNextOverflowBottomInput(input: GridInput<KEY, any>, tbody: HTMLElement) : GridInput<KEY, any> | null {
+	private getNextOverflowBottomInput(input: GridInput<KEY, any>, tbody: HTMLElement): GridInput<KEY, any> | null {
 		let index = this.gridInputsCols[input.col]!.rows.indexOf(input);
 		if (index < 0)
 			return this.gridInputsCols[input.col]!.rows[0];
@@ -617,7 +617,7 @@ export class GridManager<KEY, DATA, LIST extends Collection<DATA> | List<DATA>> 
 	 *
 	 * @param input   das Grid-Input
 	 */
-	public focusNextRowElementPageDown(input: GridInput<KEY, any>) : void {
+	public focusNextRowElementPageDown(input: GridInput<KEY, any>): void {
 		const tbody = this.getTBody(input);
 		this.updateState();
 		this.getNextOverflowBottomInput(input, tbody)?.element.focus();
@@ -629,7 +629,7 @@ export class GridManager<KEY, DATA, LIST extends Collection<DATA> | List<DATA>> 
 	 *
 	 * @param input   das Grid-Input
 	 */
-	public focusTopElement(input: GridInput<KEY, any>) : void {
+	public focusTopElement(input: GridInput<KEY, any>): void {
 		this.updateState();
 		this.gridInputsCols[input.col]!.rows[0].element.focus();
 	}
@@ -640,7 +640,7 @@ export class GridManager<KEY, DATA, LIST extends Collection<DATA> | List<DATA>> 
 	 *
 	 * @param input   das Grid-Input
 	 */
-	public focusBottomElement(input: GridInput<KEY, any>) : void {
+	public focusBottomElement(input: GridInput<KEY, any>): void {
 		this.updateState();
 		this.gridInputsCols[input.col]!.rows[this.gridInputsCols[input.col]!.rows.length - 1].element.focus();
 	}
@@ -651,7 +651,7 @@ export class GridManager<KEY, DATA, LIST extends Collection<DATA> | List<DATA>> 
 	 *
 	 * @param input   das Input, von dem ausgegangen wird
 	 */
-	public focusPrevColElement(input: GridInput<KEY, any>) : void {
+	public focusPrevColElement(input: GridInput<KEY, any>): void {
 		this.updateState();
 		const index = this.gridInputsRows[input.row]!.cols.indexOf(input);
 		if (index < 1)
@@ -665,7 +665,7 @@ export class GridManager<KEY, DATA, LIST extends Collection<DATA> | List<DATA>> 
 	 *
 	 * @param input   das Input, von dem ausgegangen wird
 	 */
-	public focusNextColElement(input: GridInput<KEY, any>) : void {
+	public focusNextColElement(input: GridInput<KEY, any>): void {
 		this.updateState();
 		const index = this.gridInputsRows[input.row]!.cols.indexOf(input);
 		if ((index < 0) || (index >= this.gridInputsRows[input.row]!.cols.length - 1))
@@ -679,7 +679,7 @@ export class GridManager<KEY, DATA, LIST extends Collection<DATA> | List<DATA>> 
 	 * @param key    der key des Grid-Inputs
 	 * @param data   die Daten, mit denen das Grid-Input aktualisiert wird
 	 */
-	public update(key: KEY, data: unknown) : void {
+	public update(key: KEY, data: unknown): void {
 		const manager = this.mapInputs.get(key);
 		if (manager === undefined)
 			return;
@@ -698,7 +698,7 @@ export class GridManager<KEY, DATA, LIST extends Collection<DATA> | List<DATA>> 
 	 * @returns das Input oder null
 	 */
 	public applyInputToggle(key: KEY, col: number, row: number, elem: Element | ComponentPublicInstance<unknown> | null,
-		setter : (value: boolean) => void) : GridInputToggle<KEY> | null {
+		setter: (value: boolean) => void): GridInputToggle<KEY> | null {
 		// Wenn elem null ist, dann entferne das Element
 		if (elem === null)
 			return this.unregister(key);
@@ -724,7 +724,7 @@ export class GridManager<KEY, DATA, LIST extends Collection<DATA> | List<DATA>> 
 	 * @returns das Input oder null
 	 */
 	public applyInputIntegerDiv(key: KEY, col: number, row: number, elem: Element | ComponentPublicInstance<unknown> | null, max: number | null,
-		setter : (value: number | null) => void) : GridInputIntegerDiv<KEY> | null {
+		setter: (value: number | null) => void): GridInputIntegerDiv<KEY> | null {
 		// Wenn elem null ist, dann entferne das Element
 		if (elem === null)
 			return this.unregister(key);
@@ -751,7 +751,7 @@ export class GridManager<KEY, DATA, LIST extends Collection<DATA> | List<DATA>> 
 	 * @returns das Input oder null
 	 */
 	public applyInputNumberFixed(key: KEY, col: number, row: number, elem: Element | ComponentPublicInstance<unknown> | null, max: number | null,
-		dp: number, setter : (value: number | null) => void) : GridInputNumberFixed<KEY> | null {
+		dp: number, setter: (value: number | null) => void): GridInputNumberFixed<KEY> | null {
 		// Wenn elem null ist, dann entferne das Element
 		if (elem === null)
 			return this.unregister(key);
@@ -777,7 +777,7 @@ export class GridManager<KEY, DATA, LIST extends Collection<DATA> | List<DATA>> 
 	 * @returns das Input oder null
 	 */
 	public applyInputNote(key: KEY, col: number, row: number, elem: Element | ComponentPublicInstance<unknown> | null,
-		setter : (value: string | null) => void, schuljahr: number) : GridInputNote<KEY> | null {
+		setter: (value: string | null) => void, schuljahr: number): GridInputNote<KEY> | null {
 		// Wenn elem null ist, dann entferne das Element
 		if (elem === null)
 			return this.unregister(key);
@@ -803,7 +803,7 @@ export class GridManager<KEY, DATA, LIST extends Collection<DATA> | List<DATA>> 
 	 * @returns das Input oder null
 	 */
 	public applyInputAbiturNotenpunkte(key: KEY, col: number, row: number, elem: Element | ComponentPublicInstance<unknown> | null,
-		setter : (value: string | null) => void, schuljahr: number) : GridInputAbiturNotenpunkte<KEY> | null {
+		setter: (value: string | null) => void, schuljahr: number): GridInputAbiturNotenpunkte<KEY> | null {
 		// Wenn elem null ist, dann entferne das Element
 		if (elem === null)
 			return this.unregister(key);
@@ -827,7 +827,7 @@ export class GridManager<KEY, DATA, LIST extends Collection<DATA> | List<DATA>> 
 	 * @returns das Input oder null
 	 */
 	public applyInputAbiturPruefungsreihenfolge(key: KEY, col: number, row: number, elem: Element | ComponentPublicInstance<unknown> | null,
-		setter : (value: number | null) => void) : GridInputAbiturPruefungsreihenfolge<KEY> | null {
+		setter: (value: number | null) => void): GridInputAbiturPruefungsreihenfolge<KEY> | null {
 		// Wenn elem null ist, dann entferne das Element
 		if (elem === null)
 			return this.unregister(key);
@@ -988,7 +988,7 @@ export class GridManager<KEY, DATA, LIST extends Collection<DATA> | List<DATA>> 
 	 *
 	 * @param restore   gibt an, ob die letzte Fokussierung wiederhergestellt werden soll.
 	 */
-	public doFocus(restore: boolean) : void {
+	public doFocus(restore: boolean): void {
 		// Stelle ggf. die Fokussierung wieder her
 		if (restore && (this._focusLastKey.value !== null)) {
 			const input = this.mapInputs.get(this._focusLastKey.value);
@@ -1036,7 +1036,7 @@ export class GridManager<KEY, DATA, LIST extends Collection<DATA> | List<DATA>> 
 	 *
 	 * @param row   die Zeile
 	 */
-	public doFocusRowIfNotFocussed(row: number) : void {
+	public doFocusRowIfNotFocussed(row: number): void {
 		// Prüfe, ob auf eine Zelle mit Input geklickt wurde, dann wurde diese zuvor automatisch fokussiert
 		if (this.focus !== null)
 			return;
@@ -1070,7 +1070,7 @@ export class GridManager<KEY, DATA, LIST extends Collection<DATA> | List<DATA>> 
 	 * @param key               der Key des Grid-Input
 	 * @param navigateOnEnter   null, wenn keine Navigation stattfinden soll und 'DOWN' für unten und 'RIGHT' für rechts
 	 */
-	public setNavigationOnEnter(key: KEY, navigateOnEnter : null | 'DOWN' | 'RIGHT') : void {
+	public setNavigationOnEnter(key: KEY, navigateOnEnter: null | 'DOWN' | 'RIGHT'): void {
 		const input = this.mapInputs.get(key);
 		if (input === undefined)
 			return;

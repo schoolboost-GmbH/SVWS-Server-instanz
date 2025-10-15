@@ -54,7 +54,7 @@
 
 	import { computed, ref, watch } from "vue";
 	import { JavaObject, JavaString, SchulEintrag, Schulform, AdressenUtils, Herkunftsschulnummern, BenutzerKompetenz } from "@core";
-	import type { SchulenKatalogEintrag, List } from "@core"
+	import type { SchulenKatalogEintrag, List } from "@core";
 	import type { KatalogSchuleNeuProps } from "./SKatalogSchuleNeuProps";
 	import { filterSchulenKatalogEintraege } from "~/utils/helfer";
 	import { emailIsValid, mandatoryInputIsValid, optionalInputIsValid, phoneNumberIsValid } from "~/util/validation/Validation";
@@ -63,8 +63,8 @@
 	const hatKompetenzAdd = computed<boolean>(() => props.benutzerKompetenzen.has(BenutzerKompetenz.KATALOG_EINTRAEGE_AENDERN));
 	const disabled = computed(() => !hatKompetenzAdd.value);
 	const isInternal = ref<boolean>(true);
-	const data = ref<SchulEintrag>(Object.assign(new SchulEintrag(), {istSichtbar: true}));
-	const schulenKatalogEintraege= computed<List<SchulenKatalogEintrag>>(() => props.manager().getSchulenKatalogEintraege());
+	const data = ref<SchulEintrag>(Object.assign(new SchulEintrag(), { istSichtbar: true }));
+	const schulenKatalogEintraege = computed<List<SchulenKatalogEintrag>>(() => props.manager().getSchulenKatalogEintraege());
 	const selectedSchule = ref<SchulenKatalogEintrag>();
 	const externalSchulnummer = ref<Herkunftsschulnummern>();
 	const schuljahr = computed<number>(() => props.manager().getSchuljahr());
@@ -77,30 +77,30 @@
 			if (eintrag !== null)
 				data.value.idSchulform = eintrag.id;
 		},
-	})
+	});
 	const adresse = computed({
 		get: () => AdressenUtils.combineStrasse(data.value.strassenname, data.value.hausnummer, data.value.zusatzHausnummer),
-		set: (adresse : string | null) => {
+		set: (adresse: string | null) => {
 			const vals = AdressenUtils.splitStrasse(adresse);
 			data.value.strassenname = vals[0];
 			data.value.hausnummer = vals[1];
 			data.value.zusatzHausnummer = vals[2];
 		},
-	})
+	});
 
 	// befüllt das Formular mit den Werten der vorausgewählten Schule
-	function updateData(schule : SchulenKatalogEintrag | undefined | null) {
+	function updateData(schule: SchulenKatalogEintrag | undefined | null) {
 		// Felder clearen
 		if (schule === undefined || schule === null) {
-			resetForm()
+			resetForm();
 			return;
 		}
 		selectedSchule.value = schule;
 		// Felder füllen
-		data.value.kurzbezeichnung = schule.KurzBez?? "";
+		data.value.kurzbezeichnung = schule.KurzBez ?? "";
 		data.value.schulnummerStatistik = schule.SchulNr;
-		data.value.name = (schule.ABez1?? "") + (schule.ABez2?? "") + (schule.ABez3?? "");
-		selectedSchulform.value = Schulform.data().getWertBySchluessel(schule.SF?? "");
+		data.value.name = (schule.ABez1 ?? "") + (schule.ABez2 ?? "") + (schule.ABez3 ?? "");
+		selectedSchulform.value = Schulform.data().getWertBySchluessel(schule.SF ?? "");
 		adresse.value = schule.Strasse;
 		data.value.plz = schule.PLZ;
 		data.value.ort = schule.Ort;
@@ -136,17 +136,17 @@
 	// ---util---
 
 	const schuleAlreadyCreated = computed(() => findSchuleByPredicate(
-		(schuleintrag : SchulEintrag) => JavaObject.equalsTranspiler(schuleintrag.schulnummerStatistik, selectedSchule.value?.SchulNr)) !== null
-	)
+		(schuleintrag: SchulEintrag) => JavaObject.equalsTranspiler(schuleintrag.schulnummerStatistik, selectedSchule.value?.SchulNr)) !== null
+	);
 
 	function resetForm() {
-		data.value = Object.assign(new SchulEintrag(), {istSichtbar: true})
+		data.value = Object.assign(new SchulEintrag(), { istSichtbar: true });
 		selectedSchule.value = undefined;
 	}
 
 	async function navigateToSelectedSchule() {
 		props.checkpoint.active = false;
-		const schuleintrag = findSchuleByPredicate((schuleintrag : SchulEintrag) =>
+		const schuleintrag = findSchuleByPredicate((schuleintrag: SchulEintrag) =>
 			JavaObject.equalsTranspiler(schuleintrag.schulnummerStatistik, selectedSchule.value?.SchulNr));
 		if (schuleintrag)
 			await props.gotoDefaultView(schuleintrag.id);
@@ -162,20 +162,20 @@
 
 	const isLoading = ref<boolean>(false);
 
-	watch(() => data.value, async() => {
+	watch(() => data.value, async () => {
 		if (isLoading.value)
 			return;
 		props.checkpoint.active = true;
-	}, {immediate: false, deep: true});
+	}, { immediate: false, deep: true });
 
 	watch(() => isInternal.value, () => {
 		// intern / extern toggle setzt die Felder zurück
 		resetForm();
-	})
+	});
 
 	// ---validation logic---
 
-	function fieldIsValid(field: keyof SchulEintrag | null):(v:string | null) => boolean {
+	function fieldIsValid(field: keyof SchulEintrag | null): (v: string | null) => boolean {
 		return (v: string | null) => {
 			switch (field) {
 				case 'kuerzel':
@@ -198,12 +198,12 @@
 					return phoneNumberIsValid(data.value.telefon, 20);
 				case "fax":
 					return phoneNumberIsValid(data.value.fax, 20);
-				case "email" :
+				case "email":
 					return emailIsValid(data.value.email, 40);
 				default:
 					return true;
 			}
-		}
+		};
 	}
 
 	const formIsValid = computed(() => {
@@ -212,8 +212,8 @@
 			const validateField = fieldIsValid(field as keyof SchulEintrag);
 			const fieldValue = data.value[field as keyof SchulEintrag] as string | null;
 			return validateField(fieldValue);
-		})
-	})
+		});
+	});
 
 	function adresseIsValid() {
 		return optionalInputIsValid(data.value.strassenname, 55) &&
@@ -221,15 +221,15 @@
 			optionalInputIsValid(data.value.zusatzHausnummer, 30);
 	}
 
-	function optionalNumberIsValid(input: string | null, maxLength : number) {
+	function optionalNumberIsValid(input: string | null, maxLength: number) {
 		if (input === null || JavaString.isBlank(input))
 			return true;
 		if (input.length > maxLength)
 			return false;
-		return /^\d+$/.test(input)
+		return /^\d+$/.test(input);
 	}
 
-	function kuerzelIsValid(kuerzel : string | null) {
+	function kuerzelIsValid(kuerzel: string | null) {
 		if ((kuerzel === null) || (JavaString.isBlank(kuerzel)))
 			return true;
 		if (kuerzel.length > 10)

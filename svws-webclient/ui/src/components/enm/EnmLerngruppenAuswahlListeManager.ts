@@ -21,7 +21,7 @@ export class EnmLerngruppenAuswahlListeManager extends AuswahlManager<number, EN
 	/**
 	 * Funktionen zum Mappen von Auswahl- bzw. Daten-Objekten auf deren ID-Typ
 	 */
-	private static readonly _lerngruppeToId : JavaFunction<ENMLerngruppe, number> = { apply : (l: ENMLerngruppe) => l.id };
+	private static readonly _lerngruppeToId: JavaFunction<ENMLerngruppe, number> = { apply: (l: ENMLerngruppe) => l.id };
 
 	/**
 	 * Erstellt einen neuen Manager und initialisiert diesen mit den übergebenen Daten
@@ -32,7 +32,7 @@ export class EnmLerngruppenAuswahlListeManager extends AuswahlManager<number, EN
 	 * @param schuljahresabschnittSchule   der Schuljahresabschnitt, in welchem sich die Schule aktuell befindet.
 	 * @param schulform                    die Schulform der Schule
 	 */
-	public constructor(enmManager: EnmManager, schuljahresabschnitt : number, schuljahresabschnittSchule : number, schuljahresabschnitte : List<Schuljahresabschnitt>, schulform : Schulform | null) {
+	public constructor(enmManager: EnmManager, schuljahresabschnitt: number, schuljahresabschnittSchule: number, schuljahresabschnitte: List<Schuljahresabschnitt>, schulform: Schulform | null) {
 		super(schuljahresabschnitt, schuljahresabschnittSchule, schuljahresabschnitte, schulform, enmManager.daten.lerngruppen, enmManager.comparatorLerngruppen,
 			EnmLerngruppenAuswahlListeManager._lerngruppeToId, EnmLerngruppenAuswahlListeManager._lerngruppeToId, Arrays.asList());
 		this.enmManager = enmManager;
@@ -46,15 +46,15 @@ export class EnmLerngruppenAuswahlListeManager extends AuswahlManager<number, EN
 	 *
 	 * @return das Ergebnis des Vergleichs (-1 kleine, 0 gleich und 1 größer)
 	 */
-	protected compareAuswahl(a : ENMLerngruppe, b : ENMLerngruppe) : number {
+	protected compareAuswahl(a: ENMLerngruppe, b: ENMLerngruppe): number {
 		for (const criteria of this._order) {
-			const field : string | null = criteria.a;
-			const asc : boolean = (criteria.b === null) || criteria.b;
-			let cmp : number = 0;
+			const field: string | null = criteria.a;
+			const asc: boolean = (criteria.b === null) || criteria.b;
+			let cmp: number = 0;
 			if (JavaObject.equalsTranspiler("bezeichnung", (field))) {
 				cmp = JavaString.compareTo(a.bezeichnung ?? "", b.bezeichnung);
 			} else
-				throw new DeveloperNotificationException("Fehler bei der Sortierung. Das Sortierkriterium wird vom Manager nicht unterstützt.")
+				throw new DeveloperNotificationException("Fehler bei der Sortierung. Das Sortierkriterium wird vom Manager nicht unterstützt.");
 			if (cmp === 0)
 				continue;
 			return asc ? cmp : -cmp;
@@ -62,12 +62,12 @@ export class EnmLerngruppenAuswahlListeManager extends AuswahlManager<number, EN
 		return this.enmManager.comparatorLerngruppen.compare(a, b);
 	}
 
-	protected checkFilter(eintrag : ENMLerngruppe) : boolean {
+	protected checkFilter(eintrag: ENMLerngruppe): boolean {
 		return true;
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
-		return [ 'de.svws_nrw.core.utils.AuswahlManager' ].includes(name);
+	isTranspiledInstanceOf(name: string): boolean {
+		return ['de.svws_nrw.core.utils.AuswahlManager'].includes(name);
 	}
 
 }

@@ -1,4 +1,4 @@
-import { type Ref, ref } from 'vue'
+import { type Ref, ref } from 'vue';
 
 const focusSwitchingEnabled = ref<boolean>(false);
 const focusHelpVisible = ref<boolean>(false);
@@ -42,7 +42,7 @@ export function useRegionSwitch() {
 		else if (event.code === 'Digit4')
 			cycleFocusFields(htmlElements, currentListIndex);
 		else {
-			const focusField = htmlElements.item(0)
+			const focusField = htmlElements.item(0);
 			if (focusField !== null)
 				(focusField as HTMLElement).focus();
 			currentModalIndex.value = 0;
@@ -78,5 +78,5 @@ export function useRegionSwitch() {
 		focusSwitchingEnabled,
 		enable,
 		disable,
-	}
+	};
 }

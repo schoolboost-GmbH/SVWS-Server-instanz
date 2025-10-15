@@ -16,15 +16,15 @@ export class RouteFoerderschwerpunkteGruppenprozesse extends RouteNode<any, Rout
 
 	public constructor() {
 		super(Schulform.values(), [BenutzerKompetenz.KATALOG_EINTRAEGE_ANSEHEN, BenutzerKompetenz.KATALOG_EINTRAEGE_AENDERN,
-			BenutzerKompetenz.KATALOG_EINTRAEGE_LOESCHEN], "schule.foerderschwerpunkte.gruppenprozesse" , "gruppenprozesse", SFoerderschwerpunkteGruppenprozesse);
+			BenutzerKompetenz.KATALOG_EINTRAEGE_LOESCHEN], "schule.foerderschwerpunkte.gruppenprozesse", "gruppenprozesse", SFoerderschwerpunkteGruppenprozesse);
 		super.types = new Set([ViewType.GRUPPENPROZESSE]);
 		super.mode = ServerMode.DEV;
 		super.propHandler = (route) => this.getProps(route);
-		super.text = "Gruppenprozesse"
+		super.text = "Gruppenprozesse";
 	}
 
 	public getRoute(): RouteLocationRaw {
-		return { name: this.name, params: {idSchuljahresabschnitt: routeApp.data.idSchuljahresabschnitt, id: ""}}
+		return { name: this.name, params: { idSchuljahresabschnitt: routeApp.data.idSchuljahresabschnitt, id: "" } };
 	}
 
 	public getProps(to: RouteLocationNormalized): FoerderschwerpunkteGruppenprozesseProps {
@@ -34,7 +34,7 @@ export class RouteFoerderschwerpunkteGruppenprozesse extends RouteNode<any, Rout
 			benutzerKompetenzen: api.benutzerKompetenzen,
 			deleteFoerderschwerpunkte: routeFoerderschwerpunkte.data.delete,
 			manager: () => routeFoerderschwerpunkte.data.manager,
-		}
+		};
 	}
 }
 

@@ -184,13 +184,13 @@
 
 <script setup lang="ts">
 
-	import type { GostSchuelerklausurTermin, JavaMapEntry, JavaSet, List} from "@core";
+	import type { GostSchuelerklausurTermin, JavaMapEntry, JavaSet, List } from "@core";
 	import { BenutzerKompetenz } from "@core";
-	import {GostKursklausur, GostKlausurtermin, HashSet, KlausurterminblockungAlgorithmen, GostKlausurterminblockungDaten, KlausurterminblockungModusKursarten, KlausurterminblockungModusQuartale, DateUtils } from "@core";
+	import { GostKursklausur, GostKlausurtermin, HashSet, KlausurterminblockungAlgorithmen, GostKlausurterminblockungDaten, KlausurterminblockungModusKursarten, KlausurterminblockungModusQuartale, DateUtils } from "@core";
 	import { computed, ref, onMounted, onUnmounted, shallowRef } from 'vue';
 	import type { GostKlausurplanungSchienenProps } from './SGostKlausurplanungSchienenProps';
 	import type { GostKlausurplanungDragData, GostKlausurplanungDropZone } from "./SGostKlausurplanung";
-	import type {DataTableColumn} from "@ui";
+	import type { DataTableColumn } from "@ui";
 
 	const showModalAutomatischBlocken = ref<boolean>(false);
 
@@ -214,7 +214,7 @@
 			return DateUtils.gibDatumGermanFormat(termin.datum);
 		if (props.terminSelected.value !== undefined && props.terminSelected.value.datum !== null)
 			return DateUtils.gibDatumGermanFormat(props.terminSelected.value.datum);
-		return "N.N."
+		return "N.N.";
 	}
 
 	const modalVorgaben = ref<boolean>(false);
@@ -240,7 +240,7 @@
 		} else if (props.terminSelected.value !== undefined)
 			return props.kMan().konflikteMapKursklausurSchueleridsByTermin(props.terminSelected.value).entrySet();
 		return new HashSet<JavaMapEntry<GostKursklausur, JavaSet<number>>>();
-	}
+	};
 
 	const anzahlProKwKonflikte = (threshold: number) => {
 		if (dragData.value !== undefined && props.terminSelected.value !== undefined && dragData.value instanceof GostKursklausur) {
@@ -249,7 +249,7 @@
 		} else if (props.terminSelected.value !== undefined)
 			return props.kMan().klausurenProSchueleridExceedingKWThresholdByTerminAndThreshold(props.terminSelected.value, threshold).entrySet();
 		return new HashSet<JavaMapEntry<number, List<GostSchuelerklausurTermin>>>();
-	}
+	};
 
 	const onDrop = async (event: DragEvent | undefined, zone: GostKlausurplanungDropZone) => {
 		if (dragData.value instanceof GostKursklausur) {
@@ -268,11 +268,11 @@
 	async function verschiebeKlausurTrotzRaumzuweisung() {
 		if (klausurMoveDragData instanceof GostKursklausur) {
 			if (klausurMoveDropZone === undefined && klausurMoveDragData.idTermin !== null)
-				await props.patchKlausur(klausurMoveDragData, {idTermin: null});
+				await props.patchKlausur(klausurMoveDragData, { idTermin: null });
 			else if (klausurMoveDropZone instanceof GostKlausurtermin) {
 				const termin = klausurMoveDropZone;
 				if (termin.id !== klausurMoveDragData.idTermin) {
-					await props.patchKlausur(klausurMoveDragData, {idTermin: termin.id});
+					await props.patchKlausur(klausurMoveDragData, { idTermin: termin.id });
 					props.terminSelected.value = klausurMoveDropZone;
 				}
 			}
@@ -314,7 +314,7 @@
 		const konfliktZuEigenemTermin = termin === undefined ? false : props.kMan().konflikteAnzahlZuEigenemTerminGetByKursklausur(klausur) > 0;
 		return {
 			"bg-ui-danger text-ui-ondanger": konfliktZuEigenemTermin,
-		}
+		};
 	};
 
 	const isMounted = ref(false);
@@ -341,7 +341,7 @@
 			{ key: "kursSchiene", label: "S", tooltip: "Schiene", span: 0.25, align: "right", minWidth: 2.75 },
 		];
 		if (props.quartalsauswahl.value === 0)
-			cols.push({ key: "quartal", label: "Q", tooltip: "Quartal", span: 0.25, align: "right", minWidth: 2.75 })
+			cols.push({ key: "quartal", label: "Q", tooltip: "Quartal", span: 0.25, align: "right", minWidth: 2.75 });
 		return cols;
 	}
 

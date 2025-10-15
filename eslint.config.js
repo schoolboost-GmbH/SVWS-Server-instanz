@@ -45,28 +45,81 @@ export default tseslint.config(
 		rules: {
 			//TESTING:
 			curly: ["off", "multi"], // if und for als Einzeiler ohne Klammern
-			"@stylistic/semi": "off", // verwende Semikolon überall
-
 
 			// Standard Regeln
-			//"@stylistic/semi": "warn", => Probleme mit arrow functions
-			"@stylistic/max-len": "off",
-			"@stylistic/no-mixed-spaces-and-tabs": "off",
 
-			"@stylistic/arrow-spacing": "warn",
-			"@stylistic/comma-dangle": ["warn", {
-        "arrays": "always-multiline",
-        "imports": "always-multiline",
-        "exports": "always-multiline",
-        "objects": "always-multiline",
-        "functions": "never",
-        "importAttributes": "never",
-        "dynamicImports": "never"
-    	}],
-			"@stylistic/no-multi-spaces": "error",
+			// Objekte und Arrays
+			"@stylistic/object-curly-spacing": ["error", "always"],
+			"@stylistic/array-bracket-spacing": ["error", "never"],
+			"@stylistic/computed-property-spacing": ["error", "never"],
+			"@stylistic/key-spacing": ["error", {
+				"beforeColon": false,
+				"afterColon": true,
+				"mode": "strict",
+			}],
+
+			// Funktionen und Funktionsaufrufe
+			"@stylistic/nonblock-statement-body-position": ["error", "below"],
+			"@stylistic/function-call-spacing": ["error", "never"],
+			"@stylistic/arrow-spacing": ["error", { "before": true, "after": true }],
+			"@stylistic/space-before-function-paren": ["error", {
+				"anonymous": "never",
+				"named": "never",
+				"asyncArrow": "always",
+				"catch": "always"
+			}],
+			
+			// Operatoren und Keywords
+			"@stylistic/space-infix-ops": "error",
+			"@stylistic/space-unary-ops": ["error", {"words": true, "nonwords": false}],
+			"@stylistic/keyword-spacing": ["error", { "before": true, "after": true }],
 			"@stylistic/no-mixed-operators": "error",
-			"@stylistic/no-trailing-spaces": "error",
+
+			// Blöcke
+			"@stylistic/block-spacing":["error", "always"],
+			"@stylistic/space-before-blocks": ["error", "always"],
+
+			// Typen
+			"@stylistic/type-annotation-spacing": ["error", {
+				"before": false,
+				"after": true,
+				"overrides": {
+					"arrow": { "before": true, "after": true }
+				}
+			}],
+			"@stylistic/type-generic-spacing": ["error"],
+
+			// Kommata und Semikola
+			"@stylistic/comma-spacing": ["error", { "before": false, "after": true }],
+			"@stylistic/comma-style": ["error", "last"],
+			"@stylistic/semi": ["error", "always", { "omitLastInOneLineBlock": true }],
+			"@stylistic/comma-dangle": ["warn", {
+				"arrays": "always-multiline",
+				"imports": "always-multiline",
+				"exports": "always-multiline",
+				"objects": "always-multiline",
+				"functions": "never",
+				"importAttributes": "never",
+				"dynamicImports": "never"
+			}],
+
+			// Tabs und spaces
+			"@stylistic/no-mixed-spaces-and-tabs": "off",
+			"@stylistic/no-multi-spaces": "error",
 			"@stylistic/indent": ["error", "tab", { "SwitchCase": 1 }],
+			"@stylistic/no-trailing-spaces": "error",
+			"@stylistic/switch-colon-spacing": ["error", {"after": true, "before": false}],
+			"@stylistic/template-curly-spacing": ["error", "never"],
+			"@stylistic/spaced-comment": ["error", "always", {
+				"markers": ["/"]
+			  }],
+			"@stylistic/space-in-parens": ["error", "never"],
+			"@stylistic/no-whitespace-before-property": "error",
+
+			// Sonstiges
+			"@stylistic/max-len": "off",
+			
+			"@stylistic/brace-style": ["error", "1tbs", { "allowSingleLine": true }],
 
 			"require-await": "off",
 			"no-unused-vars": "off",

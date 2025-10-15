@@ -1,6 +1,6 @@
-import type {List, ServerMode, BenutzerKompetenz, ReportingParameter, ApiFile, SimpleOperationResponse, StundenplanListeEintrag, Schulform, Schulgliederung} from "@core";
+import type { List, ServerMode, BenutzerKompetenz, ReportingParameter, ApiFile, SimpleOperationResponse, StundenplanListeEintrag, Schulform, Schulgliederung } from "@core";
 import type { KursListeManager } from "@ui";
-import type {ApiStatus} from "~/components/ApiStatus";
+import type { ApiStatus } from "~/components/ApiStatus";
 
 export interface KurseGruppenprozesseProps {
 	apiStatus: ApiStatus;

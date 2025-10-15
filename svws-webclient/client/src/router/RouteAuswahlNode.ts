@@ -104,7 +104,7 @@ export abstract class RouteAuswahlNode<TAuswahlManager extends AuswahlManager<nu
 	}
 
 	protected async update(to: RouteNode<any, any>, to_params: RouteParams, from: RouteNode<any, any> | undefined, from_params: RouteParams,
-		isEntering: boolean, redirected: RouteNode<any, any> | undefined) : Promise<void | Error | RouteLocationRaw> {
+		isEntering: boolean, redirected: RouteNode<any, any> | undefined): Promise<void | Error | RouteLocationRaw> {
 		try {
 			const { idSchuljahresabschnitt, id: paramId } = RouteNode.getIntParams(to_params, ["idSchuljahresabschnitt", this._idParam]);
 			if (idSchuljahresabschnitt === undefined)
@@ -124,7 +124,7 @@ export abstract class RouteAuswahlNode<TAuswahlManager extends AuswahlManager<nu
 
 			// Wenn einer der folgenden Routen Types aufgerufen wird, wird hier ein Redirect initiiert, sobald eine ID in der URL enthalten ist.
 			if (to.hasOneOfTypes([ViewType.GRUPPENPROZESSE, ViewType.HINZUFUEGEN]) && (id !== undefined))
-				return this.getRouteView(to, { id: '' })
+				return this.getRouteView(to, { id: '' });
 
 			if (to.hasType(ViewType.GRUPPENPROZESSE))
 				await this.data.gotoGruppenprozessView(false);
@@ -151,14 +151,14 @@ export abstract class RouteAuswahlNode<TAuswahlManager extends AuswahlManager<nu
 		}
 	}
 
-	public async leave(from: RouteNode<any, any>, from_params: RouteParams, to: RouteNode<any, any>, to_params: RouteParams) : Promise<void> {
+	public async leave(from: RouteNode<any, any>, from_params: RouteParams, to: RouteNode<any, any>, to_params: RouteParams): Promise<void> {
 		// Wenn eine Route mit ViewType != Default verlassen wird, soll bei der Rückkehr zu dieser Route kein Child Node mehr selektiert sein.
 		// Es soll dann die Default View angezeigt werden.
 		if (this.data.activeViewType !== ViewType.DEFAULT)
 			this._selectedChild.value = undefined;
 
 		this.data.reset();
-		const { id } = RouteNode.getStringParams(from_params, [ this._idParam ]);
+		const { id } = RouteNode.getStringParams(from_params, [this._idParam]);
 		await api.nonPersistentConfig.setValue(`${this.name}.auswahl.id`, id ?? "");
 	}
 

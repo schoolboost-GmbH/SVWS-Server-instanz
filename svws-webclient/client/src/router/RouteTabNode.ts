@@ -55,7 +55,7 @@ export abstract class RouteTabNode<TRouteData extends RouteData<any>, TRoutePare
 	 *
 	 * @returns ggf. die Route für ein redirect oder ein Fehler
 	 */
-	protected async update(to: RouteNode<any, any>, to_params: RouteParams, from: RouteNode<any, any> | undefined, from_params: RouteParams, isEntering: boolean, redirected: RouteNode<any, any> | undefined) : Promise<void | Error | RouteLocationRaw> {
+	protected async update(to: RouteNode<any, any>, to_params: RouteParams, from: RouteNode<any, any> | undefined, from_params: RouteParams, isEntering: boolean, redirected: RouteNode<any, any> | undefined): Promise<void | Error | RouteLocationRaw> {
 		if (to.name === this.name)
 			return this.getRouteDefaultChild();
 		if (!to.name.startsWith(this.data.view.name))
@@ -89,6 +89,6 @@ export abstract class RouteTabNode<TRouteData extends RouteData<any>, TRoutePare
 		await RouteManager.doRoute(this.getRouteView(node));
 		this.data.setView(node, this.children);
 		this.data.autofocus = false;
-	}
+	};
 
 }

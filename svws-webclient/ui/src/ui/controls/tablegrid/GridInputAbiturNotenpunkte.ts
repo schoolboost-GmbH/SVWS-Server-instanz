@@ -12,7 +12,7 @@ import type { List } from "../../../../../core/src/java/util/List";
 export class GridInputAbiturNotenpunkte<KEY> extends GridInputInnerText<KEY, string | null> {
 
 	// Der Setter zum Schreiben der Daten
-	protected _setter : (value: string | null) => void;
+	protected _setter: (value: string | null) => void;
 
 	// Der zwischengespeicherte Wert des Input-Elements als Notepunkte oder null
 	protected _notenpunkte = shallowRef<number | null>(null);
@@ -40,17 +40,17 @@ export class GridInputAbiturNotenpunkte<KEY> extends GridInputInnerText<KEY, str
 		super.updateText(null);
 	}
 
-	private getNotenpunkteFromKuerzel(value: string | null) : number | null {
+	private getNotenpunkteFromKuerzel(value: string | null): number | null {
 		const notenkuerzel = value;
 		if (notenkuerzel === null)
 			return null;
-		const nke : NoteKatalogEintrag | null = Note.fromKuerzel(notenkuerzel).daten(this._schuljahr);
+		const nke: NoteKatalogEintrag | null = Note.fromKuerzel(notenkuerzel).daten(this._schuljahr);
 		if ((nke === null) || (nke.notenpunkte === null))
 			return null;
 		return nke.notenpunkte;
 	}
 
-	private getNotenKuerzelFromNotenpunkte(value: number | null) : string | null {
+	private getNotenKuerzelFromNotenpunkte(value: number | null): string | null {
 		const note = Note.fromNotenpunkte(value);
 		const eintrag = note.daten(this._schuljahr);
 		return (eintrag === null) ? null : eintrag.kuerzel;
@@ -70,7 +70,7 @@ export class GridInputAbiturNotenpunkte<KEY> extends GridInputInnerText<KEY, str
 	/**
 	 * Schreibt die internen Daten dieses Inputs mithilfe des Setters.
 	 */
-	public commit() : void {
+	public commit(): void {
 		this._setter(this.getNotenKuerzelFromNotenpunkte(this._notenpunkte.value));
 	}
 
@@ -81,7 +81,7 @@ export class GridInputAbiturNotenpunkte<KEY> extends GridInputInnerText<KEY, str
 	 *
 	 * @returns true, falls das Anhängen der Ziffer zulässig war und sonst false
 	 */
-	public append(ziffer : number): boolean {
+	public append(ziffer: number): boolean {
 		if ((this._notenpunkte.value !== null) && (this._notenpunkte.value !== 0) && (((this._notenpunkte.value === 1) && (ziffer > 5)) || (this._notenpunkte.value > 1)))
 			return false;
 		const npNeu = (this._notenpunkte.value === null) ? ziffer : (this._notenpunkte.value * 10) + ziffer;
@@ -111,7 +111,7 @@ export class GridInputAbiturNotenpunkte<KEY> extends GridInputInnerText<KEY, str
 	 *
 	 * @returns true   es hat aufgrund des Tastaturereignisses eine Änderung am Zustand des Inputs stattgefunden
 	 */
-	public onKeyDown(event : KeyboardEvent) : boolean {
+	public onKeyDown(event: KeyboardEvent): boolean {
 		if (super.onKeyDownNavigation(event))
 			return false;
 		// Lösche ggf. den aktuellen Wert

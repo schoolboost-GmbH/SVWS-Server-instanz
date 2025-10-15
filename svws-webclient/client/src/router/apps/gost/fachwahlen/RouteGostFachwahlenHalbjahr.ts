@@ -3,7 +3,7 @@ import type { RouteLocationNormalized, RouteLocationRaw, RouteParams, RouteParam
 import { BenutzerKompetenz, DeveloperNotificationException, GostHalbjahr, ServerMode } from "@core";
 
 import { RouteNode } from "~/router/RouteNode";
-import { routeGost, type RouteGost} from "~/router/apps/gost/RouteGost";
+import { routeGost, type RouteGost } from "~/router/apps/gost/RouteGost";
 
 import { routeGostFachwahlen } from "~/router/apps/gost/fachwahlen/RouteGostFachwahlen";
 
@@ -34,23 +34,23 @@ export class RouteGostFachwahlenHalbjahr extends RouteNode<any, RouteGost> {
 		super.text = "Fachwahlen - Halbjahresbezogen";
 		this.isHidden = (params?: RouteParams) => {
 			return this.checkHidden(params);
-		}
+		};
 	}
 
 	public checkHidden(params?: RouteParams) {
 		try {
-			const { abiturjahr } = params ? RouteNode.getIntParams(params, [ "abiturjahr" ]) : { abiturjahr: null };
+			const { abiturjahr } = params ? RouteNode.getIntParams(params, ["abiturjahr"]) : { abiturjahr: null };
 			if ((abiturjahr === null) || (abiturjahr === -1))
-				return { name: routeGost.defaultChild!.name, params: { idSchuljahresabschnitt: routeApp.data.idSchuljahresabschnitt, abiturjahr }};
+				return { name: routeGost.defaultChild!.name, params: { idSchuljahresabschnitt: routeApp.data.idSchuljahresabschnitt, abiturjahr } };
 			return false;
 		} catch (e) {
 			return routeError.getSimpleErrorRoute(e as DeveloperNotificationException);
 		}
 	}
 
-	public async update(to: RouteNode<any, any>, to_params: RouteParams) : Promise<void | Error | RouteLocationRaw> {
+	public async update(to: RouteNode<any, any>, to_params: RouteParams): Promise<void | Error | RouteLocationRaw> {
 		try {
-			const { idHalbjahr } = RouteNode.getIntParams(to_params, [ "idHalbjahr" ]);
+			const { idHalbjahr } = RouteNode.getIntParams(to_params, ["idHalbjahr"]);
 			const halbjahr = GostHalbjahr.fromID(idHalbjahr ?? null);
 			if (halbjahr === null)
 				throw new DeveloperNotificationException("Fehler: Das Halbjahr " + idHalbjahr + " ist ungültig");
@@ -61,7 +61,7 @@ export class RouteGostFachwahlenHalbjahr extends RouteNode<any, RouteGost> {
 		}
 	}
 
-	public addRouteParamsFromState() : RouteParamsRawGeneric {
+	public addRouteParamsFromState(): RouteParamsRawGeneric {
 		const idHalbjahr = this._halbjahr.value.id;
 		return { idHalbjahr };
 	}

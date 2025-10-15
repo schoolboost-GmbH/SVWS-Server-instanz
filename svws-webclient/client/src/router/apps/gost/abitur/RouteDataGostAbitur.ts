@@ -45,15 +45,15 @@ export class RouteDataGostAbitur extends RouteData<RouteStateDataGostAbitur> {
 		return this._state.value.mapKurse;
 	}
 
-	get managerLaufbahnplanungMap() : JavaMap<number, AbiturdatenManager> {
+	get managerLaufbahnplanungMap(): JavaMap<number, AbiturdatenManager> {
 		return this._state.value.managerLaufbahnplanungMap;
 	}
 
-	get ergebnisBelegpruefungMap() : JavaMap<number, GostBelegpruefungErgebnis> {
+	get ergebnisBelegpruefungMap(): JavaMap<number, GostBelegpruefungErgebnis> {
 		return this._state.value.ergebnisBelegpruefungMap;
 	}
 
-	get managerAbiturMap() : JavaMap<number, AbiturdatenManager> {
+	get managerAbiturMap(): JavaMap<number, AbiturdatenManager> {
 		return this._state.value.managerAbiturMap;
 	}
 
@@ -63,7 +63,7 @@ export class RouteDataGostAbitur extends RouteData<RouteStateDataGostAbitur> {
 	 * @param abiJahrgang   die Informationen zum Abiturjahrgang
 	 * @param force         gibt an, ob das Laden erzwungen werden soll, obwohl die ID bereits geladen ist
 	 */
-	public async setAbiturjahr(abiJahrgang: GostJahrgang, force: boolean = false) : Promise<void> {
+	public async setAbiturjahr(abiJahrgang: GostJahrgang, force: boolean = false): Promise<void> {
 		if ((!force) && (abiJahrgang.abiturjahr === this._state.value.abiJahrgang?.abiturjahr))
 			return;
 		// Lade die Informationen zum Abiturjahrgang des Schülers
@@ -78,7 +78,7 @@ export class RouteDataGostAbitur extends RouteData<RouteStateDataGostAbitur> {
 				for (const kurs of listKurse)
 					mapKurse.put(kurs.id, kurs);
 			}
-		} catch(error) {
+		} catch (error) {
 			// Das Laden der Kurse kann fehlschlagen, wenn der Schuljahresabschnitt für die Q2.2 noch nicht existiert
 		}
 
@@ -98,7 +98,7 @@ export class RouteDataGostAbitur extends RouteData<RouteStateDataGostAbitur> {
 			faecherManager = new GostFaecherManager(abiJahrgang.abiturjahr - 1, listGostFaecher);
 			listFachkombinationen = await api.server.getGostAbiturjahrgangFachkombinationen(api.schema, abiJahrgang.abiturjahr);
 			faecherManager.addFachkombinationenAll(listFachkombinationen);
-		} catch(error) {
+		} catch (error) {
 			throw new UserNotificationException("Die Informationen zum Abiturjahrgang " + abiJahrgang.abiturjahr +
 				", dessen Schüler und dessen Fächer konnten nicht vollständig ermittelt werden. Überpfüfen Sie diese Infromationen.");
 		}
@@ -126,10 +126,10 @@ export class RouteDataGostAbitur extends RouteData<RouteStateDataGostAbitur> {
 		} catch (e) {
 			// do nothing
 		}
-		this.setPatchedDefaultState(newState)
+		this.setPatchedDefaultState(newState);
 	}
 
-	copyAbiturdatenAusLeistungsdaten = async (idSchueler: number) : Promise<void> => {
+	copyAbiturdatenAusLeistungsdaten = async (idSchueler: number): Promise<void> => {
 		const managerLaufbahnplanung = this.managerLaufbahnplanungMap.get(idSchueler);
 		if (managerLaufbahnplanung === null)
 			return;
@@ -139,7 +139,7 @@ export class RouteDataGostAbitur extends RouteData<RouteStateDataGostAbitur> {
 		const abiturdaten = await api.server.getGostSchuelerAbiturdaten(api.schema, idSchueler);
 		this.managerAbiturMap.put(idSchueler, new AbiturdatenManager(api.mode, abiturdaten, managerLaufbahnplanung.jahrgangsdaten(), managerLaufbahnplanung.faecher(), GostBelegpruefungsArt.GESAMT));
 		this.commit();
-	}
+	};
 
 	updateAbiturpruefungsdaten = async (manager: () => AbiturdatenManager, belegung: Partial<AbiturFachbelegung>, berechnePflichtpruefungenNeu: boolean) => {
 		if (belegung.fachID === undefined)
@@ -170,6 +170,6 @@ export class RouteDataGostAbitur extends RouteData<RouteStateDataGostAbitur> {
 		manager().pruefeZulassung();
 		AbiturdatenManager.berechnePruefungsergebnis(orig, berechnePflichtpruefungenNeu);
 		this.commit();
-	}
+	};
 
 }

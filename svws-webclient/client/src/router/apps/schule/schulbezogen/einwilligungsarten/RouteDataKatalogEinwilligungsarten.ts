@@ -10,7 +10,7 @@ import type { RouteStateAuswahlInterface } from "~/router/RouteDataAuswahl";
 import { RouteDataAuswahl } from "~/router/RouteDataAuswahl";
 import { routeKatalogEinwilligungsartenGruppenprozesse } from "~/router/apps/schule/schulbezogen/einwilligungsarten/RouteKatalogEinwilligungsartenGruppenprozesse";
 import { routeKatalogEinwilligungsartenNeu } from "~/router/apps/schule/schulbezogen/einwilligungsarten/RouteKatalogEinwilligungsartenNeu";
-import type {RouteParamsRawGeneric } from "vue-router";
+import type { RouteParamsRawGeneric } from "vue-router";
 
 const defaultState = {
 	idSchuljahresabschnitt: -1,
@@ -30,7 +30,7 @@ export class RouteDataKatalogEinwilligungsarten extends RouteDataAuswahl<Einwill
 		param.id = id;
 	}
 
-	protected async createManager(_ : number) : Promise<Partial<RouteStateAuswahlInterface<EinwilligungsartenListeManager>>> {
+	protected async createManager(_: number): Promise<Partial<RouteStateAuswahlInterface<EinwilligungsartenListeManager>>> {
 		const einwilligungsarten = await api.server.getEinwilligungsarten(api.schema);
 		const manager = new EinwilligungsartenListeManager(api.abschnitt.id, api.schuleStammdaten.idSchuljahresabschnitt, api.schuleStammdaten.abschnitte, api.schulform, einwilligungsarten, new ArrayList());
 		return { manager };
@@ -44,7 +44,7 @@ export class RouteDataKatalogEinwilligungsarten extends RouteDataAuswahl<Einwill
 		return auswahl;
 	}
 
-	protected async doPatch(data : Partial<Einwilligungsart>, id: number) : Promise<void> {
+	protected async doPatch(data: Partial<Einwilligungsart>, id: number): Promise<void> {
 		await api.server.patchEinwilligungsart(data, api.schema, id);
 	}
 
@@ -56,9 +56,9 @@ export class RouteDataKatalogEinwilligungsarten extends RouteDataAuswahl<Einwill
 		const res = await api.server.createEinwilligungsart(data, api.schema);
 		await this.setSchuljahresabschnitt(this._state.value.idSchuljahresabschnitt, true);
 		await this.gotoDefaultView(res.id);
-	}
+	};
 
-	protected deleteMessage(id: number, einwilligungsart: Einwilligungsart | null) : string {
+	protected deleteMessage(id: number, einwilligungsart: Einwilligungsart | null): string {
 		return `Einwilligungsart ${einwilligungsart?.bezeichnung ?? '???'} (ID: ${id}) wurde erfolgreich gelöscht.`;
 	}
 }

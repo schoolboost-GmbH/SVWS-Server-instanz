@@ -76,11 +76,11 @@
 	defineSlots();
 	const emit = defineEmits<{
 		click: [id: number];
-	}>()
+	}>();
 
 	const isOpen = ref(true);
 	const stackOpen = ref(false);
-	const copied = ref<boolean|null>(null);
+	const copied = ref<boolean | null>(null);
 
 	function setIsOpen(value: boolean) {
 		isOpen.value = value;
@@ -95,7 +95,7 @@
 			return;
 		try {
 			await navigator.clipboard.writeText(props.toCopy);
-		} catch(e) {
+		} catch (e) {
 			copied.value = false;
 		}
 		copied.value = true;

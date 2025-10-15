@@ -24,8 +24,8 @@
 
 	const props = withDefaults(defineProps<{
 		type?: 'default' | 'tabs';
-		focusSwitchingEnabled? : boolean;
-		focusHelpVisible? : boolean;
+		focusSwitchingEnabled?: boolean;
+		focusHelpVisible?: boolean;
 	}>(), {
 		type: 'default',
 		focusSwitchingEnabled: false,
@@ -56,7 +56,7 @@
 		scrollFactor: number;
 		maxScrollLeft: number;
 		scrollOffset: number;
-	}
+	};
 
 	const state = ref<ComponentData>({
 		scrolled: false,

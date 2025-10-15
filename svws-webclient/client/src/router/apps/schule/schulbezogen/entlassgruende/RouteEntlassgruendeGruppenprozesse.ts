@@ -15,15 +15,15 @@ export class RouteEntlassgruendeGruppenprozesse extends RouteNode<any, RouteEntl
 
 	public constructor() {
 		super(Schulform.values(), [BenutzerKompetenz.KATALOG_EINTRAEGE_ANSEHEN, BenutzerKompetenz.KATALOG_EINTRAEGE_AENDERN,
-			BenutzerKompetenz.KATALOG_EINTRAEGE_LOESCHEN], "schule.entlassgruende.gruppenprozesse" , "gruppenprozesse", SEntlassgruendeGruppenprozesse);
+			BenutzerKompetenz.KATALOG_EINTRAEGE_LOESCHEN], "schule.entlassgruende.gruppenprozesse", "gruppenprozesse", SEntlassgruendeGruppenprozesse);
 		super.types = new Set([ViewType.GRUPPENPROZESSE]);
 		super.mode = ServerMode.DEV;
 		super.propHandler = (route) => this.getProps(route);
-		super.text = "Gruppenprozesse"
+		super.text = "Gruppenprozesse";
 	}
 
 	public getRoute(): RouteLocationRaw {
-		return { name: this.name, params: {idSchuljahresabschnitt: routeApp.data.idSchuljahresabschnitt, id: ""}}
+		return { name: this.name, params: { idSchuljahresabschnitt: routeApp.data.idSchuljahresabschnitt, id: "" } };
 	}
 
 	public getProps(to: RouteLocationNormalized): EntlassgruendeGruppenprozesseProps {
@@ -33,7 +33,7 @@ export class RouteEntlassgruendeGruppenprozesse extends RouteNode<any, RouteEntl
 			benutzerKompetenzen: api.benutzerKompetenzen,
 			deleteEntlassgruende: routeEntlassgruende.data.delete,
 			manager: () => routeEntlassgruende.data.manager,
-		}
+		};
 	}
 
 }

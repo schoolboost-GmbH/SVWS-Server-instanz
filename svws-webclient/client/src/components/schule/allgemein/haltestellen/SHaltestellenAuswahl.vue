@@ -40,7 +40,7 @@
 		if ((props.activeViewType === ViewType.GRUPPENPROZESSE) || (props.activeViewType === ViewType.HINZUFUEGEN))
 			return null;
 		return (props.manager().hasDaten()) ? props.manager().auswahl() : null;
-	})
+	});
 	const columns: DataTableColumn[] = [
 		{ key: "bezeichnung", label: "Bezeichnung", sortable: true, span: 2, defaultSort: 'asc' },
 	];
@@ -53,7 +53,7 @@
 		if (props.manager().liste.auswahlExists())
 			await props.gotoGruppenprozessView(true);
 		else
-			await props.gotoDefaultView(props.manager().getVorherigeAuswahl()?.id)
+			await props.gotoDefaultView(props.manager().getVorherigeAuswahl()?.id);
 	}
 
 </script>

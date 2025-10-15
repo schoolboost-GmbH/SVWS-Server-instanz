@@ -27,7 +27,7 @@
 
 	const openModal = () => {
 		show.value = true;
-	}
+	};
 
 	async function sortiere() {
 		show.value = false;

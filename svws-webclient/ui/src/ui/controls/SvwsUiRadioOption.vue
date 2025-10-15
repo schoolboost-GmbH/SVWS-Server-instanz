@@ -69,7 +69,7 @@
 	const checked = computed<object | number | boolean | string>({
 		get: () => props.modelValue,
 		set: (value) => emit('update:modelValue', value),
-	})
+	});
 
 	const idComponent = useId();
 	const idInputField = useId();

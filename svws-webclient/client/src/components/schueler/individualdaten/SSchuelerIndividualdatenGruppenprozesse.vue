@@ -197,7 +197,7 @@
 
 <script setup lang="ts">
 
-	import type { Fahrschuelerart} from "@core";
+	import type { Fahrschuelerart } from "@core";
 	import { BenutzerKompetenz, Nationalitaeten, SchuelerStatus, Schulform, Verkehrssprache } from "@core";
 	import type { SchuelerIndividualdatenGruppenprozesseProps } from "~/components/schueler/individualdaten/SSchuelerIndividualdatenGruppenprozesseProps";
 	import { computed, ref, watch, toRefs } from "vue";

@@ -221,7 +221,7 @@
 		&& (props.buttonPosition === 'right'));
 	const showFooterLeftButton = computed(() => !slots.buttonFooterLeft && showButtons.value && (props.buttonContainer === 'footer')
 		&& (props.buttonPosition === 'left'));
-	const showButtons = computed (() => buttons.value.length !== 0);
+	const showButtons = computed(() => buttons.value.length !== 0);
 
 	const isHovered = ref(false);
 
@@ -297,10 +297,10 @@
 	 * Setzt die ID für den Teleport, abhängig von der gewünschten Position der Buttons.
 	 * Diese wird definiert durch die props: buttonContainer und buttonPosition.
 	 */
-	const buttonContainerId = computed (() => {
-		if(!showButtons.value)
+	const buttonContainerId = computed(() => {
+		if (!showButtons.value)
 			return undefined;
-		if(props.buttonContainer === "content")
+		if (props.buttonContainer === "content")
 			return (props.buttonPosition === "left") ? "#ui-card--button-content-left" : "#ui-card--button-content-right";
 		else
 			return (props.buttonPosition === "left") ? "#ui-card--button-footer-left" : "#ui-card--button-footer-right";
@@ -375,7 +375,7 @@
 	 *
 	 * @param content   Der Contentbereich, dessen Höhe animiert werden soll
 	 */
-	async function openCard (content: Element, done: () => void) {
+	async function openCard(content: Element, done: () => void) {
 		const element = content as HTMLElement;
 		// Wenn die Card bereits geöffnet ist (zum Beispiel initial beim Mounting), dann darf die Funktion nicht ausgeführt werden
 		if (element.style.maxHeight === 'fit-content')
@@ -389,7 +389,7 @@
 	 *
 	 * @param content   Der Contentbereich, dessen Zusatnd nach dem Öffnen gesetzt werden soll.
 	 */
-	function afterOpenCard (content: Element) {
+	function afterOpenCard(content: Element) {
 		const element = content as HTMLElement;
 		element.style.maxHeight = 'fit-content';
 	};
@@ -399,7 +399,7 @@
 	 *
 	 * @param content   Der Contentbereich, dessen Zusatnd nach dem Öffnen gesetzt werden soll.
 	 */
-	function beforeCloseCard (el: Element) {
+	function beforeCloseCard(el: Element) {
 		const element = el as HTMLElement;
 		element.style.maxHeight = `${element.scrollHeight}px`;
 	};
@@ -409,7 +409,7 @@
 	 *
 	 * @param content   Der Contentbereich, dessen Höhe animiert werden soll
 	 */
-	async function closeCard (el: Element, done: () => void) {
+	async function closeCard(el: Element, done: () => void) {
 		const element = el as HTMLElement;
 		element.style.maxHeight = '0px';
 		element.addEventListener('transitionend', done, { once: true });
@@ -434,7 +434,7 @@
 	 *
 	 * @param button Der Button, für den überprüft wird, ob er ein Tooltip benötigt.
 	 */
-	function tooltipDisabled (button: ButtonConfig) {
+	function tooltipDisabled(button: ButtonConfig) {
 		if (props.buttonMode === 'icon' || (button.disabled && (button.disabledReason !== undefined)))
 			return false;
 		else

@@ -180,7 +180,7 @@
 	const wochentypAnzeige = shallowRef<number>(0);
 	const doppelstundenModus = shallowRef<boolean>(false);
 	const schienSortierung = shallowRef<boolean>(true);
-	const auswahl = ref<StundenplanKlassenunterricht|StundenplanUnterricht|StundenplanKurs|undefined>();
+	const auswahl = ref<StundenplanKlassenunterricht | StundenplanUnterricht | StundenplanKurs | undefined>();
 	const refSelect = ref();
 
 	const readonly = computed<boolean>(() => !props.benutzerKompetenzen.has(BenutzerKompetenz.STUNDENPLAN_AENDERN));
@@ -188,14 +188,14 @@
 	const schuljahr = computed<number>(() => props.stundenplanManager().getSchuljahr());
 
 	const klasse = computed<StundenplanKlasse>({
-		get: () : StundenplanKlasse => {
+		get: (): StundenplanKlasse => {
 			if (_klasse.value !== undefined)
 				try {
 					return props.stundenplanManager().klasseGetByIdOrException(_klasse.value.id);
 				} catch (e) { /* empty */ }
 			return props.stundenplanManager().klasseGetMengeAsList().isEmpty() ? new StundenplanKlasse() : props.stundenplanManager().klasseGetMengeAsList().get(0);
 		},
-		set: (value : StundenplanKlasse) => _klasse.value = value,
+		set: (value: StundenplanKlasse) => _klasse.value = value,
 	});
 
 	function getBgColor(fach: string): string {
@@ -213,32 +213,28 @@
 			raeumeAuswahl.value = props.stundenplanManager().raumGetMengeAsList();
 			schuelerzahl.value = props.stundenplanManager().schuelerGetAnzahlByKlasseIdOrException(klasse.value.id);
 			unterrichtBezeichnung.value = props.stundenplanManager().fachGetByIdOrException(auswahl.value.idFach).bezeichnung;
-		}
-		else if (auswahl.value instanceof StundenplanUnterricht) {
+		} else if (auswahl.value instanceof StundenplanUnterricht) {
 			unterrichteAuswahl.value = props.stundenplanManager().unterrichtGetMengeByUnterrichtId(auswahl.value.id);
 			raeumeAuswahl.value = props.stundenplanManager().raumGetMengeAsList();
 			if (auswahl.value.idKurs === null) {
 				schuelerzahl.value = props.stundenplanManager().schuelerGetAnzahlByKlasseIdOrException(klasse.value.id);
 				unterrichtBezeichnung.value = props.stundenplanManager().fachGetByIdOrException(auswahl.value.idFach).bezeichnung;
-			}
-			else {
+			} else {
 				schuelerzahl.value = props.stundenplanManager().schuelerGetAnzahlByKursIdAsListOrException(auswahl.value.idKurs);
 				unterrichtBezeichnung.value = props.stundenplanManager().unterrichtGetByIDStringOfFachOderKurs(auswahl.value.id, true);
 			}
-		}
-		else if (auswahl.value instanceof StundenplanKurs) {
+		} else if (auswahl.value instanceof StundenplanKurs) {
 			unterrichteAuswahl.value = props.stundenplanManager().unterrichtGetMengeByKurs(auswahl.value.id);
 			raeumeAuswahl.value = props.stundenplanManager().raumGetMengeAsList();
 			schuelerzahl.value = props.stundenplanManager().schuelerGetAnzahlByKursIdAsListOrException(auswahl.value.id);
 			unterrichtBezeichnung.value = auswahl.value.bezeichnung;
-		}
-		else {
+		} else {
 			unterrichteAuswahl.value = new ArrayList();
 			raeumeAuswahl.value = new ArrayList();
 			schuelerzahl.value = 0;
 			unterrichtBezeichnung.value = "";
 		}
-	})
+	});
 
 	function raumInfo(raum: StundenplanRaum, unterrichte: List<StundenplanUnterricht> = unterrichteAuswahl.value) {
 		const ids = new ArrayList<number>();
@@ -356,7 +352,7 @@
 			const stunde = { idZeitraster: zone.id, wochentyp, idKurs: dragData.value.id, idFach: dragData.value.idFach, klassen: new ArrayList(klassen), schienen: dragData.value.schienen, lehrer: dragData.value.lehrer };
 			const arr = [];
 			arr.push(stunde);
-			//stundenplanManager().klassenunterrichtGetWochenstundenIST(ku.idKlasse, ku.idFach) }}/{{ stundenplanManager().klassenunterrichtGetWochenstundenSOLL(ku.idKlasse, ku.idFach)
+			// stundenplanManager().klassenunterrichtGetWochenstundenIST(ku.idKlasse, ku.idFach) }}/{{ stundenplanManager().klassenunterrichtGetWochenstundenSOLL(ku.idKlasse, ku.idFach)
 			if (doppelstundenModus.value === true && props.stundenplanManager().kursGetWochenstundenREST(dragData.value.id) >= 2) {
 				const next = props.stundenplanManager().getZeitrasterNext(zone);
 				if (next && props.stundenplanManager().kursDarfInZelle(dragData.value, zone.wochentag, next.unterrichtstunde, wochentyp))
@@ -392,7 +388,7 @@
 		// TODO Fall Lehrer -> StundenplanPausenzeit
 	}
 
-	function isDropZone() : boolean {
+	function isDropZone(): boolean {
 		if ((dragData.value === undefined) || (dragData.value instanceof StundenplanKurs) || (dragData.value instanceof StundenplanKlassenunterricht))
 			return false;
 		return true;

@@ -31,7 +31,7 @@ export class RouteDataKatalogRaeume extends RouteData<RouteStateKatalogRaeume> {
 		const listKatalogeintraege = await api.server.getRaeume(api.schema);
 		const raumListeManager = new RaumListeManager(api.abschnitt.id, api.schuleStammdaten.idSchuljahresabschnitt, api.schuleStammdaten.abschnitte, api.schulform, listKatalogeintraege);
 		raumListeManager.setFilterAuswahlPermitted(true);
-		this.setPatchedDefaultState({ raumListeManager })
+		this.setPatchedDefaultState({ raumListeManager });
 	}
 
 	setEintrag = (raum: Raum | null) => {
@@ -47,11 +47,11 @@ export class RouteDataKatalogRaeume extends RouteData<RouteStateKatalogRaeume> {
 			return;
 		raumListeManager.setDaten(raum);
 		this.setPatchedState({ raumListeManager });
-	}
+	};
 
 	gotoEintrag = async (eintrag: Raum) => {
 		await RouteManager.doRoute(routeKatalogRaeume.getRoute({ idRaum: eintrag.id }));
-	}
+	};
 
 	addEintrag = async (eintrag: Partial<Raum>) => {
 		if ((eintrag.kuerzel === undefined) || (this.raumListeManager.getByKuerzelOrNull(eintrag.kuerzel) !== null))
@@ -62,7 +62,7 @@ export class RouteDataKatalogRaeume extends RouteData<RouteStateKatalogRaeume> {
 		this.setPatchedState({ raumListeManager: this.raumListeManager });
 		await routeStundenplan.data.reloadVorlagen();
 		await this.gotoEintrag(raum);
-	}
+	};
 
 	deleteEintraege = async (eintraege: Iterable<Raum>) => {
 		const raumListeManager = this.raumListeManager;
@@ -75,9 +75,9 @@ export class RouteDataKatalogRaeume extends RouteData<RouteStateKatalogRaeume> {
 		raumListeManager.liste.removeAll(raeume);
 		await routeStundenplan.data.reloadVorlagen();
 		this.setPatchedState({ raumListeManager });
-	}
+	};
 
-	patch = async (eintrag : Partial<Raum>) => {
+	patch = async (eintrag: Partial<Raum>) => {
 		const idRaum = this.raumListeManager.auswahlID();
 		if (idRaum === null)
 			throw new DeveloperNotificationException("Beim Aufruf der Patch-Methode wurden keine gültigen Daten geladen.");
@@ -91,7 +91,7 @@ export class RouteDataKatalogRaeume extends RouteData<RouteStateKatalogRaeume> {
 		raumListeManager.liste.add(neu);
 		await routeStundenplan.data.reloadVorlagen();
 		this.setPatchedState({ raumListeManager });
-	}
+	};
 
 	setKatalogRaeumeImportJSON = api.call(async (formData: FormData) => {
 		const jsonFile = formData.get("data");
@@ -112,5 +112,5 @@ export class RouteDataKatalogRaeume extends RouteData<RouteStateKatalogRaeume> {
 		raumListeManager.liste.addAll(res);
 		await routeStundenplan.data.reloadVorlagen();
 		this.setPatchedState({ raumListeManager });
-	})
+	});
 }

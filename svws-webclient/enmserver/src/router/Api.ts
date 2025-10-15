@@ -1,5 +1,5 @@
 import { ApiConnection } from "~/router/ApiConnection";
-import type { ApiPendingData} from "~/components/ApiStatus";
+import type { ApiPendingData } from "~/components/ApiStatus";
 import { ApiStatus } from "~/components/ApiStatus";
 import { version } from '../../version';
 import { githash } from "../../githash";
@@ -34,17 +34,17 @@ class Api {
 	}
 
 	/** Gibt den Hostnamen zurück des SVWS-Servers zurück */
-	get hostname() : string {
+	get hostname(): string {
 		return this.conn.hostname;
 	}
 
 	/** Gibt den Status zurück, ob der Benutzer authentifiziert wurde */
-	get authenticated() : boolean {
+	get authenticated(): boolean {
 		return this.conn.authenticated;
 	}
 
 	/** Gibt den Benutzernamen für die Verbindung zum SVWS-Server zurück **/
-	get username() : string {
+	get username(): string {
 		return this.conn.username;
 	}
 
@@ -65,7 +65,7 @@ class Api {
 	 */
 	setHostname = (hostname: string): void => {
 		return this.conn.setHostname(hostname);
-	}
+	};
 
 	/**
 	 * Versucht eine Verbindung zu der angegebenen Adresse herzustellen.
@@ -76,7 +76,7 @@ class Api {
 	 */
 	connectTo = async (adresse: string): Promise<void> => {
 		await this.conn.connectTo(adresse);
-	}
+	};
 
 	/**
 	 * Authentifiziert den Benutzer mit dem angebenen Benutzernamen und Kennwort bei dem
@@ -89,7 +89,7 @@ class Api {
 	 */
 	login = async (username: string, password: string): Promise<boolean> => {
 		return await this.conn.login(username, password);
-	}
+	};
 
 	/**
 	 * Initialialisiert die Daten, die beim Login geladen werden sollen
@@ -98,14 +98,14 @@ class Api {
 	 */
 	init = async (): Promise<boolean> => {
 		return await this.conn.init();
-	}
+	};
 
 	/**
 	 * Meldet den angemeldeten Benutzer bei der Api ab.
 	 */
 	logout = async (): Promise<void> => {
 		await this.conn.logout();
-	}
+	};
 
 	/**
 	 * Gibt die Schulform der Schule zurück, wo der Benutzer angemeldet ist.
@@ -161,8 +161,8 @@ class Api {
 			} finally {
 				this.status.stop();
 			}
-		}
-	}
+		};
+	};
 
 }
 

@@ -28,7 +28,7 @@
 
 	import type { EntlassgruendeAuswahlProps } from "~/components/schule/schulbezogen/entlassgruende/SEntlassgruendeAuswahlProps";
 	import type { DataTableColumn } from "@ui";
-	import type { KatalogEntlassgrund} from "@core";
+	import type { KatalogEntlassgrund } from "@core";
 	import { BenutzerKompetenz, ServerMode } from "@core";
 	import { useRegionSwitch, ViewType } from "@ui";
 	import { computed } from "vue";
@@ -40,9 +40,9 @@
 		if ((props.activeViewType === ViewType.GRUPPENPROZESSE) || (props.activeViewType === ViewType.HINZUFUEGEN))
 			return null;
 		return (props.manager().hasDaten()) ? props.manager().auswahl() : null;
-	})
+	});
 	const columns: DataTableColumn[] = [
-		{ key: "bezeichnung", label: "Bezeichnung", sortable: true, defaultSort: "asc"},
+		{ key: "bezeichnung", label: "Bezeichnung", sortable: true, defaultSort: "asc" },
 	];
 
 	async function setAuswahl(entlassgruende: KatalogEntlassgrund[]) {
@@ -53,7 +53,7 @@
 		if (props.manager().liste.auswahlExists())
 			await props.gotoGruppenprozessView(true);
 		else
-			await props.gotoDefaultView(props.manager().getVorherigeAuswahl()?.id)
+			await props.gotoDefaultView(props.manager().getVorherigeAuswahl()?.id);
 	}
 
 </script>

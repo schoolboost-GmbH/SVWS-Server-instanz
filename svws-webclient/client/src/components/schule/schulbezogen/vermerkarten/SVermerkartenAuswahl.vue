@@ -40,7 +40,7 @@
 
 	import { computed } from "vue";
 	import { BenutzerKompetenz, type VermerkartEintrag } from "@core";
-	import type { DataTableColumn} from "@ui";
+	import type { DataTableColumn } from "@ui";
 	import { useRegionSwitch, ViewType } from "@ui";
 	import type { VermerkeAuswahlProps } from "./SVermerkartenAuswahlProps";
 
@@ -48,9 +48,9 @@
 	const readonly = computed<boolean>(() => !props.benutzerKompetenzen.has(BenutzerKompetenz.KATALOG_EINTRAEGE_AENDERN));
 	const { focusHelpVisible, focusSwitchingEnabled } = useRegionSwitch();
 
-	const columns : DataTableColumn[] = [
-		{ key: "bezeichnung", label: "Bezeichnung", sortable: true, defaultSort: "asc", span: 2},
-		{ key: "anzahlVermerke", label: "Anzahl", sortable: true, defaultSort: "asc", span: 1, align: "right"},
+	const columns: DataTableColumn[] = [
+		{ key: "bezeichnung", label: "Bezeichnung", sortable: true, defaultSort: "asc", span: 2 },
+		{ key: "anzahlVermerke", label: "Anzahl", sortable: true, defaultSort: "asc", span: 1, align: "right" },
 	];
 
 	const filterNurSichtbare = computed<boolean>({
@@ -61,7 +61,7 @@
 		},
 	});
 
-	async function setAuswahl(items : VermerkartEintrag[]) {
+	async function setAuswahl(items: VermerkartEintrag[]) {
 		props.manager().liste.auswahlClear();
 		for (const item of items)
 			if (props.manager().liste.hasValue(item) === true)

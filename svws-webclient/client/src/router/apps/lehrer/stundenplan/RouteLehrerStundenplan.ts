@@ -1,7 +1,7 @@
 import type { RouteLocationNormalized, RouteLocationRaw, RouteParams, RouteParamsRawGeneric } from "vue-router";
 import type { LehrerStundenplanProps } from "~/components/lehrer/stundenplan/SLehrerStundenplanProps";
 
-import { DeveloperNotificationException} from "@core";
+import { DeveloperNotificationException } from "@core";
 import { BenutzerKompetenz, Schulform, ServerMode } from "@core";
 
 import { RouteNode } from "~/router/RouteNode";
@@ -17,7 +17,7 @@ const SLehrerStundenplan = () => import("~/components/lehrer/stundenplan/SLehrer
 export class RouteLehrerStundenplan extends RouteNode<RouteDataLehrerStundenplan, RouteLehrer> {
 
 	public constructor() {
-		super(Schulform.values(), [ BenutzerKompetenz.STUNDENPLAN_ALLGEMEIN_ANSEHEN ], "lehrer.stundenplan", "stundenplan/:idStundenplan(\\d+)?/:wochentyp(\\d+)?/:kw(\\d+\\.\\d+)?", SLehrerStundenplan, new RouteDataLehrerStundenplan());
+		super(Schulform.values(), [BenutzerKompetenz.STUNDENPLAN_ALLGEMEIN_ANSEHEN], "lehrer.stundenplan", "stundenplan/:idStundenplan(\\d+)?/:wochentyp(\\d+)?/:kw(\\d+\\.\\d+)?", SLehrerStundenplan, new RouteDataLehrerStundenplan());
 		super.mode = ServerMode.STABLE;
 		super.propHandler = (route) => this.getProps(route);
 		super.text = "Stundenplan";
@@ -27,7 +27,7 @@ export class RouteLehrerStundenplan extends RouteNode<RouteDataLehrerStundenplan
 		]);
 	}
 
-	protected async update(to: RouteNode<any, any>, to_params: RouteParams, from: RouteNode<any, any> | undefined, from_params: RouteParams, isEntering: boolean) : Promise<void | Error | RouteLocationRaw> {
+	protected async update(to: RouteNode<any, any>, to_params: RouteParams, from: RouteNode<any, any> | undefined, from_params: RouteParams, isEntering: boolean): Promise<void | Error | RouteLocationRaw> {
 		try {
 			const { idSchuljahresabschnitt, id: idLehrer, idStundenplan, wochentyp } = RouteNode.getIntParams(to_params, ["idSchuljahresabschnitt", "id", "idStundenplan", "wochentyp"]);
 			const { kw: kwString } = RouteNode.getStringParams(to_params, ["kw"]);
@@ -60,7 +60,7 @@ export class RouteLehrerStundenplan extends RouteNode<RouteDataLehrerStundenplan
 		this.data.reset();
 	}
 
-	public addRouteParamsFromState() : RouteParamsRawGeneric {
+	public addRouteParamsFromState(): RouteParamsRawGeneric {
 		return {
 			idStundenplan: (this.data.hasAuswahl === true) ? this.data.auswahl.id : undefined,
 			wochentyp: this.data.wochentyp,

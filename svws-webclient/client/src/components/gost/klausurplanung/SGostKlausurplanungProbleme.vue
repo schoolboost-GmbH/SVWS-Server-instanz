@@ -316,8 +316,8 @@
 <script setup lang="ts">
 	import { ref, onMounted, computed } from 'vue';
 	import type { DataTableColumn } from "@ui";
-	import type {GostKlausurtermin, GostKursklausur } from "@core";
-	import { DateUtils, GostHalbjahr, ListUtils, OpenApiError, ValidatorFehlerart} from "@core";
+	import type { GostKlausurtermin, GostKursklausur } from "@core";
+	import { DateUtils, GostHalbjahr, ListUtils, OpenApiError, ValidatorFehlerart } from "@core";
 	import { Fach } from "@core";
 	import type { GostKlausurplanungProblemeProps } from "./SGostKlausurplanungProblemeProps";
 
@@ -361,12 +361,12 @@
 	});
 
 	function setCurrentAction(newAction: string, open: boolean) {
-		if(newAction === oldAction.value.name && !open)
+		if (newAction === oldAction.value.name && !open)
 			return;
 		oldAction.value.name = currentAction.value;
 		oldAction.value.open = (currentAction.value === "") ? false : true;
-		if(open === true)
-			currentAction.value= newAction;
+		if (open === true)
+			currentAction.value = newAction;
 		else
 			currentAction.value = "";
 	}
@@ -378,38 +378,38 @@
 	});
 
 	const colsVorgaben: DataTableColumn[] = [
-		{key: 'idFach', label: 'Fach', span: 1.25, sortable: true},
-		{key: 'kursart', label: 'Kursart', span: 0.5, sortable: true},
-		{key: 'quartal', label: 'Quartal', span: 0.1, align: 'center'},
+		{ key: 'idFach', label: 'Fach', span: 1.25, sortable: true },
+		{ key: 'kursart', label: 'Kursart', span: 0.5, sortable: true },
+		{ key: 'quartal', label: 'Quartal', span: 0.1, align: 'center' },
 	];
 
 	const colsKursklausuren: DataTableColumn[] = [
-		{key: 'kurs', label: 'Kurs', span: 1.25, sortable: true},
-		{key: 'lehrer', label: 'Lehrer', span: 0.25, sortable: true},
-		{key: 'quartal', label: 'Quartal', span: 0.1, align: 'center'},
+		{ key: 'kurs', label: 'Kurs', span: 1.25, sortable: true },
+		{ key: 'lehrer', label: 'Lehrer', span: 0.25, sortable: true },
+		{ key: 'quartal', label: 'Quartal', span: 0.1, align: 'center' },
 	];
 
 	const colsSchuelerklausuren: DataTableColumn[] = [
-		{key: 'name', label: 'Name', span: 1.5, sortable: true},
-		{key: 'kurs', label: 'Kurs', span: 0.4, sortable: true},
-		{key: 'quartal', label: 'Quartal', span: 0.1, align: 'center'},
+		{ key: 'name', label: 'Name', span: 1.5, sortable: true },
+		{ key: 'kurs', label: 'Kurs', span: 0.4, sortable: true },
+		{ key: 'quartal', label: 'Quartal', span: 0.1, align: 'center' },
 	];
 
 	const colsTermine: DataTableColumn[] = [
-		{key: 'kurse', label: 'Titel', span: 1.25, sortable: true},
-		{key: 'quartal', label: 'Quartal', span: 0.1, align: 'center'},
-		{key: 'datum', type: 'date', label: 'Datum', span: 0.3, align: 'center'},
+		{ key: 'kurse', label: 'Titel', span: 1.25, sortable: true },
+		{ key: 'quartal', label: 'Quartal', span: 0.1, align: 'center' },
+		{ key: 'datum', type: 'date', label: 'Datum', span: 0.3, align: 'center' },
 	];
 
 	const colsKwKonflikte: DataTableColumn[] = [
-		{key: 'kw', label: 'KW', span: 0.25, sortable: true},
-		{key: 'schueler', label: 'Schüler', span: 0.75, sortable: true},
-		{key: 'klausuren', label: 'Klausuren', sortable: true},
+		{ key: 'kw', label: 'KW', span: 0.25, sortable: true },
+		{ key: 'schueler', label: 'Schüler', span: 0.75, sortable: true },
+		{ key: 'klausuren', label: 'Klausuren', sortable: true },
 	];
 
 	function addStatusColumn(columns: DataTableColumn[], span: number = 0.2) {
 		const newColumns = Array.from(columns);
-		newColumns.push({key: 'status', label: 'Korrektur', span, align: 'right'});
+		newColumns.push({ key: 'status', label: 'Korrektur', span, align: 'right' });
 		return newColumns;
 	}
 
@@ -425,9 +425,9 @@
 		if (!termin.istHaupttermin)
 			return "Nachschreibtermin";
 		if (props.kMan().kursklausurGetMengeByTermin(termin).size() > 0)
-			return [...props.kMan().kursklausurGetMengeByTermin(termin)].map(k => props.kMan().kursKurzbezeichnungByKursklausur(k)).join(", ")
+			return [...props.kMan().kursklausurGetMengeByTermin(termin)].map(k => props.kMan().kursKurzbezeichnungByKursklausur(k)).join(", ");
 		return "Leerer Klausurtermin";
-	}
+	};
 
 	const modalVorgaben = ref<boolean>(false);
 	const modalError = ref<string | undefined>(undefined);
@@ -435,7 +435,7 @@
 	async function erzeugeKursklausurenAusVorgabenOrModal() {
 		try {
 			await props.erzeugeKursklausurenAusVorgaben(props.quartalsauswahl.value);
-		} catch(err) {
+		} catch (err) {
 			if (err instanceof OpenApiError) {
 				modalError.value = await err.response?.text();
 				modalVorgaben.value = true;

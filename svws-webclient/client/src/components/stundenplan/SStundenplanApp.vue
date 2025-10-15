@@ -58,18 +58,18 @@
 		if (auswahlStundenplanList.size() > 5)
 			return `${auswahlStundenplanList.size()} Stundenpläne ausgewählt`;
 		return [...auswahlStundenplanList].map(s => s.bezeichnung).join(', ');
-	})
+	});
 
-	const wochentag = ['So.', 'Mo.', 'Di.', 'Mi.', 'Do.', 'Fr.', 'Sa.', 'So.' ];
+	const wochentag = ['So.', 'Mo.', 'Di.', 'Mi.', 'Do.', 'Fr.', 'Sa.', 'So.'];
 
-	function toDateStr(iso: string) : string {
+	function toDateStr(iso: string): string {
 		if ((typeof iso !== 'string') || (iso.length < 10))
 			return '—';
 		const date = DateUtils.extractFromDateISO8601(iso);
 		return wochentag[date[3] % 7] + " " + date[2] + "." + date[1] + "." + date[0];
 	}
 
-	function toYear(isoFrom: string, isoTo: string) : string {
+	function toYear(isoFrom: string, isoTo: string): string {
 		if ((typeof isoFrom !== 'string') || (isoFrom.length < 4))
 			return '—';
 		const dateFrom = DateUtils.extractFromDateISO8601(isoFrom);
@@ -77,7 +77,7 @@
 		return "" + dateFrom[0] + (dateFrom[0] !== dateTo[0] ? "/" + dateTo[0] : "");
 	}
 
-	function toKW(iso: string) : string {
+	function toKW(iso: string): string {
 		if ((typeof iso !== 'string') || (iso.length < 10))
 			return '—';
 		const date = DateUtils.extractFromDateISO8601(iso);

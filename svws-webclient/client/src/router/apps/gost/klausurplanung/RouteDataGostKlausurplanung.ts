@@ -1,6 +1,6 @@
 
 import type { GostJahrgangsdaten, GostKlausurvorgabe, GostKlausurraum, Schuljahresabschnitt, GostKlausurterminblockungDaten, GostNachschreibterminblockungKonfiguration, GostKlausurenUpdate, List, GostKlausurraumRich, ApiFile, GostSchuelerklausur } from "@core";
-import { GostKlausurtermin, ArrayList, StundenplanManager, GostFaecherManager, GostHalbjahr, GostKlausurplanManager, DeveloperNotificationException, GostSchuelerklausurTermin, GostKlausurenCollectionAllData, GostKlausurenCollectionHjData, ReportingParameter, ReportingReportvorlage, GostKursklausur} from "@core";
+import { GostKlausurtermin, ArrayList, StundenplanManager, GostFaecherManager, GostHalbjahr, GostKlausurplanManager, DeveloperNotificationException, GostSchuelerklausurTermin, GostKlausurenCollectionAllData, GostKlausurenCollectionHjData, ReportingParameter, ReportingReportvorlage, GostKursklausur } from "@core";
 import type { RouteNode } from "~/router/RouteNode";
 import { computed } from "vue";
 
@@ -21,7 +21,7 @@ import { routeStundenplan } from "../../stundenplan/RouteStundenplan";
 interface RouteStateGostKlausurplanung extends RouteStateInterface {
 	// Daten nur abhängig von dem Abiturjahrgang
 	abiturjahr: number | undefined;
-	abschnitt : Schuljahresabschnitt | undefined;
+	abschnitt: Schuljahresabschnitt | undefined;
 	jahrgangsdaten: GostJahrgangsdaten | undefined;
 	halbjahr: GostHalbjahr;
 	manager: GostKlausurplanManager;
@@ -68,21 +68,21 @@ export class RouteDataGostKlausurplanung extends RouteData<RouteStateGostKlausur
 		return this._state.value.abiturjahr !== undefined;
 	}
 
-	public get abiturjahrIstVorlage() : boolean {
+	public get abiturjahrIstVorlage(): boolean {
 		return (this._state.value.abiturjahr !== undefined) && (this._state.value.abiturjahr === -1);
 	}
 
-	public get abschnitt() : Schuljahresabschnitt | undefined {
+	public get abschnitt(): Schuljahresabschnitt | undefined {
 		return this._state.value.abschnitt;
 	}
 
-	public get abiturjahr() : number {
+	public get abiturjahr(): number {
 		if (this._state.value.abiturjahr === undefined)
 			throw new DeveloperNotificationException("Es wurde noch kein Abiturjahrgang geladen.");
 		return this._state.value.abiturjahr;
 	}
 
-	public async setAbiturjahr(abiturjahr: number | undefined) : Promise<boolean> {
+	public async setAbiturjahr(abiturjahr: number | undefined): Promise<boolean> {
 		const abiturjahrwechsel = (abiturjahr !== this._state.value.abiturjahr);
 		if (!abiturjahrwechsel)
 			return false;
@@ -93,7 +93,7 @@ export class RouteDataGostKlausurplanung extends RouteData<RouteStateGostKlausur
 		try {
 			api.status.start();
 			// Lade die Daten für die Kursplanung, die nur vom Abiturjahrgang abhängen
-			const jahrgangsdaten = await api.server.getGostAbiturjahrgang(api.schema, abiturjahr)
+			const jahrgangsdaten = await api.server.getGostAbiturjahrgang(api.schema, abiturjahr);
 			let view: RouteNode<any, any> = this.view;
 
 			if (abiturjahr === -1) {
@@ -107,8 +107,8 @@ export class RouteDataGostKlausurplanung extends RouteData<RouteStateGostKlausur
 				halbjahr: this._state.value.halbjahr,
 				view: view,
 				abschnitt: this._state.value.abschnitt,
-			}
-			Object.assign(result, {manager: this._state.value.manager, kalenderdatum: this._state.value.kalenderdatum});
+			};
+			Object.assign(result, { manager: this._state.value.manager, kalenderdatum: this._state.value.kalenderdatum });
 			// Setze den State neu
 			this.setPatchedDefaultState(result);
 		} finally {
@@ -127,7 +127,7 @@ export class RouteDataGostKlausurplanung extends RouteData<RouteStateGostKlausur
 		return this._state.value.jahrgangsdaten;
 	}
 
-	public get halbjahr() : GostHalbjahr {
+	public get halbjahr(): GostHalbjahr {
 		return this._state.value.halbjahr;
 	}
 
@@ -141,7 +141,7 @@ export class RouteDataGostKlausurplanung extends RouteData<RouteStateGostKlausur
 			const result: Partial<RouteStateGostKlausurplanung> = {
 				abschnitt: undefined,
 				halbjahr: halbjahr,
-			}
+			};
 
 			if (!this.manager.isVorgabenInitialized()) {
 				const listKlausurvorgaben = await api.server.getGostKlausurenVorgabenJahrgang(api.schema, -1);
@@ -155,12 +155,12 @@ export class RouteDataGostKlausurplanung extends RouteData<RouteStateGostKlausur
 				return true;
 			}
 			const schuljahr = halbjahr.getSchuljahrFromAbiturjahr(this._state.value.abiturjahr);
-			const abschnitt : Schuljahresabschnitt | undefined = api.getAbschnittBySchuljahrUndHalbjahr(schuljahr, halbjahr.halbjahr);
+			const abschnitt: Schuljahresabschnitt | undefined = api.getAbschnittBySchuljahrUndHalbjahr(schuljahr, halbjahr.halbjahr);
 			if (abschnitt === undefined) {
 				this.setPatchedState(result);
 				return true;
 			}
-			Object.assign(result, {abschnitt});
+			Object.assign(result, { abschnitt });
 			this.setPatchedState(result);
 			const missingKlausurData = this.manager.getMissingHjKlausurdata(this.abiturjahr, halbjahr.id);
 			if (!missingKlausurData.isEmpty()) {
@@ -214,14 +214,14 @@ export class RouteDataGostKlausurplanung extends RouteData<RouteStateGostKlausur
 			await api.config.setNumberValue('gost.klausurplan.' + key, value);
 		else
 			await api.config.setValue('gost.klausurplan.' + key, value);
-	}
+	};
 
 	setRaumTermin = (termin: GostKlausurtermin | null) => {
 		if (termin !== null && (this.terminSelected.value === undefined || !this.terminSelected.value.equals(termin))) {
 			this.terminSelected.value = termin;
 		}
 		this.commit();
-	}
+	};
 
 	quartalsauswahl = computed<0 | 1 | 2>({
 		get: () => {
@@ -242,7 +242,7 @@ export class RouteDataGostKlausurplanung extends RouteData<RouteStateGostKlausur
 		const fehlendData = GostKlausurenCollectionHjData.transpilerFromJSON(await fehlendDataBlob.text());
 		this.manager.setKlausurDataFehlend(fehlendData);
 		this.commit();
-	}
+	};
 
 	kalenderdatum = computed<string | undefined>({
 		get: () => this._state.value.kalenderdatum,
@@ -266,11 +266,11 @@ export class RouteDataGostKlausurplanung extends RouteData<RouteStateGostKlausur
 
 	gotoVorgaben = async () => {
 		await RouteManager.doRoute(routeGostKlausurplanungVorgaben.getRoute({ abiturjahr: this.abiturjahr, halbjahr: this.halbjahr.id }));
-	}
+	};
 
 	gotoSchienen = async (termin: GostKlausurtermin | undefined) => {
 		await RouteManager.doRoute(routeGostKlausurplanungSchienen.getRoute({ abiturjahr: this.abiturjahr, halbjahr: this.halbjahr.id, idtermin: termin ? termin.id : undefined }));
-	}
+	};
 
 	gotoKalenderdatum = async (datum: string | undefined, termin: GostKlausurtermin | undefined) => {
 		if (termin !== undefined) {
@@ -282,23 +282,23 @@ export class RouteDataGostKlausurplanung extends RouteData<RouteStateGostKlausur
 			await RouteManager.doRoute(routeGostKlausurplanungKalender.getRoute({ abiturjahr: this.abiturjahr, halbjahr: this.halbjahr.id, datum: datum.replace(/-/g, ""), idtermin: undefined }));
 		else
 			await RouteManager.doRoute(routeGostKlausurplanungKalender.getRoute({ abiturjahr: this.abiturjahr, halbjahr: this.halbjahr.id, datum: -1, idtermin: undefined }));
-	}
+	};
 
 	gotoRaumzeitTermin = async (abiturjahr: number, halbjahr: GostHalbjahr, idtermin: number | undefined) => {
 		await RouteManager.doRoute(routeGostKlausurplanungRaumzeit.getRoute({ abiturjahr, halbjahr: halbjahr.id, idtermin }));
-	}
+	};
 
 	gotoHalbjahr = async (value: GostHalbjahr) => {
 		await RouteManager.doRoute(this.view.getRoute({ abiturjahr: this.abiturjahr, halbjahr: value.id }));
-	}
+	};
 
 	gotoNachschreiber = async (abiturjahr: number, halbjahr: GostHalbjahr) => {
 		await RouteManager.doRoute(routeGostKlausurplanungNachschreiber.getRoute({ abiturjahr, halbjahr: halbjahr.id }));
-	}
+	};
 
 	gotoStundenplan = async () => {
-		await RouteManager.doRoute(routeStundenplan.getRoute({ idSchuljahresabschnitt: this.abschnitt!.id }))
-	}
+		await RouteManager.doRoute(routeStundenplan.getRoute({ idSchuljahresabschnitt: this.abschnitt!.id }));
+	};
 
 	get zeigeAlleJahrgaenge(): boolean {
 		return this.getConfigValue("zeigeAlleJahrgaenge") === 'true';
@@ -306,11 +306,11 @@ export class RouteDataGostKlausurplanung extends RouteData<RouteStateGostKlausur
 
 	setZeigeAlleJahrgaenge = (value: boolean) => {
 		void this.setConfigValue('zeigeAlleJahrgaenge', value ? "true" : "false");
-	}
+	};
 
 	erzeugeKlausurtermin = async (quartal: number, ht: boolean): Promise<GostKlausurtermin> => {
 		api.status.start();
-		const terminNeu : Partial<GostKlausurtermin> = new GostKlausurtermin();
+		const terminNeu: Partial<GostKlausurtermin> = new GostKlausurtermin();
 		terminNeu.idSchuljahresabschnitt = this.abschnitt!.id;
 		terminNeu.abijahr = this.abiturjahr;
 		terminNeu.halbjahr = this.halbjahr.id;
@@ -322,7 +322,7 @@ export class RouteDataGostKlausurplanung extends RouteData<RouteStateGostKlausur
 		this.commit();
 		api.status.stop();
 		return termin;
-	}
+	};
 
 	loescheKlausurtermine = async (termine: List<GostKlausurtermin>) => {
 		api.status.start();
@@ -333,7 +333,7 @@ export class RouteDataGostKlausurplanung extends RouteData<RouteStateGostKlausur
 		this.manager.terminRemoveAll(termine);
 		this.commit();
 		api.status.stop();
-	}
+	};
 
 	loescheKursklausuren = async (klausuren: List<GostKursklausur> | GostKursklausur[]) => {
 		api.status.start();
@@ -350,7 +350,7 @@ export class RouteDataGostKlausurplanung extends RouteData<RouteStateGostKlausur
 		this.manager.kursklausurRemoveAll(klausListe);
 		this.commit();
 		api.status.stop();
-	}
+	};
 
 	erzeugeSchuelerklausuren = async (klausuren: List<Partial<GostSchuelerklausur>>) => {
 		api.status.start();
@@ -360,7 +360,7 @@ export class RouteDataGostKlausurplanung extends RouteData<RouteStateGostKlausur
 		this.manager.addKlausurData(dtos);
 		this.commit();
 		api.status.stop();
-	}
+	};
 
 	loescheSchuelerklausuren = async (klausuren: List<GostSchuelerklausur>) => {
 		api.status.start();
@@ -371,7 +371,7 @@ export class RouteDataGostKlausurplanung extends RouteData<RouteStateGostKlausur
 		this.manager.schuelerklausurRemoveAll(klausuren);
 		this.commit();
 		api.status.stop();
-	}
+	};
 
 	patchKlausur = async (klausur: GostKursklausur | GostSchuelerklausur | GostSchuelerklausurTermin, patch: Partial<GostKursklausur | GostSchuelerklausur | GostSchuelerklausurTermin>): Promise<void> => {
 		try {
@@ -388,7 +388,7 @@ export class RouteDataGostKlausurplanung extends RouteData<RouteStateGostKlausur
 			this.commit();
 			api.status.stop();
 		}
-	}
+	};
 
 	erzeugeDefaultKlausurvorgaben = async (quartal: number) => {
 		api.status.start();
@@ -396,7 +396,7 @@ export class RouteDataGostKlausurplanung extends RouteData<RouteStateGostKlausur
 		this.manager.vorgabeAddAll(neueVorgaben);
 		this.commit();
 		api.status.stop();
-	}
+	};
 
 	erzeugeKlausurvorgabe = async (vorgabe: Partial<GostKlausurvorgabe>) => {
 		api.status.start();
@@ -411,7 +411,7 @@ export class RouteDataGostKlausurplanung extends RouteData<RouteStateGostKlausur
 			this.commit();
 			api.status.stop();
 		}
-	}
+	};
 
 	patchKlausurvorgabe = async (vorgabe: Partial<GostKlausurvorgabe>, id: number) => {
 		api.status.start();
@@ -419,7 +419,7 @@ export class RouteDataGostKlausurplanung extends RouteData<RouteStateGostKlausur
 		this.manager.vorgabePatchAttributes(Object.assign(this.manager.vorgabeGetByIdOrException(id), vorgabe));
 		this.commit();
 		api.status.stop();
-	}
+	};
 
 	loescheKlausurvorgabe = async (id: number) => {
 		api.status.start();
@@ -427,7 +427,7 @@ export class RouteDataGostKlausurplanung extends RouteData<RouteStateGostKlausur
 		this.manager.vorgabeRemoveById(id);
 		this.commit();
 		api.status.stop();
-	}
+	};
 
 	erzeugeKursklausurenAusVorgaben = async (quartal: number) => {
 		api.status.start();
@@ -439,7 +439,7 @@ export class RouteDataGostKlausurplanung extends RouteData<RouteStateGostKlausur
 			this.commit();
 			api.status.stop();
 		}
-	}
+	};
 
 	patchKlausurtermin = async (id: number, termin: Partial<GostKlausurtermin>) => {
 		if (this._state.value.abschnitt === undefined)
@@ -453,7 +453,7 @@ export class RouteDataGostKlausurplanung extends RouteData<RouteStateGostKlausur
 			this.commit();
 			api.status.stop();
 		}
-	}
+	};
 
 	erzeugeVorgabenAusVorlage = async (quartal: number) => {
 		api.status.start();
@@ -462,7 +462,7 @@ export class RouteDataGostKlausurplanung extends RouteData<RouteStateGostKlausur
 		void this.reloadFehlendData();
 		this.commit();
 		api.status.stop();
-	}
+	};
 
 	createKlausurraum = async (raum: Partial<GostKlausurraum>) => {
 		api.status.start();
@@ -470,7 +470,7 @@ export class RouteDataGostKlausurplanung extends RouteData<RouteStateGostKlausur
 		this.manager.raumAdd(neuerRaum);
 		this.commit();
 		api.status.stop();
-	}
+	};
 
 	loescheKlausurraum = async (id: number): Promise<boolean> => {
 		api.status.start();
@@ -479,7 +479,7 @@ export class RouteDataGostKlausurplanung extends RouteData<RouteStateGostKlausur
 		this.commit();
 		api.status.stop();
 		return true;
-	}
+	};
 
 	patchKlausurraum = async (id: number, raum: Partial<GostKlausurraum>): Promise<boolean> => {
 		api.status.start();
@@ -489,7 +489,7 @@ export class RouteDataGostKlausurplanung extends RouteData<RouteStateGostKlausur
 		this.commit();
 		api.status.stop();
 		return true;
-	}
+	};
 
 	setzeRaumZuSchuelerklausuren = async (rRaeume: List<GostKlausurraumRich>, deleteFromRaeume: boolean): Promise<void> => {
 		if (this._state.value.abschnitt === undefined)
@@ -509,7 +509,7 @@ export class RouteDataGostKlausurplanung extends RouteData<RouteStateGostKlausur
 		this.manager.setzeRaumZuSchuelerklausuren(collectionSkrsKrs);
 		this.commit();
 		api.status.stop();
-	}
+	};
 
 	blockenKursklausuren = async (blockungDaten: GostKlausurterminblockungDaten) => {
 		api.status.start();
@@ -518,7 +518,7 @@ export class RouteDataGostKlausurplanung extends RouteData<RouteStateGostKlausur
 		this.manager.kursklausurMengePatchAttributes(blockung.kursklausuren);
 		this.commit();
 		api.status.stop();
-	}
+	};
 
 	blockenNachschreiber = async (config: GostNachschreibterminblockungKonfiguration) => {
 		api.status.start();
@@ -528,7 +528,7 @@ export class RouteDataGostKlausurplanung extends RouteData<RouteStateGostKlausur
 			this.manager.schuelerklausurterminPatchAttributes(skt);
 		this.commit();
 		api.status.stop();
-	}
+	};
 
 	updateKlausurblockung = async (update: GostKlausurenUpdate) => {
 		api.status.start();
@@ -536,7 +536,7 @@ export class RouteDataGostKlausurplanung extends RouteData<RouteStateGostKlausur
 		this.manager.updateExecute(update);
 		this.commit();
 		api.status.stop();
-	}
+	};
 
 	createSchuelerklausurTermin = async (skt: Partial<GostSchuelerklausurTermin>) => {
 		api.status.start();
@@ -545,7 +545,7 @@ export class RouteDataGostKlausurplanung extends RouteData<RouteStateGostKlausur
 		this.manager.schuelerklausurterminAdd(skNeu);
 		this.commit();
 		api.status.stop();
-	}
+	};
 
 	getPDF = api.call(async (title: DownloadPDFTypen): Promise<ApiFile> => {
 		const reportingParameter = new ReportingParameter();
@@ -579,7 +579,7 @@ export class RouteDataGostKlausurplanung extends RouteData<RouteStateGostKlausur
 			reportingParameter.einzelausgabeDetaildaten = true;
 		}
 		return await api.server.pdfReport(reportingParameter, api.schema);
-	})
+	});
 
 
 }

@@ -40,7 +40,7 @@
 	const data = ref(new VermerkartEintrag());
 	const isLoading = ref<boolean>(false);
 
-	function fieldIsValid(field: keyof VermerkartEintrag | null) : (v: string | null) => boolean {
+	function fieldIsValid(field: keyof VermerkartEintrag | null): (v: string | null) => boolean {
 		return (v: string | null) => {
 			switch (field) {
 				case 'bezeichnung':
@@ -48,7 +48,7 @@
 				default:
 					return true;
 			}
-		}
+		};
 	}
 
 	const formIsValid = computed(() => {
@@ -57,8 +57,8 @@
 			const validateField = fieldIsValid(field as keyof VermerkartEintrag);
 			const fieldValue = data.value[field as keyof VermerkartEintrag] as string | null;
 			return validateField(fieldValue);
-		})
-	})
+		});
+	});
 
 	function bezeichnungIsValid(value: string | null): boolean {
 		if (!mandatoryInputIsValid(value, 30))
@@ -82,7 +82,7 @@
 		isLoading.value = false;
 	}
 
-	watch(() => data.value, async() => {
+	watch(() => data.value, async () => {
 		if (isLoading.value)
 			return;
 		props.checkpoint.active = true;

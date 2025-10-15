@@ -15,7 +15,7 @@ const defaultState = {
 	view: routeKindergaertenDaten,
 	activeViewType: ViewType.DEFAULT,
 	oldView: undefined,
-}
+};
 
 export class RouteDataKindergaerten extends RouteDataAuswahl<KindergaertenListeManager, RouteStateAuswahlInterface<KindergaertenListeManager>> {
 
@@ -27,7 +27,7 @@ export class RouteDataKindergaerten extends RouteDataAuswahl<KindergaertenListeM
 		const kindergaerten = await api.server.getKindergaerten(api.schema);
 		const manager = new KindergaertenListeManager(api.abschnitt.id, api.schuleStammdaten.idSchuljahresabschnitt, api.schuleStammdaten.abschnitte,
 			api.schulform, kindergaerten);
-		return { manager }
+		return { manager };
 	}
 
 	public addID(param: RouteParamsRawGeneric, id: number): void {
@@ -50,11 +50,11 @@ export class RouteDataKindergaerten extends RouteDataAuswahl<KindergaertenListeM
 		return `Kindergarten ${kindergarten?.bezeichnung ?? '???'} (ID: ${id}) wurde erfolgreich gelöscht.`;
 	}
 
-	addKindergarten = async (data: Partial<Kindergarten>) : Promise<void> => {
+	addKindergarten = async (data: Partial<Kindergarten>): Promise<void> => {
 		const result = await api.server.addKindergarten(data, api.schema);
 		this.manager.liste.add(result);
 		this.commit();
 		await this.gotoDefaultView(result.id);
-	}
+	};
 
 }

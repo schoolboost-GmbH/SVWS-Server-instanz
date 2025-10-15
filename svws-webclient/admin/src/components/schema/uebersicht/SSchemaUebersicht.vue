@@ -89,7 +89,7 @@
 	const props = defineProps<SchemaUebersichtProps>();
 
 	const eintrag = computed(() => props.data());
-	watch(eintrag, async(newEintrag, oldEintrag) => {
+	watch(eintrag, async (newEintrag, oldEintrag) => {
 		if ((newEintrag === undefined) && (oldEintrag === undefined))
 			return;
 		if ((newEintrag !== undefined) && (oldEintrag !== undefined) && (newEintrag.name === oldEintrag.name))
@@ -97,9 +97,9 @@
 		clear();
 	});
 
-	const schule = ref<SchulenKatalogEintrag>()
+	const schule = ref<SchulenKatalogEintrag>();
 	const loading = ref<boolean>(false);
-	const logs = shallowRef<List<string|null> | undefined>(undefined);
+	const logs = shallowRef<List<string | null> | undefined>(undefined);
 	const status = shallowRef<boolean | undefined>(undefined);
 	const currentAction = ref<string>('');
 	const oldAction = ref<{ name: string | undefined; open: boolean }>({
@@ -124,7 +124,7 @@
 		if (eintrag.value === undefined || revServer === null || eintrag.value.revision < 0)
 			return false;
 		return revServer !== eintrag.value.revision;
-	})
+	});
 
 	const zeigeNeuesSchemaAnlegen = computed<boolean>(() => (eintrag.value !== undefined) && (eintrag.value.isInConfig) && !eintrag.value.isSVWS);
 
@@ -137,12 +137,12 @@
 	];
 
 	function setCurrentAction(newAction: string, open: boolean) {
-		if(newAction === oldAction.value.name && !open)
+		if (newAction === oldAction.value.name && !open)
 			return;
 		oldAction.value.name = currentAction.value;
 		oldAction.value.open = (currentAction.value === "") ? false : true;
-		if(open === true)
-			currentAction.value= newAction;
+		if (open === true)
+			currentAction.value = newAction;
 		else
 			currentAction.value = "";
 	}
@@ -172,7 +172,7 @@
 		// Teilmatch Schulnummer
 		const nrmatch = /\d+/.exec(search);
 		const nr = nrmatch ? nrmatch[0] : undefined;
-		//Teilmatch Name
+		// Teilmatch Name
 		const ort = search.replace(/\d+\s*/, "").trim();
 		if ((nr === undefined) && (ort.length === 0)) {
 			return items;

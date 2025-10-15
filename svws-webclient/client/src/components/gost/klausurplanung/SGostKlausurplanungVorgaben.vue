@@ -109,7 +109,7 @@
 
 <script setup lang="ts">
 
-	import type { Ref , WritableComputedRef } from 'vue'
+	import type { Ref, WritableComputedRef } from 'vue';
 	import { computed, ref, onMounted, onUnmounted } from 'vue';
 	import type { DataTableColumn } from "@ui";
 	import type { GostFach } from "@core";
@@ -126,7 +126,7 @@
 	const activeVorgabe: Ref<GostKlausurvorgabe> = ref(new GostKlausurvorgabe());
 
 	const formKursarten = computed(() => ["GK", "LK"]);
-	const formJaNein = computed(() => [{key: true, name: "Ja"}, {key: false, name: "Nein"}]);
+	const formJaNein = computed(() => [{ key: true, name: "Ja" }, { key: false, name: "Nein" }]);
 	const formQuartale = computed(() => [1, 2]);
 	const inputVorgabeFach: WritableComputedRef<GostFach | undefined> = computed({
 		get() {
@@ -198,21 +198,21 @@
 	});
 
 	const cols: DataTableColumn[] = [
-		{key: 'idFach', label: 'Fach', span: 1.25, sortable: true},
-		{key: 'kursart', label: 'Kursart', span: 0.5, sortable: true},
-		{key: 'quartal', label: 'Quartal', span: 0.5, sortable: true},
-		{key: 'dauer', label: 'Dauer', tooltip: 'Dauer in Minuten', span: 0.5, sortable: true},
-		{key: 'auswahlzeit', label: 'Auswahlzeit', tooltip: 'Auswahlzeit in Minuten', span: 0.5, sortable: false},
-		{key: 'istMdlPruefung', label: 'M', align: "center", tooltip: 'Mündliche Prüfung', fixedWidth: 2.5},
-		{key: 'istAudioNotwendig', label: 'A', align: "center", tooltip: 'Mit Audioteil', fixedWidth: 2.5},
-		{key: 'istVideoNotwendig', label: 'V', align: "center", tooltip: 'Mit Videoteil', fixedWidth: 2.5},
-		{key: 'bemerkungVorgabe', label: 'Bemerkung', span: 1.25},
+		{ key: 'idFach', label: 'Fach', span: 1.25, sortable: true },
+		{ key: 'kursart', label: 'Kursart', span: 0.5, sortable: true },
+		{ key: 'quartal', label: 'Quartal', span: 0.5, sortable: true },
+		{ key: 'dauer', label: 'Dauer', tooltip: 'Dauer in Minuten', span: 0.5, sortable: true },
+		{ key: 'auswahlzeit', label: 'Auswahlzeit', tooltip: 'Auswahlzeit in Minuten', span: 0.5, sortable: false },
+		{ key: 'istMdlPruefung', label: 'M', align: "center", tooltip: 'Mündliche Prüfung', fixedWidth: 2.5 },
+		{ key: 'istAudioNotwendig', label: 'A', align: "center", tooltip: 'Mit Audioteil', fixedWidth: 2.5 },
+		{ key: 'istVideoNotwendig', label: 'V', align: "center", tooltip: 'Mit Videoteil', fixedWidth: 2.5 },
+		{ key: 'bemerkungVorgabe', label: 'Bemerkung', span: 1.25 },
 	];
 
 	function getBgColor(kuerzel: string | null) {
 		if (kuerzel === null)
 			return 'rgb(220,220,220)';
-		return Fach.getBySchluesselOrDefault(kuerzel).getHMTLFarbeRGBA(props.jahrgangsdaten!.abiturjahr-1, 1.0);
+		return Fach.getBySchluesselOrDefault(kuerzel).getHMTLFarbeRGBA(props.jahrgangsdaten!.abiturjahr - 1, 1.0);
 	}
 
 	function handleClick(e: MouseEvent) {

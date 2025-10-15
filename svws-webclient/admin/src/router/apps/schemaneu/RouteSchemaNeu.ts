@@ -10,8 +10,8 @@ import type { SchemaAuswahlProps } from "~/components/schema/SSchemaAuswahlProps
 import { api } from "~/router/Api";
 import { ServerMode } from "@core/core/types/ServerMode";
 
-const SSchemaAuswahl = () => import("~/components/schema/SSchemaAuswahl.vue")
-const SSchemaNeu = () => import("~/components/schemaneu/SSchemaNeu.vue")
+const SSchemaAuswahl = () => import("~/components/schema/SSchemaAuswahl.vue");
+const SSchemaNeu = () => import("~/components/schemaneu/SSchemaNeu.vue");
 
 
 export class RouteSchemaNeu extends RouteNode<unknown, RouteApp> {
@@ -24,10 +24,10 @@ export class RouteSchemaNeu extends RouteNode<unknown, RouteApp> {
 		super.setView("liste", SSchemaAuswahl, (route) => this.getAuswahlProps(route));
 	}
 
-	protected async update(to: RouteNode<unknown, any>, to_params: RouteParams, from: RouteNode<unknown, any> | undefined, from_params: RouteParams, isEntering: boolean) : Promise<void | Error | RouteLocationRaw> {
+	protected async update(to: RouteNode<unknown, any>, to_params: RouteParams, from: RouteNode<unknown, any> | undefined, from_params: RouteParams, isEntering: boolean): Promise<void | Error | RouteLocationRaw> {
 	}
 
-	public getRoute() : RouteLocationRaw {
+	public getRoute(): RouteLocationRaw {
 		return { name: this.name };
 	}
 

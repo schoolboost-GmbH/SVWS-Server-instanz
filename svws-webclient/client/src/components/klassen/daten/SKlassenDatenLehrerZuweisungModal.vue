@@ -34,7 +34,7 @@
 
 	const search = ref<string>("");
 
-	const klassenleitungen = computed<List<number>>( () => props.manager().daten().klassenLeitungen);
+	const klassenleitungen = computed<List<number>>(() => props.manager().daten().klassenLeitungen);
 
 	const rowsFiltered = computed<LehrerListeEintrag[]>(() => {
 		const arr = [];

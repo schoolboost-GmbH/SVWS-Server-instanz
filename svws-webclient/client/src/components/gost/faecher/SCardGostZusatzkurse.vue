@@ -16,7 +16,7 @@
 	import { GostHalbjahr } from "@core";
 
 	const props = defineProps<{
-		patchJahrgangsdaten: (data: Partial<GostJahrgangsdaten>, abiturjahr : number) => Promise<boolean>;
+		patchJahrgangsdaten: (data: Partial<GostJahrgangsdaten>, abiturjahr: number) => Promise<boolean>;
 		jahrgangsdaten: () => GostJahrgangsdaten;
 		hatUpdateKompetenz: boolean;
 	}>();
@@ -25,7 +25,7 @@
 
 	const inputHatZusatzkursGE = computed<boolean>({
 		get: () => props.jahrgangsdaten().hatZusatzkursGE,
-		set: (value) => { void props.patchJahrgangsdaten({ hatZusatzkursGE: value }, props.jahrgangsdaten().abiturjahr); },
+		set: (value) => { void props.patchJahrgangsdaten({ hatZusatzkursGE: value }, props.jahrgangsdaten().abiturjahr) },
 	});
 
 	const inputBeginnZusatzkursGE = computed<GostHalbjahr>({

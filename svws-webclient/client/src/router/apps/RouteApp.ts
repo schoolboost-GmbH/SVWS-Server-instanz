@@ -61,14 +61,14 @@ export class RouteApp extends RouteNode<RouteDataApp, any> {
 	/** Die Knoten, welche im Haupt-Menu zur Verfügung gestellt werden */
 	private _menuMain: RouteNode<any, any>[];
 
-	public menuHidden() : boolean[] {
+	public menuHidden(): boolean[] {
 		return super.menu.map(c => c.hidden(routerManager.getRouteParams()) !== false);
 	}
 
 	/** Die Knoten, welche im Menu Einstellungen zur Verfügung gestellt werden */
 	// TODO in abstrahierter Form in RouteNode integrieren...
 	private _menuEinstellungen: RouteNode<any, any>[];
-	public get menuEinstellungen() : RouteNode<any, any>[] {
+	public get menuEinstellungen(): RouteNode<any, any>[] {
 		const result: RouteNode<any, any>[] = [];
 		for (const node of this._menuEinstellungen) {
 			if (api.authenticated && (!node.mode.checkServerMode(api.mode) || !node.hatSchulform() || !node.hatEineKompetenz()))
@@ -77,14 +77,14 @@ export class RouteApp extends RouteNode<RouteDataApp, any> {
 		}
 		return result;
 	}
-	public menuEinstellungenHidden() : boolean[] {
+	public menuEinstellungenHidden(): boolean[] {
 		return this.menuEinstellungen.map(c => c.hidden(routerManager.getRouteParams()) !== false);
 	}
 
 	/** Die Knoten, welche im Menu Schule zur Verfügung gestellt werden */
 	// TODO in abstrahierter Form in RouteNode integrieren...
 	private _menuSchule: RouteNode<any, any>[];
-	public get menuSchule() : RouteNode<any, any>[] {
+	public get menuSchule(): RouteNode<any, any>[] {
 		const result: RouteNode<any, any>[] = [];
 		for (const node of this._menuSchule) {
 			if (api.authenticated && (!node.mode.checkServerMode(api.mode) || !node.hatSchulform() || !node.hatEineKompetenz()))
@@ -93,14 +93,14 @@ export class RouteApp extends RouteNode<RouteDataApp, any> {
 		}
 		return result;
 	}
-	public menuSchuleHidden() : boolean[] {
+	public menuSchuleHidden(): boolean[] {
 		return this.menuSchule.map(c => c.hidden(routerManager.getRouteParams()) !== false);
 	}
 
 	/** Die Knoten, welche im Menu Notenmodul zur Verfügung gestellt werden */
 	// TODO in abstrahierter Form in RouteNode integrieren...
 	private _menuNotenmodul: RouteNode<any, any>[];
-	public get menuNotenmodul() : RouteNode<any, any>[] {
+	public get menuNotenmodul(): RouteNode<any, any>[] {
 		const result: RouteNode<any, any>[] = [];
 		for (const node of this._menuNotenmodul) {
 			if (api.authenticated && (!node.mode.checkServerMode(api.mode) || !node.hatSchulform() || !node.hatEineKompetenz()))
@@ -109,12 +109,12 @@ export class RouteApp extends RouteNode<RouteDataApp, any> {
 		}
 		return result;
 	}
-	public menuNotenmodulHidden() : boolean[] {
+	public menuNotenmodulHidden(): boolean[] {
 		return this.menuNotenmodul.map(c => c.hidden(routerManager.getRouteParams()) !== false);
 	}
 
 	public constructor() {
-		super(Schulform.values(), [ BenutzerKompetenz.KEINE ], "app", "/:schema?/:idSchuljahresabschnitt(\\d+)?", SApp, new RouteDataApp());
+		super(Schulform.values(), [BenutzerKompetenz.KEINE], "app", "/:schema?/:idSchuljahresabschnitt(\\d+)?", SApp, new RouteDataApp());
 		super.mode = ServerMode.STABLE;
 		super.propHandler = (route) => this.getProps();
 		super.text = "SVWS-Client";
@@ -173,7 +173,7 @@ export class RouteApp extends RouteNode<RouteDataApp, any> {
 			routeNotenmodulLeistungen,
 			routeNotenmodulTeilleistungen,
 			routeNotenmodulKlassenleitung,
-		]
+		];
 		super.children = [
 			...this._menuMain,
 			...this._menuSchule,
@@ -184,7 +184,7 @@ export class RouteApp extends RouteNode<RouteDataApp, any> {
 		super.defaultChild = routeSchueler;
 	}
 
-	public async update(to: RouteNode<any, any>, to_params: RouteParams, from: RouteNode<any, any> | undefined, from_params: RouteParams, isEntering: boolean) : Promise<void | Error | RouteLocationRaw> {
+	public async update(to: RouteNode<any, any>, to_params: RouteParams, from: RouteNode<any, any> | undefined, from_params: RouteParams, isEntering: boolean): Promise<void | Error | RouteLocationRaw> {
 		try {
 			if (isEntering)
 				await this.data.init();
@@ -209,7 +209,7 @@ export class RouteApp extends RouteNode<RouteDataApp, any> {
 		await this.data.leave();
 	}
 
-	public addRouteParamsFromState() : RouteParamsRawGeneric {
+	public addRouteParamsFromState(): RouteParamsRawGeneric {
 		const schema = encodeURIComponent(api.schema);
 		const idSchuljahresabschnitt = this.data.idSchuljahresabschnitt;
 		return { schema, idSchuljahresabschnitt };
@@ -269,10 +269,10 @@ export class RouteApp extends RouteNode<RouteDataApp, any> {
 		const result = await RouteManager.doRoute(node.getRoute());
 		if (result === RoutingStatus.SUCCESS)
 			this.data.setView(node, this.children);
-	}
+	};
 
-	private getMenuManager() : AppMenuManager {
-		const submenuManager = new Array<{name: string, manager: TabManager}>();
+	private getMenuManager(): AppMenuManager {
+		const submenuManager = new Array<{ name: string, manager: TabManager }>();
 		if (routeSchule.hidden() === false)
 			submenuManager.push({ name: "schule", manager: this.getTabManagerSchule() });
 		if ((routeNotenmodul.hidden() === false) && (api.mode === ServerMode.DEV))
@@ -282,21 +282,21 @@ export class RouteApp extends RouteNode<RouteDataApp, any> {
 		return new AppMenuManager(this.getTabManager(), submenuManager, this.getApp());
 	}
 
-	private getTabManager() : TabManager {
+	private getTabManager(): TabManager {
 		return this.createTabManager(super.menu, this.menuHidden(), this.data.view.name, this.setApp, ViewType.DEFAULT);
 	}
 
-	private getTabManagerEinstellungen = () : TabManager => {
+	private getTabManagerEinstellungen = (): TabManager => {
 		return this.createTabManager(this.menuEinstellungen, this.menuEinstellungenHidden(), this.data.view.name, this.setTab, ViewType.DEFAULT);
-	}
+	};
 
-	private getTabManagerSchule = () : TabManager => {
+	private getTabManagerSchule = (): TabManager => {
 		return this.createTabManager(this.menuSchule, this.menuSchuleHidden(), this.data.view.name, this.setTab, ViewType.DEFAULT);
-	}
+	};
 
-	private getTabManagerNotenmodul = () : TabManager => {
+	private getTabManagerNotenmodul = (): TabManager => {
 		return this.createTabManager(this.menuNotenmodul, this.menuNotenmodulHidden(), this.data.view.name, this.setTab, ViewType.DEFAULT);
-	}
+	};
 
 	private setTab = async (value: TabData) => {
 		const node = RouteNode.getNodeByName(value.name);
@@ -305,7 +305,7 @@ export class RouteApp extends RouteNode<RouteDataApp, any> {
 		const routingStatus = await RouteManager.doRoute(node.getRoute());
 		if (routingStatus === RoutingStatus.SUCCESS)
 			this.data.setView(node, this.children);
-	}
+	};
 
 }
 

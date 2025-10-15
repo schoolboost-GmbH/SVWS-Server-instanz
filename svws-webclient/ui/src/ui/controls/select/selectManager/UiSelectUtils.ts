@@ -68,7 +68,7 @@ export function useUiSelectUtils<T, V extends Validator>(
 	 * Extrahiert alle gesetzten Klassen von außerhalb und setzt diese an den Rootknoten. Icon-Farben werden jedoch herausgefiltert, da diese den Hintergrund
 	 * beeinflussen. Ebenso Fokusklassen, da diese an die Combobox bzw. das SearchInput weitergeleitet werden müssen.
 	 */
-	const filteredAttributes = computed (() => {
+	const filteredAttributes = computed(() => {
 		const result = { ...attrs };
 
 		const stringClass = result.class;
@@ -195,12 +195,12 @@ export function useUiSelectUtils<T, V extends Validator>(
 			return {};
 		return {
 			'aria-labelledby': `uiSelectLabel_${instanceId}`,
-			'aria-controls': isEditable? `uiSelectDropdown_${instanceId}` : undefined,
+			'aria-controls': isEditable ? `uiSelectDropdown_${instanceId}` : undefined,
 			'aria-autocomplete': isEditable ? 'none' as const : undefined,
 			'aria-expanded': isEditable ? dropdownIsOpen.value : undefined,
 			'aria-disabled': props.disabled! ? true : undefined,
 			'aria-activedescendant': (isEditable && hasHighlightedOption()) ? `uiSelectOption_${highlightedIndex.value}_${instanceId}` : undefined,
-		}
+		};
 	});
 
 	/**
@@ -253,7 +253,7 @@ export function useUiSelectUtils<T, V extends Validator>(
 	/**
 	 * Berechnet die top Position des Dropdowns abhängig von Position und Größe der Combobox sowie des Flipflags.
 	 */
-	const topPosition = computed (() => {
+	const topPosition = computed(() => {
 		if (flip.value) {
 			const dropdownHeight = uiSelectDropdown.value?.scrollHeight !== undefined
 				? Math.min(maxHeight.value, uiSelectDropdown.value.scrollHeight)
@@ -267,7 +267,7 @@ export function useUiSelectUtils<T, V extends Validator>(
 	/**
 	 * Berechnet, ab wann das Dropdown über der Combobox positioniert wird, statt darunter
 	 */
-	const flip = computed (() => {
+	const flip = computed(() => {
 		if (!dropdownIsOpen.value)
 			return false;
 		const below = windowHeight.value - (top.value + height.value);
@@ -363,14 +363,13 @@ export function useUiSelectUtils<T, V extends Validator>(
 				// Falls das Element unten rausgeht → Liste nach unten scrollen
 				if (itemRect.bottom + ringSize > listRect.bottom) {
 					uiSelectDropdown.value.scrollTop += (itemRect.bottom + ringSize) - listRect.bottom;
-				}
-				// Falls das Element oben rausgeht → Liste nach oben scrollen
-				else if (itemRect.top - ringSize < listRect.top) {
+				} else if (itemRect.top - ringSize < listRect.top) {
+					// Falls das Element oben rausgeht → Liste nach oben scrollen
 					uiSelectDropdown.value.scrollTop -= listRect.top - (itemRect.top - ringSize);
 				}
 			}
 		});
-	}, {deep: true});
+	}, { deep: true });
 
 	/**
 	 * Dropdown Tastatursteuerung
@@ -478,7 +477,7 @@ export function useUiSelectUtils<T, V extends Validator>(
 	}
 
 	function handleEscape() {
-		closeDropdown()
+		closeDropdown();
 		resetSearch();
 	}
 
@@ -866,48 +865,48 @@ export function useUiSelectUtils<T, V extends Validator>(
 	 *
 	 * @param color    die Textfarbe, dessen Sekundärfarbe ermittlet werden soll.
 	 */
-	function getSecondaryTextColor (color: string) {
+	function getSecondaryTextColor(color: string) {
 		if (color.startsWith("text-uistatic"))
 			return "text-uistatic-25";
 		switch (color) {
 			case "text-ui":
 				return "text-ui-secondary";
 			case "text-ui-brand":
-				return "text-ui-brand-secondary"
+				return "text-ui-brand-secondary";
 			case "text-ui-statistic":
-				return "text-ui-statistic-secondary"
+				return "text-ui-statistic-secondary";
 			case "text-ui-selected":
-				return "text-ui-selected-secondary"
+				return "text-ui-selected-secondary";
 			case "text-ui-danger":
-				return "text-ui-danger-secondary"
+				return "text-ui-danger-secondary";
 			case "text-ui-success":
-				return "text-ui-success-secondary"
+				return "text-ui-success-secondary";
 			case "text-ui-warning":
-				return "text-ui-warning-secondary"
+				return "text-ui-warning-secondary";
 			case "text-ui-caution":
-				return "text-ui-caution-secondary"
+				return "text-ui-caution-secondary";
 			case "text-ui-neutral":
-				return "text-ui-neutral-secondary"
+				return "text-ui-neutral-secondary";
 			case "text-ui-disabled":
-				return "text-ui-disabled-secondary"
+				return "text-ui-disabled-secondary";
 			case "text-ui-onbrand":
-				return "text-ui-onbrand-secondary"
+				return "text-ui-onbrand-secondary";
 			case "text-ui-onstatistic":
-				return "text-ui-onstatistic-secondary"
+				return "text-ui-onstatistic-secondary";
 			case "text-ui-onselected":
-				return "text-ui-onselected-secondary"
+				return "text-ui-onselected-secondary";
 			case "text-ui-ondanger":
-				return "text-ui-ondanger-secondary"
+				return "text-ui-ondanger-secondary";
 			case "text-ui-onsuccess":
-				return "text-ui-onsuccess-secondary"
+				return "text-ui-onsuccess-secondary";
 			case "text-ui-onwarning":
-				return "text-ui-onwarning-secondary"
+				return "text-ui-onwarning-secondary";
 			case "text-ui-oncaution":
-				return "text-ui-oncaution-secondary"
+				return "text-ui-oncaution-secondary";
 			case "text-ui-onneutral":
-				return "text-ui-onneutral-secondary"
+				return "text-ui-onneutral-secondary";
 			case "text-ui-ondisabled":
-				return "text-ui-ondisabled-secondary"
+				return "text-ui-ondisabled-secondary";
 			default:
 				return "text-ui-secondary";
 		}
@@ -918,48 +917,48 @@ export function useUiSelectUtils<T, V extends Validator>(
 	 *
 	 * @param color    die Iconfarbe, dessen Sekundärfarbe ermittlet werden soll.
 	 */
-	function getSecondaryIconColor (color: string) {
+	function getSecondaryIconColor(color: string) {
 		if (color.startsWith("icon-uistatic"))
 			return "icon-uistatic-25";
 		switch (color) {
 			case "icon-ui":
 				return "icon-ui-secondary";
 			case "icon-ui-brand":
-				return "icon-ui-brand-secondary"
+				return "icon-ui-brand-secondary";
 			case "icon-ui-statistic":
-				return "icon-ui-statistic-secondary"
+				return "icon-ui-statistic-secondary";
 			case "icon-ui-selected":
-				return "icon-ui-selected-secondary"
+				return "icon-ui-selected-secondary";
 			case "icon-ui-danger":
-				return "icon-ui-danger-secondary"
+				return "icon-ui-danger-secondary";
 			case "icon-ui-success":
-				return "icon-ui-success-secondary"
+				return "icon-ui-success-secondary";
 			case "icon-ui-warning":
-				return "icon-ui-warning-secondary"
+				return "icon-ui-warning-secondary";
 			case "icon-ui-caution":
-				return "icon-ui-caution-secondary"
+				return "icon-ui-caution-secondary";
 			case "icon-ui-neutral":
-				return "icon-ui-neutral-secondary"
+				return "icon-ui-neutral-secondary";
 			case "icon-ui-disabled":
-				return "icon-ui-disabled-secondary"
+				return "icon-ui-disabled-secondary";
 			case "icon-ui-onbrand":
-				return "icon-ui-onbrand-secondary"
+				return "icon-ui-onbrand-secondary";
 			case "icon-ui-onstatistic":
-				return "icon-ui-onstatistic-secondary"
+				return "icon-ui-onstatistic-secondary";
 			case "icon-ui-onselected":
-				return "icon-ui-onselected-secondary"
+				return "icon-ui-onselected-secondary";
 			case "icon-ui-ondanger":
-				return "icon-ui-ondanger-secondary"
+				return "icon-ui-ondanger-secondary";
 			case "icon-ui-onsuccess":
-				return "icon-ui-onsuccess-secondary"
+				return "icon-ui-onsuccess-secondary";
 			case "icon-ui-onwarning":
-				return "icon-ui-onwarning-secondary"
+				return "icon-ui-onwarning-secondary";
 			case "icon-ui-oncaution":
-				return "icon-ui-oncaution-secondary"
+				return "icon-ui-oncaution-secondary";
 			case "icon-ui-onneutral":
-				return "icon-ui-onneutral-secondary"
+				return "icon-ui-onneutral-secondary";
 			case "icon-ui-ondisabled":
-				return "icon-ui-ondisabled-secondary"
+				return "icon-ui-ondisabled-secondary";
 			default:
 				return "icon-ui-secondary";
 		}
@@ -1003,7 +1002,7 @@ export function useUiSelectUtils<T, V extends Validator>(
 
 			// Suche in den DeepSearchAttributen der Option
 			let matches = false;
-			for (const attr of props.deepSearchAttributes?? []) {
+			for (const attr of props.deepSearchAttributes ?? []) {
 				const value = option[attr as keyof T];
 				const stringValue = (value !== undefined && value !== null) ? value.toString() : '';
 				if (stringValue.toLocaleLowerCase("de-DE").includes(searchText.toLocaleLowerCase("de-DE"))) {
@@ -1059,6 +1058,6 @@ export function useUiSelectUtils<T, V extends Validator>(
 		handleBlur, handleComponentClick, comboboxClasses, headlessPadding, labelClasses, labelTextColorClass, labelIconClass, optionClasses, validatorErrorIcon, showLabel,
 		showValidatorError, showValidatorErrorMessage, validatorErrorBgClasses, showSelection, splitText, getSecondaryTextColor, handleInput, onFocusOut,
 		toggleSelection, searchFilteredOptions, resetSearch,
-	}
+	};
 
 }

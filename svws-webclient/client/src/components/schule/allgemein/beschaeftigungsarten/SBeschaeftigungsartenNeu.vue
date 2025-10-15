@@ -47,7 +47,7 @@
 		return data.value.bezeichnung.length > 100;
 	});
 
-	function fieldIsValid(field: keyof Beschaeftigungsart | null) : (v: string | null) => boolean {
+	function fieldIsValid(field: keyof Beschaeftigungsart | null): (v: string | null) => boolean {
 		return (v: string | null) => {
 			switch (field) {
 				case 'bezeichnung':
@@ -55,7 +55,7 @@
 				default:
 					return true;
 			}
-		}
+		};
 	}
 
 	function bezeichnungIsValid(value: string | null) {
@@ -71,8 +71,8 @@
 			const validateField = fieldIsValid(field as keyof Beschaeftigungsart);
 			const fieldValue = data.value[field as keyof Beschaeftigungsart] as string | null;
 			return validateField(fieldValue);
-		})
-	})
+		});
+	});
 
 	async function add() {
 		if (isLoading.value)
@@ -90,7 +90,7 @@
 		await props.goToDefaultView(null);
 	}
 
-	watch(() => data.value, async() => {
+	watch(() => data.value, async () => {
 		if (isLoading.value)
 			return;
 

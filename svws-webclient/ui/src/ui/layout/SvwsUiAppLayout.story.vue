@@ -97,7 +97,7 @@
 	import type { TabData } from "../nav/TabData";
 	import { TabManager } from "../nav/TabManager";
 
-	async function setTab(tab : TabData) {
+	async function setTab(tab: TabData) {
 		selectedTab.value = tab;
 	}
 

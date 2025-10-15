@@ -69,7 +69,7 @@
 		draggable: boolean;
 		onDrag: (data: StundenplanAnsichtDragData, event?: DragEvent) => void;
 		onDrop: (zone: StundenplanAnsichtDropZone, wochentyp?: number) => void;
-		checkDropZonePausenzeit: (event: DragEvent, pause : StundenplanPausenzeit) => void;
+		checkDropZonePausenzeit: (event: DragEvent, pause: StundenplanPausenzeit) => void;
 	}>();
 
 	function getPausenaufsichtenString(idPausenzeit: number) {

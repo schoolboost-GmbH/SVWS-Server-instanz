@@ -43,7 +43,7 @@ export class RouteDataFaecher extends RouteDataAuswahl<FachListeManager, RouteSt
 		return this._state.value.idSchuljahresabschnitt;
 	}
 
-	protected async createManager(idSchuljahresabschnitt : number) : Promise<Partial<RouteStateAuswahlInterface<FachListeManager>>> {
+	protected async createManager(idSchuljahresabschnitt: number): Promise<Partial<RouteStateAuswahlInterface<FachListeManager>>> {
 		const faecher = await api.server.getFaecher(api.schema);
 		const manager = new FachListeManager(idSchuljahresabschnitt, api.schuleStammdaten.idSchuljahresabschnitt, api.schuleStammdaten.abschnitte,	api.schulform, faecher);
 		if (this._state.value.manager === undefined) {
@@ -53,10 +53,10 @@ export class RouteDataFaecher extends RouteDataAuswahl<FachListeManager, RouteSt
 			manager.useFilter(this._state.value.manager);
 		}
 
-		return { manager }
+		return { manager };
 	}
 
-	public async ladeDaten(auswahl: FachDaten | null) : Promise<FachDaten | null> {
+	public async ladeDaten(auswahl: FachDaten | null): Promise<FachDaten | null> {
 		if (auswahl === null)
 			return null;
 
@@ -71,7 +71,7 @@ export class RouteDataFaecher extends RouteDataAuswahl<FachListeManager, RouteSt
 		this.setPatchedState({ stundenplaeneById: mapStundenplaene });
 	}
 
-	protected async doPatch(data : Partial<FachDaten>, id: number) : Promise<void> {
+	protected async doPatch(data: Partial<FachDaten>, id: number): Promise<void> {
 		await api.server.patchFach(data, api.schema, id);
 	}
 
@@ -79,7 +79,7 @@ export class RouteDataFaecher extends RouteDataAuswahl<FachListeManager, RouteSt
 		return await api.server.deleteFaecher(ids, api.schema);
 	}
 
-	protected deleteMessage(id: number, fach: FachDaten | null) : string {
+	protected deleteMessage(id: number, fach: FachDaten | null): string {
 		return `Fach ${fach?.kuerzel ?? '???'} (ID: ${id}) wurde erfolgreich gelöscht.`;
 	}
 

@@ -5,7 +5,7 @@
 </template>
 
 <script setup lang="ts">
-	import type { GostKlausurplanManager, GostFaecherManager, LehrerListeEintrag, GostKlausurtermin, KursManager} from "@core";
+	import type { GostKlausurplanManager, GostFaecherManager, LehrerListeEintrag, GostKlausurtermin, KursManager } from "@core";
 
 	const props = defineProps<{
 		termin: GostKlausurtermin;

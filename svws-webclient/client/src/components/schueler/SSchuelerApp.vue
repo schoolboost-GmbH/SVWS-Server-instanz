@@ -91,7 +91,7 @@
 		if (auswahlSchuelerList.size() > 3)
 			return `${auswahlSchuelerList.size()} Schüler ausgewählt`;
 		return [...auswahlSchuelerList].map(k => `${k.vorname} ${k.nachname}`).join(', ');
-	})
+	});
 
 	const foto = computed<string | null>(() => props.manager().daten().foto);
 	const nachname = computed<string>(() => props.manager().daten().nachname);

@@ -35,11 +35,11 @@
 		kompetenzgruppe: BenutzerKompetenzGruppe;
 		showInfo: boolean;
 		getBenutzerManager: () => BenutzerManager;
-		addKompetenz : (kompetenz : BenutzerKompetenz) => Promise<boolean>;
-		removeKompetenz : (kompetenz : BenutzerKompetenz) => Promise<boolean>;
-		addBenutzerKompetenzGruppe : (kompetenzgruppe : BenutzerKompetenzGruppe) => Promise<boolean>;
-		removeBenutzerKompetenzGruppe : (kompetenzgruppe : BenutzerKompetenzGruppe) => Promise<boolean>;
-		benutzerKompetenzen : ( kompetenz : BenutzerKompetenzGruppe ) => List<BenutzerKompetenz>;
+		addKompetenz: (kompetenz: BenutzerKompetenz) => Promise<boolean>;
+		removeKompetenz: (kompetenz: BenutzerKompetenz) => Promise<boolean>;
+		addBenutzerKompetenzGruppe: (kompetenzgruppe: BenutzerKompetenzGruppe) => Promise<boolean>;
+		removeBenutzerKompetenzGruppe: (kompetenzgruppe: BenutzerKompetenzGruppe) => Promise<boolean>;
+		benutzerKompetenzen: (kompetenz: BenutzerKompetenzGruppe) => List<BenutzerKompetenz>;
 	}>();
 
 	const collapsed = ref(true);
@@ -50,7 +50,7 @@
 		const kompetenzen = BenutzerKompetenz.getKompetenzen(props.kompetenzgruppe);
 		if (kompetenzen.isEmpty())
 			return false;
-		return props.getBenutzerManager().hatKompetenzen(kompetenzen)
+		return props.getBenutzerManager().hatKompetenzen(kompetenzen);
 	});
 	const selectedMindestensEine = computed<boolean>(() => props.getBenutzerManager().hatKompetenzenMindestensEine(props.benutzerKompetenzen(props.kompetenzgruppe)));
 	const indeterminate = computed<boolean>(() => !selectedHatAlle.value && selectedMindestensEine.value);

@@ -9,10 +9,10 @@ import type { Collection } from "../../../../../core/src/java/util/Collection";
 export class GridInputAbiturPruefungsreihenfolge<KEY> extends GridInputInnerText<KEY, number | null> {
 
 	// Der Setter zum Schreiben der Daten
-	protected _setter : (value: number | null) => void;
+	protected _setter: (value: number | null) => void;
 
 	// Der zwischengespeicherte Wert des Input-Elements als Reihenfolge von 1 bis 3 oder null
-	protected _reihenfolge : number | null = null;
+	protected _reihenfolge: number | null = null;
 
 	/**
 	 * Erzeugt ein neues Grid-Input für ein HTMLElement, welches die Notepunkte im Abitur in dem innerText
@@ -25,7 +25,7 @@ export class GridInputAbiturPruefungsreihenfolge<KEY> extends GridInputInnerText
 	 * @param elem          das HTML-Element, welches dem Grid-Input und damit der Zelle des Grid zugeordnet ist
 	 * @param setter        der Setter zum Schreiben der Daten des Grid-Input
 	 */
-	constructor(gridManager: GridManager<KEY, any, Collection<any> | List<any>>, key: KEY, col: number, row: number, elem: HTMLElement, setter : (value: number | null) => void) {
+	constructor(gridManager: GridManager<KEY, any, Collection<any> | List<any>>, key: KEY, col: number, row: number, elem: HTMLElement, setter: (value: number | null) => void) {
 		super(gridManager, key, col, row, elem);
 		this._setter = setter;
 		super.updateText(null);
@@ -44,7 +44,7 @@ export class GridInputAbiturPruefungsreihenfolge<KEY> extends GridInputInnerText
 	/**
 	 * Schreibt die internen Daten dieses Inputs mithilfe des Setters.
 	 */
-	public commit() : void {
+	public commit(): void {
 		this._setter(this._reihenfolge);
 	}
 
@@ -55,7 +55,7 @@ export class GridInputAbiturPruefungsreihenfolge<KEY> extends GridInputInnerText
 	 *
 	 * @returns true, falls die Ziffer zulässig war und sonst false
 	 */
-	public check(ziffer : number): boolean {
+	public check(ziffer: number): boolean {
 		if ((this._reihenfolge !== null) || (ziffer < 1) || (ziffer > 3))
 			return false;
 		this.update(ziffer);
@@ -69,7 +69,7 @@ export class GridInputAbiturPruefungsreihenfolge<KEY> extends GridInputInnerText
 	 *
 	 * @returns true   es hat aufgrund des Tastaturereignisses eine Änderung am Zustand des Inputs stattgefunden
 	 */
-	public onKeyDown(event : KeyboardEvent) : boolean {
+	public onKeyDown(event: KeyboardEvent): boolean {
 		if (super.onKeyDownNavigation(event))
 			return false;
 		// Lösche ggf. den aktuellen Wert

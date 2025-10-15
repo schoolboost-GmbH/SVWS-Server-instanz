@@ -46,7 +46,7 @@
 		}
 	}
 
-	async function doPatchLeistung(fachbezogeneBemerkungen: string|null) {
+	async function doPatchLeistung(fachbezogeneBemerkungen: string | null) {
 		if ((auswahlZelle.value.schueler === null) || (auswahlZelle.value.leistung === null))
 			return;
 		await props.patchLeistung(auswahlZelle.value.leistung, { fachbezogeneBemerkungen });

@@ -5,7 +5,7 @@ import type { MerkmaleListeManager } from "@ui";
 import { BenutzerKompetenz, Schulform, ServerMode } from "@core";
 import { RouteAuswahlNode } from "~/router/RouteAuswahlNode";
 import { RouteSchuleMenuGroup } from "~/router/apps/schule/RouteSchuleMenuGroup";
-import { RouteDataMerkmale} from "~/router/apps/schule/schulbezogen/merkmale/RouteDataMerkmale";
+import { RouteDataMerkmale } from "~/router/apps/schule/schulbezogen/merkmale/RouteDataMerkmale";
 import { routeMerkmaleGruppenprozesse } from "~/router/apps/schule/schulbezogen/merkmale/RouteMerkmaleGruppenprozesse";
 import { routeMerkmaleDaten } from "~/router/apps/schule/schulbezogen/merkmale/RouteMerkmaleDaten";
 import { routeMerkmaleNeu } from "~/router/apps/schule/schulbezogen/merkmale/RouteMerkmaleNeu";

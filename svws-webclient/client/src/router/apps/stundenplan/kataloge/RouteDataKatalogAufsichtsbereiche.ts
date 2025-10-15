@@ -1,4 +1,4 @@
-import type { StundenplanAufsichtsbereich} from "@core";
+import type { StundenplanAufsichtsbereich } from "@core";
 import { StundenplanKomplett, StundenplanManager, ArrayList, UserNotificationException, DeveloperNotificationException } from "@core";
 
 import { api } from "~/router/Api";
@@ -42,7 +42,7 @@ export class RouteDataKatalogAufsichtsbereiche extends RouteData<RouteStateKatal
 		stundenplanKomplett.daten.gueltigBis = '2999-01-01';
 		const stundenplanManager = new StundenplanManager(stundenplanKomplett);
 		stundenplanManager.aufsichtsbereichAddAll(listKatalogeintraege);
-		this.setPatchedDefaultState({ auswahl, stundenplanManager })
+		this.setPatchedDefaultState({ auswahl, stundenplanManager });
 	}
 
 	setEintrag = async (auswahl: StundenplanAufsichtsbereich) => this.setPatchedState({ auswahl });
@@ -56,10 +56,10 @@ export class RouteDataKatalogAufsichtsbereiche extends RouteData<RouteStateKatal
 		const aufsichtsbereich = await api.server.addAufsichtsbereich(eintrag, api.schema);
 		const stundenplanManager = this.stundenplanManager;
 		stundenplanManager.aufsichtsbereichAdd(aufsichtsbereich);
-		this.setPatchedState({stundenplanManager});
+		this.setPatchedState({ stundenplanManager });
 		await routeStundenplan.data.reloadVorlagen();
 		await this.gotoEintrag(aufsichtsbereich);
-	}
+	};
 
 	deleteEintraege = async (eintraege: Iterable<StundenplanAufsichtsbereich>) => {
 		const stundenplanManager = this.stundenplanManager;
@@ -73,10 +73,10 @@ export class RouteDataKatalogAufsichtsbereiche extends RouteData<RouteStateKatal
 		const liste = this.stundenplanManager.aufsichtsbereichGetMengeAsList();
 		const auswahl = liste.isEmpty() ? undefined : liste.get(0);
 		await routeStundenplan.data.reloadVorlagen();
-		this.setPatchedState({auswahl, stundenplanManager});
-	}
+		this.setPatchedState({ auswahl, stundenplanManager });
+	};
 
-	patch = async (eintrag : Partial<StundenplanAufsichtsbereich>) => {
+	patch = async (eintrag: Partial<StundenplanAufsichtsbereich>) => {
 		if (this.auswahl === undefined)
 			throw new DeveloperNotificationException("Beim Aufruf der Patch-Methode sind keine gültigen Daten geladen.");
 		await api.server.patchAufsichtsbereich(eintrag, api.schema, this.auswahl.id);
@@ -85,6 +85,6 @@ export class RouteDataKatalogAufsichtsbereiche extends RouteData<RouteStateKatal
 		this.stundenplanManager.aufsichtsbereichPatchAttributes(auswahl);
 		await routeStundenplan.data.reloadVorlagen();
 		this.commit();
-	}
+	};
 
 }

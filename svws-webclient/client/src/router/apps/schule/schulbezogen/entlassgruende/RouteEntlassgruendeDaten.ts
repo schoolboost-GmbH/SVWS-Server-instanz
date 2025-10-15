@@ -6,7 +6,7 @@ import { RouteNode } from "~/router/RouteNode";
 import { routeEntlassgruende } from "~/router/apps/schule/schulbezogen/entlassgruende/RouteEntlassgruende";
 import { api } from "~/router/Api";
 
-const SEntlassgruendeDaten = () => import("~/components/schule/schulbezogen/entlassgruende/daten/SEntlassgruendeDaten.vue")
+const SEntlassgruendeDaten = () => import("~/components/schule/schulbezogen/entlassgruende/daten/SEntlassgruendeDaten.vue");
 
 export class RouteEntlassgruendeDaten extends RouteNode<any, RouteEntlassgruende> {
 
@@ -15,7 +15,7 @@ export class RouteEntlassgruendeDaten extends RouteNode<any, RouteEntlassgruende
 			"daten", SEntlassgruendeDaten);
 		super.mode = ServerMode.DEV;
 		super.propHandler = (route) => this.getProps(route);
-		super.text = "Entlassgründe"
+		super.text = "Entlassgründe";
 	}
 
 	public getProps(to: RouteLocationNormalized): EntlassgruendeDatenProps {
@@ -23,7 +23,7 @@ export class RouteEntlassgruendeDaten extends RouteNode<any, RouteEntlassgruende
 			manager: () => routeEntlassgruende.data.manager,
 			benutzerKompetenzen: api.benutzerKompetenzen,
 			patch: routeEntlassgruende.data.patch,
-		}
+		};
 	}
 }
 

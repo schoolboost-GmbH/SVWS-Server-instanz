@@ -16,7 +16,7 @@ const defaultState = {
 	view: routeMerkmaleDaten,
 	activeViewType: ViewType.DEFAULT,
 	oldView: undefined,
-}
+};
 
 export class RouteDataMerkmale extends RouteDataAuswahl<MerkmaleListeManager, RouteStateAuswahlInterface<MerkmaleListeManager>> {
 
@@ -28,7 +28,7 @@ export class RouteDataMerkmale extends RouteDataAuswahl<MerkmaleListeManager, Ro
 		const merkmale = await api.server.getMerkmale(api.schema);
 		const manager = new MerkmaleListeManager(api.abschnitt.id, api.schuleStammdaten.idSchuljahresabschnitt, api.schuleStammdaten.abschnitte,
 			api.schulform, merkmale);
-		return { manager }
+		return { manager };
 	}
 
 	public addID(param: RouteParamsRawGeneric, id: number): void {
@@ -51,12 +51,12 @@ export class RouteDataMerkmale extends RouteDataAuswahl<MerkmaleListeManager, Ro
 		return `Merkmal ${merkmal?.bezeichnung ?? '???'} (ID: ${id}) wurde erfolgreich gelöscht.`;
 	}
 
-	addMerkmal = async (data: Partial<Merkmal>) : Promise<void> => {
+	addMerkmal = async (data: Partial<Merkmal>): Promise<void> => {
 		const result = await api.server.addMerkmal(data, api.schema);
 		this.manager.liste.add(result);
 		this.commit();
 		await this.gotoDefaultView(result.id);
-	}
+	};
 
 }
 

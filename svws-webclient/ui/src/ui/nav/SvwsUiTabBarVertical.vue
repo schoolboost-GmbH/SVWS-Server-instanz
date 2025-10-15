@@ -46,7 +46,7 @@
 		scrolledMax: boolean;
 		scrollFactor: number;
 		maxScrollTop: number;
-	}
+	};
 
 	const contentEl = ref();
 
@@ -62,7 +62,7 @@
 		state.value.scrolledMax = (contentEl.value?.scrollTop ?? 0) >= state.value.maxScrollTop;
 		contentEl.value?.addEventListener("scroll", handleScroll);
 		window.addEventListener("resize", handleScroll);
-	})
+	});
 
 
 	onUnmounted(() => {

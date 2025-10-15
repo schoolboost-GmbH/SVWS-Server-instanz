@@ -19,7 +19,7 @@
 
 	const hatKompetenzUpdate = computed<boolean>(() => props.benutzerKompetenzen.has(BenutzerKompetenz.KATALOG_EINTRAEGE_AENDERN));
 	// patching these entries is not aloud according to SchILDzentral
-	const idsOfNonPatchableEntries = new Set([1,2,3,4,5])
+	const idsOfNonPatchableEntries = new Set([1, 2, 3, 4, 5]);
 	const readonly = computed(() => (!hatKompetenzUpdate.value) || (idsOfNonPatchableEntries.has(props.manager().auswahl().id)));
 
 </script>

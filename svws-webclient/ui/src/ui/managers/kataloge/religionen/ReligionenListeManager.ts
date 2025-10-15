@@ -20,7 +20,7 @@ export class ReligionenListeManager extends AuswahlManager<number, ReligionEintr
 	/**
 	 * Funktionen zum Mappen von Auswahl- bzw. Daten-Objekten auf deren ID-Typ
 	 */
-	private static readonly _religionToId: JavaFunction<ReligionEintrag, number> = { apply : (r: ReligionEintrag) => r.id };
+	private static readonly _religionToId: JavaFunction<ReligionEintrag, number> = { apply: (r: ReligionEintrag) => r.id };
 
 	/**
 	 * Zusätzliche Maps, welche zum schnellen Zugriff auf Teilmengen der Liste verwendet werden können
@@ -37,7 +37,7 @@ export class ReligionenListeManager extends AuswahlManager<number, ReligionEintr
 	/**
 	 * Ein Default-Comparator für den Vergleich von Religion-Einträgen.
 	 */
-	public static readonly _comparatorKuerzel: Comparator<ReligionEintrag> = { compare : (a: ReligionEintrag, b: ReligionEintrag) => {
+	public static readonly _comparatorKuerzel: Comparator<ReligionEintrag> = { compare: (a: ReligionEintrag, b: ReligionEintrag) => {
 		let cmp: number = a.sortierung - b.sortierung;
 		if (cmp !== 0)
 			return cmp;
@@ -54,8 +54,8 @@ export class ReligionenListeManager extends AuswahlManager<number, ReligionEintr
 	/**
 	 * Ein Comparator für den Vergleich von Religion-Einträgen anhand ihres Textes.
 	 */
-	public static readonly _comparatorText : Comparator<ReligionEintrag> = { compare : (a: ReligionEintrag, b: ReligionEintrag) => {
-		const cmp : number = JavaString.compareTo(a.bezeichnung, b.bezeichnung);
+	public static readonly _comparatorText: Comparator<ReligionEintrag> = { compare: (a: ReligionEintrag, b: ReligionEintrag) => {
+		const cmp: number = JavaString.compareTo(a.bezeichnung, b.bezeichnung);
 		return (cmp === 0) ? JavaLong.compare(a.id, b.id) : cmp;
 	} };
 
@@ -90,8 +90,8 @@ export class ReligionenListeManager extends AuswahlManager<number, ReligionEintr
 	 * @param eintrag   der Auswahl-Eintrag
 	 * @param daten     das neue Daten-Objekt zu der Auswahl
 	 */
-	protected onSetDaten(eintrag: ReligionEintrag, daten: ReligionEintrag) : boolean {
-		let updateEintrag : boolean = false;
+	protected onSetDaten(eintrag: ReligionEintrag, daten: ReligionEintrag): boolean {
+		let updateEintrag: boolean = false;
 		if (!JavaObject.equalsTranspiler(daten.kuerzel, (eintrag.kuerzel))) {
 			eintrag.kuerzel = daten.kuerzel;
 			updateEintrag = true;
@@ -132,16 +132,16 @@ export class ReligionenListeManager extends AuswahlManager<number, ReligionEintr
 	 */
 	protected compareAuswahl(a: ReligionEintrag, b: ReligionEintrag): number {
 		for (const criteria of this._order) {
-			const field : string | null = criteria.a;
-			const asc : boolean = (criteria.b === null) || criteria.b;
-			let cmp : number = 0;
+			const field: string | null = criteria.a;
+			const asc: boolean = (criteria.b === null) || criteria.b;
+			let cmp: number = 0;
 			if (JavaObject.equalsTranspiler("kuerzel", (field))) {
 				cmp = ReligionenListeManager._comparatorKuerzel.compare(a, b);
 			} else
 				if (JavaObject.equalsTranspiler("text", (field))) {
 					cmp = ReligionenListeManager._comparatorText.compare(a, b);
 				} else
-					throw new DeveloperNotificationException("Fehler bei der Sortierung. Das Sortierkriterium wird vom Manager nicht unterstützt.")
+					throw new DeveloperNotificationException("Fehler bei der Sortierung. Das Sortierkriterium wird vom Manager nicht unterstützt.");
 			if (cmp === 0)
 				continue;
 			return asc ? cmp : -cmp;
@@ -149,7 +149,7 @@ export class ReligionenListeManager extends AuswahlManager<number, ReligionEintr
 		return ReligionenListeManager._comparatorKuerzel.compare(a, b);
 	}
 
-	protected checkFilter(eintrag: ReligionEintrag) : boolean {
+	protected checkFilter(eintrag: ReligionEintrag): boolean {
 		if (this._filterNurSichtbar && !eintrag.istSichtbar)
 			return false;
 		return true;
@@ -160,7 +160,7 @@ export class ReligionenListeManager extends AuswahlManager<number, ReligionEintr
 	 *
 	 * @param srcManager Manager, aus dem die Filterinformationen übernommen werden
 	 */
-	public useFilter(srcManager: ReligionenListeManager) : void {
+	public useFilter(srcManager: ReligionenListeManager): void {
 		this.setFilterNurSichtbar(srcManager.filterNurSichtbar());
 	}
 
@@ -168,7 +168,7 @@ export class ReligionenListeManager extends AuswahlManager<number, ReligionEintr
 		return 'de.svws_nrw.core.utils.religion.ReligionenListeManager';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.utils.AuswahlManager', 'de.svws_nrw.core.utils.religion.ReligionenListeManager'].includes(name);
 	}
 

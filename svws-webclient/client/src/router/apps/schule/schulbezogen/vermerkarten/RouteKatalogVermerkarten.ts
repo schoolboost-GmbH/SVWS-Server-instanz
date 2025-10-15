@@ -16,7 +16,7 @@ const SVermerkartenApp = () => import("~/components/schule/schulbezogen/vermerka
 export class RouteKatalogVermerkarten extends RouteAuswahlNode<VermerkartenListeManager, RouteDataKatalogVermerkarten, RouteApp> {
 
 	public constructor() {
-		super(Schulform.values(), [ BenutzerKompetenz.KATALOG_EINTRAEGE_ANSEHEN, BenutzerKompetenz.KATALOG_EINTRAEGE_AENDERN ], "schule.vermerkarten", "schule/vermerkarten/:id(\\d+)?", SVermerkartenApp, SVermerkartenAuswahl, new RouteDataKatalogVermerkarten());
+		super(Schulform.values(), [BenutzerKompetenz.KATALOG_EINTRAEGE_ANSEHEN, BenutzerKompetenz.KATALOG_EINTRAEGE_AENDERN], "schule.vermerkarten", "schule/vermerkarten/:id(\\d+)?", SVermerkartenApp, SVermerkartenAuswahl, new RouteDataKatalogVermerkarten());
 		super.mode = ServerMode.DEV;
 		super.text = "Vermerkarten";
 		super.menugroup = RouteSchuleMenuGroup.SCHULBEZOGEN;

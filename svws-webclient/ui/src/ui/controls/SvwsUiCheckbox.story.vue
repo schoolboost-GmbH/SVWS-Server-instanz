@@ -71,7 +71,7 @@
 		toggle: false,
 		headless: false,
 		color: undefined,
-	})
+	});
 
 	const modelValue = ref(true);
 	const modelValue1 = ref(true);

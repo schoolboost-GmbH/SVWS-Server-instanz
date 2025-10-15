@@ -4,6 +4,6 @@ import type { ReligionenListeManager } from "@ui";
 export interface ReligionenDatenProps {
 	manager: () => ReligionenListeManager;
 	schulform: Schulform;
-	patch: (data : Partial<ReligionEintrag>) => Promise<void>;
+	patch: (data: Partial<ReligionEintrag>) => Promise<void>;
 	benutzerKompetenzen: Set<BenutzerKompetenz>,
 }

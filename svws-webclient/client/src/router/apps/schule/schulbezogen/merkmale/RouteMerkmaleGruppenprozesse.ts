@@ -15,15 +15,15 @@ export class RouteMerkmaleGruppenprozesse extends RouteNode<any, RouteMerkmale> 
 
 	public constructor() {
 		super(Schulform.values(), [BenutzerKompetenz.KATALOG_EINTRAEGE_ANSEHEN, BenutzerKompetenz.KATALOG_EINTRAEGE_AENDERN,
-			BenutzerKompetenz.KATALOG_EINTRAEGE_LOESCHEN], "schule.merkmale.gruppenprozesse" , "gruppenprozesse", SMerkmaleGruppenprozesse);
+			BenutzerKompetenz.KATALOG_EINTRAEGE_LOESCHEN], "schule.merkmale.gruppenprozesse", "gruppenprozesse", SMerkmaleGruppenprozesse);
 		super.types = new Set([ViewType.GRUPPENPROZESSE]);
 		super.mode = ServerMode.DEV;
 		super.propHandler = (route) => this.getProps(route);
-		super.text = "Gruppenprozesse"
+		super.text = "Gruppenprozesse";
 	}
 
 	public getRoute(): RouteLocationRaw {
-		return { name: this.name, params: {idSchuljahresabschnitt: routeApp.data.idSchuljahresabschnitt, id: ""}}
+		return { name: this.name, params: { idSchuljahresabschnitt: routeApp.data.idSchuljahresabschnitt, id: "" } };
 	}
 
 	public getProps(to: RouteLocationNormalized): MerkmaleGruppenprozesseProps {
@@ -33,7 +33,7 @@ export class RouteMerkmaleGruppenprozesse extends RouteNode<any, RouteMerkmale> 
 			benutzerKompetenzen: api.benutzerKompetenzen,
 			deleteMerkmale: routeMerkmale.data.delete,
 			manager: () => routeMerkmale.data.manager,
-		}
+		};
 	}
 }
 

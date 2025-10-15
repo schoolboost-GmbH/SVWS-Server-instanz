@@ -20,6 +20,6 @@ export interface StundenplanPausenProps {
 	removeAufsicht: (aufsichtID: number) => Promise<void>;
 	patchAufsicht: (aufsicht: Partial<StundenplanPausenaufsicht>, id: number) => Promise<void>;
 	apiStatus: ApiStatus;
-	gotoKatalog: (katalog: 'raeume'|'aufsichtsbereiche'|'pausenzeiten') => Promise<RoutingStatus>;
+	gotoKatalog: (katalog: 'raeume' | 'aufsichtsbereiche' | 'pausenzeiten') => Promise<RoutingStatus>;
 }
 

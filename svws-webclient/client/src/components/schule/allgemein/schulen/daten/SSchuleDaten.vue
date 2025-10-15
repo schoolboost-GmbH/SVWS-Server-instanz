@@ -40,8 +40,8 @@
 
 	import type { SchuleDatenProps } from "./SSchuleDatenProps";
 	import { computed } from "vue";
-	import { AdressenUtils, BenutzerKompetenz, Schulform } from "@core"
-	import {optionalInputIsValid} from "~/util/validation/Validation";
+	import { AdressenUtils, BenutzerKompetenz, Schulform } from "@core";
+	import { optionalInputIsValid } from "~/util/validation/Validation";
 
 	const props = defineProps<SchuleDatenProps>();
 	const hatKompetenzUpdate = computed<boolean>(() => props.benutzerKompetenzen.has(BenutzerKompetenz.KATALOG_EINTRAEGE_AENDERN));
@@ -49,7 +49,7 @@
 	const strasse = computed(() => AdressenUtils.combineStrasse(props.manager().daten().strassenname ?? "",
 		props.manager().daten().hausnummer ?? "", props.manager().daten().zusatzHausnummer ?? ""));
 
-	function adresseIsValid(vals : Array<string>) {
+	function adresseIsValid(vals: Array<string>) {
 		return optionalInputIsValid(vals[0], 55) &&
 			optionalInputIsValid(vals[1], 10) &&
 			optionalInputIsValid(vals[2], 30);

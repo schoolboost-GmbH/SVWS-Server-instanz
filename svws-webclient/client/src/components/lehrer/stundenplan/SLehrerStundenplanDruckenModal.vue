@@ -34,7 +34,7 @@
 	import { ref } from 'vue';
 	import type { ApiStatus } from '~/components/ApiStatus';
 	import type { StundenplanListeEintrag, ApiFile } from '@core';
-	import { ArrayList} from '@core';
+	import { ArrayList } from '@core';
 	import { DateUtils, ReportingParameter, ReportingReportvorlage } from '@core';
 
 	const props = defineProps<{
@@ -51,7 +51,7 @@
 
 	const loading = ref<boolean>(false);
 	const stundenplanAuswahl = ref<StundenplanListeEintrag>();
-	const gruppe1 = ref<0|1|2>(0);
+	const gruppe1 = ref<0 | 1 | 2>(0);
 	const option8 = ref(false);
 
 	async function downloadPDF() {
@@ -68,7 +68,7 @@
 					vp.wert = (gruppe1.value === 1).toString();
 					break;
 				case "mitPausenzeiten":
-					vp.wert = (gruppe1.value === 2).toString()
+					vp.wert = (gruppe1.value === 2).toString();
 					break;
 				case "mitFachkuerzelStattFachbezeichnung":
 					vp.wert = option8.value.toString();
@@ -86,14 +86,14 @@
 		show.value = false;
 	}
 
-	const wochentag = ['So.', 'Mo.', 'Di.', 'Mi.', 'Do.', 'Fr.', 'Sa.', 'So.' ];
+	const wochentag = ['So.', 'Mo.', 'Di.', 'Mi.', 'Do.', 'Fr.', 'Sa.', 'So.'];
 
-	function toDateStr(iso: string) : string {
+	function toDateStr(iso: string): string {
 		const date = DateUtils.extractFromDateISO8601(iso);
 		return wochentag[date[3] % 7] + " " + date[2] + "." + date[1] + "." + date[0];
 	}
 
-	function toKW(iso: string) : string {
+	function toKW(iso: string): string {
 		const date = DateUtils.extractFromDateISO8601(iso);
 		return "" + date[5];
 	}

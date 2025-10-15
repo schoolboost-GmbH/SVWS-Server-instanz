@@ -23,6 +23,6 @@
 	}>(), {
 		title: '',
 		hideIcon: false,
-	})
+	});
 
 </script>

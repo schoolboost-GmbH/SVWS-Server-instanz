@@ -177,7 +177,8 @@
 		const daten = personalabschnittsdaten();
 		if (daten !== null)
 			return new ValidatorLehrerPersonalabschnittsdaten(daten, props.lehrerListeManager().daten(), props.validatorKontext());
-		else throw new DeveloperNotificationException("Keine Personalabschnittsdaten gefunden.");
+		else
+			throw new DeveloperNotificationException("Keine Personalabschnittsdaten gefunden.");
 	});
 
 	function validatePersonalabschnittDaten(validator: Validator): boolean {

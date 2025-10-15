@@ -52,10 +52,10 @@ export class RouteDataReligionen extends RouteDataAuswahl<ReligionenListeManager
 
 	add = async (partialReligion: Partial<ReligionEintrag>): Promise<void> => {
 		delete partialReligion.id;
-		const religion = await api.server.createReligion(partialReligion, api.schema)
+		const religion = await api.server.createReligion(partialReligion, api.schema);
 		await this.setSchuljahresabschnitt(this._state.value.idSchuljahresabschnitt, true);
-		await this.gotoDefaultView(religion.id)
-	}
+		await this.gotoDefaultView(religion.id);
+	};
 
 	protected deleteMessage(id: number, religion: ReligionEintrag | null): string {
 		return `Religion ${religion?.kuerzel} (ID: ${id.toString()}) wurde erfolgreich gelöscht.`;
@@ -70,6 +70,6 @@ export class RouteDataReligionen extends RouteDataAuswahl<ReligionenListeManager
 			errorLog.add('Es wurde keine Religion zum Löschen ausgewählt.');
 
 		return errorLog;
-	}
+	};
 
 }

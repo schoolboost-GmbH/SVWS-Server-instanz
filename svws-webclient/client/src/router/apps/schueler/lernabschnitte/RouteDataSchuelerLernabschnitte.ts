@@ -1,6 +1,6 @@
 import type { List, FachDaten, SchuelerLeistungsdaten, SchuelerLernabschnittListeEintrag,
 	SchuelerLernabschnittsdaten, FoerderschwerpunktEintrag, JahrgangsDaten, SchuelerLernabschnittBemerkungen,
-	GostSchuelerklausurTermin} from "@core";
+	GostSchuelerklausurTermin } from "@core";
 import { ArrayList, DeveloperNotificationException, GostHalbjahr, GostKlausurplanManager } from "@core";
 
 import { api } from "~/router/Api";
@@ -68,7 +68,7 @@ export class RouteDataSchuelerLernabschnitte extends RouteData<RouteStateDataSch
 		return this._state.value.manager;
 	}
 
-	get hatKlausurManager() : boolean {
+	get hatKlausurManager(): boolean {
 		return (this._state.value.klausurManager !== undefined);
 	}
 
@@ -78,8 +78,8 @@ export class RouteDataSchuelerLernabschnitte extends RouteData<RouteStateDataSch
 		return this._state.value.klausurManager;
 	}
 
-	protected getLernabschnitt(curState : RouteStateDataSchuelerLernabschnitte, idSchuljahresabschnitt : number, wechselNr : number) : SchuelerLernabschnittListeEintrag | undefined {
-		let found : SchuelerLernabschnittListeEintrag | undefined = undefined;
+	protected getLernabschnitt(curState: RouteStateDataSchuelerLernabschnitte, idSchuljahresabschnitt: number, wechselNr: number): SchuelerLernabschnittListeEintrag | undefined {
+		let found: SchuelerLernabschnittListeEintrag | undefined = undefined;
 		for (const current of curState.listAbschnitte) {
 			if (current.schuljahresabschnitt === idSchuljahresabschnitt) {
 				found = current;
@@ -90,8 +90,8 @@ export class RouteDataSchuelerLernabschnitte extends RouteData<RouteStateDataSch
 		return found;
 	}
 
-	protected async updateSchuljahresabschnitt(curState : RouteStateDataSchuelerLernabschnitte, newSchuljahresabschnitt : number | undefined, newWechselNr : number) : Promise<RouteStateDataSchuelerLernabschnitte> {
-		let found : SchuelerLernabschnittListeEintrag | undefined = undefined;
+	protected async updateSchuljahresabschnitt(curState: RouteStateDataSchuelerLernabschnitte, newSchuljahresabschnitt: number | undefined, newWechselNr: number): Promise<RouteStateDataSchuelerLernabschnitte> {
+		let found: SchuelerLernabschnittListeEintrag | undefined = undefined;
 		// Prüfe, ob ein alter Schuljahresabschnitt (und ggf. die Wechselnummer) in der Liste der Lernabschnitte existiert
 		if (newSchuljahresabschnitt !== undefined)
 			found = this.getLernabschnitt(curState, newSchuljahresabschnitt, newWechselNr);
@@ -109,7 +109,7 @@ export class RouteDataSchuelerLernabschnitte extends RouteData<RouteStateDataSch
 		if (found === undefined) {
 			if (curState.listAbschnitte.isEmpty())
 				return curState;
-			found = curState.listAbschnitte.get(curState.listAbschnitte.size()-1);
+			found = curState.listAbschnitte.get(curState.listAbschnitte.size() - 1);
 		}
 		const daten = await api.server.getSchuelerLernabschnittsdatenByID(api.schema, found.id);
 		let listKurse;
@@ -120,7 +120,7 @@ export class RouteDataSchuelerLernabschnitte extends RouteData<RouteStateDataSch
 			listKlassen = this.manager.klasseGetMenge();
 			listLehrer = this.manager.lehrerGetMenge();
 		} else {
-			[ listKurse, listKlassen, listLehrer ] = await Promise.all([
+			[listKurse, listKlassen, listLehrer] = await Promise.all([
 				api.server.getKurseFuerAbschnitt(api.schema, found.schuljahresabschnitt),
 				api.server.getKlassenFuerAbschnitt(api.schema, found.schuljahresabschnitt),
 				api.server.getLehrerFuerAbschnitt(api.schema, found.schuljahresabschnitt),
@@ -155,11 +155,11 @@ export class RouteDataSchuelerLernabschnitte extends RouteData<RouteStateDataSch
 	 * @param idSchueler   die ID des Schülers
 	 * @param force        gibt an, ob das Laden erzwungen werden soll, obwohl die ID bereits geladen ist
 	 */
-	public async setSchueler(idSchueler: number, force: boolean = false) : Promise<void> {
+	public async setSchueler(idSchueler: number, force: boolean = false): Promise<void> {
 		if ((!force) && (idSchueler === this._state.value.idSchueler))
 			return;
 		const listAbschnitte = await api.server.getSchuelerLernabschnittsliste(api.schema, idSchueler);
-		let hatGymOb : boolean = false;
+		let hatGymOb: boolean = false;
 		for (const abschnitt of listAbschnitte) {
 			if (("EF" === abschnitt.jahrgang) || ("Q1" === abschnitt.jahrgang) || ("Q2" === abschnitt.jahrgang)) {
 				hatGymOb = true;
@@ -174,7 +174,7 @@ export class RouteDataSchuelerLernabschnitte extends RouteData<RouteStateDataSch
 			listFoerderschwerpunkte = this.manager.foerderschwerpunktGetMenge();
 			listJahrgaenge = this.manager.jahrgangGetMenge();
 		} else {
-			[ listFaecher, listFoerderschwerpunkte, listJahrgaenge ] = await Promise.all([
+			[listFaecher, listFoerderschwerpunkte, listJahrgaenge] = await Promise.all([
 				api.server.getFaecher(api.schema),
 				api.server.getKatalogFoerderschwerpunkte(api.schema),
 				api.server.getJahrgaenge(api.schema),
@@ -185,10 +185,10 @@ export class RouteDataSchuelerLernabschnitte extends RouteData<RouteStateDataSch
 		newState = await this.updateSchuljahresabschnitt(newState,
 			alteAuswahl === undefined ? undefined : alteAuswahl.schuljahresabschnitt,
 			alteAuswahl === undefined ? 0 : alteAuswahl.wechselNr);
-		this.setPatchedDefaultState(newState)
+		this.setPatchedDefaultState(newState);
 	}
 
-	get hatAuswahl() : boolean {
+	get hatAuswahl(): boolean {
 		return (this._state.value.auswahl !== undefined);
 	}
 
@@ -204,7 +204,7 @@ export class RouteDataSchuelerLernabschnitte extends RouteData<RouteStateDataSch
 		return this._state.value.daten;
 	}
 
-	public async setLernabschnitt(idSchuljahresabschnitt : number, wechselNr : number) {
+	public async setLernabschnitt(idSchuljahresabschnitt: number, wechselNr: number) {
 		const curAuswahl = this._state.value.auswahl;
 		if ((curAuswahl === undefined) || ((idSchuljahresabschnitt === curAuswahl.schuljahresabschnitt) && (wechselNr === curAuswahl.wechselNr)))
 			return;
@@ -214,59 +214,59 @@ export class RouteDataSchuelerLernabschnitte extends RouteData<RouteStateDataSch
 
 	gotoLernabschnitt = async (value: SchuelerLernabschnittListeEintrag) => {
 		await RouteManager.doRoute(this.view.getRoute({ id: value.schuelerID, abschnitt: value.schuljahresabschnitt, wechselNr: value.wechselNr }));
-	}
+	};
 
-	patchLernabschnitt = async (data : Partial<SchuelerLernabschnittsdaten>) => {
+	patchLernabschnitt = async (data: Partial<SchuelerLernabschnittsdaten>) => {
 		await api.server.patchSchuelerLernabschnittsdaten(data, api.schema, this.daten.id);
 		Object.assign(this.daten, data);
 		this.commit();
-	}
+	};
 
-	patchLeistung = async (data : Partial<SchuelerLeistungsdaten>, id : number) => {
+	patchLeistung = async (data: Partial<SchuelerLeistungsdaten>, id: number) => {
 		await api.server.patchSchuelerLeistungsdaten(data, api.schema, id);
 		const leistung = this.manager.leistungGetByIdOrException(id);
 		Object.assign(leistung, data);
 		this.commit();
-	}
+	};
 
-	addLeistung = async (fachID : number) => {
-		const data : Partial<SchuelerLeistungsdaten> = { lernabschnittID: this.daten.id, fachID };
+	addLeistung = async (fachID: number) => {
+		const data: Partial<SchuelerLeistungsdaten> = { lernabschnittID: this.daten.id, fachID };
 		const result = await api.server.addSchuelerLeistungsdaten(data, api.schema);
 		this.manager.leistungAdd(result);
 		this.commit();
-	}
+	};
 
 	deleteLeistungen = async (leistungenIDs: List<number>) => {
 		const leistungen = await api.server.deleteSchuelerLeistungsdatenMultiple(leistungenIDs, api.schema);
 		for (const l of leistungen)
 			this.manager.leistungRemoveByID(l.id);
 		this.commit();
-	}
+	};
 
-	patchBemerkungen = async (data : Partial<SchuelerLernabschnittBemerkungen>) : Promise<void> => {
+	patchBemerkungen = async (data: Partial<SchuelerLernabschnittBemerkungen>): Promise<void> => {
 		await api.server.patchSchuelerLernabschnittsdatenBemerkungen(data, api.schema, this.daten.id);
 		Object.assign(this.daten.bemerkungen, data);
 		this.commit();
-	}
+	};
 
 	createSchuelerklausurTermin = async (skt: Partial<GostSchuelerklausurTermin>) => {
 		delete skt.id;
 		const skNeu = await api.server.createGostKlausurenSchuelerklausurtermin(skt, api.schema);
 		this.klausurManager.schuelerklausurterminAdd(skNeu);
 		this.commit();
-	}
+	};
 
-	deleteSchuelerklausurTermin = async (skt : GostSchuelerklausurTermin) => {
+	deleteSchuelerklausurTermin = async (skt: GostSchuelerklausurTermin) => {
 		await api.server.deleteGostKlausurenSchuelerklausurtermin(api.schema, skt.id);
 		this.klausurManager.schuelerklausurterminRemoveById(skt.id);
 		this.commit();
-	}
+	};
 
-	patchSchuelerklausurTermin = async (id: number, skt : Partial<GostSchuelerklausurTermin>) => {
+	patchSchuelerklausurTermin = async (id: number, skt: Partial<GostSchuelerklausurTermin>) => {
 		await api.server.patchGostKlausurenSchuelerklausurtermin(skt, api.schema, id);
-	}
+	};
 
-	gotoPlanung = async() => {
+	gotoPlanung = async () => {
 		const abiturjahr = this.manager.schuelerGet().abiturjahrgang;
 		if (abiturjahr === null)
 			return;
@@ -277,6 +277,6 @@ export class RouteDataSchuelerLernabschnitte extends RouteData<RouteStateDataSch
 			return;
 		const dest = RouteNode.getNodeByName("gost.klausurplanung.nachschreiber")!.getRoute({ abiturjahr, halbjahr: halbjahr.id });
 		await RouteManager.doRoute(dest);
-	}
+	};
 
 }

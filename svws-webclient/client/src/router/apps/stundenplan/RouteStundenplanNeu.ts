@@ -13,16 +13,16 @@ const SStundenplanNeu = () => import("~/components/stundenplan/SStundenplanNeu.v
 export class RouteStundenplanNeu extends RouteNode<any, RouteStundenplan> {
 
 	public constructor() {
-		super(Schulform.values(), [ BenutzerKompetenz.STUNDENPLAN_AENDERN ], "stundenplan.neu", "neu", SStundenplanNeu);
-		super.types = new Set([ ViewType.HINZUFUEGEN ]);
+		super(Schulform.values(), [BenutzerKompetenz.STUNDENPLAN_AENDERN], "stundenplan.neu", "neu", SStundenplanNeu);
+		super.types = new Set([ViewType.HINZUFUEGEN]);
 		super.mode = ServerMode.STABLE;
 		super.propHandler = (route) => this.getProps(route);
 		super.text = "Stundenplan Neu";
 		super.setCheckpoint = true;
 	}
 
-	public addRouteParamsFromState() : RouteParamsRawGeneric {
-		return { id : "" };
+	public addRouteParamsFromState(): RouteParamsRawGeneric {
+		return { id: "" };
 	}
 
 	public getProps(to: RouteLocationNormalized): StundenplanNeuProps {

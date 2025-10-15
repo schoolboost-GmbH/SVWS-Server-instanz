@@ -23,7 +23,7 @@
 
 	import { computed, ref } from "vue";
 	import type { AbteilungenGruppenprozesseProps } from "./SAbteilungenGruppenprozesseProps";
-	import type { List} from "@core";
+	import type { List } from "@core";
 	import { BenutzerKompetenz, ServerMode } from "@core";
 
 	const props = defineProps<AbteilungenGruppenprozesseProps>();

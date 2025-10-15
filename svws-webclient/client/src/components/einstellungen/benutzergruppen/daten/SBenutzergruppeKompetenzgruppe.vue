@@ -26,18 +26,18 @@
 
 	import { ref, computed } from "vue";
 	import type { BenutzergruppenManager, BenutzerKompetenzGruppe, List } from "@core";
-	import { BenutzerKompetenz} from "@core";
+	import { BenutzerKompetenz } from "@core";
 
 	const props = defineProps<{
 		getBenutzergruppenManager: () => BenutzergruppenManager;
 		showInfo: boolean;
 		kompetenzgruppe: BenutzerKompetenzGruppe;
 		istAdmin: boolean;
-		addKompetenz : (kompetenz: BenutzerKompetenz) => Promise<boolean>;
-		removeKompetenz : (kompetenz: BenutzerKompetenz) => Promise<boolean>;
-		addBenutzerKompetenzGruppe : (kompetenzgruppe : BenutzerKompetenzGruppe) => Promise<boolean>,
-		removeBenutzerKompetenzGruppe : (kompetenzgruppe : BenutzerKompetenzGruppe) => Promise<boolean>,
-		benutzerKompetenzen : (kompetenzgruppe : BenutzerKompetenzGruppe) => List<BenutzerKompetenz>;
+		addKompetenz: (kompetenz: BenutzerKompetenz) => Promise<boolean>;
+		removeKompetenz: (kompetenz: BenutzerKompetenz) => Promise<boolean>;
+		addBenutzerKompetenzGruppe: (kompetenzgruppe: BenutzerKompetenzGruppe) => Promise<boolean>,
+		removeBenutzerKompetenzGruppe: (kompetenzgruppe: BenutzerKompetenzGruppe) => Promise<boolean>,
+		benutzerKompetenzen: (kompetenzgruppe: BenutzerKompetenzGruppe) => List<BenutzerKompetenz>;
 	}>();
 
 	const collapsed = ref(true);

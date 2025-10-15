@@ -42,7 +42,7 @@
 	const columns = [
 		{ key: "name1", label: "Name", sortable: true, span: 2 },
 		{ key: "id", label: "ID", sortable: true, span: 0.5 },
-	]
+	];
 
 	async function doDeleteEintraege() {
 		await props.deleteEintraege(selected.value);
@@ -51,9 +51,9 @@
 
 	const rowsFiltered = computed<BetriebListeEintrag[]>(() => {
 		const res = [];
-		for(const k of props.mapKatalogeintraege.values())
-			if((k.name1 !== null) && k.name1.toLocaleLowerCase().includes(search.value.toLocaleLowerCase()))
+		for (const k of props.mapKatalogeintraege.values())
+			if ((k.name1 !== null) && k.name1.toLocaleLowerCase().includes(search.value.toLocaleLowerCase()))
 				res.push(k);
 		return res;
-	})
+	});
 </script>

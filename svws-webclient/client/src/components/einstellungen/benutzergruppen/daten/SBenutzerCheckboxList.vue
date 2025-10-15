@@ -29,10 +29,10 @@
 
 	const props = defineProps<{
 		listBenutzer: () => List<BenutzerListeEintrag>;
-		title : string;
-		spalteLinks : boolean;
-		addBenutzerToBenutzergruppe : (benutzer: BenutzerListeEintrag) => Promise<void>;
-		removeBenutzerFromBenutzergruppe : (benutzer: BenutzerListeEintrag) => Promise<void>;
+		title: string;
+		spalteLinks: boolean;
+		addBenutzerToBenutzergruppe: (benutzer: BenutzerListeEintrag) => Promise<void>;
+		removeBenutzerFromBenutzergruppe: (benutzer: BenutzerListeEintrag) => Promise<void>;
 		gotoBenutzer: (b_id: number) => Promise<void>;
 		listBenutzerInGruppe: () => List<BenutzerListeEintrag>;
 	}>();
@@ -45,8 +45,8 @@
 	});
 
 	const cols = [
-		{key: 'anzeigename', label: 'Anzeigename', span: 2},
-		{key: 'name', label: ' ', span: 1},
+		{ key: 'anzeigename', label: 'Anzeigename', span: 2 },
+		{ key: 'name', label: ' ', span: 1 },
 	];
 
 </script>

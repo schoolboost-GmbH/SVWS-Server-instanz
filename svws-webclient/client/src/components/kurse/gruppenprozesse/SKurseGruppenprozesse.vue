@@ -151,10 +151,10 @@
 		if (currentAction.value === 'delete')
 			return [true, []];
 		return [false, []];
-	})
+	});
 
 	function setCurrentAction(newAction: Action, open: boolean) {
-		if(newAction !== currentAction.value && !open)
+		if (newAction !== currentAction.value && !open)
 			return;
 		option1.value = false;
 		option2.value = false;

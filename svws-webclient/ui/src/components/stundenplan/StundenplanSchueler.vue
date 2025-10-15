@@ -35,11 +35,11 @@
 		onDrop: (zone: StundenplanAnsichtDropZone, wochentyp?: number) => {},
 	});
 
-	function getSchienen(wochentag: number, stunde: number, wochentyp: number) : List<StundenplanSchiene> {
+	function getSchienen(wochentag: number, stunde: number, wochentyp: number): List<StundenplanSchiene> {
 		return props.manager().schieneGetMengeBySchuelerIdAndWochentagAndStundeAndWochentypAndInklusiveOrEmptyList(props.id, wochentag, stunde, wochentyp, false);
 	}
 
-	function getUnterricht(wochentag: number, stunde: number, wochentyp: number, schiene: number | null) : List<StundenplanUnterricht> {
+	function getUnterricht(wochentag: number, stunde: number, wochentyp: number, schiene: number | null): List<StundenplanUnterricht> {
 		return props.manager().unterrichtGetMengeBySchuelerIdAndWochentagAndStundeAndWochentypAndInklusiveOrEmptyList(props.id, wochentag, stunde, wochentyp, false);
 	}
 
@@ -55,11 +55,11 @@
 		return props.manager().pausenzeitHatSchnittMitZeitrasterByWochentagAndSchuelerId(wochentag, props.id);
 	}
 
-	function getPausenzeitenWochentag(wochentag: number) : List<StundenplanPausenzeit> {
+	function getPausenzeitenWochentag(wochentag: number): List<StundenplanPausenzeit> {
 		return props.manager().pausenzeitGetMengeBySchuelerIdAndWochentagAsList(props.id, wochentag);
 	}
 
-	function getPausenaufsichtenPausenzeit(idPausenzeit: number) : List<StundenplanPausenaufsicht> {
+	function getPausenaufsichtenPausenzeit(idPausenzeit: number): List<StundenplanPausenaufsicht> {
 		return props.manager().pausenaufsichtGetMengeBySchuelerIdAndPausenzeitIdAndWochentypAndInklusive(props.id, idPausenzeit, props.wochentyp(), true);
 	}
 

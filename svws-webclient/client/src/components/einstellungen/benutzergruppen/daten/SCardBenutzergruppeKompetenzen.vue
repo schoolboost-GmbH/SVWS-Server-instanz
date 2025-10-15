@@ -25,11 +25,11 @@
 
 	const props = defineProps<{
 		getBenutzergruppenManager: () => BenutzergruppenManager;
-		addKompetenz : (kompetenz: BenutzerKompetenz) => Promise<boolean>;
-		removeKompetenz : (kompetenz: BenutzerKompetenz) => Promise<boolean>;
-		addBenutzerKompetenzGruppe : (kompetenzgruppe : BenutzerKompetenzGruppe) => Promise<boolean>,
-		removeBenutzerKompetenzGruppe : (kompetenzgruppe : BenutzerKompetenzGruppe) => Promise<boolean>
-		benutzerKompetenzen : (kompetenzgruppe : BenutzerKompetenzGruppe) => List<BenutzerKompetenz>;
+		addKompetenz: (kompetenz: BenutzerKompetenz) => Promise<boolean>;
+		removeKompetenz: (kompetenz: BenutzerKompetenz) => Promise<boolean>;
+		addBenutzerKompetenzGruppe: (kompetenzgruppe: BenutzerKompetenzGruppe) => Promise<boolean>,
+		removeBenutzerKompetenzGruppe: (kompetenzgruppe: BenutzerKompetenzGruppe) => Promise<boolean>
+		benutzerKompetenzen: (kompetenzgruppe: BenutzerKompetenzGruppe) => List<BenutzerKompetenz>;
 	}>();
 
 	const kompetenzgruppen = computed<BenutzerKompetenzGruppe[]>(() => BenutzerKompetenzGruppe.values().filter(gr => gr.daten.id >= 0 && props.benutzerKompetenzen(gr).size() > 0));

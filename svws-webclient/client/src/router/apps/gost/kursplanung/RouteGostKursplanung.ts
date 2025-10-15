@@ -2,7 +2,7 @@ import type { RouteLocationNormalized, RouteLocationRaw, RouteParams, RouteParam
 import type { GostKursplanungAuswahlProps } from "~/components/gost/kursplanung/SGostKursplanungAuswahlProps";
 import type { GostKursplanungProps } from "~/components/gost/kursplanung/SGostKursplanungProps";
 
-import type { GostBlockungListeneintrag, GostBlockungsergebnis} from "@core";
+import type { GostBlockungListeneintrag, GostBlockungsergebnis } from "@core";
 import { BenutzerKompetenz, DeveloperNotificationException, GostHalbjahr, ServerMode } from "@core";
 
 import { api } from "~/router/Api";
@@ -38,7 +38,7 @@ export class RouteGostKursplanung extends RouteNode<RouteDataGostKursplanung, Ro
 		super.defaultChild = routeGostKursplanungSchueler;
 		this.isHidden = (params?: RouteParams) => {
 			return this.checkHidden(params);
-		}
+		};
 		api.config.addElements([
 			new ConfigElement("gost.kursplanung.kursansicht.ausgeblendet", "user", "nichts"), // nichts, alles, schienen
 			new ConfigElement("gost.kursplanung.kursansicht.sortierung", "user", "kursart"),
@@ -54,14 +54,14 @@ export class RouteGostKursplanung extends RouteNode<RouteDataGostKursplanung, Ro
 		try {
 			const { abiturjahr } = params ? RouteNode.getIntParams(params, ["abiturjahr"]) : { abiturjahr: null };
 			if ((abiturjahr === null) || (abiturjahr === -1))
-				return { name: routeGost.defaultChild!.name, params: { idSchuljahresabschnitt: routeApp.data.idSchuljahresabschnitt, abiturjahr }};
+				return { name: routeGost.defaultChild!.name, params: { idSchuljahresabschnitt: routeApp.data.idSchuljahresabschnitt, abiturjahr } };
 			return false;
 		} catch (e) {
 			return routeError.getSimpleErrorRoute(e as DeveloperNotificationException);
 		}
 	}
 
-	public async beforeEach(to: RouteNode<any, any>, to_params: RouteParams, from: RouteNode<any, any> | undefined, from_params: RouteParams) : Promise<boolean | void | Error | RouteLocationRaw> {
+	public async beforeEach(to: RouteNode<any, any>, to_params: RouteParams, from: RouteNode<any, any> | undefined, from_params: RouteParams): Promise<boolean | void | Error | RouteLocationRaw> {
 		try {
 			const { abiturjahr, halbjahr: halbjahrId, idblockung: idBlockung, idergebnis: idErgebnis } = RouteNode.getIntParams(to_params, ["abiturjahr", "halbjahr", "idblockung", "idergebnis"]);
 			if ((abiturjahr === undefined))
@@ -75,12 +75,12 @@ export class RouteGostKursplanung extends RouteNode<RouteDataGostKursplanung, Ro
 			if ((idBlockung === undefined) && (idErgebnis !== undefined))
 				return this.getRouteHalbjahr(abiturjahr, halbjahr.id);
 			return true;
-		} catch(e) {
+		} catch (e) {
 			return await routeError.getErrorRoute(e instanceof Error ? e : new DeveloperNotificationException("Unbekannter Fehler beim Laden der Klausurplanungsdaten."));
 		}
 	}
 
-	protected async update(to: RouteNode<any, any>, to_params: RouteParams, from: RouteNode<any, any> | undefined, from_params: RouteParams, isEntering: boolean, redirected: RouteNode<any, any> | undefined) : Promise<void | Error | RouteLocationRaw> {
+	protected async update(to: RouteNode<any, any>, to_params: RouteParams, from: RouteNode<any, any> | undefined, from_params: RouteParams, isEntering: boolean, redirected: RouteNode<any, any> | undefined): Promise<void | Error | RouteLocationRaw> {
 		try {
 			const { abiturjahr, halbjahr: halbjahrId, idblockung: idBlockung, idergebnis: idErgebnis } = RouteNode.getIntParams(to_params, ["abiturjahr", "halbjahr", "idblockung", "idergebnis"]);
 			// Prüfe den Abiturjahrgang und setze diesen ggf.
@@ -102,7 +102,7 @@ export class RouteGostKursplanung extends RouteNode<RouteDataGostKursplanung, Ro
 			if (idBlockung === undefined) {
 				// ... wurde die ID der Blockung auf undefined gesetzt, so prüfe, ob die Blockungsliste leer ist und wähle ggf. die aktive Blockung oder das erste Element aus
 				if (this.data.mapBlockungen.size > 0) {
-					let blockungsEintrag : GostBlockungListeneintrag | undefined = undefined;
+					let blockungsEintrag: GostBlockungListeneintrag | undefined = undefined;
 					for (const e of this.data.mapBlockungen.values())
 						if (e.istAktiv === true) {
 							blockungsEintrag = e;
@@ -135,7 +135,7 @@ export class RouteGostKursplanung extends RouteNode<RouteDataGostKursplanung, Ro
 				}
 			}
 			// Prüfe das Blockungsergebnis und setzte dieses ggf.
-			let ergebnis : GostBlockungsergebnis | undefined;
+			let ergebnis: GostBlockungsergebnis | undefined;
 			if (idErgebnis === undefined) {
 				// ... wurde die ID des Ergebnisses auf undefined setzt, so prüfe, ob die Ergebnisliste leer ist und wähle ggf. das aktiver oder das erste Element aus
 				if ((this.data.hatBlockung) && (this.data.ergebnisse.size() > 0)) {
@@ -171,7 +171,7 @@ export class RouteGostKursplanung extends RouteNode<RouteDataGostKursplanung, Ro
 			// Setze die aktuelle Route auf die Schüler-Route, so dass die Auswahl geladen wird.
 			if (this.name === to.name)
 				return routeGostKursplanungSchueler.getRoute();
-		} catch(e) {
+		} catch (e) {
 			return await routeError.getErrorRoute(e instanceof Error ? e : new DeveloperNotificationException("Unbekannter Fehler beim Laden der Klausurplanungsdaten."));
 		}
 	}
@@ -184,7 +184,7 @@ export class RouteGostKursplanung extends RouteNode<RouteDataGostKursplanung, Ro
 		this.data.unsetHalbjahr();
 	}
 
-	public addRouteParamsFromState() : RouteParamsRawGeneric {
+	public addRouteParamsFromState(): RouteParamsRawGeneric {
 		const abiturjahr = this.data.hatAbiturjahr ? this.data.abiturjahr : -1;
 		const halbjahr = this.data.halbjahr.id;
 		const idblockung = this.data.hatBlockung ? this.data.auswahlBlockung.id : undefined;
@@ -192,19 +192,19 @@ export class RouteGostKursplanung extends RouteNode<RouteDataGostKursplanung, Ro
 		return { abiturjahr, halbjahr, idblockung, idergebnis };
 	}
 
-	public getRouteHalbjahr(abiturjahr: number, halbjahr: number) : RouteLocationRaw {
+	public getRouteHalbjahr(abiturjahr: number, halbjahr: number): RouteLocationRaw {
 		return this.getRoute({ abiturjahr, halbjahr, idblockung: undefined, idergebnis: undefined });
 	}
 
-	public getRouteBlockung(abiturjahr: number, halbjahr: number, idblockung: number) : RouteLocationRaw {
+	public getRouteBlockung(abiturjahr: number, halbjahr: number, idblockung: number): RouteLocationRaw {
 		return this.getRoute({ abiturjahr, halbjahr, idblockung, idergebnis: undefined });
 	}
 
-	public getRouteErgebnis(abiturjahr: number, halbjahr: number, idblockung: number, idergebnis: number) : RouteLocationRaw {
+	public getRouteErgebnis(abiturjahr: number, halbjahr: number, idblockung: number, idergebnis: number): RouteLocationRaw {
 		return this.getRoute({ abiturjahr, halbjahr, idblockung, idergebnis });
 	}
 
-	public getRouteSchueler(abiturjahr: number, halbjahr: number, idblockung: number, idergebnis: number, idschueler: number) : RouteLocationRaw {
+	public getRouteSchueler(abiturjahr: number, halbjahr: number, idblockung: number, idergebnis: number, idschueler: number): RouteLocationRaw {
 		return routeGostKursplanungSchueler.getRoute({ abiturjahr, halbjahr, idblockung, idergebnis, idschueler });
 	}
 
@@ -244,7 +244,7 @@ export class RouteGostKursplanung extends RouteNode<RouteDataGostKursplanung, Ro
 			ausfuehrlicheDarstellungKursdifferenz: () => this.data.ausfuehrlicheDarstellungKursdifferenz,
 			setAusfuehrlicheDarstellungKursdifferenz: this.data.setAusfuehrlicheDarstellungKursdifferenz,
 			mapCoreTypeNameJsonData: () => api.mapCoreTypeNameJsonData,
-		}
+		};
 	}
 
 	public getProps(to: RouteLocationNormalized): GostKursplanungProps {
@@ -282,7 +282,7 @@ export class RouteGostKursplanung extends RouteNode<RouteDataGostKursplanung, Ro
 			ergebnisSynchronisieren: this.data.ergebnisSynchronisieren,
 			kurssortierung: this.data.kurssortierung,
 			getPDF: this.data.getPDF,
-			sendEmailPdf : this.data.sendEmailPdf,
+			sendEmailPdf: this.data.sendEmailPdf,
 			existiertSchuljahresabschnitt: this.data.existiertSchuljahresabschnitt,
 			schuelerFilter: () => this.data.schuelerFilter,
 			faecherManager: routeGost.data.faecherManager,
@@ -291,7 +291,7 @@ export class RouteGostKursplanung extends RouteNode<RouteDataGostKursplanung, Ro
 			mapFachwahlStatistik: () => this.data.mapFachwahlStatistik,
 			updateKursSchuelerZuordnungen: this.data.updateKursSchuelerZuordnungen,
 			apiStatus: api.status,
-			//Config
+			// Config
 			blockungstabelleHidden: () => this.data.blockungstabelleHidden,
 			setBlockungstabelleHidden: this.data.setBlockungstabelleHidden,
 			zeigeSchienenbezeichnungen: () => this.data.zeigeSchienenbezeichnungen,
@@ -300,7 +300,7 @@ export class RouteGostKursplanung extends RouteNode<RouteDataGostKursplanung, Ro
 			setFixierteVerschieben: this.data.setFixierteVerschieben,
 			inZielkursFixieren: () => this.data.inZielkursFixieren,
 			setInZielkursFixieren: this.data.setInZielkursFixieren,
-		}
+		};
 	}
 
 }

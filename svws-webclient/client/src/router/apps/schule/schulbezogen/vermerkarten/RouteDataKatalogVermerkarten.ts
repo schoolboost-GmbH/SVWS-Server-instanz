@@ -27,7 +27,7 @@ export class RouteDataKatalogVermerkarten extends RouteDataAuswahl<VermerkartenL
 		param.id = id;
 	}
 
-	protected async createManager(_ : number) : Promise<Partial<RouteStateAuswahlInterface<VermerkartenListeManager>>> {
+	protected async createManager(_: number): Promise<Partial<RouteStateAuswahlInterface<VermerkartenListeManager>>> {
 		const vermerkarten = await api.server.getVermerkarten(api.schema);
 		const manager = new VermerkartenListeManager(api.abschnitt.id, api.schuleStammdaten.idSchuljahresabschnitt, api.schuleStammdaten.abschnitte, api.schulform, vermerkarten, new ArrayList());
 		if (this._state.value.manager === undefined)
@@ -45,7 +45,7 @@ export class RouteDataKatalogVermerkarten extends RouteDataAuswahl<VermerkartenL
 		return auswahl;
 	}
 
-	protected async doPatch(data : Partial<VermerkartEintrag>, id: number) : Promise<void> {
+	protected async doPatch(data: Partial<VermerkartEintrag>, id: number): Promise<void> {
 		await api.server.patchVermerkart(data, api.schema, id);
 	}
 
@@ -57,9 +57,9 @@ export class RouteDataKatalogVermerkarten extends RouteDataAuswahl<VermerkartenL
 		const res = await api.server.createVermerkart(data, api.schema);
 		await this.setSchuljahresabschnitt(this._state.value.idSchuljahresabschnitt, true);
 		await this.gotoDefaultView(res.id);
-	}
+	};
 
-	protected deleteMessage(id: number, vermerkart: VermerkartEintrag | null) : string {
+	protected deleteMessage(id: number, vermerkart: VermerkartEintrag | null): string {
 		return `Vermerkart ${vermerkart?.bezeichnung ?? '???'} (ID: ${id}) wurde erfolgreich gelöscht.`;
 	}
 

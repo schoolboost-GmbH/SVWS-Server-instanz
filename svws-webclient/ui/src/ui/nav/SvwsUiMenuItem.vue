@@ -63,10 +63,10 @@
 		emit("click", event);
 	}
 
-	const slots: SetupContext['slots'] = useSlots()
+	const slots: SetupContext['slots'] = useSlots();
 
 	const hatlabel = computed(() => {
-		const label = slots.label?.()
+		const label = slots.label?.();
 		if ((label !== undefined) && (label.length > 0) && (typeof label[0].children === 'string'))
 			return label[0].children;
 		return "";

@@ -145,7 +145,7 @@
 
 	const props = defineProps<AppProps>();
 
-	const { focusHelpVisible, focusSwitchingEnabled , enable, disable } = useRegionSwitch();
+	const { focusHelpVisible, focusSwitchingEnabled, enable, disable } = useRegionSwitch();
 	onMounted(() => enable());
 	onUnmounted(() => disable());
 
@@ -163,10 +163,10 @@
 	});
 
 	const pendingSetApp = ref('');
-	const copied = ref<boolean|null>(null);
+	const copied = ref<boolean | null>(null);
 
-	function getIcon(menu: TabData) : string {
-		switch(menu.image) {
+	function getIcon(menu: TabData): string {
+		switch (menu.image) {
 			case "i-ri-school-line":
 			case "i-ri-group-line":
 			case "i-ri-briefcase-line":
@@ -185,7 +185,7 @@
 	async function copyToClipboard() {
 		try {
 			await navigator.clipboard.writeText(`${version} ${githash}`);
-		} catch(e) {
+		} catch (e) {
 			copied.value = false;
 		}
 		copied.value = true;
@@ -217,13 +217,13 @@
 
 	function copyString(error: CapturedError) {
 		const json = JSON.stringify({ env: { mode: api.mode.text, version: api.version, commit: api.githash }, error }, null, 2);
-		return "```json\n"+json+"\n```";
+		return "```json\n" + json + "\n```";
 	}
 
 	function errorHandler(event: ErrorEvent | PromiseRejectionEvent) {
 		event.preventDefault();
 		api.status.stop();
-		console.log(event)
+		console.log(event);
 		if (event instanceof ErrorEvent)
 			void createCapturedError(event.error);
 		if (event instanceof PromiseRejectionEvent)
@@ -252,15 +252,15 @@
 		let message = reason.message;
 		let log = null;
 		if (reason instanceof DeveloperNotificationException)
-			name = "Programmierfehler: Bitte melden Sie diesen Fehler."
+			name = "Programmierfehler: Bitte melden Sie diesen Fehler.";
 		else if (reason instanceof UserNotificationException)
 			name = "Nutzungsfehler: Dieser Fehler wurde durch eine nicht vorgesehene Nutzung der verwendeten Funktion hervorgerufen, z.B. durch unmögliche Kombinationen etc.";
 		else if (reason instanceof OpenApiError) {
-			name = "API-Fehler: Dieser Fehler wird durch eine fehlerhafte Kommunikation mit dem Server verursacht. In der Regel bedeutet das, dass die verschickten Daten nicht den Vorgaben entsprechen."
+			name = "API-Fehler: Dieser Fehler wird durch eine fehlerhafte Kommunikation mit dem Server verursacht. In der Regel bedeutet das, dass die verschickten Daten nicht den Vorgaben entsprechen.";
 			if (reason.response instanceof Response) {
 				const text = await reason.response.text();
 				try {
-					const res = JSON.parse(text)
+					const res = JSON.parse(text);
 					if (('log' in res) && ('success' in res))
 						log = res satisfies SimpleOperationResponse;
 				} catch {
@@ -277,7 +277,7 @@
 			message,
 			stack: reason.stack?.split("\n") || '',
 			log,
-		}
+		};
 		errors.value.set(newError.id, newError);
 	}
 

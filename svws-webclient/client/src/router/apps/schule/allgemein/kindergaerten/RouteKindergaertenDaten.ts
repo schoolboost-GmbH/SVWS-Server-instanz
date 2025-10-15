@@ -6,7 +6,7 @@ import { RouteNode } from "~/router/RouteNode";
 import { api } from "~/router/Api";
 import { routeKindergaerten } from "~/router/apps/schule/allgemein/kindergaerten/RouteKindergaerten";
 
-const SKindergaertenDaten = () => import("~/components/schule/allgemein/kindergaerten/daten/SKindergaertenDaten.vue")
+const SKindergaertenDaten = () => import("~/components/schule/allgemein/kindergaerten/daten/SKindergaertenDaten.vue");
 
 export class RouteKindergaertenDaten extends RouteNode<any, RouteKindergaerten> {
 
@@ -15,7 +15,7 @@ export class RouteKindergaertenDaten extends RouteNode<any, RouteKindergaerten> 
 			"daten", SKindergaertenDaten);
 		super.mode = ServerMode.DEV;
 		super.propHandler = (route) => this.getProps(route);
-		super.text = "Kindergaerten"
+		super.text = "Kindergaerten";
 	}
 
 	public getProps(to: RouteLocationNormalized): KindergaertenDatenProps {
@@ -23,7 +23,7 @@ export class RouteKindergaertenDaten extends RouteNode<any, RouteKindergaerten> 
 			manager: () => routeKindergaerten.data.manager,
 			benutzerKompetenzen: api.benutzerKompetenzen,
 			patch: routeKindergaerten.data.patch,
-		}
+		};
 	}
 }
 

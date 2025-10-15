@@ -65,15 +65,15 @@
 			wochenTypModell: lastValidStundenplan === null ? 0 : lastValidStundenplan.wochenTypModell,
 			aktiv: false,
 			bezeichnungStundenplan: "Neuer Stundenplan",
-		}
+		};
 
-	})
+	});
 
 	const validateAll = computed(() =>
 		StundenplanListeManager.validateBezeichnung(data.value.bezeichnungStundenplan)
 		&& (DateUtils.isValidDate(data.value.gueltigAb)
 			&& DateUtils.isValidDate(data.value.gueltigBis)
-			&& props.manager().validateGueltigAb(data.value.gueltigAb, data.value.gueltigBis, data.value.aktiv,props. manager().validateGueltigBis(data.value.gueltigAb, data.value.gueltigAb, data.value.aktiv))
+			&& props.manager().validateGueltigAb(data.value.gueltigAb, data.value.gueltigBis, data.value.aktiv, props.manager().validateGueltigBis(data.value.gueltigAb, data.value.gueltigAb, data.value.aktiv))
 			&& props.manager().validateGueltigBis(data.value.gueltigAb, data.value.gueltigBis, data.value.aktiv)
 			&& (data.value.aktiv === false || props.manager().istKonfliktfreiZuAktivenStundenplaenen(data.value.gueltigAb, data.value.gueltigBis))));
 

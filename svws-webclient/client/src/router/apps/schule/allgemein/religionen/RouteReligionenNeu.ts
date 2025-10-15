@@ -14,8 +14,8 @@ const SReligionenNeu = () => import("~/components/schule/allgemein/religionen/SR
 export class RouteReligionenNeu extends RouteNode<any, RouteReligionen> {
 
 	public constructor() {
-		super(Schulform.values(), [ BenutzerKompetenz.KATALOG_EINTRAEGE_AENDERN ], "schule.religionen.neu", "neu", SReligionenNeu);
-		super.types = new Set([ ViewType.HINZUFUEGEN ]);
+		super(Schulform.values(), [BenutzerKompetenz.KATALOG_EINTRAEGE_AENDERN], "schule.religionen.neu", "neu", SReligionenNeu);
+		super.types = new Set([ViewType.HINZUFUEGEN]);
 		super.mode = ServerMode.STABLE;
 		super.propHandler = (route) => this.getProps(route);
 		super.text = "Religionen Neu";

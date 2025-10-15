@@ -32,7 +32,7 @@
 
 	const openModal = () => {
 		show.value = true;
-	}
+	};
 
 	function onFileChanged(event: Event) {
 		const target = event.target as HTMLInputElement;

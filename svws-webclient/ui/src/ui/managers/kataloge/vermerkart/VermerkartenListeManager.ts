@@ -1,12 +1,12 @@
 import { JavaObject } from '../../../../../../core/src/java/lang/JavaObject';
 import type { JavaSet } from '../../../../../../core/src/java/util/JavaSet';
-import { VermerkartEintrag } from '../../../../../../core/src/core/data/schule/VermerkartEintrag';
+import type { VermerkartEintrag } from '../../../../../../core/src/core/data/schule/VermerkartEintrag';
 import { AttributMitAuswahl } from '../../../../../../core/src/core/utils/AttributMitAuswahl';
-import { Schulform } from '../../../../../../core/src/asd/types/schule/Schulform';
+import type { Schulform } from '../../../../../../core/src/asd/types/schule/Schulform';
 import { SchuelerUtils } from '../../../../../../core/src/core/utils/schueler/SchuelerUtils';
 import { JavaString } from '../../../../../../core/src/java/lang/JavaString';
 import { DeveloperNotificationException } from '../../../../../../core/src/core/exceptions/DeveloperNotificationException';
-import { SchuelerVermerkartZusammenfassung } from '../../../../../../core/src/core/data/schueler/SchuelerVermerkartZusammenfassung';
+import type { SchuelerVermerkartZusammenfassung } from '../../../../../../core/src/core/data/schueler/SchuelerVermerkartZusammenfassung';
 import type { Comparator } from '../../../../../../core/src/java/util/Comparator';
 import { AuswahlManager } from '../../../AuswahlManager';
 import { JavaInteger } from '../../../../../../core/src/java/lang/JavaInteger';
@@ -16,7 +16,7 @@ import { JavaLong } from '../../../../../../core/src/java/lang/JavaLong';
 import type { List } from '../../../../../../core/src/java/util/List';
 import { Class } from '../../../../../../core/src/java/lang/Class';
 import { Arrays } from '../../../../../../core/src/java/util/Arrays';
-import { Schuljahresabschnitt } from '../../../../../../core/src/asd/data/schule/Schuljahresabschnitt';
+import type { Schuljahresabschnitt } from '../../../../../../core/src/asd/data/schule/Schuljahresabschnitt';
 import { HashSet } from '../../../../../../core/src/java/util/HashSet';
 import { Pair } from '../../../../../../core/src/asd/adt/Pair';
 
@@ -25,34 +25,34 @@ export class VermerkartenListeManager extends AuswahlManager<number, VermerkartE
 	/**
 	 * Funktionen zum Mappen von Auswahl- bzw. Daten-Objekten auf deren ID-Typ
 	 */
-	private static readonly _vermerkartToId : JavaFunction<VermerkartEintrag, number> = { apply : (v: VermerkartEintrag) => v.id };
+	private static readonly _vermerkartToId: JavaFunction<VermerkartEintrag, number> = { apply: (v: VermerkartEintrag) => v.id };
 
-	private listSchuelerVermerkartZusammenfassung : AttributMitAuswahl<number, SchuelerVermerkartZusammenfassung>;
+	private listSchuelerVermerkartZusammenfassung: AttributMitAuswahl<number, SchuelerVermerkartZusammenfassung>;
 
-	private static readonly _schuelerToId : JavaFunction<SchuelerVermerkartZusammenfassung, number> = { apply : (s: SchuelerVermerkartZusammenfassung) => s.id };
+	private static readonly _schuelerToId: JavaFunction<SchuelerVermerkartZusammenfassung, number> = { apply: (s: SchuelerVermerkartZusammenfassung) => s.id };
 
 	/**
 	 * Das Filter-Attribut auf nur sichtbare Vermerkarten
 	 */
-	private _filterNurSichtbar : boolean = true;
+	private _filterNurSichtbar: boolean = true;
 
 	/**
 	 * Ein Dummy-Event.
 	 */
-	protected static readonly _dummyEvent : Runnable = { run : () => {
+	protected static readonly _dummyEvent: Runnable = { run: () => {
 		// empty block
 	} };
 
 	/**
 	 * Sets mit Listen zur aktuellen Auswahl
 	 */
-	private readonly setVermerkartenIDsMitSchuelern : HashSet<number> = new HashSet<number>();
+	private readonly setVermerkartenIDsMitSchuelern: HashSet<number> = new HashSet<number>();
 
 	/**
 	 * Ein Default-Comparator für den Vergleich von Vermerkarten in Vermerkartenlisten.
 	 */
-	public static readonly comparator : Comparator<VermerkartEintrag> = { compare : (a: VermerkartEintrag, b: VermerkartEintrag) => {
-		let cmp : number = a.sortierung - b.sortierung;
+	public static readonly comparator: Comparator<VermerkartEintrag> = { compare: (a: VermerkartEintrag, b: VermerkartEintrag) => {
+		let cmp: number = a.sortierung - b.sortierung;
 		if (cmp !== 0)
 			return cmp;
 		if ((a.bezeichnung !== null) && (b.bezeichnung !== null)) {
@@ -74,7 +74,7 @@ export class VermerkartenListeManager extends AuswahlManager<number, VermerkartE
 	 * @param vermerkarten     					die Liste der Vermerkarten
 	 * @param listSchuelerVermerkartZusammenfassung     	die Liste der SchuelerVermerkartZusammenfassung
 	 */
-	public constructor(schuljahresabschnitt : number, schuljahresabschnittSchule : number, schuljahresabschnitte : List<Schuljahresabschnitt>, schulform : Schulform | null, vermerkarten : List<VermerkartEintrag>, listSchuelerVermerkartZusammenfassung : List<SchuelerVermerkartZusammenfassung>) {
+	public constructor(schuljahresabschnitt: number, schuljahresabschnittSchule: number, schuljahresabschnitte: List<Schuljahresabschnitt>, schulform: Schulform | null, vermerkarten: List<VermerkartEintrag>, listSchuelerVermerkartZusammenfassung: List<SchuelerVermerkartZusammenfassung>) {
 		super(schuljahresabschnitt, schuljahresabschnittSchule, schuljahresabschnitte, schulform, vermerkarten, VermerkartenListeManager.comparator, VermerkartenListeManager._vermerkartToId, VermerkartenListeManager._vermerkartToId, Arrays.asList(new Pair("Vermerkart", true), new Pair("schueleranzahl", true)));
 		this.listSchuelerVermerkartZusammenfassung = new AttributMitAuswahl(listSchuelerVermerkartZusammenfassung, VermerkartenListeManager._schuelerToId, SchuelerUtils.comparatorSchuelerVermerkartZusammenfassung, VermerkartenListeManager._dummyEvent);
 	}
@@ -84,7 +84,7 @@ export class VermerkartenListeManager extends AuswahlManager<number, VermerkartE
 	 *
 	 * @param listSchuelerVermerkartZusammenfassung Eine Liste von SchülervermerkartZusammenfassungen
 	 */
-	public setListSchuelerVermerkartZusammenfassung(listSchuelerVermerkartZusammenfassung : List<SchuelerVermerkartZusammenfassung>) : void {
+	public setListSchuelerVermerkartZusammenfassung(listSchuelerVermerkartZusammenfassung: List<SchuelerVermerkartZusammenfassung>): void {
 		this.listSchuelerVermerkartZusammenfassung = new AttributMitAuswahl(listSchuelerVermerkartZusammenfassung, VermerkartenListeManager._schuelerToId, SchuelerUtils.comparatorSchuelerVermerkartZusammenfassung, VermerkartenListeManager._dummyEvent);
 	}
 
@@ -93,7 +93,7 @@ export class VermerkartenListeManager extends AuswahlManager<number, VermerkartE
 	 *
 	 * @return Das Set mit IDs von Vermerkarten, die Schüler haben
 	 */
-	public getVermerkartenIDsMitSchuelern() : JavaSet<number> {
+	public getVermerkartenIDsMitSchuelern(): JavaSet<number> {
 		return this.setVermerkartenIDsMitSchuelern;
 	}
 
@@ -102,12 +102,12 @@ export class VermerkartenListeManager extends AuswahlManager<number, VermerkartE
 	 *
 	 * @return Eine Instanz von AttributMitAuswahl, die eine Liste von SchülervermerkartZusammenfassungen enthält.
 	 */
-	public getListSchuelerVermerkartZusammenfassung() : AttributMitAuswahl<number, SchuelerVermerkartZusammenfassung> {
+	public getListSchuelerVermerkartZusammenfassung(): AttributMitAuswahl<number, SchuelerVermerkartZusammenfassung> {
 		return this.listSchuelerVermerkartZusammenfassung;
 	}
 
-	protected onSetDaten(eintrag : VermerkartEintrag, daten : VermerkartEintrag) : boolean {
-		let updateEintrag : boolean = false;
+	protected onSetDaten(eintrag: VermerkartEintrag, daten: VermerkartEintrag): boolean {
+		let updateEintrag: boolean = false;
 		if (!JavaObject.equalsTranspiler(daten.bezeichnung, (eintrag.bezeichnung))) {
 			eintrag.bezeichnung = daten.bezeichnung;
 			updateEintrag = true;
@@ -120,7 +120,7 @@ export class VermerkartenListeManager extends AuswahlManager<number, VermerkartE
 	 *
 	 * @return true, wenn nur sichtbare Vermerkarten angezeigt werden und ansonsten false
 	 */
-	public filterNurSichtbar() : boolean {
+	public filterNurSichtbar(): boolean {
 		return this._filterNurSichtbar;
 	}
 
@@ -129,12 +129,12 @@ export class VermerkartenListeManager extends AuswahlManager<number, VermerkartE
 	 *
 	 * @param value   true, wenn der Filter aktiviert werden soll, und ansonsten false
 	 */
-	public setFilterNurSichtbar(value : boolean) : void {
+	public setFilterNurSichtbar(value: boolean): void {
 		this._filterNurSichtbar = value;
 		this._eventHandlerFilterChanged.run();
 	}
 
-	protected onMehrfachauswahlChanged() : void {
+	protected onMehrfachauswahlChanged(): void {
 		this.setVermerkartenIDsMitSchuelern.clear();
 		for (const k of this.liste.auswahl())
 			if (k.anzahlVermerke !== 0)
@@ -149,18 +149,18 @@ export class VermerkartenListeManager extends AuswahlManager<number, VermerkartE
 	 *
 	 * @return das Ergebnis des Vergleichs (-1 kleiner, 0 gleich und 1 größer)
 	 */
-	protected compareAuswahl(a : VermerkartEintrag, b : VermerkartEintrag) : number {
+	protected compareAuswahl(a: VermerkartEintrag, b: VermerkartEintrag): number {
 		for (const criteria of this._order) {
-			const field : string | null = criteria.a;
-			const asc : boolean = (criteria.b === null) || criteria.b;
-			let cmp : number = 0;
+			const field: string | null = criteria.a;
+			const asc: boolean = (criteria.b === null) || criteria.b;
+			let cmp: number = 0;
 			if (JavaObject.equalsTranspiler("Vermerkart", (field))) {
 				cmp = VermerkartenListeManager.comparator.compare(a, b);
 			} else
 				if (JavaObject.equalsTranspiler("schueleranzahl", (field))) {
 					cmp = JavaInteger.compare(a.anzahlVermerke, b.anzahlVermerke);
 				} else
-					throw new DeveloperNotificationException("Fehler bei der Sortierung. Das Sortierkriterium wird vom Manager nicht unterstützt.")
+					throw new DeveloperNotificationException("Fehler bei der Sortierung. Das Sortierkriterium wird vom Manager nicht unterstützt.");
 			if (cmp === 0)
 				continue;
 			return asc ? cmp : -cmp;
@@ -168,7 +168,7 @@ export class VermerkartenListeManager extends AuswahlManager<number, VermerkartE
 		return JavaLong.compare(a.id, b.id);
 	}
 
-	protected checkFilter(eintrag : VermerkartEintrag) : boolean {
+	protected checkFilter(eintrag: VermerkartEintrag): boolean {
 		return !(this._filterNurSichtbar && !eintrag.istSichtbar);
 	}
 
@@ -177,7 +177,7 @@ export class VermerkartenListeManager extends AuswahlManager<number, VermerkartE
 	 *
 	 * @param srcManager Manager, aus dem die Filterinformationen übernommen werden
 	 */
-	public useFilter(srcManager : VermerkartenListeManager) : void {
+	public useFilter(srcManager: VermerkartenListeManager): void {
 		this.setFilterNurSichtbar(srcManager.filterNurSichtbar());
 	}
 
@@ -185,7 +185,7 @@ export class VermerkartenListeManager extends AuswahlManager<number, VermerkartE
 		return 'de.svws_nrw.core.utils.kataloge.vermerkart.VermerkartenListeManager';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.utils.AuswahlManager', 'de.svws_nrw.core.utils.kataloge.vermerkart.VermerkartenListeManager'].includes(name);
 	}
 
@@ -193,6 +193,6 @@ export class VermerkartenListeManager extends AuswahlManager<number, VermerkartE
 
 }
 
-export function cast_de_svws_nrw_core_utils_kataloge_vermerkart_VermerkartenListeManager(obj : unknown) : VermerkartenListeManager {
+export function cast_de_svws_nrw_core_utils_kataloge_vermerkart_VermerkartenListeManager(obj: unknown): VermerkartenListeManager {
 	return obj as VermerkartenListeManager;
 }

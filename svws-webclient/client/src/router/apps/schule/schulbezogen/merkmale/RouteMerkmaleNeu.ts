@@ -29,7 +29,7 @@ export class RouteMerkmaleNeu extends RouteNode<any, RouteMerkmale> {
 			checkpoint: this.checkpoint,
 			benutzerKompetenzen: api.benutzerKompetenzen,
 			continueRoutingAfterCheckpoint: () => RouteManager.continueRoutingAfterCheckpoint(),
-		}
+		};
 	}
 }
 

@@ -1,6 +1,6 @@
 import type { RouteLocationNormalized, RouteLocationRaw, RouteParams, RouteParamsRawGeneric } from "vue-router";
 
-import type { StundenplanAufsichtsbereich , DeveloperNotificationException} from "@core";
+import type { StundenplanAufsichtsbereich, DeveloperNotificationException } from "@core";
 import { BenutzerKompetenz, Schulform, ServerMode } from "@core";
 
 import { RouteNode } from "~/router/RouteNode";
@@ -22,7 +22,7 @@ const SAufsichtsbereiche = () => import("~/components/stundenplan/kataloge/aufsi
 export class RouteKatalogAufsichtsbereiche extends RouteNode<RouteDataKatalogAufsichtsbereiche, RouteStundenplan> {
 
 	public constructor() {
-		super(Schulform.values(), [ BenutzerKompetenz.KEINE ], "stundenplan.kataloge.aufsichtsbereiche", "aufsichtsbereiche/:idAufsichtsbereich(\\d+)?", SAufsichtsbereiche, new RouteDataKatalogAufsichtsbereiche());
+		super(Schulform.values(), [BenutzerKompetenz.KEINE], "stundenplan.kataloge.aufsichtsbereiche", "aufsichtsbereiche/:idAufsichtsbereich(\\d+)?", SAufsichtsbereiche, new RouteDataKatalogAufsichtsbereiche());
 		super.mode = ServerMode.STABLE;
 		super.propHandler = (route) => this.getProps(route);
 		super.text = "Aufsichtsbereiche";
@@ -30,7 +30,7 @@ export class RouteKatalogAufsichtsbereiche extends RouteNode<RouteDataKatalogAuf
 		super.setView("eintraege", SAufsichtsbereicheAuswahl, (route) => this.getAuswahlProps(route));
 	}
 
-	protected async update(to: RouteNode<any, any>, to_params: RouteParams, from: RouteNode<any, any> | undefined, from_params: RouteParams, isEntering: boolean) : Promise<void | Error | RouteLocationRaw> {
+	protected async update(to: RouteNode<any, any>, to_params: RouteParams, from: RouteNode<any, any> | undefined, from_params: RouteParams, isEntering: boolean): Promise<void | Error | RouteLocationRaw> {
 		try {
 			const { idAufsichtsbereich } = RouteNode.getIntParams(to_params, ["idAufsichtsbereich"]);
 			if (isEntering)
@@ -51,8 +51,8 @@ export class RouteKatalogAufsichtsbereiche extends RouteNode<RouteDataKatalogAuf
 		}
 	}
 
-	public addRouteParamsFromState() : RouteParamsRawGeneric {
-		return { idAufsichtsbereich : this.data.auswahl?.id ?? undefined };
+	public addRouteParamsFromState(): RouteParamsRawGeneric {
+		return { idAufsichtsbereich: this.data.auswahl?.id ?? undefined };
 	}
 
 	public getAuswahlProps(to: RouteLocationNormalized): AufsichtsbereicheAuswahlProps {

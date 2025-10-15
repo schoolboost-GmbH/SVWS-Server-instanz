@@ -30,7 +30,7 @@
 <script setup lang="ts">
 
 	import { computed } from "vue";
-	import {BenutzerKompetenz, type ReligionEintrag, ServerMode} from "@core";
+	import { BenutzerKompetenz, type ReligionEintrag, ServerMode } from "@core";
 	import type { ReligionenAuswahlProps } from "~/components/schule/allgemein/religionen/SReligionenAuswahlPops";
 	import { useRegionSwitch, ViewType } from "@ui";
 
@@ -50,7 +50,7 @@
 		return props.manager().hasDaten() ? props.manager().auswahl() : null;
 	});
 
-	async function setAuswahl(items : ReligionEintrag[]) {
+	async function setAuswahl(items: ReligionEintrag[]) {
 		props.manager().liste.auswahlClear();
 		for (const item of items)
 			if (props.manager().liste.hasValue(item))

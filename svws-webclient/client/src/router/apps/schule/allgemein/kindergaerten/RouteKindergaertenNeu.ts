@@ -29,7 +29,7 @@ export class RouteKindergaertenNeu extends RouteNode<any, RouteKindergaerten> {
 			checkpoint: this.checkpoint,
 			benutzerKompetenzen: api.benutzerKompetenzen,
 			continueRoutingAfterCheckpoint: () => RouteManager.continueRoutingAfterCheckpoint(),
-		}
+		};
 	}
 }
 

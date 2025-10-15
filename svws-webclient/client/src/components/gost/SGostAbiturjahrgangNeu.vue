@@ -44,7 +44,7 @@
 
 	async function close() {
 		jahrgaenge.value.clear();
-		await props.cancelCreationMode()
+		await props.cancelCreationMode();
 	}
 
 </script>

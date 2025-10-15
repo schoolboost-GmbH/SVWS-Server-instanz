@@ -4,5 +4,5 @@ import type { SchuelerLernabschnittManager } from "../SchuelerLernabschnittManag
 export interface SchuelerLernabschnittNachpruefungProps {
 	schule: SchuleStammdaten;
 	manager: () => SchuelerLernabschnittManager;
-	patch: (data : Partial<SchuelerLernabschnittsdaten>) => Promise<void>;
+	patch: (data: Partial<SchuelerLernabschnittsdaten>) => Promise<void>;
 }

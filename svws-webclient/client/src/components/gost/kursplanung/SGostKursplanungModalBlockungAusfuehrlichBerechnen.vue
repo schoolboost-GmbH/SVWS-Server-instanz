@@ -202,7 +202,7 @@
 		closeModal();
 	}
 
-	function getBewertungColor(farbcode: number) : string {
+	function getBewertungColor(farbcode: number): string {
 		const h = Math.round((1 - farbcode) * 120);
 		return `hsl(${h},100%,75%)`;
 	}

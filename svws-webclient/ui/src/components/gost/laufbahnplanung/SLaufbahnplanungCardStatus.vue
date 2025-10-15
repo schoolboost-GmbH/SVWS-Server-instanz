@@ -29,13 +29,13 @@
 	const props = defineProps<{
 		abiturdatenManager: () => AbiturdatenManager;
 		fehlerliste: () => List<GostBelegpruefungErgebnisFehler>;
-		gostBelegpruefungsArt: () => 'ef1'|'gesamt'|'auto';
-		setGostBelegpruefungsArt: (value: 'ef1'|'gesamt'|'auto') => Promise<void>;
+		gostBelegpruefungsArt: () => 'ef1' | 'gesamt' | 'auto';
+		setGostBelegpruefungsArt: (value: 'ef1' | 'gesamt' | 'auto') => Promise<void>;
 	}>();
 
 	const schuljahr = computed<number>(() => props.abiturdatenManager().getSchuljahr());
 
-	const art = computed<'ef1'|'gesamt'|'auto'>({
+	const art = computed<'ef1' | 'gesamt' | 'auto'>({
 		get: () => props.gostBelegpruefungsArt(),
 		set: (value) => void props.setGostBelegpruefungsArt(value),
 	});

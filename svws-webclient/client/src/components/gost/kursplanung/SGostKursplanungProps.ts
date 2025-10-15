@@ -1,9 +1,9 @@
 import type { WritableComputedRef } from "vue";
-import {
+import type {
 	GostBlockungsdatenManager, GostBlockungsergebnisManager, GostBlockungSchiene, GostBlockungKurs, GostBlockungKursLehrer, GostFaecherManager,
 	GostHalbjahr, LehrerListeEintrag, GostStatistikFachwahl, GostBlockungsergebnisKurs, GostJahrgangsdaten, ApiFile,
 	GostBlockungsergebnisKursSchuelerZuordnungUpdate, GostBlockungRegelUpdate, JavaSet, BenutzerKompetenz, Schulform, ServerMode, ReportingParameter,
-	SimpleOperationResponse
+	SimpleOperationResponse,
 } from "@core";
 import type { GostKursplanungSchuelerFilter } from "./GostKursplanungSchuelerFilter";
 import type { ApiStatus } from "~/components/ApiStatus";
@@ -22,13 +22,13 @@ export interface GostKursplanungProps {
 	restoreBlockung: () => Promise<void>;
 	regelnUpdate: (update: GostBlockungRegelUpdate) => Promise<void>;
 	updateKursSchienenZuordnung: (idKurs: number, idSchieneAlt: number, idSchieneNeu: number) => Promise<boolean>;
-	patchSchiene: (data: Partial<GostBlockungSchiene>, id : number) => Promise<void>;
+	patchSchiene: (data: Partial<GostBlockungSchiene>, id: number) => Promise<void>;
 	addSchiene: () => Promise<GostBlockungSchiene | undefined>;
 	removeSchiene: (s: GostBlockungSchiene) => Promise<GostBlockungSchiene | undefined>;
 	patchKurs: (data: Partial<GostBlockungKurs>, kurs_id: number) => Promise<void>;
-	addKurs: (fach_id : number, kursart_id : number) => Promise<GostBlockungKurs | undefined>;
+	addKurs: (fach_id: number, kursart_id: number) => Promise<GostBlockungKurs | undefined>;
 	removeKurse: (ids: Iterable<number>) => Promise<void>;
-	combineKurs: (kurs1 : GostBlockungKurs, fach2: GostBlockungKurs | GostBlockungsergebnisKurs | undefined | null) => Promise<void>;
+	combineKurs: (kurs1: GostBlockungKurs, fach2: GostBlockungKurs | GostBlockungsergebnisKurs | undefined | null) => Promise<void>;
 	splitKurs: (kurs: GostBlockungKurs) => Promise<void>;
 	addKursLehrer: (kurs_id: number, lehrer_id: number) => Promise<GostBlockungKursLehrer | undefined>;
 	removeKursLehrer: (kurs_id: number, lehrer_id: number) => Promise<void>;
@@ -55,8 +55,8 @@ export interface GostKursplanungProps {
 	// Config
 	zeigeSchienenbezeichnungen: () => boolean;
 	setZeigeSchienenbezeichnungen: (value: boolean) => Promise<void>;
-	blockungstabelleHidden: () => 'nichts'|'alles'|'schienen';
-	setBlockungstabelleHidden: (value: 'nichts'|'alles'|'schienen') => Promise<void>;
+	blockungstabelleHidden: () => 'nichts' | 'alles' | 'schienen';
+	setBlockungstabelleHidden: (value: 'nichts' | 'alles' | 'schienen') => Promise<void>;
 	fixierteVerschieben: () => boolean;
 	setFixierteVerschieben: (value: boolean) => Promise<void>;
 	inZielkursFixieren: () => boolean;

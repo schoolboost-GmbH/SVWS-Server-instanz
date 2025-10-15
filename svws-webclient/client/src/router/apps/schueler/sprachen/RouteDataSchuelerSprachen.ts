@@ -1,4 +1,4 @@
-import type { Comparator, List, SchuelerListeEintrag, Sprachbelegung, Sprachpruefung} from "@core";
+import type { Comparator, List, SchuelerListeEintrag, Sprachbelegung, Sprachpruefung } from "@core";
 import { ArrayList, DeveloperNotificationException, JavaInteger } from "@core";
 
 import { api } from "~/router/Api";
@@ -52,15 +52,15 @@ export class RouteDataSchuelerSprachen extends RouteData<RouteStateSchuelerSprac
 			api.status.start();
 			const sprachbelegungen = await api.server.getSchuelerSprachbelegungen(api.schema, auswahl.id);
 			const sprachpruefungen = await api.server.getSchuelerSprachpruefungen(api.schema, auswahl.id);
-			sprachbelegungen.sort(<Comparator<Sprachbelegung>>{ compare(n1: Sprachbelegung, n2: Sprachbelegung) { return JavaInteger.compare(n1.reihenfolge ?? 0, n2.reihenfolge ?? 0); }})
-			this.setPatchedState({ auswahl, sprachbelegungen, sprachpruefungen })
-		} catch(error) {
-			throw new DeveloperNotificationException("Die Laufbahninformationen konnten nicht eingeholt werden.")
+			sprachbelegungen.sort(<Comparator<Sprachbelegung>>{ compare(n1: Sprachbelegung, n2: Sprachbelegung) { return JavaInteger.compare(n1.reihenfolge ?? 0, n2.reihenfolge ?? 0) } });
+			this.setPatchedState({ auswahl, sprachbelegungen, sprachpruefungen });
+		} catch (error) {
+			throw new DeveloperNotificationException("Die Laufbahninformationen konnten nicht eingeholt werden.");
 		}
 		api.status.stop();
 	}
 
-	getSprachbelegung(data: Partial<Sprachbelegung>) : Sprachbelegung | null {
+	getSprachbelegung(data: Partial<Sprachbelegung>): Sprachbelegung | null {
 		if ((data.sprache !== undefined) && (data.sprache !== ""))
 			for (const b of this._state.value.sprachbelegungen)
 				if (b.sprache === data.sprache)
@@ -69,7 +69,7 @@ export class RouteDataSchuelerSprachen extends RouteData<RouteStateSchuelerSprac
 	}
 
 	patchSprachbelegung = async (data: Partial<Sprachbelegung>, sprache: string): Promise<void> => {
-		const belegung : Sprachbelegung | null = this.getSprachbelegung({sprache});
+		const belegung: Sprachbelegung | null = this.getSprachbelegung({ sprache });
 		if (belegung === null)
 			return;
 		api.status.start();
@@ -77,11 +77,11 @@ export class RouteDataSchuelerSprachen extends RouteData<RouteStateSchuelerSprac
 		Object.assign(belegung, data);
 		this.commit();
 		api.status.stop();
-	}
+	};
 
 	addSprachbelegung = async (data: Partial<Sprachbelegung>): Promise<Sprachbelegung | null> => {
 		// Prüfe, ob bereits eine Sprachbelegung für das angegeben Sprach-Kürzel existiert
-		let belegung : Sprachbelegung | null = this.getSprachbelegung(data);
+		let belegung: Sprachbelegung | null = this.getSprachbelegung(data);
 		if (belegung !== null)
 			return null;
 		// Füge die Sprachbelegung hinzu
@@ -91,11 +91,11 @@ export class RouteDataSchuelerSprachen extends RouteData<RouteStateSchuelerSprac
 		this.commit();
 		api.status.stop();
 		return belegung;
-	}
+	};
 
 	removeSprachbelegung = async (data: Sprachbelegung): Promise<Sprachbelegung> => {
 		// Prüfe, ob die Sprachbelegung existiert
-		const belegung : Sprachbelegung | null = this.getSprachbelegung(data);
+		const belegung: Sprachbelegung | null = this.getSprachbelegung(data);
 		if (belegung === null)
 			throw new DeveloperNotificationException("Die zu löschende Sprachbelegung existiert nicht.");
 		// Entferne die Sprachbelegung
@@ -106,12 +106,12 @@ export class RouteDataSchuelerSprachen extends RouteData<RouteStateSchuelerSprac
 		this.commit();
 		api.status.stop();
 		return result;
-	}
+	};
 
-	getSprachpruefung(data: Partial<Sprachpruefung>) : Sprachpruefung | null {
+	getSprachpruefung(data: Partial<Sprachpruefung>): Sprachpruefung | null {
 		if ((data.sprache === undefined) || (data.sprache === ""))
 			return null;
-		let pruefung : Sprachpruefung | null = null;
+		let pruefung: Sprachpruefung | null = null;
 		for (const p of this._state.value.sprachpruefungen)
 			if (p.sprache === data.sprache) {
 				pruefung = p;
@@ -121,7 +121,7 @@ export class RouteDataSchuelerSprachen extends RouteData<RouteStateSchuelerSprac
 	}
 
 	patchSprachpruefung = async (data: Partial<Sprachpruefung>, sprache: string): Promise<void> => {
-		const pruefung = this.getSprachpruefung({sprache});
+		const pruefung = this.getSprachpruefung({ sprache });
 		if (pruefung === null)
 			return;
 		api.status.start();
@@ -129,11 +129,11 @@ export class RouteDataSchuelerSprachen extends RouteData<RouteStateSchuelerSprac
 		Object.assign(pruefung, data);
 		this.commit();
 		api.status.stop();
-	}
+	};
 
 	addSprachpruefung = async (data: Partial<Sprachpruefung>): Promise<Sprachpruefung | null> => {
 		// Prüfe, ob bereits eine Sprachpruefung für das angegeben Sprach-Kürzel existiert
-		let pruefung : Sprachpruefung | null = this.getSprachpruefung(data);
+		let pruefung: Sprachpruefung | null = this.getSprachpruefung(data);
 		if (pruefung !== null)
 			return null;
 		// Füge die Sprachprüfung hinzu
@@ -143,11 +143,11 @@ export class RouteDataSchuelerSprachen extends RouteData<RouteStateSchuelerSprac
 		this.commit();
 		api.status.stop();
 		return pruefung;
-	}
+	};
 
 	removeSprachpruefung = async (data: Sprachpruefung): Promise<Sprachpruefung> => {
 		// Prüfe, ob die Sprachprüfung existiert
-		const pruefung : Sprachpruefung | null = this.getSprachpruefung(data);
+		const pruefung: Sprachpruefung | null = this.getSprachpruefung(data);
 		if (pruefung === null)
 			throw new DeveloperNotificationException("Die zu löschende Sprachpruefung existiert nicht.");
 		// Entferne die Sprachprüfung
@@ -158,6 +158,6 @@ export class RouteDataSchuelerSprachen extends RouteData<RouteStateSchuelerSprac
 		this.commit();
 		api.status.stop();
 		return result;
-	}
+	};
 
 }

@@ -84,7 +84,7 @@
 		for (const device of list)
 			if (device.kind === 'videoinput')
 				hasVideoDevice.value = true;
-	})
+	});
 
 	const fileInputEl = ref<null | HTMLInputElement>(null);
 	const uploadedImage = ref<string | null>(null);
@@ -102,7 +102,7 @@
 		if (uploadedImage.value !== null)
 			uploadedImage.value = null;
 		else
-			fileInputEl.value?.click()
+			fileInputEl.value?.click();
 	}
 
 	function toggleSnapshot() {
@@ -117,8 +117,7 @@
 			emit('image:captured', capturedImage.value);
 			emit('image:base64', canvasEl.value?.toDataURL('image/jpeg', 0.75).split(',').pop() ?? null);
 			stopCapturing();
-		}
-		else
+		} else
 			await startCapturing();
 	}
 
@@ -167,7 +166,7 @@
 			if (videoEl.value)
 				videoEl.value.srcObject = stream.value;
 		} catch (err) {
-			console.log(err)
+			console.log(err);
 			capturingError.value = (err as { message: string }).message;
 		}
 	}

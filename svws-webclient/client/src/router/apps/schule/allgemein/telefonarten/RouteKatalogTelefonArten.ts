@@ -16,7 +16,7 @@ const STelefonArtenApp = () => import("~/components/schule/allgemein/telefonarte
 export class RouteKatalogTelefonArten extends RouteAuswahlNode<TelefonArtListeManager, RouteDataKatalogTelefonArten, RouteApp> {
 
 	public constructor() {
-		super(Schulform.values(), [ BenutzerKompetenz.KATALOG_EINTRAEGE_ANSEHEN, BenutzerKompetenz.KATALOG_EINTRAEGE_AENDERN ], "schule.telefonarten", "schule/telefonarten/:id(\\d+)?", STelefonArtenApp, STelefonArtenAuswahl, new RouteDataKatalogTelefonArten());
+		super(Schulform.values(), [BenutzerKompetenz.KATALOG_EINTRAEGE_ANSEHEN, BenutzerKompetenz.KATALOG_EINTRAEGE_AENDERN], "schule.telefonarten", "schule/telefonarten/:id(\\d+)?", STelefonArtenApp, STelefonArtenAuswahl, new RouteDataKatalogTelefonArten());
 		super.mode = ServerMode.DEV;
 		super.text = "Telefonarten";
 		super.menugroup = RouteSchuleMenuGroup.ALLGEMEIN;

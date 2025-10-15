@@ -93,7 +93,7 @@
 
 <script setup lang="ts">
 
-	import type { Ref} from 'vue';
+	import type { Ref } from 'vue';
 	import { computed, onMounted, ref, shallowRef, watch } from 'vue';
 	import type { SchuleDatenaustauschUntisExporteProps } from './SSchuleDatenaustauschUntisExporteProps';
 	import { GostHalbjahr, Schulform } from '@core';
@@ -103,55 +103,55 @@
 	type GPU = {
 		title: string,
 		files: string[],
-		export: (gpu002? : string, blockungsergebnisse? : number[]) => Promise<string[]>,
+		export: (gpu002?: string, blockungsergebnisse?: number[]) => Promise<string[]>,
 	};
 
 	const klassenGPU003 = <GPU>({
 		title: 'Klassenliste',
-		files: [ 'GPU003.txt' ],
+		files: ['GPU003.txt'],
 		export: async () => await props.exportUntisKlassenGPU003(),
 	});
 
 	const lehrerGPU004 = <GPU>({
 		title: 'Lehrerliste',
-		files: [ 'GPU004.txt' ],
+		files: ['GPU004.txt'],
 		export: async () => await props.exportUntisLehrerGPU004(),
 	});
 
 	const faecherGPU006 = <GPU>({
 		title: 'Fächer- und Kursliste',
-		files: [ 'GPU006.txt' ],
+		files: ['GPU006.txt'],
 		export: async () => await props.exportUntisFaecherGPU006(),
 	});
 
 	const schuelerGPU010 = <GPU>({
 		title: 'Schülerliste',
-		files: [ 'GPU010.txt' ],
+		files: ['GPU010.txt'],
 		export: async () => await props.exportUntisSchuelerGPU010(sidvariante.value),
 	});
 
 	const fachwahlenGPU015 = <GPU>({
 		title: 'Kurswahlen',
-		files: [ 'GPU015.txt' ],
-		export: async (gpu002 : string) => await props.exportUntisFachwahlenGPU015(sidvariante.value, gpu002),
+		files: ['GPU015.txt'],
+		export: async (gpu002: string) => await props.exportUntisFachwahlenGPU015(sidvariante.value, gpu002),
 	});
 
 	const klausurenGPU017 = <GPU>({
 		title: 'Klausuren',
-		files: [ 'GPU017.txt' ],
-		export: async (gpu002 : string) => await props.exportUntisKlausurenGPU017(sidvariante.value, gpu002),
+		files: ['GPU017.txt'],
+		export: async (gpu002: string) => await props.exportUntisKlausurenGPU017(sidvariante.value, gpu002),
 	});
 
 	const schienenGPU019 = <GPU>({
 		title: 'Schienen',
-		files: [ 'GPU019.txt' ],
-		export: async (gpu002 : string) => await props.exportUntisSchienenGPU019(gpu002),
+		files: ['GPU019.txt'],
+		export: async (gpu002: string) => await props.exportUntisSchienenGPU019(gpu002),
 	});
 
 	const blockungGPUs = <GPU>({
 		title: 'Blockung',
-		files: [ 'GPU002.txt', 'GPU015.txt', 'GPU019.txt' ],
-		export: async (gpu002 : string, blockungsergebnisse : number[]) => await props.exportUntisBlockung(sidvariante.value, gpu002, blockungsergebnisse),
+		files: ['GPU002.txt', 'GPU015.txt', 'GPU019.txt'],
+		export: async (gpu002: string, blockungsergebnisse: number[]) => await props.exportUntisBlockung(sidvariante.value, gpu002, blockungsergebnisse),
 	});
 
 	const sidvariante = ref<number>(1);
@@ -168,22 +168,22 @@
 	}
 
 	const aktuell = shallowRef<GPU>(klassenGPU003);
-	const filenames = ref<string[]>([ ]);
+	const filenames = ref<string[]>([]);
 	const daten = ref<string[] | null>(null);
 	const gpu002 = shallowRef<string | null>(null);
 	interface AbijahrgangsBlockungsinfos {
-		abijahr : number,
-		halbjahr : GostHalbjahr,
-		idBlockung : number | null,
-		idErgebnis : number | null,
+		abijahr: number,
+		halbjahr: GostHalbjahr,
+		idBlockung: number | null,
+		idErgebnis: number | null,
 		auswahl: Ref<boolean>,
 	}
 	const blockungsinfos = shallowRef<Array<AbijahrgangsBlockungsinfos>>([]);
 	const blockungsergebnisse = computed<number[]>(() => blockungsinfos.value.map(info => info.auswahl.value ? info.idErgebnis : null).filter(id => id !== null));
 
-	const gpus = [ klassenGPU003, lehrerGPU004, faecherGPU006, schuelerGPU010, fachwahlenGPU015, klausurenGPU017, schienenGPU019, blockungGPUs ];
-	const gpusBrauchenGPU002 = [ blockungGPUs, fachwahlenGPU015, klausurenGPU017, schienenGPU019 ];
-	const gpusHabenSchueler = [ schuelerGPU010, fachwahlenGPU015, klausurenGPU017, blockungGPUs ];
+	const gpus = [klassenGPU003, lehrerGPU004, faecherGPU006, schuelerGPU010, fachwahlenGPU015, klausurenGPU017, schienenGPU019, blockungGPUs];
+	const gpusBrauchenGPU002 = [blockungGPUs, fachwahlenGPU015, klausurenGPU017, schienenGPU019];
+	const gpusHabenSchueler = [schuelerGPU010, fachwahlenGPU015, klausurenGPU017, blockungGPUs];
 	const zeigeSchuelerVariantenAuswahl = computed<boolean>(() => gpusHabenSchueler.includes(aktuell.value));
 	const zeigeGPU002Laden = computed<boolean>(() => gpusBrauchenGPU002.includes(aktuell.value));
 	const zeigeDateiSpeichern = computed<boolean>(() => (daten.value !== null) && (!zeigeGPU002Laden.value || (gpu002.value !== null)));
@@ -209,11 +209,11 @@
 		return true;
 	}
 
-	async function updateAbiturjahrgaenge(gpu : GPU) {
+	async function updateAbiturjahrgaenge(gpu: GPU) {
 		if (gpu === blockungGPUs) {
 			const schuljahr = props.schuljahresabschnitt().schuljahr;
 			const abschnitt = props.schuljahresabschnitt().abschnitt;
-			const abijahrgaenge = [ schuljahr + 1, schuljahr + 2, schuljahr + 3 ];
+			const abijahrgaenge = [schuljahr + 1, schuljahr + 2, schuljahr + 3];
 			const blockungslisten = await props.ladeBlockungslisten(abijahrgaenge);
 			const infos = new Array<AbijahrgangsBlockungsinfos>();
 			for (let index = 0; index < abijahrgaenge.length; index++) {
@@ -224,13 +224,13 @@
 					idBlockung: null,
 					idErgebnis: null,
 					auswahl: ref(false),
-				}
+				};
 				const blockungsliste = blockungslisten[index];
 				for (const blockung of blockungsliste) {
 					if (blockung.istAktiv) {
 						info.idBlockung = blockung.id;
 						info.idErgebnis = blockung.idAktivesErgebnis;
-						info.auswahl.value = (blockung.idAktivesErgebnis !== null)
+						info.auswahl.value = (blockung.idAktivesErgebnis !== null);
 						break;
 					}
 				}
@@ -242,7 +242,7 @@
 		blockungsinfos.value = [];
 	}
 
-	async function onSelect(gpu : GPU): Promise<void> {
+	async function onSelect(gpu: GPU): Promise<void> {
 		aktuell.value = gpu;
 		// Initialisiere die Dateinamen für den Ouput
 		filenames.value = new Array<string>(gpu.files.length);
@@ -278,11 +278,11 @@
 			: await aktuell.value.export(gpu002.value, blockungsergebnisse.value);
 	}
 
-	function onSave(index : number): void {
+	function onSave(index: number): void {
 		if ((daten.value === null) || (filenames.value[index].trim() === ''))
 			return;
 		const link = document.createElement("a");
-		const blob = new Blob([ daten.value[index] ], { type : 'plain/text' });
+		const blob = new Blob([daten.value[index]], { type: 'plain/text' });
 		link.href = URL.createObjectURL(blob);
 		link.download = filenames.value[index];
 		link.target = "_blank";

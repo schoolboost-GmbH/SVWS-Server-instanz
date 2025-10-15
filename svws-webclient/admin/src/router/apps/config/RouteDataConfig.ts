@@ -13,7 +13,7 @@ interface RouteStateConfig {
 
 export class RouteDataConfig {
 
-	private static _defaultState : RouteStateConfig = {
+	private static _defaultState: RouteStateConfig = {
 		view: routeSchemaUebersicht,
 	};
 
@@ -31,11 +31,11 @@ export class RouteDataConfig {
 		this._state.value = { ... this._state.value };
 	}
 
-	public get view(): RouteNode<any,any> {
+	public get view(): RouteNode<any, any> {
 		return this._state.value.view;
 	}
 
-	public async setView(view: RouteNode<any,any>) {
+	public async setView(view: RouteNode<any, any>) {
 		if (routeSchema.children.includes(view))
 			this.setPatchedState({ view });
 		else
@@ -44,6 +44,6 @@ export class RouteDataConfig {
 
 	getCert = async () => {
 		return await api.server.getConfigCertificateFile();
-	}
+	};
 
 }

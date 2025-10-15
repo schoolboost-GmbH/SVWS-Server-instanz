@@ -59,8 +59,8 @@ export abstract class RouteNode<TRouteData, TRouteParent extends RouteNode<unkno
 			props: { default: (to) => this.getNoProps(to) },
 			children: undefined,
 			meta: {
-				text: name // Ein Text, welcher zur Darstellung in der GUI genutzt wird (z.B. der Text auf Tabs)
-			}
+				text: name, // Ein Text, welcher zur Darstellung in der GUI genutzt wird (z.B. der Text auf Tabs)
+			},
 		};
 		this._children = [];
 		this._menu = [];
@@ -74,14 +74,14 @@ export abstract class RouteNode<TRouteData, TRouteParent extends RouteNode<unkno
 	 *
 	 * @returns das Objekt
 	 */
-	public get record() : RouteRecordRaw {
+	public get record(): RouteRecordRaw {
 		return this._record;
 	}
 
 	/**
 	 * Gibt den Namen der Route zurück.
 	 */
-	public get name() : string {
+	public get name(): string {
 		if (this._record.name === undefined)
 			throw Error("Die Route hat keinen gültigen Namen");
 		return this._record.name.toString();
@@ -92,33 +92,33 @@ export abstract class RouteNode<TRouteData, TRouteParent extends RouteNode<unkno
 	 *
 	 * @param {any[]} args die Parameter
 	 */
-	public abstract getRoute(...args: any[]) : RouteLocationRaw;
+	public abstract getRoute(...args: any[]): RouteLocationRaw;
 
 	/**
 	 * Gibt den Text der Route zurück, welcher für die Visualisierung genutzt wird (z.B. bei Tabs).
 	 */
-	public get text() : string {
+	public get text(): string {
 		return (this._record.meta as { text: string }).text;
 	}
 
 	/**
 	 * Setzt den Text der Route, welcher für die Visualisierung genutzt wird (z.B. bei Tabs).
 	 */
-	public set text(text : string) {
+	public set text(text: string) {
 		(this._record.meta as { text: string }).text = text;
 	}
 
 	/**
 	 * Gibt die Daten zurück, die diesem Knoten zugeordnet sind.
 	 */
-	public get data() : TRouteData {
+	public get data(): TRouteData {
 		return this._data;
 	}
 
 	/**
 	 * Setzt die Daten, die diesem Knoten zugeordnet sind
 	 */
-	public set data(data : TRouteData ) {
+	public set data(data: TRouteData) {
 		this._data = data;
 	}
 
@@ -143,8 +143,8 @@ export abstract class RouteNode<TRouteData, TRouteParent extends RouteNode<unkno
 	 *
 	 * @returns ein Array mit den Kind-Knoten
 	 */
-	public get children() : RouteNode<unknown, any>[] {
-		const result : RouteNode<unknown, any>[] = [];
+	public get children(): RouteNode<unknown, any>[] {
+		const result: RouteNode<unknown, any>[] = [];
 		for (const node of this._children)
 			result.push(node);
 		return result;
@@ -166,7 +166,7 @@ export abstract class RouteNode<TRouteData, TRouteParent extends RouteNode<unkno
 	 *
 	 * @returns ein Array mit den Knoten
 	 */
-	public get menu() : RouteNode<unknown, any>[] {
+	public get menu(): RouteNode<unknown, any>[] {
 		const result: RouteNode<unknown, any>[] = [];
 		for (const node of this._menu)
 			result.push(node);
@@ -197,8 +197,8 @@ export abstract class RouteNode<TRouteData, TRouteParent extends RouteNode<unkno
 	 *
 	 * @returns ein Array mit den vue-route-Record-Objekten
 	 */
-	public get children_records() : RouteRecordRaw[] {
-		const result : RouteRecordRaw[] = [];
+	public get children_records(): RouteRecordRaw[] {
+		const result: RouteRecordRaw[] = [];
 		for (const node of this.children)
 			result.push(node.record);
 		return result;
@@ -211,7 +211,7 @@ export abstract class RouteNode<TRouteData, TRouteParent extends RouteNode<unkno
 	 *
 	 * @returns ein Array mit der
 	 */
-	public children_hidden() : ComputedRef<boolean[]> {
+	public children_hidden(): ComputedRef<boolean[]> {
 		const route = useRoute();
 		return computed(() => this.children.map(c => c.hidden(route.params)));
 	}
@@ -219,14 +219,14 @@ export abstract class RouteNode<TRouteData, TRouteParent extends RouteNode<unkno
 	/**
 	 * TODO
 	 */
-	public get selectedChild() : RouteNode<unknown, any> | undefined {
+	public get selectedChild(): RouteNode<unknown, any> | undefined {
 		return this._selectedChild.value;
 	}
 
 	/**
 	 * TODO
 	 */
-	public set selectedChildRecord(record : RouteRecordRaw | undefined) {
+	public set selectedChildRecord(record: RouteRecordRaw | undefined) {
 		this._selectedChild.value = ((record === undefined) || (record.name === undefined))
 			? undefined : this._selectedChild.value = RouteNode.mapNodesByName.get(record.name.toString());
 	}
@@ -234,21 +234,21 @@ export abstract class RouteNode<TRouteData, TRouteParent extends RouteNode<unkno
 	/**
 	 * TODO
 	 */
-	public get selectedChildRecord() : RouteRecordRaw | undefined {
+	public get selectedChildRecord(): RouteRecordRaw | undefined {
 		return this._selectedChild.value?.record;
 	}
 
 	/**
 	 * TODO
 	 */
-	public set defaultChild(node : RouteNode<unknown, any> | undefined) {
+	public set defaultChild(node: RouteNode<unknown, any> | undefined) {
 		this._defaultChild = node;
 	}
 
 	/**
 	 * TODO
 	 */
-	public get defaultChild() : RouteNode<unknown, any> | undefined {
+	public get defaultChild(): RouteNode<unknown, any> | undefined {
 		return this._defaultChild;
 	}
 
@@ -323,7 +323,7 @@ export abstract class RouteNode<TRouteData, TRouteParent extends RouteNode<unkno
 	 * @param from   die Quell-Route
 	 * @param from_params die Parameter der Quell-Route
 	 */
-	protected async beforeEach(to: RouteNode<unknown, any>, to_params: RouteParams, from: RouteNode<unknown, any> | undefined, from_params: RouteParams) : Promise<boolean | void | Error | RouteLocationRaw> {
+	protected async beforeEach(to: RouteNode<unknown, any>, to_params: RouteParams, from: RouteNode<unknown, any> | undefined, from_params: RouteParams): Promise<boolean | void | Error | RouteLocationRaw> {
 		return true;
 	}
 
@@ -335,7 +335,7 @@ export abstract class RouteNode<TRouteData, TRouteParent extends RouteNode<unkno
 	 * @param from   die Quell-Route
 	 * @param from_params die Parameter der Quell-Route
 	 */
-	public async doBeforeEach(to: RouteNode<unknown, any>, to_params: RouteParams, from: RouteNode<unknown, any> | undefined, from_params: RouteParams) : Promise<boolean | void | Error | RouteLocationRaw> {
+	public async doBeforeEach(to: RouteNode<unknown, any>, to_params: RouteParams, from: RouteNode<unknown, any> | undefined, from_params: RouteParams): Promise<boolean | void | Error | RouteLocationRaw> {
 		try {
 			return await this.beforeEach(to, to_params, from, from_params);
 		} catch (e) {
@@ -358,7 +358,7 @@ export abstract class RouteNode<TRouteData, TRouteParent extends RouteNode<unkno
 		const other_node = typeof other === "string" ? RouteNode.getNodeByName(other) : other;
 		if ((other_node === undefined) || (this.parent === undefined))
 			return false;
-		const result: RouteNode<unknown, any>[] = [ this ];
+		const result: RouteNode<unknown, any>[] = [this];
 		let current: RouteNode<unknown, any> | undefined = this.parent;
 		do {
 			result.push(current);
@@ -382,7 +382,7 @@ export abstract class RouteNode<TRouteData, TRouteParent extends RouteNode<unkno
 		const other_node = typeof other === "string" ? RouteNode.getNodeByName(other) : other;
 		if ((other_node === undefined) || (other_node.parent === undefined))
 			return false;
-		const result: RouteNode<unknown, any>[] = [ this ];
+		const result: RouteNode<unknown, any>[] = [this];
 		let current: RouteNode<unknown, any> | undefined = other_node.parent;
 		while (current !== undefined) {
 			result.push(current);
@@ -402,7 +402,7 @@ export abstract class RouteNode<TRouteData, TRouteParent extends RouteNode<unkno
 	 * @returns die Vorgänger dieses Knotens als Array
 	 */
 	public getPredecessors(): RouteNode<unknown, any>[] {
-		const result: RouteNode<unknown, any>[] = [ ];
+		const result: RouteNode<unknown, any>[] = [];
 		let current: RouteNode<unknown, any> | undefined = this.parent;
 		while (current !== undefined) {
 			result.push(current);
@@ -418,7 +418,7 @@ export abstract class RouteNode<TRouteData, TRouteParent extends RouteNode<unkno
 	 * @param to   die neue Route
 	 * @param to_params   die Routen-Parameter
 	 */
-	protected async enter(to: RouteNode<unknown, any>, to_params: RouteParams) : Promise<void | Error | RouteLocationRaw> {
+	protected async enter(to: RouteNode<unknown, any>, to_params: RouteParams): Promise<void | Error | RouteLocationRaw> {
 	}
 
 	/**
@@ -428,7 +428,7 @@ export abstract class RouteNode<TRouteData, TRouteParent extends RouteNode<unkno
 	 * @param to   die neue Route
 	 * @param to_params   die Routen-Parameter
 	 */
-	public async doEnter(to: RouteNode<unknown, any>, to_params: RouteParams) : Promise<void | Error | RouteLocationRaw> {
+	public async doEnter(to: RouteNode<unknown, any>, to_params: RouteParams): Promise<void | Error | RouteLocationRaw> {
 		try {
 			return await this.enter(to, to_params);
 		} catch (e) {
@@ -447,7 +447,7 @@ export abstract class RouteNode<TRouteData, TRouteParent extends RouteNode<unkno
 	 * @param to   die neue Route
 	 * @param to_params   die Routen-Parameter
 	 */
-	protected async update(to: RouteNode<unknown, any>, to_params: RouteParams) : Promise<void | Error | RouteLocationRaw> {
+	protected async update(to: RouteNode<unknown, any>, to_params: RouteParams): Promise<void | Error | RouteLocationRaw> {
 	}
 
 	/**
@@ -459,7 +459,7 @@ export abstract class RouteNode<TRouteData, TRouteParent extends RouteNode<unkno
 	 * @param to   die neue Route
 	 * @param to_params   die Routen-Parameter
 	 */
-	public async doUpdate(to: RouteNode<unknown, any>, to_params: RouteParams) : Promise<void | Error | RouteLocationRaw> {
+	public async doUpdate(to: RouteNode<unknown, any>, to_params: RouteParams): Promise<void | Error | RouteLocationRaw> {
 		try {
 			// Prüfe mithilfe der hidden-Methode, ob die Route sichtbar ist
 			if (this.hidden(to_params))
@@ -481,7 +481,7 @@ export abstract class RouteNode<TRouteData, TRouteParent extends RouteNode<unkno
 	 * @param from   die Route, die verlassen wird
 	 * @param from_params   die Routen-Parameter
 	 */
-	protected async leaveBefore(from: RouteNode<unknown, any>, from_params: RouteParams) : Promise<void | Error | RouteLocationRaw> {
+	protected async leaveBefore(from: RouteNode<unknown, any>, from_params: RouteParams): Promise<void | Error | RouteLocationRaw> {
 	}
 
 	/**
@@ -491,7 +491,7 @@ export abstract class RouteNode<TRouteData, TRouteParent extends RouteNode<unkno
 	 * @param from   die Route, die verlassen wird
 	 * @param from_params   die Routen-Parameter
 	 */
-	public async doLeaveBefore(from: RouteNode<unknown, any>, from_params: RouteParams) : Promise<void | Error | RouteLocationRaw> {
+	public async doLeaveBefore(from: RouteNode<unknown, any>, from_params: RouteParams): Promise<void | Error | RouteLocationRaw> {
 		try {
 			return await this.leaveBefore(from, from_params);
 		} catch (e) {
@@ -509,7 +509,7 @@ export abstract class RouteNode<TRouteData, TRouteParent extends RouteNode<unkno
 	 * @param from   die Route, die verlassen wird
 	 * @param from_params   die Routen-Parameter
 	 */
-	public async leave(from: RouteNode<unknown, any>, from_params: RouteParams) : Promise<void> {
+	public async leave(from: RouteNode<unknown, any>, from_params: RouteParams): Promise<void> {
 	}
 
 	/**
@@ -519,7 +519,7 @@ export abstract class RouteNode<TRouteData, TRouteParent extends RouteNode<unkno
 	 *
 	 * @returns der Knoten oder undefined
 	 */
-	public static getNodeByName(name : string | undefined | null) : RouteNode<unknown, any> | undefined {
+	public static getNodeByName(name: string | undefined | null): RouteNode<unknown, any> | undefined {
 		if ((name === undefined) || (name === null))
 			return undefined;
 		return RouteNode.mapNodesByName.get(name);

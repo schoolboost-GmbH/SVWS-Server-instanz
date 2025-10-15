@@ -21,18 +21,18 @@ export class RouteLogin extends RouteNode<any, any> {
 	protected schema = ref<string | null>(null);
 
 	public constructor() {
-		super(Schulform.values(), [ BenutzerKompetenz.KEINE ], "login", "/login/:schema?", SLogin);
+		super(Schulform.values(), [BenutzerKompetenz.KEINE], "login", "/login/:schema?", SLogin);
 		super.mode = ServerMode.STABLE;
 		super.propHandler = (route) => this.getProps();
 		super.text = "Login";
 	}
 
-	public async update(to: RouteNode<any, any>, to_params: RouteParams, from: RouteNode<any, any> | undefined, from_params: RouteParams) : Promise<void | Error | RouteLocationRaw> {
+	public async update(to: RouteNode<any, any>, to_params: RouteParams, from: RouteNode<any, any> | undefined, from_params: RouteParams): Promise<void | Error | RouteLocationRaw> {
 		try {
 			const { schema } = RouteNode.getStringParams(to_params, ["schema"]);
 			this.schema.value = schema ?? null;
 		} catch (e) {
-			console.log('Es wurde ein falscher Schema-Parameter übergeben, Login trotzdem fortsetzen: ', e)
+			console.log('Es wurde ein falscher Schema-Parameter übergeben, Login trotzdem fortsetzen: ', e);
 		}
 	}
 
@@ -50,7 +50,7 @@ export class RouteLogin extends RouteNode<any, any> {
 			if (api.benutzerIstAdmin)
 				await RouteManager.doRoute(routeInit.name);
 		}
-	}
+	};
 
 	public logout = async () => {
 		this.routepath = "/";
@@ -58,11 +58,11 @@ export class RouteLogin extends RouteNode<any, any> {
 		await RouteManager.doRoute(this.getRoute());
 		await api.logout();
 		RouteManager.resetRouteState();
-	}
+	};
 
 	public setSchema = async (schema: DBSchemaListeEintrag) => {
 		this.schema.value = schema.name;
-	}
+	};
 
 	public getProps(): LoginProps {
 		return {
@@ -74,7 +74,7 @@ export class RouteLogin extends RouteNode<any, any> {
 			hostname: api.hostname,
 			schemaPrevious: this.schema.value,
 			setMapCoreTypeNameJsonData: api.setMapCoreTypeNameJsonData,
-		}
+		};
 	}
 
 }

@@ -185,7 +185,7 @@ describe("SvwsUiTooltip", () => {
 
 	test("ShowArrow = true rendert Pfeil", async () => {
 		mount(SvwsUiTooltip, {
-			props: { initOpen: true, showArrow:true},
+			props: { initOpen: true, showArrow: true },
 			slots: {
 				content: "<span class='tooltip-content'>Lorem123</span>",
 			},

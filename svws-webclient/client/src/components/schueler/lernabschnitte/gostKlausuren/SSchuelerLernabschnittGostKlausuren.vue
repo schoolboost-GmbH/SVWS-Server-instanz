@@ -83,7 +83,7 @@
 
 	const createTermin = async (create: boolean) => {
 		if (create) {
-			await props.patchSchuelerklausurTermin(terminSelected.value.id, { bemerkung: terminSelected.value.bemerkung } );
+			await props.patchSchuelerklausurTermin(terminSelected.value.id, { bemerkung: terminSelected.value.bemerkung });
 			const sktNeu = new GostSchuelerklausurTermin();
 			sktNeu.idSchuelerklausur = terminSelected.value.idSchuelerklausur;
 			await props.createSchuelerklausurTermin(sktNeu);
@@ -93,7 +93,7 @@
 	};
 
 	const colsKlausuren: Array<DataTableColumn> = [
-		{ key: "quartal", label: "Quartal", tooltip: "Ursprüngliches Datum der Klausur", fixedWidth: 5},
+		{ key: "quartal", label: "Quartal", tooltip: "Ursprüngliches Datum der Klausur", fixedWidth: 5 },
 		{ key: "kurs", label: "Kurs", tooltip: "Kurs" },
 		{ key: "lehrer", label: "Fachlehrer", tooltip: "Fachlehrer", fixedWidth: 7 },
 		{ key: "termin", label: "Datum", tooltip: "Ursprüngliches Datum der Klausur", minWidth: 6 },

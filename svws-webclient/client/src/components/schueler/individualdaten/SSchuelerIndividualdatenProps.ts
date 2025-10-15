@@ -15,7 +15,7 @@ import type {
 	Fahrschuelerart,
 	ApiFile,
 	ReportingParameter,
-	SimpleOperationResponse
+	SimpleOperationResponse,
 } from "@core";
 import type { SchuelerListeManager } from "@ui";
 

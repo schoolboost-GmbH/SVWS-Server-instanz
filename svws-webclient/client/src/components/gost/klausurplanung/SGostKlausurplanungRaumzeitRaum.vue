@@ -92,13 +92,13 @@
 
 <script setup lang="ts">
 
-	import type { StundenplanRaum, GostKlausurplanManager, GostKlausurenCollectionSkrsKrsData, GostKlausurraum, GostKlausurtermin} from '@core';
+	import type { StundenplanRaum, GostKlausurplanManager, GostKlausurenCollectionSkrsKrsData, GostKlausurraum, GostKlausurtermin } from '@core';
 	import { BenutzerKompetenz } from '@core';
 	import type { GostKlausurplanungDragData, GostKlausurplanungDropZone } from './SGostKlausurplanung';
 	import type { DataTableColumn } from "@ui";
 	import { GostKursklausur, GostHalbjahr } from '@core';
 	import { computed } from 'vue';
-	import { DateUtils} from "@core";
+	import { DateUtils } from "@core";
 
 	const props = defineProps<{
 		benutzerKompetenzen: Set<BenutzerKompetenz>,
@@ -140,7 +140,7 @@
 				startzeit = startzeitRaum;
 		}
 		return startzeit !== -1 ? DateUtils.getStringOfUhrzeitFromMinuten(startzeit) : undefined;
-	}
+	};
 
 	const anzahlRaumstunden = computed(() => {
 		return props.kMan().raumstundeGetMengeByRaum(props.raum).size();
@@ -153,7 +153,7 @@
 		return raeume;
 	});
 
-	function isDropZone() : boolean {
+	function isDropZone(): boolean {
 		if ((props.dragData() === undefined) || ((props.dragData() instanceof GostKursklausur) && props.kMan().containsKlausurraumKursklausur(props.raum, props.dragData() as GostKursklausur)))
 			return false;
 		return true;
@@ -169,8 +169,8 @@
 			return;
 		try {
 			const startzeit = event.trim().length > 0 ? DateUtils.gibMinutenOfZeitAsString(event) : null;
-			await props.patchKlausur(klausur, {startzeit});
-		} catch(e) {
+			await props.patchKlausur(klausur, { startzeit });
+		} catch (e) {
 			// Do nothing
 		}
 	}

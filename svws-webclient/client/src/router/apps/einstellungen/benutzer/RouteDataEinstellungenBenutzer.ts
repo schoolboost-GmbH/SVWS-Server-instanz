@@ -55,12 +55,12 @@ export class RouteDataEinstellungenBenutzer extends RouteData<RouteStateEinstell
 			mapBenutzer.set(l.id, l);
 		this.mapBenutzer = mapBenutzer;
 		this.setPatchedState({
-			mapBenutzer : this._state.value.mapBenutzer,
+			mapBenutzer: this._state.value.mapBenutzer,
 			listBenutzer: this._state.value.listBenutzer,
-		})
+		});
 	}
 
-	public async setBenutzer(benutzer: BenutzerListeEintrag | undefined ) {
+	public async setBenutzer(benutzer: BenutzerListeEintrag | undefined) {
 		if (benutzer?.id === this._state.value.auswahl?.id)
 			return;
 		if ((benutzer === undefined) || (this.mapBenutzer.size === 0)) {
@@ -72,7 +72,7 @@ export class RouteDataEinstellungenBenutzer extends RouteData<RouteStateEinstell
 				listBenutzergruppen: new ArrayList(),
 				daten: undefined,
 
-			})
+			});
 			await this.ladeListe();
 		}
 		const auswahl = benutzer === undefined ? this.firstBenutzer(this.mapBenutzer) : benutzer;
@@ -85,16 +85,16 @@ export class RouteDataEinstellungenBenutzer extends RouteData<RouteStateEinstell
 	gotoBenutzer = async (value: BenutzerListeEintrag | undefined) => {
 		const route = (value === undefined) ? routeEinstellungenBenutzer.getRoute() : routeEinstellungenBenutzer.getRouteSelectedChild({ id: value.id });
 		await RouteManager.doRoute(route);
-	}
+	};
 
 	gotoBenutzergruppe = async (id: number) => {
 		const node = RouteNode.getNodeByName("einstellungen.benutzergruppe.daten");
 		await RouteManager.doRoute(node!.getRoute({ id }));
-	}
+	};
 
 	getBenutzerManager = () => {
 		return this._state.value.benutzerManager;
-	}
+	};
 
 	get auswahl(): BenutzerListeEintrag | undefined {
 		return this._state.value.auswahl;
@@ -104,7 +104,7 @@ export class RouteDataEinstellungenBenutzer extends RouteData<RouteStateEinstell
 		this._state.value.auswahl = value;
 	}
 
-	get listBenutzer(): List<BenutzerListeEintrag>{
+	get listBenutzer(): List<BenutzerListeEintrag> {
 		return this._state.value.listBenutzer;
 	}
 
@@ -117,7 +117,7 @@ export class RouteDataEinstellungenBenutzer extends RouteData<RouteStateEinstell
 	}
 
 	get daten(): BenutzerDaten {
-		if(this._state.value.daten === undefined)
+		if (this._state.value.daten === undefined)
 			throw new DeveloperNotificationException("Unerwarteter Fehler: Klassendaten nicht initialisiert");
 		return this._state.value.daten;
 	}
@@ -127,7 +127,7 @@ export class RouteDataEinstellungenBenutzer extends RouteData<RouteStateEinstell
 	}
 
 	get benutzerManager(): BenutzerManager {
-		return this._state.value.benutzerManager
+		return this._state.value.benutzerManager;
 	}
 
 	set benutzerManager(value: BenutzerManager) {
@@ -135,7 +135,7 @@ export class RouteDataEinstellungenBenutzer extends RouteData<RouteStateEinstell
 	}
 
 	get listBenutzergruppen(): List<BenutzergruppeListeEintrag> {
-		return this._state.value.listBenutzergruppen
+		return this._state.value.listBenutzergruppen;
 	}
 
 	set listBenutzergruppen(value: List<BenutzergruppeListeEintrag>) {
@@ -143,7 +143,7 @@ export class RouteDataEinstellungenBenutzer extends RouteData<RouteStateEinstell
 	}
 
 	get mapBenutzer(): Map<number, BenutzerListeEintrag> {
-		return this._state.value.mapBenutzer
+		return this._state.value.mapBenutzer;
 	}
 
 	set mapBenutzer(value: Map<number, BenutzerListeEintrag>) {
@@ -158,7 +158,7 @@ export class RouteDataEinstellungenBenutzer extends RouteData<RouteStateEinstell
 	 *
 	 * @returns {Promise<void>}
 	 */
-	setAnzeigename = async (anzeigename : string | null): Promise<void> => {
+	setAnzeigename = async (anzeigename: string | null): Promise<void> => {
 		if (this.benutzerManager.daten().typ !== BenutzerTyp.ALLGEMEIN.id)
 			return;
 		await api.server.setAnzeigename(anzeigename, api.schema, this.benutzerManager.getID());
@@ -167,7 +167,7 @@ export class RouteDataEinstellungenBenutzer extends RouteData<RouteStateEinstell
 				benutzer.anzeigename = anzeigename;
 		this.benutzerManager.setAnzeigename(anzeigename ?? '');
 		this.commit();
-	}
+	};
 
 	/**
 	 * Setzt den Benutzernamens für die Anmeldung
@@ -180,13 +180,13 @@ export class RouteDataEinstellungenBenutzer extends RouteData<RouteStateEinstell
 		await api.server.setBenutzername(anmeldename, api.schema, this.benutzerManager.getID());
 		this.benutzerManager.setAnmeldename(anmeldename ?? '—');
 		const neueAuswahl = this.mapBenutzer.get(this.daten.id);
-		this.mapBenutzer.set(this.daten.id,this.daten);
+		this.mapBenutzer.set(this.daten.id, this.daten);
 		this.setPatchedState({
 			auswahl: neueAuswahl,
-			mapBenutzer : this.mapBenutzer,
-			benutzerManager : this.benutzerManager,
-		})
-	}
+			mapBenutzer: this.mapBenutzer,
+			benutzerManager: this.benutzerManager,
+		});
+	};
 
 	/**
 	 * Setzt, ob der Benutzer ein administrativer Benutzer ist oder nicht
@@ -202,17 +202,17 @@ export class RouteDataEinstellungenBenutzer extends RouteData<RouteStateEinstell
 			await api.server.removeBenutzerAdmin(api.schema, this.benutzerManager.getID());
 		this.benutzerManager.setAdmin(istAdmin);
 		this.commit();
-	}
+	};
 
 	/**
 	 * Setzt ein neues Kennwort für den aktuell ausgewählten Benutzer
 	 *
 	 * @passwort das neue Kennwort
 	 */
-	setPassword = async (passwort : string) => {
+	setPassword = async (passwort: string) => {
 		await api.server.setPassword(passwort, api.schema, this.benutzerManager.getID());
 		setTimeout(() => alert("Das Kennwort wurde erfolgreich geändert."), 300);
-	}
+	};
 
 	/**
 	 * Fügt den Benutzer in die Benutzergruppe mit der übergebenen ID ein.
@@ -242,7 +242,7 @@ export class RouteDataEinstellungenBenutzer extends RouteData<RouteStateEinstell
 			benutzerManager: this._state.value.benutzerManager,
 			listBenutzergruppen: this._state.value.listBenutzergruppen,
 		});
-	}
+	};
 
 	/**
 	 * Entfernt den Benutzer aus der Benutzergruppe mit der übergebenen ID.
@@ -274,15 +274,15 @@ export class RouteDataEinstellungenBenutzer extends RouteData<RouteStateEinstell
 		this.setPatchedState({
 			benutzerManager: benutzerManager,
 			listBenutzergruppen: this._state.value.listBenutzergruppen,
-		})
-	}
+		});
+	};
 
 	/**
 	 * Fügt die übergebene Kompetenz zu dem Benutzer hinzu
 	 *
 	 * @param kompetenz   die hinzuzufügende Kompetenz
 	 */
-	addKompetenz = async (kompetenz : BenutzerKompetenz) => {
+	addKompetenz = async (kompetenz: BenutzerKompetenz) => {
 		const kid = new ArrayList<number>();
 		kid.add(kompetenz.daten.id);
 		if (this.benutzerManager.hatKompetenz(kompetenz))
@@ -291,16 +291,16 @@ export class RouteDataEinstellungenBenutzer extends RouteData<RouteStateEinstell
 		this.benutzerManager.addKompetenz(kompetenz);
 		this.setPatchedState({
 			benutzerManager: this._state.value.benutzerManager,
-		})
+		});
 		return true;
-	}
+	};
 
 	/**
 	 * Entfernt die übergebene Kompetenz von diesem Benutzer
 	 *
 	 * @param kompetenz   die zu entfernende Kompetenz
 	 */
-	removeKompetenz = async (kompetenz : BenutzerKompetenz) => {
+	removeKompetenz = async (kompetenz: BenutzerKompetenz) => {
 		const kid = new ArrayList<number>();
 		kid.add(kompetenz.daten.id);
 		if (!this.benutzerManager.hatKompetenz(kompetenz))
@@ -309,26 +309,26 @@ export class RouteDataEinstellungenBenutzer extends RouteData<RouteStateEinstell
 		this.benutzerManager.removeKompetenz(kompetenz);
 		this.setPatchedState({
 			benutzerManager: this._state.value.benutzerManager,
-		})
+		});
 		return true;
-	}
+	};
 
 	/**
 	 * Fügt die übergebene Kompetenzen einer Benutzerkompetenzgruppe zu diesem Benutzer hinzu
 	 *
 	 * @param kompetenzgruppe   die Kompetenzgruppe, deren Kompetenzen hinzugefügt werden.
 	 */
-	addBenutzerKompetenzGruppe = async (kompetenzgruppe : BenutzerKompetenzGruppe) => {
+	addBenutzerKompetenzGruppe = async (kompetenzgruppe: BenutzerKompetenzGruppe) => {
 		const kids = new ArrayList<number>();
 		if (!this.benutzerManager.istAdmin()) {
-			//Es werden nur die IDs der Kompetenzen in kids gespreichert, welche dem Benutzer direkt zugordnet sind.
+			// Es werden nur die IDs der Kompetenzen in kids gespreichert, welche dem Benutzer direkt zugordnet sind.
 			// Sie sind also nicht über Benutzergruppen vererbt.
 			for (const komp of BenutzerKompetenz.getKompetenzen(kompetenzgruppe)) {
 				if (this.benutzerManager.getGruppen(komp).size() === 0)
 					kids.add(komp.daten.id);
 			}
 			await api.server.addBenutzerKompetenzen(kids, api.schema, this.benutzerManager.getID());
-			//Den obigen Schritten entsprechende Anpassung des Client-Objekts mithilfe des Managers
+			// Den obigen Schritten entsprechende Anpassung des Client-Objekts mithilfe des Managers
 			for (const komp of BenutzerKompetenz.getKompetenzen(kompetenzgruppe)) {
 				if (this.benutzerManager.getGruppen(komp).size() === 0) {
 					if (!this.benutzerManager.hatKompetenz(komp))
@@ -338,16 +338,16 @@ export class RouteDataEinstellungenBenutzer extends RouteData<RouteStateEinstell
 		}
 		this.setPatchedState({
 			benutzerManager: this._state.value.benutzerManager,
-		})
+		});
 		return true;
-	}
+	};
 
 	/**
 	 * Entfernt die übergebene Kompetenzen einer Benutzerkompetenzgruppe von diesem Benutzer
 	 *
 	 * @param kompetenzgruppe   die Kompetenzgruppe, deren Kompetenzen entfernt werden.
 	 */
-	removeBenutzerKompetenzGruppe = async (kompetenzgruppe : BenutzerKompetenzGruppe) => {
+	removeBenutzerKompetenzGruppe = async (kompetenzgruppe: BenutzerKompetenzGruppe) => {
 		const kids = new ArrayList<number>();
 		if (!this.benutzerManager.istAdmin()) {
 			for (const komp of BenutzerKompetenz.getKompetenzen(kompetenzgruppe))
@@ -363,9 +363,9 @@ export class RouteDataEinstellungenBenutzer extends RouteData<RouteStateEinstell
 		}
 		this.setPatchedState({
 			benutzerManager: this._state.value.benutzerManager,
-		})
+		});
 		return true;
-	}
+	};
 
 	/**
 	 * Erstellt einen neuen Benutzer
@@ -384,12 +384,12 @@ export class RouteDataEinstellungenBenutzer extends RouteData<RouteStateEinstell
 		ble.id = result.id;
 		ble.anzeigename = result.anzeigename;
 		ble.name = result.name;
-		ble.istAdmin= result.istAdmin;
+		ble.istAdmin = result.istAdmin;
 		ble.idCredentials = result.idCredentials;
 		this.listBenutzer.add(ble);
 		this.mapBenutzer.set(ble.id, ble);
 		await this.gotoBenutzer(ble);
-	}
+	};
 
 	/**
 	 * Entfernt die ausgewählten Benutzer
@@ -402,7 +402,7 @@ export class RouteDataEinstellungenBenutzer extends RouteData<RouteStateEinstell
 		// Rufe die Methode zum Entfernen der Benutzer beim Server auf
 		const benutzerIDs = new ArrayList<number>();
 		for (const benutzerEintrag of selectedItems)
-			benutzerIDs.add(benutzerEintrag.id)
+			benutzerIDs.add(benutzerEintrag.id);
 		await api.server.removeBenutzerMenge(benutzerIDs, api.schema);
 		// Aktualisiere die Liste der Benutzer und die zugehörige Map
 		for (const benutzerID of benutzerIDs) {
@@ -417,6 +417,6 @@ export class RouteDataEinstellungenBenutzer extends RouteData<RouteStateEinstell
 			await this.gotoBenutzer(this.listBenutzer.get(0));
 		else
 			this.commit();
-	}
+	};
 
 }

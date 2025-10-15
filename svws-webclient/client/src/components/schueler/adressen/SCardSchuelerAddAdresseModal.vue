@@ -57,22 +57,22 @@
 					break;
 				}
 			}
-		}
+		},
 	});
 
 	const ansprechpartner = computed<BetriebAnsprechpartner | undefined>({
 		get: () => (schuelerBetriebsdaten.value.ansprechpartner_id === null) ? undefined : props.mapAnsprechpartner.get(schuelerBetriebsdaten.value.ansprechpartner_id),
-		set: (value) => schuelerBetriebsdaten.value.ansprechpartner_id = (value === undefined) ? null : value.id
+		set: (value) => schuelerBetriebsdaten.value.ansprechpartner_id = (value === undefined) ? null : value.id,
 	});
 
 	const beschaeftigungsart = computed<Beschaeftigungsart | undefined>({
 		get: () => (schuelerBetriebsdaten.value.beschaeftigungsart_id === null) ? undefined : props.mapBeschaeftigungsarten.get(schuelerBetriebsdaten.value.beschaeftigungsart_id),
-		set: (value) => schuelerBetriebsdaten.value.beschaeftigungsart_id = (value === undefined) ? null : value.id
-	})
+		set: (value) => schuelerBetriebsdaten.value.beschaeftigungsart_id = (value === undefined) ? null : value.id,
+	});
 
 	const betreuungslehrer = computed<LehrerListeEintrag | undefined>({
 		get: () => (schuelerBetriebsdaten.value.betreuungslehrer_id === null) ? undefined : props.mapLehrer.get(schuelerBetriebsdaten.value.betreuungslehrer_id),
-		set: (value) => schuelerBetriebsdaten.value.betreuungslehrer_id = (value === undefined) ? null : value.id
+		set: (value) => schuelerBetriebsdaten.value.betreuungslehrer_id = (value === undefined) ? null : value.id,
 	});
 
 	async function save() {
@@ -83,15 +83,15 @@
 
 	const openModal = () => {
 		show.value = true;
-	}
+	};
 
 	const listAnpsrechpartner = computed<Map<number, BetriebAnsprechpartner>>(() => {
 		const t = new Map();
-		console.log(props.mapAnsprechpartner)
-		for( const a of props.mapAnsprechpartner.entries()){
-			console.log(a)
-			if(betrieb.value?.id=== a[1].betrieb_id)
-				t.set(a[0],a[1])
+		console.log(props.mapAnsprechpartner);
+		for (const a of props.mapAnsprechpartner.entries()) {
+			console.log(a);
+			if (betrieb.value?.id === a[1].betrieb_id)
+				t.set(a[0], a[1]);
 		}
 		return t;
 	});

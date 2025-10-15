@@ -47,8 +47,8 @@
 	import { ref } from "vue";
 
 	const props = withDefaults(defineProps<{
-		showEinstellungenDefaultApp? : boolean;
-		focusSwitchingEnabled? : boolean;
+		showEinstellungenDefaultApp?: boolean;
+		focusSwitchingEnabled?: boolean;
 		focusHelpVisible?: boolean;
 	}>(), {
 		showEinstellungenDefaultApp: true,

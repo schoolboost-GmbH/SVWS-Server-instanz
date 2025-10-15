@@ -22,7 +22,7 @@
 <script setup lang="ts">
 
 	import type { KindergaertenGruppenprozesseProps } from "~/components/schule/allgemein/kindergaerten/gruppenprozesse/SKindergaertenGruppenprozesseProps";
-	import type { List} from "@core";
+	import type { List } from "@core";
 	import { BenutzerKompetenz, ServerMode } from "@core";
 	import { computed, ref } from "vue";
 

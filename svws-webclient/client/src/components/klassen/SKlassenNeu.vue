@@ -72,7 +72,7 @@
 				idSchulgliederung,
 				idKlassenart,
 				idAllgemeinbildendOrganisationsform: AllgemeinbildendOrganisationsformen.GANZTAG.daten(props.manager().getSchuljahr())?.id ?? null,
-			}
+			};
 		else if (props.schulform.istBerufsbildend())
 			data.value = {
 				kuerzel: "",
@@ -81,7 +81,7 @@
 				parallelitaet: null,
 				idSchulgliederung,
 				idBerufsbildendOrganisationsform: BerufskollegOrganisationsformen.VOLLZEIT.daten(props.manager().getSchuljahr())?.id ?? null,
-			}
+			};
 		else if (props.schulform.istWeiterbildung())
 			data.value = {
 				kuerzel: "",
@@ -90,7 +90,7 @@
 				parallelitaet: null,
 				idSchulgliederung,
 				idWeiterbildungOrganisationsform: WeiterbildungskollegOrganisationsformen.VOLLZEIT.daten(props.manager().getSchuljahr())?.id ?? null,
-			}
+			};
 
 
 		watch(() => data.value, async () => {
@@ -100,7 +100,7 @@
 			props.checkpoint.active = true;
 			validateAll();
 		}, { immediate: false, deep: true });
-	})
+	});
 
 	const parallelitaet = computed<string | null>({
 		get: () => data.value.parallelitaet ?? '---',

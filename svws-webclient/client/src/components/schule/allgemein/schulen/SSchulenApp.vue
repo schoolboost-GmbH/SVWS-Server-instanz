@@ -48,6 +48,6 @@
 		if (auswahlSchulenList.size() > 5)
 			return `${auswahlSchulenList.size()} Schulen ausgewählt`;
 		return [...auswahlSchulenList].map(k => k.schulnummerStatistik).join(', ');
-	})
+	});
 
 </script>

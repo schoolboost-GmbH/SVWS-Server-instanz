@@ -44,7 +44,7 @@
 		hfull: false,
 	});
 
-	const copied = ref<boolean|null>(null);
+	const copied = ref<boolean | null>(null);
 	defineSlots();
 
 	const log = computed(() => {
@@ -61,8 +61,8 @@
 		if (log.value === undefined)
 			return;
 		try {
-			await navigator.clipboard.writeText("```\n"+log.value+"\n```");
-		} catch(e) {
+			await navigator.clipboard.writeText("```\n" + log.value + "\n```");
+		} catch (e) {
 			copied.value = false;
 		}
 		copied.value = true;

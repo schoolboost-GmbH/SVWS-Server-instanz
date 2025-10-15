@@ -25,7 +25,7 @@ const defaultProps: Partial<{
 
 beforeEach(async () => {
 	wrapper = mount(SvwsUiDashboardTile);
-	idComponent ="#" + wrapper.findComponent({ name: "SvwsUiDashboardTile" }).vm.idComponent;
+	idComponent = "#" + wrapper.findComponent({ name: "SvwsUiDashboardTile" }).vm.idComponent;
 });
 
 afterEach(() => {
@@ -38,7 +38,7 @@ test("Rendert HTML korrekt", () => {
 });
 
 test("Teste die default-Werte der props", () => {
-	for (const [prop, expectedValue] of Object.entries(defaultProps)){
+	for (const [prop, expectedValue] of Object.entries(defaultProps)) {
 		expect(wrapper.props()[prop as keyof typeof defaultProps]).toBe(expectedValue);
 	}
 });
@@ -48,8 +48,8 @@ describe("Tests für die CSS-Props", () => {
 	// PROP-Color [Propvalue, CSS-Klasse, Beschreibung]
 	test.each([
 		['ligt', 'light', 'Prop color wird mit dem Wert null an CSS übergeben'],
-		['dark','svws-ui-dashboard-tile--dark', 'Prop color wird mit dem Wert dark an CSS übergeben'],
-		['transparent','svws-ui-dashboard-tile--transparent', 'Prop color wird mit dem Wert transparent an CSS übergeben'],
+		['dark', 'svws-ui-dashboard-tile--dark', 'Prop color wird mit dem Wert dark an CSS übergeben'],
+		['transparent', 'svws-ui-dashboard-tile--transparent', 'Prop color wird mit dem Wert transparent an CSS übergeben'],
 	])("%s(%s) => %s", async (x, y) => {
 		// Vorbereiten
 		// Testen des default-Werts
@@ -59,7 +59,7 @@ describe("Tests für die CSS-Props", () => {
 		await wrapper.setProps({ color: x as 'light' | 'dark' | 'transparent' });
 
 		// Testen
-		if( y !== 'light' ) {
+		if (y !== 'light') {
 			expect(wrapper.find(idComponent).classes()).toContain(y);
 		}
 	});
@@ -67,19 +67,19 @@ describe("Tests für die CSS-Props", () => {
 	// PROP-Span [Propvalue, CSS-Klasse, Beschreibung]
 	test.each([
 		['1', '1', 'Prop span wird mit dem Wert null an CSS übergeben'],
-		['2','col-span-2', 'Prop span wird mit dem Wert 2 an CSS übergeben'],
-		['full','col-span-full', 'Prop color wird mit dem Wert full an CSS übergeben'],
+		['2', 'col-span-2', 'Prop span wird mit dem Wert 2 an CSS übergeben'],
+		['full', 'col-span-full', 'Prop color wird mit dem Wert full an CSS übergeben'],
 	])("%s(%s) => %s", async (x, y) => {
 		// Vorbereiten
 		// Testen des default-Werts
 		expect(wrapper.find(idComponent).classes()).not.toContain("y");
 
 		// Aktion
-		const c = x!=='full' ? parseInt(x) : x;
+		const c = x !== 'full' ? parseInt(x) : x;
 		await wrapper.setProps({ span: c as 1 | 2 | 'full' });
 
 		// Testen
-		if( y !== '1' ) {
+		if (y !== '1') {
 			expect(wrapper.find(idComponent).classes()).toContain(y);
 		}
 	});
@@ -101,7 +101,7 @@ describe("Bedingte Rendern", () => {
 	test("Rendert den Titel im vorgegebenem Slot-Inhalt nicht, wenn title nicht gesetzt ist", async () => {
 		// Testen
 		expect(wrapper.find(idComponent).find(".svws-ui-dashboard-tile__title").exists()).toBe(false);
-	})
+	});
 
 	test("Rendert den Titel im vorhandenen Slot-Inhalt, wenn title gesetzt ist", async () => {
 		// Vorbereiten
@@ -113,7 +113,7 @@ describe("Bedingte Rendern", () => {
 		// Testen
 		expect(wrapper.find(idComponent).find(".dashboard-tile--title").exists()).toBe(true);
 		expect(wrapper.find(idComponent).find(".dashboard-tile--title").text()).toBe(title);
-	})
+	});
 
 	test("Rendert den Titel in dem mitgegebenen title-Slot", async () => {
 		// Vorbereiten

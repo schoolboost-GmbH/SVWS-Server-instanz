@@ -29,7 +29,7 @@ export class RouteDataSchuelerVermerke extends RouteData<RouteStateSchuelerVerme
 
 	setFilterNurSichtbare = async (value: boolean) => {
 		await api.config.setValue('schueler.vermerke.filterNurSichtbare', value ? "true" : "false");
-	}
+	};
 
 	get auswahl(): SchuelerListeEintrag {
 		if (this._state.value.auswahl === undefined)
@@ -45,7 +45,7 @@ export class RouteDataSchuelerVermerke extends RouteData<RouteStateSchuelerVerme
 		return this._state.value.mapVermerkArten;
 	}
 
-	patch = async (data : Partial<SchuelerVermerke>, idVermerk: number) => {
+	patch = async (data: Partial<SchuelerVermerke>, idVermerk: number) => {
 		api.status.start();
 		await api.server.patchSchuelerVermerke(data, api.schema, idVermerk);
 		for (const vermerk of this.schuelerVermerke)
@@ -53,16 +53,16 @@ export class RouteDataSchuelerVermerke extends RouteData<RouteStateSchuelerVerme
 				Object.assign(vermerk, data);
 		this.commit();
 		api.status.stop();
-	}
+	};
 
 	add = async () => {
-		const addCanditate : Partial<SchuelerVermerke> = {idSchueler: this.auswahl.id}
+		const addCanditate: Partial<SchuelerVermerke> = { idSchueler: this.auswahl.id };
 		api.status.start();
 		const vermerk = await api.server.addVermerk(addCanditate, api.schema);
 		this.schuelerVermerke.add(vermerk);
 		this.commit();
 		api.status.stop();
-	}
+	};
 
 	remove = async (idVermerk: number) => {
 		api.status.start();
@@ -76,7 +76,7 @@ export class RouteDataSchuelerVermerke extends RouteData<RouteStateSchuelerVerme
 		}
 		this.commit();
 		api.status.stop();
-	}
+	};
 
 	public async ladeDaten(auswahl: SchuelerListeEintrag | null) {
 		if (auswahl === null) {

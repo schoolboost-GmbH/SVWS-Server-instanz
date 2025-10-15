@@ -72,14 +72,14 @@ export class Color {
 	/**
 	 * Gibt den Kontrast dieser Farbe zu Weiß zurück.
 	 */
-	public get contrastWhite() : number {
+	public get contrastWhite(): number {
 		return 1.05 / (this.luminance + 0.05);
 	}
 
 	/**
 	 * Gibt den Kontrast dieser Farbe zu Schwarz zurück.
 	 */
-	public get contrastBlack() : number {
+	public get contrastBlack(): number {
 		return (this.luminance + 0.05) / 0.05;
 	}
 

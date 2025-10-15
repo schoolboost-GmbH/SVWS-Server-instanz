@@ -51,7 +51,7 @@
 		return props.manager().hasDaten() ? props.manager().auswahl() : null;
 	});
 
-	async function setAuswahl(items : JahrgangsDaten[]) {
+	async function setAuswahl(items: JahrgangsDaten[]) {
 		props.manager().liste.auswahlClear();
 		for (const item of items)
 			if (props.manager().liste.hasValue(item))

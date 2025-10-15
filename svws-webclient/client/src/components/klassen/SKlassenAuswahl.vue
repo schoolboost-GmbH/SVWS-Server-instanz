@@ -55,7 +55,7 @@
 
 	import { computed, ref } from "vue";
 	import type { KlassenAuswahlProps } from "./SKlassenAuswahlProps";
-	import type{ JahrgangsDaten, KlassenDaten, LehrerListeEintrag, Schulgliederung } from "@core";
+	import type { JahrgangsDaten, KlassenDaten, LehrerListeEintrag, Schulgliederung } from "@core";
 	import { BenutzerKompetenz } from "@core";
 	import { useRegionSwitch, ViewType } from "@ui";
 
@@ -148,7 +148,7 @@
 		return props.manager().hasDaten() ? props.manager().auswahl() : null;
 	});
 
-	async function setAuswahl(items : KlassenDaten[]) {
+	async function setAuswahl(items: KlassenDaten[]) {
 		props.manager().liste.auswahlClear();
 		for (const item of items)
 			if (props.manager().liste.hasValue(item))
@@ -167,7 +167,8 @@
 				if (lehrer !== null)
 					if (s.length > 0)
 						s += `, ${lehrer.kuerzel}`;
-					else s = lehrer.kuerzel;
+					else
+						s = lehrer.kuerzel;
 			}
 		return s;
 	}

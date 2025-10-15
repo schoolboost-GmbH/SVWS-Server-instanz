@@ -14,14 +14,14 @@ const SLehrerAllgemeinesGruppenprozesse = () => import("~/components/lehrer/allg
 export class RouteLehrerAllgemeinesGruppenprozesse extends RouteNode<any, RouteLehrer> {
 
 	public constructor() {
-		super(Schulform.values(), [ BenutzerKompetenz.KEINE ], "lehrer.gruppenprozesse.allgemeines", "gruppenprozesse/allgemeines", SLehrerAllgemeinesGruppenprozesse);
-		super.types = new Set([ ViewType.GRUPPENPROZESSE ]);
+		super(Schulform.values(), [BenutzerKompetenz.KEINE], "lehrer.gruppenprozesse.allgemeines", "gruppenprozesse/allgemeines", SLehrerAllgemeinesGruppenprozesse);
+		super.types = new Set([ViewType.GRUPPENPROZESSE]);
 		super.mode = ServerMode.STABLE;
 		super.propHandler = (route) => this.getProps(route);
 		super.text = "Allgemeines";
 	}
 
-	protected async update() : Promise<void | Error | RouteLocationRaw> {
+	protected async update(): Promise<void | Error | RouteLocationRaw> {
 		await routeLehrer.data.updateMapStundenplaene();
 	}
 

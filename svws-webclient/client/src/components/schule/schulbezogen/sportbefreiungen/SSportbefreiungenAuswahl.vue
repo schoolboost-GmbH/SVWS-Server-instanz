@@ -40,9 +40,9 @@
 		if ((props.activeViewType === ViewType.GRUPPENPROZESSE) || (props.activeViewType === ViewType.HINZUFUEGEN))
 			return null;
 		return (props.manager().hasDaten()) ? props.manager().auswahl() : null;
-	})
+	});
 	const columns: DataTableColumn[] = [
-		{ key: "bezeichnung", label: "Bezeichnung", sortable: true, defaultSort: "asc"},
+		{ key: "bezeichnung", label: "Bezeichnung", sortable: true, defaultSort: "asc" },
 	];
 
 	async function setAuswahl(sportbefreiungen: Sportbefreiung[]) {

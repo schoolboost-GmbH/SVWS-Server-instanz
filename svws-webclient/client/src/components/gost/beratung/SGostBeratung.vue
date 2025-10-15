@@ -94,7 +94,7 @@
 		for (const l of props.beratungslehrer())
 			map.delete(l.id);
 		return map;
-	})
+	});
 
 </script>
 

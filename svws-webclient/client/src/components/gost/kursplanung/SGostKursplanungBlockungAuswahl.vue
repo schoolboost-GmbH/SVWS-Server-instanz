@@ -87,7 +87,7 @@
 
 	import { computed, ref } from 'vue';
 	import type { ApiStatus } from '~/components/ApiStatus';
-	import type { ServerMode, GostBlockungListeneintrag, GostBlockungsdaten, GostBlockungsdatenManager, GostBlockungsergebnis, GostHalbjahr, List, GostBlockungsergebnisManager} from "@core";
+	import type { ServerMode, GostBlockungListeneintrag, GostBlockungsdaten, GostBlockungsdatenManager, GostBlockungsergebnis, GostHalbjahr, List, GostBlockungsergebnisManager } from "@core";
 	import { ArrayList, BlockungsUtils } from "@core";
 
 	const props = defineProps<{
@@ -128,7 +128,7 @@
 			list.add(i);
 		BlockungsUtils.sortGostBlockungListeneintrag(list);
 		return list;
-	})
+	});
 
 	async function select_blockungauswahl(blockung: GostBlockungListeneintrag | null) {
 		if ((blockung === null) || props.apiStatus.pending)
@@ -147,7 +147,7 @@
 		await props.rechneGostBlockung();
 	}
 
-	async function patch_blockung(value: string, idBlockung : number) {
+	async function patch_blockung(value: string, idBlockung: number) {
 		const result = await props.patchBlockung({ name: value.toString() }, idBlockung);
 		if (result && props.auswahlBlockung)
 			props.auswahlBlockung.name = value.toString();

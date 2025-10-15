@@ -30,8 +30,8 @@
 
 	const props = withDefaults(defineProps<{
 		showDeleteIcon: boolean;
-		createBenutzergruppe : (bezeichnung: string, istAdmin: boolean) => Promise<void>;
-		deleteBenutzergruppen : () => Promise<void>;
+		createBenutzergruppe: (bezeichnung: string, istAdmin: boolean) => Promise<void>;
+		deleteBenutzergruppen: () => Promise<void>;
 		hasFocus?: boolean;
 	}>(), {
 		hasFocus: false,
@@ -40,13 +40,13 @@
 	const show = ref<boolean>(false);
 
 	const bezeichnung = ref();
-	const inputbgIstAdmin=ref(false);
+	const inputbgIstAdmin = ref(false);
 
-	function create(){
-		void props.createBenutzergruppe(bezeichnung.value,inputbgIstAdmin.value);
+	function create() {
+		void props.createBenutzergruppe(bezeichnung.value, inputbgIstAdmin.value);
 		show.value = false;
 		bezeichnung.value = "";
-		inputbgIstAdmin.value=false;
+		inputbgIstAdmin.value = false;
 	}
 
 </script>

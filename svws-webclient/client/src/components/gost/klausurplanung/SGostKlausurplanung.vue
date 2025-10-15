@@ -39,7 +39,7 @@
 	const numWarnings = computed<number>(() => props.kMan().planungshinweiseGetAnzahlByHalbjahrAndQuartal(props.jahrgangsdaten!.abiturjahr, props.halbjahr, props.quartalsauswahl.value, props.getConfigNumberValue("kwWarnLimit"), props.getConfigNumberValue("kwErrorLimit")));
 
 	const dropdownList = [
-		{ text: "Klausurplan (Kurse)", action: () => downloadPDF("Klausurplan (Kurse)")},
+		{ text: "Klausurplan (Kurse)", action: () => downloadPDF("Klausurplan (Kurse)") },
 		{ text: "Klausurplan (Nachschreiber)", action: () => downloadPDF("Klausurplan (Nachschreiber)") },
 		{ text: "Klausurplan (Kurse und Nachschreiber)", action: () => downloadPDF("Klausurplan (Kurse und Nachschreiber)") },
 		{ text: "Klausurplan (detailliert)", action: () => downloadPDF("Klausurplan (detailliert)"), default: true },

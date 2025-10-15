@@ -15,7 +15,7 @@ const defaultState = {
 	view: routeEntlassgruendeDaten,
 	activeViewType: ViewType.DEFAULT,
 	oldView: undefined,
-}
+};
 
 export class RouteDataEntlassgruende extends RouteDataAuswahl<EntlassgruendeListeManager, RouteStateAuswahlInterface<EntlassgruendeListeManager>> {
 
@@ -27,7 +27,7 @@ export class RouteDataEntlassgruende extends RouteDataAuswahl<EntlassgruendeList
 		const entlassgruende = await api.server.getEntlassgruende(api.schema);
 		const manager = new EntlassgruendeListeManager(api.abschnitt.id, api.schuleStammdaten.idSchuljahresabschnitt, api.schuleStammdaten.abschnitte,
 			api.schulform, entlassgruende);
-		return { manager }
+		return { manager };
 	}
 
 	public addID(param: RouteParamsRawGeneric, id: number): void {
@@ -50,12 +50,12 @@ export class RouteDataEntlassgruende extends RouteDataAuswahl<EntlassgruendeList
 		return `Entlassgrund ${entlassgrund?.bezeichnung ?? '???'} (ID: ${id}) wurde erfolgreich gelöscht.`;
 	}
 
-	addEntlassgrund = async (data: Partial<KatalogEntlassgrund>) : Promise<void> => {
+	addEntlassgrund = async (data: Partial<KatalogEntlassgrund>): Promise<void> => {
 		const entlassgrund = await api.server.addEntlassgrund(data, api.schema);
 		this.manager.liste.add(entlassgrund);
 		this.commit();
 		await this.gotoDefaultView(entlassgrund.id);
-	}
+	};
 
 }
 

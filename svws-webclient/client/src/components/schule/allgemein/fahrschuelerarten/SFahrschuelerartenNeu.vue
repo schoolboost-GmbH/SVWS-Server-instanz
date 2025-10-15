@@ -33,7 +33,7 @@
 	import { isUniqueInList, mandatoryInputIsValid } from "~/util/validation/Validation";
 
 	const props = defineProps<FahrschuelerartenNeuProps>();
-	const data = ref<Fahrschuelerart>(Object.assign( new Fahrschuelerart(), {istSichtbar: true, sortierung: 1}));
+	const data = ref<Fahrschuelerart>(Object.assign(new Fahrschuelerart(), { istSichtbar: true, sortierung: 1 }));
 	const isLoading = ref<boolean>(false);
 	const hatKompetenzAdd = computed<boolean>(() => props.benutzerKompetenzen.has(BenutzerKompetenz.KATALOG_EINTRAEGE_AENDERN));
 	const disabled = computed(() => !hatKompetenzAdd.value);
@@ -44,7 +44,7 @@
 		return data.value.bezeichnung.length > 30;
 	});
 
-	function fieldIsValid(field: keyof Fahrschuelerart | null) : (v: string | null) => boolean {
+	function fieldIsValid(field: keyof Fahrschuelerart | null): (v: string | null) => boolean {
 		return (v: string | null) => {
 			switch (field) {
 				case 'bezeichnung':
@@ -52,7 +52,7 @@
 				default:
 					return true;
 			}
-		}
+		};
 	}
 
 	const formIsValid = computed(() => {
@@ -61,7 +61,7 @@
 			const validateField = fieldIsValid(field as keyof Fahrschuelerart);
 			const fieldValue = data.value[field as keyof Fahrschuelerart] as string | null;
 			return validateField(fieldValue);
-		})
+		});
 	});
 
 	function bezeichnungIsValid(v: string | null) {
@@ -87,7 +87,7 @@
 		await props.goToDefaultView(null);
 	}
 
-	watch(() => data.value, async() => {
+	watch(() => data.value, async () => {
 		if (isLoading.value)
 			return;
 

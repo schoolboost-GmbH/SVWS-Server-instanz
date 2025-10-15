@@ -29,7 +29,7 @@ export class RouteFahrschuelerartenNeu extends RouteNode<any, RouteFahrschuelera
 			checkpoint: this.checkpoint,
 			benutzerKompetenzen: api.benutzerKompetenzen,
 			continueRoutingAfterCheckpoint: () => RouteManager.continueRoutingAfterCheckpoint(),
-		}
+		};
 	}
 }
 

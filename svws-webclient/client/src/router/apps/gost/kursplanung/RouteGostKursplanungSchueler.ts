@@ -32,7 +32,7 @@ export class RouteGostKursplanungSchueler extends RouteNode<any, RouteGostKurspl
 		super.text = "Kursplanung - Schüler";
 		this.isHidden = (params?: RouteParams) => {
 			return this.checkHidden(params);
-		}
+		};
 		api.config.addElements([
 			new ConfigElement("gost.kursplanung.schueler.auswahl.geschlecht", "user", "true"),
 			new ConfigElement("gost.kursplanung.schueler.auswahl.filterOpen", "user", "true"),
@@ -43,14 +43,14 @@ export class RouteGostKursplanungSchueler extends RouteNode<any, RouteGostKurspl
 		try {
 			const { abiturjahr } = params ? RouteNode.getIntParams(params, ["abiturjahr"]) : { abiturjahr: null };
 			if ((abiturjahr === null) || (abiturjahr === -1))
-				return { name: routeGost.defaultChild!.name, params: { idSchuljahresabschnitt: routeApp.data.idSchuljahresabschnitt, abiturjahr }};
+				return { name: routeGost.defaultChild!.name, params: { idSchuljahresabschnitt: routeApp.data.idSchuljahresabschnitt, abiturjahr } };
 			return false;
 		} catch (e) {
 			return routeError.getSimpleErrorRoute(e as DeveloperNotificationException);
 		}
 	}
 
-	public async beforeEach(to: RouteNode<any, any>, to_params: RouteParams, from: RouteNode<any, any> | undefined, from_params: RouteParams) : Promise<boolean | void | Error | RouteLocationRaw> {
+	public async beforeEach(to: RouteNode<any, any>, to_params: RouteParams, from: RouteNode<any, any> | undefined, from_params: RouteParams): Promise<boolean | void | Error | RouteLocationRaw> {
 		try {
 			const { abiturjahr, halbjahr: halbjahrId, idblockung: idBlockung, idergebnis: idErgebnis } = RouteNode.getIntParams(to_params, ["abiturjahr", "halbjahr", "idblockung", "idergebnis"]);
 			const halbjahr = GostHalbjahr.fromID(halbjahrId ?? null);
@@ -61,12 +61,12 @@ export class RouteGostKursplanungSchueler extends RouteNode<any, RouteGostKurspl
 			if (idErgebnis === undefined)
 				return routeGostKursplanung.getRouteBlockung(abiturjahr, halbjahr.id, idBlockung);
 			return true;
-		} catch(e) {
+		} catch (e) {
 			return await routeError.getErrorRoute(e instanceof Error ? e : new DeveloperNotificationException("Unbekannter Fehler beim Laden der Klausurplanungsdaten."));
 		}
 	}
 
-	public async update(to: RouteNode<any, any>, to_params: RouteParams) : Promise<void | Error | RouteLocationRaw> {
+	public async update(to: RouteNode<any, any>, to_params: RouteParams): Promise<void | Error | RouteLocationRaw> {
 		try {
 			const { abiturjahr, halbjahr: halbjahrId, idblockung: idBlockung, idergebnis: idErgebnis, idschueler: idSchueler } = RouteNode.getIntParams(to_params, ["abiturjahr", "halbjahr", "idblockung", "idergebnis", "idschueler"]);
 			const halbjahr = GostHalbjahr.fromID(halbjahrId ?? null);
@@ -98,22 +98,22 @@ export class RouteGostKursplanungSchueler extends RouteNode<any, RouteGostKurspl
 					return this.getRoute({ idschueler: undefined });
 				await routeGostKursplanung.data.setAuswahlSchueler(schueler);
 			}
-		} catch(e) {
+		} catch (e) {
 			return await routeError.getErrorRoute(e instanceof Error ? e : new DeveloperNotificationException("Unbekannter Fehler beim Laden der Klausurplanungsdaten."));
 		}
 	}
 
-	public addRouteParamsFromState() : RouteParamsRawGeneric {
+	public addRouteParamsFromState(): RouteParamsRawGeneric {
 		return { idschueler: routeGostKursplanung.data.hatSchueler ? routeGostKursplanung.data.auswahlSchueler.id : undefined };
 	}
 
 	gotoSchuelerIndividualdaten = async (idSchueler: number) => {
 		await RouteManager.doRoute(routeSchuelerIndividualdaten.getRoute({ id: idSchueler }));
-	}
+	};
 
 	gotoLaufbahnplanung = async (idSchueler: number) => {
 		await RouteManager.doRoute(routeSchuelerLaufbahnplanung.getRoute({ id: idSchueler }));
-	}
+	};
 
 	public getAuswahlProps(to: RouteLocationNormalized): KursplanungSchuelerAuswahlProps {
 		return {
@@ -130,7 +130,7 @@ export class RouteGostKursplanungSchueler extends RouteNode<any, RouteGostKurspl
 			setIsSchuelerFilterOpen: routeGostKursplanung.data.setIsSchuelerFilterOpen,
 			showGeschlecht: () => routeGostKursplanung.data.showGeschlecht,
 			setShowGeschlecht: routeGostKursplanung.data.setShowGeschlecht,
-		}
+		};
 	}
 
 	public getProps(to: RouteLocationNormalized): GostKursplanungUmwahlansichtProps {
@@ -150,7 +150,7 @@ export class RouteGostKursplanungSchueler extends RouteNode<any, RouteGostKurspl
 			getErgebnismanager: () => routeGostKursplanung.data.ergebnismanager,
 			schueler: routeGostKursplanung.data.hatSchueler ? routeGostKursplanung.data.auswahlSchueler : undefined,
 			apiStatus: api.status,
-		}
+		};
 	}
 
 }

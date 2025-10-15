@@ -42,7 +42,7 @@
 		return (props.manager().hasDaten()) ? props.manager().auswahl() : null;
 	});
 	const columns: DataTableColumn[] = [
-		{ key: "bezeichnung", label: "Bezeichnung", sortable: true, defaultSort: "asc"},
+		{ key: "bezeichnung", label: "Bezeichnung", sortable: true, defaultSort: "asc" },
 	];
 
 	async function setAuswahl(fahrschuelerarten: Fahrschuelerart[]) {

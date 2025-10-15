@@ -1,4 +1,4 @@
-import type { SimpleOperationResponse} from "@core";
+import type { SimpleOperationResponse } from "@core";
 import { UnsupportedOperationException, type ENMKlasse, type List } from "@core";
 import { EnmKlassenleitungAuswahlListeManager, ViewType } from "@ui";
 import { api } from "~/router/Api";
@@ -49,20 +49,20 @@ export class RouteDataNotenmodulKlassenleitung extends RouteDataAuswahl<EnmKlass
 	}
 
 	protected async doDelete(ids: List<number>): Promise<List<SimpleOperationResponse>> {
-		throw new UnsupportedOperationException("Die Methode ist nicht implementiert.")
+		throw new UnsupportedOperationException("Die Methode ist nicht implementiert.");
 	}
 
 	protected deleteMessage(id: number, eintrag: any): string {
-		throw new UnsupportedOperationException("Die Methode ist nicht implementiert.")
+		throw new UnsupportedOperationException("Die Methode ist nicht implementiert.");
 	}
 
-	get columnsVisible(): Map<string, boolean|null> {
-		return new Map<string, boolean|null>(JSON.parse(api.config.getValue("notenmodul.klassenleitung.table.columns")));
+	get columnsVisible(): Map<string, boolean | null> {
+		return new Map<string, boolean | null>(JSON.parse(api.config.getValue("notenmodul.klassenleitung.table.columns")));
 	}
 
-	setColumnsVisible = async (value: Map<string, boolean|null>) => {
+	setColumnsVisible = async (value: Map<string, boolean | null>) => {
 		await api.config.setValue('notenmodul.klassenleitung.table.columns', JSON.stringify([...value]));
-	}
+	};
 
 	get floskelEditorVisible(): boolean {
 		return (api.config.getValue("notenmodul.klassenleitung.floskelEditorVisible") === 'true');
@@ -70,6 +70,6 @@ export class RouteDataNotenmodulKlassenleitung extends RouteDataAuswahl<EnmKlass
 
 	setFloskelEditorVisible = async (value: boolean) => {
 		await api.config.setValue('notenmodul.klassenleitung.floskelEditorVisible', value ? 'true' : 'false');
-	}
+	};
 
 }

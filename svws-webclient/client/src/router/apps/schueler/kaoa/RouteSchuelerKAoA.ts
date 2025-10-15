@@ -35,7 +35,7 @@ export class RouteSchuelerKAoA extends RouteNode<RouteDataSchuelerKAoA, RouteSch
 		}
 	}
 
-	public async update(to: RouteNode<any, any>, to_params: RouteParams) : Promise<void | Error | RouteLocationRaw> {
+	public async update(to: RouteNode<any, any>, to_params: RouteParams): Promise<void | Error | RouteLocationRaw> {
 		try {
 			const { id } = RouteNode.getIntParams(to_params, ["id"]);
 			if (this.parent === undefined)
@@ -45,7 +45,7 @@ export class RouteSchuelerKAoA extends RouteNode<RouteDataSchuelerKAoA, RouteSch
 			} else {
 				try {
 					await this.data.ladeDaten(routeSchueler.data.manager.liste.get(id));
-				} catch(error) {
+				} catch (error) {
 					// TODO: Routing zum Schüler zurück führt zu einer Endlosschleife... return routeSchueler.getRoute({ id });
 				}
 			}

@@ -1,4 +1,4 @@
-import { createRouter, createWebHistory } from 'vue-router'
+import { createRouter, createWebHistory } from 'vue-router';
 
 
 const routes = [
@@ -39,7 +39,7 @@ const routes = [
 	{ path: '/navigation/AppLayout', component: () => import('../ui/nav/SvwsUiMenu.story.vue') },
 	{ path: '/gost/laufbahnplanungInfos', component: () => import('../components/gost/laufbahnplanung/SLaufbahnplanungInformationen.story.vue') },
 	{ path: '/composables/usePaneSplitter', component: () => import('../ui/composables/usePaneSplitter.story.vue') },
-]
+];
 
 const router = createRouter({ history: createWebHistory(), routes });
 

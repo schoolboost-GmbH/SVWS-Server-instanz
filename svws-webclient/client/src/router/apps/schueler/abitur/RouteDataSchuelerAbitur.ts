@@ -1,4 +1,4 @@
-import type { AbiturFachbelegung, GostBelegpruefungErgebnis, SchuelerListeEintrag} from "@core";
+import type { AbiturFachbelegung, GostBelegpruefungErgebnis, SchuelerListeEintrag } from "@core";
 import { Abiturdaten, AbiturdatenManager, DeveloperNotificationException, GostBelegpruefungsArt, GostFaecherManager, UserNotificationException } from "@core";
 import { api } from "~/router/Api";
 import { RouteData, type RouteStateInterface } from "~/router/RouteData";
@@ -34,21 +34,21 @@ export class RouteDataSchuelerAbitur extends RouteData<RouteStateDataSchuelerAbi
 		return schueler;
 	}
 
-	get managerLaufbahnplanung() : AbiturdatenManager {
+	get managerLaufbahnplanung(): AbiturdatenManager {
 		const managerLaufbahnplanung = this._state.value.managerLaufbahnplanung;
 		if (managerLaufbahnplanung === null)
 			throw new DeveloperNotificationException("Ein Aufruf dieser Methode sollte vor der korrekten Initialisierung der Laufbahnplanungsdaten nicht erfolgen.");
 		return managerLaufbahnplanung;
 	}
 
-	get ergebnisBelegpruefung() : GostBelegpruefungErgebnis {
+	get ergebnisBelegpruefung(): GostBelegpruefungErgebnis {
 		const ergebnisBelegpruefung = this._state.value.ergebnisBelegpruefung;
 		if (ergebnisBelegpruefung === null)
 			throw new DeveloperNotificationException("Ein Aufruf dieser Methode sollte vor der korrekten Initialisierung der Laufbahnplanungsdaten nicht erfolgen.");
 		return ergebnisBelegpruefung;
 	}
 
-	get managerAbitur() : AbiturdatenManager | null {
+	get managerAbitur(): AbiturdatenManager | null {
 		return this._state.value.managerAbitur;
 	}
 
@@ -58,7 +58,7 @@ export class RouteDataSchuelerAbitur extends RouteData<RouteStateDataSchuelerAbi
 	 * @param schueler   der Listeneintrag zu dem Schüler
 	 * @param force      gibt an, ob das Laden erzwungen werden soll, obwohl die ID bereits geladen ist
 	 */
-	public async setSchueler(schueler: SchuelerListeEintrag, force: boolean = false) : Promise<void> {
+	public async setSchueler(schueler: SchuelerListeEintrag, force: boolean = false): Promise<void> {
 		if ((!force) && (schueler.id === this._state.value.schueler?.id))
 			return;
 		// Lade die Informationen zum Abiturjahrgang des Schülers
@@ -74,7 +74,7 @@ export class RouteDataSchuelerAbitur extends RouteData<RouteStateDataSchuelerAbi
 			faecherManager = new GostFaecherManager(schueler.abiturjahrgang - 1, listGostFaecher);
 			listFachkombinationen = await api.server.getGostAbiturjahrgangFachkombinationen(api.schema, schueler.abiturjahrgang);
 			faecherManager.addFachkombinationenAll(listFachkombinationen);
-		} catch(error) {
+		} catch (error) {
 			throw new UserNotificationException("Die Informationen zum Abiturjahrgang " + schueler.abiturjahrgang +
 				" und dessen Fächer konnten nicht vollständig ermittelt werden. Überpfüfen Sie diese Infromationen.");
 		}
@@ -95,11 +95,11 @@ export class RouteDataSchuelerAbitur extends RouteData<RouteStateDataSchuelerAbi
 		} catch (e) {
 			// do nothing
 		}
-		this.setPatchedDefaultState(newState)
+		this.setPatchedDefaultState(newState);
 	}
 
 
-	copyAbiturdatenAusLeistungsdaten = async (idSchueler: number) : Promise<void> => {
+	copyAbiturdatenAusLeistungsdaten = async (idSchueler: number): Promise<void> => {
 		// Kopiere die Leistungsdaten auf dem Server ...
 		await api.server.copyGostSchuelerAbiturdatenAusLeistungsdaten(api.schema, idSchueler);
 		// ... und lade diese dann vom Server
@@ -107,8 +107,8 @@ export class RouteDataSchuelerAbitur extends RouteData<RouteStateDataSchuelerAbi
 		const abiturdaten = await api.server.getGostSchuelerAbiturdaten(api.schema, idSchueler);
 		newState.managerAbitur = new AbiturdatenManager(api.mode, abiturdaten, this.managerLaufbahnplanung.jahrgangsdaten(),
 			this.managerLaufbahnplanung.faecher(), GostBelegpruefungsArt.GESAMT);
-		this.setPatchedState(newState)
-	}
+		this.setPatchedState(newState);
+	};
 
 	updateAbiturpruefungsdaten = async (manager: () => AbiturdatenManager, belegung: Partial<AbiturFachbelegung>, berechnePflichtpruefungenNeu: boolean) => {
 		if (belegung.fachID === undefined)
@@ -139,6 +139,6 @@ export class RouteDataSchuelerAbitur extends RouteData<RouteStateDataSchuelerAbi
 		manager().pruefeZulassung();
 		AbiturdatenManager.berechnePruefungsergebnis(orig, berechnePflichtpruefungenNeu);
 		this.commit();
-	}
+	};
 
 }

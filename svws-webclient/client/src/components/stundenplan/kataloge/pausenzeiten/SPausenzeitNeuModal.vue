@@ -37,14 +37,14 @@
 
 	const openModal = () => {
 		show.value = true;
-	}
+	};
 
 	const disabled = computed<boolean>(() => {
 		for (const w of wochentage.value)
 			if (props.stundenplanManager().pausenzeitExistsByWochentagAndBeginnAndEnde(w.id, item.value.beginn ?? null, item.value.ende ?? null))
 				return true;
 		return false;
-	})
+	});
 
 	async function importer() {
 		const list = [];
@@ -52,7 +52,7 @@
 		for (const klasse of klassen.value)
 			listKlassen.add(klasse);
 		for (const tag of wochentage.value)
-			list.push({wochentag: tag.id, beginn: item.value.beginn, ende: item.value.ende, bezeichnung: 'Pause', klassen: listKlassen})
+			list.push({ wochentag: tag.id, beginn: item.value.beginn, ende: item.value.ende, bezeichnung: 'Pause', klassen: listKlassen });
 		show.value = false;
 		await props.addPausenzeiten(list);
 	}

@@ -72,7 +72,7 @@ export abstract class BaseSelectManager<T> {
 	 *
 	 * @param config      die Konfiguration des Selects. Wenn nicht angegeben, dann wird das Select ohne Optionen generiert.
 	 */
-	protected constructor (config?: BaseSelectManagerConfig<T>) {
+	protected constructor(config?: BaseSelectManagerConfig<T>) {
 		this.initManager(config);
 	}
 
@@ -157,7 +157,7 @@ export abstract class BaseSelectManager<T> {
 	 * 					  Beispiel: `v => this.toList(v)` wandelt den Itereator von source vor der Speicherung als ShallowRef noch in eine Liste um
 	 * @returns ein ShallowRef mit dem Wert der source
 	 */
-	protected initShallowRef<R, S>(source: MaybeRef<R>, transform: (v: R) => S ): ShallowRef<S> {
+	protected initShallowRef<R, S>(source: MaybeRef<R>, transform: (v: R) => S): ShallowRef<S> {
 		return isRef(source) ? shallowRef(transform(toRaw(source.value))) : shallowRef(transform(toRaw(source)));
 	}
 
@@ -195,7 +195,7 @@ export abstract class BaseSelectManager<T> {
 	 *
 	 * @param value   neue sortierte Liste der gefilterten Optionen
 	 */
-	public set filteredOptions (value: Iterable<T>) {
+	public set filteredOptions(value: Iterable<T>) {
 		const filteredList = this.toList(value);
 		if (this.sort !== null)
 			filteredList.sort(this.sort);
@@ -209,7 +209,7 @@ export abstract class BaseSelectManager<T> {
 	 * @param filter   der Filter, deren Optionen aktualisiert werden sollen. Wenn nicht angegeben, dann werden alle optionen aktualisiert.
 	 * @param remove   wenn true, dann wird der Filter aus der Map entfernt. Andernfalls wird der Filter angewendet.
 	 */
-	public updateFilteredOptions (filter?: SelectFilter<T>, remove: boolean = false): void {
+	public updateFilteredOptions(filter?: SelectFilter<T>, remove: boolean = false): void {
 		this.updateFilterMap(filter, remove);
 
 		if (this._filterMap.size === 0) {
@@ -218,7 +218,7 @@ export abstract class BaseSelectManager<T> {
 		}
 
 		let result = this._filterMap.values().toArray()[0];
-		for (const filteredOptions of this._filterMap.values().filter((_, idx) => idx > 0) )
+		for (const filteredOptions of this._filterMap.values().filter((_, idx) => idx > 0))
 			result = this.intersect(result, filteredOptions);
 
 		this.filteredOptions = result;
@@ -235,8 +235,7 @@ export abstract class BaseSelectManager<T> {
 		if (filter !== undefined)
 			if (remove) {
 				this._filterMap.delete(filter.key);
-			}
-			else
+			} else
 				this._filterMap.set(filter.key, filter.apply(this.unfilteredOptions));
 		else {
 			this._filterMap.clear();
@@ -444,7 +443,7 @@ export abstract class BaseSelectManager<T> {
 				compare: sort,
 			};
 		}
-		return sort
+		return sort;
 	}
 
 

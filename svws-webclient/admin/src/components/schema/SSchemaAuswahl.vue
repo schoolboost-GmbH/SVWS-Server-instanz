@@ -65,7 +65,7 @@
 		{ key: "revision", label: "Revision", sortable: true, span: 1 },
 		{ key: "isTainted", label: "Tainted", tooltip: 'Tainted: Schema kann von der angegebenen Revision abweichen und wird als Entwickler-Schema betrachtet', sortable: true, span: 0.5 },
 		{ key: "isInConfig", label: "Config", tooltip: 'Schema ist in der Config-Datei eingetragen', sortable: true, span: 0.5 },
-	]
+	];
 
 	const selectedItems = computed<Array<SchemaListeEintrag>>({
 		get: () => props.auswahlGruppe,

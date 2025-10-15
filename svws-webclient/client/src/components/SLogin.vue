@@ -57,16 +57,16 @@
 	const schema = shallowRef<DBSchemaListeEintrag | undefined>();
 	const username = ref("");
 	const password = ref("");
-	const error = ref<{name: string; message: string;}|null>(null);
+	const error = ref<{ name: string; message: string; } | null>(null);
 
 	onMounted(() => {
 		try {
 			const set = new Set();
 			set.difference(new Set());
 		} catch (e) {
-			error.value = {name: "Achtung", message: "Ihr Browser ist veraltet. Bitte aktualisieren Sie Ihren Browser auf eine aktuelle Version. Die weitere Nutzung wird zu Fehlern im SVWS-Client führen."};
+			error.value = { name: "Achtung", message: "Ihr Browser ist veraltet. Bitte aktualisieren Sie Ihren Browser auf eine aktuelle Version. Die weitere Nutzung wird zu Fehlern im SVWS-Client führen." };
 		}
-	})
+	});
 
 	const connecting = ref(false);
 	const authenticating = ref(false);
@@ -105,7 +105,7 @@
 			connection_failed.value = true;
 			connecting.value = false;
 			const message = e instanceof DeveloperNotificationException ? e.message : "Verbindung zum Server fehlgeschlagen. Bitte die Serveradresse prüfen und erneut versuchen.";
-			error.value = {name: "Serverfehler", message};
+			error.value = { name: "Serverfehler", message };
 			return;
 		}
 		let hasDefault = false;
@@ -144,13 +144,13 @@
 		inputFocus.value = false;
 		error.value = null;
 		if ((schema.value === undefined) || (schema.value.name === null))
-			return error.value = {name: "Eingabefehler", message: "Es muss ein gültiges Schema ausgewählt sein."};
+			return error.value = { name: "Eingabefehler", message: "Es muss ein gültiges Schema ausgewählt sein." };
 		authenticating.value = true;
 		try {
 			await props.login(schema.value.name, username.value, password.value);
 			firstauth.value = false;
 			if (!props.authenticated)
-				error.value = {name: "Eingabefehler", message: "Passwort oder Benutzername falsch."};
+				error.value = { name: "Eingabefehler", message: "Passwort oder Benutzername falsch." };
 			else {
 				localStorage.setItem("SVWS-Client Last Used Schema", schema.value.name);
 				// localStorage.setItem(`SVWS-Client Last Used Username for Schema_${schema.value.name}`, username.value);

@@ -62,20 +62,20 @@
 
 	const aktuell = ref<GostStatistikFachwahl | undefined>(undefined);
 
-	function onClick(fws : GostStatistikFachwahl): void {
+	function onClick(fws: GostStatistikFachwahl): void {
 		aktuell.value = (aktuell.value?.id === fws.id) ? undefined : fws;
 	}
 
 	const schuljahr = computed<number>(() => props.faecherManager.getSchuljahr());
 
-	function getBgColor(fws: GostStatistikFachwahl) : string {
+	function getBgColor(fws: GostStatistikFachwahl): string {
 		if (fws.kuerzelStatistik === null)
 			return 'rgb(220,220,220)';
 		return Fach.getBySchluesselOrDefault(fws.kuerzelStatistik).getHMTLFarbeRGBA(schuljahr.value, 1.0);
 	}
 
-	function doSortSchuelerListeByNachnameAndVornameAndId(liste : List<SchuelerListeEintrag>): List<SchuelerListeEintrag> {
-		liste.sort({ compare(a : SchuelerListeEintrag, b : SchuelerListeEintrag) : number {
+	function doSortSchuelerListeByNachnameAndVornameAndId(liste: List<SchuelerListeEintrag>): List<SchuelerListeEintrag> {
+		liste.sort({ compare(a: SchuelerListeEintrag, b: SchuelerListeEintrag): number {
 			let cmp = a.nachname.localeCompare(b.nachname);
 			if (cmp !== 0)
 				return cmp;
@@ -87,11 +87,11 @@
 		return liste;
 	}
 
-	function getSchuelerListe(idFach : number, halbjahr: GostHalbjahr, col: number) : List<SchuelerListeEintrag> {
+	function getSchuelerListe(idFach: number, halbjahr: GostHalbjahr, col: number): List<SchuelerListeEintrag> {
 		const result = new ArrayList<SchuelerListeEintrag>();
 		const schuelermenge = (col === 1)
 			? props.fachwahlenManager.schuelerGetMengeGKSchriftlichByFachAndHalbjahrAsListOrException(idFach, halbjahr)
-			: props.fachwahlenManager.schuelerGetMengeGKMuendlichByFachAndHalbjahrAsListOrException(idFach, halbjahr)
+			: props.fachwahlenManager.schuelerGetMengeGKMuendlichByFachAndHalbjahrAsListOrException(idFach, halbjahr);
 		for (const id of schuelermenge) {
 			const schueler = props.mapSchueler.get(id);
 			if (schueler !== undefined)

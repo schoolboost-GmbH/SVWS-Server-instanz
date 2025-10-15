@@ -12,15 +12,15 @@ const SGostAbiturjahrgangNeu = () => import("~/components/gost/SGostAbiturjahrga
 export class RouteGostAbiturjahrNeu extends RouteNode<any, RouteGost> {
 
 	public constructor() {
-		super(Schulform.values(), [ BenutzerKompetenz.OBERSTUFE_ABITURJAHRGAENGE_VERWALTEN ], "gost.abiturjahrNeu", "neu", SGostAbiturjahrgangNeu);
-		super.types = new Set([ ViewType.HINZUFUEGEN ]);
+		super(Schulform.values(), [BenutzerKompetenz.OBERSTUFE_ABITURJAHRGAENGE_VERWALTEN], "gost.abiturjahrNeu", "neu", SGostAbiturjahrgangNeu);
+		super.types = new Set([ViewType.HINZUFUEGEN]);
 		super.mode = ServerMode.STABLE;
 		super.propHandler = (route) => this.getProps(route);
 		super.text = "Abiturjahr anlegen";
 	}
 
-	public addRouteParamsFromState() : RouteParamsRawGeneric {
-		return { abiturjahr : "" };
+	public addRouteParamsFromState(): RouteParamsRawGeneric {
+		return { abiturjahr: "" };
 	}
 
 	public getProps(to: RouteLocationNormalized): GostAbiturjahrgangNeuProps {

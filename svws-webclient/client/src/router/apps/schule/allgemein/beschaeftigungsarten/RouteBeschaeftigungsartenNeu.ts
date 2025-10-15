@@ -29,7 +29,7 @@ export class RouteBeschaeftigungsartenNeu extends RouteNode<any, RouteBeschaefti
 			checkpoint: this.checkpoint,
 			benutzerKompetenzen: api.benutzerKompetenzen,
 			continueRoutingAfterCheckpoint: () => RouteManager.continueRoutingAfterCheckpoint(),
-		}
+		};
 	}
 }
 

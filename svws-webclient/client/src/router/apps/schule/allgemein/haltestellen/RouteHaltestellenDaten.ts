@@ -6,7 +6,7 @@ import { RouteNode } from "~/router/RouteNode";
 import { api } from "~/router/Api";
 import { routeHaltestellen } from "~/router/apps/schule/allgemein/haltestellen/RouteHaltestellen";
 
-const SHaltestelleDaten = () => import("~/components/schule/allgemein/haltestellen/daten/SHaltestellenDaten.vue")
+const SHaltestelleDaten = () => import("~/components/schule/allgemein/haltestellen/daten/SHaltestellenDaten.vue");
 
 export class RouteHaltestellenDaten extends RouteNode<any, RouteHaltestellen> {
 
@@ -15,7 +15,7 @@ export class RouteHaltestellenDaten extends RouteNode<any, RouteHaltestellen> {
 			"daten", SHaltestelleDaten);
 		super.mode = ServerMode.DEV;
 		super.propHandler = (route) => this.getProps(route);
-		super.text = "Haltestelle"
+		super.text = "Haltestelle";
 	}
 
 	public getProps(to: RouteLocationNormalized): HaltestellenDatenProps {
@@ -23,7 +23,7 @@ export class RouteHaltestellenDaten extends RouteNode<any, RouteHaltestellen> {
 			manager: () => routeHaltestellen.data.manager,
 			benutzerKompetenzen: api.benutzerKompetenzen,
 			patch: routeHaltestellen.data.patch,
-		}
+		};
 	}
 }
 

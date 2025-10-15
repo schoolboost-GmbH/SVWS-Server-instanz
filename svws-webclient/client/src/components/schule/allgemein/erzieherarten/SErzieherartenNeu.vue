@@ -35,7 +35,7 @@
 	const data = ref(new Erzieherart());
 	const isLoading = ref<boolean>(false);
 
-	function fieldIsValid(field: keyof Erzieherart | null) : (v: string | null) => boolean {
+	function fieldIsValid(field: keyof Erzieherart | null): (v: string | null) => boolean {
 		return (v: string | null) => {
 			switch (field) {
 				case 'bezeichnung':
@@ -43,7 +43,7 @@
 				default:
 					return true;
 			}
-		}
+		};
 	}
 
 	function bezeichnungIsValid(value: string | null) {
@@ -59,8 +59,8 @@
 			const validateField = fieldIsValid(field as keyof Erzieherart);
 			const fieldValue = data.value[field as keyof Erzieherart] as string | null;
 			return validateField(fieldValue);
-		})
-	})
+		});
+	});
 
 	async function addErzieherart() {
 		if (isLoading.value === true)
@@ -78,7 +78,7 @@
 		await props.gotoDefaultView(null);
 	}
 
-	watch(() => data.value, async() => {
+	watch(() => data.value, async () => {
 		if (isLoading.value)
 			return;
 

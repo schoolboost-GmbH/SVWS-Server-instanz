@@ -73,7 +73,7 @@
 		danger: false,
 	});
 
-	const items = reactive<{id: number, text: string}[]>([
+	const items = reactive<{ id: number, text: string }[]>([
 		{ id: 1, text: "Item 1" },
 		{ id: 2, text: "Item 2 hat einen sehr langen Titel, der je nach verfügbarer Breite gekürzt wird. Im Dropdown ist immer der gesamte Text lesbar." },
 		{ id: 3, text: "Item 3" },

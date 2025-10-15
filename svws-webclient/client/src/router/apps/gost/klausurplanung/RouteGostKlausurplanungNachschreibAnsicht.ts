@@ -1,6 +1,6 @@
 import type { RouteLocationNormalized, RouteLocationRaw, RouteParams } from "vue-router";
 
-import type { DeveloperNotificationException} from "@core";
+import type { DeveloperNotificationException } from "@core";
 import { BenutzerKompetenz, ServerMode } from "@core";
 
 import { RouteNode } from "~/router/RouteNode";
@@ -26,13 +26,13 @@ export class RouteGostKlausurplanungNachschreibAnsicht extends RouteNode<any, Ro
 	public checkHidden(params?: RouteParams) {
 		try {
 			const { abiturjahr } = params ? RouteNode.getIntParams(params, ["abiturjahr"]) : { abiturjahr: undefined };
-			return ((abiturjahr === undefined) || (abiturjahr === -1))
+			return ((abiturjahr === undefined) || (abiturjahr === -1));
 		} catch (e) {
 			return routeError.getSimpleErrorRoute(e as DeveloperNotificationException);
 		}
 	}
 
-	protected async update(to: RouteNode<any, any>, to_params: RouteParams, from: RouteNode<any, any> | undefined, from_params: RouteParams, isEntering: boolean) : Promise<void | Error | RouteLocationRaw> {
+	protected async update(to: RouteNode<any, any>, to_params: RouteParams, from: RouteNode<any, any> | undefined, from_params: RouteParams, isEntering: boolean): Promise<void | Error | RouteLocationRaw> {
 	}
 
 	public getProps(to: RouteLocationNormalized): GostKlausurplanungNachschreibAnsichtProps {
@@ -41,7 +41,7 @@ export class RouteGostKlausurplanungNachschreibAnsicht extends RouteNode<any, Ro
 			halbjahr: routeGostKlausurplanung.data.halbjahr,
 			kMan: () => routeGostKlausurplanung.data.manager,
 			quartalsauswahl: routeGostKlausurplanung.data.quartalsauswahl,
-		}
+		};
 	}
 
 }

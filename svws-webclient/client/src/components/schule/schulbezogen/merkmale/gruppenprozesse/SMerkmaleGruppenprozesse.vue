@@ -22,7 +22,7 @@
 <script setup lang="ts">
 
 	import type { MerkmaleGruppenprozesseProps } from "~/components/schule/schulbezogen/merkmale/gruppenprozesse/SMerkmaleGruppenprozesseProps";
-	import type { List} from "@core";
+	import type { List } from "@core";
 	import { BenutzerKompetenz, ServerMode } from "@core";
 	import { computed, ref } from "vue";
 

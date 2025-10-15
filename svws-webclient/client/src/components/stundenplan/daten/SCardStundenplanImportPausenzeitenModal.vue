@@ -58,7 +58,7 @@
 	import { computed, ref } from "vue";
 	import type { List, StundenplanPausenzeit } from "@core";
 	import type { StundenplanListeManager } from "@ui";
-	import { Wochentag, DateUtils } from "@core"
+	import { Wochentag, DateUtils } from "@core";
 
 	const props = defineProps<{
 		pausenzeitenSyncToVorlage: (raeume: StundenplanPausenzeit[]) => Promise<void>;
@@ -73,10 +73,10 @@
 	const selectedStundenplan = ref<StundenplanPausenzeit[]>([]);
 
 	const columns = [
-		{key: 'wochentag', label: 'Wochentag', span: 1},
-		{key: 'beginn', label: 'Beginn', span: 1},
-		{key: 'ende', label: 'Ende', span: 1},
-		{key: 'klassen', label: 'Klassen', span: 2},
+		{ key: 'wochentag', label: 'Wochentag', span: 1 },
+		{ key: 'beginn', label: 'Beginn', span: 1 },
+		{ key: 'ende', label: 'Ende', span: 1 },
+		{ key: 'klassen', label: 'Klassen', span: 2 },
 	];
 
 	const setVorlage = computed(() => new Set([...props.listPausenzeiten()].map(r => JSON.stringify(r))));
@@ -102,7 +102,7 @@
 	}
 
 	function klassenbezeichnungen(klassen: number[]) {
-		const str = []
+		const str = [];
 		if (klassen.length === 0)
 			return "";
 		for (const k of klassen)

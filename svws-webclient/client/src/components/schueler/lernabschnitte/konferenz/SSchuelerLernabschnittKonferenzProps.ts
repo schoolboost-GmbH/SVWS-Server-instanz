@@ -4,7 +4,7 @@ import type { SchuelerLernabschnittManager } from "../SchuelerLernabschnittManag
 export interface SchuelerLernabschnittKonferenzProps {
 	schule: SchuleStammdaten;
 	manager: () => SchuelerLernabschnittManager;
-	patch: (data : Partial<SchuelerLernabschnittsdaten>) => Promise<void>;
-	patchBemerkungen: (data : Partial<SchuelerLernabschnittBemerkungen>) => Promise<void>;
+	patch: (data: Partial<SchuelerLernabschnittsdaten>) => Promise<void>;
+	patchBemerkungen: (data: Partial<SchuelerLernabschnittBemerkungen>) => Promise<void>;
 	benutzerKompetenzen: Set<BenutzerKompetenz>;
 }

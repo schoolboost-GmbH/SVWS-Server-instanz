@@ -55,7 +55,7 @@
 	const firstauth = ref(true);
 	const username = ref("");
 	const password = ref("");
-	const error = ref<{name: string; message: string;}|null>(null);
+	const error = ref<{ name: string; message: string; } | null>(null);
 
 	onMounted(async () => {
 		try {
@@ -69,7 +69,7 @@
 				message: "Ihr Browser ist veraltet. Bitte aktualisieren Sie Ihren Browser auf eine aktuelle Version. Die weitere Nutzung wird zu Fehlern im ENM-Client führen.",
 			};
 		}
-	})
+	});
 
 	const connecting = ref(false);
 	const authenticating = ref(false);
