@@ -12,7 +12,7 @@ services:
       MARIADB_INITDB_SKIP_TZINFO: 1
     volumes:
       - svws-db-data:/var/lib/mysql
-      - ./init-db:/docker-entrypoint-initdb.d:ro
+      - ./deployment/docker/init-db:/docker-entrypoint-initdb.d:ro
     healthcheck:
       test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1", "-u", "root", "--password=${SERVICE_PASSWORD_ROOT:-svws_root_2024}"]
       interval: 10s
