@@ -1,5 +1,5 @@
 {
-	"version": 1,
+	"version": 2,
 	"daten": [ {
 		"bezeichner": "BE",
 		"idStatistik": "1",
@@ -11,7 +11,7 @@
 			"stufen": ["SEKUNDARSTUFE_I", "SEKUNDARSTUFE_II"],
 			"anzeigeZusatzmerkmal": ["SBO_10_7_1", "SBO_10_7_3"],
 			"gueltigVon": null,
-			"gueltigBis": null
+			"gueltigBis": 2024
 		} ]
 	}, {
 		"bezeichner": "GY",
@@ -37,7 +37,7 @@
 			"stufen": ["SEKUNDARSTUFE_I", "SEKUNDARSTUFE_II"],
 			"anzeigeZusatzmerkmal": ["SBO_10_7_1", "SBO_10_7_2", "SBO_10_7_3", "SBO_10_7_4", "SBO_10_7_5"],
 			"gueltigVon": null,
-			"gueltigBis": null
+			"gueltigBis": 2024
 		} ]
 	}, {
 		"bezeichner": "BFSI",
@@ -50,7 +50,7 @@
 			"stufen": ["SEKUNDARSTUFE_I", "SEKUNDARSTUFE_II"],
 			"anzeigeZusatzmerkmal": ["SBO_10_7_5"],
 			"gueltigVon": null,
-			"gueltigBis": null
+			"gueltigBis": 2024
 		} ]
 	}, {
 		"bezeichner": "BFSII",
@@ -63,7 +63,7 @@
 			"stufen": ["SEKUNDARSTUFE_I", "SEKUNDARSTUFE_II"],
 			"anzeigeZusatzmerkmal": ["SBO_10_7_6", "SBO_10_7_7", "SBO_10_7_8", "SBO_10_7_9", "SBO_10_7_10"],
 			"gueltigVon": null,
-			"gueltigBis": null
+			"gueltigBis": 2024
 		} ]
 	}, {
 		"bezeichner": "HOEBFS",
@@ -129,7 +129,7 @@
 				"SBO_10_7_13"
 			],
 			"gueltigVon": null,
-			"gueltigBis": null
+			"gueltigBis": 2024
 		} ]
 	}, {
 		"bezeichner": "SCHUAUS",
@@ -152,7 +152,7 @@
 				"SBO_10_7_13"
 			],
 			"gueltigVon": null,
-			"gueltigBis": null
+			"gueltigBis": 2024
 		} ]
 	}, {
 		"bezeichner": "SCHUGA",
@@ -175,7 +175,7 @@
 				"SBO_10_7_13"
 			],
 			"gueltigVon": null,
-			"gueltigBis": null
+			"gueltigBis": 2024
 		} ]
 	}, {
 		"bezeichner": "BAE",
@@ -201,7 +201,7 @@
 			"stufen": ["SEKUNDARSTUFE_I", "SEKUNDARSTUFE_II"],
 			"anzeigeZusatzmerkmal": ["SBO_10_7_1", "SBO_10_7_3", "SBO_10_7_4"],
 			"gueltigVon": null,
-			"gueltigBis": null
+			"gueltigBis": 2024
 		} ]
 	}, {
 		"bezeichner": "BVB",
@@ -225,7 +225,7 @@
 				"SBO_10_7_10"
 			],
 			"gueltigVon": null,
-			"gueltigBis": null
+			"gueltigBis": 2024
 		} ]
 	}, {
 		"bezeichner": "EQ",
@@ -250,7 +250,7 @@
 				"SBO_10_7_11"
 			],
 			"gueltigVon": null,
-			"gueltigBis": null
+			"gueltigBis": 2024
 		} ]
 	}, {
 		"bezeichner": "WERK",
@@ -274,7 +274,7 @@
 				"SBO_10_7_10"
 			],
 			"gueltigVon": null,
-			"gueltigBis": null
+			"gueltigBis": 2024
 		} ]
 	}, {
 		"bezeichner": "JUWERK",
@@ -335,7 +335,7 @@
 			"stufen": ["SEKUNDARSTUFE_I", "SEKUNDARSTUFE_II"],
 			"anzeigeZusatzmerkmal": ["SBO_10_7_1", "SBO_10_7_2", "SBO_10_7_4", "SBO_10_7_5", "SBO_10_7_6"],
 			"gueltigVon": null,
-			"gueltigBis": null
+			"gueltigBis": 2024
 		} ]
 	}, {
 		"bezeichner": "PRAKT",
@@ -389,7 +389,7 @@
 				"SBO_10_7_13"
 			],
 			"gueltigVon": null,
-			"gueltigBis": null
+			"gueltigBis": 2024
 		} ]
 	}, {
 		"bezeichner": "SVP",
@@ -494,7 +494,7 @@
 			"stufen": ["SEKUNDARSTUFE_I", "SEKUNDARSTUFE_II"],
 			"anzeigeZusatzmerkmal": ["SBO_10_7_1", "SBO_10_7_3"],
 			"gueltigVon": null,
-			"gueltigBis": null
+			"gueltigBis": 2024
 		} ]
 	}, {
 		"bezeichner": "HAUSE",
@@ -507,7 +507,7 @@
 			"stufen": ["SEKUNDARSTUFE_I", "SEKUNDARSTUFE_II"],
 			"anzeigeZusatzmerkmal": ["SBO_10_7_1", "SBO_10_7_3"],
 			"gueltigVon": null,
-			"gueltigBis": null
+			"gueltigBis": 2024
 		} ]
 	}, {
 		"bezeichner": "REHA",
@@ -570,7 +570,7 @@
 				"SBO_10_7_11"
 			],
 			"gueltigVon": null,
-			"gueltigBis": null
+			"gueltigBis": 2024
 		} ]
 	}, {
 		"bezeichner": "ABSENZ",
@@ -622,7 +622,7 @@
 				"SBO_10_7_13"
 			],
 			"gueltigVon": null,
-			"gueltigBis": null
+			"gueltigBis": 2024
 		} ]
 	}, {
 		"bezeichner": "NOKEAN",
@@ -649,6 +649,29 @@
 				"SBO_10_7_13"
 			],
 			"gueltigVon": null,
+			"gueltigBis": 2024
+			}, {
+			"id": 81,
+			"kuerzel": "NOKEAN",
+			"text": "Kontakt besteht - noch kein Anschluss (Grund bitte unter Anmerkungen angeben)",
+			"schluessel": "NOKEAN",
+			"stufen": ["SEKUNDARSTUFE_I", "SEKUNDARSTUFE_II"],
+			"anzeigeZusatzmerkmal": [
+				"SBO_10_7_1",
+				"SBO_10_7_2",
+				"SBO_10_7_3",
+				"SBO_10_7_4",
+				"SBO_10_7_5",
+				"SBO_10_7_6",
+				"SBO_10_7_7",
+				"SBO_10_7_8",
+				"SBO_10_7_9",
+				"SBO_10_7_10",
+				"SBO_10_7_11",
+				"SBO_10_7_12",
+				"SBO_10_7_13"
+			],
+			"gueltigVon": 2025,
 			"gueltigBis": null
 		} ]
 	}, {
@@ -675,6 +698,480 @@
 			"stufen": ["SEKUNDARSTUFE_II"],
 			"anzeigeZusatzmerkmal": ["SBO_10_7_12", "SBO_10_7_13"],
 			"gueltigVon": null,
+			"gueltigBis": null
+		} ]
+	}, {
+		"bezeichner": "WIED",
+		"idStatistik": "38",
+		"historie": [ {
+			"id": 59,
+			"kuerzel": "WIED",
+			"text": "Wiederholung oder Verbleib an der Schule im zieldifferenten Bildungsgang des Gemeinsamen Lernens",
+			"schluessel": "WIED",
+			"stufen": ["SEKUNDARSTUFE_I"],
+			"anzeigeZusatzmerkmal": [
+				"SBO_10_7_1",
+				"SBO_10_7_2",
+				"SBO_10_7_3",
+				"SBO_10_7_4",
+				"SBO_10_7_5",
+				"SBO_10_7_6",
+				"SBO_10_7_7"
+			],
+			"gueltigVon": 2025,
+			"gueltigBis": null
+		} ]
+	}, {
+		"bezeichner": "BEF",
+		"idStatistik": "39",
+		"historie": [ {
+			"id": 60,
+			"kuerzel": "BEF",
+			"text": "Berufspraxisstufe einer Förderschule",
+			"schluessel": "BEF",
+			"stufen": ["SEKUNDARSTUFE_I", "SEKUNDARSTUFE_II"],
+			"anzeigeZusatzmerkmal": ["SBO_10_7_1", "SBO_10_7_3"],
+			"gueltigVon": 2025,
+			"gueltigBis": null
+		} ]
+	}, {
+		"bezeichner": "AVVZ",
+		"idStatistik": "40",
+		"historie": [ {
+			"id": 61,
+			"kuerzel": "AVVZ",
+			"text": "Berufskolleg - Einjährige Ausbildungsvorbereitung in Vollzeit (AV-VZ) - Anlage A",
+			"schluessel": "AVVZ",
+			"stufen": ["SEKUNDARSTUFE_I"],
+			"anzeigeZusatzmerkmal": [
+				"SBO_10_7_1",
+				"SBO_10_7_2",
+				"SBO_10_7_3",
+				"SBO_10_7_4",
+				"SBO_10_7_5"
+			],
+			"gueltigVon": 2025,
+			"gueltigBis": null
+		} ]
+	}, {
+		"bezeichner": "BFSIB",
+		"idStatistik": "41",
+		"historie": [ {
+			"id": 62,
+			"kuerzel": "BFSIB",
+			"text": "Berufskolleg - Einjährige Berufsfachschule 1 (BFS1) - Anlage B",
+			"schluessel": "BFSIB",
+			"stufen": ["SEKUNDARSTUFE_I", "SEKUNDARSTUFE_II"],
+			"anzeigeZusatzmerkmal": ["SBO_10_7_5"],
+			"gueltigVon": 2025,
+			"gueltigBis": null
+		} ]
+	}, {
+		"bezeichner": "BFSIIB",
+		"idStatistik": "42",
+		"historie": [ {
+			"id": 63,
+			"kuerzel": "BFSIIB",
+			"text": "Berufskolleg - Einjährige Berufsfachschule 2 (BFS2) - Anlage B",
+			"schluessel": "BFSIIB",
+			"stufen": ["SEKUNDARSTUFE_I", "SEKUNDARSTUFE_II"],
+			"anzeigeZusatzmerkmal": [
+				"SBO_10_7_6",
+				"SBO_10_7_7",
+				"SBO_10_7_8",
+				"SBO_10_7_9",
+				"SBO_10_7_10"
+			],
+			"gueltigVon": 2025,
+			"gueltigBis": null
+		} ]
+	}, {
+		"bezeichner": "DUALBB",
+		"idStatistik": "43",
+		"historie": [ {
+			"id": 64,
+			"kuerzel": "DUALBB",
+			"text": "Duale Berufsausbildung im Betrieb und an der Berufsschule am Berufskolleg",
+			"schluessel": "DUALBB",
+			"stufen": ["SEKUNDARSTUFE_I", "SEKUNDARSTUFE_II"],
+			"anzeigeZusatzmerkmal": [
+				"SBO_10_7_1",
+				"SBO_10_7_2",
+				"SBO_10_7_3",
+				"SBO_10_7_4",
+				"SBO_10_7_5",
+				"SBO_10_7_6",
+				"SBO_10_7_7",
+				"SBO_10_7_8",
+				"SBO_10_7_9",
+				"SBO_10_7_10",
+				"SBO_10_7_11",
+				"SBO_10_7_12",
+				"SBO_10_7_13"
+			],
+			"gueltigVon": 2025,
+			"gueltigBis": null
+		} ]
+	}, {
+		"bezeichner": "FACHWERK",
+		"idStatistik": "44",
+		"historie": [ {
+			"id": 65,
+			"kuerzel": "FACHWERK",
+			"text": "Fachpraktikerausbildung/Werkerausbildung – Betriebliche Ausbildung in gesondert geregelten Berufen für Jugendliche mit Behinderung",
+			"schluessel": "FACHWERK",
+			"stufen": ["SEKUNDARSTUFE_I", "SEKUNDARSTUFE_II"],
+			"anzeigeZusatzmerkmal": [
+				"SBO_10_7_1",
+				"SBO_10_7_3",
+				"SBO_10_7_4"
+			],
+			"gueltigVon": 2025,
+			"gueltigBis": null
+		} ]
+	}, {
+		"bezeichner": "BAED",
+		"idStatistik": "45",
+		"historie": [ {
+			"id": 66,
+			"kuerzel": "BAED",
+			"text": "Beamtenlaufbahn einfacher Dienst",
+			"schluessel": "BAED",
+			"stufen": ["SEKUNDARSTUFE_I", "SEKUNDARSTUFE_II"],
+			"anzeigeZusatzmerkmal": ["SBO_10_7_5", "SBO_10_7_6"],
+			"gueltigVon": 2025,
+			"gueltigBis": null
+		} ]
+	}, {
+		"bezeichner": "BAMD",
+		"idStatistik": "46",
+		"historie": [ {
+			"id": 67,
+			"kuerzel": "BAMD",
+			"text": "Beamtenlaufbahn mittlerer Dienst",
+			"schluessel": "BAMD",
+			"stufen": ["SEKUNDARSTUFE_I", "SEKUNDARSTUFE_II"],
+			"anzeigeZusatzmerkmal": ["SBO_10_7_7", "SBO_10_7_8"],
+			"gueltigVon": 2025,
+			"gueltigBis": null
+		} ]
+	}, {
+		"bezeichner": "BAGD",
+		"idStatistik": "47",
+		"historie": [ {
+			"id": 68,
+			"kuerzel": "BAGD",
+			"text": "Beamtenlaufbahn gehobener Dienst",
+			"schluessel": "BAGD",
+			"stufen": ["SEKUNDARSTUFE_I", "SEKUNDARSTUFE_II"],
+			"anzeigeZusatzmerkmal": ["SBO_10_7_12", "SBO_10_7_13"],
+			"gueltigVon": 2025,
+			"gueltigBis": null
+		} ]
+	}, {
+		"bezeichner": "SCHUPGA",
+		"idStatistik": "48",
+		"historie": [ {
+			"id": 69,
+			"kuerzel": "SCHUPGA",
+			"text": "Schulische Ausbildung in Pflegeberufen und Gesundheitsberufen",
+			"schluessel": "SCHUPGA",
+			"stufen": ["SEKUNDARSTUFE_I", "SEKUNDARSTUFE_II"],
+			"anzeigeZusatzmerkmal": [
+				"SBO_10_7_5",
+				"SBO_10_7_6",
+				"SBO_10_7_7",
+				"SBO_10_7_8",
+				"SBO_10_7_9",
+				"SBO_10_7_10",
+				"SBO_10_7_11",
+				"SBO_10_7_12",
+				"SBO_10_7_13"
+			],
+			"gueltigVon": 2025,
+			"gueltigBis": null
+		} ]
+	},{
+		"bezeichner": "BKAUSZW",
+		"idStatistik": "49",
+		"historie": [ {
+			"id": 70,
+			"kuerzel": "BKAUSZW",
+			"text": "Berufskolleg - 2-jährige vollzeitschulische Ausbildung (Sozialassistenz, Kinderpflege, Assistenz für Ernährung und Versorgung) an der Berufsfachschule Anlage B",
+			"schluessel": "BKAUSZW",
+			"stufen": ["SEKUNDARSTUFE_I", "SEKUNDARSTUFE_II"],
+			"anzeigeZusatzmerkmal": [
+				"SBO_10_7_5",
+				"SBO_10_7_6",
+				"SBO_10_7_7",
+				"SBO_10_7_8",
+				"SBO_10_7_9",
+				"SBO_10_7_10",
+				"SBO_10_7_11",
+				"SBO_10_7_12",
+				"SBO_10_7_13"
+			],
+			"gueltigVon": 2025,
+			"gueltigBis": null
+		} ]
+	}, {
+		"bezeichner": "BKAUSDR",
+		"idStatistik": "50",
+		"historie": [ {
+			"id": 71,
+			"kuerzel": "BKAUSDR",
+			"text": "Berufskolleg – Assistentenausbildung 3-jährig vollzeitschulisch (verkürzt 2-jährig) an der Berufsfachschule Anlage C oder am Beruflichen Gymnasium",
+			"schluessel": "BKAUSDR",
+			"stufen": ["SEKUNDARSTUFE_I", "SEKUNDARSTUFE_II"],
+			"anzeigeZusatzmerkmal": [
+				"SBO_10_7_7",
+				"SBO_10_7_8",
+				"SBO_10_7_9",
+				"SBO_10_7_10",
+				"SBO_10_7_11",
+				"SBO_10_7_12",
+				"SBO_10_7_13"
+			],
+			"gueltigVon": 2025,
+			"gueltigBis": null
+		} ]
+	}, {
+		"bezeichner": "EINQUA",
+		"idStatistik": "51",
+		"historie": [ {
+			"id": 72,
+			"kuerzel": "EINQUA",
+			"text": "Einstiegsqualifizierung (EQ)",
+			"schluessel": "EINQUA",
+			"stufen": ["SEKUNDARSTUFE_I", "SEKUNDARSTUFE_II"],
+			"anzeigeZusatzmerkmal": [
+				"SBO_10_7_1",
+				"SBO_10_7_2",
+				"SBO_10_7_3",
+				"SBO_10_7_4",
+				"SBO_10_7_5",
+				"SBO_10_7_6",
+				"SBO_10_7_7",
+				"SBO_10_7_8",
+				"SBO_10_7_9",
+				"SBO_10_7_10",
+				"SBO_10_7_11"
+			],
+			"gueltigVon": 2025,
+			"gueltigBis": null
+		} ]
+	}, {
+		"bezeichner": "BVBR",
+		"idStatistik": "52",
+		"historie": [ {
+			"id": 73,
+			"kuerzel": "BVBR",
+			"text": "Berufsvorbereitende Bildungsmaßnahme (BvB), auch rehaspezifisch",
+			"schluessel": "BVBR",
+			"stufen": ["SEKUNDARSTUFE_I", "SEKUNDARSTUFE_II"],
+			"anzeigeZusatzmerkmal": [
+				"SBO_10_7_1",
+				"SBO_10_7_2",
+				"SBO_10_7_3",
+				"SBO_10_7_4",
+				"SBO_10_7_5",
+				"SBO_10_7_6",
+				"SBO_10_7_7",
+				"SBO_10_7_8",
+				"SBO_10_7_9",
+				"SBO_10_7_10"
+			],
+			"gueltigVon": 2025,
+			"gueltigBis": null
+		} ]
+	}, {
+		"bezeichner": "WSJ",
+		"idStatistik": "53",
+		"historie": [ {
+			"id": 74,
+			"kuerzel": "WSJ",
+			"text": "Werkstattjahr (Berufsvorbereitende Bildungsmaßnahmen mit produktionsorientiertem Ansatz und Aktivierungshilfen für Jüngere mit produktionsorientiertem Ansatz)",
+			"schluessel": "WSJ",
+			"stufen": ["SEKUNDARSTUFE_I", "SEKUNDARSTUFE_II"],
+			"anzeigeZusatzmerkmal": [
+				"SBO_10_7_1",
+				"SBO_10_7_2",
+				"SBO_10_7_3",
+				"SBO_10_7_4",
+				"SBO_10_7_5",
+				"SBO_10_7_6",
+				"SBO_10_7_7",
+				"SBO_10_7_8",
+				"SBO_10_7_9",
+				"SBO_10_7_10"
+			],
+			"gueltigVon": 2025,
+			"gueltigBis": null
+		} ]
+	}, {
+		"bezeichner": "ABEND",
+		"idStatistik": "54",
+		"historie": [ {
+			"id": 75,
+			"kuerzel": "ABEND",
+			"text": "Abendrealschule oder Weiterbildungsträger wie z.B. VHS zum Nachholen des Schulabschlusses",
+			"schluessel": "ABEND",
+			"stufen": ["SEKUNDARSTUFE_I", "SEKUNDARSTUFE_II"],
+			"anzeigeZusatzmerkmal": [
+				"SBO_10_7_1",
+				"SBO_10_7_2",
+				"SBO_10_7_4",
+				"SBO_10_7_5",
+				"SBO_10_7_6"
+			],
+			"gueltigVon": 2025,
+			"gueltigBis": null
+		} ]
+	}, {
+		"bezeichner": "FREIBUND",
+		"idStatistik": "55",
+		"historie": [ {
+			"id":76 ,
+			"kuerzel": "FREIBUND",
+			"text": "Freiwilligendienste, Freiwilliger Wehrdienst/Laufbahn Bundeswehr und ähnliche Anschlussoptionen (siehe Glossar)",
+			"schluessel": "FREIBUND",
+			"stufen": ["SEKUNDARSTUFE_I", "SEKUNDARSTUFE_II"],
+			"anzeigeZusatzmerkmal": [
+				"SBO_10_7_1",
+				"SBO_10_7_2",
+				"SBO_10_7_3",
+				"SBO_10_7_4",
+				"SBO_10_7_5",
+				"SBO_10_7_6",
+				"SBO_10_7_7",
+				"SBO_10_7_8",
+				"SBO_10_7_9",
+				"SBO_10_7_10",
+				"SBO_10_7_11",
+				"SBO_10_7_12",
+				"SBO_10_7_13"
+			],
+			"gueltigVon": 2025,
+			"gueltigBis": null
+		} ]
+	}, {
+		"bezeichner": "SU",
+		"idStatistik": "56",
+		"historie": [ {
+			"id": 77,
+			"kuerzel": "SU",
+			"text": "Selbstständige/r Unternehmer/in",
+			"schluessel": "SU",
+			"stufen": ["SEKUNDARSTUFE_I", "SEKUNDARSTUFE_II"],
+			"anzeigeZusatzmerkmal": [
+				"SBO_10_7_1",
+				"SBO_10_7_3",
+				"SBO_10_7_4",
+				"SBO_10_7_5",
+				"SBO_10_7_6",
+				"SBO_10_7_7",
+				"SBO_10_7_8",
+				"SBO_10_7_9",
+				"SBO_10_7_10",
+				"SBO_10_7_11",
+				"SBO_10_7_12",
+				"SBO_10_7_13"
+			],
+			"gueltigVon": 2025,
+			"gueltigBis": null
+		} ]
+	}, {
+		"bezeichner": "AUSSON",
+		"idStatistik": "57",
+		"historie": [ {
+			"id": 78,
+			"kuerzel": "AUSSON",
+			"text": "Sonstige Ausbildung bzw. berufliche Qualifizierung, die nicht den aufgeführten Anschlüssen zuzuordnen ist (Ausbildung bitte unter Anmerkungen angeben)",
+			"schluessel": "AUSSON",
+			"stufen": ["SEKUNDARSTUFE_I", "SEKUNDARSTUFE_II"],
+			"anzeigeZusatzmerkmal": [
+				"SBO_10_7_1",
+				"SBO_10_7_2",
+				"SBO_10_7_3",
+				"SBO_10_7_4",
+				"SBO_10_7_5",
+				"SBO_10_7_6",
+				"SBO_10_7_7",
+				"SBO_10_7_8",
+				"SBO_10_7_9",
+				"SBO_10_7_10",
+				"SBO_10_7_11",
+				"SBO_10_7_12",
+				"SBO_10_7_13"
+			],
+			"gueltigVon": 2025,
+			"gueltigBis": null
+		} ]
+	},{
+		"bezeichner": "ELTERN",
+		"idStatistik": "58",
+		"historie": [ {
+			"id": 79,
+			"kuerzel": "ELTERN",
+			"text": "Elternzeit",
+			"schluessel": "ELTERN",
+			"stufen": ["SEKUNDARSTUFE_I", "SEKUNDARSTUFE_II"],
+			"anzeigeZusatzmerkmal": [
+				"SBO_10_7_1",
+				"SBO_10_7_2",
+				"SBO_10_7_3",
+				"SBO_10_7_4",
+				"SBO_10_7_5",
+				"SBO_10_7_6",
+				"SBO_10_7_7",
+				"SBO_10_7_8",
+				"SBO_10_7_9",
+				"SBO_10_7_10",
+				"SBO_10_7_11",
+				"SBO_10_7_12",
+				"SBO_10_7_13"
+			],
+			"gueltigVon": 2025,
+			"gueltigBis": null
+		} ]
+	}, {
+		"bezeichner": "HAUS",
+		"idStatistik": "59",
+		"historie": [ {
+			"id": 80,
+			"kuerzel": "HAUS",
+			"text": "Verbleib zu Hause - Elternentscheidung nach Vollzeitschulpflicht bei einer Mehrfach- oder Schwerstmehrfachbehinderung",
+			"schluessel": "HAUS",
+			"stufen": ["SEKUNDARSTUFE_I", "SEKUNDARSTUFE_II"],
+			"anzeigeZusatzmerkmal": ["SBO_10_7_1", "SBO_10_7_3"],
+			"gueltigVon": 2025,
+			"gueltigBis": null
+		} ]
+	}, {
+		"bezeichner": "VERUN",
+		"idStatistik": "60",
+		"historie": [ {
+			"id": 82,
+			"kuerzel": "VERUN",
+			"text": "Verbleib unbekannt - andere Gründe (bitte unter Anmerkungen angeben)",
+			"schluessel": "VERUN",
+			"stufen": ["SEKUNDARSTUFE_I", "SEKUNDARSTUFE_II"],
+			"anzeigeZusatzmerkmal": [
+				"SBO_10_7_1",
+				"SBO_10_7_2",
+				"SBO_10_7_3",
+				"SBO_10_7_4",
+				"SBO_10_7_5",
+				"SBO_10_7_6",
+				"SBO_10_7_7",
+				"SBO_10_7_8",
+				"SBO_10_7_9",
+				"SBO_10_7_10",
+				"SBO_10_7_11",
+				"SBO_10_7_12",
+				"SBO_10_7_13"
+			],
+			"gueltigVon": 2025,
 			"gueltigBis": null
 		} ]
 	} ]

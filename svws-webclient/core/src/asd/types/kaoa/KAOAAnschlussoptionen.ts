@@ -189,7 +189,7 @@ export class KAOAAnschlussoptionen extends JavaEnum<KAOAAnschlussoptionen> imple
 	public static readonly UNBE : KAOAAnschlussoptionen = new KAOAAnschlussoptionen("UNBE", 33, );
 
 	/**
-	 * KAoA-Anschlussoption: Noch kein Anschluss
+	 * KAoA-Anschlussoption: Kontakt besteht - noch kein Anschluss (Grund bitte unter Anmerkungen angeben)
 	 */
 	public static readonly NOKEAN : KAOAAnschlussoptionen = new KAOAAnschlussoptionen("NOKEAN", 34, );
 
@@ -202,6 +202,121 @@ export class KAOAAnschlussoptionen extends JavaEnum<KAOAAnschlussoptionen> imple
 	 * KAoA-Anschlussoption: Hochschulstudium
 	 */
 	public static readonly STUD : KAOAAnschlussoptionen = new KAOAAnschlussoptionen("STUD", 36, );
+
+	/**
+	 * KAoA-Anschlussoption: Wiederholung oder Verbleib an der Schule im zieldifferenten Bildungsgang des Gemeinsamen Lernens
+	 */
+	public static readonly WIED : KAOAAnschlussoptionen = new KAOAAnschlussoptionen("WIED", 37, );
+
+	/**
+	 * KAoA-Anschlussoption: Berufspraxisstufe einer Förderschule
+	 */
+	public static readonly BEF : KAOAAnschlussoptionen = new KAOAAnschlussoptionen("BEF", 38, );
+
+	/**
+	 * KAoA-Anschlussoption: Berufskolleg - Einjährige Ausbildungsvorbereitung in Vollzeit (AV-VZ) - Anlage A
+	 */
+	public static readonly AVVZ : KAOAAnschlussoptionen = new KAOAAnschlussoptionen("AVVZ", 39, );
+
+	/**
+	 * KAoA-Anschlussoption: Berufskolleg - Einjährige Berufsfachschule 1 (BFS1) - Anlage B
+	 */
+	public static readonly BFSIB : KAOAAnschlussoptionen = new KAOAAnschlussoptionen("BFSIB", 40, );
+
+	/**
+	 * KAoA-Anschlussoption: Berufskolleg - Einjährige Berufsfachschule 2 (BFS2) - Anlage B
+	 */
+	public static readonly BFSIIB : KAOAAnschlussoptionen = new KAOAAnschlussoptionen("BFSIIB", 41, );
+
+	/**
+	 * KAoA-Anschlussoption: Duale Berufsausbildung im Betrieb und an der Berufsschule am Berufskolleg
+	 */
+	public static readonly DUALBB : KAOAAnschlussoptionen = new KAOAAnschlussoptionen("DUALBB", 42, );
+
+	/**
+	 * KAoA-Anschlussoption: Fachpraktikerausbildung/Werkerausbildung  Betriebliche Ausbildung in gesondert geregelten Berufen für Jugendliche mit Behinderung
+	 */
+	public static readonly FACHWERK : KAOAAnschlussoptionen = new KAOAAnschlussoptionen("FACHWERK", 43, );
+
+	/**
+	 * KAoA-Anschlussoption: Beamtenlaufbahn einfacher Dienst
+	 */
+	public static readonly BAED : KAOAAnschlussoptionen = new KAOAAnschlussoptionen("BAED", 44, );
+
+	/**
+	 * KAoA-Anschlussoption: Beamtenlaufbahn mittlerer Dienst
+	 */
+	public static readonly BAMD : KAOAAnschlussoptionen = new KAOAAnschlussoptionen("BAMD", 45, );
+
+	/**
+	 * KAoA-Anschlussoption: Beamtenlaufbahn gehobener Dienst
+	 */
+	public static readonly BAGD : KAOAAnschlussoptionen = new KAOAAnschlussoptionen("BAGD", 46, );
+
+	/**
+	 * KAoA-Anschlussoption: Schulische Ausbildung in Pflegeberufen und Gesundheitsberufen
+	 */
+	public static readonly SCHUPGA : KAOAAnschlussoptionen = new KAOAAnschlussoptionen("SCHUPGA", 47, );
+
+	/**
+	 * KAoA-Anschlussoption: Berufskolleg - 2-jährige vollzeitschulische Ausbildung (Sozialassistenz, Kinderpflege, Assistenz für Ernährung und Versorgung) an der Berufsfachschule Anlage B
+	 */
+	public static readonly BKAUSZW : KAOAAnschlussoptionen = new KAOAAnschlussoptionen("BKAUSZW", 48, );
+
+	/**
+	 * KAoA-Anschlussoption: Berufskolleg  Assistentenausbildung 3-jährig vollzeitschulisch (verkürzt 2-jährig) an der Berufsfachschule Anlage C oder am Beruflichen Gymnasium
+	 */
+	public static readonly BKAUSDR : KAOAAnschlussoptionen = new KAOAAnschlussoptionen("BKAUSDR", 49, );
+
+	/**
+	 * KAoA-Anschlussoption: Einstiegsqualifizierung (EQ
+	 */
+	public static readonly EINQUA : KAOAAnschlussoptionen = new KAOAAnschlussoptionen("EINQUA", 50, );
+
+	/**
+	 * KAoA-Anschlussoption: Berufsvorbereitende Bildungsmaßnahme (BvB), auch rehaspezifisch
+	 */
+	public static readonly BVBR : KAOAAnschlussoptionen = new KAOAAnschlussoptionen("BVBR", 51, );
+
+	/**
+	 * KAoA-Anschlussoption: Werkstattjahr (Berufsvorbereitende Bildungsmaßnahmen mit produktionsorientiertem Ansatz und Aktivierungshilfen für Jüngere mit produktionsorientiertem Ansatz
+	 */
+	public static readonly WSJ : KAOAAnschlussoptionen = new KAOAAnschlussoptionen("WSJ", 52, );
+
+	/**
+	 * KAoA-Anschlussoption: Abendrealschule oder Weiterbildungsträger wie z. B. VHS zum Nachholen des Schulabschlusses
+	 */
+	public static readonly ABEND : KAOAAnschlussoptionen = new KAOAAnschlussoptionen("ABEND", 53, );
+
+	/**
+	 * KAoA-Anschlussoption: Freiwilligendienste, Freiwilliger Wehrdienst/Laufbahn Bundeswehr und ähnliche Anschlussoptionen (siehe Glossar)
+	 */
+	public static readonly FREIBUND : KAOAAnschlussoptionen = new KAOAAnschlussoptionen("FREIBUND", 54, );
+
+	/**
+	 * KAoA-Anschlussoption: Selbstständige/r Unternehmer/in
+	 */
+	public static readonly SU : KAOAAnschlussoptionen = new KAOAAnschlussoptionen("SU", 55, );
+
+	/**
+	 * KAoA-Anschlussoption: Sonstige Ausbildung bzw. berufliche Qualifizierung, die nicht den aufgeführten Anschlüssen zuzuordnen ist  (Ausbildung bitte unter Anmerkungen angeben)
+	 */
+	public static readonly AUSSON : KAOAAnschlussoptionen = new KAOAAnschlussoptionen("AUSSON", 56, );
+
+	/**
+	 * KAoA-Anschlussoption: Elternzeit
+	 */
+	public static readonly ELTERN : KAOAAnschlussoptionen = new KAOAAnschlussoptionen("ELTERN", 57, );
+
+	/**
+	 * KAoA-Anschlussoption: Verbleib zu Hause - Elternentscheidung nach Vollzeitschulpflicht bei einer Mehrfach- oder Schwerstmehrfachbehinderung
+	 */
+	public static readonly HAUS : KAOAAnschlussoptionen = new KAOAAnschlussoptionen("HAUS", 58, );
+
+	/**
+	 * KAoA-Anschlussoption: Verbleib unbekannt - andere Gründe (bitte unter Anmerkungen angeben
+	 */
+	public static readonly VERUN : KAOAAnschlussoptionen = new KAOAAnschlussoptionen("VERUN", 59, );
 
 	/**
 	 * (Integer, Long) -> Schuljahr, idZusatzmerkmal

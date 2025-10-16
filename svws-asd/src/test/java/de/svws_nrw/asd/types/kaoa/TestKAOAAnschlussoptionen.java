@@ -30,12 +30,12 @@ class TestKAOAAnschlussoptionen {
 	 *
 	 * CoreType: KAOAAnschlussoptionen
 	 * Testfall: Prüft die Anzahl der möglichen Werte
-	 * Ergebnis: Erwartete Anzahl - 37
+	 * Ergebnis: Erwartete Anzahl - 60
 	 */
 	@Test
 	@DisplayName("Teste CoreType KAOAAnschlussoptionen: Anzahl der vorhandenen Werte.")
 	void testKAOAAnschlussoptionen() {
-		assertEquals(37, KAOAAnschlussoptionen.data().getWerte().size());
+		assertEquals(60, KAOAAnschlussoptionen.data().getWerte().size());
 	}
 
 	/**
