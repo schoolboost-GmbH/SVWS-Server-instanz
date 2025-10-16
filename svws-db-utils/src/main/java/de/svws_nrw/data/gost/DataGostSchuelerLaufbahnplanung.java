@@ -256,7 +256,7 @@ public final class DataGostSchuelerLaufbahnplanung extends DataManagerRevised<Lo
 			return;
 		}
 		if (fw != null)
-			throw new ApiOperationException(Status.CONFLICT);
+			throw new ApiOperationException(Status.CONFLICT, "Es konnte keine Fachwahl für die Leistungsdaten gefunden werden.");
 	}
 
 
@@ -334,9 +334,20 @@ public final class DataGostSchuelerLaufbahnplanung extends DataManagerRevised<Lo
 				.getResultList().stream().findFirst().orElse(null);
 		if (lernabschnitt == null)
 			throw new ApiOperationException(Status.NOT_FOUND);
+		String asdJahrgang = lernabschnitt.ASDJahrgang;
+		if (asdJahrgang == null) {
+			if (lernabschnitt.Jahrgang_ID == null)
+				throw new ApiOperationException(Status.NOT_FOUND, "Der Jahrgang des aktuellen Lernabschnittes des Schülers konnte nicht bestimmt werden.");
+			final DTOJahrgang dtoJahrgang = conn.queryByKey(DTOJahrgang.class, lernabschnitt.Jahrgang_ID);
+			if (dtoJahrgang == null)
+				throw new ApiOperationException(Status.NOT_FOUND, "Der Jahrgang des aktuellen Lernabschnittes des Schülers ist ungültig.");
+			asdJahrgang = dtoJahrgang.ASDJahrgang;
+			if (asdJahrgang == null)
+				throw new ApiOperationException(Status.NOT_FOUND, "Der Jahrgang des aktuellen Lernabschnittes des Schülers ist nicht korrekt gesetzt.");
+		}
 		final GostHalbjahr aktHalbjahr = (schule.AnzahlAbschnitte == 4)
-				? GostHalbjahr.fromJahrgangUndHalbjahr(lernabschnitt.ASDJahrgang, (abschnitt.Abschnitt + 1) / 2)
-				: GostHalbjahr.fromJahrgangUndHalbjahr(lernabschnitt.ASDJahrgang, abschnitt.Abschnitt);
+				? GostHalbjahr.fromJahrgangUndHalbjahr(asdJahrgang, (abschnitt.Abschnitt + 1) / 2)
+				: GostHalbjahr.fromJahrgangUndHalbjahr(asdJahrgang, abschnitt.Abschnitt);
 		final Schulgliederung schulgliederung = (lernabschnitt.Schulgliederung == null)
 				? Schulgliederung.getDefault(schulform)
 				: Schulgliederung.data().getWertByKuerzel(lernabschnitt.Schulgliederung);
