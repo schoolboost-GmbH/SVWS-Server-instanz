@@ -450,9 +450,11 @@ public final class DataSchuelerLernabschnittsdaten extends DataManagerRevised<Lo
 	}
 
 	private void validateJahrgangID(final DTOSchuelerLernabschnittsdaten dto, final Long idJahrgang) throws ApiOperationException {
-		if ((idJahrgang != null) && (conn.queryByKey(DTOJahrgang.class, idJahrgang) == null))
+		final DTOJahrgang jahrgang = conn.queryByKey(DTOJahrgang.class, idJahrgang);
+		if ((idJahrgang != null) && (jahrgang == null))
 			throw new ApiOperationException(Status.CONFLICT, "Der angegebene Jahrgang existiert nicht.");
 		dto.Jahrgang_ID = idJahrgang;
+		dto.ASDJahrgang = jahrgang.ASDJahrgang;
 
 		if ((dto.Klassen_ID == null) && (idJahrgang != null)) {
 			final List<DTOKlassen> matches = conn.queryList(
