@@ -9,17 +9,17 @@ export abstract class KursblockungAlgorithmusS extends JavaObject {
 	/**
 	 *  Ein {@link Random}-Objekt zur Steuerung des Zufalls über einen Anfangs-Seed.
 	 */
-	protected readonly _random : Random;
+	protected readonly _random: Random;
 
 	/**
 	 *  Logger für Benutzerhinweise, Warnungen und Fehler.
 	 */
-	protected readonly logger : Logger;
+	protected readonly logger: Logger;
 
 	/**
 	 *  Die aktuellen Blockungsdaten. Dieses Objekt dient zur Manipulation der Daten während des Blockungsvorganges.
 	 */
-	protected readonly dynDaten : KursblockungDynDaten;
+	protected readonly dynDaten: KursblockungDynDaten;
 
 
 	/**
@@ -30,7 +30,7 @@ export abstract class KursblockungAlgorithmusS extends JavaObject {
 	 * @param logger   Logger für Benutzerhinweise, Warnungen und Fehler.
 	 * @param dynDaten Die aktuellen Blockungsdaten.
 	 */
-	protected constructor(pRandom : Random, logger : Logger, dynDaten : KursblockungDynDaten) {
+	protected constructor(pRandom: Random, logger: Logger, dynDaten: KursblockungDynDaten) {
 		super();
 		this._random = pRandom;
 		this.logger = logger;
@@ -41,13 +41,13 @@ export abstract class KursblockungAlgorithmusS extends JavaObject {
 	 * Eine Unterklasse, die diese Methode implementiert, berechnet eine Verteilung der SuS auf die Kurse. Es gibt keine
 	 * festgelegte Zeitgrenze, aber die Methode sollte sehr schnell sein.
 	 */
-	public abstract berechne() : void;
+	public abstract berechne(): void;
 
 	transpilerCanonicalName(): string {
 		return 'de.svws_nrw.core.kursblockung.KursblockungAlgorithmusS';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.kursblockung.KursblockungAlgorithmusS'].includes(name);
 	}
 
@@ -55,6 +55,6 @@ export abstract class KursblockungAlgorithmusS extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_kursblockung_KursblockungAlgorithmusS(obj : unknown) : KursblockungAlgorithmusS {
+export function cast_de_svws_nrw_core_kursblockung_KursblockungAlgorithmusS(obj: unknown): KursblockungAlgorithmusS {
 	return obj as KursblockungAlgorithmusS;
 }

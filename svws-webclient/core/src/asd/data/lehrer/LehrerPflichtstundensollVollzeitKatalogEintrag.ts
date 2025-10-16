@@ -16,13 +16,13 @@ export class LehrerPflichtstundensollVollzeitKatalogEintrag extends CoreTypeData
 		return 'de.svws_nrw.asd.data.lehrer.LehrerPflichtstundensollVollzeitKatalogEintrag';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.asd.data.CoreTypeDataNurSchulformenUndSchulgliederungen', 'de.svws_nrw.asd.data.lehrer.LehrerPflichtstundensollVollzeitKatalogEintrag', 'de.svws_nrw.asd.data.CoreTypeData'].includes(name);
 	}
 
 	public static class = new Class<LehrerPflichtstundensollVollzeitKatalogEintrag>('de.svws_nrw.asd.data.lehrer.LehrerPflichtstundensollVollzeitKatalogEintrag');
 
-	public static transpilerFromJSON(json : string): LehrerPflichtstundensollVollzeitKatalogEintrag {
+	public static transpilerFromJSON(json: string): LehrerPflichtstundensollVollzeitKatalogEintrag {
 		const obj = JSON.parse(json) as Partial<LehrerPflichtstundensollVollzeitKatalogEintrag>;
 		const result = new LehrerPflichtstundensollVollzeitKatalogEintrag();
 		if (obj.zulaessig !== undefined) {
@@ -47,7 +47,7 @@ export class LehrerPflichtstundensollVollzeitKatalogEintrag extends CoreTypeData
 		return result;
 	}
 
-	public static transpilerToJSON(obj : LehrerPflichtstundensollVollzeitKatalogEintrag) : string {
+	public static transpilerToJSON(obj: LehrerPflichtstundensollVollzeitKatalogEintrag): string {
 		let result = '{';
 		result += '"zulaessig" : [ ';
 		for (let i = 0; i < obj.zulaessig.size(); i++) {
@@ -68,7 +68,7 @@ export class LehrerPflichtstundensollVollzeitKatalogEintrag extends CoreTypeData
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<LehrerPflichtstundensollVollzeitKatalogEintrag>) : string {
+	public static transpilerToJSONPatch(obj: Partial<LehrerPflichtstundensollVollzeitKatalogEintrag>): string {
 		let result = '{';
 		if (obj.zulaessig !== undefined) {
 			result += '"zulaessig" : [ ';
@@ -105,6 +105,6 @@ export class LehrerPflichtstundensollVollzeitKatalogEintrag extends CoreTypeData
 
 }
 
-export function cast_de_svws_nrw_asd_data_lehrer_LehrerPflichtstundensollVollzeitKatalogEintrag(obj : unknown) : LehrerPflichtstundensollVollzeitKatalogEintrag {
+export function cast_de_svws_nrw_asd_data_lehrer_LehrerPflichtstundensollVollzeitKatalogEintrag(obj: unknown): LehrerPflichtstundensollVollzeitKatalogEintrag {
 	return obj as LehrerPflichtstundensollVollzeitKatalogEintrag;
 }

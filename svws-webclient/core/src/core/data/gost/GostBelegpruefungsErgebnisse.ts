@@ -8,27 +8,27 @@ export class GostBelegpruefungsErgebnisse extends JavaObject {
 	/**
 	 * Der Schüler, für welchen die Belegprüfung durchgeführt wurde
 	 */
-	public schueler : Schueler = new Schueler();
+	public schueler: Schueler = new Schueler();
 
 	/**
 	 * Gibt an, ob der Schüler aktuell Fachwahlen hat der nicht.
 	 */
-	public hatFachwahlen : boolean = false;
+	public hatFachwahlen: boolean = false;
 
 	/**
 	 * Gibt an, ob und wann der Schüler zuletzt beraten wurde.
 	 */
-	public beratungsDatum : string | null = null;
+	public beratungsDatum: string | null = null;
 
 	/**
 	 * Gibt an, ob und wann für den Schüler zuletzt ein Import der Laufbahnplanungsdaten stattgefunden hat.
 	 */
-	public ruecklaufDatum : string | null = null;
+	public ruecklaufDatum: string | null = null;
 
 	/**
 	 * Die zugehörigen Belegprüfungsergebnisse
 	 */
-	public ergebnis : GostBelegpruefungErgebnis = new GostBelegpruefungErgebnis();
+	public ergebnis: GostBelegpruefungErgebnis = new GostBelegpruefungErgebnis();
 
 
 	/**
@@ -42,13 +42,13 @@ export class GostBelegpruefungsErgebnisse extends JavaObject {
 		return 'de.svws_nrw.core.data.gost.GostBelegpruefungsErgebnisse';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.gost.GostBelegpruefungsErgebnisse'].includes(name);
 	}
 
 	public static class = new Class<GostBelegpruefungsErgebnisse>('de.svws_nrw.core.data.gost.GostBelegpruefungsErgebnisse');
 
-	public static transpilerFromJSON(json : string): GostBelegpruefungsErgebnisse {
+	public static transpilerFromJSON(json: string): GostBelegpruefungsErgebnisse {
 		const obj = JSON.parse(json) as Partial<GostBelegpruefungsErgebnisse>;
 		const result = new GostBelegpruefungsErgebnisse();
 		if (obj.schueler === undefined)
@@ -65,7 +65,7 @@ export class GostBelegpruefungsErgebnisse extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : GostBelegpruefungsErgebnisse) : string {
+	public static transpilerToJSON(obj: GostBelegpruefungsErgebnisse): string {
 		let result = '{';
 		result += '"schueler" : ' + Schueler.transpilerToJSON(obj.schueler) + ',';
 		result += '"hatFachwahlen" : ' + obj.hatFachwahlen.toString() + ',';
@@ -77,7 +77,7 @@ export class GostBelegpruefungsErgebnisse extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<GostBelegpruefungsErgebnisse>) : string {
+	public static transpilerToJSONPatch(obj: Partial<GostBelegpruefungsErgebnisse>): string {
 		let result = '{';
 		if (obj.schueler !== undefined) {
 			result += '"schueler" : ' + Schueler.transpilerToJSON(obj.schueler) + ',';
@@ -101,6 +101,6 @@ export class GostBelegpruefungsErgebnisse extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_gost_GostBelegpruefungsErgebnisse(obj : unknown) : GostBelegpruefungsErgebnisse {
+export function cast_de_svws_nrw_core_data_gost_GostBelegpruefungsErgebnisse(obj: unknown): GostBelegpruefungsErgebnisse {
 	return obj as GostBelegpruefungsErgebnisse;
 }

@@ -9,22 +9,22 @@ export class ENMFloskelgruppe extends JavaObject {
 	/**
 	 * Das Kürzel der Floskelgruppe, z. B. AL1, AL2 oder ASV.
 	 */
-	public kuerzel : string = "";
+	public kuerzel: string = "";
 
 	/**
 	 * Die textuelle Bezeichnung der Floskelgruppe, z. B. Allgemeine Floskeln oder Floskeln zum Arbeits- und Sozialverhalten.
 	 */
-	public bezeichnung : string | null = null;
+	public bezeichnung: string | null = null;
 
 	/**
 	 * Die Hauptgruppe für Floskeln. Diese kann bei mehreren Floskelgruppen auftreten und fasst diese ggf. nochmals zusammen (z.B. ALLG)
 	 */
-	public hauptgruppe : string | null = null;
+	public hauptgruppe: string | null = null;
 
 	/**
 	 * Die Liste der Floskeln, die dieser Floskelgruppe zugeordnet sind.
 	 */
-	public readonly floskeln : List<ENMFloskel> = new ArrayList<ENMFloskel>();
+	public readonly floskeln: List<ENMFloskel> = new ArrayList<ENMFloskel>();
 
 
 	/**
@@ -38,13 +38,13 @@ export class ENMFloskelgruppe extends JavaObject {
 		return 'de.svws_nrw.core.data.enm.ENMFloskelgruppe';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.enm.ENMFloskelgruppe'].includes(name);
 	}
 
 	public static class = new Class<ENMFloskelgruppe>('de.svws_nrw.core.data.enm.ENMFloskelgruppe');
 
-	public static transpilerFromJSON(json : string): ENMFloskelgruppe {
+	public static transpilerFromJSON(json: string): ENMFloskelgruppe {
 		const obj = JSON.parse(json) as Partial<ENMFloskelgruppe>;
 		const result = new ENMFloskelgruppe();
 		if (obj.kuerzel === undefined)
@@ -60,7 +60,7 @@ export class ENMFloskelgruppe extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : ENMFloskelgruppe) : string {
+	public static transpilerToJSON(obj: ENMFloskelgruppe): string {
 		let result = '{';
 		result += '"kuerzel" : ' + JSON.stringify(obj.kuerzel) + ',';
 		result += '"bezeichnung" : ' + ((obj.bezeichnung === null) ? 'null' : JSON.stringify(obj.bezeichnung)) + ',';
@@ -78,7 +78,7 @@ export class ENMFloskelgruppe extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<ENMFloskelgruppe>) : string {
+	public static transpilerToJSONPatch(obj: Partial<ENMFloskelgruppe>): string {
 		let result = '{';
 		if (obj.kuerzel !== undefined) {
 			result += '"kuerzel" : ' + JSON.stringify(obj.kuerzel) + ',';
@@ -106,6 +106,6 @@ export class ENMFloskelgruppe extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_enm_ENMFloskelgruppe(obj : unknown) : ENMFloskelgruppe {
+export function cast_de_svws_nrw_core_data_enm_ENMFloskelgruppe(obj: unknown): ENMFloskelgruppe {
 	return obj as ENMFloskelgruppe;
 }

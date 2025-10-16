@@ -6,37 +6,37 @@ export class SchuelerLernabschnittBemerkungen extends JavaObject {
 	/**
 	 * Der Text für allgemeine Zeugnisbemerkungen.
 	 */
-	public zeugnisAllgemein : string | null = "";
+	public zeugnisAllgemein: string | null = "";
 
 	/**
 	 * Der Text für Zeugnisbemerkungen zum Arbeits- und Sozialverhalten.
 	 */
-	public zeugnisASV : string | null = "";
+	public zeugnisASV: string | null = "";
 
 	/**
 	 * Der Text für Zeugnisbemerkungen zur Lernentwicklung in Grundschulen.
 	 */
-	public zeugnisLELS : string | null = "";
+	public zeugnisLELS: string | null = "";
 
 	/**
 	 * Der Text für Zeugnisbemerkungen zum Außerunterrichtlichen Engagement.
 	 */
-	public zeugnisAUE : string | null = "";
+	public zeugnisAUE: string | null = "";
 
 	/**
 	 * Der Text für Empfehlung der Schulform beim Übergang von der Primarstufe in die Sekundarstufe I.
 	 */
-	public uebergangESF : string | null = "";
+	public uebergangESF: string | null = "";
 
 	/**
 	 * Eine Bemerkung zum Förderschwerpunkt.
 	 */
-	public foerderschwerpunkt : string | null = "";
+	public foerderschwerpunkt: string | null = "";
 
 	/**
 	 * Eine Bemerkung zur Versetzungsentscheidung.
 	 */
-	public versetzungsentscheidung : string | null = "";
+	public versetzungsentscheidung: string | null = "";
 
 
 	/**
@@ -50,13 +50,13 @@ export class SchuelerLernabschnittBemerkungen extends JavaObject {
 		return 'de.svws_nrw.asd.data.schueler.SchuelerLernabschnittBemerkungen';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.asd.data.schueler.SchuelerLernabschnittBemerkungen'].includes(name);
 	}
 
 	public static class = new Class<SchuelerLernabschnittBemerkungen>('de.svws_nrw.asd.data.schueler.SchuelerLernabschnittBemerkungen');
 
-	public static transpilerFromJSON(json : string): SchuelerLernabschnittBemerkungen {
+	public static transpilerFromJSON(json: string): SchuelerLernabschnittBemerkungen {
 		const obj = JSON.parse(json) as Partial<SchuelerLernabschnittBemerkungen>;
 		const result = new SchuelerLernabschnittBemerkungen();
 		result.zeugnisAllgemein = (obj.zeugnisAllgemein === undefined) ? null : obj.zeugnisAllgemein === null ? null : obj.zeugnisAllgemein;
@@ -69,7 +69,7 @@ export class SchuelerLernabschnittBemerkungen extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : SchuelerLernabschnittBemerkungen) : string {
+	public static transpilerToJSON(obj: SchuelerLernabschnittBemerkungen): string {
 		let result = '{';
 		result += '"zeugnisAllgemein" : ' + ((obj.zeugnisAllgemein === null) ? 'null' : JSON.stringify(obj.zeugnisAllgemein)) + ',';
 		result += '"zeugnisASV" : ' + ((obj.zeugnisASV === null) ? 'null' : JSON.stringify(obj.zeugnisASV)) + ',';
@@ -83,7 +83,7 @@ export class SchuelerLernabschnittBemerkungen extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<SchuelerLernabschnittBemerkungen>) : string {
+	public static transpilerToJSONPatch(obj: Partial<SchuelerLernabschnittBemerkungen>): string {
 		let result = '{';
 		if (obj.zeugnisAllgemein !== undefined) {
 			result += '"zeugnisAllgemein" : ' + ((obj.zeugnisAllgemein === null) ? 'null' : JSON.stringify(obj.zeugnisAllgemein)) + ',';
@@ -113,6 +113,6 @@ export class SchuelerLernabschnittBemerkungen extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_asd_data_schueler_SchuelerLernabschnittBemerkungen(obj : unknown) : SchuelerLernabschnittBemerkungen {
+export function cast_de_svws_nrw_asd_data_schueler_SchuelerLernabschnittBemerkungen(obj: unknown): SchuelerLernabschnittBemerkungen {
 	return obj as SchuelerLernabschnittBemerkungen;
 }

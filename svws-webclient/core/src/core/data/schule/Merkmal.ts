@@ -6,27 +6,27 @@ export class Merkmal extends JavaObject {
 	/**
 	 * Die ID des Merkmals
 	 */
-	public id : number = 0;
+	public id: number = 0;
 
 	/**
 	 * Gibt an, ob das Merkmal einer Schule zugewiesen werden kann
 	 */
-	public istSchulmerkmal : boolean = false;
+	public istSchulmerkmal: boolean = false;
 
 	/**
 	 * Gibt an, ob das Merkmal einem Schueler zugewiesen werden kann
 	 */
-	public istSchuelermerkmal : boolean = false;
+	public istSchuelermerkmal: boolean = false;
 
 	/**
 	 * Das Kuerzel des Merkmals
 	 */
-	public kuerzel : string | null = null;
+	public kuerzel: string | null = null;
 
 	/**
 	 * Die Bezeichnung des Merkmals
 	 */
-	public bezeichnung : string | null = null;
+	public bezeichnung: string | null = null;
 
 
 	public constructor() {
@@ -37,13 +37,13 @@ export class Merkmal extends JavaObject {
 		return 'de.svws_nrw.core.data.schule.Merkmal';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.schule.Merkmal'].includes(name);
 	}
 
 	public static class = new Class<Merkmal>('de.svws_nrw.core.data.schule.Merkmal');
 
-	public static transpilerFromJSON(json : string): Merkmal {
+	public static transpilerFromJSON(json: string): Merkmal {
 		const obj = JSON.parse(json) as Partial<Merkmal>;
 		const result = new Merkmal();
 		if (obj.id === undefined)
@@ -60,7 +60,7 @@ export class Merkmal extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : Merkmal) : string {
+	public static transpilerToJSON(obj: Merkmal): string {
 		let result = '{';
 		result += '"id" : ' + obj.id.toString() + ',';
 		result += '"istSchulmerkmal" : ' + obj.istSchulmerkmal.toString() + ',';
@@ -72,7 +72,7 @@ export class Merkmal extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<Merkmal>) : string {
+	public static transpilerToJSONPatch(obj: Partial<Merkmal>): string {
 		let result = '{';
 		if (obj.id !== undefined) {
 			result += '"id" : ' + obj.id.toString() + ',';
@@ -96,6 +96,6 @@ export class Merkmal extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_schule_Merkmal(obj : unknown) : Merkmal {
+export function cast_de_svws_nrw_core_data_schule_Merkmal(obj: unknown): Merkmal {
 	return obj as Merkmal;
 }

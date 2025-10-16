@@ -12,22 +12,22 @@ export class GostBelegpruefungsdaten extends JavaObject {
 	/**
 	 * Das Jahr, in welchem der Jahrgang Abitur machen wird.
 	 */
-	public abiturdaten : Abiturdaten = new Abiturdaten();
+	public abiturdaten: Abiturdaten = new Abiturdaten();
 
 	/**
 	 * Informationen zu dem Abiturjahrgang.
 	 */
-	public gostJahrgang : GostJahrgangsdaten = new GostJahrgangsdaten();
+	public gostJahrgang: GostJahrgangsdaten = new GostJahrgangsdaten();
 
 	/**
 	 * Die Liste der Fächer der gymnasialen Oberstufe, die für die Belegprüfung genutzt werden sollen
 	 */
-	public gostFaecher : List<GostFach> = new ArrayList<GostFach>();
+	public gostFaecher: List<GostFach> = new ArrayList<GostFach>();
 
 	/**
 	 * Die Informationen zu den nicht zulässigen und geforderten Fächerkombinationen.
 	 */
-	public gostFaecherKombinationen : List<GostJahrgangFachkombination> = new ArrayList<GostJahrgangFachkombination>();
+	public gostFaecherKombinationen: List<GostJahrgangFachkombination> = new ArrayList<GostJahrgangFachkombination>();
 
 
 	/**
@@ -41,13 +41,13 @@ export class GostBelegpruefungsdaten extends JavaObject {
 		return 'de.svws_nrw.core.data.gost.GostBelegpruefungsdaten';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.gost.GostBelegpruefungsdaten'].includes(name);
 	}
 
 	public static class = new Class<GostBelegpruefungsdaten>('de.svws_nrw.core.data.gost.GostBelegpruefungsdaten');
 
-	public static transpilerFromJSON(json : string): GostBelegpruefungsdaten {
+	public static transpilerFromJSON(json: string): GostBelegpruefungsdaten {
 		const obj = JSON.parse(json) as Partial<GostBelegpruefungsdaten>;
 		const result = new GostBelegpruefungsdaten();
 		if (obj.abiturdaten === undefined)
@@ -69,7 +69,7 @@ export class GostBelegpruefungsdaten extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : GostBelegpruefungsdaten) : string {
+	public static transpilerToJSON(obj: GostBelegpruefungsdaten): string {
 		let result = '{';
 		result += '"abiturdaten" : ' + Abiturdaten.transpilerToJSON(obj.abiturdaten) + ',';
 		result += '"gostJahrgang" : ' + GostJahrgangsdaten.transpilerToJSON(obj.gostJahrgang) + ',';
@@ -94,7 +94,7 @@ export class GostBelegpruefungsdaten extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<GostBelegpruefungsdaten>) : string {
+	public static transpilerToJSONPatch(obj: Partial<GostBelegpruefungsdaten>): string {
 		let result = '{';
 		if (obj.abiturdaten !== undefined) {
 			result += '"abiturdaten" : ' + Abiturdaten.transpilerToJSON(obj.abiturdaten) + ',';
@@ -129,6 +129,6 @@ export class GostBelegpruefungsdaten extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_gost_GostBelegpruefungsdaten(obj : unknown) : GostBelegpruefungsdaten {
+export function cast_de_svws_nrw_core_data_gost_GostBelegpruefungsdaten(obj: unknown): GostBelegpruefungsdaten {
 	return obj as GostBelegpruefungsdaten;
 }

@@ -6,27 +6,27 @@ export class Beschaeftigungsart extends JavaObject {
 	/**
 	 * Die ID der Beschäftigungsart
 	 */
-	public id : number = 0;
+	public id: number = 0;
 
 	/**
 	 * Die Bezeichnung der Beschäftigungsart
 	 */
-	public bezeichnung : string | null = null;
+	public bezeichnung: string | null = null;
 
 	/**
 	 * Die Position in der Sortierreihenfolge der Beschäftigungsarten
 	 */
-	public sortierung : number = 0;
+	public sortierung: number = 0;
 
 	/**
 	 * Die Sichtbarkeit der Beschäftigungsart
 	 */
-	public istSichtbar : boolean = false;
+	public istSichtbar: boolean = false;
 
 	/**
 	 * Die Änderbarkeit der Beschäftigungsart
 	 */
-	public istAenderbar : boolean = false;
+	public istAenderbar: boolean = false;
 
 
 	public constructor() {
@@ -37,13 +37,13 @@ export class Beschaeftigungsart extends JavaObject {
 		return 'de.svws_nrw.core.data.betrieb.Beschaeftigungsart';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.betrieb.Beschaeftigungsart'].includes(name);
 	}
 
 	public static class = new Class<Beschaeftigungsart>('de.svws_nrw.core.data.betrieb.Beschaeftigungsart');
 
-	public static transpilerFromJSON(json : string): Beschaeftigungsart {
+	public static transpilerFromJSON(json: string): Beschaeftigungsart {
 		const obj = JSON.parse(json) as Partial<Beschaeftigungsart>;
 		const result = new Beschaeftigungsart();
 		if (obj.id === undefined)
@@ -62,7 +62,7 @@ export class Beschaeftigungsart extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : Beschaeftigungsart) : string {
+	public static transpilerToJSON(obj: Beschaeftigungsart): string {
 		let result = '{';
 		result += '"id" : ' + obj.id.toString() + ',';
 		result += '"bezeichnung" : ' + ((obj.bezeichnung === null) ? 'null' : JSON.stringify(obj.bezeichnung)) + ',';
@@ -74,7 +74,7 @@ export class Beschaeftigungsart extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<Beschaeftigungsart>) : string {
+	public static transpilerToJSONPatch(obj: Partial<Beschaeftigungsart>): string {
 		let result = '{';
 		if (obj.id !== undefined) {
 			result += '"id" : ' + obj.id.toString() + ',';
@@ -98,6 +98,6 @@ export class Beschaeftigungsart extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_betrieb_Beschaeftigungsart(obj : unknown) : Beschaeftigungsart {
+export function cast_de_svws_nrw_core_data_betrieb_Beschaeftigungsart(obj: unknown): Beschaeftigungsart {
 	return obj as Beschaeftigungsart;
 }

@@ -6,34 +6,34 @@ export class CoreTypeData extends JavaObject {
 	/**
 	 * Die ID des Core-Type-Daten-Eintrags und der neue Schlüssel für die ASD
 	 */
-	public id : number = -1;
+	public id: number = -1;
 
 	/**
 	 *  Ein Schlüssel als Zeichenkette, welcher sich auf den Schlüssel eines externen Katalogs bezieht. Als fremder Katalog können
 	 *  hier auch Schlüsselwerte aus der früheren ASD-Statistik angegeben. Diese müssen für ein Jahr der Historie über den
 	 *  Katalog eindeutig sein, jedoch nicht im Verlauf der Jahre. In der Historie eines Bezeichners können diese allerdings abweichen.
 	 */
-	public schluessel : string = "";
+	public schluessel: string = "";
 
 	/**
 	 * Das Kürzel, welches als Kurztext zu Visualisierung verwendet wird. Sollte nicht als identifizierendes Merkmal verwendet werden.
 	 */
-	public kuerzel : string = "";
+	public kuerzel: string = "";
 
 	/**
 	 * Die Bezeichnung, welche als Langtext zu Visualisierung verwendet wird. Sollte nicht als identifizierendes Merkmal verwendet werden.
 	 */
-	public text : string = "";
+	public text: string = "";
 
 	/**
 	 * Gibt an, in welchem Schuljahr der Eintrag einführt wurde. Ist kein Schuljahr bekannt, so ist null gesetzt.
 	 */
-	public gueltigVon : number | null = null;
+	public gueltigVon: number | null = null;
 
 	/**
 	 * Gibt an, bis zu welchem Schuljahr der Eintrag gültig ist. Ist kein Schuljahr bekannt, so ist null gesetzt.
 	 */
-	public gueltigBis : number | null = null;
+	public gueltigBis: number | null = null;
 
 
 	/**
@@ -48,7 +48,7 @@ export class CoreTypeData extends JavaObject {
 	 *
 	 * @return die Daten als String
 	 */
-	public toString() : string | null {
+	public toString(): string | null {
 		return "CoreTypeData [id=" + this.id + ", schluessel=" + this.schluessel + ", kuerzel=" + this.kuerzel + ", text=" + this.text + ", gueltigVon=" + this.gueltigVon + ", gueltigBis=" + this.gueltigBis + "]";
 	}
 
@@ -56,13 +56,13 @@ export class CoreTypeData extends JavaObject {
 		return 'de.svws_nrw.asd.data.CoreTypeData';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.asd.data.CoreTypeData'].includes(name);
 	}
 
 	public static class = new Class<CoreTypeData>('de.svws_nrw.asd.data.CoreTypeData');
 
-	public static transpilerFromJSON(json : string): CoreTypeData {
+	public static transpilerFromJSON(json: string): CoreTypeData {
 		const obj = JSON.parse(json) as Partial<CoreTypeData>;
 		const result = new CoreTypeData();
 		if (obj.id === undefined)
@@ -82,7 +82,7 @@ export class CoreTypeData extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : CoreTypeData) : string {
+	public static transpilerToJSON(obj: CoreTypeData): string {
 		let result = '{';
 		result += '"id" : ' + obj.id.toString() + ',';
 		result += '"schluessel" : ' + JSON.stringify(obj.schluessel) + ',';
@@ -95,7 +95,7 @@ export class CoreTypeData extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<CoreTypeData>) : string {
+	public static transpilerToJSONPatch(obj: Partial<CoreTypeData>): string {
 		let result = '{';
 		if (obj.id !== undefined) {
 			result += '"id" : ' + obj.id.toString() + ',';
@@ -122,6 +122,6 @@ export class CoreTypeData extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_asd_data_CoreTypeData(obj : unknown) : CoreTypeData {
+export function cast_de_svws_nrw_asd_data_CoreTypeData(obj: unknown): CoreTypeData {
 	return obj as CoreTypeData;
 }

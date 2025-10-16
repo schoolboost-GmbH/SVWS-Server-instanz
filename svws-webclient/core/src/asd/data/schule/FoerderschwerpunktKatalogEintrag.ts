@@ -15,13 +15,13 @@ export class FoerderschwerpunktKatalogEintrag extends CoreTypeDataNurSchulformen
 		return 'de.svws_nrw.asd.data.schule.FoerderschwerpunktKatalogEintrag';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.asd.data.CoreTypeData', 'de.svws_nrw.asd.data.schule.FoerderschwerpunktKatalogEintrag', 'de.svws_nrw.asd.data.CoreTypeDataNurSchulformen'].includes(name);
 	}
 
 	public static class = new Class<FoerderschwerpunktKatalogEintrag>('de.svws_nrw.asd.data.schule.FoerderschwerpunktKatalogEintrag');
 
-	public static transpilerFromJSON(json : string): FoerderschwerpunktKatalogEintrag {
+	public static transpilerFromJSON(json: string): FoerderschwerpunktKatalogEintrag {
 		const obj = JSON.parse(json) as Partial<FoerderschwerpunktKatalogEintrag>;
 		const result = new FoerderschwerpunktKatalogEintrag();
 		if (obj.schulformen !== undefined) {
@@ -46,7 +46,7 @@ export class FoerderschwerpunktKatalogEintrag extends CoreTypeDataNurSchulformen
 		return result;
 	}
 
-	public static transpilerToJSON(obj : FoerderschwerpunktKatalogEintrag) : string {
+	public static transpilerToJSON(obj: FoerderschwerpunktKatalogEintrag): string {
 		let result = '{';
 		result += '"schulformen" : [ ';
 		for (let i = 0; i < obj.schulformen.size(); i++) {
@@ -67,7 +67,7 @@ export class FoerderschwerpunktKatalogEintrag extends CoreTypeDataNurSchulformen
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<FoerderschwerpunktKatalogEintrag>) : string {
+	public static transpilerToJSONPatch(obj: Partial<FoerderschwerpunktKatalogEintrag>): string {
 		let result = '{';
 		if (obj.schulformen !== undefined) {
 			result += '"schulformen" : [ ';
@@ -104,6 +104,6 @@ export class FoerderschwerpunktKatalogEintrag extends CoreTypeDataNurSchulformen
 
 }
 
-export function cast_de_svws_nrw_asd_data_schule_FoerderschwerpunktKatalogEintrag(obj : unknown) : FoerderschwerpunktKatalogEintrag {
+export function cast_de_svws_nrw_asd_data_schule_FoerderschwerpunktKatalogEintrag(obj: unknown): FoerderschwerpunktKatalogEintrag {
 	return obj as FoerderschwerpunktKatalogEintrag;
 }

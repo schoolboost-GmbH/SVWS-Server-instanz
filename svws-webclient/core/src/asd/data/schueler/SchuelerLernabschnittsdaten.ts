@@ -11,232 +11,232 @@ export class SchuelerLernabschnittsdaten extends JavaObject {
 	/**
 	 * Die ID des Lernabschnitts in der Datenbank.
 	 */
-	public id : number = 0;
+	public id: number = 0;
 
 	/**
 	 * Die ID des Schülers, zu dem diese Lernabschnittdaten gehören.
 	 */
-	public schuelerID : number = 0;
+	public schuelerID: number = 0;
 
 	/**
 	 * Die ID des Schuljahresabschnitts, zu welchem diese Lernabschnittdaten gehören.
 	 */
-	public schuljahresabschnitt : number = 0;
+	public schuljahresabschnitt: number = 0;
 
 	/**
 	 * Eine Nr, zur Unterscheidung von Lernabschnittsdaten, wenn beim Schüler mehrere Lernabschnitt in einem Schuljahresabschnitt vorliegen (z.B. Wechsel einer Klasse, NULL=aktueller Abschnitt, 1=vor dem ersten Wechsel, 2=vor dem zweiten Wechsel, usw.).
 	 */
-	public wechselNr : number = 0;
+	public wechselNr: number = 0;
 
 	/**
 	 * Das Datum, wann der Lernabschnitt beginnt
 	 */
-	public datumAnfang : string | null = null;
+	public datumAnfang: string | null = null;
 
 	/**
 	 * Das Datum, wann der Lernabschnitt endet
 	 */
-	public datumEnde : string | null = null;
+	public datumEnde: string | null = null;
 
 	/**
 	 * Das Datum der Konferenz
 	 */
-	public datumKonferenz : string | null = null;
+	public datumKonferenz: string | null = null;
 
 	/**
 	 * Das Datum des Zeugnisses bzw. der Laufbahnbescheinigung
 	 */
-	public datumZeugnis : string | null = null;
+	public datumZeugnis: string | null = null;
 
 	/**
 	 * Gibt an, ob es sich um einen gewerteten Abschnitt handelt oder nicht
 	 */
-	public istGewertet : boolean = true;
+	public istGewertet: boolean = true;
 
 	/**
 	 * Gibt an, ob es sich bei dem Abschnitt um einen wiederholten Abschnitt handelt oder nicht
 	 */
-	public istWiederholung : boolean = false;
+	public istWiederholung: boolean = false;
 
 	/**
 	 * Die Prüfungsordnung, die in dem Lernabschnitt bei dem Schüler anzuwenden ist.
 	 */
-	public pruefungsOrdnung : string = "";
+	public pruefungsOrdnung: string = "";
 
 	/**
 	 * Die ID der Klasse des Schülers oder null, falls keine Klasse zugeordnet ist.
 	 */
-	public klassenID : number | null = null;
+	public klassenID: number | null = null;
 
 	/**
 	 * Die ID eines Tutors, der den Schüler betreut, oder null, falls keiner zugewiesen ist
 	 */
-	public tutorID : number | null = null;
+	public tutorID: number | null = null;
 
 	/**
 	 * Die ID der Folge-Klasse des Schülers, sofern dieser vom Standard der Klassentabelle abweicht.
 	 */
-	public folgeklassenID : number | null = null;
+	public folgeklassenID: number | null = null;
 
 	/**
 	 * Das Kürzel der Schulgliederung bzw. des Bildungsgangs des Schülers.
 	 */
-	public schulgliederung : string | null = null;
+	public schulgliederung: string | null = null;
 
 	/**
 	 * Die ID des Jahrgangs des Schülers oder null, falls kein Jahrgang zugeordnet ist
 	 */
-	public jahrgangID : number | null = null;
+	public jahrgangID: number | null = null;
 
 	/**
 	 * Die bisherige Anzahl der Jahre in der Schuleingangssphase
 	 */
-	public epJahre : number | null = null;
+	public epJahre: number | null = null;
 
 	/**
 	 * Die ID der Fachklasse des Schülers an einem Berufskolleg
 	 */
-	public fachklasseID : number | null = null;
+	public fachklasseID: number | null = null;
 
 	/**
 	 * Der Schwerpunkt eines Schülers laut dem Schwerpunkt-Katalog
 	 */
-	public schwerpunktID : number | null = null;
+	public schwerpunktID: number | null = null;
 
 	/**
 	 * Das Kürzel der Organisationsform der Schule in Bezug auf den Schüler (z.B. Ganztag - siehe Core-Type)
 	 */
-	public organisationsform : string | null = null;
+	public organisationsform: string | null = null;
 
 	/**
 	 * Das Kürzel der Klassenart in Bezug auf den Schüler (z.B. Regelklasse - siehe Core-Type)
 	 */
-	public Klassenart : string | null = "RK";
+	public Klassenart: string | null = "RK";
 
 	/**
 	 * Die Summe der Gesamtfehlstunden für den gesamten Lernabschnitt
 	 */
-	public fehlstundenGesamt : number = 0;
+	public fehlstundenGesamt: number = 0;
 
 	/**
 	 * Die Summe der unentschuldigten Fehlstunden für den gesamten Lernabschnitt
 	 */
-	public fehlstundenUnentschuldigt : number = 0;
+	public fehlstundenUnentschuldigt: number = 0;
 
 	/**
 	 * Der Grenzwert für die Fehlstunden, ab dem am Berufskolleg Warnbriefe zur Entlassung verschickt werden
 	 */
-	public fehlstundenGrenzwert : number | null = null;
+	public fehlstundenGrenzwert: number | null = null;
 
 	/**
 	 * Gibt an, ob eine Schwerbehinderung nachgewiesen ist oder nicht
 	 */
-	public hatSchwerbehinderungsNachweis : boolean = false;
+	public hatSchwerbehinderungsNachweis: boolean = false;
 
 	/**
 	 * Gibt an, ob eine Förderung nach der Ausbildungsordnung Sonderpädagogischer Förderung (AOSF) vorliegt
 	 */
-	public hatAOSF : boolean = false;
+	public hatAOSF: boolean = false;
 
 	/**
 	 * Gibt an, ob eine Diagnose zu Autismus vorliegt oder nicht
 	 */
-	public hatAutismus : boolean = false;
+	public hatAutismus: boolean = false;
 
 	/**
 	 * Gibt an, ob zieldifferent unterrichet wird oder nicht
 	 */
-	public hatZieldifferentenUnterricht : boolean = false;
+	public hatZieldifferentenUnterricht: boolean = false;
 
 	/**
 	 * Die ID des Haupförderschwerpunktes des Schülers
 	 */
-	public foerderschwerpunkt1ID : number | null = null;
+	public foerderschwerpunkt1ID: number | null = null;
 
 	/**
 	 * Die ID des weiteren Förderschwerpunktes des Schülers
 	 */
-	public foerderschwerpunkt2ID : number | null = null;
+	public foerderschwerpunkt2ID: number | null = null;
 
 	/**
 	 * Die ID eines Sonderpädagogen, der den Schüler betreut und auch im Notenmodul hat
 	 */
-	public sonderpaedagogeID : number | null = null;
+	public sonderpaedagogeID: number | null = null;
 
 	/**
 	 * Die Sprache des bilngualen Zweigs, falls der Schüler im bilingualen Zweig unterrichtet wird
 	 */
-	public bilingualerZweig : string | null = null;
+	public bilingualerZweig: string | null = null;
 
 	/**
 	 * Gibt für das Berufskolleg an, ob der fachpraktische Anteil in den Anlagen B08, B09 und B10 ausreichend sind für Versetzung
 	 */
-	public istFachpraktischerAnteilAusreichend : boolean = true;
+	public istFachpraktischerAnteilAusreichend: boolean = true;
 
 	/**
 	 * Das Kürzel des Versetzungsvermerks
 	 */
-	public versetzungsvermerk : string | null = null;
+	public versetzungsvermerk: string | null = null;
 
 	/**
 	 * Die Durchschnittsnote in diesem Lernabschnitt - wird ggf. von einem Prüfungsalgorithmus gesetzt und kann dann ausgelesen werden
 	 */
-	public noteDurchschnitt : string | null = null;
+	public noteDurchschnitt: string | null = null;
 
 	/**
 	 * Die Lernbereichnote Gesellschaftswissenschaft oder Arbeitlehre für den Hauptschulabschluss nach Klassen 10
 	 */
-	public noteLernbereichGSbzwAL : number | null = null;
+	public noteLernbereichGSbzwAL: number | null = null;
 
 	/**
 	 * Die Lernbereichnote Naturwissenschaft für den Hauptschulabschluss nach Klassen 10
 	 */
-	public noteLernbereichNW : number | null = null;
+	public noteLernbereichNW: number | null = null;
 
 	/**
 	 * Die Art des Abschlusses (siehe Katalog)
 	 */
-	public abschlussart : number | null = null;
+	public abschlussart: number | null = null;
 
 	/**
 	 * Gibt an, ob der berechnete Abschluss eine Prognose ist oder nicht (siehe Katalog)
 	 */
-	public istAbschlussPrognose : boolean = false;
+	public istAbschlussPrognose: boolean = false;
 
 	/**
 	 * Der erreichte allgemeinbildende Abschluss
 	 */
-	public abschluss : string | null = null;
+	public abschluss: string | null = null;
 
 	/**
 	 * Der erreichte berufsbezogene Abschluss am Berufskolleg
 	 */
-	public abschlussBerufsbildend : string | null = null;
+	public abschlussBerufsbildend: string | null = null;
 
 	/**
 	 * Die textuelle Ausgabe des Prüfungsalgorithmus für die Versetzungs-/Abschlussberechnung
 	 */
-	public textErgebnisPruefungsalgorithmus : string | null = null;
+	public textErgebnisPruefungsalgorithmus: string | null = null;
 
 	/**
 	 * Die Art des Zeugnisses
 	 */
-	public zeugnisart : string | null = null;
+	public zeugnisart: string | null = null;
 
 	/**
 	 * Die Informationen den Nachprüfungen in diesem Lernabschnitt oder null, falls keine vorhanden sind.
 	 */
-	public nachpruefungen : SchuelerLernabschnittNachpruefungsdaten | null = null;
+	public nachpruefungen: SchuelerLernabschnittNachpruefungsdaten | null = null;
 
 	/**
 	 * Die Bemerkungen in diesem Lernabschnitt.
 	 */
-	public bemerkungen : SchuelerLernabschnittBemerkungen = new SchuelerLernabschnittBemerkungen();
+	public bemerkungen: SchuelerLernabschnittBemerkungen = new SchuelerLernabschnittBemerkungen();
 
 	/**
 	 * Die Leistungsdaten des Schülers in diesem Lernabschnitt.
 	 */
-	public leistungsdaten : List<SchuelerLeistungsdaten> = new ArrayList<SchuelerLeistungsdaten>();
+	public leistungsdaten: List<SchuelerLeistungsdaten> = new ArrayList<SchuelerLeistungsdaten>();
 
 
 	/**
@@ -250,13 +250,13 @@ export class SchuelerLernabschnittsdaten extends JavaObject {
 		return 'de.svws_nrw.asd.data.schueler.SchuelerLernabschnittsdaten';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.asd.data.schueler.SchuelerLernabschnittsdaten'].includes(name);
 	}
 
 	public static class = new Class<SchuelerLernabschnittsdaten>('de.svws_nrw.asd.data.schueler.SchuelerLernabschnittsdaten');
 
-	public static transpilerFromJSON(json : string): SchuelerLernabschnittsdaten {
+	public static transpilerFromJSON(json: string): SchuelerLernabschnittsdaten {
 		const obj = JSON.parse(json) as Partial<SchuelerLernabschnittsdaten>;
 		const result = new SchuelerLernabschnittsdaten();
 		if (obj.id === undefined)
@@ -344,7 +344,7 @@ export class SchuelerLernabschnittsdaten extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : SchuelerLernabschnittsdaten) : string {
+	public static transpilerToJSON(obj: SchuelerLernabschnittsdaten): string {
 		let result = '{';
 		result += '"id" : ' + obj.id.toString() + ',';
 		result += '"schuelerID" : ' + obj.schuelerID.toString() + ',';
@@ -404,7 +404,7 @@ export class SchuelerLernabschnittsdaten extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<SchuelerLernabschnittsdaten>) : string {
+	public static transpilerToJSONPatch(obj: Partial<SchuelerLernabschnittsdaten>): string {
 		let result = '{';
 		if (obj.id !== undefined) {
 			result += '"id" : ' + obj.id.toString() + ',';
@@ -558,6 +558,6 @@ export class SchuelerLernabschnittsdaten extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_asd_data_schueler_SchuelerLernabschnittsdaten(obj : unknown) : SchuelerLernabschnittsdaten {
+export function cast_de_svws_nrw_asd_data_schueler_SchuelerLernabschnittsdaten(obj: unknown): SchuelerLernabschnittsdaten {
 	return obj as SchuelerLernabschnittsdaten;
 }

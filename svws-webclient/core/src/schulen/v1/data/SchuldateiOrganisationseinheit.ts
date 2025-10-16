@@ -15,67 +15,67 @@ export class SchuldateiOrganisationseinheit extends JavaObject {
 	/**
 	 * Die Schulnummer der Organisationseinheit.
 	 */
-	public schulnummer : string = "";
+	public schulnummer: string = "";
 
 	/**
 	 * Die Bundeslandkennung (NRW)
 	 */
-	public bundeslandkennung : string = "";
+	public bundeslandkennung: string = "";
 
 	/**
 	 * Die eindeutige Identifier für das XSCHULE-Format
 	 */
-	public xscid : string = "";
+	public xscid: string = "";
 
 	/**
 	 * Die Art der Organisationseinheit
 	 */
-	public oeart : string = "";
+	public oeart: string = "";
 
 	/**
 	 * Das Errichtungsdatum der Schule.
 	 */
-	public errichtung : string = "";
+	public errichtung: string = "";
 
 	/**
 	 * Das Aufloesungsdatum der Schule.
 	 */
-	public aufloesung : string = "";
+	public aufloesung: string = "";
 
 	/**
 	 * Die Grunddaten der Organisationseinheit (zeitl. Verlaufsliste)
 	 */
-	public readonly grunddaten : List<SchuldateiOrganisationseinheitGrunddaten> = new ArrayList<SchuldateiOrganisationseinheitGrunddaten>();
+	public readonly grunddaten: List<SchuldateiOrganisationseinheitGrunddaten> = new ArrayList<SchuldateiOrganisationseinheitGrunddaten>();
 
 	/**
 	 * Die Schulformen der Organisationseinheit:Schule (zeitl. Verlaufsliste)
 	 */
-	public readonly schulform : List<SchuldateiOrganisationseinheitSchulform> = new ArrayList<SchuldateiOrganisationseinheitSchulform>();
+	public readonly schulform: List<SchuldateiOrganisationseinheitSchulform> = new ArrayList<SchuldateiOrganisationseinheitSchulform>();
 
 	/**
 	 * Die Adressen der Organisationseinheit (zeitl. Verlaufsliste)
 	 */
-	public readonly adressen : List<SchuldateiOrganisationseinheitAdresse> = new ArrayList<SchuldateiOrganisationseinheitAdresse>();
+	public readonly adressen: List<SchuldateiOrganisationseinheitAdresse> = new ArrayList<SchuldateiOrganisationseinheitAdresse>();
 
 	/**
 	 * Die Merkmale der Organisationseinheit (zeitl. Verlaufsliste)
 	 */
-	public readonly merkmal : List<SchuldateiOrganisationseinheitMerkmal> = new ArrayList<SchuldateiOrganisationseinheitMerkmal>();
+	public readonly merkmal: List<SchuldateiOrganisationseinheitMerkmal> = new ArrayList<SchuldateiOrganisationseinheitMerkmal>();
 
 	/**
 	 * Die Erreichbarkeiten der Organisationseinheit (zeitl. Verlaufsliste)
 	 */
-	public readonly erreichbarkeiten : List<SchuldateiOrganisationseinheitErreichbarkeit> = new ArrayList<SchuldateiOrganisationseinheitErreichbarkeit>();
+	public readonly erreichbarkeiten: List<SchuldateiOrganisationseinheitErreichbarkeit> = new ArrayList<SchuldateiOrganisationseinheitErreichbarkeit>();
 
 	/**
 	 * Die Gliederungen der Organisationseinheit-Schule (zeitl. Verlaufsliste)
 	 */
-	public readonly gliederung : List<SchuldateiOrganisationseinheitGliederung> = new ArrayList<SchuldateiOrganisationseinheitGliederung>();
+	public readonly gliederung: List<SchuldateiOrganisationseinheitGliederung> = new ArrayList<SchuldateiOrganisationseinheitGliederung>();
 
 	/**
 	 * Die Eigenschaften der Organisationseinheit
 	 */
-	public readonly oe_eigenschaften : List<SchuldateiOrganisationseinheitEigenschaft> = new ArrayList<SchuldateiOrganisationseinheitEigenschaft>();
+	public readonly oe_eigenschaften: List<SchuldateiOrganisationseinheitEigenschaft> = new ArrayList<SchuldateiOrganisationseinheitEigenschaft>();
 
 
 	/**
@@ -89,13 +89,13 @@ export class SchuldateiOrganisationseinheit extends JavaObject {
 		return 'de.svws_nrw.schulen.v1.data.SchuldateiOrganisationseinheit';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.schulen.v1.data.SchuldateiOrganisationseinheit'].includes(name);
 	}
 
 	public static class = new Class<SchuldateiOrganisationseinheit>('de.svws_nrw.schulen.v1.data.SchuldateiOrganisationseinheit');
 
-	public static transpilerFromJSON(json : string): SchuldateiOrganisationseinheit {
+	public static transpilerFromJSON(json: string): SchuldateiOrganisationseinheit {
 		const obj = JSON.parse(json) as Partial<SchuldateiOrganisationseinheit>;
 		const result = new SchuldateiOrganisationseinheit();
 		if (obj.schulnummer === undefined)
@@ -154,7 +154,7 @@ export class SchuldateiOrganisationseinheit extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : SchuldateiOrganisationseinheit) : string {
+	public static transpilerToJSON(obj: SchuldateiOrganisationseinheit): string {
 		let result = '{';
 		result += '"schulnummer" : ' + JSON.stringify(obj.schulnummer) + ',';
 		result += '"bundeslandkennung" : ' + JSON.stringify(obj.bundeslandkennung) + ',';
@@ -223,7 +223,7 @@ export class SchuldateiOrganisationseinheit extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<SchuldateiOrganisationseinheit>) : string {
+	public static transpilerToJSONPatch(obj: Partial<SchuldateiOrganisationseinheit>): string {
 		let result = '{';
 		if (obj.schulnummer !== undefined) {
 			result += '"schulnummer" : ' + JSON.stringify(obj.schulnummer) + ',';
@@ -320,6 +320,6 @@ export class SchuldateiOrganisationseinheit extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_schulen_v1_data_SchuldateiOrganisationseinheit(obj : unknown) : SchuldateiOrganisationseinheit {
+export function cast_de_svws_nrw_schulen_v1_data_SchuldateiOrganisationseinheit(obj: unknown): SchuldateiOrganisationseinheit {
 	return obj as SchuldateiOrganisationseinheit;
 }

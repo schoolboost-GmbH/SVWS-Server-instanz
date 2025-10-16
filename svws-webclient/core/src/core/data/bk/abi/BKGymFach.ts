@@ -6,42 +6,42 @@ export class BKGymFach extends JavaObject {
 	/**
 	 * Die ID des Faches
 	 */
-	public id : number = -1;
+	public id: number = -1;
 
 	/**
 	 * Das Statistik-Kürzel des Faches
 	 */
-	public kuerzel : string = "";
+	public kuerzel: string = "";
 
 	/**
 	 * Das Fach-Kürzel, welches zur Anzeige verwendet wird.
 	 */
-	public kuerzelAnzeige : string | null = null;
+	public kuerzelAnzeige: string | null = null;
 
 	/**
 	 * Die Bezeichnung des Faches
 	 */
-	public bezeichnung : string | null = null;
+	public bezeichnung: string | null = null;
 
 	/**
 	 * Die Nummer, welche die Sortierung der Fächer angibt.
 	 */
-	public sortierung : number = 32000;
+	public sortierung: number = 32000;
 
 	/**
 	 * Gibt an, ob es sich bei dem Fach um eine Fremdsprache handelt oder nicht
 	 */
-	public istFremdsprache : boolean = false;
+	public istFremdsprache: boolean = false;
 
 	/**
 	 * Gibt an, ob das Fache eine neu einsetzende Fremdsprache ist.
 	 */
-	public istFremdSpracheNeuEinsetzend : boolean = false;
+	public istFremdSpracheNeuEinsetzend: boolean = false;
 
 	/**
 	 * Gibt im Falle eines bilingualen Sachfaches das einstellige Fremdsprachenkürzel an.
 	 */
-	public biliSprache : string | null = null;
+	public biliSprache: string | null = null;
 
 
 	/**
@@ -55,13 +55,13 @@ export class BKGymFach extends JavaObject {
 		return 'de.svws_nrw.core.data.bk.abi.BKGymFach';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.bk.abi.BKGymFach'].includes(name);
 	}
 
 	public static class = new Class<BKGymFach>('de.svws_nrw.core.data.bk.abi.BKGymFach');
 
-	public static transpilerFromJSON(json : string): BKGymFach {
+	public static transpilerFromJSON(json: string): BKGymFach {
 		const obj = JSON.parse(json) as Partial<BKGymFach>;
 		const result = new BKGymFach();
 		if (obj.id === undefined)
@@ -85,7 +85,7 @@ export class BKGymFach extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : BKGymFach) : string {
+	public static transpilerToJSON(obj: BKGymFach): string {
 		let result = '{';
 		result += '"id" : ' + obj.id.toString() + ',';
 		result += '"kuerzel" : ' + JSON.stringify(obj.kuerzel) + ',';
@@ -100,7 +100,7 @@ export class BKGymFach extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<BKGymFach>) : string {
+	public static transpilerToJSONPatch(obj: Partial<BKGymFach>): string {
 		let result = '{';
 		if (obj.id !== undefined) {
 			result += '"id" : ' + obj.id.toString() + ',';
@@ -133,6 +133,6 @@ export class BKGymFach extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_bk_abi_BKGymFach(obj : unknown) : BKGymFach {
+export function cast_de_svws_nrw_core_data_bk_abi_BKGymFach(obj: unknown): BKGymFach {
 	return obj as BKGymFach;
 }

@@ -9,52 +9,52 @@ export class LernplattformV1Schueler extends JavaObject {
 	/**
 	 * Die ID des Schülers in der SVWS-DB
 	 */
-	public id : number = 0;
+	public id: number = 0;
 
 	/**
 	 * Die ID des aktuellen Jahrgangs, in dem sich der Schüler befindet.
 	 */
-	public idJahrgang : number = 0;
+	public idJahrgang: number = 0;
 
 	/**
 	 * Die ID der aktuellen Klasse, in der sich der Schüler befindet.
 	 */
-	public idKlasse : number = 0;
+	public idKlasse: number = 0;
 
 	/**
 	 * Der Nachname des Schülers (z.B. Mustermann)
 	 */
-	public nachname : string | null = null;
+	public nachname: string | null = null;
 
 	/**
 	 * Der Vorname des Schülers (z.B. Max)
 	 */
-	public vorname : string | null = null;
+	public vorname: string | null = null;
 
 	/**
 	 * Das Geschlecht des Schülers (m,w,d,x)
 	 */
-	public geschlecht : string | null = null;
+	public geschlecht: string | null = null;
 
 	/**
 	 * Das Geburtsdatum des Schülers (z.B. 21.01.2000)
 	 */
-	public geburtsdatum : string | null = null;
+	public geburtsdatum: string | null = null;
 
 	/**
 	 * Die Status-ID des Schülers.
 	 */
-	public status : number = 0;
+	public status: number = 0;
 
 	/**
 	 * Logindaten des Schülers bestehend aus Benutzername und Initialpasswort.
 	 */
-	public lernplattformlogin : LernplattformV1Login = new LernplattformV1Login();
+	public lernplattformlogin: LernplattformV1Login = new LernplattformV1Login();
 
 	/**
 	 * Die IDs der Lerngruppen des Schülers in dem Lernabschnitt.
 	 */
-	public idsLerngruppen : List<number> = new ArrayList<number>();
+	public idsLerngruppen: List<number> = new ArrayList<number>();
 
 
 	/**
@@ -68,13 +68,13 @@ export class LernplattformV1Schueler extends JavaObject {
 		return 'de.svws_nrw.core.data.lernplattform.v1.LernplattformV1Schueler';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.lernplattform.v1.LernplattformV1Schueler'].includes(name);
 	}
 
 	public static class = new Class<LernplattformV1Schueler>('de.svws_nrw.core.data.lernplattform.v1.LernplattformV1Schueler');
 
-	public static transpilerFromJSON(json : string): LernplattformV1Schueler {
+	public static transpilerFromJSON(json: string): LernplattformV1Schueler {
 		const obj = JSON.parse(json) as Partial<LernplattformV1Schueler>;
 		const result = new LernplattformV1Schueler();
 		if (obj.id === undefined)
@@ -104,7 +104,7 @@ export class LernplattformV1Schueler extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : LernplattformV1Schueler) : string {
+	public static transpilerToJSON(obj: LernplattformV1Schueler): string {
 		let result = '{';
 		result += '"id" : ' + obj.id.toString() + ',';
 		result += '"idJahrgang" : ' + obj.idJahrgang.toString() + ',';
@@ -128,7 +128,7 @@ export class LernplattformV1Schueler extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<LernplattformV1Schueler>) : string {
+	public static transpilerToJSONPatch(obj: Partial<LernplattformV1Schueler>): string {
 		let result = '{';
 		if (obj.id !== undefined) {
 			result += '"id" : ' + obj.id.toString() + ',';
@@ -174,6 +174,6 @@ export class LernplattformV1Schueler extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_lernplattform_v1_LernplattformV1Schueler(obj : unknown) : LernplattformV1Schueler {
+export function cast_de_svws_nrw_core_data_lernplattform_v1_LernplattformV1Schueler(obj: unknown): LernplattformV1Schueler {
 	return obj as LernplattformV1Schueler;
 }

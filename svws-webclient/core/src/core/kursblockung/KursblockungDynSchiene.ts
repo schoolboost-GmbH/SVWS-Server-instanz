@@ -15,22 +15,22 @@ export class KursblockungDynSchiene extends JavaObject {
 	/**
 	 * Die Nummer der Schiene. Wenn es 14 Schienen gibt, dann gibt es 14 Objekte dieser Klasse mit den Nummern 0 bis 13.
 	 */
-	private readonly nr : number;
+	private readonly nr: number;
 
 	/**
 	 * Logger für Benutzerhinweise, Warnungen und Fehler.
 	 */
-	private readonly logger : Logger;
+	private readonly logger: Logger;
 
 	/**
 	 * Die aktuellen Kurse in dieser Schiene. Über die ID (Long-Wert der GUI) kann man schnell darauf zugreifen.
 	 */
-	private readonly kursMap : HashMap<number, KursblockungDynKurs>;
+	private readonly kursMap: HashMap<number, KursblockungDynKurs>;
 
 	/**
 	 * Das Statistik-Objekt wird über die aktuellen Kurs-Paarungen informiert.
 	 */
-	private readonly statistik : KursblockungDynStatistik;
+	private readonly statistik: KursblockungDynStatistik;
 
 
 	/**
@@ -40,7 +40,7 @@ export class KursblockungDynSchiene extends JavaObject {
 	 * @param pNr         Die Nummer der Schiene.
 	 * @param pStatistik  Das Statistik-Objekt wird über die aktuellen Kurs-Paarungen informiert.
 	 */
-	public constructor(pLogger : Logger, pNr : number, pStatistik : KursblockungDynStatistik) {
+	public constructor(pLogger: Logger, pNr: number, pStatistik: KursblockungDynStatistik) {
 		super();
 		this.logger = pLogger;
 		this.nr = pNr;
@@ -53,7 +53,7 @@ export class KursblockungDynSchiene extends JavaObject {
 	 *
 	 * @return die String-Repräsentation der Schiene
 	 */
-	public toString() : string {
+	public toString(): string {
 		return "" + this.nr;
 	}
 
@@ -62,10 +62,10 @@ export class KursblockungDynSchiene extends JavaObject {
 	 *
 	 * @param kurs1 Der Kurs, welcher der Schiene hinzugefügt werden soll.
 	 */
-	public aktionKursHinzufuegen(kurs1 : KursblockungDynKurs) : void {
-		const kursID : number = kurs1.gibDatenbankID();
+	public aktionKursHinzufuegen(kurs1: KursblockungDynKurs): void {
+		const kursID: number = kurs1.gibDatenbankID();
 		if (this.kursMap.containsKey(kursID)) {
-			const fehler : string | null = "Kurs '" + kurs1.toString() + "' soll in Schiene " + this.nr + ", ist aber bereits drin.";
+			const fehler: string | null = "Kurs '" + kurs1.toString() + "' soll in Schiene " + this.nr + ", ist aber bereits drin.";
 			this.logger.logLn(LogLevel.ERROR, fehler);
 			throw new DeveloperNotificationException(fehler)
 		}
@@ -80,10 +80,10 @@ export class KursblockungDynSchiene extends JavaObject {
 	 *
 	 * @param kurs1 Der Kurs, welcher aus der Schiene entfernt werden soll.
 	 */
-	public aktionKursEntfernen(kurs1 : KursblockungDynKurs) : void {
-		const kursID : number = kurs1.gibDatenbankID();
+	public aktionKursEntfernen(kurs1: KursblockungDynKurs): void {
+		const kursID: number = kurs1.gibDatenbankID();
 		if (!this.kursMap.containsKey(kursID)) {
-			const fehler : string | null = "Kurs '" + kurs1.toString() + "' soll aus Schiene " + this.nr + " entfernt werden, ist aber nicht drin.";
+			const fehler: string | null = "Kurs '" + kurs1.toString() + "' soll aus Schiene " + this.nr + " entfernt werden, ist aber nicht drin.";
 			this.logger.logLn(LogLevel.ERROR, fehler);
 			throw new DeveloperNotificationException(fehler)
 		}
@@ -98,7 +98,7 @@ export class KursblockungDynSchiene extends JavaObject {
 	 *
 	 * @return Die aktuelle Nummer der Schiene (0-indiziert).
 	 */
-	public gibNr() : number {
+	public gibNr(): number {
 		return this.nr;
 	}
 
@@ -107,7 +107,7 @@ export class KursblockungDynSchiene extends JavaObject {
 	 *
 	 * @return Die aktuelle Anzahl an Kursen in dieser Schiene.
 	 */
-	public gibKursAnzahl() : number {
+	public gibKursAnzahl(): number {
 		return this.kursMap.size();
 	}
 
@@ -118,9 +118,9 @@ export class KursblockungDynSchiene extends JavaObject {
 	 * @return die Anzahl an Kursen mit gleicher Fachart in dieser Schiene. Diese Anzahl wird als Bewertungskriterium
 	 *         für die Blockung verwendet.
 	 */
-	gibAnzahlGleicherFacharten() : number {
-		const setFachart : AVLSet<number> | null = new AVLSet<number>();
-		let summe : number = 0;
+	gibAnzahlGleicherFacharten(): number {
+		const setFachart: AVLSet<number> | null = new AVLSet<number>();
+		let summe: number = 0;
 		for (const kurs of this.kursMap.values())
 			if (!setFachart.add(kurs.gibFachart().gibNr()))
 				summe++;
@@ -132,7 +132,7 @@ export class KursblockungDynSchiene extends JavaObject {
 	 *
 	 * @param nurMultikurse Falls TRUE, werden nur Multikurse angezeigt.
 	 */
-	public debug(nurMultikurse : boolean) : void {
+	public debug(nurMultikurse: boolean): void {
 		this.logger.modifyIndent(+4);
 		for (const k of this.kursMap.values()) {
 			if ((nurMultikurse) && (k.gibSchienenAnzahl() < 2))
@@ -145,7 +145,7 @@ export class KursblockungDynSchiene extends JavaObject {
 	/**
 	 * Ausgabe der Kurse dieser Schiene (4 eingerückt).
 	 */
-	public printlnKurse() : void {
+	public printlnKurse(): void {
 		console.log(JSON.stringify("Schiene " + (this.nr + 1)));
 		for (const k of this.kursMap.values())
 			console.log(JSON.stringify("    ID " + k.gibDatenbankID() + ", " + k.gibFachart()));
@@ -156,7 +156,7 @@ export class KursblockungDynSchiene extends JavaObject {
 	 *
 	 * @param _schuelerArr  Die Menge alle SuS.
 	 */
-	public printlnKurseUndSchueler(_schuelerArr : Array<KursblockungDynSchueler>) : void {
+	public printlnKurseUndSchueler(_schuelerArr: Array<KursblockungDynSchueler>): void {
 		console.log(JSON.stringify("Schiene " + (this.nr + 1)));
 		for (const k of this.kursMap.values()) {
 			console.log(JSON.stringify("    ID " + k.gibDatenbankID() + ", " + k.gibFachart() + ", Fach-ID=" + k.gibFachID()));
@@ -171,7 +171,7 @@ export class KursblockungDynSchiene extends JavaObject {
 	 *
 	 * @return true, falls in der Schiene nur Kurse der Kursart LK sind (oder keine Kurse).
 	 */
-	public gibHatNurLK() : boolean {
+	public gibHatNurLK(): boolean {
 		for (const k of this.kursMap.values())
 			if (k.gibFachart().gibKursart() as unknown !== GostKursart.LK as unknown)
 				return false;
@@ -183,7 +183,7 @@ export class KursblockungDynSchiene extends JavaObject {
 	 *
 	 * @return true, falls in der Schiene keine Kurse der Kursart LK sind.
 	 */
-	public gibHatKeineLK() : boolean {
+	public gibHatKeineLK(): boolean {
 		for (const k of this.kursMap.values())
 			if (k.gibFachart().gibKursart() as unknown === GostKursart.LK as unknown)
 				return false;
@@ -194,7 +194,7 @@ export class KursblockungDynSchiene extends JavaObject {
 		return 'de.svws_nrw.core.kursblockung.KursblockungDynSchiene';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.kursblockung.KursblockungDynSchiene'].includes(name);
 	}
 
@@ -202,6 +202,6 @@ export class KursblockungDynSchiene extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_kursblockung_KursblockungDynSchiene(obj : unknown) : KursblockungDynSchiene {
+export function cast_de_svws_nrw_core_kursblockung_KursblockungDynSchiene(obj: unknown): KursblockungDynSchiene {
 	return obj as KursblockungDynSchiene;
 }

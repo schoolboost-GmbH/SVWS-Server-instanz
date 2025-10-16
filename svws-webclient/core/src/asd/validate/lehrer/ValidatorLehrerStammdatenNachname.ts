@@ -12,7 +12,7 @@ export class ValidatorLehrerStammdatenNachname extends Validator {
 	/**
 	 * Die Lehrer-Stammdaten
 	 */
-	private readonly daten : LehrerStammdaten;
+	private readonly daten: LehrerStammdaten;
 
 	/**
 	 *   Namenszusätze in Europa:
@@ -34,9 +34,9 @@ export class ValidatorLehrerStammdatenNachname extends Validator {
 	 *   1-teilig: af, ap, da, das, de, dei, del, della, des, di, do, dos, dotter, du, fi, fitz, la, las, le, los, of, son, ten, van, vom, von, vonder, y, z, zu, zum, zur
 	 *   2-teilig: de la, de l’, van de, van den, van der
 	 */
-	private readonly zusaetze : JavaSet<string> = java_util_Set_of("de", "te", "zu", "da", "von", "van", "vom", "thor");
+	private readonly zusaetze: JavaSet<string> = java_util_Set_of("de", "te", "zu", "da", "von", "van", "vom", "thor");
 
-	private readonly zusaetzeZweiteilig : JavaSet<string> = java_util_Set_of("de la");
+	private readonly zusaetzeZweiteilig: JavaSet<string> = java_util_Set_of("de la");
 
 
 	/**
@@ -45,7 +45,7 @@ export class ValidatorLehrerStammdatenNachname extends Validator {
 	 * @param daten     die Daten des Validators
 	 * @param kontext   der Kontext des Validators
 	 */
-	public constructor(daten : LehrerStammdaten, kontext : ValidatorKontext) {
+	public constructor(daten: LehrerStammdaten, kontext: ValidatorKontext) {
 		super(kontext);
 		this.daten = daten;
 	}
@@ -59,8 +59,8 @@ export class ValidatorLehrerStammdatenNachname extends Validator {
 	 *
 	 * @return der Nachname mit ggf. entferntem Vornamen
 	 */
-	private getOhneZusatz(nachname : string) : string {
-		const teile : Array<string> = nachname.split(" ", 3);
+	private getOhneZusatz(nachname: string): string {
+		const teile: Array<string> = nachname.split(" ", 3);
 		if ((teile.length === 3) && (this.zusaetzeZweiteilig.contains(teile[0] + " " + teile[1])))
 			return teile[2];
 		if ((teile.length === 3) && (this.zusaetze.contains(teile[0])))
@@ -70,29 +70,29 @@ export class ValidatorLehrerStammdatenNachname extends Validator {
 		return nachname;
 	}
 
-	protected pruefe() : boolean {
-		let success : boolean = true;
-		const nachname : string | null = this.daten.nachname;
-		success = this.exec(0, { getAsBoolean : () => (nachname === null) || (nachname.length === 0) }, "Nachname der Lehrkraft: Kein Wert vorhanden.");
+	protected pruefe(): boolean {
+		let success: boolean = true;
+		const nachname: string | null = this.daten.nachname;
+		success = this.exec(0, { getAsBoolean: () => (nachname === null) || (nachname.length === 0) }, "Nachname der Lehrkraft: Kein Wert vorhanden.");
 		if (!success)
 			return false;
-		success = this.exec(1, { getAsBoolean : () => JavaString.isBlank(nachname.trim()) }, "Nachname der Lehrkraft: Der Nachname darf nicht nur aus Leerzeichen bestehen.");
+		success = this.exec(1, { getAsBoolean: () => JavaString.isBlank(nachname.trim()) }, "Nachname der Lehrkraft: Der Nachname darf nicht nur aus Leerzeichen bestehen.");
 		if (!success)
 			return false;
-		success = this.exec(2, { getAsBoolean : () => this.daten.nachname.length === 1 }, "Nachname der Lehrkraft: Der Nachname besteht aus nur einem Zeichen. Bitte überprüfen sie Ihre Angaben.");
-		if (!this.exec(3, { getAsBoolean : () => nachname.startsWith(" ") || nachname.startsWith("\t") }, "Nachname der Lehrkraft: Die Eintragung des Nachnamens muss linksbündig erfolgen (ohne vorangestellte Leerzeichen oder Tabs)."))
+		success = this.exec(2, { getAsBoolean: () => this.daten.nachname.length === 1 }, "Nachname der Lehrkraft: Der Nachname besteht aus nur einem Zeichen. Bitte überprüfen sie Ihre Angaben.");
+		if (!this.exec(3, { getAsBoolean: () => nachname.startsWith(" ") || nachname.startsWith("\t") }, "Nachname der Lehrkraft: Die Eintragung des Nachnamens muss linksbündig erfolgen (ohne vorangestellte Leerzeichen oder Tabs)."))
 			success = false;
-		const nachnameOhneZusatz : string = this.getOhneZusatz(nachname);
-		if (!this.exec(4, { getAsBoolean : () => !JavaCharacter.isUpperCase(nachnameOhneZusatz.charAt(0)) }, "Nachname der Lehrkraft: Die erste Stelle des Nachnamens muss - ggf. im Anschluss an einen Namenszusatz, wie z.B. \"von\" -  mit einem Großbuchstaben besetzt sein."))
+		const nachnameOhneZusatz: string = this.getOhneZusatz(nachname);
+		if (!this.exec(4, { getAsBoolean: () => !JavaCharacter.isUpperCase(nachnameOhneZusatz.charAt(0)) }, "Nachname der Lehrkraft: Die erste Stelle des Nachnamens muss - ggf. im Anschluss an einen Namenszusatz, wie z.B. \"von\" -  mit einem Großbuchstaben besetzt sein."))
 			success = false;
-		if (!this.exec(5, { getAsBoolean : () => (nachnameOhneZusatz.length > 1) && JavaCharacter.isUpperCase(nachnameOhneZusatz.charAt(1)) }, "Nachname der Lehrkraft: Die zweite Stelle des Nachnamens ist mit einem Großbuchstaben besetzt. Bitte stellen sie sicher, dass nur der erste Buchstabe des Nachnamens ein Großbuchstabe ist. Bitte schreiben Sie auf ihn folgende Buchstaben klein."))
+		if (!this.exec(5, { getAsBoolean: () => (nachnameOhneZusatz.length > 1) && JavaCharacter.isUpperCase(nachnameOhneZusatz.charAt(1)) }, "Nachname der Lehrkraft: Die zweite Stelle des Nachnamens ist mit einem Großbuchstaben besetzt. Bitte stellen sie sicher, dass nur der erste Buchstabe des Nachnamens ein Großbuchstabe ist. Bitte schreiben Sie auf ihn folgende Buchstaben klein."))
 			success = false;
-		if (!this.exec(6, { getAsBoolean : () => (nachnameOhneZusatz.length > 2) && JavaCharacter.isUpperCase(nachnameOhneZusatz.charAt(2)) && !java_util_Set_of("A'", "D'", "M'", "O'", "Mc").contains(nachnameOhneZusatz.substring(0, 2)) }, "Nachname der Lehrkraft: Die dritte Stelle des Nachnamens ist mit einem Großbuchstaben besetzt. Bitte stellen sie sicher, dass nur der erste Buchstabe des Nachnamens ein Großbuchstabe ist. Bitte schreiben Sie auf ihn folgende Buchstaben klein."))
+		if (!this.exec(6, { getAsBoolean: () => (nachnameOhneZusatz.length > 2) && JavaCharacter.isUpperCase(nachnameOhneZusatz.charAt(2)) && !java_util_Set_of("A'", "D'", "M'", "O'", "Mc").contains(nachnameOhneZusatz.substring(0, 2)) }, "Nachname der Lehrkraft: Die dritte Stelle des Nachnamens ist mit einem Großbuchstaben besetzt. Bitte stellen sie sicher, dass nur der erste Buchstabe des Nachnamens ein Großbuchstabe ist. Bitte schreiben Sie auf ihn folgende Buchstaben klein."))
 			success = false;
-		if (!this.exec(7, { getAsBoolean : () => JavaString.contains(nachname, " -") || JavaString.contains(nachname, "- ") }, "Nachname der Lehrkraft: Der Nachname enthält überflüssige Leerzeichen vor und/oder nach dem Bindestrich."))
+		if (!this.exec(7, { getAsBoolean: () => JavaString.contains(nachname, " -") || JavaString.contains(nachname, "- ") }, "Nachname der Lehrkraft: Der Nachname enthält überflüssige Leerzeichen vor und/oder nach dem Bindestrich."))
 			success = false;
-		if (!this.exec(8, { getAsBoolean : () => {
-			const nLower : string | null = nachname.toLowerCase();
+		if (!this.exec(8, { getAsBoolean: () => {
+			const nLower: string | null = nachname.toLowerCase();
 			return nLower.startsWith("frau ") || nLower.startsWith("herr ");
 		} }, "Nachname der Lehrkraft: Die Anrede (Frau oder Herr) gehört nicht in den Nachnamen."))
 			success = false;
@@ -103,7 +103,7 @@ export class ValidatorLehrerStammdatenNachname extends Validator {
 		return 'de.svws_nrw.asd.validate.lehrer.ValidatorLehrerStammdatenNachname';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.asd.validate.lehrer.ValidatorLehrerStammdatenNachname', 'de.svws_nrw.asd.validate.Validator'].includes(name);
 	}
 
@@ -111,6 +111,6 @@ export class ValidatorLehrerStammdatenNachname extends Validator {
 
 }
 
-export function cast_de_svws_nrw_asd_validate_lehrer_ValidatorLehrerStammdatenNachname(obj : unknown) : ValidatorLehrerStammdatenNachname {
+export function cast_de_svws_nrw_asd_validate_lehrer_ValidatorLehrerStammdatenNachname(obj: unknown): ValidatorLehrerStammdatenNachname {
 	return obj as ValidatorLehrerStammdatenNachname;
 }

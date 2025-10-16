@@ -15,24 +15,24 @@ export class KlausurblockungSchienenAlgorithmusGreedy6 extends KlausurblockungSc
 	 * @param pRandom   Ein {@link Random}-Objekt zur Steuerung des Zufalls über einen Anfangs-Seed.
 	 * @param pDynDaten Die aktuellen Blockungsdaten.
 	 */
-	public constructor(pRandom : Random, pDynDaten : KlausurblockungSchienenDynDaten) {
+	public constructor(pRandom: Random, pDynDaten: KlausurblockungSchienenDynDaten) {
 		super(pRandom, pDynDaten);
 	}
 
-	public toString() : string {
+	public toString(): string {
 		return "Recursive Largest First (RLF)";
 	}
 
-	public berechne(pZeitEnde : number) : void;
+	public berechne(pZeitEnde: number) : void;
 
 	public berechne() : void;
 
 	/**
 	 * Implementation for method overloads of 'berechne'
 	 */
-	public berechne(__param0? : number) : void {
+	public berechne(__param0?: number): void {
 		if (((__param0 !== undefined) && typeof __param0 === "number")) {
-			const pZeitEnde : number = __param0 as number;
+			const pZeitEnde: number = __param0 as number;
 			this.berechne();
 			this._dynDaten.aktionZustand1Speichern();
 			while (System.currentTimeMillis() < pZeitEnde) {
@@ -46,13 +46,13 @@ export class KlausurblockungSchienenAlgorithmusGreedy6 extends KlausurblockungSc
 				this._dynDaten.aktionZustand2Speichern();
 		} else if ((__param0 === undefined)) {
 			this._dynDaten.aktionKlausurenAusSchienenEntfernen();
-			const setS : LinkedCollection<number> = new LinkedCollection<number>();
+			const setS: LinkedCollection<number> = new LinkedCollection<number>();
 			while (this._dynDaten.gibAnzahlNichtverteilterKlausuren() > 0) {
 				setS.clear();
-				const nr1 : number = this._dynDaten.gibKlausurDieFreiIstMitDenMeistenFreienNachbarn();
-				const s : number = this._dynDaten.aktionSetzeKlausurInNeueSchiene(nr1);
+				const nr1: number = this._dynDaten.gibKlausurDieFreiIstMitDenMeistenFreienNachbarn();
+				const s: number = this._dynDaten.aktionSetzeKlausurInNeueSchiene(nr1);
 				setS.addLast(nr1);
-				let nr2 : number = this._dynDaten.gibKlausurDieFreiIstUndNichtBenachbartZurMengeAberDerenNachbarnMaximalBenachbartSind(setS);
+				let nr2: number = this._dynDaten.gibKlausurDieFreiIstUndNichtBenachbartZurMengeAberDerenNachbarnMaximalBenachbartSind(setS);
 				while (nr2 >= 0) {
 					setS.addLast(nr2);
 					if (!this._dynDaten.aktionSetzeKlausurInSchiene(nr2, s))
@@ -67,7 +67,7 @@ export class KlausurblockungSchienenAlgorithmusGreedy6 extends KlausurblockungSc
 		return 'de.svws_nrw.core.utils.gost.klausurplanung.KlausurblockungSchienenAlgorithmusGreedy6';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.utils.gost.klausurplanung.KlausurblockungSchienenAlgorithmusGreedy6', 'de.svws_nrw.core.utils.gost.klausurplanung.KlausurblockungSchienenAlgorithmusAbstract'].includes(name);
 	}
 
@@ -75,6 +75,6 @@ export class KlausurblockungSchienenAlgorithmusGreedy6 extends KlausurblockungSc
 
 }
 
-export function cast_de_svws_nrw_core_utils_gost_klausurplanung_KlausurblockungSchienenAlgorithmusGreedy6(obj : unknown) : KlausurblockungSchienenAlgorithmusGreedy6 {
+export function cast_de_svws_nrw_core_utils_gost_klausurplanung_KlausurblockungSchienenAlgorithmusGreedy6(obj: unknown): KlausurblockungSchienenAlgorithmusGreedy6 {
 	return obj as KlausurblockungSchienenAlgorithmusGreedy6;
 }

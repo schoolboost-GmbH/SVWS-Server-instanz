@@ -13,37 +13,37 @@ export class StundenplanblockungManagerLerngruppe extends JavaObject {
 	/**
 	 * Die Datenbank-ID der Lerngruppe.
 	 */
-	_id : number = 0;
+	_id: number = 0;
 
 	/**
 	 * Die Anzahl an Stunden im Stundenplan.
 	 */
-	stunden : number = 0;
+	stunden: number = 0;
 
 	/**
 	 * Die Lehrkräfte der Lerngruppe.
 	 */
-	_menge_le : ArrayList<StundenplanblockungManagerLehrkraft> = new ArrayList<StundenplanblockungManagerLehrkraft>();
+	_menge_le: ArrayList<StundenplanblockungManagerLehrkraft> = new ArrayList<StundenplanblockungManagerLehrkraft>();
 
 	/**
 	 * Die Klassen der Lerngruppe.
 	 */
-	_menge_kl : ArrayList<StundenplanblockungManagerKlasse> = new ArrayList<StundenplanblockungManagerKlasse>();
+	_menge_kl: ArrayList<StundenplanblockungManagerKlasse> = new ArrayList<StundenplanblockungManagerKlasse>();
 
 	/**
 	 * Die Fächer Lerngruppe.
 	 */
-	_menge_fa : ArrayList<StundenplanblockungManagerFach> = new ArrayList<StundenplanblockungManagerFach>();
+	_menge_fa: ArrayList<StundenplanblockungManagerFach> = new ArrayList<StundenplanblockungManagerFach>();
 
 	/**
 	 * Die Räume Lerngruppe.
 	 */
-	_menge_ra : ArrayList<StundenplanblockungManagerRaum> = new ArrayList<StundenplanblockungManagerRaum>();
+	_menge_ra: ArrayList<StundenplanblockungManagerRaum> = new ArrayList<StundenplanblockungManagerRaum>();
 
 	/**
 	 * Die Kopplungen Lerngruppe.
 	 */
-	_menge_ko : ArrayList<StundenplanblockungManagerKopplung> = new ArrayList<StundenplanblockungManagerKopplung>();
+	_menge_ko: ArrayList<StundenplanblockungManagerKopplung> = new ArrayList<StundenplanblockungManagerKopplung>();
 
 
 	/**
@@ -51,7 +51,7 @@ export class StundenplanblockungManagerLerngruppe extends JavaObject {
 	 *
 	 * @param pID  Die Datenbank-ID der Lerngruppe.
 	 */
-	public constructor(pID : number) {
+	public constructor(pID: number) {
 		super();
 		this._id = pID;
 	}
@@ -61,7 +61,7 @@ export class StundenplanblockungManagerLerngruppe extends JavaObject {
 	 *
 	 * @return Die Datenbank-ID der Lerngruppe.
 	 */
-	public getID() : number {
+	public getID(): number {
 		return this._id;
 	}
 
@@ -70,7 +70,7 @@ export class StundenplanblockungManagerLerngruppe extends JavaObject {
 	 *
 	 * @param pLe Das Objekt, welches hinzugefügt werden soll.
 	 */
-	public addLehrkraftOrException(pLe : StundenplanblockungManagerLehrkraft) : void {
+	public addLehrkraftOrException(pLe: StundenplanblockungManagerLehrkraft): void {
 		if (this._menge_le.contains(pLe))
 			throw new NullPointerException("Lerngruppe " + this._id + " hat bereits Lehrkraft " + pLe._kuerzel + " (" + pLe._id + ")!")
 		this._menge_le.add(pLe);
@@ -82,7 +82,7 @@ export class StundenplanblockungManagerLerngruppe extends JavaObject {
 	 *
 	 * @param pKl Das Objekt, welches hinzugefügt werden soll.
 	 */
-	public addKlasseOrException(pKl : StundenplanblockungManagerKlasse) : void {
+	public addKlasseOrException(pKl: StundenplanblockungManagerKlasse): void {
 		if (this._menge_kl.contains(pKl))
 			throw new NullPointerException("Lerngruppe " + this._id + " hat bereits Klasse " + pKl._kuerzel + " (" + pKl._id + ")!")
 		this._menge_kl.add(pKl);
@@ -94,7 +94,7 @@ export class StundenplanblockungManagerLerngruppe extends JavaObject {
 	 *
 	 * @param pFa Das Objekt, welches hinzugefügt werden soll.
 	 */
-	public addFachOrException(pFa : StundenplanblockungManagerFach) : void {
+	public addFachOrException(pFa: StundenplanblockungManagerFach): void {
 		if (this._menge_fa.contains(pFa))
 			throw new NullPointerException("Lerngruppe " + this._id + " hat bereits Fach " + pFa._kuerzel + " (" + pFa._id + ")!")
 		this._menge_fa.add(pFa);
@@ -107,7 +107,7 @@ export class StundenplanblockungManagerLerngruppe extends JavaObject {
 	 * @param pLe  Das Objekt, nach dem gesucht wird.
 	 * @return TRUE, falls der Lerngruppe die Lehrkraft zugeordnet ist.
 	 */
-	public hasLehrkraft(pLe : StundenplanblockungManagerLehrkraft) : boolean {
+	public hasLehrkraft(pLe: StundenplanblockungManagerLehrkraft): boolean {
 		return this._menge_le.contains(pLe);
 	}
 
@@ -117,7 +117,7 @@ export class StundenplanblockungManagerLerngruppe extends JavaObject {
 	 * @param pKl  Das Objekt, nach dem gesucht wird.
 	 * @return TRUE, falls der Lerngruppe der Klasse zugeordnet ist.
 	 */
-	public hasKlasse(pKl : StundenplanblockungManagerKlasse) : boolean {
+	public hasKlasse(pKl: StundenplanblockungManagerKlasse): boolean {
 		return this._menge_kl.contains(pKl);
 	}
 
@@ -127,7 +127,7 @@ export class StundenplanblockungManagerLerngruppe extends JavaObject {
 	 * @param pFa  Das Objekt, nach dem gesucht wird..
 	 * @return TRUE, falls der Lerngruppe das Fach zugeordnet ist.
 	 */
-	public hasFach(pFa : StundenplanblockungManagerFach) : boolean {
+	public hasFach(pFa: StundenplanblockungManagerFach): boolean {
 		return this._menge_fa.contains(pFa);
 	}
 
@@ -136,7 +136,7 @@ export class StundenplanblockungManagerLerngruppe extends JavaObject {
 	 *
 	 * @param pLe  Das Objekt, welches entfernt werden soll.
 	 */
-	public removeLehrkraftOrException(pLe : StundenplanblockungManagerLehrkraft) : void {
+	public removeLehrkraftOrException(pLe: StundenplanblockungManagerLehrkraft): void {
 		if (!this._menge_le.contains(pLe))
 			throw new NullPointerException("Lerngruppe " + this._id + " hat nicht Lehrkraft " + pLe._kuerzel + " (" + pLe._id + ")!")
 		this._menge_le.remove(pLe);
@@ -148,7 +148,7 @@ export class StundenplanblockungManagerLerngruppe extends JavaObject {
 	 *
 	 * @param pKl  Das Objekt, welches entfernt werden soll.
 	 */
-	public removeKlasseOrException(pKl : StundenplanblockungManagerKlasse) : void {
+	public removeKlasseOrException(pKl: StundenplanblockungManagerKlasse): void {
 		if (!this._menge_kl.contains(pKl))
 			throw new NullPointerException("Lerngruppe " + this._id + " hat nicht Klasse " + pKl._kuerzel + " (" + pKl._id + ")!")
 		this._menge_kl.remove(pKl);
@@ -160,7 +160,7 @@ export class StundenplanblockungManagerLerngruppe extends JavaObject {
 	 *
 	 * @param pFa  Das Objekt, welches entfernt werden soll.
 	 */
-	public removeFachOrException(pFa : StundenplanblockungManagerFach) : void {
+	public removeFachOrException(pFa: StundenplanblockungManagerFach): void {
 		if (!this._menge_fa.contains(pFa))
 			throw new NullPointerException("Lerngruppe " + this._id + " hat nicht Fach " + pFa._kuerzel + " (" + pFa._id + ")!")
 		this._menge_fa.remove(pFa);
@@ -171,7 +171,7 @@ export class StundenplanblockungManagerLerngruppe extends JavaObject {
 		return 'de.svws_nrw.core.utils.stundenplanblockung.StundenplanblockungManagerLerngruppe';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.utils.stundenplanblockung.StundenplanblockungManagerLerngruppe'].includes(name);
 	}
 
@@ -179,6 +179,6 @@ export class StundenplanblockungManagerLerngruppe extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_utils_stundenplanblockung_StundenplanblockungManagerLerngruppe(obj : unknown) : StundenplanblockungManagerLerngruppe {
+export function cast_de_svws_nrw_core_utils_stundenplanblockung_StundenplanblockungManagerLerngruppe(obj: unknown): StundenplanblockungManagerLerngruppe {
 	return obj as StundenplanblockungManagerLerngruppe;
 }

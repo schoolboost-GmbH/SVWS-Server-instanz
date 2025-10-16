@@ -15,37 +15,37 @@ export class SchuldateiKatalogManager extends JavaObject {
 	/**
 	 * Der Name des Katalogs
 	 */
-	private readonly _name : string;
+	private readonly _name: string;
 
 	/**
 	 * Die Liste aller Katalog-Einträge dieses Katalogs
 	 */
-	private readonly _katalogeintraege : List<SchuldateiKatalogeintrag> = new ArrayList<SchuldateiKatalogeintrag>();
+	private readonly _katalogeintraege: List<SchuldateiKatalogeintrag> = new ArrayList<SchuldateiKatalogeintrag>();
 
 	/**
 	 * Eine Map von dem Wert der Katalog-Einträge auf die Liste der Katalog-Einträge mit diesem Wert
 	 */
-	private readonly _mapKatalogeintraegeByWert : JavaMap<string, List<SchuldateiKatalogeintrag>> = new HashMap<string, List<SchuldateiKatalogeintrag>>();
+	private readonly _mapKatalogeintraegeByWert: JavaMap<string, List<SchuldateiKatalogeintrag>> = new HashMap<string, List<SchuldateiKatalogeintrag>>();
 
 	/**
 	 * Eine Map von dem Schlüssel der Katalog-Einträge auf eine Liste der Katalog-Einträge mit diesem Schlüssel
 	 */
-	private readonly _mapKatalogeintraegeBySchluessel : JavaMap<string, List<SchuldateiKatalogeintrag>> = new HashMap<string, List<SchuldateiKatalogeintrag>>();
+	private readonly _mapKatalogeintraegeBySchluessel: JavaMap<string, List<SchuldateiKatalogeintrag>> = new HashMap<string, List<SchuldateiKatalogeintrag>>();
 
 	/**
 	 * Cache: Eine Map der Einträge anhand des Schuljahres
 	 */
-	private readonly _mapKatalogeintraegeBySchuljahr : JavaMap<number, List<SchuldateiKatalogeintrag>> = new HashMap<number, List<SchuldateiKatalogeintrag>>();
+	private readonly _mapKatalogeintraegeBySchuljahr: JavaMap<number, List<SchuldateiKatalogeintrag>> = new HashMap<number, List<SchuldateiKatalogeintrag>>();
 
 	/**
 	 * Cache: Eine Map nach Schuljahren für Maps von Wert auf einen SchuldateiKatalogeintrag
 	 */
-	private readonly _mapKatalogEintraegeBySchuljahrAndWert : JavaMap<number, JavaMap<string, SchuldateiKatalogeintrag>> = new HashMap<number, JavaMap<string, SchuldateiKatalogeintrag>>();
+	private readonly _mapKatalogEintraegeBySchuljahrAndWert: JavaMap<number, JavaMap<string, SchuldateiKatalogeintrag>> = new HashMap<number, JavaMap<string, SchuldateiKatalogeintrag>>();
 
 	/**
 	 * Cache: Eine Map nach Schuljahren für Maps von Schlüssel auf eine Liste von SchuldateiKatalogeinträgen
 	 */
-	private readonly _mapKatalogEintraegeBySchuljahrAndSchluessel : JavaMap<number, JavaMap<string, List<SchuldateiKatalogeintrag>>> = new HashMap<number, JavaMap<string, List<SchuldateiKatalogeintrag>>>();
+	private readonly _mapKatalogEintraegeBySchuljahrAndSchluessel: JavaMap<number, JavaMap<string, List<SchuldateiKatalogeintrag>>> = new HashMap<number, JavaMap<string, List<SchuldateiKatalogeintrag>>>();
 
 
 	/**
@@ -53,7 +53,7 @@ export class SchuldateiKatalogManager extends JavaObject {
 	 *
 	 * @param name   der Name des Katalogs
 	 */
-	public constructor(name : string) {
+	public constructor(name: string) {
 		super();
 		this._name = name;
 	}
@@ -74,17 +74,17 @@ export class SchuldateiKatalogManager extends JavaObject {
 	 *
 	 * @param eintrag   der Eintrag
 	 */
-	addEintrag(eintrag : SchuldateiKatalogeintrag) : void {
-		let schuljahrBis : number = eintrag.gueltigbis === null ? SchuldateiUtils._immerGueltigBis : SchuldateiUtils.schuljahrGueltigBis(eintrag.gueltigbis);
-		let schuljahrAb : number = eintrag.gueltigab === null ? SchuldateiUtils._immerGueltigAb : SchuldateiUtils.schuljahrGueltigAb(eintrag.gueltigab);
+	addEintrag(eintrag: SchuldateiKatalogeintrag): void {
+		let schuljahrBis: number = eintrag.gueltigbis === null ? SchuldateiUtils._immerGueltigBis : SchuldateiUtils.schuljahrGueltigBis(eintrag.gueltigbis);
+		let schuljahrAb: number = eintrag.gueltigab === null ? SchuldateiUtils._immerGueltigAb : SchuldateiUtils.schuljahrGueltigAb(eintrag.gueltigab);
 		if (schuljahrAb > schuljahrBis)
 			return;
 		this._katalogeintraege.add(eintrag);
-		const eintraegeByWert : List<SchuldateiKatalogeintrag> | null = this._mapKatalogeintraegeByWert.computeIfAbsent(eintrag.wert, { apply : (k: string) => new ArrayList<SchuldateiKatalogeintrag>() });
+		const eintraegeByWert: List<SchuldateiKatalogeintrag> | null = this._mapKatalogeintraegeByWert.computeIfAbsent(eintrag.wert, { apply: (k: string) => new ArrayList<SchuldateiKatalogeintrag>() });
 		if (eintraegeByWert !== null)
 			eintraegeByWert.add(eintrag);
 		if (!JavaString.isBlank(eintrag.schluessel)) {
-			const eintraegeBySchluessel : List<SchuldateiKatalogeintrag> | null = this._mapKatalogeintraegeBySchluessel.computeIfAbsent(eintrag.schluessel, { apply : (k: string) => new ArrayList<SchuldateiKatalogeintrag>() });
+			const eintraegeBySchluessel: List<SchuldateiKatalogeintrag> | null = this._mapKatalogeintraegeBySchluessel.computeIfAbsent(eintrag.schluessel, { apply: (k: string) => new ArrayList<SchuldateiKatalogeintrag>() });
 			if (eintraegeBySchluessel !== null)
 				eintraegeBySchluessel.add(eintrag);
 		}
@@ -95,7 +95,7 @@ export class SchuldateiKatalogManager extends JavaObject {
 	 *
 	 * @return der Name des Katalogs
 	 */
-	public getName() : string {
+	public getName(): string {
 		return this._name;
 	}
 
@@ -104,7 +104,7 @@ export class SchuldateiKatalogManager extends JavaObject {
 	 *
 	 * @return die Liste mit allen Katalog-Einträgen
 	 */
-	public getEintraege() : List<SchuldateiKatalogeintrag> {
+	public getEintraege(): List<SchuldateiKatalogeintrag> {
 		return this._katalogeintraege;
 	}
 
@@ -115,11 +115,11 @@ export class SchuldateiKatalogManager extends JavaObject {
 	 *
 	 * @return die Liste der Katalog-Einträge, die in dem Schuljahr gültig sind
 	 */
-	public getEintraegeBySchuljahr(schuljahr : number) : List<SchuldateiKatalogeintrag> {
-		const list : List<SchuldateiKatalogeintrag> | null = this._mapKatalogeintraegeBySchuljahr.get(schuljahr);
+	public getEintraegeBySchuljahr(schuljahr: number): List<SchuldateiKatalogeintrag> {
+		const list: List<SchuldateiKatalogeintrag> | null = this._mapKatalogeintraegeBySchuljahr.get(schuljahr);
 		if (list !== null)
 			return list;
-		const listEintraege : List<SchuldateiKatalogeintrag> = new ArrayList<SchuldateiKatalogeintrag>();
+		const listEintraege: List<SchuldateiKatalogeintrag> = new ArrayList<SchuldateiKatalogeintrag>();
 		for (const eintrag of this._katalogeintraege)
 			if (SchuldateiUtils.pruefeSchuljahr(schuljahr, eintrag))
 				listEintraege.add(eintrag);
@@ -135,7 +135,7 @@ export class SchuldateiKatalogManager extends JavaObject {
 	 *
 	 * @return die Katalog-Einträge oder null, wenn es keinen für den Wert gibt.
 	 */
-	public getEintraegeByWert(wert : string | null) : List<SchuldateiKatalogeintrag> | null {
+	public getEintraegeByWert(wert: string | null): List<SchuldateiKatalogeintrag> | null {
 		return this._mapKatalogeintraegeByWert.get(wert);
 	}
 
@@ -146,7 +146,7 @@ export class SchuldateiKatalogManager extends JavaObject {
 	 *
 	 * @return die Katalog-Einträge oder null, wenn es keinen für den Wert gibt.
 	 */
-	public getEintraegeByIntegerWert(wert : number) : List<SchuldateiKatalogeintrag> | null {
+	public getEintraegeByIntegerWert(wert: number): List<SchuldateiKatalogeintrag> | null {
 		return this.getEintraegeByWert("" + wert);
 	}
 
@@ -158,7 +158,7 @@ export class SchuldateiKatalogManager extends JavaObject {
 	 *
 	 * @return der Katalog-Eintrag für das Schuljahr und den Wert falls er existiert und ansonsten null.
 	 */
-	public getEintragBySchuljahrAndWert(schuljahr : number, wert : string | null) : SchuldateiKatalogeintrag | null {
+	public getEintragBySchuljahrAndWert(schuljahr: number, wert: string | null): SchuldateiKatalogeintrag | null {
 		return this.getCacheBySchuljahrAndWert(schuljahr).get(wert);
 	}
 
@@ -170,7 +170,7 @@ export class SchuldateiKatalogManager extends JavaObject {
 	 *
 	 * @return der Katalog-Eintrag für das Schuljahr und den numerischen Wert falls er existiert und ansonsten null.
 	 */
-	public getEintragBySchuljahrAndIntegerWert(schuljahr : number, wert : number) : SchuldateiKatalogeintrag | null {
+	public getEintragBySchuljahrAndIntegerWert(schuljahr: number, wert: number): SchuldateiKatalogeintrag | null {
 		return this.getEintragBySchuljahrAndWert(schuljahr, "" + wert);
 	}
 
@@ -181,7 +181,7 @@ export class SchuldateiKatalogManager extends JavaObject {
 	 *
 	 * @return die Liste der Katalog-Einträge für den Schlüssel existiert der Schlüssel nicht, so wird null zurückgegeben
 	 */
-	public getEintraegeBySchluessel(schluessel : string | null) : List<SchuldateiKatalogeintrag> | null {
+	public getEintraegeBySchluessel(schluessel: string | null): List<SchuldateiKatalogeintrag> | null {
 		return this._mapKatalogeintraegeBySchluessel.get(schluessel);
 	}
 
@@ -193,16 +193,16 @@ export class SchuldateiKatalogManager extends JavaObject {
 	 *
 	 * @return die Liste der Katalog-Eintrag für den Schlüssel existiert der Schlüssel nicht, so wird null zurückgegeben
 	 */
-	public getEintraegeBySchuljahrAndSchluessel(schuljahr : number, schluessel : string | null) : List<SchuldateiKatalogeintrag> | null {
+	public getEintraegeBySchuljahrAndSchluessel(schuljahr: number, schluessel: string | null): List<SchuldateiKatalogeintrag> | null {
 		if ((schluessel === null) || (!this._mapKatalogeintraegeBySchluessel.containsKey(schluessel)))
 			return null;
-		const map : JavaMap<string, List<SchuldateiKatalogeintrag>> | null = this._mapKatalogEintraegeBySchuljahrAndSchluessel.get(schuljahr);
+		const map: JavaMap<string, List<SchuldateiKatalogeintrag>> | null = this._mapKatalogEintraegeBySchuljahrAndSchluessel.get(schuljahr);
 		if (map !== null)
 			return map.get(schluessel);
-		const neueMap : JavaMap<string, List<SchuldateiKatalogeintrag>> = new HashMap<string, List<SchuldateiKatalogeintrag>>();
+		const neueMap: JavaMap<string, List<SchuldateiKatalogeintrag>> = new HashMap<string, List<SchuldateiKatalogeintrag>>();
 		for (const eintrag of this._katalogeintraege)
 			if ((!JavaString.isBlank(eintrag.schluessel)) && (SchuldateiUtils.pruefeSchuljahr(schuljahr, eintrag))) {
-				const eintraegeBySchluessel : List<SchuldateiKatalogeintrag> | null = neueMap.computeIfAbsent(eintrag.schluessel, { apply : (k: string) => new ArrayList<SchuldateiKatalogeintrag>() });
+				const eintraegeBySchluessel: List<SchuldateiKatalogeintrag> | null = neueMap.computeIfAbsent(eintrag.schluessel, { apply: (k: string) => new ArrayList<SchuldateiKatalogeintrag>() });
 				if (eintraegeBySchluessel !== null)
 					eintraegeBySchluessel.add(eintrag);
 			}
@@ -217,7 +217,7 @@ export class SchuldateiKatalogManager extends JavaObject {
 	 *
 	 * @return true, falls ein Katalog-Eintrag existiert und ansonsten false.
 	 */
-	public hasEintrag(wert : string | null) : boolean;
+	public hasEintrag(wert: string | null) : boolean;
 
 	/**
 	 * Gibt zurück, ob ein Katalog-Eintrag für den Wert existiert.
@@ -226,19 +226,19 @@ export class SchuldateiKatalogManager extends JavaObject {
 	 *
 	 * @return true, falls ein Katalog-Eintrag existiert und ansonsten false.
 	 */
-	public hasEintrag(wert : number) : boolean;
+	public hasEintrag(wert: number) : boolean;
 
 	/**
 	 * Implementation for method overloads of 'hasEintrag'
 	 */
-	public hasEintrag(__param0 : null | number | string) : boolean {
+	public hasEintrag(__param0: null | number | string): boolean {
 		if (((__param0 !== undefined) && (typeof __param0 === "string") || (__param0 === null))) {
-			const wert : string | null = __param0;
+			const wert: string | null = __param0;
 			if (wert === null)
 				return false;
 			return this._mapKatalogeintraegeByWert.containsKey(wert);
 		} else if (((__param0 !== undefined) && typeof __param0 === "number")) {
-			const wert : number = __param0 as number;
+			const wert: number = __param0 as number;
 			return this.hasEintrag("" + wert);
 		} else throw new Error('invalid method overload');
 	}
@@ -251,7 +251,7 @@ export class SchuldateiKatalogManager extends JavaObject {
 	 *
 	 * @return true, falls ein Katalog-Eintrag im angegebenen Schuljahr existiert und ansonsten false.
 	 */
-	public hasEintragBySchuljahr(schuljahr : number, wert : string) : boolean;
+	public hasEintragBySchuljahr(schuljahr: number, wert: string) : boolean;
 
 	/**
 	 * Gibt zurück, ob ein Katalog-Eintrag für den numerischen Wert existiert.
@@ -261,19 +261,19 @@ export class SchuldateiKatalogManager extends JavaObject {
 	 *
 	 * @return true, falls ein Katalog-Eintrag existiert und ansonsten false.
 	 */
-	public hasEintragBySchuljahr(schuljahr : number, wert : number) : boolean;
+	public hasEintragBySchuljahr(schuljahr: number, wert: number) : boolean;
 
 	/**
 	 * Implementation for method overloads of 'hasEintragBySchuljahr'
 	 */
-	public hasEintragBySchuljahr(__param0 : number, __param1 : number | string) : boolean {
+	public hasEintragBySchuljahr(__param0: number, __param1: number | string): boolean {
 		if (((__param0 !== undefined) && typeof __param0 === "number") && ((__param1 !== undefined) && (typeof __param1 === "string"))) {
-			const schuljahr : number = __param0 as number;
-			const wert : string = __param1;
+			const schuljahr: number = __param0 as number;
+			const wert: string = __param1;
 			return this.getCacheBySchuljahrAndWert(schuljahr).containsKey(wert);
 		} else if (((__param0 !== undefined) && typeof __param0 === "number") && ((__param1 !== undefined) && typeof __param1 === "number")) {
-			const schuljahr : number = __param0 as number;
-			const wert : number = __param1 as number;
+			const schuljahr: number = __param0 as number;
+			const wert: number = __param1 as number;
 			return this.hasEintragBySchuljahr(schuljahr, ("" + wert));
 		} else throw new Error('invalid method overload');
 	}
@@ -286,7 +286,7 @@ export class SchuldateiKatalogManager extends JavaObject {
 	 *
 	 * @return true, falls ein Katalog-Eintrag existiert und ansonsten false.
 	 */
-	public hasEintragInZeitraum(abBis : SchuldateiEintrag | null, wert : string | null) : boolean;
+	public hasEintragInZeitraum(abBis: SchuldateiEintrag | null, wert: string | null) : boolean;
 
 	/**
 	 * Gibt zurück, ob ein Katalog-Eintrag für den numerischen Wert in einem Zeitraum existiert.
@@ -296,7 +296,7 @@ export class SchuldateiKatalogManager extends JavaObject {
 	 *
 	 * @return true, falls ein Katalog-Eintrag existiert und ansonsten false.
 	 */
-	public hasEintragInZeitraum(abBis : SchuldateiEintrag | null, wert : number) : boolean;
+	public hasEintragInZeitraum(abBis: SchuldateiEintrag | null, wert: number) : boolean;
 
 	/**
 	 * Prüft ob ein Katalog-Eintrag für den Wert in einem Zeitraum existiert
@@ -310,39 +310,39 @@ export class SchuldateiKatalogManager extends JavaObject {
 	 *
 	 * @return boolean, true wenn Eintrag entsprechend vorliegt, sonst false
 	 */
-	public hasEintragInZeitraum(schuljahrAb : number, schuljahrBis : number, wert : string | null, mitTeilgueltigkeit : boolean) : boolean;
+	public hasEintragInZeitraum(schuljahrAb: number, schuljahrBis: number, wert: string | null, mitTeilgueltigkeit: boolean) : boolean;
 
 	/**
 	 * Implementation for method overloads of 'hasEintragInZeitraum'
 	 */
-	public hasEintragInZeitraum(__param0 : SchuldateiEintrag | null | number, __param1 : null | number | string, __param2? : null | string, __param3? : boolean) : boolean {
+	public hasEintragInZeitraum(__param0: SchuldateiEintrag | null | number, __param1: null | number | string, __param2?: null | string, __param3?: boolean): boolean {
 		if (((__param0 !== undefined) && ((__param0 instanceof JavaObject) && (__param0.isTranspiledInstanceOf('de.svws_nrw.schulen.v1.data.SchuldateiEintrag'))) || (__param0 === null)) && ((__param1 !== undefined) && (typeof __param1 === "string") || (__param1 === null)) && (__param2 === undefined) && (__param3 === undefined)) {
-			const abBis : SchuldateiEintrag | null = cast_de_svws_nrw_schulen_v1_data_SchuldateiEintrag(__param0);
-			const wert : string | null = __param1;
+			const abBis: SchuldateiEintrag | null = cast_de_svws_nrw_schulen_v1_data_SchuldateiEintrag(__param0);
+			const wert: string | null = __param1;
 			if (wert === null)
 				return false;
-			const ab : number = abBis.gueltigab === null ? SchuldateiUtils._immerGueltigAb : SchuldateiUtils.schuljahrAusDatum(abBis.gueltigab);
-			const bis : number = abBis.gueltigbis === null ? SchuldateiUtils._immerGueltigBis : SchuldateiUtils.schuljahrAusDatum(abBis.gueltigbis);
+			const ab: number = abBis.gueltigab === null ? SchuldateiUtils._immerGueltigAb : SchuldateiUtils.schuljahrAusDatum(abBis.gueltigab);
+			const bis: number = abBis.gueltigbis === null ? SchuldateiUtils._immerGueltigBis : SchuldateiUtils.schuljahrAusDatum(abBis.gueltigbis);
 			return this.hasEintragInZeitraum(ab, bis, wert, false);
 		} else if (((__param0 !== undefined) && ((__param0 instanceof JavaObject) && (__param0.isTranspiledInstanceOf('de.svws_nrw.schulen.v1.data.SchuldateiEintrag'))) || (__param0 === null)) && ((__param1 !== undefined) && typeof __param1 === "number") && (__param2 === undefined) && (__param3 === undefined)) {
-			const abBis : SchuldateiEintrag | null = cast_de_svws_nrw_schulen_v1_data_SchuldateiEintrag(__param0);
-			const wert : number = __param1 as number;
+			const abBis: SchuldateiEintrag | null = cast_de_svws_nrw_schulen_v1_data_SchuldateiEintrag(__param0);
+			const wert: number = __param1 as number;
 			return this.hasEintragInZeitraum(abBis, "" + wert);
 		} else if (((__param0 !== undefined) && typeof __param0 === "number") && ((__param1 !== undefined) && typeof __param1 === "number") && ((__param2 !== undefined) && (typeof __param2 === "string") || (__param2 === null)) && ((__param3 !== undefined) && typeof __param3 === "boolean")) {
-			const schuljahrAb : number = __param0 as number;
-			const schuljahrBis : number = __param1 as number;
-			const wert : string | null = __param2;
-			const mitTeilgueltigkeit : boolean = __param3 as boolean;
-			const list : List<SchuldateiKatalogeintrag> | null = this.getEintraegeByWert(wert);
+			const schuljahrAb: number = __param0 as number;
+			const schuljahrBis: number = __param1 as number;
+			const wert: string | null = __param2;
+			const mitTeilgueltigkeit: boolean = __param3 as boolean;
+			const list: List<SchuldateiKatalogeintrag> | null = this.getEintraegeByWert(wert);
 			if (list === null)
 				return false;
 			list.sort(SchuldateiUtils._comparatorSchuldateieintragZeitraumDescending);
-			const ab : number = schuljahrAb < SchuldateiUtils._immerGueltigAb ? SchuldateiUtils._immerGueltigAb : schuljahrAb;
-			let bis : number = schuljahrBis > SchuldateiUtils._immerGueltigBis ? SchuldateiUtils._immerGueltigBis : schuljahrBis;
+			const ab: number = schuljahrAb < SchuldateiUtils._immerGueltigAb ? SchuldateiUtils._immerGueltigAb : schuljahrAb;
+			let bis: number = schuljahrBis > SchuldateiUtils._immerGueltigBis ? SchuldateiUtils._immerGueltigBis : schuljahrBis;
 			for (const eintrag of list) {
 				if ((eintrag.gueltigbis === null) || SchuldateiUtils.schuljahrAusDatum(eintrag.gueltigbis) < bis)
 					return false;
-				const vonSchuljahr : number = (eintrag.gueltigab === null ? SchuldateiUtils._immerGueltigAb : SchuldateiUtils.schuljahrAusDatum(eintrag.gueltigab));
+				const vonSchuljahr: number = (eintrag.gueltigab === null ? SchuldateiUtils._immerGueltigAb : SchuldateiUtils.schuljahrAusDatum(eintrag.gueltigab));
 				if (vonSchuljahr <= bis) {
 					if (mitTeilgueltigkeit || (vonSchuljahr <= ab))
 						return true;
@@ -362,8 +362,8 @@ export class SchuldateiKatalogManager extends JavaObject {
 	 *
 	 * @return die Bezeichnung oder null, wenn sie nicht gültig ist
 	 */
-	public getBezeichnung(schuljahr : number, wert : string | null) : string | null {
-		const eintrag : SchuldateiKatalogeintrag | null = this.getEintragBySchuljahrAndWert(schuljahr, wert);
+	public getBezeichnung(schuljahr: number, wert: string | null): string | null {
+		const eintrag: SchuldateiKatalogeintrag | null = this.getEintragBySchuljahrAndWert(schuljahr, wert);
 		if (eintrag === null)
 			return null;
 		return eintrag.bezeichnung;
@@ -376,11 +376,11 @@ export class SchuldateiKatalogManager extends JavaObject {
 	 *
 	 * @return Der gefüllte Cache für das übergebene Schuljahr
 	 */
-	private getCacheBySchuljahrAndWert(schuljahr : number) : JavaMap<string, SchuldateiKatalogeintrag> {
-		const map : JavaMap<string, SchuldateiKatalogeintrag> | null = this._mapKatalogEintraegeBySchuljahrAndWert.get(schuljahr);
+	private getCacheBySchuljahrAndWert(schuljahr: number): JavaMap<string, SchuldateiKatalogeintrag> {
+		const map: JavaMap<string, SchuldateiKatalogeintrag> | null = this._mapKatalogEintraegeBySchuljahrAndWert.get(schuljahr);
 		if (map !== null)
 			return map;
-		const neueMap : JavaMap<string, SchuldateiKatalogeintrag> = new HashMap<string, SchuldateiKatalogeintrag>();
+		const neueMap: JavaMap<string, SchuldateiKatalogeintrag> = new HashMap<string, SchuldateiKatalogeintrag>();
 		for (const eintrag of this._katalogeintraege)
 			if (SchuldateiUtils.pruefeSchuljahr(schuljahr, eintrag))
 				neueMap.put(eintrag.wert, eintrag);
@@ -394,15 +394,15 @@ export class SchuldateiKatalogManager extends JavaObject {
 	 *
 	 * @throws IllegalArgumentException   falls eine Überlappung festgestellt wird.
 	 */
-	public validate() : void {
+	public validate(): void {
 		for (const list of this._mapKatalogeintraegeByWert.values()) {
-			let eintrag : SchuldateiKatalogeintrag;
+			let eintrag: SchuldateiKatalogeintrag;
 			if (list.size() > 1) {
 				list.sort(SchuldateiUtils._comparatorSchuldateieintragZeitraumDescending);
 				eintrag = list.getFirst();
-				let schuljahrBis : number = eintrag.gueltigbis === null ? SchuldateiUtils._immerGueltigBis : SchuldateiUtils.schuljahrGueltigBis(eintrag.gueltigbis);
-				let schuljahrAb : number = eintrag.gueltigab === null ? SchuldateiUtils._immerGueltigAb : SchuldateiUtils.schuljahrGueltigAb(eintrag.gueltigab);
-				for (let i : number = 1; i < list.size(); i++) {
+				let schuljahrBis: number = eintrag.gueltigbis === null ? SchuldateiUtils._immerGueltigBis : SchuldateiUtils.schuljahrGueltigBis(eintrag.gueltigbis);
+				let schuljahrAb: number = eintrag.gueltigab === null ? SchuldateiUtils._immerGueltigAb : SchuldateiUtils.schuljahrGueltigAb(eintrag.gueltigab);
+				for (let i: number = 1; i < list.size(); i++) {
 					if (schuljahrBis < schuljahrAb)
 						throw new IllegalArgumentException("Dieser Katalogeintrag Katalog='" + eintrag.katalog + "', Wert='" + eintrag.wert + "' hat einen ungültigen Gültigkeitszeitraum.")
 					eintrag = list.get(i);
@@ -425,7 +425,7 @@ export class SchuldateiKatalogManager extends JavaObject {
 		return 'de.svws_nrw.schulen.v1.utils.SchuldateiKatalogManager';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.schulen.v1.utils.SchuldateiKatalogManager'].includes(name);
 	}
 
@@ -433,6 +433,6 @@ export class SchuldateiKatalogManager extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_schulen_v1_utils_SchuldateiKatalogManager(obj : unknown) : SchuldateiKatalogManager {
+export function cast_de_svws_nrw_schulen_v1_utils_SchuldateiKatalogManager(obj: unknown): SchuldateiKatalogManager {
 	return obj as SchuldateiKatalogManager;
 }

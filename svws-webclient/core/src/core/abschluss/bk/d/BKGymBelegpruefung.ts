@@ -17,12 +17,12 @@ export abstract class BKGymBelegpruefung extends JavaObject {
 	/**
 	 * Die Abiturdaten-Manager
 	 */
-	protected readonly manager : BKGymAbiturdatenManager;
+	protected readonly manager: BKGymAbiturdatenManager;
 
 	/**
 	 * Die Belegungsfehler, die bei der Prüfung entstanden sind.
 	 */
-	private readonly belegungsfehler : List<BKGymBelegungsfehler> = new ArrayList<BKGymBelegungsfehler>();
+	private readonly belegungsfehler: List<BKGymBelegungsfehler> = new ArrayList<BKGymBelegungsfehler>();
 
 
 	/**
@@ -30,7 +30,7 @@ export abstract class BKGymBelegpruefung extends JavaObject {
 	 *
 	 * @param manager   der Manager für die Abiturdaten
 	 */
-	public constructor(manager : BKGymAbiturdatenManager) {
+	public constructor(manager: BKGymAbiturdatenManager) {
 		super();
 		this.manager = manager;
 	}
@@ -41,7 +41,7 @@ export abstract class BKGymBelegpruefung extends JavaObject {
 	 *
 	 * @param fehler   der hinzuzufügende Belegungsfehler
 	 */
-	protected addFehler(fehler : BKGymBelegungsfehler) : void {
+	protected addFehler(fehler: BKGymBelegungsfehler): void {
 		if (!this.belegungsfehler.contains(fehler))
 			this.belegungsfehler.add(fehler);
 	}
@@ -51,7 +51,7 @@ export abstract class BKGymBelegpruefung extends JavaObject {
 	 *
 	 * @return die Belegungsfehler
 	 */
-	public getBelegungsfehler() : List<BKGymBelegungsfehler> {
+	public getBelegungsfehler(): List<BKGymBelegungsfehler> {
 		return this.belegungsfehler;
 	}
 
@@ -60,7 +60,7 @@ export abstract class BKGymBelegpruefung extends JavaObject {
 	 *
 	 * @return true, wenn kein "echter" Belegungsfehler vorliegt, und ansonsten false.
 	 */
-	public istErfolgreich() : boolean {
+	public istErfolgreich(): boolean {
 		for (const fehler of this.belegungsfehler)
 			if (!fehler.istInfo())
 				return false;
@@ -70,7 +70,7 @@ export abstract class BKGymBelegpruefung extends JavaObject {
 	/**
 	 * Führt die Belegprüfung durch.
 	 */
-	public abstract pruefe() : void;
+	public abstract pruefe(): void;
 
 	/**
 	 * Diese Methode bestimmt die möglichen Stundentafeln anhand der Abiturfächer und der übergebenen Anlage.
@@ -80,20 +80,20 @@ export abstract class BKGymBelegpruefung extends JavaObject {
 	 *
 	 * @return die Liste der möglichen Stundentafeln
 	 */
-	protected getStundentafelnByAbiturfaechern(anlage : BeruflichesGymnasiumPruefungsordnungAnlage) : List<BeruflichesGymnasiumStundentafel> {
-		const lk1 : BKGymAbiturFachbelegung | null = this.manager.getAbiFachbelegung(GostAbiturFach.LK1);
+	protected getStundentafelnByAbiturfaechern(anlage: BeruflichesGymnasiumPruefungsordnungAnlage): List<BeruflichesGymnasiumStundentafel> {
+		const lk1: BKGymAbiturFachbelegung | null = this.manager.getAbiFachbelegung(GostAbiturFach.LK1);
 		if (lk1 === null)
 			this.addFehler(BKGymBelegungsfehler.LK_1);
-		const lk2 : BKGymAbiturFachbelegung | null = this.manager.getAbiFachbelegung(GostAbiturFach.LK2);
+		const lk2: BKGymAbiturFachbelegung | null = this.manager.getAbiFachbelegung(GostAbiturFach.LK2);
 		if (lk2 === null)
 			this.addFehler(BKGymBelegungsfehler.LK_2);
-		const mglStundentafeln : List<BeruflichesGymnasiumStundentafel> = this.manager.getStundentafelByLeistungskurse(anlage);
+		const mglStundentafeln: List<BeruflichesGymnasiumStundentafel> = this.manager.getStundentafelByLeistungskurse(anlage);
 		if (mglStundentafeln.isEmpty())
 			this.addFehler(BKGymBelegungsfehler.LK_3);
-		const ab3 : BKGymAbiturFachbelegung | null = this.manager.getAbiFachbelegung(GostAbiturFach.AB3);
+		const ab3: BKGymAbiturFachbelegung | null = this.manager.getAbiFachbelegung(GostAbiturFach.AB3);
 		if (ab3 === null)
 			this.addFehler(BKGymBelegungsfehler.AB_3);
-		const ab4 : BKGymAbiturFachbelegung | null = this.manager.getAbiFachbelegung(GostAbiturFach.AB4);
+		const ab4: BKGymAbiturFachbelegung | null = this.manager.getAbiFachbelegung(GostAbiturFach.AB4);
 		if (ab4 === null)
 			this.addFehler(BKGymBelegungsfehler.AB_4);
 		return mglStundentafeln;
@@ -106,15 +106,15 @@ export abstract class BKGymBelegpruefung extends JavaObject {
 	 *
 	 * @return die Zuordnung der Fachbelegungen zu den Stundentafeleinträgen
 	 */
-	public getMapStundentafelFaecherByVariante(tafel : BeruflichesGymnasiumStundentafel) : JavaMap<number, List<BKGymAbiturFachbelegung>> {
-		const mapZuordnung : JavaMap<number, List<BKGymAbiturFachbelegung>> = new HashMap<number, List<BKGymAbiturFachbelegung>>();
+	public getMapStundentafelFaecherByVariante(tafel: BeruflichesGymnasiumStundentafel): JavaMap<number, List<BKGymAbiturFachbelegung>> {
+		const mapZuordnung: JavaMap<number, List<BKGymAbiturFachbelegung>> = new HashMap<number, List<BKGymAbiturFachbelegung>>();
 		for (const fach of tafel.faecher)
-			mapZuordnung.computeIfAbsent(fach.sortierung, { apply : (index: number | null) => new ArrayList() });
+			mapZuordnung.computeIfAbsent(fach.sortierung, { apply: (index: number | null) => new ArrayList() });
 		for (const fachbelegung of this.manager.getAbidaten().fachbelegungen) {
-			const fach : BeruflichesGymnasiumStundentafelFach | null = this.manager.getFachByBelegung(tafel, fachbelegung);
+			const fach: BeruflichesGymnasiumStundentafelFach | null = this.manager.getFachByBelegung(tafel, fachbelegung);
 			if (fach === null)
 				continue;
-			const tafelBelegungen : List<BKGymAbiturFachbelegung> | null = mapZuordnung.get(fach.sortierung);
+			const tafelBelegungen: List<BKGymAbiturFachbelegung> | null = mapZuordnung.get(fach.sortierung);
 			if (tafelBelegungen === null)
 				continue;
 			tafelBelegungen.add(fachbelegung);
@@ -130,13 +130,13 @@ export abstract class BKGymBelegpruefung extends JavaObject {
 	 *
 	 * @return die Zuordnung
 	 */
-	public getZuordnungStundentafelFachbelegung(mglStundentafeln : List<BeruflichesGymnasiumStundentafel>) : JavaMap<BeruflichesGymnasiumStundentafel, JavaMap<number, List<BKGymAbiturFachbelegung>>> {
-		const mapStundentafelFachbelegungen : JavaMap<BeruflichesGymnasiumStundentafel, JavaMap<number, List<BKGymAbiturFachbelegung>>> = new HashMap<BeruflichesGymnasiumStundentafel, JavaMap<number, List<BKGymAbiturFachbelegung>>>();
+	public getZuordnungStundentafelFachbelegung(mglStundentafeln: List<BeruflichesGymnasiumStundentafel>): JavaMap<BeruflichesGymnasiumStundentafel, JavaMap<number, List<BKGymAbiturFachbelegung>>> {
+		const mapStundentafelFachbelegungen: JavaMap<BeruflichesGymnasiumStundentafel, JavaMap<number, List<BKGymAbiturFachbelegung>>> = new HashMap<BeruflichesGymnasiumStundentafel, JavaMap<number, List<BKGymAbiturFachbelegung>>>();
 		for (const tafel of mglStundentafeln) {
-			const mapStundentafelFaecher : JavaMap<number, List<BKGymAbiturFachbelegung>> = this.getMapStundentafelFaecherByVariante(tafel);
-			let valid : boolean = true;
+			const mapStundentafelFaecher: JavaMap<number, List<BKGymAbiturFachbelegung>> = this.getMapStundentafelFaecherByVariante(tafel);
+			let valid: boolean = true;
 			for (const fach of tafel.faecher) {
-				const tafelFachbelegungen : List<BKGymAbiturFachbelegung> | null = mapStundentafelFaecher.get(fach.sortierung);
+				const tafelFachbelegungen: List<BKGymAbiturFachbelegung> | null = mapStundentafelFaecher.get(fach.sortierung);
 				if ((fach.stundenumfang[0] === 0) && (fach.stundenumfang[1] === 0) && (fach.stundenumfang[2] === 0) && (fach.stundenumfang[3] === 0) && (fach.stundenumfang[4] === 0) && (fach.stundenumfang[5] === 0))
 					continue;
 				if (JavaObject.equalsTranspiler("Wahlfach", (fach.fachbezeichnung)))
@@ -157,7 +157,7 @@ export abstract class BKGymBelegpruefung extends JavaObject {
 		return 'de.svws_nrw.core.abschluss.bk.d.BKGymBelegpruefung';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.abschluss.bk.d.BKGymBelegpruefung'].includes(name);
 	}
 
@@ -165,6 +165,6 @@ export abstract class BKGymBelegpruefung extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_abschluss_bk_d_BKGymBelegpruefung(obj : unknown) : BKGymBelegpruefung {
+export function cast_de_svws_nrw_core_abschluss_bk_d_BKGymBelegpruefung(obj: unknown): BKGymBelegpruefung {
 	return obj as BKGymBelegpruefung;
 }

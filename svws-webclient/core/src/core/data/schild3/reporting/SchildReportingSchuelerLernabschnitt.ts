@@ -6,77 +6,77 @@ export class SchildReportingSchuelerLernabschnitt extends JavaObject {
 	/**
 	 * Die ID des Lernabschnitts
 	 */
-	public id : number = 0;
+	public id: number = 0;
 
 	/**
 	 * Die ID des Schülers, zu dem die Lernabschnittsdaten gehören.
 	 */
-	public schuelerID : number = 0;
+	public schuelerID: number = 0;
 
 	/**
 	 * Das Schuljahr, in welchem der Schuljahresabschnitt liegt
 	 */
-	public schuljahr : number = 0;
+	public schuljahr: number = 0;
 
 	/**
 	 * Die Nummer des Abschnitts im Schuljahr
 	 */
-	public abschnitt : number = 0;
+	public abschnitt: number = 0;
 
 	/**
 	 * Eine Nr, zur Unterscheidung von Lernabschnittsdaten, wenn beim Schüler mehrere Lernabschnitte in einem Schuljahresabschnitt vorliegen (z.B. Wechsel einer Klasse, NULL=aktueller Abschnitt, 1=vor dem ersten Wechsel, 2=vor dem zweiten Wechsel, usw.).
 	 */
-	public wechselNr : number = 0;
+	public wechselNr: number = 0;
 
 	/**
 	 * Gibt an, ob es sich um einen gewerteten Abschnitt handelt oder nicht
 	 */
-	public istGewertet : boolean = true;
+	public istGewertet: boolean = true;
 
 	/**
 	 * Gibt an, ob es sich bei dem Abschnitt um einen wiederholten Abschnitt handelt oder nicht
 	 */
-	public istWiederholung : boolean = false;
+	public istWiederholung: boolean = false;
 
 	/**
 	 * Die Prüfungsordnung, die in dem Lernabschnitt bei dem Schüler anzuwenden ist.
 	 */
-	public pruefungsOrdnung : string = "";
+	public pruefungsOrdnung: string = "";
 
 	/**
 	 * Die Bezeichnung der Klasse des Schülers
 	 */
-	public klasse : string = "";
+	public klasse: string = "";
 
 	/**
 	 * Die Statistik-Bezeichnung der Klasse des Schülers
 	 */
-	public klasseStatistik : string = "";
+	public klasseStatistik: string = "";
 
 	/**
 	 * Die Bezeichnung des Jahrgangs
 	 */
-	public jahrgang : string = "";
+	public jahrgang: string = "";
 
 	/**
 	 * Die Statistik-Bezeichnung des Jahrgangs
 	 */
-	public jahrgangStatistik : string = "";
+	public jahrgangStatistik: string = "";
 
 	/**
 	 * Das Datum der Zeugniskonferenz
 	 */
-	public datumZeugniskonferenz : string = "";
+	public datumZeugniskonferenz: string = "";
 
 	/**
 	 * Das Datum des Zeugnisses
 	 */
-	public datumZeugnis : string = "";
+	public datumZeugnis: string = "";
 
 	/**
 	 * Das Ergebnis des Prüfungsalgorithmus
 	 */
-	public logPruefungsalgorithmus : string = "";
+	public logPruefungsalgorithmus: string = "";
 
 
 	/**
@@ -90,13 +90,13 @@ export class SchildReportingSchuelerLernabschnitt extends JavaObject {
 		return 'de.svws_nrw.core.data.schild3.reporting.SchildReportingSchuelerLernabschnitt';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.schild3.reporting.SchildReportingSchuelerLernabschnitt'].includes(name);
 	}
 
 	public static class = new Class<SchildReportingSchuelerLernabschnitt>('de.svws_nrw.core.data.schild3.reporting.SchildReportingSchuelerLernabschnitt');
 
-	public static transpilerFromJSON(json : string): SchildReportingSchuelerLernabschnitt {
+	public static transpilerFromJSON(json: string): SchildReportingSchuelerLernabschnitt {
 		const obj = JSON.parse(json) as Partial<SchildReportingSchuelerLernabschnitt>;
 		const result = new SchildReportingSchuelerLernabschnitt();
 		if (obj.id === undefined)
@@ -147,7 +147,7 @@ export class SchildReportingSchuelerLernabschnitt extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : SchildReportingSchuelerLernabschnitt) : string {
+	public static transpilerToJSON(obj: SchildReportingSchuelerLernabschnitt): string {
 		let result = '{';
 		result += '"id" : ' + obj.id.toString() + ',';
 		result += '"schuelerID" : ' + obj.schuelerID.toString() + ',';
@@ -169,7 +169,7 @@ export class SchildReportingSchuelerLernabschnitt extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<SchildReportingSchuelerLernabschnitt>) : string {
+	public static transpilerToJSONPatch(obj: Partial<SchildReportingSchuelerLernabschnitt>): string {
 		let result = '{';
 		if (obj.id !== undefined) {
 			result += '"id" : ' + obj.id.toString() + ',';
@@ -223,6 +223,6 @@ export class SchildReportingSchuelerLernabschnitt extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_schild3_reporting_SchildReportingSchuelerLernabschnitt(obj : unknown) : SchildReportingSchuelerLernabschnitt {
+export function cast_de_svws_nrw_core_data_schild3_reporting_SchildReportingSchuelerLernabschnitt(obj: unknown): SchildReportingSchuelerLernabschnitt {
 	return obj as SchildReportingSchuelerLernabschnitt;
 }

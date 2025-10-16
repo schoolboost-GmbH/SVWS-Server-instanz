@@ -6,22 +6,22 @@ export class DatenbankVerbindungsdaten extends JavaObject {
 	/**
 	 * Gibt den Benutzernamen für die Datenbank an.
 	 */
-	public username : string | null = null;
+	public username: string | null = null;
 
 	/**
 	 * Gibt das Kennwort für die Datenbank an.
 	 */
-	public password : string | null = null;
+	public password: string | null = null;
 
 	/**
 	 * Gibt den Ort der Datenbank an.
 	 */
-	public location : string | null = null;
+	public location: string | null = null;
 
 	/**
 	 * Gibt den Schema-Namen der Datenbank an.
 	 */
-	public schema : string | null = null;
+	public schema: string | null = null;
 
 
 	/**
@@ -35,13 +35,13 @@ export class DatenbankVerbindungsdaten extends JavaObject {
 		return 'de.svws_nrw.core.data.schema.DatenbankVerbindungsdaten';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.schema.DatenbankVerbindungsdaten'].includes(name);
 	}
 
 	public static class = new Class<DatenbankVerbindungsdaten>('de.svws_nrw.core.data.schema.DatenbankVerbindungsdaten');
 
-	public static transpilerFromJSON(json : string): DatenbankVerbindungsdaten {
+	public static transpilerFromJSON(json: string): DatenbankVerbindungsdaten {
 		const obj = JSON.parse(json) as Partial<DatenbankVerbindungsdaten>;
 		const result = new DatenbankVerbindungsdaten();
 		result.username = (obj.username === undefined) ? null : obj.username === null ? null : obj.username;
@@ -51,7 +51,7 @@ export class DatenbankVerbindungsdaten extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : DatenbankVerbindungsdaten) : string {
+	public static transpilerToJSON(obj: DatenbankVerbindungsdaten): string {
 		let result = '{';
 		result += '"username" : ' + ((obj.username === null) ? 'null' : JSON.stringify(obj.username)) + ',';
 		result += '"password" : ' + ((obj.password === null) ? 'null' : JSON.stringify(obj.password)) + ',';
@@ -62,7 +62,7 @@ export class DatenbankVerbindungsdaten extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<DatenbankVerbindungsdaten>) : string {
+	public static transpilerToJSONPatch(obj: Partial<DatenbankVerbindungsdaten>): string {
 		let result = '{';
 		if (obj.username !== undefined) {
 			result += '"username" : ' + ((obj.username === null) ? 'null' : JSON.stringify(obj.username)) + ',';
@@ -83,6 +83,6 @@ export class DatenbankVerbindungsdaten extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_schema_DatenbankVerbindungsdaten(obj : unknown) : DatenbankVerbindungsdaten {
+export function cast_de_svws_nrw_core_data_schema_DatenbankVerbindungsdaten(obj: unknown): DatenbankVerbindungsdaten {
 	return obj as DatenbankVerbindungsdaten;
 }

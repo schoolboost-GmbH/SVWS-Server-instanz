@@ -18,7 +18,7 @@ export class Floskelgruppenart extends CoreTypeSimple<FloskelgruppenartKatalogEi
 	 *
 	 * @param manager   der Manager für die Daten des Core-Types
 	 */
-	public static init(manager : CoreTypeDataManager<FloskelgruppenartKatalogEintrag, Floskelgruppenart>) : void {
+	public static init(manager: CoreTypeDataManager<FloskelgruppenartKatalogEintrag, Floskelgruppenart>): void {
 		CoreTypeDataManager.putManager(Floskelgruppenart.class, manager);
 	}
 
@@ -27,7 +27,7 @@ export class Floskelgruppenart extends CoreTypeSimple<FloskelgruppenartKatalogEi
 	 *
 	 * @return der Daten-Manager
 	 */
-	public static data() : CoreTypeDataManager<FloskelgruppenartKatalogEintrag, Floskelgruppenart> {
+	public static data(): CoreTypeDataManager<FloskelgruppenartKatalogEintrag, Floskelgruppenart> {
 		return CoreTypeDataManager.getManager(Floskelgruppenart.class);
 	}
 
@@ -36,14 +36,14 @@ export class Floskelgruppenart extends CoreTypeSimple<FloskelgruppenartKatalogEi
 	 *
 	 * @return die Werte des Core-Types als Array
 	 */
-	public static values() : Array<Floskelgruppenart> {
+	public static values(): Array<Floskelgruppenart> {
 		return CoreTypeSimple.valuesByClass(Floskelgruppenart.class);
 	}
 
 	/**
 	 * Erzeugt eine Instance dieser Klasse.
 	 */
-	public getInstance() : Floskelgruppenart | null {
+	public getInstance(): Floskelgruppenart | null {
 		return new Floskelgruppenart();
 	}
 
@@ -51,7 +51,7 @@ export class Floskelgruppenart extends CoreTypeSimple<FloskelgruppenartKatalogEi
 		return 'de.svws_nrw.asd.types.schule.Floskelgruppenart';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.asd.types.schule.Floskelgruppenart', 'de.svws_nrw.asd.types.CoreType', 'java.lang.Comparable', 'de.svws_nrw.asd.types.CoreTypeSimple'].includes(name);
 	}
 
@@ -59,6 +59,6 @@ export class Floskelgruppenart extends CoreTypeSimple<FloskelgruppenartKatalogEi
 
 }
 
-export function cast_de_svws_nrw_asd_types_schule_Floskelgruppenart(obj : unknown) : Floskelgruppenart {
+export function cast_de_svws_nrw_asd_types_schule_Floskelgruppenart(obj: unknown): Floskelgruppenart {
 	return obj as Floskelgruppenart;
 }

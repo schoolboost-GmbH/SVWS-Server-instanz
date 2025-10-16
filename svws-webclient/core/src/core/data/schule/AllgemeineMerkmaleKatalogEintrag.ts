@@ -10,47 +10,47 @@ export class AllgemeineMerkmaleKatalogEintrag extends JavaObject {
 	/**
 	 * Die ID des Katalog-Eintrags.
 	 */
-	public id : number = -1;
+	public id: number = -1;
 
 	/**
 	 * Das Kürzel des allgemeinen Merkmals
 	 */
-	public kuerzel : string = "";
+	public kuerzel: string = "";
 
 	/**
 	 * Eine kurze Bezeichnung für das allgemeine Merkmal.
 	 */
-	public bezeichnung : string = "";
+	public bezeichnung: string = "";
 
 	/**
 	 * Gibt an, das das Merkmal bei der Schule gesetzt werden kann.
 	 */
-	public beiSchule : boolean = false;
+	public beiSchule: boolean = false;
 
 	/**
 	 * Gibt an, das das Merkmal bei einem Schüler gesetzt werden kann.
 	 */
-	public beiSchueler : boolean = false;
+	public beiSchueler: boolean = false;
 
 	/**
 	 * Ggf. ein Kürzel, welches im Rahmen der amtlichen Schulstatistik verwendet wird.
 	 */
-	public kuerzelASD : string | null = "";
+	public kuerzelASD: string | null = "";
 
 	/**
 	 * Die Kürzel der Schulformen, bei welchen das allgemeine Merkmal vorkommen kann.
 	 */
-	public schulformen : List<string> = new ArrayList<string>();
+	public schulformen: List<string> = new ArrayList<string>();
 
 	/**
 	 * Gibt an, in welchem Schuljahr der Eintrag einführt wurde. Ist kein Schuljahr bekannt, so ist null gesetzt.
 	 */
-	public gueltigVon : number | null = null;
+	public gueltigVon: number | null = null;
 
 	/**
 	 * Gibt an, bis zu welchem Schuljahr der Eintrag gültig ist. Ist kein Schuljahr bekannt, so ist null gesetzt.
 	 */
-	public gueltigBis : number | null = null;
+	public gueltigBis: number | null = null;
 
 
 	/**
@@ -71,25 +71,25 @@ export class AllgemeineMerkmaleKatalogEintrag extends JavaObject {
 	 * @param gueltigVon      das Schuljahr, wann der Eintrag eingeführt wurde oder null, falls es nicht bekannt ist und "schon immer gültig war"
 	 * @param gueltigBis      das Schuljahr, bis zu welchem der Eintrag gültig ist
 	 */
-	public constructor(id : number, kuerzel : string, bezeichnung : string, beiSchule : boolean, beiSchueler : boolean, kuerzelASD : string | null, schulformen : List<Schulform>, gueltigVon : number | null, gueltigBis : number | null);
+	public constructor(id: number, kuerzel: string, bezeichnung: string, beiSchule: boolean, beiSchueler: boolean, kuerzelASD: string | null, schulformen: List<Schulform>, gueltigVon: number | null, gueltigBis: number | null);
 
 	/**
 	 * Implementation for method overloads of 'constructor'
 	 */
-	public constructor(__param0? : number, __param1? : string, __param2? : string, __param3? : boolean, __param4? : boolean, __param5? : null | string, __param6? : List<Schulform>, __param7? : null | number, __param8? : null | number) {
+	public constructor(__param0?: number, __param1?: string, __param2?: string, __param3?: boolean, __param4?: boolean, __param5?: null | string, __param6?: List<Schulform>, __param7?: null | number, __param8?: null | number) {
 		super();
 		if ((__param0 === undefined) && (__param1 === undefined) && (__param2 === undefined) && (__param3 === undefined) && (__param4 === undefined) && (__param5 === undefined) && (__param6 === undefined) && (__param7 === undefined) && (__param8 === undefined)) {
 			// empty method body
 		} else if (((__param0 !== undefined) && typeof __param0 === "number") && ((__param1 !== undefined) && (typeof __param1 === "string")) && ((__param2 !== undefined) && (typeof __param2 === "string")) && ((__param3 !== undefined) && typeof __param3 === "boolean") && ((__param4 !== undefined) && typeof __param4 === "boolean") && ((__param5 !== undefined) && (typeof __param5 === "string") || (__param5 === null)) && ((__param6 !== undefined) && ((__param6 instanceof JavaObject) && (__param6.isTranspiledInstanceOf('java.util.List'))) || (__param6 === null)) && ((__param7 !== undefined) && (typeof __param7 === "number") || (__param7 === null)) && ((__param8 !== undefined) && (typeof __param8 === "number") || (__param8 === null))) {
-			const id : number = __param0 as number;
-			const kuerzel : string = __param1;
-			const bezeichnung : string = __param2;
-			const beiSchule : boolean = __param3 as boolean;
-			const beiSchueler : boolean = __param4 as boolean;
-			const kuerzelASD : string | null = __param5;
-			const schulformen : List<Schulform> = cast_java_util_List(__param6);
-			const gueltigVon : number | null = __param7;
-			const gueltigBis : number | null = __param8;
+			const id: number = __param0 as number;
+			const kuerzel: string = __param1;
+			const bezeichnung: string = __param2;
+			const beiSchule: boolean = __param3 as boolean;
+			const beiSchueler: boolean = __param4 as boolean;
+			const kuerzelASD: string | null = __param5;
+			const schulformen: List<Schulform> = cast_java_util_List(__param6);
+			const gueltigVon: number | null = __param7;
+			const gueltigBis: number | null = __param8;
 			this.id = id;
 			this.kuerzel = kuerzel;
 			this.bezeichnung = bezeichnung;
@@ -108,13 +108,13 @@ export class AllgemeineMerkmaleKatalogEintrag extends JavaObject {
 		return 'de.svws_nrw.core.data.schule.AllgemeineMerkmaleKatalogEintrag';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.schule.AllgemeineMerkmaleKatalogEintrag'].includes(name);
 	}
 
 	public static class = new Class<AllgemeineMerkmaleKatalogEintrag>('de.svws_nrw.core.data.schule.AllgemeineMerkmaleKatalogEintrag');
 
-	public static transpilerFromJSON(json : string): AllgemeineMerkmaleKatalogEintrag {
+	public static transpilerFromJSON(json: string): AllgemeineMerkmaleKatalogEintrag {
 		const obj = JSON.parse(json) as Partial<AllgemeineMerkmaleKatalogEintrag>;
 		const result = new AllgemeineMerkmaleKatalogEintrag();
 		if (obj.id === undefined)
@@ -143,7 +143,7 @@ export class AllgemeineMerkmaleKatalogEintrag extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : AllgemeineMerkmaleKatalogEintrag) : string {
+	public static transpilerToJSON(obj: AllgemeineMerkmaleKatalogEintrag): string {
 		let result = '{';
 		result += '"id" : ' + obj.id.toString() + ',';
 		result += '"kuerzel" : ' + JSON.stringify(obj.kuerzel) + ',';
@@ -166,7 +166,7 @@ export class AllgemeineMerkmaleKatalogEintrag extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<AllgemeineMerkmaleKatalogEintrag>) : string {
+	public static transpilerToJSONPatch(obj: Partial<AllgemeineMerkmaleKatalogEintrag>): string {
 		let result = '{';
 		if (obj.id !== undefined) {
 			result += '"id" : ' + obj.id.toString() + ',';
@@ -209,6 +209,6 @@ export class AllgemeineMerkmaleKatalogEintrag extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_schule_AllgemeineMerkmaleKatalogEintrag(obj : unknown) : AllgemeineMerkmaleKatalogEintrag {
+export function cast_de_svws_nrw_core_data_schule_AllgemeineMerkmaleKatalogEintrag(obj: unknown): AllgemeineMerkmaleKatalogEintrag {
 	return obj as AllgemeineMerkmaleKatalogEintrag;
 }

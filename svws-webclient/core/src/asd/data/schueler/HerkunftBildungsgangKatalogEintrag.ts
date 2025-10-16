@@ -16,13 +16,13 @@ export class HerkunftBildungsgangKatalogEintrag extends CoreTypeDataNurSchulform
 		return 'de.svws_nrw.asd.data.schueler.HerkunftBildungsgangKatalogEintrag';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.asd.data.schueler.HerkunftBildungsgangKatalogEintrag', 'de.svws_nrw.asd.data.CoreTypeDataNurSchulformenUndSchulgliederungen', 'de.svws_nrw.asd.data.CoreTypeData'].includes(name);
 	}
 
 	public static class = new Class<HerkunftBildungsgangKatalogEintrag>('de.svws_nrw.asd.data.schueler.HerkunftBildungsgangKatalogEintrag');
 
-	public static transpilerFromJSON(json : string): HerkunftBildungsgangKatalogEintrag {
+	public static transpilerFromJSON(json: string): HerkunftBildungsgangKatalogEintrag {
 		const obj = JSON.parse(json) as Partial<HerkunftBildungsgangKatalogEintrag>;
 		const result = new HerkunftBildungsgangKatalogEintrag();
 		if (obj.zulaessig !== undefined) {
@@ -47,7 +47,7 @@ export class HerkunftBildungsgangKatalogEintrag extends CoreTypeDataNurSchulform
 		return result;
 	}
 
-	public static transpilerToJSON(obj : HerkunftBildungsgangKatalogEintrag) : string {
+	public static transpilerToJSON(obj: HerkunftBildungsgangKatalogEintrag): string {
 		let result = '{';
 		result += '"zulaessig" : [ ';
 		for (let i = 0; i < obj.zulaessig.size(); i++) {
@@ -68,7 +68,7 @@ export class HerkunftBildungsgangKatalogEintrag extends CoreTypeDataNurSchulform
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<HerkunftBildungsgangKatalogEintrag>) : string {
+	public static transpilerToJSONPatch(obj: Partial<HerkunftBildungsgangKatalogEintrag>): string {
 		let result = '{';
 		if (obj.zulaessig !== undefined) {
 			result += '"zulaessig" : [ ';
@@ -105,6 +105,6 @@ export class HerkunftBildungsgangKatalogEintrag extends CoreTypeDataNurSchulform
 
 }
 
-export function cast_de_svws_nrw_asd_data_schueler_HerkunftBildungsgangKatalogEintrag(obj : unknown) : HerkunftBildungsgangKatalogEintrag {
+export function cast_de_svws_nrw_asd_data_schueler_HerkunftBildungsgangKatalogEintrag(obj: unknown): HerkunftBildungsgangKatalogEintrag {
 	return obj as HerkunftBildungsgangKatalogEintrag;
 }

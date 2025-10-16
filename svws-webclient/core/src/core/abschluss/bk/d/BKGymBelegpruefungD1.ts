@@ -23,27 +23,27 @@ export class BKGymBelegpruefungD1 extends BKGymBelegpruefung {
 	 *
 	 * @param manager   der Manager für die Abiturdaten
 	 */
-	public constructor(manager : BKGymAbiturdatenManager) {
+	public constructor(manager: BKGymAbiturdatenManager) {
 		super(manager);
 	}
 
-	public pruefe() : void {
-		const mglStundentafeln : List<BeruflichesGymnasiumStundentafel> = this.getStundentafelnByAbiturfaechern(BeruflichesGymnasiumPruefungsordnungAnlage.D1);
+	public pruefe(): void {
+		const mglStundentafeln: List<BeruflichesGymnasiumStundentafel> = this.getStundentafelnByAbiturfaechern(BeruflichesGymnasiumPruefungsordnungAnlage.D1);
 		if (mglStundentafeln.isEmpty())
 			return;
-		const mapWahlmoeglichkeiten : JavaMap<BeruflichesGymnasiumStundentafel, BeruflichesGymnasiumStundentafelAbiturfaecherWahlmoeglichkeit> = this.manager.getWahlmoeglichekeiten(mglStundentafeln);
+		const mapWahlmoeglichkeiten: JavaMap<BeruflichesGymnasiumStundentafel, BeruflichesGymnasiumStundentafelAbiturfaecherWahlmoeglichkeit> = this.manager.getWahlmoeglichekeiten(mglStundentafeln);
 		if (mapWahlmoeglichkeiten.isEmpty()) {
 			this.addFehler(BKGymBelegungsfehler.AB_5);
 			return;
 		}
-		const tmpMapStundentafelFachbelegungen : JavaMap<BeruflichesGymnasiumStundentafel, JavaMap<number, List<BKGymAbiturFachbelegung>>> = this.getZuordnungStundentafelFachbelegung(mglStundentafeln);
+		const tmpMapStundentafelFachbelegungen: JavaMap<BeruflichesGymnasiumStundentafel, JavaMap<number, List<BKGymAbiturFachbelegung>>> = this.getZuordnungStundentafelFachbelegung(mglStundentafeln);
 		if (tmpMapStundentafelFachbelegungen.isEmpty()) {
 			this.addFehler(BKGymBelegungsfehler.ST_1);
 			return;
 		}
-		const mapStundentafelFachbelegungen : JavaMap<BeruflichesGymnasiumStundentafel, JavaMap<number, List<BKGymAbiturFachbelegung>>> = new HashMap<BeruflichesGymnasiumStundentafel, JavaMap<number, List<BKGymAbiturFachbelegung>>>();
+		const mapStundentafelFachbelegungen: JavaMap<BeruflichesGymnasiumStundentafel, JavaMap<number, List<BKGymAbiturFachbelegung>>> = new HashMap<BeruflichesGymnasiumStundentafel, JavaMap<number, List<BKGymAbiturFachbelegung>>>();
 		for (const entry of tmpMapStundentafelFachbelegungen.entrySet()) {
-			const wahlmoeglichkeit : BeruflichesGymnasiumStundentafelAbiturfaecherWahlmoeglichkeit | null = mapWahlmoeglichkeiten.get(entry.getKey());
+			const wahlmoeglichkeit: BeruflichesGymnasiumStundentafelAbiturfaecherWahlmoeglichkeit | null = mapWahlmoeglichkeiten.get(entry.getKey());
 			if (wahlmoeglichkeit === null)
 				continue;
 			mapStundentafelFachbelegungen.put(entry.getKey(), entry.getValue());
@@ -52,36 +52,36 @@ export class BKGymBelegpruefungD1 extends BKGymBelegpruefung {
 			this.addFehler(BKGymBelegungsfehler.ST_2);
 			return;
 		}
-		const tafel : BeruflichesGymnasiumStundentafel | null = mapStundentafelFachbelegungen.keySet().iterator().next();
-		const zuordnung : JavaMap<number, List<BKGymAbiturFachbelegung>> | null = mapStundentafelFachbelegungen.get(tafel);
+		const tafel: BeruflichesGymnasiumStundentafel | null = mapStundentafelFachbelegungen.keySet().iterator().next();
+		const zuordnung: JavaMap<number, List<BKGymAbiturFachbelegung>> | null = mapStundentafelFachbelegungen.get(tafel);
 		if ((tafel === null) || (zuordnung === null))
 			return;
-		const wahlmoeglichkeit : BeruflichesGymnasiumStundentafelAbiturfaecherWahlmoeglichkeit | null = mapWahlmoeglichkeiten.get(tafel);
+		const wahlmoeglichkeit: BeruflichesGymnasiumStundentafelAbiturfaecherWahlmoeglichkeit | null = mapWahlmoeglichkeiten.get(tafel);
 		if (wahlmoeglichkeit === null)
 			return;
-		const mapFaecherByIndex : JavaMap<number, List<BeruflichesGymnasiumStundentafelFach>> = this.manager.getMapFaecherFromTafelByIndex(tafel);
+		const mapFaecherByIndex: JavaMap<number, List<BeruflichesGymnasiumStundentafelFach>> = this.manager.getMapFaecherFromTafelByIndex(tafel);
 		for (const index of zuordnung.keySet()) {
-			const fachbelegungen : List<BKGymAbiturFachbelegung> | null = zuordnung.get(index);
+			const fachbelegungen: List<BKGymAbiturFachbelegung> | null = zuordnung.get(index);
 			if ((fachbelegungen === null) || (fachbelegungen.isEmpty()))
 				continue;
-			let fachbelegung : BKGymAbiturFachbelegung | null = null;
+			let fachbelegung: BKGymAbiturFachbelegung | null = null;
 			if (fachbelegungen.size() > 1) {
-				let minFehlerZahl : number = JavaInteger.MAX_VALUE;
-				let aktFehlerZahl : number = 0;
+				let minFehlerZahl: number = JavaInteger.MAX_VALUE;
+				let aktFehlerZahl: number = 0;
 				for (const fb of fachbelegungen) {
-					const fach : BeruflichesGymnasiumStundentafelFach | null = this.manager.getFachByBelegung(tafel, fb);
+					const fach: BeruflichesGymnasiumStundentafelFach | null = this.manager.getFachByBelegung(tafel, fb);
 					if (fach === null)
 						continue;
-					const istAbiFach : boolean = (fb.abiturFach !== null);
-					const istLK : boolean = istAbiFach && ((fb.abiturFach === 1) || (fb.abiturFach === 2));
-					const istAbiSchriftlich : boolean = istAbiFach && (fb.abiturFach !== 4);
-					const istMathe : boolean = (JavaObject.equalsTranspiler("Mathematik", (fach.fachbezeichnung)));
-					const istDeutsch : boolean = (JavaObject.equalsTranspiler("Deutsch", (fach.fachbezeichnung)));
-					const istFS : boolean = this.manager.istFremdsprachenbelegung(fb);
-					const brauchtSchriftlichEF : boolean = istLK || istMathe || istDeutsch || istFS;
-					const brauchtSchriftlichQ : boolean = brauchtSchriftlichEF || istAbiFach;
+					const istAbiFach: boolean = (fb.abiturFach !== null);
+					const istLK: boolean = istAbiFach && ((fb.abiturFach === 1) || (fb.abiturFach === 2));
+					const istAbiSchriftlich: boolean = istAbiFach && (fb.abiturFach !== 4);
+					const istMathe: boolean = (JavaObject.equalsTranspiler("Mathematik", (fach.fachbezeichnung)));
+					const istDeutsch: boolean = (JavaObject.equalsTranspiler("Deutsch", (fach.fachbezeichnung)));
+					const istFS: boolean = this.manager.istFremdsprachenbelegung(fb);
+					const brauchtSchriftlichEF: boolean = istLK || istMathe || istDeutsch || istFS;
+					const brauchtSchriftlichQ: boolean = brauchtSchriftlichEF || istAbiFach;
 					for (const hj of GostHalbjahr.values()) {
-						const belegung : BKGymAbiturFachbelegungHalbjahr | null = fb.belegungen[hj.id];
+						const belegung: BKGymAbiturFachbelegungHalbjahr | null = fb.belegungen[hj.id];
 						if (belegung === null) {
 							if (fach.stundenumfang[hj.id] > 0)
 								aktFehlerZahl += 10;
@@ -109,9 +109,9 @@ export class BKGymBelegpruefungD1 extends BKGymBelegpruefung {
 				fachbelegung = fachbelegungen.get(0);
 			if (fachbelegung === null)
 				return;
-			const fach : BeruflichesGymnasiumStundentafelFach | null = this.manager.getFachByBelegung(tafel, fachbelegung);
+			const fach: BeruflichesGymnasiumStundentafelFach | null = this.manager.getFachByBelegung(tafel, fachbelegung);
 			for (const hj of GostHalbjahr.values()) {
-				const belegung : BKGymAbiturFachbelegungHalbjahr | null = fachbelegung.belegungen[hj.id];
+				const belegung: BKGymAbiturFachbelegungHalbjahr | null = fachbelegung.belegungen[hj.id];
 			}
 		}
 	}
@@ -120,7 +120,7 @@ export class BKGymBelegpruefungD1 extends BKGymBelegpruefung {
 		return 'de.svws_nrw.core.abschluss.bk.d.BKGymBelegpruefungD1';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.abschluss.bk.d.BKGymBelegpruefungD1', 'de.svws_nrw.core.abschluss.bk.d.BKGymBelegpruefung'].includes(name);
 	}
 
@@ -128,6 +128,6 @@ export class BKGymBelegpruefungD1 extends BKGymBelegpruefung {
 
 }
 
-export function cast_de_svws_nrw_core_abschluss_bk_d_BKGymBelegpruefungD1(obj : unknown) : BKGymBelegpruefungD1 {
+export function cast_de_svws_nrw_core_abschluss_bk_d_BKGymBelegpruefungD1(obj: unknown): BKGymBelegpruefungD1 {
 	return obj as BKGymBelegpruefungD1;
 }

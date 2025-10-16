@@ -10,9 +10,9 @@ import type { JavaMap } from '../../../java/util/JavaMap';
 
 export class StundenplanblockungManagerKlasseMenge extends JavaObject {
 
-	private readonly _menge : List<StundenplanblockungManagerKlasse> = new ArrayList<StundenplanblockungManagerKlasse>();
+	private readonly _menge: List<StundenplanblockungManagerKlasse> = new ArrayList<StundenplanblockungManagerKlasse>();
 
-	private readonly _map : JavaMap<number, StundenplanblockungManagerKlasse> = new HashMap<number, StundenplanblockungManagerKlasse>();
+	private readonly _map: JavaMap<number, StundenplanblockungManagerKlasse> = new HashMap<number, StundenplanblockungManagerKlasse>();
 
 
 	/**
@@ -30,10 +30,10 @@ export class StundenplanblockungManagerKlasseMenge extends JavaObject {
 	 * @param pKuerzel               Das Kürzel der Klasse.
 	 * @throws NullPointerException  Falls die Klasse-ID bereits existiert.
 	 */
-	public addOrException(pKlasseID : number, pKuerzel : string) : void {
+	public addOrException(pKlasseID: number, pKuerzel: string): void {
 		if (this._map.containsKey(pKlasseID))
 			throw new NullPointerException("Die Klasse-ID " + pKlasseID + " existiert bereits!")
-		const kl : StundenplanblockungManagerKlasse | null = new StundenplanblockungManagerKlasse(pKlasseID, pKuerzel);
+		const kl: StundenplanblockungManagerKlasse | null = new StundenplanblockungManagerKlasse(pKlasseID, pKuerzel);
 		this._map.put(pKlasseID, kl);
 		this._menge.add(kl);
 	}
@@ -46,8 +46,8 @@ export class StundenplanblockungManagerKlasseMenge extends JavaObject {
 	 * @return                       Das {@link StundenplanblockungKlasse}-Objekt zur übergebenen ID.
 	 * @throws NullPointerException  Falls die Klasse-ID unbekannt ist.
 	 */
-	public getOrException(pKlasseID : number) : StundenplanblockungManagerKlasse {
-		const klasse : StundenplanblockungManagerKlasse | null = this._map.get(pKlasseID);
+	public getOrException(pKlasseID: number): StundenplanblockungManagerKlasse {
+		const klasse: StundenplanblockungManagerKlasse | null = this._map.get(pKlasseID);
 		if (klasse === null)
 			throw new NullPointerException("Klasse-ID " + pKlasseID + " unbekannt!")
 		return klasse;
@@ -59,8 +59,8 @@ export class StundenplanblockungManagerKlasseMenge extends JavaObject {
 	 * @param pRandom  Das Random-Objekt zum Erzeugen von Zufallszahlen.
 	 * @return         Eine zufällige Lehrkraft oder null, falls es gar keine Lehrkräfte gibt.
 	 */
-	public getRandomOrException(pRandom : Random) : StundenplanblockungManagerKlasse {
-		const size : number = this._menge.size();
+	public getRandomOrException(pRandom: Random): StundenplanblockungManagerKlasse {
+		const size: number = this._menge.size();
 		if (size <= 0)
 			throw new NullPointerException("Es gibt keine Klassen!")
 		return this._menge.get(pRandom.nextInt(size));
@@ -73,8 +73,8 @@ export class StundenplanblockungManagerKlasseMenge extends JavaObject {
 	 * @param pKlasseID              Die Datenbank-ID der Klasse.
 	 * @throws NullPointerException  Falls die Klasse-ID unbekannt ist.
 	 */
-	public removeOrException(pKlasseID : number) : void {
-		const klasse : StundenplanblockungManagerKlasse = this.getOrException(pKlasseID);
+	public removeOrException(pKlasseID: number): void {
+		const klasse: StundenplanblockungManagerKlasse = this.getOrException(pKlasseID);
 		this._map.remove(pKlasseID);
 		this._menge.remove(klasse);
 	}
@@ -85,7 +85,7 @@ export class StundenplanblockungManagerKlasseMenge extends JavaObject {
 	 * @param pKlasseID  Die Datenbank-ID der Klasse.
 	 * @return           TRUE, falls die Klasse-ID existiert.
 	 */
-	public exists(pKlasseID : number) : boolean {
+	public exists(pKlasseID: number): boolean {
 		return this._map.containsKey(pKlasseID);
 	}
 
@@ -94,7 +94,7 @@ export class StundenplanblockungManagerKlasseMenge extends JavaObject {
 	 *
 	 * @return Die Menge aller Klassen.
 	 */
-	public getMenge() : List<StundenplanblockungManagerKlasse> | null {
+	public getMenge(): List<StundenplanblockungManagerKlasse> | null {
 		return this._menge;
 	}
 
@@ -103,7 +103,7 @@ export class StundenplanblockungManagerKlasseMenge extends JavaObject {
 	 *
 	 * @return Die Anzahl an Klassen.
 	 */
-	public size() : number {
+	public size(): number {
 		return this._menge.size();
 	}
 
@@ -111,7 +111,7 @@ export class StundenplanblockungManagerKlasseMenge extends JavaObject {
 		return 'de.svws_nrw.core.utils.stundenplanblockung.StundenplanblockungManagerKlasseMenge';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.utils.stundenplanblockung.StundenplanblockungManagerKlasseMenge'].includes(name);
 	}
 
@@ -119,6 +119,6 @@ export class StundenplanblockungManagerKlasseMenge extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_utils_stundenplanblockung_StundenplanblockungManagerKlasseMenge(obj : unknown) : StundenplanblockungManagerKlasseMenge {
+export function cast_de_svws_nrw_core_utils_stundenplanblockung_StundenplanblockungManagerKlasseMenge(obj: unknown): StundenplanblockungManagerKlasseMenge {
 	return obj as StundenplanblockungManagerKlasseMenge;
 }

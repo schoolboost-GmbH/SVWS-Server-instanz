@@ -8,22 +8,22 @@ export class BenutzergruppeDaten extends JavaObject {
 	/**
 	 * Die ID der Benutzergruppe.
 	 */
-	public id : number = -1;
+	public id: number = -1;
 
 	/**
 	 * Die Bezeichnung der Benutzergruppe.
 	 */
-	public bezeichnung : string = "";
+	public bezeichnung: string = "";
 
 	/**
 	 * Gibt an, ob es sich um eine Administrative Benutzergruppe handelt oder nicht.
 	 */
-	public istAdmin : boolean = false;
+	public istAdmin: boolean = false;
 
 	/**
 	 * Die IDs der Kompetenzen, die speziell dieser Benutzergruppe zugeordnet sind.
 	 */
-	public kompetenzen : List<number> = new ArrayList<number>();
+	public kompetenzen: List<number> = new ArrayList<number>();
 
 
 	/**
@@ -37,13 +37,13 @@ export class BenutzergruppeDaten extends JavaObject {
 		return 'de.svws_nrw.core.data.benutzer.BenutzergruppeDaten';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.benutzer.BenutzergruppeDaten'].includes(name);
 	}
 
 	public static class = new Class<BenutzergruppeDaten>('de.svws_nrw.core.data.benutzer.BenutzergruppeDaten');
 
-	public static transpilerFromJSON(json : string): BenutzergruppeDaten {
+	public static transpilerFromJSON(json: string): BenutzergruppeDaten {
 		const obj = JSON.parse(json) as Partial<BenutzergruppeDaten>;
 		const result = new BenutzergruppeDaten();
 		if (obj.id === undefined)
@@ -63,7 +63,7 @@ export class BenutzergruppeDaten extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : BenutzergruppeDaten) : string {
+	public static transpilerToJSON(obj: BenutzergruppeDaten): string {
 		let result = '{';
 		result += '"id" : ' + obj.id.toString() + ',';
 		result += '"bezeichnung" : ' + JSON.stringify(obj.bezeichnung) + ',';
@@ -81,7 +81,7 @@ export class BenutzergruppeDaten extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<BenutzergruppeDaten>) : string {
+	public static transpilerToJSONPatch(obj: Partial<BenutzergruppeDaten>): string {
 		let result = '{';
 		if (obj.id !== undefined) {
 			result += '"id" : ' + obj.id.toString() + ',';
@@ -109,6 +109,6 @@ export class BenutzergruppeDaten extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_benutzer_BenutzergruppeDaten(obj : unknown) : BenutzergruppeDaten {
+export function cast_de_svws_nrw_core_data_benutzer_BenutzergruppeDaten(obj: unknown): BenutzergruppeDaten {
 	return obj as BenutzergruppeDaten;
 }

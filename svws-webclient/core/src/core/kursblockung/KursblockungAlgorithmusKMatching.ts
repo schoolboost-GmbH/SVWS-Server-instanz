@@ -10,7 +10,7 @@ export class KursblockungAlgorithmusKMatching extends KursblockungAlgorithmusK {
 	/**
 	 *  Die Anzahl an Runden ohne Verbesserung, bevor es zum Abbruch kommt.
 	 */
-	private static readonly MAX_RUNDEN_IN_FOLGE_OHNE_VERBESSERUNG : number = 2000;
+	private static readonly MAX_RUNDEN_IN_FOLGE_OHNE_VERBESSERUNG: number = 2000;
 
 
 	/**
@@ -21,11 +21,11 @@ export class KursblockungAlgorithmusKMatching extends KursblockungAlgorithmusK {
 	 * @param pLogger Logger für Benutzerhinweise, Warnungen und Fehler.
 	 * @param pDynDat Die dynamischen Blockungsdaten.
 	 */
-	public constructor(pRandom : Random, pLogger : Logger, pDynDat : KursblockungDynDaten) {
+	public constructor(pRandom: Random, pLogger: Logger, pDynDat: KursblockungDynDaten) {
 		super(pRandom, pLogger, pDynDat);
 	}
 
-	public toString() : string {
+	public toString(): string {
 		return "Matching";
 	}
 
@@ -34,15 +34,15 @@ export class KursblockungAlgorithmusKMatching extends KursblockungAlgorithmusK {
 	 * {@link KursblockungAlgorithmusSMatching}. Falls sich die Bewertung verschlechtert, wird die Veränderung
 	 * rückgängig gemacht.
 	 */
-	public berechne(pEndzeit : number) : void {
-		const current : number = System.currentTimeMillis();
-		const halbzeit : number = current + (Math.trunc((pEndzeit - current) / 2));
+	public berechne(pEndzeit: number): void {
+		const current: number = System.currentTimeMillis();
+		const halbzeit: number = current + (Math.trunc((pEndzeit - current) / 2));
 		if (this.dynDaten.gibKurseDieFreiSindAnzahl() === 0)
 			return;
 		this.dynDaten.aktionSchuelerAusAllenKursenEntfernen();
 		this.dynDaten.aktionKurseFreieZufaelligVerteilen();
 		this.dynDaten.aktionZustandSpeichernK();
-		let countKeineVerbesserung : number = 0;
+		let countKeineVerbesserung: number = 0;
 		do {
 			countKeineVerbesserung = this.verteileKurseMitMatching() ? 0 : (countKeineVerbesserung + 1);
 		} while ((countKeineVerbesserung < KursblockungAlgorithmusKMatching.MAX_RUNDEN_IN_FOLGE_OHNE_VERBESSERUNG) && (System.currentTimeMillis() < halbzeit));
@@ -58,7 +58,7 @@ export class KursblockungAlgorithmusKMatching extends KursblockungAlgorithmusK {
 	 *
 	 * @return true, falls der Zustand angepasst wurde
 	 */
-	private verteileKurseMitMatching() : boolean {
+	private verteileKurseMitMatching(): boolean {
 		do {
 			this.dynDaten.aktionSchuelerAusAllenKursenEntfernen();
 			this.dynDaten.aktionKursVerteilenEinenZufaelligenFreien();
@@ -78,12 +78,12 @@ export class KursblockungAlgorithmusKMatching extends KursblockungAlgorithmusK {
 	 *
 	 * @return true, falls der Zustand angepasst wurde
 	 */
-	private verteileKurseMitMatchingW() : boolean {
+	private verteileKurseMitMatchingW(): boolean {
 		do {
 			this.dynDaten.aktionSchuelerAusAllenKursenEntfernen();
 			this.dynDaten.aktionKursVerteilenEinenZufaelligenFreien();
 			this.dynDaten.aktionSchuelerVerteilenMitGewichtetenBipartitemMatching();
-			const cmp : number = this.dynDaten.gibCompareZustandK_NW_KD_FW();
+			const cmp: number = this.dynDaten.gibCompareZustandK_NW_KD_FW();
 			if (cmp > 0) {
 				this.dynDaten.aktionZustandSpeichernK();
 				return true;
@@ -97,7 +97,7 @@ export class KursblockungAlgorithmusKMatching extends KursblockungAlgorithmusK {
 		return 'de.svws_nrw.core.kursblockung.KursblockungAlgorithmusKMatching';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.kursblockung.KursblockungAlgorithmusKMatching', 'de.svws_nrw.core.kursblockung.KursblockungAlgorithmusK'].includes(name);
 	}
 
@@ -105,6 +105,6 @@ export class KursblockungAlgorithmusKMatching extends KursblockungAlgorithmusK {
 
 }
 
-export function cast_de_svws_nrw_core_kursblockung_KursblockungAlgorithmusKMatching(obj : unknown) : KursblockungAlgorithmusKMatching {
+export function cast_de_svws_nrw_core_kursblockung_KursblockungAlgorithmusKMatching(obj: unknown): KursblockungAlgorithmusKMatching {
 	return obj as KursblockungAlgorithmusKMatching;
 }

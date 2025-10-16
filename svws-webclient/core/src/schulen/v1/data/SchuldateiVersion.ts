@@ -6,27 +6,27 @@ export class SchuldateiVersion extends JavaObject {
 	/**
 	 * Die Versionsnummer der Schuldatei.
 	 */
-	public version : string = "";
+	public version: string = "";
 
 	/**
 	 * Der Name des API-Endpunktes der Schuldatei-Anwendung.
 	 */
-	public name : string = "";
+	public name: string = "";
 
 	/**
 	 * Die URL des API-Endpunktes.
 	 */
-	public url : string = "";
+	public url: string = "";
 
 	/**
 	 * Das Ablaufdatum der Version.
 	 */
-	public gueltigbis : string = "";
+	public gueltigbis: string = "";
 
 	/**
 	 * Eine Bemerkung zu der Datei.
 	 */
-	public bemerkung : string = "";
+	public bemerkung: string = "";
 
 
 	/**
@@ -40,13 +40,13 @@ export class SchuldateiVersion extends JavaObject {
 		return 'de.svws_nrw.schulen.v1.data.SchuldateiVersion';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.schulen.v1.data.SchuldateiVersion'].includes(name);
 	}
 
 	public static class = new Class<SchuldateiVersion>('de.svws_nrw.schulen.v1.data.SchuldateiVersion');
 
-	public static transpilerFromJSON(json : string): SchuldateiVersion {
+	public static transpilerFromJSON(json: string): SchuldateiVersion {
 		const obj = JSON.parse(json) as Partial<SchuldateiVersion>;
 		const result = new SchuldateiVersion();
 		if (obj.version === undefined)
@@ -67,7 +67,7 @@ export class SchuldateiVersion extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : SchuldateiVersion) : string {
+	public static transpilerToJSON(obj: SchuldateiVersion): string {
 		let result = '{';
 		result += '"version" : ' + JSON.stringify(obj.version) + ',';
 		result += '"name" : ' + JSON.stringify(obj.name) + ',';
@@ -79,7 +79,7 @@ export class SchuldateiVersion extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<SchuldateiVersion>) : string {
+	public static transpilerToJSONPatch(obj: Partial<SchuldateiVersion>): string {
 		let result = '{';
 		if (obj.version !== undefined) {
 			result += '"version" : ' + JSON.stringify(obj.version) + ',';
@@ -103,6 +103,6 @@ export class SchuldateiVersion extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_schulen_v1_data_SchuldateiVersion(obj : unknown) : SchuldateiVersion {
+export function cast_de_svws_nrw_schulen_v1_data_SchuldateiVersion(obj: unknown): SchuldateiVersion {
 	return obj as SchuldateiVersion;
 }

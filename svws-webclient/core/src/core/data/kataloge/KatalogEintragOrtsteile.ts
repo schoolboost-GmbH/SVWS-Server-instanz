@@ -6,42 +6,42 @@ export class KatalogEintragOrtsteile extends JavaObject {
 	/**
 	 * Katalog von IT.NRW PLZ Ortsteile: die ID des Katalog-Eintrags
 	 */
-	public ID : number = -1;
+	public ID: number = -1;
 
 	/**
 	 * Katalog von IT.NRW PLZ Ortsteile: die Postleitzahl
 	 */
-	public PLZ : string = "";
+	public PLZ: string = "";
 
 	/**
 	 * Katalog von IT.NRW PLZ Ortsteile: der Regionalschlüssel
 	 */
-	public RegSchl : string = "";
+	public RegSchl: string = "";
 
 	/**
 	 * Katalog von IT.NRW PLZ Ortsteile: die Ortsbezeichnung
 	 */
-	public Ort : string = "";
+	public Ort: string = "";
 
 	/**
 	 * Katalog von IT.NRW PLZ Ortsteile: die Bezeichnung des Ortsteils
 	 */
-	public Ortsteil : string = "";
+	public Ortsteil: string = "";
 
 	/**
 	 * Katalog von IT.NRW PLZ Ortsteile: der Stand des Katalog-Eintrags
 	 */
-	public Stand : string = "";
+	public Stand: string = "";
 
 	/**
 	 * Katalog von IT.NRW PLZ Ortsteile: Gibt die Gültigkeit ab welchem Schuljahr an
 	 */
-	public gueltigVon : number | null = null;
+	public gueltigVon: number | null = null;
 
 	/**
 	 * Katalog von IT.NRW PLZ Ortsteile: Gibt die Gültigkeit bis zu welchem Schuljahr an
 	 */
-	public gueltigBis : number | null = null;
+	public gueltigBis: number | null = null;
 
 
 	/**
@@ -55,13 +55,13 @@ export class KatalogEintragOrtsteile extends JavaObject {
 		return 'de.svws_nrw.core.data.kataloge.KatalogEintragOrtsteile';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.kataloge.KatalogEintragOrtsteile'].includes(name);
 	}
 
 	public static class = new Class<KatalogEintragOrtsteile>('de.svws_nrw.core.data.kataloge.KatalogEintragOrtsteile');
 
-	public static transpilerFromJSON(json : string): KatalogEintragOrtsteile {
+	public static transpilerFromJSON(json: string): KatalogEintragOrtsteile {
 		const obj = JSON.parse(json) as Partial<KatalogEintragOrtsteile>;
 		const result = new KatalogEintragOrtsteile();
 		if (obj.ID === undefined)
@@ -87,7 +87,7 @@ export class KatalogEintragOrtsteile extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : KatalogEintragOrtsteile) : string {
+	public static transpilerToJSON(obj: KatalogEintragOrtsteile): string {
 		let result = '{';
 		result += '"ID" : ' + obj.ID.toString() + ',';
 		result += '"PLZ" : ' + JSON.stringify(obj.PLZ) + ',';
@@ -102,7 +102,7 @@ export class KatalogEintragOrtsteile extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<KatalogEintragOrtsteile>) : string {
+	public static transpilerToJSONPatch(obj: Partial<KatalogEintragOrtsteile>): string {
 		let result = '{';
 		if (obj.ID !== undefined) {
 			result += '"ID" : ' + obj.ID.toString() + ',';
@@ -135,6 +135,6 @@ export class KatalogEintragOrtsteile extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_kataloge_KatalogEintragOrtsteile(obj : unknown) : KatalogEintragOrtsteile {
+export function cast_de_svws_nrw_core_data_kataloge_KatalogEintragOrtsteile(obj: unknown): KatalogEintragOrtsteile {
 	return obj as KatalogEintragOrtsteile;
 }

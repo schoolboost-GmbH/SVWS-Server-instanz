@@ -6,32 +6,32 @@ export class BerufskollegBerufsebeneKatalogEintrag extends JavaObject {
 	/**
 	 * Die ID des Katalog-Eintrags.
 	 */
-	public id : number = 0;
+	public id: number = 0;
 
 	/**
 	 * Die Berufsebene.
 	 */
-	public ebene : number = 0;
+	public ebene: number = 0;
 
 	/**
 	 * Das Kürzel der Berufsebene
 	 */
-	public kuerzel : string = "";
+	public kuerzel: string = "";
 
 	/**
 	 * Die Bezeichnung der Berufsebene.
 	 */
-	public bezeichnung : string = "";
+	public bezeichnung: string = "";
 
 	/**
 	 * Gibt an, in welchem Schuljahr die Berufsebene einführt wurde. Ist kein Schuljahr bekannt, so ist null gesetzt.
 	 */
-	public gueltigVon : number | null = null;
+	public gueltigVon: number | null = null;
 
 	/**
 	 * Gibt an, bis zu welchem Schuljahr die Berufsebene gültig ist. Ist kein Schuljahr bekannt, so ist null gesetzt.
 	 */
-	public gueltigBis : number | null = null;
+	public gueltigBis: number | null = null;
 
 
 	/**
@@ -49,22 +49,22 @@ export class BerufskollegBerufsebeneKatalogEintrag extends JavaObject {
 	 * @param gueltigVon         das Schuljahr, wann der Eintrag eingeführt wurde oder null, falls es nicht bekannt ist und "schon immer gültig war"
 	 * @param gueltigBis         das Schuljahr, bis zu welchem der Eintrag gültig ist
 	 */
-	public constructor(id : number, ebene : number, kuerzel : string, bezeichnung : string, gueltigVon : number | null, gueltigBis : number | null);
+	public constructor(id: number, ebene: number, kuerzel: string, bezeichnung: string, gueltigVon: number | null, gueltigBis: number | null);
 
 	/**
 	 * Implementation for method overloads of 'constructor'
 	 */
-	public constructor(__param0? : number, __param1? : number, __param2? : string, __param3? : string, __param4? : null | number, __param5? : null | number) {
+	public constructor(__param0?: number, __param1?: number, __param2?: string, __param3?: string, __param4?: null | number, __param5?: null | number) {
 		super();
 		if ((__param0 === undefined) && (__param1 === undefined) && (__param2 === undefined) && (__param3 === undefined) && (__param4 === undefined) && (__param5 === undefined)) {
 			// empty method body
 		} else if (((__param0 !== undefined) && typeof __param0 === "number") && ((__param1 !== undefined) && typeof __param1 === "number") && ((__param2 !== undefined) && (typeof __param2 === "string")) && ((__param3 !== undefined) && (typeof __param3 === "string")) && ((__param4 !== undefined) && (typeof __param4 === "number") || (__param4 === null)) && ((__param5 !== undefined) && (typeof __param5 === "number") || (__param5 === null))) {
-			const id : number = __param0 as number;
-			const ebene : number = __param1 as number;
-			const kuerzel : string = __param2;
-			const bezeichnung : string = __param3;
-			const gueltigVon : number | null = __param4;
-			const gueltigBis : number | null = __param5;
+			const id: number = __param0 as number;
+			const ebene: number = __param1 as number;
+			const kuerzel: string = __param2;
+			const bezeichnung: string = __param3;
+			const gueltigVon: number | null = __param4;
+			const gueltigBis: number | null = __param5;
 			this.id = id;
 			this.ebene = ebene;
 			this.kuerzel = kuerzel;
@@ -78,13 +78,13 @@ export class BerufskollegBerufsebeneKatalogEintrag extends JavaObject {
 		return 'de.svws_nrw.core.data.schule.BerufskollegBerufsebeneKatalogEintrag';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.schule.BerufskollegBerufsebeneKatalogEintrag'].includes(name);
 	}
 
 	public static class = new Class<BerufskollegBerufsebeneKatalogEintrag>('de.svws_nrw.core.data.schule.BerufskollegBerufsebeneKatalogEintrag');
 
-	public static transpilerFromJSON(json : string): BerufskollegBerufsebeneKatalogEintrag {
+	public static transpilerFromJSON(json: string): BerufskollegBerufsebeneKatalogEintrag {
 		const obj = JSON.parse(json) as Partial<BerufskollegBerufsebeneKatalogEintrag>;
 		const result = new BerufskollegBerufsebeneKatalogEintrag();
 		if (obj.id === undefined)
@@ -104,7 +104,7 @@ export class BerufskollegBerufsebeneKatalogEintrag extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : BerufskollegBerufsebeneKatalogEintrag) : string {
+	public static transpilerToJSON(obj: BerufskollegBerufsebeneKatalogEintrag): string {
 		let result = '{';
 		result += '"id" : ' + obj.id.toString() + ',';
 		result += '"ebene" : ' + obj.ebene.toString() + ',';
@@ -117,7 +117,7 @@ export class BerufskollegBerufsebeneKatalogEintrag extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<BerufskollegBerufsebeneKatalogEintrag>) : string {
+	public static transpilerToJSONPatch(obj: Partial<BerufskollegBerufsebeneKatalogEintrag>): string {
 		let result = '{';
 		if (obj.id !== undefined) {
 			result += '"id" : ' + obj.id.toString() + ',';
@@ -144,6 +144,6 @@ export class BerufskollegBerufsebeneKatalogEintrag extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_schule_BerufskollegBerufsebeneKatalogEintrag(obj : unknown) : BerufskollegBerufsebeneKatalogEintrag {
+export function cast_de_svws_nrw_core_data_schule_BerufskollegBerufsebeneKatalogEintrag(obj: unknown): BerufskollegBerufsebeneKatalogEintrag {
 	return obj as BerufskollegBerufsebeneKatalogEintrag;
 }

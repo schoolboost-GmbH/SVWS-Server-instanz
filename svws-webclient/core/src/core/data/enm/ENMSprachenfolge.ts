@@ -6,52 +6,52 @@ export class ENMSprachenfolge extends JavaObject {
 	/**
 	 * Das Kürzel der Sprache, bereinigt von dem Jahrgang, in dem die Sprache eingesetzt hat
 	 */
-	public sprache : string | null = null;
+	public sprache: string | null = null;
 
 	/**
 	 * Die ID des Faches
 	 */
-	public fachID : number = 0;
+	public fachID: number = 0;
 
 	/**
 	 * Das Kürzel des Faches
 	 */
-	public fachKuerzel : string | null = null;
+	public fachKuerzel: string | null = null;
 
 	/**
 	 * Die Reihenfolge des Faches in der Sprachenfolge (Beispiel 1)
 	 */
-	public reihenfolge : number = 0;
+	public reihenfolge: number = 0;
 
 	/**
 	 * Die Information, ab welchem Jahrgang die Sprache belegt wurde (Beispiel 5)
 	 */
-	public belegungVonJahrgang : number = 0;
+	public belegungVonJahrgang: number = 0;
 
 	/**
 	 * Die Information, ab welchem Abschnitt in dem Jahrgang die Sprache belegt wurde (Beispiel 1)
 	 */
-	public belegungVonAbschnitt : number = 0;
+	public belegungVonAbschnitt: number = 0;
 
 	/**
 	 * Die Information, bis zu welchem Jahrgang die Sprache belegt wurde (Beispiel 12), sofern die Sprache bereits abgeschlossen ist
 	 */
-	public belegungBisJahrgang : number | null = null;
+	public belegungBisJahrgang: number | null = null;
 
 	/**
 	 * Die Information, bis zu welchem Abschnitt in dem Jahrgang die Sprache belegt wurde (Beispiel 2), sofern die Sprache bereits abgeschlossen ist
 	 */
-	public belegungBisAbschnitt : number | null = null;
+	public belegungBisAbschnitt: number | null = null;
 
 	/**
 	 * Die Bezeichnung des Sprachreferenzniveaus, welches bisher erreicht wurde (z.B. B2/C1)
 	 */
-	public referenzniveau : string | null = null;
+	public referenzniveau: string | null = null;
 
 	/**
 	 * Die Mindest-Dauer der Belegung in der Sekundarstufe I gemäß den Stufen im Core-Type SprachBelegungSekI (z.B. "0, 2, 4, 6")
 	 */
-	public belegungSekI : number | null = null;
+	public belegungSekI: number | null = null;
 
 
 	/**
@@ -65,13 +65,13 @@ export class ENMSprachenfolge extends JavaObject {
 		return 'de.svws_nrw.core.data.enm.ENMSprachenfolge';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.enm.ENMSprachenfolge'].includes(name);
 	}
 
 	public static class = new Class<ENMSprachenfolge>('de.svws_nrw.core.data.enm.ENMSprachenfolge');
 
-	public static transpilerFromJSON(json : string): ENMSprachenfolge {
+	public static transpilerFromJSON(json: string): ENMSprachenfolge {
 		const obj = JSON.parse(json) as Partial<ENMSprachenfolge>;
 		const result = new ENMSprachenfolge();
 		result.sprache = (obj.sprache === undefined) ? null : obj.sprache === null ? null : obj.sprache;
@@ -95,7 +95,7 @@ export class ENMSprachenfolge extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : ENMSprachenfolge) : string {
+	public static transpilerToJSON(obj: ENMSprachenfolge): string {
 		let result = '{';
 		result += '"sprache" : ' + ((obj.sprache === null) ? 'null' : JSON.stringify(obj.sprache)) + ',';
 		result += '"fachID" : ' + obj.fachID.toString() + ',';
@@ -112,7 +112,7 @@ export class ENMSprachenfolge extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<ENMSprachenfolge>) : string {
+	public static transpilerToJSONPatch(obj: Partial<ENMSprachenfolge>): string {
 		let result = '{';
 		if (obj.sprache !== undefined) {
 			result += '"sprache" : ' + ((obj.sprache === null) ? 'null' : JSON.stringify(obj.sprache)) + ',';
@@ -151,6 +151,6 @@ export class ENMSprachenfolge extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_enm_ENMSprachenfolge(obj : unknown) : ENMSprachenfolge {
+export function cast_de_svws_nrw_core_data_enm_ENMSprachenfolge(obj: unknown): ENMSprachenfolge {
 	return obj as ENMSprachenfolge;
 }

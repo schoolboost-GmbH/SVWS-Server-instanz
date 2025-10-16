@@ -10,22 +10,22 @@ export class BKGymLeistungenFach extends JavaObject {
 	/**
 	 * Das Fach des beruflichen Gymnasiums, welches dieser Leistung zugeordnet ist.
 	 */
-	public fach : BKGymFach | null = new BKGymFach();
+	public fach: BKGymFach | null = new BKGymFach();
 
 	/**
 	 * Die Nummer des Abiturfaches, sofern es sich um ein Abiturfach handelt - ansonsten null
 	 */
-	public abiturfach : number | null = null;
+	public abiturfach: number | null = null;
 
 	/**
 	 * Gibt an, ob es sich um eine neu einsetzende Fremdsprache handelt oder nicht.
 	 */
-	public istFSNeu : boolean = false;
+	public istFSNeu: boolean = false;
 
 	/**
 	 * Die einzelnen Belegungen dieses Faches
 	 */
-	public readonly belegungen : List<BKGymLeistungenFachHalbjahr> = new ArrayList<BKGymLeistungenFachHalbjahr>();
+	public readonly belegungen: List<BKGymLeistungenFachHalbjahr> = new ArrayList<BKGymLeistungenFachHalbjahr>();
 
 
 	/**
@@ -39,13 +39,13 @@ export class BKGymLeistungenFach extends JavaObject {
 		return 'de.svws_nrw.core.data.bk.abi.BKGymLeistungenFach';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.bk.abi.BKGymLeistungenFach'].includes(name);
 	}
 
 	public static class = new Class<BKGymLeistungenFach>('de.svws_nrw.core.data.bk.abi.BKGymLeistungenFach');
 
-	public static transpilerFromJSON(json : string): BKGymLeistungenFach {
+	public static transpilerFromJSON(json: string): BKGymLeistungenFach {
 		const obj = JSON.parse(json) as Partial<BKGymLeistungenFach>;
 		const result = new BKGymLeistungenFach();
 		result.fach = ((obj.fach === undefined) || (obj.fach === null)) ? null : BKGymFach.transpilerFromJSON(JSON.stringify(obj.fach));
@@ -61,7 +61,7 @@ export class BKGymLeistungenFach extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : BKGymLeistungenFach) : string {
+	public static transpilerToJSON(obj: BKGymLeistungenFach): string {
 		let result = '{';
 		result += '"fach" : ' + ((obj.fach === null) ? 'null' : BKGymFach.transpilerToJSON(obj.fach)) + ',';
 		result += '"abiturfach" : ' + ((obj.abiturfach === null) ? 'null' : obj.abiturfach.toString()) + ',';
@@ -79,7 +79,7 @@ export class BKGymLeistungenFach extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<BKGymLeistungenFach>) : string {
+	public static transpilerToJSONPatch(obj: Partial<BKGymLeistungenFach>): string {
 		let result = '{';
 		if (obj.fach !== undefined) {
 			result += '"fach" : ' + ((obj.fach === null) ? 'null' : BKGymFach.transpilerToJSON(obj.fach)) + ',';
@@ -107,6 +107,6 @@ export class BKGymLeistungenFach extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_bk_abi_BKGymLeistungenFach(obj : unknown) : BKGymLeistungenFach {
+export function cast_de_svws_nrw_core_data_bk_abi_BKGymLeistungenFach(obj: unknown): BKGymLeistungenFach {
 	return obj as BKGymLeistungenFach;
 }

@@ -6,62 +6,62 @@ export class BerufskollegFachklassenKatalogDaten extends JavaObject {
 	/**
 	 * Die ID des Katalog-Eintrags.
 	 */
-	public id : number = 0;
+	public id: number = 0;
 
 	/**
 	 * Gibt an, ob die Fachklassen ausgelaufen ist oder nicht
 	 */
-	public istAusgelaufen : boolean = false;
+	public istAusgelaufen: boolean = false;
 
 	/**
 	 * Die Gruppe des Berufsfeldes.
 	 */
-	public berufsfeldGruppe : string | null = null;
+	public berufsfeldGruppe: string | null = null;
 
 	/**
 	 * Das Berufsfeld.
 	 */
-	public berufsfeld : string | null = null;
+	public berufsfeld: string | null = null;
 
 	/**
 	 * Ebene 1 des Berufsfeldes
 	 */
-	public ebene1 : string | null = null;
+	public ebene1: string | null = null;
 
 	/**
 	 * Ebene 2 des Berufsfeldes
 	 */
-	public ebene2 : string | null = null;
+	public ebene2: string | null = null;
 
 	/**
 	 * Ebene 3 des Berufsfeldes
 	 */
-	public ebene3 : string | null = null;
+	public ebene3: string | null = null;
 
 	/**
 	 * Die Bezeichnung der Fachklasse
 	 */
-	public bezeichnung : string = "";
+	public bezeichnung: string = "";
 
 	/**
 	 * Die Bezeichnung der Fachklasse (männlich)
 	 */
-	public bezeichnungM : string = "";
+	public bezeichnungM: string = "";
 
 	/**
 	 * Die Bezeichnung der Fachklasse (weiblich)
 	 */
-	public bezeichnungW : string = "";
+	public bezeichnungW: string = "";
 
 	/**
 	 * Gibt an, in welchem Schuljahr die Fachklasse einführt wurde. Ist kein Schuljahr bekannt, so ist null gesetzt.
 	 */
-	public gueltigVon : number | null = null;
+	public gueltigVon: number | null = null;
 
 	/**
 	 * Gibt an, bis zu welchem Schuljahr die Fachklasse gültig ist. Ist kein Schuljahr bekannt, so ist null gesetzt.
 	 */
-	public gueltigBis : number | null = null;
+	public gueltigBis: number | null = null;
 
 
 	/**
@@ -75,13 +75,13 @@ export class BerufskollegFachklassenKatalogDaten extends JavaObject {
 		return 'de.svws_nrw.core.data.schule.BerufskollegFachklassenKatalogDaten';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.schule.BerufskollegFachklassenKatalogDaten'].includes(name);
 	}
 
 	public static class = new Class<BerufskollegFachklassenKatalogDaten>('de.svws_nrw.core.data.schule.BerufskollegFachklassenKatalogDaten');
 
-	public static transpilerFromJSON(json : string): BerufskollegFachklassenKatalogDaten {
+	public static transpilerFromJSON(json: string): BerufskollegFachklassenKatalogDaten {
 		const obj = JSON.parse(json) as Partial<BerufskollegFachklassenKatalogDaten>;
 		const result = new BerufskollegFachklassenKatalogDaten();
 		if (obj.id === undefined)
@@ -109,7 +109,7 @@ export class BerufskollegFachklassenKatalogDaten extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : BerufskollegFachklassenKatalogDaten) : string {
+	public static transpilerToJSON(obj: BerufskollegFachklassenKatalogDaten): string {
 		let result = '{';
 		result += '"id" : ' + obj.id.toString() + ',';
 		result += '"istAusgelaufen" : ' + obj.istAusgelaufen.toString() + ',';
@@ -128,7 +128,7 @@ export class BerufskollegFachklassenKatalogDaten extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<BerufskollegFachklassenKatalogDaten>) : string {
+	public static transpilerToJSONPatch(obj: Partial<BerufskollegFachklassenKatalogDaten>): string {
 		let result = '{';
 		if (obj.id !== undefined) {
 			result += '"id" : ' + obj.id.toString() + ',';
@@ -173,6 +173,6 @@ export class BerufskollegFachklassenKatalogDaten extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_schule_BerufskollegFachklassenKatalogDaten(obj : unknown) : BerufskollegFachklassenKatalogDaten {
+export function cast_de_svws_nrw_core_data_schule_BerufskollegFachklassenKatalogDaten(obj: unknown): BerufskollegFachklassenKatalogDaten {
 	return obj as BerufskollegFachklassenKatalogDaten;
 }

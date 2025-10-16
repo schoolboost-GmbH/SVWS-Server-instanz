@@ -6,35 +6,35 @@ import { DeveloperNotificationException } from '../../../../core/exceptions/Deve
 export class KlausurterminblockungModusQuartale extends JavaEnum<KlausurterminblockungModusQuartale> {
 
 	/** an array containing all values of this enumeration */
-	static readonly all_values_by_ordinal : Array<KlausurterminblockungModusQuartale> = [];
+	static readonly all_values_by_ordinal: Array<KlausurterminblockungModusQuartale> = [];
 
 	/** an array containing all values of this enumeration indexed by their name*/
-	static readonly all_values_by_name : Map<string, KlausurterminblockungModusQuartale> = new Map<string, KlausurterminblockungModusQuartale>();
+	static readonly all_values_by_name: Map<string, KlausurterminblockungModusQuartale> = new Map<string, KlausurterminblockungModusQuartale>();
 
 	/**
 	 * Alle Klausuren eines Halbjahres werden gemeinsam geblockt.
 	 */
-	public static readonly ZUSAMMEN : KlausurterminblockungModusQuartale = new KlausurterminblockungModusQuartale("ZUSAMMEN", 0, 0, "Zusammen");
+	public static readonly ZUSAMMEN: KlausurterminblockungModusQuartale = new KlausurterminblockungModusQuartale("ZUSAMMEN", 0, 0, "Zusammen");
 
 	/**
 	 * Die Klausuren werden pro Quartal im Halbjahr geblockt.
 	 */
-	public static readonly GETRENNT : KlausurterminblockungModusQuartale = new KlausurterminblockungModusQuartale("GETRENNT", 1, 1, "Getrennt");
+	public static readonly GETRENNT: KlausurterminblockungModusQuartale = new KlausurterminblockungModusQuartale("GETRENNT", 1, 1, "Getrennt");
 
 	/**
 	 * Die ID
 	 */
-	public readonly id : number;
+	public readonly id: number;
 
 	/**
 	 * Die textuelle Bezeichnung
 	 */
-	public readonly bezeichnung : string;
+	public readonly bezeichnung: string;
 
 	/**
 	 * Eine Map mit der Zuordnung zu der ID
 	 */
-	private static readonly _mapID : HashMap<number, KlausurterminblockungModusQuartale> = new HashMap<number, KlausurterminblockungModusQuartale>();
+	private static readonly _mapID: HashMap<number, KlausurterminblockungModusQuartale> = new HashMap<number, KlausurterminblockungModusQuartale>();
 
 	/**
 	 * Erstellt einen neuen Modus.
@@ -42,7 +42,7 @@ export class KlausurterminblockungModusQuartale extends JavaEnum<Klausurterminbl
 	 * @param id            die ID
 	 * @param bezeichnung   die Bezeichnung
 	 */
-	private constructor(name : string, ordinal : number, id : number, bezeichnung : string) {
+	private constructor(name: string, ordinal: number, id: number, bezeichnung: string) {
 		super(name, ordinal);
 		KlausurterminblockungModusQuartale.all_values_by_ordinal.push(this);
 		KlausurterminblockungModusQuartale.all_values_by_name.set(name, this);
@@ -56,7 +56,7 @@ export class KlausurterminblockungModusQuartale extends JavaEnum<Klausurterminbl
 	 *
 	 * @return die Map mit der Zuordnung zu der ID
 	 */
-	private static getMapByID() : HashMap<number, KlausurterminblockungModusQuartale> {
+	private static getMapByID(): HashMap<number, KlausurterminblockungModusQuartale> {
 		if (KlausurterminblockungModusQuartale._mapID.size() === 0)
 			for (const e of KlausurterminblockungModusQuartale.values())
 				KlausurterminblockungModusQuartale._mapID.put(e.id, e);
@@ -70,7 +70,7 @@ export class KlausurterminblockungModusQuartale extends JavaEnum<Klausurterminbl
 	 *
 	 * @return der Modus oder null, falls die ID ungültig ist
 	 */
-	public static get(id : number) : KlausurterminblockungModusQuartale | null {
+	public static get(id: number): KlausurterminblockungModusQuartale | null {
 		return KlausurterminblockungModusQuartale.getMapByID().get(id);
 	}
 
@@ -83,7 +83,7 @@ export class KlausurterminblockungModusQuartale extends JavaEnum<Klausurterminbl
 	 *
 	 * @throws DeveloperNotificationException falls die ID nicht definiert ist
 	 */
-	public static getOrException(id : number) : KlausurterminblockungModusQuartale {
+	public static getOrException(id: number): KlausurterminblockungModusQuartale {
 		return DeveloperNotificationException.ifMapGetIsNull(KlausurterminblockungModusQuartale.getMapByID(), id);
 	}
 
@@ -92,7 +92,7 @@ export class KlausurterminblockungModusQuartale extends JavaEnum<Klausurterminbl
 	 *
 	 * @returns the array with enumeration values
 	 */
-	public static values() : Array<KlausurterminblockungModusQuartale> {
+	public static values(): Array<KlausurterminblockungModusQuartale> {
 		return [...this.all_values_by_ordinal];
 	}
 
@@ -103,7 +103,7 @@ export class KlausurterminblockungModusQuartale extends JavaEnum<Klausurterminbl
 	 *
 	 * @returns the enumeration values or null
 	 */
-	public static valueOf(name : string) : KlausurterminblockungModusQuartale | null {
+	public static valueOf(name: string): KlausurterminblockungModusQuartale | null {
 		const tmp = this.all_values_by_name.get(name);
 		return (!tmp) ? null : tmp;
 	}
@@ -112,7 +112,7 @@ export class KlausurterminblockungModusQuartale extends JavaEnum<Klausurterminbl
 		return 'de.svws_nrw.core.types.gost.klausurplanung.KlausurterminblockungModusQuartale';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.types.gost.klausurplanung.KlausurterminblockungModusQuartale', 'java.lang.Enum', 'java.lang.Comparable'].includes(name);
 	}
 
@@ -120,6 +120,6 @@ export class KlausurterminblockungModusQuartale extends JavaEnum<Klausurterminbl
 
 }
 
-export function cast_de_svws_nrw_core_types_gost_klausurplanung_KlausurterminblockungModusQuartale(obj : unknown) : KlausurterminblockungModusQuartale {
+export function cast_de_svws_nrw_core_types_gost_klausurplanung_KlausurterminblockungModusQuartale(obj: unknown): KlausurterminblockungModusQuartale {
 	return obj as KlausurterminblockungModusQuartale;
 }

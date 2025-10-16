@@ -15,7 +15,7 @@ export class KursblockungAlgorithmusPermanentKSchuelervorschlag extends Kursbloc
 	 * @param logger  Logger für Benutzerhinweise, Warnungen und Fehler.
 	 * @param input   Die dynamischen Blockungsdaten.
 	 */
-	public constructor(random : Random, logger : Logger, input : GostBlockungsdatenManager) {
+	public constructor(random: Random, logger: Logger, input: GostBlockungsdatenManager) {
 		super(random, logger, input);
 		if (this.dynDaten.gibKurseDieFreiSindAnzahl() === 0)
 			return;
@@ -25,13 +25,13 @@ export class KursblockungAlgorithmusPermanentKSchuelervorschlag extends Kursbloc
 		this.dynDaten.aktionZustandSpeichernK();
 	}
 
-	public toString() : string {
+	public toString(): string {
 		return "KursblockungAlgorithmusPermanentKSchuelervorschlag";
 	}
 
-	public next(zeitEnde : number) : void {
-		const current : number = System.currentTimeMillis();
-		const halbzeit : number = current + (Math.trunc((zeitEnde - current) / 2));
+	public next(zeitEnde: number): void {
+		const current: number = System.currentTimeMillis();
+		const halbzeit: number = current + (Math.trunc((zeitEnde - current) / 2));
 		do {
 			this.verteileKurseMitSchuelerwunsch();
 		} while (System.currentTimeMillis() < halbzeit);
@@ -40,9 +40,9 @@ export class KursblockungAlgorithmusPermanentKSchuelervorschlag extends Kursbloc
 		} while (System.currentTimeMillis() < zeitEnde);
 	}
 
-	private verteileKurseMitSchuelerwunsch() : void {
+	private verteileKurseMitSchuelerwunsch(): void {
 		this.dynDaten.aktionSchuelerAusAllenKursenEntfernen();
-		let kurslagenveraenderung : boolean = this.dynDaten.aktionKurseVerteilenNachSchuelerwunsch();
+		let kurslagenveraenderung: boolean = this.dynDaten.aktionKurseVerteilenNachSchuelerwunsch();
 		if (!kurslagenveraenderung)
 			this.dynDaten.aktionKursVerteilenEinenZufaelligenFreien();
 		this.dynDaten.aktionSchuelerVerteilenMitGewichtetenBipartitemMatching();
@@ -59,7 +59,7 @@ export class KursblockungAlgorithmusPermanentKSchuelervorschlag extends Kursbloc
 		this.dynDaten.aktionZustandLadenK();
 	}
 
-	private verteileKurseMitMatchingW() : void {
+	private verteileKurseMitMatchingW(): void {
 		do {
 			this.dynDaten.aktionSchuelerAusAllenKursenEntfernen();
 			this.dynDaten.aktionKursVerteilenEinenZufaelligenFreien();
@@ -72,7 +72,7 @@ export class KursblockungAlgorithmusPermanentKSchuelervorschlag extends Kursbloc
 		this.dynDaten.aktionZustandLadenK();
 	}
 
-	public ladeBestMitSchuelerverteilung() : void {
+	public ladeBestMitSchuelerverteilung(): void {
 		this.dynDaten.aktionZustandLadenK();
 	}
 
@@ -80,7 +80,7 @@ export class KursblockungAlgorithmusPermanentKSchuelervorschlag extends Kursbloc
 		return 'de.svws_nrw.core.kursblockung.KursblockungAlgorithmusPermanentKSchuelervorschlag';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.kursblockung.KursblockungAlgorithmusPermanentKSchuelervorschlag', 'de.svws_nrw.core.kursblockung.KursblockungAlgorithmusPermanentK'].includes(name);
 	}
 
@@ -88,6 +88,6 @@ export class KursblockungAlgorithmusPermanentKSchuelervorschlag extends Kursbloc
 
 }
 
-export function cast_de_svws_nrw_core_kursblockung_KursblockungAlgorithmusPermanentKSchuelervorschlag(obj : unknown) : KursblockungAlgorithmusPermanentKSchuelervorschlag {
+export function cast_de_svws_nrw_core_kursblockung_KursblockungAlgorithmusPermanentKSchuelervorschlag(obj: unknown): KursblockungAlgorithmusPermanentKSchuelervorschlag {
 	return obj as KursblockungAlgorithmusPermanentKSchuelervorschlag;
 }

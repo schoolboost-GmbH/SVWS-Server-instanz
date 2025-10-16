@@ -16,32 +16,32 @@ export class SchuldateiOrganisationseinheitAdressManager extends JavaObject {
 	/**
 	 * Die Referenz auf den Manager für die Schuldatei
 	 */
-	private readonly _managerSchuldatei : SchuldateiManager;
+	private readonly _managerSchuldatei: SchuldateiManager;
 
 	/**
 	 * Die Referenz auf den Manager der Organisationseinheit
 	 */
-	private readonly _managerOrganisationseinheit : SchuldateiOrganisationseinheitManager;
+	private readonly _managerOrganisationseinheit: SchuldateiOrganisationseinheitManager;
 
 	/**
 	 * Das Datenobjekt für die Adresse aus der Organisationseinheit
 	 */
-	private readonly _adresse : SchuldateiOrganisationseinheitAdresse;
+	private readonly _adresse: SchuldateiOrganisationseinheitAdresse;
 
 	/**
 	 * Die Erreichbarkeiten nach Kanal in einer Map https://www.xrepository.de/details/urn:de:xoev:codeliste:erreichbarkeit
 	 */
-	private readonly _mapErreichbarkeitenByKanal : JavaMap<string, List<string>> = new HashMap<string, List<string>>();
+	private readonly _mapErreichbarkeitenByKanal: JavaMap<string, List<string>> = new HashMap<string, List<string>>();
 
 	/**
 	 * Die Art der Adresse
 	 */
-	private readonly _artDerAdresse : string;
+	private readonly _artDerAdresse: string;
 
 	/**
 	 * Gibt an, ob es sich um den Hauptstandort der Organisationseinheit handelt oder nicht
 	 */
-	private readonly _istHauptstandort : boolean;
+	private readonly _istHauptstandort: boolean;
 
 
 	/**
@@ -53,7 +53,7 @@ export class SchuldateiOrganisationseinheitAdressManager extends JavaObject {
 	 * @param adresse                       die Adresse der Organisationseinheit
 	 * @param erreichbarkeiten				die Erreichbarkeiten der Organisationseinheit
 	 */
-	public constructor(managerSchuldatei : SchuldateiManager, managerOrganisationseinheit : SchuldateiOrganisationseinheitManager, adresse : SchuldateiOrganisationseinheitAdresse, erreichbarkeiten : List<SchuldateiOrganisationseinheitErreichbarkeit>) {
+	public constructor(managerSchuldatei: SchuldateiManager, managerOrganisationseinheit: SchuldateiOrganisationseinheitManager, adresse: SchuldateiOrganisationseinheitAdresse, erreichbarkeiten: List<SchuldateiOrganisationseinheitErreichbarkeit>) {
 		super();
 		this._managerSchuldatei = managerSchuldatei;
 		this._managerOrganisationseinheit = managerOrganisationseinheit;
@@ -70,7 +70,7 @@ export class SchuldateiOrganisationseinheitAdressManager extends JavaObject {
 		this._istHauptstandort = JavaObject.equalsTranspiler("1", (adresse.hauptstandortadresse));
 		for (const erreichbarkeit of erreichbarkeiten) {
 			if (((erreichbarkeit.liegenschaft === 0) || (erreichbarkeit.liegenschaft === adresse.liegenschaft)) && (erreichbarkeit.codekey !== null) && (SchuldateiUtils.pruefeUeberlappung(erreichbarkeit, adresse))) {
-				let listErreichbarkeit : List<string> | null = this._mapErreichbarkeitenByKanal.computeIfAbsent(erreichbarkeit.codekey, { apply : (k: string) => new ArrayList<string>() });
+				let listErreichbarkeit: List<string> | null = this._mapErreichbarkeitenByKanal.computeIfAbsent(erreichbarkeit.codekey, { apply: (k: string) => new ArrayList<string>() });
 				if (listErreichbarkeit !== null)
 					listErreichbarkeit.add(erreichbarkeit.codewert);
 			}
@@ -82,7 +82,7 @@ export class SchuldateiOrganisationseinheitAdressManager extends JavaObject {
 	 *
 	 * @return die ID der Adresse
 	 */
-	public getID() : number {
+	public getID(): number {
 		return this._adresse.id;
 	}
 
@@ -91,7 +91,7 @@ export class SchuldateiOrganisationseinheitAdressManager extends JavaObject {
 	 *
 	 * @return die Schulnummer der Organisationseinheit
 	 */
-	public getSchulnummer() : string {
+	public getSchulnummer(): string {
 		return this._adresse.schulnummer;
 	}
 
@@ -100,7 +100,7 @@ export class SchuldateiOrganisationseinheitAdressManager extends JavaObject {
 	 *
 	 * @return die Nummer der Liegenschaft der Organisationseinheit
 	 */
-	public getLiegenschaftnummer() : number {
+	public getLiegenschaftnummer(): number {
 		return this._adresse.liegenschaft;
 	}
 
@@ -109,7 +109,7 @@ export class SchuldateiOrganisationseinheitAdressManager extends JavaObject {
 	 *
 	 * @return die Straße
 	 */
-	public getStrasse() : string {
+	public getStrasse(): string {
 		return this._adresse.strasse;
 	}
 
@@ -118,7 +118,7 @@ export class SchuldateiOrganisationseinheitAdressManager extends JavaObject {
 	 *
 	 * @return die Postleitzahl
 	 */
-	public getPostleitzahl() : string {
+	public getPostleitzahl(): string {
 		return this._adresse.postleitzahl;
 	}
 
@@ -127,7 +127,7 @@ export class SchuldateiOrganisationseinheitAdressManager extends JavaObject {
 	 *
 	 * @return der Ort
 	 */
-	public getOrt() : string {
+	public getOrt(): string {
 		return this._adresse.ort;
 	}
 
@@ -136,7 +136,7 @@ export class SchuldateiOrganisationseinheitAdressManager extends JavaObject {
 	 *
 	 * @return der Regionalschlüssel
 	 */
-	public getRegionalschluessel() : string {
+	public getRegionalschluessel(): string {
 		return this._adresse.regionalschluessel;
 	}
 
@@ -145,7 +145,7 @@ export class SchuldateiOrganisationseinheitAdressManager extends JavaObject {
 	 *
 	 * @return die Qualität der Verortung
 	 */
-	public getQualitaetVerortung() : number {
+	public getQualitaetVerortung(): number {
 		return this._adresse.qualitaetverortung;
 	}
 
@@ -154,7 +154,7 @@ export class SchuldateiOrganisationseinheitAdressManager extends JavaObject {
 	 *
 	 * @return der Koordinatenrechtswert
 	 */
-	public getKoordinatenrechtswert() : number {
+	public getKoordinatenrechtswert(): number {
 		return this._adresse.koordinaterechtswert;
 	}
 
@@ -163,7 +163,7 @@ export class SchuldateiOrganisationseinheitAdressManager extends JavaObject {
 	 *
 	 * @return der Koordinatenhochwert
 	 */
-	public getKoordinatenhochwert() : number {
+	public getKoordinatenhochwert(): number {
 		return this._adresse.koordinatehochwert;
 	}
 
@@ -172,7 +172,7 @@ export class SchuldateiOrganisationseinheitAdressManager extends JavaObject {
 	 *
 	 * @return die Art der Adresse
 	 */
-	public getArtDerAdresse() : string {
+	public getArtDerAdresse(): string {
 		return this._artDerAdresse;
 	}
 
@@ -181,7 +181,7 @@ export class SchuldateiOrganisationseinheitAdressManager extends JavaObject {
 	 *
 	 * @return das Standortkennzeichen des Teilstandorts
 	 */
-	public getStandortkennzeichen() : string {
+	public getStandortkennzeichen(): string {
 		return this._adresse.standortkennzeichen;
 	}
 
@@ -190,7 +190,7 @@ export class SchuldateiOrganisationseinheitAdressManager extends JavaObject {
 	 *
 	 * @return das Adresskennzeichen
 	 */
-	public getAdresskennzeichen() : string {
+	public getAdresskennzeichen(): string {
 		return this._adresse.adresskennzeichen;
 	}
 
@@ -200,7 +200,7 @@ export class SchuldateiOrganisationseinheitAdressManager extends JavaObject {
 	 *
 	 * @return die Information zur Hauptstandortadresse
 	 */
-	public getHauptstandortadresse() : string {
+	public getHauptstandortadresse(): string {
 		return this._adresse.hauptstandortadresse;
 	}
 
@@ -209,7 +209,7 @@ export class SchuldateiOrganisationseinheitAdressManager extends JavaObject {
 	 *
 	 * @return true, wenn es sich um den Hauptstandort handelt, und ansonsten false
 	 */
-	public istHauptstandort() : boolean {
+	public istHauptstandort(): boolean {
 		return this._istHauptstandort;
 	}
 
@@ -218,7 +218,7 @@ export class SchuldateiOrganisationseinheitAdressManager extends JavaObject {
 	 *
 	 * @return das Datum, ab dem diese Adresse gültig ist.
 	 */
-	public getGueltigAb() : string | null {
+	public getGueltigAb(): string | null {
 		return this._adresse.gueltigab;
 	}
 
@@ -227,7 +227,7 @@ export class SchuldateiOrganisationseinheitAdressManager extends JavaObject {
 	 *
 	 * @return das Datum, bis zu welchem diese Adresse gültig ist.
 	 */
-	public getGueltigBis() : string | null {
+	public getGueltigBis(): string | null {
 		return this._adresse.gueltigbis;
 	}
 
@@ -248,8 +248,8 @@ export class SchuldateiOrganisationseinheitAdressManager extends JavaObject {
 	 *
 	 * @return die Liste mit den Einträgen für den angegebenen codekey (Kanal)
 	 */
-	public getErreichbarkeitenAufKanal(codekey : string) : List<string> {
-		let listErreichbarkeiten : List<string> | null = this._mapErreichbarkeitenByKanal.get(codekey);
+	public getErreichbarkeitenAufKanal(codekey: string): List<string> {
+		let listErreichbarkeiten: List<string> | null = this._mapErreichbarkeitenByKanal.get(codekey);
 		if (listErreichbarkeiten === null) {
 			listErreichbarkeiten = new ArrayList();
 			this._mapErreichbarkeitenByKanal.put(codekey, listErreichbarkeiten);
@@ -262,7 +262,7 @@ export class SchuldateiOrganisationseinheitAdressManager extends JavaObject {
 	 *
 	 * @return die Liste der entsprechenden Festnetznummern
 	 */
-	public getFestnetznummern() : List<string> {
+	public getFestnetznummern(): List<string> {
 		return this.getErreichbarkeitenAufKanal("02");
 	}
 
@@ -271,7 +271,7 @@ export class SchuldateiOrganisationseinheitAdressManager extends JavaObject {
 	 *
 	 * @return die Liste der entsprechenden Mobilnummern
 	 */
-	public getMobilnummern() : List<string> {
+	public getMobilnummern(): List<string> {
 		return this.getErreichbarkeitenAufKanal("03");
 	}
 
@@ -280,7 +280,7 @@ export class SchuldateiOrganisationseinheitAdressManager extends JavaObject {
 	 *
 	 * @return die Liste der entsprechenden Faxnummern
 	 */
-	public getFaxnummern() : List<string> {
+	public getFaxnummern(): List<string> {
 		return this.getErreichbarkeitenAufKanal("04");
 	}
 
@@ -289,7 +289,7 @@ export class SchuldateiOrganisationseinheitAdressManager extends JavaObject {
 	 *
 	 * @return die Liste der entsprechenden Emailadressen
 	 */
-	public getEmailadressen() : List<string> {
+	public getEmailadressen(): List<string> {
 		return this.getErreichbarkeitenAufKanal("01");
 	}
 
@@ -298,7 +298,7 @@ export class SchuldateiOrganisationseinheitAdressManager extends JavaObject {
 	 *
 	 * @return die Liste der entsprechenden Webadressen
 	 */
-	public getWebadressen() : List<string> {
+	public getWebadressen(): List<string> {
 		return this.getErreichbarkeitenAufKanal("09");
 	}
 
@@ -306,7 +306,7 @@ export class SchuldateiOrganisationseinheitAdressManager extends JavaObject {
 		return 'de.svws_nrw.schulen.v1.utils.SchuldateiOrganisationseinheitAdressManager';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.schulen.v1.utils.SchuldateiOrganisationseinheitAdressManager'].includes(name);
 	}
 
@@ -314,6 +314,6 @@ export class SchuldateiOrganisationseinheitAdressManager extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_schulen_v1_utils_SchuldateiOrganisationseinheitAdressManager(obj : unknown) : SchuldateiOrganisationseinheitAdressManager {
+export function cast_de_svws_nrw_schulen_v1_utils_SchuldateiOrganisationseinheitAdressManager(obj: unknown): SchuldateiOrganisationseinheitAdressManager {
 	return obj as SchuldateiOrganisationseinheitAdressManager;
 }

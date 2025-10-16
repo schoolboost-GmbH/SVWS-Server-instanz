@@ -6,22 +6,22 @@ export class StundenplanPausenaufsichtBereich extends JavaObject {
 	/**
 	 * Die ID der Zuordnung
 	 */
-	public id : number = -1;
+	public id: number = -1;
 
 	/**
 	 * Die ID der {@link StundenplanPausenaufsicht}.
 	 */
-	public idPausenaufsicht : number = -1;
+	public idPausenaufsicht: number = -1;
 
 	/**
 	 * Die ID des {@link StundenplanAufsichtsbereich}.
 	 */
-	public idAufsichtsbereich : number = -1;
+	public idAufsichtsbereich: number = -1;
 
 	/**
 	 * Der Wochen-Typ bei der Unterscheidung von (A,B,... -Wochen -> 1, 2, ...) oder 0
 	 */
-	public wochentyp : number = -1;
+	public wochentyp: number = -1;
 
 
 	/**
@@ -35,13 +35,13 @@ export class StundenplanPausenaufsichtBereich extends JavaObject {
 		return 'de.svws_nrw.core.data.stundenplan.StundenplanPausenaufsichtBereich';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.stundenplan.StundenplanPausenaufsichtBereich'].includes(name);
 	}
 
 	public static class = new Class<StundenplanPausenaufsichtBereich>('de.svws_nrw.core.data.stundenplan.StundenplanPausenaufsichtBereich');
 
-	public static transpilerFromJSON(json : string): StundenplanPausenaufsichtBereich {
+	public static transpilerFromJSON(json: string): StundenplanPausenaufsichtBereich {
 		const obj = JSON.parse(json) as Partial<StundenplanPausenaufsichtBereich>;
 		const result = new StundenplanPausenaufsichtBereich();
 		if (obj.id === undefined)
@@ -59,7 +59,7 @@ export class StundenplanPausenaufsichtBereich extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : StundenplanPausenaufsichtBereich) : string {
+	public static transpilerToJSON(obj: StundenplanPausenaufsichtBereich): string {
 		let result = '{';
 		result += '"id" : ' + obj.id.toString() + ',';
 		result += '"idPausenaufsicht" : ' + obj.idPausenaufsicht.toString() + ',';
@@ -70,7 +70,7 @@ export class StundenplanPausenaufsichtBereich extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<StundenplanPausenaufsichtBereich>) : string {
+	public static transpilerToJSONPatch(obj: Partial<StundenplanPausenaufsichtBereich>): string {
 		let result = '{';
 		if (obj.id !== undefined) {
 			result += '"id" : ' + obj.id.toString() + ',';
@@ -91,6 +91,6 @@ export class StundenplanPausenaufsichtBereich extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_stundenplan_StundenplanPausenaufsichtBereich(obj : unknown) : StundenplanPausenaufsichtBereich {
+export function cast_de_svws_nrw_core_data_stundenplan_StundenplanPausenaufsichtBereich(obj: unknown): StundenplanPausenaufsichtBereich {
 	return obj as StundenplanPausenaufsichtBereich;
 }

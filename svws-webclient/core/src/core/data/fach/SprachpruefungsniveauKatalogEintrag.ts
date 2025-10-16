@@ -6,27 +6,27 @@ export class SprachpruefungsniveauKatalogEintrag extends JavaObject {
 	/**
 	 * Die ID des Katalog-Eintrags.
 	 */
-	public id : number = -1;
+	public id: number = -1;
 
 	/**
 	 * Das Kürzel des Sprachprüfungsniveaus
 	 */
-	public kuerzel : string = "";
+	public kuerzel: string = "";
 
 	/**
 	 * Die Beschreibung des Sprachprüfungsniveaus
 	 */
-	public beschreibung : string = "";
+	public beschreibung: string = "";
 
 	/**
 	 * Gibt an, in welchem Schuljahr der Eintrag einführt wurde. Ist kein Schuljahr bekannt, so ist null gesetzt.
 	 */
-	public gueltigVon : number | null = null;
+	public gueltigVon: number | null = null;
 
 	/**
 	 * Gibt an, bis zu welchem Schuljahr der Eintrag gültig ist. Ist kein Schuljahr bekannt, so ist null gesetzt.
 	 */
-	public gueltigBis : number | null = null;
+	public gueltigBis: number | null = null;
 
 
 	/**
@@ -44,21 +44,21 @@ export class SprachpruefungsniveauKatalogEintrag extends JavaObject {
 	 *                       "schon immer gültig war"
 	 * @param gueltigBis     das Schuljahr, bis zu welchem der Eintrag gültig ist
 	 */
-	public constructor(id : number, kuerzel : string, beschreibung : string, gueltigVon : number | null, gueltigBis : number | null);
+	public constructor(id: number, kuerzel: string, beschreibung: string, gueltigVon: number | null, gueltigBis: number | null);
 
 	/**
 	 * Implementation for method overloads of 'constructor'
 	 */
-	public constructor(__param0? : number, __param1? : string, __param2? : string, __param3? : null | number, __param4? : null | number) {
+	public constructor(__param0?: number, __param1?: string, __param2?: string, __param3?: null | number, __param4?: null | number) {
 		super();
 		if ((__param0 === undefined) && (__param1 === undefined) && (__param2 === undefined) && (__param3 === undefined) && (__param4 === undefined)) {
 			// empty method body
 		} else if (((__param0 !== undefined) && typeof __param0 === "number") && ((__param1 !== undefined) && (typeof __param1 === "string")) && ((__param2 !== undefined) && (typeof __param2 === "string")) && ((__param3 !== undefined) && (typeof __param3 === "number") || (__param3 === null)) && ((__param4 !== undefined) && (typeof __param4 === "number") || (__param4 === null))) {
-			const id : number = __param0 as number;
-			const kuerzel : string = __param1;
-			const beschreibung : string = __param2;
-			const gueltigVon : number | null = __param3;
-			const gueltigBis : number | null = __param4;
+			const id: number = __param0 as number;
+			const kuerzel: string = __param1;
+			const beschreibung: string = __param2;
+			const gueltigVon: number | null = __param3;
+			const gueltigBis: number | null = __param4;
 			this.id = id;
 			this.kuerzel = kuerzel;
 			this.beschreibung = beschreibung;
@@ -71,13 +71,13 @@ export class SprachpruefungsniveauKatalogEintrag extends JavaObject {
 		return 'de.svws_nrw.core.data.fach.SprachpruefungsniveauKatalogEintrag';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.fach.SprachpruefungsniveauKatalogEintrag'].includes(name);
 	}
 
 	public static class = new Class<SprachpruefungsniveauKatalogEintrag>('de.svws_nrw.core.data.fach.SprachpruefungsniveauKatalogEintrag');
 
-	public static transpilerFromJSON(json : string): SprachpruefungsniveauKatalogEintrag {
+	public static transpilerFromJSON(json: string): SprachpruefungsniveauKatalogEintrag {
 		const obj = JSON.parse(json) as Partial<SprachpruefungsniveauKatalogEintrag>;
 		const result = new SprachpruefungsniveauKatalogEintrag();
 		if (obj.id === undefined)
@@ -94,7 +94,7 @@ export class SprachpruefungsniveauKatalogEintrag extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : SprachpruefungsniveauKatalogEintrag) : string {
+	public static transpilerToJSON(obj: SprachpruefungsniveauKatalogEintrag): string {
 		let result = '{';
 		result += '"id" : ' + obj.id.toString() + ',';
 		result += '"kuerzel" : ' + JSON.stringify(obj.kuerzel) + ',';
@@ -106,7 +106,7 @@ export class SprachpruefungsniveauKatalogEintrag extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<SprachpruefungsniveauKatalogEintrag>) : string {
+	public static transpilerToJSONPatch(obj: Partial<SprachpruefungsniveauKatalogEintrag>): string {
 		let result = '{';
 		if (obj.id !== undefined) {
 			result += '"id" : ' + obj.id.toString() + ',';
@@ -130,6 +130,6 @@ export class SprachpruefungsniveauKatalogEintrag extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_fach_SprachpruefungsniveauKatalogEintrag(obj : unknown) : SprachpruefungsniveauKatalogEintrag {
+export function cast_de_svws_nrw_core_data_fach_SprachpruefungsniveauKatalogEintrag(obj: unknown): SprachpruefungsniveauKatalogEintrag {
 	return obj as SprachpruefungsniveauKatalogEintrag;
 }

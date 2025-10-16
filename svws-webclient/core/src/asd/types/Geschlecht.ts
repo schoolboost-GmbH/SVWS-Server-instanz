@@ -5,50 +5,50 @@ import { Class } from '../../java/lang/Class';
 export class Geschlecht extends JavaEnum<Geschlecht> {
 
 	/** an array containing all values of this enumeration */
-	static readonly all_values_by_ordinal : Array<Geschlecht> = [];
+	static readonly all_values_by_ordinal: Array<Geschlecht> = [];
 
 	/** an array containing all values of this enumeration indexed by their name*/
-	static readonly all_values_by_name : Map<string, Geschlecht> = new Map<string, Geschlecht>();
+	static readonly all_values_by_name: Map<string, Geschlecht> = new Map<string, Geschlecht>();
 
 	/**
 	 * Männlich mit Statistikcode 3
 	 */
-	public static readonly M : Geschlecht = new Geschlecht("M", 0, 3, "m", "männlich", "männlich");
+	public static readonly M: Geschlecht = new Geschlecht("M", 0, 3, "m", "männlich", "männlich");
 
 	/**
 	 * weiblich mit Statistikcode 4
 	 */
-	public static readonly W : Geschlecht = new Geschlecht("W", 1, 4, "w", "weiblich", "weiblich");
+	public static readonly W: Geschlecht = new Geschlecht("W", 1, 4, "w", "weiblich", "weiblich");
 
 	/**
 	 * divers mit Statistikcode 5
 	 */
-	public static readonly D : Geschlecht = new Geschlecht("D", 2, 5, "d", "divers", "divers");
+	public static readonly D: Geschlecht = new Geschlecht("D", 2, 5, "d", "divers", "divers");
 
 	/**
 	 * ohne Angabe mit Statistikcode 6
 	 */
-	public static readonly X : Geschlecht = new Geschlecht("X", 3, 6, "x", "ohne Angabe", "ohne Angabe im Geburtenregister");
+	public static readonly X: Geschlecht = new Geschlecht("X", 3, 6, "x", "ohne Angabe", "ohne Angabe im Geburtenregister");
 
 	/**
 	 * Die ID des Geschlechtes, welche im Rahmen der amtlichen Schulstatistik verwendet wird.
 	 */
-	public readonly id : number;
+	public readonly id: number;
 
 	/**
 	 * Das Geschlecht als einstelliges Kürzel
 	 */
-	public readonly kuerzel : string;
+	public readonly kuerzel: string;
 
 	/**
 	 * Die Kurz-Bezeichnung des Geschlechtes
 	 */
-	public readonly text : string;
+	public readonly text: string;
 
 	/**
 	 * Die ausführliche Bezeichnung des Geschlechtes
 	 */
-	public readonly textLang : string;
+	public readonly textLang: string;
 
 	/**
 	 * Erzeugt ein neues Geschlecht für die Aufzählung der Geschlechter.
@@ -58,7 +58,7 @@ export class Geschlecht extends JavaEnum<Geschlecht> {
 	 * @param text        die textuelle Kurz-Bezeichnung des Geschlechtes
 	 * @param textLang    die ausführliche textuelle Bezeichnung des Geschlechtes
 	 */
-	private constructor(name : string, ordinal : number, id : number, kuerzel : string, text : string, textLang : string) {
+	private constructor(name: string, ordinal: number, id: number, kuerzel: string, text: string, textLang: string) {
 		super(name, ordinal);
 		Geschlecht.all_values_by_ordinal.push(this);
 		Geschlecht.all_values_by_name.set(name, this);
@@ -75,7 +75,7 @@ export class Geschlecht extends JavaEnum<Geschlecht> {
 	 *
 	 * @return das Geschlecht oder null, falls die ID fehlerhaft ist
 	 */
-	public static fromValue(value : number | null) : Geschlecht | null {
+	public static fromValue(value: number | null): Geschlecht | null {
 		if (value === null)
 			return null;
 		switch (value) {
@@ -107,10 +107,10 @@ export class Geschlecht extends JavaEnum<Geschlecht> {
 	 *
 	 * @return das Geschlecht als Type
 	 */
-	public static fromStringValue(text : string | null) : Geschlecht {
+	public static fromStringValue(text: string | null): Geschlecht {
 		if ((text === null) || JavaObject.equalsTranspiler("", (text)))
 			return Geschlecht.X;
-		const upperValue : string | null = text.toUpperCase();
+		const upperValue: string | null = text.toUpperCase();
 		switch (upperValue) {
 			case "MÄNNLICH":
 			case "MAENNLICH":
@@ -145,7 +145,7 @@ export class Geschlecht extends JavaEnum<Geschlecht> {
 	 *
 	 * @return die Anrede
 	 */
-	public getAnrede(alter : number) : string | null {
+	public getAnrede(alter: number): string | null {
 		switch (this.id) {
 			case 3: {
 				return (alter < 18) ? "Lieber" : "Sehr geehrter Herr";
@@ -165,7 +165,7 @@ export class Geschlecht extends JavaEnum<Geschlecht> {
 		}
 	}
 
-	public toString() : string {
+	public toString(): string {
 		return this.kuerzel;
 	}
 
@@ -174,7 +174,7 @@ export class Geschlecht extends JavaEnum<Geschlecht> {
 	 *
 	 * @returns the array with enumeration values
 	 */
-	public static values() : Array<Geschlecht> {
+	public static values(): Array<Geschlecht> {
 		return [...this.all_values_by_ordinal];
 	}
 
@@ -185,7 +185,7 @@ export class Geschlecht extends JavaEnum<Geschlecht> {
 	 *
 	 * @returns the enumeration values or null
 	 */
-	public static valueOf(name : string) : Geschlecht | null {
+	public static valueOf(name: string): Geschlecht | null {
 		const tmp = this.all_values_by_name.get(name);
 		return (!tmp) ? null : tmp;
 	}
@@ -194,7 +194,7 @@ export class Geschlecht extends JavaEnum<Geschlecht> {
 		return 'de.svws_nrw.asd.types.Geschlecht';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.asd.types.Geschlecht', 'java.lang.Enum', 'java.lang.Comparable'].includes(name);
 	}
 
@@ -202,6 +202,6 @@ export class Geschlecht extends JavaEnum<Geschlecht> {
 
 }
 
-export function cast_de_svws_nrw_asd_types_Geschlecht(obj : unknown) : Geschlecht {
+export function cast_de_svws_nrw_asd_types_Geschlecht(obj: unknown): Geschlecht {
 	return obj as Geschlecht;
 }

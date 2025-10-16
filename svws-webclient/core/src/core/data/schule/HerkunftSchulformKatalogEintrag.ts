@@ -10,37 +10,37 @@ export class HerkunftSchulformKatalogEintrag extends JavaObject {
 	/**
 	 * Die ID des Katalog-Eintrags.
 	 */
-	public id : number = -1;
+	public id: number = -1;
 
 	/**
 	 * Das Kürzel der möglichen Herkunftsschulform, welches im Rahmen der amtlichen Schulstatistik für die Schulform verwendet wird
 	 */
-	public kuerzel : string = "";
+	public kuerzel: string = "";
 
 	/**
 	 * Das Kürzel der möglichen Herkunftsschulform, welches im Rahmen der amtlichen Schulstatistik für die Herkunftsschulform verwendet wird
 	 */
-	public kuerzelStatistik : string = "";
+	public kuerzelStatistik: string = "";
 
 	/**
 	 * Die Kürzel der Schulformen, bei welchen die Herkunftsschulform vorkommen kann.
 	 */
-	public schulformen : List<string> = new ArrayList<string>();
+	public schulformen: List<string> = new ArrayList<string>();
 
 	/**
 	 * Die textuelle Beschreibung der Herkunftsschulform.
 	 */
-	public beschreibung : string = "";
+	public beschreibung: string = "";
 
 	/**
 	 * Gibt an, in welchem Schuljahr der Eintrag einführt wurde. Ist kein Schuljahr bekannt, so ist null gesetzt.
 	 */
-	public gueltigVon : number | null = null;
+	public gueltigVon: number | null = null;
 
 	/**
 	 * Gibt an, bis zu welchem Schuljahr der Eintrag gültig ist. Ist kein Schulgliederung bekannt, so ist null gesetzt.
 	 */
-	public gueltigBis : number | null = null;
+	public gueltigBis: number | null = null;
 
 
 	/**
@@ -59,23 +59,23 @@ export class HerkunftSchulformKatalogEintrag extends JavaObject {
 	 * @param gueltigVon         das Schuljahr, wann der Eintrag eingeführt wurde oder null, falls es nicht bekannt ist und "schon immer gültig war"
 	 * @param gueltigBis         das Schuljahr, bis zu welchem der Eintrag gültig ist
 	 */
-	public constructor(id : number, kuerzel : string, kuerzelStatistik : string, schulformen : List<Schulform>, beschreibung : string, gueltigVon : number | null, gueltigBis : number | null);
+	public constructor(id: number, kuerzel: string, kuerzelStatistik: string, schulformen: List<Schulform>, beschreibung: string, gueltigVon: number | null, gueltigBis: number | null);
 
 	/**
 	 * Implementation for method overloads of 'constructor'
 	 */
-	public constructor(__param0? : number, __param1? : string, __param2? : string, __param3? : List<Schulform>, __param4? : string, __param5? : null | number, __param6? : null | number) {
+	public constructor(__param0?: number, __param1?: string, __param2?: string, __param3?: List<Schulform>, __param4?: string, __param5?: null | number, __param6?: null | number) {
 		super();
 		if ((__param0 === undefined) && (__param1 === undefined) && (__param2 === undefined) && (__param3 === undefined) && (__param4 === undefined) && (__param5 === undefined) && (__param6 === undefined)) {
 			// empty method body
 		} else if (((__param0 !== undefined) && typeof __param0 === "number") && ((__param1 !== undefined) && (typeof __param1 === "string")) && ((__param2 !== undefined) && (typeof __param2 === "string")) && ((__param3 !== undefined) && ((__param3 instanceof JavaObject) && (__param3.isTranspiledInstanceOf('java.util.List'))) || (__param3 === null)) && ((__param4 !== undefined) && (typeof __param4 === "string")) && ((__param5 !== undefined) && (typeof __param5 === "number") || (__param5 === null)) && ((__param6 !== undefined) && (typeof __param6 === "number") || (__param6 === null))) {
-			const id : number = __param0 as number;
-			const kuerzel : string = __param1;
-			const kuerzelStatistik : string = __param2;
-			const schulformen : List<Schulform> = cast_java_util_List(__param3);
-			const beschreibung : string = __param4;
-			const gueltigVon : number | null = __param5;
-			const gueltigBis : number | null = __param6;
+			const id: number = __param0 as number;
+			const kuerzel: string = __param1;
+			const kuerzelStatistik: string = __param2;
+			const schulformen: List<Schulform> = cast_java_util_List(__param3);
+			const beschreibung: string = __param4;
+			const gueltigVon: number | null = __param5;
+			const gueltigBis: number | null = __param6;
 			this.id = id;
 			this.kuerzel = kuerzel;
 			this.kuerzelStatistik = kuerzelStatistik;
@@ -92,13 +92,13 @@ export class HerkunftSchulformKatalogEintrag extends JavaObject {
 		return 'de.svws_nrw.core.data.schule.HerkunftSchulformKatalogEintrag';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.schule.HerkunftSchulformKatalogEintrag'].includes(name);
 	}
 
 	public static class = new Class<HerkunftSchulformKatalogEintrag>('de.svws_nrw.core.data.schule.HerkunftSchulformKatalogEintrag');
 
-	public static transpilerFromJSON(json : string): HerkunftSchulformKatalogEintrag {
+	public static transpilerFromJSON(json: string): HerkunftSchulformKatalogEintrag {
 		const obj = JSON.parse(json) as Partial<HerkunftSchulformKatalogEintrag>;
 		const result = new HerkunftSchulformKatalogEintrag();
 		if (obj.id === undefined)
@@ -123,7 +123,7 @@ export class HerkunftSchulformKatalogEintrag extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : HerkunftSchulformKatalogEintrag) : string {
+	public static transpilerToJSON(obj: HerkunftSchulformKatalogEintrag): string {
 		let result = '{';
 		result += '"id" : ' + obj.id.toString() + ',';
 		result += '"kuerzel" : ' + JSON.stringify(obj.kuerzel) + ',';
@@ -144,7 +144,7 @@ export class HerkunftSchulformKatalogEintrag extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<HerkunftSchulformKatalogEintrag>) : string {
+	public static transpilerToJSONPatch(obj: Partial<HerkunftSchulformKatalogEintrag>): string {
 		let result = '{';
 		if (obj.id !== undefined) {
 			result += '"id" : ' + obj.id.toString() + ',';
@@ -181,6 +181,6 @@ export class HerkunftSchulformKatalogEintrag extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_schule_HerkunftSchulformKatalogEintrag(obj : unknown) : HerkunftSchulformKatalogEintrag {
+export function cast_de_svws_nrw_core_data_schule_HerkunftSchulformKatalogEintrag(obj: unknown): HerkunftSchulformKatalogEintrag {
 	return obj as HerkunftSchulformKatalogEintrag;
 }

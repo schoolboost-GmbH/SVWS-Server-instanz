@@ -29,11 +29,11 @@ export class Map4DUtils extends JavaObject {
 	 *
 	 * @return die "ArrayList of V" des Schlüssels. Erstellt eine leere "ArrayList of V", falls eine solche Zuordnung nicht existierte.
 	 */
-	public static getOrCreateArrayList<K1, K2, K3, K4, V>(map3D : HashMap4D<K1, K2, K3, K4, List<V>>, key1 : K1, key2 : K2, key3 : K3, key4 : K4) : List<V> {
-		const list : List<V> | null = map3D.getOrNull(key1, key2, key3, key4);
+	public static getOrCreateArrayList<K1, K2, K3, K4, V>(map3D: HashMap4D<K1, K2, K3, K4, List<V>>, key1: K1, key2: K2, key3: K3, key4: K4): List<V> {
+		const list: List<V> | null = map3D.getOrNull(key1, key2, key3, key4);
 		if (list !== null)
 			return list;
-		const listNeu : ArrayList<V> = new ArrayList<V>();
+		const listNeu: ArrayList<V> = new ArrayList<V>();
 		map3D.put(key1, key2, key3, key4, listNeu);
 		return listNeu;
 	}
@@ -54,11 +54,11 @@ export class Map4DUtils extends JavaObject {
 	 *
 	 * @return die "HashSet of V" des Schlüssels. Erstellt ein leeres "HashSet of V", falls eine solche Zuordnung nicht existierte.
 	 */
-	public static getOrCreateSet<K1, K2, K3, K4, V>(map3D : HashMap4D<K1, K2, K3, K4, JavaSet<V>>, key1 : K1, key2 : K2, key3 : K3, key4 : K4) : JavaSet<V> {
-		const set : JavaSet<V> | null = map3D.getOrNull(key1, key2, key3, key4);
+	public static getOrCreateSet<K1, K2, K3, K4, V>(map3D: HashMap4D<K1, K2, K3, K4, JavaSet<V>>, key1: K1, key2: K2, key3: K3, key4: K4): JavaSet<V> {
+		const set: JavaSet<V> | null = map3D.getOrNull(key1, key2, key3, key4);
 		if (set !== null)
 			return set;
-		const setNeu : HashSet<V> = new HashSet<V>();
+		const setNeu: HashSet<V> = new HashSet<V>();
 		map3D.put(key1, key2, key3, key4, setNeu);
 		return setNeu;
 	}
@@ -67,7 +67,7 @@ export class Map4DUtils extends JavaObject {
 		return 'de.svws_nrw.core.utils.Map4DUtils';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.utils.Map4DUtils'].includes(name);
 	}
 
@@ -75,6 +75,6 @@ export class Map4DUtils extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_utils_Map4DUtils(obj : unknown) : Map4DUtils {
+export function cast_de_svws_nrw_core_utils_Map4DUtils(obj: unknown): Map4DUtils {
 	return obj as Map4DUtils;
 }

@@ -6,57 +6,57 @@ export class LehrerListeEintrag extends JavaObject {
 	/**
 	 * Die ID des Lehrers.
 	 */
-	public id : number = 0;
+	public id: number = 0;
 
 	/**
 	 * Das Kürzel des Lehrers.
 	 */
-	public kuerzel : string = "";
+	public kuerzel: string = "";
 
 	/**
 	 * Ggf. ein akademischer Grad des Lehrers.
 	 */
-	public titel : string | null = null;
+	public titel: string | null = null;
 
 	/**
 	 * Der Nachname des Lehrers.
 	 */
-	public nachname : string = "";
+	public nachname: string = "";
 
 	/**
 	 * Der Vorname des Lehrers.
 	 */
-	public vorname : string = "";
+	public vorname: string = "";
 
 	/**
 	 * Der Personaltyp des Lehrerlisten-Eintrags.
 	 */
-	public personTyp : string = "";
+	public personTyp: string = "";
 
 	/**
 	 * Die Sortierreihenfolge des Lehrerlisten-Eintrags.
 	 */
-	public sortierung : number = 0;
+	public sortierung: number = 0;
 
 	/**
 	 * Gibt an, ob der Lehrer in dem Schuljahresabschnitt, auf welchen sich die Abfrage bezieht aktiv ist oder nicht.
 	 */
-	public istAktiv : boolean = true;
+	public istAktiv: boolean = true;
 
 	/**
 	 * Gibt an, ob der Eintrag in der Anwendung sichtbar sein soll oder nicht.
 	 */
-	public istSichtbar : boolean = false;
+	public istSichtbar: boolean = false;
 
 	/**
 	 * Gibt an, ob der Eintrag für die Schulstatistik relevant ist oder nicht.
 	 */
-	public istRelevantFuerStatistik : boolean = false;
+	public istRelevantFuerStatistik: boolean = false;
 
 	/**
 	 * Gibt an, ob der Lehrer in anderen Datenbanktabellen referenziert ist oder nicht.
 	 */
-	public referenziertInAnderenTabellen : boolean | null = null;
+	public referenziertInAnderenTabellen: boolean | null = null;
 
 
 	/**
@@ -70,13 +70,13 @@ export class LehrerListeEintrag extends JavaObject {
 		return 'de.svws_nrw.core.data.lehrer.LehrerListeEintrag';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.lehrer.LehrerListeEintrag'].includes(name);
 	}
 
 	public static class = new Class<LehrerListeEintrag>('de.svws_nrw.core.data.lehrer.LehrerListeEintrag');
 
-	public static transpilerFromJSON(json : string): LehrerListeEintrag {
+	public static transpilerFromJSON(json: string): LehrerListeEintrag {
 		const obj = JSON.parse(json) as Partial<LehrerListeEintrag>;
 		const result = new LehrerListeEintrag();
 		if (obj.id === undefined)
@@ -111,7 +111,7 @@ export class LehrerListeEintrag extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : LehrerListeEintrag) : string {
+	public static transpilerToJSON(obj: LehrerListeEintrag): string {
 		let result = '{';
 		result += '"id" : ' + obj.id.toString() + ',';
 		result += '"kuerzel" : ' + JSON.stringify(obj.kuerzel) + ',';
@@ -129,7 +129,7 @@ export class LehrerListeEintrag extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<LehrerListeEintrag>) : string {
+	public static transpilerToJSONPatch(obj: Partial<LehrerListeEintrag>): string {
 		let result = '{';
 		if (obj.id !== undefined) {
 			result += '"id" : ' + obj.id.toString() + ',';
@@ -171,6 +171,6 @@ export class LehrerListeEintrag extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_lehrer_LehrerListeEintrag(obj : unknown) : LehrerListeEintrag {
+export function cast_de_svws_nrw_core_data_lehrer_LehrerListeEintrag(obj: unknown): LehrerListeEintrag {
 	return obj as LehrerListeEintrag;
 }

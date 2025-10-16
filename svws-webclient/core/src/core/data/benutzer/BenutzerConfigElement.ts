@@ -6,12 +6,12 @@ export class BenutzerConfigElement extends JavaObject {
 	/**
 	 * Der Schlüssel des Konfigurationselements
 	 */
-	public key : string = "";
+	public key: string = "";
 
 	/**
 	 * Der Wert des Konfigurationselements.
 	 */
-	public value : string = "";
+	public value: string = "";
 
 
 	/**
@@ -25,13 +25,13 @@ export class BenutzerConfigElement extends JavaObject {
 		return 'de.svws_nrw.core.data.benutzer.BenutzerConfigElement';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.benutzer.BenutzerConfigElement'].includes(name);
 	}
 
 	public static class = new Class<BenutzerConfigElement>('de.svws_nrw.core.data.benutzer.BenutzerConfigElement');
 
-	public static transpilerFromJSON(json : string): BenutzerConfigElement {
+	public static transpilerFromJSON(json: string): BenutzerConfigElement {
 		const obj = JSON.parse(json) as Partial<BenutzerConfigElement>;
 		const result = new BenutzerConfigElement();
 		if (obj.key === undefined)
@@ -43,7 +43,7 @@ export class BenutzerConfigElement extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : BenutzerConfigElement) : string {
+	public static transpilerToJSON(obj: BenutzerConfigElement): string {
 		let result = '{';
 		result += '"key" : ' + JSON.stringify(obj.key) + ',';
 		result += '"value" : ' + JSON.stringify(obj.value) + ',';
@@ -52,7 +52,7 @@ export class BenutzerConfigElement extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<BenutzerConfigElement>) : string {
+	public static transpilerToJSONPatch(obj: Partial<BenutzerConfigElement>): string {
 		let result = '{';
 		if (obj.key !== undefined) {
 			result += '"key" : ' + JSON.stringify(obj.key) + ',';
@@ -67,6 +67,6 @@ export class BenutzerConfigElement extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_benutzer_BenutzerConfigElement(obj : unknown) : BenutzerConfigElement {
+export function cast_de_svws_nrw_core_data_benutzer_BenutzerConfigElement(obj: unknown): BenutzerConfigElement {
 	return obj as BenutzerConfigElement;
 }

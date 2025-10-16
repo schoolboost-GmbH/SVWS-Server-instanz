@@ -6,37 +6,37 @@ export class GEAbschlussFach extends JavaObject {
 	/**
 	 * Das Kürzel des Faches
 	 */
-	public kuerzel : string = "";
+	public kuerzel: string = "";
 
 	/**
 	 * Die Bezeichnung des Faches
 	 */
-	public bezeichnung : string | null = null;
+	public bezeichnung: string | null = null;
 
 	/**
 	 * Die Note, die in dem Fach erteilt wurde
 	 */
-	public note : number = -1;
+	public note: number = -1;
 
 	/**
 	 * Gibt an, ob das Fach eine Fremdsprache ist oder nicht
 	 */
-	public istFremdsprache : boolean | null = false;
+	public istFremdsprache: boolean | null = false;
 
 	/**
 	 * Gibt die Art der Leistungsdifferenzierung bei dem Fach an: E-Kurs, G-Kurs oder sonstiger Kurs
 	 */
-	public kursart : string | null = "";
+	public kursart: string | null = "";
 
 	/**
 	 * Gibt an, ob das Fach als Ausgleich genutzt wurde oder nicht.
 	 */
-	public ausgleich : boolean | null = false;
+	public ausgleich: boolean | null = false;
 
 	/**
 	 * Gibt an, ob in diesem Fach ein Defizit ausgeglichen wurde.
 	 */
-	public ausgeglichen : boolean | null = false;
+	public ausgeglichen: boolean | null = false;
 
 
 	/**
@@ -50,13 +50,13 @@ export class GEAbschlussFach extends JavaObject {
 		return 'de.svws_nrw.core.data.abschluss.GEAbschlussFach';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.abschluss.GEAbschlussFach'].includes(name);
 	}
 
 	public static class = new Class<GEAbschlussFach>('de.svws_nrw.core.data.abschluss.GEAbschlussFach');
 
-	public static transpilerFromJSON(json : string): GEAbschlussFach {
+	public static transpilerFromJSON(json: string): GEAbschlussFach {
 		const obj = JSON.parse(json) as Partial<GEAbschlussFach>;
 		const result = new GEAbschlussFach();
 		if (obj.kuerzel === undefined)
@@ -73,7 +73,7 @@ export class GEAbschlussFach extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : GEAbschlussFach) : string {
+	public static transpilerToJSON(obj: GEAbschlussFach): string {
 		let result = '{';
 		result += '"kuerzel" : ' + JSON.stringify(obj.kuerzel) + ',';
 		result += '"bezeichnung" : ' + ((obj.bezeichnung === null) ? 'null' : JSON.stringify(obj.bezeichnung)) + ',';
@@ -87,7 +87,7 @@ export class GEAbschlussFach extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<GEAbschlussFach>) : string {
+	public static transpilerToJSONPatch(obj: Partial<GEAbschlussFach>): string {
 		let result = '{';
 		if (obj.kuerzel !== undefined) {
 			result += '"kuerzel" : ' + JSON.stringify(obj.kuerzel) + ',';
@@ -117,6 +117,6 @@ export class GEAbschlussFach extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_abschluss_GEAbschlussFach(obj : unknown) : GEAbschlussFach {
+export function cast_de_svws_nrw_core_data_abschluss_GEAbschlussFach(obj: unknown): GEAbschlussFach {
 	return obj as GEAbschlussFach;
 }

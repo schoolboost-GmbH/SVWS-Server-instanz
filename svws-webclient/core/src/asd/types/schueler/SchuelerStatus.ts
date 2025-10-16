@@ -9,52 +9,52 @@ import { de_svws_nrw_asd_types_CoreType_getManager, de_svws_nrw_asd_types_CoreTy
 export class SchuelerStatus extends JavaEnum<SchuelerStatus> implements CoreType<SchuelerStatusKatalogEintrag, SchuelerStatus> {
 
 	/** an array containing all values of this enumeration */
-	static readonly all_values_by_ordinal : Array<SchuelerStatus> = [];
+	static readonly all_values_by_ordinal: Array<SchuelerStatus> = [];
 
 	/** an array containing all values of this enumeration indexed by their name*/
-	static readonly all_values_by_name : Map<string, SchuelerStatus> = new Map<string, SchuelerStatus>();
+	static readonly all_values_by_name: Map<string, SchuelerStatus> = new Map<string, SchuelerStatus>();
 
 	/**
 	 * Status Neuaufnahme mit dem Wert 0
 	 */
-	public static readonly NEUAUFNAHME : SchuelerStatus = new SchuelerStatus("NEUAUFNAHME", 0, );
+	public static readonly NEUAUFNAHME: SchuelerStatus = new SchuelerStatus("NEUAUFNAHME", 0, );
 
 	/**
 	 * Status Warteliste mit dem Wert 1
 	 */
-	public static readonly WARTELISTE : SchuelerStatus = new SchuelerStatus("WARTELISTE", 1, );
+	public static readonly WARTELISTE: SchuelerStatus = new SchuelerStatus("WARTELISTE", 1, );
 
 	/**
 	 * Status Aktiv mit dem Wert 2
 	 */
-	public static readonly AKTIV : SchuelerStatus = new SchuelerStatus("AKTIV", 2, );
+	public static readonly AKTIV: SchuelerStatus = new SchuelerStatus("AKTIV", 2, );
 
 	/**
 	 * Status Beurlaubt mit dem Wert 3
 	 */
-	public static readonly BEURLAUBT : SchuelerStatus = new SchuelerStatus("BEURLAUBT", 3, );
+	public static readonly BEURLAUBT: SchuelerStatus = new SchuelerStatus("BEURLAUBT", 3, );
 
 	/**
 	 * Status Extern mit dem Wert 6
 	 */
-	public static readonly EXTERN : SchuelerStatus = new SchuelerStatus("EXTERN", 4, );
+	public static readonly EXTERN: SchuelerStatus = new SchuelerStatus("EXTERN", 4, );
 
 	/**
 	 * Status Abschluss mit dem Wert 8
 	 */
-	public static readonly ABSCHLUSS : SchuelerStatus = new SchuelerStatus("ABSCHLUSS", 5, );
+	public static readonly ABSCHLUSS: SchuelerStatus = new SchuelerStatus("ABSCHLUSS", 5, );
 
 	/**
 	 * Status Abgänger mit dem Wert 9
 	 */
-	public static readonly ABGANG : SchuelerStatus = new SchuelerStatus("ABGANG", 6, );
+	public static readonly ABGANG: SchuelerStatus = new SchuelerStatus("ABGANG", 6, );
 
 	/**
 	 * Status Abgänger mit dem Wert 10
 	 */
-	public static readonly EHEMALIGE : SchuelerStatus = new SchuelerStatus("EHEMALIGE", 7, );
+	public static readonly EHEMALIGE: SchuelerStatus = new SchuelerStatus("EHEMALIGE", 7, );
 
-	private constructor(name : string, ordinal : number) {
+	private constructor(name: string, ordinal: number) {
 		super(name, ordinal);
 		SchuelerStatus.all_values_by_ordinal.push(this);
 		SchuelerStatus.all_values_by_name.set(name, this);
@@ -65,7 +65,7 @@ export class SchuelerStatus extends JavaEnum<SchuelerStatus> implements CoreType
 	 *
 	 * @param manager   der Manager für die Daten des Core-Types
 	 */
-	public static init(manager : CoreTypeDataManager<SchuelerStatusKatalogEintrag, SchuelerStatus>) : void {
+	public static init(manager: CoreTypeDataManager<SchuelerStatusKatalogEintrag, SchuelerStatus>): void {
 		CoreTypeDataManager.putManager(SchuelerStatus.class, manager);
 	}
 
@@ -74,7 +74,7 @@ export class SchuelerStatus extends JavaEnum<SchuelerStatus> implements CoreType
 	 *
 	 * @return der Daten-Manager
 	 */
-	public static data() : CoreTypeDataManager<SchuelerStatusKatalogEintrag, SchuelerStatus> {
+	public static data(): CoreTypeDataManager<SchuelerStatusKatalogEintrag, SchuelerStatus> {
 		return CoreTypeDataManager.getManager(SchuelerStatus.class);
 	}
 
@@ -83,7 +83,7 @@ export class SchuelerStatus extends JavaEnum<SchuelerStatus> implements CoreType
 	 *
 	 * @returns the array with enumeration values
 	 */
-	public static values() : Array<SchuelerStatus> {
+	public static values(): Array<SchuelerStatus> {
 		return [...this.all_values_by_ordinal];
 	}
 
@@ -94,24 +94,24 @@ export class SchuelerStatus extends JavaEnum<SchuelerStatus> implements CoreType
 	 *
 	 * @returns the enumeration values or null
 	 */
-	public static valueOf(name : string) : SchuelerStatus | null {
+	public static valueOf(name: string): SchuelerStatus | null {
 		const tmp = this.all_values_by_name.get(name);
 		return (!tmp) ? null : tmp;
 	}
 
-	public getManager() : CoreTypeDataManager<SchuelerStatusKatalogEintrag, SchuelerStatus> {
+	public getManager(): CoreTypeDataManager<SchuelerStatusKatalogEintrag, SchuelerStatus> {
 		return de_svws_nrw_asd_types_CoreType_getManager(this);
 	}
 
-	public daten(schuljahr : number) : SchuelerStatusKatalogEintrag | null {
+	public daten(schuljahr: number): SchuelerStatusKatalogEintrag | null {
 		return de_svws_nrw_asd_types_CoreType_daten(this, schuljahr);
 	}
 
-	public statistikId() : string | null {
+	public statistikId(): string | null {
 		return de_svws_nrw_asd_types_CoreType_statistikId(this);
 	}
 
-	public historie() : List<SchuelerStatusKatalogEintrag> {
+	public historie(): List<SchuelerStatusKatalogEintrag> {
 		return de_svws_nrw_asd_types_CoreType_historie(this);
 	}
 
@@ -119,7 +119,7 @@ export class SchuelerStatus extends JavaEnum<SchuelerStatus> implements CoreType
 		return 'de.svws_nrw.asd.types.schueler.SchuelerStatus';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.asd.types.schueler.SchuelerStatus', 'de.svws_nrw.asd.types.CoreType', 'java.lang.Comparable', 'java.lang.Enum', 'java.lang.Comparable'].includes(name);
 	}
 
@@ -127,6 +127,6 @@ export class SchuelerStatus extends JavaEnum<SchuelerStatus> implements CoreType
 
 }
 
-export function cast_de_svws_nrw_asd_types_schueler_SchuelerStatus(obj : unknown) : SchuelerStatus {
+export function cast_de_svws_nrw_asd_types_schueler_SchuelerStatus(obj: unknown): SchuelerStatus {
 	return obj as SchuelerStatus;
 }

@@ -9,32 +9,32 @@ export class GostKlausurterminblockungKonfiguration extends JavaObject {
 	/**
 	 * Die maximale Zeit, welche für die Blockung verwendet wird
 	 */
-	public maxTimeMillis : number = 1000;
+	public maxTimeMillis: number = 1000;
 
 	/**
 	 * Der Typ des Algorithmus, welcher verwendet wird.
 	 */
-	public algorithmus : number = KlausurterminblockungAlgorithmen.NORMAL.id;
+	public algorithmus: number = KlausurterminblockungAlgorithmen.NORMAL.id;
 
 	/**
 	 * Der Modus für die Art, ob und wie die beiden Kursarten LK und GK geblockt werden
 	 */
-	public modusKursarten : number = KlausurterminblockungModusKursarten.BEIDE.id;
+	public modusKursarten: number = KlausurterminblockungModusKursarten.BEIDE.id;
 
 	/**
 	 * Der Modus dafür, wie die Klausuren in den Quartalen eines Halbjahres geblockt werden.
 	 */
-	public modusQuartale : number = KlausurterminblockungModusQuartale.ZUSAMMEN.id;
+	public modusQuartale: number = KlausurterminblockungModusQuartale.ZUSAMMEN.id;
 
 	/**
 	 * True, falls Kurse mit gleicher Lehrkraft+Fach+Kursart in einem Termin geblockt werden sollen.
 	 */
-	public regelBeiTerminenGleicheLehrkraftFachKursart : boolean = false;
+	public regelBeiTerminenGleicheLehrkraftFachKursart: boolean = false;
 
 	/**
 	 * True, falls die Regel "bevorzuge gleiche Kursschienen bei Terminen" aktiviert ist.
 	 */
-	public regelBevorzugeBeiTerminenGleicheKursschienen : boolean = false;
+	public regelBevorzugeBeiTerminenGleicheKursschienen: boolean = false;
 
 
 	/**
@@ -48,13 +48,13 @@ export class GostKlausurterminblockungKonfiguration extends JavaObject {
 		return 'de.svws_nrw.core.data.gost.klausurplanung.GostKlausurterminblockungKonfiguration';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.gost.klausurplanung.GostKlausurterminblockungKonfiguration'].includes(name);
 	}
 
 	public static class = new Class<GostKlausurterminblockungKonfiguration>('de.svws_nrw.core.data.gost.klausurplanung.GostKlausurterminblockungKonfiguration');
 
-	public static transpilerFromJSON(json : string): GostKlausurterminblockungKonfiguration {
+	public static transpilerFromJSON(json: string): GostKlausurterminblockungKonfiguration {
 		const obj = JSON.parse(json) as Partial<GostKlausurterminblockungKonfiguration>;
 		const result = new GostKlausurterminblockungKonfiguration();
 		if (obj.maxTimeMillis === undefined)
@@ -78,7 +78,7 @@ export class GostKlausurterminblockungKonfiguration extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : GostKlausurterminblockungKonfiguration) : string {
+	public static transpilerToJSON(obj: GostKlausurterminblockungKonfiguration): string {
 		let result = '{';
 		result += '"maxTimeMillis" : ' + obj.maxTimeMillis.toString() + ',';
 		result += '"algorithmus" : ' + obj.algorithmus.toString() + ',';
@@ -91,7 +91,7 @@ export class GostKlausurterminblockungKonfiguration extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<GostKlausurterminblockungKonfiguration>) : string {
+	public static transpilerToJSONPatch(obj: Partial<GostKlausurterminblockungKonfiguration>): string {
 		let result = '{';
 		if (obj.maxTimeMillis !== undefined) {
 			result += '"maxTimeMillis" : ' + obj.maxTimeMillis.toString() + ',';
@@ -118,6 +118,6 @@ export class GostKlausurterminblockungKonfiguration extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_gost_klausurplanung_GostKlausurterminblockungKonfiguration(obj : unknown) : GostKlausurterminblockungKonfiguration {
+export function cast_de_svws_nrw_core_data_gost_klausurplanung_GostKlausurterminblockungKonfiguration(obj: unknown): GostKlausurterminblockungKonfiguration {
 	return obj as GostKlausurterminblockungKonfiguration;
 }

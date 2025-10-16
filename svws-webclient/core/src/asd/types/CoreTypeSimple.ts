@@ -17,17 +17,17 @@ export abstract class CoreTypeSimple<T extends CoreTypeData, U extends CoreTypeS
 	/**
 	 * Verwaltung der Bezeichner, um die Liste der erstellten CoreType Elemente zurück geben zu können
 	 */
-	private static _values : HashMap<Class<any>, Array<unknown>> = new HashMap<Class<any>, Array<unknown>>();
+	private static _values: HashMap<Class<any>, Array<unknown>> = new HashMap<Class<any>, Array<unknown>>();
 
 	/**
 	 * der Bezeichner des CoreTypeSimple
 	 */
-	private _name : string = "";
+	private _name: string = "";
 
 	/**
 	 * die lfd. Nummer des CoreTypeSimple
 	 */
-	private _ordinal : number = 0;
+	private _ordinal: number = 0;
 
 
 	/**
@@ -46,16 +46,16 @@ export abstract class CoreTypeSimple<T extends CoreTypeData, U extends CoreTypeS
 	 * @param clazz  das Klassen-Objekt für den Core-Type
 	 * @param data   die Date mit denen der Core-Type initialisiert wird
 	 */
-	public static initValues<T extends CoreTypeData, U extends CoreTypeSimple<T, U>>(obj : U, clazz : Class<U>, data : JavaMap<string, List<T>>) : void {
+	public static initValues<T extends CoreTypeData, U extends CoreTypeSimple<T, U>>(obj: U, clazz: Class<U>, data: JavaMap<string, List<T>>): void {
 		try {
-			const values : Array<U> = Array(data.size()).fill(null) as unknown as Array<U>;
+			const values: Array<U> = Array(data.size()).fill(null) as unknown as Array<U>;
 			CoreTypeSimple._values.put(clazz, values);
-			let i : number = 0;
+			let i: number = 0;
 			for (const bezeichner of data.keySet()) {
-				const u : U | null = obj.getInstance();
+				const u: U | null = obj.getInstance();
 				if (u !== null) {
 					values[i] = u;
-					const coreTypeValue : CoreTypeSimple<T, U> | null = values[i];
+					const coreTypeValue: CoreTypeSimple<T, U> | null = values[i];
 					coreTypeValue._name = bezeichner;
 					coreTypeValue._ordinal = i++;
 				}
@@ -73,7 +73,7 @@ export abstract class CoreTypeSimple<T extends CoreTypeData, U extends CoreTypeS
 	 *
 	 * @return die Werte des Core-Types als Array
 	 */
-	public static valuesByClass<S extends CoreTypeSimple<any, any>>(clazz : Class<S>) : Array<S> {
+	public static valuesByClass<S extends CoreTypeSimple<any, any>>(clazz: Class<S>): Array<S> {
 		const list = CoreTypeSimple._values.get(clazz);
 		if (list === null)
 			return Array(0).fill(null) as unknown as Array<S>;
@@ -85,7 +85,7 @@ export abstract class CoreTypeSimple<T extends CoreTypeData, U extends CoreTypeS
 	 *
 	 * @return der name (Bezeichner)
 	 */
-	public name() : string {
+	public name(): string {
 		return this._name;
 	}
 
@@ -94,7 +94,7 @@ export abstract class CoreTypeSimple<T extends CoreTypeData, U extends CoreTypeS
 	 *
 	 * @return der Ordinal-Wert
 	 */
-	public ordinal() : number {
+	public ordinal(): number {
 		return this._ordinal;
 	}
 
@@ -103,7 +103,7 @@ export abstract class CoreTypeSimple<T extends CoreTypeData, U extends CoreTypeS
 	 *
 	 * @return der Bezeichner
 	 */
-	public toString() : string {
+	public toString(): string {
 		return this._name;
 	}
 
@@ -115,7 +115,7 @@ export abstract class CoreTypeSimple<T extends CoreTypeData, U extends CoreTypeS
 	 * @return kleiner 0, wenn dieser Wert kleiner ist, 0, wenn sie gleich sind
 	 *     und größer 0, wenn dieser Wert größer ist
 	 */
-	public compareTo(other : U) : number {
+	public compareTo(other: U): number {
 		if (other === null)
 			throw new NullPointerException()
 		return JavaInteger.compare(this.ordinal(), other.ordinal());
@@ -126,14 +126,14 @@ export abstract class CoreTypeSimple<T extends CoreTypeData, U extends CoreTypeS
 	 *
 	 * @return der Hash-Code
 	 */
-	public hashCode() : number {
+	public hashCode(): number {
 		return JavaObject.getTranspilerHashCode(this._name);
 	}
 
 	/**
 	 * Prüft, ob die CoreType-Werte gleich sind.
 	 */
-	public equals(obj : unknown | null) : boolean {
+	public equals(obj: unknown | null): boolean {
 		return (this as unknown === obj as unknown);
 	}
 
@@ -141,7 +141,7 @@ export abstract class CoreTypeSimple<T extends CoreTypeData, U extends CoreTypeS
 	 * Erzeugt ein Objekt der Klasse
 	 * @return Ein Objekt der Klasse U
 	 */
-	public getInstance() : U | null {
+	public getInstance(): U | null {
 		return null;
 	}
 
@@ -149,30 +149,30 @@ export abstract class CoreTypeSimple<T extends CoreTypeData, U extends CoreTypeS
 		return 'de.svws_nrw.asd.types.CoreTypeSimple';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.asd.types.CoreType', 'java.lang.Comparable', 'de.svws_nrw.asd.types.CoreTypeSimple'].includes(name);
 	}
 
 	public static class = new Class<CoreTypeSimple<any, any>>('de.svws_nrw.asd.types.CoreTypeSimple');
 
-	public getManager() : CoreTypeDataManager<T, U> {
+	public getManager(): CoreTypeDataManager<T, U> {
 		return de_svws_nrw_asd_types_CoreType_getManager(this);
 	}
 
-	public daten(schuljahr : number) : T | null {
+	public daten(schuljahr: number): T | null {
 		return de_svws_nrw_asd_types_CoreType_daten(this, schuljahr);
 	}
 
-	public statistikId() : string | null {
+	public statistikId(): string | null {
 		return de_svws_nrw_asd_types_CoreType_statistikId(this);
 	}
 
-	public historie() : List<T> {
+	public historie(): List<T> {
 		return de_svws_nrw_asd_types_CoreType_historie(this);
 	}
 
 }
 
-export function cast_de_svws_nrw_asd_types_CoreTypeSimple<T extends CoreTypeData, U extends CoreTypeSimple<T, U>>(obj : unknown) : CoreTypeSimple<T, U> {
+export function cast_de_svws_nrw_asd_types_CoreTypeSimple<T extends CoreTypeData, U extends CoreTypeSimple<T, U>>(obj: unknown): CoreTypeSimple<T, U> {
 	return obj as CoreTypeSimple<T, U>;
 }

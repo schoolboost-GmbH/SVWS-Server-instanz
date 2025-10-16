@@ -6,37 +6,37 @@ export class Schueler extends JavaObject {
 	/**
 	 * Die ID des Schülerdatensatzes.
 	 */
-	public id : number = 0;
+	public id: number = 0;
 
 	/**
 	 * Der Nachname des Schülerdatensatzes.
 	 */
-	public nachname : string = "";
+	public nachname: string = "";
 
 	/**
 	 * Der Vorname des Schülerdatensatzes.
 	 */
-	public vorname : string = "";
+	public vorname: string = "";
 
 	/**
 	 * Die ID des Geschlechtes. Gültige Werte sind im Enum-Typ {@link Geschlecht} definiert.
 	 */
-	public geschlecht : number = 0;
+	public geschlecht: number = 0;
 
 	/**
 	 * Der Status des Schülerdatensatzes. Gültige Werte sind im Enum-Typ {@link SchuelerStatus} definiert.
 	 */
-	public status : number = 0;
+	public status: number = 0;
 
 	/**
 	 * Ggf. der Abschlussjahrgang, dem der Schüler aktuell zugeordnet ist
 	 */
-	public abschlussjahrgang : number = -1;
+	public abschlussjahrgang: number = -1;
 
 	/**
 	 * Das Schulnummer bei einem externen Schüler oder null, wenn der Schüler kein externer Schüler ist.
 	 */
-	public externeSchulNr : string | null = null;
+	public externeSchulNr: string | null = null;
 
 
 	/**
@@ -50,13 +50,13 @@ export class Schueler extends JavaObject {
 		return 'de.svws_nrw.asd.data.schueler.Schueler';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.asd.data.schueler.Schueler'].includes(name);
 	}
 
 	public static class = new Class<Schueler>('de.svws_nrw.asd.data.schueler.Schueler');
 
-	public static transpilerFromJSON(json : string): Schueler {
+	public static transpilerFromJSON(json: string): Schueler {
 		const obj = JSON.parse(json) as Partial<Schueler>;
 		const result = new Schueler();
 		if (obj.id === undefined)
@@ -81,7 +81,7 @@ export class Schueler extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : Schueler) : string {
+	public static transpilerToJSON(obj: Schueler): string {
 		let result = '{';
 		result += '"id" : ' + obj.id.toString() + ',';
 		result += '"nachname" : ' + JSON.stringify(obj.nachname) + ',';
@@ -95,7 +95,7 @@ export class Schueler extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<Schueler>) : string {
+	public static transpilerToJSONPatch(obj: Partial<Schueler>): string {
 		let result = '{';
 		if (obj.id !== undefined) {
 			result += '"id" : ' + obj.id.toString() + ',';
@@ -125,6 +125,6 @@ export class Schueler extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_asd_data_schueler_Schueler(obj : unknown) : Schueler {
+export function cast_de_svws_nrw_asd_data_schueler_Schueler(obj: unknown): Schueler {
 	return obj as Schueler;
 }

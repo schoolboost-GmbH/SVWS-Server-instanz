@@ -12,17 +12,17 @@ export class LogConsumerList extends JavaObject implements Consumer<LogData> {
 	/**
 	 * Gibt an, ob die Zeit beim Loggen ausgegeben wird oder nicht.
 	 */
-	public readonly printTime : boolean;
+	public readonly printTime: boolean;
 
 	/**
 	 * Gibt an, ob das Log-Level beim Loggen ausgegeben wird oder nicht.
 	 */
-	public readonly printLevel : boolean;
+	public readonly printLevel: boolean;
 
 	/**
 	 * Der Vektor mit den gesammelten Log-Informationen.
 	 */
-	private readonly logData : ArrayList<LogData> = new ArrayList<LogData>();
+	private readonly logData: ArrayList<LogData> = new ArrayList<LogData>();
 
 
 	/**
@@ -37,19 +37,19 @@ export class LogConsumerList extends JavaObject implements Consumer<LogData> {
 	 * @param printTime     gibt an, ob die Zeit beim Loggen ausgegeben wird oder nicht
 	 * @param printLevel    gibt an, ob das Log-Level beim Loggen ausgegeben wird oder nicht
 	 */
-	public constructor(printTime : boolean, printLevel : boolean);
+	public constructor(printTime: boolean, printLevel: boolean);
 
 	/**
 	 * Implementation for method overloads of 'constructor'
 	 */
-	public constructor(__param0? : boolean, __param1? : boolean) {
+	public constructor(__param0?: boolean, __param1?: boolean) {
 		super();
 		if ((__param0 === undefined) && (__param1 === undefined)) {
 			this.printTime = false;
 			this.printLevel = false;
 		} else if (((__param0 !== undefined) && typeof __param0 === "boolean") && ((__param1 !== undefined) && typeof __param1 === "boolean")) {
-			const printTime : boolean = __param0 as boolean;
-			const printLevel : boolean = __param1 as boolean;
+			const printTime: boolean = __param0 as boolean;
+			const printLevel: boolean = __param1 as boolean;
 			this.printTime = printTime;
 			this.printLevel = printLevel;
 		} else throw new Error('invalid method overload');
@@ -60,7 +60,7 @@ export class LogConsumerList extends JavaObject implements Consumer<LogData> {
 	 *
 	 * @param log   der anzuhängende Log
 	 */
-	public append(log : LogConsumerList) : void {
+	public append(log: LogConsumerList): void {
 		this.logData.addAll(log.logData);
 	}
 
@@ -70,7 +70,7 @@ export class LogConsumerList extends JavaObject implements Consumer<LogData> {
 	 *
 	 * @param t   die anzuhängenden Log-Informationen
 	 */
-	public accept(t : LogData | null) : void {
+	public accept(t: LogData | null): void {
 		if (t === null)
 			return;
 		this.logData.add(t);
@@ -81,7 +81,7 @@ export class LogConsumerList extends JavaObject implements Consumer<LogData> {
 	 *
 	 * @return der Vektor mit den gesammelten Log-Informationen
 	 */
-	public getLogData() : List<LogData> {
+	public getLogData(): List<LogData> {
 		return this.logData;
 	}
 
@@ -102,20 +102,20 @@ export class LogConsumerList extends JavaObject implements Consumer<LogData> {
 	 *
 	 * @return die gesammelten Log-Informationen als Liste von Strings
 	 */
-	public getStrings(indent : string) : List<string> | null;
+	public getStrings(indent: string) : List<string> | null;
 
 	/**
 	 * Implementation for method overloads of 'getStrings'
 	 */
-	public getStrings(__param0? : string) : List<string> | null {
+	public getStrings(__param0?: string): List<string> | null {
 		if ((__param0 === undefined)) {
 			return this.getStrings("");
 		} else if (((__param0 !== undefined) && (typeof __param0 === "string"))) {
-			const indent : string = __param0;
-			const result : ArrayList<string> | null = new ArrayList<string>();
-			let temp : string = indent;
-			for (let i : number = 0; i < this.logData.size(); i++) {
-				const data : LogData = this.logData.get(i);
+			const indent: string = __param0;
+			const result: ArrayList<string> | null = new ArrayList<string>();
+			let temp: string = indent;
+			for (let i: number = 0; i < this.logData.size(); i++) {
+				const data: LogData = this.logData.get(i);
 				if (data === null)
 					continue;
 				temp += data.getText();
@@ -153,7 +153,7 @@ export class LogConsumerList extends JavaObject implements Consumer<LogData> {
 	 *
 	 * @return der Text der Log-Informationen für das angegebene Log-Level
 	 */
-	public getText(level : LogLevel) : string;
+	public getText(level: LogLevel) : string;
 
 	/**
 	 * Gibt die gesammelten Log-Informationen als Text zurück, bei dem
@@ -168,21 +168,21 @@ export class LogConsumerList extends JavaObject implements Consumer<LogData> {
 	 *
 	 * @return der Text der Log-Informationen für das angegebene Log-Level
 	 */
-	public getText(level : LogLevel, indent : string) : string;
+	public getText(level: LogLevel, indent: string) : string;
 
 	/**
 	 * Implementation for method overloads of 'getText'
 	 */
-	public getText(__param0? : LogLevel, __param1? : string) : string {
+	public getText(__param0?: LogLevel, __param1?: string): string {
 		if ((__param0 === undefined) && (__param1 === undefined)) {
 			return this.getText(LogLevel.INFO, "");
 		} else if (((__param0 !== undefined) && ((__param0 instanceof JavaObject) && (__param0.isTranspiledInstanceOf('de.svws_nrw.core.logger.LogLevel')))) && (__param1 === undefined)) {
-			const level : LogLevel = cast_de_svws_nrw_core_logger_LogLevel(__param0);
+			const level: LogLevel = cast_de_svws_nrw_core_logger_LogLevel(__param0);
 			return this.getText(level, "");
 		} else if (((__param0 !== undefined) && ((__param0 instanceof JavaObject) && (__param0.isTranspiledInstanceOf('de.svws_nrw.core.logger.LogLevel')))) && ((__param1 !== undefined) && (typeof __param1 === "string"))) {
-			const level : LogLevel = cast_de_svws_nrw_core_logger_LogLevel(__param0);
-			const indent : string = __param1;
-			const sb : StringBuilder | null = new StringBuilder();
+			const level: LogLevel = cast_de_svws_nrw_core_logger_LogLevel(__param0);
+			const indent: string = __param1;
+			const sb: StringBuilder | null = new StringBuilder();
 			for (const data of this.logData) {
 				if (data === null)
 					continue;
@@ -200,7 +200,7 @@ export class LogConsumerList extends JavaObject implements Consumer<LogData> {
 		return 'de.svws_nrw.core.logger.LogConsumerList';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['java.util.function.Consumer', 'de.svws_nrw.core.logger.LogConsumerList'].includes(name);
 	}
 
@@ -208,6 +208,6 @@ export class LogConsumerList extends JavaObject implements Consumer<LogData> {
 
 }
 
-export function cast_de_svws_nrw_core_logger_LogConsumerList(obj : unknown) : LogConsumerList {
+export function cast_de_svws_nrw_core_logger_LogConsumerList(obj: unknown): LogConsumerList {
 	return obj as LogConsumerList;
 }

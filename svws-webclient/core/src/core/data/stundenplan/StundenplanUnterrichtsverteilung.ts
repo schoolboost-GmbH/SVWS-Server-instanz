@@ -14,37 +14,37 @@ export class StundenplanUnterrichtsverteilung extends JavaObject {
 	/**
 	 * Die ID des Stundenplans.
 	 */
-	public id : number = -1;
+	public id: number = -1;
 
 	/**
 	 * Die Liste der Lehrer, die für den Stundenplan zur Verfügung stehen.
 	 */
-	public lehrer : List<StundenplanLehrer> = new ArrayList<StundenplanLehrer>();
+	public lehrer: List<StundenplanLehrer> = new ArrayList<StundenplanLehrer>();
 
 	/**
 	 * Die Liste der Schüler, die für den Stundenplan zur Verfügung stehen.
 	 */
-	public schueler : List<StundenplanSchueler> = new ArrayList<StundenplanSchueler>();
+	public schueler: List<StundenplanSchueler> = new ArrayList<StundenplanSchueler>();
 
 	/**
 	 * Die Liste der Fächer, die für den Stundenplan zur Verfügung stehen.
 	 */
-	public faecher : List<StundenplanFach> = new ArrayList<StundenplanFach>();
+	public faecher: List<StundenplanFach> = new ArrayList<StundenplanFach>();
 
 	/**
 	 * Die Liste der Klassen, die für den Stundenplan zur Verfügung stehen.
 	 */
-	public klassen : List<StundenplanKlasse> = new ArrayList<StundenplanKlasse>();
+	public klassen: List<StundenplanKlasse> = new ArrayList<StundenplanKlasse>();
 
 	/**
 	 * Die Liste der Kurse, die für den Stundenplan zur Verfügung stehen.
 	 */
-	public kurse : List<StundenplanKurs> = new ArrayList<StundenplanKurs>();
+	public kurse: List<StundenplanKurs> = new ArrayList<StundenplanKurs>();
 
 	/**
 	 * Die Liste der Klassenunterrichte, die für den Stundenplan zur Verfügung stehen.
 	 */
-	public klassenunterricht : List<StundenplanKlassenunterricht> = new ArrayList<StundenplanKlassenunterricht>();
+	public klassenunterricht: List<StundenplanKlassenunterricht> = new ArrayList<StundenplanKlassenunterricht>();
 
 
 	/**
@@ -58,13 +58,13 @@ export class StundenplanUnterrichtsverteilung extends JavaObject {
 		return 'de.svws_nrw.core.data.stundenplan.StundenplanUnterrichtsverteilung';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.stundenplan.StundenplanUnterrichtsverteilung'].includes(name);
 	}
 
 	public static class = new Class<StundenplanUnterrichtsverteilung>('de.svws_nrw.core.data.stundenplan.StundenplanUnterrichtsverteilung');
 
-	public static transpilerFromJSON(json : string): StundenplanUnterrichtsverteilung {
+	public static transpilerFromJSON(json: string): StundenplanUnterrichtsverteilung {
 		const obj = JSON.parse(json) as Partial<StundenplanUnterrichtsverteilung>;
 		const result = new StundenplanUnterrichtsverteilung();
 		if (obj.id === undefined)
@@ -103,7 +103,7 @@ export class StundenplanUnterrichtsverteilung extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : StundenplanUnterrichtsverteilung) : string {
+	public static transpilerToJSON(obj: StundenplanUnterrichtsverteilung): string {
 		let result = '{';
 		result += '"id" : ' + obj.id.toString() + ',';
 		result += '"lehrer" : [ ';
@@ -159,7 +159,7 @@ export class StundenplanUnterrichtsverteilung extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<StundenplanUnterrichtsverteilung>) : string {
+	public static transpilerToJSONPatch(obj: Partial<StundenplanUnterrichtsverteilung>): string {
 		let result = '{';
 		if (obj.id !== undefined) {
 			result += '"id" : ' + obj.id.toString() + ',';
@@ -231,6 +231,6 @@ export class StundenplanUnterrichtsverteilung extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_stundenplan_StundenplanUnterrichtsverteilung(obj : unknown) : StundenplanUnterrichtsverteilung {
+export function cast_de_svws_nrw_core_data_stundenplan_StundenplanUnterrichtsverteilung(obj: unknown): StundenplanUnterrichtsverteilung {
 	return obj as StundenplanUnterrichtsverteilung;
 }

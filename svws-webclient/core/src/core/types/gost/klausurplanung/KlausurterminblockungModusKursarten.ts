@@ -6,45 +6,45 @@ import { DeveloperNotificationException } from '../../../../core/exceptions/Deve
 export class KlausurterminblockungModusKursarten extends JavaEnum<KlausurterminblockungModusKursarten> {
 
 	/** an array containing all values of this enumeration */
-	static readonly all_values_by_ordinal : Array<KlausurterminblockungModusKursarten> = [];
+	static readonly all_values_by_ordinal: Array<KlausurterminblockungModusKursarten> = [];
 
 	/** an array containing all values of this enumeration indexed by their name*/
-	static readonly all_values_by_name : Map<string, KlausurterminblockungModusKursarten> = new Map<string, KlausurterminblockungModusKursarten>();
+	static readonly all_values_by_name: Map<string, KlausurterminblockungModusKursarten> = new Map<string, KlausurterminblockungModusKursarten>();
 
 	/**
 	 * Dieser Modus blockt beide Kursarten (LK und GK) gemischt.
 	 */
-	public static readonly BEIDE : KlausurterminblockungModusKursarten = new KlausurterminblockungModusKursarten("BEIDE", 0, 0, "Gemischt");
+	public static readonly BEIDE: KlausurterminblockungModusKursarten = new KlausurterminblockungModusKursarten("BEIDE", 0, 0, "Gemischt");
 
 	/**
 	 * Dieser Modus blockt zuerst die Kursart LK, danach die Kursart GK.
 	 */
-	public static readonly GETRENNT : KlausurterminblockungModusKursarten = new KlausurterminblockungModusKursarten("GETRENNT", 1, 1, "Getrennt");
+	public static readonly GETRENNT: KlausurterminblockungModusKursarten = new KlausurterminblockungModusKursarten("GETRENNT", 1, 1, "Getrennt");
 
 	/**
 	 * Dieser Modus blockt nur die Kursart LK.
 	 */
-	public static readonly NUR_LK : KlausurterminblockungModusKursarten = new KlausurterminblockungModusKursarten("NUR_LK", 2, 2, "Nur LK");
+	public static readonly NUR_LK: KlausurterminblockungModusKursarten = new KlausurterminblockungModusKursarten("NUR_LK", 2, 2, "Nur LK");
 
 	/**
 	 * Dieser Modus blockt nur die Kursart GK.
 	 */
-	public static readonly NUR_GK : KlausurterminblockungModusKursarten = new KlausurterminblockungModusKursarten("NUR_GK", 3, 3, "Nur GK");
+	public static readonly NUR_GK: KlausurterminblockungModusKursarten = new KlausurterminblockungModusKursarten("NUR_GK", 3, 3, "Nur GK");
 
 	/**
 	 * Die ID
 	 */
-	public readonly id : number;
+	public readonly id: number;
 
 	/**
 	 * Die textuelle Bezeichnung
 	 */
-	public readonly bezeichnung : string;
+	public readonly bezeichnung: string;
 
 	/**
 	 * Eine Map mit der Zuordnung zu der ID
 	 */
-	private static readonly _mapID : HashMap<number, KlausurterminblockungModusKursarten> = new HashMap<number, KlausurterminblockungModusKursarten>();
+	private static readonly _mapID: HashMap<number, KlausurterminblockungModusKursarten> = new HashMap<number, KlausurterminblockungModusKursarten>();
 
 	/**
 	 * Erstellt einen neuen Modus.
@@ -52,7 +52,7 @@ export class KlausurterminblockungModusKursarten extends JavaEnum<Klausurterminb
 	 * @param id            die ID
 	 * @param bezeichnung   die Bezeichnung
 	 */
-	private constructor(name : string, ordinal : number, id : number, bezeichnung : string) {
+	private constructor(name: string, ordinal: number, id: number, bezeichnung: string) {
 		super(name, ordinal);
 		KlausurterminblockungModusKursarten.all_values_by_ordinal.push(this);
 		KlausurterminblockungModusKursarten.all_values_by_name.set(name, this);
@@ -66,7 +66,7 @@ export class KlausurterminblockungModusKursarten extends JavaEnum<Klausurterminb
 	 *
 	 * @return die Map mit der Zuordnung zu der ID
 	 */
-	private static getMapByID() : HashMap<number, KlausurterminblockungModusKursarten> {
+	private static getMapByID(): HashMap<number, KlausurterminblockungModusKursarten> {
 		if (KlausurterminblockungModusKursarten._mapID.size() === 0)
 			for (const e of KlausurterminblockungModusKursarten.values())
 				KlausurterminblockungModusKursarten._mapID.put(e.id, e);
@@ -80,7 +80,7 @@ export class KlausurterminblockungModusKursarten extends JavaEnum<Klausurterminb
 	 *
 	 * @return der Modus oder null, falls die ID ungültig ist
 	 */
-	public static get(id : number) : KlausurterminblockungModusKursarten | null {
+	public static get(id: number): KlausurterminblockungModusKursarten | null {
 		return KlausurterminblockungModusKursarten.getMapByID().get(id);
 	}
 
@@ -93,7 +93,7 @@ export class KlausurterminblockungModusKursarten extends JavaEnum<Klausurterminb
 	 *
 	 * @throws DeveloperNotificationException falls die ID nicht definiert ist
 	 */
-	public static getOrException(id : number) : KlausurterminblockungModusKursarten {
+	public static getOrException(id: number): KlausurterminblockungModusKursarten {
 		return DeveloperNotificationException.ifMapGetIsNull(KlausurterminblockungModusKursarten.getMapByID(), id);
 	}
 
@@ -102,7 +102,7 @@ export class KlausurterminblockungModusKursarten extends JavaEnum<Klausurterminb
 	 *
 	 * @returns the array with enumeration values
 	 */
-	public static values() : Array<KlausurterminblockungModusKursarten> {
+	public static values(): Array<KlausurterminblockungModusKursarten> {
 		return [...this.all_values_by_ordinal];
 	}
 
@@ -113,7 +113,7 @@ export class KlausurterminblockungModusKursarten extends JavaEnum<Klausurterminb
 	 *
 	 * @returns the enumeration values or null
 	 */
-	public static valueOf(name : string) : KlausurterminblockungModusKursarten | null {
+	public static valueOf(name: string): KlausurterminblockungModusKursarten | null {
 		const tmp = this.all_values_by_name.get(name);
 		return (!tmp) ? null : tmp;
 	}
@@ -122,7 +122,7 @@ export class KlausurterminblockungModusKursarten extends JavaEnum<Klausurterminb
 		return 'de.svws_nrw.core.types.gost.klausurplanung.KlausurterminblockungModusKursarten';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.types.gost.klausurplanung.KlausurterminblockungModusKursarten', 'java.lang.Enum', 'java.lang.Comparable'].includes(name);
 	}
 
@@ -130,6 +130,6 @@ export class KlausurterminblockungModusKursarten extends JavaEnum<Klausurterminb
 
 }
 
-export function cast_de_svws_nrw_core_types_gost_klausurplanung_KlausurterminblockungModusKursarten(obj : unknown) : KlausurterminblockungModusKursarten {
+export function cast_de_svws_nrw_core_types_gost_klausurplanung_KlausurterminblockungModusKursarten(obj: unknown): KlausurterminblockungModusKursarten {
 	return obj as KlausurterminblockungModusKursarten;
 }

@@ -9,17 +9,17 @@ export class StundenplanblockungManagerFach extends JavaObject {
 	/**
 	 * Die Datenbank-ID des Faches.
 	 */
-	_id : number = 0;
+	_id: number = 0;
 
 	/**
 	 * Das Kürzel des Faches. Beispielsweise 'D', 'E' oder 'M'.
 	 */
-	_kuerzel : string = "";
+	_kuerzel: string = "";
 
 	/**
 	 * Alle Lerngruppen in denen das Fach vertreten ist.
 	 */
-	_menge_gr : List<StundenplanblockungManagerLerngruppe> = new ArrayList<StundenplanblockungManagerLerngruppe>();
+	_menge_gr: List<StundenplanblockungManagerLerngruppe> = new ArrayList<StundenplanblockungManagerLerngruppe>();
 
 
 	/**
@@ -28,7 +28,7 @@ export class StundenplanblockungManagerFach extends JavaObject {
 	 * @param pFachID   Die Datenbank-ID des Faches.
 	 * @param pKuerzel  Das Kürzel des Faches.
 	 */
-	public constructor(pFachID : number, pKuerzel : string) {
+	public constructor(pFachID: number, pKuerzel: string) {
 		super();
 		this._id = pFachID;
 		this._kuerzel = pKuerzel;
@@ -39,7 +39,7 @@ export class StundenplanblockungManagerFach extends JavaObject {
 	 *
 	 * @return Die Datenbank-ID des Faches.
 	 */
-	public getID() : number {
+	public getID(): number {
 		return this._id;
 	}
 
@@ -47,7 +47,7 @@ export class StundenplanblockungManagerFach extends JavaObject {
 		return 'de.svws_nrw.core.utils.stundenplanblockung.StundenplanblockungManagerFach';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.utils.stundenplanblockung.StundenplanblockungManagerFach'].includes(name);
 	}
 
@@ -55,6 +55,6 @@ export class StundenplanblockungManagerFach extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_utils_stundenplanblockung_StundenplanblockungManagerFach(obj : unknown) : StundenplanblockungManagerFach {
+export function cast_de_svws_nrw_core_utils_stundenplanblockung_StundenplanblockungManagerFach(obj: unknown): StundenplanblockungManagerFach {
 	return obj as StundenplanblockungManagerFach;
 }

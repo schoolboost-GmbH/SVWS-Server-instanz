@@ -6,22 +6,22 @@ export class SchulgliederungGueltigerAbschluss extends JavaObject {
 	/**
 	 * Das Kürzel des allgemeinbildenden Abschlusses
 	 */
-	public allgemeinbildend : string = "OA";
+	public allgemeinbildend: string = "OA";
 
 	/**
 	 * Das Kürzel des berufsbildenden Abschlusses
 	 */
-	public berufsbildend : string = "OA";
+	public berufsbildend: string = "OA";
 
 	/**
 	 * der niedrigste Jahrgang, in dem der Abschluss möglich ist
 	 */
-	public jahrgangVon : string = "JAHRGANG_01";
+	public jahrgangVon: string = "JAHRGANG_01";
 
 	/**
 	 * der höchste Jahrgang, in dem der Abschluss möglich ist
 	 */
-	public jahrgangBis : string = "JAHRGANG_13";
+	public jahrgangBis: string = "JAHRGANG_13";
 
 
 	/**
@@ -38,20 +38,20 @@ export class SchulgliederungGueltigerAbschluss extends JavaObject {
 	 * @param jahrgangVon        der Jahrgang, ab dem die Kombination möglich ist
 	 * @param jahrgangBis        der Jahrgang, bis zu welchem die Kombination möglich ist
 	 */
-	public constructor(berufsbildend : string, allgemeinbildend : string, jahrgangVon : string, jahrgangBis : string);
+	public constructor(berufsbildend: string, allgemeinbildend: string, jahrgangVon: string, jahrgangBis: string);
 
 	/**
 	 * Implementation for method overloads of 'constructor'
 	 */
-	public constructor(__param0? : string, __param1? : string, __param2? : string, __param3? : string) {
+	public constructor(__param0?: string, __param1?: string, __param2?: string, __param3?: string) {
 		super();
 		if ((__param0 === undefined) && (__param1 === undefined) && (__param2 === undefined) && (__param3 === undefined)) {
 			// empty method body
 		} else if (((__param0 !== undefined) && (typeof __param0 === "string")) && ((__param1 !== undefined) && (typeof __param1 === "string")) && ((__param2 !== undefined) && (typeof __param2 === "string")) && ((__param3 !== undefined) && (typeof __param3 === "string"))) {
-			const berufsbildend : string = __param0;
-			const allgemeinbildend : string = __param1;
-			const jahrgangVon : string = __param2;
-			const jahrgangBis : string = __param3;
+			const berufsbildend: string = __param0;
+			const allgemeinbildend: string = __param1;
+			const jahrgangVon: string = __param2;
+			const jahrgangBis: string = __param3;
 			this.allgemeinbildend = allgemeinbildend;
 			this.berufsbildend = berufsbildend;
 			this.jahrgangVon = jahrgangVon;
@@ -64,7 +64,7 @@ export class SchulgliederungGueltigerAbschluss extends JavaObject {
 	 *
 	 * @return der String
 	 */
-	public toString() : string | null {
+	public toString(): string | null {
 		return this.berufsbildend + "-" + this.allgemeinbildend + "-" + this.jahrgangVon + "-" + this.jahrgangBis;
 	}
 
@@ -72,13 +72,13 @@ export class SchulgliederungGueltigerAbschluss extends JavaObject {
 		return 'de.svws_nrw.asd.data.schule.SchulgliederungGueltigerAbschluss';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.asd.data.schule.SchulgliederungGueltigerAbschluss'].includes(name);
 	}
 
 	public static class = new Class<SchulgliederungGueltigerAbschluss>('de.svws_nrw.asd.data.schule.SchulgliederungGueltigerAbschluss');
 
-	public static transpilerFromJSON(json : string): SchulgliederungGueltigerAbschluss {
+	public static transpilerFromJSON(json: string): SchulgliederungGueltigerAbschluss {
 		const obj = JSON.parse(json) as Partial<SchulgliederungGueltigerAbschluss>;
 		const result = new SchulgliederungGueltigerAbschluss();
 		if (obj.allgemeinbildend === undefined)
@@ -96,7 +96,7 @@ export class SchulgliederungGueltigerAbschluss extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : SchulgliederungGueltigerAbschluss) : string {
+	public static transpilerToJSON(obj: SchulgliederungGueltigerAbschluss): string {
 		let result = '{';
 		result += '"allgemeinbildend" : ' + JSON.stringify(obj.allgemeinbildend) + ',';
 		result += '"berufsbildend" : ' + JSON.stringify(obj.berufsbildend) + ',';
@@ -107,7 +107,7 @@ export class SchulgliederungGueltigerAbschluss extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<SchulgliederungGueltigerAbschluss>) : string {
+	public static transpilerToJSONPatch(obj: Partial<SchulgliederungGueltigerAbschluss>): string {
 		let result = '{';
 		if (obj.allgemeinbildend !== undefined) {
 			result += '"allgemeinbildend" : ' + JSON.stringify(obj.allgemeinbildend) + ',';
@@ -128,6 +128,6 @@ export class SchulgliederungGueltigerAbschluss extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_asd_data_schule_SchulgliederungGueltigerAbschluss(obj : unknown) : SchulgliederungGueltigerAbschluss {
+export function cast_de_svws_nrw_asd_data_schule_SchulgliederungGueltigerAbschluss(obj: unknown): SchulgliederungGueltigerAbschluss {
 	return obj as SchulgliederungGueltigerAbschluss;
 }

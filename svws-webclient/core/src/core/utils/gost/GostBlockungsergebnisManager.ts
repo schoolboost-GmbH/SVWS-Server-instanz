@@ -60,208 +60,208 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	/**
 	 * Der Blockungsdaten-Manager ist das Elternteil dieses Objektes.
 	 */
-	private readonly _parent : GostBlockungsdatenManager;
+	private readonly _parent: GostBlockungsdatenManager;
 
 	/**
 	 * Das Blockungsergebnis ist das zugehörige Eltern-Datenobjekt.
 	 */
-	private _ergebnis : GostBlockungsergebnis = new GostBlockungsergebnis();
+	private _ergebnis: GostBlockungsergebnis = new GostBlockungsergebnis();
 
 	/**
 	 * Liste aller Fehlermeldungen.
 	 */
-	private _fehlermeldungen : List<string> = new ArrayList<string>();
+	private _fehlermeldungen: List<string> = new ArrayList<string>();
 
 	/**
 	 * Set aller Schienen-IDs.
 	 */
-	private _schienenIDset : HashSet<number> = new HashSet<number>();
+	private _schienenIDset: HashSet<number> = new HashSet<number>();
 
 	/**
 	 * Set aller Schienen-Nummern.
 	 */
-	private _schienenNRset : HashSet<number> = new HashSet<number>();
+	private _schienenNRset: HashSet<number> = new HashSet<number>();
 
 	/**
 	 * Set aller Kurs-IDs.
 	 */
-	private _kursIDset : HashSet<number> = new HashSet<number>();
+	private _kursIDset: HashSet<number> = new HashSet<number>();
 
 	/**
 	 * Set aller Fach-IDs.
 	 */
-	private _fachIDset : HashSet<number> = new HashSet<number>();
+	private _fachIDset: HashSet<number> = new HashSet<number>();
 
 	/**
 	 * Set aller Schüler-IDs.
 	 */
-	private _schuelerIDset : HashSet<number> = new HashSet<number>();
+	private _schuelerIDset: HashSet<number> = new HashSet<number>();
 
 	/**
 	 * Map von Schienen-ID nach {@link GostBlockungsergebnisSchiene}.
 	 */
-	private _schienenID_to_schiene : JavaMap<number, GostBlockungsergebnisSchiene> = new HashMap<number, GostBlockungsergebnisSchiene>();
+	private _schienenID_to_schiene: JavaMap<number, GostBlockungsergebnisSchiene> = new HashMap<number, GostBlockungsergebnisSchiene>();
 
 	/**
 	 * Map von Schienen-NR nach {@link GostBlockungsergebnisSchiene}.
 	 */
-	private _schienenNR_to_schiene : JavaMap<number, GostBlockungsergebnisSchiene> = new HashMap<number, GostBlockungsergebnisSchiene>();
+	private _schienenNR_to_schiene: JavaMap<number, GostBlockungsergebnisSchiene> = new HashMap<number, GostBlockungsergebnisSchiene>();
 
 	/**
 	 * Map von Kurs-ID nach {@link GostBlockungsergebnisKurs}.
 	 */
-	private _kursID_to_kurs : JavaMap<number, GostBlockungsergebnisKurs> = new HashMap<number, GostBlockungsergebnisKurs>();
+	private _kursID_to_kurs: JavaMap<number, GostBlockungsergebnisKurs> = new HashMap<number, GostBlockungsergebnisKurs>();
 
 	/**
 	 * Map von Schueler-ID nach {@link Schueler}.
 	 */
-	private _schuelerID_to_schueler : JavaMap<number, Schueler> = new HashMap<number, Schueler>();
+	private _schuelerID_to_schueler: JavaMap<number, Schueler> = new HashMap<number, Schueler>();
 
 	/**
 	 * Map von Schienen-ID nach Long-Set (von Kursen).
 	 */
-	private _schienenID_to_kursIDSet : JavaMap<number, JavaSet<number>> = new HashMap<number, JavaSet<number>>();
+	private _schienenID_to_kursIDSet: JavaMap<number, JavaSet<number>> = new HashMap<number, JavaSet<number>>();
 
 	/**
 	 * Map von Schueler-ID nach {@link GostBlockungsergebnisKurs}-Set (Kurse des Schüler, die aufgrund der aktuellen Fachwahlen ungültig sind).
 	 */
-	private _schuelerID_to_ungueltigeKurseSet : JavaMap<number, JavaSet<GostBlockungsergebnisKurs>> = new HashMap<number, JavaSet<GostBlockungsergebnisKurs>>();
+	private _schuelerID_to_ungueltigeKurseSet: JavaMap<number, JavaSet<GostBlockungsergebnisKurs>> = new HashMap<number, JavaSet<GostBlockungsergebnisKurs>>();
 
 	/**
 	 * Map von Kurs-ID nach Long-Set (von Schülern).
 	 */
-	private _kursID_to_schuelerIDSet : JavaMap<number, JavaSet<number>> = new HashMap<number, JavaSet<number>>();
+	private _kursID_to_schuelerIDSet: JavaMap<number, JavaSet<number>> = new HashMap<number, JavaSet<number>>();
 
 	/**
 	 * Map von Fach-ID nach {@link GostBlockungsergebnisKurs}-List.
 	 */
-	private _fachID_to_kurseList : JavaMap<number, List<GostBlockungsergebnisKurs>> = new HashMap<number, List<GostBlockungsergebnisKurs>>();
+	private _fachID_to_kurseList: JavaMap<number, List<GostBlockungsergebnisKurs>> = new HashMap<number, List<GostBlockungsergebnisKurs>>();
 
 	/**
 	 * Map von Kurs-ID nach {@link GostBlockungsergebnisSchiene}-Set.
 	 */
-	private _kursID_to_schienenSet : JavaMap<number, JavaSet<GostBlockungsergebnisSchiene>> = new HashMap<number, JavaSet<GostBlockungsergebnisSchiene>>();
+	private _kursID_to_schienenSet: JavaMap<number, JavaSet<GostBlockungsergebnisSchiene>> = new HashMap<number, JavaSet<GostBlockungsergebnisSchiene>>();
 
 	/**
 	 * Map von Kurs-ID nach Integer (Anzahl an externen SuS).
 	 */
-	private _kursID_to_dummySuS : JavaMap<number, number> = new HashMap<number, number>();
+	private _kursID_to_dummySuS: JavaMap<number, number> = new HashMap<number, number>();
 
 	/**
 	 * Map von Fachart-ID nach {@link GostBlockungsergebnisKurs}-List (Alle Kurse der selben Fachart).
 	 */
-	private _fachartID_to_kurseList : JavaMap<number, List<GostBlockungsergebnisKurs>> = new HashMap<number, List<GostBlockungsergebnisKurs>>();
+	private _fachartID_to_kurseList: JavaMap<number, List<GostBlockungsergebnisKurs>> = new HashMap<number, List<GostBlockungsergebnisKurs>>();
 
 	/**
 	 * Map von Schüler-ID nach {@link GostBlockungsergebnisKurs}-Set.
 	 */
-	private _schuelerID_to_kurseSet : JavaMap<number, JavaSet<GostBlockungsergebnisKurs>> = new HashMap<number, JavaSet<GostBlockungsergebnisKurs>>();
+	private _schuelerID_to_kurseSet: JavaMap<number, JavaSet<GostBlockungsergebnisKurs>> = new HashMap<number, JavaSet<GostBlockungsergebnisKurs>>();
 
 	/**
 	 * Menge aller Fachart-IDs sortiert nach der aktuellen Sortiervariante.
 	 */
-	private _fachartIDList_sortiert : List<number> = new ArrayList<number>();
+	private _fachartIDList_sortiert: List<number> = new ArrayList<number>();
 
 	/**
 	 * Map von Fachart-ID nach Integer (Kursdifferenz der Fachart).
 	 */
-	private _fachartID_to_kursdifferenz : JavaMap<number, number> = new HashMap<number, number>();
+	private _fachartID_to_kursdifferenz: JavaMap<number, number> = new HashMap<number, number>();
 
 	/**
 	 * Map von Schienen-ID nach Integer (Anzahl an Kollisionen in der Schiene).
 	 */
-	private _schienenID_to_kollisionen : JavaMap<number, number> = new HashMap<number, number>();
+	private _schienenID_to_kollisionen: JavaMap<number, number> = new HashMap<number, number>();
 
 	/**
 	 * Map von Schienen-ID nach Integer (Anzahl der SuS in der Schiene).
 	 */
-	private _schienenID_to_susAnzahl : JavaMap<number, number> = new HashMap<number, number>();
+	private _schienenID_to_susAnzahl: JavaMap<number, number> = new HashMap<number, number>();
 
 	/**
 	 * Map von Schüler-ID nach Map von Schienen-ID nach {@link GostBlockungsergebnisKurs}-Set (Alle Kurse des Schülers in der Schiene).
 	 */
-	private _schuelerID_schienenID_to_kurseSet : HashMap2D<number, number, JavaSet<GostBlockungsergebnisKurs>> = new HashMap2D<number, number, JavaSet<GostBlockungsergebnisKurs>>();
+	private _schuelerID_schienenID_to_kurseSet: HashMap2D<number, number, JavaSet<GostBlockungsergebnisKurs>> = new HashMap2D<number, number, JavaSet<GostBlockungsergebnisKurs>>();
 
 	/**
 	 * Map von Schienen-ID nach Map von Fachart-ID nach {@link GostBlockungsergebnisKurs}-List (Alle Kurse pro Schiene und Fachart).
 	 */
-	private _schienenID_fachartID_to_kurseList : HashMap2D<number, number, List<GostBlockungsergebnisKurs>> = new HashMap2D<number, number, List<GostBlockungsergebnisKurs>>();
+	private _schienenID_fachartID_to_kurseList: HashMap2D<number, number, List<GostBlockungsergebnisKurs>> = new HashMap2D<number, number, List<GostBlockungsergebnisKurs>>();
 
 	/**
 	 * Map von Kursdifferenz nach String-List (Facharten mit dieser Kursdifferenzen).
 	 */
-	private _kursdifferenz_to_fachartenList : JavaMap<number, List<string>> = new HashMap<number, List<string>>();
+	private _kursdifferenz_to_fachartenList: JavaMap<number, List<string>> = new HashMap<number, List<string>>();
 
 	/**
 	 * Map von Schüler-ID Integer (Summe aller Kollisionen des Schülers).
 	 */
-	private _schuelerID_to_kollisionen : JavaMap<number, number> = new HashMap<number, number>();
+	private _schuelerID_to_kollisionen: JavaMap<number, number> = new HashMap<number, number>();
 
 	/**
 	 * Map von Schüler-ID nach Map von Fach-ID nach {@link GostBlockungsergebnisKurs} (Die zugeordnete Wahl des Schülers in dem Fach, auch NULL möglich).
 	 */
-	private _schuelerID_fachID_to_kurs_or_null : HashMap2D<number, number, GostBlockungsergebnisKurs | null> = new HashMap2D<number, number, GostBlockungsergebnisKurs | null>();
+	private _schuelerID_fachID_to_kurs_or_null: HashMap2D<number, number, GostBlockungsergebnisKurs | null> = new HashMap2D<number, number, GostBlockungsergebnisKurs | null>();
 
 	/**
 	 * Von Regel-ID Regel-TYP nach List (alle Regelverletzungen des Typs als String-Menge).
 	 */
-	private _regelTyp_to_verletzungList : JavaMap<number, List<string>> = new HashMap<number, List<string>>();
+	private _regelTyp_to_verletzungList: JavaMap<number, List<string>> = new HashMap<number, List<string>>();
 
 	/**
 	 * Von Regel-ID nach String (Beschreibung der Regelverletzung).
 	 */
-	private _regelID_to_verletzungString : JavaMap<number, string> = new HashMap<number, string>();
+	private _regelID_to_verletzungString: JavaMap<number, string> = new HashMap<number, string>();
 
 	/**
 	 * Textuelle Darstellung aller Regelverletzungen der definierten Regeln.
 	 */
-	private _regelverletzungen_tooltip1_regeln : string = "";
+	private _regelverletzungen_tooltip1_regeln: string = "";
 
 	/**
 	 * Textuelle Darstellung aller Regelverletzungen der Wahlkonflikte.
 	 */
-	private _regelverletzungen_tooltip2_wahlkonflikte : string = "";
+	private _regelverletzungen_tooltip2_wahlkonflikte: string = "";
 
 	/**
 	 * Textuelle Darstellung aller Regelverletzungen der Kursdifferenzen.
 	 */
-	private _regelverletzungen_tooltip3_kursdifferenzen : string = "";
+	private _regelverletzungen_tooltip3_kursdifferenzen: string = "";
 
 	/**
 	 * Textuelle Darstellung aller Regelverletzungen der Fächerparallelität.
 	 */
-	private _regelverletzungen_tooltip4_faecherparallelitaet : string = "";
+	private _regelverletzungen_tooltip4_faecherparallelitaet: string = "";
 
 	/**
 	 * Entscheidet, welcher Comparator verwendet wird mit 1 = (KURSART, FACH) andernfalls (FACH, KURSART).
 	 */
-	private _fachartmenge_sortierung : number = 1;
+	private _fachartmenge_sortierung: number = 1;
 
 	/**
 	 * Comparator für die Facharten nach (KURSART, FACH).
 	 */
-	private readonly _fachartComparator_kursart_fach : Comparator<number>;
+	private readonly _fachartComparator_kursart_fach: Comparator<number>;
 
 	/**
 	 * Comparator für die Facharten nach (FACH, KURSART).
 	 */
-	private readonly _fachartComparator_fach_kursart : Comparator<number>;
+	private readonly _fachartComparator_fach_kursart: Comparator<number>;
 
 	/**
 	 * Ein Comparator für Kurse der Blockung (KURSART, FACH, KURSNUMMER)
 	 */
-	private readonly _kursComparator_kursart_fach_kursnummer : Comparator<GostBlockungsergebnisKurs>;
+	private readonly _kursComparator_kursart_fach_kursnummer: Comparator<GostBlockungsergebnisKurs>;
 
 	/**
 	 * Ein Comparator für Kurse der Blockung (FACH, KURSART, KURSNUMMER).
 	 */
-	private readonly _kursComparator_fach_kursart_kursnummer : Comparator<GostBlockungsergebnisKurs>;
+	private readonly _kursComparator_fach_kursart_kursnummer: Comparator<GostBlockungsergebnisKurs>;
 
-	private _bewertung3_KD_nur_LK : number = 0;
+	private _bewertung3_KD_nur_LK: number = 0;
 
-	private _bewertung3_KD_nur_GK : number = 0;
+	private _bewertung3_KD_nur_GK: number = 0;
 
-	private _bewertung3_KD_nur_REST : number = 0;
+	private _bewertung3_KD_nur_REST: number = 0;
 
 
 	/**
@@ -272,7 +272,7 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *                                 Blockung)
 	 * @param pGostBlockungsergebnisID Die ID des Blockungsergebnisses.
 	 */
-	public constructor(pParent : GostBlockungsdatenManager, pGostBlockungsergebnisID : number);
+	public constructor(pParent: GostBlockungsdatenManager, pGostBlockungsergebnisID: number);
 
 	/**
 	 * Erstellt einen neuen Manager mit den Daten aus dem übergebenen Ergebnis.
@@ -280,16 +280,16 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 * @param pParent   Das Eltern-Objekt. (Daten-Manager für die grundlegenden Definitionen der Blockung)
 	 * @param pErgebnis Das Ergebnis, welches kopiert wird.
 	 */
-	public constructor(pParent : GostBlockungsdatenManager, pErgebnis : GostBlockungsergebnis);
+	public constructor(pParent: GostBlockungsdatenManager, pErgebnis: GostBlockungsergebnis);
 
 	/**
 	 * Implementation for method overloads of 'constructor'
 	 */
-	public constructor(__param0 : GostBlockungsdatenManager, __param1 : GostBlockungsergebnis | number) {
+	public constructor(__param0: GostBlockungsdatenManager, __param1: GostBlockungsergebnis | number) {
 		super();
 		if (((__param0 !== undefined) && ((__param0 instanceof JavaObject) && (__param0.isTranspiledInstanceOf('de.svws_nrw.core.utils.gost.GostBlockungsdatenManager')))) && ((__param1 !== undefined) && typeof __param1 === "number")) {
-			const pParent : GostBlockungsdatenManager = cast_de_svws_nrw_core_utils_gost_GostBlockungsdatenManager(__param0);
-			const pGostBlockungsergebnisID : number = __param1 as number;
+			const pParent: GostBlockungsdatenManager = cast_de_svws_nrw_core_utils_gost_GostBlockungsdatenManager(__param0);
+			const pGostBlockungsergebnisID: number = __param1 as number;
 			this._parent = pParent;
 			this._fachartComparator_kursart_fach = this.createComparatorFachartKursartFach();
 			this._fachartComparator_fach_kursart = this.createComparatorFachartFachKursart();
@@ -301,8 +301,8 @@ export class GostBlockungsergebnisManager extends JavaObject {
 			this._ergebnis.gostHalbjahr = this._parent.daten().gostHalbjahr;
 			this.stateClear();
 		} else if (((__param0 !== undefined) && ((__param0 instanceof JavaObject) && (__param0.isTranspiledInstanceOf('de.svws_nrw.core.utils.gost.GostBlockungsdatenManager')))) && ((__param1 !== undefined) && ((__param1 instanceof JavaObject) && (__param1.isTranspiledInstanceOf('de.svws_nrw.core.data.gost.GostBlockungsergebnis'))))) {
-			const pParent : GostBlockungsdatenManager = cast_de_svws_nrw_core_utils_gost_GostBlockungsdatenManager(__param0);
-			const pErgebnis : GostBlockungsergebnis = cast_de_svws_nrw_core_data_gost_GostBlockungsergebnis(__param1);
+			const pParent: GostBlockungsdatenManager = cast_de_svws_nrw_core_utils_gost_GostBlockungsdatenManager(__param0);
+			const pErgebnis: GostBlockungsergebnis = cast_de_svws_nrw_core_data_gost_GostBlockungsergebnis(__param1);
 			this._parent = pParent;
 			this._fachartComparator_kursart_fach = this.createComparatorFachartKursartFach();
 			this._fachartComparator_fach_kursart = this.createComparatorFachartFachKursart();
@@ -318,11 +318,11 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	/**
 	 * Baut alle Datenstrukturen neu auf.
 	 */
-	public stateRevalidateEverything() : void {
+	public stateRevalidateEverything(): void {
 		this.stateClear();
 	}
 
-	private stateClear() : void {
+	private stateClear(): void {
 		this._ergebnis.bewertung = new GostBlockungsergebnisBewertung();
 		this._fehlermeldungen = new ArrayList();
 		this.update_0_schienenIDset_schienenNRset();
@@ -349,7 +349,7 @@ export class GostBlockungsergebnisManager extends JavaObject {
 		this.update_3_schuelerID_to_kollisionen();
 		this.update_3_schuelerID_fachID_to_kurs_or_null();
 		for (const schiene of this._ergebnis.schienen) {
-			const kursmenge : List<GostBlockungsergebnisKurs> = schiene.kurse;
+			const kursmenge: List<GostBlockungsergebnisKurs> = schiene.kurse;
 			if (this._fachartmenge_sortierung === 1) {
 				kursmenge.sort(this._kursComparator_kursart_fach_kursnummer);
 			} else {
@@ -363,7 +363,7 @@ export class GostBlockungsergebnisManager extends JavaObject {
 		this._parent.ergebnisUpdateBewertung(this._ergebnis);
 	}
 
-	private stateClearErgebnisBewertung1() : void {
+	private stateClearErgebnisBewertung1(): void {
 		this._regelTyp_to_verletzungList = new HashMap();
 		this._regelID_to_verletzungString = new HashMap();
 		for (const r of this._parent.regelGetListeOfTyp(GostKursblockungRegelTyp.KURSART_SPERRE_SCHIENEN_VON_BIS))
@@ -398,17 +398,17 @@ export class GostBlockungsergebnisManager extends JavaObject {
 			this.stateRegelvalidierung18_fach_kursart_maxProSchiene(r);
 		this._ergebnis.bewertung.anzahlKurseNichtZugeordnet = 0;
 		for (const idKurs of this._kursID_to_schienenSet.keySet()) {
-			const sizeSoll : number = DeveloperNotificationException.ifMapGetIsNull(this._kursID_to_kurs, idKurs).anzahlSchienen;
-			const sizeIst : number = DeveloperNotificationException.ifMapGetIsNull(this._kursID_to_schienenSet, idKurs).size();
+			const sizeSoll: number = DeveloperNotificationException.ifMapGetIsNull(this._kursID_to_kurs, idKurs).anzahlSchienen;
+			const sizeIst: number = DeveloperNotificationException.ifMapGetIsNull(this._kursID_to_schienenSet, idKurs).size();
 			this._ergebnis.bewertung.anzahlKurseNichtZugeordnet += Math.abs(sizeSoll - sizeIst);
 		}
 		this._regelverletzungen_tooltip1_regeln = this.stateClearErgebnisTooltip1();
 	}
 
-	private stateClearErgebnisTooltip1() : string {
-		const sb : StringBuilder = new StringBuilder();
-		let konflikte : number = 0;
-		let konflikte_ignored : number = 0;
+	private stateClearErgebnisTooltip1(): string {
+		const sb: StringBuilder = new StringBuilder();
+		let konflikte: number = 0;
+		let konflikte_ignored: number = 0;
 		for (const idRegeltyp of GostKursblockungRegelTyp.ANZEIGE_REIHENFOLGE)
 			for (const fehlermeldung of MapUtils.getOrCreateArrayList(this._regelTyp_to_verletzungList, idRegeltyp)) {
 				if (konflikte < 10) {
@@ -423,37 +423,37 @@ export class GostBlockungsergebnisManager extends JavaObject {
 		return konflikte + " Regelverletzungen\n" + sb.toString() + (konflikte_ignored === 0 ? "" : "+" + konflikte_ignored + " weitere Konflikte.");
 	}
 
-	private stateClearErgebnisBewertung2() : void {
+	private stateClearErgebnisBewertung2(): void {
 		this._ergebnis.bewertung.anzahlSchuelerNichtZugeordnet = 0;
 		for (const idSchueler of this._schuelerID_fachID_to_kurs_or_null.getKeySet())
 			for (const idFach of this._schuelerID_fachID_to_kurs_or_null.getKeySetOf(idSchueler))
 				if (this._schuelerID_fachID_to_kurs_or_null.getOrNull(idSchueler, idFach) === null)
 					this._ergebnis.bewertung.anzahlSchuelerNichtZugeordnet++;
 		for (const regel of this._parent.regelGetListeOfTyp(GostKursblockungRegelTyp.SCHUELER_IGNORIEREN)) {
-			const idSchueler : number = regel.parameter.get(0).valueOf();
+			const idSchueler: number = regel.parameter.get(0).valueOf();
 			for (const gFachwahl of this._parent.schuelerGetListeOfFachwahlen(idSchueler))
 				if (this.getOfSchuelerOfFachZugeordneterKurs(idSchueler, gFachwahl.fachID) === null)
 					this._ergebnis.bewertung.anzahlSchuelerNichtZugeordnet--;
 		}
 		this._ergebnis.bewertung.anzahlSchuelerKollisionen = 0;
 		for (const idSchueler of this._schuelerID_to_kollisionen.keySet()) {
-			const kollisionen : number = DeveloperNotificationException.ifMapGetIsNull(this._schuelerID_to_kollisionen, idSchueler).valueOf();
+			const kollisionen: number = DeveloperNotificationException.ifMapGetIsNull(this._schuelerID_to_kollisionen, idSchueler).valueOf();
 			this._ergebnis.bewertung.anzahlSchuelerKollisionen += kollisionen;
 		}
 		this._regelverletzungen_tooltip2_wahlkonflikte = this.stateClearErgebnisTooltip2();
 	}
 
-	private stateClearErgebnisTooltip2() : string {
-		const sb : StringBuilder = new StringBuilder();
-		let wahlkonflikte : number = 0;
-		let wahlkonflikte_ignored : number = 0;
+	private stateClearErgebnisTooltip2(): string {
+		const sb: StringBuilder = new StringBuilder();
+		let wahlkonflikte: number = 0;
+		let wahlkonflikte_ignored: number = 0;
 		for (const idSchueler of this._schuelerID_fachID_to_kurs_or_null.getKeySet()) {
 			const entries = this._schuelerID_fachID_to_kurs_or_null.getSubMapOrException(idSchueler).entrySet();
 			for (const e of entries)
 				if (e.getValue() === null) {
 					if (wahlkonflikte < 10) {
-						const idFach : number = e.getKey().valueOf();
-						const kursart : number = this._parent.schuelerGetOfFachFachwahl(idSchueler, idFach).kursartID;
+						const idFach: number = e.getKey().valueOf();
+						const kursart: number = this._parent.schuelerGetOfFachFachwahl(idSchueler, idFach).kursartID;
 						sb.append(this._parent.toStringSchuelerSimple(idSchueler) + " ist im Fach " + this._parent.toStringFachartSimple(idFach, kursart) + " keinem Kurs zugeordnet.\n");
 					} else {
 						wahlkonflikte_ignored++;
@@ -463,13 +463,13 @@ export class GostBlockungsergebnisManager extends JavaObject {
 		}
 		for (const idSchueler of this._schuelerID_schienenID_to_kurseSet.getKeySet())
 			for (const e of this._schuelerID_schienenID_to_kurseSet.getSubMapOrException(idSchueler).entrySet()) {
-				const set : JavaSet<GostBlockungsergebnisKurs> = e.getValue();
+				const set: JavaSet<GostBlockungsergebnisKurs> = e.getValue();
 				if (set.size() <= 1)
 					continue;
-				const list : ArrayList<GostBlockungsergebnisKurs> = new ArrayList<GostBlockungsergebnisKurs>(set);
+				const list: ArrayList<GostBlockungsergebnisKurs> = new ArrayList<GostBlockungsergebnisKurs>(set);
 				if (wahlkonflikte < 10) {
 					sb.append(this._parent.toStringSchuelerSimple(idSchueler) + " ist in " + this._parent.toStringSchieneSimple(e.getKey()) + " in mehreren Kursen:");
-					for (let i : number = 0; i < list.size(); i++)
+					for (let i: number = 0; i < list.size(); i++)
 						sb.append((i === 0 ? "" : ", ") + this._parent.toStringKursSimple(list.get(i).id));
 					sb.append("\n");
 				} else {
@@ -480,17 +480,17 @@ export class GostBlockungsergebnisManager extends JavaObject {
 		return "Wahlkonflikte = " + wahlkonflikte + "\n" + sb.toString() + (wahlkonflikte_ignored === 0 ? "" : "+" + wahlkonflikte_ignored + " weitere Konflikte.");
 	}
 
-	private stateClearErgebnisBewertung3() : void {
+	private stateClearErgebnisBewertung3(): void {
 		this._ergebnis.bewertung.kursdifferenzMax = 0;
 		this._ergebnis.bewertung.kursdifferenzHistogramm = Array(this._parent.schuelerGetAnzahl() + GostKursblockungRegelTyp.KURS_MIT_DUMMY_SUS_AUFFUELLEN_MAX + 1).fill(0);
 		this._bewertung3_KD_nur_LK = 0;
 		this._bewertung3_KD_nur_GK = 0;
 		this._bewertung3_KD_nur_REST = 0;
 		for (const idFachart of this._fachartID_to_kursdifferenz.keySet()) {
-			const newKD : number = DeveloperNotificationException.ifMapGetIsNull(this._fachartID_to_kursdifferenz, idFachart).valueOf();
+			const newKD: number = DeveloperNotificationException.ifMapGetIsNull(this._fachartID_to_kursdifferenz, idFachart).valueOf();
 			this._ergebnis.bewertung.kursdifferenzHistogramm[newKD]++;
 			this._ergebnis.bewertung.kursdifferenzMax = Math.max(this._ergebnis.bewertung.kursdifferenzMax, newKD);
-			const kursart : number = GostKursart.getKursartID(idFachart);
+			const kursart: number = GostKursart.getKursartID(idFachart);
 			if (kursart === GostKursart.LK.id) {
 				this._bewertung3_KD_nur_LK = Math.max(this._bewertung3_KD_nur_LK, newKD);
 			} else {
@@ -504,65 +504,65 @@ export class GostBlockungsergebnisManager extends JavaObject {
 		this._regelverletzungen_tooltip3_kursdifferenzen = this.stateClearErgebnisTooltip3();
 	}
 
-	private stateClearErgebnisTooltip3() : string {
-		const sb : StringBuilder = new StringBuilder();
-		const histo : Array<number> = this._ergebnis.bewertung.kursdifferenzHistogramm;
+	private stateClearErgebnisTooltip3(): string {
+		const sb: StringBuilder = new StringBuilder();
+		const histo: Array<number> = this._ergebnis.bewertung.kursdifferenzHistogramm;
 		sb.append("Maximale Kursdifferenz (LK, GK, REST): " + this._bewertung3_KD_nur_LK + ", " + this._bewertung3_KD_nur_GK + ", " + this._bewertung3_KD_nur_REST + "\n");
 		if (histo.length >= 2)
 			sb.append("Optimal 0/1: " + (histo[0] + histo[1]) + "x\n");
-		for (let i : number = 2; i < histo.length; i++) {
+		for (let i: number = 2; i < histo.length; i++) {
 			if (histo[i] <= 0)
 				continue;
-			const listFacharten : List<string> = DeveloperNotificationException.ifMapGetIsNull(this._kursdifferenz_to_fachartenList, i);
+			const listFacharten: List<string> = DeveloperNotificationException.ifMapGetIsNull(this._kursdifferenz_to_fachartenList, i);
 			sb.append("Differenz " + i + ": " + histo[i] + "x (" + listFacharten.get(0));
-			for (let j : number = 1; j < listFacharten.size(); j++)
+			for (let j: number = 1; j < listFacharten.size(); j++)
 				sb.append(", " + listFacharten.get(j));
 			sb.append(")\n");
 		}
 		return sb.toString();
 	}
 
-	private stateClearErgebnisBewertung4() : void {
+	private stateClearErgebnisBewertung4(): void {
 		this._ergebnis.bewertung.anzahlKurseMitGleicherFachartProSchiene = 0;
 		for (const idSchiene of this._schienenIDset)
 			for (const idFachart of this._fachartID_to_kurseList.keySet()) {
-				const gleicheKurseInSchiene : number = Map2DUtils.getOrCreateArrayList(this._schienenID_fachartID_to_kurseList, idSchiene, idFachart).size();
+				const gleicheKurseInSchiene: number = Map2DUtils.getOrCreateArrayList(this._schienenID_fachartID_to_kurseList, idSchiene, idFachart).size();
 				if (gleicheKurseInSchiene >= 2)
 					this._ergebnis.bewertung.anzahlKurseMitGleicherFachartProSchiene += gleicheKurseInSchiene - 1;
 			}
 		this._regelverletzungen_tooltip4_faecherparallelitaet = this.stateClearErgebnisTooltip4();
 	}
 
-	private stateClearErgebnisTooltip4() : string {
-		const sb : StringBuilder = new StringBuilder();
-		for (let nr : number = 1; nr <= this._schienenNR_to_schiene.size(); nr++) {
-			const schiene : GostBlockungsergebnisSchiene = this.getSchieneEmitNr(nr);
-			const proSchiene : string = this.stateClearErgebnisTooltip4proSchiene(schiene.id);
+	private stateClearErgebnisTooltip4(): string {
+		const sb: StringBuilder = new StringBuilder();
+		for (let nr: number = 1; nr <= this._schienenNR_to_schiene.size(); nr++) {
+			const schiene: GostBlockungsergebnisSchiene = this.getSchieneEmitNr(nr);
+			const proSchiene: string = this.stateClearErgebnisTooltip4proSchiene(schiene.id);
 			if (!JavaString.isEmpty(proSchiene))
 				sb.append("Schiene " + nr + ":\n" + proSchiene);
 		}
 		return sb.toString();
 	}
 
-	private stateClearErgebnisTooltip4proSchiene(idSchiene : number) : string {
-		const sb : StringBuilder = new StringBuilder();
+	private stateClearErgebnisTooltip4proSchiene(idSchiene: number): string {
+		const sb: StringBuilder = new StringBuilder();
 		for (const idFachart of this._fachartIDList_sortiert) {
-			const proFachart : string = this.stateClearErgebnisTooltip4proSchieneUndFachart(idSchiene, idFachart);
+			const proFachart: string = this.stateClearErgebnisTooltip4proSchieneUndFachart(idSchiene, idFachart);
 			if (!JavaString.isEmpty(proFachart))
 				sb.append(proFachart + "\n");
 		}
 		return sb.toString();
 	}
 
-	private stateClearErgebnisTooltip4proSchieneUndFachart(idSchiene : number, idFachart : number) : string {
-		const sb : StringBuilder = new StringBuilder();
+	private stateClearErgebnisTooltip4proSchieneUndFachart(idSchiene: number, idFachart: number): string {
+		const sb: StringBuilder = new StringBuilder();
 		if (this._schienenID_fachartID_to_kurseList.contains(idSchiene, idFachart)) {
-			const kursGruppe : List<GostBlockungsergebnisKurs> = this._schienenID_fachartID_to_kurseList.getOrException(idSchiene, idFachart);
-			const n : number = kursGruppe.size();
+			const kursGruppe: List<GostBlockungsergebnisKurs> = this._schienenID_fachartID_to_kurseList.getOrException(idSchiene, idFachart);
+			const n: number = kursGruppe.size();
 			if (n >= 2) {
 				sb.append("  " + this.getOfFachartName(idFachart) + " (+" + (n - 1) + "):");
-				for (let i : number = 0; i < n; i++) {
-					const kurs : GostBlockungsergebnisKurs = ListUtils.getNonNullElementAtOrException(kursGruppe, i);
+				for (let i: number = 0; i < n; i++) {
+					const kurs: GostBlockungsergebnisKurs = ListUtils.getNonNullElementAtOrException(kursGruppe, i);
 					sb.append((i === 0 ? "" : ",") + " " + this.getOfKursName(kurs.id));
 				}
 			}
@@ -570,7 +570,7 @@ export class GostBlockungsergebnisManager extends JavaObject {
 		return sb.toString();
 	}
 
-	private update_0_schienenIDset_schienenNRset() : void {
+	private update_0_schienenIDset_schienenNRset(): void {
 		this._schienenIDset = new HashSet();
 		this._schienenNRset = new HashSet();
 		for (const gSchiene of this._parent.daten().schienen) {
@@ -583,12 +583,12 @@ export class GostBlockungsergebnisManager extends JavaObject {
 			if (!this._schienenNRset.add(gSchiene.nummer))
 				this._fehlermeldungen.add("Die Schienen-NR " + gSchiene.nummer + " ist doppelt!");
 		}
-		for (let schienenNr : number = 1; schienenNr <= this._schienenNRset.size(); schienenNr++)
+		for (let schienenNr: number = 1; schienenNr <= this._schienenNRset.size(); schienenNr++)
 			if (!this._schienenNRset.contains(schienenNr))
 				this._fehlermeldungen.add("Es gibt " + this._schienenNRset.size() + " Schienen, aber es fehlt die Schienen-Nr. " + schienenNr + "!");
 	}
 
-	private update_0_kursIDset() : void {
+	private update_0_kursIDset(): void {
 		this._kursIDset = new HashSet();
 		for (const gKurs of this._parent.daten().kurse) {
 			if (gKurs.id < 0)
@@ -598,7 +598,7 @@ export class GostBlockungsergebnisManager extends JavaObject {
 		}
 	}
 
-	private update_0_fachIDset() : void {
+	private update_0_fachIDset(): void {
 		this._fachIDset = new HashSet();
 		for (const gFach of this._parent.faecherManager().faecher()) {
 			if (gFach.id < 0)
@@ -614,7 +614,7 @@ export class GostBlockungsergebnisManager extends JavaObject {
 				this._fehlermeldungen.add("Fachwahl " + this._parent.toStringFachwahlSimple(gFachwahl) + " hat ein undefiniertes Fach (im Fächer-Manager)!");
 	}
 
-	private update_0_schuelerIDset() : void {
+	private update_0_schuelerIDset(): void {
 		this._schuelerIDset = new HashSet();
 		for (const schueler of this._parent.daten().schueler) {
 			if (schueler.id < 0)
@@ -628,10 +628,10 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 * Wichtig: Die Methode muss auf gelöschte und hinzugefügt Schienen reagieren
 	 * und die eigene Datenstruktur anpassen.
 	 */
-	private update_0_schienenID_to_schiene_schienenNR_to_schiene() : void {
+	private update_0_schienenID_to_schiene_schienenNR_to_schiene(): void {
 		this._schienenID_to_schiene = new HashMap();
 		this._schienenNR_to_schiene = new HashMap();
-		const listZuLoeschen : List<GostBlockungsergebnisSchiene> | null = new ArrayList<GostBlockungsergebnisSchiene>();
+		const listZuLoeschen: List<GostBlockungsergebnisSchiene> | null = new ArrayList<GostBlockungsergebnisSchiene>();
 		for (const eSchiene of this._ergebnis.schienen)
 			if (!this._parent.schieneGetExistiert(eSchiene.id)) {
 				listZuLoeschen.add(eSchiene);
@@ -641,12 +641,12 @@ export class GostBlockungsergebnisManager extends JavaObject {
 		this._ergebnis.schienen.removeAll(listZuLoeschen);
 		for (const eSchiene of this._ergebnis.schienen) {
 			this._schienenID_to_schiene.put(eSchiene.id, eSchiene);
-			const nr : number = this._parent.schieneGet(eSchiene.id).nummer;
+			const nr: number = this._parent.schieneGet(eSchiene.id).nummer;
 			this._schienenNR_to_schiene.put(nr, eSchiene);
 		}
 		for (const gSchiene of this._parent.daten().schienen)
 			if (!this._schienenID_to_schiene.containsKey(gSchiene.id)) {
-				const eSchiene : GostBlockungsergebnisSchiene = DTOUtils.newGostBlockungsergebnisSchiene(gSchiene.id);
+				const eSchiene: GostBlockungsergebnisSchiene = DTOUtils.newGostBlockungsergebnisSchiene(gSchiene.id);
 				this._schienenID_to_schiene.put(gSchiene.id, eSchiene);
 				this._schienenNR_to_schiene.put(gSchiene.nummer, eSchiene);
 				this._ergebnis.schienen.add(eSchiene);
@@ -658,12 +658,12 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 * denn Multi-Schienen-Kurse existieren in der jeweiligen Schiene als Kopie.
 	 * Alle Kopien müssen durch das selbe Kurs-Objekt ersetzt werden.
 	 */
-	private update_0_kursID_to_kurs() : void {
+	private update_0_kursID_to_kurs(): void {
 		this._kursID_to_kurs = new HashMap();
 		for (const eSchiene of this._ergebnis.schienen)
-			for (let i : number = 0; i < eSchiene.kurse.size(); i++) {
-				const eKurs : GostBlockungsergebnisKurs = eSchiene.kurse.get(i);
-				const eKursAlt : GostBlockungsergebnisKurs | null = this._kursID_to_kurs.get(eKurs.id);
+			for (let i: number = 0; i < eSchiene.kurse.size(); i++) {
+				const eKurs: GostBlockungsergebnisKurs = eSchiene.kurse.get(i);
+				const eKursAlt: GostBlockungsergebnisKurs | null = this._kursID_to_kurs.get(eKurs.id);
 				if (eKursAlt !== null) {
 					eSchiene.kurse.set(i, eKursAlt);
 				} else {
@@ -672,18 +672,18 @@ export class GostBlockungsergebnisManager extends JavaObject {
 			}
 		for (const gKurs of this._parent.daten().kurse)
 			if (!this._kursID_to_kurs.containsKey(gKurs.id)) {
-				const eKurs : GostBlockungsergebnisKurs = DTOUtils.newGostBlockungsergebnisKurs(gKurs.id, gKurs.fach_id, gKurs.kursart, gKurs.anzahlSchienen);
+				const eKurs: GostBlockungsergebnisKurs = DTOUtils.newGostBlockungsergebnisKurs(gKurs.id, gKurs.fach_id, gKurs.kursart, gKurs.anzahlSchienen);
 				this._kursID_to_kurs.put(gKurs.id, eKurs);
 			}
 	}
 
-	private update_0_schuelerID_to_schueler() : void {
+	private update_0_schuelerID_to_schueler(): void {
 		this._schuelerID_to_schueler = new HashMap();
 		for (const gSchueler of this._parent.daten().schueler)
 			this._schuelerID_to_schueler.put(gSchueler.id, gSchueler);
 	}
 
-	private update_0_schienenID_to_kursIDSet() : void {
+	private update_0_schienenID_to_kursIDSet(): void {
 		this._schienenID_to_kursIDSet = new HashMap();
 		for (const eSchiene of this._ergebnis.schienen)
 			for (const eKurs of eSchiene.kurse)
@@ -693,7 +693,7 @@ export class GostBlockungsergebnisManager extends JavaObject {
 				MapUtils.getOrCreateHashSet(this._schienenID_to_kursIDSet, idSchiene);
 	}
 
-	private update_1_kursID_to_schuelerIDSet_schuelerID_to_ungueltigeKurseSet() : void {
+	private update_1_kursID_to_schuelerIDSet_schuelerID_to_ungueltigeKurseSet(): void {
 		this._kursID_to_schuelerIDSet = new HashMap();
 		for (const eSchiene of this._ergebnis.schienen)
 			for (const eKurs of eSchiene.kurse)
@@ -703,19 +703,19 @@ export class GostBlockungsergebnisManager extends JavaObject {
 				MapUtils.getOrCreateHashSet(this._kursID_to_schuelerIDSet, idKurs);
 		this._schuelerID_to_ungueltigeKurseSet = new HashMap();
 		for (const idKurs of this._kursID_to_schuelerIDSet.keySet()) {
-			const eKurs : GostBlockungsergebnisKurs = DeveloperNotificationException.ifMapGetIsNull(this._kursID_to_kurs, idKurs);
-			const schuelerIDset : JavaSet<number> = DeveloperNotificationException.ifMapGetIsNull(this._kursID_to_schuelerIDSet, idKurs);
+			const eKurs: GostBlockungsergebnisKurs = DeveloperNotificationException.ifMapGetIsNull(this._kursID_to_kurs, idKurs);
+			const schuelerIDset: JavaSet<number> = DeveloperNotificationException.ifMapGetIsNull(this._kursID_to_schuelerIDSet, idKurs);
 			for (const idSchueler of new HashSet(schuelerIDset))
 				if (!this._parent.schuelerGetHatFachart(idSchueler, eKurs.fachID, eKurs.kursart))
 					MapUtils.getOrCreateHashSet(this._schuelerID_to_ungueltigeKurseSet, idSchueler).add(eKurs);
 		}
 	}
 
-	private update_1_kursID_to_dummySuS() : void {
+	private update_1_kursID_to_dummySuS(): void {
 		this._kursID_to_dummySuS = new HashMap();
 		for (const r of this._parent.regelGetListeOfTyp(GostKursblockungRegelTyp.KURS_MIT_DUMMY_SUS_AUFFUELLEN)) {
-			const idKurs : number = r.parameter.get(0).valueOf();
-			const anzahl : number = r.parameter.get(1);
+			const idKurs: number = r.parameter.get(0).valueOf();
+			const anzahl: number = r.parameter.get(1);
 			if (!this._kursIDset.contains(idKurs)) {
 				this._fehlermeldungen.add("Kurs " + this._parent.toStringKursSimple(idKurs) + " soll " + anzahl + " externe SuS haben, aber den Kurs gibt es nicht!");
 				continue;
@@ -734,7 +734,7 @@ export class GostBlockungsergebnisManager extends JavaObject {
 			MapUtils.putNonNullIfNotExists(this._kursID_to_dummySuS, idKurs, 0);
 	}
 
-	private update_1_fachID_to_kurseList() : void {
+	private update_1_fachID_to_kurseList(): void {
 		this._fachID_to_kurseList = new HashMap();
 		for (const eKurs of this._kursID_to_kurs.values())
 			MapUtils.getOrCreateArrayList(this._fachID_to_kurseList, eKurs.fachID).add(eKurs);
@@ -742,10 +742,10 @@ export class GostBlockungsergebnisManager extends JavaObject {
 			MapUtils.getOrCreateArrayList(this._fachID_to_kurseList, idFach);
 	}
 
-	private update_1_kursID_to_schienenSet() : void {
+	private update_1_kursID_to_schienenSet(): void {
 		this._kursID_to_schienenSet = new HashMap();
 		for (const idSchiene of this._schienenID_to_kursIDSet.keySet()) {
-			const eSchiene : GostBlockungsergebnisSchiene = DeveloperNotificationException.ifMapGetIsNull(this._schienenID_to_schiene, idSchiene);
+			const eSchiene: GostBlockungsergebnisSchiene = DeveloperNotificationException.ifMapGetIsNull(this._schienenID_to_schiene, idSchiene);
 			for (const idKurs of MapUtils.getOrCreateHashSet(this._schienenID_to_kursIDSet, idSchiene))
 				MapUtils.getOrCreateHashSet(this._kursID_to_schienenSet, idKurs).add(eSchiene);
 		}
@@ -754,16 +754,16 @@ export class GostBlockungsergebnisManager extends JavaObject {
 				MapUtils.getOrCreateHashSet(this._kursID_to_schienenSet, idKurs);
 	}
 
-	private update_1_fachartID_to_kurseList() : void {
+	private update_1_fachartID_to_kurseList(): void {
 		this._fachartID_to_kurseList = new HashMap();
 		for (const eKurs of this._kursID_to_kurs.values()) {
-			const fachartID : number = GostKursart.getFachartID(eKurs.fachID, eKurs.kursart);
+			const fachartID: number = GostKursart.getFachartID(eKurs.fachID, eKurs.kursart);
 			MapUtils.getOrCreateArrayList(this._fachartID_to_kurseList, fachartID).add(eKurs);
 		}
 		for (const gFachwahl of this._parent.daten().fachwahlen)
 			MapUtils.getOrCreateArrayList(this._fachartID_to_kurseList, GostKursart.getFachartIDByFachwahl(gFachwahl));
 		for (const idFachart of this._fachartID_to_kurseList.keySet()) {
-			const kursmenge : List<GostBlockungsergebnisKurs> = DeveloperNotificationException.ifMapGetIsNull(this._fachartID_to_kurseList, idFachart);
+			const kursmenge: List<GostBlockungsergebnisKurs> = DeveloperNotificationException.ifMapGetIsNull(this._fachartID_to_kurseList, idFachart);
 			if (this._fachartmenge_sortierung === 1) {
 				kursmenge.sort(this._kursComparator_kursart_fach_kursnummer);
 			} else {
@@ -772,10 +772,10 @@ export class GostBlockungsergebnisManager extends JavaObject {
 		}
 	}
 
-	private update_2_schuelerID_to_kurseSet() : void {
+	private update_2_schuelerID_to_kurseSet(): void {
 		this._schuelerID_to_kurseSet = new HashMap();
 		for (const idKurs of this._kursID_to_schuelerIDSet.keySet()) {
-			const eKurs : GostBlockungsergebnisKurs = DeveloperNotificationException.ifMapGetIsNull(this._kursID_to_kurs, idKurs);
+			const eKurs: GostBlockungsergebnisKurs = DeveloperNotificationException.ifMapGetIsNull(this._kursID_to_kurs, idKurs);
 			for (const idSchueler of DeveloperNotificationException.ifMapGetIsNull(this._kursID_to_schuelerIDSet, idKurs))
 				MapUtils.getOrCreateHashSet(this._schuelerID_to_kurseSet, idSchueler).add(eKurs);
 		}
@@ -784,7 +784,7 @@ export class GostBlockungsergebnisManager extends JavaObject {
 				MapUtils.getOrCreateHashSet(this._schuelerID_to_kurseSet, idSchueler);
 	}
 
-	private update_2_fachartIDList_sortiert() : void {
+	private update_2_fachartIDList_sortiert(): void {
 		this._fachartIDList_sortiert = new ArrayList(this._fachartID_to_kurseList.keySet());
 		if (this._fachartmenge_sortierung === 1) {
 			this._fachartIDList_sortiert.sort(this._fachartComparator_kursart_fach);
@@ -793,35 +793,35 @@ export class GostBlockungsergebnisManager extends JavaObject {
 		}
 	}
 
-	private update_2_fachartID_to_kursdifferenz() : void {
+	private update_2_fachartID_to_kursdifferenz(): void {
 		this._fachartID_to_kursdifferenz = new HashMap();
 		for (const idFachart of this._fachartID_to_kurseList.keySet()) {
-			const kursmenge : List<GostBlockungsergebnisKurs> | null = DeveloperNotificationException.ifMapGetIsNull(this._fachartID_to_kurseList, idFachart);
-			let min : number = 10000;
-			let max : number = 0;
+			const kursmenge: List<GostBlockungsergebnisKurs> | null = DeveloperNotificationException.ifMapGetIsNull(this._fachartID_to_kurseList, idFachart);
+			let min: number = 10000;
+			let max: number = 0;
 			for (const kurs of kursmenge) {
-				const keyIgnoreID : LongArrayKey = new LongArrayKey([GostKursblockungRegelTyp.KURS_KURSDIFFERENZ_BEI_DER_VISUALISIERUNG_IGNORIEREN.typ, kurs.id]);
+				const keyIgnoreID: LongArrayKey = new LongArrayKey([GostKursblockungRegelTyp.KURS_KURSDIFFERENZ_BEI_DER_VISUALISIERUNG_IGNORIEREN.typ, kurs.id]);
 				if (this._parent.regelGetByLongArrayKeyOrNull(keyIgnoreID) !== null)
 					continue;
-				const size : number = DeveloperNotificationException.ifMapGetIsNull(this._kursID_to_schuelerIDSet, kurs.id).size() + DeveloperNotificationException.ifMapGetIsNull(this._kursID_to_dummySuS, kurs.id);
+				const size: number = DeveloperNotificationException.ifMapGetIsNull(this._kursID_to_schuelerIDSet, kurs.id).size() + DeveloperNotificationException.ifMapGetIsNull(this._kursID_to_dummySuS, kurs.id);
 				min = Math.min(min, size);
 				max = Math.max(max, size);
 			}
-			let newKD : number = max - min;
+			let newKD: number = max - min;
 			if (newKD < 0)
 				newKD = 0;
 			this._fachartID_to_kursdifferenz.put(idFachart, newKD);
 		}
 	}
 
-	private update_2_schienenID_to_kollisionen() : void {
+	private update_2_schienenID_to_kollisionen(): void {
 		this._schienenID_to_kollisionen = new HashMap();
 		for (const idSchiene of this._schienenID_to_kursIDSet.keySet()) {
-			const kursmenge : JavaSet<number> = DeveloperNotificationException.ifMapGetIsNull(this._schienenID_to_kursIDSet, idSchiene);
-			let summeMitDoppelten : number = 0;
-			const summeOhneDoppelte : JavaSet<number> = new HashSet<number>();
+			const kursmenge: JavaSet<number> = DeveloperNotificationException.ifMapGetIsNull(this._schienenID_to_kursIDSet, idSchiene);
+			let summeMitDoppelten: number = 0;
+			const summeOhneDoppelte: JavaSet<number> = new HashSet<number>();
 			for (const idKurs of kursmenge) {
-				const schuelermenge : JavaSet<number> = DeveloperNotificationException.ifMapGetIsNull(this._kursID_to_schuelerIDSet, idKurs);
+				const schuelermenge: JavaSet<number> = DeveloperNotificationException.ifMapGetIsNull(this._kursID_to_schuelerIDSet, idKurs);
 				summeMitDoppelten += schuelermenge.size();
 				summeOhneDoppelte.addAll(schuelermenge);
 			}
@@ -829,26 +829,26 @@ export class GostBlockungsergebnisManager extends JavaObject {
 		}
 	}
 
-	private update_2_schienenID_to_susAnzahl() : void {
+	private update_2_schienenID_to_susAnzahl(): void {
 		this._schienenID_to_susAnzahl = new HashMap();
 		for (const idSchiene of this._schienenID_to_kursIDSet.keySet()) {
-			const kursmenge : JavaSet<number> = DeveloperNotificationException.ifMapGetIsNull(this._schienenID_to_kursIDSet, idSchiene);
-			let summeMitDoppelten : number = 0;
+			const kursmenge: JavaSet<number> = DeveloperNotificationException.ifMapGetIsNull(this._schienenID_to_kursIDSet, idSchiene);
+			let summeMitDoppelten: number = 0;
 			for (const idKurs of kursmenge) {
-				const schuelermenge : JavaSet<number> = DeveloperNotificationException.ifMapGetIsNull(this._kursID_to_schuelerIDSet, idKurs);
+				const schuelermenge: JavaSet<number> = DeveloperNotificationException.ifMapGetIsNull(this._kursID_to_schuelerIDSet, idKurs);
 				summeMitDoppelten += schuelermenge.size();
 			}
 			this._schienenID_to_susAnzahl.put(idSchiene, summeMitDoppelten);
 		}
 	}
 
-	private update_2_schuelerID_schienenID_to_kurseSet() : void {
+	private update_2_schuelerID_schienenID_to_kurseSet(): void {
 		this._schuelerID_schienenID_to_kurseSet = new HashMap2D();
 		for (const idSchiene of this._schienenID_to_kursIDSet.keySet()) {
-			const kursmenge : JavaSet<number> = DeveloperNotificationException.ifMapGetIsNull(this._schienenID_to_kursIDSet, idSchiene);
+			const kursmenge: JavaSet<number> = DeveloperNotificationException.ifMapGetIsNull(this._schienenID_to_kursIDSet, idSchiene);
 			for (const idKurs of kursmenge) {
-				const eKurs : GostBlockungsergebnisKurs = DeveloperNotificationException.ifMapGetIsNull(this._kursID_to_kurs, idKurs);
-				const schuelermenge : JavaSet<number> = DeveloperNotificationException.ifMapGetIsNull(this._kursID_to_schuelerIDSet, idKurs);
+				const eKurs: GostBlockungsergebnisKurs = DeveloperNotificationException.ifMapGetIsNull(this._kursID_to_kurs, idKurs);
+				const schuelermenge: JavaSet<number> = DeveloperNotificationException.ifMapGetIsNull(this._kursID_to_schuelerIDSet, idKurs);
 				for (const idSchueler of schuelermenge) {
 					Map2DUtils.getOrCreateHashSet(this._schuelerID_schienenID_to_kurseSet, idSchueler, idSchiene).add(eKurs);
 				}
@@ -858,10 +858,10 @@ export class GostBlockungsergebnisManager extends JavaObject {
 		}
 	}
 
-	private update_2_schienenID_fachartID_to_kurseList() : void {
+	private update_2_schienenID_fachartID_to_kurseList(): void {
 		this._schienenID_fachartID_to_kurseList = new HashMap2D();
 		for (const eKurs of this._kursID_to_kurs.values()) {
-			const fachartID : number = GostKursart.getFachartID(eKurs.fachID, eKurs.kursart);
+			const fachartID: number = GostKursart.getFachartID(eKurs.fachID, eKurs.kursart);
 			for (const eSchiene of MapUtils.getOrCreateHashSet(this._kursID_to_schienenSet, eKurs.id))
 				Map2DUtils.getOrCreateArrayList(this._schienenID_fachartID_to_kurseList, eSchiene.id, fachartID).add(eKurs);
 		}
@@ -870,21 +870,21 @@ export class GostBlockungsergebnisManager extends JavaObject {
 				Map2DUtils.getOrCreateArrayList(this._schienenID_fachartID_to_kurseList, idSchiene, idFachart);
 	}
 
-	private update_3_kursdifferenz_to_fachartenList() : void {
+	private update_3_kursdifferenz_to_fachartenList(): void {
 		this._kursdifferenz_to_fachartenList = new HashMap();
 		for (const idFachart of this._fachartID_to_kursdifferenz.keySet()) {
-			const kursdifferenz : number = DeveloperNotificationException.ifMapGetIsNull(this._fachartID_to_kursdifferenz, idFachart).valueOf();
-			const sFachart : string = this._parent.toStringFachartSimpleByFachartID(idFachart);
+			const kursdifferenz: number = DeveloperNotificationException.ifMapGetIsNull(this._fachartID_to_kursdifferenz, idFachart).valueOf();
+			const sFachart: string = this._parent.toStringFachartSimpleByFachartID(idFachart);
 			MapUtils.getOrCreateArrayList(this._kursdifferenz_to_fachartenList, kursdifferenz).add(sFachart);
 		}
 	}
 
-	private update_3_schuelerID_to_kollisionen() : void {
+	private update_3_schuelerID_to_kollisionen(): void {
 		this._schuelerID_to_kollisionen = new HashMap();
 		for (const idSchueler of this._schuelerID_schienenID_to_kurseSet.getKeySet()) {
-			let summeAllerKollisionenDesSchuelers : number = 0;
+			let summeAllerKollisionenDesSchuelers: number = 0;
 			for (const idSchiene of this._schuelerID_schienenID_to_kurseSet.getKeySetOf(idSchueler)) {
-				const kurseInDerSchiene : number = this._schuelerID_schienenID_to_kurseSet.getOrException(idSchueler, idSchiene).size();
+				const kurseInDerSchiene: number = this._schuelerID_schienenID_to_kurseSet.getOrException(idSchueler, idSchiene).size();
 				if (kurseInDerSchiene >= 2)
 					summeAllerKollisionenDesSchuelers += kurseInDerSchiene - 1;
 			}
@@ -892,7 +892,7 @@ export class GostBlockungsergebnisManager extends JavaObject {
 		}
 	}
 
-	private update_3_schuelerID_fachID_to_kurs_or_null() : void {
+	private update_3_schuelerID_fachID_to_kurs_or_null(): void {
 		this._schuelerID_fachID_to_kurs_or_null = new HashMap2D();
 		for (const idSchueler of this._schuelerID_to_kurseSet.keySet())
 			for (const eKurs of DeveloperNotificationException.ifMapGetIsNull(this._schuelerID_to_kurseSet, idSchueler))
@@ -902,103 +902,103 @@ export class GostBlockungsergebnisManager extends JavaObject {
 				this._schuelerID_fachID_to_kurs_or_null.put(gFachwahl.schuelerID, gFachwahl.fachID, null);
 	}
 
-	private stateRegelvalidierung1_kursart_sperren_in_schiene_von_bis(r : GostBlockungRegel) : void {
-		for (let schienenNr : number = r.parameter.get(1); schienenNr <= r.parameter.get(2); schienenNr++)
+	private stateRegelvalidierung1_kursart_sperren_in_schiene_von_bis(r: GostBlockungRegel): void {
+		for (let schienenNr: number = r.parameter.get(1); schienenNr <= r.parameter.get(2); schienenNr++)
 			for (const eKurs of this.getSchieneEmitNr(schienenNr).kurse)
 				if (eKurs.kursart === r.parameter.get(0)) {
 					this._ergebnis.bewertung.regelVerletzungen.add(r.id);
-					const beschreibung : string = "Kursart " + this.getOfKursName(eKurs.id) + " sollte nicht auf Schiene " + schienenNr + " liegen.";
+					const beschreibung: string = "Kursart " + this.getOfKursName(eKurs.id) + " sollte nicht auf Schiene " + schienenNr + " liegen.";
 					MapUtils.addToList(this._regelTyp_to_verletzungList, 1, beschreibung);
 					this._regelID_to_verletzungString.put(r.id, beschreibung);
 				}
 	}
 
-	private stateRegelvalidierung2_kurs_fixieren_in_schiene(r : GostBlockungRegel) : void {
-		const idKurs : number = r.parameter.get(0).valueOf();
-		const schienenNr : number = r.parameter.get(1);
+	private stateRegelvalidierung2_kurs_fixieren_in_schiene(r: GostBlockungRegel): void {
+		const idKurs: number = r.parameter.get(0).valueOf();
+		const schienenNr: number = r.parameter.get(1);
 		if (!this.getOfKursSchienenmenge(idKurs).contains(this.getSchieneEmitNr(schienenNr))) {
 			this._ergebnis.bewertung.regelVerletzungen.add(r.id);
-			const beschreibung : string = "Kurs " + this.getOfKursName(idKurs) + " sollte fixiert sein in Schiene " + schienenNr + ".";
+			const beschreibung: string = "Kurs " + this.getOfKursName(idKurs) + " sollte fixiert sein in Schiene " + schienenNr + ".";
 			MapUtils.addToList(this._regelTyp_to_verletzungList, 2, beschreibung);
 			this._regelID_to_verletzungString.put(r.id, beschreibung);
 		}
 	}
 
-	private stateRegelvalidierung3_kurs_sperren_in_schiene(r : GostBlockungRegel) : void {
-		const idKurs : number = r.parameter.get(0).valueOf();
-		const schienenNr : number = r.parameter.get(1);
+	private stateRegelvalidierung3_kurs_sperren_in_schiene(r: GostBlockungRegel): void {
+		const idKurs: number = r.parameter.get(0).valueOf();
+		const schienenNr: number = r.parameter.get(1);
 		if (this.getOfKursSchienenmenge(idKurs).contains(this.getSchieneEmitNr(schienenNr))) {
 			this._ergebnis.bewertung.regelVerletzungen.add(r.id);
-			const beschreibung : string = "Kurs " + this.getOfKursName(idKurs) + " sollte gesperrt sein in Schiene " + schienenNr + ".";
+			const beschreibung: string = "Kurs " + this.getOfKursName(idKurs) + " sollte gesperrt sein in Schiene " + schienenNr + ".";
 			MapUtils.addToList(this._regelTyp_to_verletzungList, 3, beschreibung);
 			this._regelID_to_verletzungString.put(r.id, beschreibung);
 		}
 	}
 
-	private stateRegelvalidierung4_schueler_fixieren_in_kurs(r : GostBlockungRegel) : void {
-		const idSchueler : number = r.parameter.get(0).valueOf();
-		const idKurs : number = r.parameter.get(1).valueOf();
+	private stateRegelvalidierung4_schueler_fixieren_in_kurs(r: GostBlockungRegel): void {
+		const idSchueler: number = r.parameter.get(0).valueOf();
+		const idKurs: number = r.parameter.get(1).valueOf();
 		if (!this.getOfSchuelerOfKursIstZugeordnet(idSchueler, idKurs)) {
 			this._ergebnis.bewertung.regelVerletzungen.add(r.id);
-			const beschreibung : string = this.getOfSchuelerNameVorname(idSchueler) + " sollte fixiert sein in Kurs " + this.getOfKursName(idKurs) + ".";
+			const beschreibung: string = this.getOfSchuelerNameVorname(idSchueler) + " sollte fixiert sein in Kurs " + this.getOfKursName(idKurs) + ".";
 			MapUtils.addToList(this._regelTyp_to_verletzungList, 4, beschreibung);
 			this._regelID_to_verletzungString.put(r.id, beschreibung);
 		}
 	}
 
-	private stateRegelvalidierung5_schueler_verbieten_in_kurs(r : GostBlockungRegel) : void {
-		const idSchueler : number = r.parameter.get(0).valueOf();
-		const idKurs : number = r.parameter.get(1).valueOf();
+	private stateRegelvalidierung5_schueler_verbieten_in_kurs(r: GostBlockungRegel): void {
+		const idSchueler: number = r.parameter.get(0).valueOf();
+		const idKurs: number = r.parameter.get(1).valueOf();
 		if (this.getOfSchuelerOfKursIstZugeordnet(idSchueler, idKurs)) {
 			this._ergebnis.bewertung.regelVerletzungen.add(r.id);
-			const beschreibung : string = this.getOfSchuelerNameVorname(idSchueler) + " sollte verboten sein in Kurs " + this.getOfKursName(idKurs) + ".";
+			const beschreibung: string = this.getOfSchuelerNameVorname(idSchueler) + " sollte verboten sein in Kurs " + this.getOfKursName(idKurs) + ".";
 			MapUtils.addToList(this._regelTyp_to_verletzungList, 5, beschreibung);
 			this._regelID_to_verletzungString.put(r.id, beschreibung);
 		}
 	}
 
-	private stateRegelvalidierung6_kursart_allein_in_schiene_von_bis(r : GostBlockungRegel) : void {
+	private stateRegelvalidierung6_kursart_allein_in_schiene_von_bis(r: GostBlockungRegel): void {
 		for (const eKurs of this._kursID_to_kurs.values())
 			for (const eSchieneID of eKurs.schienen) {
-				const nr : number = this.getSchieneG(eSchieneID).nummer;
-				const kursart : number = r.parameter.get(0);
-				const schienenNrVon : number = r.parameter.get(1);
-				const schienenNrBis : number = r.parameter.get(2);
-				const b1 : boolean = eKurs.kursart === kursart;
-				const b2 : boolean = (schienenNrVon <= nr) && (nr <= schienenNrBis);
+				const nr: number = this.getSchieneG(eSchieneID).nummer;
+				const kursart: number = r.parameter.get(0);
+				const schienenNrVon: number = r.parameter.get(1);
+				const schienenNrBis: number = r.parameter.get(2);
+				const b1: boolean = eKurs.kursart === kursart;
+				const b2: boolean = (schienenNrVon <= nr) && (nr <= schienenNrBis);
 				if (b1 !== b2) {
 					this._ergebnis.bewertung.regelVerletzungen.add(r.id);
-					const beschreibung : string = "Kursart von " + this.getOfKursName(eKurs.id) + " sollte innerhalb der Schienen " + schienenNrVon + " bis " + schienenNrBis + " sein.";
+					const beschreibung: string = "Kursart von " + this.getOfKursName(eKurs.id) + " sollte innerhalb der Schienen " + schienenNrVon + " bis " + schienenNrBis + " sein.";
 					MapUtils.addToList(this._regelTyp_to_verletzungList, 6, beschreibung);
 					this._regelID_to_verletzungString.put(r.id, beschreibung);
 				}
 			}
 	}
 
-	private stateRegelvalidierung7_kurs_verbieten_mit_kurs(r : GostBlockungRegel) : void {
-		const idKurs1 : number = r.parameter.get(0).valueOf();
-		const idKurs2 : number = r.parameter.get(1).valueOf();
+	private stateRegelvalidierung7_kurs_verbieten_mit_kurs(r: GostBlockungRegel): void {
+		const idKurs1: number = r.parameter.get(0).valueOf();
+		const idKurs2: number = r.parameter.get(1).valueOf();
 		for (const schiene1 of this.getOfKursSchienenmenge(idKurs1))
 			for (const schiene2 of this.getOfKursSchienenmenge(idKurs2))
 				if (schiene1 as unknown === schiene2 as unknown) {
 					this._ergebnis.bewertung.regelVerletzungen.add(r.id);
-					const nr : number = this.getSchieneG(schiene1.id).nummer;
-					const beschreibung : string = "Kurs " + this.getOfKursName(idKurs1) + " und Kurs " + this.getOfKursName(idKurs2) + " sollten nicht gemeinsam in einer Schiene (" + nr + ") sein.";
+					const nr: number = this.getSchieneG(schiene1.id).nummer;
+					const beschreibung: string = "Kurs " + this.getOfKursName(idKurs1) + " und Kurs " + this.getOfKursName(idKurs2) + " sollten nicht gemeinsam in einer Schiene (" + nr + ") sein.";
 					MapUtils.addToList(this._regelTyp_to_verletzungList, 7, beschreibung);
 					this._regelID_to_verletzungString.put(r.id, beschreibung);
 				}
 	}
 
-	private stateRegelvalidierung8_kurs_zusammen_mit_kurs(r : GostBlockungRegel) : void {
-		const idKurs1 : number = r.parameter.get(0).valueOf();
-		const idKurs2 : number = r.parameter.get(1).valueOf();
-		const set1 : JavaSet<GostBlockungsergebnisSchiene> = this.getOfKursSchienenmenge(idKurs1);
-		const set2 : JavaSet<GostBlockungsergebnisSchiene> = this.getOfKursSchienenmenge(idKurs2);
+	private stateRegelvalidierung8_kurs_zusammen_mit_kurs(r: GostBlockungRegel): void {
+		const idKurs1: number = r.parameter.get(0).valueOf();
+		const idKurs2: number = r.parameter.get(1).valueOf();
+		const set1: JavaSet<GostBlockungsergebnisSchiene> = this.getOfKursSchienenmenge(idKurs1);
+		const set2: JavaSet<GostBlockungsergebnisSchiene> = this.getOfKursSchienenmenge(idKurs2);
 		if (set1.size() < set2.size()) {
 			for (const schiene1 of set1)
 				if (!set2.contains(schiene1)) {
 					this._ergebnis.bewertung.regelVerletzungen.add(r.id);
-					const beschreibung : string = "Kurs " + this.getOfKursName(idKurs1) + " und Kurs " + this.getOfKursName(idKurs2) + " sollten gemeinsam in einer Schiene sein.";
+					const beschreibung: string = "Kurs " + this.getOfKursName(idKurs1) + " und Kurs " + this.getOfKursName(idKurs2) + " sollten gemeinsam in einer Schiene sein.";
 					MapUtils.addToList(this._regelTyp_to_verletzungList, 8, beschreibung);
 					this._regelID_to_verletzungString.put(r.id, beschreibung);
 				}
@@ -1006,14 +1006,14 @@ export class GostBlockungsergebnisManager extends JavaObject {
 			for (const schiene2 of set2)
 				if (!set1.contains(schiene2)) {
 					this._ergebnis.bewertung.regelVerletzungen.add(r.id);
-					const beschreibung : string = "Kurs " + this.getOfKursName(idKurs1) + " und Kurs " + this.getOfKursName(idKurs2) + " sollten gemeinsam in einer Schiene sein.";
+					const beschreibung: string = "Kurs " + this.getOfKursName(idKurs1) + " und Kurs " + this.getOfKursName(idKurs2) + " sollten gemeinsam in einer Schiene sein.";
 					MapUtils.addToList(this._regelTyp_to_verletzungList, 8, beschreibung);
 					this._regelID_to_verletzungString.put(r.id, beschreibung);
 				}
 		}
 	}
 
-	private stateRegelvalidierung10_lehrkraefte_beachten(r : GostBlockungRegel) : void {
+	private stateRegelvalidierung10_lehrkraefte_beachten(r: GostBlockungRegel): void {
 		for (const eSchiene of this._schienenID_to_schiene.values())
 			for (const eKurs1 of eSchiene.kurse)
 				for (const eKurs2 of eSchiene.kurse)
@@ -1022,131 +1022,131 @@ export class GostBlockungsergebnisManager extends JavaObject {
 							for (const gLehr2 of this.getKursG(eKurs2.id).lehrer)
 								if (gLehr1.id === gLehr2.id) {
 									this._ergebnis.bewertung.regelVerletzungen.add(r.id);
-									const nr : number = this.getSchieneG(eSchiene.id).nummer;
-									const beschreibung : string = "Kurs " + this.getOfKursName(eKurs1.id) + " und Kurs " + this.getOfKursName(eKurs2.id) + " haben die Lehrkraft " + gLehr1.kuerzel + " in der selben Schiene (" + nr + ").";
+									const nr: number = this.getSchieneG(eSchiene.id).nummer;
+									const beschreibung: string = "Kurs " + this.getOfKursName(eKurs1.id) + " und Kurs " + this.getOfKursName(eKurs2.id) + " haben die Lehrkraft " + gLehr1.kuerzel + " in der selben Schiene (" + nr + ").";
 									MapUtils.addToList(this._regelTyp_to_verletzungList, 10, beschreibung);
 									this._regelID_to_verletzungString.put(r.id, beschreibung);
 								}
 	}
 
-	private stateRegelvalidierung11_schueler_zusammen_mit_schueler_in_fach(r : GostBlockungRegel) : void {
-		const idSchueler1 : number = r.parameter.get(0).valueOf();
-		const idSchueler2 : number = r.parameter.get(1).valueOf();
-		const idFach : number = r.parameter.get(2).valueOf();
-		const fach : GostFach = this.getFach(idFach);
+	private stateRegelvalidierung11_schueler_zusammen_mit_schueler_in_fach(r: GostBlockungRegel): void {
+		const idSchueler1: number = r.parameter.get(0).valueOf();
+		const idSchueler2: number = r.parameter.get(1).valueOf();
+		const idFach: number = r.parameter.get(2).valueOf();
+		const fach: GostFach = this.getFach(idFach);
 		if (!this._parent.schuelerGetHatFach(idSchueler1, idFach)) {
 			this._ergebnis.bewertung.regelVerletzungen.add(r.id);
-			const beschreibung : string = this.getOfSchuelerNameVorname(idSchueler1) + " hat keine Fachwahl " + fach.kuerzelAnzeige + ", aber eine Regel, die das Fach definiert.";
+			const beschreibung: string = this.getOfSchuelerNameVorname(idSchueler1) + " hat keine Fachwahl " + fach.kuerzelAnzeige + ", aber eine Regel, die das Fach definiert.";
 			MapUtils.addToList(this._regelTyp_to_verletzungList, 11, beschreibung);
 			this._regelID_to_verletzungString.put(r.id, beschreibung);
 			return;
 		}
 		if (!this._parent.schuelerGetHatFach(idSchueler2, idFach)) {
 			this._ergebnis.bewertung.regelVerletzungen.add(r.id);
-			const beschreibung : string = this.getOfSchuelerNameVorname(idSchueler2) + " hat keine Fachwahl " + fach.kuerzelAnzeige + ", aber eine Regel, die das Fach definiert.";
+			const beschreibung: string = this.getOfSchuelerNameVorname(idSchueler2) + " hat keine Fachwahl " + fach.kuerzelAnzeige + ", aber eine Regel, die das Fach definiert.";
 			MapUtils.addToList(this._regelTyp_to_verletzungList, 11, beschreibung);
 			this._regelID_to_verletzungString.put(r.id, beschreibung);
 			return;
 		}
 		if (!this._parent.schuelerGetHatDieSelbeKursartMitSchuelerInFach(idSchueler1, idSchueler2, idFach)) {
 			this._ergebnis.bewertung.regelVerletzungen.add(r.id);
-			const beschreibung : string = this.getOfSchuelerNameVorname(idSchueler1) + " und " + this.getOfSchuelerNameVorname(idSchueler2) + " haben nicht die selbe Kursart bei " + fach.kuerzelAnzeige + ".";
+			const beschreibung: string = this.getOfSchuelerNameVorname(idSchueler1) + " und " + this.getOfSchuelerNameVorname(idSchueler2) + " haben nicht die selbe Kursart bei " + fach.kuerzelAnzeige + ".";
 			MapUtils.addToList(this._regelTyp_to_verletzungList, 11, beschreibung);
 			this._regelID_to_verletzungString.put(r.id, beschreibung);
 			return;
 		}
 		if (!this.getOfSchuelerIstZusammenMitSchuelerInFach(idSchueler1, idSchueler2, idFach)) {
 			this._ergebnis.bewertung.regelVerletzungen.add(r.id);
-			const beschreibung : string = this.getOfSchuelerNameVorname(idSchueler1) + " und " + this.getOfSchuelerNameVorname(idSchueler2) + " sollten gemeinsam in " + fach.kuerzelAnzeige + " sein.";
+			const beschreibung: string = this.getOfSchuelerNameVorname(idSchueler1) + " und " + this.getOfSchuelerNameVorname(idSchueler2) + " sollten gemeinsam in " + fach.kuerzelAnzeige + " sein.";
 			MapUtils.addToList(this._regelTyp_to_verletzungList, 11, beschreibung);
 			this._regelID_to_verletzungString.put(r.id, beschreibung);
 		}
 	}
 
-	private stateRegelvalidierung12_schueler_verbieten_mit_schueler_in_fach(r : GostBlockungRegel) : void {
-		const idSchueler1 : number = r.parameter.get(0).valueOf();
-		const idSchueler2 : number = r.parameter.get(1).valueOf();
-		const idFach : number = r.parameter.get(2).valueOf();
-		const fach : GostFach = this.getFach(idFach);
+	private stateRegelvalidierung12_schueler_verbieten_mit_schueler_in_fach(r: GostBlockungRegel): void {
+		const idSchueler1: number = r.parameter.get(0).valueOf();
+		const idSchueler2: number = r.parameter.get(1).valueOf();
+		const idFach: number = r.parameter.get(2).valueOf();
+		const fach: GostFach = this.getFach(idFach);
 		if (!this._parent.schuelerGetHatFach(idSchueler1, idFach)) {
 			this._ergebnis.bewertung.regelVerletzungen.add(r.id);
-			const beschreibung : string = this.getOfSchuelerNameVorname(idSchueler1) + " hat keine Fachwahl " + fach.kuerzelAnzeige + ", hat aber eine Regel, die das Fach definiert.";
+			const beschreibung: string = this.getOfSchuelerNameVorname(idSchueler1) + " hat keine Fachwahl " + fach.kuerzelAnzeige + ", hat aber eine Regel, die das Fach definiert.";
 			MapUtils.addToList(this._regelTyp_to_verletzungList, 12, beschreibung);
 			this._regelID_to_verletzungString.put(r.id, beschreibung);
 			return;
 		}
 		if (!this._parent.schuelerGetHatFach(idSchueler2, idFach)) {
 			this._ergebnis.bewertung.regelVerletzungen.add(r.id);
-			const beschreibung : string = this.getOfSchuelerNameVorname(idSchueler2) + " hat keine Fachwahl " + fach.kuerzelAnzeige + ", hat aber eine Regel, die das Fach definiert.";
+			const beschreibung: string = this.getOfSchuelerNameVorname(idSchueler2) + " hat keine Fachwahl " + fach.kuerzelAnzeige + ", hat aber eine Regel, die das Fach definiert.";
 			MapUtils.addToList(this._regelTyp_to_verletzungList, 12, beschreibung);
 			this._regelID_to_verletzungString.put(r.id, beschreibung);
 			return;
 		}
 		if (!this._parent.schuelerGetHatDieSelbeKursartMitSchuelerInFach(idSchueler1, idSchueler2, idFach)) {
 			this._ergebnis.bewertung.regelVerletzungen.add(r.id);
-			const beschreibung : string = this.getOfSchuelerNameVorname(idSchueler1) + " und SchülerIn " + this.getOfSchuelerNameVorname(idSchueler2) + " haben nicht die selbe Kursart bei " + fach.kuerzelAnzeige + ".";
+			const beschreibung: string = this.getOfSchuelerNameVorname(idSchueler1) + " und SchülerIn " + this.getOfSchuelerNameVorname(idSchueler2) + " haben nicht die selbe Kursart bei " + fach.kuerzelAnzeige + ".";
 			MapUtils.addToList(this._regelTyp_to_verletzungList, 12, beschreibung);
 			this._regelID_to_verletzungString.put(r.id, beschreibung);
 			return;
 		}
 		if (this.getOfSchuelerIstZusammenMitSchuelerInFach(idSchueler1, idSchueler2, idFach)) {
 			this._ergebnis.bewertung.regelVerletzungen.add(r.id);
-			const beschreibung : string = this.getOfSchuelerNameVorname(idSchueler1) + " und SchülerIn " + this.getOfSchuelerNameVorname(idSchueler2) + " sollten nicht gemeinsam in " + fach.kuerzelAnzeige + " sein.";
+			const beschreibung: string = this.getOfSchuelerNameVorname(idSchueler1) + " und SchülerIn " + this.getOfSchuelerNameVorname(idSchueler2) + " sollten nicht gemeinsam in " + fach.kuerzelAnzeige + " sein.";
 			MapUtils.addToList(this._regelTyp_to_verletzungList, 12, beschreibung);
 			this._regelID_to_verletzungString.put(r.id, beschreibung);
 		}
 	}
 
-	private stateRegelvalidierung13_schueler_zusammen_mit_schueler(r : GostBlockungRegel) : void {
-		const idSchueler1 : number = r.parameter.get(0).valueOf();
-		const idSchueler2 : number = r.parameter.get(1).valueOf();
+	private stateRegelvalidierung13_schueler_zusammen_mit_schueler(r: GostBlockungRegel): void {
+		const idSchueler1: number = r.parameter.get(0).valueOf();
+		const idSchueler2: number = r.parameter.get(1).valueOf();
 		for (const fach of this._parent.schuelerGetFachListeGemeinsamerFacharten(idSchueler1, idSchueler2))
 			if (!this.getOfSchuelerIstZusammenMitSchuelerInFach(idSchueler1, idSchueler2, fach.id)) {
 				this._ergebnis.bewertung.regelVerletzungen.add(r.id);
-				const beschreibung : string = this.getOfSchuelerNameVorname(idSchueler1) + " und " + this.getOfSchuelerNameVorname(idSchueler2) + " sollten gemeinsam in " + fach.kuerzelAnzeige + " sein.";
+				const beschreibung: string = this.getOfSchuelerNameVorname(idSchueler1) + " und " + this.getOfSchuelerNameVorname(idSchueler2) + " sollten gemeinsam in " + fach.kuerzelAnzeige + " sein.";
 				MapUtils.addToList(this._regelTyp_to_verletzungList, 13, beschreibung);
 				this._regelID_to_verletzungString.put(r.id, beschreibung);
 			}
 	}
 
-	private stateRegelvalidierung14_schueler_verbieten_mit_schueler(r : GostBlockungRegel) : void {
-		const idSchueler1 : number = r.parameter.get(0).valueOf();
-		const idSchueler2 : number = r.parameter.get(1).valueOf();
+	private stateRegelvalidierung14_schueler_verbieten_mit_schueler(r: GostBlockungRegel): void {
+		const idSchueler1: number = r.parameter.get(0).valueOf();
+		const idSchueler2: number = r.parameter.get(1).valueOf();
 		for (const fach of this._parent.schuelerGetFachListeGemeinsamerFacharten(idSchueler1, idSchueler2))
 			if (this.getOfSchuelerIstZusammenMitSchuelerInFach(idSchueler1, idSchueler2, fach.id)) {
 				this._ergebnis.bewertung.regelVerletzungen.add(r.id);
-				const beschreibung : string = this.getOfSchuelerNameVorname(idSchueler1) + " und " + this.getOfSchuelerNameVorname(idSchueler2) + " sollten nicht gemeinsam in " + fach.kuerzelAnzeige + " sein.";
+				const beschreibung: string = this.getOfSchuelerNameVorname(idSchueler1) + " und " + this.getOfSchuelerNameVorname(idSchueler2) + " sollten nicht gemeinsam in " + fach.kuerzelAnzeige + " sein.";
 				MapUtils.addToList(this._regelTyp_to_verletzungList, 14, beschreibung);
 				this._regelID_to_verletzungString.put(r.id, beschreibung);
 			}
 	}
 
-	private stateRegelvalidierung15_kurs_maximale_schueleranzahl(r : GostBlockungRegel) : void {
-		const idKurs : number = r.parameter.get(0).valueOf();
-		const maxSuS : number = r.parameter.get(1);
+	private stateRegelvalidierung15_kurs_maximale_schueleranzahl(r: GostBlockungRegel): void {
+		const idKurs: number = r.parameter.get(0).valueOf();
+		const maxSuS: number = r.parameter.get(1);
 		DeveloperNotificationException.ifTrue("Regel 15: " + this._parent.toStringKurs(idKurs) + " maximale SuS-Anzahl = " + maxSuS + " ist ungültig!", (maxSuS < 0) || (maxSuS > 100));
-		const sus : number = this.getOfKursAnzahlSchuelerPlusDummy(idKurs);
+		const sus: number = this.getOfKursAnzahlSchuelerPlusDummy(idKurs);
 		if (sus > maxSuS) {
 			this._ergebnis.bewertung.regelVerletzungen.add(r.id);
-			const beschreibung : string = "Kurs " + this.getOfKursName(idKurs) + " hat " + sus + " SuS, sollte aber nicht mehr als " + maxSuS + " haben.";
+			const beschreibung: string = "Kurs " + this.getOfKursName(idKurs) + " hat " + sus + " SuS, sollte aber nicht mehr als " + maxSuS + " haben.";
 			MapUtils.addToList(this._regelTyp_to_verletzungList, 15, beschreibung);
 			this._regelID_to_verletzungString.put(r.id, beschreibung);
 		}
 	}
 
-	private stateRegelvalidierung18_fach_kursart_maxProSchiene(r : GostBlockungRegel) : void {
-		const idFach : number = r.parameter.get(0).valueOf();
-		const kursart : number = r.parameter.get(1);
-		const maxProSchiene : number = r.parameter.get(2);
-		const idFachart : number = GostKursart.getFachartID(idFach, kursart);
+	private stateRegelvalidierung18_fach_kursart_maxProSchiene(r: GostBlockungRegel): void {
+		const idFach: number = r.parameter.get(0).valueOf();
+		const kursart: number = r.parameter.get(1);
+		const maxProSchiene: number = r.parameter.get(2);
+		const idFachart: number = GostKursart.getFachartID(idFach, kursart);
 		for (const idSchiene of this._schienenIDset) {
-			const size : number = Map2DUtils.getOrCreateArrayList(this._schienenID_fachartID_to_kurseList, idSchiene, idFachart).size();
+			const size: number = Map2DUtils.getOrCreateArrayList(this._schienenID_fachartID_to_kurseList, idSchiene, idFachart).size();
 			if (size <= maxProSchiene)
 				continue;
 			this._ergebnis.bewertung.regelVerletzungen.add(r.id);
-			const beschreibung : string = "In " + this._parent.toStringSchieneSimple(idSchiene) + " ist die Fachart " + this._parent.toStringFachartSimpleByFachartID(idFachart) + " insgesamt " + size + " Mal vertreten, erlaubt sind aber nur " + maxProSchiene + "!";
+			const beschreibung: string = "In " + this._parent.toStringSchieneSimple(idSchiene) + " ist die Fachart " + this._parent.toStringFachartSimpleByFachartID(idFachart) + " insgesamt " + size + " Mal vertreten, erlaubt sind aber nur " + maxProSchiene + "!";
 			MapUtils.addToList(this._regelTyp_to_verletzungList, 18, beschreibung);
-			const old : string = MapUtils.getOrDefault(this._regelID_to_verletzungString, r.id, "");
+			const old: string = MapUtils.getOrDefault(this._regelID_to_verletzungString, r.id, "");
 			this._regelID_to_verletzungString.put(r.id, (JavaString.isEmpty(old) ? "" : "\n") + beschreibung);
 		}
 	}
@@ -1159,8 +1159,8 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 * @param  idSchueler Die Datenbank-ID des Schülers.
 	 * @param  idKurs     Die Datenbank-ID des Kurses.
 	 */
-	private stateSchuelerKursHinzufuegenOhneRevalidierung(idSchueler : number, idKurs : number) : void {
-		const eKurs : GostBlockungsergebnisKurs = this.getKursE(idKurs);
+	private stateSchuelerKursHinzufuegenOhneRevalidierung(idSchueler: number, idKurs: number): void {
+		const eKurs: GostBlockungsergebnisKurs = this.getKursE(idKurs);
 		eKurs.schueler.add(idSchueler);
 	}
 
@@ -1172,8 +1172,8 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 * @param  idSchueler Die Datenbank-ID des Schülers.
 	 * @param  idKurs     Die Datenbank-ID des Kurses.
 	 */
-	private stateSchuelerKursEntfernenOhneRevalidierung(idSchueler : number, idKurs : number) : void {
-		const eKurs : GostBlockungsergebnisKurs = this.getKursE(idKurs);
+	private stateSchuelerKursEntfernenOhneRevalidierung(idSchueler: number, idKurs: number): void {
+		const eKurs: GostBlockungsergebnisKurs = this.getKursE(idKurs);
 		eKurs.schueler.remove(idSchueler);
 	}
 
@@ -1183,9 +1183,9 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 * @param  idKurs     Die Datenbank-ID des Kurses.
 	 * @param  idSchiene  Die Datenbank-ID der Schiene.
 	 */
-	private stateKursSchieneHinzufuegenOhneRegelvalidierung(idKurs : number, idSchiene : number) : void {
-		const kurs : GostBlockungsergebnisKurs = this.getKursE(idKurs);
-		const schiene : GostBlockungsergebnisSchiene = this.getSchieneE(idSchiene);
+	private stateKursSchieneHinzufuegenOhneRegelvalidierung(idKurs: number, idSchiene: number): void {
+		const kurs: GostBlockungsergebnisKurs = this.getKursE(idKurs);
+		const schiene: GostBlockungsergebnisSchiene = this.getSchieneE(idSchiene);
 		kurs.schienen.add(idSchiene);
 		schiene.kurse.add(kurs);
 	}
@@ -1196,9 +1196,9 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 * @param  idKurs     Die Datenbank-ID des Kurses.
 	 * @param  idSchiene  Die Datenbank-ID der Schiene.
 	 */
-	private stateKursSchieneEntfernenOhneRegelvalidierung(idKurs : number, idSchiene : number) : void {
-		const kurs : GostBlockungsergebnisKurs = this.getKursE(idKurs);
-		const schiene : GostBlockungsergebnisSchiene = this.getSchieneE(idSchiene);
+	private stateKursSchieneEntfernenOhneRegelvalidierung(idKurs: number, idSchiene: number): void {
+		const kurs: GostBlockungsergebnisKurs = this.getKursE(idKurs);
+		const schiene: GostBlockungsergebnisSchiene = this.getSchieneE(idSchiene);
 		schiene.kurse.remove(kurs);
 		kurs.schienen.remove(idSchiene);
 	}
@@ -1208,8 +1208,8 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return die Anzahl an externen SuS.
 	 */
-	public getAnzahlSchuelerExterne() : number {
-		return ListUtils.getCountFiltered(this._parent.daten().schueler, { test : (schueler: Schueler) => this.getOfSchuelerHatStatusExtern(schueler.id) });
+	public getAnzahlSchuelerExterne(): number {
+		return ListUtils.getCountFiltered(this._parent.daten().schueler, { test: (schueler: Schueler) => this.getOfSchuelerHatStatusExtern(schueler.id) });
 	}
 
 	/**
@@ -1217,7 +1217,7 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return die Anzahl an E-Schienen.
 	 */
-	public getAnzahlSchienen() : number {
+	public getAnzahlSchienen(): number {
 		return this._ergebnis.schienen.size();
 	}
 
@@ -1226,8 +1226,8 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return die Anzahl an Dummy-SuS.
 	 */
-	public getAnzahlSchuelerDummy() : number {
-		let summe : number = 0;
+	public getAnzahlSchuelerDummy(): number {
+		let summe: number = 0;
 		for (const idKurs of this._kursID_to_dummySuS.keySet())
 			summe += this.getOfKursAnzahlSchuelerDummy(idKurs);
 		return summe;
@@ -1238,7 +1238,7 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return die Datenbank-ID der Blockungs. Das ist die ID des Elternteils.
 	 */
-	public getBlockungsdatenID() : number {
+	public getBlockungsdatenID(): number {
 		return this._ergebnis.blockungID;
 	}
 
@@ -1247,7 +1247,7 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return das Blockungsergebnis, potentiell auch mit Schüler-Kurs-Zuordnungen, die nicht zu den Fachwahlen passen.
 	 */
-	public getErgebnis() : GostBlockungsergebnis {
+	public getErgebnis(): GostBlockungsergebnis {
 		return this._ergebnis;
 	}
 
@@ -1257,7 +1257,7 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return die Menge (meistens eine) aller Fehlermeldungen.
 	 */
-	public getFehlermeldungen() : List<string> {
+	public getFehlermeldungen(): List<string> {
 		return this._fehlermeldungen;
 	}
 
@@ -1266,7 +1266,7 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return den zugehörigen Daten-Manager für diesen Ergebnis-Manager.
 	 */
-	public getParent() : GostBlockungsdatenManager {
+	public getParent(): GostBlockungsdatenManager {
 		return this._parent;
 	}
 
@@ -1277,7 +1277,7 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return die Güte des Bewertungskriteriums im Bereich [0;1], mit 0=optimal.
 	 */
-	private static getOfBewertungFarbcodeStatic(value : number) : number {
+	private static getOfBewertungFarbcodeStatic(value: number): number {
 		return 1 - (1 / ((0.25 * value) + 1));
 	}
 
@@ -1290,8 +1290,8 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return Den Wert des 1. Bewertungskriteriums.
 	 */
-	public static getOfBewertung1WertStatic(bewertung : GostBlockungsergebnisBewertung) : number {
-		let summe : number = 0;
+	public static getOfBewertung1WertStatic(bewertung: GostBlockungsergebnisBewertung): number {
+		let summe: number = 0;
 		summe += bewertung.anzahlKurseNichtZugeordnet;
 		summe += bewertung.regelVerletzungen.size();
 		return summe;
@@ -1304,7 +1304,7 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return Den Wert des 1. Bewertungskriteriums.
 	 */
-	public getOfBewertung1Wert() : number {
+	public getOfBewertung1Wert(): number {
 		return GostBlockungsergebnisManager.getOfBewertung1WertStatic(this._ergebnis.bewertung);
 	}
 
@@ -1317,7 +1317,7 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return Eine Güte des 1. Bewertungskriteriums im Bereich [0;1], mit 0=optimal.
 	 */
-	private static getOfBewertung1FarbcodeStatic(bewertung : GostBlockungsergebnisBewertung) : number {
+	private static getOfBewertung1FarbcodeStatic(bewertung: GostBlockungsergebnisBewertung): number {
 		return GostBlockungsergebnisManager.getOfBewertungFarbcodeStatic(GostBlockungsergebnisManager.getOfBewertung1WertStatic(bewertung));
 	}
 
@@ -1328,7 +1328,7 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return Eine Güte des 1. Bewertungskriteriums im Bereich [0;1], mit 0=optimal.
 	 */
-	public getOfBewertung1Farbcode() : number {
+	public getOfBewertung1Farbcode(): number {
 		return GostBlockungsergebnisManager.getOfBewertung1FarbcodeStatic(this._ergebnis.bewertung);
 	}
 
@@ -1341,8 +1341,8 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return Den Wert des 2. Bewertungskriteriums.
 	 */
-	private static getOfBewertung2WertStatic(bewertung : GostBlockungsergebnisBewertung) : number {
-		let summe : number = 0;
+	private static getOfBewertung2WertStatic(bewertung: GostBlockungsergebnisBewertung): number {
+		let summe: number = 0;
 		summe += bewertung.anzahlSchuelerNichtZugeordnet;
 		summe += bewertung.anzahlSchuelerKollisionen;
 		return summe;
@@ -1355,7 +1355,7 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return Den Wert des 2. Bewertungskriteriums.
 	 */
-	public getOfBewertung2Wert() : number {
+	public getOfBewertung2Wert(): number {
 		return GostBlockungsergebnisManager.getOfBewertung2WertStatic(this._ergebnis.bewertung);
 	}
 
@@ -1368,7 +1368,7 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return Eine Güte des 2. Bewertungskriteriums im Bereich [0;1], mit 0=optimal.
 	 */
-	private static getOfBewertung2FarbcodeStatic(bewertung : GostBlockungsergebnisBewertung) : number {
+	private static getOfBewertung2FarbcodeStatic(bewertung: GostBlockungsergebnisBewertung): number {
 		return GostBlockungsergebnisManager.getOfBewertungFarbcodeStatic(GostBlockungsergebnisManager.getOfBewertung2WertStatic(bewertung));
 	}
 
@@ -1379,7 +1379,7 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return Eine Güte des 2. Bewertungskriteriums im Bereich [0;1], mit 0=optimal.
 	 */
-	public getOfBewertung2Farbcode() : number {
+	public getOfBewertung2Farbcode(): number {
 		return GostBlockungsergebnisManager.getOfBewertung2FarbcodeStatic(this._ergebnis.bewertung);
 	}
 
@@ -1388,7 +1388,7 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return den Wert des 3. Bewertungskriteriums (Kursdifferenz).
 	 */
-	public getOfBewertung3Wert() : number {
+	public getOfBewertung3Wert(): number {
 		return this._ergebnis.bewertung.kursdifferenzMax;
 	}
 
@@ -1397,8 +1397,8 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return eine Güte des 3. Bewertungskriteriums (Kursdifferenz) im Bereich [0;1], mit 0=optimal.
 	 */
-	public getOfBewertung3Farbcode() : number {
-		const wert : number = this._ergebnis.bewertung.kursdifferenzMax;
+	public getOfBewertung3Farbcode(): number {
+		const wert: number = this._ergebnis.bewertung.kursdifferenzMax;
 		return GostBlockungsergebnisManager.getOfBewertungFarbcodeStatic((wert === 0) ? 0 : (wert - 1));
 	}
 
@@ -1407,7 +1407,7 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return den Wert des 3. Bewertungskriteriums (Kursdifferenz) nur bezogen auf die Kursart LK.
 	 */
-	public getOfBewertung3Wert_nur_LK() : number {
+	public getOfBewertung3Wert_nur_LK(): number {
 		return this._bewertung3_KD_nur_LK;
 	}
 
@@ -1416,8 +1416,8 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return eine Güte des 3. Bewertungskriteriums (Kursdifferenz, nur LK) im Bereich [0;1], mit 0=optimal.
 	 */
-	public getOfBewertung3Farbcode_nur_LK() : number {
-		const wert : number = this._bewertung3_KD_nur_LK;
+	public getOfBewertung3Farbcode_nur_LK(): number {
+		const wert: number = this._bewertung3_KD_nur_LK;
 		return GostBlockungsergebnisManager.getOfBewertungFarbcodeStatic((wert === 0) ? 0 : (wert - 1));
 	}
 
@@ -1426,7 +1426,7 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return den Wert des 3. Bewertungskriteriums (Kursdifferenz) nur bezogen auf die Kursart GK.
 	 */
-	public getOfBewertung3Wert_nur_GK() : number {
+	public getOfBewertung3Wert_nur_GK(): number {
 		return this._bewertung3_KD_nur_GK;
 	}
 
@@ -1435,8 +1435,8 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return eine Güte des 3. Bewertungskriteriums (Kursdifferenz, nur GK) im Bereich [0;1], mit 0=optimal.
 	 */
-	public getOfBewertung3Farbcode_nur_GK() : number {
-		const wert : number = this._bewertung3_KD_nur_GK;
+	public getOfBewertung3Farbcode_nur_GK(): number {
+		const wert: number = this._bewertung3_KD_nur_GK;
 		return GostBlockungsergebnisManager.getOfBewertungFarbcodeStatic((wert === 0) ? 0 : (wert - 1));
 	}
 
@@ -1445,7 +1445,7 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return den Wert des 3. Bewertungskriteriums (Kursdifferenz) nur bezogen auf Kursarten die nicht LK oder GK sind.
 	 */
-	public getOfBewertung3Wert_nur_REST() : number {
+	public getOfBewertung3Wert_nur_REST(): number {
 		return this._bewertung3_KD_nur_REST;
 	}
 
@@ -1454,8 +1454,8 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return eine Güte des 3. Bewertungskriteriums (Kursdifferenz, alles außer LK und GK) im Bereich [0;1], mit 0=optimal.
 	 */
-	public getOfBewertung3Farbcode_nur_REST() : number {
-		const wert : number = this._bewertung3_KD_nur_REST;
+	public getOfBewertung3Farbcode_nur_REST(): number {
+		const wert: number = this._bewertung3_KD_nur_REST;
 		return GostBlockungsergebnisManager.getOfBewertungFarbcodeStatic((wert === 0) ? 0 : (wert - 1));
 	}
 
@@ -1469,9 +1469,9 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return den Wert des 3. Bewertungskriteriums als Histogramm (Array der Länge 10).
 	 */
-	private static getOfBewertung3HistogrammStatic(bewertung : GostBlockungsergebnisBewertung) : Array<number> {
-		const histo : Array<number> = Array(10).fill(0);
-		for (let i : number = 0; i < histo.length; i++)
+	private static getOfBewertung3HistogrammStatic(bewertung: GostBlockungsergebnisBewertung): Array<number> {
+		const histo: Array<number> = Array(10).fill(0);
+		for (let i: number = 0; i < histo.length; i++)
 			histo[i] = (bewertung.kursdifferenzHistogramm.length >= histo.length) ? bewertung.kursdifferenzHistogramm[i] : 0;
 		return histo;
 	}
@@ -1483,7 +1483,7 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return den Wert des 3. Bewertungskriteriums als Histogramm (Array der Länge 10).
 	 */
-	private getOfBewertung3Histogramm() : Array<number> {
+	private getOfBewertung3Histogramm(): Array<number> {
 		return GostBlockungsergebnisManager.getOfBewertung3HistogrammStatic(this._ergebnis.bewertung);
 	}
 
@@ -1498,7 +1498,7 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return Den Wert des 4. Bewertungskriteriums.
 	 */
-	private static getOfBewertung4WertStatic(bewertung : GostBlockungsergebnisBewertung) : number {
+	private static getOfBewertung4WertStatic(bewertung: GostBlockungsergebnisBewertung): number {
 		return bewertung.anzahlKurseMitGleicherFachartProSchiene;
 	}
 
@@ -1511,7 +1511,7 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return Den Wert des 4. Bewertungskriteriums.
 	 */
-	public getOfBewertung4Wert() : number {
+	public getOfBewertung4Wert(): number {
 		return GostBlockungsergebnisManager.getOfBewertung4WertStatic(this._ergebnis.bewertung);
 	}
 
@@ -1526,7 +1526,7 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return Eine Güte des 4. Bewertungskriteriums im Bereich [0;1], mit 0=optimal.
 	 */
-	private static getOfBewertung4FarbcodeStatic(bewertung : GostBlockungsergebnisBewertung) : number {
+	private static getOfBewertung4FarbcodeStatic(bewertung: GostBlockungsergebnisBewertung): number {
 		return GostBlockungsergebnisManager.getOfBewertungFarbcodeStatic(GostBlockungsergebnisManager.getOfBewertung4WertStatic(bewertung));
 	}
 
@@ -1539,7 +1539,7 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return Eine Güte des 4. Bewertungskriteriums im Bereich [0;1], mit 0=optimal.
 	 */
-	public getOfBewertung4Farbcode() : number {
+	public getOfBewertung4Farbcode(): number {
 		return GostBlockungsergebnisManager.getOfBewertung4FarbcodeStatic(this._ergebnis.bewertung);
 	}
 
@@ -1549,7 +1549,7 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return die Anzahl nicht vollständig verteilter Kurse.
 	 */
-	public getOfBewertungAnzahlNichtZugeordneterKurse() : number {
+	public getOfBewertungAnzahlNichtZugeordneterKurse(): number {
 		return this._ergebnis.bewertung.anzahlKurseNichtZugeordnet;
 	}
 
@@ -1558,7 +1558,7 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return die Anzahl an Fachwahlen, die nicht zugeordnet wurden.
 	 */
-	public getOfBewertungAnzahlNichtzugeordneterFachwahlen() : number {
+	public getOfBewertungAnzahlNichtzugeordneterFachwahlen(): number {
 		return this._ergebnis.bewertung.anzahlSchuelerNichtZugeordnet;
 	}
 
@@ -1571,7 +1571,7 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 * @return Das {@link GostFach}-Objekt.
 	 * @throws DeveloperNotificationException falls die ID unbekannt ist.
 	 */
-	public getFach(idFach : number) : GostFach {
+	public getFach(idFach: number): GostFach {
 		return this._parent.faecherManager().getOrException(idFach);
 	}
 
@@ -1583,7 +1583,7 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 * @return die Menge aller Kurse mit dem angegebenen Fach-ID.
 	 * @throws DeveloperNotificationException falls die Fach-ID unbekannt ist.
 	 */
-	public getOfFachKursmenge(idFach : number) : List<GostBlockungsergebnisKurs> {
+	public getOfFachKursmenge(idFach: number): List<GostBlockungsergebnisKurs> {
 		return DeveloperNotificationException.ifMapGetIsNull(this._fachID_to_kurseList, idFach);
 	}
 
@@ -1597,7 +1597,7 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 * @return die Kursmenge, die zur Fachart gehört.
 	 * @throws DeveloperNotificationException falls die Fachart-ID unbekannt ist.
 	 */
-	public getOfFachartKursmenge(idFachart : number) : List<GostBlockungsergebnisKurs> {
+	public getOfFachartKursmenge(idFachart: number): List<GostBlockungsergebnisKurs> {
 		return DeveloperNotificationException.ifMapGetIsNull(this._fachartID_to_kurseList, idFachart);
 	}
 
@@ -1612,7 +1612,7 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 * @return die Kursdifferenz der Fachart und beachtet dabei Dummy-SuS von Kursen.
 	 * @throws DeveloperNotificationException falls die Fachart-ID unbekannt ist.
 	 */
-	public getOfFachartKursdifferenz(idFachart : number) : number {
+	public getOfFachartKursdifferenz(idFachart: number): number {
 		return DeveloperNotificationException.ifMapGetIsNull(this._fachartID_to_kursdifferenz, idFachart);
 	}
 
@@ -1627,8 +1627,8 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 * @return die Kursdifferenz der Fachart, übergeben als (Fach, Kursart).
 	 * @throws DeveloperNotificationException falls die Fachart-ID unbekannt ist.
 	 */
-	public getOfFachOfKursartKursdifferenz(idFach : number, idKursart : number) : number {
-		const idFachart : number = GostKursart.getFachartID(idFach, idKursart);
+	public getOfFachOfKursartKursdifferenz(idFach: number, idKursart: number): number {
+		const idFachart: number = GostKursart.getFachartID(idFach, idKursart);
 		return DeveloperNotificationException.ifMapGetIsNull(this._fachartID_to_kursdifferenz, idFachart);
 	}
 
@@ -1639,9 +1639,9 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return den Namen der Fachart, z. B. D-LK.
 	 */
-	private getOfFachartName(idFachart : number) : string | null {
-		const idFach : number = GostKursart.getFachID(idFachart);
-		const idKursart : number = GostKursart.getKursartID(idFachart);
+	private getOfFachartName(idFachart: number): string | null {
+		const idFach: number = GostKursart.getFachID(idFachart);
+		const idKursart: number = GostKursart.getKursartID(idFachart);
 		return this._parent.faecherManager().getOrException(idFach).kuerzelAnzeige + "-" + GostKursart.fromID(idKursart).kuerzel;
 	}
 
@@ -1651,7 +1651,7 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return die Menge aller Facharten (Fach + Kursart) sortiert nach der aktuellen Sortiervariante.
 	 */
-	private getOfFachartMengeSortiert() : List<number> {
+	private getOfFachartMengeSortiert(): List<number> {
 		return this._fachartIDList_sortiert;
 	}
 
@@ -1659,7 +1659,7 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 * Ändert die aktuelle Sortierung von Facharten und Kursen.
 	 * <br>Hinweis: Sortiert zuerst nach LK/GK, dann nach der Fachsortierung, zuletzt nach der Kursnummer.
 	 */
-	public kursSetSortierungKursartFachNummer() : void {
+	public kursSetSortierungKursartFachNummer(): void {
 		this._fachartmenge_sortierung = 1;
 		this.stateRevalidateEverything();
 	}
@@ -1668,7 +1668,7 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 * Ändert die aktuelle Sortierung von Facharten und Kursen.
 	 * <br>Hinweis: Sortiert zuerst nach der Fachsortierung, dann nach LK/GK, zuletzt nach der Kursnummer.
 	 */
-	public kursSetSortierungFachKursartNummer() : void {
+	public kursSetSortierungFachKursartNummer(): void {
 		this._fachartmenge_sortierung = 2;
 		this.stateRevalidateEverything();
 	}
@@ -1682,7 +1682,7 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 * @return das {@link Schueler}-Objekt zur übergebenen ID.
 	 * @throws DeveloperNotificationException falls die Schüler-ID unbekannt ist.
 	 */
-	private getSchuelerG(idSchueler : number) : Schueler {
+	private getSchuelerG(idSchueler: number): Schueler {
 		return this._parent.schuelerGet(idSchueler);
 	}
 
@@ -1693,8 +1693,8 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return einen Schüler-String im Format: 'Nachname, Vorname'.
 	 */
-	public getOfSchuelerNameVorname(idSchueler : number) : string {
-		const schueler : Schueler = this._parent.schuelerGet(idSchueler);
+	public getOfSchuelerNameVorname(idSchueler: number): string {
+		const schueler: Schueler = this._parent.schuelerGet(idSchueler);
 		return schueler.nachname + ", " + schueler.vorname;
 	}
 
@@ -1706,7 +1706,7 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return Die Menge aller Kurse, die dem Schüler zugeordnet sind.
 	 */
-	public getOfSchuelerKursmenge(idSchueler : number) : JavaSet<GostBlockungsergebnisKurs> {
+	public getOfSchuelerKursmenge(idSchueler: number): JavaSet<GostBlockungsergebnisKurs> {
 		return DeveloperNotificationException.ifMapGetIsNull(this._schuelerID_to_kurseSet, idSchueler);
 	}
 
@@ -1719,8 +1719,8 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return die sortierte Menge aller Kurse, die dem Schüler zugeordnet sind.
 	 */
-	private getOfSchuelerKursmengeSortiert(idSchueler : number) : List<GostBlockungsergebnisKurs> {
-		const list : List<GostBlockungsergebnisKurs> | null = new ArrayList<GostBlockungsergebnisKurs>();
+	private getOfSchuelerKursmengeSortiert(idSchueler: number): List<GostBlockungsergebnisKurs> {
+		const list: List<GostBlockungsergebnisKurs> | null = new ArrayList<GostBlockungsergebnisKurs>();
 		list.addAll(DeveloperNotificationException.ifMapGetIsNull(this._schuelerID_to_kurseSet, idSchueler));
 		if (this._fachartmenge_sortierung === 1)
 			list.sort(this._kursComparator_kursart_fach_kursnummer);
@@ -1736,10 +1736,10 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return Die Menge aller Kurse des Schülers mit Kollisionen.
 	 */
-	public getOfSchuelerKursmengeMitKollisionen(idSchueler : number) : JavaSet<GostBlockungsergebnisKurs> {
-		const set : JavaSet<GostBlockungsergebnisKurs> = new HashSet<GostBlockungsergebnisKurs>();
+	public getOfSchuelerKursmengeMitKollisionen(idSchueler: number): JavaSet<GostBlockungsergebnisKurs> {
+		const set: JavaSet<GostBlockungsergebnisKurs> = new HashSet<GostBlockungsergebnisKurs>();
 		for (const schiene of this._parent.schieneGetListe()) {
-			const kurseDerSchiene : JavaSet<GostBlockungsergebnisKurs> = this._schuelerID_schienenID_to_kurseSet.getOrException(idSchueler, schiene.id);
+			const kurseDerSchiene: JavaSet<GostBlockungsergebnisKurs> = this._schuelerID_schienenID_to_kurseSet.getOrException(idSchueler, schiene.id);
 			if (kurseDerSchiene.size() > 1)
 				set.addAll(kurseDerSchiene);
 		}
@@ -1753,9 +1753,9 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return die Menge aller Fachwahlen eines Schülers, die keinem Kurs zugeordnet sind.
 	 */
-	public getOfSchuelerFachwahlmengeOhneKurszuordnung(idSchueler : number) : List<GostFachwahl> {
-		const list : List<GostFachwahl> = this._parent.schuelerGetListeOfFachwahlen(idSchueler);
-		const filter : Predicate<GostFachwahl> = { test : (t: GostFachwahl) => (this.getOfSchuelerOfFachZugeordneterKurs(idSchueler, t.fachID) === null) };
+	public getOfSchuelerFachwahlmengeOhneKurszuordnung(idSchueler: number): List<GostFachwahl> {
+		const list: List<GostFachwahl> = this._parent.schuelerGetListeOfFachwahlen(idSchueler);
+		const filter: Predicate<GostFachwahl> = { test: (t: GostFachwahl) => (this.getOfSchuelerOfFachZugeordneterKurs(idSchueler, t.fachID) === null) };
 		return ListUtils.getCopyFiltered(list, filter);
 	}
 
@@ -1766,9 +1766,9 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return TRUE, falls der Schüler mindestens eine Nichtwahl hat.
 	 */
-	public getOfSchuelerHatNichtwahl(idSchueler : number) : boolean {
-		const nIst : number = DeveloperNotificationException.ifMapGetIsNull(this._schuelerID_to_kurseSet, idSchueler).size();
-		const nSoll : number = this._schuelerID_fachID_to_kurs_or_null.getSubMapSizeOrZero(idSchueler);
+	public getOfSchuelerHatNichtwahl(idSchueler: number): boolean {
+		const nIst: number = DeveloperNotificationException.ifMapGetIsNull(this._schuelerID_to_kurseSet, idSchueler).size();
+		const nSoll: number = this._schuelerID_fachID_to_kurs_or_null.getSubMapSizeOrZero(idSchueler);
 		return nIst < nSoll;
 	}
 
@@ -1781,7 +1781,7 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return TRUE, falls der übergebene Schüler die entsprechende Fachwahl (Fach + Kursart) hat.
 	 */
-	public getOfSchuelerHatFachwahl(idSchueler : number, idFach : number, idKursart : number) : boolean {
+	public getOfSchuelerHatFachwahl(idSchueler: number, idFach: number, idKursart: number): boolean {
 		return this._parent.schuelerGetHatFachart(idSchueler, idFach, idKursart);
 	}
 
@@ -1793,7 +1793,7 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return TRUE, falls der übergebene Schüler das entsprechende Fach (unabhängig von der Kursart) gewählt hat.
 	 */
-	private getOfSchuelerHatFach(idSchueler : number, idFach : number) : boolean {
+	private getOfSchuelerHatFach(idSchueler: number, idFach: number): boolean {
 		return this._parent.schuelerGetHatFach(idSchueler, idFach);
 	}
 
@@ -1805,7 +1805,7 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return TRUE, falls der Schüler mindestens eine Kollision hat.
 	 */
-	public getOfSchuelerHatKollision(idSchueler : number) : boolean {
+	public getOfSchuelerHatKollision(idSchueler: number): boolean {
 		return DeveloperNotificationException.ifMapGetIsNull(this._schuelerID_to_kollisionen, idSchueler) > 0;
 	}
 
@@ -1822,8 +1822,8 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return die Anzahl der Schüler, die den Filterkriterien entsprechen.
 	 */
-	public getOfSchuelerAnzahlGefiltert(idKurs : number, idFach : number, idKursart : number, konfliktTyp : number, subString : string, geschlecht : Geschlecht | null, schriftlichkeit : GostSchriftlichkeit | null) : number {
-		let summe : number = 0;
+	public getOfSchuelerAnzahlGefiltert(idKurs: number, idFach: number, idKursart: number, konfliktTyp: number, subString: string, geschlecht: Geschlecht | null, schriftlichkeit: GostSchriftlichkeit | null): number {
+		let summe: number = 0;
 		for (const schueler of this._parent.schuelerGetListe())
 			if (this.getOfSchuelerErfuelltKriterien(schueler.id, idKurs, idFach, idKursart, konfliktTyp, subString, geschlecht, schriftlichkeit))
 				summe++;
@@ -1838,7 +1838,7 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return die Menge der zugeordneten Kurse des Schülers in der Schiene.
 	 */
-	private getOfSchuelerOfSchieneKursmenge(idSchueler : number, idSchiene : number) : JavaSet<GostBlockungsergebnisKurs> {
+	private getOfSchuelerOfSchieneKursmenge(idSchueler: number, idSchiene: number): JavaSet<GostBlockungsergebnisKurs> {
 		return this._schuelerID_schienenID_to_kurseSet.getOrException(idSchueler, idSchiene);
 	}
 
@@ -1850,7 +1850,7 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return TRUE, falls der Schüler in der Schiene mehr als einen Kurs belegt hat.
 	 */
-	public getOfSchuelerOfSchieneHatKollision(idSchueler : number, idSchiene : number) : boolean {
+	public getOfSchuelerOfSchieneHatKollision(idSchueler: number, idSchiene: number): boolean {
 		return this._schuelerID_schienenID_to_kurseSet.getOrException(idSchueler, idSchiene).size() > 1;
 	}
 
@@ -1862,7 +1862,7 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return Die zu (idSchueler, idFach) die jeweilige Kursart.
 	 */
-	public getOfSchuelerOfFachKursart(idSchueler : number, idFach : number) : GostKursart {
+	public getOfSchuelerOfFachKursart(idSchueler: number, idFach: number): GostKursart {
 		return this._parent.schuelerGetOfFachKursart(idSchueler, idFach);
 	}
 
@@ -1874,7 +1874,7 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return den zu (idSchueler, idFach) passenden Kurs oder NULL.
 	 */
-	public getOfSchuelerOfFachZugeordneterKurs(idSchueler : number, idFach : number) : GostBlockungsergebnisKurs | null {
+	public getOfSchuelerOfFachZugeordneterKurs(idSchueler: number, idFach: number): GostBlockungsergebnisKurs | null {
 		return this._schuelerID_fachID_to_kurs_or_null.getOrNull(idSchueler, idFach);
 	}
 
@@ -1886,13 +1886,13 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return ein {@link SchuelerblockungOutput}-Objekt, welches für den Schüler eine Neuzuordnung der Kurse vorschlägt.
 	 */
-	private getOfSchuelerNeuzuordnungMitFixierung(idSchueler : number, fixiereBelegteKurse : boolean) : SchuelerblockungOutput {
-		const input : SchuelerblockungInput = new SchuelerblockungInput();
+	private getOfSchuelerNeuzuordnungMitFixierung(idSchueler: number, fixiereBelegteKurse: boolean): SchuelerblockungOutput {
+		const input: SchuelerblockungInput = new SchuelerblockungInput();
 		input.schienen = this._parent.schieneGetAnzahl();
 		for (const fachwahl of this._parent.schuelerGetListeOfFachwahlen(idSchueler)) {
 			input.fachwahlen.add(fachwahl);
 			input.fachwahlenText.add(this._parent.fachwahlGetName(fachwahl));
-			const fachartID : number = GostKursart.getFachartIDByFachwahl(fachwahl);
+			const fachartID: number = GostKursart.getFachartIDByFachwahl(fachwahl);
 			for (const kursE of this.getOfFachartKursmenge(fachartID))
 				input.kurse.add(this.getOfSchuelerNeuzuordnungErzeugeKurs(kursE.id, kursE.fachID, kursE.kursart, idSchueler, fixiereBelegteKurse));
 		}
@@ -1901,8 +1901,8 @@ export class GostBlockungsergebnisManager extends JavaObject {
 		return new SchuelerblockungAlgorithmus().handle(input);
 	}
 
-	private getOfSchuelerNeuzuordnungErzeugeKurs(idKurs : number, idFach : number, kursart : number, idSchueler : number, fixiereBelegteKurse : boolean) : SchuelerblockungInputKurs {
-		const kursS : SchuelerblockungInputKurs = new SchuelerblockungInputKurs();
+	private getOfSchuelerNeuzuordnungErzeugeKurs(idKurs: number, idFach: number, kursart: number, idSchueler: number, fixiereBelegteKurse: boolean): SchuelerblockungInputKurs {
+		const kursS: SchuelerblockungInputKurs = new SchuelerblockungInputKurs();
 		kursS.id = idKurs;
 		kursS.fach = idFach;
 		kursS.kursart = kursart;
@@ -1912,7 +1912,7 @@ export class GostBlockungsergebnisManager extends JavaObject {
 		kursS.anzahlSuS = this.getOfKursAnzahlSchuelerPlusDummy(idKurs);
 		if (this.getOfSchuelerOfKursIstZugeordnet(idSchueler, idKurs))
 			kursS.anzahlSuS--;
-		const maxSuS : number = this.getOfKursMaxSuS(idKurs);
+		const maxSuS: number = this.getOfKursMaxSuS(idKurs);
 		if (kursS.anzahlSuS >= maxSuS)
 			kursS.istGesperrt = true;
 		if (kursS.istGesperrt && kursS.istFixiert)
@@ -1930,12 +1930,12 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return ein {@link SchuelerblockungOutput}-Objekt, welches für den Schüler eine Neuzuordnung der Kurse beinhaltet.
 	 */
-	public getOfSchuelerNeuzuordnung(idSchueler : number, fixiereBelegteKurse : boolean) : GostBlockungsergebnisKursSchuelerZuordnungUpdate {
-		const zuordnung : SchuelerblockungOutput = this.getOfSchuelerNeuzuordnungMitFixierung(idSchueler, fixiereBelegteKurse);
-		const u : GostBlockungsergebnisKursSchuelerZuordnungUpdate | null = new GostBlockungsergebnisKursSchuelerZuordnungUpdate();
+	public getOfSchuelerNeuzuordnung(idSchueler: number, fixiereBelegteKurse: boolean): GostBlockungsergebnisKursSchuelerZuordnungUpdate {
+		const zuordnung: SchuelerblockungOutput = this.getOfSchuelerNeuzuordnungMitFixierung(idSchueler, fixiereBelegteKurse);
+		const u: GostBlockungsergebnisKursSchuelerZuordnungUpdate | null = new GostBlockungsergebnisKursSchuelerZuordnungUpdate();
 		for (const z of zuordnung.fachwahlenZuKurs) {
-			const kursV : GostBlockungsergebnisKurs | null = this.getOfSchuelerOfFachZugeordneterKurs(idSchueler, z.fachID);
-			const kursN : GostBlockungsergebnisKurs | null = (z.kursID < 0) ? null : this.getKursE(z.kursID);
+			const kursV: GostBlockungsergebnisKurs | null = this.getOfSchuelerOfFachZugeordneterKurs(idSchueler, z.fachID);
+			const kursN: GostBlockungsergebnisKurs | null = (z.kursID < 0) ? null : this.getKursE(z.kursID);
 			if (kursV as unknown !== kursN as unknown) {
 				if (kursV !== null)
 					u.listEntfernen.add(DTOUtils.newGostBlockungsergebnisKursSchuelerZuordnung(kursV.id, idSchueler));
@@ -1954,7 +1954,7 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return TRUE, falls der Schüler dem Kurs zugeordnet ist.
 	 */
-	public getOfSchuelerOfKursIstZugeordnet(idSchueler : number, idKurs : number) : boolean {
+	public getOfSchuelerOfKursIstZugeordnet(idSchueler: number, idKurs: number): boolean {
 		return MapUtils.getOrCreateHashSet(this._kursID_to_schuelerIDSet, idKurs).contains(idSchueler);
 	}
 
@@ -1966,7 +1966,7 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return TRUE, falls der Schüler dem Kurs zugeordnet ist, aber keine entsprechende Fachwahl hat.
 	 */
-	public getOfSchuelerOfKursIstUngueltig(idSchueler : number, idKurs : number) : boolean {
+	public getOfSchuelerOfKursIstUngueltig(idSchueler: number, idKurs: number): boolean {
 		if (this._schuelerID_to_ungueltigeKurseSet.containsKey(idSchueler))
 			for (const kurs of MapUtils.getOrCreateHashSet(this._schuelerID_to_ungueltigeKurseSet, idSchueler))
 				if (kurs.id === idKurs)
@@ -1982,7 +1982,7 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return TRUE, falls der Schüler im Kurs via Regel fixiert sein soll.
 	 */
-	private getOfSchuelerOfKursIstFixiert(idSchueler : number, idKurs : number) : boolean {
+	private getOfSchuelerOfKursIstFixiert(idSchueler: number, idKurs: number): boolean {
 		return this._parent.schuelerGetIstFixiertInKurs(idSchueler, idKurs);
 	}
 
@@ -1994,8 +1994,8 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return TRUE, falls der Schüler den Kurs als LK gewählt hat.
 	 */
-	private getOfSchuelerOfKursIstLK(idSchueler : number, idKurs : number) : boolean {
-		const abiturfach : number = this.getOfSchuelerOfKursAbiturfach(idSchueler, idKurs);
+	private getOfSchuelerOfKursIstLK(idSchueler: number, idKurs: number): boolean {
+		const abiturfach: number = this.getOfSchuelerOfKursAbiturfach(idSchueler, idKurs);
 		return (abiturfach >= 1) && (abiturfach <= 2);
 	}
 
@@ -2007,8 +2007,8 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return TRUE, falls der Schüler den Kurs als AB3 gewählt hat.
 	 */
-	private getOfSchuelerOfKursIstAB3(idSchueler : number, idKurs : number) : boolean {
-		const abiturfach : number = this.getOfSchuelerOfKursAbiturfach(idSchueler, idKurs);
+	private getOfSchuelerOfKursIstAB3(idSchueler: number, idKurs: number): boolean {
+		const abiturfach: number = this.getOfSchuelerOfKursAbiturfach(idSchueler, idKurs);
 		return (abiturfach === 3);
 	}
 
@@ -2020,8 +2020,8 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return TRUE, falls der Schüler den Kurs als LK oder AB3 gewählt hat.
 	 */
-	private getOfSchuelerOfKursIstLKoderAB3(idSchueler : number, idKurs : number) : boolean {
-		const abiturfach : number = this.getOfSchuelerOfKursAbiturfach(idSchueler, idKurs);
+	private getOfSchuelerOfKursIstLKoderAB3(idSchueler: number, idKurs: number): boolean {
+		const abiturfach: number = this.getOfSchuelerOfKursAbiturfach(idSchueler, idKurs);
 		return (abiturfach >= 1) && (abiturfach <= 3);
 	}
 
@@ -2033,8 +2033,8 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return TRUE, falls der Schüler den Kurs als AB4 gewählt hat.
 	 */
-	private getOfSchuelerOfKursIstAB4(idSchueler : number, idKurs : number) : boolean {
-		const abiturfach : number = this.getOfSchuelerOfKursAbiturfach(idSchueler, idKurs);
+	private getOfSchuelerOfKursIstAB4(idSchueler: number, idKurs: number): boolean {
+		const abiturfach: number = this.getOfSchuelerOfKursAbiturfach(idSchueler, idKurs);
 		return (abiturfach === 4);
 	}
 
@@ -2046,8 +2046,8 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return TRUE, falls der Schüler den Kurs als Abiturfach gewählt hat.
 	 */
-	private getOfSchuelerOfKursIstAbiturfach(idSchueler : number, idKurs : number) : boolean {
-		const abiturfach : number = this.getOfSchuelerOfKursAbiturfach(idSchueler, idKurs);
+	private getOfSchuelerOfKursIstAbiturfach(idSchueler: number, idKurs: number): boolean {
+		const abiturfach: number = this.getOfSchuelerOfKursAbiturfach(idSchueler, idKurs);
 		return abiturfach >= 1;
 	}
 
@@ -2059,8 +2059,8 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return den Wert (1-4) des Abiturfaches oder 0, falls es kein Abiturfach ist.
 	 */
-	private getOfSchuelerOfKursAbiturfach(idSchueler : number, idKurs : number) : number {
-		const fachwahl : GostFachwahl = this.getOfSchuelerOfKursFachwahl(idSchueler, idKurs);
+	private getOfSchuelerOfKursAbiturfach(idSchueler: number, idKurs: number): number {
+		const fachwahl: GostFachwahl = this.getOfSchuelerOfKursFachwahl(idSchueler, idKurs);
 		return (fachwahl.abiturfach === null) ? 0 : fachwahl.abiturfach;
 	}
 
@@ -2072,8 +2072,8 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return TRUE, falls der Schüler den Kurs als Abiturfach gewählt hat.
 	 */
-	private getOfSchuelerOfKursIstSchriftlich(idSchueler : number, idKurs : number) : boolean {
-		const fachwahl : GostFachwahl = this.getOfSchuelerOfKursFachwahl(idSchueler, idKurs);
+	private getOfSchuelerOfKursIstSchriftlich(idSchueler: number, idKurs: number): boolean {
+		const fachwahl: GostFachwahl = this.getOfSchuelerOfKursFachwahl(idSchueler, idKurs);
 		return fachwahl.istSchriftlich;
 	}
 
@@ -2085,10 +2085,10 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return TRUE, falls der Schüler im Kurs via Regel gesperrt sein soll.
 	 */
-	public getOfSchuelerOfKursIstGesperrt(idSchueler : number, idKurs : number) : boolean {
+	public getOfSchuelerOfKursIstGesperrt(idSchueler: number, idKurs: number): boolean {
 		for (const r of this._parent.regelGetListeOfTyp(GostKursblockungRegelTyp.SCHUELER_VERBIETEN_IN_KURS)) {
-			const schuelerID : number = r.parameter.get(0).valueOf();
-			const kursID : number = r.parameter.get(1).valueOf();
+			const schuelerID: number = r.parameter.get(0).valueOf();
+			const kursID: number = r.parameter.get(1).valueOf();
 			if ((schuelerID === idSchueler) && (kursID === idKurs))
 				return true;
 		}
@@ -2103,9 +2103,9 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return TRUE, falls der Sub-String im Nachnamen oder im Vornamen des Schülers vorkommt (Groß- und Kleinschreibung wird dabei ignoriert).
 	 */
-	private getOfSchuelerHatImNamenSubstring(idSchueler : number, subString : string) : boolean {
-		const schueler : Schueler = this.getSchuelerG(idSchueler);
-		const text : string = subString.toLowerCase();
+	private getOfSchuelerHatImNamenSubstring(idSchueler: number, subString: string): boolean {
+		const schueler: Schueler = this.getSchuelerG(idSchueler);
+		const text: string = subString.toLowerCase();
 		return JavaString.contains(schueler.nachname.toLowerCase(), text) || JavaString.contains(schueler.vorname.toLowerCase(), text);
 	}
 
@@ -2118,9 +2118,9 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 * @return das {@link Geschlecht} des Schülers.
 	 * @throws DeveloperNotificationException falls das Enum {@link Geschlecht} nicht definiert ist.
 	 */
-	private getOfSchuelerGeschlechtOrException(idSchueler : number) : Geschlecht {
-		const schueler : Schueler = this.getSchuelerG(idSchueler);
-		const geschlecht : Geschlecht | null = Geschlecht.fromValue(schueler.geschlecht);
+	private getOfSchuelerGeschlechtOrException(idSchueler: number): Geschlecht {
+		const schueler: Schueler = this.getSchuelerG(idSchueler);
+		const geschlecht: Geschlecht | null = Geschlecht.fromValue(schueler.geschlecht);
 		return DeveloperNotificationException.ifNull("Das Geschlecht des Schülers " + this._parent.toStringSchueler(idSchueler) + " ist nicht definiert!", geschlecht);
 	}
 
@@ -2131,9 +2131,9 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return TRUE, falls der Schüler den Status {@link SchuelerStatus#EXTERN} hat.
 	 */
-	private getOfSchuelerHatStatusExtern(idSchueler : number) : boolean {
-		const idStatus : number = this.getSchuelerG(idSchueler).status;
-		const status : SchuelerStatus | null = SchuelerStatus.data().getWertByID(idStatus);
+	private getOfSchuelerHatStatusExtern(idSchueler: number): boolean {
+		const idStatus: number = this.getSchuelerG(idSchueler).status;
+		const status: SchuelerStatus | null = SchuelerStatus.data().getWertByID(idStatus);
 		return (status as unknown === SchuelerStatus.EXTERN as unknown);
 	}
 
@@ -2145,8 +2145,8 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return die Fachwahl des Schüler passend zu den Kurs.
 	 */
-	public getOfSchuelerOfKursFachwahl(idSchueler : number, idKurs : number) : GostFachwahl {
-		const idFach : number = this.getKursE(idKurs).fachID;
+	public getOfSchuelerOfKursFachwahl(idSchueler: number, idKurs: number): GostFachwahl {
+		const idFach: number = this.getKursE(idKurs).fachID;
 		return this._parent.schuelerGetOfFachFachwahl(idSchueler, idFach);
 	}
 
@@ -2158,7 +2158,7 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return die Fachwahl des Schüler passend zum Fach.
 	 */
-	private getOfSchuelerOfFachFachwahl(idSchueler : number, idFach : number) : GostFachwahl {
+	private getOfSchuelerOfFachFachwahl(idSchueler: number, idFach: number): GostFachwahl {
 		return this._parent.schuelerGetOfFachFachwahl(idSchueler, idFach);
 	}
 
@@ -2173,8 +2173,8 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return eine nach Kriterien gefilterte Menge aller Schüler.
 	 */
-	public getOfSchuelerMengeGefiltert(idKurs : number, idFach : number, idKursart : number, konfliktTyp : number, subString : string) : List<Schueler> {
-		const menge : List<Schueler> = new ArrayList<Schueler>();
+	public getOfSchuelerMengeGefiltert(idKurs: number, idFach: number, idKursart: number, konfliktTyp: number, subString: string): List<Schueler> {
+		const menge: List<Schueler> = new ArrayList<Schueler>();
 		for (const schueler of this._parent.schuelerGetListe())
 			if (this.getOfSchuelerErfuelltKriterien(schueler.id, idKurs, idFach, idKursart, konfliktTyp, subString, null, null))
 				menge.add(schueler);
@@ -2187,8 +2187,8 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return eine Liste aller Schüler, deren Abiturjahrgang nicht dem der Blockung entspricht.
 	 */
-	public getOfSchuelerMengeMitAbweichendemAbijahrgang() : List<Schueler> {
-		const menge : List<Schueler> = new ArrayList<Schueler>();
+	public getOfSchuelerMengeMitAbweichendemAbijahrgang(): List<Schueler> {
+		const menge: List<Schueler> = new ArrayList<Schueler>();
 		for (const schueler of this._parent.schuelerGetListe())
 			if (schueler.abschlussjahrgang !== this._parent.daten().abijahrgang)
 				if (!this.kursSchuelerUpdate_02b_ENTFERNE_SCHUELERMENGE_AUS_ALLEN_KURSEN(SetUtils.create1(schueler.id)).listEntfernen.isEmpty() || !this.regelupdateCreate_19_SCHUELERMENGE_ENTFERNEN(SetUtils.create1(schueler.id)).listEntfernen.isEmpty())
@@ -2210,7 +2210,7 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return TRUE, falls der Schüler alle definierten Kriterien erfüllt.
 	 */
-	private getOfSchuelerErfuelltKriterien(idSchueler : number, idKurs : number, idFach : number, idKursart : number, konfliktTyp : number, subString : string, geschlecht : Geschlecht | null, schriftlichkeit : GostSchriftlichkeit | null) : boolean {
+	private getOfSchuelerErfuelltKriterien(idSchueler: number, idKurs: number, idFach: number, idKursart: number, konfliktTyp: number, subString: string, geschlecht: Geschlecht | null, schriftlichkeit: GostSchriftlichkeit | null): boolean {
 		if ((konfliktTyp === 1) && (!this.getOfSchuelerHatKollision(idSchueler)))
 			return false;
 		if ((konfliktTyp === 2) && (!this.getOfSchuelerHatNichtwahl(idSchueler)))
@@ -2225,7 +2225,7 @@ export class GostBlockungsergebnisManager extends JavaObject {
 			if (!this.getOfSchuelerOfKursIstZugeordnet(idSchueler, idKurs))
 				return false;
 			if (schriftlichkeit !== null) {
-				const ungueltig : boolean = this.getOfSchuelerOfKursIstUngueltig(idSchueler, idKurs);
+				const ungueltig: boolean = this.getOfSchuelerOfKursIstUngueltig(idSchueler, idKurs);
 				if (ungueltig && (schriftlichkeit as unknown === GostSchriftlichkeit.SCHRIFTLICH as unknown))
 					return false;
 				if (!ungueltig && (schriftlichkeit.getIstSchriftlichOrException() !== this.getOfSchuelerOfKursFachwahl(idSchueler, idKurs).istSchriftlich))
@@ -2253,7 +2253,7 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return Die Map, welche einer Schüler-ID die Menge aller ungültigen Kurse zuordnet.
 	 */
-	public getOfSchuelerMapIDzuUngueltigeKurse() : JavaMap<number, JavaSet<GostBlockungsergebnisKurs>> {
+	public getOfSchuelerMapIDzuUngueltigeKurse(): JavaMap<number, JavaSet<GostBlockungsergebnisKurs>> {
 		return this._schuelerID_to_ungueltigeKurseSet;
 	}
 
@@ -2266,10 +2266,10 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return TRUE, falls der Schüler in einer Schiene des Kurses eine Kollision hat.
 	 */
-	public getOfSchuelerOfKursHatKollision(idSchueler : number, idKurs : number) : boolean {
+	public getOfSchuelerOfKursHatKollision(idSchueler: number, idKurs: number): boolean {
 		if (!this.getOfSchuelerHatKollision(idSchueler))
 			return false;
-		const kurs : GostBlockungsergebnisKurs = this.getKursE(idKurs);
+		const kurs: GostBlockungsergebnisKurs = this.getKursE(idKurs);
 		for (const idSchiene of kurs.schienen)
 			if (this.getOfSchuelerOfSchieneKursmenge(idSchueler, idSchiene).size() > 1)
 				return true;
@@ -2285,9 +2285,9 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return TRUE, falls beide Schüler im bezogen auf das Fach gemeinsam im selben Kurs sind.
 	 */
-	public getOfSchuelerIstZusammenMitSchuelerInFach(idSchueler1 : number, idSchueler2 : number, idFach : number) : boolean {
-		const kurs1 : GostBlockungsergebnisKurs | null = this._schuelerID_fachID_to_kurs_or_null.getOrNull(idSchueler1, idFach);
-		const kurs2 : GostBlockungsergebnisKurs | null = this._schuelerID_fachID_to_kurs_or_null.getOrNull(idSchueler2, idFach);
+	public getOfSchuelerIstZusammenMitSchuelerInFach(idSchueler1: number, idSchueler2: number, idFach: number): boolean {
+		const kurs1: GostBlockungsergebnisKurs | null = this._schuelerID_fachID_to_kurs_or_null.getOrNull(idSchueler1, idFach);
+		const kurs2: GostBlockungsergebnisKurs | null = this._schuelerID_fachID_to_kurs_or_null.getOrNull(idSchueler2, idFach);
 		return ((kurs1 !== null) && (kurs2 !== null)) && (kurs1.id === kurs2.id);
 	}
 
@@ -2299,14 +2299,14 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return die Anzahl an SuS, die mit dem Schüler im Kurs sein wollen.
 	 */
-	public getOfSchuelerOfKursAnzahlZusammenWuensche(idS1 : number, idKurs : number) : number {
-		let anzahl : number = 0;
-		const idFach : number = this.getKursE(idKurs).fachID;
+	public getOfSchuelerOfKursAnzahlZusammenWuensche(idS1: number, idKurs: number): number {
+		let anzahl: number = 0;
+		const idFach: number = this.getKursE(idKurs).fachID;
 		for (const idS2 of this.getKursE(idKurs).schueler) {
 			if (idS1 === idS2)
 				continue;
-			const typ1 : number = GostKursblockungRegelTyp.SCHUELER_ZUSAMMEN_MIT_SCHUELER.typ;
-			const typ2 : number = GostKursblockungRegelTyp.SCHUELER_ZUSAMMEN_MIT_SCHUELER_IN_FACH.typ;
+			const typ1: number = GostKursblockungRegelTyp.SCHUELER_ZUSAMMEN_MIT_SCHUELER.typ;
+			const typ2: number = GostKursblockungRegelTyp.SCHUELER_ZUSAMMEN_MIT_SCHUELER_IN_FACH.typ;
 			if ((this._parent.regelGetByLongArrayKeyOrNull(new LongArrayKey([typ1, idS1, idS2])) !== null) || (this._parent.regelGetByLongArrayKeyOrNull(new LongArrayKey([typ1, idS2, idS1])) !== null) || (this._parent.regelGetByLongArrayKeyOrNull(new LongArrayKey([typ2, idS1, idS2, idFach])) !== null) || (this._parent.regelGetByLongArrayKeyOrNull(new LongArrayKey([typ2, idS2, idS1, idFach])) !== null))
 				anzahl++;
 		}
@@ -2321,14 +2321,14 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return die Anzahl an SuS, die mit dem Schüler nicht im Kurs sein sollen.
 	 */
-	public getOfSchuelerOfKursAnzahlVerbotenWuensche(idS1 : number, idKurs : number) : number {
-		let anzahl : number = 0;
-		const idFach : number = this.getKursE(idKurs).fachID;
+	public getOfSchuelerOfKursAnzahlVerbotenWuensche(idS1: number, idKurs: number): number {
+		let anzahl: number = 0;
+		const idFach: number = this.getKursE(idKurs).fachID;
 		for (const idS2 of this.getKursE(idKurs).schueler) {
 			if (idS1 === idS2)
 				continue;
-			const typ1 : number = GostKursblockungRegelTyp.SCHUELER_VERBIETEN_MIT_SCHUELER.typ;
-			const typ2 : number = GostKursblockungRegelTyp.SCHUELER_VERBIETEN_MIT_SCHUELER_IN_FACH.typ;
+			const typ1: number = GostKursblockungRegelTyp.SCHUELER_VERBIETEN_MIT_SCHUELER.typ;
+			const typ2: number = GostKursblockungRegelTyp.SCHUELER_VERBIETEN_MIT_SCHUELER_IN_FACH.typ;
 			if ((this._parent.regelGetByLongArrayKeyOrNull(new LongArrayKey([typ1, idS1, idS2])) !== null) || (this._parent.regelGetByLongArrayKeyOrNull(new LongArrayKey([typ1, idS2, idS1])) !== null) || (this._parent.regelGetByLongArrayKeyOrNull(new LongArrayKey([typ2, idS1, idS2, idFach])) !== null) || (this._parent.regelGetByLongArrayKeyOrNull(new LongArrayKey([typ2, idS2, idS1, idFach])) !== null))
 				anzahl++;
 		}
@@ -2345,7 +2345,7 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 * @return den {@link GostBlockungKurs} zur übergebenen ID.
 	 * @throws DeveloperNotificationException falls die ID unbekannt ist.
 	 */
-	public getKursG(idKurs : number) : GostBlockungKurs {
+	public getKursG(idKurs: number): GostBlockungKurs {
 		return this._parent.kursGet(idKurs);
 	}
 
@@ -2358,7 +2358,7 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 * @return den {@link GostBlockungsergebnisKurs} zur übergebenen ID.
 	 * @throws DeveloperNotificationException falls die ID unbekannt ist.
 	 */
-	public getKursE(idKurs : number) : GostBlockungsergebnisKurs {
+	public getKursE(idKurs: number): GostBlockungsergebnisKurs {
 		return DeveloperNotificationException.ifMapGetIsNull(this._kursID_to_kurs, idKurs);
 	}
 
@@ -2367,8 +2367,8 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return die Menge der {@link GostBlockungsergebnisKurs}
 	 */
-	public getKursmenge() : List<GostBlockungsergebnisKurs> {
-		const result : List<GostBlockungsergebnisKurs> = new ArrayList<GostBlockungsergebnisKurs>();
+	public getKursmenge(): List<GostBlockungsergebnisKurs> {
+		const result: List<GostBlockungsergebnisKurs> = new ArrayList<GostBlockungsergebnisKurs>();
 		result.addAll(this._kursID_to_kurs.values());
 		return result;
 	}
@@ -2380,7 +2380,7 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return den Namen des Kurses, erzeugt aus Fach, der Kursart und der Nummer, beispielsweise D-GK1.
 	 */
-	public getOfKursName(idKurs : number) : string {
+	public getOfKursName(idKurs: number): string {
 		return this._parent.kursGetName(idKurs);
 	}
 
@@ -2392,9 +2392,9 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return TRUE, falls der Kurs der Schiene zugeordnet ist.
 	 */
-	public getOfKursOfSchieneIstZugeordnet(idKurs : number, idSchiene : number) : boolean {
-		const schiene : GostBlockungsergebnisSchiene = this.getSchieneE(idSchiene);
-		const schienenOfKurs : JavaSet<GostBlockungsergebnisSchiene> = this.getOfKursSchienenmenge(idKurs);
+	public getOfKursOfSchieneIstZugeordnet(idKurs: number, idSchiene: number): boolean {
+		const schiene: GostBlockungsergebnisSchiene = this.getSchieneE(idSchiene);
+		const schienenOfKurs: JavaSet<GostBlockungsergebnisSchiene> = this.getOfKursSchienenmenge(idKurs);
 		return schienenOfKurs.contains(schiene);
 	}
 
@@ -2406,7 +2406,7 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return TRUE, falls der Kurs der Schiene mit der Nummer zugeordnet ist.
 	 */
-	private getOfKursOfSchienenNrIstZugeordnet(idKurs : number, schienenNr : number) : boolean {
+	private getOfKursOfSchienenNrIstZugeordnet(idKurs: number, schienenNr: number): boolean {
 		for (const nr of this.getOfKursSchienenNummern(idKurs))
 			if (nr === schienenNr)
 				return true;
@@ -2421,7 +2421,7 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return TRUE, falls der Kurs in der Schiene fixiert ist.
 	 */
-	private getOfKursOfSchieneIstFixiert(idKurs : number, idSchiene : number) : boolean {
+	private getOfKursOfSchieneIstFixiert(idKurs: number, idSchiene: number): boolean {
 		return this._parent.kursGetHatFixierungInSchiene(idKurs, idSchiene);
 	}
 
@@ -2434,7 +2434,7 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 * @return zur Kurs-ID die zugehörige Menge aller Schüler-IDs.
 	 * @throws DeveloperNotificationException falls der ID kein Kurs zugeordnet ist.
 	 */
-	private getOfKursSchuelerIDmenge(idKurs : number) : JavaSet<number> {
+	private getOfKursSchuelerIDmenge(idKurs: number): JavaSet<number> {
 		return DeveloperNotificationException.ifMapGetIsNull(this._kursID_to_schuelerIDSet, idKurs);
 	}
 
@@ -2445,8 +2445,8 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return die Menge aller Schüler-Objekte des Kurses.
 	 */
-	public getOfKursSchuelermenge(idKurs : number) : List<Schueler> {
-		const list : List<Schueler> = new ArrayList<Schueler>();
+	public getOfKursSchuelermenge(idKurs: number): List<Schueler> {
+		const list: List<Schueler> = new ArrayList<Schueler>();
 		for (const idSchueler of this.getKursE(idKurs).schueler)
 			list.add(this.getSchuelerG(idSchueler));
 		return list;
@@ -2461,7 +2461,7 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 * @return die Schienenmenge des Kurses.
 	 * @throws DeveloperNotificationException falls der ID kein Kurs zugeordnet ist.
 	 */
-	public getOfKursSchienenmenge(idKurs : number) : JavaSet<GostBlockungsergebnisSchiene> {
+	public getOfKursSchienenmenge(idKurs: number): JavaSet<GostBlockungsergebnisSchiene> {
 		return DeveloperNotificationException.ifMapGetIsNull(this._kursID_to_schienenSet, idKurs);
 	}
 
@@ -2472,11 +2472,11 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return ein Array aller Schienen-Nummern des Kurses.
 	 */
-	public getOfKursSchienenNummern(idKurs : number) : Array<number> {
-		const schienenIDs : List<number> = this.getKursE(idKurs).schienen;
-		const a : Array<number> | null = Array(schienenIDs.size()).fill(0);
-		for (let i : number = 0; i < a.length; i++) {
-			const schienenID : number = schienenIDs.get(i).valueOf();
+	public getOfKursSchienenNummern(idKurs: number): Array<number> {
+		const schienenIDs: List<number> = this.getKursE(idKurs).schienen;
+		const a: Array<number> | null = Array(schienenIDs.size()).fill(0);
+		for (let i: number = 0; i < a.length; i++) {
+			const schienenID: number = schienenIDs.get(i).valueOf();
 			a[i] = this._parent.schieneGet(schienenID).nummer;
 		}
 		return a;
@@ -2490,7 +2490,7 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return TRUE, falls der Kurs mindestens eine Kollision hat.
 	 */
-	private getOfKursHatKollision(idKurs : number) : boolean {
+	private getOfKursHatKollision(idKurs: number): boolean {
 		return this.getOfKursAnzahlKollisionen(idKurs) > 0;
 	}
 
@@ -2502,7 +2502,7 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return die Anzahl an Schülern des Kurses mit Kollisionen.
 	 */
-	private getOfKursAnzahlKollisionen(idKurs : number) : number {
+	private getOfKursAnzahlKollisionen(idKurs: number): number {
 		return this.getOfKursSchuelermengeMitKollisionen(idKurs).size();
 	}
 
@@ -2513,8 +2513,8 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return die Menge aller Schüler-IDs des Kurses mit Kollisionen (in den Schienen des Kurses).
 	 */
-	private getOfKursSchuelermengeMitKollisionen(idKursID : number) : JavaSet<number> {
-		const set : JavaSet<number> = new HashSet<number>();
+	private getOfKursSchuelermengeMitKollisionen(idKursID: number): JavaSet<number> {
+		const set: JavaSet<number> = new HashSet<number>();
 		for (const schiene of this.getOfKursSchienenmenge(idKursID))
 			for (const idSchueler of this.getKursE(idKursID).schueler)
 				if (this.getOfSchuelerOfSchieneKursmenge(idSchueler, schiene.id).size() > 1)
@@ -2529,7 +2529,7 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return die Anzahl an Schülern die dem Kurs zugeordnet sind ohne Dummy SuS.
 	 */
-	public getOfKursAnzahlSchueler(idKurs : number) : number {
+	public getOfKursAnzahlSchueler(idKurs: number): number {
 		return this.getKursE(idKurs).schueler.size();
 	}
 
@@ -2540,7 +2540,7 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return die Anzahl an Schülern die dem Kurs zugeordnet sind plus potentiell zugeordnete Dummy SuS.
 	 */
-	public getOfKursAnzahlSchuelerPlusDummy(idKurs : number) : number {
+	public getOfKursAnzahlSchuelerPlusDummy(idKurs: number): number {
 		return this.getKursE(idKurs).schueler.size() + DeveloperNotificationException.ifMapGetIsNull(this._kursID_to_dummySuS, idKurs);
 	}
 
@@ -2552,7 +2552,7 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return die Anzahl an Dummy-SuS des Kurses.
 	 */
-	public getOfKursAnzahlSchuelerDummy(idKurs : number) : number {
+	public getOfKursAnzahlSchuelerDummy(idKurs: number): number {
 		return DeveloperNotificationException.ifMapGetIsNull(this._kursID_to_dummySuS, idKurs);
 	}
 
@@ -2563,9 +2563,9 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return die Anzahl externer SuS die dem Kurs zugeordnet sind.
 	 */
-	public getOfKursAnzahlSchuelerExterne(idKurs : number) : number {
-		const kursE : GostBlockungsergebnisKurs = this.getKursE(idKurs);
-		return ListUtils.getCountFiltered(kursE.schueler, { test : (idSchueler: number) => this.getOfSchuelerHatStatusExtern(idSchueler) });
+	public getOfKursAnzahlSchuelerExterne(idKurs: number): number {
+		const kursE: GostBlockungsergebnisKurs = this.getKursE(idKurs);
+		return ListUtils.getCountFiltered(kursE.schueler, { test: (idSchueler: number) => this.getOfSchuelerHatStatusExtern(idSchueler) });
 	}
 
 	/**
@@ -2575,7 +2575,7 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return die Anzahl externer SuS und der Dummy-SuS die dem Kurs zugeordnet sind.
 	 */
-	public getOfKursAnzahlSchuelerExternePlusDummies(idKurs : number) : number {
+	public getOfKursAnzahlSchuelerExternePlusDummies(idKurs: number): number {
 		return this.getOfKursAnzahlSchuelerExterne(idKurs) + this.getOfKursAnzahlSchuelerDummy(idKurs);
 	}
 
@@ -2586,7 +2586,7 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return die Anzahl internen SuS. Das sind alle SuS der Kursliste abzüglich der SuS mit Status "extern".
 	 */
-	public getOfKursAnzahlSchuelerInterne(idKurs : number) : number {
+	public getOfKursAnzahlSchuelerInterne(idKurs: number): number {
 		return this.getOfKursAnzahlSchueler(idKurs) - this.getOfKursAnzahlSchuelerExterne(idKurs);
 	}
 
@@ -2597,7 +2597,7 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return die Anzahl aller Schüler des Kurses mit Schriftlichkeit {@link GostSchriftlichkeit#SCHRIFTLICH}.
 	 */
-	public getOfKursAnzahlSchuelerSchriftlich(idKurs : number) : number {
+	public getOfKursAnzahlSchuelerSchriftlich(idKurs: number): number {
 		return this.getOfSchuelerAnzahlGefiltert(idKurs, -1, -1, 0, "", null, GostSchriftlichkeit.SCHRIFTLICH);
 	}
 
@@ -2608,7 +2608,7 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return die Anzahl an Schienen in denen der Kurs gerade ist.
 	 */
-	public getOfKursAnzahlSchienenIst(idKurs : number) : number {
+	public getOfKursAnzahlSchienenIst(idKurs: number): number {
 		return this.getOfKursSchienenmenge(idKurs).size();
 	}
 
@@ -2619,7 +2619,7 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return die Anzahl an Schienen, die der Kurs haben sollte.
 	 */
-	public getOfKursAnzahlSchienenSoll(idKurs : number) : number {
+	public getOfKursAnzahlSchienenSoll(idKurs: number): number {
 		return this.getKursE(idKurs).anzahlSchienen;
 	}
 
@@ -2630,11 +2630,11 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return die Anzahl an Schülern, die den Kurs mit Abiturfach 1 oder 2 gewählt (also LK) haben.
 	 */
-	public getOfKursAnzahlSchuelerAbiturLK(idKurs : number) : number {
-		let summe : number = 0;
+	public getOfKursAnzahlSchuelerAbiturLK(idKurs: number): number {
+		let summe: number = 0;
 		for (const idSchueler of this.getKursE(idKurs).schueler) {
 			try {
-				const fachwahl : GostFachwahl = this.getOfSchuelerOfKursFachwahl(idSchueler, idKurs);
+				const fachwahl: GostFachwahl = this.getOfSchuelerOfKursFachwahl(idSchueler, idKurs);
 				if ((fachwahl.abiturfach !== null) && ((fachwahl.abiturfach === 1) || (fachwahl.abiturfach === 2)))
 					summe++;
 			} catch(dne : any) {
@@ -2651,11 +2651,11 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return die Anzahl an Schülern, die den Kurs mit Abiturfach 3 gewählt haben.
 	 */
-	public getOfKursAnzahlSchuelerAbitur3(idKurs : number) : number {
-		let summe : number = 0;
+	public getOfKursAnzahlSchuelerAbitur3(idKurs: number): number {
+		let summe: number = 0;
 		for (const idSchueler of this.getKursE(idKurs).schueler) {
 			try {
-				const fachwahl : GostFachwahl = this.getOfSchuelerOfKursFachwahl(idSchueler, idKurs);
+				const fachwahl: GostFachwahl = this.getOfSchuelerOfKursFachwahl(idSchueler, idKurs);
 				if ((fachwahl.abiturfach !== null) && (fachwahl.abiturfach === 3))
 					summe++;
 			} catch(dne : any) {
@@ -2672,11 +2672,11 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return die Anzahl an Schülern, die den Kurs mit Abiturfach 4 gewählt haben.
 	 */
-	public getOfKursAnzahlSchuelerAbitur4(idKurs : number) : number {
-		let summe : number = 0;
+	public getOfKursAnzahlSchuelerAbitur4(idKurs: number): number {
+		let summe: number = 0;
 		for (const idSchueler of this.getKursE(idKurs).schueler) {
 			try {
-				const fachwahl : GostFachwahl = this.getOfSchuelerOfKursFachwahl(idSchueler, idKurs);
+				const fachwahl: GostFachwahl = this.getOfSchuelerOfKursFachwahl(idSchueler, idKurs);
 				if ((fachwahl.abiturfach !== null) && (fachwahl.abiturfach === 4))
 					summe++;
 			} catch(dne : any) {
@@ -2693,7 +2693,7 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return die maximale Anzahl an SuS, die in dem Kurs sein dürfen, oder 999 falls es keine Begrenzung gibt.
 	 */
-	public getOfKursMaxSuS(idKurs : number) : number {
+	public getOfKursMaxSuS(idKurs: number): number {
 		for (const rAlt of this._parent.regelGetListeOfTyp(GostKursblockungRegelTyp.KURS_MAXIMALE_SCHUELERANZAHL))
 			if (idKurs === rAlt.parameter.get(0))
 				return rAlt.parameter.get(1);
@@ -2707,8 +2707,8 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return die Menge aller Schüler eines Kurses, die noch nicht fixiert sind.
 	 */
-	private getOfKursMengeAllerNichtFixiertenSchueler(idKurs : number) : List<Schueler> {
-		const list : List<Schueler> = new ArrayList<Schueler>();
+	private getOfKursMengeAllerNichtFixiertenSchueler(idKurs: number): List<Schueler> {
+		const list: List<Schueler> = new ArrayList<Schueler>();
 		for (const schueler of this.getOfKursSchuelermenge(idKurs))
 			if (!this.getOfSchuelerOfKursIstFixiert(schueler.id, idKurs))
 				list.add(schueler);
@@ -2722,8 +2722,8 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return die Menge aller Schüler eines Kurses, die noch nicht fixiert sind und den Kurs als Abiturfach (1, 2, 3 oder 4) gewählt haben.
 	 */
-	private getOfKursMengeAllerNichtFixiertenAbiturSchueler(idKurs : number) : List<Schueler> {
-		const list : List<Schueler> = new ArrayList<Schueler>();
+	private getOfKursMengeAllerNichtFixiertenAbiturSchueler(idKurs: number): List<Schueler> {
+		const list: List<Schueler> = new ArrayList<Schueler>();
 		for (const schueler of this.getOfKursSchuelermenge(idKurs))
 			if ((!this.getOfSchuelerOfKursIstFixiert(schueler.id, idKurs)) && (this.getOfSchuelerOfKursIstAbiturfach(schueler.id, idKurs)))
 				list.add(schueler);
@@ -2735,7 +2735,7 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return Die Map, welche jedem Kurs seine Schülermenge zuordnet.
 	 */
-	public getMappingKursIDSchuelerIDs() : JavaMap<number, JavaSet<number>> {
+	public getMappingKursIDSchuelerIDs(): JavaMap<number, JavaSet<number>> {
 		return this._kursID_to_schuelerIDSet;
 	}
 
@@ -2744,7 +2744,7 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return Die Map, welche jedem Kurs seine Schienenmenge zuordnet.
 	 */
-	public getMappingKursIDSchienenmenge() : JavaMap<number, JavaSet<GostBlockungsergebnisSchiene>> {
+	public getMappingKursIDSchienenmenge(): JavaMap<number, JavaSet<GostBlockungsergebnisSchiene>> {
 		return this._kursID_to_schienenSet;
 	}
 
@@ -2753,18 +2753,18 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return Eine Menge aller Kurse mit mindestens einer Kollision.
 	 */
-	private getMengeDerKurseMitKollisionen() : JavaSet<GostBlockungsergebnisKurs> {
-		const set : JavaSet<GostBlockungsergebnisKurs> = new HashSet<GostBlockungsergebnisKurs>();
+	private getMengeDerKurseMitKollisionen(): JavaSet<GostBlockungsergebnisKurs> {
+		const set: JavaSet<GostBlockungsergebnisKurs> = new HashSet<GostBlockungsergebnisKurs>();
 		for (const kurs of this._kursID_to_kurs.values())
 			if (this.getOfKursHatKollision(kurs.id))
 				set.add(kurs);
 		return set;
 	}
 
-	private static regelGetListeToggleFilteredBetween(list : List<GostBlockungKurs>, kursA : GostBlockungKurs, kursB : GostBlockungKurs) : List<GostBlockungKurs> {
-		const result : List<GostBlockungKurs> = new ArrayList<GostBlockungKurs>();
-		let foundA : boolean = false;
-		let foundB : boolean = false;
+	private static regelGetListeToggleFilteredBetween(list: List<GostBlockungKurs>, kursA: GostBlockungKurs, kursB: GostBlockungKurs): List<GostBlockungKurs> {
+		const result: List<GostBlockungKurs> = new ArrayList<GostBlockungKurs>();
+		let foundA: boolean = false;
+		let foundB: boolean = false;
 		for (const kursG of list) {
 			if (kursG as unknown === kursA as unknown)
 				foundA = true;
@@ -2793,12 +2793,12 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return eine Liste von Regeln, welche den Status der Kurs-Schienen-Sperrung in einem Auswahl-Rechteck ändern soll.
 	 */
-	private regelGetListeToggleSperrung(list : List<GostBlockungKurs>, kursA : GostBlockungKurs, kursB : GostBlockungKurs, schieneA : GostBlockungSchiene, schieneB : GostBlockungSchiene) : List<GostBlockungRegel> {
-		const min : number = Math.min(schieneA.nummer, schieneB.nummer);
-		const max : number = Math.max(schieneA.nummer, schieneB.nummer);
-		const regeln : List<GostBlockungRegel> = new ArrayList<GostBlockungRegel>();
+	private regelGetListeToggleSperrung(list: List<GostBlockungKurs>, kursA: GostBlockungKurs, kursB: GostBlockungKurs, schieneA: GostBlockungSchiene, schieneB: GostBlockungSchiene): List<GostBlockungRegel> {
+		const min: number = Math.min(schieneA.nummer, schieneB.nummer);
+		const max: number = Math.max(schieneA.nummer, schieneB.nummer);
+		const regeln: List<GostBlockungRegel> = new ArrayList<GostBlockungRegel>();
 		for (const kursG of GostBlockungsergebnisManager.regelGetListeToggleFilteredBetween(list, kursA, kursB))
-			for (let nr : number = min; nr <= max; nr++)
+			for (let nr: number = min; nr <= max; nr++)
 				regeln.add(this._parent.regelGetRegelOrDummyKursGesperrtInSchiene(kursG.id, nr));
 		return regeln;
 	}
@@ -2818,13 +2818,13 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return eine Liste von Regeln, welche den Status der Kurs-Schienen-Fixierung in einem Auswahl-Rechteck ändern soll.
 	 */
-	private regelGetListeToggleKursfixierung(list : List<GostBlockungKurs>, kursA : GostBlockungKurs, kursB : GostBlockungKurs, schieneA : GostBlockungSchiene, schieneB : GostBlockungSchiene) : List<GostBlockungRegel> {
-		const min : number = Math.min(schieneA.nummer, schieneB.nummer);
-		const max : number = Math.max(schieneA.nummer, schieneB.nummer);
-		const regeln : List<GostBlockungRegel> = new ArrayList<GostBlockungRegel>();
+	private regelGetListeToggleKursfixierung(list: List<GostBlockungKurs>, kursA: GostBlockungKurs, kursB: GostBlockungKurs, schieneA: GostBlockungSchiene, schieneB: GostBlockungSchiene): List<GostBlockungRegel> {
+		const min: number = Math.min(schieneA.nummer, schieneB.nummer);
+		const max: number = Math.max(schieneA.nummer, schieneB.nummer);
+		const regeln: List<GostBlockungRegel> = new ArrayList<GostBlockungRegel>();
 		for (const kursG of GostBlockungsergebnisManager.regelGetListeToggleFilteredBetween(list, kursA, kursB))
 			for (const schieneE of DeveloperNotificationException.ifMapGetIsNull(this._kursID_to_schienenSet, kursG.id)) {
-				const schieneG : GostBlockungSchiene = this.getSchieneG(schieneE.id);
+				const schieneG: GostBlockungSchiene = this.getSchieneG(schieneE.id);
 				if ((schieneG.nummer >= min) && (schieneG.nummer <= max))
 					regeln.add(this._parent.regelGetRegelOrDummyKursFixierungInSchiene(kursG.id, schieneG.nummer));
 			}
@@ -2846,15 +2846,15 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return eine Liste von Regeln, welche den Status der Kurs-Schueler-Fixierung in einem Auswahl-Rechteck ändern soll.
 	 */
-	private regelGetListeToggleSchuelerfixierung(list : List<GostBlockungKurs>, kursA : GostBlockungKurs, kursB : GostBlockungKurs, schieneA : GostBlockungSchiene, schieneB : GostBlockungSchiene) : List<GostBlockungRegel> {
-		const min : number = Math.min(schieneA.nummer, schieneB.nummer);
-		const max : number = Math.max(schieneA.nummer, schieneB.nummer);
-		const regeln : List<GostBlockungRegel> = new ArrayList<GostBlockungRegel>();
+	private regelGetListeToggleSchuelerfixierung(list: List<GostBlockungKurs>, kursA: GostBlockungKurs, kursB: GostBlockungKurs, schieneA: GostBlockungSchiene, schieneB: GostBlockungSchiene): List<GostBlockungRegel> {
+		const min: number = Math.min(schieneA.nummer, schieneB.nummer);
+		const max: number = Math.max(schieneA.nummer, schieneB.nummer);
+		const regeln: List<GostBlockungRegel> = new ArrayList<GostBlockungRegel>();
 		for (const kursG of GostBlockungsergebnisManager.regelGetListeToggleFilteredBetween(list, kursA, kursB))
 			for (const schieneE of DeveloperNotificationException.ifMapGetIsNull(this._kursID_to_schienenSet, kursG.id)) {
-				const schieneG : GostBlockungSchiene = this.getSchieneG(schieneE.id);
+				const schieneG: GostBlockungSchiene = this.getSchieneG(schieneE.id);
 				if ((schieneG.nummer >= min) && (schieneG.nummer <= max)) {
-					const kursE : GostBlockungsergebnisKurs = this.getKursE(kursG.id);
+					const kursE: GostBlockungsergebnisKurs = this.getKursE(kursG.id);
 					for (const idSchueler of kursE.schueler)
 						regeln.add(this._parent.regelGetRegelOrDummySchuelerInKursFixierung(idSchueler, kursE.id));
 					break;
@@ -2870,8 +2870,8 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return die Regel-Menge aller Kurs-Schienen-Fixierungen eines bestimmten Kurses.
 	 */
-	private regelGetMengeAnKursSchienenFixierungenDesKurses(idKurs : number) : List<GostBlockungRegel> {
-		const list : List<GostBlockungRegel> = new ArrayList<GostBlockungRegel>();
+	private regelGetMengeAnKursSchienenFixierungenDesKurses(idKurs: number): List<GostBlockungRegel> {
+		const list: List<GostBlockungRegel> = new ArrayList<GostBlockungRegel>();
 		for (const regel of this._parent.regelGetListeOfTyp(GostKursblockungRegelTyp.KURS_FIXIERE_IN_SCHIENE))
 			if (regel.parameter.get(0) === idKurs)
 				list.add(regel);
@@ -2885,9 +2885,9 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return die Regel-Menge aller Kurs-Schienen-Fixierungen einer bestimmten Kursmenge.
 	 */
-	private regelGetMengeAnKursSchienenFixierungenDerKurse(listeDerKursIDs : List<number>) : List<GostBlockungRegel> {
-		const setKursIDs : JavaSet<number> = new HashSet<number>(listeDerKursIDs);
-		const list : List<GostBlockungRegel> = new ArrayList<GostBlockungRegel>();
+	private regelGetMengeAnKursSchienenFixierungenDerKurse(listeDerKursIDs: List<number>): List<GostBlockungRegel> {
+		const setKursIDs: JavaSet<number> = new HashSet<number>(listeDerKursIDs);
+		const list: List<GostBlockungRegel> = new ArrayList<GostBlockungRegel>();
 		for (const regel of this._parent.regelGetListeOfTyp(GostKursblockungRegelTyp.KURS_FIXIERE_IN_SCHIENE))
 			if (setKursIDs.contains(regel.parameter.get(0)))
 				list.add(regel);
@@ -2901,8 +2901,8 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return die Regel-Menge aller Schüler-Kurs-Fixierungen des übergebenen Kurses.
 	 */
-	private regelGetMengeAllerSchuelerKursFixierungenDesKurses(idKurs : number) : List<GostBlockungRegel> {
-		const list : List<GostBlockungRegel> = new ArrayList<GostBlockungRegel>();
+	private regelGetMengeAllerSchuelerKursFixierungenDesKurses(idKurs: number): List<GostBlockungRegel> {
+		const list: List<GostBlockungRegel> = new ArrayList<GostBlockungRegel>();
 		for (const regel of this._parent.regelGetListeOfTyp(GostKursblockungRegelTyp.SCHUELER_FIXIEREN_IN_KURS))
 			if (regel.parameter.get(1) === idKurs)
 				list.add(regel);
@@ -2916,9 +2916,9 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return die Regel-Menge aller Schüler-Kurs-Fixierungen der übergebenen Kurse.
 	 */
-	private regelGetMengeAllerSchuelerKursFixierungenDerKurse(listeDerKursIDs : List<number>) : List<GostBlockungRegel> {
-		const setKursIDs : JavaSet<number> = new HashSet<number>(listeDerKursIDs);
-		const list : List<GostBlockungRegel> = new ArrayList<GostBlockungRegel>();
+	private regelGetMengeAllerSchuelerKursFixierungenDerKurse(listeDerKursIDs: List<number>): List<GostBlockungRegel> {
+		const setKursIDs: JavaSet<number> = new HashSet<number>(listeDerKursIDs);
+		const list: List<GostBlockungRegel> = new ArrayList<GostBlockungRegel>();
 		for (const regel of this._parent.regelGetListeOfTyp(GostKursblockungRegelTyp.SCHUELER_FIXIEREN_IN_KURS))
 			if (setKursIDs.contains(regel.parameter.get(1)))
 				list.add(regel);
@@ -2931,7 +2931,7 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return die Map, welche der verletzten Regel-ID (long) die Beschreibung (String) zuordnet.
 	 */
-	public regelGetMap_regelID_to_verletzungString() : JavaMap<number, string> {
+	public regelGetMap_regelID_to_verletzungString(): JavaMap<number, string> {
 		return this._regelID_to_verletzungString;
 	}
 
@@ -2941,12 +2941,12 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return die Dummy-Regel-Menge (ID=-1) aller möglichen Kurs-Schienen-Fixierungen.
 	 */
-	private regelGetDummyMengeAllerKursSchienenFixierungen() : List<GostBlockungRegel> {
-		const list : List<GostBlockungRegel> = new ArrayList<GostBlockungRegel>();
+	private regelGetDummyMengeAllerKursSchienenFixierungen(): List<GostBlockungRegel> {
+		const list: List<GostBlockungRegel> = new ArrayList<GostBlockungRegel>();
 		for (const kurs of this._kursID_to_kurs.values())
 			for (const schiene of this.getOfKursSchienenmenge(kurs.id))
 				if (!this.getOfKursOfSchieneIstFixiert(kurs.id, schiene.id)) {
-					const schienenNr : number = this._parent.schieneGet(schiene.id).nummer;
+					const schienenNr: number = this._parent.schieneGet(schiene.id).nummer;
 					list.add(DTOUtils.newGostBlockungRegel2(GostKursblockungRegelTyp.KURS_FIXIERE_IN_SCHIENE.typ, kurs.id, schienenNr));
 				}
 		return list;
@@ -2960,12 +2960,12 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return die Dummy-Regel-Menge (ID=-1) aller Kurs-Schienen-Fixierungen der übergebenen Kurse.
 	 */
-	private regelGetDummyMengeAnKursSchienenFixierungen(listeDerKursIDs : List<number>) : List<GostBlockungRegel> {
-		const list : List<GostBlockungRegel> = new ArrayList<GostBlockungRegel>();
+	private regelGetDummyMengeAnKursSchienenFixierungen(listeDerKursIDs: List<number>): List<GostBlockungRegel> {
+		const list: List<GostBlockungRegel> = new ArrayList<GostBlockungRegel>();
 		for (const idKurs of listeDerKursIDs)
 			for (const schiene of this.getOfKursSchienenmenge(idKurs))
 				if (!this.getOfKursOfSchieneIstFixiert(idKurs, schiene.id)) {
-					const schienenNr : number = this._parent.schieneGet(schiene.id).nummer;
+					const schienenNr: number = this._parent.schieneGet(schiene.id).nummer;
 					list.add(DTOUtils.newGostBlockungRegel2(GostKursblockungRegelTyp.KURS_FIXIERE_IN_SCHIENE.typ, idKurs, schienenNr));
 				}
 		return list;
@@ -2977,8 +2977,8 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return die Dummy-Regel-Menge (ID=-1) aller möglichen Schüler-Kurs-Fixierungen.
 	 */
-	private regelGetDummyMengeAllerSchuelerKursFixierungen() : List<GostBlockungRegel> {
-		const list : List<GostBlockungRegel> = new ArrayList<GostBlockungRegel>();
+	private regelGetDummyMengeAllerSchuelerKursFixierungen(): List<GostBlockungRegel> {
+		const list: List<GostBlockungRegel> = new ArrayList<GostBlockungRegel>();
 		for (const kurs of this._kursID_to_kurs.values())
 			for (const schueler of this.getOfKursSchuelermenge(kurs.id))
 				if (!this.getOfSchuelerOfKursIstFixiert(schueler.id, kurs.id))
@@ -2992,8 +2992,8 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return die Dummy-Regel-Menge (ID=-1) aller möglichen Schüler-Kurs-Fixierungen der Abiturkurse.
 	 */
-	private regelGetDummyMengeAllerSchuelerAbiturKursFixierungen() : List<GostBlockungRegel> {
-		const list : List<GostBlockungRegel> = new ArrayList<GostBlockungRegel>();
+	private regelGetDummyMengeAllerSchuelerAbiturKursFixierungen(): List<GostBlockungRegel> {
+		const list: List<GostBlockungRegel> = new ArrayList<GostBlockungRegel>();
 		for (const kurs of this._kursID_to_kurs.values())
 			for (const schueler of this.getOfKursSchuelermenge(kurs.id))
 				if ((this.getOfSchuelerOfKursIstAbiturfach(schueler.id, kurs.id)) && (!this.getOfSchuelerOfKursIstFixiert(schueler.id, kurs.id)))
@@ -3009,8 +3009,8 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return die Dummy-Regel-Menge (ID=-1) aller möglichen Schüler-Kurs-Fixierungen einer bestimmten Kursmenge.
 	 */
-	private regelGetDummyMengeAnKursSchuelerFixierungen(listeDerKursIDs : List<number>) : List<GostBlockungRegel> {
-		const list : List<GostBlockungRegel> = new ArrayList<GostBlockungRegel>();
+	private regelGetDummyMengeAnKursSchuelerFixierungen(listeDerKursIDs: List<number>): List<GostBlockungRegel> {
+		const list: List<GostBlockungRegel> = new ArrayList<GostBlockungRegel>();
 		for (const idKurs of listeDerKursIDs)
 			for (const schueler of this.getOfKursSchuelermenge(idKurs))
 				if (!this.getOfSchuelerOfKursIstFixiert(schueler.id, idKurs))
@@ -3026,8 +3026,8 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return die Dummy-Regel-Menge (ID=-1) aller möglichen Schüler-Kurs-Fixierungen einer bestimmten Kursmenge, welche als Abiturfach gewählt wurden.
 	 */
-	private regelGetDummyMengeAnAbiturKursSchuelerFixierungen(listeDerKursIDs : List<number>) : List<GostBlockungRegel> {
-		const list : List<GostBlockungRegel> = new ArrayList<GostBlockungRegel>();
+	private regelGetDummyMengeAnAbiturKursSchuelerFixierungen(listeDerKursIDs: List<number>): List<GostBlockungRegel> {
+		const list: List<GostBlockungRegel> = new ArrayList<GostBlockungRegel>();
 		for (const idKurs of listeDerKursIDs)
 			for (const schueler of this.getOfKursSchuelermenge(idKurs))
 				if ((this.getOfSchuelerOfKursIstAbiturfach(schueler.id, idKurs)) && (!this.getOfSchuelerOfKursIstFixiert(schueler.id, idKurs)))
@@ -3040,7 +3040,7 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return einen Tooltip für alle Regelverletzungen der definierten Regeln.
 	 */
-	regelGetTooltipFuerRegelverletzungen() : string {
+	regelGetTooltipFuerRegelverletzungen(): string {
 		return this._regelverletzungen_tooltip1_regeln;
 	}
 
@@ -3049,7 +3049,7 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return einen Tooltip für alle Regelverletzungen der Fächerparallelität.
 	 */
-	regelGetTooltipFuerFaecherparallelitaet() : string {
+	regelGetTooltipFuerFaecherparallelitaet(): string {
 		return this._regelverletzungen_tooltip4_faecherparallelitaet;
 	}
 
@@ -3058,7 +3058,7 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return einen Tooltip für alle Wahlkonflikte (Kollisionen und Nichtwahlen) ggf. gekürzt.
 	 */
-	regelGetTooltipFuerWahlkonflikte() : string {
+	regelGetTooltipFuerWahlkonflikte(): string {
 		return this._regelverletzungen_tooltip2_wahlkonflikte;
 	}
 
@@ -3067,15 +3067,15 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return einen Tooltip für alle Kursdifferenzen.
 	 */
-	regelGetTooltipFuerKursdifferenzen() : string {
+	regelGetTooltipFuerKursdifferenzen(): string {
 		return this._regelverletzungen_tooltip3_kursdifferenzen;
 	}
 
-	private static regelupdateIsEqualPair(a1 : number, a2 : number, b1 : number, b2 : number) : boolean {
+	private static regelupdateIsEqualPair(a1: number, a2: number, b1: number, b2: number): boolean {
 		return ((a1 === b1) && (a2 === b2)) || ((a1 === b2) && (a2 === b1));
 	}
 
-	private static regelupdateAppend(u1 : GostBlockungRegelUpdate, u2 : GostBlockungRegelUpdate) : void {
+	private static regelupdateAppend(u1: GostBlockungRegelUpdate, u2: GostBlockungRegelUpdate): void {
 		u1.listEntfernen.addAll(u2.listEntfernen);
 		u1.listHinzuzufuegen.addAll(u2.listHinzuzufuegen);
 	}
@@ -3093,27 +3093,27 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return alle nötigen Veränderungen als {@link GostBlockungRegelUpdate}-Objekt, um eine Kursart-Schienenmengen-Sperrung zu setzen.
 	 */
-	public regelupdateCreate_01_KURSART_SPERRE_SCHIENEN_VON_BIS(kursart : number, schienenNrVon : number, schienenNrBis : number) : GostBlockungRegelUpdate {
-		const von : number = Math.min(schienenNrVon, schienenNrBis);
-		const bis : number = Math.max(schienenNrVon, schienenNrBis);
-		const u : GostBlockungRegelUpdate = new GostBlockungRegelUpdate();
+	public regelupdateCreate_01_KURSART_SPERRE_SCHIENEN_VON_BIS(kursart: number, schienenNrVon: number, schienenNrBis: number): GostBlockungRegelUpdate {
+		const von: number = Math.min(schienenNrVon, schienenNrBis);
+		const bis: number = Math.max(schienenNrVon, schienenNrBis);
+		const u: GostBlockungRegelUpdate = new GostBlockungRegelUpdate();
 		for (const kurs of this.getKursmenge())
-			for (let schienenNr : number = von; schienenNr <= bis; schienenNr++)
+			for (let schienenNr: number = von; schienenNr <= bis; schienenNr++)
 				if (kurs.kursart === kursart) {
-					const keySperrung : LongArrayKey = new LongArrayKey([GostKursblockungRegelTyp.KURS_SPERRE_IN_SCHIENE.typ, kurs.id, schienenNr]);
-					const regelSperrung : GostBlockungRegel | null = this._parent.regelGetByLongArrayKeyOrNull(keySperrung);
+					const keySperrung: LongArrayKey = new LongArrayKey([GostKursblockungRegelTyp.KURS_SPERRE_IN_SCHIENE.typ, kurs.id, schienenNr]);
+					const regelSperrung: GostBlockungRegel | null = this._parent.regelGetByLongArrayKeyOrNull(keySperrung);
 					if (regelSperrung !== null)
 						u.listEntfernen.add(regelSperrung);
-					const keyFixierung : LongArrayKey = new LongArrayKey([GostKursblockungRegelTyp.KURS_FIXIERE_IN_SCHIENE.typ, kurs.id, schienenNr]);
-					const regelFixierung : GostBlockungRegel | null = this._parent.regelGetByLongArrayKeyOrNull(keyFixierung);
+					const keyFixierung: LongArrayKey = new LongArrayKey([GostKursblockungRegelTyp.KURS_FIXIERE_IN_SCHIENE.typ, kurs.id, schienenNr]);
+					const regelFixierung: GostBlockungRegel | null = this._parent.regelGetByLongArrayKeyOrNull(keyFixierung);
 					if (regelFixierung !== null)
 						u.listEntfernen.add(regelFixierung);
 				}
-		const keyBisVon : LongArrayKey = new LongArrayKey([GostKursblockungRegelTyp.KURSART_SPERRE_SCHIENEN_VON_BIS.typ, kursart, bis, von]);
-		const regelBisVon : GostBlockungRegel | null = this._parent.regelGetByLongArrayKeyOrNull(keyBisVon);
+		const keyBisVon: LongArrayKey = new LongArrayKey([GostKursblockungRegelTyp.KURSART_SPERRE_SCHIENEN_VON_BIS.typ, kursart, bis, von]);
+		const regelBisVon: GostBlockungRegel | null = this._parent.regelGetByLongArrayKeyOrNull(keyBisVon);
 		if (regelBisVon !== null)
 			u.listEntfernen.add(regelBisVon);
-		const keyVonBis : LongArrayKey = new LongArrayKey([GostKursblockungRegelTyp.KURSART_SPERRE_SCHIENEN_VON_BIS.typ, kursart, von, bis]);
+		const keyVonBis: LongArrayKey = new LongArrayKey([GostKursblockungRegelTyp.KURSART_SPERRE_SCHIENEN_VON_BIS.typ, kursart, von, bis]);
 		if (this._parent.regelGetByLongArrayKeyOrNull(keyVonBis) === null)
 			u.listHinzuzufuegen.add(DTOUtils.newGostBlockungRegel3(GostKursblockungRegelTyp.KURSART_SPERRE_SCHIENEN_VON_BIS.typ, kursart, von, bis));
 		return u;
@@ -3130,24 +3130,24 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return alle nötigen Veränderungen als {@link GostBlockungRegelUpdate}-Objekt, um eine Kurs-Schienen-Fixierung einer Rechtecks-Auswahl zu realisieren.
 	 */
-	public regelupdateCreate_02_KURS_FIXIERE_IN_SCHIENE_MARKIERT(setKursID : JavaSet<number>, setSchienenNr : JavaSet<number>) : GostBlockungRegelUpdate {
-		const u : GostBlockungRegelUpdate = new GostBlockungRegelUpdate();
+	public regelupdateCreate_02_KURS_FIXIERE_IN_SCHIENE_MARKIERT(setKursID: JavaSet<number>, setSchienenNr: JavaSet<number>): GostBlockungRegelUpdate {
+		const u: GostBlockungRegelUpdate = new GostBlockungRegelUpdate();
 		for (const idKurs of setKursID) {
 			for (const nr of setSchienenNr)
 				if (this.getOfKursOfSchienenNrIstZugeordnet(idKurs, nr)) {
-					const kSperrung : LongArrayKey = new LongArrayKey([GostKursblockungRegelTyp.KURS_SPERRE_IN_SCHIENE.typ, idKurs, nr]);
-					const rSperrung : GostBlockungRegel | null = this._parent.regelGetByLongArrayKeyOrNull(kSperrung);
+					const kSperrung: LongArrayKey = new LongArrayKey([GostKursblockungRegelTyp.KURS_SPERRE_IN_SCHIENE.typ, idKurs, nr]);
+					const rSperrung: GostBlockungRegel | null = this._parent.regelGetByLongArrayKeyOrNull(kSperrung);
 					if (rSperrung !== null)
 						u.listEntfernen.add(rSperrung);
-					const kFixierung : LongArrayKey = new LongArrayKey([GostKursblockungRegelTyp.KURS_FIXIERE_IN_SCHIENE.typ, idKurs, nr]);
-					const rFixierung : GostBlockungRegel | null = this._parent.regelGetByLongArrayKeyOrNull(kFixierung);
+					const kFixierung: LongArrayKey = new LongArrayKey([GostKursblockungRegelTyp.KURS_FIXIERE_IN_SCHIENE.typ, idKurs, nr]);
+					const rFixierung: GostBlockungRegel | null = this._parent.regelGetByLongArrayKeyOrNull(kFixierung);
 					if (rFixierung === null)
 						u.listHinzuzufuegen.add(DTOUtils.newGostBlockungRegel2(GostKursblockungRegelTyp.KURS_FIXIERE_IN_SCHIENE.typ, idKurs, nr));
 				}
-			for (let nr : number = 1; nr <= this._schienenNR_to_schiene.size(); nr++)
+			for (let nr: number = 1; nr <= this._schienenNR_to_schiene.size(); nr++)
 				if (!this.getOfKursOfSchienenNrIstZugeordnet(idKurs, nr)) {
-					const kFixierung : LongArrayKey = new LongArrayKey([GostKursblockungRegelTyp.KURS_FIXIERE_IN_SCHIENE.typ, idKurs, nr]);
-					const rFixierung : GostBlockungRegel | null = this._parent.regelGetByLongArrayKeyOrNull(kFixierung);
+					const kFixierung: LongArrayKey = new LongArrayKey([GostKursblockungRegelTyp.KURS_FIXIERE_IN_SCHIENE.typ, idKurs, nr]);
+					const rFixierung: GostBlockungRegel | null = this._parent.regelGetByLongArrayKeyOrNull(kFixierung);
 					if (rFixierung !== null)
 						u.listEntfernen.add(rFixierung);
 				}
@@ -3164,12 +3164,12 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return alle nötigen Veränderungen als {@link GostBlockungRegelUpdate}-Objekt, um eine Kursmenge komplett in ihrer Lage zu fixieren.
 	 */
-	public regelupdateCreate_02b_KURS_FIXIERE_MENGE_IN_IHREN_SCHIENEN(setKursID : JavaSet<number>) : GostBlockungRegelUpdate {
-		const u : GostBlockungRegelUpdate = new GostBlockungRegelUpdate();
+	public regelupdateCreate_02b_KURS_FIXIERE_MENGE_IN_IHREN_SCHIENEN(setKursID: JavaSet<number>): GostBlockungRegelUpdate {
+		const u: GostBlockungRegelUpdate = new GostBlockungRegelUpdate();
 		for (const idKurs of setKursID)
-			for (let nr : number = 1; nr <= this._schienenNR_to_schiene.size(); nr++) {
-				const kFixierung : LongArrayKey = new LongArrayKey([GostKursblockungRegelTyp.KURS_FIXIERE_IN_SCHIENE.typ, idKurs, nr]);
-				const rFixierung : GostBlockungRegel | null = this._parent.regelGetByLongArrayKeyOrNull(kFixierung);
+			for (let nr: number = 1; nr <= this._schienenNR_to_schiene.size(); nr++) {
+				const kFixierung: LongArrayKey = new LongArrayKey([GostKursblockungRegelTyp.KURS_FIXIERE_IN_SCHIENE.typ, idKurs, nr]);
+				const rFixierung: GostBlockungRegel | null = this._parent.regelGetByLongArrayKeyOrNull(kFixierung);
 				if (this.getOfKursOfSchienenNrIstZugeordnet(idKurs, nr)) {
 					if (rFixierung === null)
 						u.listHinzuzufuegen.add(DTOUtils.newGostBlockungRegel2(GostKursblockungRegelTyp.KURS_FIXIERE_IN_SCHIENE.typ, idKurs, nr));
@@ -3188,7 +3188,7 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return alle nötigen Veränderungen als {@link GostBlockungRegelUpdate}-Objekt, um alle Kurse komplett in ihrer Lage zu fixieren.
 	 */
-	public regelupdateCreate_02c_KURS_FIXIERE_ALLE_IN_IHREN_SCHIENEN() : GostBlockungRegelUpdate {
+	public regelupdateCreate_02c_KURS_FIXIERE_ALLE_IN_IHREN_SCHIENEN(): GostBlockungRegelUpdate {
 		return this.regelupdateCreate_02b_KURS_FIXIERE_MENGE_IN_IHREN_SCHIENEN(this._parent.kursmengeGetSetDerIDs());
 	}
 
@@ -3203,21 +3203,21 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return alle nötigen Veränderungen als {@link GostBlockungRegelUpdate}-Objekt, um eine Kursmengen-Schienemengen-Toggle-Fixierung zu realisieren.
 	 */
-	public regelupdateCreate_02d_KURS_FIXIERE_IN_SCHIENE_TOGGLE(setKursID : JavaSet<number>, setSchienenNr : JavaSet<number>) : GostBlockungRegelUpdate {
-		const u : GostBlockungRegelUpdate = new GostBlockungRegelUpdate();
+	public regelupdateCreate_02d_KURS_FIXIERE_IN_SCHIENE_TOGGLE(setKursID: JavaSet<number>, setSchienenNr: JavaSet<number>): GostBlockungRegelUpdate {
+		const u: GostBlockungRegelUpdate = new GostBlockungRegelUpdate();
 		for (const idKurs of setKursID)
 			for (const schieneE of DeveloperNotificationException.ifMapGetIsNull(this._kursID_to_schienenSet, idKurs)) {
-				const schieneG : GostBlockungSchiene = this.getSchieneG(schieneE.id);
+				const schieneG: GostBlockungSchiene = this.getSchieneG(schieneE.id);
 				if (setSchienenNr.contains(schieneG.nummer)) {
-					const keyFixierung : LongArrayKey = new LongArrayKey([GostKursblockungRegelTyp.KURS_FIXIERE_IN_SCHIENE.typ, idKurs, schieneG.nummer]);
-					const regelFixierung : GostBlockungRegel | null = this._parent.regelGetByLongArrayKeyOrNull(keyFixierung);
+					const keyFixierung: LongArrayKey = new LongArrayKey([GostKursblockungRegelTyp.KURS_FIXIERE_IN_SCHIENE.typ, idKurs, schieneG.nummer]);
+					const regelFixierung: GostBlockungRegel | null = this._parent.regelGetByLongArrayKeyOrNull(keyFixierung);
 					if (regelFixierung !== null) {
 						u.listEntfernen.add(regelFixierung);
 						continue;
 					}
 					u.listHinzuzufuegen.add(DTOUtils.newGostBlockungRegel2(GostKursblockungRegelTyp.KURS_FIXIERE_IN_SCHIENE.typ, idKurs, schieneG.nummer));
-					const keySperrung : LongArrayKey = new LongArrayKey([GostKursblockungRegelTyp.KURS_SPERRE_IN_SCHIENE.typ, idKurs, schieneG.nummer]);
-					const regelSperrung : GostBlockungRegel | null = this._parent.regelGetByLongArrayKeyOrNull(keySperrung);
+					const keySperrung: LongArrayKey = new LongArrayKey([GostKursblockungRegelTyp.KURS_SPERRE_IN_SCHIENE.typ, idKurs, schieneG.nummer]);
+					const regelSperrung: GostBlockungRegel | null = this._parent.regelGetByLongArrayKeyOrNull(keySperrung);
 					if (regelSperrung !== null)
 						u.listEntfernen.add(regelSperrung);
 				}
@@ -3237,24 +3237,24 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return alle nötigen Veränderungen als {@link GostBlockungRegelUpdate}-Objekt, um einen Kurs in einer Schiene zu fixieren.
 	 */
-	public regelupdateCreate_02e_KURS_FIXIERE_IN_EINER_SCHIENE(idKurs : number, schienenNr : number) : GostBlockungRegelUpdate {
+	public regelupdateCreate_02e_KURS_FIXIERE_IN_EINER_SCHIENE(idKurs: number, schienenNr: number): GostBlockungRegelUpdate {
 		return this.regelupdateCreate_02e_helper(idKurs, schienenNr, true);
 	}
 
-	private regelupdateCreate_02e_helper(idKurs : number, schienenNr : number, checkErlaubt : boolean) : GostBlockungRegelUpdate {
-		const u : GostBlockungRegelUpdate = new GostBlockungRegelUpdate();
-		const kSperrung : LongArrayKey = new LongArrayKey([GostKursblockungRegelTyp.KURS_SPERRE_IN_SCHIENE.typ, idKurs, schienenNr]);
-		const rSperrung : GostBlockungRegel | null = this._parent.regelGetByLongArrayKeyOrNull(kSperrung);
+	private regelupdateCreate_02e_helper(idKurs: number, schienenNr: number, checkErlaubt: boolean): GostBlockungRegelUpdate {
+		const u: GostBlockungRegelUpdate = new GostBlockungRegelUpdate();
+		const kSperrung: LongArrayKey = new LongArrayKey([GostKursblockungRegelTyp.KURS_SPERRE_IN_SCHIENE.typ, idKurs, schienenNr]);
+		const rSperrung: GostBlockungRegel | null = this._parent.regelGetByLongArrayKeyOrNull(kSperrung);
 		if (rSperrung !== null)
 			u.listEntfernen.add(rSperrung);
-		const kFixierung : LongArrayKey = new LongArrayKey([GostKursblockungRegelTyp.KURS_FIXIERE_IN_SCHIENE.typ, idKurs, schienenNr]);
-		const rFixierung : GostBlockungRegel | null = this._parent.regelGetByLongArrayKeyOrNull(kFixierung);
+		const kFixierung: LongArrayKey = new LongArrayKey([GostKursblockungRegelTyp.KURS_FIXIERE_IN_SCHIENE.typ, idKurs, schienenNr]);
+		const rFixierung: GostBlockungRegel | null = this._parent.regelGetByLongArrayKeyOrNull(kFixierung);
 		if (rFixierung !== null)
 			return u;
 		if (checkErlaubt && !this._parent.kursIstWeitereFixierungErlaubt(idKurs))
-			for (let nr : number = 1; nr <= this._schienenNR_to_schiene.size(); nr++) {
-				const kFixierungAlt : LongArrayKey = new LongArrayKey([GostKursblockungRegelTyp.KURS_FIXIERE_IN_SCHIENE.typ, idKurs, nr]);
-				const rFixierungAlt : GostBlockungRegel | null = this._parent.regelGetByLongArrayKeyOrNull(kFixierungAlt);
+			for (let nr: number = 1; nr <= this._schienenNR_to_schiene.size(); nr++) {
+				const kFixierungAlt: LongArrayKey = new LongArrayKey([GostKursblockungRegelTyp.KURS_FIXIERE_IN_SCHIENE.typ, idKurs, nr]);
+				const rFixierungAlt: GostBlockungRegel | null = this._parent.regelGetByLongArrayKeyOrNull(kFixierungAlt);
 				if (rFixierungAlt !== null)
 					u.listEntfernen.add(rFixierungAlt);
 			}
@@ -3271,14 +3271,14 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return alle nötigen Veränderungen als {@link GostBlockungRegelUpdate}-Objekt, um eine Kursmengen-Schienemengen-Sperrung zu setzen.
 	 */
-	public regelupdateCreate_03_KURS_SPERRE_IN_SCHIENE(setKursID : JavaSet<number>, setSchienenNr : JavaSet<number>) : GostBlockungRegelUpdate {
-		const u : GostBlockungRegelUpdate = new GostBlockungRegelUpdate();
+	public regelupdateCreate_03_KURS_SPERRE_IN_SCHIENE(setKursID: JavaSet<number>, setSchienenNr: JavaSet<number>): GostBlockungRegelUpdate {
+		const u: GostBlockungRegelUpdate = new GostBlockungRegelUpdate();
 		for (const idKurs of setKursID)
 			for (const schienenNr of setSchienenNr) {
-				const keySperrung : LongArrayKey = new LongArrayKey([GostKursblockungRegelTyp.KURS_SPERRE_IN_SCHIENE.typ, idKurs, schienenNr]);
-				const regelSperrung : GostBlockungRegel | null = this._parent.regelGetByLongArrayKeyOrNull(keySperrung);
-				const keyFixierung : LongArrayKey = new LongArrayKey([GostKursblockungRegelTyp.KURS_FIXIERE_IN_SCHIENE.typ, idKurs, schienenNr]);
-				const regelFixierung : GostBlockungRegel | null = this._parent.regelGetByLongArrayKeyOrNull(keyFixierung);
+				const keySperrung: LongArrayKey = new LongArrayKey([GostKursblockungRegelTyp.KURS_SPERRE_IN_SCHIENE.typ, idKurs, schienenNr]);
+				const regelSperrung: GostBlockungRegel | null = this._parent.regelGetByLongArrayKeyOrNull(keySperrung);
+				const keyFixierung: LongArrayKey = new LongArrayKey([GostKursblockungRegelTyp.KURS_FIXIERE_IN_SCHIENE.typ, idKurs, schienenNr]);
+				const regelFixierung: GostBlockungRegel | null = this._parent.regelGetByLongArrayKeyOrNull(keyFixierung);
 				if ((regelSperrung === null) && (regelFixierung === null))
 					u.listHinzuzufuegen.add(DTOUtils.newGostBlockungRegel2(GostKursblockungRegelTyp.KURS_SPERRE_IN_SCHIENE.typ, idKurs, schienenNr));
 			}
@@ -3295,20 +3295,20 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return alle nötigen Veränderungen als {@link GostBlockungRegelUpdate}-Objekt, um eine Kursmengen-Schienemengen-Toggle-Sperrung zu realisieren.
 	 */
-	public regelupdateCreate_03b_KURS_SPERRE_IN_SCHIENE_TOGGLE(setKursID : JavaSet<number>, setSchienenNr : JavaSet<number>) : GostBlockungRegelUpdate {
-		const u : GostBlockungRegelUpdate = new GostBlockungRegelUpdate();
+	public regelupdateCreate_03b_KURS_SPERRE_IN_SCHIENE_TOGGLE(setKursID: JavaSet<number>, setSchienenNr: JavaSet<number>): GostBlockungRegelUpdate {
+		const u: GostBlockungRegelUpdate = new GostBlockungRegelUpdate();
 		for (const idKurs of setKursID)
 			for (const schieneE of DeveloperNotificationException.ifMapGetIsNull(this._kursID_to_schienenSet, idKurs)) {
-				const schieneG : GostBlockungSchiene = this.getSchieneG(schieneE.id);
+				const schieneG: GostBlockungSchiene = this.getSchieneG(schieneE.id);
 				if (setSchienenNr.contains(schieneG.nummer)) {
-					const keySperrung : LongArrayKey = new LongArrayKey([GostKursblockungRegelTyp.KURS_SPERRE_IN_SCHIENE.typ, idKurs, schieneG.nummer]);
-					const regelSperrung : GostBlockungRegel | null = this._parent.regelGetByLongArrayKeyOrNull(keySperrung);
+					const keySperrung: LongArrayKey = new LongArrayKey([GostKursblockungRegelTyp.KURS_SPERRE_IN_SCHIENE.typ, idKurs, schieneG.nummer]);
+					const regelSperrung: GostBlockungRegel | null = this._parent.regelGetByLongArrayKeyOrNull(keySperrung);
 					if (regelSperrung !== null) {
 						u.listEntfernen.add(regelSperrung);
 						continue;
 					}
-					const keyFixierung : LongArrayKey = new LongArrayKey([GostKursblockungRegelTyp.KURS_FIXIERE_IN_SCHIENE.typ, idKurs, schieneG.nummer]);
-					const regelFixierung : GostBlockungRegel | null = this._parent.regelGetByLongArrayKeyOrNull(keyFixierung);
+					const keyFixierung: LongArrayKey = new LongArrayKey([GostKursblockungRegelTyp.KURS_FIXIERE_IN_SCHIENE.typ, idKurs, schieneG.nummer]);
+					const regelFixierung: GostBlockungRegel | null = this._parent.regelGetByLongArrayKeyOrNull(keyFixierung);
 					if (regelFixierung === null)
 						u.listHinzuzufuegen.add(DTOUtils.newGostBlockungRegel2(GostKursblockungRegelTyp.KURS_SPERRE_IN_SCHIENE.typ, idKurs, schieneG.nummer));
 				}
@@ -3328,8 +3328,8 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return alle nötigen Veränderungen als {@link GostBlockungRegelUpdate}-Objekt, um eine Schülermengen-Kursmengen-Fixierung zu setzen.
 	 */
-	public regelupdateCreate_04_SCHUELER_FIXIEREN_IN_KURS(setSchuelerID : JavaSet<number>, setKursID : JavaSet<number>) : GostBlockungRegelUpdate {
-		const schuelerKursPaare : JavaSet<PairNN<number, number>> = new HashSet<PairNN<number, number>>();
+	public regelupdateCreate_04_SCHUELER_FIXIEREN_IN_KURS(setSchuelerID: JavaSet<number>, setKursID: JavaSet<number>): GostBlockungRegelUpdate {
+		const schuelerKursPaare: JavaSet<PairNN<number, number>> = new HashSet<PairNN<number, number>>();
 		for (const idSchueler of setSchuelerID)
 			for (const idKurs of setKursID)
 				schuelerKursPaare.add(new PairNN<number, number>(idSchueler, idKurs));
@@ -3347,10 +3347,10 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return alle nötigen Veränderungen als {@link GostBlockungRegelUpdate}-Objekt, um alle Schüler-Kurs-Fixierungen einer Kursmenge zu setzen.
 	 */
-	public regelupdateCreate_04b_SCHUELER_FIXIEREN_IN_DEN_KURSEN(setKursID : JavaSet<number>) : GostBlockungRegelUpdate {
-		const u : GostBlockungRegelUpdate = new GostBlockungRegelUpdate();
+	public regelupdateCreate_04b_SCHUELER_FIXIEREN_IN_DEN_KURSEN(setKursID: JavaSet<number>): GostBlockungRegelUpdate {
+		const u: GostBlockungRegelUpdate = new GostBlockungRegelUpdate();
 		for (const idKurs of setKursID) {
-			const u2 : GostBlockungRegelUpdate = this.regelupdateCreate_04_SCHUELER_FIXIEREN_IN_KURS(this.getOfKursSchuelerIDmenge(idKurs), SetUtils.create1(idKurs));
+			const u2: GostBlockungRegelUpdate = this.regelupdateCreate_04_SCHUELER_FIXIEREN_IN_KURS(this.getOfKursSchuelerIDmenge(idKurs), SetUtils.create1(idKurs));
 			u.listEntfernen.addAll(u2.listEntfernen);
 			u.listHinzuzufuegen.addAll(u2.listHinzuzufuegen);
 		}
@@ -3363,7 +3363,7 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return alle nötigen Veränderungen als {@link GostBlockungRegelUpdate}-Objekt, um alle Schüler in ihren aktuellen Kursen zu fixieren.
 	 */
-	public regelupdateCreate_04c_SCHUELER_FIXIEREN_IN_ALLEN_KURSEN() : GostBlockungRegelUpdate {
+	public regelupdateCreate_04c_SCHUELER_FIXIEREN_IN_ALLEN_KURSEN(): GostBlockungRegelUpdate {
 		return this.regelupdateCreate_04b_SCHUELER_FIXIEREN_IN_DEN_KURSEN(this._kursID_to_kurs.keySet());
 	}
 
@@ -3375,7 +3375,7 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return alle nötigen Veränderungen als {@link GostBlockungRegelUpdate}-Objekt, um die Menge aller LK-Schüler zu fixieren.
 	 */
-	public regelupdateCreate_04e_SCHUELER_FIXIEREN_TYP_LK() : GostBlockungRegelUpdate {
+	public regelupdateCreate_04e_SCHUELER_FIXIEREN_TYP_LK(): GostBlockungRegelUpdate {
 		return this.regelupdateCreate_04e_SCHUELER_FIXIEREN_TYP_LK_DER_KURSMENGE(this._kursIDset);
 	}
 
@@ -3389,8 +3389,8 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return alle nötigen Veränderungen als {@link GostBlockungRegelUpdate}-Objekt, um alle LK-Schüler einer Kursmenge zu fixieren.
 	 */
-	public regelupdateCreate_04e_SCHUELER_FIXIEREN_TYP_LK_DER_KURSMENGE(kursIDs : JavaSet<number>) : GostBlockungRegelUpdate {
-		const schuelerKursPaare : JavaSet<PairNN<number, number>> = new HashSet<PairNN<number, number>>();
+	public regelupdateCreate_04e_SCHUELER_FIXIEREN_TYP_LK_DER_KURSMENGE(kursIDs: JavaSet<number>): GostBlockungRegelUpdate {
+		const schuelerKursPaare: JavaSet<PairNN<number, number>> = new HashSet<PairNN<number, number>>();
 		for (const idKurs of kursIDs)
 			for (const idSchueler of this.getOfKursSchuelerIDmenge(idKurs))
 				if (this.getOfSchuelerOfKursIstLK(idSchueler, idKurs))
@@ -3406,7 +3406,7 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return alle nötigen Veränderungen als {@link GostBlockungRegelUpdate}-Objekt, um die Menge aller AB3-Schüler zu fixieren.
 	 */
-	public regelupdateCreate_04f_SCHUELER_FIXIEREN_TYP_AB3() : GostBlockungRegelUpdate {
+	public regelupdateCreate_04f_SCHUELER_FIXIEREN_TYP_AB3(): GostBlockungRegelUpdate {
 		return this.regelupdateCreate_04f_SCHUELER_FIXIEREN_TYP_AB3_DER_KURSMENGE(this._kursIDset);
 	}
 
@@ -3420,8 +3420,8 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return alle nötigen Veränderungen als {@link GostBlockungRegelUpdate}-Objekt, um die Menge aller AB3-Schüler zu fixieren.
 	 */
-	public regelupdateCreate_04f_SCHUELER_FIXIEREN_TYP_AB3_DER_KURSMENGE(kursIDs : JavaSet<number>) : GostBlockungRegelUpdate {
-		const schuelerKursPaare : JavaSet<PairNN<number, number>> = new HashSet<PairNN<number, number>>();
+	public regelupdateCreate_04f_SCHUELER_FIXIEREN_TYP_AB3_DER_KURSMENGE(kursIDs: JavaSet<number>): GostBlockungRegelUpdate {
+		const schuelerKursPaare: JavaSet<PairNN<number, number>> = new HashSet<PairNN<number, number>>();
 		for (const idKurs of kursIDs)
 			for (const idSchueler of this.getOfKursSchuelerIDmenge(idKurs))
 				if (this.getOfSchuelerOfKursIstAB3(idSchueler, idKurs))
@@ -3437,7 +3437,7 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return alle nötigen Veränderungen als {@link GostBlockungRegelUpdate}-Objekt, um die Menge aller LKs und AB3-Schüler zu fixieren.
 	 */
-	public regelupdateCreate_04g_SCHUELER_FIXIEREN_TYP_LK_UND_AB3() : GostBlockungRegelUpdate {
+	public regelupdateCreate_04g_SCHUELER_FIXIEREN_TYP_LK_UND_AB3(): GostBlockungRegelUpdate {
 		return this.regelupdateCreate_04g_SCHUELER_FIXIEREN_TYP_LK_UND_AB3_DER_KURSMENGE(this._kursIDset);
 	}
 
@@ -3451,8 +3451,8 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return alle nötigen Veränderungen als {@link GostBlockungRegelUpdate}-Objekt, um die Menge aller LKs und AB3-Schüler zu fixieren.
 	 */
-	public regelupdateCreate_04g_SCHUELER_FIXIEREN_TYP_LK_UND_AB3_DER_KURSMENGE(kursIDs : JavaSet<number>) : GostBlockungRegelUpdate {
-		const schuelerKursPaare : JavaSet<PairNN<number, number>> = new HashSet<PairNN<number, number>>();
+	public regelupdateCreate_04g_SCHUELER_FIXIEREN_TYP_LK_UND_AB3_DER_KURSMENGE(kursIDs: JavaSet<number>): GostBlockungRegelUpdate {
+		const schuelerKursPaare: JavaSet<PairNN<number, number>> = new HashSet<PairNN<number, number>>();
 		for (const idKurs of kursIDs)
 			for (const idSchueler of this.getOfKursSchuelerIDmenge(idKurs))
 				if (this.getOfSchuelerOfKursIstLKoderAB3(idSchueler, idKurs))
@@ -3468,7 +3468,7 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return alle nötigen Veränderungen als {@link GostBlockungRegelUpdate}-Objekt, um die Menge aller AB4-Schüler zu fixieren.
 	 */
-	public regelupdateCreate_04h_SCHUELER_FIXIEREN_TYP_AB4() : GostBlockungRegelUpdate {
+	public regelupdateCreate_04h_SCHUELER_FIXIEREN_TYP_AB4(): GostBlockungRegelUpdate {
 		return this.regelupdateCreate_04h_SCHUELER_FIXIEREN_TYP_AB4_DER_KURSMENGE(this._kursIDset);
 	}
 
@@ -3482,8 +3482,8 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return alle nötigen Veränderungen als {@link GostBlockungRegelUpdate}-Objekt, um die Menge aller AB4-Schüler zu fixieren.
 	 */
-	public regelupdateCreate_04h_SCHUELER_FIXIEREN_TYP_AB4_DER_KURSMENGE(kursIDs : JavaSet<number>) : GostBlockungRegelUpdate {
-		const schuelerKursPaare : JavaSet<PairNN<number, number>> = new HashSet<PairNN<number, number>>();
+	public regelupdateCreate_04h_SCHUELER_FIXIEREN_TYP_AB4_DER_KURSMENGE(kursIDs: JavaSet<number>): GostBlockungRegelUpdate {
+		const schuelerKursPaare: JavaSet<PairNN<number, number>> = new HashSet<PairNN<number, number>>();
 		for (const idKurs of kursIDs)
 			for (const idSchueler of this.getOfKursSchuelerIDmenge(idKurs))
 				if (this.getOfSchuelerOfKursIstAB4(idSchueler, idKurs))
@@ -3499,7 +3499,7 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return alle nötigen Veränderungen als {@link GostBlockungRegelUpdate}-Objekt, um die Menge aller AB-Schüler zu fixieren.
 	 */
-	public regelupdateCreate_04i_SCHUELER_FIXIEREN_TYP_AB() : GostBlockungRegelUpdate {
+	public regelupdateCreate_04i_SCHUELER_FIXIEREN_TYP_AB(): GostBlockungRegelUpdate {
 		return this.regelupdateCreate_04i_SCHUELER_FIXIEREN_TYP_AB_DER_KURSMENGE(this._kursIDset);
 	}
 
@@ -3513,8 +3513,8 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return alle nötigen Veränderungen als {@link GostBlockungRegelUpdate}-Objekt, um die Menge aller AB-Schüler zu fixieren.
 	 */
-	public regelupdateCreate_04i_SCHUELER_FIXIEREN_TYP_AB_DER_KURSMENGE(kursIDs : JavaSet<number>) : GostBlockungRegelUpdate {
-		const schuelerKursPaare : JavaSet<PairNN<number, number>> = new HashSet<PairNN<number, number>>();
+	public regelupdateCreate_04i_SCHUELER_FIXIEREN_TYP_AB_DER_KURSMENGE(kursIDs: JavaSet<number>): GostBlockungRegelUpdate {
+		const schuelerKursPaare: JavaSet<PairNN<number, number>> = new HashSet<PairNN<number, number>>();
 		for (const idKurs of kursIDs)
 			for (const idSchueler of this.getOfKursSchuelerIDmenge(idKurs))
 				if (this.getOfSchuelerOfKursIstAbiturfach(idSchueler, idKurs))
@@ -3530,7 +3530,7 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return alle nötigen Veränderungen als {@link GostBlockungRegelUpdate}-Objekt, um die Menge aller schriftlichen Schüler zu fixieren.
 	 */
-	public regelupdateCreate_04j_SCHUELER_FIXIEREN_TYP_SCHRIFTLICH() : GostBlockungRegelUpdate {
+	public regelupdateCreate_04j_SCHUELER_FIXIEREN_TYP_SCHRIFTLICH(): GostBlockungRegelUpdate {
 		return this.regelupdateCreate_04j_SCHUELER_FIXIEREN_TYP_SCHRIFTLICH_DER_KURSMENGE(this._kursIDset);
 	}
 
@@ -3544,8 +3544,8 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return alle nötigen Veränderungen als {@link GostBlockungRegelUpdate}-Objekt, um die Menge aller schriftlichen Schüler zu fixieren.
 	 */
-	public regelupdateCreate_04j_SCHUELER_FIXIEREN_TYP_SCHRIFTLICH_DER_KURSMENGE(kursIDs : JavaSet<number>) : GostBlockungRegelUpdate {
-		const schuelerKursPaare : JavaSet<PairNN<number, number>> = new HashSet<PairNN<number, number>>();
+	public regelupdateCreate_04j_SCHUELER_FIXIEREN_TYP_SCHRIFTLICH_DER_KURSMENGE(kursIDs: JavaSet<number>): GostBlockungRegelUpdate {
+		const schuelerKursPaare: JavaSet<PairNN<number, number>> = new HashSet<PairNN<number, number>>();
 		for (const idKurs of kursIDs)
 			for (const idSchueler of this.getOfKursSchuelerIDmenge(idKurs))
 				if (this.getOfSchuelerOfKursIstSchriftlich(idSchueler, idKurs))
@@ -3565,8 +3565,8 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return alle GostBlockungRegelUpdate-Objekte für die Umsetzung einer Menge von Schüler-Kurs-Fixierungen.
 	 */
-	private regelupdateCreate_04x_SCHUELER_FIXIEREN_IN_KURS(idSchueler : number, idKurs : number) : GostBlockungRegelUpdate {
-		const schuelerKursPaare : JavaSet<PairNN<number, number>> = new HashSet<PairNN<number, number>>();
+	private regelupdateCreate_04x_SCHUELER_FIXIEREN_IN_KURS(idSchueler: number, idKurs: number): GostBlockungRegelUpdate {
+		const schuelerKursPaare: JavaSet<PairNN<number, number>> = new HashSet<PairNN<number, number>>();
 		schuelerKursPaare.add(new PairNN<number, number>(idSchueler, idKurs));
 		return this.regelupdateCreate_04x_SCHUELER_FIXIEREN_IN_KURSMENGE(schuelerKursPaare);
 	}
@@ -3582,19 +3582,19 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return alle GostBlockungRegelUpdate-Objekte für die Umsetzung einer Menge von Schüler-Kurs-Fixierungen.
 	 */
-	private regelupdateCreate_04x_SCHUELER_FIXIEREN_IN_KURSMENGE(schuelerKursPaare : JavaSet<PairNN<number, number>>) : GostBlockungRegelUpdate {
-		const u : GostBlockungRegelUpdate = new GostBlockungRegelUpdate();
+	private regelupdateCreate_04x_SCHUELER_FIXIEREN_IN_KURSMENGE(schuelerKursPaare: JavaSet<PairNN<number, number>>): GostBlockungRegelUpdate {
+		const u: GostBlockungRegelUpdate = new GostBlockungRegelUpdate();
 		for (const pair of schuelerKursPaare) {
-			const idSchueler : number = pair.a;
-			const idKurs : number = pair.b;
-			const kurs1 : GostBlockungKurs = this._parent.kursGet(idKurs);
-			const keySperrung : LongArrayKey = new LongArrayKey([GostKursblockungRegelTyp.SCHUELER_VERBIETEN_IN_KURS.typ, idSchueler, idKurs]);
-			const regelSperrung : GostBlockungRegel | null = this._parent.regelGetByLongArrayKeyOrNull(keySperrung);
+			const idSchueler: number = pair.a;
+			const idKurs: number = pair.b;
+			const kurs1: GostBlockungKurs = this._parent.kursGet(idKurs);
+			const keySperrung: LongArrayKey = new LongArrayKey([GostKursblockungRegelTyp.SCHUELER_VERBIETEN_IN_KURS.typ, idSchueler, idKurs]);
+			const regelSperrung: GostBlockungRegel | null = this._parent.regelGetByLongArrayKeyOrNull(keySperrung);
 			if (regelSperrung !== null)
 				u.listEntfernen.add(regelSperrung);
 			for (const kurs2 of this._parent.kursGetListeByFachUndKursart(kurs1.fach_id, kurs1.kursart)) {
-				const keyFixierung : LongArrayKey = new LongArrayKey([GostKursblockungRegelTyp.SCHUELER_FIXIEREN_IN_KURS.typ, idSchueler, kurs2.id]);
-				const regelFixierung : GostBlockungRegel | null = this._parent.regelGetByLongArrayKeyOrNull(keyFixierung);
+				const keyFixierung: LongArrayKey = new LongArrayKey([GostKursblockungRegelTyp.SCHUELER_FIXIEREN_IN_KURS.typ, idSchueler, kurs2.id]);
+				const regelFixierung: GostBlockungRegel | null = this._parent.regelGetByLongArrayKeyOrNull(keyFixierung);
 				if (kurs1.id === kurs2.id) {
 					if (regelFixierung === null) {
 						u.listHinzuzufuegen.add(DTOUtils.newGostBlockungRegel2(GostKursblockungRegelTyp.SCHUELER_FIXIEREN_IN_KURS.typ, idSchueler, idKurs));
@@ -3619,16 +3619,16 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return alle nötigen Veränderungen als {@link GostBlockungRegelUpdate}-Objekt, um eine Schülermengen-Kursmengen-Sperrung zu setzen.
 	 */
-	public regelupdateCreate_05_SCHUELER_VERBIETEN_IN_KURS(setSchuelerID : JavaSet<number>, setKursID : JavaSet<number>) : GostBlockungRegelUpdate {
-		const u : GostBlockungRegelUpdate = new GostBlockungRegelUpdate();
+	public regelupdateCreate_05_SCHUELER_VERBIETEN_IN_KURS(setSchuelerID: JavaSet<number>, setKursID: JavaSet<number>): GostBlockungRegelUpdate {
+		const u: GostBlockungRegelUpdate = new GostBlockungRegelUpdate();
 		for (const idSchueler of setSchuelerID)
 			for (const idKurs of setKursID) {
-				const keyFixierung : LongArrayKey = new LongArrayKey([GostKursblockungRegelTyp.SCHUELER_FIXIEREN_IN_KURS.typ, idSchueler, idKurs]);
-				const regelFixierung : GostBlockungRegel | null = this._parent.regelGetByLongArrayKeyOrNull(keyFixierung);
+				const keyFixierung: LongArrayKey = new LongArrayKey([GostKursblockungRegelTyp.SCHUELER_FIXIEREN_IN_KURS.typ, idSchueler, idKurs]);
+				const regelFixierung: GostBlockungRegel | null = this._parent.regelGetByLongArrayKeyOrNull(keyFixierung);
 				if (regelFixierung !== null)
 					u.listEntfernen.add(regelFixierung);
-				const keySperrung : LongArrayKey = new LongArrayKey([GostKursblockungRegelTyp.SCHUELER_VERBIETEN_IN_KURS.typ, idSchueler, idKurs]);
-				const regelSperrung : GostBlockungRegel | null = this._parent.regelGetByLongArrayKeyOrNull(keySperrung);
+				const keySperrung: LongArrayKey = new LongArrayKey([GostKursblockungRegelTyp.SCHUELER_VERBIETEN_IN_KURS.typ, idSchueler, idKurs]);
+				const regelSperrung: GostBlockungRegel | null = this._parent.regelGetByLongArrayKeyOrNull(keySperrung);
 				if (regelSperrung === null)
 					u.listHinzuzufuegen.add(DTOUtils.newGostBlockungRegel2(GostKursblockungRegelTyp.SCHUELER_VERBIETEN_IN_KURS.typ, idSchueler, idKurs));
 			}
@@ -3644,8 +3644,8 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return alle nötigen Veränderungen als {@link GostBlockungRegelUpdate}-Objekt, um alle Schüler-Kurs-Sperrungen der Kurse zu sperren.
 	 */
-	private regelupdateCreate_05b_SCHUELER_VERBIETEN_IN_DEN_KURSEN(setKursID : JavaSet<number>) : GostBlockungRegelUpdate {
-		const u : GostBlockungRegelUpdate = new GostBlockungRegelUpdate();
+	private regelupdateCreate_05b_SCHUELER_VERBIETEN_IN_DEN_KURSEN(setKursID: JavaSet<number>): GostBlockungRegelUpdate {
+		const u: GostBlockungRegelUpdate = new GostBlockungRegelUpdate();
 		for (const idKurs of setKursID)
 			GostBlockungsergebnisManager.regelupdateAppend(u, this.regelupdateCreate_05_SCHUELER_VERBIETEN_IN_KURS(this.getOfKursSchuelerIDmenge(idKurs), SetUtils.create1(idKurs)));
 		return u;
@@ -3664,24 +3664,24 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return alle nötigen Veränderungen als {@link GostBlockungRegelUpdate}-Objekt, um eine Kursart-Schienenmengen-Allein-Zuordnung zu setzen.
 	 */
-	public regelupdateCreate_06_KURSART_ALLEIN_IN_SCHIENEN_VON_BIS(kursart : number, schienenNrVon : number, schienenNrBis : number) : GostBlockungRegelUpdate {
-		const von : number = Math.min(schienenNrVon, schienenNrBis);
-		const bis : number = Math.max(schienenNrVon, schienenNrBis);
-		const u : GostBlockungRegelUpdate = new GostBlockungRegelUpdate();
+	public regelupdateCreate_06_KURSART_ALLEIN_IN_SCHIENEN_VON_BIS(kursart: number, schienenNrVon: number, schienenNrBis: number): GostBlockungRegelUpdate {
+		const von: number = Math.min(schienenNrVon, schienenNrBis);
+		const bis: number = Math.max(schienenNrVon, schienenNrBis);
+		const u: GostBlockungRegelUpdate = new GostBlockungRegelUpdate();
 		for (const rGleicheKursart of this._parent.regelGetListeOfTyp(GostKursblockungRegelTyp.KURSART_ALLEIN_IN_SCHIENEN_VON_BIS))
 			if (kursart === rGleicheKursart.parameter.get(0))
 				u.listEntfernen.add(rGleicheKursart);
 		for (const kurs of this.getKursmenge())
-			for (let schienenNr : number = 1; schienenNr <= this._parent.schieneGetAnzahl(); schienenNr++) {
-				const imSchienenBereich : boolean = (von <= schienenNr) && (schienenNr <= bis);
-				const richtigeKursart : boolean = (kurs.kursart === kursart);
+			for (let schienenNr: number = 1; schienenNr <= this._parent.schieneGetAnzahl(); schienenNr++) {
+				const imSchienenBereich: boolean = (von <= schienenNr) && (schienenNr <= bis);
+				const richtigeKursart: boolean = (kurs.kursart === kursart);
 				if (imSchienenBereich !== richtigeKursart) {
-					const kFixierung : LongArrayKey = new LongArrayKey([GostKursblockungRegelTyp.KURS_FIXIERE_IN_SCHIENE.typ, kurs.id, schienenNr]);
-					const rFixierung : GostBlockungRegel | null = this._parent.regelGetByLongArrayKeyOrNull(kFixierung);
+					const kFixierung: LongArrayKey = new LongArrayKey([GostKursblockungRegelTyp.KURS_FIXIERE_IN_SCHIENE.typ, kurs.id, schienenNr]);
+					const rFixierung: GostBlockungRegel | null = this._parent.regelGetByLongArrayKeyOrNull(kFixierung);
 					if (rFixierung !== null)
 						u.listEntfernen.add(rFixierung);
-					const kSperrung : LongArrayKey = new LongArrayKey([GostKursblockungRegelTyp.KURS_SPERRE_IN_SCHIENE.typ, kurs.id, schienenNr]);
-					const rSperrung : GostBlockungRegel | null = this._parent.regelGetByLongArrayKeyOrNull(kSperrung);
+					const kSperrung: LongArrayKey = new LongArrayKey([GostKursblockungRegelTyp.KURS_SPERRE_IN_SCHIENE.typ, kurs.id, schienenNr]);
+					const rSperrung: GostBlockungRegel | null = this._parent.regelGetByLongArrayKeyOrNull(kSperrung);
 					if (rSperrung !== null)
 						u.listEntfernen.add(rSperrung);
 				}
@@ -3700,25 +3700,25 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return alle nötigen Veränderungen als {@link GostBlockungRegelUpdate}-Objekt, um alle Kurs-Kurs-Verbote der Kursmenge (alle Paarungen) zu setzen.
 	 */
-	public regelupdateCreate_07_KURS_VERBIETEN_MIT_KURS(setKursID : JavaSet<number>) : GostBlockungRegelUpdate {
-		const u : GostBlockungRegelUpdate = new GostBlockungRegelUpdate();
+	public regelupdateCreate_07_KURS_VERBIETEN_MIT_KURS(setKursID: JavaSet<number>): GostBlockungRegelUpdate {
+		const u: GostBlockungRegelUpdate = new GostBlockungRegelUpdate();
 		for (const idKurs1 of setKursID)
 			for (const idKurs2 of setKursID)
 				if (idKurs1 < idKurs2) {
-					const keyZusammen12 : LongArrayKey = new LongArrayKey([GostKursblockungRegelTyp.KURS_ZUSAMMEN_MIT_KURS.typ, idKurs1, idKurs2]);
-					const regelZusammen12 : GostBlockungRegel | null = this._parent.regelGetByLongArrayKeyOrNull(keyZusammen12);
+					const keyZusammen12: LongArrayKey = new LongArrayKey([GostKursblockungRegelTyp.KURS_ZUSAMMEN_MIT_KURS.typ, idKurs1, idKurs2]);
+					const regelZusammen12: GostBlockungRegel | null = this._parent.regelGetByLongArrayKeyOrNull(keyZusammen12);
 					if (regelZusammen12 !== null)
 						u.listEntfernen.add(regelZusammen12);
-					const keyZusammen21 : LongArrayKey = new LongArrayKey([GostKursblockungRegelTyp.KURS_ZUSAMMEN_MIT_KURS.typ, idKurs2, idKurs1]);
-					const regelZusammen21 : GostBlockungRegel | null = this._parent.regelGetByLongArrayKeyOrNull(keyZusammen21);
+					const keyZusammen21: LongArrayKey = new LongArrayKey([GostKursblockungRegelTyp.KURS_ZUSAMMEN_MIT_KURS.typ, idKurs2, idKurs1]);
+					const regelZusammen21: GostBlockungRegel | null = this._parent.regelGetByLongArrayKeyOrNull(keyZusammen21);
 					if (regelZusammen21 !== null)
 						u.listEntfernen.add(regelZusammen21);
-					const keyVerboten21 : LongArrayKey = new LongArrayKey([GostKursblockungRegelTyp.KURS_VERBIETEN_MIT_KURS.typ, idKurs2, idKurs1]);
-					const regelVerboten21 : GostBlockungRegel | null = this._parent.regelGetByLongArrayKeyOrNull(keyVerboten21);
+					const keyVerboten21: LongArrayKey = new LongArrayKey([GostKursblockungRegelTyp.KURS_VERBIETEN_MIT_KURS.typ, idKurs2, idKurs1]);
+					const regelVerboten21: GostBlockungRegel | null = this._parent.regelGetByLongArrayKeyOrNull(keyVerboten21);
 					if (regelVerboten21 !== null)
 						u.listEntfernen.add(regelVerboten21);
-					const keyVerboten12 : LongArrayKey = new LongArrayKey([GostKursblockungRegelTyp.KURS_VERBIETEN_MIT_KURS.typ, idKurs1, idKurs2]);
-					const regelVerboten12 : GostBlockungRegel | null = this._parent.regelGetByLongArrayKeyOrNull(keyVerboten12);
+					const keyVerboten12: LongArrayKey = new LongArrayKey([GostKursblockungRegelTyp.KURS_VERBIETEN_MIT_KURS.typ, idKurs1, idKurs2]);
+					const regelVerboten12: GostBlockungRegel | null = this._parent.regelGetByLongArrayKeyOrNull(keyVerboten12);
 					if (regelVerboten12 === null)
 						u.listHinzuzufuegen.add(DTOUtils.newGostBlockungRegel2(GostKursblockungRegelTyp.KURS_VERBIETEN_MIT_KURS.typ, idKurs1, idKurs2));
 				}
@@ -3735,25 +3735,25 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return alle nötigen Veränderungen als {@link GostBlockungRegelUpdate}-Objekt, um alle Kurs-Kurs-Zusammen-Gebote von setKursID (alle Paarungen) zu setzen.
 	 */
-	public regelupdateCreate_08_KURS_ZUSAMMEN_MIT_KURS(setKursID : JavaSet<number>) : GostBlockungRegelUpdate {
-		const u : GostBlockungRegelUpdate = new GostBlockungRegelUpdate();
+	public regelupdateCreate_08_KURS_ZUSAMMEN_MIT_KURS(setKursID: JavaSet<number>): GostBlockungRegelUpdate {
+		const u: GostBlockungRegelUpdate = new GostBlockungRegelUpdate();
 		for (const idKurs1 of setKursID)
 			for (const idKurs2 of setKursID)
 				if (idKurs1 < idKurs2) {
-					const keyVerboten12 : LongArrayKey = new LongArrayKey([GostKursblockungRegelTyp.KURS_VERBIETEN_MIT_KURS.typ, idKurs1, idKurs2]);
-					const regelVerboten12 : GostBlockungRegel | null = this._parent.regelGetByLongArrayKeyOrNull(keyVerboten12);
+					const keyVerboten12: LongArrayKey = new LongArrayKey([GostKursblockungRegelTyp.KURS_VERBIETEN_MIT_KURS.typ, idKurs1, idKurs2]);
+					const regelVerboten12: GostBlockungRegel | null = this._parent.regelGetByLongArrayKeyOrNull(keyVerboten12);
 					if (regelVerboten12 !== null)
 						u.listEntfernen.add(regelVerboten12);
-					const keyVerboten21 : LongArrayKey = new LongArrayKey([GostKursblockungRegelTyp.KURS_VERBIETEN_MIT_KURS.typ, idKurs2, idKurs1]);
-					const regelVerboten21 : GostBlockungRegel | null = this._parent.regelGetByLongArrayKeyOrNull(keyVerboten21);
+					const keyVerboten21: LongArrayKey = new LongArrayKey([GostKursblockungRegelTyp.KURS_VERBIETEN_MIT_KURS.typ, idKurs2, idKurs1]);
+					const regelVerboten21: GostBlockungRegel | null = this._parent.regelGetByLongArrayKeyOrNull(keyVerboten21);
 					if (regelVerboten21 !== null)
 						u.listEntfernen.add(regelVerboten21);
-					const keyZusammen21 : LongArrayKey = new LongArrayKey([GostKursblockungRegelTyp.KURS_ZUSAMMEN_MIT_KURS.typ, idKurs2, idKurs1]);
-					const regelZusammen21 : GostBlockungRegel | null = this._parent.regelGetByLongArrayKeyOrNull(keyZusammen21);
+					const keyZusammen21: LongArrayKey = new LongArrayKey([GostKursblockungRegelTyp.KURS_ZUSAMMEN_MIT_KURS.typ, idKurs2, idKurs1]);
+					const regelZusammen21: GostBlockungRegel | null = this._parent.regelGetByLongArrayKeyOrNull(keyZusammen21);
 					if (regelZusammen21 !== null)
 						u.listEntfernen.add(regelZusammen21);
-					const keyZusammen12 : LongArrayKey = new LongArrayKey([GostKursblockungRegelTyp.KURS_ZUSAMMEN_MIT_KURS.typ, idKurs1, idKurs2]);
-					const regelZusammen12 : GostBlockungRegel | null = this._parent.regelGetByLongArrayKeyOrNull(keyZusammen12);
+					const keyZusammen12: LongArrayKey = new LongArrayKey([GostKursblockungRegelTyp.KURS_ZUSAMMEN_MIT_KURS.typ, idKurs1, idKurs2]);
+					const regelZusammen12: GostBlockungRegel | null = this._parent.regelGetByLongArrayKeyOrNull(keyZusammen12);
 					if (regelZusammen12 === null)
 						u.listHinzuzufuegen.add(DTOUtils.newGostBlockungRegel2(GostKursblockungRegelTyp.KURS_ZUSAMMEN_MIT_KURS.typ, idKurs1, idKurs2));
 				}
@@ -3770,8 +3770,8 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return alle nötigen Veränderungen als {@link GostBlockungRegelUpdate}-Objekt, um die Anzahl der Dummy-Schüler eines Kurses zu setzen.
 	 */
-	public regelupdateCreate_09_KURS_MIT_DUMMY_SUS_AUFFUELLEN(idKurs : number, anzahl : number) : GostBlockungRegelUpdate {
-		const u : GostBlockungRegelUpdate = new GostBlockungRegelUpdate();
+	public regelupdateCreate_09_KURS_MIT_DUMMY_SUS_AUFFUELLEN(idKurs: number, anzahl: number): GostBlockungRegelUpdate {
+		const u: GostBlockungRegelUpdate = new GostBlockungRegelUpdate();
 		for (const rAlt of this._parent.regelGetListeOfTyp(GostKursblockungRegelTyp.KURS_MIT_DUMMY_SUS_AUFFUELLEN))
 			if (idKurs === rAlt.parameter.get(0))
 				u.listEntfernen.add(rAlt);
@@ -3789,10 +3789,10 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return alle nötigen Veränderungen als {@link GostBlockungRegelUpdate}-Objekt, um "Lehrkräfte beachten" zu aktivieren/deaktivieren.
 	 */
-	public regelupdateCreate_10_LEHRKRAEFTE_BEACHTEN(erstellen : boolean) : GostBlockungRegelUpdate {
-		const u : GostBlockungRegelUpdate = new GostBlockungRegelUpdate();
-		const keyDummyAlt : LongArrayKey = new LongArrayKey([GostKursblockungRegelTyp.LEHRKRAEFTE_BEACHTEN.typ]);
-		const regelDummyAlt : GostBlockungRegel | null = this._parent.regelGetByLongArrayKeyOrNull(keyDummyAlt);
+	public regelupdateCreate_10_LEHRKRAEFTE_BEACHTEN(erstellen: boolean): GostBlockungRegelUpdate {
+		const u: GostBlockungRegelUpdate = new GostBlockungRegelUpdate();
+		const keyDummyAlt: LongArrayKey = new LongArrayKey([GostKursblockungRegelTyp.LEHRKRAEFTE_BEACHTEN.typ]);
+		const regelDummyAlt: GostBlockungRegel | null = this._parent.regelGetByLongArrayKeyOrNull(keyDummyAlt);
 		if ((!erstellen) && (regelDummyAlt !== null))
 			u.listEntfernen.add(regelDummyAlt);
 		if ((erstellen) && (regelDummyAlt === null))
@@ -3815,42 +3815,42 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return alle nötigen Veränderungen als {@link GostBlockungRegelUpdate}-Objekt, um zwei Schüler in einem Fach zusammen zu setzen.
 	 */
-	public regelupdateCreate_11_SCHUELER_ZUSAMMEN_MIT_SCHUELER_IN_FACH(idSchueler1 : number, idSchueler2 : number, idFach : number) : GostBlockungRegelUpdate {
-		const u : GostBlockungRegelUpdate = new GostBlockungRegelUpdate();
-		const idS1 : number = Math.min(idSchueler1, idSchueler2);
-		const idS2 : number = Math.max(idSchueler1, idSchueler2);
+	public regelupdateCreate_11_SCHUELER_ZUSAMMEN_MIT_SCHUELER_IN_FACH(idSchueler1: number, idSchueler2: number, idFach: number): GostBlockungRegelUpdate {
+		const u: GostBlockungRegelUpdate = new GostBlockungRegelUpdate();
+		const idS1: number = Math.min(idSchueler1, idSchueler2);
+		const idS2: number = Math.max(idSchueler1, idSchueler2);
 		if (idS1 === idS2)
 			return u;
-		const keyVerbietenFach12 : LongArrayKey = new LongArrayKey([GostKursblockungRegelTyp.SCHUELER_VERBIETEN_MIT_SCHUELER_IN_FACH.typ, idS1, idS2, idFach]);
-		const regelVerbietenFach12 : GostBlockungRegel | null = this._parent.regelGetByLongArrayKeyOrNull(keyVerbietenFach12);
+		const keyVerbietenFach12: LongArrayKey = new LongArrayKey([GostKursblockungRegelTyp.SCHUELER_VERBIETEN_MIT_SCHUELER_IN_FACH.typ, idS1, idS2, idFach]);
+		const regelVerbietenFach12: GostBlockungRegel | null = this._parent.regelGetByLongArrayKeyOrNull(keyVerbietenFach12);
 		if (regelVerbietenFach12 !== null)
 			u.listEntfernen.add(regelVerbietenFach12);
-		const keyVerbietenFach21 : LongArrayKey = new LongArrayKey([GostKursblockungRegelTyp.SCHUELER_VERBIETEN_MIT_SCHUELER_IN_FACH.typ, idS2, idS1, idFach]);
-		const regelVerbietenFach21 : GostBlockungRegel | null = this._parent.regelGetByLongArrayKeyOrNull(keyVerbietenFach21);
+		const keyVerbietenFach21: LongArrayKey = new LongArrayKey([GostKursblockungRegelTyp.SCHUELER_VERBIETEN_MIT_SCHUELER_IN_FACH.typ, idS2, idS1, idFach]);
+		const regelVerbietenFach21: GostBlockungRegel | null = this._parent.regelGetByLongArrayKeyOrNull(keyVerbietenFach21);
 		if (regelVerbietenFach21 !== null)
 			u.listEntfernen.add(regelVerbietenFach21);
-		const keyVerbieten12 : LongArrayKey = new LongArrayKey([GostKursblockungRegelTyp.SCHUELER_VERBIETEN_MIT_SCHUELER.typ, idS1, idS2]);
-		const regelVerbieten12 : GostBlockungRegel | null = this._parent.regelGetByLongArrayKeyOrNull(keyVerbieten12);
+		const keyVerbieten12: LongArrayKey = new LongArrayKey([GostKursblockungRegelTyp.SCHUELER_VERBIETEN_MIT_SCHUELER.typ, idS1, idS2]);
+		const regelVerbieten12: GostBlockungRegel | null = this._parent.regelGetByLongArrayKeyOrNull(keyVerbieten12);
 		if (regelVerbieten12 !== null)
 			u.listEntfernen.add(regelVerbieten12);
-		const keyVerbieten21 : LongArrayKey = new LongArrayKey([GostKursblockungRegelTyp.SCHUELER_VERBIETEN_MIT_SCHUELER.typ, idS2, idS1]);
-		const regelVerbieten21 : GostBlockungRegel | null = this._parent.regelGetByLongArrayKeyOrNull(keyVerbieten21);
+		const keyVerbieten21: LongArrayKey = new LongArrayKey([GostKursblockungRegelTyp.SCHUELER_VERBIETEN_MIT_SCHUELER.typ, idS2, idS1]);
+		const regelVerbieten21: GostBlockungRegel | null = this._parent.regelGetByLongArrayKeyOrNull(keyVerbieten21);
 		if (regelVerbieten21 !== null)
 			u.listEntfernen.add(regelVerbieten21);
-		const keyZusammen12 : LongArrayKey = new LongArrayKey([GostKursblockungRegelTyp.SCHUELER_ZUSAMMEN_MIT_SCHUELER.typ, idS1, idS2]);
-		const regelZusammen12 : GostBlockungRegel | null = this._parent.regelGetByLongArrayKeyOrNull(keyZusammen12);
+		const keyZusammen12: LongArrayKey = new LongArrayKey([GostKursblockungRegelTyp.SCHUELER_ZUSAMMEN_MIT_SCHUELER.typ, idS1, idS2]);
+		const regelZusammen12: GostBlockungRegel | null = this._parent.regelGetByLongArrayKeyOrNull(keyZusammen12);
 		if (regelZusammen12 !== null)
 			u.listEntfernen.add(regelZusammen12);
-		const keyZusammen21 : LongArrayKey = new LongArrayKey([GostKursblockungRegelTyp.SCHUELER_ZUSAMMEN_MIT_SCHUELER.typ, idS2, idS1]);
-		const regelZusammen21 : GostBlockungRegel | null = this._parent.regelGetByLongArrayKeyOrNull(keyZusammen21);
+		const keyZusammen21: LongArrayKey = new LongArrayKey([GostKursblockungRegelTyp.SCHUELER_ZUSAMMEN_MIT_SCHUELER.typ, idS2, idS1]);
+		const regelZusammen21: GostBlockungRegel | null = this._parent.regelGetByLongArrayKeyOrNull(keyZusammen21);
 		if (regelZusammen21 !== null)
 			u.listEntfernen.add(regelZusammen21);
-		const keyZusammenFach21 : LongArrayKey = new LongArrayKey([GostKursblockungRegelTyp.SCHUELER_ZUSAMMEN_MIT_SCHUELER_IN_FACH.typ, idS2, idS1, idFach]);
-		const regelZusammenFach21 : GostBlockungRegel | null = this._parent.regelGetByLongArrayKeyOrNull(keyZusammenFach21);
+		const keyZusammenFach21: LongArrayKey = new LongArrayKey([GostKursblockungRegelTyp.SCHUELER_ZUSAMMEN_MIT_SCHUELER_IN_FACH.typ, idS2, idS1, idFach]);
+		const regelZusammenFach21: GostBlockungRegel | null = this._parent.regelGetByLongArrayKeyOrNull(keyZusammenFach21);
 		if (regelZusammenFach21 !== null)
 			u.listEntfernen.add(regelZusammenFach21);
-		const keyZusammenFach12 : LongArrayKey = new LongArrayKey([GostKursblockungRegelTyp.SCHUELER_ZUSAMMEN_MIT_SCHUELER_IN_FACH.typ, idS1, idS2, idFach]);
-		const regelZusammenFach12 : GostBlockungRegel | null = this._parent.regelGetByLongArrayKeyOrNull(keyZusammenFach12);
+		const keyZusammenFach12: LongArrayKey = new LongArrayKey([GostKursblockungRegelTyp.SCHUELER_ZUSAMMEN_MIT_SCHUELER_IN_FACH.typ, idS1, idS2, idFach]);
+		const regelZusammenFach12: GostBlockungRegel | null = this._parent.regelGetByLongArrayKeyOrNull(keyZusammenFach12);
 		if (regelZusammenFach12 === null)
 			u.listHinzuzufuegen.add(DTOUtils.newGostBlockungRegel3(GostKursblockungRegelTyp.SCHUELER_ZUSAMMEN_MIT_SCHUELER_IN_FACH.typ, idS1, idS2, idFach));
 		return u;
@@ -3871,42 +3871,42 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return alle nötigen Veränderungen als {@link GostBlockungRegelUpdate}-Objekt, um zwei Schüler in einem Fach zu verbieten.
 	 */
-	public regelupdateCreate_12_SCHUELER_VERBIETEN_MIT_SCHUELER_IN_FACH(idSchueler1 : number, idSchueler2 : number, idFach : number) : GostBlockungRegelUpdate {
-		const u : GostBlockungRegelUpdate = new GostBlockungRegelUpdate();
-		const idS1 : number = Math.min(idSchueler1, idSchueler2);
-		const idS2 : number = Math.max(idSchueler1, idSchueler2);
+	public regelupdateCreate_12_SCHUELER_VERBIETEN_MIT_SCHUELER_IN_FACH(idSchueler1: number, idSchueler2: number, idFach: number): GostBlockungRegelUpdate {
+		const u: GostBlockungRegelUpdate = new GostBlockungRegelUpdate();
+		const idS1: number = Math.min(idSchueler1, idSchueler2);
+		const idS2: number = Math.max(idSchueler1, idSchueler2);
 		if (idS1 === idS2)
 			return u;
-		const keyZusammenFach12 : LongArrayKey = new LongArrayKey([GostKursblockungRegelTyp.SCHUELER_ZUSAMMEN_MIT_SCHUELER_IN_FACH.typ, idS1, idS2, idFach]);
-		const regelZusammenFach12 : GostBlockungRegel | null = this._parent.regelGetByLongArrayKeyOrNull(keyZusammenFach12);
+		const keyZusammenFach12: LongArrayKey = new LongArrayKey([GostKursblockungRegelTyp.SCHUELER_ZUSAMMEN_MIT_SCHUELER_IN_FACH.typ, idS1, idS2, idFach]);
+		const regelZusammenFach12: GostBlockungRegel | null = this._parent.regelGetByLongArrayKeyOrNull(keyZusammenFach12);
 		if (regelZusammenFach12 !== null)
 			u.listEntfernen.add(regelZusammenFach12);
-		const keyZusammenFach21 : LongArrayKey = new LongArrayKey([GostKursblockungRegelTyp.SCHUELER_ZUSAMMEN_MIT_SCHUELER_IN_FACH.typ, idS2, idS1, idFach]);
-		const regelZusammenFach21 : GostBlockungRegel | null = this._parent.regelGetByLongArrayKeyOrNull(keyZusammenFach21);
+		const keyZusammenFach21: LongArrayKey = new LongArrayKey([GostKursblockungRegelTyp.SCHUELER_ZUSAMMEN_MIT_SCHUELER_IN_FACH.typ, idS2, idS1, idFach]);
+		const regelZusammenFach21: GostBlockungRegel | null = this._parent.regelGetByLongArrayKeyOrNull(keyZusammenFach21);
 		if (regelZusammenFach21 !== null)
 			u.listEntfernen.add(regelZusammenFach21);
-		const keyZusammen12 : LongArrayKey = new LongArrayKey([GostKursblockungRegelTyp.SCHUELER_ZUSAMMEN_MIT_SCHUELER.typ, idS1, idS2]);
-		const regelZusammen12 : GostBlockungRegel | null = this._parent.regelGetByLongArrayKeyOrNull(keyZusammen12);
+		const keyZusammen12: LongArrayKey = new LongArrayKey([GostKursblockungRegelTyp.SCHUELER_ZUSAMMEN_MIT_SCHUELER.typ, idS1, idS2]);
+		const regelZusammen12: GostBlockungRegel | null = this._parent.regelGetByLongArrayKeyOrNull(keyZusammen12);
 		if (regelZusammen12 !== null)
 			u.listEntfernen.add(regelZusammen12);
-		const keyZusammen21 : LongArrayKey = new LongArrayKey([GostKursblockungRegelTyp.SCHUELER_ZUSAMMEN_MIT_SCHUELER.typ, idS2, idS1]);
-		const regelZusammen21 : GostBlockungRegel | null = this._parent.regelGetByLongArrayKeyOrNull(keyZusammen21);
+		const keyZusammen21: LongArrayKey = new LongArrayKey([GostKursblockungRegelTyp.SCHUELER_ZUSAMMEN_MIT_SCHUELER.typ, idS2, idS1]);
+		const regelZusammen21: GostBlockungRegel | null = this._parent.regelGetByLongArrayKeyOrNull(keyZusammen21);
 		if (regelZusammen21 !== null)
 			u.listEntfernen.add(regelZusammen21);
-		const keyVerbieten12 : LongArrayKey = new LongArrayKey([GostKursblockungRegelTyp.SCHUELER_VERBIETEN_MIT_SCHUELER.typ, idS1, idS2]);
-		const regelVerbieten12 : GostBlockungRegel | null = this._parent.regelGetByLongArrayKeyOrNull(keyVerbieten12);
+		const keyVerbieten12: LongArrayKey = new LongArrayKey([GostKursblockungRegelTyp.SCHUELER_VERBIETEN_MIT_SCHUELER.typ, idS1, idS2]);
+		const regelVerbieten12: GostBlockungRegel | null = this._parent.regelGetByLongArrayKeyOrNull(keyVerbieten12);
 		if (regelVerbieten12 !== null)
 			u.listEntfernen.add(regelVerbieten12);
-		const keyVerbieten21 : LongArrayKey = new LongArrayKey([GostKursblockungRegelTyp.SCHUELER_VERBIETEN_MIT_SCHUELER.typ, idS2, idS1]);
-		const regelVerbieten21 : GostBlockungRegel | null = this._parent.regelGetByLongArrayKeyOrNull(keyVerbieten21);
+		const keyVerbieten21: LongArrayKey = new LongArrayKey([GostKursblockungRegelTyp.SCHUELER_VERBIETEN_MIT_SCHUELER.typ, idS2, idS1]);
+		const regelVerbieten21: GostBlockungRegel | null = this._parent.regelGetByLongArrayKeyOrNull(keyVerbieten21);
 		if (regelVerbieten21 !== null)
 			u.listEntfernen.add(regelVerbieten21);
-		const keyVerbietenFach21 : LongArrayKey = new LongArrayKey([GostKursblockungRegelTyp.SCHUELER_VERBIETEN_MIT_SCHUELER_IN_FACH.typ, idS2, idS1, idFach]);
-		const regelVerbietenFach21 : GostBlockungRegel | null = this._parent.regelGetByLongArrayKeyOrNull(keyVerbietenFach21);
+		const keyVerbietenFach21: LongArrayKey = new LongArrayKey([GostKursblockungRegelTyp.SCHUELER_VERBIETEN_MIT_SCHUELER_IN_FACH.typ, idS2, idS1, idFach]);
+		const regelVerbietenFach21: GostBlockungRegel | null = this._parent.regelGetByLongArrayKeyOrNull(keyVerbietenFach21);
 		if (regelVerbietenFach21 !== null)
 			u.listEntfernen.add(regelVerbietenFach21);
-		const keyVerbietenFach12 : LongArrayKey = new LongArrayKey([GostKursblockungRegelTyp.SCHUELER_VERBIETEN_MIT_SCHUELER_IN_FACH.typ, idS1, idS2, idFach]);
-		const regelVerbietenFach12 : GostBlockungRegel | null = this._parent.regelGetByLongArrayKeyOrNull(keyVerbietenFach12);
+		const keyVerbietenFach12: LongArrayKey = new LongArrayKey([GostKursblockungRegelTyp.SCHUELER_VERBIETEN_MIT_SCHUELER_IN_FACH.typ, idS1, idS2, idFach]);
+		const regelVerbietenFach12: GostBlockungRegel | null = this._parent.regelGetByLongArrayKeyOrNull(keyVerbietenFach12);
 		if (regelVerbietenFach12 === null)
 			u.listHinzuzufuegen.add(DTOUtils.newGostBlockungRegel3(GostKursblockungRegelTyp.SCHUELER_VERBIETEN_MIT_SCHUELER_IN_FACH.typ, idS1, idS2, idFach));
 		return u;
@@ -3925,10 +3925,10 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return alle nötigen Veränderungen als {@link GostBlockungRegelUpdate}-Objekt, um zwei Schüler in jedem gemeinsamen Fach zusammen zu setzen.
 	 */
-	public regelupdateCreate_13_SCHUELER_ZUSAMMEN_MIT_SCHUELER(idSchueler1 : number, idSchueler2 : number) : GostBlockungRegelUpdate {
-		const u : GostBlockungRegelUpdate = new GostBlockungRegelUpdate();
-		const idS1 : number = Math.min(idSchueler1, idSchueler2);
-		const idS2 : number = Math.max(idSchueler1, idSchueler2);
+	public regelupdateCreate_13_SCHUELER_ZUSAMMEN_MIT_SCHUELER(idSchueler1: number, idSchueler2: number): GostBlockungRegelUpdate {
+		const u: GostBlockungRegelUpdate = new GostBlockungRegelUpdate();
+		const idS1: number = Math.min(idSchueler1, idSchueler2);
+		const idS2: number = Math.max(idSchueler1, idSchueler2);
 		for (const r11 of this._parent.regelGetListeOfTyp(GostKursblockungRegelTyp.SCHUELER_ZUSAMMEN_MIT_SCHUELER_IN_FACH))
 			if (GostBlockungsergebnisManager.regelupdateIsEqualPair(r11.parameter.get(0), r11.parameter.get(1), idS1, idS2))
 				u.listEntfernen.add(r11);
@@ -3959,10 +3959,10 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return alle nötigen Veränderungen als {@link GostBlockungRegelUpdate}-Objekt, um zwei Schüler in jedem gemeinsamen Fach zu verbieten.
 	 */
-	public regelupdateCreate_14_SCHUELER_VERBIETEN_MIT_SCHUELER(idSchueler1 : number, idSchueler2 : number) : GostBlockungRegelUpdate {
-		const u : GostBlockungRegelUpdate = new GostBlockungRegelUpdate();
-		const idS1 : number = Math.min(idSchueler1, idSchueler2);
-		const idS2 : number = Math.max(idSchueler1, idSchueler2);
+	public regelupdateCreate_14_SCHUELER_VERBIETEN_MIT_SCHUELER(idSchueler1: number, idSchueler2: number): GostBlockungRegelUpdate {
+		const u: GostBlockungRegelUpdate = new GostBlockungRegelUpdate();
+		const idS1: number = Math.min(idSchueler1, idSchueler2);
+		const idS2: number = Math.max(idSchueler1, idSchueler2);
 		for (const r11 of this._parent.regelGetListeOfTyp(GostKursblockungRegelTyp.SCHUELER_ZUSAMMEN_MIT_SCHUELER_IN_FACH))
 			if (GostBlockungsergebnisManager.regelupdateIsEqualPair(r11.parameter.get(0), r11.parameter.get(1), idS1, idS2))
 				u.listEntfernen.add(r11);
@@ -3990,8 +3990,8 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return alle nötigen Veränderungen als {@link GostBlockungRegelUpdate}-Objekt, um die maximale Anzahl an Schülern eines Kurses zu setzen.
 	 */
-	public regelupdateCreate_15_KURS_MAXIMALE_SCHUELERANZAHL(idKurs : number, anzahl : number) : GostBlockungRegelUpdate {
-		const u : GostBlockungRegelUpdate = new GostBlockungRegelUpdate();
+	public regelupdateCreate_15_KURS_MAXIMALE_SCHUELERANZAHL(idKurs: number, anzahl: number): GostBlockungRegelUpdate {
+		const u: GostBlockungRegelUpdate = new GostBlockungRegelUpdate();
 		for (const rAlt of this._parent.regelGetListeOfTyp(GostKursblockungRegelTyp.KURS_MAXIMALE_SCHUELERANZAHL))
 			if (idKurs === rAlt.parameter.get(0))
 				u.listEntfernen.add(rAlt);
@@ -4008,11 +4008,11 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return alle nötigen Veränderungen als {@link GostBlockungRegelUpdate}-Objekt, um eine Schülermenge beim Blocken zu ignorieren.
 	 */
-	public regelupdateCreate_16_SCHUELER_IGNORIEREN(setSchuelerID : JavaSet<number>) : GostBlockungRegelUpdate {
-		const u : GostBlockungRegelUpdate = new GostBlockungRegelUpdate();
+	public regelupdateCreate_16_SCHUELER_IGNORIEREN(setSchuelerID: JavaSet<number>): GostBlockungRegelUpdate {
+		const u: GostBlockungRegelUpdate = new GostBlockungRegelUpdate();
 		for (const idSchueler of setSchuelerID) {
-			const keySchuelerIgnorieren : LongArrayKey = new LongArrayKey([GostKursblockungRegelTyp.SCHUELER_IGNORIEREN.typ, idSchueler]);
-			const regelSchuelerIgnorieren : GostBlockungRegel | null = this._parent.regelGetByLongArrayKeyOrNull(keySchuelerIgnorieren);
+			const keySchuelerIgnorieren: LongArrayKey = new LongArrayKey([GostKursblockungRegelTyp.SCHUELER_IGNORIEREN.typ, idSchueler]);
+			const regelSchuelerIgnorieren: GostBlockungRegel | null = this._parent.regelGetByLongArrayKeyOrNull(keySchuelerIgnorieren);
 			if (regelSchuelerIgnorieren === null)
 				u.listHinzuzufuegen.add(DTOUtils.newGostBlockungRegel1(GostKursblockungRegelTyp.SCHUELER_IGNORIEREN.typ, idSchueler));
 		}
@@ -4027,11 +4027,11 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return alle nötigen Veränderungen als {@link GostBlockungRegelUpdate}-Objekt, um eine Kursmenge von Kursdifferenz-Berechnungen auszuschließen.
 	 */
-	public regelupdateCreate_17_KURS_KURSDIFFERENZ_BEI_DER_VISUALISIERUNG_IGNORIEREN(setKursID : JavaSet<number>) : GostBlockungRegelUpdate {
-		const u : GostBlockungRegelUpdate = new GostBlockungRegelUpdate();
+	public regelupdateCreate_17_KURS_KURSDIFFERENZ_BEI_DER_VISUALISIERUNG_IGNORIEREN(setKursID: JavaSet<number>): GostBlockungRegelUpdate {
+		const u: GostBlockungRegelUpdate = new GostBlockungRegelUpdate();
 		for (const idKurs of setKursID) {
-			const keyKurs_KD_ignorieren : LongArrayKey = new LongArrayKey([GostKursblockungRegelTyp.KURS_KURSDIFFERENZ_BEI_DER_VISUALISIERUNG_IGNORIEREN.typ, idKurs]);
-			const regelKurs_KD_ignorieren : GostBlockungRegel | null = this._parent.regelGetByLongArrayKeyOrNull(keyKurs_KD_ignorieren);
+			const keyKurs_KD_ignorieren: LongArrayKey = new LongArrayKey([GostKursblockungRegelTyp.KURS_KURSDIFFERENZ_BEI_DER_VISUALISIERUNG_IGNORIEREN.typ, idKurs]);
+			const regelKurs_KD_ignorieren: GostBlockungRegel | null = this._parent.regelGetByLongArrayKeyOrNull(keyKurs_KD_ignorieren);
 			if (regelKurs_KD_ignorieren === null)
 				u.listHinzuzufuegen.add(DTOUtils.newGostBlockungRegel1(GostKursblockungRegelTyp.KURS_KURSDIFFERENZ_BEI_DER_VISUALISIERUNG_IGNORIEREN.typ, idKurs));
 		}
@@ -4050,17 +4050,17 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return alle nötigen Veränderungen als {@link GostBlockungRegelUpdate}-Objekt, um die maximale Anzahl an Kursen einer bestimmten Fachart (in jeder Schiene) zu begrenzen.
 	 */
-	public regelupdateCreate_18_FACH_KURSART_MAXIMALE_ANZAHL_PRO_SCHIENE(idFach : number, idKursart : number, maximal : number) : GostBlockungRegelUpdate {
-		const u : GostBlockungRegelUpdate = new GostBlockungRegelUpdate();
+	public regelupdateCreate_18_FACH_KURSART_MAXIMALE_ANZAHL_PRO_SCHIENE(idFach: number, idKursart: number, maximal: number): GostBlockungRegelUpdate {
+		const u: GostBlockungRegelUpdate = new GostBlockungRegelUpdate();
 		for (const r18 of this._parent.regelGetListeOfTyp(GostKursblockungRegelTyp.FACH_KURSART_MAXIMALE_ANZAHL_PRO_SCHIENE))
 			if ((r18.parameter.get(0) === idFach) && (r18.parameter.get(1) === idKursart))
 				u.listEntfernen.add(r18);
 		if (maximal === 1)
 			for (const r7 of this._parent.regelGetListeOfTyp(GostKursblockungRegelTyp.KURS_VERBIETEN_MIT_KURS)) {
-				const idKurs1 : number = r7.parameter.get(0).valueOf();
-				const idKurs2 : number = r7.parameter.get(1).valueOf();
-				const kurs1 : GostBlockungsergebnisKurs = this.getKursE(idKurs1);
-				const kurs2 : GostBlockungsergebnisKurs = this.getKursE(idKurs2);
+				const idKurs1: number = r7.parameter.get(0).valueOf();
+				const idKurs2: number = r7.parameter.get(1).valueOf();
+				const kurs1: GostBlockungsergebnisKurs = this.getKursE(idKurs1);
+				const kurs2: GostBlockungsergebnisKurs = this.getKursE(idKurs2);
 				if ((kurs1.fachID === idFach) && (kurs2.fachID === idFach) && (kurs1.kursart === idKursart) && (kurs2.kursart === idKursart))
 					u.listEntfernen.add(r7);
 			}
@@ -4075,11 +4075,11 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return alle nötigen Veränderungen als {@link GostBlockungRegelUpdate}-Objekt, um alle Regeln einer Schülermenge zu entfernen.
 	 */
-	public regelupdateCreate_19_SCHUELERMENGE_ENTFERNEN(setSchuelerID : JavaSet<number>) : GostBlockungRegelUpdate {
-		const u : GostBlockungRegelUpdate = new GostBlockungRegelUpdate();
+	public regelupdateCreate_19_SCHUELERMENGE_ENTFERNEN(setSchuelerID: JavaSet<number>): GostBlockungRegelUpdate {
+		const u: GostBlockungRegelUpdate = new GostBlockungRegelUpdate();
 		for (const regel of this._parent.regelGetListe()) {
-			const typ : GostKursblockungRegelTyp | null = GostKursblockungRegelTyp.fromTyp(regel.typ);
-			for (let i : number = 0; i < typ.getParamCount(); i++)
+			const typ: GostKursblockungRegelTyp | null = GostKursblockungRegelTyp.fromTyp(regel.typ);
+			for (let i: number = 0; i < typ.getParamCount(); i++)
 				if ((typ.getParamType(i) as unknown === GostKursblockungRegelParameterTyp.SCHUELER_ID as unknown) && setSchuelerID.contains(regel.parameter.get(i)))
 					u.listEntfernen.add(regel);
 		}
@@ -4099,15 +4099,15 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return alle nötigen Veränderungen als {@link GostBlockungRegelUpdate}-Objekt, um eine Regel dieses Typs zu patchen.
 	 */
-	public regelupdatePatchByID_01_KURSART_SPERRE_SCHIENEN_VON_BIS(idRegelAlt : number, kursart : number, schienenNrVon : number, schienenNrBis : number) : GostBlockungRegelUpdate {
-		const u : GostBlockungRegelUpdate = new GostBlockungRegelUpdate();
-		const von : number = Math.min(schienenNrVon, schienenNrBis);
-		const bis : number = Math.max(schienenNrVon, schienenNrBis);
-		const rAlt : GostBlockungRegel = this._parent.regelGet(idRegelAlt);
+	public regelupdatePatchByID_01_KURSART_SPERRE_SCHIENEN_VON_BIS(idRegelAlt: number, kursart: number, schienenNrVon: number, schienenNrBis: number): GostBlockungRegelUpdate {
+		const u: GostBlockungRegelUpdate = new GostBlockungRegelUpdate();
+		const von: number = Math.min(schienenNrVon, schienenNrBis);
+		const bis: number = Math.max(schienenNrVon, schienenNrBis);
+		const rAlt: GostBlockungRegel = this._parent.regelGet(idRegelAlt);
 		if (rAlt.typ !== GostKursblockungRegelTyp.KURSART_SPERRE_SCHIENEN_VON_BIS.typ)
 			return u;
-		const kNeu : LongArrayKey = new LongArrayKey([GostKursblockungRegelTyp.KURSART_SPERRE_SCHIENEN_VON_BIS.typ, kursart, von, bis]);
-		const rNeu : GostBlockungRegel | null = this._parent.regelGetByLongArrayKeyOrNull(kNeu);
+		const kNeu: LongArrayKey = new LongArrayKey([GostKursblockungRegelTyp.KURSART_SPERRE_SCHIENEN_VON_BIS.typ, kursart, von, bis]);
+		const rNeu: GostBlockungRegel | null = this._parent.regelGetByLongArrayKeyOrNull(kNeu);
 		if (rNeu !== null)
 			return u;
 		GostBlockungsergebnisManager.regelupdateAppend(u, this.regelupdateCreate_01_KURSART_SPERRE_SCHIENEN_VON_BIS(kursart, von, bis));
@@ -4128,13 +4128,13 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return alle nötigen Veränderungen als {@link GostBlockungRegelUpdate}-Objekt, um eine Regel dieses Typs zu patchen.
 	 */
-	public regelupdatePatchByID_02e_KURS_FIXIERE_IN_EINER_SCHIENE(idRegelAlt : number, idKurs : number, schienenNr : number) : GostBlockungRegelUpdate {
-		const u : GostBlockungRegelUpdate = new GostBlockungRegelUpdate();
-		const rAlt : GostBlockungRegel = this._parent.regelGet(idRegelAlt);
+	public regelupdatePatchByID_02e_KURS_FIXIERE_IN_EINER_SCHIENE(idRegelAlt: number, idKurs: number, schienenNr: number): GostBlockungRegelUpdate {
+		const u: GostBlockungRegelUpdate = new GostBlockungRegelUpdate();
+		const rAlt: GostBlockungRegel = this._parent.regelGet(idRegelAlt);
 		if (rAlt.typ !== GostKursblockungRegelTyp.KURS_FIXIERE_IN_SCHIENE.typ)
 			return u;
-		const kNeu : LongArrayKey = new LongArrayKey([GostKursblockungRegelTyp.KURS_FIXIERE_IN_SCHIENE.typ, idKurs, schienenNr]);
-		const rNeu : GostBlockungRegel | null = this._parent.regelGetByLongArrayKeyOrNull(kNeu);
+		const kNeu: LongArrayKey = new LongArrayKey([GostKursblockungRegelTyp.KURS_FIXIERE_IN_SCHIENE.typ, idKurs, schienenNr]);
+		const rNeu: GostBlockungRegel | null = this._parent.regelGetByLongArrayKeyOrNull(kNeu);
 		if (rNeu !== null)
 			return u;
 		GostBlockungsergebnisManager.regelupdateAppend(u, this.regelupdateCreate_02e_helper(idKurs, schienenNr, false));
@@ -4155,13 +4155,13 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return alle nötigen Veränderungen als {@link GostBlockungRegelUpdate}-Objekt, um eine Regel dieses Typs zu patchen.
 	 */
-	public regelupdatePatchByID_03_KURS_SPERRE_IN_SCHIENE(idRegelAlt : number, idKurs : number, schienenNr : number) : GostBlockungRegelUpdate {
-		const u : GostBlockungRegelUpdate = new GostBlockungRegelUpdate();
-		const rAlt : GostBlockungRegel = this._parent.regelGet(idRegelAlt);
+	public regelupdatePatchByID_03_KURS_SPERRE_IN_SCHIENE(idRegelAlt: number, idKurs: number, schienenNr: number): GostBlockungRegelUpdate {
+		const u: GostBlockungRegelUpdate = new GostBlockungRegelUpdate();
+		const rAlt: GostBlockungRegel = this._parent.regelGet(idRegelAlt);
 		if (rAlt.typ !== GostKursblockungRegelTyp.KURS_SPERRE_IN_SCHIENE.typ)
 			return u;
-		const kNeu : LongArrayKey = new LongArrayKey([GostKursblockungRegelTyp.KURS_SPERRE_IN_SCHIENE.typ, idKurs, schienenNr]);
-		const rNeu : GostBlockungRegel | null = this._parent.regelGetByLongArrayKeyOrNull(kNeu);
+		const kNeu: LongArrayKey = new LongArrayKey([GostKursblockungRegelTyp.KURS_SPERRE_IN_SCHIENE.typ, idKurs, schienenNr]);
+		const rNeu: GostBlockungRegel | null = this._parent.regelGetByLongArrayKeyOrNull(kNeu);
 		if (rNeu !== null)
 			return u;
 		GostBlockungsergebnisManager.regelupdateAppend(u, this.regelupdateCreate_03_KURS_SPERRE_IN_SCHIENE(SetUtils.create1(idKurs), SetUtils.create1(schienenNr)));
@@ -4182,13 +4182,13 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return alle nötigen Veränderungen als {@link GostBlockungRegelUpdate}-Objekt, um eine Regel dieses Typs zu patchen.
 	 */
-	public regelupdatePatchByID_04_SCHUELER_FIXIEREN_IN_KURS(idRegelAlt : number, idSchueler : number, idKurs : number) : GostBlockungRegelUpdate {
-		const u : GostBlockungRegelUpdate = new GostBlockungRegelUpdate();
-		const rAlt : GostBlockungRegel = this._parent.regelGet(idRegelAlt);
+	public regelupdatePatchByID_04_SCHUELER_FIXIEREN_IN_KURS(idRegelAlt: number, idSchueler: number, idKurs: number): GostBlockungRegelUpdate {
+		const u: GostBlockungRegelUpdate = new GostBlockungRegelUpdate();
+		const rAlt: GostBlockungRegel = this._parent.regelGet(idRegelAlt);
 		if (rAlt.typ !== GostKursblockungRegelTyp.SCHUELER_FIXIEREN_IN_KURS.typ)
 			return u;
-		const kNeu : LongArrayKey = new LongArrayKey([GostKursblockungRegelTyp.SCHUELER_FIXIEREN_IN_KURS.typ, idSchueler, idKurs]);
-		const rNeu : GostBlockungRegel | null = this._parent.regelGetByLongArrayKeyOrNull(kNeu);
+		const kNeu: LongArrayKey = new LongArrayKey([GostKursblockungRegelTyp.SCHUELER_FIXIEREN_IN_KURS.typ, idSchueler, idKurs]);
+		const rNeu: GostBlockungRegel | null = this._parent.regelGetByLongArrayKeyOrNull(kNeu);
 		if (rNeu !== null)
 			return u;
 		GostBlockungsergebnisManager.regelupdateAppend(u, this.regelupdateCreate_04x_SCHUELER_FIXIEREN_IN_KURS(idSchueler, idKurs));
@@ -4209,13 +4209,13 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return alle nötigen Veränderungen als {@link GostBlockungRegelUpdate}-Objekt, um eine Regel dieses Typs zu patchen.
 	 */
-	public regelupdatePatchByID_05_SCHUELER_VERBIETEN_IN_KURS(idRegelAlt : number, idSchueler : number, idKurs : number) : GostBlockungRegelUpdate {
-		const u : GostBlockungRegelUpdate = new GostBlockungRegelUpdate();
-		const rAlt : GostBlockungRegel = this._parent.regelGet(idRegelAlt);
+	public regelupdatePatchByID_05_SCHUELER_VERBIETEN_IN_KURS(idRegelAlt: number, idSchueler: number, idKurs: number): GostBlockungRegelUpdate {
+		const u: GostBlockungRegelUpdate = new GostBlockungRegelUpdate();
+		const rAlt: GostBlockungRegel = this._parent.regelGet(idRegelAlt);
 		if (rAlt.typ !== GostKursblockungRegelTyp.SCHUELER_VERBIETEN_IN_KURS.typ)
 			return u;
-		const kNeu : LongArrayKey = new LongArrayKey([GostKursblockungRegelTyp.SCHUELER_VERBIETEN_IN_KURS.typ, idSchueler, idKurs]);
-		const rNeu : GostBlockungRegel | null = this._parent.regelGetByLongArrayKeyOrNull(kNeu);
+		const kNeu: LongArrayKey = new LongArrayKey([GostKursblockungRegelTyp.SCHUELER_VERBIETEN_IN_KURS.typ, idSchueler, idKurs]);
+		const rNeu: GostBlockungRegel | null = this._parent.regelGetByLongArrayKeyOrNull(kNeu);
 		if (rNeu !== null)
 			return u;
 		GostBlockungsergebnisManager.regelupdateAppend(u, this.regelupdateCreate_05_SCHUELER_VERBIETEN_IN_KURS(SetUtils.create1(idSchueler), SetUtils.create1(idKurs)));
@@ -4237,15 +4237,15 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return alle nötigen Veränderungen als {@link GostBlockungRegelUpdate}-Objekt, um eine Regel dieses Typs zu patchen.
 	 */
-	public regelupdatePatchByID_06_KURSART_ALLEIN_IN_SCHIENEN_VON_BIS(idRegelAlt : number, kursart : number, schienenNrVon : number, schienenNrBis : number) : GostBlockungRegelUpdate {
-		const u : GostBlockungRegelUpdate = new GostBlockungRegelUpdate();
-		const von : number = Math.min(schienenNrVon, schienenNrBis);
-		const bis : number = Math.max(schienenNrVon, schienenNrBis);
-		const rAlt : GostBlockungRegel = this._parent.regelGet(idRegelAlt);
+	public regelupdatePatchByID_06_KURSART_ALLEIN_IN_SCHIENEN_VON_BIS(idRegelAlt: number, kursart: number, schienenNrVon: number, schienenNrBis: number): GostBlockungRegelUpdate {
+		const u: GostBlockungRegelUpdate = new GostBlockungRegelUpdate();
+		const von: number = Math.min(schienenNrVon, schienenNrBis);
+		const bis: number = Math.max(schienenNrVon, schienenNrBis);
+		const rAlt: GostBlockungRegel = this._parent.regelGet(idRegelAlt);
 		if (rAlt.typ !== GostKursblockungRegelTyp.KURSART_ALLEIN_IN_SCHIENEN_VON_BIS.typ)
 			return u;
-		const kNeu : LongArrayKey = new LongArrayKey([GostKursblockungRegelTyp.KURSART_ALLEIN_IN_SCHIENEN_VON_BIS.typ, kursart, von, bis]);
-		const rNeu : GostBlockungRegel | null = this._parent.regelGetByLongArrayKeyOrNull(kNeu);
+		const kNeu: LongArrayKey = new LongArrayKey([GostKursblockungRegelTyp.KURSART_ALLEIN_IN_SCHIENEN_VON_BIS.typ, kursart, von, bis]);
+		const rNeu: GostBlockungRegel | null = this._parent.regelGetByLongArrayKeyOrNull(kNeu);
 		if (rNeu !== null)
 			return u;
 		GostBlockungsergebnisManager.regelupdateAppend(u, this.regelupdateCreate_06_KURSART_ALLEIN_IN_SCHIENEN_VON_BIS(kursart, von, bis));
@@ -4266,15 +4266,15 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return alle nötigen Veränderungen als {@link GostBlockungRegelUpdate}-Objekt, um eine Regel dieses Typs zu patchen.
 	 */
-	public regelupdatePatchByID_07_KURS_VERBIETEN_MIT_KURS(idRegelAlt : number, idKurs1 : number, idKurs2 : number) : GostBlockungRegelUpdate {
-		const u : GostBlockungRegelUpdate = new GostBlockungRegelUpdate();
-		const idKursMin : number = Math.min(idKurs1, idKurs2);
-		const idKursMax : number = Math.max(idKurs1, idKurs2);
-		const rAlt : GostBlockungRegel = this._parent.regelGet(idRegelAlt);
+	public regelupdatePatchByID_07_KURS_VERBIETEN_MIT_KURS(idRegelAlt: number, idKurs1: number, idKurs2: number): GostBlockungRegelUpdate {
+		const u: GostBlockungRegelUpdate = new GostBlockungRegelUpdate();
+		const idKursMin: number = Math.min(idKurs1, idKurs2);
+		const idKursMax: number = Math.max(idKurs1, idKurs2);
+		const rAlt: GostBlockungRegel = this._parent.regelGet(idRegelAlt);
 		if (rAlt.typ !== GostKursblockungRegelTyp.KURS_VERBIETEN_MIT_KURS.typ)
 			return u;
-		const kNeu : LongArrayKey = new LongArrayKey([GostKursblockungRegelTyp.KURS_VERBIETEN_MIT_KURS.typ, idKursMin, idKursMax]);
-		const rNeu : GostBlockungRegel | null = this._parent.regelGetByLongArrayKeyOrNull(kNeu);
+		const kNeu: LongArrayKey = new LongArrayKey([GostKursblockungRegelTyp.KURS_VERBIETEN_MIT_KURS.typ, idKursMin, idKursMax]);
+		const rNeu: GostBlockungRegel | null = this._parent.regelGetByLongArrayKeyOrNull(kNeu);
 		if (rNeu !== null)
 			return u;
 		GostBlockungsergebnisManager.regelupdateAppend(u, this.regelupdateCreate_07_KURS_VERBIETEN_MIT_KURS(SetUtils.create2(idKursMin, idKursMax)));
@@ -4295,15 +4295,15 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return alle nötigen Veränderungen als {@link GostBlockungRegelUpdate}-Objekt, um eine Regel dieses Typs zu patchen.
 	 */
-	public regelupdatePatchByID_08_KURS_ZUSAMMEN_MIT_KURS(idRegelAlt : number, idKurs1 : number, idKurs2 : number) : GostBlockungRegelUpdate {
-		const u : GostBlockungRegelUpdate = new GostBlockungRegelUpdate();
-		const idKursMin : number = Math.min(idKurs1, idKurs2);
-		const idKursMax : number = Math.max(idKurs1, idKurs2);
-		const rAlt : GostBlockungRegel = this._parent.regelGet(idRegelAlt);
+	public regelupdatePatchByID_08_KURS_ZUSAMMEN_MIT_KURS(idRegelAlt: number, idKurs1: number, idKurs2: number): GostBlockungRegelUpdate {
+		const u: GostBlockungRegelUpdate = new GostBlockungRegelUpdate();
+		const idKursMin: number = Math.min(idKurs1, idKurs2);
+		const idKursMax: number = Math.max(idKurs1, idKurs2);
+		const rAlt: GostBlockungRegel = this._parent.regelGet(idRegelAlt);
 		if (rAlt.typ !== GostKursblockungRegelTyp.KURS_ZUSAMMEN_MIT_KURS.typ)
 			return u;
-		const kNeu : LongArrayKey = new LongArrayKey([GostKursblockungRegelTyp.KURS_ZUSAMMEN_MIT_KURS.typ, idKursMin, idKursMax]);
-		const rNeu : GostBlockungRegel | null = this._parent.regelGetByLongArrayKeyOrNull(kNeu);
+		const kNeu: LongArrayKey = new LongArrayKey([GostKursblockungRegelTyp.KURS_ZUSAMMEN_MIT_KURS.typ, idKursMin, idKursMax]);
+		const rNeu: GostBlockungRegel | null = this._parent.regelGetByLongArrayKeyOrNull(kNeu);
 		if (rNeu !== null)
 			return u;
 		GostBlockungsergebnisManager.regelupdateAppend(u, this.regelupdateCreate_08_KURS_ZUSAMMEN_MIT_KURS(SetUtils.create2(idKursMin, idKursMax)));
@@ -4324,13 +4324,13 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return alle nötigen Veränderungen als {@link GostBlockungRegelUpdate}-Objekt, um eine Regel dieses Typs zu patchen.
 	 */
-	public regelupdatePatchByID_09_KURS_MIT_DUMMY_SUS_AUFFUELLEN(idRegelAlt : number, idKurs : number, anzahl : number) : GostBlockungRegelUpdate {
-		const u : GostBlockungRegelUpdate = new GostBlockungRegelUpdate();
-		const rAlt : GostBlockungRegel = this._parent.regelGet(idRegelAlt);
+	public regelupdatePatchByID_09_KURS_MIT_DUMMY_SUS_AUFFUELLEN(idRegelAlt: number, idKurs: number, anzahl: number): GostBlockungRegelUpdate {
+		const u: GostBlockungRegelUpdate = new GostBlockungRegelUpdate();
+		const rAlt: GostBlockungRegel = this._parent.regelGet(idRegelAlt);
 		if (rAlt.typ !== GostKursblockungRegelTyp.KURS_MIT_DUMMY_SUS_AUFFUELLEN.typ)
 			return u;
-		const kNeu : LongArrayKey = new LongArrayKey([GostKursblockungRegelTyp.KURS_MIT_DUMMY_SUS_AUFFUELLEN.typ, idKurs, anzahl]);
-		const rNeu : GostBlockungRegel | null = this._parent.regelGetByLongArrayKeyOrNull(kNeu);
+		const kNeu: LongArrayKey = new LongArrayKey([GostKursblockungRegelTyp.KURS_MIT_DUMMY_SUS_AUFFUELLEN.typ, idKurs, anzahl]);
+		const rNeu: GostBlockungRegel | null = this._parent.regelGetByLongArrayKeyOrNull(kNeu);
 		if (rNeu !== null)
 			return u;
 		GostBlockungsergebnisManager.regelupdateAppend(u, this.regelupdateCreate_09_KURS_MIT_DUMMY_SUS_AUFFUELLEN(idKurs, anzahl));
@@ -4352,15 +4352,15 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return alle nötigen Veränderungen als {@link GostBlockungRegelUpdate}-Objekt, um eine Regel dieses Typs zu patchen.
 	 */
-	public regelupdatePatchByID_11_SCHUELER_ZUSAMMEN_MIT_SCHUELER_IN_FACH(idRegelAlt : number, idSchueler1 : number, idSchueler2 : number, idFach : number) : GostBlockungRegelUpdate {
-		const u : GostBlockungRegelUpdate = new GostBlockungRegelUpdate();
-		const idSchuelerMin : number = Math.min(idSchueler1, idSchueler2);
-		const idSchuelerMax : number = Math.max(idSchueler1, idSchueler2);
-		const rAlt : GostBlockungRegel = this._parent.regelGet(idRegelAlt);
+	public regelupdatePatchByID_11_SCHUELER_ZUSAMMEN_MIT_SCHUELER_IN_FACH(idRegelAlt: number, idSchueler1: number, idSchueler2: number, idFach: number): GostBlockungRegelUpdate {
+		const u: GostBlockungRegelUpdate = new GostBlockungRegelUpdate();
+		const idSchuelerMin: number = Math.min(idSchueler1, idSchueler2);
+		const idSchuelerMax: number = Math.max(idSchueler1, idSchueler2);
+		const rAlt: GostBlockungRegel = this._parent.regelGet(idRegelAlt);
 		if (rAlt.typ !== GostKursblockungRegelTyp.SCHUELER_ZUSAMMEN_MIT_SCHUELER_IN_FACH.typ)
 			return u;
-		const kNeu : LongArrayKey = new LongArrayKey([GostKursblockungRegelTyp.SCHUELER_ZUSAMMEN_MIT_SCHUELER_IN_FACH.typ, idSchuelerMin, idSchuelerMax, idFach]);
-		const rNeu : GostBlockungRegel | null = this._parent.regelGetByLongArrayKeyOrNull(kNeu);
+		const kNeu: LongArrayKey = new LongArrayKey([GostKursblockungRegelTyp.SCHUELER_ZUSAMMEN_MIT_SCHUELER_IN_FACH.typ, idSchuelerMin, idSchuelerMax, idFach]);
+		const rNeu: GostBlockungRegel | null = this._parent.regelGetByLongArrayKeyOrNull(kNeu);
 		if (rNeu !== null)
 			return u;
 		GostBlockungsergebnisManager.regelupdateAppend(u, this.regelupdateCreate_11_SCHUELER_ZUSAMMEN_MIT_SCHUELER_IN_FACH(idSchuelerMin, idSchuelerMax, idFach));
@@ -4382,15 +4382,15 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return alle nötigen Veränderungen als {@link GostBlockungRegelUpdate}-Objekt, um eine Regel dieses Typs zu patchen.
 	 */
-	public regelupdatePatchByID_12_SCHUELER_VERBIETEN_MIT_SCHUELER_IN_FACH(idRegelAlt : number, idSchueler1 : number, idSchueler2 : number, idFach : number) : GostBlockungRegelUpdate {
-		const u : GostBlockungRegelUpdate = new GostBlockungRegelUpdate();
-		const idSchuelerMin : number = Math.min(idSchueler1, idSchueler2);
-		const idSchuelerMax : number = Math.max(idSchueler1, idSchueler2);
-		const rAlt : GostBlockungRegel = this._parent.regelGet(idRegelAlt);
+	public regelupdatePatchByID_12_SCHUELER_VERBIETEN_MIT_SCHUELER_IN_FACH(idRegelAlt: number, idSchueler1: number, idSchueler2: number, idFach: number): GostBlockungRegelUpdate {
+		const u: GostBlockungRegelUpdate = new GostBlockungRegelUpdate();
+		const idSchuelerMin: number = Math.min(idSchueler1, idSchueler2);
+		const idSchuelerMax: number = Math.max(idSchueler1, idSchueler2);
+		const rAlt: GostBlockungRegel = this._parent.regelGet(idRegelAlt);
 		if (rAlt.typ !== GostKursblockungRegelTyp.SCHUELER_VERBIETEN_MIT_SCHUELER_IN_FACH.typ)
 			return u;
-		const kNeu : LongArrayKey = new LongArrayKey([GostKursblockungRegelTyp.SCHUELER_VERBIETEN_MIT_SCHUELER_IN_FACH.typ, idSchuelerMin, idSchuelerMax, idFach]);
-		const rNeu : GostBlockungRegel | null = this._parent.regelGetByLongArrayKeyOrNull(kNeu);
+		const kNeu: LongArrayKey = new LongArrayKey([GostKursblockungRegelTyp.SCHUELER_VERBIETEN_MIT_SCHUELER_IN_FACH.typ, idSchuelerMin, idSchuelerMax, idFach]);
+		const rNeu: GostBlockungRegel | null = this._parent.regelGetByLongArrayKeyOrNull(kNeu);
 		if (rNeu !== null)
 			return u;
 		GostBlockungsergebnisManager.regelupdateAppend(u, this.regelupdateCreate_12_SCHUELER_VERBIETEN_MIT_SCHUELER_IN_FACH(idSchuelerMin, idSchuelerMax, idFach));
@@ -4411,15 +4411,15 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return alle nötigen Veränderungen als {@link GostBlockungRegelUpdate}-Objekt, um eine Regel dieses Typs zu patchen.
 	 */
-	public regelupdatePatchByID_13_SCHUELER_ZUSAMMEN_MIT_SCHUELER(idRegelAlt : number, idSchueler1 : number, idSchueler2 : number) : GostBlockungRegelUpdate {
-		const u : GostBlockungRegelUpdate = new GostBlockungRegelUpdate();
-		const idSchuelerMin : number = Math.min(idSchueler1, idSchueler2);
-		const idSchuelerMax : number = Math.max(idSchueler1, idSchueler2);
-		const rAlt : GostBlockungRegel = this._parent.regelGet(idRegelAlt);
+	public regelupdatePatchByID_13_SCHUELER_ZUSAMMEN_MIT_SCHUELER(idRegelAlt: number, idSchueler1: number, idSchueler2: number): GostBlockungRegelUpdate {
+		const u: GostBlockungRegelUpdate = new GostBlockungRegelUpdate();
+		const idSchuelerMin: number = Math.min(idSchueler1, idSchueler2);
+		const idSchuelerMax: number = Math.max(idSchueler1, idSchueler2);
+		const rAlt: GostBlockungRegel = this._parent.regelGet(idRegelAlt);
 		if (rAlt.typ !== GostKursblockungRegelTyp.SCHUELER_ZUSAMMEN_MIT_SCHUELER.typ)
 			return u;
-		const kNeu : LongArrayKey = new LongArrayKey([GostKursblockungRegelTyp.SCHUELER_ZUSAMMEN_MIT_SCHUELER.typ, idSchuelerMin, idSchuelerMax]);
-		const rNeu : GostBlockungRegel | null = this._parent.regelGetByLongArrayKeyOrNull(kNeu);
+		const kNeu: LongArrayKey = new LongArrayKey([GostKursblockungRegelTyp.SCHUELER_ZUSAMMEN_MIT_SCHUELER.typ, idSchuelerMin, idSchuelerMax]);
+		const rNeu: GostBlockungRegel | null = this._parent.regelGetByLongArrayKeyOrNull(kNeu);
 		if (rNeu !== null)
 			return u;
 		GostBlockungsergebnisManager.regelupdateAppend(u, this.regelupdateCreate_13_SCHUELER_ZUSAMMEN_MIT_SCHUELER(idSchuelerMin, idSchuelerMax));
@@ -4440,15 +4440,15 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return alle nötigen Veränderungen als {@link GostBlockungRegelUpdate}-Objekt, um eine Regel dieses Typs zu patchen.
 	 */
-	public regelupdatePatchByID_14_SCHUELER_VERBIETEN_MIT_SCHUELER(idRegelAlt : number, idSchueler1 : number, idSchueler2 : number) : GostBlockungRegelUpdate {
-		const u : GostBlockungRegelUpdate = new GostBlockungRegelUpdate();
-		const idSchuelerMin : number = Math.min(idSchueler1, idSchueler2);
-		const idSchuelerMax : number = Math.max(idSchueler1, idSchueler2);
-		const rAlt : GostBlockungRegel = this._parent.regelGet(idRegelAlt);
+	public regelupdatePatchByID_14_SCHUELER_VERBIETEN_MIT_SCHUELER(idRegelAlt: number, idSchueler1: number, idSchueler2: number): GostBlockungRegelUpdate {
+		const u: GostBlockungRegelUpdate = new GostBlockungRegelUpdate();
+		const idSchuelerMin: number = Math.min(idSchueler1, idSchueler2);
+		const idSchuelerMax: number = Math.max(idSchueler1, idSchueler2);
+		const rAlt: GostBlockungRegel = this._parent.regelGet(idRegelAlt);
 		if (rAlt.typ !== GostKursblockungRegelTyp.SCHUELER_VERBIETEN_MIT_SCHUELER.typ)
 			return u;
-		const kNeu : LongArrayKey = new LongArrayKey([GostKursblockungRegelTyp.SCHUELER_VERBIETEN_MIT_SCHUELER.typ, idSchuelerMin, idSchuelerMax]);
-		const rNeu : GostBlockungRegel | null = this._parent.regelGetByLongArrayKeyOrNull(kNeu);
+		const kNeu: LongArrayKey = new LongArrayKey([GostKursblockungRegelTyp.SCHUELER_VERBIETEN_MIT_SCHUELER.typ, idSchuelerMin, idSchuelerMax]);
+		const rNeu: GostBlockungRegel | null = this._parent.regelGetByLongArrayKeyOrNull(kNeu);
 		if (rNeu !== null)
 			return u;
 		GostBlockungsergebnisManager.regelupdateAppend(u, this.regelupdateCreate_14_SCHUELER_VERBIETEN_MIT_SCHUELER(idSchuelerMin, idSchuelerMax));
@@ -4469,13 +4469,13 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return alle nötigen Veränderungen als {@link GostBlockungRegelUpdate}-Objekt, um eine Regel dieses Typs zu patchen.
 	 */
-	public regelupdatePatchByID_15_KURS_MAXIMALE_SCHUELERANZAHL(idRegelAlt : number, idKurs : number, anzahl : number) : GostBlockungRegelUpdate {
-		const u : GostBlockungRegelUpdate = new GostBlockungRegelUpdate();
-		const rAlt : GostBlockungRegel = this._parent.regelGet(idRegelAlt);
+	public regelupdatePatchByID_15_KURS_MAXIMALE_SCHUELERANZAHL(idRegelAlt: number, idKurs: number, anzahl: number): GostBlockungRegelUpdate {
+		const u: GostBlockungRegelUpdate = new GostBlockungRegelUpdate();
+		const rAlt: GostBlockungRegel = this._parent.regelGet(idRegelAlt);
 		if (rAlt.typ !== GostKursblockungRegelTyp.KURS_MAXIMALE_SCHUELERANZAHL.typ)
 			return u;
-		const kNeu : LongArrayKey = new LongArrayKey([GostKursblockungRegelTyp.KURS_MAXIMALE_SCHUELERANZAHL.typ, idKurs, anzahl]);
-		const rNeu : GostBlockungRegel | null = this._parent.regelGetByLongArrayKeyOrNull(kNeu);
+		const kNeu: LongArrayKey = new LongArrayKey([GostKursblockungRegelTyp.KURS_MAXIMALE_SCHUELERANZAHL.typ, idKurs, anzahl]);
+		const rNeu: GostBlockungRegel | null = this._parent.regelGetByLongArrayKeyOrNull(kNeu);
 		if (rNeu !== null)
 			return u;
 		GostBlockungsergebnisManager.regelupdateAppend(u, this.regelupdateCreate_15_KURS_MAXIMALE_SCHUELERANZAHL(idKurs, anzahl));
@@ -4495,13 +4495,13 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return alle nötigen Veränderungen als {@link GostBlockungRegelUpdate}-Objekt, um eine Regel dieses Typs zu patchen.
 	 */
-	public regelupdatePatchByID_16_SCHUELER_IGNORIEREN(idRegelAlt : number, idSchueler : number) : GostBlockungRegelUpdate {
-		const u : GostBlockungRegelUpdate = new GostBlockungRegelUpdate();
-		const rAlt : GostBlockungRegel = this._parent.regelGet(idRegelAlt);
+	public regelupdatePatchByID_16_SCHUELER_IGNORIEREN(idRegelAlt: number, idSchueler: number): GostBlockungRegelUpdate {
+		const u: GostBlockungRegelUpdate = new GostBlockungRegelUpdate();
+		const rAlt: GostBlockungRegel = this._parent.regelGet(idRegelAlt);
 		if (rAlt.typ !== GostKursblockungRegelTyp.SCHUELER_IGNORIEREN.typ)
 			return u;
-		const kNeu : LongArrayKey = new LongArrayKey([GostKursblockungRegelTyp.SCHUELER_IGNORIEREN.typ, idSchueler]);
-		const rNeu : GostBlockungRegel | null = this._parent.regelGetByLongArrayKeyOrNull(kNeu);
+		const kNeu: LongArrayKey = new LongArrayKey([GostKursblockungRegelTyp.SCHUELER_IGNORIEREN.typ, idSchueler]);
+		const rNeu: GostBlockungRegel | null = this._parent.regelGetByLongArrayKeyOrNull(kNeu);
 		if (rNeu !== null)
 			return u;
 		GostBlockungsergebnisManager.regelupdateAppend(u, this.regelupdateCreate_16_SCHUELER_IGNORIEREN(SetUtils.create1(idSchueler)));
@@ -4523,16 +4523,16 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return alle nötigen Veränderungen als {@link GostBlockungRegelUpdate}-Objekt, um die Regel von einem zu einem anderen Kurs zu patchen.
 	 */
-	public regelupdatePatchByID_17_KURS_KURSDIFFERENZ_BEI_DER_VISUALISIERUNG_IGNORIEREN(idRegelAlt : number, idKursNeu : number) : GostBlockungRegelUpdate {
-		const u : GostBlockungRegelUpdate = new GostBlockungRegelUpdate();
-		const rAlt : GostBlockungRegel = this._parent.regelGet(idRegelAlt);
+	public regelupdatePatchByID_17_KURS_KURSDIFFERENZ_BEI_DER_VISUALISIERUNG_IGNORIEREN(idRegelAlt: number, idKursNeu: number): GostBlockungRegelUpdate {
+		const u: GostBlockungRegelUpdate = new GostBlockungRegelUpdate();
+		const rAlt: GostBlockungRegel = this._parent.regelGet(idRegelAlt);
 		if (rAlt.typ !== GostKursblockungRegelTyp.KURS_KURSDIFFERENZ_BEI_DER_VISUALISIERUNG_IGNORIEREN.typ)
 			return u;
-		const kNeu : LongArrayKey = new LongArrayKey([GostKursblockungRegelTyp.KURS_KURSDIFFERENZ_BEI_DER_VISUALISIERUNG_IGNORIEREN.typ, idKursNeu]);
-		const rNeu : GostBlockungRegel | null = this._parent.regelGetByLongArrayKeyOrNull(kNeu);
+		const kNeu: LongArrayKey = new LongArrayKey([GostKursblockungRegelTyp.KURS_KURSDIFFERENZ_BEI_DER_VISUALISIERUNG_IGNORIEREN.typ, idKursNeu]);
+		const rNeu: GostBlockungRegel | null = this._parent.regelGetByLongArrayKeyOrNull(kNeu);
 		if (rNeu !== null)
 			return u;
-		const idKursAlt : number = rAlt.parameter.get(0).valueOf();
+		const idKursAlt: number = rAlt.parameter.get(0).valueOf();
 		if (idKursAlt === idKursNeu)
 			return u;
 		GostBlockungsergebnisManager.regelupdateAppend(u, this.regelupdateCreate_17_KURS_KURSDIFFERENZ_BEI_DER_VISUALISIERUNG_IGNORIEREN(SetUtils.create1(idKursNeu)));
@@ -4550,14 +4550,14 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return alle nötigen Veränderungen als {@link GostBlockungRegelUpdate}-Objekt, um eine Kursmengen-Schienemengen-Fixierung zu lösen.
 	 */
-	public regelupdateRemove_02_KURS_FIXIERE_IN_SCHIENE_MARKIERT(setKursID : JavaSet<number>, setSchienenNr : JavaSet<number>) : GostBlockungRegelUpdate {
-		const u : GostBlockungRegelUpdate = new GostBlockungRegelUpdate();
+	public regelupdateRemove_02_KURS_FIXIERE_IN_SCHIENE_MARKIERT(setKursID: JavaSet<number>, setSchienenNr: JavaSet<number>): GostBlockungRegelUpdate {
+		const u: GostBlockungRegelUpdate = new GostBlockungRegelUpdate();
 		for (const idKurs of setKursID)
 			for (const schieneE of DeveloperNotificationException.ifMapGetIsNull(this._kursID_to_schienenSet, idKurs)) {
-				const schieneG : GostBlockungSchiene = this.getSchieneG(schieneE.id);
+				const schieneG: GostBlockungSchiene = this.getSchieneG(schieneE.id);
 				if (setSchienenNr.contains(schieneG.nummer)) {
-					const keyKursInSchiene : LongArrayKey = new LongArrayKey([GostKursblockungRegelTyp.KURS_FIXIERE_IN_SCHIENE.typ, idKurs, schieneG.nummer]);
-					const regel : GostBlockungRegel | null = this._parent.regelGetByLongArrayKeyOrNull(keyKursInSchiene);
+					const keyKursInSchiene: LongArrayKey = new LongArrayKey([GostKursblockungRegelTyp.KURS_FIXIERE_IN_SCHIENE.typ, idKurs, schieneG.nummer]);
+					const regel: GostBlockungRegel | null = this._parent.regelGetByLongArrayKeyOrNull(keyKursInSchiene);
 					if (regel !== null)
 						u.listEntfernen.add(regel);
 				}
@@ -4573,12 +4573,12 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return alle nötigen Veränderungen als {@link GostBlockungRegelUpdate}-Objekt, um eine Fixierung einer Kursmenge komplett zu lösen.
 	 */
-	public regelupdateRemove_02b_KURS_FIXIERE_MENGE_IN_IHREN_SCHIENEN(setKursID : JavaSet<number>) : GostBlockungRegelUpdate {
-		const u : GostBlockungRegelUpdate = new GostBlockungRegelUpdate();
+	public regelupdateRemove_02b_KURS_FIXIERE_MENGE_IN_IHREN_SCHIENEN(setKursID: JavaSet<number>): GostBlockungRegelUpdate {
+		const u: GostBlockungRegelUpdate = new GostBlockungRegelUpdate();
 		for (const idKurs of setKursID)
-			for (let nr : number = 1; nr <= this._schienenNR_to_schiene.size(); nr++) {
-				const kFixierung : LongArrayKey = new LongArrayKey([GostKursblockungRegelTyp.KURS_FIXIERE_IN_SCHIENE.typ, idKurs, nr]);
-				const rFixierung : GostBlockungRegel | null = this._parent.regelGetByLongArrayKeyOrNull(kFixierung);
+			for (let nr: number = 1; nr <= this._schienenNR_to_schiene.size(); nr++) {
+				const kFixierung: LongArrayKey = new LongArrayKey([GostKursblockungRegelTyp.KURS_FIXIERE_IN_SCHIENE.typ, idKurs, nr]);
+				const rFixierung: GostBlockungRegel | null = this._parent.regelGetByLongArrayKeyOrNull(kFixierung);
 				if (rFixierung !== null)
 					u.listEntfernen.add(rFixierung);
 			}
@@ -4590,7 +4590,7 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return alle nötigen Veränderungen als {@link GostBlockungRegelUpdate}-Objekt, um alle Kurs-Schienen-Fixierungen zu lösen.
 	 */
-	public regelupdateRemove_02c_KURS_FIXIERE_ALLE_IN_IHREN_SCHIENEN() : GostBlockungRegelUpdate {
+	public regelupdateRemove_02c_KURS_FIXIERE_ALLE_IN_IHREN_SCHIENEN(): GostBlockungRegelUpdate {
 		return this.regelupdateRemove_02b_KURS_FIXIERE_MENGE_IN_IHREN_SCHIENEN(this._parent.kursmengeGetSetDerIDs());
 	}
 
@@ -4603,10 +4603,10 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return alle nötigen Veränderungen als {@link GostBlockungRegelUpdate}-Objekt, um eine Kurs-Schienen-Fixierung zu lösen.
 	 */
-	public regelupdateRemove_02e_KURS_FIXIERE_IN_EINER_SCHIENE(idKurs : number, schienenNr : number) : GostBlockungRegelUpdate {
-		const u : GostBlockungRegelUpdate = new GostBlockungRegelUpdate();
-		const kFixierung : LongArrayKey = new LongArrayKey([GostKursblockungRegelTyp.KURS_FIXIERE_IN_SCHIENE.typ, idKurs, schienenNr]);
-		const rFixierung : GostBlockungRegel | null = this._parent.regelGetByLongArrayKeyOrNull(kFixierung);
+	public regelupdateRemove_02e_KURS_FIXIERE_IN_EINER_SCHIENE(idKurs: number, schienenNr: number): GostBlockungRegelUpdate {
+		const u: GostBlockungRegelUpdate = new GostBlockungRegelUpdate();
+		const kFixierung: LongArrayKey = new LongArrayKey([GostKursblockungRegelTyp.KURS_FIXIERE_IN_SCHIENE.typ, idKurs, schienenNr]);
+		const rFixierung: GostBlockungRegel | null = this._parent.regelGetByLongArrayKeyOrNull(kFixierung);
 		if (rFixierung !== null)
 			u.listEntfernen.add(rFixierung);
 		return u;
@@ -4621,12 +4621,12 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return alle nötigen Veränderungen als {@link GostBlockungRegelUpdate}-Objekt, um eine Kursmengen-Schienemengen-Sperrung zu lösen.
 	 */
-	public regelupdateRemove_03_KURS_SPERRE_IN_SCHIENE(setKursID : JavaSet<number>, setSchienenNr : JavaSet<number>) : GostBlockungRegelUpdate {
-		const u : GostBlockungRegelUpdate = new GostBlockungRegelUpdate();
+	public regelupdateRemove_03_KURS_SPERRE_IN_SCHIENE(setKursID: JavaSet<number>, setSchienenNr: JavaSet<number>): GostBlockungRegelUpdate {
+		const u: GostBlockungRegelUpdate = new GostBlockungRegelUpdate();
 		for (const idKurs of setKursID)
 			for (const schienenNr of setSchienenNr) {
-				const keyGesperrt : LongArrayKey = new LongArrayKey([GostKursblockungRegelTyp.KURS_SPERRE_IN_SCHIENE.typ, idKurs, schienenNr]);
-				const regelGesperrt : GostBlockungRegel | null = this._parent.regelGetByLongArrayKeyOrNull(keyGesperrt);
+				const keyGesperrt: LongArrayKey = new LongArrayKey([GostKursblockungRegelTyp.KURS_SPERRE_IN_SCHIENE.typ, idKurs, schienenNr]);
+				const regelGesperrt: GostBlockungRegel | null = this._parent.regelGetByLongArrayKeyOrNull(keyGesperrt);
 				if (regelGesperrt !== null)
 					u.listEntfernen.add(regelGesperrt);
 			}
@@ -4642,12 +4642,12 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return alle nötigen Veränderungen als {@link GostBlockungRegelUpdate}-Objekt, um eine Schülermengen-Kursmengen-Fixierung zu lösen.
 	 */
-	public regelupdateRemove_04_SCHUELER_FIXIEREN_IN_KURS(setSchuelerID : JavaSet<number>, setKursID : JavaSet<number>) : GostBlockungRegelUpdate {
-		const u : GostBlockungRegelUpdate = new GostBlockungRegelUpdate();
+	public regelupdateRemove_04_SCHUELER_FIXIEREN_IN_KURS(setSchuelerID: JavaSet<number>, setKursID: JavaSet<number>): GostBlockungRegelUpdate {
+		const u: GostBlockungRegelUpdate = new GostBlockungRegelUpdate();
 		for (const idSchueler of setSchuelerID)
 			for (const idKurs of setKursID) {
-				const keyFixierung : LongArrayKey = new LongArrayKey([GostKursblockungRegelTyp.SCHUELER_FIXIEREN_IN_KURS.typ, idSchueler, idKurs]);
-				const regelFixierung : GostBlockungRegel | null = this._parent.regelGetByLongArrayKeyOrNull(keyFixierung);
+				const keyFixierung: LongArrayKey = new LongArrayKey([GostKursblockungRegelTyp.SCHUELER_FIXIEREN_IN_KURS.typ, idSchueler, idKurs]);
+				const regelFixierung: GostBlockungRegel | null = this._parent.regelGetByLongArrayKeyOrNull(keyFixierung);
 				if (regelFixierung !== null)
 					u.listEntfernen.add(regelFixierung);
 			}
@@ -4662,10 +4662,10 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return alle nötigen Veränderungen als {@link GostBlockungRegelUpdate}-Objekt, um alle Schüler-Kurs-Fixierungen einer Kursmenge zu lösen.
 	 */
-	public regelupdateRemove_04b_SCHUELER_FIXIEREN_IN_DEN_KURSEN(setKursID : JavaSet<number>) : GostBlockungRegelUpdate {
-		const u : GostBlockungRegelUpdate = new GostBlockungRegelUpdate();
+	public regelupdateRemove_04b_SCHUELER_FIXIEREN_IN_DEN_KURSEN(setKursID: JavaSet<number>): GostBlockungRegelUpdate {
+		const u: GostBlockungRegelUpdate = new GostBlockungRegelUpdate();
 		for (const idKurs of setKursID) {
-			const u2 : GostBlockungRegelUpdate = this.regelupdateRemove_04_SCHUELER_FIXIEREN_IN_KURS(this.getOfKursSchuelerIDmenge(idKurs), SetUtils.create1(idKurs));
+			const u2: GostBlockungRegelUpdate = this.regelupdateRemove_04_SCHUELER_FIXIEREN_IN_KURS(this.getOfKursSchuelerIDmenge(idKurs), SetUtils.create1(idKurs));
 			u.listEntfernen.addAll(u2.listEntfernen);
 			u.listHinzuzufuegen.addAll(u2.listHinzuzufuegen);
 		}
@@ -4678,8 +4678,8 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return alle nötigen Veränderungen als {@link GostBlockungRegelUpdate}-Objekt, um alle Schüler-Kurs-Fixierungen zu lösen.
 	 */
-	public regelupdateRemove_04c_SCHUELER_FIXIEREN_IN_ALLEN_KURSEN() : GostBlockungRegelUpdate {
-		const u : GostBlockungRegelUpdate = new GostBlockungRegelUpdate();
+	public regelupdateRemove_04c_SCHUELER_FIXIEREN_IN_ALLEN_KURSEN(): GostBlockungRegelUpdate {
+		const u: GostBlockungRegelUpdate = new GostBlockungRegelUpdate();
 		u.listEntfernen.addAll(this._parent.regelGetListeOfTyp(GostKursblockungRegelTyp.SCHUELER_FIXIEREN_IN_KURS));
 		return u;
 	}
@@ -4694,22 +4694,22 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return alle nötigen Veränderungen als {@link GostBlockungRegelUpdate}-Objekt, um ein Schüler-Kurs-Fixierung-Toggle zu realisieren.
 	 */
-	public regelupdateRemove_04d_SCHUELER_FIXIEREN_IN_DEN_KURSEN_TOGGLE(setKursID : JavaSet<number>) : GostBlockungRegelUpdate {
-		const u : GostBlockungRegelUpdate = new GostBlockungRegelUpdate();
+	public regelupdateRemove_04d_SCHUELER_FIXIEREN_IN_DEN_KURSEN_TOGGLE(setKursID: JavaSet<number>): GostBlockungRegelUpdate {
+		const u: GostBlockungRegelUpdate = new GostBlockungRegelUpdate();
 		for (const idKurs1 of setKursID)
 			for (const idSchueler of this.getOfKursSchuelerIDmenge(idKurs1)) {
-				const kFixierung : LongArrayKey = new LongArrayKey([GostKursblockungRegelTyp.SCHUELER_FIXIEREN_IN_KURS.typ, idSchueler, idKurs1]);
-				const rFixierung : GostBlockungRegel | null = this._parent.regelGetByLongArrayKeyOrNull(kFixierung);
+				const kFixierung: LongArrayKey = new LongArrayKey([GostKursblockungRegelTyp.SCHUELER_FIXIEREN_IN_KURS.typ, idSchueler, idKurs1]);
+				const rFixierung: GostBlockungRegel | null = this._parent.regelGetByLongArrayKeyOrNull(kFixierung);
 				if (rFixierung !== null) {
 					u.listEntfernen.add(rFixierung);
 				} else {
 					u.listHinzuzufuegen.add(DTOUtils.newGostBlockungRegel2(GostKursblockungRegelTyp.SCHUELER_FIXIEREN_IN_KURS.typ, idSchueler, idKurs1));
 				}
-				const kurs1 : GostBlockungKurs = this._parent.kursGet(idKurs1);
+				const kurs1: GostBlockungKurs = this._parent.kursGet(idKurs1);
 				for (const kurs2 of this._parent.kursGetListeByFachUndKursart(kurs1.fach_id, kurs1.kursart))
 					if (kurs1.id !== kurs2.id) {
-						const kFixierung2 : LongArrayKey = new LongArrayKey([GostKursblockungRegelTyp.SCHUELER_FIXIEREN_IN_KURS.typ, idSchueler, kurs2.id]);
-						const rFixierung2 : GostBlockungRegel | null = this._parent.regelGetByLongArrayKeyOrNull(kFixierung2);
+						const kFixierung2: LongArrayKey = new LongArrayKey([GostKursblockungRegelTyp.SCHUELER_FIXIEREN_IN_KURS.typ, idSchueler, kurs2.id]);
+						const rFixierung2: GostBlockungRegel | null = this._parent.regelGetByLongArrayKeyOrNull(kFixierung2);
 						if (rFixierung2 !== null)
 							u.listEntfernen.add(rFixierung2);
 					}
@@ -4726,12 +4726,12 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return alle nötigen Veränderungen als {@link GostBlockungRegelUpdate}-Objekt, um eine Schülermengen-Kursmengen-Sperrung zu lösen.
 	 */
-	private regelupdateRemove_05_SCHUELER_VERBIETEN_IN_KURS(setSchuelerID : JavaSet<number>, setKursID : JavaSet<number>) : GostBlockungRegelUpdate {
-		const u : GostBlockungRegelUpdate = new GostBlockungRegelUpdate();
+	private regelupdateRemove_05_SCHUELER_VERBIETEN_IN_KURS(setSchuelerID: JavaSet<number>, setKursID: JavaSet<number>): GostBlockungRegelUpdate {
+		const u: GostBlockungRegelUpdate = new GostBlockungRegelUpdate();
 		for (const idSchueler of setSchuelerID)
 			for (const idKurs of setKursID) {
-				const keySperrung : LongArrayKey = new LongArrayKey([GostKursblockungRegelTyp.SCHUELER_VERBIETEN_IN_KURS.typ, idSchueler, idKurs]);
-				const regelSperrung : GostBlockungRegel | null = this._parent.regelGetByLongArrayKeyOrNull(keySperrung);
+				const keySperrung: LongArrayKey = new LongArrayKey([GostKursblockungRegelTyp.SCHUELER_VERBIETEN_IN_KURS.typ, idSchueler, idKurs]);
+				const regelSperrung: GostBlockungRegel | null = this._parent.regelGetByLongArrayKeyOrNull(keySperrung);
 				if (regelSperrung !== null)
 					u.listEntfernen.add(regelSperrung);
 			}
@@ -4746,10 +4746,10 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return alle nötigen Veränderungen als {@link GostBlockungRegelUpdate}-Objekt, um alle Schüler-Kurs-Sperrungen der Kurse zu lösen.
 	 */
-	private regelupdateRemove_05b_SCHUELER_VERBIETEN_IN_DEN_KURSEN(setKursID : JavaSet<number>) : GostBlockungRegelUpdate {
-		const u : GostBlockungRegelUpdate = new GostBlockungRegelUpdate();
+	private regelupdateRemove_05b_SCHUELER_VERBIETEN_IN_DEN_KURSEN(setKursID: JavaSet<number>): GostBlockungRegelUpdate {
+		const u: GostBlockungRegelUpdate = new GostBlockungRegelUpdate();
 		for (const idKurs of setKursID) {
-			const u2 : GostBlockungRegelUpdate = this.regelupdateRemove_05_SCHUELER_VERBIETEN_IN_KURS(this.getOfKursSchuelerIDmenge(idKurs), SetUtils.create1(idKurs));
+			const u2: GostBlockungRegelUpdate = this.regelupdateRemove_05_SCHUELER_VERBIETEN_IN_KURS(this.getOfKursSchuelerIDmenge(idKurs), SetUtils.create1(idKurs));
 			u.listEntfernen.addAll(u2.listEntfernen);
 			u.listHinzuzufuegen.addAll(u2.listHinzuzufuegen);
 		}
@@ -4764,17 +4764,17 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return alle nötigen Veränderungen als {@link GostBlockungRegelUpdate}-Objekt, um alle Kurs-Kurs-Verbote der Kursmenge (alle Paarungen) zu lösen.
 	 */
-	private regelupdateRemove_07_KURS_VERBIETEN_MIT_KURS(setKursID : JavaSet<number>) : GostBlockungRegelUpdate {
-		const u : GostBlockungRegelUpdate = new GostBlockungRegelUpdate();
+	private regelupdateRemove_07_KURS_VERBIETEN_MIT_KURS(setKursID: JavaSet<number>): GostBlockungRegelUpdate {
+		const u: GostBlockungRegelUpdate = new GostBlockungRegelUpdate();
 		for (const idKurs1 of setKursID)
 			for (const idKurs2 of setKursID)
 				if (idKurs1 < idKurs2) {
-					const keyVerboten12 : LongArrayKey = new LongArrayKey([GostKursblockungRegelTyp.KURS_VERBIETEN_MIT_KURS.typ, idKurs1, idKurs2]);
-					const regelVerboten12 : GostBlockungRegel | null = this._parent.regelGetByLongArrayKeyOrNull(keyVerboten12);
+					const keyVerboten12: LongArrayKey = new LongArrayKey([GostKursblockungRegelTyp.KURS_VERBIETEN_MIT_KURS.typ, idKurs1, idKurs2]);
+					const regelVerboten12: GostBlockungRegel | null = this._parent.regelGetByLongArrayKeyOrNull(keyVerboten12);
 					if (regelVerboten12 !== null)
 						u.listEntfernen.add(regelVerboten12);
-					const keyVerboten21 : LongArrayKey = new LongArrayKey([GostKursblockungRegelTyp.KURS_VERBIETEN_MIT_KURS.typ, idKurs2, idKurs1]);
-					const regelVerboten21 : GostBlockungRegel | null = this._parent.regelGetByLongArrayKeyOrNull(keyVerboten21);
+					const keyVerboten21: LongArrayKey = new LongArrayKey([GostKursblockungRegelTyp.KURS_VERBIETEN_MIT_KURS.typ, idKurs2, idKurs1]);
+					const regelVerboten21: GostBlockungRegel | null = this._parent.regelGetByLongArrayKeyOrNull(keyVerboten21);
 					if (regelVerboten21 !== null)
 						u.listEntfernen.add(regelVerboten21);
 				}
@@ -4789,17 +4789,17 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return alle nötigen Veränderungen als {@link GostBlockungRegelUpdate}-Objekt, um alle Kurs-Kurs-Gebote von setKursID (alle Paarungen) zu lösen.
 	 */
-	private regelupdateRemove_08_KURS_ZUSAMMEN_MIT_KURS(setKursID : JavaSet<number>) : GostBlockungRegelUpdate {
-		const u : GostBlockungRegelUpdate = new GostBlockungRegelUpdate();
+	private regelupdateRemove_08_KURS_ZUSAMMEN_MIT_KURS(setKursID: JavaSet<number>): GostBlockungRegelUpdate {
+		const u: GostBlockungRegelUpdate = new GostBlockungRegelUpdate();
 		for (const idKurs1 of setKursID)
 			for (const idKurs2 of setKursID)
 				if (idKurs1 < idKurs2) {
-					const keyZusammen12 : LongArrayKey = new LongArrayKey([GostKursblockungRegelTyp.KURS_ZUSAMMEN_MIT_KURS.typ, idKurs1, idKurs2]);
-					const regelZusammen12 : GostBlockungRegel | null = this._parent.regelGetByLongArrayKeyOrNull(keyZusammen12);
+					const keyZusammen12: LongArrayKey = new LongArrayKey([GostKursblockungRegelTyp.KURS_ZUSAMMEN_MIT_KURS.typ, idKurs1, idKurs2]);
+					const regelZusammen12: GostBlockungRegel | null = this._parent.regelGetByLongArrayKeyOrNull(keyZusammen12);
 					if (regelZusammen12 !== null)
 						u.listEntfernen.add(regelZusammen12);
-					const keyZusammen21 : LongArrayKey = new LongArrayKey([GostKursblockungRegelTyp.KURS_ZUSAMMEN_MIT_KURS.typ, idKurs2, idKurs1]);
-					const regelZusammen21 : GostBlockungRegel | null = this._parent.regelGetByLongArrayKeyOrNull(keyZusammen21);
+					const keyZusammen21: LongArrayKey = new LongArrayKey([GostKursblockungRegelTyp.KURS_ZUSAMMEN_MIT_KURS.typ, idKurs2, idKurs1]);
+					const regelZusammen21: GostBlockungRegel | null = this._parent.regelGetByLongArrayKeyOrNull(keyZusammen21);
 					if (regelZusammen21 !== null)
 						u.listEntfernen.add(regelZusammen21);
 				}
@@ -4812,7 +4812,7 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @param update  Das {@link GostBlockungRegelUpdate}-Objekt.
 	 */
-	public regelupdateExecute(update : GostBlockungRegelUpdate) : void {
+	public regelupdateExecute(update: GostBlockungRegelUpdate): void {
 		this._parent.regelRemoveListe(update.listEntfernen);
 		this._parent.regelAddListe(update.listHinzuzufuegen);
 		this.stateRevalidateEverything();
@@ -4827,7 +4827,7 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return alle nötigen Veränderungen als {@link GostBlockungsergebnisKursSchuelerZuordnungUpdate}-Objekt, um alle Schüler aus den derzeit zugeordneten Kursen zu entfernen.
 	 */
-	public kursSchuelerUpdate_01_LEERE_ALLE_KURSE(entferneAuchFixierte : boolean) : GostBlockungsergebnisKursSchuelerZuordnungUpdate {
+	public kursSchuelerUpdate_01_LEERE_ALLE_KURSE(entferneAuchFixierte: boolean): GostBlockungsergebnisKursSchuelerZuordnungUpdate {
 		return this.kursSchuelerUpdate_01b_LEERE_KURSMENGE(this._kursIDset, entferneAuchFixierte);
 	}
 
@@ -4841,8 +4841,8 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return alle nötigen Veränderungen als {@link GostBlockungsergebnisKursSchuelerZuordnungUpdate}-Objekt, um alle Schüler aus der übergebenen Kursmenge zu entfernen.
 	 */
-	public kursSchuelerUpdate_01b_LEERE_KURSMENGE(kursIDs : JavaSet<number>, entferneAuchFixierte : boolean) : GostBlockungsergebnisKursSchuelerZuordnungUpdate {
-		const u : GostBlockungsergebnisKursSchuelerZuordnungUpdate = new GostBlockungsergebnisKursSchuelerZuordnungUpdate();
+	public kursSchuelerUpdate_01b_LEERE_KURSMENGE(kursIDs: JavaSet<number>, entferneAuchFixierte: boolean): GostBlockungsergebnisKursSchuelerZuordnungUpdate {
+		const u: GostBlockungsergebnisKursSchuelerZuordnungUpdate = new GostBlockungsergebnisKursSchuelerZuordnungUpdate();
 		for (const idKurs of kursIDs)
 			for (const idSchueler of this.getOfKursSchuelerIDmenge(idKurs))
 				if (entferneAuchFixierte || !this._parent.schuelerGetIstFixiertInKurs(idSchueler, idKurs)) {
@@ -4862,14 +4862,14 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return alle nötigen Veränderungen als {@link GostBlockungsergebnisKursSchuelerZuordnungUpdate}-Objekt, um eine Schülermenge aus einem Kurs zu entfernen.
 	 */
-	public kursSchuelerUpdate_02a_ENTFERNE_SCHUELERMENGE_AUS_KURS(schuelerIDs : JavaSet<number>, idKurs : number, entferneAuchFixierte : boolean) : GostBlockungsergebnisKursSchuelerZuordnungUpdate {
-		const u : GostBlockungsergebnisKursSchuelerZuordnungUpdate = new GostBlockungsergebnisKursSchuelerZuordnungUpdate();
-		const setSchulerOfKurs : JavaSet<number> = this.getOfKursSchuelerIDmenge(idKurs);
+	public kursSchuelerUpdate_02a_ENTFERNE_SCHUELERMENGE_AUS_KURS(schuelerIDs: JavaSet<number>, idKurs: number, entferneAuchFixierte: boolean): GostBlockungsergebnisKursSchuelerZuordnungUpdate {
+		const u: GostBlockungsergebnisKursSchuelerZuordnungUpdate = new GostBlockungsergebnisKursSchuelerZuordnungUpdate();
+		const setSchulerOfKurs: JavaSet<number> = this.getOfKursSchuelerIDmenge(idKurs);
 		for (const idSchueler of schuelerIDs) {
 			if (!setSchulerOfKurs.contains(idSchueler))
 				continue;
-			const keyFixiert : LongArrayKey = new LongArrayKey([GostKursblockungRegelTyp.SCHUELER_FIXIEREN_IN_KURS.typ, idSchueler, idKurs]);
-			const regelFixiert : GostBlockungRegel | null = this._parent.regelGetByLongArrayKeyOrNull(keyFixiert);
+			const keyFixiert: LongArrayKey = new LongArrayKey([GostKursblockungRegelTyp.SCHUELER_FIXIEREN_IN_KURS.typ, idSchueler, idKurs]);
+			const regelFixiert: GostBlockungRegel | null = this._parent.regelGetByLongArrayKeyOrNull(keyFixiert);
 			if (regelFixiert === null) {
 				u.listEntfernen.add(DTOUtils.newGostBlockungsergebnisKursSchuelerZuordnung(idKurs, idSchueler));
 				continue;
@@ -4890,8 +4890,8 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return alle nötigen Veränderungen als {@link GostBlockungsergebnisKursSchuelerZuordnungUpdate}-Objekt, um eine Schülermenge aus allen Kursen entfernen.
 	 */
-	public kursSchuelerUpdate_02b_ENTFERNE_SCHUELERMENGE_AUS_ALLEN_KURSEN(schuelerIDs : JavaSet<number>) : GostBlockungsergebnisKursSchuelerZuordnungUpdate {
-		const u : GostBlockungsergebnisKursSchuelerZuordnungUpdate = new GostBlockungsergebnisKursSchuelerZuordnungUpdate();
+	public kursSchuelerUpdate_02b_ENTFERNE_SCHUELERMENGE_AUS_ALLEN_KURSEN(schuelerIDs: JavaSet<number>): GostBlockungsergebnisKursSchuelerZuordnungUpdate {
+		const u: GostBlockungsergebnisKursSchuelerZuordnungUpdate = new GostBlockungsergebnisKursSchuelerZuordnungUpdate();
 		for (const idSchueler of schuelerIDs)
 			for (const kurs of this.getOfSchuelerKursmenge(idSchueler))
 				u.listEntfernen.add(DTOUtils.newGostBlockungsergebnisKursSchuelerZuordnung(kurs.id, idSchueler));
@@ -4909,10 +4909,10 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return alle nötigen Veränderungen als {@link GostBlockungsergebnisKursSchuelerZuordnungUpdate}-Objekt, um Schüler auf Kurse zu verteilen.
 	 */
-	public kursSchuelerUpdate_03a_FUEGE_KURS_SCHUELER_PAARE_HINZU(kursSchuelerZuordnungen : JavaSet<GostBlockungsergebnisKursSchuelerZuordnung>) : GostBlockungsergebnisKursSchuelerZuordnungUpdate {
-		const u : GostBlockungsergebnisKursSchuelerZuordnungUpdate = new GostBlockungsergebnisKursSchuelerZuordnungUpdate();
+	public kursSchuelerUpdate_03a_FUEGE_KURS_SCHUELER_PAARE_HINZU(kursSchuelerZuordnungen: JavaSet<GostBlockungsergebnisKursSchuelerZuordnung>): GostBlockungsergebnisKursSchuelerZuordnungUpdate {
+		const u: GostBlockungsergebnisKursSchuelerZuordnungUpdate = new GostBlockungsergebnisKursSchuelerZuordnungUpdate();
 		for (const z of kursSchuelerZuordnungen) {
-			const kurs1 : GostBlockungKurs = this._parent.kursGet(z.idKurs);
+			const kurs1: GostBlockungKurs = this._parent.kursGet(z.idKurs);
 			if (!this.getOfSchuelerOfKursIstZugeordnet(z.idSchueler, z.idKurs))
 				u.listHinzuzufuegen.add(z);
 			for (const kurs2 of this._parent.kursGetListeByFachUndKursart(kurs1.fach_id, kurs1.kursart))
@@ -4935,16 +4935,16 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return alle nötigen Veränderungen als {@link GostBlockungsergebnisKursSchuelerZuordnungUpdate}-Objekt, um Schüler auf Kurse zu verteilen mit Nebenbedingungen.
 	 */
-	private kursSchuelerUpdate_03a_VERSCHIEBE_SCHUELER_ZU_KURSEN(kursSchuelerZuordnungen : JavaSet<GostBlockungsergebnisKursSchuelerZuordnung>, verschiebeFixierteDesQuellkurses : boolean, fixiereImZielkurs : boolean) : GostBlockungsergebnisKursSchuelerZuordnungUpdate {
-		const u : GostBlockungsergebnisKursSchuelerZuordnungUpdate = new GostBlockungsergebnisKursSchuelerZuordnungUpdate();
+	private kursSchuelerUpdate_03a_VERSCHIEBE_SCHUELER_ZU_KURSEN(kursSchuelerZuordnungen: JavaSet<GostBlockungsergebnisKursSchuelerZuordnung>, verschiebeFixierteDesQuellkurses: boolean, fixiereImZielkurs: boolean): GostBlockungsergebnisKursSchuelerZuordnungUpdate {
+		const u: GostBlockungsergebnisKursSchuelerZuordnungUpdate = new GostBlockungsergebnisKursSchuelerZuordnungUpdate();
 		for (const z of kursSchuelerZuordnungen) {
-			const kursNeu : GostBlockungKurs = this._parent.kursGet(z.idKurs);
+			const kursNeu: GostBlockungKurs = this._parent.kursGet(z.idKurs);
 			if (!this.getOfSchuelerHatFachwahl(z.idSchueler, kursNeu.fach_id, kursNeu.kursart))
 				continue;
-			const kursAlt : GostBlockungsergebnisKurs | null = this.getOfSchuelerOfFachZugeordneterKurs(z.idSchueler, kursNeu.fach_id);
+			const kursAlt: GostBlockungsergebnisKurs | null = this.getOfSchuelerOfFachZugeordneterKurs(z.idSchueler, kursNeu.fach_id);
 			if (kursAlt !== null) {
-				const keyFixiertAlt : LongArrayKey = new LongArrayKey([GostKursblockungRegelTyp.SCHUELER_FIXIEREN_IN_KURS.typ, z.idSchueler, kursAlt.id]);
-				const regelFixiertAlt : GostBlockungRegel | null = this._parent.regelGetByLongArrayKeyOrNull(keyFixiertAlt);
+				const keyFixiertAlt: LongArrayKey = new LongArrayKey([GostKursblockungRegelTyp.SCHUELER_FIXIEREN_IN_KURS.typ, z.idSchueler, kursAlt.id]);
+				const regelFixiertAlt: GostBlockungRegel | null = this._parent.regelGetByLongArrayKeyOrNull(keyFixiertAlt);
 				if ((regelFixiertAlt !== null) && (!verschiebeFixierteDesQuellkurses))
 					continue;
 				u.listEntfernen.add(DTOUtils.newGostBlockungsergebnisKursSchuelerZuordnung(kursAlt.id, z.idSchueler));
@@ -4967,13 +4967,13 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return alle nötigen Veränderungen als {@link GostBlockungsergebnisKursSchuelerZuordnungUpdate}-Objekt, um Schüler aus Kursen zu entfernen.
 	 */
-	public kursSchuelerUpdate_03b_ENTFERNE_KURS_SCHUELER_PAARE(kursSchuelerZuordnungen : JavaSet<GostBlockungsergebnisKursSchuelerZuordnung>) : GostBlockungsergebnisKursSchuelerZuordnungUpdate {
-		const u : GostBlockungsergebnisKursSchuelerZuordnungUpdate = new GostBlockungsergebnisKursSchuelerZuordnungUpdate();
+	public kursSchuelerUpdate_03b_ENTFERNE_KURS_SCHUELER_PAARE(kursSchuelerZuordnungen: JavaSet<GostBlockungsergebnisKursSchuelerZuordnung>): GostBlockungsergebnisKursSchuelerZuordnungUpdate {
+		const u: GostBlockungsergebnisKursSchuelerZuordnungUpdate = new GostBlockungsergebnisKursSchuelerZuordnungUpdate();
 		for (const z of kursSchuelerZuordnungen) {
 			if (this.getOfSchuelerOfKursIstZugeordnet(z.idSchueler, z.idKurs))
 				u.listEntfernen.add(z);
-			const keyFixiertAlt : LongArrayKey = new LongArrayKey([GostKursblockungRegelTyp.SCHUELER_FIXIEREN_IN_KURS.typ, z.idSchueler, z.idKurs]);
-			const regelFixiertAlt : GostBlockungRegel | null = this._parent.regelGetByLongArrayKeyOrNull(keyFixiertAlt);
+			const keyFixiertAlt: LongArrayKey = new LongArrayKey([GostKursblockungRegelTyp.SCHUELER_FIXIEREN_IN_KURS.typ, z.idSchueler, z.idKurs]);
+			const regelFixiertAlt: GostBlockungRegel | null = this._parent.regelGetByLongArrayKeyOrNull(keyFixiertAlt);
 			if (regelFixiertAlt !== null)
 				u.regelUpdates.listEntfernen.add(regelFixiertAlt);
 		}
@@ -4994,23 +4994,23 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return alle nötigen Veränderungen als {@link GostBlockungsergebnisKursSchuelerZuordnungUpdate}-Objekt, um Schüler auf Kurse zu verteilen mit Nebenbedingungen.
 	 */
-	public kursSchuelerUpdate_04_BILDE_KERNGRUPPEN(idQuellKurs : number, idZielKurse : JavaSet<number>, verschiebeFixierteDesQuellkurses : boolean, inZielKursenFixieren : boolean, zielKurseLeeren : boolean) : GostBlockungsergebnisKursSchuelerZuordnungUpdate {
-		const fachartSet : JavaSet<number> = new HashSet<number>();
+	public kursSchuelerUpdate_04_BILDE_KERNGRUPPEN(idQuellKurs: number, idZielKurse: JavaSet<number>, verschiebeFixierteDesQuellkurses: boolean, inZielKursenFixieren: boolean, zielKurseLeeren: boolean): GostBlockungsergebnisKursSchuelerZuordnungUpdate {
+		const fachartSet: JavaSet<number> = new HashSet<number>();
 		for (const idZielKurs of idZielKurse) {
-			const kurs : GostBlockungsergebnisKurs = this.getKursE(idZielKurs);
-			const fachartID : number = GostKursart.getFachartID(kurs.fachID, kurs.kursart);
+			const kurs: GostBlockungsergebnisKurs = this.getKursE(idZielKurs);
+			const fachartID: number = GostKursart.getFachartID(kurs.fachID, kurs.kursart);
 			if (!fachartSet.add(fachartID)) {
-				const sKursQuelle : string | null = this._parent.toStringKursSimple(idQuellKurs);
-				const sFachartZiel : string | null = this._parent.toStringFachartSimpleByFachartID(fachartID);
+				const sKursQuelle: string | null = this._parent.toStringKursSimple(idQuellKurs);
+				const sFachartZiel: string | null = this._parent.toStringFachartSimpleByFachartID(fachartID);
 				throw new UserNotificationException("Die Kerngruppe des Kurses " + sKursQuelle + " kann nicht auf zwei Kurse der Fachart " + sFachartZiel + " verteilt werden!")
 			}
 		}
-		const idSchuelerKerngruppe : JavaSet<number> = this.getOfKursSchuelerIDmenge(idQuellKurs);
-		const kursSchuelerZuordnungen : JavaSet<GostBlockungsergebnisKursSchuelerZuordnung> = new HashSet<GostBlockungsergebnisKursSchuelerZuordnung>();
+		const idSchuelerKerngruppe: JavaSet<number> = this.getOfKursSchuelerIDmenge(idQuellKurs);
+		const kursSchuelerZuordnungen: JavaSet<GostBlockungsergebnisKursSchuelerZuordnung> = new HashSet<GostBlockungsergebnisKursSchuelerZuordnung>();
 		for (const idZielKurs of idZielKurse)
 			for (const idSchueler of idSchuelerKerngruppe)
 				kursSchuelerZuordnungen.add(DTOUtils.newGostBlockungsergebnisKursSchuelerZuordnung(idZielKurs, idSchueler));
-		const u : GostBlockungsergebnisKursSchuelerZuordnungUpdate = this.kursSchuelerUpdate_03a_VERSCHIEBE_SCHUELER_ZU_KURSEN(kursSchuelerZuordnungen, verschiebeFixierteDesQuellkurses, inZielKursenFixieren);
+		const u: GostBlockungsergebnisKursSchuelerZuordnungUpdate = this.kursSchuelerUpdate_03a_VERSCHIEBE_SCHUELER_ZU_KURSEN(kursSchuelerZuordnungen, verschiebeFixierteDesQuellkurses, inZielKursenFixieren);
 		if (zielKurseLeeren)
 			for (const idZielKurs of idZielKurse)
 				for (const idSchueler of this.getOfKursSchuelerIDmenge(idZielKurs))
@@ -5026,7 +5026,7 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @param update  Das {@link GostBlockungsergebnisKursSchuelerZuordnungUpdate}-Objekt.
 	 */
-	public kursSchuelerUpdateExecute(update : GostBlockungsergebnisKursSchuelerZuordnungUpdate) : void {
+	public kursSchuelerUpdateExecute(update: GostBlockungsergebnisKursSchuelerZuordnungUpdate): void {
 		this._parent.regelRemoveListe(update.regelUpdates.listEntfernen);
 		for (const z of update.listEntfernen)
 			this.stateSchuelerKursEntfernenOhneRevalidierung(z.idSchueler, z.idKurs);
@@ -5044,8 +5044,8 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return alle nötigen Veränderungen als {@link GostBlockungsergebnisKursSchienenZuordnungUpdate}-Objekt, um Kurse in Schienen zu setzen.
 	 */
-	public kursSchienenUpdate_01a_FUEGE_KURS_SCHIENEN_PAARE_HINZU(kursSchienenZuordnungen : JavaSet<GostBlockungsergebnisKursSchienenZuordnung>) : GostBlockungsergebnisKursSchienenZuordnungUpdate {
-		const u : GostBlockungsergebnisKursSchienenZuordnungUpdate = new GostBlockungsergebnisKursSchienenZuordnungUpdate();
+	public kursSchienenUpdate_01a_FUEGE_KURS_SCHIENEN_PAARE_HINZU(kursSchienenZuordnungen: JavaSet<GostBlockungsergebnisKursSchienenZuordnung>): GostBlockungsergebnisKursSchienenZuordnungUpdate {
+		const u: GostBlockungsergebnisKursSchienenZuordnungUpdate = new GostBlockungsergebnisKursSchienenZuordnungUpdate();
 		for (const z of kursSchienenZuordnungen) {
 			if (!this.getOfKursOfSchieneIstZugeordnet(z.idKurs, z.idSchiene))
 				u.listHinzuzufuegen.add(z);
@@ -5061,8 +5061,8 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return alle nötigen Veränderungen als {@link GostBlockungsergebnisKursSchienenZuordnungUpdate}-Objekt, um Kurse aus Schienen zu entfernen.
 	 */
-	public kursSchienenUpdate_01b_ENTFERNE_KURS_SCHIENEN_PAARE(kursSchienenZuordnungen : JavaSet<GostBlockungsergebnisKursSchienenZuordnung>) : GostBlockungsergebnisKursSchienenZuordnungUpdate {
-		const u : GostBlockungsergebnisKursSchienenZuordnungUpdate = new GostBlockungsergebnisKursSchienenZuordnungUpdate();
+	public kursSchienenUpdate_01b_ENTFERNE_KURS_SCHIENEN_PAARE(kursSchienenZuordnungen: JavaSet<GostBlockungsergebnisKursSchienenZuordnung>): GostBlockungsergebnisKursSchienenZuordnungUpdate {
+		const u: GostBlockungsergebnisKursSchienenZuordnungUpdate = new GostBlockungsergebnisKursSchienenZuordnungUpdate();
 		for (const z of kursSchienenZuordnungen) {
 			if (this.getOfKursOfSchieneIstZugeordnet(z.idKurs, z.idSchiene))
 				u.listEntfernen.add(z);
@@ -5084,8 +5084,8 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return alle nötigen Veränderungen als {@link GostBlockungsergebnisKursSchienenZuordnungUpdate}-Objekt, um einen Kurs von einer Schiene zu einer anderen Schiene zu verschieben.
 	 */
-	public kursSchienenUpdate_02a_VERSCHIEBE_KURS_VON_SCHIENE_NACH_SCHIENE(idKurs : number, idSchieneQuelle : number, idSchieneZiel : number) : GostBlockungsergebnisKursSchienenZuordnungUpdate {
-		const u : GostBlockungsergebnisKursSchienenZuordnungUpdate = new GostBlockungsergebnisKursSchienenZuordnungUpdate();
+	public kursSchienenUpdate_02a_VERSCHIEBE_KURS_VON_SCHIENE_NACH_SCHIENE(idKurs: number, idSchieneQuelle: number, idSchieneZiel: number): GostBlockungsergebnisKursSchienenZuordnungUpdate {
+		const u: GostBlockungsergebnisKursSchienenZuordnungUpdate = new GostBlockungsergebnisKursSchienenZuordnungUpdate();
 		if (!this.getOfKursOfSchieneIstZugeordnet(idKurs, idSchieneQuelle))
 			return u;
 		if (this.getOfKursOfSchieneIstZugeordnet(idKurs, idSchieneZiel))
@@ -5102,7 +5102,7 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @param update  Das {@link GostBlockungsergebnisKursSchienenZuordnungUpdate}-Objekt.
 	 */
-	public kursSchienenUpdateExecute(update : GostBlockungsergebnisKursSchienenZuordnungUpdate) : void {
+	public kursSchienenUpdateExecute(update: GostBlockungsergebnisKursSchienenZuordnungUpdate): void {
 		this._parent.regelRemoveListe(update.regelUpdates.listEntfernen);
 		for (const z of update.listEntfernen)
 			this.stateKursSchieneEntfernenOhneRegelvalidierung(z.idKurs, z.idSchiene);
@@ -5122,7 +5122,7 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 * @return das zur ID zugehörige {@link GostBlockungSchiene}-Objekt.
 	 * @throws DeveloperNotificationException falls die ID unbekannt ist.
 	 */
-	public getSchieneG(idSchiene : number) : GostBlockungSchiene {
+	public getSchieneG(idSchiene: number): GostBlockungSchiene {
 		return this._parent.schieneGet(idSchiene);
 	}
 
@@ -5134,7 +5134,7 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 * @return das zur ID zugehörige {@link GostBlockungsergebnisSchiene}-Objekt.
 	 * @throws DeveloperNotificationException falls die Schiene nicht existiert.
 	 */
-	private getSchieneE(idSchiene : number) : GostBlockungsergebnisSchiene {
+	private getSchieneE(idSchiene: number): GostBlockungsergebnisSchiene {
 		return DeveloperNotificationException.ifMapGetIsNull(this._schienenID_to_schiene, idSchiene);
 	}
 
@@ -5146,7 +5146,7 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 * @return TRUE, falls die Schiene keine Kurse enthält.
 	 * @throws DeveloperNotificationException falls die Schiene nicht existiert.
 	 */
-	public getOfSchieneIstLeer(idSchiene : number) : boolean {
+	public getOfSchieneIstLeer(idSchiene: number): boolean {
 		return this.getSchieneE(idSchiene).kurse.isEmpty();
 	}
 
@@ -5159,7 +5159,7 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 * @return das zur Nummer zugehörige {@link GostBlockungsergebnisSchiene}-Objekt.
 	 * @throws DeveloperNotificationException falls eine solche Schiene nicht existiert.
 	 */
-	private getSchieneEmitNr(nrSchiene : number) : GostBlockungsergebnisSchiene {
+	private getSchieneEmitNr(nrSchiene: number): GostBlockungsergebnisSchiene {
 		return DeveloperNotificationException.ifMapGetIsNull(this._schienenNR_to_schiene, nrSchiene);
 	}
 
@@ -5171,7 +5171,7 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 * @return die ID einer Schiene mit einer bestimmten Nummer.
 	 * @throws DeveloperNotificationException falls eine solche Schiene nicht existiert.
 	 */
-	public getOfSchieneID(nrSchiene : number) : number {
+	public getOfSchieneID(nrSchiene: number): number {
 		return DeveloperNotificationException.ifMapGetIsNull(this._schienenNR_to_schiene, nrSchiene).id;
 	}
 
@@ -5180,7 +5180,7 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return Die Menge aller Schienen.
 	 */
-	public getMengeAllerSchienen() : List<GostBlockungsergebnisSchiene> {
+	public getMengeAllerSchienen(): List<GostBlockungsergebnisSchiene> {
 		return this._ergebnis.schienen;
 	}
 
@@ -5189,8 +5189,8 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return Eine Menge aller Schienen mit mindestens einer Kollision.
 	 */
-	private getMengeDerSchienenMitKollisionen() : JavaSet<GostBlockungsergebnisSchiene> {
-		return CollectionUtils.toFilteredHashSet(this._schienenID_to_schiene.values(), { test : (s: GostBlockungsergebnisSchiene) => this.getOfSchieneHatKollision(s.id) });
+	private getMengeDerSchienenMitKollisionen(): JavaSet<GostBlockungsergebnisSchiene> {
+		return CollectionUtils.toFilteredHashSet(this._schienenID_to_schiene.values(), { test: (s: GostBlockungsergebnisSchiene) => this.getOfSchieneHatKollision(s.id) });
 	}
 
 	/**
@@ -5199,7 +5199,7 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 * @param idSchiene  Die Datenbank-ID der Schiene.
 	 * @return TRUE, falls die E-Schiene existiert.
 	 */
-	public getOfSchieneExists(idSchiene : number) : boolean {
+	public getOfSchieneExists(idSchiene: number): boolean {
 		return this._schienenID_to_schiene.containsKey(idSchiene);
 	}
 
@@ -5211,7 +5211,7 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return die Anzahl an Schülern in der Schiene mit der übergebenen ID zurück.
 	 */
-	public getOfSchieneAnzahlSchueler(idSchiene : number) : number {
+	public getOfSchieneAnzahlSchueler(idSchiene: number): number {
 		return DeveloperNotificationException.ifMapGetIsNull(this._schienenID_to_susAnzahl, idSchiene);
 	}
 
@@ -5222,7 +5222,7 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return TRUE, falls die Schiene mindestens eine Schüler-Kollision hat.
 	 */
-	public getOfSchieneHatKollision(idSchiene : number) : boolean {
+	public getOfSchieneHatKollision(idSchiene: number): boolean {
 		return this.getOfSchieneAnzahlSchuelerMitKollisionen(idSchiene) > 0;
 	}
 
@@ -5234,7 +5234,7 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return die Anzahl an Schüler-Kollisionen der Schiene.
 	 */
-	public getOfSchieneAnzahlSchuelerMitKollisionen(idSchiene : number) : number {
+	public getOfSchieneAnzahlSchuelerMitKollisionen(idSchiene: number): number {
 		return DeveloperNotificationException.ifMapGetIsNull(this._schienenID_to_kollisionen, idSchiene);
 	}
 
@@ -5245,8 +5245,8 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return Die Menge an Schüler-IDs, die in der Schiene eine Kollision haben.
 	 */
-	public getOfSchieneSchuelermengeMitKollisionen(idSchiene : number) : JavaSet<number> {
-		const set : JavaSet<number> = new HashSet<number>();
+	public getOfSchieneSchuelermengeMitKollisionen(idSchiene: number): JavaSet<number> {
+		const set: JavaSet<number> = new HashSet<number>();
 		for (const schuelerID of this._schuelerID_to_kollisionen.keySet())
 			if (this.getOfSchuelerOfSchieneKursmenge(schuelerID, idSchiene).size() > 1)
 				set.add(schuelerID);
@@ -5260,8 +5260,8 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return die Menge an Kursen, die in der Schiene eine Kollision haben.
 	 */
-	public getOfSchieneKursmengeMitKollisionen(idSchiene : number) : JavaSet<GostBlockungsergebnisKurs> {
-		const set : JavaSet<GostBlockungsergebnisKurs> = new HashSet<GostBlockungsergebnisKurs>();
+	public getOfSchieneKursmengeMitKollisionen(idSchiene: number): JavaSet<GostBlockungsergebnisKurs> {
+		const set: JavaSet<GostBlockungsergebnisKurs> = new HashSet<GostBlockungsergebnisKurs>();
 		for (const kurs of this.getSchieneE(idSchiene).kurse)
 			if (this.getOfKursHatKollision(kurs.id))
 				set.add(kurs);
@@ -5275,7 +5275,7 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return die sortierte Menge an Kursen einer bestimmten Schiene.
 	 */
-	public getOfSchieneKursmengeSortiert(idSchiene : number) : List<GostBlockungsergebnisKurs> {
+	public getOfSchieneKursmengeSortiert(idSchiene: number): List<GostBlockungsergebnisKurs> {
 		return this.getSchieneE(idSchiene).kurse;
 	}
 
@@ -5286,14 +5286,14 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return einen Tooltip für die Schiene, welche alle Kollisionen pro Kurs-Paarung darstellt.
 	 */
-	private getOfSchieneTooltipKurskollisionen(idSchiene : number) : string {
-		const sbZeilen : StringBuilder | null = new StringBuilder();
+	private getOfSchieneTooltipKurskollisionen(idSchiene: number): string {
+		const sbZeilen: StringBuilder | null = new StringBuilder();
 		for (const kurs1 of this.getSchieneE(idSchiene).kurse) {
-			let summe : number = 0;
-			const sbZeile : StringBuilder | null = new StringBuilder();
+			let summe: number = 0;
+			const sbZeile: StringBuilder | null = new StringBuilder();
 			for (const kurs2 of this.getSchieneE(idSchiene).kurse) {
 				if (kurs2.id !== kurs1.id) {
-					const anzahl : number = GostBlockungsergebnisManager.getOfKursOfKursAnzahlGemeinsamerSchueler(kurs1, kurs2);
+					const anzahl: number = GostBlockungsergebnisManager.getOfKursOfKursAnzahlGemeinsamerSchueler(kurs1, kurs2);
 					if (anzahl > 0) {
 						summe += anzahl;
 						sbZeile.append((sbZeile.isEmpty() ? "" : ", ") + this.getOfKursName(kurs2.id) + "(" + anzahl + ")");
@@ -5316,14 +5316,14 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return alle Kollisionen einer Schiene, als Liste von Liste von Kurs-Anzahl-Paaren.
 	 */
-	public getOfSchieneTooltipKurskollisionenAsData(idSchiene : number) : List<List<Pair<GostBlockungsergebnisKurs, number>>> {
-		const listOfLists : List<List<Pair<GostBlockungsergebnisKurs, number>>> = new ArrayList<List<Pair<GostBlockungsergebnisKurs, number>>>();
+	public getOfSchieneTooltipKurskollisionenAsData(idSchiene: number): List<List<Pair<GostBlockungsergebnisKurs, number>>> {
+		const listOfLists: List<List<Pair<GostBlockungsergebnisKurs, number>>> = new ArrayList<List<Pair<GostBlockungsergebnisKurs, number>>>();
 		for (const kurs1 of this.getSchieneE(idSchiene).kurse) {
-			let summe : number = 0;
-			const listOfPairs : List<Pair<GostBlockungsergebnisKurs, number>> = new ArrayList<Pair<GostBlockungsergebnisKurs, number>>();
+			let summe: number = 0;
+			const listOfPairs: List<Pair<GostBlockungsergebnisKurs, number>> = new ArrayList<Pair<GostBlockungsergebnisKurs, number>>();
 			for (const kurs2 of this.getSchieneE(idSchiene).kurse) {
 				if (kurs2.id !== kurs1.id) {
-					const anzahl : number = GostBlockungsergebnisManager.getOfKursOfKursAnzahlGemeinsamerSchueler(kurs1, kurs2);
+					const anzahl: number = GostBlockungsergebnisManager.getOfKursOfKursAnzahlGemeinsamerSchueler(kurs1, kurs2);
 					if (anzahl > 0) {
 						listOfPairs.add(new Pair<GostBlockungsergebnisKurs, number>(kurs2, anzahl));
 						summe += anzahl;
@@ -5345,20 +5345,20 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return alle Kollisionen einer Schiene (pro Element ein Schüler).
 	 */
-	public getOfSchieneTooltipSchuelerkollisionen(idSchiene : number) : string {
-		const sb : StringBuilder = new StringBuilder();
-		let zeilen : number = 0;
-		let zeilen_ignored : number = 0;
+	public getOfSchieneTooltipSchuelerkollisionen(idSchiene: number): string {
+		const sb: StringBuilder = new StringBuilder();
+		let zeilen: number = 0;
+		let zeilen_ignored: number = 0;
 		for (const idSchueler of this._schuelerID_schienenID_to_kurseSet.getKeySet()) {
-			const set : JavaSet<GostBlockungsergebnisKurs> | null = this._schuelerID_schienenID_to_kurseSet.getOrNull(idSchueler, idSchiene);
+			const set: JavaSet<GostBlockungsergebnisKurs> | null = this._schuelerID_schienenID_to_kurseSet.getOrNull(idSchueler, idSchiene);
 			if (set === null)
 				continue;
 			if (set.size() <= 1)
 				continue;
-			const list : ArrayList<GostBlockungsergebnisKurs> = new ArrayList<GostBlockungsergebnisKurs>(set);
+			const list: ArrayList<GostBlockungsergebnisKurs> = new ArrayList<GostBlockungsergebnisKurs>(set);
 			if (zeilen < 10) {
 				sb.append(this._parent.toStringSchuelerSimple(idSchueler) + " ist in mehreren Kursen:");
-				for (let i : number = 0; i < list.size(); i++)
+				for (let i: number = 0; i < list.size(); i++)
 					sb.append((i === 0 ? "" : ", ") + this._parent.toStringKursSimpleOhneID(list.get(i).id));
 				sb.append("\n");
 			} else {
@@ -5369,8 +5369,8 @@ export class GostBlockungsergebnisManager extends JavaObject {
 		return sb.toString() + (zeilen_ignored === 0 ? "" : "+" + zeilen_ignored + " weitere Zeilen.");
 	}
 
-	private static getOfKursOfKursAnzahlGemeinsamerSchueler(kurs1 : GostBlockungsergebnisKurs, kurs2 : GostBlockungsergebnisKurs) : number {
-		const set : JavaSet<number> = new HashSet<number>();
+	private static getOfKursOfKursAnzahlGemeinsamerSchueler(kurs1: GostBlockungsergebnisKurs, kurs2: GostBlockungsergebnisKurs): number {
+		const set: JavaSet<number> = new HashSet<number>();
 		set.addAll(kurs1.schueler);
 		set.retainAll(kurs2.schueler);
 		return set.size();
@@ -5385,7 +5385,7 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 * @return TRUE, falls ein Löschen der Schiene erlaubt ist.
 	 * @throws DeveloperNotificationException Falls die Schiene nicht existiert.
 	 */
-	public getOfSchieneRemoveAllowed(idSchiene : number) : boolean {
+	public getOfSchieneRemoveAllowed(idSchiene: number): boolean {
 		return this.getSchieneE(idSchiene).kurse.isEmpty();
 	}
 
@@ -5394,8 +5394,8 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return die maximale Anzahl an Kursen, die es in einer Schiene gibt.
 	 */
-	public getOfSchieneMaxKursanzahl() : number {
-		let max : number = 0;
+	public getOfSchieneMaxKursanzahl(): number {
+		let max: number = 0;
 		for (const schiene of this._ergebnis.schienen)
 			max = Math.max(max, schiene.kurse.size());
 		return max;
@@ -5409,8 +5409,8 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return die Anzahl an externen SuS der Schiene.
 	 */
-	public getOfSchieneAnzahlSchuelerExterne(idSchiene : number) : number {
-		let summe : number = 0;
+	public getOfSchieneAnzahlSchuelerExterne(idSchiene: number): number {
+		let summe: number = 0;
 		for (const kurs of this.getSchieneE(idSchiene).kurse)
 			for (const idSchueler of kurs.schueler)
 				if (this.getOfSchuelerHatStatusExtern(idSchueler))
@@ -5425,8 +5425,8 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return die Anzahl an Dummy-SuS der Schiene.
 	 */
-	public getOfSchieneAnzahlSchuelerDummy(idSchiene : number) : number {
-		let summe : number = 0;
+	public getOfSchieneAnzahlSchuelerDummy(idSchiene: number): number {
+		let summe: number = 0;
 		for (const kurs of this.getSchieneE(idSchiene).kurse)
 			summe += this.getOfKursAnzahlSchuelerDummy(kurs.id);
 		return summe;
@@ -5439,7 +5439,7 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @throws DeveloperNotificationException  falls die Schiene nicht zuerst im Datenmanager hinzugefügt wurde.
 	 */
-	public setAddSchieneByID(idSchiene : number) : void {
+	public setAddSchieneByID(idSchiene: number): void {
 		DeveloperNotificationException.ifTrue("Die Schiene " + this._parent.toStringSchiene(idSchiene) + " muss erst beim Datenmanager hinzugefügt werden!", !this._parent.schieneGetExistiert(idSchiene));
 		this.stateRevalidateEverything();
 	}
@@ -5452,9 +5452,9 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 * @throws DeveloperNotificationException  falls die Schiene nicht zuerst beim Datenmanager entfernt wurde, oder
 	 *                                         falls die Schiene noch Kurszuordnungen hat.
 	 */
-	public setRemoveSchieneByID(idSchiene : number) : void {
+	public setRemoveSchieneByID(idSchiene: number): void {
 		DeveloperNotificationException.ifTrue("Die Schiene " + this._parent.toStringSchiene(idSchiene) + " muss erst beim Datenmanager entfernt werden!", this._parent.schieneGetExistiert(idSchiene));
-		const nKurse : number = this.getSchieneE(idSchiene).kurse.size();
+		const nKurse: number = this.getSchieneE(idSchiene).kurse.size();
 		DeveloperNotificationException.ifTrue("Entfernen unmöglich: Schiene " + this._parent.toStringSchiene(idSchiene) + " hat noch " + nKurse + " Kurse!", nKurse > 0);
 		this._ergebnis.schienen.remove(this.getSchieneE(idSchiene));
 		this.stateRevalidateEverything();
@@ -5467,14 +5467,14 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @throws DeveloperNotificationException  Falls der Kurs nicht zuerst beim Datenmanager hinzugefügt wurde.
 	 */
-	public setAddKursByID(idKurs : number) : void {
+	public setAddKursByID(idKurs: number): void {
 		DeveloperNotificationException.ifTrue("" + this._parent.toStringKurs(idKurs) + " muss erst beim Datenmanager hinzugefügt werden!", !this._parent.kursGetExistiert(idKurs));
-		const kurs : GostBlockungKurs = this._parent.kursGet(idKurs);
-		const nSchienen : number = this._parent.schieneGetAnzahl();
+		const kurs: GostBlockungKurs = this._parent.kursGet(idKurs);
+		const nSchienen: number = this._parent.schieneGetAnzahl();
 		DeveloperNotificationException.ifTrue("Es gibt " + nSchienen + " Schienen, da passt ein Kurs mit " + kurs.anzahlSchienen + " nicht hinein!", nSchienen < kurs.anzahlSchienen);
 		this.stateRevalidateEverything();
-		for (let nr : number = 1; nr <= kurs.anzahlSchienen; nr++) {
-			const eSchiene : GostBlockungsergebnisSchiene = this.getSchieneEmitNr(nr);
+		for (let nr: number = 1; nr <= kurs.anzahlSchienen; nr++) {
+			const eSchiene: GostBlockungsergebnisSchiene = this.getSchieneEmitNr(nr);
 			this.stateKursSchieneHinzufuegenOhneRegelvalidierung(idKurs, eSchiene.id);
 		}
 		this.stateRevalidateEverything();
@@ -5487,13 +5487,13 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @throws DeveloperNotificationException  Falls mindestens einer der Kurse nicht zuerst beim Datenmanager entfernt wurde.
 	 */
-	public setRemoveKurseByID(idKurse : List<number>) : void {
+	public setRemoveKurseByID(idKurse: List<number>): void {
 		for (const idKurs of idKurse)
 			DeveloperNotificationException.ifTrue(this._parent.toStringKurs(idKurs) + " muss erst beim Datenmanager entfernt werden!", this._parent.kursGetExistiert(idKurs));
 		for (const idKurs of idKurse) {
-			const kurs : GostBlockungsergebnisKurs = this.getKursE(idKurs);
+			const kurs: GostBlockungsergebnisKurs = this.getKursE(idKurs);
 			for (const schienenID of kurs.schienen) {
-				const i : JavaIterator<GostBlockungsergebnisKurs> = this.getSchieneE(schienenID).kurse.iterator();
+				const i: JavaIterator<GostBlockungsergebnisKurs> = this.getSchieneE(schienenID).kurse.iterator();
 				while (i.hasNext())
 					if (i.next().id === kurs.id)
 						i.remove();
@@ -5510,9 +5510,9 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 * @param  idKursID1keep    Die Datenbank-ID des Kurses, der erhalten bleibt.
 	 * @param  idKursID2delete  Die Datenbank-ID des Kurses, der gelöscht wird.
 	 */
-	public setMergeKurseByID(idKursID1keep : number, idKursID2delete : number) : void {
-		const kursDelete : GostBlockungsergebnisKurs = this.getKursE(idKursID2delete);
-		const kursKeep : GostBlockungsergebnisKurs = this.getKursE(idKursID1keep);
+	public setMergeKurseByID(idKursID1keep: number, idKursID2delete: number): void {
+		const kursDelete: GostBlockungsergebnisKurs = this.getKursE(idKursID2delete);
+		const kursKeep: GostBlockungsergebnisKurs = this.getKursE(idKursID1keep);
 		kursKeep.schueler.addAll(kursDelete.schueler);
 		for (const schienenID of kursDelete.schienen)
 			this.getSchieneE(schienenID).kurse.remove(kursDelete);
@@ -5529,7 +5529,7 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 * @param  kurs2neu     Der Kurs, der neu erzeugt wird.
 	 * @param  susVon1nach2 Die Datenbank-IDs der Schüler, die verschoben werden sollen.
 	 */
-	public setSplitKurs(kurs1alt : GostBlockungKurs, kurs2neu : GostBlockungKurs, susVon1nach2 : Array<number>) : void {
+	public setSplitKurs(kurs1alt: GostBlockungKurs, kurs2neu: GostBlockungKurs, susVon1nach2: Array<number>): void {
 		this._parent.kursAdd(kurs2neu);
 		this.stateRevalidateEverything();
 		for (const eSchiene of this.getOfKursSchienenmenge(kurs1alt.id))
@@ -5549,10 +5549,10 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @throws DeveloperNotificationException Falls ein unerwarteter Fehler passiert.
 	 */
-	public patchOfKursSchienenAnzahl(idKurs : number, anzahlSchienenNeu : number) : void {
-		const kursG : GostBlockungKurs = this.getKursG(idKurs);
-		const kursE : GostBlockungsergebnisKurs = this.getKursE(idKurs);
-		const nSchienen : number = this._parent.schieneGetAnzahl();
+	public patchOfKursSchienenAnzahl(idKurs: number, anzahlSchienenNeu: number): void {
+		const kursG: GostBlockungKurs = this.getKursG(idKurs);
+		const kursE: GostBlockungsergebnisKurs = this.getKursE(idKurs);
+		const nSchienen: number = this._parent.schieneGetAnzahl();
 		DeveloperNotificationException.ifTrue("Schienenanzahl von KursE (" + kursE.anzahlSchienen + ") ist ungleich der von KursG (" + kursG.anzahlSchienen + ")!", kursE.anzahlSchienen !== kursG.anzahlSchienen);
 		DeveloperNotificationException.ifTrue("Die Schienenanzahl von " + this._parent.toStringKurs(idKurs) + " darf nur bei der Blockungsvorlage verändert werden!", !this._parent.getIstBlockungsVorlage());
 		DeveloperNotificationException.ifTrue(this._parent.toStringKurs(idKurs) + " hat als GostBlockungKurs " + kursG.anzahlSchienen + " Schienen, als GostBlockungsergebnisKurs hingegen " + kursE.anzahlSchienen + " Schienen!", kursE.anzahlSchienen !== kursG.anzahlSchienen);
@@ -5560,9 +5560,9 @@ export class GostBlockungsergebnisManager extends JavaObject {
 		DeveloperNotificationException.ifTrue(this._parent.toStringKurs(idKurs) + " muss mindestens einer Schiene zugeordnet sein, statt " + anzahlSchienenNeu + " Schienen!", anzahlSchienenNeu <= 0);
 		DeveloperNotificationException.ifTrue("Es gibt nur " + nSchienen + " Schienen, somit kann " + this._parent.toStringKurs(idKurs) + " nicht " + anzahlSchienenNeu + " Schienen zugeordnet werden!", anzahlSchienenNeu > nSchienen);
 		while (anzahlSchienenNeu > kursG.anzahlSchienen) {
-			let hinzugefuegt : boolean = false;
-			for (let nr : number = 1; (nr <= this._schienenNR_to_schiene.size()) && (!hinzugefuegt); nr++) {
-				const schiene : GostBlockungsergebnisSchiene = this.getSchieneEmitNr(nr);
+			let hinzugefuegt: boolean = false;
+			for (let nr: number = 1; (nr <= this._schienenNR_to_schiene.size()) && (!hinzugefuegt); nr++) {
+				const schiene: GostBlockungsergebnisSchiene = this.getSchieneEmitNr(nr);
 				if (!kursE.schienen.contains(schiene.id)) {
 					hinzugefuegt = true;
 					kursG.anzahlSchienen++;
@@ -5573,9 +5573,9 @@ export class GostBlockungsergebnisManager extends JavaObject {
 			DeveloperNotificationException.ifTrue("Es wurde keine freie Schiene für " + this._parent.toStringKurs(idKurs) + " gefunden!", !hinzugefuegt);
 		}
 		while (anzahlSchienenNeu < kursG.anzahlSchienen) {
-			let entfernt : boolean = false;
-			for (let nr : number = this._schienenNR_to_schiene.size(); (nr >= 1) && (!entfernt); nr--) {
-				const schiene : GostBlockungsergebnisSchiene = this.getSchieneEmitNr(nr);
+			let entfernt: boolean = false;
+			for (let nr: number = this._schienenNR_to_schiene.size(); (nr >= 1) && (!entfernt); nr--) {
+				const schiene: GostBlockungsergebnisSchiene = this.getSchieneEmitNr(nr);
 				if (kursE.schienen.contains(schiene.id)) {
 					entfernt = true;
 					kursG.anzahlSchienen--;
@@ -5592,38 +5592,38 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 * Informiert den Manager, dass sich bei mindestens einem Kurs die Lehrkraft geändert hat.
 	 * Führt zu einer Revalidierung der Bewertung des Ergebnisses.
 	 */
-	public patchOfKursLehrkaefteChanged() : void {
+	public patchOfKursLehrkaefteChanged(): void {
 		this.stateRevalidateEverything();
 	}
 
-	private createComparatorFachartKursartFach() : Comparator<number> {
-		const comp : Comparator<number> = { compare : (a: number, b: number) => {
-			const aKursartID : number = GostKursart.getKursartID(a);
-			const bKursartID : number = GostKursart.getKursartID(b);
+	private createComparatorFachartKursartFach(): Comparator<number> {
+		const comp: Comparator<number> = { compare: (a: number, b: number) => {
+			const aKursartID: number = GostKursart.getKursartID(a);
+			const bKursartID: number = GostKursart.getKursartID(b);
 			if (aKursartID < bKursartID)
 				return -1;
 			if (aKursartID > bKursartID)
 				return +1;
-			const aFachID : number = GostKursart.getFachID(a);
-			const bFachID : number = GostKursart.getFachID(b);
-			const aFach : GostFach | null = this._parent.faecherManager().get(aFachID);
-			const bFach : GostFach | null = this._parent.faecherManager().get(bFachID);
+			const aFachID: number = GostKursart.getFachID(a);
+			const bFachID: number = GostKursart.getFachID(b);
+			const aFach: GostFach | null = this._parent.faecherManager().get(aFachID);
+			const bFach: GostFach | null = this._parent.faecherManager().get(bFachID);
 			return GostFaecherManager.comp.compare(aFach, bFach);
 		} };
 		return comp;
 	}
 
-	private createComparatorFachartFachKursart() : Comparator<number> {
-		const comp : Comparator<number> = { compare : (a: number, b: number) => {
-			const aFachID : number = GostKursart.getFachID(a);
-			const bFachID : number = GostKursart.getFachID(b);
-			const aFach : GostFach | null = this._parent.faecherManager().get(aFachID);
-			const bFach : GostFach | null = this._parent.faecherManager().get(bFachID);
-			const cmpFach : number = GostFaecherManager.comp.compare(aFach, bFach);
+	private createComparatorFachartFachKursart(): Comparator<number> {
+		const comp: Comparator<number> = { compare: (a: number, b: number) => {
+			const aFachID: number = GostKursart.getFachID(a);
+			const bFachID: number = GostKursart.getFachID(b);
+			const aFach: GostFach | null = this._parent.faecherManager().get(aFachID);
+			const bFach: GostFach | null = this._parent.faecherManager().get(bFachID);
+			const cmpFach: number = GostFaecherManager.comp.compare(aFach, bFach);
 			if (cmpFach !== 0)
 				return cmpFach;
-			const aKursartID : number = GostKursart.getKursartID(a);
-			const bKursartID : number = GostKursart.getKursartID(b);
+			const aKursartID: number = GostKursart.getKursartID(a);
+			const bKursartID: number = GostKursart.getKursartID(b);
 			if (aKursartID < bKursartID)
 				return -1;
 			if (aKursartID > bKursartID)
@@ -5633,37 +5633,37 @@ export class GostBlockungsergebnisManager extends JavaObject {
 		return comp;
 	}
 
-	private createComparatorKursFachKursartNummer() : Comparator<GostBlockungsergebnisKurs> {
-		const comp : Comparator<GostBlockungsergebnisKurs> = { compare : (a: GostBlockungsergebnisKurs, b: GostBlockungsergebnisKurs) => {
-			const aFach : GostFach | null = this._parent.faecherManager().get(a.fachID);
-			const bFach : GostFach | null = this._parent.faecherManager().get(b.fachID);
-			const cmpFach : number = GostFaecherManager.comp.compare(aFach, bFach);
+	private createComparatorKursFachKursartNummer(): Comparator<GostBlockungsergebnisKurs> {
+		const comp: Comparator<GostBlockungsergebnisKurs> = { compare: (a: GostBlockungsergebnisKurs, b: GostBlockungsergebnisKurs) => {
+			const aFach: GostFach | null = this._parent.faecherManager().get(a.fachID);
+			const bFach: GostFach | null = this._parent.faecherManager().get(b.fachID);
+			const cmpFach: number = GostFaecherManager.comp.compare(aFach, bFach);
 			if (cmpFach !== 0)
 				return cmpFach;
 			if (a.kursart < b.kursart)
 				return -1;
 			if (a.kursart > b.kursart)
 				return +1;
-			const aKurs : GostBlockungKurs = this._parent.kursGet(a.id);
-			const bKurs : GostBlockungKurs = this._parent.kursGet(b.id);
+			const aKurs: GostBlockungKurs = this._parent.kursGet(a.id);
+			const bKurs: GostBlockungKurs = this._parent.kursGet(b.id);
 			return JavaInteger.compare(aKurs.nummer, bKurs.nummer);
 		} };
 		return comp;
 	}
 
-	private createComparatorKursKursartFachNummer() : Comparator<GostBlockungsergebnisKurs> {
-		const comp : Comparator<GostBlockungsergebnisKurs> = { compare : (a: GostBlockungsergebnisKurs, b: GostBlockungsergebnisKurs) => {
+	private createComparatorKursKursartFachNummer(): Comparator<GostBlockungsergebnisKurs> {
+		const comp: Comparator<GostBlockungsergebnisKurs> = { compare: (a: GostBlockungsergebnisKurs, b: GostBlockungsergebnisKurs) => {
 			if (a.kursart < b.kursart)
 				return -1;
 			if (a.kursart > b.kursart)
 				return +1;
-			const aFach : GostFach | null = this._parent.faecherManager().get(a.fachID);
-			const bFach : GostFach | null = this._parent.faecherManager().get(b.fachID);
-			const cmpFach : number = GostFaecherManager.comp.compare(aFach, bFach);
+			const aFach: GostFach | null = this._parent.faecherManager().get(a.fachID);
+			const bFach: GostFach | null = this._parent.faecherManager().get(b.fachID);
+			const cmpFach: number = GostFaecherManager.comp.compare(aFach, bFach);
 			if (cmpFach !== 0)
 				return cmpFach;
-			const aKurs : GostBlockungKurs = this._parent.kursGet(a.id);
-			const bKurs : GostBlockungKurs = this._parent.kursGet(b.id);
+			const aKurs: GostBlockungKurs = this._parent.kursGet(a.id);
+			const bKurs: GostBlockungKurs = this._parent.kursGet(b.id);
 			return JavaInteger.compare(aKurs.nummer, bKurs.nummer);
 		} };
 		return comp;
@@ -5674,7 +5674,7 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @param logger Ein Logger für Debug-Zwecke.
 	 */
-	public debug(logger : Logger) : void {
+	public debug(logger: Logger): void {
 		logger.modifyIndent(+4);
 		logger.logLn("----- Kurse sortiert nach Fachart -----");
 		for (const fachartID of this._fachartID_to_kurseList.keySet()) {
@@ -5693,8 +5693,8 @@ export class GostBlockungsergebnisManager extends JavaObject {
 	 *
 	 * @return einen String, der alle Schienen-Fachart-Kurs-Zuordnungen zeigt.
 	 */
-	private debugKursSchienenZuordnungen() : string {
-		const sb : StringBuilder = new StringBuilder();
+	private debugKursSchienenZuordnungen(): string {
+		const sb: StringBuilder = new StringBuilder();
 		sb.append("\n\nSchienen-Fachart-Kurs-Zuordnungen");
 		for (const idSchiene of this._schienenIDset) {
 			sb.append("Schiene " + this._parent.toStringSchieneSimple(idSchiene) + "\n");
@@ -5714,7 +5714,7 @@ export class GostBlockungsergebnisManager extends JavaObject {
 		return 'de.svws_nrw.core.utils.gost.GostBlockungsergebnisManager';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.utils.gost.GostBlockungsergebnisManager'].includes(name);
 	}
 
@@ -5722,6 +5722,6 @@ export class GostBlockungsergebnisManager extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_utils_gost_GostBlockungsergebnisManager(obj : unknown) : GostBlockungsergebnisManager {
+export function cast_de_svws_nrw_core_utils_gost_GostBlockungsergebnisManager(obj: unknown): GostBlockungsergebnisManager {
 	return obj as GostBlockungsergebnisManager;
 }

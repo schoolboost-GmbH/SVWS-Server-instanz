@@ -15,76 +15,76 @@ import { HashSet } from '../../../../java/util/HashSet';
 
 export class KlausurblockungSchienenDynDaten extends JavaObject {
 
-	private static readonly SCHIENEN_MAX_ANZAHL : number = 1000;
+	private static readonly SCHIENEN_MAX_ANZAHL: number = 1000;
 
 	/**
 	 * Ein {@link Random}-Objekt zur Steuerung des Zufalls über einen Anfangs-Seed.
 	 */
-	private readonly _random : Random;
+	private readonly _random: Random;
 
 	/**
 	 * Ein {@link Logger}-Objekt für Debug-Zwecke.
 	 */
-	private readonly _logger : Logger;
+	private readonly _logger: Logger;
 
 	/**
 	 * Mapping, um eine Sammlung von Long-Werten in laufende Integer-Werte umzuwandeln.
 	 */
-	private readonly _mapKlausurZuNummer : HashMap<number, number> = new HashMap<number, number>();
+	private readonly _mapKlausurZuNummer: HashMap<number, number> = new HashMap<number, number>();
 
 	/**
 	 * Mapping, um eine Sammlung von Long-Werten in laufende Integer-Werte umzuwandeln.
 	 */
-	private readonly _mapNummerZuKlausur : HashMap<number, GostKursklausurRich> = new HashMap<number, GostKursklausurRich>();
+	private readonly _mapNummerZuKlausur: HashMap<number, GostKursklausurRich> = new HashMap<number, GostKursklausurRich>();
 
 	/**
 	 * Mapping, um eine Sammlung von Long-Werten in laufende Integer-Werte umzuwandeln.
 	 */
-	private readonly _mapSchuelerZuNummer : HashMap<number, number> = new HashMap<number, number>();
+	private readonly _mapSchuelerZuNummer: HashMap<number, number> = new HashMap<number, number>();
 
 	/**
 	 * Die Anzahl der Klausuren.
 	 */
-	private readonly _klausurenAnzahl : number;
+	private readonly _klausurenAnzahl: number;
 
 	/**
 	 * Jeder Klausurnummer wird eine Schiene zugeordnet. Der Wert -1 definiert eine temporäre Nicht-Zuordnung.
 	 *  Am Ende des Algorithmus hat jede Klausur einen Wert >= 0.
 	 */
-	private readonly _klausurZuSchiene : Array<number>;
+	private readonly _klausurZuSchiene: Array<number>;
 
-	private readonly _klausurZuSchiene1 : Array<number>;
+	private readonly _klausurZuSchiene1: Array<number>;
 
-	private readonly _klausurZuSchiene2 : Array<number>;
+	private readonly _klausurZuSchiene2: Array<number>;
 
 	/**
 	 * Jeder Klausurnummer wird der Knotengrad (Anzahl an Nachbarn) zugeordnet.
 	 */
-	private readonly _klausurnummerZuGrad : Array<number>;
+	private readonly _klausurnummerZuGrad: Array<number>;
 
 	/**
 	 * Ein Array aller Klausurnummern, sortiert nach ihrem Knotengrad (Anzahl an Nachbarn).
 	 */
-	private readonly _klausurenSortiertGrad : Array<number>;
+	private readonly _klausurenSortiertGrad: Array<number>;
 
 	/**
 	 * Bestimmt, ob ein Klausurnummer-Paar am selben Termin verboten ist.
 	 */
-	private readonly _verboten : Array<Array<boolean>>;
+	private readonly _verboten: Array<Array<boolean>>;
 
 	/**
 	 * Bestimmt, ob ein Klausurnummer-Paar am selben Termin bevorzugt wird.
 	 */
-	private readonly _bevorzugt : Array<Array<number>>;
+	private readonly _bevorzugt: Array<Array<number>>;
 
 	/**
 	 * Die Anzahl der derzeitigen verwendeten Schienen.
 	 */
-	private _schienenAnzahl : number = 0;
+	private _schienenAnzahl: number = 0;
 
-	private _schienenAnzahl1 : number = KlausurblockungSchienenDynDaten.SCHIENEN_MAX_ANZAHL;
+	private _schienenAnzahl1: number = KlausurblockungSchienenDynDaten.SCHIENEN_MAX_ANZAHL;
 
-	private _schienenAnzahl2 : number = KlausurblockungSchienenDynDaten.SCHIENEN_MAX_ANZAHL;
+	private _schienenAnzahl2: number = KlausurblockungSchienenDynDaten.SCHIENEN_MAX_ANZAHL;
 
 
 	/**
@@ -95,7 +95,7 @@ export class KlausurblockungSchienenDynDaten extends JavaObject {
 	 * @param pRandom Ein {@link Random}-Objekt zur Steuerung des Zufalls über einen Anfangs-Seed.
 	 * @param pInput  Die Eingabedaten (Schnittstelle zur GUI).
 	 */
-	constructor(pLogger : Logger, pRandom : Random, pInput : List<GostKursklausurRich>) {
+	constructor(pLogger: Logger, pRandom: Random, pInput: List<GostKursklausurRich>) {
 		super();
 		this._random = pRandom;
 		this._logger = pLogger;
@@ -115,37 +115,37 @@ export class KlausurblockungSchienenDynDaten extends JavaObject {
 		this.aktionKlausurenAusSchienenEntfernen();
 	}
 
-	private initialisiereMapSchueler(pInput : List<GostKursklausurRich>) : void {
-		const setSchueler : HashSet<number> = new HashSet<number>();
+	private initialisiereMapSchueler(pInput: List<GostKursklausurRich>): void {
+		const setSchueler: HashSet<number> = new HashSet<number>();
 		for (const gostKursklausur of pInput) {
 			for (const schuelerID of gostKursklausur.schuelerIds) {
 				if (schuelerID < 0)
 					throw new DeveloperNotificationException("Schüler-ID " + schuelerID + " ist negativ!")
 				if (setSchueler.add(schuelerID)) {
-					const schuelerNummer : number = this._mapSchuelerZuNummer.size();
+					const schuelerNummer: number = this._mapSchuelerZuNummer.size();
 					this._mapSchuelerZuNummer.put(schuelerID, schuelerNummer);
 				}
 			}
 		}
 	}
 
-	private initialisiereMapKlausuren(pInput : List<GostKursklausurRich>) : void {
+	private initialisiereMapKlausuren(pInput: List<GostKursklausurRich>): void {
 		for (const gostKursklausur of pInput) {
 			if (gostKursklausur.id < 0)
 				throw new DeveloperNotificationException("Klausur-ID=" + gostKursklausur.id + " ist negativ!")
 			if (this._mapKlausurZuNummer.containsKey(gostKursklausur.id))
 				throw new DeveloperNotificationException("Klausur-ID=" + gostKursklausur.id + " ist doppelt!")
-			const klausurNummer : number = this._mapKlausurZuNummer.size();
+			const klausurNummer: number = this._mapKlausurZuNummer.size();
 			this._mapKlausurZuNummer.put(gostKursklausur.id, klausurNummer);
 			this._mapNummerZuKlausur.put(klausurNummer, gostKursklausur);
 		}
 	}
 
-	private initialisiereMatrixVerboten(pInput : List<GostKursklausurRich>) : void {
-		const mapSchuelerKlausuren : HashMap<number, LinkedCollection<number>> = new HashMap<number, LinkedCollection<number>>();
+	private initialisiereMatrixVerboten(pInput: List<GostKursklausurRich>): void {
+		const mapSchuelerKlausuren: HashMap<number, LinkedCollection<number>> = new HashMap<number, LinkedCollection<number>>();
 		for (const gostKursklausur of pInput) {
 			for (const schuelerID of gostKursklausur.schuelerIds) {
-				let list : LinkedCollection<number> | null = mapSchuelerKlausuren.get(schuelerID);
+				let list: LinkedCollection<number> | null = mapSchuelerKlausuren.get(schuelerID);
 				if (list === null) {
 					list = new LinkedCollection();
 					mapSchuelerKlausuren.put(schuelerID, list);
@@ -154,22 +154,22 @@ export class KlausurblockungSchienenDynDaten extends JavaObject {
 			}
 		}
 		for (const e of mapSchuelerKlausuren.entrySet()) {
-			const list : LinkedCollection<number> = e.getValue();
+			const list: LinkedCollection<number> = e.getValue();
 			for (const klausurID1 of list)
 				for (const klausurID2 of list) {
-					const klausurNr1 : number = DeveloperNotificationException.ifNull("NULL-Wert beim Mapping von klausurID1(" + klausurID1 + ")", this._mapKlausurZuNummer.get(klausurID1));
-					const klausurNr2 : number = DeveloperNotificationException.ifNull("NULL-Wert beim Mapping von klausurID2(" + klausurID2 + ")", this._mapKlausurZuNummer.get(klausurID2));
+					const klausurNr1: number = DeveloperNotificationException.ifNull("NULL-Wert beim Mapping von klausurID1(" + klausurID1 + ")", this._mapKlausurZuNummer.get(klausurID1));
+					const klausurNr2: number = DeveloperNotificationException.ifNull("NULL-Wert beim Mapping von klausurID2(" + klausurID2 + ")", this._mapKlausurZuNummer.get(klausurID2));
 					this._verboten[klausurNr1.valueOf()][klausurNr2.valueOf()] = true;
 				}
 		}
 	}
 
-	private initialisiereMatrixBevorzugt(pInput : List<GostKursklausurRich>) : void {
+	private initialisiereMatrixBevorzugt(pInput: List<GostKursklausurRich>): void {
 		for (const gostKursklausur1 of pInput)
 			for (const gostKursklausur2 of pInput)
 				if (KlausurblockungSchienenDynDaten.hatGemeinsameSchiene(gostKursklausur1.kursSchiene, gostKursklausur2.kursSchiene)) {
-					const klausurNr1 : number | null = this._mapKlausurZuNummer.get(gostKursklausur1.id);
-					const klausurNr2 : number | null = this._mapKlausurZuNummer.get(gostKursklausur2.id);
+					const klausurNr1: number | null = this._mapKlausurZuNummer.get(gostKursklausur1.id);
+					const klausurNr2: number | null = this._mapKlausurZuNummer.get(gostKursklausur2.id);
 					if (klausurNr1 === null)
 						throw new DeveloperNotificationException("NULL-Wert beim Mapping von klausurID1 --> " + gostKursklausur1.id)
 					if (klausurNr2 === null)
@@ -178,7 +178,7 @@ export class KlausurblockungSchienenDynDaten extends JavaObject {
 				}
 	}
 
-	private static hatGemeinsameSchiene(kursSchiene1 : Array<number>, kursSchiene2 : Array<number>) : boolean {
+	private static hatGemeinsameSchiene(kursSchiene1: Array<number>, kursSchiene2: Array<number>): boolean {
 		for (const schiene1 of kursSchiene1)
 			for (const schiene2 of kursSchiene2)
 				if (schiene1 === schiene2)
@@ -186,18 +186,18 @@ export class KlausurblockungSchienenDynDaten extends JavaObject {
 		return false;
 	}
 
-	private initialisiereKnotenGrad() : void {
-		for (let klausurNr1 : number = 0; klausurNr1 < this._klausurenAnzahl; klausurNr1++) {
-			let kanten : number = 0;
-			for (let klausurNr2 : number = 0; klausurNr2 < this._klausurenAnzahl; klausurNr2++)
+	private initialisiereKnotenGrad(): void {
+		for (let klausurNr1: number = 0; klausurNr1 < this._klausurenAnzahl; klausurNr1++) {
+			let kanten: number = 0;
+			for (let klausurNr2: number = 0; klausurNr2 < this._klausurenAnzahl; klausurNr2++)
 				if (this._verboten[klausurNr1][klausurNr2])
 					kanten++;
 			this._klausurnummerZuGrad[klausurNr1] = kanten;
 		}
-		for (let i : number = 1; i < this._klausurenAnzahl; i++)
-			for (let j : number = i; j >= 1; j--) {
-				const nummerR : number = this._klausurenSortiertGrad[j];
-				const nummerL : number = this._klausurenSortiertGrad[j - 1];
+		for (let i: number = 1; i < this._klausurenAnzahl; i++)
+			for (let j: number = i; j >= 1; j--) {
+				const nummerR: number = this._klausurenSortiertGrad[j];
+				const nummerL: number = this._klausurenSortiertGrad[j - 1];
 				if (this._klausurnummerZuGrad[nummerL] >= this._klausurnummerZuGrad[nummerR])
 					break;
 				this._klausurenSortiertGrad[j] = nummerL;
@@ -210,9 +210,9 @@ export class KlausurblockungSchienenDynDaten extends JavaObject {
 	 *
 	 * @return ein Array aller Klausurnummern in aufsteigender Reihenfolge ihrer Nummer.
 	 */
-	private gibErzeugeKlausurenInReihenfolge() : Array<number> {
-		const temp : Array<number> | null = Array(this._klausurenAnzahl).fill(0);
-		for (let i : number = 0; i < this._klausurenAnzahl; i++)
+	private gibErzeugeKlausurenInReihenfolge(): Array<number> {
+		const temp: Array<number> | null = Array(this._klausurenAnzahl).fill(0);
+		for (let i: number = 0; i < this._klausurenAnzahl; i++)
 			temp[i] = i;
 		return temp;
 	}
@@ -222,14 +222,14 @@ export class KlausurblockungSchienenDynDaten extends JavaObject {
 	 *
 	 * @return ein Ausgabe-Objekt: 1. Ebene = Schienen, 2. Ebene = KlausurIDs
 	 */
-	gibErzeugeOutput() : List<List<number>> {
-		const out : List<List<number>> = new ArrayList<List<number>>();
-		for (let i : number = 0; i < this._schienenAnzahl; i++)
+	gibErzeugeOutput(): List<List<number>> {
+		const out: List<List<number>> = new ArrayList<List<number>>();
+		for (let i: number = 0; i < this._schienenAnzahl; i++)
 			out.add(new ArrayList<number>());
 		for (const e of this._mapKlausurZuNummer.entrySet()) {
-			const klausurID : number = e.getKey();
-			const klausurNr : number = e.getValue();
-			const schiene : number = this._klausurZuSchiene[klausurNr.valueOf()];
+			const klausurID: number = e.getKey();
+			const klausurNr: number = e.getValue();
+			const schiene: number = this._klausurZuSchiene[klausurNr.valueOf()];
 			DeveloperNotificationException.ifTrue("schiene(" + schiene + ") < 0", schiene < 0);
 			DeveloperNotificationException.ifTrue("schiene(" + schiene + ") >= _schienenAnzahl", schiene >= this._schienenAnzahl);
 			out.get(schiene).add(klausurID);
@@ -242,14 +242,14 @@ export class KlausurblockungSchienenDynDaten extends JavaObject {
 	 *
 	 * @return ein Array aller Klausurnummern in zufälliger Reihenfolge.
 	 */
-	gibErzeugeKlausurenInZufaelligerReihenfolge() : Array<number> {
-		const temp : Array<number> | null = Array(this._klausurenAnzahl).fill(0);
-		for (let i : number = 0; i < this._klausurenAnzahl; i++)
+	gibErzeugeKlausurenInZufaelligerReihenfolge(): Array<number> {
+		const temp: Array<number> | null = Array(this._klausurenAnzahl).fill(0);
+		for (let i: number = 0; i < this._klausurenAnzahl; i++)
 			temp[i] = i;
-		for (let i1 : number = 0; i1 < this._klausurenAnzahl; i1++) {
-			const i2 : number = this._random.nextInt(this._klausurenAnzahl);
-			const save1 : number = temp[i1];
-			const save2 : number = temp[i2];
+		for (let i1: number = 0; i1 < this._klausurenAnzahl; i1++) {
+			const i2: number = this._random.nextInt(this._klausurenAnzahl);
+			const save1: number = temp[i1];
+			const save2: number = temp[i2];
 			temp[i1] = save2;
 			temp[i2] = save1;
 		}
@@ -261,16 +261,16 @@ export class KlausurblockungSchienenDynDaten extends JavaObject {
 	 *
 	 * @return ein Array aller Klausurnummern in zufälliger Reihenfolge nach bevorzugter Lage.
 	 */
-	gibErzeugeKlausurenInZufaelligerReihenfolgeNachBevorzugterLage() : Array<number> {
-		const temp : Array<number> | null = this.gibErzeugeKlausurenInZufaelligerReihenfolge();
-		for (let i1 : number = 0; i1 < this._klausurenAnzahl; i1++) {
-			const nr1 : number = temp[i1];
-			const iTausch : number = i1 + 1;
-			for (let i2 : number = iTausch; i2 < this._klausurenAnzahl; i2++) {
-				const nr2 : number = temp[i2];
+	gibErzeugeKlausurenInZufaelligerReihenfolgeNachBevorzugterLage(): Array<number> {
+		const temp: Array<number> | null = this.gibErzeugeKlausurenInZufaelligerReihenfolge();
+		for (let i1: number = 0; i1 < this._klausurenAnzahl; i1++) {
+			const nr1: number = temp[i1];
+			const iTausch: number = i1 + 1;
+			for (let i2: number = iTausch; i2 < this._klausurenAnzahl; i2++) {
+				const nr2: number = temp[i2];
 				if (this._bevorzugt[nr1][nr2] > 0) {
-					const save1 : number = temp[iTausch];
-					const save2 : number = temp[i2];
+					const save1: number = temp[iTausch];
+					const save2: number = temp[i2];
 					temp[iTausch] = save2;
 					temp[i2] = save1;
 					break;
@@ -285,14 +285,14 @@ export class KlausurblockungSchienenDynDaten extends JavaObject {
 	 *
 	 * @return ein leicht permutiertes Array aller Klausurnummern sortiert nach höheren Knotengrad zuerst.
 	 */
-	gibErzeugeKlausurenMitHoeheremGradZuerstEtwasPermutiert() : Array<number> {
-		const temp : Array<number> | null = Arrays.copyOf(this._klausurenSortiertGrad, this._klausurenAnzahl);
-		for (let i1 : number = 0; i1 < this._klausurenAnzahl; i1++) {
-			const i2 : number = this._random.nextInt(this._klausurenAnzahl);
+	gibErzeugeKlausurenMitHoeheremGradZuerstEtwasPermutiert(): Array<number> {
+		const temp: Array<number> | null = Arrays.copyOf(this._klausurenSortiertGrad, this._klausurenAnzahl);
+		for (let i1: number = 0; i1 < this._klausurenAnzahl; i1++) {
+			const i2: number = this._random.nextInt(this._klausurenAnzahl);
 			if (((i1 - i2) * (i1 - i2)) > this._klausurenAnzahl)
 				continue;
-			const save1 : number = temp[i1];
-			const save2 : number = temp[i2];
+			const save1: number = temp[i1];
+			const save2: number = temp[i2];
 			temp[i1] = save2;
 			temp[i2] = save1;
 		}
@@ -304,7 +304,7 @@ export class KlausurblockungSchienenDynDaten extends JavaObject {
 	 *
 	 * @return ein Array aller Klausurnummern sortiert nach höheren Knotengrad zuerst.
 	 */
-	gibErzeugeKlausurenMitHoeheremGradZuerst() : Array<number> {
+	gibErzeugeKlausurenMitHoeheremGradZuerst(): Array<number> {
 		return Arrays.copyOf(this._klausurenSortiertGrad, this._klausurenAnzahl);
 	}
 
@@ -313,14 +313,14 @@ export class KlausurblockungSchienenDynDaten extends JavaObject {
 	 *
 	 * @return ein Array aller derzeit verwendeten Schienen in zufälliger Reihenfolge.
 	 */
-	gibErzeugeSchienenInZufaelligerReihenfolge() : Array<number> {
-		const temp : Array<number> | null = Array(this._schienenAnzahl).fill(0);
-		for (let i : number = 0; i < this._schienenAnzahl; i++)
+	gibErzeugeSchienenInZufaelligerReihenfolge(): Array<number> {
+		const temp: Array<number> | null = Array(this._schienenAnzahl).fill(0);
+		for (let i: number = 0; i < this._schienenAnzahl; i++)
 			temp[i] = i;
-		for (let i1 : number = 0; i1 < this._schienenAnzahl; i1++) {
-			const i2 : number = this._random.nextInt(this._schienenAnzahl);
-			const save1 : number = temp[i1];
-			const save2 : number = temp[i2];
+		for (let i1: number = 0; i1 < this._schienenAnzahl; i1++) {
+			const i2: number = this._random.nextInt(this._schienenAnzahl);
+			const save1: number = temp[i1];
+			const save2: number = temp[i2];
 			temp[i1] = save2;
 			temp[i2] = save1;
 		}
@@ -332,7 +332,7 @@ export class KlausurblockungSchienenDynDaten extends JavaObject {
 	 *
 	 * @return TRUE, wenn der aktuelle Zustand besser als der gespeicherte Zustand 1 ist.
 	 */
-	gibIstBesserAlsZustand1() : boolean {
+	gibIstBesserAlsZustand1(): boolean {
 		return this.gibVergleicheMitAktuellemZustand(this._schienenAnzahl1, this._klausurZuSchiene1);
 	}
 
@@ -341,40 +341,40 @@ export class KlausurblockungSchienenDynDaten extends JavaObject {
 	 *
 	 * @return TRUE, wenn der aktuelle Zustand besser als der gespeicherte Zustand 2 ist.
 	 */
-	gibIstBesserAlsZustand2() : boolean {
+	gibIstBesserAlsZustand2(): boolean {
 		return this.gibVergleicheMitAktuellemZustand(this._schienenAnzahl2, this._klausurZuSchiene2);
 	}
 
-	private gibVergleicheMitAktuellemZustand(schienenAnzahlX : number, klausurZuSchieneX : Array<number>) : boolean {
+	private gibVergleicheMitAktuellemZustand(schienenAnzahlX: number, klausurZuSchieneX: Array<number>): boolean {
 		if (this._schienenAnzahl < schienenAnzahlX)
 			return true;
 		if (this._schienenAnzahl > schienenAnzahlX)
 			return false;
-		const bevorzugt : number = this.gibSchienenBevorzugt(this._klausurZuSchiene);
-		const bevorzugtX : number = this.gibSchienenBevorzugt(klausurZuSchieneX);
+		const bevorzugt: number = this.gibSchienenBevorzugt(this._klausurZuSchiene);
+		const bevorzugtX: number = this.gibSchienenBevorzugt(klausurZuSchieneX);
 		if (bevorzugt > bevorzugtX)
 			return true;
 		if (bevorzugt < bevorzugtX)
 			return false;
-		const histogramm : Array<number> | null = Array(this._schienenAnzahl).fill(0);
-		const histogrammX : Array<number> | null = Array(this._schienenAnzahl).fill(0);
-		for (let i : number = 0; i < this._klausurenAnzahl; i++) {
+		const histogramm: Array<number> | null = Array(this._schienenAnzahl).fill(0);
+		const histogrammX: Array<number> | null = Array(this._schienenAnzahl).fill(0);
+		for (let i: number = 0; i < this._klausurenAnzahl; i++) {
 			histogramm[this._klausurZuSchiene[i]]++;
 			histogrammX[klausurZuSchieneX[i]]++;
 		}
-		let minHisto : number = this._klausurenAnzahl;
-		let minHistoX : number = this._klausurenAnzahl;
-		for (let i : number = 0; i < this._schienenAnzahl; i++) {
+		let minHisto: number = this._klausurenAnzahl;
+		let minHistoX: number = this._klausurenAnzahl;
+		for (let i: number = 0; i < this._schienenAnzahl; i++) {
 			minHisto = Math.min(minHisto, histogramm[i]);
 			minHistoX = Math.min(minHistoX, histogrammX[i]);
 		}
 		return minHisto < minHistoX;
 	}
 
-	private gibSchienenBevorzugt(pKlausurZuSchiene : Array<number>) : number {
-		let summeBevorzugt : number = 0;
-		for (let nr1 : number = 0; nr1 < this._klausurenAnzahl; nr1++)
-			for (let nr2 : number = nr1 + 1; nr2 < this._klausurenAnzahl; nr2++)
+	private gibSchienenBevorzugt(pKlausurZuSchiene: Array<number>): number {
+		let summeBevorzugt: number = 0;
+		for (let nr1: number = 0; nr1 < this._klausurenAnzahl; nr1++)
+			for (let nr2: number = nr1 + 1; nr2 < this._klausurenAnzahl; nr2++)
 				if (pKlausurZuSchiene[nr1] === pKlausurZuSchiene[nr2])
 					summeBevorzugt += this._bevorzugt[nr1][nr2];
 		return summeBevorzugt;
@@ -385,9 +385,9 @@ export class KlausurblockungSchienenDynDaten extends JavaObject {
 	 *
 	 * @return die Anzahl noch nicht verteilter Klausuren.
 	 */
-	gibAnzahlNichtverteilterKlausuren() : number {
-		let summe : number = 0;
-		for (let klausurNr : number = 0; klausurNr < this._klausurenAnzahl; klausurNr++)
+	gibAnzahlNichtverteilterKlausuren(): number {
+		let summe: number = 0;
+		for (let klausurNr: number = 0; klausurNr < this._klausurenAnzahl; klausurNr++)
 			if (this._klausurZuSchiene[klausurNr] < 0)
 				summe++;
 		return summe;
@@ -398,7 +398,7 @@ export class KlausurblockungSchienenDynDaten extends JavaObject {
 	 *
 	 * @return die Anzahl an Klausuren.
 	 */
-	gibAnzahlKlausuren() : number {
+	gibAnzahlKlausuren(): number {
 		return this._klausurenAnzahl;
 	}
 
@@ -408,7 +408,7 @@ export class KlausurblockungSchienenDynDaten extends JavaObject {
 	 * @param  klausurNr die Klausurnummer, nach der gefragt wird.
 	 * @return           TRUE, falls die übergebene Klausurnummer noch nicht verteilt wurde.
 	 */
-	gibIstKlausurUnverteilt(klausurNr : number) : boolean {
+	gibIstKlausurUnverteilt(klausurNr: number): boolean {
 		return this._klausurZuSchiene[klausurNr] < 0;
 	}
 
@@ -417,7 +417,7 @@ export class KlausurblockungSchienenDynDaten extends JavaObject {
 	 *
 	 * @return die Nummer einer neu erzeugten Schiene.
 	 */
-	gibErzeugeNeueSchiene() : number {
+	gibErzeugeNeueSchiene(): number {
 		this._schienenAnzahl++;
 		return this._schienenAnzahl - 1;
 	}
@@ -427,7 +427,7 @@ export class KlausurblockungSchienenDynDaten extends JavaObject {
 	 *
 	 * @return die Anzahl der derzeit verwendeten Schienen.
 	 */
-	gibAnzahlSchienen() : number {
+	gibAnzahlSchienen(): number {
 		return this._schienenAnzahl;
 	}
 
@@ -437,13 +437,13 @@ export class KlausurblockungSchienenDynDaten extends JavaObject {
 	 *
 	 * @return den Knoten, der die meisten Nachbarsfarben hat oder -1 falls es keinen gibt.
 	 */
-	gibKlausurDieFreiIstMitDenMeistenNachbarsfarben() : number {
-		let maxFarben : number = -1;
-		let maxNr : number = -1;
+	gibKlausurDieFreiIstMitDenMeistenNachbarsfarben(): number {
+		let maxFarben: number = -1;
+		let maxNr: number = -1;
 		for (const klausurNr of this.gibErzeugeKlausurenInZufaelligerReihenfolge()) {
 			if (this._klausurZuSchiene[klausurNr] >= 0)
 				continue;
-			const farben : number = this.gibNachbarsfarbenDerKlausur(klausurNr);
+			const farben: number = this.gibNachbarsfarbenDerKlausur(klausurNr);
 			if (farben < maxFarben)
 				continue;
 			maxFarben = farben;
@@ -452,11 +452,11 @@ export class KlausurblockungSchienenDynDaten extends JavaObject {
 		return maxNr;
 	}
 
-	private gibNachbarsfarbenDerKlausur(klausurNr : number) : number {
-		let summe : number = 0;
-		const benutzt : Array<boolean> | null = Array(this._schienenAnzahl).fill(false);
-		for (let klausurNr2 : number = 0; klausurNr2 < this._klausurenAnzahl; klausurNr2++) {
-			const farbe : number = this._klausurZuSchiene[klausurNr2];
+	private gibNachbarsfarbenDerKlausur(klausurNr: number): number {
+		let summe: number = 0;
+		const benutzt: Array<boolean> | null = Array(this._schienenAnzahl).fill(false);
+		for (let klausurNr2: number = 0; klausurNr2 < this._klausurenAnzahl; klausurNr2++) {
+			const farbe: number = this._klausurZuSchiene[klausurNr2];
 			if (((farbe >= 0) && (this._verboten[klausurNr][klausurNr2])) && (!benutzt[farbe])) {
 				benutzt[farbe] = true;
 				summe++;
@@ -471,13 +471,13 @@ export class KlausurblockungSchienenDynDaten extends JavaObject {
 	 *
 	 * @return den Knoten, der die meisten Nachbarsfarben hat oder -1 falls es keinen gibt.
 	 */
-	gibKlausurDieFreiIstMitDenMeistenFreienNachbarn() : number {
-		let maxNachbarn : number = -1;
-		let maxNr : number = -1;
+	gibKlausurDieFreiIstMitDenMeistenFreienNachbarn(): number {
+		let maxNachbarn: number = -1;
+		let maxNr: number = -1;
 		for (const nr of this.gibErzeugeKlausurenInZufaelligerReihenfolge()) {
 			if (this._klausurZuSchiene[nr] >= 0)
 				continue;
-			const nachbarn : number = this.gibAnzahlFreierNachbarn(nr);
+			const nachbarn: number = this.gibAnzahlFreierNachbarn(nr);
 			if (nachbarn < maxNachbarn)
 				continue;
 			maxNachbarn = nachbarn;
@@ -486,9 +486,9 @@ export class KlausurblockungSchienenDynDaten extends JavaObject {
 		return maxNr;
 	}
 
-	private gibAnzahlFreierNachbarn(nr : number) : number {
-		let summe : number = 0;
-		for (let nr2 : number = 0; nr2 < this._klausurenAnzahl; nr2++)
+	private gibAnzahlFreierNachbarn(nr: number): number {
+		let summe: number = 0;
+		for (let nr2: number = 0; nr2 < this._klausurenAnzahl; nr2++)
 			if ((this._klausurZuSchiene[nr2] >= 0) && (this._verboten[nr][nr2]))
 				summe++;
 		return summe;
@@ -502,15 +502,15 @@ export class KlausurblockungSchienenDynDaten extends JavaObject {
 	 * @return      eine freie Klausur, die nicht mit "nr1" benachbart ist, welche aber die meisten freien Nachbarn hat,
 	 *              die widerum mit "nr1" benachbart sind.
 	 */
-	gibKlausurDieFreiIstUndNichtBenachbartZurMengeAberDerenNachbarnMaximalBenachbartSind(setS : LinkedCollection<number>) : number {
-		let maxNachbarn : number = -1;
-		let maxNr : number = -1;
+	gibKlausurDieFreiIstUndNichtBenachbartZurMengeAberDerenNachbarnMaximalBenachbartSind(setS: LinkedCollection<number>): number {
+		let maxNachbarn: number = -1;
+		let maxNr: number = -1;
 		for (const nr2 of this.gibErzeugeKlausurenInZufaelligerReihenfolge()) {
 			if (this._klausurZuSchiene[nr2] >= 0)
 				continue;
 			if (this.gibIstBenachbart(nr2, setS))
 				continue;
-			const nachbarn : number = this.gibAnzahlFreierNachbarnVonNr2DieMitDerMengeBenachbartSind(setS, nr2);
+			const nachbarn: number = this.gibAnzahlFreierNachbarnVonNr2DieMitDerMengeBenachbartSind(setS, nr2);
 			if (nachbarn < maxNachbarn)
 				continue;
 			maxNachbarn = nachbarn;
@@ -519,15 +519,15 @@ export class KlausurblockungSchienenDynDaten extends JavaObject {
 		return maxNr;
 	}
 
-	private gibAnzahlFreierNachbarnVonNr2DieMitDerMengeBenachbartSind(setS : LinkedCollection<number>, nr2 : number) : number {
-		let summe : number = 0;
-		for (let nr3 : number = 0; nr3 < this._klausurenAnzahl; nr3++)
+	private gibAnzahlFreierNachbarnVonNr2DieMitDerMengeBenachbartSind(setS: LinkedCollection<number>, nr2: number): number {
+		let summe: number = 0;
+		for (let nr3: number = 0; nr3 < this._klausurenAnzahl; nr3++)
 			if (((this._verboten[nr2][nr3]) && (this._klausurZuSchiene[nr3] < 0)) && (this.gibIstBenachbart(nr3, setS)))
 				summe++;
 		return summe;
 	}
 
-	private gibIstBenachbart(nr3 : number, setS : LinkedCollection<number>) : boolean {
+	private gibIstBenachbart(nr3: number, setS: LinkedCollection<number>): boolean {
 		for (const nr4 of setS)
 			if (this._verboten[nr3][nr4])
 				return true;
@@ -537,7 +537,7 @@ export class KlausurblockungSchienenDynDaten extends JavaObject {
 	/**
 	 * Speichert die aktuelle Klausur-Schienen-Lage in Zustand 1.
 	 */
-	aktionZustand1Speichern() : void {
+	aktionZustand1Speichern(): void {
 		this._schienenAnzahl1 = this._schienenAnzahl;
 		System.arraycopy(this._klausurZuSchiene, 0, this._klausurZuSchiene1, 0, this._klausurenAnzahl);
 	}
@@ -545,7 +545,7 @@ export class KlausurblockungSchienenDynDaten extends JavaObject {
 	/**
 	 * Lädt die aktuelle Klausur-Schienen-Lage aus Zustand 1.
 	 */
-	aktionZustand1Laden() : void {
+	aktionZustand1Laden(): void {
 		this.aktionKlausurenAusSchienenEntfernen();
 		this._schienenAnzahl = this._schienenAnzahl1;
 		System.arraycopy(this._klausurZuSchiene1, 0, this._klausurZuSchiene, 0, this._klausurenAnzahl);
@@ -554,7 +554,7 @@ export class KlausurblockungSchienenDynDaten extends JavaObject {
 	/**
 	 * Speichert die aktuelle Klausur-Schienen-Lage in Zustand 2.
 	 */
-	aktionZustand2Speichern() : void {
+	aktionZustand2Speichern(): void {
 		this._schienenAnzahl2 = this._schienenAnzahl;
 		System.arraycopy(this._klausurZuSchiene, 0, this._klausurZuSchiene2, 0, this._klausurenAnzahl);
 		this._logger.logLn("BESSER, bevorzugtSumme = " + this.gibSchienenBevorzugt(this._klausurZuSchiene));
@@ -563,7 +563,7 @@ export class KlausurblockungSchienenDynDaten extends JavaObject {
 	/**
 	 * Lädt die aktuelle Klausur-Schienen-Lage aus Zustand 2.
 	 */
-	aktionZustand2Laden() : void {
+	aktionZustand2Laden(): void {
 		this.aktionKlausurenAusSchienenEntfernen();
 		this._schienenAnzahl = this._schienenAnzahl2;
 		System.arraycopy(this._klausurZuSchiene2, 0, this._klausurZuSchiene, 0, this._klausurenAnzahl);
@@ -572,8 +572,8 @@ export class KlausurblockungSchienenDynDaten extends JavaObject {
 	/**
 	 * Entfernt alle Klausur-Schienen-Zuordnungen und passt die Datenstrukturen entsprechend an.
 	 */
-	aktionKlausurenAusSchienenEntfernen() : void {
-		for (let i : number = 0; i < this._klausurenAnzahl; i++)
+	aktionKlausurenAusSchienenEntfernen(): void {
+		for (let i: number = 0; i < this._klausurenAnzahl; i++)
 			this._klausurZuSchiene[i] = -1;
 		this._schienenAnzahl = 0;
 	}
@@ -585,12 +585,12 @@ export class KlausurblockungSchienenDynDaten extends JavaObject {
 	 * @param  s  die Schiene, in der die übergebene Klausur landen soll.
 	 * @return    TRUE, falls die übergebene Klausur in die übergebene Schiene gesetzt werden konnte.
 	 */
-	aktionSetzeKlausurInSchiene(nr : number, s : number) : boolean {
+	aktionSetzeKlausurInSchiene(nr: number, s: number): boolean {
 		if (s < 0)
 			throw new DeveloperNotificationException("aktionSetzeKlausurInSchiene(" + nr + ", " + s + ") --> Schiene zu klein!")
 		if (s >= this._schienenAnzahl)
 			throw new DeveloperNotificationException("aktionSetzeKlausurInSchiene(" + nr + ", " + s + ") --> Schiene zu groß!")
-		for (let nr2 : number = 0; nr2 < this._klausurenAnzahl; nr2++)
+		for (let nr2: number = 0; nr2 < this._klausurenAnzahl; nr2++)
 			if ((this._klausurZuSchiene[nr2] === s) && (this._verboten[nr][nr2]))
 				return false;
 		this._klausurZuSchiene[nr] = s;
@@ -603,7 +603,7 @@ export class KlausurblockungSchienenDynDaten extends JavaObject {
 	 *
 	 * @param klausurNr die Nummer der Klausur, die entfernt werden soll.
 	 */
-	aktionEntferneKlausurAusSchiene(klausurNr : number) : void {
+	aktionEntferneKlausurAusSchiene(klausurNr: number): void {
 		if (this._klausurZuSchiene[klausurNr] < 0)
 			throw new DeveloperNotificationException("aktionEntferneKlausurAusSchiene(" + klausurNr + ") --> Die Klausur hatte gar keine Schiene!")
 		this._klausurZuSchiene[klausurNr] = -1;
@@ -616,8 +616,8 @@ export class KlausurblockungSchienenDynDaten extends JavaObject {
 	 * @param  klausurNr die Klausur, die in eine neue Schiene gesetzt werden soll.
 	 * @return           die neue Schiene, in welche die Klausur gesetzt wurde.
 	 */
-	aktionSetzeKlausurInNeueSchiene(klausurNr : number) : number {
-		const schiene : number = this._schienenAnzahl;
+	aktionSetzeKlausurInNeueSchiene(klausurNr: number): number {
+		const schiene: number = this._schienenAnzahl;
 		if (this._klausurZuSchiene[klausurNr] >= 0)
 			throw new DeveloperNotificationException("aktionSetzeKlausurInNeueSchiene(" + klausurNr + ") --> Die Klausur ist bereits in einer Schiene!")
 		this._klausurZuSchiene[klausurNr] = this._schienenAnzahl;
@@ -630,7 +630,7 @@ export class KlausurblockungSchienenDynDaten extends JavaObject {
 	 *
 	 * @param pDifferenz Die Differenz der Veränderung.
 	 */
-	aktionSchienenAnzahlVeraendern(pDifferenz : number) : void {
+	aktionSchienenAnzahlVeraendern(pDifferenz: number): void {
 		this._schienenAnzahl += pDifferenz;
 	}
 
@@ -641,7 +641,7 @@ export class KlausurblockungSchienenDynDaten extends JavaObject {
 	 * @param klausurNr Setzt die übergebene Klausur in eine zufällige vorhandene Schiene.
 	 *                  Falls dies nicht möglich ist, wird die Klausur in eine neue Schiene gesetzt.
 	 */
-	aktionSetzeKlausurInZufaelligeSchieneOderErzeugeNeue(klausurNr : number) : void {
+	aktionSetzeKlausurInZufaelligeSchieneOderErzeugeNeue(klausurNr: number): void {
 		for (const schienenNr of this.gibErzeugeSchienenInZufaelligerReihenfolge())
 			if (this.aktionSetzeKlausurInSchiene(klausurNr, schienenNr))
 				return;
@@ -652,7 +652,7 @@ export class KlausurblockungSchienenDynDaten extends JavaObject {
 	 * Verteilt nicht verteilte Klausuren in zufällige Schienen.
 	 * Falls dies nicht klappt, wird eine neue Schiene erzeugt.
 	 */
-	aktionSetzeNichtverteilteKlausurenZufaellig() : void {
+	aktionSetzeNichtverteilteKlausurenZufaellig(): void {
 		for (const nr of this.gibErzeugeKlausurenInZufaelligerReihenfolge())
 			if (this._klausurZuSchiene[nr] === -1)
 				this.aktionSetzeKlausurInZufaelligeSchieneOderErzeugeNeue(nr);
@@ -662,10 +662,10 @@ export class KlausurblockungSchienenDynDaten extends JavaObject {
 	 * Zerstört einige Schienen, d.h. entfernt alle Klausuren aus den zerstörten Schienen
 	 * und setzt danach alle entfernen Klausuren neu.
 	 */
-	aktionZerstoereEinigeSchienenUndVerteileNeu() : void {
+	aktionZerstoereEinigeSchienenUndVerteileNeu(): void {
 		while (this._schienenAnzahl > 0) {
-			const s : number = this._random.nextInt(this._schienenAnzahl);
-			for (let nr : number = 0; nr < this._klausurenAnzahl; nr++) {
+			const s: number = this._random.nextInt(this._schienenAnzahl);
+			for (let nr: number = 0; nr < this._klausurenAnzahl; nr++) {
 				if (this._klausurZuSchiene[nr] === s)
 					this._klausurZuSchiene[nr] = -1;
 				if (this._klausurZuSchiene[nr] === (this._schienenAnzahl - 1))
@@ -683,21 +683,21 @@ export class KlausurblockungSchienenDynDaten extends JavaObject {
 	 *
 	 * @param header Überschrift der Debug-Ausgabe.
 	 */
-	debug(header : string) : void {
+	debug(header: string): void {
 		this._logger.logLn("");
 		this._logger.logLn(header);
-		for (let s : number = 0; s < this._schienenAnzahl; s++) {
+		for (let s: number = 0; s < this._schienenAnzahl; s++) {
 			this._logger.log("    Schiene " + (s + 1) + ": ");
-			for (let nr : number = 0; nr < this._klausurenAnzahl; nr++)
+			for (let nr: number = 0; nr < this._klausurenAnzahl; nr++)
 				if (this._klausurZuSchiene[nr] === s) {
-					const gostKlausur : GostKursklausurRich | null = this._mapNummerZuKlausur.get(nr);
+					const gostKlausur: GostKursklausurRich | null = this._mapNummerZuKlausur.get(nr);
 					if (gostKlausur === null)
 						throw new DeveloperNotificationException("Mapping _mapNummerZuKlausur.get(" + nr + ") ist NULL!")
 					this._logger.log(" " + (nr + 1) + "/" + Arrays.toString(gostKlausur.kursSchiene));
 				}
 			this._logger.logLn("");
 		}
-		for (let nr : number = 0; nr < this._klausurenAnzahl; nr++)
+		for (let nr: number = 0; nr < this._klausurenAnzahl; nr++)
 			DeveloperNotificationException.ifTrue("Klausur " + (nr + 1) + " --> ohne Schiene!", this._klausurZuSchiene[nr] < 0);
 	}
 
@@ -705,7 +705,7 @@ export class KlausurblockungSchienenDynDaten extends JavaObject {
 	 * Entfernt zunächst alle Klausuren aus ihren Schienen und setzt sie dann in eine zufällige Schiene.
 	 * Falls dies nicht klappt, wird eine neue Schiene erzeugt.
 	 */
-	aktion_EntferneAlles_KlausurenZufaellig_SchienenZufaellig() : void {
+	aktion_EntferneAlles_KlausurenZufaellig_SchienenZufaellig(): void {
 		this.aktionKlausurenAusSchienenEntfernen();
 		for (const nr of this.gibErzeugeKlausurenInZufaelligerReihenfolge())
 			this.aktionSetzeKlausurInZufaelligeSchieneOderErzeugeNeue(nr);
@@ -714,10 +714,10 @@ export class KlausurblockungSchienenDynDaten extends JavaObject {
 	/**
 	 * Entfernt zunächst alle Klausuren aus ihren Schienen und füllt dann die Schienen nacheinander auf.
 	 */
-	aktion_EntferneAlles_SchienenNacheinander_KlausurenZufaellig() : void {
+	aktion_EntferneAlles_SchienenNacheinander_KlausurenZufaellig(): void {
 		this.aktionKlausurenAusSchienenEntfernen();
 		while (this.gibAnzahlNichtverteilterKlausuren() > 0) {
-			const schienenNr : number = this.gibErzeugeNeueSchiene();
+			const schienenNr: number = this.gibErzeugeNeueSchiene();
 			for (const klausurNr of this.gibErzeugeKlausurenInZufaelligerReihenfolge())
 				if (this.gibIstKlausurUnverteilt(klausurNr))
 					this.aktionSetzeKlausurInSchiene(klausurNr, schienenNr);
@@ -728,7 +728,7 @@ export class KlausurblockungSchienenDynDaten extends JavaObject {
 	 * Entfernt zunächst alle Klausuren aus ihren Schienen. Verteilt dann die Klausuren mit höherem Grad zuerst auf
 	 * eine zufällige Schiene. Falls dies nicht klappt, wird eine neue Schiene erzeugt.
 	 */
-	aktion_EntferneAlles_KlausurenHoherGradZuerst_SchienenZufaellig() : void {
+	aktion_EntferneAlles_KlausurenHoherGradZuerst_SchienenZufaellig(): void {
 		this.aktionKlausurenAusSchienenEntfernen();
 		for (const klausurNr of this.gibErzeugeKlausurenMitHoeheremGradZuerstEtwasPermutiert())
 			this.aktionSetzeKlausurInZufaelligeSchieneOderErzeugeNeue(klausurNr);
@@ -738,10 +738,10 @@ export class KlausurblockungSchienenDynDaten extends JavaObject {
 	 * Entfernt zunächst alle Klausuren aus ihren Schienen und füllt dann die Schienen nacheinander auf.
 	 * Dabei werden Klausuren mit höherem Grad bevorzugt.
 	 */
-	aktion_EntferneAlles_SchienenNacheinande_KlausurenHoherGradZuerst() : void {
+	aktion_EntferneAlles_SchienenNacheinande_KlausurenHoherGradZuerst(): void {
 		this.aktionKlausurenAusSchienenEntfernen();
 		while (this.gibAnzahlNichtverteilterKlausuren() > 0) {
-			const schienenNr : number = this.gibErzeugeNeueSchiene();
+			const schienenNr: number = this.gibErzeugeNeueSchiene();
 			for (const klausurNr of this.gibErzeugeKlausurenMitHoeheremGradZuerstEtwasPermutiert())
 				if (this.gibIstKlausurUnverteilt(klausurNr))
 					this.aktionSetzeKlausurInSchiene(klausurNr, schienenNr);
@@ -752,9 +752,9 @@ export class KlausurblockungSchienenDynDaten extends JavaObject {
 	 * Entfernt zunächst alle Klausuren aus ihren Schienen. Verteilt dann die Klausuren mit den meisten Nachbarsfarben
 	 * auf eine zufällige Schiene. Falls dies nicht klappt, wird eine neue Schiene erzeugt.
 	 */
-	aktion_EntferneAlles_KlausurenMitDenMeistenNachbarsfarben_SchienenZufaellig() : void {
+	aktion_EntferneAlles_KlausurenMitDenMeistenNachbarsfarben_SchienenZufaellig(): void {
 		this.aktionKlausurenAusSchienenEntfernen();
-		let klausurNr : number = this.gibKlausurDieFreiIstMitDenMeistenNachbarsfarben();
+		let klausurNr: number = this.gibKlausurDieFreiIstMitDenMeistenNachbarsfarben();
 		while (klausurNr >= 0) {
 			this.aktionSetzeKlausurInZufaelligeSchieneOderErzeugeNeue(klausurNr);
 			klausurNr = this.gibKlausurDieFreiIstMitDenMeistenNachbarsfarben();
@@ -766,10 +766,10 @@ export class KlausurblockungSchienenDynDaten extends JavaObject {
 	 * füllt dann die Schienen nacheinander auf
 	 * und wählt die Klausuren so, dass bevorzugte Klausuren-Paare sequentiell durchlaufen werden.
 	 */
-	aktion_EntferneAlles_TermineNacheinander_KlausurenBevorzugterLage() : void {
+	aktion_EntferneAlles_TermineNacheinander_KlausurenBevorzugterLage(): void {
 		this.aktionKlausurenAusSchienenEntfernen();
 		while (this.gibAnzahlNichtverteilterKlausuren() > 0) {
-			const schienenNr : number = this.gibErzeugeNeueSchiene();
+			const schienenNr: number = this.gibErzeugeNeueSchiene();
 			for (const klausurNr of this.gibErzeugeKlausurenInZufaelligerReihenfolgeNachBevorzugterLage())
 				if (this.gibIstKlausurUnverteilt(klausurNr))
 					this.aktionSetzeKlausurInSchiene(klausurNr, schienenNr);
@@ -780,7 +780,7 @@ export class KlausurblockungSchienenDynDaten extends JavaObject {
 		return 'de.svws_nrw.core.utils.gost.klausurplanung.KlausurblockungSchienenDynDaten';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.utils.gost.klausurplanung.KlausurblockungSchienenDynDaten'].includes(name);
 	}
 
@@ -788,6 +788,6 @@ export class KlausurblockungSchienenDynDaten extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_utils_gost_klausurplanung_KlausurblockungSchienenDynDaten(obj : unknown) : KlausurblockungSchienenDynDaten {
+export function cast_de_svws_nrw_core_utils_gost_klausurplanung_KlausurblockungSchienenDynDaten(obj: unknown): KlausurblockungSchienenDynDaten {
 	return obj as KlausurblockungSchienenDynDaten;
 }

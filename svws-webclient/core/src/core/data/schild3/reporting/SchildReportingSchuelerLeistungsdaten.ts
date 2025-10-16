@@ -6,82 +6,82 @@ export class SchildReportingSchuelerLeistungsdaten extends JavaObject {
 	/**
 	 * Die ID der Leistungsdaten
 	 */
-	public id : number = -1;
+	public id: number = -1;
 
 	/**
 	 * Die ID des Schüler-Lernabschnitts, zu dem die Leistungsdaten gehören.
 	 */
-	public abschnittID : number = -1;
+	public abschnittID: number = -1;
 
 	/**
 	 * Die ID des Faches der Leistungsdaten
 	 */
-	public fachID : number = -1;
+	public fachID: number = -1;
 
 	/**
 	 * Das Kürzel des Faches
 	 */
-	public fachKuerzel : string = "";
+	public fachKuerzel: string = "";
 
 	/**
 	 * Die Bezeichnung des Faches
 	 */
-	public fach : string = "";
+	public fach: string = "";
 
 	/**
 	 * Die ID des Fachlehrers
 	 */
-	public lehrerID : number | null = null;
+	public lehrerID: number | null = null;
 
 	/**
 	 * Das Kürzel des Fachlehrers
 	 */
-	public lehrerKuerzel : string | null = null;
+	public lehrerKuerzel: string | null = null;
 
 	/**
 	 * Die ID des Kurses, sofern vorhanden
 	 */
-	public kursID : number | null = null;
+	public kursID: number | null = null;
 
 	/**
 	 * Die Bezeichnung des Kurses, sofern vorhanden, sonst leer
 	 */
-	public kurs : string = "";
+	public kurs: string = "";
 
 	/**
 	 * Die spezielle Kursart
 	 */
-	public kursart : string = "";
+	public kursart: string = "";
 
 	/**
 	 * Die allgemeine Kursart
 	 */
-	public kursartAllg : string = "";
+	public kursartAllg: string = "";
 
 	/**
 	 * Die Bezeichnung der Note
 	 */
-	public note : string = "";
+	public note: string = "";
 
 	/**
 	 * Das Notenkürzel
 	 */
-	public noteKuerzel : string = "";
+	public noteKuerzel: string = "";
 
 	/**
 	 * Die Notenpunkte, sofern eine Note gesetzt ist
 	 */
-	public notePunkte : number | null = null;
+	public notePunkte: number | null = null;
 
 	/**
 	 * Wert für allgemeine Sortierung der Fächer. Wird mit aufgenommen, um in Reports eine benutzerdefinierte Sortierung zu ermöglichen
 	 */
-	public sortierungAllg : number | null = null;
+	public sortierungAllg: number | null = null;
 
 	/**
 	 * Wert für Sortierung der Fächer in der Sek-II. Wird mit aufgenommen, um in Reports eine benutzerdefinierte Sortierung zu ermöglichen
 	 */
-	public sortierungSekII : number | null = null;
+	public sortierungSekII: number | null = null;
 
 
 	/**
@@ -95,13 +95,13 @@ export class SchildReportingSchuelerLeistungsdaten extends JavaObject {
 		return 'de.svws_nrw.core.data.schild3.reporting.SchildReportingSchuelerLeistungsdaten';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.schild3.reporting.SchildReportingSchuelerLeistungsdaten'].includes(name);
 	}
 
 	public static class = new Class<SchildReportingSchuelerLeistungsdaten>('de.svws_nrw.core.data.schild3.reporting.SchildReportingSchuelerLeistungsdaten');
 
-	public static transpilerFromJSON(json : string): SchildReportingSchuelerLeistungsdaten {
+	public static transpilerFromJSON(json: string): SchildReportingSchuelerLeistungsdaten {
 		const obj = JSON.parse(json) as Partial<SchildReportingSchuelerLeistungsdaten>;
 		const result = new SchildReportingSchuelerLeistungsdaten();
 		if (obj.id === undefined)
@@ -143,7 +143,7 @@ export class SchildReportingSchuelerLeistungsdaten extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : SchildReportingSchuelerLeistungsdaten) : string {
+	public static transpilerToJSON(obj: SchildReportingSchuelerLeistungsdaten): string {
 		let result = '{';
 		result += '"id" : ' + obj.id.toString() + ',';
 		result += '"abschnittID" : ' + obj.abschnittID.toString() + ',';
@@ -166,7 +166,7 @@ export class SchildReportingSchuelerLeistungsdaten extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<SchildReportingSchuelerLeistungsdaten>) : string {
+	public static transpilerToJSONPatch(obj: Partial<SchildReportingSchuelerLeistungsdaten>): string {
 		let result = '{';
 		if (obj.id !== undefined) {
 			result += '"id" : ' + obj.id.toString() + ',';
@@ -223,6 +223,6 @@ export class SchildReportingSchuelerLeistungsdaten extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_schild3_reporting_SchildReportingSchuelerLeistungsdaten(obj : unknown) : SchildReportingSchuelerLeistungsdaten {
+export function cast_de_svws_nrw_core_data_schild3_reporting_SchildReportingSchuelerLeistungsdaten(obj: unknown): SchildReportingSchuelerLeistungsdaten {
 	return obj as SchildReportingSchuelerLeistungsdaten;
 }

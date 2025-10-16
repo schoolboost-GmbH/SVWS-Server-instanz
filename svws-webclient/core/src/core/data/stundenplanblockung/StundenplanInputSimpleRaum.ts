@@ -6,12 +6,12 @@ export class StundenplanInputSimpleRaum extends JavaObject {
 	/**
 	 * Die ID des Raumes.
 	 */
-	public id : number = 0;
+	public id: number = 0;
 
 	/**
 	 * Das Kürzel des Raumes. Beispielsweise 'SpH1' oder 'BK05'.
 	 */
-	public kuerzel : string = "";
+	public kuerzel: string = "";
 
 
 	/**
@@ -25,13 +25,13 @@ export class StundenplanInputSimpleRaum extends JavaObject {
 		return 'de.svws_nrw.core.data.stundenplanblockung.StundenplanInputSimpleRaum';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.stundenplanblockung.StundenplanInputSimpleRaum'].includes(name);
 	}
 
 	public static class = new Class<StundenplanInputSimpleRaum>('de.svws_nrw.core.data.stundenplanblockung.StundenplanInputSimpleRaum');
 
-	public static transpilerFromJSON(json : string): StundenplanInputSimpleRaum {
+	public static transpilerFromJSON(json: string): StundenplanInputSimpleRaum {
 		const obj = JSON.parse(json) as Partial<StundenplanInputSimpleRaum>;
 		const result = new StundenplanInputSimpleRaum();
 		if (obj.id === undefined)
@@ -43,7 +43,7 @@ export class StundenplanInputSimpleRaum extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : StundenplanInputSimpleRaum) : string {
+	public static transpilerToJSON(obj: StundenplanInputSimpleRaum): string {
 		let result = '{';
 		result += '"id" : ' + obj.id.toString() + ',';
 		result += '"kuerzel" : ' + JSON.stringify(obj.kuerzel) + ',';
@@ -52,7 +52,7 @@ export class StundenplanInputSimpleRaum extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<StundenplanInputSimpleRaum>) : string {
+	public static transpilerToJSONPatch(obj: Partial<StundenplanInputSimpleRaum>): string {
 		let result = '{';
 		if (obj.id !== undefined) {
 			result += '"id" : ' + obj.id.toString() + ',';
@@ -67,6 +67,6 @@ export class StundenplanInputSimpleRaum extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_stundenplanblockung_StundenplanInputSimpleRaum(obj : unknown) : StundenplanInputSimpleRaum {
+export function cast_de_svws_nrw_core_data_stundenplanblockung_StundenplanInputSimpleRaum(obj: unknown): StundenplanInputSimpleRaum {
 	return obj as StundenplanInputSimpleRaum;
 }

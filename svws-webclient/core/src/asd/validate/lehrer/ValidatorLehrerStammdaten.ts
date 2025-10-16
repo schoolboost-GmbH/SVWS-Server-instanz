@@ -16,7 +16,7 @@ export class ValidatorLehrerStammdaten extends Validator {
 	 * @param daten     die Daten des Validators
 	 * @param kontext   der Kontext des Validators
 	 */
-	public constructor(daten : LehrerStammdaten, kontext : ValidatorKontext) {
+	public constructor(daten: LehrerStammdaten, kontext: ValidatorKontext) {
 		super(kontext);
 		this._validatoren.add(new ValidatorLehrerStammdatenNachname(daten, kontext));
 		this._validatoren.add(new ValidatorLehrerStammdatenVorname(daten, kontext));
@@ -24,7 +24,7 @@ export class ValidatorLehrerStammdaten extends Validator {
 		this._validatoren.add(new ValidatorLehrerStammdatenGeschlecht(daten, kontext));
 	}
 
-	protected pruefe() : boolean {
+	protected pruefe(): boolean {
 		return true;
 	}
 
@@ -32,7 +32,7 @@ export class ValidatorLehrerStammdaten extends Validator {
 		return 'de.svws_nrw.asd.validate.lehrer.ValidatorLehrerStammdaten';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.asd.validate.lehrer.ValidatorLehrerStammdaten', 'de.svws_nrw.asd.validate.Validator'].includes(name);
 	}
 
@@ -40,6 +40,6 @@ export class ValidatorLehrerStammdaten extends Validator {
 
 }
 
-export function cast_de_svws_nrw_asd_validate_lehrer_ValidatorLehrerStammdaten(obj : unknown) : ValidatorLehrerStammdaten {
+export function cast_de_svws_nrw_asd_validate_lehrer_ValidatorLehrerStammdaten(obj: unknown): ValidatorLehrerStammdaten {
 	return obj as ValidatorLehrerStammdaten;
 }

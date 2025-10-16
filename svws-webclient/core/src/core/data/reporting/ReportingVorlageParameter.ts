@@ -7,17 +7,17 @@ export class ReportingVorlageParameter extends JavaObject {
 	/**
 	 * Der Name des Vorlage-Parameters, wie er später im HTML-Template verwendet wird.
 	 */
-	public name : string = "";
+	public name: string = "";
 
 	/**
 	 * Der Typ des Wertes des Vorlage-Parameters.
 	 */
-	public typ : number = ReportingVorlageParameterTyp.UNDEFINED.getId();
+	public typ: number = ReportingVorlageParameterTyp.UNDEFINED.getId();
 
 	/**
 	 * Der Wert des Vorlage-Parameters.
 	 */
-	public wert : string = "";
+	public wert: string = "";
 
 
 	/**
@@ -31,13 +31,13 @@ export class ReportingVorlageParameter extends JavaObject {
 		return 'de.svws_nrw.core.data.reporting.ReportingVorlageParameter';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.reporting.ReportingVorlageParameter'].includes(name);
 	}
 
 	public static class = new Class<ReportingVorlageParameter>('de.svws_nrw.core.data.reporting.ReportingVorlageParameter');
 
-	public static transpilerFromJSON(json : string): ReportingVorlageParameter {
+	public static transpilerFromJSON(json: string): ReportingVorlageParameter {
 		const obj = JSON.parse(json) as Partial<ReportingVorlageParameter>;
 		const result = new ReportingVorlageParameter();
 		if (obj.name === undefined)
@@ -52,7 +52,7 @@ export class ReportingVorlageParameter extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : ReportingVorlageParameter) : string {
+	public static transpilerToJSON(obj: ReportingVorlageParameter): string {
 		let result = '{';
 		result += '"name" : ' + JSON.stringify(obj.name) + ',';
 		result += '"typ" : ' + obj.typ.toString() + ',';
@@ -62,7 +62,7 @@ export class ReportingVorlageParameter extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<ReportingVorlageParameter>) : string {
+	public static transpilerToJSONPatch(obj: Partial<ReportingVorlageParameter>): string {
 		let result = '{';
 		if (obj.name !== undefined) {
 			result += '"name" : ' + JSON.stringify(obj.name) + ',';
@@ -80,6 +80,6 @@ export class ReportingVorlageParameter extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_reporting_ReportingVorlageParameter(obj : unknown) : ReportingVorlageParameter {
+export function cast_de_svws_nrw_core_data_reporting_ReportingVorlageParameter(obj: unknown): ReportingVorlageParameter {
 	return obj as ReportingVorlageParameter;
 }

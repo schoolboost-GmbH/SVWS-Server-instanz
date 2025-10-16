@@ -6,42 +6,42 @@ export class GostKlausurenKalenderinformation extends JavaObject {
 	/**
 	 * Die ID der Kalenderinformation.
 	 */
-	public id : number = -1;
+	public id: number = -1;
 
 	/**
 	 * Die Bezeichnung der Kalenderinformation.
 	 */
-	public bezeichnung : string = "";
+	public bezeichnung: string = "";
 
 	/**
 	 * Das Startdatum der Kalenderinformation.
 	 */
-	public startdatum : string | null = null;
+	public startdatum: string | null = null;
 
 	/**
 	 * Die Startzeit der Kalenderinformation in Minuten seit 0 Uhr.
 	 */
-	public startzeit : number | null = null;
+	public startzeit: number | null = null;
 
 	/**
 	 * Das Enddatum der Kalenderinformation.
 	 */
-	public enddatum : string | null = null;
+	public enddatum: string | null = null;
 
 	/**
 	 * Die Endzeit der Kalenderinformation in Minuten seit 0 Uhr.
 	 */
-	public endzeit : number | null = null;
+	public endzeit: number | null = null;
 
 	/**
 	 * Die textuelle Bemerkung zur Kalenderinformation, sofern vorhanden.
 	 */
-	public bemerkung : string | null = null;
+	public bemerkung: string | null = null;
 
 	/**
 	 * Die Information, ob es sich um einen Sperrtermin handelt.
 	 */
-	public istSperrtermin : boolean = false;
+	public istSperrtermin: boolean = false;
 
 
 	/**
@@ -55,13 +55,13 @@ export class GostKlausurenKalenderinformation extends JavaObject {
 		return 'de.svws_nrw.core.data.gost.klausurplanung.GostKlausurenKalenderinformation';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.gost.klausurplanung.GostKlausurenKalenderinformation'].includes(name);
 	}
 
 	public static class = new Class<GostKlausurenKalenderinformation>('de.svws_nrw.core.data.gost.klausurplanung.GostKlausurenKalenderinformation');
 
-	public static transpilerFromJSON(json : string): GostKlausurenKalenderinformation {
+	public static transpilerFromJSON(json: string): GostKlausurenKalenderinformation {
 		const obj = JSON.parse(json) as Partial<GostKlausurenKalenderinformation>;
 		const result = new GostKlausurenKalenderinformation();
 		if (obj.id === undefined)
@@ -81,7 +81,7 @@ export class GostKlausurenKalenderinformation extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : GostKlausurenKalenderinformation) : string {
+	public static transpilerToJSON(obj: GostKlausurenKalenderinformation): string {
 		let result = '{';
 		result += '"id" : ' + obj.id.toString() + ',';
 		result += '"bezeichnung" : ' + JSON.stringify(obj.bezeichnung) + ',';
@@ -96,7 +96,7 @@ export class GostKlausurenKalenderinformation extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<GostKlausurenKalenderinformation>) : string {
+	public static transpilerToJSONPatch(obj: Partial<GostKlausurenKalenderinformation>): string {
 		let result = '{';
 		if (obj.id !== undefined) {
 			result += '"id" : ' + obj.id.toString() + ',';
@@ -129,6 +129,6 @@ export class GostKlausurenKalenderinformation extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_gost_klausurplanung_GostKlausurenKalenderinformation(obj : unknown) : GostKlausurenKalenderinformation {
+export function cast_de_svws_nrw_core_data_gost_klausurplanung_GostKlausurenKalenderinformation(obj: unknown): GostKlausurenKalenderinformation {
 	return obj as GostKlausurenKalenderinformation;
 }

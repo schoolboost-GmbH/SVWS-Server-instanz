@@ -6,17 +6,17 @@ export class LehrerPersonalabschnittsdatenLehrerfunktion extends JavaObject {
 	/**
 	 * Die ID für diesen Eintrag.
 	 */
-	public id : number = -1;
+	public id: number = -1;
 
 	/**
 	 * Die ID der Lehrerabschnittsdaten.
 	 */
-	public idAbschnittsdaten : number = -1;
+	public idAbschnittsdaten: number = -1;
 
 	/**
 	 * Die ID in dem Katalog der schulspezifischen Lehrerfunktionen.
 	 */
-	public idFunktion : number = -1;
+	public idFunktion: number = -1;
 
 
 	/**
@@ -30,13 +30,13 @@ export class LehrerPersonalabschnittsdatenLehrerfunktion extends JavaObject {
 		return 'de.svws_nrw.asd.data.lehrer.LehrerPersonalabschnittsdatenLehrerfunktion';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.asd.data.lehrer.LehrerPersonalabschnittsdatenLehrerfunktion'].includes(name);
 	}
 
 	public static class = new Class<LehrerPersonalabschnittsdatenLehrerfunktion>('de.svws_nrw.asd.data.lehrer.LehrerPersonalabschnittsdatenLehrerfunktion');
 
-	public static transpilerFromJSON(json : string): LehrerPersonalabschnittsdatenLehrerfunktion {
+	public static transpilerFromJSON(json: string): LehrerPersonalabschnittsdatenLehrerfunktion {
 		const obj = JSON.parse(json) as Partial<LehrerPersonalabschnittsdatenLehrerfunktion>;
 		const result = new LehrerPersonalabschnittsdatenLehrerfunktion();
 		if (obj.id === undefined)
@@ -51,7 +51,7 @@ export class LehrerPersonalabschnittsdatenLehrerfunktion extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : LehrerPersonalabschnittsdatenLehrerfunktion) : string {
+	public static transpilerToJSON(obj: LehrerPersonalabschnittsdatenLehrerfunktion): string {
 		let result = '{';
 		result += '"id" : ' + obj.id.toString() + ',';
 		result += '"idAbschnittsdaten" : ' + obj.idAbschnittsdaten.toString() + ',';
@@ -61,7 +61,7 @@ export class LehrerPersonalabschnittsdatenLehrerfunktion extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<LehrerPersonalabschnittsdatenLehrerfunktion>) : string {
+	public static transpilerToJSONPatch(obj: Partial<LehrerPersonalabschnittsdatenLehrerfunktion>): string {
 		let result = '{';
 		if (obj.id !== undefined) {
 			result += '"id" : ' + obj.id.toString() + ',';
@@ -79,6 +79,6 @@ export class LehrerPersonalabschnittsdatenLehrerfunktion extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_asd_data_lehrer_LehrerPersonalabschnittsdatenLehrerfunktion(obj : unknown) : LehrerPersonalabschnittsdatenLehrerfunktion {
+export function cast_de_svws_nrw_asd_data_lehrer_LehrerPersonalabschnittsdatenLehrerfunktion(obj: unknown): LehrerPersonalabschnittsdatenLehrerfunktion {
 	return obj as LehrerPersonalabschnittsdatenLehrerfunktion;
 }

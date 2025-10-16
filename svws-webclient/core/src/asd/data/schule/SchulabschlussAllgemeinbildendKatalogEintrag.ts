@@ -15,13 +15,13 @@ export class SchulabschlussAllgemeinbildendKatalogEintrag extends CoreTypeData {
 		return 'de.svws_nrw.asd.data.schule.SchulabschlussAllgemeinbildendKatalogEintrag';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.asd.data.CoreTypeData', 'de.svws_nrw.asd.data.schule.SchulabschlussAllgemeinbildendKatalogEintrag'].includes(name);
 	}
 
 	public static class = new Class<SchulabschlussAllgemeinbildendKatalogEintrag>('de.svws_nrw.asd.data.schule.SchulabschlussAllgemeinbildendKatalogEintrag');
 
-	public static transpilerFromJSON(json : string): SchulabschlussAllgemeinbildendKatalogEintrag {
+	public static transpilerFromJSON(json: string): SchulabschlussAllgemeinbildendKatalogEintrag {
 		const obj = JSON.parse(json) as Partial<SchulabschlussAllgemeinbildendKatalogEintrag>;
 		const result = new SchulabschlussAllgemeinbildendKatalogEintrag();
 		if (obj.id === undefined)
@@ -41,7 +41,7 @@ export class SchulabschlussAllgemeinbildendKatalogEintrag extends CoreTypeData {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : SchulabschlussAllgemeinbildendKatalogEintrag) : string {
+	public static transpilerToJSON(obj: SchulabschlussAllgemeinbildendKatalogEintrag): string {
 		let result = '{';
 		result += '"id" : ' + obj.id.toString() + ',';
 		result += '"schluessel" : ' + JSON.stringify(obj.schluessel) + ',';
@@ -54,7 +54,7 @@ export class SchulabschlussAllgemeinbildendKatalogEintrag extends CoreTypeData {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<SchulabschlussAllgemeinbildendKatalogEintrag>) : string {
+	public static transpilerToJSONPatch(obj: Partial<SchulabschlussAllgemeinbildendKatalogEintrag>): string {
 		let result = '{';
 		if (obj.id !== undefined) {
 			result += '"id" : ' + obj.id.toString() + ',';
@@ -81,6 +81,6 @@ export class SchulabschlussAllgemeinbildendKatalogEintrag extends CoreTypeData {
 
 }
 
-export function cast_de_svws_nrw_asd_data_schule_SchulabschlussAllgemeinbildendKatalogEintrag(obj : unknown) : SchulabschlussAllgemeinbildendKatalogEintrag {
+export function cast_de_svws_nrw_asd_data_schule_SchulabschlussAllgemeinbildendKatalogEintrag(obj: unknown): SchulabschlussAllgemeinbildendKatalogEintrag {
 	return obj as SchulabschlussAllgemeinbildendKatalogEintrag;
 }

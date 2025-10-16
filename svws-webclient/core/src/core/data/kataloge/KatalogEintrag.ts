@@ -6,27 +6,27 @@ export class KatalogEintrag extends JavaObject {
 	/**
 	 * Die ID des Katalog-Eintrags.
 	 */
-	public id : number = 0;
+	public id: number = 0;
 
 	/**
 	 * Das Kürzel des Eintrags.
 	 */
-	public kuerzel : string | null = null;
+	public kuerzel: string | null = null;
 
 	/**
 	 * Die textuelle Beschreibung des Katalog-Eintrags.
 	 */
-	public text : string | null = null;
+	public text: string | null = null;
 
 	/**
 	 * Gibt an, ob der Eintrag in der Anwendung sichtbar sein soll oder nicht.
 	 */
-	public istSichtbar : boolean = false;
+	public istSichtbar: boolean = false;
 
 	/**
 	 * Gibt an, ob der Eintrag in der Anwendung änderbar sein soll oder nicht.
 	 */
-	public istAenderbar : boolean = false;
+	public istAenderbar: boolean = false;
 
 
 	/**
@@ -40,13 +40,13 @@ export class KatalogEintrag extends JavaObject {
 		return 'de.svws_nrw.core.data.kataloge.KatalogEintrag';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.kataloge.KatalogEintrag'].includes(name);
 	}
 
 	public static class = new Class<KatalogEintrag>('de.svws_nrw.core.data.kataloge.KatalogEintrag');
 
-	public static transpilerFromJSON(json : string): KatalogEintrag {
+	public static transpilerFromJSON(json: string): KatalogEintrag {
 		const obj = JSON.parse(json) as Partial<KatalogEintrag>;
 		const result = new KatalogEintrag();
 		if (obj.id === undefined)
@@ -63,7 +63,7 @@ export class KatalogEintrag extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : KatalogEintrag) : string {
+	public static transpilerToJSON(obj: KatalogEintrag): string {
 		let result = '{';
 		result += '"id" : ' + obj.id.toString() + ',';
 		result += '"kuerzel" : ' + ((obj.kuerzel === null) ? 'null' : JSON.stringify(obj.kuerzel)) + ',';
@@ -75,7 +75,7 @@ export class KatalogEintrag extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<KatalogEintrag>) : string {
+	public static transpilerToJSONPatch(obj: Partial<KatalogEintrag>): string {
 		let result = '{';
 		if (obj.id !== undefined) {
 			result += '"id" : ' + obj.id.toString() + ',';
@@ -99,6 +99,6 @@ export class KatalogEintrag extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_kataloge_KatalogEintrag(obj : unknown) : KatalogEintrag {
+export function cast_de_svws_nrw_core_data_kataloge_KatalogEintrag(obj: unknown): KatalogEintrag {
 	return obj as KatalogEintrag;
 }

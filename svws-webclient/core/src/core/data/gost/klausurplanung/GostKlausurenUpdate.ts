@@ -8,12 +8,12 @@ export class GostKlausurenUpdate extends JavaObject {
 	/**
 	 * Die zu entfernenden Regeln
 	 */
-	public listSchuelerklausurTermineRemoveIdTermin : List<number> = new ArrayList<number>();
+	public listSchuelerklausurTermineRemoveIdTermin: List<number> = new ArrayList<number>();
 
 	/**
 	 * Die hinzuzufügenden Regeln
 	 */
-	public listKlausurtermineNachschreiberZugelassenFalse : List<number> = new ArrayList<number>();
+	public listKlausurtermineNachschreiberZugelassenFalse: List<number> = new ArrayList<number>();
 
 
 	/**
@@ -27,13 +27,13 @@ export class GostKlausurenUpdate extends JavaObject {
 		return 'de.svws_nrw.core.data.gost.klausurplanung.GostKlausurenUpdate';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.gost.klausurplanung.GostKlausurenUpdate'].includes(name);
 	}
 
 	public static class = new Class<GostKlausurenUpdate>('de.svws_nrw.core.data.gost.klausurplanung.GostKlausurenUpdate');
 
-	public static transpilerFromJSON(json : string): GostKlausurenUpdate {
+	public static transpilerFromJSON(json: string): GostKlausurenUpdate {
 		const obj = JSON.parse(json) as Partial<GostKlausurenUpdate>;
 		const result = new GostKlausurenUpdate();
 		if (obj.listSchuelerklausurTermineRemoveIdTermin !== undefined) {
@@ -49,7 +49,7 @@ export class GostKlausurenUpdate extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : GostKlausurenUpdate) : string {
+	public static transpilerToJSON(obj: GostKlausurenUpdate): string {
 		let result = '{';
 		result += '"listSchuelerklausurTermineRemoveIdTermin" : [ ';
 		for (let i = 0; i < obj.listSchuelerklausurTermineRemoveIdTermin.size(); i++) {
@@ -72,7 +72,7 @@ export class GostKlausurenUpdate extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<GostKlausurenUpdate>) : string {
+	public static transpilerToJSONPatch(obj: Partial<GostKlausurenUpdate>): string {
 		let result = '{';
 		if (obj.listSchuelerklausurTermineRemoveIdTermin !== undefined) {
 			result += '"listSchuelerklausurTermineRemoveIdTermin" : [ ';
@@ -101,6 +101,6 @@ export class GostKlausurenUpdate extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_gost_klausurplanung_GostKlausurenUpdate(obj : unknown) : GostKlausurenUpdate {
+export function cast_de_svws_nrw_core_data_gost_klausurplanung_GostKlausurenUpdate(obj: unknown): GostKlausurenUpdate {
 	return obj as GostKlausurenUpdate;
 }

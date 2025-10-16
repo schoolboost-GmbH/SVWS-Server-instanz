@@ -10,7 +10,7 @@ import { GostBelegungsfehler } from '../../../../core/abschluss/gost/GostBelegun
 
 export class Deutsch extends GostBelegpruefung {
 
-	private _deutsch : AbiturFachbelegung | null = null;
+	private _deutsch: AbiturFachbelegung | null = null;
 
 
 	/**
@@ -19,15 +19,15 @@ export class Deutsch extends GostBelegpruefung {
 	 * @param manager        der Daten-Manager für die Abiturdaten
 	 * @param pruefungsArt   die Art der durchzuführenden Prüfung (z.B. EF.1 oder GESAMT)
 	 */
-	public constructor(manager : AbiturdatenManager, pruefungsArt : GostBelegpruefungsArt) {
+	public constructor(manager: AbiturdatenManager, pruefungsArt: GostBelegpruefungsArt) {
 		super(manager, pruefungsArt);
 	}
 
-	protected init() : void {
+	protected init(): void {
 		this._deutsch = this.manager.getRelevanteFachbelegung(GostFachbereich.DEUTSCH);
 	}
 
-	protected pruefeEF1() : void {
+	protected pruefeEF1(): void {
 		if ((this._deutsch === null) || !this.manager.pruefeBelegungMitSchriftlichkeitEinzeln(this._deutsch, GostSchriftlichkeit.BELIEBIG, GostHalbjahr.EF1)) {
 			this.addFehler(GostBelegungsfehler.D_10);
 			return;
@@ -36,7 +36,7 @@ export class Deutsch extends GostBelegpruefung {
 			this.addFehler(GostBelegungsfehler.D_11);
 	}
 
-	protected pruefeGesamt() : void {
+	protected pruefeGesamt(): void {
 		if (this._deutsch === null) {
 			this.addFehler(GostBelegungsfehler.D_10);
 			return;
@@ -51,7 +51,7 @@ export class Deutsch extends GostBelegpruefung {
 		return 'de.svws_nrw.core.abschluss.gost.belegpruefung.Deutsch';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.abschluss.gost.GostBelegpruefung', 'de.svws_nrw.core.abschluss.gost.belegpruefung.Deutsch'].includes(name);
 	}
 
@@ -59,6 +59,6 @@ export class Deutsch extends GostBelegpruefung {
 
 }
 
-export function cast_de_svws_nrw_core_abschluss_gost_belegpruefung_Deutsch(obj : unknown) : Deutsch {
+export function cast_de_svws_nrw_core_abschluss_gost_belegpruefung_Deutsch(obj: unknown): Deutsch {
 	return obj as Deutsch;
 }

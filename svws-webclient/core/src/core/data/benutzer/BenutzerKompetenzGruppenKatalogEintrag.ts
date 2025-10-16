@@ -6,22 +6,22 @@ export class BenutzerKompetenzGruppenKatalogEintrag extends JavaObject {
 	/**
 	 * Die ID der Kompetenzgruppe.
 	 */
-	public id : number = -1;
+	public id: number = -1;
 
 	/**
 	 * Die Bezeichnung der Kompetenzgruppe.
 	 */
-	public bezeichnung : string = "";
+	public bezeichnung: string = "";
 
 	/**
 	 * Die Spalte bei der Darstellung der Benutzerverwaltung in Schild.
 	 */
-	public spalte : number = -1;
+	public spalte: number = -1;
 
 	/**
 	 * Die Zeile bei der Darstellung der Benutzerverwaltung in Schild.
 	 */
-	public zeile : number = -1;
+	public zeile: number = -1;
 
 
 	/**
@@ -37,20 +37,20 @@ export class BenutzerKompetenzGruppenKatalogEintrag extends JavaObject {
 	 * @param spalte         die Spalte bei der Darstellung der Benutzerverwaltung in Schild
 	 * @param zeile          die Zeile bei der Darstellung der Benutzerverwaltung in Schild
 	 */
-	public constructor(id : number, bezeichnung : string, spalte : number, zeile : number);
+	public constructor(id: number, bezeichnung: string, spalte: number, zeile: number);
 
 	/**
 	 * Implementation for method overloads of 'constructor'
 	 */
-	public constructor(__param0? : number, __param1? : string, __param2? : number, __param3? : number) {
+	public constructor(__param0?: number, __param1?: string, __param2?: number, __param3?: number) {
 		super();
 		if ((__param0 === undefined) && (__param1 === undefined) && (__param2 === undefined) && (__param3 === undefined)) {
 			// empty method body
 		} else if (((__param0 !== undefined) && typeof __param0 === "number") && ((__param1 !== undefined) && (typeof __param1 === "string")) && ((__param2 !== undefined) && typeof __param2 === "number") && ((__param3 !== undefined) && typeof __param3 === "number")) {
-			const id : number = __param0 as number;
-			const bezeichnung : string = __param1;
-			const spalte : number = __param2 as number;
-			const zeile : number = __param3 as number;
+			const id: number = __param0 as number;
+			const bezeichnung: string = __param1;
+			const spalte: number = __param2 as number;
+			const zeile: number = __param3 as number;
 			this.id = id;
 			this.bezeichnung = bezeichnung;
 			this.spalte = spalte;
@@ -62,13 +62,13 @@ export class BenutzerKompetenzGruppenKatalogEintrag extends JavaObject {
 		return 'de.svws_nrw.core.data.benutzer.BenutzerKompetenzGruppenKatalogEintrag';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.benutzer.BenutzerKompetenzGruppenKatalogEintrag'].includes(name);
 	}
 
 	public static class = new Class<BenutzerKompetenzGruppenKatalogEintrag>('de.svws_nrw.core.data.benutzer.BenutzerKompetenzGruppenKatalogEintrag');
 
-	public static transpilerFromJSON(json : string): BenutzerKompetenzGruppenKatalogEintrag {
+	public static transpilerFromJSON(json: string): BenutzerKompetenzGruppenKatalogEintrag {
 		const obj = JSON.parse(json) as Partial<BenutzerKompetenzGruppenKatalogEintrag>;
 		const result = new BenutzerKompetenzGruppenKatalogEintrag();
 		if (obj.id === undefined)
@@ -86,7 +86,7 @@ export class BenutzerKompetenzGruppenKatalogEintrag extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : BenutzerKompetenzGruppenKatalogEintrag) : string {
+	public static transpilerToJSON(obj: BenutzerKompetenzGruppenKatalogEintrag): string {
 		let result = '{';
 		result += '"id" : ' + obj.id.toString() + ',';
 		result += '"bezeichnung" : ' + JSON.stringify(obj.bezeichnung) + ',';
@@ -97,7 +97,7 @@ export class BenutzerKompetenzGruppenKatalogEintrag extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<BenutzerKompetenzGruppenKatalogEintrag>) : string {
+	public static transpilerToJSONPatch(obj: Partial<BenutzerKompetenzGruppenKatalogEintrag>): string {
 		let result = '{';
 		if (obj.id !== undefined) {
 			result += '"id" : ' + obj.id.toString() + ',';
@@ -118,6 +118,6 @@ export class BenutzerKompetenzGruppenKatalogEintrag extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_benutzer_BenutzerKompetenzGruppenKatalogEintrag(obj : unknown) : BenutzerKompetenzGruppenKatalogEintrag {
+export function cast_de_svws_nrw_core_data_benutzer_BenutzerKompetenzGruppenKatalogEintrag(obj: unknown): BenutzerKompetenzGruppenKatalogEintrag {
 	return obj as BenutzerKompetenzGruppenKatalogEintrag;
 }

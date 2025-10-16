@@ -13,12 +13,12 @@ export class SatSolverSimple1 extends SatSolver {
 	/**
 	 * Eine Kopie aller Klauseln.
 	 */
-	private readonly _clauses : List<Array<number>> = new ArrayList<Array<number>>();
+	private readonly _clauses: List<Array<number>> = new ArrayList<Array<number>>();
 
 	/**
 	 * Das Array, welches jeder Variablen (1-indiziert) seine Lösung zuordnet.
 	 */
-	private _solution : Array<number> = Array(0).fill(0);
+	private _solution: Array<number> = Array(0).fill(0);
 
 
 	/**
@@ -29,14 +29,14 @@ export class SatSolverSimple1 extends SatSolver {
 		super();
 	}
 
-	public apply(t : SatInput) : SatOutput {
-		const timeEnd : number = System.currentTimeMillis() + this.maxTimeMillis;
-		const nVars : number = t.getVarCount();
+	public apply(t: SatInput): SatOutput {
+		const timeEnd: number = System.currentTimeMillis() + this.maxTimeMillis;
+		const nVars: number = t.getVarCount();
 		DeveloperNotificationException.ifSmaller("nVars", nVars, 1);
 		this._clauses.clear();
 		this._clauses.addAll(t.getClauses());
 		this._solution = Array(nVars + 1).fill(0);
-		let i : number = 1;
+		let i: number = 1;
 		while (System.currentTimeMillis() <= timeEnd) {
 			if (this.conflict()) {
 				while (true) {
@@ -60,17 +60,17 @@ export class SatSolverSimple1 extends SatSolver {
 		return SatOutput.createUNKNOWN();
 	}
 
-	private conflict() : boolean {
+	private conflict(): boolean {
 		for (const clause of this._clauses)
 			if (this.isEmpty(clause))
 				return true;
 		return false;
 	}
 
-	private isEmpty(clause : Array<number>) : boolean {
+	private isEmpty(clause: Array<number>): boolean {
 		for (const literal of clause) {
-			const abs : number = Math.abs(literal);
-			const assignment : number = this._solution[abs];
+			const abs: number = Math.abs(literal);
+			const assignment: number = this._solution[abs];
 			if ((assignment === literal) || (assignment === 0))
 				return false;
 		}
@@ -81,7 +81,7 @@ export class SatSolverSimple1 extends SatSolver {
 		return 'de.svws_nrw.core.adt.sat.SatSolverSimple1';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.adt.sat.SatSolverSimple1', 'java.util.function.Function', 'de.svws_nrw.core.adt.sat.SatSolver'].includes(name);
 	}
 
@@ -89,6 +89,6 @@ export class SatSolverSimple1 extends SatSolver {
 
 }
 
-export function cast_de_svws_nrw_core_adt_sat_SatSolverSimple1(obj : unknown) : SatSolverSimple1 {
+export function cast_de_svws_nrw_core_adt_sat_SatSolverSimple1(obj: unknown): SatSolverSimple1 {
 	return obj as SatSolverSimple1;
 }

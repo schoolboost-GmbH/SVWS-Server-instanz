@@ -6,12 +6,12 @@ export class SchulformSchulgliederung extends JavaObject {
 	/**
 	 * Das Kürzel der Schulform
 	 */
-	public schulform : string = "GY";
+	public schulform: string = "GY";
 
 	/**
 	 * Das Kürzel der Schulgliederung bzw. des Bildungsganges. Null, falls alle Gliederungen der Schulform gemeint sind.
 	 */
-	public gliederung : string | null = null;
+	public gliederung: string | null = null;
 
 
 	/**
@@ -25,13 +25,13 @@ export class SchulformSchulgliederung extends JavaObject {
 		return 'de.svws_nrw.asd.data.schule.SchulformSchulgliederung';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.asd.data.schule.SchulformSchulgliederung'].includes(name);
 	}
 
 	public static class = new Class<SchulformSchulgliederung>('de.svws_nrw.asd.data.schule.SchulformSchulgliederung');
 
-	public static transpilerFromJSON(json : string): SchulformSchulgliederung {
+	public static transpilerFromJSON(json: string): SchulformSchulgliederung {
 		const obj = JSON.parse(json) as Partial<SchulformSchulgliederung>;
 		const result = new SchulformSchulgliederung();
 		if (obj.schulform === undefined)
@@ -41,7 +41,7 @@ export class SchulformSchulgliederung extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : SchulformSchulgliederung) : string {
+	public static transpilerToJSON(obj: SchulformSchulgliederung): string {
 		let result = '{';
 		result += '"schulform" : ' + JSON.stringify(obj.schulform) + ',';
 		result += '"gliederung" : ' + ((obj.gliederung === null) ? 'null' : JSON.stringify(obj.gliederung)) + ',';
@@ -50,7 +50,7 @@ export class SchulformSchulgliederung extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<SchulformSchulgliederung>) : string {
+	public static transpilerToJSONPatch(obj: Partial<SchulformSchulgliederung>): string {
 		let result = '{';
 		if (obj.schulform !== undefined) {
 			result += '"schulform" : ' + JSON.stringify(obj.schulform) + ',';
@@ -65,6 +65,6 @@ export class SchulformSchulgliederung extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_asd_data_schule_SchulformSchulgliederung(obj : unknown) : SchulformSchulgliederung {
+export function cast_de_svws_nrw_asd_data_schule_SchulformSchulgliederung(obj: unknown): SchulformSchulgliederung {
 	return obj as SchulformSchulgliederung;
 }

@@ -4,30 +4,30 @@ import { Class } from '../../../java/lang/Class';
 export class GostBelegpruefungsArt extends JavaEnum<GostBelegpruefungsArt> {
 
 	/** an array containing all values of this enumeration */
-	static readonly all_values_by_ordinal : Array<GostBelegpruefungsArt> = [];
+	static readonly all_values_by_ordinal: Array<GostBelegpruefungsArt> = [];
 
 	/** an array containing all values of this enumeration indexed by their name*/
-	static readonly all_values_by_name : Map<string, GostBelegpruefungsArt> = new Map<string, GostBelegpruefungsArt>();
+	static readonly all_values_by_name: Map<string, GostBelegpruefungsArt> = new Map<string, GostBelegpruefungsArt>();
 
 	/**
 	 * Prüfung nur der EF.1
 	 */
-	public static readonly EF1 : GostBelegpruefungsArt = new GostBelegpruefungsArt("EF1", 0, "EF.1", "nur EF.1");
+	public static readonly EF1: GostBelegpruefungsArt = new GostBelegpruefungsArt("EF1", 0, "EF.1", "nur EF.1");
 
 	/**
 	 * Gesamtprüfung über die gesamte Oberstufe
 	 */
-	public static readonly GESAMT : GostBelegpruefungsArt = new GostBelegpruefungsArt("GESAMT", 1, "Gesamt", "die gesamte Oberstufe");
+	public static readonly GESAMT: GostBelegpruefungsArt = new GostBelegpruefungsArt("GESAMT", 1, "Gesamt", "die gesamte Oberstufe");
 
 	/**
 	 * Das Kürzel für die Belegprüfungsart
 	 */
-	public readonly kuerzel : string;
+	public readonly kuerzel: string;
 
 	/**
 	 * Eine textuelle Beschreibung für die Art der Belegprüfung
 	 */
-	public readonly beschreibung : string;
+	public readonly beschreibung: string;
 
 	/**
 	 * Erzeugt ein neues Abitur-Belegungsart-Objekt
@@ -35,7 +35,7 @@ export class GostBelegpruefungsArt extends JavaEnum<GostBelegpruefungsArt> {
 	 * @param kuerzel        das der Kurs-Belegungsart
 	 * @param beschreibung   die textuelle Beschreibung der Kurs-Belegungsart
 	 */
-	private constructor(name : string, ordinal : number, kuerzel : string, beschreibung : string) {
+	private constructor(name: string, ordinal: number, kuerzel: string, beschreibung: string) {
 		super(name, ordinal);
 		GostBelegpruefungsArt.all_values_by_ordinal.push(this);
 		GostBelegpruefungsArt.all_values_by_name.set(name, this);
@@ -50,7 +50,7 @@ export class GostBelegpruefungsArt extends JavaEnum<GostBelegpruefungsArt> {
 	 *
 	 * @return die Art der Belegprüfung
 	 */
-	public static fromKuerzel(kuerzel : string | null) : GostBelegpruefungsArt | null {
+	public static fromKuerzel(kuerzel: string | null): GostBelegpruefungsArt | null {
 		if (kuerzel === null)
 			return null;
 		switch (kuerzel) {
@@ -66,7 +66,7 @@ export class GostBelegpruefungsArt extends JavaEnum<GostBelegpruefungsArt> {
 		}
 	}
 
-	public toString() : string {
+	public toString(): string {
 		return this.kuerzel;
 	}
 
@@ -75,7 +75,7 @@ export class GostBelegpruefungsArt extends JavaEnum<GostBelegpruefungsArt> {
 	 *
 	 * @returns the array with enumeration values
 	 */
-	public static values() : Array<GostBelegpruefungsArt> {
+	public static values(): Array<GostBelegpruefungsArt> {
 		return [...this.all_values_by_ordinal];
 	}
 
@@ -86,7 +86,7 @@ export class GostBelegpruefungsArt extends JavaEnum<GostBelegpruefungsArt> {
 	 *
 	 * @returns the enumeration values or null
 	 */
-	public static valueOf(name : string) : GostBelegpruefungsArt | null {
+	public static valueOf(name: string): GostBelegpruefungsArt | null {
 		const tmp = this.all_values_by_name.get(name);
 		return (!tmp) ? null : tmp;
 	}
@@ -95,7 +95,7 @@ export class GostBelegpruefungsArt extends JavaEnum<GostBelegpruefungsArt> {
 		return 'de.svws_nrw.core.abschluss.gost.GostBelegpruefungsArt';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.abschluss.gost.GostBelegpruefungsArt', 'java.lang.Enum', 'java.lang.Comparable'].includes(name);
 	}
 
@@ -103,6 +103,6 @@ export class GostBelegpruefungsArt extends JavaEnum<GostBelegpruefungsArt> {
 
 }
 
-export function cast_de_svws_nrw_core_abschluss_gost_GostBelegpruefungsArt(obj : unknown) : GostBelegpruefungsArt {
+export function cast_de_svws_nrw_core_abschluss_gost_GostBelegpruefungsArt(obj: unknown): GostBelegpruefungsArt {
 	return obj as GostBelegpruefungsArt;
 }

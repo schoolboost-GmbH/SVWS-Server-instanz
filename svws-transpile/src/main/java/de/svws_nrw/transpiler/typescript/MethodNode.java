@@ -507,13 +507,13 @@ public final class MethodNode {
 		sb.append("(");
 		final boolean isEnumConstructor = methods.get(0).isEnum && methods.get(0).isConstructor();
 		if (isEnumConstructor)
-			sb.append("name : string, ordinal : number, ");
+			sb.append("name: string, ordinal: number, ");
 		final int maxParams = methods.stream().mapToInt(m -> m.getParameterCount()).max().orElse(0);
 		for (int i = 0; i < maxParams; i++) {
 			sb.append("__param" + i);
 			if (isOptionalParameter(methods, i))
 				sb.append("?");
-			sb.append(" : ");
+			sb.append(": ");
 
 			sb.append(getUnionParamType(methods, i));
 
@@ -525,7 +525,7 @@ public final class MethodNode {
 		// the return type if the method is not a constructor
 		final String returnType = getUnionReturnType(methods);
 		if (!"".equals(returnType)) {
-			sb.append(" : ");
+			sb.append(": ");
 			sb.append(returnType);
 		}
 
@@ -661,12 +661,12 @@ public final class MethodNode {
 		sb.append("(");
 		final boolean isEnumConstructor = isEnum && isConstructor();
 		if (isEnumConstructor) {
-			sb.append("name : string, ordinal : number");
+			sb.append("name: string, ordinal: number");
 			if (!parameters.isEmpty())
 				sb.append(", ");
 		}
 		if (isDefault) {
-			sb.append("transpiledThis : any");
+			sb.append("transpiledThis: any");
 			if (!parameters.isEmpty())
 				sb.append(", ");
 		}
@@ -679,7 +679,7 @@ public final class MethodNode {
 
 		// the return type if the method is not a constructor
 		if (returnType != null) {
-			sb.append(" : ");
+			sb.append(": ");
 			sb.append(returnType.transpile(false));
 		}
 

@@ -6,27 +6,27 @@ export class SchuldateiKatalogeintrag extends SchuldateiEintrag {
 	/**
 	 * Der Katalog, welchem der Eintrag zugeordnet ist
 	 */
-	public katalog : string = "";
+	public katalog: string = "";
 
 	/**
 	 * Der Schlüssel des Katalog-Eintrags
 	 */
-	public schluessel : string = "";
+	public schluessel: string = "";
 
 	/**
 	 * Der Wert des Katalog-Eintrags
 	 */
-	public wert : string = "";
+	public wert: string = "";
 
 	/**
 	 * Die Bezeichnung
 	 */
-	public bezeichnung : string = "";
+	public bezeichnung: string = "";
 
 	/**
 	 * Der Datentypwert
 	 */
-	public datentypwert : string = "";
+	public datentypwert: string = "";
 
 
 	/**
@@ -40,13 +40,13 @@ export class SchuldateiKatalogeintrag extends SchuldateiEintrag {
 		return 'de.svws_nrw.schulen.v1.data.SchuldateiKatalogeintrag';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.schulen.v1.data.SchuldateiEintrag', 'de.svws_nrw.schulen.v1.data.SchuldateiKatalogeintrag'].includes(name);
 	}
 
 	public static class = new Class<SchuldateiKatalogeintrag>('de.svws_nrw.schulen.v1.data.SchuldateiKatalogeintrag');
 
-	public static transpilerFromJSON(json : string): SchuldateiKatalogeintrag {
+	public static transpilerFromJSON(json: string): SchuldateiKatalogeintrag {
 		const obj = JSON.parse(json) as Partial<SchuldateiKatalogeintrag>;
 		const result = new SchuldateiKatalogeintrag();
 		result.gueltigab = (obj.gueltigab === undefined) ? null : obj.gueltigab === null ? null : obj.gueltigab;
@@ -70,7 +70,7 @@ export class SchuldateiKatalogeintrag extends SchuldateiEintrag {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : SchuldateiKatalogeintrag) : string {
+	public static transpilerToJSON(obj: SchuldateiKatalogeintrag): string {
 		let result = '{';
 		result += '"gueltigab" : ' + ((obj.gueltigab === null) ? 'null' : JSON.stringify(obj.gueltigab)) + ',';
 		result += '"gueltigbis" : ' + ((obj.gueltigbis === null) ? 'null' : JSON.stringify(obj.gueltigbis)) + ',';
@@ -85,7 +85,7 @@ export class SchuldateiKatalogeintrag extends SchuldateiEintrag {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<SchuldateiKatalogeintrag>) : string {
+	public static transpilerToJSONPatch(obj: Partial<SchuldateiKatalogeintrag>): string {
 		let result = '{';
 		if (obj.gueltigab !== undefined) {
 			result += '"gueltigab" : ' + ((obj.gueltigab === null) ? 'null' : JSON.stringify(obj.gueltigab)) + ',';
@@ -118,6 +118,6 @@ export class SchuldateiKatalogeintrag extends SchuldateiEintrag {
 
 }
 
-export function cast_de_svws_nrw_schulen_v1_data_SchuldateiKatalogeintrag(obj : unknown) : SchuldateiKatalogeintrag {
+export function cast_de_svws_nrw_schulen_v1_data_SchuldateiKatalogeintrag(obj: unknown): SchuldateiKatalogeintrag {
 	return obj as SchuldateiKatalogeintrag;
 }

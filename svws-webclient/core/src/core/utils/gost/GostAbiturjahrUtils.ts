@@ -14,8 +14,8 @@ export class GostAbiturjahrUtils extends JavaObject {
 	/**
 	 * Ein Default-Comparator für den Vergleich von Abiturjahrgängen in Abiturjahrgangslisten.
 	 */
-	public static readonly comparator : Comparator<GostJahrgang> = { compare : (a: GostJahrgang, b: GostJahrgang) => {
-		const cmp : number = a.abiturjahr - b.abiturjahr;
+	public static readonly comparator: Comparator<GostJahrgang> = { compare: (a: GostJahrgang, b: GostJahrgang) => {
+		const cmp: number = a.abiturjahr - b.abiturjahr;
 		if (cmp !== 0)
 			return cmp;
 		if ((a.jahrgang === null) || (b.jahrgang === null)) {
@@ -45,11 +45,11 @@ export class GostAbiturjahrUtils extends JavaObject {
 	 *
 	 * @return das Kalenderjahr des Abiturs oder null, falls das Jahr des Abiturs nicht bestimmt werden kann.
 	 */
-	public static getGostAbiturjahr(schulform : Schulform, gliederung : Schulgliederung, aktuellesSchuljahr : number, jahrgang : string) : number | null {
-		const sfke : SchulformKatalogEintrag | null = schulform.daten(aktuellesSchuljahr);
+	public static getGostAbiturjahr(schulform: Schulform, gliederung: Schulgliederung, aktuellesSchuljahr: number, jahrgang: string): number | null {
+		const sfke: SchulformKatalogEintrag | null = schulform.daten(aktuellesSchuljahr);
 		if ((sfke === null) || (!sfke.hatGymOb))
 			return null;
-		let restjahre : number | null = JahrgaengeUtils.getRestlicheJahre(schulform, gliederung, jahrgang);
+		let restjahre: number | null = JahrgaengeUtils.getRestlicheJahre(schulform, gliederung, jahrgang);
 		if (restjahre === null)
 			return null;
 		if ((schulform as unknown !== Schulform.GY as unknown) && (!JahrgaengeUtils.istGymOb(jahrgang)))
@@ -69,21 +69,21 @@ export class GostAbiturjahrUtils extends JavaObject {
 	 *
 	 * @return der Statistik-Jahrgang zu dem angegeben Abiturjahrgang
 	 */
-	public static getGostAbiturjahrJahrgang(schulform : Schulform, gliederung : Schulgliederung, schuljahr : number, abiturjahr : number) : string | null {
-		const sfke : SchulformKatalogEintrag | null = schulform.daten(schuljahr);
+	public static getGostAbiturjahrJahrgang(schulform: Schulform, gliederung: Schulgliederung, schuljahr: number, abiturjahr: number): string | null {
+		const sfke: SchulformKatalogEintrag | null = schulform.daten(schuljahr);
 		if ((sfke === null) || (!sfke.hatGymOb))
 			return null;
-		const restlicheJahre : number = abiturjahr - schuljahr;
+		const restlicheJahre: number = abiturjahr - schuljahr;
 		if (restlicheJahre <= 1)
 			return "Q2";
 		if (restlicheJahre === 2)
 			return "Q1";
 		if (restlicheJahre === 3)
 			return "EF";
-		const sekIJahre : number = (gliederung.istG8() || ((schulform as unknown === Schulform.GY as unknown) && (gliederung as unknown === Schulgliederung.DEFAULT as unknown))) ? 9 : 10;
+		const sekIJahre: number = (gliederung.istG8() || ((schulform as unknown === Schulform.GY as unknown) && (gliederung as unknown === Schulgliederung.DEFAULT as unknown))) ? 9 : 10;
 		if (restlicheJahre >= sekIJahre)
 			return null;
-		let strJG : string | null = "" + (sekIJahre - (restlicheJahre - 4));
+		let strJG: string | null = "" + (sekIJahre - (restlicheJahre - 4));
 		if (strJG.length === 1)
 			strJG = "0" + strJG;
 		return strJG;
@@ -93,7 +93,7 @@ export class GostAbiturjahrUtils extends JavaObject {
 		return 'de.svws_nrw.core.utils.gost.GostAbiturjahrUtils';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.utils.gost.GostAbiturjahrUtils'].includes(name);
 	}
 
@@ -101,6 +101,6 @@ export class GostAbiturjahrUtils extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_utils_gost_GostAbiturjahrUtils(obj : unknown) : GostAbiturjahrUtils {
+export function cast_de_svws_nrw_core_utils_gost_GostAbiturjahrUtils(obj: unknown): GostAbiturjahrUtils {
 	return obj as GostAbiturjahrUtils;
 }

@@ -15,13 +15,13 @@ export class BildungsgangTypKatalogEintrag extends CoreTypeData {
 		return 'de.svws_nrw.asd.data.schule.BildungsgangTypKatalogEintrag';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.asd.data.schule.BildungsgangTypKatalogEintrag', 'de.svws_nrw.asd.data.CoreTypeData'].includes(name);
 	}
 
 	public static class = new Class<BildungsgangTypKatalogEintrag>('de.svws_nrw.asd.data.schule.BildungsgangTypKatalogEintrag');
 
-	public static transpilerFromJSON(json : string): BildungsgangTypKatalogEintrag {
+	public static transpilerFromJSON(json: string): BildungsgangTypKatalogEintrag {
 		const obj = JSON.parse(json) as Partial<BildungsgangTypKatalogEintrag>;
 		const result = new BildungsgangTypKatalogEintrag();
 		if (obj.id === undefined)
@@ -41,7 +41,7 @@ export class BildungsgangTypKatalogEintrag extends CoreTypeData {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : BildungsgangTypKatalogEintrag) : string {
+	public static transpilerToJSON(obj: BildungsgangTypKatalogEintrag): string {
 		let result = '{';
 		result += '"id" : ' + obj.id.toString() + ',';
 		result += '"schluessel" : ' + JSON.stringify(obj.schluessel) + ',';
@@ -54,7 +54,7 @@ export class BildungsgangTypKatalogEintrag extends CoreTypeData {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<BildungsgangTypKatalogEintrag>) : string {
+	public static transpilerToJSONPatch(obj: Partial<BildungsgangTypKatalogEintrag>): string {
 		let result = '{';
 		if (obj.id !== undefined) {
 			result += '"id" : ' + obj.id.toString() + ',';
@@ -81,6 +81,6 @@ export class BildungsgangTypKatalogEintrag extends CoreTypeData {
 
 }
 
-export function cast_de_svws_nrw_asd_data_schule_BildungsgangTypKatalogEintrag(obj : unknown) : BildungsgangTypKatalogEintrag {
+export function cast_de_svws_nrw_asd_data_schule_BildungsgangTypKatalogEintrag(obj: unknown): BildungsgangTypKatalogEintrag {
 	return obj as BildungsgangTypKatalogEintrag;
 }

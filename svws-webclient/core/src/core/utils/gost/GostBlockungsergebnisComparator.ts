@@ -20,8 +20,8 @@ export class GostBlockungsergebnisComparator extends JavaObject implements Compa
 		super();
 	}
 
-	public compare(o1 : GostBlockungsergebnis, o2 : GostBlockungsergebnis) : number {
-		const cmp : number = GostBlockungsergebnisBewertungComparator.compareBewertungen(o1.bewertung, o2.bewertung);
+	public compare(o1: GostBlockungsergebnis, o2: GostBlockungsergebnis): number {
+		const cmp: number = GostBlockungsergebnisBewertungComparator.compareBewertungen(o1.bewertung, o2.bewertung);
 		if (cmp !== 0)
 			return cmp;
 		if (o1.id < o2.id)
@@ -35,7 +35,7 @@ export class GostBlockungsergebnisComparator extends JavaObject implements Compa
 		return 'de.svws_nrw.core.utils.gost.GostBlockungsergebnisComparator';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.utils.gost.GostBlockungsergebnisComparator', 'java.util.Comparator'].includes(name);
 	}
 
@@ -43,6 +43,6 @@ export class GostBlockungsergebnisComparator extends JavaObject implements Compa
 
 }
 
-export function cast_de_svws_nrw_core_utils_gost_GostBlockungsergebnisComparator(obj : unknown) : GostBlockungsergebnisComparator {
+export function cast_de_svws_nrw_core_utils_gost_GostBlockungsergebnisComparator(obj: unknown): GostBlockungsergebnisComparator {
 	return obj as GostBlockungsergebnisComparator;
 }

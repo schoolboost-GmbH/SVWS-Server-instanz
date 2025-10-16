@@ -15,37 +15,37 @@ export class SchuleStatistikdatenGesamt extends JavaObject {
 	/**
 	 * Die Stammdaten der Schule
 	 */
-	public stammdaten : SchuleStammdaten = new SchuleStammdaten();
+	public stammdaten: SchuleStammdaten = new SchuleStammdaten();
 
 	/**
 	 * Die Stammdaten der Lehrer.
 	 */
-	public lehrerStammdaten : List<LehrerStammdaten> = new ArrayList<LehrerStammdaten>();
+	public lehrerStammdaten: List<LehrerStammdaten> = new ArrayList<LehrerStammdaten>();
 
 	/**
 	 * Die Personaldaten der Lehrer.
 	 */
-	public lehrerPersonaldaten : List<LehrerPersonaldaten> = new ArrayList<LehrerPersonaldaten>();
+	public lehrerPersonaldaten: List<LehrerPersonaldaten> = new ArrayList<LehrerPersonaldaten>();
 
 	/**
 	 * Die allgemeinen Angaben zu dem Lernabschnitt der Schüler.
 	 */
-	public schuelerLernabschnittsdaten : List<SchuelerLernabschnittsdaten> = new ArrayList<SchuelerLernabschnittsdaten>();
+	public schuelerLernabschnittsdaten: List<SchuelerLernabschnittsdaten> = new ArrayList<SchuelerLernabschnittsdaten>();
 
 	/**
 	 * Die Schulbesuchsdaten der Schüler.
 	 */
-	public schuelerSchulbesuchsdaten : List<SchuelerSchulbesuchsdaten> = new ArrayList<SchuelerSchulbesuchsdaten>();
+	public schuelerSchulbesuchsdaten: List<SchuelerSchulbesuchsdaten> = new ArrayList<SchuelerSchulbesuchsdaten>();
 
 	/**
 	 * Die Betriebsdaten der Schüler in einem Betrieb.
 	 */
-	public schuelerBetriebsdaten : List<SchuelerBetriebsdaten> = new ArrayList<SchuelerBetriebsdaten>();
+	public schuelerBetriebsdaten: List<SchuelerBetriebsdaten> = new ArrayList<SchuelerBetriebsdaten>();
 
 	/**
 	 * Die Informationen zu den Sprachbelegungen und den Sprachprüfungen der Schüler.
 	 */
-	public schuelerSprachendaten : List<Sprachendaten> = new ArrayList<Sprachendaten>();
+	public schuelerSprachendaten: List<Sprachendaten> = new ArrayList<Sprachendaten>();
 
 
 	/**
@@ -59,13 +59,13 @@ export class SchuleStatistikdatenGesamt extends JavaObject {
 		return 'de.svws_nrw.asd.data.schule.SchuleStatistikdatenGesamt';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.asd.data.schule.SchuleStatistikdatenGesamt'].includes(name);
 	}
 
 	public static class = new Class<SchuleStatistikdatenGesamt>('de.svws_nrw.asd.data.schule.SchuleStatistikdatenGesamt');
 
-	public static transpilerFromJSON(json : string): SchuleStatistikdatenGesamt {
+	public static transpilerFromJSON(json: string): SchuleStatistikdatenGesamt {
 		const obj = JSON.parse(json) as Partial<SchuleStatistikdatenGesamt>;
 		const result = new SchuleStatistikdatenGesamt();
 		if (obj.stammdaten === undefined)
@@ -104,7 +104,7 @@ export class SchuleStatistikdatenGesamt extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : SchuleStatistikdatenGesamt) : string {
+	public static transpilerToJSON(obj: SchuleStatistikdatenGesamt): string {
 		let result = '{';
 		result += '"stammdaten" : ' + SchuleStammdaten.transpilerToJSON(obj.stammdaten) + ',';
 		result += '"lehrerStammdaten" : [ ';
@@ -160,7 +160,7 @@ export class SchuleStatistikdatenGesamt extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<SchuleStatistikdatenGesamt>) : string {
+	public static transpilerToJSONPatch(obj: Partial<SchuleStatistikdatenGesamt>): string {
 		let result = '{';
 		if (obj.stammdaten !== undefined) {
 			result += '"stammdaten" : ' + SchuleStammdaten.transpilerToJSON(obj.stammdaten) + ',';
@@ -232,6 +232,6 @@ export class SchuleStatistikdatenGesamt extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_asd_data_schule_SchuleStatistikdatenGesamt(obj : unknown) : SchuleStatistikdatenGesamt {
+export function cast_de_svws_nrw_asd_data_schule_SchuleStatistikdatenGesamt(obj: unknown): SchuleStatistikdatenGesamt {
 	return obj as SchuleStatistikdatenGesamt;
 }

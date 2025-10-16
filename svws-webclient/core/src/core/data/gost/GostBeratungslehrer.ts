@@ -6,22 +6,22 @@ export class GostBeratungslehrer extends JavaObject {
 	/**
 	 * Die ID des Lehrers.
 	 */
-	public id : number = 0;
+	public id: number = 0;
 
 	/**
 	 * Das Kürzel des Lehrers.
 	 */
-	public kuerzel : string | null = null;
+	public kuerzel: string | null = null;
 
 	/**
 	 * Der Nachname des Lehrers.
 	 */
-	public nachname : string | null = null;
+	public nachname: string | null = null;
 
 	/**
 	 * Der Vorname des Lehrers.
 	 */
-	public vorname : string | null = null;
+	public vorname: string | null = null;
 
 
 	/**
@@ -35,13 +35,13 @@ export class GostBeratungslehrer extends JavaObject {
 		return 'de.svws_nrw.core.data.gost.GostBeratungslehrer';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.gost.GostBeratungslehrer'].includes(name);
 	}
 
 	public static class = new Class<GostBeratungslehrer>('de.svws_nrw.core.data.gost.GostBeratungslehrer');
 
-	public static transpilerFromJSON(json : string): GostBeratungslehrer {
+	public static transpilerFromJSON(json: string): GostBeratungslehrer {
 		const obj = JSON.parse(json) as Partial<GostBeratungslehrer>;
 		const result = new GostBeratungslehrer();
 		if (obj.id === undefined)
@@ -53,7 +53,7 @@ export class GostBeratungslehrer extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : GostBeratungslehrer) : string {
+	public static transpilerToJSON(obj: GostBeratungslehrer): string {
 		let result = '{';
 		result += '"id" : ' + obj.id.toString() + ',';
 		result += '"kuerzel" : ' + ((obj.kuerzel === null) ? 'null' : JSON.stringify(obj.kuerzel)) + ',';
@@ -64,7 +64,7 @@ export class GostBeratungslehrer extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<GostBeratungslehrer>) : string {
+	public static transpilerToJSONPatch(obj: Partial<GostBeratungslehrer>): string {
 		let result = '{';
 		if (obj.id !== undefined) {
 			result += '"id" : ' + obj.id.toString() + ',';
@@ -85,6 +85,6 @@ export class GostBeratungslehrer extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_gost_GostBeratungslehrer(obj : unknown) : GostBeratungslehrer {
+export function cast_de_svws_nrw_core_data_gost_GostBeratungslehrer(obj: unknown): GostBeratungslehrer {
 	return obj as GostBeratungslehrer;
 }

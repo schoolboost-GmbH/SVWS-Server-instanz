@@ -292,7 +292,7 @@ public final class TranspilerTypeScriptPlugin extends TranspilerLanguagePlugin {
 		final boolean isFinal = transpiler.hasFinalModifier(node);
 		pruefeBezeichner(node.getName().toString());
 		final TypeNode typeNode = new TypeNode(this, node.getType(), true, transpiler.hasNotNullAnnotation(node));
-		final String strType = Transpiler.isDeclaredUsingVar(node) ? "" : " : " + typeNode.transpile(false);
+		final String strType = Transpiler.isDeclaredUsingVar(node) ? "" : ": " + typeNode.transpile(false);
 		final ExpressionTree initializer = node.getInitializer();
 		if (initializer == null)
 			return "%s %s%s".formatted(isFinal ? strTsConst : strTsLet, node.getName(), strType);
@@ -721,7 +721,7 @@ public final class TranspilerTypeScriptPlugin extends TranspilerLanguagePlugin {
 
 		// generate the lambda parameter code
 		final StringBuilder sb = new StringBuilder();
-		sb.append("{ ").append(methodName).append(" : (");
+		sb.append("{ ").append(methodName).append(": (");
 		boolean first = true;
 		for (final VariableTree p : node.getParameters()) {
 			if (!first)
@@ -1826,7 +1826,7 @@ public final class TranspilerTypeScriptPlugin extends TranspilerLanguagePlugin {
 
 		// convert to typescrypt code
 		final TypeNode typeNode = new TypeNode(this, node.getType(), true, forceNotNull || transpiler.hasNotNullAnnotation(node));
-		return comment + getIndent() + "%s%s%s%s : %s%s;%s".formatted(
+		return comment + getIndent() + "%s%s%s%s: %s%s;%s".formatted(
 				"".equals(accessModifier) ? "" : accessModifier + " ",
 				transpiler.hasStaticModifier(node) ? "static " : "",
 				transpiler.hasFinalModifier(node) ? "readonly " : "",
@@ -1864,7 +1864,7 @@ public final class TranspilerTypeScriptPlugin extends TranspilerLanguagePlugin {
 				"export function ",
 				getCastFunctionName(node),
 				convertTypeParameters(node.getTypeParameters(), true),
-				"(obj : unknown) : ",
+				"(obj: unknown): ",
 				node.getSimpleName(),
 				convertTypeParameters(node.getTypeParameters(), false),
 				" {"
@@ -1939,7 +1939,7 @@ public final class TranspilerTypeScriptPlugin extends TranspilerLanguagePlugin {
 	 * @return the isTranspiledInstanceOf method code as a String
 	 */
 	public String appendIsTranspiledInstanceOf(final ClassTree node) {
-		String result = getIndent() + "isTranspiledInstanceOf(name : string): boolean {" + System.lineSeparator();
+		String result = getIndent() + "isTranspiledInstanceOf(name: string): boolean {" + System.lineSeparator();
 		indentC++;
 		final TranspilerUnit unit = transpiler.getTranspilerUnit(node);
 		String strInstanceOfTypes = unit.superTypes.stream().collect(Collectors.joining("', '", "'", "'"));
@@ -1963,7 +1963,7 @@ public final class TranspilerTypeScriptPlugin extends TranspilerLanguagePlugin {
 	public String appendTranspilerFromJSON(final ClassTree node) {
 		final TranspilerUnit unit = transpiler.getTranspilerUnit(node);
 		final StringBuilder sb = new StringBuilder();
-		sb.append(getIndent() + "public static transpilerFromJSON(json : string): " + node.getSimpleName().toString() + " {" + System.lineSeparator());
+		sb.append(getIndent() + "public static transpilerFromJSON(json: string): " + node.getSimpleName().toString() + " {" + System.lineSeparator());
 		indentC++;
 		sb.append(getIndent() + "const obj = JSON.parse(json) as Partial<" + node.getSimpleName().toString() + ">;" + System.lineSeparator());
 		sb.append(getIndent() + "const result = new " + node.getSimpleName().toString() + "();" + System.lineSeparator());
@@ -2107,7 +2107,7 @@ public final class TranspilerTypeScriptPlugin extends TranspilerLanguagePlugin {
 	 */
 	public String appendTranspilerToJSON(final ClassTree node) {
 		final StringBuilder sb = new StringBuilder();
-		sb.append(getIndent() + "public static transpilerToJSON(obj : " + node.getSimpleName().toString() + ") : string {" + System.lineSeparator());
+		sb.append(getIndent() + "public static transpilerToJSON(obj: " + node.getSimpleName().toString() + "): string {" + System.lineSeparator());
 		indentC++;
 		sb.append(getIndent() + "let result = '{';" + System.lineSeparator());
 		final List<VariableTree> attributes = transpiler.getAttributesWithSuperclassAttributes(node);
@@ -2261,7 +2261,7 @@ public final class TranspilerTypeScriptPlugin extends TranspilerLanguagePlugin {
 	 */
 	public String appendTranspilerToJSONPatch(final ClassTree node) {
 		final StringBuilder sb = new StringBuilder();
-		sb.append(getIndent() + "public static transpilerToJSONPatch(obj : Partial<" + node.getSimpleName().toString() + ">) : string {"
+		sb.append(getIndent() + "public static transpilerToJSONPatch(obj: Partial<" + node.getSimpleName().toString() + ">): string {"
 				+ System.lineSeparator());
 		indentC++;
 		sb.append(getIndent() + "let result = '{';" + System.lineSeparator());
@@ -2538,7 +2538,7 @@ public final class TranspilerTypeScriptPlugin extends TranspilerLanguagePlugin {
 					&& (!methodHasNotNull))
 				returnTypeStr += " | null";
 			// TODO the methods type parameters
-			sb.append(getIndent()).append("public ").append(methodName).append("(").append(methodParams).append(") : ").append(returnTypeStr).append(" {")
+			sb.append(getIndent()).append("public ").append(methodName).append("(").append(methodParams).append("): ").append(returnTypeStr).append(" {")
 					.append(System.lineSeparator());
 			indentC++;
 			sb.append(getIndent());
@@ -2645,7 +2645,7 @@ public final class TranspilerTypeScriptPlugin extends TranspilerLanguagePlugin {
 
 		final TranspilerUnit unit = transpiler.getTranspilerUnit(node);
 		if (unit.superTypes.contains("java.util.Deque")) {
-			sb.append(getIndent()).append("public reversed() : Deque<E> {").append(System.lineSeparator());
+			sb.append(getIndent()).append("public reversed(): Deque<E> {").append(System.lineSeparator());
 			sb.append(getIndent()).append("\tthrow new UnsupportedOperationException(\"Der Transpiler unterstützt diese Methode noch nicht.\");")
 					.append(System.lineSeparator());
 			sb.append(getIndent()).append("}").append(System.lineSeparator());
@@ -2663,24 +2663,24 @@ public final class TranspilerTypeScriptPlugin extends TranspilerLanguagePlugin {
 					}
 				}
 			}
-			sb.append(getIndent()).append("public reversed() : NavigableSet<" + strType + "> {").append(System.lineSeparator());
+			sb.append(getIndent()).append("public reversed(): NavigableSet<" + strType + "> {").append(System.lineSeparator());
 			sb.append(getIndent()).append("\treturn this.descendingSet();").append(System.lineSeparator());
 			sb.append(getIndent()).append("}").append(System.lineSeparator());
 			sb.append(System.lineSeparator());
 		}
 		if (unit.superTypes.contains("java.util.NavigableMap")) {
-			sb.append(getIndent()).append("public reversed() : NavigableMap<K, V> {").append(System.lineSeparator());
+			sb.append(getIndent()).append("public reversed(): NavigableMap<K, V> {").append(System.lineSeparator());
 			sb.append(getIndent()).append("\treturn this.descendingMap();").append(System.lineSeparator());
 			sb.append(getIndent()).append("}").append(System.lineSeparator());
 			sb.append(System.lineSeparator());
 		}
 		if (unit.superTypes.contains("java.util.Map")) { // TODO check only if the class directly implements Map and not indirectly
 			// TODO determine the name of both type parameter and replace K and V in the following code...
-			sb.append(getIndent()).append("public computeIfAbsent(key : K, mappingFunction: JavaFunction<K, V> ) : V | null {").append(System.lineSeparator());
-			sb.append(getIndent()).append("\tconst v : V | null = this.get(key);").append(System.lineSeparator());
+			sb.append(getIndent()).append("public computeIfAbsent(key: K, mappingFunction: JavaFunction<K, V> ): V | null {").append(System.lineSeparator());
+			sb.append(getIndent()).append("\tconst v: V | null = this.get(key);").append(System.lineSeparator());
 			sb.append(getIndent()).append("\tif (v != null)").append(System.lineSeparator());
 			sb.append(getIndent()).append("\t\treturn v;").append(System.lineSeparator());
-			sb.append(getIndent()).append("\tconst newValue : V = mappingFunction.apply(key);").append(System.lineSeparator());
+			sb.append(getIndent()).append("\tconst newValue: V = mappingFunction.apply(key);").append(System.lineSeparator());
 			sb.append(getIndent()).append("\tif (newValue == null)").append(System.lineSeparator());
 			sb.append(getIndent()).append("\t\treturn null;").append(System.lineSeparator());
 			sb.append(getIndent()).append("\tthis.put(key, newValue)").append(System.lineSeparator());
@@ -2696,9 +2696,9 @@ public final class TranspilerTypeScriptPlugin extends TranspilerLanguagePlugin {
 				throw new TranspilerException("Transpiler Error: cannot determine iterable type");
 			final String typeParam = TypeScriptUtils.transpileTypeParamTypeMirror(type);
 			sb.append(getIndent()).append("public [Symbol.iterator](): Iterator<").append(typeParam).append("> {").append(System.lineSeparator());
-			sb.append(getIndent()).append("\tconst iter : JavaIterator<").append(typeParam).append("> = this.iterator();").append(System.lineSeparator());
-			sb.append(getIndent()).append("\tconst result : Iterator<").append(typeParam).append("> = {").append(System.lineSeparator());
-			sb.append(getIndent()).append("\t\tnext() : IteratorResult<").append(typeParam).append("> {").append(System.lineSeparator());
+			sb.append(getIndent()).append("\tconst iter: JavaIterator<").append(typeParam).append("> = this.iterator();").append(System.lineSeparator());
+			sb.append(getIndent()).append("\tconst result: Iterator<").append(typeParam).append("> = {").append(System.lineSeparator());
+			sb.append(getIndent()).append("\t\tnext(): IteratorResult<").append(typeParam).append("> {").append(System.lineSeparator());
 			sb.append(getIndent()).append("\t\t\tif (iter.hasNext())").append(System.lineSeparator());
 			sb.append(getIndent()).append("\t\t\t\treturn { value : iter.next(), done : false };").append(System.lineSeparator());
 			sb.append(getIndent()).append("\t\t\treturn { value : null, done : true };").append(System.lineSeparator());
@@ -2749,11 +2749,11 @@ public final class TranspilerTypeScriptPlugin extends TranspilerLanguagePlugin {
 		// Generate Attributes
 		indentC++;
 		sb.append(getIndent()).append("/** an array containing all values of this enumeration */").append(System.lineSeparator());
-		sb.append(getIndent()).append("static readonly all_values_by_ordinal : Array<").append(node.getSimpleName()).append("> = [];")
+		sb.append(getIndent()).append("static readonly all_values_by_ordinal: Array<").append(node.getSimpleName()).append("> = [];")
 				.append(System.lineSeparator());
 		sb.append(System.lineSeparator());
 		sb.append(getIndent()).append("/** an array containing all values of this enumeration indexed by their name*/").append(System.lineSeparator());
-		sb.append(getIndent()).append("static readonly all_values_by_name : Map<string, ").append(node.getSimpleName()).append("> = new Map<string, ")
+		sb.append(getIndent()).append("static readonly all_values_by_name: Map<string, ").append(node.getSimpleName()).append("> = new Map<string, ")
 				.append(node.getSimpleName()).append(">();").append(System.lineSeparator());
 		sb.append(System.lineSeparator());
 
@@ -2792,7 +2792,7 @@ public final class TranspilerTypeScriptPlugin extends TranspilerLanguagePlugin {
 				%1$s *
 				%1$s * @returns the array with enumeration values
 				%1$s */
-				%1$spublic static values() : Array<%2$s> {
+				%1$spublic static values(): Array<%2$s> {
 				%1$s\treturn [...this.all_values_by_ordinal];
 				%1$s}
 				""".formatted(getIndent(), node.getSimpleName())
@@ -2807,7 +2807,7 @@ public final class TranspilerTypeScriptPlugin extends TranspilerLanguagePlugin {
 				%1$s *
 				%1$s * @returns the enumeration values or null
 				%1$s */
-				%1$spublic static valueOf(name : string) : %2$s | null {
+				%1$spublic static valueOf(name: string): %2$s | null {
 				%1$s\tconst tmp = this.all_values_by_name.get(name);
 				%1$s\treturn (!tmp) ? null : tmp;
 				%1$s}

@@ -9,22 +9,22 @@ export class BKBildungsplanKatalogEintrag extends JavaObject {
 	/**
 	 * Der Index (Schulgliederung) für die Verknüpfung von einem Bildungsgang des Berufskollegs mit Fachklassen
 	 */
-	public index : number = -1;
+	public index: number = -1;
 
 	/**
 	 * Der Fachklassenschlüssel.
 	 */
-	public schluessel : string = "";
+	public schluessel: string = "";
 
 	/**
 	 * Die Version des Teilkatalogs. Diese wird bei Änderungen am Katalog erhöht.
 	 */
-	public version : number = -1;
+	public version: number = -1;
 
 	/**
 	 * Die Einträge des Katalogs.
 	 */
-	public historie : List<BKBildungsplan> = new ArrayList<BKBildungsplan>();
+	public historie: List<BKBildungsplan> = new ArrayList<BKBildungsplan>();
 
 
 	/**
@@ -38,13 +38,13 @@ export class BKBildungsplanKatalogEintrag extends JavaObject {
 		return 'de.svws_nrw.core.data.bk.BKBildungsplanKatalogEintrag';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.bk.BKBildungsplanKatalogEintrag'].includes(name);
 	}
 
 	public static class = new Class<BKBildungsplanKatalogEintrag>('de.svws_nrw.core.data.bk.BKBildungsplanKatalogEintrag');
 
-	public static transpilerFromJSON(json : string): BKBildungsplanKatalogEintrag {
+	public static transpilerFromJSON(json: string): BKBildungsplanKatalogEintrag {
 		const obj = JSON.parse(json) as Partial<BKBildungsplanKatalogEintrag>;
 		const result = new BKBildungsplanKatalogEintrag();
 		if (obj.index === undefined)
@@ -64,7 +64,7 @@ export class BKBildungsplanKatalogEintrag extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : BKBildungsplanKatalogEintrag) : string {
+	public static transpilerToJSON(obj: BKBildungsplanKatalogEintrag): string {
 		let result = '{';
 		result += '"index" : ' + obj.index + ',';
 		result += '"schluessel" : ' + JSON.stringify(obj.schluessel) + ',';
@@ -82,7 +82,7 @@ export class BKBildungsplanKatalogEintrag extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<BKBildungsplanKatalogEintrag>) : string {
+	public static transpilerToJSONPatch(obj: Partial<BKBildungsplanKatalogEintrag>): string {
 		let result = '{';
 		if (obj.index !== undefined) {
 			result += '"index" : ' + obj.index + ',';
@@ -110,6 +110,6 @@ export class BKBildungsplanKatalogEintrag extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_bk_BKBildungsplanKatalogEintrag(obj : unknown) : BKBildungsplanKatalogEintrag {
+export function cast_de_svws_nrw_core_data_bk_BKBildungsplanKatalogEintrag(obj: unknown): BKBildungsplanKatalogEintrag {
 	return obj as BKBildungsplanKatalogEintrag;
 }

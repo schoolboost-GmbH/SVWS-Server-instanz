@@ -10,37 +10,37 @@ export class GostBlockungsergebnis extends JavaObject {
 	/**
 	 * Die ID des Zwischenergebnisses der Blockung
 	 */
-	public id : number = -1;
+	public id: number = -1;
 
 	/**
 	 * Die ID der Blockung
 	 */
-	public blockungID : number = -1;
+	public blockungID: number = -1;
 
 	/**
 	 * Der Name der Blockung
 	 */
-	public name : string = "Blockung";
+	public name: string = "Blockung";
 
 	/**
 	 * Das Halbjahr, welchem die Kursblockung zugeordnet ist (0=EF.1, 1=EF.2, 2=Q1.1, 3=Q1.2, 4=Q2.1, 5=Q2.2)
 	 */
-	public gostHalbjahr : number = 0;
+	public gostHalbjahr: number = 0;
 
 	/**
 	 * Gibt an, ob dieses Ergebnis als aktiv markiert wurde.
 	 */
-	public istAktiv : boolean = false;
+	public istAktiv: boolean = false;
 
 	/**
 	 * Eine Liste der Schienen, welche zugeordnete Kurse beinhalten.
 	 */
-	public readonly schienen : List<GostBlockungsergebnisSchiene> = new ArrayList<GostBlockungsergebnisSchiene>();
+	public readonly schienen: List<GostBlockungsergebnisSchiene> = new ArrayList<GostBlockungsergebnisSchiene>();
 
 	/**
 	 * Die Informationen zur aktuellen Bewertung des Blockungsergebnisses
 	 */
-	public bewertung : GostBlockungsergebnisBewertung = new GostBlockungsergebnisBewertung();
+	public bewertung: GostBlockungsergebnisBewertung = new GostBlockungsergebnisBewertung();
 
 
 	/**
@@ -54,13 +54,13 @@ export class GostBlockungsergebnis extends JavaObject {
 		return 'de.svws_nrw.core.data.gost.GostBlockungsergebnis';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.gost.GostBlockungsergebnis'].includes(name);
 	}
 
 	public static class = new Class<GostBlockungsergebnis>('de.svws_nrw.core.data.gost.GostBlockungsergebnis');
 
-	public static transpilerFromJSON(json : string): GostBlockungsergebnis {
+	public static transpilerFromJSON(json: string): GostBlockungsergebnis {
 		const obj = JSON.parse(json) as Partial<GostBlockungsergebnis>;
 		const result = new GostBlockungsergebnis();
 		if (obj.id === undefined)
@@ -89,7 +89,7 @@ export class GostBlockungsergebnis extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : GostBlockungsergebnis) : string {
+	public static transpilerToJSON(obj: GostBlockungsergebnis): string {
 		let result = '{';
 		result += '"id" : ' + obj.id.toString() + ',';
 		result += '"blockungID" : ' + obj.blockungID.toString() + ',';
@@ -110,7 +110,7 @@ export class GostBlockungsergebnis extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<GostBlockungsergebnis>) : string {
+	public static transpilerToJSONPatch(obj: Partial<GostBlockungsergebnis>): string {
 		let result = '{';
 		if (obj.id !== undefined) {
 			result += '"id" : ' + obj.id.toString() + ',';
@@ -147,6 +147,6 @@ export class GostBlockungsergebnis extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_gost_GostBlockungsergebnis(obj : unknown) : GostBlockungsergebnis {
+export function cast_de_svws_nrw_core_data_gost_GostBlockungsergebnis(obj: unknown): GostBlockungsergebnis {
 	return obj as GostBlockungsergebnis;
 }

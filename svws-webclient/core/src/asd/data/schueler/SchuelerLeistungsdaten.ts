@@ -6,127 +6,127 @@ export class SchuelerLeistungsdaten extends JavaObject {
 	/**
 	 * Die ID der Leistungsdaten in der Datenbank.
 	 */
-	public id : number = -1;
+	public id: number = -1;
 
 	/**
 	 * Die ID des Lernabschnitts des Schülers, zu dem diese Leistungsdaten gehören.
 	 */
-	public lernabschnittID : number = -1;
+	public lernabschnittID: number = -1;
 
 	/**
 	 * Die ID des Faches, auf welches sich die Leistungsdaten beziehen.
 	 */
-	public fachID : number = -1;
+	public fachID: number = -1;
 
 	/**
 	 * Die ID des Kurses, auf welches sich die Leistungsdaten beziehen - bei Klassen unterricht NULL.
 	 */
-	public kursID : number | null = null;
+	public kursID: number | null = null;
 
 	/**
 	 * Die spezielle Kursart des Schülers, sofern Kursunterricht vorliegt.
 	 */
-	public kursart : string | null = null;
+	public kursart: string | null = null;
 
 	/**
 	 * Gibt an, ob es sich bei der Fachbelegung um ein Abiturfach des Schülers handelt und wenn ja, um welches (NULL, 1, 2, 3, 4)
 	 */
-	public abifach : number | null = null;
+	public abifach: number | null = null;
 
 	/**
 	 * Gibt an, ob es sich um ein Fach der Zentralen Prüfungen 10 handelt oder um ein Fach der Zentralen Klausuren in der EF (G8)
 	 */
-	public istZP10oderZKEF : boolean = false;
+	public istZP10oderZKEF: boolean = false;
 
 	/**
 	 * Die Schulnummer, sofern es sich um Unterricht an einer kooperierenden Schule handelt, ansonsten NULL
 	 */
-	public koopSchule : number | null = null;
+	public koopSchule: number | null = null;
 
 	/**
 	 * Die ID des zugehörigen Fach-Lehrers.
 	 */
-	public lehrerID : number | null = null;
+	public lehrerID: number | null = null;
 
 	/**
 	 * Die Anzahl der Wochenstunden, welche das Fach unterrichtet wird.
 	 */
-	public wochenstunden : number = 0;
+	public wochenstunden: number = 0;
 
 	/**
 	 * Die ID der Zusatzkraft.
 	 */
-	public zusatzkraftID : number | null = null;
+	public zusatzkraftID: number | null = null;
 
 	/**
 	 * Die Anzahl der Wochenstunden der Zusatzkraft.
 	 */
-	public zusatzkraftWochenstunden : number = 0;
+	public zusatzkraftWochenstunden: number = 0;
 
 	/**
 	 * Gibt an, on das Fach auf dem Zeugnis erscheint oder nicht.
 	 */
-	public aufZeugnis : boolean = true;
+	public aufZeugnis: boolean = true;
 
 	/**
 	 * Das Kürzel der erteilten Note - es können auch Pseudonoten eingetragen werden (z.B. AT).
 	 */
-	public note : string | null = null;
+	public note: string | null = null;
 
 	/**
 	 * Das Kürzel der erteilten Qurtalsnote - es können auch Pseudonoten eingetragen werden (z.B. AT).
 	 */
-	public noteQuartal : string | null = null;
+	public noteQuartal: string | null = null;
 
 	/**
 	 * Gibt an, ob die Leistung gemahnt wurde oder nicht.
 	 */
-	public istGemahnt : boolean = false;
+	public istGemahnt: boolean = false;
 
 	/**
 	 * Das Datum, wann die Leistung gemahnt wurde oder null.
 	 */
-	public mahndatum : string | null = null;
+	public mahndatum: string | null = null;
 
 	/**
 	 * Gibt an, ob es sich um ein epochal unterrichtetes Fach handelt oder nicht.
 	 */
-	public istEpochal : boolean = false;
+	public istEpochal: boolean = false;
 
 	/**
 	 * Gibt an, ob es sich um eine Leistung handelt, welche über das "Holen von abgeschlossenen Fächern" in diesem Leistungsabschnitt bereitstehen. Wenn ja, dann ist hier der Jahrgang angegeben aus welchem die Daten geholt wurden
 	 */
-	public geholtJahrgangAbgeschlossen : string | null = null;
+	public geholtJahrgangAbgeschlossen: string | null = null;
 
 	/**
 	 * Die Gewichtung für den allgemeinbildenden Teil (am Berufskolleg)
 	 */
-	public gewichtungAllgemeinbildend : number = 1;
+	public gewichtungAllgemeinbildend: number = 1;
 
 	/**
 	 * Die Berufsabschlussnote am Berufskolleg
 	 */
-	public noteBerufsabschluss : string | null = null;
+	public noteBerufsabschluss: string | null = null;
 
 	/**
 	 * Der Text für die fachbezogene Lernentwicklung des Schülers
 	 */
-	public textFachbezogeneLernentwicklung : string = "";
+	public textFachbezogeneLernentwicklung: string = "";
 
 	/**
 	 * Die Facheigenschaft für die Lernstandberichte an Grundschulen (V = voller Umfang, R = reduzierter Umfang)
 	 */
-	public umfangLernstandsbericht : string = "";
+	public umfangLernstandsbericht: string = "";
 
 	/**
 	 * Die Gesamt-Anzahl der Fehlstunden für dieses Fach
 	 */
-	public fehlstundenGesamt : number = 0;
+	public fehlstundenGesamt: number = 0;
 
 	/**
 	 * Die Anzahl der unentschuldigten Fehlstunden für dieses Fach
 	 */
-	public fehlstundenUnentschuldigt : number = 0;
+	public fehlstundenUnentschuldigt: number = 0;
 
 
 	/**
@@ -140,13 +140,13 @@ export class SchuelerLeistungsdaten extends JavaObject {
 		return 'de.svws_nrw.asd.data.schueler.SchuelerLeistungsdaten';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.asd.data.schueler.SchuelerLeistungsdaten'].includes(name);
 	}
 
 	public static class = new Class<SchuelerLeistungsdaten>('de.svws_nrw.asd.data.schueler.SchuelerLeistungsdaten');
 
-	public static transpilerFromJSON(json : string): SchuelerLeistungsdaten {
+	public static transpilerFromJSON(json: string): SchuelerLeistungsdaten {
 		const obj = JSON.parse(json) as Partial<SchuelerLeistungsdaten>;
 		const result = new SchuelerLeistungsdaten();
 		if (obj.id === undefined)
@@ -205,7 +205,7 @@ export class SchuelerLeistungsdaten extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : SchuelerLeistungsdaten) : string {
+	public static transpilerToJSON(obj: SchuelerLeistungsdaten): string {
 		let result = '{';
 		result += '"id" : ' + obj.id.toString() + ',';
 		result += '"lernabschnittID" : ' + obj.lernabschnittID.toString() + ',';
@@ -237,7 +237,7 @@ export class SchuelerLeistungsdaten extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<SchuelerLeistungsdaten>) : string {
+	public static transpilerToJSONPatch(obj: Partial<SchuelerLeistungsdaten>): string {
 		let result = '{';
 		if (obj.id !== undefined) {
 			result += '"id" : ' + obj.id.toString() + ',';
@@ -321,6 +321,6 @@ export class SchuelerLeistungsdaten extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_asd_data_schueler_SchuelerLeistungsdaten(obj : unknown) : SchuelerLeistungsdaten {
+export function cast_de_svws_nrw_asd_data_schueler_SchuelerLeistungsdaten(obj: unknown): SchuelerLeistungsdaten {
 	return obj as SchuelerLeistungsdaten;
 }

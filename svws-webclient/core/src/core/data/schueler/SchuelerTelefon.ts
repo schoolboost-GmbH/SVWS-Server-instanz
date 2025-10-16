@@ -6,37 +6,37 @@ export class SchuelerTelefon extends JavaObject {
 	/**
 	 * Die ID des Telefonnummerneintrags.
 	 */
-	public id : number = -1;
+	public id: number = -1;
 
 	/**
 	 * Die ID des Schülers zum Telefonnummerneintrag.
 	 */
-	public idSchueler : number = -1;
+	public idSchueler: number = -1;
 
 	/**
 	 * Die ID der TelefonArt zum Telefonnummerneintrag.
 	 */
-	public idTelefonArt : number = -1;
+	public idTelefonArt: number = -1;
 
 	/**
 	 * Die Telefonnummer für die TelefonArt eines Schülers
 	 */
-	public telefonnummer : string | null = null;
+	public telefonnummer: string | null = null;
 
 	/**
 	 * Die Bemerkung für die TelefonArt eines Schülers
 	 */
-	public bemerkung : string | null = null;
+	public bemerkung: string | null = null;
 
 	/**
 	 * Gibt die Position in der Sortierreihenfolge für die Einträge an.
 	 */
-	public sortierung : number = 1;
+	public sortierung: number = 1;
 
 	/**
 	 * Die Sperrung des Telefonnummerneintrags.
 	 */
-	public istGesperrt : boolean = false;
+	public istGesperrt: boolean = false;
 
 
 	public constructor() {
@@ -47,13 +47,13 @@ export class SchuelerTelefon extends JavaObject {
 		return 'de.svws_nrw.core.data.schueler.SchuelerTelefon';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.schueler.SchuelerTelefon'].includes(name);
 	}
 
 	public static class = new Class<SchuelerTelefon>('de.svws_nrw.core.data.schueler.SchuelerTelefon');
 
-	public static transpilerFromJSON(json : string): SchuelerTelefon {
+	public static transpilerFromJSON(json: string): SchuelerTelefon {
 		const obj = JSON.parse(json) as Partial<SchuelerTelefon>;
 		const result = new SchuelerTelefon();
 		if (obj.id === undefined)
@@ -76,7 +76,7 @@ export class SchuelerTelefon extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : SchuelerTelefon) : string {
+	public static transpilerToJSON(obj: SchuelerTelefon): string {
 		let result = '{';
 		result += '"id" : ' + obj.id.toString() + ',';
 		result += '"idSchueler" : ' + obj.idSchueler.toString() + ',';
@@ -90,7 +90,7 @@ export class SchuelerTelefon extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<SchuelerTelefon>) : string {
+	public static transpilerToJSONPatch(obj: Partial<SchuelerTelefon>): string {
 		let result = '{';
 		if (obj.id !== undefined) {
 			result += '"id" : ' + obj.id.toString() + ',';
@@ -120,6 +120,6 @@ export class SchuelerTelefon extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_schueler_SchuelerTelefon(obj : unknown) : SchuelerTelefon {
+export function cast_de_svws_nrw_core_data_schueler_SchuelerTelefon(obj: unknown): SchuelerTelefon {
 	return obj as SchuelerTelefon;
 }

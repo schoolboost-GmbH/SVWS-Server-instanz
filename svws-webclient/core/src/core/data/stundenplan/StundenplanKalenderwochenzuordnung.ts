@@ -6,22 +6,22 @@ export class StundenplanKalenderwochenzuordnung extends JavaObject {
 	/**
 	 * Die ID der Kalenderwochenzuordnung.
 	 */
-	public id : number = -1;
+	public id: number = -1;
 
 	/**
 	 * Das Kalenderjahr der Zuordnung
 	 */
-	public jahr : number = -1;
+	public jahr: number = -1;
 
 	/**
 	 * Die Kalenderwoche in dem Jahr.
 	 */
-	public kw : number = -1;
+	public kw: number = -1;
 
 	/**
 	 * Der Wochentyp, der der Kalenderwoche zugeordnet ist (z.B. eine A- bzw. B-Wochen, d.h. 1 bzw. 2). Muss größer als 0 sein.
 	 */
-	public wochentyp : number = 0;
+	public wochentyp: number = 0;
 
 
 	/**
@@ -35,13 +35,13 @@ export class StundenplanKalenderwochenzuordnung extends JavaObject {
 		return 'de.svws_nrw.core.data.stundenplan.StundenplanKalenderwochenzuordnung';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.stundenplan.StundenplanKalenderwochenzuordnung'].includes(name);
 	}
 
 	public static class = new Class<StundenplanKalenderwochenzuordnung>('de.svws_nrw.core.data.stundenplan.StundenplanKalenderwochenzuordnung');
 
-	public static transpilerFromJSON(json : string): StundenplanKalenderwochenzuordnung {
+	public static transpilerFromJSON(json: string): StundenplanKalenderwochenzuordnung {
 		const obj = JSON.parse(json) as Partial<StundenplanKalenderwochenzuordnung>;
 		const result = new StundenplanKalenderwochenzuordnung();
 		if (obj.id === undefined)
@@ -59,7 +59,7 @@ export class StundenplanKalenderwochenzuordnung extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : StundenplanKalenderwochenzuordnung) : string {
+	public static transpilerToJSON(obj: StundenplanKalenderwochenzuordnung): string {
 		let result = '{';
 		result += '"id" : ' + obj.id.toString() + ',';
 		result += '"jahr" : ' + obj.jahr.toString() + ',';
@@ -70,7 +70,7 @@ export class StundenplanKalenderwochenzuordnung extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<StundenplanKalenderwochenzuordnung>) : string {
+	public static transpilerToJSONPatch(obj: Partial<StundenplanKalenderwochenzuordnung>): string {
 		let result = '{';
 		if (obj.id !== undefined) {
 			result += '"id" : ' + obj.id.toString() + ',';
@@ -91,6 +91,6 @@ export class StundenplanKalenderwochenzuordnung extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_stundenplan_StundenplanKalenderwochenzuordnung(obj : unknown) : StundenplanKalenderwochenzuordnung {
+export function cast_de_svws_nrw_core_data_stundenplan_StundenplanKalenderwochenzuordnung(obj: unknown): StundenplanKalenderwochenzuordnung {
 	return obj as StundenplanKalenderwochenzuordnung;
 }

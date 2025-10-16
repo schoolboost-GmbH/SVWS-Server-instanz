@@ -24,17 +24,17 @@ export class AdressenUtils extends JavaObject {
 	 *
 	 * @return ein Array mit den 3 Elementen (0 - Strassennamen, 1 - Hausnummer und 2 - Hausnummerzusatz)
 	 */
-	public static splitStrasse(strasse : string | null) : Array<string> {
-		const result : Array<string> = Array(3).fill(null);
+	public static splitStrasse(strasse: string | null): Array<string> {
+		const result: Array<string> = Array(3).fill(null);
 		if (strasse === null) {
 			result[0] = "";
 			result[1] = "";
 			result[2] = "";
 			return result;
 		}
-		const tmp : string = JavaString.replace(JavaString.replace(JavaString.replace(JavaString.replace(strasse.trim(), "  ", " "), "  ", " "), " -", "-"), "- ", "-");
+		const tmp: string = JavaString.replace(JavaString.replace(JavaString.replace(JavaString.replace(strasse.trim(), "  ", " "), "  ", " "), " -", "-"), "- ", "-");
 		result[0] = JavaString.replaceFirst(tmp, " *(\\d+ *[-\\+]+)* *\\d+\\D*$", "");
-		const rest : string = tmp.substring(result[0].length).trim();
+		const rest: string = tmp.substring(result[0].length).trim();
 		result[1] = JavaString.replaceFirst(rest, "\\D*$", "").trim();
 		result[2] = rest.substring(result[1].length).trim();
 		if (result[0].length > 55)
@@ -56,7 +56,7 @@ export class AdressenUtils extends JavaObject {
 	 *
 	 * @return die kombinierte Strassenangabe
 	 */
-	public static combineStrasse(name : string | null, hausNummer : string | null, zusatz : string | null) : string | null {
+	public static combineStrasse(name: string | null, hausNummer: string | null, zusatz: string | null): string | null {
 		if ((name === null) || (hausNummer === null) || (zusatz === null))
 			return null;
 		if (JavaObject.equalsTranspiler("", (hausNummer.trim())) && (JavaObject.equalsTranspiler("", (zusatz.trim()))))
@@ -68,7 +68,7 @@ export class AdressenUtils extends JavaObject {
 		return 'de.svws_nrw.core.utils.AdressenUtils';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.utils.AdressenUtils'].includes(name);
 	}
 
@@ -76,6 +76,6 @@ export class AdressenUtils extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_utils_AdressenUtils(obj : unknown) : AdressenUtils {
+export function cast_de_svws_nrw_core_utils_AdressenUtils(obj: unknown): AdressenUtils {
 	return obj as AdressenUtils;
 }

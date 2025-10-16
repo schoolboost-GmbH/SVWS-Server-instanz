@@ -15,7 +15,7 @@ export class KursblockungAlgorithmusPermanentKMatching extends KursblockungAlgor
 	 * @param logger  Logger für Benutzerhinweise, Warnungen und Fehler.
 	 * @param input   Die dynamischen Blockungsdaten.
 	 */
-	public constructor(random : Random, logger : Logger, input : GostBlockungsdatenManager) {
+	public constructor(random: Random, logger: Logger, input: GostBlockungsdatenManager) {
 		super(random, logger, input);
 		if (this.dynDaten.gibKurseDieFreiSindAnzahl() === 0)
 			return;
@@ -25,13 +25,13 @@ export class KursblockungAlgorithmusPermanentKMatching extends KursblockungAlgor
 		this.dynDaten.aktionZustandSpeichernK();
 	}
 
-	public toString() : string {
+	public toString(): string {
 		return "KursblockungAlgorithmusPermanentKMatching";
 	}
 
-	public next(zeitEnde : number) : void {
-		const current : number = System.currentTimeMillis();
-		const halbzeit : number = current + (Math.trunc((zeitEnde - current) / 2));
+	public next(zeitEnde: number): void {
+		const current: number = System.currentTimeMillis();
+		const halbzeit: number = current + (Math.trunc((zeitEnde - current) / 2));
 		do {
 			this.verteileKurseMitMatching();
 		} while (System.currentTimeMillis() < halbzeit);
@@ -40,7 +40,7 @@ export class KursblockungAlgorithmusPermanentKMatching extends KursblockungAlgor
 		} while (System.currentTimeMillis() < zeitEnde);
 	}
 
-	private verteileKurseMitMatching() : void {
+	private verteileKurseMitMatching(): void {
 		do {
 			this.dynDaten.aktionSchuelerAusAllenKursenEntfernen();
 			this.dynDaten.aktionKursVerteilenEinenZufaelligenFreien();
@@ -53,7 +53,7 @@ export class KursblockungAlgorithmusPermanentKMatching extends KursblockungAlgor
 		this.dynDaten.aktionZustandLadenK();
 	}
 
-	private verteileKurseMitMatchingW() : void {
+	private verteileKurseMitMatchingW(): void {
 		do {
 			this.dynDaten.aktionSchuelerAusAllenKursenEntfernen();
 			this.dynDaten.aktionKursVerteilenEinenZufaelligenFreien();
@@ -66,7 +66,7 @@ export class KursblockungAlgorithmusPermanentKMatching extends KursblockungAlgor
 		this.dynDaten.aktionZustandLadenK();
 	}
 
-	public ladeBestMitSchuelerverteilung() : void {
+	public ladeBestMitSchuelerverteilung(): void {
 		this.dynDaten.aktionZustandLadenK();
 	}
 
@@ -74,7 +74,7 @@ export class KursblockungAlgorithmusPermanentKMatching extends KursblockungAlgor
 		return 'de.svws_nrw.core.kursblockung.KursblockungAlgorithmusPermanentKMatching';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.kursblockung.KursblockungAlgorithmusPermanentKMatching', 'de.svws_nrw.core.kursblockung.KursblockungAlgorithmusPermanentK'].includes(name);
 	}
 
@@ -82,6 +82,6 @@ export class KursblockungAlgorithmusPermanentKMatching extends KursblockungAlgor
 
 }
 
-export function cast_de_svws_nrw_core_kursblockung_KursblockungAlgorithmusPermanentKMatching(obj : unknown) : KursblockungAlgorithmusPermanentKMatching {
+export function cast_de_svws_nrw_core_kursblockung_KursblockungAlgorithmusPermanentKMatching(obj: unknown): KursblockungAlgorithmusPermanentKMatching {
 	return obj as KursblockungAlgorithmusPermanentKMatching;
 }

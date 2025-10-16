@@ -8,7 +8,7 @@ export class KAOAKategorieKatalogEintrag extends CoreTypeData {
 	/**
 	 * Jahrgangsstufen in denen der Eintrag gemacht werden darf
 	 */
-	public jahrgaenge : List<string> = new ArrayList<string>();
+	public jahrgaenge: List<string> = new ArrayList<string>();
 
 
 	/**
@@ -22,13 +22,13 @@ export class KAOAKategorieKatalogEintrag extends CoreTypeData {
 		return 'de.svws_nrw.asd.data.kaoa.KAOAKategorieKatalogEintrag';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.asd.data.kaoa.KAOAKategorieKatalogEintrag', 'de.svws_nrw.asd.data.CoreTypeData'].includes(name);
 	}
 
 	public static class = new Class<KAOAKategorieKatalogEintrag>('de.svws_nrw.asd.data.kaoa.KAOAKategorieKatalogEintrag');
 
-	public static transpilerFromJSON(json : string): KAOAKategorieKatalogEintrag {
+	public static transpilerFromJSON(json: string): KAOAKategorieKatalogEintrag {
 		const obj = JSON.parse(json) as Partial<KAOAKategorieKatalogEintrag>;
 		const result = new KAOAKategorieKatalogEintrag();
 		if (obj.id === undefined)
@@ -53,7 +53,7 @@ export class KAOAKategorieKatalogEintrag extends CoreTypeData {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : KAOAKategorieKatalogEintrag) : string {
+	public static transpilerToJSON(obj: KAOAKategorieKatalogEintrag): string {
 		let result = '{';
 		result += '"id" : ' + obj.id.toString() + ',';
 		result += '"schluessel" : ' + JSON.stringify(obj.schluessel) + ',';
@@ -74,7 +74,7 @@ export class KAOAKategorieKatalogEintrag extends CoreTypeData {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<KAOAKategorieKatalogEintrag>) : string {
+	public static transpilerToJSONPatch(obj: Partial<KAOAKategorieKatalogEintrag>): string {
 		let result = '{';
 		if (obj.id !== undefined) {
 			result += '"id" : ' + obj.id.toString() + ',';
@@ -111,6 +111,6 @@ export class KAOAKategorieKatalogEintrag extends CoreTypeData {
 
 }
 
-export function cast_de_svws_nrw_asd_data_kaoa_KAOAKategorieKatalogEintrag(obj : unknown) : KAOAKategorieKatalogEintrag {
+export function cast_de_svws_nrw_asd_data_kaoa_KAOAKategorieKatalogEintrag(obj: unknown): KAOAKategorieKatalogEintrag {
 	return obj as KAOAKategorieKatalogEintrag;
 }

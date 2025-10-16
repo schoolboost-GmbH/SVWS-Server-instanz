@@ -9,42 +9,42 @@ export class OAuth2ClientConnection extends JavaObject {
 	/**
 	 * Die ID des OAuth2 Client Secrets.
 	 */
-	public id : number = -1;
+	public id: number = -1;
 
 	/**
 	 * Die URL des Auth-Servers.
 	 */
-	public authServer : string = "";
+	public authServer: string = "";
 
 	/**
 	 * Die Client-ID für diesen Auth-Server.
 	 */
-	public clientID : string = "";
+	public clientID: string = "";
 
 	/**
 	 * Das Client-Secret für die Client ID für diesen Auth-Server.
 	 */
-	public clientSecret : string = "";
+	public clientSecret: string = "";
 
 	/**
 	 * Das TLS-Zertifikat, welches von dem Auth-Server verwendet wird.
 	 */
-	public tlsCert : string | null = null;
+	public tlsCert: string | null = null;
 
 	/**
 	 * Gibt an, ob das TLS-Zertifikat von dem SVWS-Server über die Chain automatisch validiert werden kann.
 	 */
-	public tlsCertIsKnown : boolean = false;
+	public tlsCertIsKnown: boolean = false;
 
 	/**
 	 * Gibt an, ob dem TLS-Zertifikat von dem SVWS-Server vertraut wird oder nicht.
 	 */
-	public tlsCertIsTrusted : boolean = false;
+	public tlsCertIsTrusted: boolean = false;
 
 	/**
 	 * Die Liste mit den TLS-Zertifikaten der Zertifikatskette des TLS-Servers.
 	 */
-	public tlsCertChain : List<TLSCertificate> = new ArrayList<TLSCertificate>();
+	public tlsCertChain: List<TLSCertificate> = new ArrayList<TLSCertificate>();
 
 
 	/**
@@ -58,13 +58,13 @@ export class OAuth2ClientConnection extends JavaObject {
 		return 'de.svws_nrw.core.data.oauth2.OAuth2ClientConnection';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.oauth2.OAuth2ClientConnection'].includes(name);
 	}
 
 	public static class = new Class<OAuth2ClientConnection>('de.svws_nrw.core.data.oauth2.OAuth2ClientConnection');
 
-	public static transpilerFromJSON(json : string): OAuth2ClientConnection {
+	public static transpilerFromJSON(json: string): OAuth2ClientConnection {
 		const obj = JSON.parse(json) as Partial<OAuth2ClientConnection>;
 		const result = new OAuth2ClientConnection();
 		if (obj.id === undefined)
@@ -94,7 +94,7 @@ export class OAuth2ClientConnection extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : OAuth2ClientConnection) : string {
+	public static transpilerToJSON(obj: OAuth2ClientConnection): string {
 		let result = '{';
 		result += '"id" : ' + obj.id.toString() + ',';
 		result += '"authServer" : ' + JSON.stringify(obj.authServer) + ',';
@@ -116,7 +116,7 @@ export class OAuth2ClientConnection extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<OAuth2ClientConnection>) : string {
+	public static transpilerToJSONPatch(obj: Partial<OAuth2ClientConnection>): string {
 		let result = '{';
 		if (obj.id !== undefined) {
 			result += '"id" : ' + obj.id.toString() + ',';
@@ -156,6 +156,6 @@ export class OAuth2ClientConnection extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_oauth2_OAuth2ClientConnection(obj : unknown) : OAuth2ClientConnection {
+export function cast_de_svws_nrw_core_data_oauth2_OAuth2ClientConnection(obj: unknown): OAuth2ClientConnection {
 	return obj as OAuth2ClientConnection;
 }

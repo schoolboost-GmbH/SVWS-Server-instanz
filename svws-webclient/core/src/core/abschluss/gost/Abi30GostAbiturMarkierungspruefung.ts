@@ -11,7 +11,7 @@ export class Abi30GostAbiturMarkierungspruefung extends JavaObject {
 	/**
 	 * Das Ergebnis der Prüfung
 	 */
-	private readonly ergebnis : GostAbiturMarkierungspruefungErgebnis = new GostAbiturMarkierungspruefungErgebnis();
+	private readonly ergebnis: GostAbiturMarkierungspruefungErgebnis = new GostAbiturMarkierungspruefungErgebnis();
 
 
 	/**
@@ -21,7 +21,7 @@ export class Abi30GostAbiturMarkierungspruefung extends JavaObject {
 	 * @param manager            der Abiturdaten-Manager
 	 * @param belegpruefungen    die durchgeführten Belegprüfungen
 	 */
-	private constructor(manager : AbiturdatenManager, belegpruefungen : List<GostBelegpruefung>) {
+	private constructor(manager: AbiturdatenManager, belegpruefungen: List<GostBelegpruefung>) {
 		super();
 		throw new UnsupportedOperationException()
 	}
@@ -36,8 +36,8 @@ export class Abi30GostAbiturMarkierungspruefung extends JavaObject {
 	 *
 	 * @return das Ergebnis der Prüfung
 	 */
-	public static pruefe(manager : AbiturdatenManager, belegpruefungen : List<GostBelegpruefung>) : GostAbiturMarkierungspruefungErgebnis {
-		const pruefung : Abi30GostAbiturMarkierungspruefung = new Abi30GostAbiturMarkierungspruefung(manager, belegpruefungen);
+	public static pruefe(manager: AbiturdatenManager, belegpruefungen: List<GostBelegpruefung>): GostAbiturMarkierungspruefungErgebnis {
+		const pruefung: Abi30GostAbiturMarkierungspruefung = new Abi30GostAbiturMarkierungspruefung(manager, belegpruefungen);
 		return pruefung.ergebnis;
 	}
 
@@ -45,7 +45,7 @@ export class Abi30GostAbiturMarkierungspruefung extends JavaObject {
 		return 'de.svws_nrw.core.abschluss.gost.Abi30GostAbiturMarkierungspruefung';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.abschluss.gost.Abi30GostAbiturMarkierungspruefung'].includes(name);
 	}
 
@@ -53,6 +53,6 @@ export class Abi30GostAbiturMarkierungspruefung extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_abschluss_gost_Abi30GostAbiturMarkierungspruefung(obj : unknown) : Abi30GostAbiturMarkierungspruefung {
+export function cast_de_svws_nrw_core_abschluss_gost_Abi30GostAbiturMarkierungspruefung(obj: unknown): Abi30GostAbiturMarkierungspruefung {
 	return obj as Abi30GostAbiturMarkierungspruefung;
 }

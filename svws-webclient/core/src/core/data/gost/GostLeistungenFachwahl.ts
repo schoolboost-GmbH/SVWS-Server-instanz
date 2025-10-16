@@ -10,22 +10,22 @@ export class GostLeistungenFachwahl extends JavaObject {
 	/**
 	 * Das Fach der Gymnasialen Oberstufe, welches dieser Fachwahl zugeordnet ist.
 	 */
-	public fach : GostFach | null = new GostFach();
+	public fach: GostFach | null = new GostFach();
 
 	/**
 	 * Die Nummer des Abiturfaches, sofern es sich um ein Abiturfach handelt - ansonsten null
 	 */
-	public abiturfach : number | null = null;
+	public abiturfach: number | null = null;
 
 	/**
 	 * Gibt an, ob es sich um eine neu einsetzende Fremdsprache handelt oder nicht.
 	 */
-	public istFSNeu : boolean = false;
+	public istFSNeu: boolean = false;
 
 	/**
 	 * Die einzelnen Belegungen dieses Faches
 	 */
-	public readonly belegungen : List<GostLeistungenFachbelegung> = new ArrayList<GostLeistungenFachbelegung>();
+	public readonly belegungen: List<GostLeistungenFachbelegung> = new ArrayList<GostLeistungenFachbelegung>();
 
 
 	/**
@@ -39,13 +39,13 @@ export class GostLeistungenFachwahl extends JavaObject {
 		return 'de.svws_nrw.core.data.gost.GostLeistungenFachwahl';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.gost.GostLeistungenFachwahl'].includes(name);
 	}
 
 	public static class = new Class<GostLeistungenFachwahl>('de.svws_nrw.core.data.gost.GostLeistungenFachwahl');
 
-	public static transpilerFromJSON(json : string): GostLeistungenFachwahl {
+	public static transpilerFromJSON(json: string): GostLeistungenFachwahl {
 		const obj = JSON.parse(json) as Partial<GostLeistungenFachwahl>;
 		const result = new GostLeistungenFachwahl();
 		result.fach = ((obj.fach === undefined) || (obj.fach === null)) ? null : GostFach.transpilerFromJSON(JSON.stringify(obj.fach));
@@ -61,7 +61,7 @@ export class GostLeistungenFachwahl extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : GostLeistungenFachwahl) : string {
+	public static transpilerToJSON(obj: GostLeistungenFachwahl): string {
 		let result = '{';
 		result += '"fach" : ' + ((obj.fach === null) ? 'null' : GostFach.transpilerToJSON(obj.fach)) + ',';
 		result += '"abiturfach" : ' + ((obj.abiturfach === null) ? 'null' : obj.abiturfach.toString()) + ',';
@@ -79,7 +79,7 @@ export class GostLeistungenFachwahl extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<GostLeistungenFachwahl>) : string {
+	public static transpilerToJSONPatch(obj: Partial<GostLeistungenFachwahl>): string {
 		let result = '{';
 		if (obj.fach !== undefined) {
 			result += '"fach" : ' + ((obj.fach === null) ? 'null' : GostFach.transpilerToJSON(obj.fach)) + ',';
@@ -107,6 +107,6 @@ export class GostLeistungenFachwahl extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_gost_GostLeistungenFachwahl(obj : unknown) : GostLeistungenFachwahl {
+export function cast_de_svws_nrw_core_data_gost_GostLeistungenFachwahl(obj: unknown): GostLeistungenFachwahl {
 	return obj as GostLeistungenFachwahl;
 }

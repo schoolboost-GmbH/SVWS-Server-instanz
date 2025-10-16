@@ -13,15 +13,15 @@ export class KlausurblockungSchienenAlgorithmusGreedy2b extends KlausurblockungS
 	 * @param pRandom   Ein {@link Random}-Objekt zur Steuerung des Zufalls über einen Anfangs-Seed.
 	 * @param pDynDaten Die aktuellen Blockungsdaten.
 	 */
-	public constructor(pRandom : Random, pDynDaten : KlausurblockungSchienenDynDaten) {
+	public constructor(pRandom: Random, pDynDaten: KlausurblockungSchienenDynDaten) {
 		super(pRandom, pDynDaten);
 	}
 
-	public toString() : string {
+	public toString(): string {
 		return "Klausuren nach Knotengrad & Schienen nacheinander";
 	}
 
-	public berechne(pZeitEnde : number) : void {
+	public berechne(pZeitEnde: number): void {
 		this._dynDaten.aktion_EntferneAlles_SchienenNacheinande_KlausurenHoherGradZuerst();
 		this._dynDaten.aktionZustand1Speichern();
 		while (System.currentTimeMillis() < pZeitEnde) {
@@ -39,7 +39,7 @@ export class KlausurblockungSchienenAlgorithmusGreedy2b extends KlausurblockungS
 		return 'de.svws_nrw.core.utils.gost.klausurplanung.KlausurblockungSchienenAlgorithmusGreedy2b';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.utils.gost.klausurplanung.KlausurblockungSchienenAlgorithmusGreedy2b', 'de.svws_nrw.core.utils.gost.klausurplanung.KlausurblockungSchienenAlgorithmusAbstract'].includes(name);
 	}
 
@@ -47,6 +47,6 @@ export class KlausurblockungSchienenAlgorithmusGreedy2b extends KlausurblockungS
 
 }
 
-export function cast_de_svws_nrw_core_utils_gost_klausurplanung_KlausurblockungSchienenAlgorithmusGreedy2b(obj : unknown) : KlausurblockungSchienenAlgorithmusGreedy2b {
+export function cast_de_svws_nrw_core_utils_gost_klausurplanung_KlausurblockungSchienenAlgorithmusGreedy2b(obj: unknown): KlausurblockungSchienenAlgorithmusGreedy2b {
 	return obj as KlausurblockungSchienenAlgorithmusGreedy2b;
 }

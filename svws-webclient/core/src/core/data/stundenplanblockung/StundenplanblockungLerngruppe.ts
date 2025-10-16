@@ -14,47 +14,47 @@ export class StundenplanblockungLerngruppe extends JavaObject {
 	/**
 	 * Die Datenbank-ID der Lerngruppe.
 	 */
-	public id : number = 0;
+	public id: number = 0;
 
 	/**
 	 * Alle Lehrkräfte, die dieser Lerngruppe zugeordnet sind.
 	 */
-	public lehrkraefte1 : List<StundenplanblockungLehrkraft> = new ArrayList<StundenplanblockungLehrkraft>();
+	public lehrkraefte1: List<StundenplanblockungLehrkraft> = new ArrayList<StundenplanblockungLehrkraft>();
 
 	/**
 	 * Alle Lehrkräfte, die dieser Lerngruppe hospitierend zugeordnet sind.
 	 */
-	public lehrkraefte2 : List<StundenplanblockungLehrkraft> = new ArrayList<StundenplanblockungLehrkraft>();
+	public lehrkraefte2: List<StundenplanblockungLehrkraft> = new ArrayList<StundenplanblockungLehrkraft>();
 
 	/**
 	 * Alle Klassen, die dieser Lerngruppe zugeordnet sind.
 	 */
-	public klassen : List<StundenplanblockungKlasse> = new ArrayList<StundenplanblockungKlasse>();
+	public klassen: List<StundenplanblockungKlasse> = new ArrayList<StundenplanblockungKlasse>();
 
 	/**
 	 * Alle Fächer, die dieser Lerngruppe zugeordnet sind. In der Regel genau ein Fach.
 	 */
-	public faecher : List<StundenplanblockungFach> = new ArrayList<StundenplanblockungFach>();
+	public faecher: List<StundenplanblockungFach> = new ArrayList<StundenplanblockungFach>();
 
 	/**
 	 * Alle Räume, die für diese Lerngruppe primär in Frage kommen.
 	 */
-	public raeume1 : List<StundenplanblockungRaum> = new ArrayList<StundenplanblockungRaum>();
+	public raeume1: List<StundenplanblockungRaum> = new ArrayList<StundenplanblockungRaum>();
 
 	/**
 	 * Alle Räume, die für diese Lerngruppe sekundär (alternativ) in Frage kommen.
 	 */
-	public raeume2 : List<StundenplanblockungRaum> = new ArrayList<StundenplanblockungRaum>();
+	public raeume2: List<StundenplanblockungRaum> = new ArrayList<StundenplanblockungRaum>();
 
 	/**
 	 * Alle Kopplungen, die dieser Lerngruppe zugeordnet sind.
 	 */
-	public kopplungen : List<StundenplanblockungKopplung> = new ArrayList<StundenplanblockungKopplung>();
+	public kopplungen: List<StundenplanblockungKopplung> = new ArrayList<StundenplanblockungKopplung>();
 
 	/**
 	 * Alle Stundenelemente, die dieser Lerngruppe zugeordnet sind.
 	 */
-	public stundenelemente : List<StundenplanblockungStundenelement> = new ArrayList<StundenplanblockungStundenelement>();
+	public stundenelemente: List<StundenplanblockungStundenelement> = new ArrayList<StundenplanblockungStundenelement>();
 
 
 	/**
@@ -68,13 +68,13 @@ export class StundenplanblockungLerngruppe extends JavaObject {
 		return 'de.svws_nrw.core.data.stundenplanblockung.StundenplanblockungLerngruppe';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.stundenplanblockung.StundenplanblockungLerngruppe'].includes(name);
 	}
 
 	public static class = new Class<StundenplanblockungLerngruppe>('de.svws_nrw.core.data.stundenplanblockung.StundenplanblockungLerngruppe');
 
-	public static transpilerFromJSON(json : string): StundenplanblockungLerngruppe {
+	public static transpilerFromJSON(json: string): StundenplanblockungLerngruppe {
 		const obj = JSON.parse(json) as Partial<StundenplanblockungLerngruppe>;
 		const result = new StundenplanblockungLerngruppe();
 		if (obj.id === undefined)
@@ -123,7 +123,7 @@ export class StundenplanblockungLerngruppe extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : StundenplanblockungLerngruppe) : string {
+	public static transpilerToJSON(obj: StundenplanblockungLerngruppe): string {
 		let result = '{';
 		result += '"id" : ' + obj.id.toString() + ',';
 		result += '"lehrkraefte1" : [ ';
@@ -195,7 +195,7 @@ export class StundenplanblockungLerngruppe extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<StundenplanblockungLerngruppe>) : string {
+	public static transpilerToJSONPatch(obj: Partial<StundenplanblockungLerngruppe>): string {
 		let result = '{';
 		if (obj.id !== undefined) {
 			result += '"id" : ' + obj.id.toString() + ',';
@@ -287,6 +287,6 @@ export class StundenplanblockungLerngruppe extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_stundenplanblockung_StundenplanblockungLerngruppe(obj : unknown) : StundenplanblockungLerngruppe {
+export function cast_de_svws_nrw_core_data_stundenplanblockung_StundenplanblockungLerngruppe(obj: unknown): StundenplanblockungLerngruppe {
 	return obj as StundenplanblockungLerngruppe;
 }

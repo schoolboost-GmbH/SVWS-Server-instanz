@@ -8,32 +8,32 @@ export class StundenplanPausenzeit extends JavaObject {
 	/**
 	 * Die ID der Pausenzeit.
 	 */
-	public id : number = -1;
+	public id: number = -1;
 
 	/**
 	 * Der {@link Wochentag} für die Pausenzeit (1=Montag, 2=Dienstag, ..., 7=Sonntag)
 	 */
-	public wochentag : number = 1;
+	public wochentag: number = 1;
 
 	/**
 	 * Die Uhrzeit in Minuten seit 0 Uhr, wann die Pause beginnt. NULL bedeutet "noch nicht definiert".
 	 */
-	public beginn : number | null = null;
+	public beginn: number | null = null;
 
 	/**
 	 * Die Uhrzeit in Minuten seit 0 Uhr, wann die Pause endet. NULL bedeutet "noch nicht definiert".
 	 */
-	public ende : number | null = null;
+	public ende: number | null = null;
 
 	/**
 	 * Die Bezeichnung der Pausenzeit, welche die Art der Pausenzeit genauer beschreibt (z.B. Mittagspause).
 	 */
-	public bezeichnung : string = "Pause";
+	public bezeichnung: string = "Pause";
 
 	/**
 	 * Die IDs der Klassen, denen diese Pausenzeit zugeordnet sind. Ist die Liste leer, so gilt die Pausenzeit für alle Klassen!
 	 */
-	public klassen : List<number> = new ArrayList<number>();
+	public klassen: List<number> = new ArrayList<number>();
 
 
 	/**
@@ -47,13 +47,13 @@ export class StundenplanPausenzeit extends JavaObject {
 		return 'de.svws_nrw.core.data.stundenplan.StundenplanPausenzeit';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.stundenplan.StundenplanPausenzeit'].includes(name);
 	}
 
 	public static class = new Class<StundenplanPausenzeit>('de.svws_nrw.core.data.stundenplan.StundenplanPausenzeit');
 
-	public static transpilerFromJSON(json : string): StundenplanPausenzeit {
+	public static transpilerFromJSON(json: string): StundenplanPausenzeit {
 		const obj = JSON.parse(json) as Partial<StundenplanPausenzeit>;
 		const result = new StundenplanPausenzeit();
 		if (obj.id === undefined)
@@ -75,7 +75,7 @@ export class StundenplanPausenzeit extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : StundenplanPausenzeit) : string {
+	public static transpilerToJSON(obj: StundenplanPausenzeit): string {
 		let result = '{';
 		result += '"id" : ' + obj.id.toString() + ',';
 		result += '"wochentag" : ' + obj.wochentag.toString() + ',';
@@ -95,7 +95,7 @@ export class StundenplanPausenzeit extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<StundenplanPausenzeit>) : string {
+	public static transpilerToJSONPatch(obj: Partial<StundenplanPausenzeit>): string {
 		let result = '{';
 		if (obj.id !== undefined) {
 			result += '"id" : ' + obj.id.toString() + ',';
@@ -129,6 +129,6 @@ export class StundenplanPausenzeit extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_stundenplan_StundenplanPausenzeit(obj : unknown) : StundenplanPausenzeit {
+export function cast_de_svws_nrw_core_data_stundenplan_StundenplanPausenzeit(obj: unknown): StundenplanPausenzeit {
 	return obj as StundenplanPausenzeit;
 }

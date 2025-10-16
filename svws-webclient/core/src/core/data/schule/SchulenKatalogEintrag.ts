@@ -6,242 +6,242 @@ export class SchulenKatalogEintrag extends JavaObject {
 	/**
 	 * Die Schulnummer.
 	 */
-	public SchulNr : string = "";
+	public SchulNr: string = "";
 
 	/**
 	 * Regionalschlüssel der Schule
 	 */
-	public RegSchl : string | null = null;
+	public RegSchl: string | null = null;
 
 	/**
 	 * Feld KoRe
 	 */
-	public KoRe : number = 0;
+	public KoRe: number = 0;
 
 	/**
 	 * Feld KoHo
 	 */
-	public KoHo : number = 0;
+	public KoHo: number = 0;
 
 	/**
 	 * Bezeichnung 1 der Schule
 	 */
-	public ABez1 : string | null = null;
+	public ABez1: string | null = null;
 
 	/**
 	 * Bezeichnung 2 der Schule
 	 */
-	public ABez2 : string | null = null;
+	public ABez2: string | null = null;
 
 	/**
 	 * Bezeichnung 3 der Schule
 	 */
-	public ABez3 : string | null = null;
+	public ABez3: string | null = null;
 
 	/**
 	 * Postleitzahl der Schule
 	 */
-	public PLZ : string | null = null;
+	public PLZ: string | null = null;
 
 	/**
 	 * Ort der Schule
 	 */
-	public Ort : string | null = null;
+	public Ort: string | null = null;
 
 	/**
 	 * Straße der Schule
 	 */
-	public Strasse : string | null = null;
+	public Strasse: string | null = null;
 
 	/**
 	 * Telefonvorwahl der Schule
 	 */
-	public TelVorw : string | null = null;
+	public TelVorw: string | null = null;
 
 	/**
 	 * Telefonnummer der Schule
 	 */
-	public Telefon : string | null = null;
+	public Telefon: string | null = null;
 
 	/**
 	 * Faxvorwahl der Schule
 	 */
-	public FaxVorw : string | null = null;
+	public FaxVorw: string | null = null;
 
 	/**
 	 * Faxnummer der Schule
 	 */
-	public Fax : string | null = null;
+	public Fax: string | null = null;
 
 	/**
 	 * Modemvorwahl der Schule
 	 */
-	public ModemVorw : string | null = null;
+	public ModemVorw: string | null = null;
 
 	/**
 	 * Modem-Telefonnummer der Schule
 	 */
-	public Modem : string | null = null;
+	public Modem: string | null = null;
 
 	/**
 	 * Schulform der Schule
 	 */
-	public SF : string | null = null;
+	public SF: string | null = null;
 
 	/**
 	 * OeffPri
 	 */
-	public OeffPri : string | null = null;
+	public OeffPri: string | null = null;
 
 	/**
 	 * Kurzbezeichnung der Schule
 	 */
-	public KurzBez : string | null = null;
+	public KurzBez: string | null = null;
 
 	/**
 	 * Schulbetriebsschlüssel der Schule
 	 */
-	public SchBetrSchl : number | null = null;
+	public SchBetrSchl: number | null = null;
 
 	/**
 	 * Datum des Schulbetriensschlüssels der Schule
 	 */
-	public SchBetrSchlDatum : string | null = null;
+	public SchBetrSchlDatum: string | null = null;
 
 	/**
 	 * Art der Trägerschaft der Schule
 	 */
-	public ArtDerTraegerschaft : string | null = null;
+	public ArtDerTraegerschaft: string | null = null;
 
 	/**
 	 * Schulträgernummer der Schule
 	 */
-	public SchultraegerNr : string | null = null;
+	public SchultraegerNr: string | null = null;
 
 	/**
 	 * Schulgliederung der Schule
 	 */
-	public Schulgliederung : string | null = null;
+	public Schulgliederung: string | null = null;
 
 	/**
 	 * Schulart
 	 */
-	public Schulart : string | null = null;
+	public Schulart: string | null = null;
 
 	/**
 	 * Gibt an ob die Schule Ganztagsbetrieb hat
 	 */
-	public Ganztagsbetrieb : string | null = null;
+	public Ganztagsbetrieb: string | null = null;
 
 	/**
 	 * Förderschwerpunkte der Schule
 	 */
-	public FSP : string | null = null;
+	public FSP: string | null = null;
 
 	/**
 	 * Verbund
 	 */
-	public Verbund : string | null = null;
+	public Verbund: string | null = null;
 
 	/**
 	 * Bus
 	 */
-	public Bus : string | null = null;
+	public Bus: string | null = null;
 
 	/**
 	 * Fachberater der Schule
 	 */
-	public Fachberater : number | null = null;
+	public Fachberater: number | null = null;
 
 	/**
 	 * FachberHauptamtl
 	 */
-	public FachberHauptamtl : number | null = null;
+	public FachberHauptamtl: number | null = null;
 
 	/**
 	 * TelNrDBSalt
 	 */
-	public TelNrDBSalt : string | null = null;
+	public TelNrDBSalt: string | null = null;
 
 	/**
 	 * RP
 	 */
-	public RP : string | null = null;
+	public RP: string | null = null;
 
 	/**
 	 * Email-Adresse der Schule
 	 */
-	public Email : string | null = null;
+	public Email: string | null = null;
 
 	/**
 	 * Website der Schule
 	 */
-	public URL : string | null = null;
+	public URL: string | null = null;
 
 	/**
 	 * Bemerkung zur Schule
 	 */
-	public Bemerkung : string | null = null;
+	public Bemerkung: string | null = null;
 
 	/**
 	 * Gibt an ob die Schule eine CD für ASDPC32 möchte
 	 */
-	public CD : number | null = null;
+	public CD: number | null = null;
 
 	/**
 	 * Stift
 	 */
-	public Stift : number | null = null;
+	public Stift: number | null = null;
 
 	/**
 	 * Gibt an ob die Schule offenen Ganztag hat
 	 */
-	public OGTS : string | null = null;
+	public OGTS: string | null = null;
 
 	/**
 	 * SELB
 	 */
-	public SELB : string | null = null;
+	public SELB: string | null = null;
 
 	/**
 	 * Gibt an ob die Schule Internatsplätze hat
 	 */
-	public Internat : string | null = null;
+	public Internat: string | null = null;
 
 	/**
 	 * Anzahl der Internatsplätze
 	 */
-	public InternatPlaetze : number | null = null;
+	public InternatPlaetze: number | null = null;
 
 	/**
 	 * Schulmailadresse
 	 */
-	public SMail : string | null = null;
+	public SMail: string | null = null;
 
 	/**
 	 * Hat die Schule Sport im Abitur?
 	 */
-	public SportImAbi : string | null = null;
+	public SportImAbi: string | null = null;
 
 	/**
 	 * Nimmt die Schule am Projekt Talentschule teil?
 	 */
-	public Tal : string | null = null;
+	public Tal: string | null = null;
 
 	/**
 	 * Ist die konfessionelle Kooperation an dieser Schule genehmigt?
 	 */
-	public KonKop : string | null = null;
+	public KonKop: string | null = null;
 
 	/**
 	 * Gibt die Gültigkeit ab welchem Schuljahr an
 	 */
-	public gueltigVon : number | null = null;
+	public gueltigVon: number | null = null;
 
 	/**
 	 * Gibt die Gültigkeit bis zu welchem Schuljahr an
 	 */
-	public gueltigBis : number | null = null;
+	public gueltigBis: number | null = null;
 
 
 	/**
@@ -255,13 +255,13 @@ export class SchulenKatalogEintrag extends JavaObject {
 		return 'de.svws_nrw.core.data.schule.SchulenKatalogEintrag';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.schule.SchulenKatalogEintrag'].includes(name);
 	}
 
 	public static class = new Class<SchulenKatalogEintrag>('de.svws_nrw.core.data.schule.SchulenKatalogEintrag');
 
-	public static transpilerFromJSON(json : string): SchulenKatalogEintrag {
+	public static transpilerFromJSON(json: string): SchulenKatalogEintrag {
 		const obj = JSON.parse(json) as Partial<SchulenKatalogEintrag>;
 		const result = new SchulenKatalogEintrag();
 		if (obj.SchulNr === undefined)
@@ -321,7 +321,7 @@ export class SchulenKatalogEintrag extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : SchulenKatalogEintrag) : string {
+	public static transpilerToJSON(obj: SchulenKatalogEintrag): string {
 		let result = '{';
 		result += '"SchulNr" : ' + JSON.stringify(obj.SchulNr) + ',';
 		result += '"RegSchl" : ' + ((obj.RegSchl === null) ? 'null' : JSON.stringify(obj.RegSchl)) + ',';
@@ -376,7 +376,7 @@ export class SchulenKatalogEintrag extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<SchulenKatalogEintrag>) : string {
+	public static transpilerToJSONPatch(obj: Partial<SchulenKatalogEintrag>): string {
 		let result = '{';
 		if (obj.SchulNr !== undefined) {
 			result += '"SchulNr" : ' + JSON.stringify(obj.SchulNr) + ',';
@@ -529,6 +529,6 @@ export class SchulenKatalogEintrag extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_schule_SchulenKatalogEintrag(obj : unknown) : SchulenKatalogEintrag {
+export function cast_de_svws_nrw_core_data_schule_SchulenKatalogEintrag(obj: unknown): SchulenKatalogEintrag {
 	return obj as SchulenKatalogEintrag;
 }

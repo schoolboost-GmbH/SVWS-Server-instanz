@@ -19,29 +19,29 @@ export class Abi30BelegpruefungAllgemeines extends GostBelegpruefung {
 	 * @param manager        der Daten-Manager für die Abiturdaten
 	 * @param pruefungsArt   die Art der durchzuführenden Prüfung (z.B. EF.1 oder GESAMT)
 	 */
-	public constructor(manager : AbiturdatenManager, pruefungsArt : GostBelegpruefungsArt) {
+	public constructor(manager: AbiturdatenManager, pruefungsArt: GostBelegpruefungsArt) {
 		super(manager, pruefungsArt);
 	}
 
-	protected init() : void {
+	protected init(): void {
 		// empty block
 	}
 
-	protected pruefeEF1() : void {
+	protected pruefeEF1(): void {
 		if (this.manager.zaehleBelegungInHalbjahren(this.manager.getRelevanteFachbelegungen(GostFachbereich.RELIGION), GostHalbjahr.EF1) > 1)
 			this.addFehler(GostBelegungsfehler.IGF_10);
 		if (this.manager.hatDoppelteFachbelegungInHalbjahr(GostHalbjahr.EF1))
 			this.addFehler(GostBelegungsfehler.IGF_10);
 	}
 
-	protected pruefeGesamt() : void {
-		const alleFachbelegungen : List<AbiturFachbelegung> = this.manager.getRelevanteFachbelegungen();
+	protected pruefeGesamt(): void {
+		const alleFachbelegungen: List<AbiturFachbelegung> = this.manager.getRelevanteFachbelegungen();
 		for (const fachbelegung of alleFachbelegungen) {
 			if (!this.manager.istBelegtSeitEF(fachbelegung))
 				this.addFehler(GostBelegungsfehler.E1BEL_10_2);
 		}
 		for (const fachbelegung of alleFachbelegungen) {
-			const abiturFach : GostAbiturFach | null = GostAbiturFach.fromID(fachbelegung.abiturFach);
+			const abiturFach: GostAbiturFach | null = GostAbiturFach.fromID(fachbelegung.abiturFach);
 			if (abiturFach !== null)
 				continue;
 			if (this.manager.pruefeBelegungMitSchriftlichkeitEinzeln(fachbelegung, GostSchriftlichkeit.SCHRIFTLICH, GostHalbjahr.Q22)) {
@@ -61,7 +61,7 @@ export class Abi30BelegpruefungAllgemeines extends GostBelegpruefung {
 		return 'de.svws_nrw.core.abschluss.gost.belegpruefung.abi2030.Abi30BelegpruefungAllgemeines';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.abschluss.gost.GostBelegpruefung', 'de.svws_nrw.core.abschluss.gost.belegpruefung.abi2030.Abi30BelegpruefungAllgemeines'].includes(name);
 	}
 
@@ -69,6 +69,6 @@ export class Abi30BelegpruefungAllgemeines extends GostBelegpruefung {
 
 }
 
-export function cast_de_svws_nrw_core_abschluss_gost_belegpruefung_abi2030_Abi30BelegpruefungAllgemeines(obj : unknown) : Abi30BelegpruefungAllgemeines {
+export function cast_de_svws_nrw_core_abschluss_gost_belegpruefung_abi2030_Abi30BelegpruefungAllgemeines(obj: unknown): Abi30BelegpruefungAllgemeines {
 	return obj as Abi30BelegpruefungAllgemeines;
 }

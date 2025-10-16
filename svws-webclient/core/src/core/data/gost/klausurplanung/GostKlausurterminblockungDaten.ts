@@ -11,17 +11,17 @@ export class GostKlausurterminblockungDaten extends JavaObject {
 	/**
 	 * Die Konfiguration für den Blockungs-Algorithmus
 	 */
-	public konfiguration : GostKlausurterminblockungKonfiguration = new GostKlausurterminblockungKonfiguration();
+	public konfiguration: GostKlausurterminblockungKonfiguration = new GostKlausurterminblockungKonfiguration();
 
 	/**
 	 * Die Kurs-Klausuren, für welche die Blockung durchgeführt werden soll.
 	 */
-	public klausuren : List<GostKursklausur> = new ArrayList<GostKursklausur>();
+	public klausuren: List<GostKursklausur> = new ArrayList<GostKursklausur>();
 
 	/**
 	 * Die um Informationen für den Blockungsalgorithmus angereicherten Kurs-Klausuren, für welche die Blockung durchgeführt werden soll.
 	 */
-	public richKlausuren : List<GostKursklausurRich> = new ArrayList<GostKursklausurRich>();
+	public richKlausuren: List<GostKursklausurRich> = new ArrayList<GostKursklausurRich>();
 
 
 	/**
@@ -35,13 +35,13 @@ export class GostKlausurterminblockungDaten extends JavaObject {
 		return 'de.svws_nrw.core.data.gost.klausurplanung.GostKlausurterminblockungDaten';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.gost.klausurplanung.GostKlausurterminblockungDaten'].includes(name);
 	}
 
 	public static class = new Class<GostKlausurterminblockungDaten>('de.svws_nrw.core.data.gost.klausurplanung.GostKlausurterminblockungDaten');
 
-	public static transpilerFromJSON(json : string): GostKlausurterminblockungDaten {
+	public static transpilerFromJSON(json: string): GostKlausurterminblockungDaten {
 		const obj = JSON.parse(json) as Partial<GostKlausurterminblockungDaten>;
 		const result = new GostKlausurterminblockungDaten();
 		if (obj.konfiguration === undefined)
@@ -60,7 +60,7 @@ export class GostKlausurterminblockungDaten extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : GostKlausurterminblockungDaten) : string {
+	public static transpilerToJSON(obj: GostKlausurterminblockungDaten): string {
 		let result = '{';
 		result += '"konfiguration" : ' + GostKlausurterminblockungKonfiguration.transpilerToJSON(obj.konfiguration) + ',';
 		result += '"klausuren" : [ ';
@@ -84,7 +84,7 @@ export class GostKlausurterminblockungDaten extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<GostKlausurterminblockungDaten>) : string {
+	public static transpilerToJSONPatch(obj: Partial<GostKlausurterminblockungDaten>): string {
 		let result = '{';
 		if (obj.konfiguration !== undefined) {
 			result += '"konfiguration" : ' + GostKlausurterminblockungKonfiguration.transpilerToJSON(obj.konfiguration) + ',';
@@ -116,6 +116,6 @@ export class GostKlausurterminblockungDaten extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_gost_klausurplanung_GostKlausurterminblockungDaten(obj : unknown) : GostKlausurterminblockungDaten {
+export function cast_de_svws_nrw_core_data_gost_klausurplanung_GostKlausurterminblockungDaten(obj: unknown): GostKlausurterminblockungDaten {
 	return obj as GostKlausurterminblockungDaten;
 }

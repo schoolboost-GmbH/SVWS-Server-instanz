@@ -6,27 +6,27 @@ export class GostFachwahl extends JavaObject {
 	/**
 	 * Die ID des Faches
 	 */
-	public fachID : number = -1;
+	public fachID: number = -1;
 
 	/**
 	 * Die ID des Schülers
 	 */
-	public schuelerID : number = -1;
+	public schuelerID: number = -1;
 
 	/**
 	 * Die ID der Kursart
 	 */
-	public kursartID : number = -1;
+	public kursartID: number = -1;
 
 	/**
 	 * Gibt an, ob die Fachwahl ein schriftlicher Kurs ist oder nicht
 	 */
-	public istSchriftlich : boolean = false;
+	public istSchriftlich: boolean = false;
 
 	/**
 	 * Gibt an, ob die Fachwahl als ein Abiturfach geplant ist oder nicht
 	 */
-	public abiturfach : number | null = null;
+	public abiturfach: number | null = null;
 
 
 	/**
@@ -40,13 +40,13 @@ export class GostFachwahl extends JavaObject {
 		return 'de.svws_nrw.core.data.gost.GostFachwahl';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.gost.GostFachwahl'].includes(name);
 	}
 
 	public static class = new Class<GostFachwahl>('de.svws_nrw.core.data.gost.GostFachwahl');
 
-	public static transpilerFromJSON(json : string): GostFachwahl {
+	public static transpilerFromJSON(json: string): GostFachwahl {
 		const obj = JSON.parse(json) as Partial<GostFachwahl>;
 		const result = new GostFachwahl();
 		if (obj.fachID === undefined)
@@ -65,7 +65,7 @@ export class GostFachwahl extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : GostFachwahl) : string {
+	public static transpilerToJSON(obj: GostFachwahl): string {
 		let result = '{';
 		result += '"fachID" : ' + obj.fachID.toString() + ',';
 		result += '"schuelerID" : ' + obj.schuelerID.toString() + ',';
@@ -77,7 +77,7 @@ export class GostFachwahl extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<GostFachwahl>) : string {
+	public static transpilerToJSONPatch(obj: Partial<GostFachwahl>): string {
 		let result = '{';
 		if (obj.fachID !== undefined) {
 			result += '"fachID" : ' + obj.fachID.toString() + ',';
@@ -101,6 +101,6 @@ export class GostFachwahl extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_gost_GostFachwahl(obj : unknown) : GostFachwahl {
+export function cast_de_svws_nrw_core_data_gost_GostFachwahl(obj: unknown): GostFachwahl {
 	return obj as GostFachwahl;
 }

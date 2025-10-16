@@ -15,82 +15,82 @@ export class ENMSchueler extends JavaObject {
 	/**
 	 * Die ID des Schülers in der SVWS-DB
 	 */
-	public id : number = 0;
+	public id: number = 0;
 
 	/**
 	 * Die ID des aktuellen Jahrgangs, in dem sich der Schüler befindet
 	 */
-	public jahrgangID : number = 0;
+	public jahrgangID: number = 0;
 
 	/**
 	 * Die ID der aktuellen Klasse, in der sich der Schüler befindet
 	 */
-	public klasseID : number = 0;
+	public klasseID: number = 0;
 
 	/**
 	 * Der Nachname des Schülers (z.B. Mustermann)
 	 */
-	public nachname : string | null = null;
+	public nachname: string | null = null;
 
 	/**
 	 * Der Vorname des Schülers (z.B. Max)
 	 */
-	public vorname : string | null = null;
+	public vorname: string | null = null;
 
 	/**
 	 * Das Geschlecht des Schülers (m,w,d,x)
 	 */
-	public geschlecht : string | null = null;
+	public geschlecht: string | null = null;
 
 	/**
 	 * Gibt an, ob sich der Schüler aktuell im bilingualen Bildungsgang befindet (wenn ja, z.B. F) oder nicht (null)
 	 */
-	public bilingualeSprache : string | null = null;
+	public bilingualeSprache: string | null = null;
 
 	/**
 	 * Gibt an, ob der Schüler Ziel-different unterrichtet wird
 	 */
-	public istZieldifferent : boolean = false;
+	public istZieldifferent: boolean = false;
 
 	/**
 	 * Gibt an, ob der Schüler Deutsch-Förderung mit Deutsch als Zweitsprache (DaZ) bekommt (Seiteneinsteiger, z.B. Flüchtlingskinder)
 	 */
-	public istDaZFoerderung : boolean = false;
+	public istDaZFoerderung: boolean = false;
 
 	/**
 	 * Die Sprachenfolge des Schülers
 	 */
-	public sprachenfolge : List<ENMSprachenfolge> = new ArrayList<ENMSprachenfolge>();
+	public sprachenfolge: List<ENMSprachenfolge> = new ArrayList<ENMSprachenfolge>();
 
 	/**
 	 * Informationen zum Lernabschnitt des Schülers in der Notendatei
 	 */
-	public lernabschnitt : ENMLernabschnitt = new ENMLernabschnitt();
+	public lernabschnitt: ENMLernabschnitt = new ENMLernabschnitt();
 
 	/**
 	 * Die Leistungsdaten des Schülers in dem Lernabschnitt der Notendatei
 	 */
-	public leistungsdaten : List<ENMLeistung> = new ArrayList<ENMLeistung>();
+	public leistungsdaten: List<ENMLeistung> = new ArrayList<ENMLeistung>();
 
 	/**
 	 * Die Ankreuzkompetenzen des Schülers in dem Lernabschnitt der Notendatei
 	 */
-	public ankreuzkompetenzen : List<ENMSchuelerAnkreuzkompetenz> = new ArrayList<ENMSchuelerAnkreuzkompetenz>();
+	public ankreuzkompetenzen: List<ENMSchuelerAnkreuzkompetenz> = new ArrayList<ENMSchuelerAnkreuzkompetenz>();
 
 	/**
 	 * Die Bemerkungen bei dem Schüler in Bezug auf den Lernabschnitt der Notendatei
 	 */
-	public bemerkungen : ENMLeistungBemerkungen = new ENMLeistungBemerkungen();
+	public bemerkungen: ENMLeistungBemerkungen = new ENMLeistungBemerkungen();
 
 	/**
 	 * Die Informationen zu den Zentralen Prüfungen Klasse 10, sofern vorhanden - ansonsten null
 	 */
-	public zp10 : ENMZP10 | null = null;
+	public zp10: ENMZP10 | null = null;
 
 	/**
 	 * Die Informationen zu den Abschlüssen am Berufskolleg, sofern vorhanden - ansonsten null
 	 */
-	public bkabschluss : ENMBKAbschluss | null = null;
+	public bkabschluss: ENMBKAbschluss | null = null;
 
 
 	/**
@@ -104,13 +104,13 @@ export class ENMSchueler extends JavaObject {
 		return 'de.svws_nrw.core.data.enm.ENMSchueler';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.enm.ENMSchueler'].includes(name);
 	}
 
 	public static class = new Class<ENMSchueler>('de.svws_nrw.core.data.enm.ENMSchueler');
 
-	public static transpilerFromJSON(json : string): ENMSchueler {
+	public static transpilerFromJSON(json: string): ENMSchueler {
 		const obj = JSON.parse(json) as Partial<ENMSchueler>;
 		const result = new ENMSchueler();
 		if (obj.id === undefined)
@@ -158,7 +158,7 @@ export class ENMSchueler extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : ENMSchueler) : string {
+	public static transpilerToJSON(obj: ENMSchueler): string {
 		let result = '{';
 		result += '"id" : ' + obj.id.toString() + ',';
 		result += '"jahrgangID" : ' + obj.jahrgangID.toString() + ',';
@@ -202,7 +202,7 @@ export class ENMSchueler extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<ENMSchueler>) : string {
+	public static transpilerToJSONPatch(obj: Partial<ENMSchueler>): string {
 		let result = '{';
 		if (obj.id !== undefined) {
 			result += '"id" : ' + obj.id.toString() + ',';
@@ -280,6 +280,6 @@ export class ENMSchueler extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_enm_ENMSchueler(obj : unknown) : ENMSchueler {
+export function cast_de_svws_nrw_core_data_enm_ENMSchueler(obj: unknown): ENMSchueler {
 	return obj as ENMSchueler;
 }

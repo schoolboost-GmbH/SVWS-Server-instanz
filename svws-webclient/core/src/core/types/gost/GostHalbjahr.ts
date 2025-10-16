@@ -10,90 +10,90 @@ import { IllegalArgumentException } from '../../../java/lang/IllegalArgumentExce
 export class GostHalbjahr extends JavaEnum<GostHalbjahr> {
 
 	/** an array containing all values of this enumeration */
-	static readonly all_values_by_ordinal : Array<GostHalbjahr> = [];
+	static readonly all_values_by_ordinal: Array<GostHalbjahr> = [];
 
 	/** an array containing all values of this enumeration indexed by their name*/
-	static readonly all_values_by_name : Map<string, GostHalbjahr> = new Map<string, GostHalbjahr>();
+	static readonly all_values_by_name: Map<string, GostHalbjahr> = new Map<string, GostHalbjahr>();
 
 	/**
 	 * Einführungsphase 1. Halbjahr = EF1
 	 */
-	public static readonly EF1 : GostHalbjahr = new GostHalbjahr("EF1", 0, 0, "EF", 1, "EF.1", "E1", "Einführungsphase 1. Halbjahr");
+	public static readonly EF1: GostHalbjahr = new GostHalbjahr("EF1", 0, 0, "EF", 1, "EF.1", "E1", "Einführungsphase 1. Halbjahr");
 
 	/**
 	 * Einführungsphase 2. Halbjahr = EF2
 	 */
-	public static readonly EF2 : GostHalbjahr = new GostHalbjahr("EF2", 1, 1, "EF", 2, "EF.2", "E2", "Einführungsphase 2. Halbjahr");
+	public static readonly EF2: GostHalbjahr = new GostHalbjahr("EF2", 1, 1, "EF", 2, "EF.2", "E2", "Einführungsphase 2. Halbjahr");
 
 	/**
 	 * Qualifikationsphase 1. Jahr, 1. Halbjahr = Q1.1
 	 */
-	public static readonly Q11 : GostHalbjahr = new GostHalbjahr("Q11", 2, 2, "Q1", 1, "Q1.1", "Q1", "Qualifikationsphase 1. Jahr, 1. Halbjahr");
+	public static readonly Q11: GostHalbjahr = new GostHalbjahr("Q11", 2, 2, "Q1", 1, "Q1.1", "Q1", "Qualifikationsphase 1. Jahr, 1. Halbjahr");
 
 	/**
 	 * Qualifikationsphase 1. Jahr, 2. Halbjahr = Q1.2
 	 */
-	public static readonly Q12 : GostHalbjahr = new GostHalbjahr("Q12", 3, 3, "Q1", 2, "Q1.2", "Q2", "Qualifikationsphase 1. Jahr, 2. Halbjahr");
+	public static readonly Q12: GostHalbjahr = new GostHalbjahr("Q12", 3, 3, "Q1", 2, "Q1.2", "Q2", "Qualifikationsphase 1. Jahr, 2. Halbjahr");
 
 	/**
 	 * Qualifikationsphase 2. Jahr, 1. Halbjahr = Q2.1
 	 */
-	public static readonly Q21 : GostHalbjahr = new GostHalbjahr("Q21", 4, 4, "Q2", 1, "Q2.1", "Q3", "Qualifikationsphase 2. Jahr, 1. Halbjahr");
+	public static readonly Q21: GostHalbjahr = new GostHalbjahr("Q21", 4, 4, "Q2", 1, "Q2.1", "Q3", "Qualifikationsphase 2. Jahr, 1. Halbjahr");
 
 	/**
 	 * Qualifikationsphase 2. Jahr, 2. Halbjahr = Q2.2
 	 */
-	public static readonly Q22 : GostHalbjahr = new GostHalbjahr("Q22", 5, 5, "Q2", 2, "Q2.2", "Q4", "Qualifikationsphase 2. Jahr, 2. Halbjahr");
+	public static readonly Q22: GostHalbjahr = new GostHalbjahr("Q22", 5, 5, "Q2", 2, "Q2.2", "Q4", "Qualifikationsphase 2. Jahr, 2. Halbjahr");
 
 	/**
 	 * Eine Zuordnung der Halbjahre zu der ID, welche die Reihenfolge der Halbjahre angibt.
 	 */
-	private static readonly _mapID : HashMap<number, GostHalbjahr> = new HashMap<number, GostHalbjahr>();
+	private static readonly _mapID: HashMap<number, GostHalbjahr> = new HashMap<number, GostHalbjahr>();
 
 	/**
 	 * Eine Zuordnung der Halbjahre zu dem Kürzel.
 	 */
-	private static readonly _mapKuerzel : HashMap<string, GostHalbjahr> = new HashMap<string, GostHalbjahr>();
+	private static readonly _mapKuerzel: HashMap<string, GostHalbjahr> = new HashMap<string, GostHalbjahr>();
 
 	/**
 	 * Eine Zuordnung der Halbjahre zu dem alten Kürzel.
 	 */
-	private static readonly _mapKuerzelAlt : HashMap<string, GostHalbjahr> = new HashMap<string, GostHalbjahr>();
+	private static readonly _mapKuerzelAlt: HashMap<string, GostHalbjahr> = new HashMap<string, GostHalbjahr>();
 
 	/**
 	 * Die maximale Anzahl an Halbjahren in der gymnasialen Oberstufe
 	 */
-	public static readonly maxHalbjahre : number = 6;
+	public static readonly maxHalbjahre: number = 6;
 
 	/**
 	 * Eine ID für das Halbjahr, welches die Reihenfolge der Halbjahre wiederspiegelt und als Index für Arrays verwendet werden kann.
 	 */
-	public readonly id : number;
+	public readonly id: number;
 
 	/**
 	 * Das Jahrgangskürzel des Halbjahres
 	 */
-	public readonly jahrgang : string;
+	public readonly jahrgang: string;
 
 	/**
 	 * Die Nummer des Halbjahres
 	 */
-	public readonly halbjahr : number;
+	public readonly halbjahr: number;
 
 	/**
 	 * Das eindeutige Kürzel für das Halbjahr der gymnasialen Oberstufe
 	 */
-	public readonly kuerzel : string;
+	public readonly kuerzel: string;
 
 	/**
 	 * Ein eindeutiges Kürzel, welche in alten Tabellen (z.B. LuPO) verwendet wurde.
 	 */
-	public readonly kuerzelAlt : string;
+	public readonly kuerzelAlt: string;
 
 	/**
 	 * Eine textuelle Beschreibung für das Halbjahr der gymnasialen Oberstufe
 	 */
-	public readonly beschreibung : string;
+	public readonly beschreibung: string;
 
 	/**
 	 * Erzeugt ein neues Halbjahr der Gymnasialen Oberstufe für diese Aufzählung.
@@ -105,7 +105,7 @@ export class GostHalbjahr extends JavaEnum<GostHalbjahr> {
 	 * @param kuerzelAlt     ein eindeutiges Kürzel, welche in alten Tabellen verwendet wurde.
 	 * @param beschreibung   die textuelle Beschreibung für das Halbjahr der gymnasialen Oberstufe
 	 */
-	private constructor(name : string, ordinal : number, id : number, jahrgang : string, halbjahr : number, kuerzel : string, kuerzelAlt : string, beschreibung : string) {
+	private constructor(name: string, ordinal: number, id: number, jahrgang: string, halbjahr: number, kuerzel: string, kuerzelAlt: string, beschreibung: string) {
 		super(name, ordinal);
 		GostHalbjahr.all_values_by_ordinal.push(this);
 		GostHalbjahr.all_values_by_name.set(name, this);
@@ -123,7 +123,7 @@ export class GostHalbjahr extends JavaEnum<GostHalbjahr> {
 	 *
 	 * @return die Map von den IDs auf das Gost-Halbjahr
 	 */
-	private static getMapByID() : HashMap<number, GostHalbjahr> {
+	private static getMapByID(): HashMap<number, GostHalbjahr> {
 		if (GostHalbjahr._mapID.size() === 0)
 			for (const h of GostHalbjahr.values())
 				GostHalbjahr._mapID.put(h.id, h);
@@ -136,7 +136,7 @@ export class GostHalbjahr extends JavaEnum<GostHalbjahr> {
 	 *
 	 * @return die Map von den Kürzeln auf das Gost-Halbjahr
 	 */
-	private static getMapByKuerzel() : HashMap<string, GostHalbjahr> {
+	private static getMapByKuerzel(): HashMap<string, GostHalbjahr> {
 		if (GostHalbjahr._mapKuerzel.size() === 0)
 			for (const h of GostHalbjahr.values())
 				GostHalbjahr._mapKuerzel.put(h.kuerzel, h);
@@ -149,7 +149,7 @@ export class GostHalbjahr extends JavaEnum<GostHalbjahr> {
 	 *
 	 * @return die Map von den alten Kürzeln auf das Gost-Halbjahr
 	 */
-	private static getMapByKuerzelAlt() : HashMap<string, GostHalbjahr> {
+	private static getMapByKuerzelAlt(): HashMap<string, GostHalbjahr> {
 		if (GostHalbjahr._mapKuerzelAlt.size() === 0)
 			for (const h of GostHalbjahr.values())
 				GostHalbjahr._mapKuerzelAlt.put(h.kuerzelAlt, h);
@@ -161,7 +161,7 @@ export class GostHalbjahr extends JavaEnum<GostHalbjahr> {
 	 *
 	 * @return das nachfolgende Halbjahr oder null, wenn es keines mehr gibt
 	 */
-	public next() : GostHalbjahr | null {
+	public next(): GostHalbjahr | null {
 		return GostHalbjahr.getMapByID().get(this.id + 1);
 	}
 
@@ -172,8 +172,8 @@ export class GostHalbjahr extends JavaEnum<GostHalbjahr> {
 	 *
 	 * @throws NullPointerException wenn es kein nachfolgendes Halbjahr gibt
 	 */
-	public nextOrException() : GostHalbjahr {
-		const hj : GostHalbjahr | null = GostHalbjahr.getMapByID().get(this.id + 1);
+	public nextOrException(): GostHalbjahr {
+		const hj: GostHalbjahr | null = GostHalbjahr.getMapByID().get(this.id + 1);
 		if (hj === null)
 			throw new NullPointerException()
 		return hj;
@@ -184,7 +184,7 @@ export class GostHalbjahr extends JavaEnum<GostHalbjahr> {
 	 *
 	 * @return das vorherige Halbjahr oder null, wenn es keines mehr gibt
 	 */
-	public previous() : GostHalbjahr | null {
+	public previous(): GostHalbjahr | null {
 		return GostHalbjahr.getMapByID().get(this.id - 1);
 	}
 
@@ -195,8 +195,8 @@ export class GostHalbjahr extends JavaEnum<GostHalbjahr> {
 	 *
 	 * @throws NullPointerException wenn es kein vorheriges Halbjahr gibt
 	 */
-	public previousOrException() : GostHalbjahr {
-		const hj : GostHalbjahr | null = GostHalbjahr.getMapByID().get(this.id - 1);
+	public previousOrException(): GostHalbjahr {
+		const hj: GostHalbjahr | null = GostHalbjahr.getMapByID().get(this.id - 1);
 		if (hj === null)
 			throw new NullPointerException()
 		return hj;
@@ -207,12 +207,12 @@ export class GostHalbjahr extends JavaEnum<GostHalbjahr> {
 	 *
 	 * @return ein Array mit allen Halbjahren des Schuljahres, in dem das Halbjahr-Objekt liegt der gymnasialen Oberstufe
 	 */
-	public getSchuljahr() : Array<GostHalbjahr> {
+	public getSchuljahr(): Array<GostHalbjahr> {
 		if ((this.id % 2) === 0) {
-			const hjs : Array<GostHalbjahr> = [this, this.nextOrException()];
+			const hjs: Array<GostHalbjahr> = [this, this.nextOrException()];
 			return hjs;
 		}
-		const hjs : Array<GostHalbjahr> = [this.previousOrException(), this];
+		const hjs: Array<GostHalbjahr> = [this.previousOrException(), this];
 		return hjs;
 	}
 
@@ -221,8 +221,8 @@ export class GostHalbjahr extends JavaEnum<GostHalbjahr> {
 	 *
 	 * @return ein Array mit allen Halbjahren der Einführungsphase der gymnasialen Oberstufe
 	 */
-	public static getEinfuehrungsphase() : Array<GostHalbjahr> {
-		const ef : Array<GostHalbjahr> = [GostHalbjahr.EF1, GostHalbjahr.EF2];
+	public static getEinfuehrungsphase(): Array<GostHalbjahr> {
+		const ef: Array<GostHalbjahr> = [GostHalbjahr.EF1, GostHalbjahr.EF2];
 		return ef;
 	}
 
@@ -231,8 +231,8 @@ export class GostHalbjahr extends JavaEnum<GostHalbjahr> {
 	 *
 	 * @return ein Array mit allen Halbjahren der Qualifikationsphase der gymnasialen Oberstufe
 	 */
-	public static getQualifikationsphase() : Array<GostHalbjahr> {
-		const q : Array<GostHalbjahr> = [GostHalbjahr.Q11, GostHalbjahr.Q12, GostHalbjahr.Q21, GostHalbjahr.Q22];
+	public static getQualifikationsphase(): Array<GostHalbjahr> {
+		const q: Array<GostHalbjahr> = [GostHalbjahr.Q11, GostHalbjahr.Q12, GostHalbjahr.Q21, GostHalbjahr.Q22];
 		return q;
 	}
 
@@ -243,18 +243,18 @@ export class GostHalbjahr extends JavaEnum<GostHalbjahr> {
 	 *
 	 * @return ein Array mit den Halbjahren des Jahrgangs
 	 */
-	public static getHalbjahreFromJahrgang(jahrgang : string) : Array<GostHalbjahr> {
+	public static getHalbjahreFromJahrgang(jahrgang: string): Array<GostHalbjahr> {
 		switch (jahrgang) {
 			case "EF": {
-				const ef : Array<GostHalbjahr> = [GostHalbjahr.EF1, GostHalbjahr.EF2]
+				const ef: Array<GostHalbjahr> = [GostHalbjahr.EF1, GostHalbjahr.EF2]
 				return ef;
 			}
 			case "Q1": {
-				const q1 : Array<GostHalbjahr> = [GostHalbjahr.Q11, GostHalbjahr.Q12]
+				const q1: Array<GostHalbjahr> = [GostHalbjahr.Q11, GostHalbjahr.Q12]
 				return q1;
 			}
 			case "Q2": {
-				const q2 : Array<GostHalbjahr> = [GostHalbjahr.Q21, GostHalbjahr.Q22]
+				const q2: Array<GostHalbjahr> = [GostHalbjahr.Q21, GostHalbjahr.Q22]
 				return q2;
 			}
 			default: {
@@ -270,7 +270,7 @@ export class GostHalbjahr extends JavaEnum<GostHalbjahr> {
 	 *
 	 * @return das Halbjahr oder null, falls die ID nicht gültig ist
 	 */
-	public static fromID(id : number | null) : GostHalbjahr | null {
+	public static fromID(id: number | null): GostHalbjahr | null {
 		if (id === null)
 			return null;
 		switch (id) {
@@ -307,8 +307,8 @@ export class GostHalbjahr extends JavaEnum<GostHalbjahr> {
 	 * @return Das Halbjahr oder eine Exception, falls die ID nicht gültig ist
 	 * @throws NullPointerException Falls die ID keinem Halbjahr zugeordnet werden kann.
 	 */
-	public static fromIDorException(pGostHalbjahID : number) : GostHalbjahr {
-		const halbjahr : GostHalbjahr | null = GostHalbjahr.fromID(pGostHalbjahID);
+	public static fromIDorException(pGostHalbjahID: number): GostHalbjahr {
+		const halbjahr: GostHalbjahr | null = GostHalbjahr.fromID(pGostHalbjahID);
 		if (halbjahr === null)
 			throw new NullPointerException("GostHalbjahr nicht gefunden!")
 		return halbjahr;
@@ -321,7 +321,7 @@ export class GostHalbjahr extends JavaEnum<GostHalbjahr> {
 	 *
 	 * @return das Halbjahr oder null, falls das Kürzel nicht gültig ist
 	 */
-	public static fromKuerzel(kuerzel : string | null) : GostHalbjahr | null {
+	public static fromKuerzel(kuerzel: string | null): GostHalbjahr | null {
 		return GostHalbjahr.getMapByKuerzel().get(kuerzel);
 	}
 
@@ -332,7 +332,7 @@ export class GostHalbjahr extends JavaEnum<GostHalbjahr> {
 	 *
 	 * @return das Halbjahr oder null, falls das Kürzel nicht gültig ist
 	 */
-	public static fromKuerzelAlt(kuerzelAlt : string | null) : GostHalbjahr | null {
+	public static fromKuerzelAlt(kuerzelAlt: string | null): GostHalbjahr | null {
 		return GostHalbjahr.getMapByKuerzelAlt().get(kuerzelAlt);
 	}
 
@@ -344,7 +344,7 @@ export class GostHalbjahr extends JavaEnum<GostHalbjahr> {
 	 *
 	 * @return das Halbjahr oder null, falls es kein gültiges Halbjahr mit den Angaben gibt.
 	 */
-	public static fromJahrgangUndHalbjahr(jahrgang : string | null, halbjahr : number) : GostHalbjahr | null {
+	public static fromJahrgangUndHalbjahr(jahrgang: string | null, halbjahr: number): GostHalbjahr | null {
 		if ((halbjahr !== 1) && (halbjahr !== 2))
 			return null;
 		switch (jahrgang) {
@@ -371,7 +371,7 @@ export class GostHalbjahr extends JavaEnum<GostHalbjahr> {
 	 *
 	 * @return das Halbjahr oder null, falls es kein gültiges Halbjahr mit den Angaben gibt.
 	 */
-	public static fromBkJahrgangUndHalbjahr(jahrgang : string | null, halbjahr : number) : GostHalbjahr | null {
+	public static fromBkJahrgangUndHalbjahr(jahrgang: string | null, halbjahr: number): GostHalbjahr | null {
 		if ((halbjahr !== 1) && (halbjahr !== 2))
 			return null;
 		switch (jahrgang) {
@@ -400,8 +400,8 @@ export class GostHalbjahr extends JavaEnum<GostHalbjahr> {
 	 *
 	 * @return das Halbjahr der gymnasialen Oberstufe oder null
 	 */
-	public static fromAbiturjahrSchuljahrUndHalbjahr(abiturjahr : number, schuljahr : number, halbjahr : number) : GostHalbjahr | null {
-		const id : number = ((((schuljahr + 3) - abiturjahr) * 2) + halbjahr) - 1;
+	public static fromAbiturjahrSchuljahrUndHalbjahr(abiturjahr: number, schuljahr: number, halbjahr: number): GostHalbjahr | null {
+		const id: number = ((((schuljahr + 3) - abiturjahr) * 2) + halbjahr) - 1;
 		return GostHalbjahr.fromID(id);
 	}
 
@@ -417,8 +417,8 @@ export class GostHalbjahr extends JavaEnum<GostHalbjahr> {
 	 * @return das nächste Halbjahr der gymnasialen Oberstufe zur Planung oder null, wenn der
 	 *         Jahrgang in der Q2.2 ist oder das Abitur bereits abgeschlossen ist.
 	 */
-	public static getPlanungshalbjahrFromAbiturjahrSchuljahrUndHalbjahr(abiturjahr : number, schuljahr : number, halbjahr : number) : GostHalbjahr | null {
-		let id : number = (((schuljahr + 3) - abiturjahr) * 2) + halbjahr;
+	public static getPlanungshalbjahrFromAbiturjahrSchuljahrUndHalbjahr(abiturjahr: number, schuljahr: number, halbjahr: number): GostHalbjahr | null {
+		let id: number = (((schuljahr + 3) - abiturjahr) * 2) + halbjahr;
 		if (id < 0)
 			id = 0;
 		return GostHalbjahr.fromID(id);
@@ -432,7 +432,7 @@ export class GostHalbjahr extends JavaEnum<GostHalbjahr> {
 	 *
 	 * @return das Abiturjahr
 	 */
-	public getAbiturjahrFromSchuljahr(schuljahr : number) : number {
+	public getAbiturjahrFromSchuljahr(schuljahr: number): number {
 		return (schuljahr + 3) - (Math.trunc(this.id / 2));
 	}
 
@@ -444,7 +444,7 @@ export class GostHalbjahr extends JavaEnum<GostHalbjahr> {
 	 *
 	 * @return das Schuljahr
 	 */
-	public getSchuljahrFromAbiturjahr(abiturjahr : number) : number {
+	public getSchuljahrFromAbiturjahr(abiturjahr: number): number {
 		return (abiturjahr - 3) + (Math.trunc(this.id / 2));
 	}
 
@@ -453,7 +453,7 @@ export class GostHalbjahr extends JavaEnum<GostHalbjahr> {
 	 *
 	 * @return  Einführungsphase, true oder false
 	 */
-	public istEinfuehrungsphase() : boolean {
+	public istEinfuehrungsphase(): boolean {
 		return JavaObject.equalsTranspiler("EF", (this.jahrgang));
 	}
 
@@ -462,7 +462,7 @@ export class GostHalbjahr extends JavaEnum<GostHalbjahr> {
 	 *
 	 * @return  Qualifikationsphase, true oder false
 	 */
-	public istQualifikationsphase() : boolean {
+	public istQualifikationsphase(): boolean {
 		return !this.istEinfuehrungsphase();
 	}
 
@@ -475,7 +475,7 @@ export class GostHalbjahr extends JavaEnum<GostHalbjahr> {
 	 * @return true, wenn es sich um die beiden Halbjahre der Einführungsphase handelt
 	 *         und ansonsten false
 	 */
-	public static pruefeEinfuehrungsphase(...halbjahre : Array<GostHalbjahr>) : boolean {
+	public static pruefeEinfuehrungsphase(...halbjahre: Array<GostHalbjahr>): boolean {
 		if ((halbjahre === null) || (halbjahre.length !== 2))
 			return false;
 		return ((halbjahre[0] as unknown === GostHalbjahr.EF1 as unknown) && (halbjahre[0] as unknown === GostHalbjahr.EF2 as unknown)) || ((halbjahre[0] as unknown === GostHalbjahr.EF2 as unknown) && (halbjahre[0] as unknown === GostHalbjahr.EF1 as unknown));
@@ -490,10 +490,10 @@ export class GostHalbjahr extends JavaEnum<GostHalbjahr> {
 	 * @return true, wenn es sich um die vier Halbjahre der Qualifikationsphase
 	 *         handelt und ansonsten false
 	 */
-	public static pruefeQualifikationsphase(...halbjahre : Array<GostHalbjahr>) : boolean {
+	public static pruefeQualifikationsphase(...halbjahre: Array<GostHalbjahr>): boolean {
 		if ((halbjahre === null) || (halbjahre.length !== 4))
 			return false;
-		const list : List<GostHalbjahr> = Arrays.asList(...halbjahre);
+		const list: List<GostHalbjahr> = Arrays.asList(...halbjahre);
 		return (list.contains(GostHalbjahr.Q11) && list.contains(GostHalbjahr.Q12) && list.contains(GostHalbjahr.Q21) && list.contains(GostHalbjahr.Q22));
 	}
 
@@ -502,7 +502,7 @@ export class GostHalbjahr extends JavaEnum<GostHalbjahr> {
 	 *
 	 * @returns the array with enumeration values
 	 */
-	public static values() : Array<GostHalbjahr> {
+	public static values(): Array<GostHalbjahr> {
 		return [...this.all_values_by_ordinal];
 	}
 
@@ -513,7 +513,7 @@ export class GostHalbjahr extends JavaEnum<GostHalbjahr> {
 	 *
 	 * @returns the enumeration values or null
 	 */
-	public static valueOf(name : string) : GostHalbjahr | null {
+	public static valueOf(name: string): GostHalbjahr | null {
 		const tmp = this.all_values_by_name.get(name);
 		return (!tmp) ? null : tmp;
 	}
@@ -522,7 +522,7 @@ export class GostHalbjahr extends JavaEnum<GostHalbjahr> {
 		return 'de.svws_nrw.core.types.gost.GostHalbjahr';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.types.gost.GostHalbjahr', 'java.lang.Enum', 'java.lang.Comparable'].includes(name);
 	}
 
@@ -530,6 +530,6 @@ export class GostHalbjahr extends JavaEnum<GostHalbjahr> {
 
 }
 
-export function cast_de_svws_nrw_core_types_gost_GostHalbjahr(obj : unknown) : GostHalbjahr {
+export function cast_de_svws_nrw_core_types_gost_GostHalbjahr(obj: unknown): GostHalbjahr {
 	return obj as GostHalbjahr;
 }

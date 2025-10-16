@@ -15,13 +15,13 @@ export class LehrerLehramtKatalogEintrag extends CoreTypeData {
 		return 'de.svws_nrw.asd.data.lehrer.LehrerLehramtKatalogEintrag';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.asd.data.lehrer.LehrerLehramtKatalogEintrag', 'de.svws_nrw.asd.data.CoreTypeData'].includes(name);
 	}
 
 	public static class = new Class<LehrerLehramtKatalogEintrag>('de.svws_nrw.asd.data.lehrer.LehrerLehramtKatalogEintrag');
 
-	public static transpilerFromJSON(json : string): LehrerLehramtKatalogEintrag {
+	public static transpilerFromJSON(json: string): LehrerLehramtKatalogEintrag {
 		const obj = JSON.parse(json) as Partial<LehrerLehramtKatalogEintrag>;
 		const result = new LehrerLehramtKatalogEintrag();
 		if (obj.id === undefined)
@@ -41,7 +41,7 @@ export class LehrerLehramtKatalogEintrag extends CoreTypeData {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : LehrerLehramtKatalogEintrag) : string {
+	public static transpilerToJSON(obj: LehrerLehramtKatalogEintrag): string {
 		let result = '{';
 		result += '"id" : ' + obj.id.toString() + ',';
 		result += '"schluessel" : ' + JSON.stringify(obj.schluessel) + ',';
@@ -54,7 +54,7 @@ export class LehrerLehramtKatalogEintrag extends CoreTypeData {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<LehrerLehramtKatalogEintrag>) : string {
+	public static transpilerToJSONPatch(obj: Partial<LehrerLehramtKatalogEintrag>): string {
 		let result = '{';
 		if (obj.id !== undefined) {
 			result += '"id" : ' + obj.id.toString() + ',';
@@ -81,6 +81,6 @@ export class LehrerLehramtKatalogEintrag extends CoreTypeData {
 
 }
 
-export function cast_de_svws_nrw_asd_data_lehrer_LehrerLehramtKatalogEintrag(obj : unknown) : LehrerLehramtKatalogEintrag {
+export function cast_de_svws_nrw_asd_data_lehrer_LehrerLehramtKatalogEintrag(obj: unknown): LehrerLehramtKatalogEintrag {
 	return obj as LehrerLehramtKatalogEintrag;
 }

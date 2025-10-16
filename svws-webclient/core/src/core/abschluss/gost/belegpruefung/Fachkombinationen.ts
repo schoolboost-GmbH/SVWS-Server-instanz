@@ -19,30 +19,30 @@ export class Fachkombinationen extends GostBelegpruefung {
 	 * @param manager        der Daten-Manager für die Abiturdaten
 	 * @param pruefungsArt   die Art der durchzuführenden Prüfung (z.B. EF.1 oder GESAMT)
 	 */
-	public constructor(manager : AbiturdatenManager, pruefungsArt : GostBelegpruefungsArt) {
+	public constructor(manager: AbiturdatenManager, pruefungsArt: GostBelegpruefungsArt) {
 		super(manager, pruefungsArt);
 	}
 
-	protected init() : void {
+	protected init(): void {
 		// empty block
 	}
 
-	private static pruefeHatBelegungFach2InHalbjahr(kombi : GostJahrgangFachkombination, belegung2 : AbiturFachbelegung | null, halbjahr : GostHalbjahr) : boolean {
+	private static pruefeHatBelegungFach2InHalbjahr(kombi: GostJahrgangFachkombination, belegung2: AbiturFachbelegung | null, halbjahr: GostHalbjahr): boolean {
 		if (belegung2 === null)
 			return false;
-		const belegung2Halbjahr : AbiturFachbelegungHalbjahr | null = belegung2.belegungen[halbjahr.id];
+		const belegung2Halbjahr: AbiturFachbelegungHalbjahr | null = belegung2.belegungen[halbjahr.id];
 		return ((belegung2Halbjahr !== null) && (!AbiturdatenManager.istNullPunkteBelegungInQPhase(belegung2Halbjahr)) && ((kombi.kursart2 === null) || (GostKursart.fromKuerzel(belegung2Halbjahr.kursartKuerzel) as unknown === GostKursart.fromKuerzel(kombi.kursart2) as unknown)));
 	}
 
-	private pruefeHatFachkombination(kombi : GostJahrgangFachkombination, ...halbjahre : Array<GostHalbjahr>) : void {
-		const belegung1 : AbiturFachbelegung | null = this.manager.getFachbelegungByID(kombi.fachID1);
+	private pruefeHatFachkombination(kombi: GostJahrgangFachkombination, ...halbjahre: Array<GostHalbjahr>): void {
+		const belegung1: AbiturFachbelegung | null = this.manager.getFachbelegungByID(kombi.fachID1);
 		if (belegung1 === null)
 			return;
-		const belegung2 : AbiturFachbelegung | null = this.manager.getFachbelegungByID(kombi.fachID2);
+		const belegung2: AbiturFachbelegung | null = this.manager.getFachbelegungByID(kombi.fachID2);
 		for (const halbjahr of halbjahre) {
 			if (!kombi.gueltigInHalbjahr[halbjahr.id])
 				continue;
-			const belegung1Halbjahr : AbiturFachbelegungHalbjahr | null = belegung1.belegungen[halbjahr.id];
+			const belegung1Halbjahr: AbiturFachbelegungHalbjahr | null = belegung1.belegungen[halbjahr.id];
 			if ((belegung1Halbjahr === null) || (AbiturdatenManager.istNullPunkteBelegungInQPhase(belegung1Halbjahr)))
 				continue;
 			if ((kombi.kursart1 === null) || (GostKursart.fromKuerzel(belegung1Halbjahr.kursartKuerzel) as unknown === GostKursart.fromKuerzel(kombi.kursart1) as unknown)) {
@@ -58,12 +58,12 @@ export class Fachkombinationen extends GostBelegpruefung {
 		}
 	}
 
-	protected pruefeEF1() : void {
+	protected pruefeEF1(): void {
 		for (const kombi of this.manager.getFachkombinationenEF1())
 			this.pruefeHatFachkombination(kombi, GostHalbjahr.EF1);
 	}
 
-	protected pruefeGesamt() : void {
+	protected pruefeGesamt(): void {
 		for (const kombi of this.manager.getFachkombinationenGesamt())
 			this.pruefeHatFachkombination(kombi, ...GostHalbjahr.values());
 	}
@@ -72,7 +72,7 @@ export class Fachkombinationen extends GostBelegpruefung {
 		return 'de.svws_nrw.core.abschluss.gost.belegpruefung.Fachkombinationen';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.abschluss.gost.belegpruefung.Fachkombinationen', 'de.svws_nrw.core.abschluss.gost.GostBelegpruefung'].includes(name);
 	}
 
@@ -80,6 +80,6 @@ export class Fachkombinationen extends GostBelegpruefung {
 
 }
 
-export function cast_de_svws_nrw_core_abschluss_gost_belegpruefung_Fachkombinationen(obj : unknown) : Fachkombinationen {
+export function cast_de_svws_nrw_core_abschluss_gost_belegpruefung_Fachkombinationen(obj: unknown): Fachkombinationen {
 	return obj as Fachkombinationen;
 }

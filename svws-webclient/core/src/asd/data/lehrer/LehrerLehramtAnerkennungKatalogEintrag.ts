@@ -15,13 +15,13 @@ export class LehrerLehramtAnerkennungKatalogEintrag extends CoreTypeData {
 		return 'de.svws_nrw.asd.data.lehrer.LehrerLehramtAnerkennungKatalogEintrag';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.asd.data.lehrer.LehrerLehramtAnerkennungKatalogEintrag', 'de.svws_nrw.asd.data.CoreTypeData'].includes(name);
 	}
 
 	public static class = new Class<LehrerLehramtAnerkennungKatalogEintrag>('de.svws_nrw.asd.data.lehrer.LehrerLehramtAnerkennungKatalogEintrag');
 
-	public static transpilerFromJSON(json : string): LehrerLehramtAnerkennungKatalogEintrag {
+	public static transpilerFromJSON(json: string): LehrerLehramtAnerkennungKatalogEintrag {
 		const obj = JSON.parse(json) as Partial<LehrerLehramtAnerkennungKatalogEintrag>;
 		const result = new LehrerLehramtAnerkennungKatalogEintrag();
 		if (obj.id === undefined)
@@ -41,7 +41,7 @@ export class LehrerLehramtAnerkennungKatalogEintrag extends CoreTypeData {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : LehrerLehramtAnerkennungKatalogEintrag) : string {
+	public static transpilerToJSON(obj: LehrerLehramtAnerkennungKatalogEintrag): string {
 		let result = '{';
 		result += '"id" : ' + obj.id.toString() + ',';
 		result += '"schluessel" : ' + JSON.stringify(obj.schluessel) + ',';
@@ -54,7 +54,7 @@ export class LehrerLehramtAnerkennungKatalogEintrag extends CoreTypeData {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<LehrerLehramtAnerkennungKatalogEintrag>) : string {
+	public static transpilerToJSONPatch(obj: Partial<LehrerLehramtAnerkennungKatalogEintrag>): string {
 		let result = '{';
 		if (obj.id !== undefined) {
 			result += '"id" : ' + obj.id.toString() + ',';
@@ -81,6 +81,6 @@ export class LehrerLehramtAnerkennungKatalogEintrag extends CoreTypeData {
 
 }
 
-export function cast_de_svws_nrw_asd_data_lehrer_LehrerLehramtAnerkennungKatalogEintrag(obj : unknown) : LehrerLehramtAnerkennungKatalogEintrag {
+export function cast_de_svws_nrw_asd_data_lehrer_LehrerLehramtAnerkennungKatalogEintrag(obj: unknown): LehrerLehramtAnerkennungKatalogEintrag {
 	return obj as LehrerLehramtAnerkennungKatalogEintrag;
 }

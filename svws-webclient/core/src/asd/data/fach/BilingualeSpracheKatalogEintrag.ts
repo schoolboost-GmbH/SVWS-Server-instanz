@@ -15,13 +15,13 @@ export class BilingualeSpracheKatalogEintrag extends CoreTypeDataNurSchulformen 
 		return 'de.svws_nrw.asd.data.fach.BilingualeSpracheKatalogEintrag';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.asd.data.fach.BilingualeSpracheKatalogEintrag', 'de.svws_nrw.asd.data.CoreTypeData', 'de.svws_nrw.asd.data.CoreTypeDataNurSchulformen'].includes(name);
 	}
 
 	public static class = new Class<BilingualeSpracheKatalogEintrag>('de.svws_nrw.asd.data.fach.BilingualeSpracheKatalogEintrag');
 
-	public static transpilerFromJSON(json : string): BilingualeSpracheKatalogEintrag {
+	public static transpilerFromJSON(json: string): BilingualeSpracheKatalogEintrag {
 		const obj = JSON.parse(json) as Partial<BilingualeSpracheKatalogEintrag>;
 		const result = new BilingualeSpracheKatalogEintrag();
 		if (obj.schulformen !== undefined) {
@@ -46,7 +46,7 @@ export class BilingualeSpracheKatalogEintrag extends CoreTypeDataNurSchulformen 
 		return result;
 	}
 
-	public static transpilerToJSON(obj : BilingualeSpracheKatalogEintrag) : string {
+	public static transpilerToJSON(obj: BilingualeSpracheKatalogEintrag): string {
 		let result = '{';
 		result += '"schulformen" : [ ';
 		for (let i = 0; i < obj.schulformen.size(); i++) {
@@ -67,7 +67,7 @@ export class BilingualeSpracheKatalogEintrag extends CoreTypeDataNurSchulformen 
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<BilingualeSpracheKatalogEintrag>) : string {
+	public static transpilerToJSONPatch(obj: Partial<BilingualeSpracheKatalogEintrag>): string {
 		let result = '{';
 		if (obj.schulformen !== undefined) {
 			result += '"schulformen" : [ ';
@@ -104,6 +104,6 @@ export class BilingualeSpracheKatalogEintrag extends CoreTypeDataNurSchulformen 
 
 }
 
-export function cast_de_svws_nrw_asd_data_fach_BilingualeSpracheKatalogEintrag(obj : unknown) : BilingualeSpracheKatalogEintrag {
+export function cast_de_svws_nrw_asd_data_fach_BilingualeSpracheKatalogEintrag(obj: unknown): BilingualeSpracheKatalogEintrag {
 	return obj as BilingualeSpracheKatalogEintrag;
 }

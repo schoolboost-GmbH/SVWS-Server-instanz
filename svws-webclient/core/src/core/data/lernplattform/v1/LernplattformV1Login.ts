@@ -6,12 +6,12 @@ export class LernplattformV1Login extends JavaObject {
 	/**
 	 * Der Benutzername für die Lernplattform.
 	 */
-	public benutzername : string | null = null;
+	public benutzername: string | null = null;
 
 	/**
 	 * Das Initialpasswort für die Lernplattform.
 	 */
-	public initialpasswort : string | null = null;
+	public initialpasswort: string | null = null;
 
 
 	/**
@@ -25,13 +25,13 @@ export class LernplattformV1Login extends JavaObject {
 		return 'de.svws_nrw.core.data.lernplattform.v1.LernplattformV1Login';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.lernplattform.v1.LernplattformV1Login'].includes(name);
 	}
 
 	public static class = new Class<LernplattformV1Login>('de.svws_nrw.core.data.lernplattform.v1.LernplattformV1Login');
 
-	public static transpilerFromJSON(json : string): LernplattformV1Login {
+	public static transpilerFromJSON(json: string): LernplattformV1Login {
 		const obj = JSON.parse(json) as Partial<LernplattformV1Login>;
 		const result = new LernplattformV1Login();
 		result.benutzername = (obj.benutzername === undefined) ? null : obj.benutzername === null ? null : obj.benutzername;
@@ -39,7 +39,7 @@ export class LernplattformV1Login extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : LernplattformV1Login) : string {
+	public static transpilerToJSON(obj: LernplattformV1Login): string {
 		let result = '{';
 		result += '"benutzername" : ' + ((obj.benutzername === null) ? 'null' : JSON.stringify(obj.benutzername)) + ',';
 		result += '"initialpasswort" : ' + ((obj.initialpasswort === null) ? 'null' : JSON.stringify(obj.initialpasswort)) + ',';
@@ -48,7 +48,7 @@ export class LernplattformV1Login extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<LernplattformV1Login>) : string {
+	public static transpilerToJSONPatch(obj: Partial<LernplattformV1Login>): string {
 		let result = '{';
 		if (obj.benutzername !== undefined) {
 			result += '"benutzername" : ' + ((obj.benutzername === null) ? 'null' : JSON.stringify(obj.benutzername)) + ',';
@@ -63,6 +63,6 @@ export class LernplattformV1Login extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_lernplattform_v1_LernplattformV1Login(obj : unknown) : LernplattformV1Login {
+export function cast_de_svws_nrw_core_data_lernplattform_v1_LernplattformV1Login(obj: unknown): LernplattformV1Login {
 	return obj as LernplattformV1Login;
 }

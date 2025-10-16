@@ -15,13 +15,13 @@ export class PrimarstufeSchuleingangsphaseBesuchsjahreKatalogEintrag extends Cor
 		return 'de.svws_nrw.asd.data.jahrgang.PrimarstufeSchuleingangsphaseBesuchsjahreKatalogEintrag';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.asd.data.jahrgang.PrimarstufeSchuleingangsphaseBesuchsjahreKatalogEintrag', 'de.svws_nrw.asd.data.CoreTypeData'].includes(name);
 	}
 
 	public static class = new Class<PrimarstufeSchuleingangsphaseBesuchsjahreKatalogEintrag>('de.svws_nrw.asd.data.jahrgang.PrimarstufeSchuleingangsphaseBesuchsjahreKatalogEintrag');
 
-	public static transpilerFromJSON(json : string): PrimarstufeSchuleingangsphaseBesuchsjahreKatalogEintrag {
+	public static transpilerFromJSON(json: string): PrimarstufeSchuleingangsphaseBesuchsjahreKatalogEintrag {
 		const obj = JSON.parse(json) as Partial<PrimarstufeSchuleingangsphaseBesuchsjahreKatalogEintrag>;
 		const result = new PrimarstufeSchuleingangsphaseBesuchsjahreKatalogEintrag();
 		if (obj.id === undefined)
@@ -41,7 +41,7 @@ export class PrimarstufeSchuleingangsphaseBesuchsjahreKatalogEintrag extends Cor
 		return result;
 	}
 
-	public static transpilerToJSON(obj : PrimarstufeSchuleingangsphaseBesuchsjahreKatalogEintrag) : string {
+	public static transpilerToJSON(obj: PrimarstufeSchuleingangsphaseBesuchsjahreKatalogEintrag): string {
 		let result = '{';
 		result += '"id" : ' + obj.id.toString() + ',';
 		result += '"schluessel" : ' + JSON.stringify(obj.schluessel) + ',';
@@ -54,7 +54,7 @@ export class PrimarstufeSchuleingangsphaseBesuchsjahreKatalogEintrag extends Cor
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<PrimarstufeSchuleingangsphaseBesuchsjahreKatalogEintrag>) : string {
+	public static transpilerToJSONPatch(obj: Partial<PrimarstufeSchuleingangsphaseBesuchsjahreKatalogEintrag>): string {
 		let result = '{';
 		if (obj.id !== undefined) {
 			result += '"id" : ' + obj.id.toString() + ',';
@@ -81,6 +81,6 @@ export class PrimarstufeSchuleingangsphaseBesuchsjahreKatalogEintrag extends Cor
 
 }
 
-export function cast_de_svws_nrw_asd_data_jahrgang_PrimarstufeSchuleingangsphaseBesuchsjahreKatalogEintrag(obj : unknown) : PrimarstufeSchuleingangsphaseBesuchsjahreKatalogEintrag {
+export function cast_de_svws_nrw_asd_data_jahrgang_PrimarstufeSchuleingangsphaseBesuchsjahreKatalogEintrag(obj: unknown): PrimarstufeSchuleingangsphaseBesuchsjahreKatalogEintrag {
 	return obj as PrimarstufeSchuleingangsphaseBesuchsjahreKatalogEintrag;
 }

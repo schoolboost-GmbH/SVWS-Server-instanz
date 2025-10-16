@@ -6,72 +6,72 @@ export class BKGymLeistungenFachHalbjahr extends JavaObject {
 	/**
 	 * Die ID des Datensatzes
 	 */
-	public id : number = 0;
+	public id: number = 0;
 
 	/**
 	 * Das Schuljahr der Fachbelegung
 	 */
-	public schuljahr : number = 0;
+	public schuljahr: number = 0;
 
 	/**
 	 * Das Kürzel des Halbjahres der Fachbelegung
 	 */
-	public halbjahrKuerzel : string | null = null;
+	public halbjahrKuerzel: string | null = null;
 
 	/**
 	 * Gibt an, ob es sich um einen gewerteten Abschnitt handelt.
 	 */
-	public abschnittGewertet : boolean = false;
+	public abschnittGewertet: boolean = false;
 
 	/**
 	 * Gibt den Jahrgang, an dem die Belegung zugeordnet ist
 	 */
-	public jahrgang : string | null = null;
+	public jahrgang: string | null = null;
 
 	/**
 	 * Die ID des Kurses
 	 */
-	public idKurs : number | null = null;
+	public idKurs: number | null = null;
 
 	/**
 	 * Gibt die ID des Fachlehrers an, bei dem der zur Fachbelegung gehörige Kurs belegt wurde.
 	 */
-	public idFachlehrer : number | null = null;
+	public idFachlehrer: number | null = null;
 
 	/**
 	 * Gibt die Note als Zeichenkette und mit Tendenz an
 	 */
-	public notenKuerzel : string | null = null;
+	public notenKuerzel: string | null = null;
 
 	/**
 	 * Das Kürzel der Kursart der gymnasialen Oberstufe des belegten Kurses
 	 */
-	public kursartKuerzel : string | null = null;
+	public kursartKuerzel: string | null = null;
 
 	/**
 	 * Gibt an, ob der Kurs schriftlich belegt wurde.
 	 */
-	public istSchriftlich : boolean = false;
+	public istSchriftlich: boolean = false;
 
 	/**
 	 * Gibt die Sprache als einstelliges Kürzel an, sofern der Kurs bilingual unterrichtet wurde.
 	 */
-	public bilingualeSprache : string | null = null;
+	public bilingualeSprache: string | null = null;
 
 	/**
 	 * Gibt die Anzahl der Wochenstunden für den Kurs an.
 	 */
-	public wochenstunden : number = 0;
+	public wochenstunden: number = 0;
 
 	/**
 	 * Gibt die Anzahl der Fehlstunden in dem Halbjahr an.
 	 */
-	public fehlstundenGesamt : number = 0;
+	public fehlstundenGesamt: number = 0;
 
 	/**
 	 * Gibt die Anzahl der unentschuldigten Fehlstunden in dem Halbjahr an.
 	 */
-	public fehlstundenUnentschuldigt : number = 0;
+	public fehlstundenUnentschuldigt: number = 0;
 
 
 	/**
@@ -85,13 +85,13 @@ export class BKGymLeistungenFachHalbjahr extends JavaObject {
 		return 'de.svws_nrw.core.data.bk.abi.BKGymLeistungenFachHalbjahr';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.bk.abi.BKGymLeistungenFachHalbjahr'].includes(name);
 	}
 
 	public static class = new Class<BKGymLeistungenFachHalbjahr>('de.svws_nrw.core.data.bk.abi.BKGymLeistungenFachHalbjahr');
 
-	public static transpilerFromJSON(json : string): BKGymLeistungenFachHalbjahr {
+	public static transpilerFromJSON(json: string): BKGymLeistungenFachHalbjahr {
 		const obj = JSON.parse(json) as Partial<BKGymLeistungenFachHalbjahr>;
 		const result = new BKGymLeistungenFachHalbjahr();
 		if (obj.id === undefined)
@@ -125,7 +125,7 @@ export class BKGymLeistungenFachHalbjahr extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : BKGymLeistungenFachHalbjahr) : string {
+	public static transpilerToJSON(obj: BKGymLeistungenFachHalbjahr): string {
 		let result = '{';
 		result += '"id" : ' + obj.id.toString() + ',';
 		result += '"schuljahr" : ' + obj.schuljahr.toString() + ',';
@@ -146,7 +146,7 @@ export class BKGymLeistungenFachHalbjahr extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<BKGymLeistungenFachHalbjahr>) : string {
+	public static transpilerToJSONPatch(obj: Partial<BKGymLeistungenFachHalbjahr>): string {
 		let result = '{';
 		if (obj.id !== undefined) {
 			result += '"id" : ' + obj.id.toString() + ',';
@@ -197,6 +197,6 @@ export class BKGymLeistungenFachHalbjahr extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_bk_abi_BKGymLeistungenFachHalbjahr(obj : unknown) : BKGymLeistungenFachHalbjahr {
+export function cast_de_svws_nrw_core_data_bk_abi_BKGymLeistungenFachHalbjahr(obj: unknown): BKGymLeistungenFachHalbjahr {
 	return obj as BKGymLeistungenFachHalbjahr;
 }

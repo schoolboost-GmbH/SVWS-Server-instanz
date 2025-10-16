@@ -15,13 +15,13 @@ export class BerufskollegAnlageKatalogEintrag extends CoreTypeData {
 		return 'de.svws_nrw.asd.data.schule.BerufskollegAnlageKatalogEintrag';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.asd.data.schule.BerufskollegAnlageKatalogEintrag', 'de.svws_nrw.asd.data.CoreTypeData'].includes(name);
 	}
 
 	public static class = new Class<BerufskollegAnlageKatalogEintrag>('de.svws_nrw.asd.data.schule.BerufskollegAnlageKatalogEintrag');
 
-	public static transpilerFromJSON(json : string): BerufskollegAnlageKatalogEintrag {
+	public static transpilerFromJSON(json: string): BerufskollegAnlageKatalogEintrag {
 		const obj = JSON.parse(json) as Partial<BerufskollegAnlageKatalogEintrag>;
 		const result = new BerufskollegAnlageKatalogEintrag();
 		if (obj.id === undefined)
@@ -41,7 +41,7 @@ export class BerufskollegAnlageKatalogEintrag extends CoreTypeData {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : BerufskollegAnlageKatalogEintrag) : string {
+	public static transpilerToJSON(obj: BerufskollegAnlageKatalogEintrag): string {
 		let result = '{';
 		result += '"id" : ' + obj.id.toString() + ',';
 		result += '"schluessel" : ' + JSON.stringify(obj.schluessel) + ',';
@@ -54,7 +54,7 @@ export class BerufskollegAnlageKatalogEintrag extends CoreTypeData {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<BerufskollegAnlageKatalogEintrag>) : string {
+	public static transpilerToJSONPatch(obj: Partial<BerufskollegAnlageKatalogEintrag>): string {
 		let result = '{';
 		if (obj.id !== undefined) {
 			result += '"id" : ' + obj.id.toString() + ',';
@@ -81,6 +81,6 @@ export class BerufskollegAnlageKatalogEintrag extends CoreTypeData {
 
 }
 
-export function cast_de_svws_nrw_asd_data_schule_BerufskollegAnlageKatalogEintrag(obj : unknown) : BerufskollegAnlageKatalogEintrag {
+export function cast_de_svws_nrw_asd_data_schule_BerufskollegAnlageKatalogEintrag(obj: unknown): BerufskollegAnlageKatalogEintrag {
 	return obj as BerufskollegAnlageKatalogEintrag;
 }

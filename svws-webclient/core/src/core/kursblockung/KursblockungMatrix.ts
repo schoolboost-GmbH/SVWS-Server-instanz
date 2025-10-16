@@ -12,84 +12,84 @@ export class KursblockungMatrix extends JavaObject {
 	/**
 	 * Ein {@link Random}-Objekt zur Steuerung des Zufalls über einen Anfangs-Seed.
 	 */
-	private readonly _random : Random;
+	private readonly _random: Random;
 
 	/**
 	 * Die Werte der Matrix [Zeile][Spalte].
 	 */
-	private readonly matrix : Array<Array<number>>;
+	private readonly matrix: Array<Array<number>>;
 
 	/**
 	 * Die Anzahl der Zeilen der Matrix.
 	 */
-	private readonly rows : number;
+	private readonly rows: number;
 
 	/**
 	 * Die Anzahl der Spalten der Matrix.
 	 */
-	private readonly cols : number;
+	private readonly cols: number;
 
 	/**
 	 * Die aktuelle Permutation der Zeilen für potentiellen Nichtdeterminismus. Interne Algorithmen iterieren so über
 	 *  die Matrix-Zeilen in zufälliger Reihenfolge, damit aus mehreren optimalen Lösungen eine zufällige ausgewählt
 	 *  wird. Die echten Zeilen der Matrix bleiben unverändert.
 	 */
-	private readonly permR : Array<number>;
+	private readonly permR: Array<number>;
 
 	/**
 	 * Die aktuelle Permutation der Spalten für potentiellen Nichtdeterminismus. Interne Algorithmen iterieren so über
 	 *  die Matrix-Spalten in zufälliger Reihenfolge, damit aus mehreren optimalen Lösungen eine zufällige ausgewählt
 	 *  wird. Die echten Spalten der Matrix bleiben unverändert.
 	 */
-	private readonly permC : Array<number>;
+	private readonly permC: Array<number>;
 
 	/**
 	 * Die Zuordnung einer Zeile zu einer Spalte (für das bipartite Matching).
 	 */
-	private readonly r2c : Array<number>;
+	private readonly r2c: Array<number>;
 
 	/**
 	 * Die Zuordnung einer Spalte zu einer Zeile (für das bipartite Matching).
 	 */
-	private readonly c2r : Array<number>;
+	private readonly c2r: Array<number>;
 
 	/**
 	 * Definiert, ob eine linker Zeilen-Knoten bereits besucht wurde (für das bipartite Matching).
 	 */
-	private readonly besuchtR : Array<boolean>;
+	private readonly besuchtR: Array<boolean>;
 
 	/**
 	 * Definiert, ob eine rechter Spalten-Knoten bereits besucht wurde (für das bipartite Matching).
 	 */
-	private readonly abgearbeitetC : Array<boolean>;
+	private readonly abgearbeitetC: Array<boolean>;
 
 	/**
 	 * Definiert, den Zeilen-Vorgänger-Knoten eines rechten Spalten-Knotens (für das bipartite Matching).
 	 */
-	private readonly vorgaengerCzuR : Array<number>;
+	private readonly vorgaengerCzuR: Array<number>;
 
 	/**
 	 * Definiert eine Warteschlange mit maximal <i>rows</i> Knoten (für das bipartite Matching).
 	 */
-	private readonly queueR : Array<number>;
+	private readonly queueR: Array<number>;
 
 	/**
 	 * Definiert ein linkes Knotengewicht (Potential) zur Umgewichtung der ausgehenden Kanten (für das bipartite
 	 *  Matching).
 	 */
-	private readonly potentialR : Array<number>;
+	private readonly potentialR: Array<number>;
 
 	/**
 	 * Definiert ein rechtes Knotengewicht (Potential) zur Umgewichtung der eingehenden Kanten (für das bipartite
 	 *  Matching).
 	 */
-	private readonly potentialC : Array<number>;
+	private readonly potentialC: Array<number>;
 
 	/**
 	 * Definiert die Entfernung vom aktuellen Zeilen-Knoten zu den jeweiligen Spalten-Knoten (für das bipartite
 	 *  Matching).
 	 */
-	private readonly distanzC : Array<number>;
+	private readonly distanzC: Array<number>;
 
 
 	/**
@@ -99,7 +99,7 @@ export class KursblockungMatrix extends JavaObject {
 	 * @param rows    Die Anzahl der Zeilen der Matrix.
 	 * @param cols    Die Anzahl der Spalten der Matrix.
 	 */
-	public constructor(pRandom : Random, rows : number, cols : number) {
+	public constructor(pRandom: Random, rows: number, cols: number) {
 		super();
 		this._random = pRandom;
 		this.rows = rows;
@@ -130,32 +130,32 @@ export class KursblockungMatrix extends JavaObject {
 	 *                              gibt.
 	 * @return                      die Zeilen- zu Spaltenzuordnung, negative Werte entsprechen einer Nichtzuordnung.
 	 */
-	public gibMaximalesBipartitesMatching(nichtdeterministisch : boolean) : Array<number> {
+	public gibMaximalesBipartitesMatching(nichtdeterministisch: boolean): Array<number> {
 		Arrays.fill(this.r2c, -1);
 		Arrays.fill(this.c2r, -1);
 		this.initialisierPermRundPermC(nichtdeterministisch);
-		for (let pseudoR : number = 0; pseudoR < this.rows; pseudoR++) {
-			const r : number = this.permR[pseudoR];
+		for (let pseudoR: number = 0; pseudoR < this.rows; pseudoR++) {
+			const r: number = this.permR[pseudoR];
 			Arrays.fill(this.besuchtR, false);
 			Arrays.fill(this.vorgaengerCzuR, -1);
-			let queue_first : number = 0;
-			let queue_last : number = 0;
+			let queue_first: number = 0;
+			let queue_last: number = 0;
 			this.queueR[queue_last] = r;
 			queue_last++;
 			this.besuchtR[r] = true;
 			while (queue_first < queue_last) {
-				const vonR : number = this.queueR[queue_first];
+				const vonR: number = this.queueR[queue_first];
 				queue_first++;
-				for (let pseudoC : number = 0; pseudoC < this.cols; pseudoC++) {
-					const ueberC : number = this.permC[pseudoC];
+				for (let pseudoC: number = 0; pseudoC < this.cols; pseudoC++) {
+					const ueberC: number = this.permC[pseudoC];
 					if ((this.matrix[vonR][ueberC] !== 0) && (this.r2c[vonR] !== ueberC)) {
-						const zuR : number = this.c2r[ueberC];
+						const zuR: number = this.c2r[ueberC];
 						if (zuR === -1) {
 							this.vorgaengerCzuR[ueberC] = vonR;
-							let c2 : number = ueberC;
+							let c2: number = ueberC;
 							while (c2 >= 0) {
-								const r2 : number = this.vorgaengerCzuR[c2];
-								const saveC : number = this.r2c[r2];
+								const r2: number = this.vorgaengerCzuR[c2];
+								const saveC: number = this.r2c[r2];
 								this.c2r[c2] = r2;
 								this.r2c[r2] = c2;
 								c2 = saveC;
@@ -193,40 +193,40 @@ export class KursblockungMatrix extends JavaObject {
 	 *                              gibt.
 	 * @return                      die Zeilen- zu Spaltenzuordnung, negative Werte entsprechen einer Nichtzuordnung.
 	 */
-	public gibMinimalesBipartitesMatchingGewichtet(nichtdeterministisch : boolean) : Array<number> {
+	public gibMinimalesBipartitesMatchingGewichtet(nichtdeterministisch: boolean): Array<number> {
 		Arrays.fill(this.r2c, -1);
 		Arrays.fill(this.c2r, -1);
 		Arrays.fill(this.potentialR, 0);
 		Arrays.fill(this.potentialC, 0);
 		this.initialisierPermRundPermC(nichtdeterministisch);
 		if (this.rows <= this.cols) {
-			for (let r : number = 0; r < this.rows; r++) {
-				let min : number = (this.matrix[r][0] + this.potentialR[r]) - this.potentialC[0];
-				for (let c : number = 0; c < this.cols; c++) {
-					const kante : number = (this.matrix[r][c] + this.potentialR[r]) - this.potentialC[c];
+			for (let r: number = 0; r < this.rows; r++) {
+				let min: number = (this.matrix[r][0] + this.potentialR[r]) - this.potentialC[0];
+				for (let c: number = 0; c < this.cols; c++) {
+					const kante: number = (this.matrix[r][c] + this.potentialR[r]) - this.potentialC[c];
 					min = Math.min(min, kante);
 				}
 				this.potentialR[r] -= min;
 			}
 		}
 		if (this.cols <= this.rows) {
-			for (let c : number = 0; c < this.cols; c++) {
-				let min : number = (this.matrix[0][c] + this.potentialR[0]) - this.potentialC[c];
-				for (let r : number = 0; r < this.rows; r++) {
-					const kante : number = (this.matrix[r][c] + this.potentialR[r]) - this.potentialC[c];
+			for (let c: number = 0; c < this.cols; c++) {
+				let min: number = (this.matrix[0][c] + this.potentialR[0]) - this.potentialC[c];
+				for (let r: number = 0; r < this.rows; r++) {
+					const kante: number = (this.matrix[r][c] + this.potentialR[r]) - this.potentialC[c];
 					min = Math.min(min, kante);
 				}
 				this.potentialC[c] += min;
 			}
 		}
-		let dijkstraRunden : number = Math.min(this.rows, this.cols);
+		let dijkstraRunden: number = Math.min(this.rows, this.cols);
 		Arrays.fill(this.abgearbeitetC, false);
-		for (let ir : number = 0; ir < this.rows; ir++) {
-			const r : number = this.permR[ir];
-			for (let ic : number = 0; ic < this.cols; ic++) {
-				const c : number = this.permC[ic];
+		for (let ir: number = 0; ir < this.rows; ir++) {
+			const r: number = this.permR[ir];
+			for (let ic: number = 0; ic < this.cols; ic++) {
+				const c: number = this.permC[ic];
 				if (!this.abgearbeitetC[c]) {
-					const kante : number = (this.matrix[r][c] + this.potentialR[r]) - this.potentialC[c];
+					const kante: number = (this.matrix[r][c] + this.potentialR[r]) - this.potentialC[c];
 					if (kante === 0) {
 						this.r2c[r] = c;
 						this.c2r[c] = r;
@@ -237,16 +237,16 @@ export class KursblockungMatrix extends JavaObject {
 				}
 			}
 		}
-		for (let dijkstraRunde : number = 0; dijkstraRunde < dijkstraRunden; dijkstraRunde++) {
-			for (let ic : number = 0; ic < this.cols; ic++) {
-				const c : number = this.permC[ic];
+		for (let dijkstraRunde: number = 0; dijkstraRunde < dijkstraRunden; dijkstraRunde++) {
+			for (let ic: number = 0; ic < this.cols; ic++) {
+				const c: number = this.permC[ic];
 				this.vorgaengerCzuR[c] = -1;
 				this.abgearbeitetC[c] = false;
 				this.distanzC[c] = JavaLong.MAX_VALUE;
-				for (let ir : number = 0; ir < this.rows; ir++) {
-					const r : number = this.permR[ir];
+				for (let ir: number = 0; ir < this.rows; ir++) {
+					const r: number = this.permR[ir];
 					if (this.r2c[r] < 0) {
-						const kante : number = (this.matrix[r][c] + this.potentialR[r]) - this.potentialC[c];
+						const kante: number = (this.matrix[r][c] + this.potentialR[r]) - this.potentialC[c];
 						if (kante < this.distanzC[c]) {
 							this.distanzC[c] = kante;
 							this.vorgaengerCzuR[c] = r;
@@ -254,21 +254,21 @@ export class KursblockungMatrix extends JavaObject {
 					}
 				}
 			}
-			let endknotenC : number = -1;
-			for (let dijkstraZyklus : number = 0; dijkstraZyklus < this.cols; dijkstraZyklus++) {
-				let fromC : number = 0;
-				for (let ic : number = 0; ic < this.cols; ic++) {
-					const c : number = this.permC[ic];
+			let endknotenC: number = -1;
+			for (let dijkstraZyklus: number = 0; dijkstraZyklus < this.cols; dijkstraZyklus++) {
+				let fromC: number = 0;
+				for (let ic: number = 0; ic < this.cols; ic++) {
+					const c: number = this.permC[ic];
 					if ((!this.abgearbeitetC[c]) && ((this.abgearbeitetC[fromC]) || (this.distanzC[c] < this.distanzC[fromC])))
 						fromC = c;
 				}
 				this.abgearbeitetC[fromC] = true;
-				const overR : number = this.c2r[fromC];
+				const overR: number = this.c2r[fromC];
 				if (overR >= 0) {
-					for (let ic : number = 0; ic < this.cols; ic++) {
-						const toC : number = this.permC[ic];
-						const kante : number = (this.matrix[overR][toC] + this.potentialR[overR]) - this.potentialC[toC];
-						const distance : number = this.distanzC[fromC] + kante;
+					for (let ic: number = 0; ic < this.cols; ic++) {
+						const toC: number = this.permC[ic];
+						const kante: number = (this.matrix[overR][toC] + this.potentialR[overR]) - this.potentialC[toC];
+						const distance: number = this.distanzC[fromC] + kante;
 						if (distance < this.distanzC[toC]) {
 							this.distanzC[toC] = distance;
 							this.vorgaengerCzuR[toC] = overR;
@@ -280,18 +280,18 @@ export class KursblockungMatrix extends JavaObject {
 					}
 				}
 			}
-			let currentC : number = endknotenC;
+			let currentC: number = endknotenC;
 			while (currentC >= 0) {
-				const prevR : number = this.vorgaengerCzuR[currentC];
-				const prevC : number = this.r2c[prevR];
+				const prevR: number = this.vorgaengerCzuR[currentC];
+				const prevC: number = this.r2c[prevR];
 				this.r2c[prevR] = currentC;
 				this.c2r[currentC] = prevR;
 				currentC = prevC;
 			}
-			for (let r : number = 0; r < this.rows; r++) {
-				const c : number = this.r2c[r];
+			for (let r: number = 0; r < this.rows; r++) {
+				const c: number = this.r2c[r];
 				if (c >= 0) {
-					const kante : number = (this.matrix[r][c] + this.potentialR[r]) - this.potentialC[c];
+					const kante: number = (this.matrix[r][c] + this.potentialR[r]) - this.potentialC[c];
 					this.potentialR[r] += this.distanzC[c] - kante;
 					this.potentialC[c] += this.distanzC[c];
 				}
@@ -307,7 +307,7 @@ export class KursblockungMatrix extends JavaObject {
 	 * @param nichtdeterministisch falls {@code true} werden {@link KursblockungMatrix#permR} und
 	 *                             {@link KursblockungMatrix#permC} permutiert, sonst initialisiert.
 	 */
-	private initialisierPermRundPermC(nichtdeterministisch : boolean) : void {
+	private initialisierPermRundPermC(nichtdeterministisch: boolean): void {
 		if (nichtdeterministisch) {
 			this.permutiere(this.permR);
 			this.permutiere(this.permC);
@@ -322,9 +322,9 @@ export class KursblockungMatrix extends JavaObject {
 	 *
 	 * @param perm Das Array, welches mit den Zahlen {@code 0,1,2...} gefüllt wird.
 	 */
-	private static initialisiere(perm : Array<number>) : void {
-		const laenge : number = perm.length;
-		for (let i : number = 0; i < laenge; i++) {
+	private static initialisiere(perm: Array<number>): void {
+		const laenge: number = perm.length;
+		for (let i: number = 0; i < laenge; i++) {
 			perm[i] = i;
 		}
 	}
@@ -334,12 +334,12 @@ export class KursblockungMatrix extends JavaObject {
 	 *
 	 * @param perm Das Array, dessen Inhalt zufällig permutiert wird.
 	 */
-	private permutiere(perm : Array<number>) : void {
-		const laenge : number = perm.length;
-		for (let i : number = 0; i < laenge; i++) {
-			const j : number = this._random.nextInt(laenge);
-			const saveI : number = perm[i];
-			const saveJ : number = perm[j];
+	private permutiere(perm: Array<number>): void {
+		const laenge: number = perm.length;
+		for (let i: number = 0; i < laenge; i++) {
+			const j: number = this._random.nextInt(laenge);
+			const saveI: number = perm[i];
+			const saveJ: number = perm[j];
 			perm[i] = saveJ;
 			perm[j] = saveI;
 		}
@@ -350,7 +350,7 @@ export class KursblockungMatrix extends JavaObject {
 	 *
 	 * @return Die Array-Referenz.
 	 */
-	public getMatrix() : Array<Array<number>> {
+	public getMatrix(): Array<Array<number>> {
 		return this.matrix;
 	}
 
@@ -364,16 +364,16 @@ export class KursblockungMatrix extends JavaObject {
 	 *                            Knotenpotentiale, andernfalls bleiben die Kantenwerte unverändert.
 	 * @return                    Eine String-Representation der Matrix.
 	 */
-	public convertToString(kommentar : string, zellenbreite : number, mitKnotenPotential : boolean) : string {
-		const sb : StringBuilder = new StringBuilder(kommentar + System.lineSeparator());
-		for (let r : number = 0; r < this.rows; r++) {
-			for (let c : number = 0; c < this.cols; c++) {
-				const wert : number = mitKnotenPotential ? ((this.matrix[r][c] + this.potentialR[r]) - this.potentialC[c]) : this.matrix[r][c];
-				const sWert1 : StringBuilder = new StringBuilder();
-				const sWert2 : StringBuilder = new StringBuilder("" + wert);
+	public convertToString(kommentar: string, zellenbreite: number, mitKnotenPotential: boolean): string {
+		const sb: StringBuilder = new StringBuilder(kommentar + System.lineSeparator());
+		for (let r: number = 0; r < this.rows; r++) {
+			for (let c: number = 0; c < this.cols; c++) {
+				const wert: number = mitKnotenPotential ? ((this.matrix[r][c] + this.potentialR[r]) - this.potentialC[c]) : this.matrix[r][c];
+				const sWert1: StringBuilder = new StringBuilder();
+				const sWert2: StringBuilder = new StringBuilder("" + wert);
 				while ((sWert1.length() + sWert2.length()) < zellenbreite)
 					sWert1.append(" ");
-				const sZusatz : string = (this.r2c[r] === c) ? "*" : " ";
+				const sZusatz: string = (this.r2c[r] === c) ? "*" : " ";
 				sb.append(sWert1);
 				sb.append(sWert2);
 				sb.append(sZusatz);
@@ -391,9 +391,9 @@ export class KursblockungMatrix extends JavaObject {
 	 * @param von Der kleinstmögliche zufällige Wert (inklusive).
 	 * @param bis Der größtmögliche zufällige Wert (inklusive).
 	 */
-	public fuelleMitZufallszahlenVonBis(von : number, bis : number) : void {
-		for (let r : number = 0; r < this.rows; r++)
-			for (let c : number = 0; c < this.cols; c++)
+	public fuelleMitZufallszahlenVonBis(von: number, bis: number): void {
+		for (let r: number = 0; r < this.rows; r++)
+			for (let c: number = 0; c < this.cols; c++)
 				this.matrix[r][c] = this._random.nextLong((bis - von) + 1) + von;
 	}
 
@@ -402,9 +402,9 @@ export class KursblockungMatrix extends JavaObject {
 	 *
 	 * @param wert  Der Wert, der alle Zellen überschreibt.
 	 */
-	public fuelleMitWert(wert : number) : void {
-		for (let r : number = 0; r < this.rows; r++)
-			for (let c : number = 0; c < this.cols; c++)
+	public fuelleMitWert(wert: number): void {
+		for (let r: number = 0; r < this.rows; r++)
+			for (let c: number = 0; c < this.cols; c++)
 				this.matrix[r][c] = wert;
 	}
 
@@ -413,7 +413,7 @@ export class KursblockungMatrix extends JavaObject {
 	 *
 	 * @return die Anzahl an Zeilen der Matrix.
 	 */
-	public gibZeilen() : number {
+	public gibZeilen(): number {
 		return this.rows;
 	}
 
@@ -422,7 +422,7 @@ export class KursblockungMatrix extends JavaObject {
 	 *
 	 * @return die Anzahl an Spalten der Matrix.
 	 */
-	public gibSpalten() : number {
+	public gibSpalten(): number {
 		return this.cols;
 	}
 
@@ -430,7 +430,7 @@ export class KursblockungMatrix extends JavaObject {
 		return 'de.svws_nrw.core.kursblockung.KursblockungMatrix';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.kursblockung.KursblockungMatrix'].includes(name);
 	}
 
@@ -438,6 +438,6 @@ export class KursblockungMatrix extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_kursblockung_KursblockungMatrix(obj : unknown) : KursblockungMatrix {
+export function cast_de_svws_nrw_core_kursblockung_KursblockungMatrix(obj: unknown): KursblockungMatrix {
 	return obj as KursblockungMatrix;
 }

@@ -12,67 +12,67 @@ export class ReportingParameter extends JavaObject {
 	/**
 	 * Die ID des Schuljahres, auf den sich die Ausgabe des Reports beziehen soll.
 	 */
-	public idSchuljahresabschnitt : number = -1;
+	public idSchuljahresabschnitt: number = -1;
 
 	/**
 	 * Das Dateiformat, in dem der Report ausgegeben werden soll, angegeben als Wert gemäß CoreType {@link ReportingAusgabeformat}
 	 */
-	public ausgabeformat : number = ReportingAusgabeformat.PDF.getId();
+	public ausgabeformat: number = ReportingAusgabeformat.PDF.getId();
 
 	/**
 	 * Die Bezeichnung des auszugebenden Reports gemäß Definition im CoreType {@link ReportingReportvorlage}
 	 */
-	public reportvorlage : string = "";
+	public reportvorlage: string = "";
 
 	/**
 	 * Eine Liste von IDs für die Hauptdatenquelle des zu erstellenden PDFs.
 	 */
-	public idsHauptdaten : List<number> = new ArrayList<number>();
+	public idsHauptdaten: List<number> = new ArrayList<number>();
 
 	/**
 	 * Legt fest, ob pro Datensatz der Hauptdaten eine einzelne PDF-Datei erzeugt werden soll.
 	 */
-	public einzelausgabeHauptdaten : boolean = false;
+	public einzelausgabeHauptdaten: boolean = false;
 
 	/**
 	 * Eine Liste von IDs für die Ausgabe von Detaildaten zu den Hauptdaten.
 	 */
-	public idsDetaildaten : List<number> = new ArrayList<number>();
+	public idsDetaildaten: List<number> = new ArrayList<number>();
 
 	/**
 	 * Legt fest, ob pro Datensatz der Detaildaten eine einzelne PDF-Datei erzeugt werden soll.
 	 */
-	public einzelausgabeDetaildaten : boolean = false;
+	public einzelausgabeDetaildaten: boolean = false;
 
 	/**
 	 * Eine ReportingSortierungDefinition für die Hauptdaten. Der Typ wird dabei ignoriert und nur die übrigen Einstellungen werden benutzt.
 	 */
-	public sortierungHauptdaten : ReportingSortierungDefinition | null = new ReportingSortierungDefinition();
+	public sortierungHauptdaten: ReportingSortierungDefinition | null = new ReportingSortierungDefinition();
 
 	/**
 	 * Eine ReportingSortierungDefinition für die Detaildaten. Der Typ wird dabei ignoriert und nur die übrigen Einstellungen werden benutzt.
 	 */
-	public sortierungDetaildaten : ReportingSortierungDefinition | null = new ReportingSortierungDefinition();
+	public sortierungDetaildaten: ReportingSortierungDefinition | null = new ReportingSortierungDefinition();
 
 	/**
 	 * Typenspezifische Sortierdefinitionen, die für die Sortierung von ProxyTyp-Objekten verwendet werden sollen.
 	 */
-	public sortierungDefinitionen : List<ReportingSortierungDefinition> | null = new ArrayList<ReportingSortierungDefinition>();
+	public sortierungDefinitionen: List<ReportingSortierungDefinition> | null = new ArrayList<ReportingSortierungDefinition>();
 
 	/**
 	 * Parameter, der die Daten für den E-Mail-Versand enthält.
 	 */
-	public eMailDaten : ReportingEMailDaten | null = new ReportingEMailDaten();
+	public eMailDaten: ReportingEMailDaten | null = new ReportingEMailDaten();
 
 	/**
 	 * Legt fest, ob die Seiteneinstellungen für einen Duplexdruck verwendet werden sollen.
 	 */
-	public duplexdruck : boolean = false;
+	public duplexdruck: boolean = false;
 
 	/**
 	 * Eine Liste mit freien, typisierten Report-Parameter-Werten, die in Templates direkt über ihren Namen nutzbar sind.
 	 */
-	public vorlageParameter : List<ReportingVorlageParameter> = new ArrayList<ReportingVorlageParameter>();
+	public vorlageParameter: List<ReportingVorlageParameter> = new ArrayList<ReportingVorlageParameter>();
 
 
 	/**
@@ -87,13 +87,13 @@ export class ReportingParameter extends JavaObject {
 		return 'de.svws_nrw.core.data.reporting.ReportingParameter';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.reporting.ReportingParameter'].includes(name);
 	}
 
 	public static class = new Class<ReportingParameter>('de.svws_nrw.core.data.reporting.ReportingParameter');
 
-	public static transpilerFromJSON(json : string): ReportingParameter {
+	public static transpilerFromJSON(json: string): ReportingParameter {
 		const obj = JSON.parse(json) as Partial<ReportingParameter>;
 		const result = new ReportingParameter();
 		if (obj.idSchuljahresabschnitt === undefined)
@@ -143,7 +143,7 @@ export class ReportingParameter extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : ReportingParameter) : string {
+	public static transpilerToJSON(obj: ReportingParameter): string {
 		let result = '{';
 		result += '"idSchuljahresabschnitt" : ' + obj.idSchuljahresabschnitt.toString() + ',';
 		result += '"ausgabeformat" : ' + obj.ausgabeformat.toString() + ',';
@@ -195,7 +195,7 @@ export class ReportingParameter extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<ReportingParameter>) : string {
+	public static transpilerToJSONPatch(obj: Partial<ReportingParameter>): string {
 		let result = '{';
 		if (obj.idSchuljahresabschnitt !== undefined) {
 			result += '"idSchuljahresabschnitt" : ' + obj.idSchuljahresabschnitt.toString() + ',';
@@ -275,6 +275,6 @@ export class ReportingParameter extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_reporting_ReportingParameter(obj : unknown) : ReportingParameter {
+export function cast_de_svws_nrw_core_data_reporting_ReportingParameter(obj: unknown): ReportingParameter {
 	return obj as ReportingParameter;
 }

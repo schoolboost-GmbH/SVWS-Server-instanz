@@ -6,87 +6,87 @@ export class SchulEintrag extends JavaObject {
 	/**
 	 * Die ID des Katalog-Eintrags.
 	 */
-	public id : number = -1;
+	public id: number = -1;
 
 	/**
 	 * Ein Kürzel, welches der Schule zugeordnet ist.
 	 */
-	public kuerzel : string | null = null;
+	public kuerzel: string | null = null;
 
 	/**
 	 * Eine Kurzbezeichnung für die Schule.
 	 */
-	public kurzbezeichnung : string | null = null;
+	public kurzbezeichnung: string | null = null;
 
 	/**
 	 * Die Statistik-Schulnummer der Schule
 	 */
-	public schulnummerStatistik : string | null = null;
+	public schulnummerStatistik: string | null = null;
 
 	/**
 	 * Der Name des Schule.
 	 */
-	public name : string = "";
+	public name: string = "";
 
 	/**
 	 * Die ID der Schulform.
 	 */
-	public idSchulform : number | null = null;
+	public idSchulform: number | null = null;
 
 	/**
 	 * Der Straßenname der Straße in der die Schule liegt.
 	 */
-	public strassenname : string | null = null;
+	public strassenname: string | null = null;
 
 	/**
 	 * Die Hausnummer zur Straße in der die Schule liegt.
 	 */
-	public hausnummer : string | null = null;
+	public hausnummer: string | null = null;
 
 	/**
 	 * Ggf. der Hausnummerzusatz zur Straße in der die Schule liegt.
 	 */
-	public zusatzHausnummer : string | null = null;
+	public zusatzHausnummer: string | null = null;
 
 	/**
 	 * Die Postleitzahl des Gebietes in dem die Schule liegt.
 	 */
-	public plz : string | null = null;
+	public plz: string | null = null;
 
 	/**
 	 * Der Ort in dem die Schule liegt.
 	 */
-	public ort : string | null = null;
+	public ort: string | null = null;
 
 	/**
 	 * Die Telefonnummer der Schule.
 	 */
-	public telefon : string | null = null;
+	public telefon: string | null = null;
 
 	/**
 	 * Die Faxnummer der Schule.
 	 */
-	public fax : string | null = null;
+	public fax: string | null = null;
 
 	/**
 	 * Die Mailadresse der Schule.
 	 */
-	public email : string | null = null;
+	public email: string | null = null;
 
 	/**
 	 * Der Name des/der Schuleiters/Schulleiterin.
 	 */
-	public schulleiter : string | null = null;
+	public schulleiter: string | null = null;
 
 	/**
 	 * Gibt die Position in der Sortierreihenfolge für die Katalog-Einträge an.
 	 */
-	public sortierung : number = 32000;
+	public sortierung: number = 32000;
 
 	/**
 	 * Gibt an, ob der Eintrag in der Anwendung sichtbar sein soll oder nicht.
 	 */
-	public istSichtbar : boolean = false;
+	public istSichtbar: boolean = false;
 
 
 	/**
@@ -100,13 +100,13 @@ export class SchulEintrag extends JavaObject {
 		return 'de.svws_nrw.core.data.kataloge.SchulEintrag';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.kataloge.SchulEintrag'].includes(name);
 	}
 
 	public static class = new Class<SchulEintrag>('de.svws_nrw.core.data.kataloge.SchulEintrag');
 
-	public static transpilerFromJSON(json : string): SchulEintrag {
+	public static transpilerFromJSON(json: string): SchulEintrag {
 		const obj = JSON.parse(json) as Partial<SchulEintrag>;
 		const result = new SchulEintrag();
 		if (obj.id === undefined)
@@ -137,7 +137,7 @@ export class SchulEintrag extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : SchulEintrag) : string {
+	public static transpilerToJSON(obj: SchulEintrag): string {
 		let result = '{';
 		result += '"id" : ' + obj.id.toString() + ',';
 		result += '"kuerzel" : ' + ((obj.kuerzel === null) ? 'null' : JSON.stringify(obj.kuerzel)) + ',';
@@ -161,7 +161,7 @@ export class SchulEintrag extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<SchulEintrag>) : string {
+	public static transpilerToJSONPatch(obj: Partial<SchulEintrag>): string {
 		let result = '{';
 		if (obj.id !== undefined) {
 			result += '"id" : ' + obj.id.toString() + ',';
@@ -221,6 +221,6 @@ export class SchulEintrag extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_kataloge_SchulEintrag(obj : unknown) : SchulEintrag {
+export function cast_de_svws_nrw_core_data_kataloge_SchulEintrag(obj: unknown): SchulEintrag {
 	return obj as SchulEintrag;
 }

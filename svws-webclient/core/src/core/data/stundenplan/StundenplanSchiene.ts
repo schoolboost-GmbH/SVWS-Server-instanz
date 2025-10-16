@@ -6,22 +6,22 @@ export class StundenplanSchiene extends JavaObject {
 	/**
 	 * Die ID der Schiene.
 	 */
-	public id : number = -1;
+	public id: number = -1;
 
 	/**
 	 * Die ID des Jahrgangs, dem die Schiene zugeordnet ist.
 	 */
-	public idJahrgang : number = -1;
+	public idJahrgang: number = -1;
 
 	/**
 	 * Die Nummer der Schiene.
 	 */
-	public nummer : number = -1;
+	public nummer: number = -1;
 
 	/**
 	 * Die Bezeichnung der Schiene.
 	 */
-	public bezeichnung : string = "";
+	public bezeichnung: string = "";
 
 
 	/**
@@ -35,13 +35,13 @@ export class StundenplanSchiene extends JavaObject {
 		return 'de.svws_nrw.core.data.stundenplan.StundenplanSchiene';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.stundenplan.StundenplanSchiene'].includes(name);
 	}
 
 	public static class = new Class<StundenplanSchiene>('de.svws_nrw.core.data.stundenplan.StundenplanSchiene');
 
-	public static transpilerFromJSON(json : string): StundenplanSchiene {
+	public static transpilerFromJSON(json: string): StundenplanSchiene {
 		const obj = JSON.parse(json) as Partial<StundenplanSchiene>;
 		const result = new StundenplanSchiene();
 		if (obj.id === undefined)
@@ -59,7 +59,7 @@ export class StundenplanSchiene extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : StundenplanSchiene) : string {
+	public static transpilerToJSON(obj: StundenplanSchiene): string {
 		let result = '{';
 		result += '"id" : ' + obj.id.toString() + ',';
 		result += '"idJahrgang" : ' + obj.idJahrgang.toString() + ',';
@@ -70,7 +70,7 @@ export class StundenplanSchiene extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<StundenplanSchiene>) : string {
+	public static transpilerToJSONPatch(obj: Partial<StundenplanSchiene>): string {
 		let result = '{';
 		if (obj.id !== undefined) {
 			result += '"id" : ' + obj.id.toString() + ',';
@@ -91,6 +91,6 @@ export class StundenplanSchiene extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_stundenplan_StundenplanSchiene(obj : unknown) : StundenplanSchiene {
+export function cast_de_svws_nrw_core_data_stundenplan_StundenplanSchiene(obj: unknown): StundenplanSchiene {
 	return obj as StundenplanSchiene;
 }

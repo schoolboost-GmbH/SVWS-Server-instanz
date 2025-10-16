@@ -9,87 +9,87 @@ export class SchuelerListeEintrag extends JavaObject {
 	/**
 	 * Die ID des Schülers.
 	 */
-	public id : number = -1;
+	public id: number = -1;
 
 	/**
 	 * Der Nachname des Schülers.
 	 */
-	public nachname : string = "";
+	public nachname: string = "";
 
 	/**
 	 * Der Vorname des Schülers.
 	 */
-	public vorname : string = "";
+	public vorname: string = "";
 
 	/**
 	 * Das Geschlecht des Schülers (m, w, d, x - siehe {@link Geschlecht}).
 	 */
-	public geschlecht : string = "";
+	public geschlecht: string = "";
 
 	/**
 	 * Das Geburtsdatum des Schülers.
 	 */
-	public geburtsdatum : string | null = null;
+	public geburtsdatum: string | null = null;
 
 	/**
 	 * Die ID der aktuellen Klasse des Schülers.
 	 */
-	public idKlasse : number = -1;
+	public idKlasse: number = -1;
 
 	/**
 	 * Die ID des aktuellen Jahrgangs des Schülers.
 	 */
-	public idJahrgang : number = -1;
+	public idJahrgang: number = -1;
 
 	/**
 	 * Der aktuelle Jahrgang des Schülers.
 	 */
-	public jahrgang : string = "";
+	public jahrgang: string = "";
 
 	/**
 	 * Die bisherige Anzahl der Jahre in der Schuleingangssphase.
 	 */
-	public epJahre : number | null = null;
+	public epJahre: number | null = null;
 
 	/**
 	 * Der Abiturjahrgang, falls es sich um eine Schule mit Gymnasialer Oberstufe handelt.
 	 */
-	public abiturjahrgang : number | null = null;
+	public abiturjahrgang: number | null = null;
 
 	/**
 	 * Das Kürzel der aktuellen Schulgliederung des Schülers
 	 */
-	public schulgliederung : string = "";
+	public schulgliederung: string = "";
 
 	/**
 	 * Die Bezeichnung des Status des Schülers (Aktiv, Extern, etc.).
 	 */
-	public status : number = 0;
+	public status: number = 0;
 
 	/**
 	 * Gibt an, ob es sich bei dem Schülerdatensatz um ein Duplikat handelt oder nicht.
 	 */
-	public istDuplikat : boolean = false;
+	public istDuplikat: boolean = false;
 
 	/**
 	 * Das Schulnummer bei einem externen Schüler oder null, wenn der Schüler kein externer Schüler ist.
 	 */
-	public externeSchulNr : string | null = null;
+	public externeSchulNr: string | null = null;
 
 	/**
 	 * Die ID des Schuljahresabschnittes des Eintrags.
 	 */
-	public idSchuljahresabschnitt : number = -1;
+	public idSchuljahresabschnitt: number = -1;
 
 	/**
 	 * Die ID des Schuljahresabschnittes des Schülers.
 	 */
-	public idSchuljahresabschnittSchueler : number = -1;
+	public idSchuljahresabschnittSchueler: number = -1;
 
 	/**
 	 * Die Liste der IDs der belegten Kurse im aktuellen Abschnit
 	 */
-	public readonly kurse : List<number> = new ArrayList<number>();
+	public readonly kurse: List<number> = new ArrayList<number>();
 
 
 	/**
@@ -106,7 +106,7 @@ export class SchuelerListeEintrag extends JavaObject {
 	 *
 	 * @return true, falls die Objekte indentisch sind, sonst false
 	 */
-	public equals(another : unknown | null) : boolean {
+	public equals(another: unknown | null): boolean {
 		return (another !== null) && (((another instanceof JavaObject) && (another.isTranspiledInstanceOf('de.svws_nrw.core.data.schueler.SchuelerListeEintrag')))) && (this.id === (another as unknown as SchuelerListeEintrag).id);
 	}
 
@@ -115,7 +115,7 @@ export class SchuelerListeEintrag extends JavaObject {
 	 *
 	 * @return den HashCode
 	 */
-	public hashCode() : number {
+	public hashCode(): number {
 		return JavaLong.hashCode((this.id));
 	}
 
@@ -123,13 +123,13 @@ export class SchuelerListeEintrag extends JavaObject {
 		return 'de.svws_nrw.core.data.schueler.SchuelerListeEintrag';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.schueler.SchuelerListeEintrag'].includes(name);
 	}
 
 	public static class = new Class<SchuelerListeEintrag>('de.svws_nrw.core.data.schueler.SchuelerListeEintrag');
 
-	public static transpilerFromJSON(json : string): SchuelerListeEintrag {
+	public static transpilerFromJSON(json: string): SchuelerListeEintrag {
 		const obj = JSON.parse(json) as Partial<SchuelerListeEintrag>;
 		const result = new SchuelerListeEintrag();
 		if (obj.id === undefined)
@@ -180,7 +180,7 @@ export class SchuelerListeEintrag extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : SchuelerListeEintrag) : string {
+	public static transpilerToJSON(obj: SchuelerListeEintrag): string {
 		let result = '{';
 		result += '"id" : ' + obj.id.toString() + ',';
 		result += '"nachname" : ' + JSON.stringify(obj.nachname) + ',';
@@ -211,7 +211,7 @@ export class SchuelerListeEintrag extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<SchuelerListeEintrag>) : string {
+	public static transpilerToJSONPatch(obj: Partial<SchuelerListeEintrag>): string {
 		let result = '{';
 		if (obj.id !== undefined) {
 			result += '"id" : ' + obj.id.toString() + ',';
@@ -278,6 +278,6 @@ export class SchuelerListeEintrag extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_schueler_SchuelerListeEintrag(obj : unknown) : SchuelerListeEintrag {
+export function cast_de_svws_nrw_core_data_schueler_SchuelerListeEintrag(obj: unknown): SchuelerListeEintrag {
 	return obj as SchuelerListeEintrag;
 }

@@ -8,7 +8,7 @@ import { SchuelerblockungDynDaten } from '../../core/kursblockung/Schuelerblocku
 
 export class SchuelerblockungAlgorithmus extends Service {
 
-	private static readonly _random : Random = new Random();
+	private static readonly _random: Random = new Random();
 
 
 	/**
@@ -25,12 +25,12 @@ export class SchuelerblockungAlgorithmus extends Service {
 	 *
 	 * @return die Kurs-Schülerfachwahl-Zuordnung
 	 */
-	public handle(pInput : SchuelerblockungInput) : SchuelerblockungOutput {
+	public handle(pInput: SchuelerblockungInput): SchuelerblockungOutput {
 		this.logger.modifyIndent(+4);
-		const seed : number = SchuelerblockungAlgorithmus._random.nextLong();
-		const random : Random = new Random(seed);
+		const seed: number = SchuelerblockungAlgorithmus._random.nextLong();
+		const random: Random = new Random(seed);
 		this.logger.log(LogLevel.APP, "SchuelerblockungAlgorithmus.handle(): Seed (" + seed + ") verwendet.");
-		const dynDaten : SchuelerblockungDynDaten = new SchuelerblockungDynDaten(random, pInput);
+		const dynDaten: SchuelerblockungDynDaten = new SchuelerblockungDynDaten(random, pInput);
 		this.logger.modifyIndent(-4);
 		return dynDaten.gibBestesMatching();
 	}
@@ -39,7 +39,7 @@ export class SchuelerblockungAlgorithmus extends Service {
 		return 'de.svws_nrw.core.kursblockung.SchuelerblockungAlgorithmus';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.Service', 'de.svws_nrw.core.kursblockung.SchuelerblockungAlgorithmus'].includes(name);
 	}
 
@@ -47,6 +47,6 @@ export class SchuelerblockungAlgorithmus extends Service {
 
 }
 
-export function cast_de_svws_nrw_core_kursblockung_SchuelerblockungAlgorithmus(obj : unknown) : SchuelerblockungAlgorithmus {
+export function cast_de_svws_nrw_core_kursblockung_SchuelerblockungAlgorithmus(obj: unknown): SchuelerblockungAlgorithmus {
 	return obj as SchuelerblockungAlgorithmus;
 }

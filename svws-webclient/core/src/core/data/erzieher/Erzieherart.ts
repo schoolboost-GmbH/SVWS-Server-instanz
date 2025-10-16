@@ -6,32 +6,32 @@ export class Erzieherart extends JavaObject {
 	/**
 	 * ID der Erzieherart
 	 */
-	public id : number = -1;
+	public id: number = -1;
 
 	/**
 	 * Bezeichnung der Erzieherart
 	 */
-	public bezeichnung : string = "";
+	public bezeichnung: string = "";
 
 	/**
 	 * Gibt die Position in der Sortierreihenfolge für die Katalog-Einträge an.
 	 */
-	public sortierung : number = 1;
+	public sortierung: number = 1;
 
 	/**
 	 * Gibt an, ob der Eintrag in der Anwendung sichtbar sein soll oder nicht.
 	 */
-	public istSichtbar : boolean = true;
+	public istSichtbar: boolean = true;
 
 	/**
 	 * Exportbezeichnung der Erzieherart
 	 */
-	public exportBez : string | null = "";
+	public exportBez: string | null = "";
 
 	/**
 	 * Gibt an wie vielen Erziehungsberechtigten die entsprechende Erzieherart zugeordnet sind.
 	 */
-	public anzahlErziehungsberechtigte : number = 0;
+	public anzahlErziehungsberechtigte: number = 0;
 
 
 	/**
@@ -45,13 +45,13 @@ export class Erzieherart extends JavaObject {
 		return 'de.svws_nrw.core.data.erzieher.Erzieherart';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.erzieher.Erzieherart'].includes(name);
 	}
 
 	public static class = new Class<Erzieherart>('de.svws_nrw.core.data.erzieher.Erzieherart');
 
-	public static transpilerFromJSON(json : string): Erzieherart {
+	public static transpilerFromJSON(json: string): Erzieherart {
 		const obj = JSON.parse(json) as Partial<Erzieherart>;
 		const result = new Erzieherart();
 		if (obj.id === undefined)
@@ -73,7 +73,7 @@ export class Erzieherart extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : Erzieherart) : string {
+	public static transpilerToJSON(obj: Erzieherart): string {
 		let result = '{';
 		result += '"id" : ' + obj.id.toString() + ',';
 		result += '"bezeichnung" : ' + JSON.stringify(obj.bezeichnung) + ',';
@@ -86,7 +86,7 @@ export class Erzieherart extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<Erzieherart>) : string {
+	public static transpilerToJSONPatch(obj: Partial<Erzieherart>): string {
 		let result = '{';
 		if (obj.id !== undefined) {
 			result += '"id" : ' + obj.id.toString() + ',';
@@ -113,6 +113,6 @@ export class Erzieherart extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_erzieher_Erzieherart(obj : unknown) : Erzieherart {
+export function cast_de_svws_nrw_core_data_erzieher_Erzieherart(obj: unknown): Erzieherart {
 	return obj as Erzieherart;
 }

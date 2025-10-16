@@ -13,73 +13,73 @@ import { IllegalArgumentException } from '../../../java/lang/IllegalArgumentExce
 export class StundenplanblockungRegelTyp extends JavaEnum<StundenplanblockungRegelTyp> {
 
 	/** an array containing all values of this enumeration */
-	static readonly all_values_by_ordinal : Array<StundenplanblockungRegelTyp> = [];
+	static readonly all_values_by_ordinal: Array<StundenplanblockungRegelTyp> = [];
 
 	/** an array containing all values of this enumeration indexed by their name*/
-	static readonly all_values_by_name : Map<string, StundenplanblockungRegelTyp> = new Map<string, StundenplanblockungRegelTyp>();
+	static readonly all_values_by_name: Map<string, StundenplanblockungRegelTyp> = new Map<string, StundenplanblockungRegelTyp>();
 
 	/**
 	 *  Eine Regel ist nicht definiert.
 	 */
-	public static readonly UNDEFINIERT : StundenplanblockungRegelTyp = new StundenplanblockungRegelTyp("UNDEFINIERT", 0, 0, "Undefiniert", Collections.emptyList());
+	public static readonly UNDEFINIERT: StundenplanblockungRegelTyp = new StundenplanblockungRegelTyp("UNDEFINIERT", 0, 0, "Undefiniert", Collections.emptyList());
 
 	/**
 	 *  Definiert, wie viele Tage in der Woche Unterricht stattfindet.
 	 */
-	public static readonly SCHULE_TAGE_PRO_WOCHE : StundenplanblockungRegelTyp = new StundenplanblockungRegelTyp("SCHULE_TAGE_PRO_WOCHE", 1, 1, "Schule: Unterrichtstage pro Woche:", Arrays.asList(StundenplanblockungRegelParameterTyp.WERT_INTEGER));
+	public static readonly SCHULE_TAGE_PRO_WOCHE: StundenplanblockungRegelTyp = new StundenplanblockungRegelTyp("SCHULE_TAGE_PRO_WOCHE", 1, 1, "Schule: Unterrichtstage pro Woche:", Arrays.asList(StundenplanblockungRegelParameterTyp.WERT_INTEGER));
 
 	/**
 	 *  Definiert, wie viele Stunden es pro Tag maximal gibt.
 	 */
-	public static readonly SCHULE_LETZTE_STUNDE : StundenplanblockungRegelTyp = new StundenplanblockungRegelTyp("SCHULE_LETZTE_STUNDE", 2, 2, "Schule: Letzte mögliche Stunde:", Arrays.asList(StundenplanblockungRegelParameterTyp.WERT_INTEGER));
+	public static readonly SCHULE_LETZTE_STUNDE: StundenplanblockungRegelTyp = new StundenplanblockungRegelTyp("SCHULE_LETZTE_STUNDE", 2, 2, "Schule: Letzte mögliche Stunde:", Arrays.asList(StundenplanblockungRegelParameterTyp.WERT_INTEGER));
 
 	/**
 	 *  Definiert, wie viele Springstunden eine Lehrkraft pro Woche maximal haben darf.
 	 *  Dieser Wert kann pro Lehrkraft mit einer Regel individuell überschrieben werden.
 	 */
-	public static readonly SCHULE_LEHRKRAFT_MAX_SPRING_PRO_WOCHE : StundenplanblockungRegelTyp = new StundenplanblockungRegelTyp("SCHULE_LEHRKRAFT_MAX_SPRING_PRO_WOCHE", 3, 3, "Schule: Pro Lehrkraft pro Woche max. Springstunden:", Arrays.asList(StundenplanblockungRegelParameterTyp.WERT_INTEGER));
+	public static readonly SCHULE_LEHRKRAFT_MAX_SPRING_PRO_WOCHE: StundenplanblockungRegelTyp = new StundenplanblockungRegelTyp("SCHULE_LEHRKRAFT_MAX_SPRING_PRO_WOCHE", 3, 3, "Schule: Pro Lehrkraft pro Woche max. Springstunden:", Arrays.asList(StundenplanblockungRegelParameterTyp.WERT_INTEGER));
 
 	/**
 	 *  Definiert, wie viele Springstunden eine Lehrkraft pro Tag maximal haben darf.
 	 *  Dieser Wert kann pro Lehrkraft mit einer Regel individuell überschrieben werden.
 	 */
-	public static readonly SCHULE_LEHRKRAFT_MAX_SPRING_PRO_TAG : StundenplanblockungRegelTyp = new StundenplanblockungRegelTyp("SCHULE_LEHRKRAFT_MAX_SPRING_PRO_TAG", 4, 4, "Schule: Pro Lehrkraft pro Tag max. Springstunden:", Arrays.asList(StundenplanblockungRegelParameterTyp.WERT_INTEGER));
+	public static readonly SCHULE_LEHRKRAFT_MAX_SPRING_PRO_TAG: StundenplanblockungRegelTyp = new StundenplanblockungRegelTyp("SCHULE_LEHRKRAFT_MAX_SPRING_PRO_TAG", 4, 4, "Schule: Pro Lehrkraft pro Tag max. Springstunden:", Arrays.asList(StundenplanblockungRegelParameterTyp.WERT_INTEGER));
 
 	/**
 	 *  Definiert, wie viel Präsenz (Unterricht + Springstunden) eine Lehrkraft pro Tag maximal haben darf.
 	 *  Dieser Wert kann pro Lehrkraft mit einer Regel individuell überschrieben werden.
 	 */
-	public static readonly SCHULE_LEHRKRAFT_MAX_PRAESENZ_PRO_TAG : StundenplanblockungRegelTyp = new StundenplanblockungRegelTyp("SCHULE_LEHRKRAFT_MAX_PRAESENZ_PRO_TAG", 5, 5, "Schule: Pro Lehrkraft pro Tag max. Präsenz:", Arrays.asList(StundenplanblockungRegelParameterTyp.WERT_INTEGER));
+	public static readonly SCHULE_LEHRKRAFT_MAX_PRAESENZ_PRO_TAG: StundenplanblockungRegelTyp = new StundenplanblockungRegelTyp("SCHULE_LEHRKRAFT_MAX_PRAESENZ_PRO_TAG", 5, 5, "Schule: Pro Lehrkraft pro Tag max. Präsenz:", Arrays.asList(StundenplanblockungRegelParameterTyp.WERT_INTEGER));
 
 	/**
 	 *  Definiert, ob in bestimmten Stunden Einzelstunden verboten sind.
 	 */
-	public static readonly SCHULE_LERNGRUPPEN_KEINE_EINZELSTUNDE_IN_STUNDE : StundenplanblockungRegelTyp = new StundenplanblockungRegelTyp("SCHULE_LERNGRUPPEN_KEINE_EINZELSTUNDE_IN_STUNDE", 6, 6, "Schule: Lerngruppen haben keine Enzelstunde in Stunde:", Arrays.asList(StundenplanblockungRegelParameterTyp.WERT_INTEGER));
+	public static readonly SCHULE_LERNGRUPPEN_KEINE_EINZELSTUNDE_IN_STUNDE: StundenplanblockungRegelTyp = new StundenplanblockungRegelTyp("SCHULE_LERNGRUPPEN_KEINE_EINZELSTUNDE_IN_STUNDE", 6, 6, "Schule: Lerngruppen haben keine Enzelstunde in Stunde:", Arrays.asList(StundenplanblockungRegelParameterTyp.WERT_INTEGER));
 
 	/**
 	 *  Definiert, ob eine Doppelstunde (und mehr) diese und die nächste Stunde überschreiten darf.
 	 */
-	public static readonly SCHULE_LERNGRUPPEN_KEINE_STUNDENUEBERGAENGE_IN_STUNDE_UND_DARAUFFOLGEND : StundenplanblockungRegelTyp = new StundenplanblockungRegelTyp("SCHULE_LERNGRUPPEN_KEINE_STUNDENUEBERGAENGE_IN_STUNDE_UND_DARAUFFOLGEND", 7, 7, "Schule: Lerngruppen haben keinen Übergang von dieser zur darauffolgenden Stunde:", Arrays.asList(StundenplanblockungRegelParameterTyp.WERT_INTEGER));
+	public static readonly SCHULE_LERNGRUPPEN_KEINE_STUNDENUEBERGAENGE_IN_STUNDE_UND_DARAUFFOLGEND: StundenplanblockungRegelTyp = new StundenplanblockungRegelTyp("SCHULE_LERNGRUPPEN_KEINE_STUNDENUEBERGAENGE_IN_STUNDE_UND_DARAUFFOLGEND", 7, 7, "Schule: Lerngruppen haben keinen Übergang von dieser zur darauffolgenden Stunde:", Arrays.asList(StundenplanblockungRegelParameterTyp.WERT_INTEGER));
 
 	/**
 	 * Der ID des Typs der Regel.
 	 */
-	public readonly id : number;
+	public readonly id: number;
 
 	/**
 	 * Die Bezeichnung des Regel-Typs.
 	 */
-	public readonly bezeichnung : string | null;
+	public readonly bezeichnung: string | null;
 
 	/**
 	 * Die Typen der Regel-Parameter
 	 */
-	private readonly paramTypes : List<StundenplanblockungRegelParameterTyp>;
+	private readonly paramTypes: List<StundenplanblockungRegelParameterTyp>;
 
 	/**
 	 * Mapping von "Typ --> GostKursblockungRegelTyp".
 	 */
-	private static readonly _map_id_regel : HashMap<number, StundenplanblockungRegelTyp> = new HashMap<number, StundenplanblockungRegelTyp>();
+	private static readonly _map_id_regel: HashMap<number, StundenplanblockungRegelTyp> = new HashMap<number, StundenplanblockungRegelTyp>();
 
 	/**
 	 * Erstellt einen neuen Regel-Typ mit der angegeben ID.
@@ -88,7 +88,7 @@ export class StundenplanblockungRegelTyp extends JavaEnum<StundenplanblockungReg
 	 * @param bezeichnung   die textuelle Bezeichnung für diesen Regel-Typ
 	 * @param paramTypes    die Typen der Parameter für diesen Regel-Typ
 	 */
-	private constructor(name : string, ordinal : number, id : number, bezeichnung : string, paramTypes : List<StundenplanblockungRegelParameterTyp>) {
+	private constructor(name: string, ordinal: number, id: number, bezeichnung: string, paramTypes: List<StundenplanblockungRegelParameterTyp>) {
 		super(name, ordinal);
 		StundenplanblockungRegelTyp.all_values_by_ordinal.push(this);
 		StundenplanblockungRegelTyp.all_values_by_name.set(name, this);
@@ -102,7 +102,7 @@ export class StundenplanblockungRegelTyp extends JavaEnum<StundenplanblockungReg
 	 *
 	 * @return Liefert die Map. Falls diese leer ist, wird sie vorher gefüllt.
 	 */
-	private static getMap() : HashMap<number, StundenplanblockungRegelTyp> {
+	private static getMap(): HashMap<number, StundenplanblockungRegelTyp> {
 		if (StundenplanblockungRegelTyp._map_id_regel.isEmpty())
 			for (const typ of StundenplanblockungRegelTyp.values())
 				if (StundenplanblockungRegelTyp._map_id_regel.put(typ.id, typ) !== null)
@@ -115,7 +115,7 @@ export class StundenplanblockungRegelTyp extends JavaEnum<StundenplanblockungReg
 	 *
 	 * @return Die Menge aller existierender Regeln.
 	 */
-	public static getCollection() : Collection<StundenplanblockungRegelTyp> {
+	public static getCollection(): Collection<StundenplanblockungRegelTyp> {
 		return StundenplanblockungRegelTyp.getMap().values();
 	}
 
@@ -125,10 +125,10 @@ export class StundenplanblockungRegelTyp extends JavaEnum<StundenplanblockungReg
 	 * @param id   die ID des Regel-Typs
 	 * @return der Regel-Typ
 	 */
-	public static fromTyp(id : number | null) : StundenplanblockungRegelTyp {
+	public static fromTyp(id: number | null): StundenplanblockungRegelTyp {
 		if (id === null)
 			return StundenplanblockungRegelTyp.UNDEFINIERT;
-		const gostTyp : StundenplanblockungRegelTyp | null = StundenplanblockungRegelTyp.getMap().get(id);
+		const gostTyp: StundenplanblockungRegelTyp | null = StundenplanblockungRegelTyp.getMap().get(id);
 		if (gostTyp === null)
 			return StundenplanblockungRegelTyp.UNDEFINIERT;
 		return gostTyp;
@@ -140,7 +140,7 @@ export class StundenplanblockungRegelTyp extends JavaEnum<StundenplanblockungReg
 	 * @param pRegel Das Regel-Objekt.
 	 * @return der Regel-Typ
 	 */
-	public static fromRegel(pRegel : StundenplanblockungRegel) : StundenplanblockungRegelTyp {
+	public static fromRegel(pRegel: StundenplanblockungRegel): StundenplanblockungRegelTyp {
 		return StundenplanblockungRegelTyp.fromTyp(pRegel.typ);
 	}
 
@@ -149,7 +149,7 @@ export class StundenplanblockungRegelTyp extends JavaEnum<StundenplanblockungReg
 	 *
 	 * @return die Anzahl der Parameter für diesen Regel-Type zurück.
 	 */
-	public getParamCount() : number {
+	public getParamCount(): number {
 		return this.paramTypes.size();
 	}
 
@@ -162,7 +162,7 @@ export class StundenplanblockungRegelTyp extends JavaEnum<StundenplanblockungReg
 	 *
 	 * @throws IllegalArgumentException falls der angegebene Index ungültig ist
 	 */
-	public getParamType(i : number) : StundenplanblockungRegelParameterTyp {
+	public getParamType(i: number): StundenplanblockungRegelParameterTyp {
 		if ((i < 0) || (i >= this.paramTypes.size()))
 			throw new IllegalArgumentException("Ein Parameter mit dem Index i existiert nicht für den Regel-Typ " + this.name())
 		return this.paramTypes.get(i);
@@ -176,7 +176,7 @@ export class StundenplanblockungRegelTyp extends JavaEnum<StundenplanblockungReg
 	 *
 	 * @return true, falls die Regel einen solchen Parametertyp hat und ansonsten false
 	 */
-	public hasParamType(paramType : StundenplanblockungRegelParameterTyp | null) : boolean {
+	public hasParamType(paramType: StundenplanblockungRegelParameterTyp | null): boolean {
 		for (const cur of this.paramTypes)
 			if (paramType as unknown === cur as unknown)
 				return true;
@@ -188,7 +188,7 @@ export class StundenplanblockungRegelTyp extends JavaEnum<StundenplanblockungReg
 	 *
 	 * @returns the array with enumeration values
 	 */
-	public static values() : Array<StundenplanblockungRegelTyp> {
+	public static values(): Array<StundenplanblockungRegelTyp> {
 		return [...this.all_values_by_ordinal];
 	}
 
@@ -199,7 +199,7 @@ export class StundenplanblockungRegelTyp extends JavaEnum<StundenplanblockungReg
 	 *
 	 * @returns the enumeration values or null
 	 */
-	public static valueOf(name : string) : StundenplanblockungRegelTyp | null {
+	public static valueOf(name: string): StundenplanblockungRegelTyp | null {
 		const tmp = this.all_values_by_name.get(name);
 		return (!tmp) ? null : tmp;
 	}
@@ -208,7 +208,7 @@ export class StundenplanblockungRegelTyp extends JavaEnum<StundenplanblockungReg
 		return 'de.svws_nrw.core.data.stundenplanblockung.StundenplanblockungRegelTyp';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.stundenplanblockung.StundenplanblockungRegelTyp', 'java.lang.Enum', 'java.lang.Comparable'].includes(name);
 	}
 
@@ -216,6 +216,6 @@ export class StundenplanblockungRegelTyp extends JavaEnum<StundenplanblockungReg
 
 }
 
-export function cast_de_svws_nrw_core_data_stundenplanblockung_StundenplanblockungRegelTyp(obj : unknown) : StundenplanblockungRegelTyp {
+export function cast_de_svws_nrw_core_data_stundenplanblockung_StundenplanblockungRegelTyp(obj: unknown): StundenplanblockungRegelTyp {
 	return obj as StundenplanblockungRegelTyp;
 }

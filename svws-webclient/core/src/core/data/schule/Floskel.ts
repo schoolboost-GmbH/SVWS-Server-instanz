@@ -6,37 +6,37 @@ export class Floskel extends JavaObject {
 	/**
 	 * Das Kürzel der Floskel
 	 */
-	public kuerzel : string | null = null;
+	public kuerzel: string | null = null;
 
 	/**
 	 * Der Text
 	 */
-	public text : string | null = null;
+	public text: string | null = null;
 
 	/**
 	 * Das Kürzel der Floskelgruppe
 	 */
-	public kuerzelFloskelgruppe : string | null = null;
+	public kuerzelFloskelgruppe: string | null = null;
 
 	/**
 	 * Die ID des Fachs
 	 */
-	public idFach : number | null = null;
+	public idFach: number | null = null;
 
 	/**
 	 * Das Niveau
 	 */
-	public niveau : string | null = null;
+	public niveau: string | null = null;
 
 	/**
 	 * Die ID des Jahrgangs
 	 */
-	public idJahrgang : number | null = null;
+	public idJahrgang: number | null = null;
 
 	/**
 	 * Gibt an, ob die Floskel in anderen Datenbanktabellen referenziert ist.
 	 */
-	public referenziertInAnderenTabellen : boolean | null = null;
+	public referenziertInAnderenTabellen: boolean | null = null;
 
 
 	public constructor() {
@@ -47,13 +47,13 @@ export class Floskel extends JavaObject {
 		return 'de.svws_nrw.core.data.schule.Floskel';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.schule.Floskel'].includes(name);
 	}
 
 	public static class = new Class<Floskel>('de.svws_nrw.core.data.schule.Floskel');
 
-	public static transpilerFromJSON(json : string): Floskel {
+	public static transpilerFromJSON(json: string): Floskel {
 		const obj = JSON.parse(json) as Partial<Floskel>;
 		const result = new Floskel();
 		result.kuerzel = (obj.kuerzel === undefined) ? null : obj.kuerzel === null ? null : obj.kuerzel;
@@ -66,7 +66,7 @@ export class Floskel extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : Floskel) : string {
+	public static transpilerToJSON(obj: Floskel): string {
 		let result = '{';
 		result += '"kuerzel" : ' + ((obj.kuerzel === null) ? 'null' : JSON.stringify(obj.kuerzel)) + ',';
 		result += '"text" : ' + ((obj.text === null) ? 'null' : JSON.stringify(obj.text)) + ',';
@@ -80,7 +80,7 @@ export class Floskel extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<Floskel>) : string {
+	public static transpilerToJSONPatch(obj: Partial<Floskel>): string {
 		let result = '{';
 		if (obj.kuerzel !== undefined) {
 			result += '"kuerzel" : ' + ((obj.kuerzel === null) ? 'null' : JSON.stringify(obj.kuerzel)) + ',';
@@ -110,6 +110,6 @@ export class Floskel extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_schule_Floskel(obj : unknown) : Floskel {
+export function cast_de_svws_nrw_core_data_schule_Floskel(obj: unknown): Floskel {
 	return obj as Floskel;
 }

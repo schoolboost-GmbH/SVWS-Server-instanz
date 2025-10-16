@@ -11,7 +11,7 @@ import type { JavaMap } from '../../../java/util/JavaMap';
 
 export class HashMap3D<K1, K2, K3, V> extends JavaObject {
 
-	private readonly _map1 : JavaMap<K1, JavaMap<K2, JavaMap<K3, V>>> = new HashMap<K1, JavaMap<K2, JavaMap<K3, V>>>();
+	private readonly _map1: JavaMap<K1, JavaMap<K2, JavaMap<K3, V>>> = new HashMap<K1, JavaMap<K2, JavaMap<K3, V>>>();
 
 
 	/**
@@ -31,11 +31,11 @@ export class HashMap3D<K1, K2, K3, V> extends JavaObject {
 	 *
 	 * @param value Der zugeordnete Wert. Der Wert null ist erlaubt.
 	 */
-	public put(key1 : K1, key2 : K2, key3 : K3, value : V) : void {
-		const map2 : JavaMap<K2, JavaMap<K3, V>> | null = this._map1.computeIfAbsent(key1, { apply : (k: K1 | null) => new HashMap() });
+	public put(key1: K1, key2: K2, key3: K3, value: V): void {
+		const map2: JavaMap<K2, JavaMap<K3, V>> | null = this._map1.computeIfAbsent(key1, { apply: (k: K1 | null) => new HashMap() });
 		if (map2 === null)
 			throw new NullPointerException()
-		const map3 : JavaMap<K3, V> | null = map2.computeIfAbsent(key2, { apply : (k: K2 | null) => new HashMap() });
+		const map3: JavaMap<K3, V> | null = map2.computeIfAbsent(key2, { apply: (k: K2 | null) => new HashMap() });
 		if (map3 === null)
 			throw new NullPointerException()
 		map3.put(key3, value);
@@ -53,14 +53,14 @@ export class HashMap3D<K1, K2, K3, V> extends JavaObject {
 	 *
 	 * @throws DeveloperNotificationException falls es den Pfad (key1, key2, key3) nicht gibt.
 	 */
-	public getOrException(key1 : K1, key2 : K2, key3 : K3) : V {
-		const map2 : JavaMap<K2, JavaMap<K3, V>> | null = this._map1.get(key1);
+	public getOrException(key1: K1, key2: K2, key3: K3): V {
+		const map2: JavaMap<K2, JavaMap<K3, V>> | null = this._map1.get(key1);
 		if (map2 === null)
 			throw new DeveloperNotificationException("Pfad (key1=" + key1 + ") ungültig!")
-		const map3 : JavaMap<K3, V> | null = map2.get(key2);
+		const map3: JavaMap<K3, V> | null = map2.get(key2);
 		if (map3 === null)
 			throw new DeveloperNotificationException("Pfad (key1=" + key1 + ", " + key2 + ") ungültig!")
-		const value : V | null = map3.get(key3);
+		const value: V | null = map3.get(key3);
 		if (value === null)
 			throw new DeveloperNotificationException("Pfad (key1=" + key1 + ", key2=" + key2 + ", key3=" + key3 + ") ungültig!")
 		return value;
@@ -75,11 +75,11 @@ export class HashMap3D<K1, K2, K3, V> extends JavaObject {
 	 *
 	 * @return den Wert zum Mapping (key1, key2, key3) oder NULL. <br>
 	 */
-	public getOrNull(key1 : K1, key2 : K2, key3 : K3) : V | null {
-		const map2 : JavaMap<K2, JavaMap<K3, V>> | null = this._map1.get(key1);
+	public getOrNull(key1: K1, key2: K2, key3: K3): V | null {
+		const map2: JavaMap<K2, JavaMap<K3, V>> | null = this._map1.get(key1);
 		if (map2 === null)
 			return null;
-		const map3 : JavaMap<K3, V> | null = map2.get(key2);
+		const map3: JavaMap<K3, V> | null = map2.get(key2);
 		if (map3 === null)
 			return null;
 		return map3.get(key3);
@@ -92,7 +92,7 @@ export class HashMap3D<K1, K2, K3, V> extends JavaObject {
 	 *
 	 * @return die Map zum Mapping key1 oder NULL. <br>
 	 */
-	public getMap2OrNull(key1 : K1) : JavaMap<K2, JavaMap<K3, V>> | null {
+	public getMap2OrNull(key1: K1): JavaMap<K2, JavaMap<K3, V>> | null {
 		return this._map1.get(key1);
 	}
 
@@ -104,8 +104,8 @@ export class HashMap3D<K1, K2, K3, V> extends JavaObject {
 	 *
 	 * @return die Map zum Mapping (key1, key2) oder NULL. <br>
 	 */
-	public getMap3OrNull(key1 : K1, key2 : K2) : JavaMap<K3, V> | null {
-		const map2 : JavaMap<K2, JavaMap<K3, V>> | null = this._map1.get(key1);
+	public getMap3OrNull(key1: K1, key2: K2): JavaMap<K3, V> | null {
+		const map2: JavaMap<K2, JavaMap<K3, V>> | null = this._map1.get(key1);
 		if (map2 === null)
 			return null;
 		return map2.get(key2);
@@ -122,8 +122,8 @@ export class HashMap3D<K1, K2, K3, V> extends JavaObject {
 	 * @return den Nicht-Null-Wert zum Mapping (key1, key2, key3).
 	 * @throws NullPointerException falls der Pfad (key1, key2, key3) nicht existiert, oder NULL zugeordnet ist.
 	 */
-	public getNonNullOrException(key1 : K1, key2 : K2, key3 : K3) : V {
-		const value : V | null = this.getOrException(key1, key2, key3);
+	public getNonNullOrException(key1: K1, key2: K2, key3: K3): V {
+		const value: V | null = this.getOrException(key1, key2, key3);
 		if (value === null)
 			throw new DeveloperNotificationException("value is NULL!")
 		return value;
@@ -136,7 +136,7 @@ export class HashMap3D<K1, K2, K3, V> extends JavaObject {
 	 *
 	 * @return TRUE, falls es den Teilpfad gibt.
 	 */
-	public containsKey1(key1 : K1) : boolean {
+	public containsKey1(key1: K1): boolean {
 		return this._map1.containsKey(key1);
 	}
 
@@ -148,8 +148,8 @@ export class HashMap3D<K1, K2, K3, V> extends JavaObject {
 	 *
 	 * @return TRUE, falls es den Teilpfad gibt.
 	 */
-	public containsKey1AndKey2(key1 : K1, key2 : K2) : boolean {
-		const map2 : JavaMap<K2, JavaMap<K3, V>> | null = this._map1.get(key1);
+	public containsKey1AndKey2(key1: K1, key2: K2): boolean {
+		const map2: JavaMap<K2, JavaMap<K3, V>> | null = this._map1.get(key1);
 		if (map2 === null)
 			return false;
 		return map2.containsKey(key2);
@@ -164,11 +164,11 @@ export class HashMap3D<K1, K2, K3, V> extends JavaObject {
 	 *
 	 * @return TRUE, falls für das Tripel (key1, key2, key3) ein Mapping existiert.
 	 */
-	public contains(key1 : K1, key2 : K2, key3 : K3) : boolean {
-		const map2 : JavaMap<K2, JavaMap<K3, V>> | null = this._map1.get(key1);
+	public contains(key1: K1, key2: K2, key3: K3): boolean {
+		const map2: JavaMap<K2, JavaMap<K3, V>> | null = this._map1.get(key1);
 		if (map2 === null)
 			return false;
-		const map3 : JavaMap<K3, V> | null = map2.get(key2);
+		const map3: JavaMap<K3, V> | null = map2.get(key2);
 		if (map3 === null)
 			return false;
 		return map3.containsKey(key3);
@@ -177,7 +177,7 @@ export class HashMap3D<K1, K2, K3, V> extends JavaObject {
 	/**
 	 * Löscht alle Zuordnungen der Map.
 	 */
-	public clear() : void {
+	public clear(): void {
 		this._map1.clear();
 	}
 
@@ -189,11 +189,11 @@ export class HashMap3D<K1, K2, K3, V> extends JavaObject {
 	 * @param key2  Der 2. Schlüssel des Tripels(key1, key2, key3).
 	 * @param key3  Der 3. Schlüssel des Tripels(key1, key2, key3).
 	 */
-	public removeOrException(key1 : K1, key2 : K2, key3 : K3) : void {
-		const map2 : JavaMap<K2, JavaMap<K3, V>> | null = this._map1.get(key1);
+	public removeOrException(key1: K1, key2: K2, key3: K3): void {
+		const map2: JavaMap<K2, JavaMap<K3, V>> | null = this._map1.get(key1);
 		if (map2 === null)
 			throw new DeveloperNotificationException("Pfad (key1=" + key1 + ") ungültig!")
-		const map3 : JavaMap<K3, V> | null = map2.get(key2);
+		const map3: JavaMap<K3, V> | null = map2.get(key2);
 		if (map3 === null)
 			throw new DeveloperNotificationException("Pfad (key1=" + key1 + ", " + key2 + ") ungültig!")
 		if (!map3.containsKey(key3))
@@ -214,11 +214,11 @@ export class HashMap3D<K1, K2, K3, V> extends JavaObject {
 	 * @param key2  Der 2. Schlüssel des Tripels(key1, key2, key3).
 	 * @param key3  Der 3. Schlüssel des Tripels(key1, key2, key3).
 	 */
-	public remove(key1 : K1, key2 : K2, key3 : K3) : void {
-		const map2 : JavaMap<K2, JavaMap<K3, V>> | null = this._map1.get(key1);
+	public remove(key1: K1, key2: K2, key3: K3): void {
+		const map2: JavaMap<K2, JavaMap<K3, V>> | null = this._map1.get(key1);
 		if (map2 === null)
 			return;
-		const map3 : JavaMap<K3, V> | null = map2.get(key2);
+		const map3: JavaMap<K3, V> | null = map2.get(key2);
 		if (map3 === null)
 			return;
 		if (!map3.containsKey(key3))
@@ -237,7 +237,7 @@ export class HashMap3D<K1, K2, K3, V> extends JavaObject {
 	 *
 	 * @return das KeySet der SubMap des 1. Schlüssels.
 	 */
-	public getKeySet() : JavaSet<K1> {
+	public getKeySet(): JavaSet<K1> {
 		return this._map1.keySet();
 	}
 
@@ -246,7 +246,7 @@ export class HashMap3D<K1, K2, K3, V> extends JavaObject {
 	 *
 	 * @return das EntrySet der SubMap des 1. Schlüssels.
 	 */
-	public getEntrySet() : JavaSet<JavaMapEntry<K1, JavaMap<K2, JavaMap<K3, V>>>> {
+	public getEntrySet(): JavaSet<JavaMapEntry<K1, JavaMap<K2, JavaMap<K3, V>>>> {
 		return this._map1.entrySet();
 	}
 
@@ -255,8 +255,8 @@ export class HashMap3D<K1, K2, K3, V> extends JavaObject {
 	 *
 	 * @return eine Liste aller Values in dieser Map.
 	 */
-	public getNonNullValuesAsList() : List<V> {
-		const list : ArrayList<V> = new ArrayList<V>();
+	public getNonNullValuesAsList(): List<V> {
+		const list: ArrayList<V> = new ArrayList<V>();
 		for (const map2 of this._map1.values())
 			for (const map3 of map2.values())
 				for (const value of map3.values())
@@ -271,9 +271,9 @@ export class HashMap3D<K1, K2, K3, V> extends JavaObject {
 	 *
 	 * @return eine Liste aller Values in dieser Map.
 	 */
-	public getNonNullValuesOfMap2AsList(key1 : K1) : List<V> {
-		const list : ArrayList<V> = new ArrayList<V>();
-		const map2 : JavaMap<K2, JavaMap<K3, V>> | null = this._map1.get(key1);
+	public getNonNullValuesOfMap2AsList(key1: K1): List<V> {
+		const list: ArrayList<V> = new ArrayList<V>();
+		const map2: JavaMap<K2, JavaMap<K3, V>> | null = this._map1.get(key1);
 		if (map2 !== null) {
 			for (const map3 of map2.values())
 				for (const value of map3.values())
@@ -290,11 +290,11 @@ export class HashMap3D<K1, K2, K3, V> extends JavaObject {
 	 *
 	 * @return eine Liste aller Values in dieser Map.
 	 */
-	public getNonNullValuesOfMap3AsList(key1 : K1, key2 : K2) : List<V> {
-		const list : ArrayList<V> = new ArrayList<V>();
-		const map2 : JavaMap<K2, JavaMap<K3, V>> | null = this._map1.get(key1);
+	public getNonNullValuesOfMap3AsList(key1: K1, key2: K2): List<V> {
+		const list: ArrayList<V> = new ArrayList<V>();
+		const map2: JavaMap<K2, JavaMap<K3, V>> | null = this._map1.get(key1);
 		if (map2 !== null) {
-			const map3 : JavaMap<K3, V> | null = map2.get(key2);
+			const map3: JavaMap<K3, V> | null = map2.get(key2);
 			if (map3 !== null)
 				for (const value of map3.values())
 					list.add(value);
@@ -306,7 +306,7 @@ export class HashMap3D<K1, K2, K3, V> extends JavaObject {
 		return 'de.svws_nrw.core.adt.map.HashMap3D';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.adt.map.HashMap3D'].includes(name);
 	}
 
@@ -314,6 +314,6 @@ export class HashMap3D<K1, K2, K3, V> extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_adt_map_HashMap3D<K1, K2, K3, V>(obj : unknown) : HashMap3D<K1, K2, K3, V> {
+export function cast_de_svws_nrw_core_adt_map_HashMap3D<K1, K2, K3, V>(obj: unknown): HashMap3D<K1, K2, K3, V> {
 	return obj as HashMap3D<K1, K2, K3, V>;
 }

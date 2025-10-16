@@ -9,17 +9,17 @@ export class BKGymBelegpruefungErgebnis extends JavaObject {
 	/**
 	 * gibt an, ob die Belegprüfung erfolgreich abgeschlossen wurde
 	 */
-	public erfolgreich : boolean = false;
+	public erfolgreich: boolean = false;
 
 	/**
 	 * eine Liste der Belegungsfehler und Hinweise zur Belegung
 	 */
-	public fehlercodes : List<BKGymBelegpruefungErgebnisFehler> = new ArrayList<BKGymBelegpruefungErgebnisFehler>();
+	public fehlercodes: List<BKGymBelegpruefungErgebnisFehler> = new ArrayList<BKGymBelegpruefungErgebnisFehler>();
 
 	/**
 	 * Ein Log, der den Ablauf der Belegprüfung verdeutlicht
 	 */
-	public log : List<string> = new ArrayList<string>();
+	public log: List<string> = new ArrayList<string>();
 
 
 	/**
@@ -33,13 +33,13 @@ export class BKGymBelegpruefungErgebnis extends JavaObject {
 		return 'de.svws_nrw.core.abschluss.bk.d.BKGymBelegpruefungErgebnis';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.abschluss.bk.d.BKGymBelegpruefungErgebnis'].includes(name);
 	}
 
 	public static class = new Class<BKGymBelegpruefungErgebnis>('de.svws_nrw.core.abschluss.bk.d.BKGymBelegpruefungErgebnis');
 
-	public static transpilerFromJSON(json : string): BKGymBelegpruefungErgebnis {
+	public static transpilerFromJSON(json: string): BKGymBelegpruefungErgebnis {
 		const obj = JSON.parse(json) as Partial<BKGymBelegpruefungErgebnis>;
 		const result = new BKGymBelegpruefungErgebnis();
 		if (obj.erfolgreich === undefined)
@@ -58,7 +58,7 @@ export class BKGymBelegpruefungErgebnis extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : BKGymBelegpruefungErgebnis) : string {
+	public static transpilerToJSON(obj: BKGymBelegpruefungErgebnis): string {
 		let result = '{';
 		result += '"erfolgreich" : ' + obj.erfolgreich.toString() + ',';
 		result += '"fehlercodes" : [ ';
@@ -82,7 +82,7 @@ export class BKGymBelegpruefungErgebnis extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<BKGymBelegpruefungErgebnis>) : string {
+	public static transpilerToJSONPatch(obj: Partial<BKGymBelegpruefungErgebnis>): string {
 		let result = '{';
 		if (obj.erfolgreich !== undefined) {
 			result += '"erfolgreich" : ' + obj.erfolgreich.toString() + ',';
@@ -114,6 +114,6 @@ export class BKGymBelegpruefungErgebnis extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_abschluss_bk_d_BKGymBelegpruefungErgebnis(obj : unknown) : BKGymBelegpruefungErgebnis {
+export function cast_de_svws_nrw_core_abschluss_bk_d_BKGymBelegpruefungErgebnis(obj: unknown): BKGymBelegpruefungErgebnis {
 	return obj as BKGymBelegpruefungErgebnis;
 }

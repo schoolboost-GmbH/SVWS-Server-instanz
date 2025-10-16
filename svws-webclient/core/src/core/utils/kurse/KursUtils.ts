@@ -11,8 +11,8 @@ export class KursUtils extends JavaObject {
 	/**
 	 * Ein Default-Comparator für den Vergleich von Klassen in Klassenlisten.
 	 */
-	public static readonly comparator : Comparator<KursDaten> = { compare : (a: KursDaten, b: KursDaten) => {
-		let cmp : number = a.sortierung - b.sortierung;
+	public static readonly comparator: Comparator<KursDaten> = { compare: (a: KursDaten, b: KursDaten) => {
+		let cmp: number = a.sortierung - b.sortierung;
 		if (cmp !== 0)
 			return cmp;
 		cmp = JavaString.compareTo(a.kuerzel, b.kuerzel);
@@ -29,7 +29,7 @@ export class KursUtils extends JavaObject {
 		return 'de.svws_nrw.core.utils.kurse.KursUtils';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.utils.kurse.KursUtils'].includes(name);
 	}
 
@@ -37,6 +37,6 @@ export class KursUtils extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_utils_kurse_KursUtils(obj : unknown) : KursUtils {
+export function cast_de_svws_nrw_core_utils_kurse_KursUtils(obj: unknown): KursUtils {
 	return obj as KursUtils;
 }

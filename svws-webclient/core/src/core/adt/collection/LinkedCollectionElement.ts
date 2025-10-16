@@ -6,17 +6,17 @@ export class LinkedCollectionElement<E> extends JavaObject {
 	/**
 	 * Der Wert, der in diesem Element gespeichert wird.
 	 */
-	private _value : E;
+	private _value: E;
 
 	/**
 	 * Referenz auf das vorige Element.
 	 */
-	private _prev : LinkedCollectionElement<E> | null = null;
+	private _prev: LinkedCollectionElement<E> | null = null;
 
 	/**
 	 * Referenz auf das nachfolgende Element.
 	 */
-	private _next : LinkedCollectionElement<E> | null = null;
+	private _next: LinkedCollectionElement<E> | null = null;
 
 
 	/**
@@ -27,7 +27,7 @@ export class LinkedCollectionElement<E> extends JavaObject {
 	 * @param prev    der Vorgänger
 	 * @param next    der Nachfolger
 	 */
-	constructor(value : E, prev : LinkedCollectionElement<E> | null, next : LinkedCollectionElement<E> | null) {
+	constructor(value: E, prev: LinkedCollectionElement<E> | null, next: LinkedCollectionElement<E> | null) {
 		super();
 		this._value = value;
 		this._prev = prev;
@@ -39,7 +39,7 @@ export class LinkedCollectionElement<E> extends JavaObject {
 	 *
 	 * @return der Wert des Elements
 	 */
-	getValue() : E {
+	getValue(): E {
 		return this._value;
 	}
 
@@ -50,8 +50,8 @@ export class LinkedCollectionElement<E> extends JavaObject {
 	 *
 	 * @return der alte Wert des Elements
 	 */
-	setValue(value : E) : E {
-		const oldValue : E = this._value;
+	setValue(value: E): E {
+		const oldValue: E = this._value;
 		this._value = value;
 		return oldValue;
 	}
@@ -61,7 +61,7 @@ export class LinkedCollectionElement<E> extends JavaObject {
 	 *
 	 * @return   das LinkedCollectionElement das der Vorgänger des Elementes ist
 	 */
-	getPrev() : LinkedCollectionElement<E> | null {
+	getPrev(): LinkedCollectionElement<E> | null {
 		return this._prev;
 	}
 
@@ -70,7 +70,7 @@ export class LinkedCollectionElement<E> extends JavaObject {
 	 *
 	 * @param prev   der Vorgänger des Elements
 	 */
-	setPrev(prev : LinkedCollectionElement<E> | null) : void {
+	setPrev(prev: LinkedCollectionElement<E> | null): void {
 		this._prev = prev;
 	}
 
@@ -79,7 +79,7 @@ export class LinkedCollectionElement<E> extends JavaObject {
 	 *
 	 * @return   das LinkedCollectionElement das der Nachfolger des Elementes ist
 	 */
-	getNext() : LinkedCollectionElement<E> | null {
+	getNext(): LinkedCollectionElement<E> | null {
 		return this._next;
 	}
 
@@ -88,7 +88,7 @@ export class LinkedCollectionElement<E> extends JavaObject {
 	 *
 	 * @param next   der Nachfolger des Elements
 	 */
-	setNext(next : LinkedCollectionElement<E> | null) : void {
+	setNext(next: LinkedCollectionElement<E> | null): void {
 		this._next = next;
 	}
 
@@ -96,7 +96,7 @@ export class LinkedCollectionElement<E> extends JavaObject {
 		return 'de.svws_nrw.core.adt.collection.LinkedCollectionElement';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.adt.collection.LinkedCollectionElement'].includes(name);
 	}
 
@@ -104,6 +104,6 @@ export class LinkedCollectionElement<E> extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_adt_collection_LinkedCollectionElement<E>(obj : unknown) : LinkedCollectionElement<E> {
+export function cast_de_svws_nrw_core_adt_collection_LinkedCollectionElement<E>(obj: unknown): LinkedCollectionElement<E> {
 	return obj as LinkedCollectionElement<E>;
 }

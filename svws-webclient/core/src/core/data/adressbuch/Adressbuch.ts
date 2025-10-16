@@ -9,32 +9,32 @@ export class Adressbuch extends JavaObject {
 	/**
 	 * ID des Adressbuchs
 	 */
-	public id : string = "";
+	public id: string = "";
 
 	/**
 	 * Anzeigename des Adressbuchs
 	 */
-	public displayname : string | null = null;
+	public displayname: string | null = null;
 
 	/**
 	 * Beschreibung des Adressbuchs
 	 */
-	public beschreibung : string | null = null;
+	public beschreibung: string | null = null;
 
 	/**
 	 * Versionskennzeichen des Adressbuchs
 	 */
-	public synctoken : number = 0;
+	public synctoken: number = 0;
 
 	/**
 	 * Der Typ des Adressbuchs
 	 */
-	public adressbuchTyp : string = "";
+	public adressbuchTyp: string = "";
 
 	/**
 	 * Eine Liste der Einträge des Adressbuchs
 	 */
-	public adressbuchEintraege : List<AdressbuchEintrag> = new ArrayList<AdressbuchEintrag>();
+	public adressbuchEintraege: List<AdressbuchEintrag> = new ArrayList<AdressbuchEintrag>();
 
 
 	/**
@@ -48,13 +48,13 @@ export class Adressbuch extends JavaObject {
 		return 'de.svws_nrw.core.data.adressbuch.Adressbuch';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.adressbuch.Adressbuch'].includes(name);
 	}
 
 	public static class = new Class<Adressbuch>('de.svws_nrw.core.data.adressbuch.Adressbuch');
 
-	public static transpilerFromJSON(json : string): Adressbuch {
+	public static transpilerFromJSON(json: string): Adressbuch {
 		const obj = JSON.parse(json) as Partial<Adressbuch>;
 		const result = new Adressbuch();
 		if (obj.id === undefined)
@@ -76,7 +76,7 @@ export class Adressbuch extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : Adressbuch) : string {
+	public static transpilerToJSON(obj: Adressbuch): string {
 		let result = '{';
 		result += '"id" : ' + JSON.stringify(obj.id) + ',';
 		result += '"displayname" : ' + ((obj.displayname === null) ? 'null' : JSON.stringify(obj.displayname)) + ',';
@@ -96,7 +96,7 @@ export class Adressbuch extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<Adressbuch>) : string {
+	public static transpilerToJSONPatch(obj: Partial<Adressbuch>): string {
 		let result = '{';
 		if (obj.id !== undefined) {
 			result += '"id" : ' + JSON.stringify(obj.id) + ',';
@@ -130,6 +130,6 @@ export class Adressbuch extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_adressbuch_Adressbuch(obj : unknown) : Adressbuch {
+export function cast_de_svws_nrw_core_data_adressbuch_Adressbuch(obj: unknown): Adressbuch {
 	return obj as Adressbuch;
 }

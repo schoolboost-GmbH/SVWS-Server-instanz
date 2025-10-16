@@ -6,42 +6,42 @@ export class NationalitaetenKatalogEintrag extends CoreTypeData {
 	/**
 	 * Das 3-stellige Kürzel des ISO-Standards 3166-1
 	 */
-	public iso3 : string = "";
+	public iso3: string = "";
 
 	/**
 	 * Das 2-stellige Kürzel des ISO-Standards 3166-1
 	 */
-	public iso2 : string = "";
+	public iso2: string = "";
 
 	/**
 	 * Die 3-stellige Nummer des ISO-Standards 3166-1
 	 */
-	public isoNumerisch : string | null = null;
+	public isoNumerisch: string | null = null;
 
 	/**
 	 * Die 3-stellige Nummer, welche vom statistischen Bundesamt verwendet wird (destatis.de)
 	 */
-	public codeDEStatis : string = "";
+	public codeDEStatis: string = "";
 
 	/**
 	 * Die Bezeichnung für eine Suche
 	 */
-	public bezeichnungSuche : string = "";
+	public bezeichnungSuche: string = "";
 
 	/**
 	 * Die kurze Bezeichnung
 	 */
-	public bezeichnung : string = "";
+	public bezeichnung: string = "";
 
 	/**
 	 * Die Bezeichnung für eine Suche
 	 */
-	public bezeichnungLang : string = "";
+	public bezeichnungLang: string = "";
 
 	/**
 	 * Die Bezeichnung der Staatsangehörigkeit
 	 */
-	public staatsangehoerigkeit : string = "";
+	public staatsangehoerigkeit: string = "";
 
 
 	/**
@@ -55,13 +55,13 @@ export class NationalitaetenKatalogEintrag extends CoreTypeData {
 		return 'de.svws_nrw.asd.data.schule.NationalitaetenKatalogEintrag';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.asd.data.schule.NationalitaetenKatalogEintrag', 'de.svws_nrw.asd.data.CoreTypeData'].includes(name);
 	}
 
 	public static class = new Class<NationalitaetenKatalogEintrag>('de.svws_nrw.asd.data.schule.NationalitaetenKatalogEintrag');
 
-	public static transpilerFromJSON(json : string): NationalitaetenKatalogEintrag {
+	public static transpilerFromJSON(json: string): NationalitaetenKatalogEintrag {
 		const obj = JSON.parse(json) as Partial<NationalitaetenKatalogEintrag>;
 		const result = new NationalitaetenKatalogEintrag();
 		if (obj.id === undefined)
@@ -103,7 +103,7 @@ export class NationalitaetenKatalogEintrag extends CoreTypeData {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : NationalitaetenKatalogEintrag) : string {
+	public static transpilerToJSON(obj: NationalitaetenKatalogEintrag): string {
 		let result = '{';
 		result += '"id" : ' + obj.id.toString() + ',';
 		result += '"schluessel" : ' + JSON.stringify(obj.schluessel) + ',';
@@ -124,7 +124,7 @@ export class NationalitaetenKatalogEintrag extends CoreTypeData {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<NationalitaetenKatalogEintrag>) : string {
+	public static transpilerToJSONPatch(obj: Partial<NationalitaetenKatalogEintrag>): string {
 		let result = '{';
 		if (obj.id !== undefined) {
 			result += '"id" : ' + obj.id.toString() + ',';
@@ -175,6 +175,6 @@ export class NationalitaetenKatalogEintrag extends CoreTypeData {
 
 }
 
-export function cast_de_svws_nrw_asd_data_schule_NationalitaetenKatalogEintrag(obj : unknown) : NationalitaetenKatalogEintrag {
+export function cast_de_svws_nrw_asd_data_schule_NationalitaetenKatalogEintrag(obj: unknown): NationalitaetenKatalogEintrag {
 	return obj as NationalitaetenKatalogEintrag;
 }

@@ -6,42 +6,42 @@ export class Schild3KatalogEintragFilterFeldListe extends JavaObject {
 	/**
 	 * ID für den Eintrag welche Felder im Attributsfilter zur Verfügung stehen.
 	 */
-	public ID : number | null = null;
+	public ID: number | null = null;
 
 	/**
 	 * Bezeichnung im Attributsfilter
 	 */
-	public Bezeichnung : string | null = null;
+	public Bezeichnung: string | null = null;
 
 	/**
 	 * Datenbankfeld im Attributsfilter
 	 */
-	public DBFeld : string | null = null;
+	public DBFeld: string | null = null;
 
 	/**
 	 * Typ des Feldes im Attributsfilter
 	 */
-	public Typ : string | null = null;
+	public Typ: string | null = null;
 
 	/**
 	 * Mögliche Werte des Feldes im Attributsfilter
 	 */
-	public Werte : string | null = null;
+	public Werte: string | null = null;
 
 	/**
 	 * Standardwert im Attributsfilter
 	 */
-	public StdWert : string | null = null;
+	public StdWert: string | null = null;
 
 	/**
 	 * Operator  im Attributsfilter (größer-kleiner)
 	 */
-	public Operator : string | null = null;
+	public Operator: string | null = null;
 
 	/**
 	 * Zusatzbedingung im Attributsfilter
 	 */
-	public Zusatzbedingung : string | null = null;
+	public Zusatzbedingung: string | null = null;
 
 
 	/**
@@ -55,13 +55,13 @@ export class Schild3KatalogEintragFilterFeldListe extends JavaObject {
 		return 'de.svws_nrw.core.data.schild3.Schild3KatalogEintragFilterFeldListe';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.schild3.Schild3KatalogEintragFilterFeldListe'].includes(name);
 	}
 
 	public static class = new Class<Schild3KatalogEintragFilterFeldListe>('de.svws_nrw.core.data.schild3.Schild3KatalogEintragFilterFeldListe');
 
-	public static transpilerFromJSON(json : string): Schild3KatalogEintragFilterFeldListe {
+	public static transpilerFromJSON(json: string): Schild3KatalogEintragFilterFeldListe {
 		const obj = JSON.parse(json) as Partial<Schild3KatalogEintragFilterFeldListe>;
 		const result = new Schild3KatalogEintragFilterFeldListe();
 		result.ID = (obj.ID === undefined) ? null : obj.ID === null ? null : obj.ID;
@@ -75,7 +75,7 @@ export class Schild3KatalogEintragFilterFeldListe extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : Schild3KatalogEintragFilterFeldListe) : string {
+	public static transpilerToJSON(obj: Schild3KatalogEintragFilterFeldListe): string {
 		let result = '{';
 		result += '"ID" : ' + ((obj.ID === null) ? 'null' : obj.ID.toString()) + ',';
 		result += '"Bezeichnung" : ' + ((obj.Bezeichnung === null) ? 'null' : JSON.stringify(obj.Bezeichnung)) + ',';
@@ -90,7 +90,7 @@ export class Schild3KatalogEintragFilterFeldListe extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<Schild3KatalogEintragFilterFeldListe>) : string {
+	public static transpilerToJSONPatch(obj: Partial<Schild3KatalogEintragFilterFeldListe>): string {
 		let result = '{';
 		if (obj.ID !== undefined) {
 			result += '"ID" : ' + ((obj.ID === null) ? 'null' : obj.ID.toString()) + ',';
@@ -123,6 +123,6 @@ export class Schild3KatalogEintragFilterFeldListe extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_schild3_Schild3KatalogEintragFilterFeldListe(obj : unknown) : Schild3KatalogEintragFilterFeldListe {
+export function cast_de_svws_nrw_core_data_schild3_Schild3KatalogEintragFilterFeldListe(obj: unknown): Schild3KatalogEintragFilterFeldListe {
 	return obj as Schild3KatalogEintragFilterFeldListe;
 }

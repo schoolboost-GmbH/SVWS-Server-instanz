@@ -11,182 +11,182 @@ export class Abiturdaten extends JavaObject {
 	/**
 	 * Die eindeutige ID des Schülers
 	 */
-	public schuelerID : number = 0;
+	public schuelerID: number = 0;
 
 	/**
 	 * Das Kalenderjahr, in dem der Schüler sein Abitur ablegt bzw. ablegen wird.
 	 */
-	public abiturjahr : number = 0;
+	public abiturjahr: number = 0;
 
 	/**
 	 * Das Schuljahr, in dem der Schüler sein Abitur ablegt bzw. ablegen wird.
 	 */
-	public schuljahrAbitur : number = 0;
+	public schuljahrAbitur: number = 0;
 
 	/**
 	 * Gibt für die einzelnen {@link GostHalbjahr}-Werte an, ob gewertete Leistungsdaten vorhanden sind oder es sich um Werte der Laufbahnplanung handelt.
 	 */
-	public readonly bewertetesHalbjahr : Array<boolean> = Array(6).fill(false);
+	public readonly bewertetesHalbjahr: Array<boolean> = Array(6).fill(false);
 
 	/**
 	 * Ein Array mit den Fachbelegungen in der Oberstufe.
 	 */
-	public readonly fachbelegungen : List<AbiturFachbelegung> = new ArrayList<AbiturFachbelegung>();
+	public readonly fachbelegungen: List<AbiturFachbelegung> = new ArrayList<AbiturFachbelegung>();
 
 	/**
 	 * Die Sprachendaten des Schülers mit Informationen zu Sprachbelegungen (Sprachenfolge) und zu Sprachprüfungen.
 	 */
-	public sprachendaten : Sprachendaten = new Sprachendaten();
+	public sprachendaten: Sprachendaten = new Sprachendaten();
 
 	/**
 	 * Das einstellige Kürzel der Sprache des bilingualen Bildungsganges, falls der Schüler an einem solchen teilnimmt.
 	 */
-	public bilingualeSprache : string | null = null;
+	public bilingualeSprache: string | null = null;
 
 	/**
 	 * Gibt an, ob das große Latinum erworben wurde.
 	 */
-	public latinum : boolean = false;
+	public latinum: boolean = false;
 
 	/**
 	 * Gibt an, ob das kleine Latinum erworben wurde.
 	 */
-	public kleinesLatinum : boolean = false;
+	public kleinesLatinum: boolean = false;
 
 	/**
 	 * Gibt an, ob das Graecum erworben wurde.
 	 */
-	public graecum : boolean = false;
+	public graecum: boolean = false;
 
 	/**
 	 * Gibt an, ob das Hebraicum erworben wurde.
 	 */
-	public hebraicum : boolean = false;
+	public hebraicum: boolean = false;
 
 	/**
 	 * Die Anzahl der Fehlstunden in der gesamten Qualifikationsphase.
 	 */
-	public block1FehlstundenGesamt : number = 0;
+	public block1FehlstundenGesamt: number = 0;
 
 	/**
 	 * Die Anzahl der unentschuldigten Fehlstunden in der gesamten Qualifikationsphase.
 	 */
-	public block1FehlstundenUnentschuldigt : number = 0;
+	public block1FehlstundenUnentschuldigt: number = 0;
 
 	/**
 	 * Das Projektkursthema, sofern ein Projektkurs belegt wurde.
 	 */
-	public projektKursThema : string | null = null;
+	public projektKursThema: string | null = null;
 
 	/**
 	 * Das Kürzel des ersten Leitfaches des belegten Projektkurs, sofern einer belegt wurde.
 	 */
-	public projektkursLeitfach1Kuerzel : string | null = null;
+	public projektkursLeitfach1Kuerzel: string | null = null;
 
 	/**
 	 * Das Kürzel des zweiten Leitfaches des belegten Projektkurs, sofern einer belegt wurde und ein zweites Leitfach für diesen festgelegt wurde
 	 */
-	public projektkursLeitfach2Kuerzel : string | null = null;
+	public projektkursLeitfach2Kuerzel: string | null = null;
 
 	/**
 	 * Gibt an, ob eine besondere Lernleistung vorliegt (K - keine, P - in einem Projektkurs, E - extern).
 	 */
-	public besondereLernleistung : string | null = GostBesondereLernleistung.KEINE.kuerzel;
+	public besondereLernleistung: string | null = GostBesondereLernleistung.KEINE.kuerzel;
 
 	/**
 	 * Gibt ggf. die Note einer externen besonderen Lernleistung an.
 	 */
-	public besondereLernleistungNotenKuerzel : string | null = null;
+	public besondereLernleistungNotenKuerzel: string | null = null;
 
 	/**
 	 * Gibt das Thema der Besonderen Lernleistung an.
 	 */
-	public besondereLernleistungThema : string | null = null;
+	public besondereLernleistungThema: string | null = null;
 
 	/**
 	 * Gibt die Anzahl der Kurse in der Qualifikationsphase an.
 	 */
-	public block1AnzahlKurse : number | null = null;
+	public block1AnzahlKurse: number | null = null;
 
 	/**
 	 * Gibt die Anzahl der Gesamtdefizite in der Qualifikationsphase an.
 	 */
-	public block1DefiziteGesamt : number | null = null;
+	public block1DefiziteGesamt: number | null = null;
 
 	/**
 	 * Gibt die Anzahl der Defizite im LK-Bereich in der Qualifikationsphase an.
 	 */
-	public block1DefiziteLK : number | null = null;
+	public block1DefiziteLK: number | null = null;
 
 	/**
 	 * Gibt die Punktsumme aller Grundkurse in der Qualifikationsphase an.
 	 */
-	public block1PunktSummeGK : number | null = null;
+	public block1PunktSummeGK: number | null = null;
 
 	/**
 	 * Gibt die Punktsumme aller Leistungskurse in der Qualifikationsphase an.
 	 */
-	public block1PunktSummeLK : number | null = null;
+	public block1PunktSummeLK: number | null = null;
 
 	/**
 	 * Gibt die normierte Punktsumme aller Kurse in der Qualifikationsphase an.
 	 */
-	public block1PunktSummeNormiert : number | null = null;
+	public block1PunktSummeNormiert: number | null = null;
 
 	/**
 	 * Gibt den Durchschnitt der Notenpunkte von allen Kursen der Qualifikationsphase an.
 	 */
-	public block1NotenpunkteDurchschnitt : number | null = null;
+	public block1NotenpunkteDurchschnitt: number | null = null;
 
 	/**
 	 * Gibt an, ob die Zulassung erreicht wurde oder nicht - sofern diese schon geprüft wurde.
 	 */
-	public block1Zulassung : boolean | null = null;
+	public block1Zulassung: boolean | null = null;
 
 	/**
 	 * Gibt an, ob freiwillig von der Abiturprüfung zurückgetreten wurde.
 	 */
-	public freiwilligerRuecktritt : boolean = false;
+	public freiwilligerRuecktritt: boolean = false;
 
 	/**
 	 * Gibt die Anzahl der Gesamtdefizite im Abiturbereich (Block II) an.
 	 */
-	public block2DefiziteGesamt : number | null = null;
+	public block2DefiziteGesamt: number | null = null;
 
 	/**
 	 * Gibt die Anzahl der Leistungskurs-Defizite im Abiturbereich (Block II) an.
 	 */
-	public block2DefiziteLK : number | null = null;
+	public block2DefiziteLK: number | null = null;
 
 	/**
 	 * Gibt die Punktsumme im Abiturbereich (Block II) an.
 	 */
-	public block2PunktSumme : number | null = null;
+	public block2PunktSumme: number | null = null;
 
 	/**
 	 * Gibt die erreichte Gesamtpunktzahl in der Qualifikation und im Abiturbereich (Block I und II) an.
 	 */
-	public gesamtPunkte : number | null = null;
+	public gesamtPunkte: number | null = null;
 
 	/**
 	 * Gibt die Gesamtpunktzahl an, ab der sich die Abiturnote verbessern würde
 	 */
-	public gesamtPunkteVerbesserung : number | null = null;
+	public gesamtPunkteVerbesserung: number | null = null;
 
 	/**
 	 * Gibt die Gesamtpunktzahl an, ab der sich die Abiturnote verschlechtern würde.
 	 */
-	public gesamtPunkteVerschlechterung : number | null = null;
+	public gesamtPunkteVerschlechterung: number | null = null;
 
 	/**
 	 * Gibt an, ob die Abiturprüfung bestanden wurde oder nicht - sofern das Prüfungsverfahren schon abgeschlossen wurde.
 	 */
-	public pruefungBestanden : boolean | null = null;
+	public pruefungBestanden: boolean | null = null;
 
 	/**
 	 * Die Abiturnote einer bestandenen Abiturprüfung - sofern das Prüfungsverfahren schon abgeschlossen wurde.
 	 */
-	public note : string | null = null;
+	public note: string | null = null;
 
 
 	/**
@@ -200,13 +200,13 @@ export class Abiturdaten extends JavaObject {
 		return 'de.svws_nrw.core.data.gost.Abiturdaten';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.gost.Abiturdaten'].includes(name);
 	}
 
 	public static class = new Class<Abiturdaten>('de.svws_nrw.core.data.gost.Abiturdaten');
 
-	public static transpilerFromJSON(json : string): Abiturdaten {
+	public static transpilerFromJSON(json: string): Abiturdaten {
 		const obj = JSON.parse(json) as Partial<Abiturdaten>;
 		const result = new Abiturdaten();
 		if (obj.schuelerID === undefined)
@@ -278,7 +278,7 @@ export class Abiturdaten extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : Abiturdaten) : string {
+	public static transpilerToJSON(obj: Abiturdaten): string {
 		let result = '{';
 		result += '"schuelerID" : ' + obj.schuelerID.toString() + ',';
 		result += '"abiturjahr" : ' + obj.abiturjahr.toString() + ',';
@@ -335,7 +335,7 @@ export class Abiturdaten extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<Abiturdaten>) : string {
+	public static transpilerToJSONPatch(obj: Partial<Abiturdaten>): string {
 		let result = '{';
 		if (obj.schuelerID !== undefined) {
 			result += '"schuelerID" : ' + obj.schuelerID.toString() + ',';
@@ -467,6 +467,6 @@ export class Abiturdaten extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_gost_Abiturdaten(obj : unknown) : Abiturdaten {
+export function cast_de_svws_nrw_core_data_gost_Abiturdaten(obj: unknown): Abiturdaten {
 	return obj as Abiturdaten;
 }

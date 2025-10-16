@@ -9,47 +9,47 @@ export class DateManager extends JavaObject implements Comparable<DateManager> {
 	/**
 	 * Der Tag im Monat (1-31) - je nach Monat
 	 */
-	private readonly tag : number;
+	private readonly tag: number;
 
 	/**
 	 * Der Monat im Jahr (1-12)
 	 */
-	private readonly monat : number;
+	private readonly monat: number;
 
 	/**
 	 * Das Jahr
 	 */
-	private readonly jahr : number;
+	private readonly jahr: number;
 
 	/**
 	 * Gibt an, on das Datum in einem Schaltjahr liegt oder nicht.
 	 */
-	private istSchaltjahr : boolean = false;
+	private istSchaltjahr: boolean = false;
 
 	/**
 	 * Der Tag im Jahr (1-365/366) - je nach Schaltjahr
 	 */
-	private readonly tagImJahr : number;
+	private readonly tagImJahr: number;
 
 	/**
 	 * Die maximale Anzahl an Tagen in dem Monat (ein Schaltjahr ist hier ggf. berücksichtigt)
 	 */
-	private maxTageImMonat : number = 0;
+	private maxTageImMonat: number = 0;
 
 	/**
 	 * Der Wochentag: 1 für Montag, ..., 7 für Sonntag
 	 */
-	private readonly wochentag : number;
+	private readonly wochentag: number;
 
 	/**
 	 * Die Kalenderwoche im Kalenderwochenjahr
 	 */
-	private readonly kalenderwoche : number;
+	private readonly kalenderwoche: number;
 
 	/**
 	 * Das Jahr für die Kalenderwoche - dieses kann zu Beginn oder zum Ende eines Jahres vom Jahr abweichen
 	 */
-	private readonly kalenderwochenjahr : number;
+	private readonly kalenderwochenjahr: number;
 
 
 	/**
@@ -61,13 +61,13 @@ export class DateManager extends JavaObject implements Comparable<DateManager> {
 	 *
 	 * @throws InvalidDateException   falls das Datum ungültig ist
 	 */
-	private constructor(tag : number, monat : number, jahr : number) {
+	private constructor(tag: number, monat: number, jahr: number) {
 		super();
 		this.tag = tag;
 		this.monat = monat;
 		this.jahr = jahr;
 		this.initPruefeTagMonatUndJahr();
-		const schalttag : number = this.istSchaltjahr ? 1 : 0;
+		const schalttag: number = this.istSchaltjahr ? 1 : 0;
 		const _seexpr_670811900 = (monat);
 		if (_seexpr_670811900 === 1) {
 			this.tagImJahr = tag;
@@ -98,17 +98,17 @@ export class DateManager extends JavaObject implements Comparable<DateManager> {
 		}
 		;
 		this.wochentag = DateManager.getWochentagOfTagImJahr(jahr, this.tagImJahr);
-		const wt1 : number = DateManager.getWochentagOfTagImJahr(jahr, 1);
-		const kwAnzahl : number = ((wt1 === 4) || (this.istSchaltjahr && (wt1 === 3))) ? 53 : 52;
-		const tagImJahrMontagKW1 : number = (4 - DateManager.getWochentagOfTagImJahr(jahr, 4)) + 1;
+		const wt1: number = DateManager.getWochentagOfTagImJahr(jahr, 1);
+		const kwAnzahl: number = ((wt1 === 4) || (this.istSchaltjahr && (wt1 === 3))) ? 53 : 52;
+		const tagImJahrMontagKW1: number = (4 - DateManager.getWochentagOfTagImJahr(jahr, 4)) + 1;
 		if (this.tagImJahr < tagImJahrMontagKW1) {
 			this.kalenderwochenjahr = jahr - 1;
-			const istVjSchaltjahr : boolean = (DateManager.getSchalttageBisJahr(jahr - 1) - DateManager.getSchalttageBisJahr(jahr - 2)) === 1;
-			const wt1vj : number = DateManager.getWochentagOfTagImJahr(jahr, 1);
-			const kwVjAnzahl : number = ((wt1vj === 4) || (istVjSchaltjahr && (wt1vj === 3))) ? 53 : 52;
+			const istVjSchaltjahr: boolean = (DateManager.getSchalttageBisJahr(jahr - 1) - DateManager.getSchalttageBisJahr(jahr - 2)) === 1;
+			const wt1vj: number = DateManager.getWochentagOfTagImJahr(jahr, 1);
+			const kwVjAnzahl: number = ((wt1vj === 4) || (istVjSchaltjahr && (wt1vj === 3))) ? 53 : 52;
 			this.kalenderwoche = kwVjAnzahl;
 		} else {
-			const tmpKW : number = 1 + (Math.trunc((this.tagImJahr - tagImJahrMontagKW1) / 7));
+			const tmpKW: number = 1 + (Math.trunc((this.tagImJahr - tagImJahrMontagKW1) / 7));
 			if (tmpKW > kwAnzahl) {
 				this.kalenderwochenjahr = jahr + 1;
 				this.kalenderwoche = 1;
@@ -126,14 +126,14 @@ export class DateManager extends JavaObject implements Comparable<DateManager> {
 	 *
 	 * @throws InvalidDateException   wenn die Werte für Tag, Monat oder Jahr fehlerhaft sind
 	 */
-	private initPruefeTagMonatUndJahr() : void {
+	private initPruefeTagMonatUndJahr(): void {
 		if (this.jahr < 0)
 			throw new InvalidDateException("Die Jahresangabe muss positiv sein.")
 		if (this.jahr > 9999)
 			throw new InvalidDateException("Die Jahresangabe ist größer als 9999.")
-		const schalttageBisVorjahr : number = DateManager.getSchalttageBisJahr(this.jahr - 1);
-		const schalttageBisJahr : number = DateManager.getSchalttageBisJahr(this.jahr);
-		const schalttag : number = (schalttageBisJahr - schalttageBisVorjahr);
+		const schalttageBisVorjahr: number = DateManager.getSchalttageBisJahr(this.jahr - 1);
+		const schalttageBisJahr: number = DateManager.getSchalttageBisJahr(this.jahr);
+		const schalttag: number = (schalttageBisJahr - schalttageBisVorjahr);
 		this.istSchaltjahr = (schalttag === 1);
 		if ((this.monat < 1) || (this.monat > 12))
 			throw new InvalidDateException("Der Monat muss zwischen 1 und 12 liegen.")
@@ -185,7 +185,7 @@ export class DateManager extends JavaObject implements Comparable<DateManager> {
 	 *
 	 * @return der Wochentag (1 - Montag, ..., 7 - Sonntag)
 	 */
-	private static getWochentagOfTagImJahr(jahr : number, tagImJahr : number) : number {
+	private static getWochentagOfTagImJahr(jahr: number, tagImJahr: number): number {
 		return ((jahr + DateManager.getSchalttageBisJahr(jahr - 1) + tagImJahr + 5) % 7) + 1;
 	}
 
@@ -200,7 +200,7 @@ export class DateManager extends JavaObject implements Comparable<DateManager> {
 	 *
 	 * @return die Anzahl der Schalttage seit dem Jahr 1
 	 */
-	private static getSchalttageBisJahr(jahr : number) : number {
+	private static getSchalttageBisJahr(jahr: number): number {
 		return (Math.trunc(jahr / 4)) - ((Math.trunc(jahr / 100)) - (Math.trunc(jahr / 400)));
 	}
 
@@ -215,7 +215,7 @@ export class DateManager extends JavaObject implements Comparable<DateManager> {
 	 *
 	 * @throws InvalidDateException falls das Datum fehlerhaft ist
 	 */
-	public static fromValues(jahr : number, monat : number, tag : number) : DateManager {
+	public static fromValues(jahr: number, monat: number, tag: number): DateManager {
 		return new DateManager(tag, monat, jahr);
 	}
 
@@ -228,26 +228,26 @@ export class DateManager extends JavaObject implements Comparable<DateManager> {
 	 *
 	 * @throws InvalidDateException falls das Datumsformat oder das Datum fehlerhaft ist
 	 */
-	public static from(isoDate : string | null) : DateManager {
+	public static from(isoDate: string | null): DateManager {
 		if (isoDate === null)
 			throw new InvalidDateException("Es muss ein Datum angegeben werden. null ist nicht zulässig.")
-		const d : Array<string | null> = isoDate.split("-");
-		const strError : string = "Das Datumsformat '" + isoDate + "' ist nicht konform zu ISO8601";
+		const d: Array<string | null> = isoDate.split("-");
+		const strError: string = "Das Datumsformat '" + isoDate + "' ist nicht konform zu ISO8601";
 		if (d.length !== 3)
 			throw new InvalidDateException(strError + ": Es ist nicht durch zwei Bindestriche unterteilt.")
-		let jahr : number;
+		let jahr: number;
 		try {
 			jahr = JavaInteger.parseInt(d[0]);
 		} catch(e : any) {
 			throw new InvalidDateException(strError + ": Der Teil vor dem ersten Bindestrich muss eine Zahl sein und sollte das Jahr angeben", e)
 		}
-		let monat : number;
+		let monat: number;
 		try {
 			monat = JavaInteger.parseInt(d[1]);
 		} catch(e : any) {
 			throw new InvalidDateException(strError + ": Der mittlere Teil zwischen den Bindestrichen muss eine Zahl sein und sollte den Monat angeben", e)
 		}
-		let tag : number;
+		let tag: number;
 		try {
 			tag = JavaInteger.parseInt(d[2]);
 		} catch(e : any) {
@@ -256,10 +256,10 @@ export class DateManager extends JavaObject implements Comparable<DateManager> {
 		return new DateManager(tag, monat, jahr);
 	}
 
-	public compareTo(other : DateManager | null) : number {
+	public compareTo(other: DateManager | null): number {
 		if (other === null)
 			return 1;
-		let tmp : number = JavaInteger.compare(this.jahr, other.jahr);
+		let tmp: number = JavaInteger.compare(this.jahr, other.jahr);
 		if (tmp !== 0)
 			return tmp;
 		tmp = JavaInteger.compare(this.monat, other.monat);
@@ -268,11 +268,11 @@ export class DateManager extends JavaObject implements Comparable<DateManager> {
 		return JavaInteger.compare(this.tag, other.tag);
 	}
 
-	public hashCode() : number {
+	public hashCode(): number {
 		return (this.jahr * 10000) + (this.monat * 100) + this.tag;
 	}
 
-	public equals(obj : unknown | null) : boolean {
+	public equals(obj: unknown | null): boolean {
 		if (this as unknown === obj as unknown)
 			return true;
 		if ((obj !== null) && (((obj instanceof JavaObject) && (obj.isTranspiledInstanceOf('de.svws_nrw.asd.validate.DateManager')))))
@@ -285,7 +285,7 @@ export class DateManager extends JavaObject implements Comparable<DateManager> {
 	 *
 	 * @return der Tag im Monat
 	 */
-	public getTag() : number {
+	public getTag(): number {
 		return this.tag;
 	}
 
@@ -294,7 +294,7 @@ export class DateManager extends JavaObject implements Comparable<DateManager> {
 	 *
 	 * @return der Monat
 	 */
-	public getMonat() : number {
+	public getMonat(): number {
 		return this.monat;
 	}
 
@@ -303,7 +303,7 @@ export class DateManager extends JavaObject implements Comparable<DateManager> {
 	 *
 	 * @return das Jahr
 	 */
-	public getJahr() : number {
+	public getJahr(): number {
 		return this.jahr;
 	}
 
@@ -312,7 +312,7 @@ export class DateManager extends JavaObject implements Comparable<DateManager> {
 	 *
 	 * @return true, falls ein Schaltjahr vorliegt, und ansonsten false
 	 */
-	public isSchaltjahr() : boolean {
+	public isSchaltjahr(): boolean {
 		return this.istSchaltjahr;
 	}
 
@@ -321,7 +321,7 @@ export class DateManager extends JavaObject implements Comparable<DateManager> {
 	 *
 	 * @return der Tag im Jahr
 	 */
-	public getTagImJahr() : number {
+	public getTagImJahr(): number {
 		return this.tagImJahr;
 	}
 
@@ -331,7 +331,7 @@ export class DateManager extends JavaObject implements Comparable<DateManager> {
 	 *
 	 * @return 28, 29, 30 oder 31
 	 */
-	public getMaxTageImMonat() : number {
+	public getMaxTageImMonat(): number {
 		return this.maxTageImMonat;
 	}
 
@@ -340,7 +340,7 @@ export class DateManager extends JavaObject implements Comparable<DateManager> {
 	 *
 	 * @return der Wochentag
 	 */
-	public getWochentag() : number {
+	public getWochentag(): number {
 		return this.wochentag;
 	}
 
@@ -351,7 +351,7 @@ export class DateManager extends JavaObject implements Comparable<DateManager> {
 	 *
 	 * @return die Kalenderwoche
 	 */
-	public getKalenderwoche() : number {
+	public getKalenderwoche(): number {
 		return this.kalenderwoche;
 	}
 
@@ -361,7 +361,7 @@ export class DateManager extends JavaObject implements Comparable<DateManager> {
 	 *
 	 * @return das Kalenderwochenjahr
 	 */
-	public getKalenderwochenjahr() : number {
+	public getKalenderwochenjahr(): number {
 		return this.kalenderwochenjahr;
 	}
 
@@ -377,11 +377,11 @@ export class DateManager extends JavaObject implements Comparable<DateManager> {
 	 * @throws InvalidDateException falls das übergebene Datum früher liegt als
 	 *     das Geburtsdatum des Managers
 	 */
-	public getAlter(other : DateManager) : number {
-		const cmp : number = this.compareTo(other);
+	public getAlter(other: DateManager): number {
+		const cmp: number = this.compareTo(other);
 		if (cmp < 0)
 			throw new InvalidDateException("Das angegebene Datum ist vor dem Geburtsdatum. Eine Altersbestimmung ist so nicht möglich.")
-		const tmp : number = other.jahr - this.jahr;
+		const tmp: number = other.jahr - this.jahr;
 		if ((other.monat < this.monat) || ((other.monat === this.monat) && (other.tag < this.tag)))
 			return tmp - 1;
 		return tmp;
@@ -395,7 +395,7 @@ export class DateManager extends JavaObject implements Comparable<DateManager> {
 	 *
 	 * @return true, falls das Datum in dem Bereich liegt, und ansonsten false
 	 */
-	public istInJahren(von : number, bis : number) : boolean {
+	public istInJahren(von: number, bis: number): boolean {
 		return (von <= this.jahr) && (this.jahr <= bis);
 	}
 
@@ -403,7 +403,7 @@ export class DateManager extends JavaObject implements Comparable<DateManager> {
 		return 'de.svws_nrw.asd.validate.DateManager';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.asd.validate.DateManager', 'java.lang.Comparable'].includes(name);
 	}
 
@@ -411,6 +411,6 @@ export class DateManager extends JavaObject implements Comparable<DateManager> {
 
 }
 
-export function cast_de_svws_nrw_asd_validate_DateManager(obj : unknown) : DateManager {
+export function cast_de_svws_nrw_asd_validate_DateManager(obj: unknown): DateManager {
 	return obj as DateManager;
 }

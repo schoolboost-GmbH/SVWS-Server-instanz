@@ -17,7 +17,7 @@ export class KursblockungAlgorithmusPermanentKOptimiereBest extends Kursblockung
 	 * @param input   Die dynamischen Blockungsdaten.
 	 * @param best    Der Zustand des derzeit besten Ergebnisses.
 	 */
-	public constructor(random : Random, logger : Logger, input : GostBlockungsdatenManager, best : KursblockungDynDaten | null) {
+	public constructor(random: Random, logger: Logger, input: GostBlockungsdatenManager, best: KursblockungDynDaten | null) {
 		super(random, logger, input);
 		if (best === null) {
 			this.dynDaten.aktionSchuelerAusAllenKursenEntfernen();
@@ -29,17 +29,17 @@ export class KursblockungAlgorithmusPermanentKOptimiereBest extends Kursblockung
 		this.dynDaten.aktionZustandSpeichernK();
 	}
 
-	public toString() : string {
+	public toString(): string {
 		return "KursblockungAlgorithmusPermanentKOptimiereBest";
 	}
 
-	public next(zeitEnde : number) : void {
+	public next(zeitEnde: number): void {
 		do {
 			this.verteileKurse();
 		} while (System.currentTimeMillis() < zeitEnde);
 	}
 
-	private verteileKurse() : void {
+	private verteileKurse(): void {
 		do {
 			this.dynDaten.aktionSchuelerAusAllenKursenEntfernen();
 			this.dynDaten.aktionKursVerteilenEinenZufaelligenFreien();
@@ -58,7 +58,7 @@ export class KursblockungAlgorithmusPermanentKOptimiereBest extends Kursblockung
 		this.dynDaten.aktionZustandLadenK();
 	}
 
-	public ladeBestMitSchuelerverteilung() : void {
+	public ladeBestMitSchuelerverteilung(): void {
 		this.dynDaten.aktionZustandLadenK();
 	}
 
@@ -66,7 +66,7 @@ export class KursblockungAlgorithmusPermanentKOptimiereBest extends Kursblockung
 		return 'de.svws_nrw.core.kursblockung.KursblockungAlgorithmusPermanentKOptimiereBest';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.kursblockung.KursblockungAlgorithmusPermanentK', 'de.svws_nrw.core.kursblockung.KursblockungAlgorithmusPermanentKOptimiereBest'].includes(name);
 	}
 
@@ -74,6 +74,6 @@ export class KursblockungAlgorithmusPermanentKOptimiereBest extends Kursblockung
 
 }
 
-export function cast_de_svws_nrw_core_kursblockung_KursblockungAlgorithmusPermanentKOptimiereBest(obj : unknown) : KursblockungAlgorithmusPermanentKOptimiereBest {
+export function cast_de_svws_nrw_core_kursblockung_KursblockungAlgorithmusPermanentKOptimiereBest(obj: unknown): KursblockungAlgorithmusPermanentKOptimiereBest {
 	return obj as KursblockungAlgorithmusPermanentKOptimiereBest;
 }

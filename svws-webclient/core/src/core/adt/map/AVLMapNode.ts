@@ -9,42 +9,42 @@ export class AVLMapNode<K, V> extends JavaObject implements JavaMapEntry<K, V> {
 	/**
 	 *  Der Schlüsselwert des Baum-Eintrags.
 	 */
-	readonly _key : K;
+	readonly _key: K;
 
 	/**
 	 *  Der zum Schlüsselwert zugeordnete Wert des Baum-Eintrags.
 	 */
-	_val : V;
+	_val: V;
 
 	/**
 	 *  Der Vorgänger-Knoten.
 	 */
-	_prev : AVLMapNode<K, V> | null = null;
+	_prev: AVLMapNode<K, V> | null = null;
 
 	/**
 	 *  Der Nachfolger-Knoten.
 	 */
-	_next : AVLMapNode<K, V> | null = null;
+	_next: AVLMapNode<K, V> | null = null;
 
 	/**
 	 *  Das linke Kind des Knotens.
 	 */
-	_childL : AVLMapNode<K, V> | null = null;
+	_childL: AVLMapNode<K, V> | null = null;
 
 	/**
 	 *  Das rechte Kind des Knotens.
 	 */
-	_childR : AVLMapNode<K, V> | null = null;
+	_childR: AVLMapNode<K, V> | null = null;
 
 	/**
 	 *  Die Höhe des Teilbaums dieses Knotens.
 	 */
-	_height : number = 1;
+	_height: number = 1;
 
 	/**
 	 *  Die Summe aller Elemente der Sub-Bäume plus diesem Element.
 	 */
-	_size : number = 1;
+	_size: number = 1;
 
 
 	/**
@@ -53,38 +53,38 @@ export class AVLMapNode<K, V> extends JavaObject implements JavaMapEntry<K, V> {
 	 * @param key Der Schlüssel (Key). Der Wert darf nicht NULL sein.
 	 * @param val Der Wert (Value), welcher dem Schlüssel (Key) zugeordnet ist. Der Wert darf nicht NULL sein.
 	 */
-	constructor(key : K, val : V) {
+	constructor(key: K, val: V) {
 		super();
 		this._key = key;
 		this._val = val;
 	}
 
-	public toString() : string {
+	public toString(): string {
 		return "[" + this._key + ", " + this._val + "]";
 	}
 
-	public equals(o : unknown | null) : boolean {
+	public equals(o: unknown | null): boolean {
 		if (o === null)
 			return false;
 		if (!(((o instanceof JavaObject) && (o.isTranspiledInstanceOf('java.util.Map.Entry')))))
 			return false;
-		const e : JavaMapEntry<any, any> | null = cast_java_util_Map_Entry(o);
+		const e: JavaMapEntry<any, any> | null = cast_java_util_Map_Entry(o);
 		return JavaObject.equalsTranspiler(this._key, (e.getKey())) && (JavaObject.equalsTranspiler(this._val, (e.getValue())));
 	}
 
-	public hashCode() : number {
+	public hashCode(): number {
 		return JavaObject.getTranspilerHashCode(this._key) ^ JavaObject.getTranspilerHashCode(this._val);
 	}
 
-	public getKey() : K {
+	public getKey(): K {
 		return this._key;
 	}
 
-	public getValue() : V {
+	public getValue(): V {
 		return this._val;
 	}
 
-	public setValue(value : V) : V {
+	public setValue(value: V): V {
 		throw new UnsupportedOperationException()
 	}
 
@@ -92,7 +92,7 @@ export class AVLMapNode<K, V> extends JavaObject implements JavaMapEntry<K, V> {
 		return 'de.svws_nrw.core.adt.map.AVLMapNode';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['java.util.Map.Entry', 'de.svws_nrw.core.adt.map.AVLMapNode'].includes(name);
 	}
 
@@ -100,6 +100,6 @@ export class AVLMapNode<K, V> extends JavaObject implements JavaMapEntry<K, V> {
 
 }
 
-export function cast_de_svws_nrw_core_adt_map_AVLMapNode<K, V>(obj : unknown) : AVLMapNode<K, V> {
+export function cast_de_svws_nrw_core_adt_map_AVLMapNode<K, V>(obj: unknown): AVLMapNode<K, V> {
 	return obj as AVLMapNode<K, V>;
 }

@@ -23,9 +23,9 @@ import { GostKursklausurRich } from '../../../../core/data/gost/klausurplanung/G
 
 export class KlausurterminblockungAlgorithmus extends JavaObject {
 
-	private static readonly _random : Random = new Random();
+	private static readonly _random: Random = new Random();
 
-	private static readonly _compGostKursklausurRich : Comparator<GostKursklausurRich> = { compare : (a: GostKursklausurRich, b: GostKursklausurRich) => {
+	private static readonly _compGostKursklausurRich: Comparator<GostKursklausurRich> = { compare: (a: GostKursklausurRich, b: GostKursklausurRich) => {
 		if (a.halbjahr < b.halbjahr)
 			return -1;
 		if (a.halbjahr > b.halbjahr)
@@ -40,7 +40,7 @@ export class KlausurterminblockungAlgorithmus extends JavaObject {
 	/**
 	 * Ein Logger für Debug-Zwecke.
 	 */
-	private readonly _logger : Logger;
+	private readonly _logger: Logger;
 
 
 	/**
@@ -53,17 +53,17 @@ export class KlausurterminblockungAlgorithmus extends JavaObject {
 	 *
 	 * @param pLogger  Ein Logger für Debug-Zwecke.
 	 */
-	public constructor(pLogger : Logger);
+	public constructor(pLogger: Logger);
 
 	/**
 	 * Implementation for method overloads of 'constructor'
 	 */
-	public constructor(__param0? : Logger) {
+	public constructor(__param0?: Logger) {
 		super();
 		if ((__param0 === undefined)) {
 			this._logger = new Logger();
 		} else if (((__param0 !== undefined) && ((__param0 instanceof JavaObject) && (__param0.isTranspiledInstanceOf('de.svws_nrw.core.logger.Logger'))))) {
-			const pLogger : Logger = cast_de_svws_nrw_core_logger_Logger(__param0);
+			const pLogger: Logger = cast_de_svws_nrw_core_logger_Logger(__param0);
 			this._logger = pLogger;
 		} else throw new Error('invalid method overload');
 	}
@@ -75,13 +75,13 @@ export class KlausurterminblockungAlgorithmus extends JavaObject {
 	 *
 	 * @return die Liste der Termine
 	 */
-	public apply(daten : GostKlausurterminblockungDaten) : GostKlausurterminblockungErgebnis {
-		const out : GostKlausurterminblockungErgebnis = new GostKlausurterminblockungErgebnis();
+	public apply(daten: GostKlausurterminblockungDaten): GostKlausurterminblockungErgebnis {
+		const out: GostKlausurterminblockungErgebnis = new GostKlausurterminblockungErgebnis();
 		this.berechneRekursivQuartalsModus(daten.richKlausuren, daten.konfiguration, out);
 		return out;
 	}
 
-	private berechneRekursivQuartalsModus(input : List<GostKursklausurRich>, config : GostKlausurterminblockungKonfiguration, out : GostKlausurterminblockungErgebnis) : void {
+	private berechneRekursivQuartalsModus(input: List<GostKursklausurRich>, config: GostKlausurterminblockungKonfiguration, out: GostKlausurterminblockungErgebnis): void {
 		if (input.isEmpty())
 			return;
 		if (config.modusQuartale === KlausurterminblockungModusQuartale.ZUSAMMEN.id) {
@@ -89,7 +89,7 @@ export class KlausurterminblockungAlgorithmus extends JavaObject {
 			return;
 		}
 		input.sort(KlausurterminblockungAlgorithmus._compGostKursklausurRich);
-		const temp : List<GostKursklausurRich> = new ArrayList<GostKursklausurRich>();
+		const temp: List<GostKursklausurRich> = new ArrayList<GostKursklausurRich>();
 		for (const klausur of input) {
 			if (temp.isEmpty()) {
 				temp.add(klausur);
@@ -109,8 +109,8 @@ export class KlausurterminblockungAlgorithmus extends JavaObject {
 		}
 	}
 
-	private berechneRekursivLkGkModus(input : List<GostKursklausurRich>, config : GostKlausurterminblockungKonfiguration, out : GostKlausurterminblockungErgebnis) : void {
-		const modus : KlausurterminblockungModusKursarten = KlausurterminblockungModusKursarten.getOrException(config.modusKursarten);
+	private berechneRekursivLkGkModus(input: List<GostKursklausurRich>, config: GostKlausurterminblockungKonfiguration, out: GostKlausurterminblockungErgebnis): void {
+		const modus: KlausurterminblockungModusKursarten = KlausurterminblockungModusKursarten.getOrException(config.modusKursarten);
 		switch (modus) {
 			case KlausurterminblockungModusKursarten.BEIDE: {
 				this.berechne_helper(input, config, out);
@@ -143,8 +143,8 @@ export class KlausurterminblockungAlgorithmus extends JavaObject {
 	 *
 	 * @return die Liste pInput nach LK-Klausuren (oder dem Gegenteil) gefiltert heraus.
 	 */
-	private static filter(input : List<GostKursklausurRich>, istLK : boolean) : List<GostKursklausurRich> {
-		const temp : List<GostKursklausurRich> = new ArrayList<GostKursklausurRich>();
+	private static filter(input: List<GostKursklausurRich>, istLK: boolean): List<GostKursklausurRich> {
+		const temp: List<GostKursklausurRich> = new ArrayList<GostKursklausurRich>();
 		for (const gostKursklausur of input)
 			if (JavaObject.equalsTranspiler(gostKursklausur.kursart, ("LK")) === istLK)
 				temp.add(gostKursklausur);
@@ -158,21 +158,21 @@ export class KlausurterminblockungAlgorithmus extends JavaObject {
 	 * @param config  die Konfiguration der Blockung.
 	 * @param out     die Termin-Klausur-Zuordnung (Ausgabe).
 	 */
-	private berechne_helper(input : List<GostKursklausurRich>, config : GostKlausurterminblockungKonfiguration, out : GostKlausurterminblockungErgebnis) : void {
+	private berechne_helper(input: List<GostKursklausurRich>, config: GostKlausurterminblockungKonfiguration, out: GostKlausurterminblockungErgebnis): void {
 		this._logger.log("KlausurterminblockungAlgorithmus");
 		this._logger.modifyIndent(+4);
-		const zeitEndeGesamt : number = System.currentTimeMillis() + config.maxTimeMillis;
-		const seed : number = KlausurterminblockungAlgorithmus._random.nextLong();
-		const random : Random = new Random(seed);
-		const dynDaten : KlausurterminblockungDynDaten | null = new KlausurterminblockungDynDaten(this._logger, random, input, config);
-		const algorithmen : Array<KlausurterminblockungAlgorithmusAbstract> = [new KlausurterminblockungAlgorithmusGreedy1(random, dynDaten), new KlausurterminblockungAlgorithmusGreedy1b(random, dynDaten), new KlausurterminblockungAlgorithmusGreedy2(random, dynDaten), new KlausurterminblockungAlgorithmusGreedy2b(random, dynDaten), new KlausurterminblockungAlgorithmusGreedy3(random, dynDaten)];
+		const zeitEndeGesamt: number = System.currentTimeMillis() + config.maxTimeMillis;
+		const seed: number = KlausurterminblockungAlgorithmus._random.nextLong();
+		const random: Random = new Random(seed);
+		const dynDaten: KlausurterminblockungDynDaten | null = new KlausurterminblockungDynDaten(this._logger, random, input, config);
+		const algorithmen: Array<KlausurterminblockungAlgorithmusAbstract> = [new KlausurterminblockungAlgorithmusGreedy1(random, dynDaten), new KlausurterminblockungAlgorithmusGreedy1b(random, dynDaten), new KlausurterminblockungAlgorithmusGreedy2(random, dynDaten), new KlausurterminblockungAlgorithmusGreedy2b(random, dynDaten), new KlausurterminblockungAlgorithmusGreedy3(random, dynDaten)];
 		dynDaten.aktion_Clear_TermineNacheinander_GruppeZufaellig();
 		dynDaten.aktionZustand2Speichern();
-		let zeitProAlgorithmus : number = 10;
+		let zeitProAlgorithmus: number = 10;
 		do {
 			this._logger.log("zeitProAlgorithmus --> " + zeitProAlgorithmus);
 			for (const algorithmus of algorithmen) {
-				const zeitEndeRunde : number = System.currentTimeMillis() + zeitProAlgorithmus;
+				const zeitEndeRunde: number = System.currentTimeMillis() + zeitProAlgorithmus;
 				algorithmus.berechne(zeitEndeRunde);
 				this._logger.log(algorithmus.toString() + " --> " + dynDaten.gibTerminAnzahl());
 			}
@@ -187,7 +187,7 @@ export class KlausurterminblockungAlgorithmus extends JavaObject {
 		return 'de.svws_nrw.core.utils.gost.klausurplanung.KlausurterminblockungAlgorithmus';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.utils.gost.klausurplanung.KlausurterminblockungAlgorithmus'].includes(name);
 	}
 
@@ -195,6 +195,6 @@ export class KlausurterminblockungAlgorithmus extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_utils_gost_klausurplanung_KlausurterminblockungAlgorithmus(obj : unknown) : KlausurterminblockungAlgorithmus {
+export function cast_de_svws_nrw_core_utils_gost_klausurplanung_KlausurterminblockungAlgorithmus(obj: unknown): KlausurterminblockungAlgorithmus {
 	return obj as KlausurterminblockungAlgorithmus;
 }

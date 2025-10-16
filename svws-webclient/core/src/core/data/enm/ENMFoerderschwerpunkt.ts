@@ -6,17 +6,17 @@ export class ENMFoerderschwerpunkt extends JavaObject {
 	/**
 	 * Die ID des Förderschwerpunktes.
 	 */
-	public id : number = 0;
+	public id: number = 0;
 
 	/**
 	 * Das Kürzel, welche im Rahmen der amtlichen Schulstatistik verwendet wird
 	 */
-	public kuerzel : string | null = null;
+	public kuerzel: string | null = null;
 
 	/**
 	 * Die textuelle Bezeichnung des Förderschwerpunktes.
 	 */
-	public beschreibung : string | null = null;
+	public beschreibung: string | null = null;
 
 
 	/**
@@ -30,13 +30,13 @@ export class ENMFoerderschwerpunkt extends JavaObject {
 		return 'de.svws_nrw.core.data.enm.ENMFoerderschwerpunkt';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.enm.ENMFoerderschwerpunkt'].includes(name);
 	}
 
 	public static class = new Class<ENMFoerderschwerpunkt>('de.svws_nrw.core.data.enm.ENMFoerderschwerpunkt');
 
-	public static transpilerFromJSON(json : string): ENMFoerderschwerpunkt {
+	public static transpilerFromJSON(json: string): ENMFoerderschwerpunkt {
 		const obj = JSON.parse(json) as Partial<ENMFoerderschwerpunkt>;
 		const result = new ENMFoerderschwerpunkt();
 		if (obj.id === undefined)
@@ -47,7 +47,7 @@ export class ENMFoerderschwerpunkt extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : ENMFoerderschwerpunkt) : string {
+	public static transpilerToJSON(obj: ENMFoerderschwerpunkt): string {
 		let result = '{';
 		result += '"id" : ' + obj.id.toString() + ',';
 		result += '"kuerzel" : ' + ((obj.kuerzel === null) ? 'null' : JSON.stringify(obj.kuerzel)) + ',';
@@ -57,7 +57,7 @@ export class ENMFoerderschwerpunkt extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<ENMFoerderschwerpunkt>) : string {
+	public static transpilerToJSONPatch(obj: Partial<ENMFoerderschwerpunkt>): string {
 		let result = '{';
 		if (obj.id !== undefined) {
 			result += '"id" : ' + obj.id.toString() + ',';
@@ -75,6 +75,6 @@ export class ENMFoerderschwerpunkt extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_enm_ENMFoerderschwerpunkt(obj : unknown) : ENMFoerderschwerpunkt {
+export function cast_de_svws_nrw_core_data_enm_ENMFoerderschwerpunkt(obj: unknown): ENMFoerderschwerpunkt {
 	return obj as ENMFoerderschwerpunkt;
 }

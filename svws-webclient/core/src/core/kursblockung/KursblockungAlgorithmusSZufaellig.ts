@@ -11,17 +11,17 @@ export class KursblockungAlgorithmusSZufaellig extends KursblockungAlgorithmusS 
 	/**
 	 *  Die Anzahl an Runden ohne Verbesserung, bevor es zum Abbruch kommt.
 	 */
-	private static readonly MAX_RUNDEN_IN_FOLGE_OHNE_VERBESSERUNG : number = 30;
+	private static readonly MAX_RUNDEN_IN_FOLGE_OHNE_VERBESSERUNG: number = 30;
 
 	/**
 	 *  Array der SuS, deren Kurse verteilt werden sollen.
 	 */
-	private readonly _schuelerArr : Array<KursblockungDynSchueler>;
+	private readonly _schuelerArr: Array<KursblockungDynSchueler>;
 
 	/**
 	 *  Zur Speicherung einer zufälligen Permutation der Indizes der Schüler.
 	 */
-	private readonly _perm : Array<number>;
+	private readonly _perm: Array<number>;
 
 
 	/**
@@ -32,7 +32,7 @@ export class KursblockungAlgorithmusSZufaellig extends KursblockungAlgorithmusS 
 	 * @param logger Logger zum Protokollieren von Warnungen und Fehlern.
 	 * @param dynDat Die dynamischen Blockungsdaten.
 	 */
-	public constructor(random : Random, logger : Logger, dynDat : KursblockungDynDaten) {
+	public constructor(random: Random, logger: Logger, dynDat: KursblockungDynDaten) {
 		super(random, logger, dynDat);
 		this._schuelerArr = dynDat.gibSchuelerArrayAlle();
 		this._perm = KursblockungStatic.gibPermutation(this._random, this._schuelerArr.length);
@@ -42,10 +42,10 @@ export class KursblockungAlgorithmusSZufaellig extends KursblockungAlgorithmusS 
 	 * Der Algorithmus verteilt die SuS auf ihre Kurse zufällig. Kommt es während des Verteilens zur Kollision, so wird
 	 * der Kurs nicht gewählt.
 	 */
-	public berechne() : void {
+	public berechne(): void {
 		this.dynDaten.aktionSchuelerAusAllenKursenEntfernen();
 		this.dynDaten.gibStatistik().aktionBewertungSpeichernS();
-		let countKeineVerbesserung : number = 0;
+		let countKeineVerbesserung: number = 0;
 		do {
 			countKeineVerbesserung = this.verteileSchuelerAlle() ? 0 : (countKeineVerbesserung + 1);
 		} while (countKeineVerbesserung < KursblockungAlgorithmusSZufaellig.MAX_RUNDEN_IN_FOLGE_OHNE_VERBESSERUNG);
@@ -57,23 +57,23 @@ export class KursblockungAlgorithmusSZufaellig extends KursblockungAlgorithmusS 
 	 *
 	 * @return TRUE, falls der Zustand sich verbessert hat.
 	 */
-	private verteileSchuelerAlle() : boolean {
-		let verbesserung : boolean = false;
+	private verteileSchuelerAlle(): boolean {
+		let verbesserung: boolean = false;
 		KursblockungStatic.aktionPermutiere(this._random, this._perm);
-		for (let p : number = 0; p < this._schuelerArr.length; p++) {
-			const i : number = this._perm[p];
+		for (let p: number = 0; p < this._schuelerArr.length; p++) {
+			const i: number = this._perm[p];
 			verbesserung = verbesserung || this.verteileSchuelerEiner(this._schuelerArr[i]);
 		}
 		return verbesserung;
 	}
 
-	private verteileSchuelerEiner(schueler : KursblockungDynSchueler) : boolean {
+	private verteileSchuelerEiner(schueler: KursblockungDynSchueler): boolean {
 		this.dynDaten.gibStatistik().aktionBewertungSpeichernS();
 		schueler.aktionZustandSpeichernS();
 		schueler.aktionKurseAlleEntfernen();
 		schueler.aktionKurseVerteilenNurFachartenMitEinemErlaubtenKurs();
 		schueler.aktionKurseVerteilenZufaellig();
-		const cmp : number = this.dynDaten.gibStatistik().gibBewertungZustandS_NW_KD();
+		const cmp: number = this.dynDaten.gibStatistik().gibBewertungZustandS_NW_KD();
 		if (cmp < 0)
 			schueler.aktionZustandLadenS();
 		return cmp > 0;
@@ -83,7 +83,7 @@ export class KursblockungAlgorithmusSZufaellig extends KursblockungAlgorithmusS 
 		return 'de.svws_nrw.core.kursblockung.KursblockungAlgorithmusSZufaellig';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.kursblockung.KursblockungAlgorithmusS', 'de.svws_nrw.core.kursblockung.KursblockungAlgorithmusSZufaellig'].includes(name);
 	}
 
@@ -91,6 +91,6 @@ export class KursblockungAlgorithmusSZufaellig extends KursblockungAlgorithmusS 
 
 }
 
-export function cast_de_svws_nrw_core_kursblockung_KursblockungAlgorithmusSZufaellig(obj : unknown) : KursblockungAlgorithmusSZufaellig {
+export function cast_de_svws_nrw_core_kursblockung_KursblockungAlgorithmusSZufaellig(obj: unknown): KursblockungAlgorithmusSZufaellig {
 	return obj as KursblockungAlgorithmusSZufaellig;
 }

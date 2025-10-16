@@ -6,32 +6,32 @@ export class SchuldateiOrganisationseinheitErreichbarkeit extends SchuldateiEint
 	/**
 	 * Die Schulnummer.
 	 */
-	public schulnummer : string = "";
+	public schulnummer: string = "";
 
 	/**
 	 * Die ID des Erreichbarkeits-Eintrags.
 	 */
-	public id : number | null = null;
+	public id: number | null = null;
 
 	/**
 	 * Die Nummer der Liegenschaft der Organisationseinheit
 	 */
-	public liegenschaft : number = 0;
+	public liegenschaft: number = 0;
 
 	/**
 	 * Kommgruppe des Eintrags
 	 */
-	public kommgruppe : string = "";
+	public kommgruppe: string = "";
 
 	/**
 	 * codekey des Eintrags
 	 */
-	public codekey : string = "";
+	public codekey: string = "";
 
 	/**
 	 * codewert des Eintrags
 	 */
-	public codewert : string = "";
+	public codewert: string = "";
 
 
 	/**
@@ -45,13 +45,13 @@ export class SchuldateiOrganisationseinheitErreichbarkeit extends SchuldateiEint
 		return 'de.svws_nrw.schulen.v1.data.SchuldateiOrganisationseinheitErreichbarkeit';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.schulen.v1.data.SchuldateiEintrag', 'de.svws_nrw.schulen.v1.data.SchuldateiOrganisationseinheitErreichbarkeit'].includes(name);
 	}
 
 	public static class = new Class<SchuldateiOrganisationseinheitErreichbarkeit>('de.svws_nrw.schulen.v1.data.SchuldateiOrganisationseinheitErreichbarkeit');
 
-	public static transpilerFromJSON(json : string): SchuldateiOrganisationseinheitErreichbarkeit {
+	public static transpilerFromJSON(json: string): SchuldateiOrganisationseinheitErreichbarkeit {
 		const obj = JSON.parse(json) as Partial<SchuldateiOrganisationseinheitErreichbarkeit>;
 		const result = new SchuldateiOrganisationseinheitErreichbarkeit();
 		result.gueltigab = (obj.gueltigab === undefined) ? null : obj.gueltigab === null ? null : obj.gueltigab;
@@ -76,7 +76,7 @@ export class SchuldateiOrganisationseinheitErreichbarkeit extends SchuldateiEint
 		return result;
 	}
 
-	public static transpilerToJSON(obj : SchuldateiOrganisationseinheitErreichbarkeit) : string {
+	public static transpilerToJSON(obj: SchuldateiOrganisationseinheitErreichbarkeit): string {
 		let result = '{';
 		result += '"gueltigab" : ' + ((obj.gueltigab === null) ? 'null' : JSON.stringify(obj.gueltigab)) + ',';
 		result += '"gueltigbis" : ' + ((obj.gueltigbis === null) ? 'null' : JSON.stringify(obj.gueltigbis)) + ',';
@@ -92,7 +92,7 @@ export class SchuldateiOrganisationseinheitErreichbarkeit extends SchuldateiEint
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<SchuldateiOrganisationseinheitErreichbarkeit>) : string {
+	public static transpilerToJSONPatch(obj: Partial<SchuldateiOrganisationseinheitErreichbarkeit>): string {
 		let result = '{';
 		if (obj.gueltigab !== undefined) {
 			result += '"gueltigab" : ' + ((obj.gueltigab === null) ? 'null' : JSON.stringify(obj.gueltigab)) + ',';
@@ -128,6 +128,6 @@ export class SchuldateiOrganisationseinheitErreichbarkeit extends SchuldateiEint
 
 }
 
-export function cast_de_svws_nrw_schulen_v1_data_SchuldateiOrganisationseinheitErreichbarkeit(obj : unknown) : SchuldateiOrganisationseinheitErreichbarkeit {
+export function cast_de_svws_nrw_schulen_v1_data_SchuldateiOrganisationseinheitErreichbarkeit(obj: unknown): SchuldateiOrganisationseinheitErreichbarkeit {
 	return obj as SchuldateiOrganisationseinheitErreichbarkeit;
 }

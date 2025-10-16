@@ -12,22 +12,22 @@ export class StundenplanKomplett extends JavaObject {
 	/**
 	 * Die Grunddaten des Stundenplans.
 	 */
-	public daten : Stundenplan = new Stundenplan();
+	public daten: Stundenplan = new Stundenplan();
 
 	/**
 	 * Die Unterrichtsdaten des Stundenplans.
 	 */
-	public unterrichte : List<StundenplanUnterricht> = new ArrayList<StundenplanUnterricht>();
+	public unterrichte: List<StundenplanUnterricht> = new ArrayList<StundenplanUnterricht>();
 
 	/**
 	 * Die Informationen zu den Pausenaufsichten.
 	 */
-	public pausenaufsichten : List<StundenplanPausenaufsicht> = new ArrayList<StundenplanPausenaufsicht>();
+	public pausenaufsichten: List<StundenplanPausenaufsicht> = new ArrayList<StundenplanPausenaufsicht>();
 
 	/**
 	 * Die Zusatzinformationen zu der Unterrichtsverteilung.
 	 */
-	public unterrichtsverteilung : StundenplanUnterrichtsverteilung = new StundenplanUnterrichtsverteilung();
+	public unterrichtsverteilung: StundenplanUnterrichtsverteilung = new StundenplanUnterrichtsverteilung();
 
 
 	/**
@@ -41,13 +41,13 @@ export class StundenplanKomplett extends JavaObject {
 		return 'de.svws_nrw.core.data.stundenplan.StundenplanKomplett';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.stundenplan.StundenplanKomplett'].includes(name);
 	}
 
 	public static class = new Class<StundenplanKomplett>('de.svws_nrw.core.data.stundenplan.StundenplanKomplett');
 
-	public static transpilerFromJSON(json : string): StundenplanKomplett {
+	public static transpilerFromJSON(json: string): StundenplanKomplett {
 		const obj = JSON.parse(json) as Partial<StundenplanKomplett>;
 		const result = new StundenplanKomplett();
 		if (obj.daten === undefined)
@@ -69,7 +69,7 @@ export class StundenplanKomplett extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : StundenplanKomplett) : string {
+	public static transpilerToJSON(obj: StundenplanKomplett): string {
 		let result = '{';
 		result += '"daten" : ' + Stundenplan.transpilerToJSON(obj.daten) + ',';
 		result += '"unterrichte" : [ ';
@@ -94,7 +94,7 @@ export class StundenplanKomplett extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<StundenplanKomplett>) : string {
+	public static transpilerToJSONPatch(obj: Partial<StundenplanKomplett>): string {
 		let result = '{';
 		if (obj.daten !== undefined) {
 			result += '"daten" : ' + Stundenplan.transpilerToJSON(obj.daten) + ',';
@@ -129,6 +129,6 @@ export class StundenplanKomplett extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_stundenplan_StundenplanKomplett(obj : unknown) : StundenplanKomplett {
+export function cast_de_svws_nrw_core_data_stundenplan_StundenplanKomplett(obj: unknown): StundenplanKomplett {
 	return obj as StundenplanKomplett;
 }

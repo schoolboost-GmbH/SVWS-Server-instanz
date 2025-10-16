@@ -9,17 +9,17 @@ import { de_svws_nrw_asd_types_CoreType_getManager, de_svws_nrw_asd_types_CoreTy
 export class KAOAMerkmaleOptionsarten extends JavaEnum<KAOAMerkmaleOptionsarten> implements CoreType<KAOAMerkmaleOptionsartenKatalogEintrag, KAOAMerkmaleOptionsarten> {
 
 	/** an array containing all values of this enumeration */
-	static readonly all_values_by_ordinal : Array<KAOAMerkmaleOptionsarten> = [];
+	static readonly all_values_by_ordinal: Array<KAOAMerkmaleOptionsarten> = [];
 
 	/** an array containing all values of this enumeration indexed by their name*/
-	static readonly all_values_by_name : Map<string, KAOAMerkmaleOptionsarten> = new Map<string, KAOAMerkmaleOptionsarten>();
+	static readonly all_values_by_name: Map<string, KAOAMerkmaleOptionsarten> = new Map<string, KAOAMerkmaleOptionsarten>();
 
 	/**
 	 * Keine Option für das KAoA-Merkmal
 	 */
-	public static readonly KEINE : KAOAMerkmaleOptionsarten = new KAOAMerkmaleOptionsarten("KEINE", 0, );
+	public static readonly KEINE: KAOAMerkmaleOptionsarten = new KAOAMerkmaleOptionsarten("KEINE", 0, );
 
-	private constructor(name : string, ordinal : number) {
+	private constructor(name: string, ordinal: number) {
 		super(name, ordinal);
 		KAOAMerkmaleOptionsarten.all_values_by_ordinal.push(this);
 		KAOAMerkmaleOptionsarten.all_values_by_name.set(name, this);
@@ -30,7 +30,7 @@ export class KAOAMerkmaleOptionsarten extends JavaEnum<KAOAMerkmaleOptionsarten>
 	 *
 	 * @param manager   der Manager für die Daten des Core-Types
 	 */
-	public static init(manager : CoreTypeDataManager<KAOAMerkmaleOptionsartenKatalogEintrag, KAOAMerkmaleOptionsarten>) : void {
+	public static init(manager: CoreTypeDataManager<KAOAMerkmaleOptionsartenKatalogEintrag, KAOAMerkmaleOptionsarten>): void {
 		CoreTypeDataManager.putManager(KAOAMerkmaleOptionsarten.class, manager);
 	}
 
@@ -39,7 +39,7 @@ export class KAOAMerkmaleOptionsarten extends JavaEnum<KAOAMerkmaleOptionsarten>
 	 *
 	 * @return der Daten-Manager
 	 */
-	public static data() : CoreTypeDataManager<KAOAMerkmaleOptionsartenKatalogEintrag, KAOAMerkmaleOptionsarten> {
+	public static data(): CoreTypeDataManager<KAOAMerkmaleOptionsartenKatalogEintrag, KAOAMerkmaleOptionsarten> {
 		return CoreTypeDataManager.getManager(KAOAMerkmaleOptionsarten.class);
 	}
 
@@ -48,7 +48,7 @@ export class KAOAMerkmaleOptionsarten extends JavaEnum<KAOAMerkmaleOptionsarten>
 	 *
 	 * @returns the array with enumeration values
 	 */
-	public static values() : Array<KAOAMerkmaleOptionsarten> {
+	public static values(): Array<KAOAMerkmaleOptionsarten> {
 		return [...this.all_values_by_ordinal];
 	}
 
@@ -59,24 +59,24 @@ export class KAOAMerkmaleOptionsarten extends JavaEnum<KAOAMerkmaleOptionsarten>
 	 *
 	 * @returns the enumeration values or null
 	 */
-	public static valueOf(name : string) : KAOAMerkmaleOptionsarten | null {
+	public static valueOf(name: string): KAOAMerkmaleOptionsarten | null {
 		const tmp = this.all_values_by_name.get(name);
 		return (!tmp) ? null : tmp;
 	}
 
-	public getManager() : CoreTypeDataManager<KAOAMerkmaleOptionsartenKatalogEintrag, KAOAMerkmaleOptionsarten> {
+	public getManager(): CoreTypeDataManager<KAOAMerkmaleOptionsartenKatalogEintrag, KAOAMerkmaleOptionsarten> {
 		return de_svws_nrw_asd_types_CoreType_getManager(this);
 	}
 
-	public daten(schuljahr : number) : KAOAMerkmaleOptionsartenKatalogEintrag | null {
+	public daten(schuljahr: number): KAOAMerkmaleOptionsartenKatalogEintrag | null {
 		return de_svws_nrw_asd_types_CoreType_daten(this, schuljahr);
 	}
 
-	public statistikId() : string | null {
+	public statistikId(): string | null {
 		return de_svws_nrw_asd_types_CoreType_statistikId(this);
 	}
 
-	public historie() : List<KAOAMerkmaleOptionsartenKatalogEintrag> {
+	public historie(): List<KAOAMerkmaleOptionsartenKatalogEintrag> {
 		return de_svws_nrw_asd_types_CoreType_historie(this);
 	}
 
@@ -84,7 +84,7 @@ export class KAOAMerkmaleOptionsarten extends JavaEnum<KAOAMerkmaleOptionsarten>
 		return 'de.svws_nrw.asd.types.kaoa.KAOAMerkmaleOptionsarten';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.asd.types.kaoa.KAOAMerkmaleOptionsarten', 'de.svws_nrw.asd.types.CoreType', 'java.lang.Comparable', 'java.lang.Enum', 'java.lang.Comparable'].includes(name);
 	}
 
@@ -92,6 +92,6 @@ export class KAOAMerkmaleOptionsarten extends JavaEnum<KAOAMerkmaleOptionsarten>
 
 }
 
-export function cast_de_svws_nrw_asd_types_kaoa_KAOAMerkmaleOptionsarten(obj : unknown) : KAOAMerkmaleOptionsarten {
+export function cast_de_svws_nrw_asd_types_kaoa_KAOAMerkmaleOptionsarten(obj: unknown): KAOAMerkmaleOptionsarten {
 	return obj as KAOAMerkmaleOptionsarten;
 }

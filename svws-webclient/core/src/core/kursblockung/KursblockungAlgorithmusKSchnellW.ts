@@ -16,15 +16,15 @@ export class KursblockungAlgorithmusKSchnellW extends KursblockungAlgorithmusK {
 	 * @param pLogger Logger für Benutzerhinweise, Warnungen und Fehler.
 	 * @param pDynDat Die dynamischen Blockungsdaten.
 	 */
-	public constructor(pRandom : Random, pLogger : Logger, pDynDat : KursblockungDynDaten) {
+	public constructor(pRandom: Random, pLogger: Logger, pDynDat: KursblockungDynDaten) {
 		super(pRandom, pLogger, pDynDat);
 	}
 
-	public toString() : string {
+	public toString(): string {
 		return "SchnellW";
 	}
 
-	public berechne(pEndzeit : number) : void {
+	public berechne(pEndzeit: number): void {
 		if (this.dynDaten.gibKurseDieFreiSindAnzahl() === 0)
 			return;
 		this.dynDaten.aktionSchuelerAusAllenKursenEntfernen();
@@ -40,7 +40,7 @@ export class KursblockungAlgorithmusKSchnellW extends KursblockungAlgorithmusK {
 	 * Kurslage wird ein wenig zufällig verändert und bewertet.
 	 * Falls sich die Bewertung verschlechter, wird die Veränderung rückgängig gemacht.
 	 */
-	private veraendereDieKurslageZufaelligEinWenig() : void {
+	private veraendereDieKurslageZufaelligEinWenig(): void {
 		do {
 			this.dynDaten.aktionSchuelerAusAllenKursenEntfernen();
 			this.dynDaten.aktionKursVerteilenEinenZufaelligenFreien();
@@ -57,7 +57,7 @@ export class KursblockungAlgorithmusKSchnellW extends KursblockungAlgorithmusK {
 		return 'de.svws_nrw.core.kursblockung.KursblockungAlgorithmusKSchnellW';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.kursblockung.KursblockungAlgorithmusKSchnellW', 'de.svws_nrw.core.kursblockung.KursblockungAlgorithmusK'].includes(name);
 	}
 
@@ -65,6 +65,6 @@ export class KursblockungAlgorithmusKSchnellW extends KursblockungAlgorithmusK {
 
 }
 
-export function cast_de_svws_nrw_core_kursblockung_KursblockungAlgorithmusKSchnellW(obj : unknown) : KursblockungAlgorithmusKSchnellW {
+export function cast_de_svws_nrw_core_kursblockung_KursblockungAlgorithmusKSchnellW(obj: unknown): KursblockungAlgorithmusKSchnellW {
 	return obj as KursblockungAlgorithmusKSchnellW;
 }

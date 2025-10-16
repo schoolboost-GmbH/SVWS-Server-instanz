@@ -12,17 +12,17 @@ export class ValidatorSchuleStammdaten extends Validator {
 	 *
 	 * @param kontext   der Kontext des Validators
 	 */
-	public constructor(kontext : ValidatorKontext) {
+	public constructor(kontext: ValidatorKontext) {
 		super(kontext);
 	}
 
-	protected pruefe() : boolean {
-		let success : boolean = true;
-		const schulformKrz : string | null = super.kontext().getSchuleStammdaten().schulform;
-		success = this.exec(0, { getAsBoolean : () => (schulformKrz === null) || (JavaString.isBlank(schulformKrz)) }, "Die Schulform muss gesetzt sein.");
+	protected pruefe(): boolean {
+		let success: boolean = true;
+		const schulformKrz: string | null = super.kontext().getSchuleStammdaten().schulform;
+		success = this.exec(0, { getAsBoolean: () => (schulformKrz === null) || (JavaString.isBlank(schulformKrz)) }, "Die Schulform muss gesetzt sein.");
 		if (!success)
 			return false;
-		success = this.exec(1, { getAsBoolean : () => {
+		success = this.exec(1, { getAsBoolean: () => {
 			try {
 				return Schulform.data().getWertByKuerzel(schulformKrz) === null;
 			} catch(e : any) {
@@ -36,7 +36,7 @@ export class ValidatorSchuleStammdaten extends Validator {
 		return 'de.svws_nrw.asd.validate.schule.ValidatorSchuleStammdaten';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.asd.validate.schule.ValidatorSchuleStammdaten', 'de.svws_nrw.asd.validate.Validator'].includes(name);
 	}
 
@@ -44,6 +44,6 @@ export class ValidatorSchuleStammdaten extends Validator {
 
 }
 
-export function cast_de_svws_nrw_asd_validate_schule_ValidatorSchuleStammdaten(obj : unknown) : ValidatorSchuleStammdaten {
+export function cast_de_svws_nrw_asd_validate_schule_ValidatorSchuleStammdaten(obj: unknown): ValidatorSchuleStammdaten {
 	return obj as ValidatorSchuleStammdaten;
 }

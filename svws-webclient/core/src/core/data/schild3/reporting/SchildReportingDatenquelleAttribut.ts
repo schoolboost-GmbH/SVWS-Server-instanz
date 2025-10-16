@@ -6,17 +6,17 @@ export class SchildReportingDatenquelleAttribut extends JavaObject {
 	/**
 	 * Der Name des Attributs
 	 */
-	public name : string = "";
+	public name: string = "";
 
 	/**
 	 * Der Typ des Attributs
 	 */
-	public typ : string = "";
+	public typ: string = "";
 
 	/**
 	 * Die Beschreibung des Attributs
 	 */
-	public beschreibung : string = "";
+	public beschreibung: string = "";
 
 
 	/**
@@ -30,13 +30,13 @@ export class SchildReportingDatenquelleAttribut extends JavaObject {
 		return 'de.svws_nrw.core.data.schild3.reporting.SchildReportingDatenquelleAttribut';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.schild3.reporting.SchildReportingDatenquelleAttribut'].includes(name);
 	}
 
 	public static class = new Class<SchildReportingDatenquelleAttribut>('de.svws_nrw.core.data.schild3.reporting.SchildReportingDatenquelleAttribut');
 
-	public static transpilerFromJSON(json : string): SchildReportingDatenquelleAttribut {
+	public static transpilerFromJSON(json: string): SchildReportingDatenquelleAttribut {
 		const obj = JSON.parse(json) as Partial<SchildReportingDatenquelleAttribut>;
 		const result = new SchildReportingDatenquelleAttribut();
 		if (obj.name === undefined)
@@ -51,7 +51,7 @@ export class SchildReportingDatenquelleAttribut extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : SchildReportingDatenquelleAttribut) : string {
+	public static transpilerToJSON(obj: SchildReportingDatenquelleAttribut): string {
 		let result = '{';
 		result += '"name" : ' + JSON.stringify(obj.name) + ',';
 		result += '"typ" : ' + JSON.stringify(obj.typ) + ',';
@@ -61,7 +61,7 @@ export class SchildReportingDatenquelleAttribut extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<SchildReportingDatenquelleAttribut>) : string {
+	public static transpilerToJSONPatch(obj: Partial<SchildReportingDatenquelleAttribut>): string {
 		let result = '{';
 		if (obj.name !== undefined) {
 			result += '"name" : ' + JSON.stringify(obj.name) + ',';
@@ -79,6 +79,6 @@ export class SchildReportingDatenquelleAttribut extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_schild3_reporting_SchildReportingDatenquelleAttribut(obj : unknown) : SchildReportingDatenquelleAttribut {
+export function cast_de_svws_nrw_core_data_schild3_reporting_SchildReportingDatenquelleAttribut(obj: unknown): SchildReportingDatenquelleAttribut {
 	return obj as SchildReportingDatenquelleAttribut;
 }

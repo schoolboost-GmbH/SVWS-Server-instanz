@@ -6,17 +6,17 @@ export class BenutzerAllgemeinCredentials extends JavaObject {
 	/**
 	 * Benutzername des Account-Credentials
 	 */
-	public anzeigename : string = "";
+	public anzeigename: string = "";
 
 	/**
 	 * Benutzername des Account-Credentials
 	 */
-	public benutzername : string = "";
+	public benutzername: string = "";
 
 	/**
 	 * Passwort des Account-Credentials
 	 */
-	public password : string = "";
+	public password: string = "";
 
 
 	/**
@@ -30,13 +30,13 @@ export class BenutzerAllgemeinCredentials extends JavaObject {
 		return 'de.svws_nrw.core.data.benutzer.BenutzerAllgemeinCredentials';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.benutzer.BenutzerAllgemeinCredentials'].includes(name);
 	}
 
 	public static class = new Class<BenutzerAllgemeinCredentials>('de.svws_nrw.core.data.benutzer.BenutzerAllgemeinCredentials');
 
-	public static transpilerFromJSON(json : string): BenutzerAllgemeinCredentials {
+	public static transpilerFromJSON(json: string): BenutzerAllgemeinCredentials {
 		const obj = JSON.parse(json) as Partial<BenutzerAllgemeinCredentials>;
 		const result = new BenutzerAllgemeinCredentials();
 		if (obj.anzeigename === undefined)
@@ -51,7 +51,7 @@ export class BenutzerAllgemeinCredentials extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : BenutzerAllgemeinCredentials) : string {
+	public static transpilerToJSON(obj: BenutzerAllgemeinCredentials): string {
 		let result = '{';
 		result += '"anzeigename" : ' + JSON.stringify(obj.anzeigename) + ',';
 		result += '"benutzername" : ' + JSON.stringify(obj.benutzername) + ',';
@@ -61,7 +61,7 @@ export class BenutzerAllgemeinCredentials extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<BenutzerAllgemeinCredentials>) : string {
+	public static transpilerToJSONPatch(obj: Partial<BenutzerAllgemeinCredentials>): string {
 		let result = '{';
 		if (obj.anzeigename !== undefined) {
 			result += '"anzeigename" : ' + JSON.stringify(obj.anzeigename) + ',';
@@ -79,6 +79,6 @@ export class BenutzerAllgemeinCredentials extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_benutzer_BenutzerAllgemeinCredentials(obj : unknown) : BenutzerAllgemeinCredentials {
+export function cast_de_svws_nrw_core_data_benutzer_BenutzerAllgemeinCredentials(obj: unknown): BenutzerAllgemeinCredentials {
 	return obj as BenutzerAllgemeinCredentials;
 }

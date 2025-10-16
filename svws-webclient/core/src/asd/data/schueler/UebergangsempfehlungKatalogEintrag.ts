@@ -15,13 +15,13 @@ export class UebergangsempfehlungKatalogEintrag extends CoreTypeData {
 		return 'de.svws_nrw.asd.data.schueler.UebergangsempfehlungKatalogEintrag';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.asd.data.schueler.UebergangsempfehlungKatalogEintrag', 'de.svws_nrw.asd.data.CoreTypeData'].includes(name);
 	}
 
 	public static class = new Class<UebergangsempfehlungKatalogEintrag>('de.svws_nrw.asd.data.schueler.UebergangsempfehlungKatalogEintrag');
 
-	public static transpilerFromJSON(json : string): UebergangsempfehlungKatalogEintrag {
+	public static transpilerFromJSON(json: string): UebergangsempfehlungKatalogEintrag {
 		const obj = JSON.parse(json) as Partial<UebergangsempfehlungKatalogEintrag>;
 		const result = new UebergangsempfehlungKatalogEintrag();
 		if (obj.id === undefined)
@@ -41,7 +41,7 @@ export class UebergangsempfehlungKatalogEintrag extends CoreTypeData {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : UebergangsempfehlungKatalogEintrag) : string {
+	public static transpilerToJSON(obj: UebergangsempfehlungKatalogEintrag): string {
 		let result = '{';
 		result += '"id" : ' + obj.id.toString() + ',';
 		result += '"schluessel" : ' + JSON.stringify(obj.schluessel) + ',';
@@ -54,7 +54,7 @@ export class UebergangsempfehlungKatalogEintrag extends CoreTypeData {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<UebergangsempfehlungKatalogEintrag>) : string {
+	public static transpilerToJSONPatch(obj: Partial<UebergangsempfehlungKatalogEintrag>): string {
 		let result = '{';
 		if (obj.id !== undefined) {
 			result += '"id" : ' + obj.id.toString() + ',';
@@ -81,6 +81,6 @@ export class UebergangsempfehlungKatalogEintrag extends CoreTypeData {
 
 }
 
-export function cast_de_svws_nrw_asd_data_schueler_UebergangsempfehlungKatalogEintrag(obj : unknown) : UebergangsempfehlungKatalogEintrag {
+export function cast_de_svws_nrw_asd_data_schueler_UebergangsempfehlungKatalogEintrag(obj: unknown): UebergangsempfehlungKatalogEintrag {
 	return obj as UebergangsempfehlungKatalogEintrag;
 }

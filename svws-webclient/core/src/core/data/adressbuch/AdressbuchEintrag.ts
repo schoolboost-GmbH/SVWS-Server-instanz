@@ -6,22 +6,22 @@ export class AdressbuchEintrag extends JavaObject {
 	/**
 	 * ID des AdressbuchEintrags
 	 */
-	public id : string = "";
+	public id: string = "";
 
 	/**
 	 * ID des Adressbuchs
 	 */
-	public adressbuchId : string = "";
+	public adressbuchId: string = "";
 
 	/**
 	 *  URI der VCard des Kontakts
 	 */
-	public uri : string = "";
+	public uri: string = "";
 
 	/**
 	 *  Versionskennzeichen des Kontaks
 	 */
-	public version : string = "";
+	public version: string = "";
 
 
 	/**
@@ -35,13 +35,13 @@ export class AdressbuchEintrag extends JavaObject {
 		return 'de.svws_nrw.core.data.adressbuch.AdressbuchEintrag';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.adressbuch.AdressbuchEintrag'].includes(name);
 	}
 
 	public static class = new Class<AdressbuchEintrag>('de.svws_nrw.core.data.adressbuch.AdressbuchEintrag');
 
-	public static transpilerFromJSON(json : string): AdressbuchEintrag {
+	public static transpilerFromJSON(json: string): AdressbuchEintrag {
 		const obj = JSON.parse(json) as Partial<AdressbuchEintrag>;
 		const result = new AdressbuchEintrag();
 		if (obj.id === undefined)
@@ -59,7 +59,7 @@ export class AdressbuchEintrag extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : AdressbuchEintrag) : string {
+	public static transpilerToJSON(obj: AdressbuchEintrag): string {
 		let result = '{';
 		result += '"id" : ' + JSON.stringify(obj.id) + ',';
 		result += '"adressbuchId" : ' + JSON.stringify(obj.adressbuchId) + ',';
@@ -70,7 +70,7 @@ export class AdressbuchEintrag extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<AdressbuchEintrag>) : string {
+	public static transpilerToJSONPatch(obj: Partial<AdressbuchEintrag>): string {
 		let result = '{';
 		if (obj.id !== undefined) {
 			result += '"id" : ' + JSON.stringify(obj.id) + ',';
@@ -91,6 +91,6 @@ export class AdressbuchEintrag extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_adressbuch_AdressbuchEintrag(obj : unknown) : AdressbuchEintrag {
+export function cast_de_svws_nrw_core_data_adressbuch_AdressbuchEintrag(obj: unknown): AdressbuchEintrag {
 	return obj as AdressbuchEintrag;
 }

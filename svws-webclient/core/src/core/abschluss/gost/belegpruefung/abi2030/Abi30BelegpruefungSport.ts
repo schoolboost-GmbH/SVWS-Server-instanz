@@ -11,7 +11,7 @@ import { GostBelegungsfehler } from '../../../../../core/abschluss/gost/GostBele
 
 export class Abi30BelegpruefungSport extends GostBelegpruefung {
 
-	private _sport : List<AbiturFachbelegung> = new ArrayList<AbiturFachbelegung>();
+	private _sport: List<AbiturFachbelegung> = new ArrayList<AbiturFachbelegung>();
 
 
 	/**
@@ -20,20 +20,20 @@ export class Abi30BelegpruefungSport extends GostBelegpruefung {
 	 * @param manager        der Daten-Manager für die Abiturdaten
 	 * @param pruefungsArt   die Art der durchzuführenden Prüfung (z.B. EF.1 oder GESAMT)
 	 */
-	public constructor(manager : AbiturdatenManager, pruefungsArt : GostBelegpruefungsArt) {
+	public constructor(manager: AbiturdatenManager, pruefungsArt: GostBelegpruefungsArt) {
 		super(manager, pruefungsArt);
 	}
 
-	protected init() : void {
+	protected init(): void {
 		this._sport = this.manager.getRelevanteFachbelegungen(GostFachbereich.SPORT);
 	}
 
-	protected pruefeEF1() : void {
+	protected pruefeEF1(): void {
 		if ((this._sport === null) || (!this.manager.pruefeBelegungExistiertEinzeln(this._sport, GostHalbjahr.EF1)))
 			this.addFehler(GostBelegungsfehler.SP_10);
 	}
 
-	protected pruefeGesamt() : void {
+	protected pruefeGesamt(): void {
 		if ((this._sport === null) || (!this.manager.pruefeBelegungExistiert(this._sport, GostHalbjahr.EF1, GostHalbjahr.EF2, GostHalbjahr.Q11, GostHalbjahr.Q12, GostHalbjahr.Q21, GostHalbjahr.Q22)))
 			this.addFehler(GostBelegungsfehler.SP_10);
 	}
@@ -42,7 +42,7 @@ export class Abi30BelegpruefungSport extends GostBelegpruefung {
 		return 'de.svws_nrw.core.abschluss.gost.belegpruefung.abi2030.Abi30BelegpruefungSport';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.abschluss.gost.GostBelegpruefung', 'de.svws_nrw.core.abschluss.gost.belegpruefung.abi2030.Abi30BelegpruefungSport'].includes(name);
 	}
 
@@ -50,6 +50,6 @@ export class Abi30BelegpruefungSport extends GostBelegpruefung {
 
 }
 
-export function cast_de_svws_nrw_core_abschluss_gost_belegpruefung_abi2030_Abi30BelegpruefungSport(obj : unknown) : Abi30BelegpruefungSport {
+export function cast_de_svws_nrw_core_abschluss_gost_belegpruefung_abi2030_Abi30BelegpruefungSport(obj: unknown): Abi30BelegpruefungSport {
 	return obj as Abi30BelegpruefungSport;
 }

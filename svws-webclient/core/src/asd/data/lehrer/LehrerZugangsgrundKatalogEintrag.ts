@@ -15,13 +15,13 @@ export class LehrerZugangsgrundKatalogEintrag extends CoreTypeData {
 		return 'de.svws_nrw.asd.data.lehrer.LehrerZugangsgrundKatalogEintrag';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.asd.data.lehrer.LehrerZugangsgrundKatalogEintrag', 'de.svws_nrw.asd.data.CoreTypeData'].includes(name);
 	}
 
 	public static class = new Class<LehrerZugangsgrundKatalogEintrag>('de.svws_nrw.asd.data.lehrer.LehrerZugangsgrundKatalogEintrag');
 
-	public static transpilerFromJSON(json : string): LehrerZugangsgrundKatalogEintrag {
+	public static transpilerFromJSON(json: string): LehrerZugangsgrundKatalogEintrag {
 		const obj = JSON.parse(json) as Partial<LehrerZugangsgrundKatalogEintrag>;
 		const result = new LehrerZugangsgrundKatalogEintrag();
 		if (obj.id === undefined)
@@ -41,7 +41,7 @@ export class LehrerZugangsgrundKatalogEintrag extends CoreTypeData {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : LehrerZugangsgrundKatalogEintrag) : string {
+	public static transpilerToJSON(obj: LehrerZugangsgrundKatalogEintrag): string {
 		let result = '{';
 		result += '"id" : ' + obj.id.toString() + ',';
 		result += '"schluessel" : ' + JSON.stringify(obj.schluessel) + ',';
@@ -54,7 +54,7 @@ export class LehrerZugangsgrundKatalogEintrag extends CoreTypeData {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<LehrerZugangsgrundKatalogEintrag>) : string {
+	public static transpilerToJSONPatch(obj: Partial<LehrerZugangsgrundKatalogEintrag>): string {
 		let result = '{';
 		if (obj.id !== undefined) {
 			result += '"id" : ' + obj.id.toString() + ',';
@@ -81,6 +81,6 @@ export class LehrerZugangsgrundKatalogEintrag extends CoreTypeData {
 
 }
 
-export function cast_de_svws_nrw_asd_data_lehrer_LehrerZugangsgrundKatalogEintrag(obj : unknown) : LehrerZugangsgrundKatalogEintrag {
+export function cast_de_svws_nrw_asd_data_lehrer_LehrerZugangsgrundKatalogEintrag(obj: unknown): LehrerZugangsgrundKatalogEintrag {
 	return obj as LehrerZugangsgrundKatalogEintrag;
 }

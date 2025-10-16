@@ -9,98 +9,98 @@ export class ENMLeistung extends JavaObject {
 	/**
 	 * Die ID der Leistungsdaten des Schülers in der SVWS-DB (z.B. 307956)
 	 */
-	public id : number = 0;
+	public id: number = 0;
 
 	/**
 	 * Die eindeutige ID der Lerngruppe, der der Schüler zugeordnet ist. (Klasse oder Kurs wird erst
 	 *  in der Lerngruppe unterschieden!)
 	 */
-	public lerngruppenID : number = 0;
+	public lerngruppenID: number = 0;
 
 	/**
 	 * Das Kürzel der Note, die vergeben wurde.
 	 */
-	public note : string | null = null;
+	public note: string | null = null;
 
 	/**
 	 * Der Zeitstempel der letzten Änderung an der erteilten Note
 	 */
-	public tsNote : string | null = null;
+	public tsNote: string | null = null;
 
 	/**
 	 * Das Kürzel der Quartals-Note, die vergeben wurde.
 	 */
-	public noteQuartal : string | null = null;
+	public noteQuartal: string | null = null;
 
 	/**
 	 * Der Zeitstempel der letzten Änderung an der erteilten Quartals-Note
 	 */
-	public tsNoteQuartal : string | null = null;
+	public tsNoteQuartal: string | null = null;
 
 	/**
 	 * Gibt bei Oberstufenkursen an, ob das Fach schriftlich belegt wurde oder nicht.
 	 */
-	public istSchriftlich : boolean | null = null;
+	public istSchriftlich: boolean | null = null;
 
 	/**
 	 * Gibt an, ob es sich um ein Abiturfach handelt (1,2,3 oder 4) oder nicht (null)
 	 */
-	public abiturfach : number | null = null;
+	public abiturfach: number | null = null;
 
 	/**
 	 * Gibt die Anzahl der gesamten Fehlstunden an, sofern diese fachbezogen ermittelt werden.
 	 */
-	public fehlstundenFach : number | null = null;
+	public fehlstundenFach: number | null = null;
 
 	/**
 	 * Der Zeitstempel der letzten Änderung an Anzahl der gesamten Fehlstunden an, sofern diese fachbezogen ermittelt werden
 	 */
-	public tsFehlstundenFach : string | null = null;
+	public tsFehlstundenFach: string | null = null;
 
 	/**
 	 * Gibt die Anzahl der unentschuldigten Fehlstunden an, sofern diese fachbezogen ermittelt werden.
 	 */
-	public fehlstundenUnentschuldigtFach : number | null = null;
+	public fehlstundenUnentschuldigtFach: number | null = null;
 
 	/**
 	 * Der Zeitstempel der letzten Änderung an Anzahl der unentschuldigten Fehlstunden an, sofern diese fachbezogen ermittelt werden
 	 */
-	public tsFehlstundenUnentschuldigtFach : string | null = null;
+	public tsFehlstundenUnentschuldigtFach: string | null = null;
 
 	/**
 	 * Die fachbezogenen Bemerkungen bzw. das Thema bei Projektkursen
 	 */
-	public fachbezogeneBemerkungen : string | null = null;
+	public fachbezogeneBemerkungen: string | null = null;
 
 	/**
 	 * Der Zeitstempel der letzten Änderung an Anzahl den fachbezogenen Bemerkungen bzw. dem Thema bei Projektkursen
 	 */
-	public tsFachbezogeneBemerkungen : string | null = null;
+	public tsFachbezogeneBemerkungen: string | null = null;
 
 	/**
 	 * Die Kurszuweisung, die auf dem Zeugnis erscheinen soll für den nächsten Kursabschnitt (z.B. E oder G-Kurs, z.B. an der Gesamtschule)
 	 */
-	public neueZuweisungKursart : string | null = null;
+	public neueZuweisungKursart: string | null = null;
 
 	/**
 	 * Gibt an, ob ein Fach gemahnt wurde oder nicht.
 	 */
-	public istGemahnt : boolean | null = null;
+	public istGemahnt: boolean | null = null;
 
 	/**
 	 * Der Zeitstempel, wann gesetzt wurde, ob die Leistung gemahnt wurde
 	 */
-	public tsIstGemahnt : string | null = null;
+	public tsIstGemahnt: string | null = null;
 
 	/**
 	 * Das Mahndatum bei erfolgter Mahnung.
 	 */
-	public mahndatum : string | null = null;
+	public mahndatum: string | null = null;
 
 	/**
 	 * Die Teilleistungen, sofern welche vordefiniert sind.
 	 */
-	public teilleistungen : List<ENMTeilleistung> = new ArrayList<ENMTeilleistung>();
+	public teilleistungen: List<ENMTeilleistung> = new ArrayList<ENMTeilleistung>();
 
 
 	/**
@@ -114,13 +114,13 @@ export class ENMLeistung extends JavaObject {
 		return 'de.svws_nrw.core.data.enm.ENMLeistung';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.enm.ENMLeistung'].includes(name);
 	}
 
 	public static class = new Class<ENMLeistung>('de.svws_nrw.core.data.enm.ENMLeistung');
 
-	public static transpilerFromJSON(json : string): ENMLeistung {
+	public static transpilerFromJSON(json: string): ENMLeistung {
 		const obj = JSON.parse(json) as Partial<ENMLeistung>;
 		const result = new ENMLeistung();
 		if (obj.id === undefined)
@@ -153,7 +153,7 @@ export class ENMLeistung extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : ENMLeistung) : string {
+	public static transpilerToJSON(obj: ENMLeistung): string {
 		let result = '{';
 		result += '"id" : ' + obj.id.toString() + ',';
 		result += '"lerngruppenID" : ' + obj.lerngruppenID.toString() + ',';
@@ -186,7 +186,7 @@ export class ENMLeistung extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<ENMLeistung>) : string {
+	public static transpilerToJSONPatch(obj: Partial<ENMLeistung>): string {
 		let result = '{';
 		if (obj.id !== undefined) {
 			result += '"id" : ' + obj.id.toString() + ',';
@@ -259,6 +259,6 @@ export class ENMLeistung extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_enm_ENMLeistung(obj : unknown) : ENMLeistung {
+export function cast_de_svws_nrw_core_data_enm_ENMLeistung(obj: unknown): ENMLeistung {
 	return obj as ENMLeistung;
 }

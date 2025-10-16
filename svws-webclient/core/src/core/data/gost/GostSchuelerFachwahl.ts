@@ -6,12 +6,12 @@ export class GostSchuelerFachwahl extends JavaObject {
 	/**
 	 * Die Fachwahlen des Schülers für die sechs Halbjahre der gymnasialen Oberstufe
 	 */
-	public halbjahre : Array<string | null> = Array(6).fill(null);
+	public halbjahre: Array<string | null> = Array(6).fill(null);
 
 	/**
 	 * Die Nummer des Abiturfaches (1-4), falls dieses Fach als Abiturfach gewählt wurde und ansonsten null
 	 */
-	public abiturFach : number | null = null;
+	public abiturFach: number | null = null;
 
 
 	/**
@@ -25,13 +25,13 @@ export class GostSchuelerFachwahl extends JavaObject {
 		return 'de.svws_nrw.core.data.gost.GostSchuelerFachwahl';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.gost.GostSchuelerFachwahl'].includes(name);
 	}
 
 	public static class = new Class<GostSchuelerFachwahl>('de.svws_nrw.core.data.gost.GostSchuelerFachwahl');
 
-	public static transpilerFromJSON(json : string): GostSchuelerFachwahl {
+	public static transpilerFromJSON(json: string): GostSchuelerFachwahl {
 		const obj = JSON.parse(json) as Partial<GostSchuelerFachwahl>;
 		const result = new GostSchuelerFachwahl();
 		if (obj.halbjahre !== undefined) {
@@ -43,7 +43,7 @@ export class GostSchuelerFachwahl extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : GostSchuelerFachwahl) : string {
+	public static transpilerToJSON(obj: GostSchuelerFachwahl): string {
 		let result = '{';
 		result += '"halbjahre" : [ ';
 		for (let i = 0; i < obj.halbjahre.length; i++) {
@@ -59,7 +59,7 @@ export class GostSchuelerFachwahl extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<GostSchuelerFachwahl>) : string {
+	public static transpilerToJSONPatch(obj: Partial<GostSchuelerFachwahl>): string {
 		let result = '{';
 		if (obj.halbjahre !== undefined) {
 			const a = obj.halbjahre;
@@ -82,6 +82,6 @@ export class GostSchuelerFachwahl extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_gost_GostSchuelerFachwahl(obj : unknown) : GostSchuelerFachwahl {
+export function cast_de_svws_nrw_core_data_gost_GostSchuelerFachwahl(obj: unknown): GostSchuelerFachwahl {
 	return obj as GostSchuelerFachwahl;
 }

@@ -7,7 +7,7 @@ import { System } from '../../../../java/lang/System';
 
 export class KlausurraumblockungAlgorithmus extends JavaObject {
 
-	private readonly random : Random;
+	private readonly random: Random;
 
 
 	/**
@@ -35,10 +35,10 @@ export class KlausurraumblockungAlgorithmus extends JavaObject {
 	 *
 	 * @param config   		  Die Konfiguration und die Eingabedaten.
 	 */
-	public berechne(config : GostKlausurraumblockungKonfiguration) : void {
-		const dynDaten : KlausurraumblockungAlgorithmusDynDaten | null = new KlausurraumblockungAlgorithmusDynDaten(this.random, config);
+	public berechne(config: GostKlausurraumblockungKonfiguration): void {
+		const dynDaten: KlausurraumblockungAlgorithmusDynDaten | null = new KlausurraumblockungAlgorithmusDynDaten(this.random, config);
 		dynDaten.aktionKlausurenVerteilenAlgorithmus01_raum_zufaellig_gruppe_zufaellig();
-		const zeitEnde : number = System.currentTimeMillis() + config.maxTimeMillis;
+		const zeitEnde: number = System.currentTimeMillis() + config.maxTimeMillis;
 		do {
 			dynDaten.aktionKlausurenVerteilenAlgorithmus01_raum_zufaellig_gruppe_zufaellig();
 			dynDaten.aktionKlausurenVerteilenAlgorithmus02_raum_aufsteigend_gruppe_zufaellig();
@@ -57,7 +57,7 @@ export class KlausurraumblockungAlgorithmus extends JavaObject {
 		return 'de.svws_nrw.core.utils.gost.klausurplanung.KlausurraumblockungAlgorithmus';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.utils.gost.klausurplanung.KlausurraumblockungAlgorithmus'].includes(name);
 	}
 
@@ -65,6 +65,6 @@ export class KlausurraumblockungAlgorithmus extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_utils_gost_klausurplanung_KlausurraumblockungAlgorithmus(obj : unknown) : KlausurraumblockungAlgorithmus {
+export function cast_de_svws_nrw_core_utils_gost_klausurplanung_KlausurraumblockungAlgorithmus(obj: unknown): KlausurraumblockungAlgorithmus {
 	return obj as KlausurraumblockungAlgorithmus;
 }

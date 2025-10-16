@@ -9,12 +9,12 @@ export class ENMServerConfig extends JavaObject {
 	/**
 	 * Die Konfiguration, die dem Benutzer zugeordnet ist.
 	 */
-	public server : List<BenutzerConfigElement> = new ArrayList<BenutzerConfigElement>();
+	public server: List<BenutzerConfigElement> = new ArrayList<BenutzerConfigElement>();
 
 	/**
 	 * Die globale Konfiguration, die auch für den Benutzer gilt.
 	 */
-	public global : List<BenutzerConfigElement> = new ArrayList<BenutzerConfigElement>();
+	public global: List<BenutzerConfigElement> = new ArrayList<BenutzerConfigElement>();
 
 
 	/**
@@ -28,13 +28,13 @@ export class ENMServerConfig extends JavaObject {
 		return 'de.svws_nrw.core.data.enm.ENMServerConfig';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.enm.ENMServerConfig'].includes(name);
 	}
 
 	public static class = new Class<ENMServerConfig>('de.svws_nrw.core.data.enm.ENMServerConfig');
 
-	public static transpilerFromJSON(json : string): ENMServerConfig {
+	public static transpilerFromJSON(json: string): ENMServerConfig {
 		const obj = JSON.parse(json) as Partial<ENMServerConfig>;
 		const result = new ENMServerConfig();
 		if (obj.server !== undefined) {
@@ -50,7 +50,7 @@ export class ENMServerConfig extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : ENMServerConfig) : string {
+	public static transpilerToJSON(obj: ENMServerConfig): string {
 		let result = '{';
 		result += '"server" : [ ';
 		for (let i = 0; i < obj.server.size(); i++) {
@@ -73,7 +73,7 @@ export class ENMServerConfig extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<ENMServerConfig>) : string {
+	public static transpilerToJSONPatch(obj: Partial<ENMServerConfig>): string {
 		let result = '{';
 		if (obj.server !== undefined) {
 			result += '"server" : [ ';
@@ -102,6 +102,6 @@ export class ENMServerConfig extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_enm_ENMServerConfig(obj : unknown) : ENMServerConfig {
+export function cast_de_svws_nrw_core_data_enm_ENMServerConfig(obj: unknown): ENMServerConfig {
 	return obj as ENMServerConfig;
 }

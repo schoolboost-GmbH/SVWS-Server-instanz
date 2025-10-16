@@ -11,8 +11,8 @@ export class RaumUtils extends JavaObject {
 	/**
 	 * Ein Default-Comparator für den Vergleich von Räumen in Raumlisten.
 	 */
-	public static readonly comparator : Comparator<Raum> = { compare : (a: Raum, b: Raum) => {
-		let cmp : number = JavaString.compareTo(a.kuerzel, b.kuerzel);
+	public static readonly comparator: Comparator<Raum> = { compare: (a: Raum, b: Raum) => {
+		let cmp: number = JavaString.compareTo(a.kuerzel, b.kuerzel);
 		return (cmp === 0) ? JavaLong.compare(a.id, b.id) : cmp;
 	} };
 
@@ -26,7 +26,7 @@ export class RaumUtils extends JavaObject {
 		return 'de.svws_nrw.core.utils.raum.RaumUtils';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.utils.raum.RaumUtils'].includes(name);
 	}
 
@@ -34,6 +34,6 @@ export class RaumUtils extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_utils_raum_RaumUtils(obj : unknown) : RaumUtils {
+export function cast_de_svws_nrw_core_utils_raum_RaumUtils(obj: unknown): RaumUtils {
 	return obj as RaumUtils;
 }

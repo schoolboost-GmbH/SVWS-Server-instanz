@@ -6,12 +6,12 @@ export class KAOAZusatzmerkmalKatalogEintrag extends CoreTypeData {
 	/**
 	 * Das Merkmal, welcher das Zusatzmerkmal zugeordnet ist.
 	 */
-	public merkmal : string = "";
+	public merkmal: string = "";
 
 	/**
 	 * Die Optionsart des Zusatzmerkmals.
 	 */
-	public optionsart : string | null = null;
+	public optionsart: string | null = null;
 
 
 	/**
@@ -25,13 +25,13 @@ export class KAOAZusatzmerkmalKatalogEintrag extends CoreTypeData {
 		return 'de.svws_nrw.asd.data.kaoa.KAOAZusatzmerkmalKatalogEintrag';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.asd.data.kaoa.KAOAZusatzmerkmalKatalogEintrag', 'de.svws_nrw.asd.data.CoreTypeData'].includes(name);
 	}
 
 	public static class = new Class<KAOAZusatzmerkmalKatalogEintrag>('de.svws_nrw.asd.data.kaoa.KAOAZusatzmerkmalKatalogEintrag');
 
-	public static transpilerFromJSON(json : string): KAOAZusatzmerkmalKatalogEintrag {
+	public static transpilerFromJSON(json: string): KAOAZusatzmerkmalKatalogEintrag {
 		const obj = JSON.parse(json) as Partial<KAOAZusatzmerkmalKatalogEintrag>;
 		const result = new KAOAZusatzmerkmalKatalogEintrag();
 		if (obj.id === undefined)
@@ -55,7 +55,7 @@ export class KAOAZusatzmerkmalKatalogEintrag extends CoreTypeData {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : KAOAZusatzmerkmalKatalogEintrag) : string {
+	public static transpilerToJSON(obj: KAOAZusatzmerkmalKatalogEintrag): string {
 		let result = '{';
 		result += '"id" : ' + obj.id.toString() + ',';
 		result += '"schluessel" : ' + JSON.stringify(obj.schluessel) + ',';
@@ -70,7 +70,7 @@ export class KAOAZusatzmerkmalKatalogEintrag extends CoreTypeData {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<KAOAZusatzmerkmalKatalogEintrag>) : string {
+	public static transpilerToJSONPatch(obj: Partial<KAOAZusatzmerkmalKatalogEintrag>): string {
 		let result = '{';
 		if (obj.id !== undefined) {
 			result += '"id" : ' + obj.id.toString() + ',';
@@ -103,6 +103,6 @@ export class KAOAZusatzmerkmalKatalogEintrag extends CoreTypeData {
 
 }
 
-export function cast_de_svws_nrw_asd_data_kaoa_KAOAZusatzmerkmalKatalogEintrag(obj : unknown) : KAOAZusatzmerkmalKatalogEintrag {
+export function cast_de_svws_nrw_asd_data_kaoa_KAOAZusatzmerkmalKatalogEintrag(obj: unknown): KAOAZusatzmerkmalKatalogEintrag {
 	return obj as KAOAZusatzmerkmalKatalogEintrag;
 }

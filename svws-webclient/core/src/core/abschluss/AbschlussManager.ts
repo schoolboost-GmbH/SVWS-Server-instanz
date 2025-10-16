@@ -31,8 +31,8 @@ export class AbschlussManager extends JavaObject {
 	 *
 	 * @return das Ergebnis der Abschlussberechnung
 	 */
-	public static getErgebnis(abschluss : SchulabschlussAllgemeinbildend | null, erworben : boolean) : AbschlussErgebnis {
-		const ergebnis : AbschlussErgebnis = new AbschlussErgebnis();
+	public static getErgebnis(abschluss: SchulabschlussAllgemeinbildend | null, erworben: boolean): AbschlussErgebnis {
+		const ergebnis: AbschlussErgebnis = new AbschlussErgebnis();
 		ergebnis.abschluss = (abschluss === null) ? null : abschluss.toString();
 		ergebnis.erworben = erworben;
 		ergebnis.npFaecher = null;
@@ -50,8 +50,8 @@ export class AbschlussManager extends JavaObject {
 	 *
 	 * @return das Ergebnis der Abschlussberechnung
 	 */
-	public static getErgebnisNachpruefung(abschluss : SchulabschlussAllgemeinbildend | null, npFaecher : List<string> | null) : AbschlussErgebnis {
-		const ergebnis : AbschlussErgebnis = new AbschlussErgebnis();
+	public static getErgebnisNachpruefung(abschluss: SchulabschlussAllgemeinbildend | null, npFaecher: List<string> | null): AbschlussErgebnis {
+		const ergebnis: AbschlussErgebnis = new AbschlussErgebnis();
 		ergebnis.abschluss = (abschluss === null) ? null : abschluss.toString();
 		ergebnis.erworben = false;
 		if ((npFaecher === null) || (npFaecher.isEmpty()))
@@ -70,7 +70,7 @@ export class AbschlussManager extends JavaObject {
 	 *
 	 * @return true, falls eine Nachprüfungsmöglichkeit besteht, sonst false
 	 */
-	public static hatNachpruefungsmoeglichkeit(ergebnis : AbschlussErgebnis) : boolean {
+	public static hatNachpruefungsmoeglichkeit(ergebnis: AbschlussErgebnis): boolean {
 		return (ergebnis.npFaecher !== null) && !ergebnis.npFaecher.isEmpty();
 	}
 
@@ -82,10 +82,10 @@ export class AbschlussManager extends JavaObject {
 	 *
 	 * @return die Nachprüfungsfächer als Komma-separierten String
 	 */
-	public static getNPFaecherString(ergebnis : AbschlussErgebnis) : string {
+	public static getNPFaecherString(ergebnis: AbschlussErgebnis): string {
 		if (ergebnis.npFaecher === null)
 			return "";
-		const sb : StringBuilder | null = new StringBuilder();
+		const sb: StringBuilder | null = new StringBuilder();
 		for (const fach of ergebnis.npFaecher) {
 			if (sb.length() > 0)
 				sb.append(", ");
@@ -104,8 +104,8 @@ export class AbschlussManager extends JavaObject {
 	 *
 	 * @return true, falls sie identisch sind und ansonsten false
 	 */
-	public static equalsAbschluesse(a : string | null, b : string | null) : boolean {
-		const oa : SchulabschlussAllgemeinbildend | null = SchulabschlussAllgemeinbildend.OA;
+	public static equalsAbschluesse(a: string | null, b: string | null): boolean {
+		const oa: SchulabschlussAllgemeinbildend | null = SchulabschlussAllgemeinbildend.OA;
 		if ((a === null) || (oa.is(a)))
 			return (b === null) || (oa.is(b));
 		return JavaObject.equalsTranspiler(a, (b));
@@ -119,7 +119,7 @@ export class AbschlussManager extends JavaObject {
 	 *
 	 * @return der Abschluss
 	 */
-	public static getAbschluss(ergebnis : AbschlussErgebnis) : string {
+	public static getAbschluss(ergebnis: AbschlussErgebnis): string {
 		return (ergebnis.abschluss === null) ? SchulabschlussAllgemeinbildend.OA.toString() : ergebnis.abschluss;
 	}
 
@@ -134,8 +134,8 @@ export class AbschlussManager extends JavaObject {
 	 *
 	 * @return das Abschlussfach
 	 */
-	public static erstelleAbschlussFach(kuerzel : string, bezeichnung : string | null, note : number, kursart : GELeistungsdifferenzierteKursart, istFremdsprache : boolean | null) : GEAbschlussFach {
-		const fach : GEAbschlussFach = new GEAbschlussFach();
+	public static erstelleAbschlussFach(kuerzel: string, bezeichnung: string | null, note: number, kursart: GELeistungsdifferenzierteKursart, istFremdsprache: boolean | null): GEAbschlussFach {
+		const fach: GEAbschlussFach = new GEAbschlussFach();
 		fach.kuerzel = kuerzel;
 		fach.bezeichnung = ((bezeichnung === null) || JavaObject.equalsTranspiler("", (bezeichnung))) ? "---" : bezeichnung;
 		fach.note = note;
@@ -151,8 +151,8 @@ export class AbschlussManager extends JavaObject {
 	 *
 	 * @return die Liste mit den Fachkürzeln
 	 */
-	public static getKuerzel(faecher : List<GEAbschlussFach>) : List<string> {
-		const result : ArrayList<string> = new ArrayList<string>();
+	public static getKuerzel(faecher: List<GEAbschlussFach>): List<string> {
+		const result: ArrayList<string> = new ArrayList<string>();
 		for (const fach of faecher) {
 			if ((fach.kuerzel === null) || result.contains(fach.kuerzel))
 				continue;
@@ -169,15 +169,15 @@ export class AbschlussManager extends JavaObject {
 	 *
 	 * @return true, falls vier leistungsdifferenzierte Fächer belegt wurden, sonst false
 	 */
-	public static pruefeHat4LeistungsdifferenzierteFaecher(abschlussFaecher : GEAbschlussFaecher) : boolean {
+	public static pruefeHat4LeistungsdifferenzierteFaecher(abschlussFaecher: GEAbschlussFaecher): boolean {
 		if (abschlussFaecher.faecher === null)
 			return false;
-		let count : number = 0;
-		const faecher : List<GEAbschlussFach> = abschlussFaecher.faecher;
+		let count: number = 0;
+		const faecher: List<GEAbschlussFach> = abschlussFaecher.faecher;
 		for (const fach of faecher) {
 			if (fach === null)
 				continue;
-			const kursart : GELeistungsdifferenzierteKursart = GELeistungsdifferenzierteKursart.from(fach.kursart);
+			const kursart: GELeistungsdifferenzierteKursart = GELeistungsdifferenzierteKursart.from(fach.kursart);
 			if ((kursart as unknown === GELeistungsdifferenzierteKursart.E as unknown) || (kursart as unknown === GELeistungsdifferenzierteKursart.G as unknown))
 				count++;
 		}
@@ -192,11 +192,11 @@ export class AbschlussManager extends JavaObject {
 	 *
 	 * @return true, falls keine Duplikate vorkommen, sonst false
 	 */
-	public static pruefeKuerzelDuplikate(abschlussFaecher : GEAbschlussFaecher) : boolean {
+	public static pruefeKuerzelDuplikate(abschlussFaecher: GEAbschlussFaecher): boolean {
 		if (abschlussFaecher.faecher === null)
 			return true;
-		const kuerzel : HashSet<string> = new HashSet<string>();
-		const faecher : List<GEAbschlussFach> = abschlussFaecher.faecher;
+		const kuerzel: HashSet<string> = new HashSet<string>();
+		const faecher: List<GEAbschlussFach> = abschlussFaecher.faecher;
 		for (const fach of faecher) {
 			if ((fach === null) || (fach.kuerzel === null))
 				continue;
@@ -210,7 +210,7 @@ export class AbschlussManager extends JavaObject {
 		return 'de.svws_nrw.core.abschluss.AbschlussManager';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.abschluss.AbschlussManager'].includes(name);
 	}
 
@@ -218,6 +218,6 @@ export class AbschlussManager extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_abschluss_AbschlussManager(obj : unknown) : AbschlussManager {
+export function cast_de_svws_nrw_core_abschluss_AbschlussManager(obj: unknown): AbschlussManager {
 	return obj as AbschlussManager;
 }

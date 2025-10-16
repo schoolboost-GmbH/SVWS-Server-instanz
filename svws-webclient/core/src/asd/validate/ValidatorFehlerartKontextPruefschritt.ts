@@ -8,22 +8,22 @@ export class ValidatorFehlerartKontextPruefschritt extends JavaObject {
 	/**
 	 * Die Nummer des Prüfschrittes, auf welchen sich die Definition bezieht (-1 für einen Default für alle Prüfschritte eines Validators)
 	 */
-	public nummer : number = -1;
+	public nummer: number = -1;
 
 	/**
 	 * Liste der Schulformen, in denen bei dem Prüfschritt ein Fehler vorliegt
 	 */
-	public muss : List<string> = new ArrayList<string>();
+	public muss: List<string> = new ArrayList<string>();
 
 	/**
 	 * Liste der Schulformen, in denen bei dem Prüfschritt wahrscheinlich ein Fehler vorliegt
 	 */
-	public kann : List<string> = new ArrayList<string>();
+	public kann: List<string> = new ArrayList<string>();
 
 	/**
 	 * Liste der Schulformen, in denen bei dem Prüfschritt ein Hinweis auf einen möglichen Fehler erfolgt
 	 */
-	public hinweis : List<string> = new ArrayList<string>();
+	public hinweis: List<string> = new ArrayList<string>();
 
 
 	public constructor() {
@@ -34,13 +34,13 @@ export class ValidatorFehlerartKontextPruefschritt extends JavaObject {
 		return 'de.svws_nrw.asd.validate.ValidatorFehlerartKontextPruefschritt';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.asd.validate.ValidatorFehlerartKontextPruefschritt'].includes(name);
 	}
 
 	public static class = new Class<ValidatorFehlerartKontextPruefschritt>('de.svws_nrw.asd.validate.ValidatorFehlerartKontextPruefschritt');
 
-	public static transpilerFromJSON(json : string): ValidatorFehlerartKontextPruefschritt {
+	public static transpilerFromJSON(json: string): ValidatorFehlerartKontextPruefschritt {
 		const obj = JSON.parse(json) as Partial<ValidatorFehlerartKontextPruefschritt>;
 		const result = new ValidatorFehlerartKontextPruefschritt();
 		if (obj.nummer === undefined)
@@ -64,7 +64,7 @@ export class ValidatorFehlerartKontextPruefschritt extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : ValidatorFehlerartKontextPruefschritt) : string {
+	public static transpilerToJSON(obj: ValidatorFehlerartKontextPruefschritt): string {
 		let result = '{';
 		result += '"nummer" : ' + obj.nummer.toString() + ',';
 		result += '"muss" : [ ';
@@ -96,7 +96,7 @@ export class ValidatorFehlerartKontextPruefschritt extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<ValidatorFehlerartKontextPruefschritt>) : string {
+	public static transpilerToJSONPatch(obj: Partial<ValidatorFehlerartKontextPruefschritt>): string {
 		let result = '{';
 		if (obj.nummer !== undefined) {
 			result += '"nummer" : ' + obj.nummer.toString() + ',';
@@ -138,6 +138,6 @@ export class ValidatorFehlerartKontextPruefschritt extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_asd_validate_ValidatorFehlerartKontextPruefschritt(obj : unknown) : ValidatorFehlerartKontextPruefschritt {
+export function cast_de_svws_nrw_asd_validate_ValidatorFehlerartKontextPruefschritt(obj: unknown): ValidatorFehlerartKontextPruefschritt {
 	return obj as ValidatorFehlerartKontextPruefschritt;
 }

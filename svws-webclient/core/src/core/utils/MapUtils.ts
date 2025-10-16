@@ -24,11 +24,11 @@ export class MapUtils extends JavaObject {
 	 *
 	 * @return das "Set of V" des Schlüssels. Erstellt ein leeres "Set of V", falls eine solche Zuordnung nicht existierte.
 	 */
-	public static getOrCreateHashSet<K, V>(map : JavaMap<K, JavaSet<V>>, key : K) : JavaSet<V> {
-		const set : JavaSet<V> | null = map.get(key);
+	public static getOrCreateHashSet<K, V>(map: JavaMap<K, JavaSet<V>>, key: K): JavaSet<V> {
+		const set: JavaSet<V> | null = map.get(key);
 		if (set !== null)
 			return set;
-		const setNeu : HashSet<V> = new HashSet<V>();
+		const setNeu: HashSet<V> = new HashSet<V>();
 		map.put(key, setNeu);
 		return setNeu;
 	}
@@ -43,11 +43,11 @@ export class MapUtils extends JavaObject {
 	 *
 	 * @return die "ArrayList of V" des Schlüssels. Erstellt eine leere "ArrayList of V", falls eine solche Zuordnung nicht existierte.
 	 */
-	public static getOrCreateArrayList<K, V>(map : JavaMap<K, List<V>>, key : K) : List<V> {
-		const list : List<V> | null = map.get(key);
+	public static getOrCreateArrayList<K, V>(map: JavaMap<K, List<V>>, key: K): List<V> {
+		const list: List<V> | null = map.get(key);
 		if (list !== null)
 			return list;
-		const listNeu : ArrayList<V> = new ArrayList<V>();
+		const listNeu: ArrayList<V> = new ArrayList<V>();
 		map.put(key, listNeu);
 		return listNeu;
 	}
@@ -62,13 +62,13 @@ export class MapUtils extends JavaObject {
 	 * @param key    Der Schlüssel.
 	 * @param value  Der Wert, welcher der Liste der Liste hinzugefügt werden soll.
 	 */
-	public static addToListIfNotExists<K, V>(map : JavaMap<K, List<V>>, key : K, value : V) : void {
-		const list : List<V> | null = map.get(key);
+	public static addToListIfNotExists<K, V>(map: JavaMap<K, List<V>>, key: K, value: V): void {
+		const list: List<V> | null = map.get(key);
 		if (list !== null) {
 			if (!list.contains(value))
 				list.add(value);
 		} else {
-			const listNeu : List<V> | null = new ArrayList<V>();
+			const listNeu: List<V> | null = new ArrayList<V>();
 			listNeu.add(value);
 			map.put(key, listNeu);
 		}
@@ -84,12 +84,12 @@ export class MapUtils extends JavaObject {
 	 * @param key    Der Schlüssel.
 	 * @param value  Der Wert, welcher der Liste der Liste hinzugefügt werden soll.
 	 */
-	public static addToList<K, V>(map : JavaMap<K, List<V>>, key : K, value : V) : void {
-		const list : List<V> | null = map.get(key);
+	public static addToList<K, V>(map: JavaMap<K, List<V>>, key: K, value: V): void {
+		const list: List<V> | null = map.get(key);
 		if (list !== null) {
 			list.add(value);
 		} else {
-			const listNeu : List<V> | null = new ArrayList<V>();
+			const listNeu: List<V> | null = new ArrayList<V>();
 			listNeu.add(value);
 			map.put(key, listNeu);
 		}
@@ -104,8 +104,8 @@ export class MapUtils extends JavaObject {
 	 * @param key    Der 1. Schlüssel.
 	 * @param value  Der Wert, welcher aus der Liste von (K1, K2) entfernt werden soll.
 	 */
-	public static removeFromListAndTrimOrException<K, V>(map : JavaMap<K, List<V>>, key : K, value : V) : void {
-		const list : List<V> | null = DeveloperNotificationException.ifMapGetIsNull(map, key);
+	public static removeFromListAndTrimOrException<K, V>(map: JavaMap<K, List<V>>, key: K, value: V): void {
+		const list: List<V> | null = DeveloperNotificationException.ifMapGetIsNull(map, key);
 		DeveloperNotificationException.ifListRemoveFailes("list", list, value);
 		if (list.isEmpty())
 			DeveloperNotificationException.ifMapRemoveFailes(map, key);
@@ -122,8 +122,8 @@ export class MapUtils extends JavaObject {
 	 *
 	 * @return den Wert V des Schlüssels K, falls diese existiert, andernfalls den Default-Wert.
 	 */
-	public static getOrDefault<K, V>(map : JavaMap<K, V>, key : K, defaultValue : V) : V {
-		const value : V | null = map.get(key);
+	public static getOrDefault<K, V>(map: JavaMap<K, V>, key: K, defaultValue: V): V {
+		const value: V | null = map.get(key);
 		if (value === null)
 			return defaultValue;
 		return value;
@@ -139,7 +139,7 @@ export class MapUtils extends JavaObject {
 	 * @param key    Der Schlüssel.
 	 * @param value  Der Wert, welcher hinzugefügt werden soll, falls es noch keine Zuordnung gibt.
 	 */
-	public static putNonNullIfNotExists<K, V>(map : JavaMap<K, V>, key : K, value : V) : void {
+	public static putNonNullIfNotExists<K, V>(map: JavaMap<K, V>, key: K, value: V): void {
 		if (map.containsKey(key))
 			return;
 		map.put(key, value);
@@ -149,7 +149,7 @@ export class MapUtils extends JavaObject {
 		return 'de.svws_nrw.core.utils.MapUtils';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.utils.MapUtils'].includes(name);
 	}
 
@@ -157,6 +157,6 @@ export class MapUtils extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_utils_MapUtils(obj : unknown) : MapUtils {
+export function cast_de_svws_nrw_core_utils_MapUtils(obj: unknown): MapUtils {
 	return obj as MapUtils;
 }

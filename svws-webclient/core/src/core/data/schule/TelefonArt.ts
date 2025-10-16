@@ -6,27 +6,27 @@ export class TelefonArt extends JavaObject {
 	/**
 	 * Die ID des Katalog-Eintrags.
 	 */
-	public id : number = -1;
+	public id: number = -1;
 
 	/**
 	 * Die Bezeichnung der Telefonarten.
 	 */
-	public bezeichnung : string = "";
+	public bezeichnung: string = "";
 
 	/**
 	 * Gibt die Position in der Sortierreihenfolge für die Katalog-Einträge an.
 	 */
-	public sortierung : number = 1;
+	public sortierung: number = 1;
 
 	/**
 	 * Gibt an, ob der Eintrag in der Anwendung sichtbar sein soll oder nicht.
 	 */
-	public istSichtbar : boolean = true;
+	public istSichtbar: boolean = true;
 
 	/**
 	 * Gibt an wie viele Telefonnummern der entsprechenden Telefonart zugeordnet sind.
 	 */
-	public anzahlTelefonnummern : number = 0;
+	public anzahlTelefonnummern: number = 0;
 
 
 	public constructor() {
@@ -37,13 +37,13 @@ export class TelefonArt extends JavaObject {
 		return 'de.svws_nrw.core.data.schule.TelefonArt';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.schule.TelefonArt'].includes(name);
 	}
 
 	public static class = new Class<TelefonArt>('de.svws_nrw.core.data.schule.TelefonArt');
 
-	public static transpilerFromJSON(json : string): TelefonArt {
+	public static transpilerFromJSON(json: string): TelefonArt {
 		const obj = JSON.parse(json) as Partial<TelefonArt>;
 		const result = new TelefonArt();
 		if (obj.id === undefined)
@@ -64,7 +64,7 @@ export class TelefonArt extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : TelefonArt) : string {
+	public static transpilerToJSON(obj: TelefonArt): string {
 		let result = '{';
 		result += '"id" : ' + obj.id.toString() + ',';
 		result += '"bezeichnung" : ' + JSON.stringify(obj.bezeichnung) + ',';
@@ -76,7 +76,7 @@ export class TelefonArt extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<TelefonArt>) : string {
+	public static transpilerToJSONPatch(obj: Partial<TelefonArt>): string {
 		let result = '{';
 		if (obj.id !== undefined) {
 			result += '"id" : ' + obj.id.toString() + ',';
@@ -100,6 +100,6 @@ export class TelefonArt extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_schule_TelefonArt(obj : unknown) : TelefonArt {
+export function cast_de_svws_nrw_core_data_schule_TelefonArt(obj: unknown): TelefonArt {
 	return obj as TelefonArt;
 }

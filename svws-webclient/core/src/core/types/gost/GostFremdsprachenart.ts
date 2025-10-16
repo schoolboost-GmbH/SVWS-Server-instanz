@@ -4,35 +4,35 @@ import { Class } from '../../../java/lang/Class';
 export class GostFremdsprachenart extends JavaEnum<GostFremdsprachenart> {
 
 	/** an array containing all values of this enumeration */
-	static readonly all_values_by_ordinal : Array<GostFremdsprachenart> = [];
+	static readonly all_values_by_ordinal: Array<GostFremdsprachenart> = [];
 
 	/** an array containing all values of this enumeration indexed by their name*/
-	static readonly all_values_by_name : Map<string, GostFremdsprachenart> = new Map<string, GostFremdsprachenart>();
+	static readonly all_values_by_name: Map<string, GostFremdsprachenart> = new Map<string, GostFremdsprachenart>();
 
 	/**
 	 * Ist eine fortgeführte Fremdsprache.
 	 */
-	public static readonly FORTGEFUEHRT : GostFremdsprachenart = new GostFremdsprachenart("FORTGEFUEHRT", 0, 0, "fortgeführt");
+	public static readonly FORTGEFUEHRT: GostFremdsprachenart = new GostFremdsprachenart("FORTGEFUEHRT", 0, 0, "fortgeführt");
 
 	/**
 	 * Ist eine neueinsetzende Fremdsprache.
 	 */
-	public static readonly NEU : GostFremdsprachenart = new GostFremdsprachenart("NEU", 1, 1, "neu einsetzend");
+	public static readonly NEU: GostFremdsprachenart = new GostFremdsprachenart("NEU", 1, 1, "neu einsetzend");
 
 	/**
 	 * Kann neueinsetzende oder fortgeführte Fremdsprache sein.
 	 */
-	public static readonly BELIEBIG : GostFremdsprachenart = new GostFremdsprachenart("BELIEBIG", 2, 2, "beliebig");
+	public static readonly BELIEBIG: GostFremdsprachenart = new GostFremdsprachenart("BELIEBIG", 2, 2, "beliebig");
 
 	/**
 	 * eine eindeutige ID für die Fremdsprachenart
 	 */
-	public readonly id : number;
+	public readonly id: number;
 
 	/**
 	 * Die Bezeichnung der Fremdsprachenart als Text
 	 */
-	public readonly bezeichnung : string;
+	public readonly bezeichnung: string;
 
 	/**
 	 * Erzeugt eine neue Fremdsprachenart für die Aufzählung.
@@ -40,7 +40,7 @@ export class GostFremdsprachenart extends JavaEnum<GostFremdsprachenart> {
 	 * @param id            die eindeutige ID für die Fremdsprachenart
 	 * @param bezeichnung   die Bezeichnung der Fremdsprachenart als Text
 	 */
-	private constructor(name : string, ordinal : number, id : number, bezeichnung : string) {
+	private constructor(name: string, ordinal: number, id: number, bezeichnung: string) {
 		super(name, ordinal);
 		GostFremdsprachenart.all_values_by_ordinal.push(this);
 		GostFremdsprachenart.all_values_by_name.set(name, this);
@@ -53,7 +53,7 @@ export class GostFremdsprachenart extends JavaEnum<GostFremdsprachenart> {
 	 *
 	 * @returns the array with enumeration values
 	 */
-	public static values() : Array<GostFremdsprachenart> {
+	public static values(): Array<GostFremdsprachenart> {
 		return [...this.all_values_by_ordinal];
 	}
 
@@ -64,7 +64,7 @@ export class GostFremdsprachenart extends JavaEnum<GostFremdsprachenart> {
 	 *
 	 * @returns the enumeration values or null
 	 */
-	public static valueOf(name : string) : GostFremdsprachenart | null {
+	public static valueOf(name: string): GostFremdsprachenart | null {
 		const tmp = this.all_values_by_name.get(name);
 		return (!tmp) ? null : tmp;
 	}
@@ -73,7 +73,7 @@ export class GostFremdsprachenart extends JavaEnum<GostFremdsprachenart> {
 		return 'de.svws_nrw.core.types.gost.GostFremdsprachenart';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.types.gost.GostFremdsprachenart', 'java.lang.Enum', 'java.lang.Comparable'].includes(name);
 	}
 
@@ -81,6 +81,6 @@ export class GostFremdsprachenart extends JavaEnum<GostFremdsprachenart> {
 
 }
 
-export function cast_de_svws_nrw_core_types_gost_GostFremdsprachenart(obj : unknown) : GostFremdsprachenart {
+export function cast_de_svws_nrw_core_types_gost_GostFremdsprachenart(obj: unknown): GostFremdsprachenart {
 	return obj as GostFremdsprachenart;
 }

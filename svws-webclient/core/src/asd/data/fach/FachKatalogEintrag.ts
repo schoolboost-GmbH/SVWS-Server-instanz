@@ -7,52 +7,52 @@ export class FachKatalogEintrag extends CoreTypeDataNurSchulformenUndSchulgliede
 	/**
 	 * Das Aufgabenfeld, welchem das Fach ggf. zugeordnet ist (1, 2 oder 3)
 	 */
-	public aufgabenfeld : number | null = -1;
+	public aufgabenfeld: number | null = -1;
 
 	/**
 	 * Das Kürzel der zugeordneten Fachgruppe
 	 */
-	public fachgruppe : string | null = "";
+	public fachgruppe: string | null = "";
 
 	/**
 	 * Der ASD-Jahrgang, ab dem das Fach zulässig ist (z.B. bei Fremdsprachen)
 	 */
-	public abJahrgang : string | null = "";
+	public abJahrgang: string | null = "";
 
 	/**
 	 * Gibt an, ob es sich um eine Fremdsprache handelt
 	 */
-	public istFremdsprache : boolean = false;
+	public istFremdsprache: boolean = false;
 
 	/**
 	 * Gibt an, ob es sich um ein Fach der Herkuntftsprache handelt (Unterrichts in der Herkunftssprache oder Herkunftssprache anstelle einer Pflichtfremdsprache)
 	 */
-	public istHKFS : boolean = false;
+	public istHKFS: boolean = false;
 
 	/**
 	 * Gibt an, ob das Fach außerhalb des regulären Fachunterrichts unterrichtet wird.
 	 */
-	public istAusRegUFach : boolean = false;
+	public istAusRegUFach: boolean = false;
 
 	/**
 	 * Gibt an, ob es sich bei dem Fach um einen Ersatz für eine Pflichtfremdsprache handelt (siehe auch istHKFS)
 	 */
-	public istErsatzPflichtFS : boolean = false;
+	public istErsatzPflichtFS: boolean = false;
 
 	/**
 	 * Gibt an, ob das Religionsfach konfessionell kooperativ unterrichtet wird oder nicht - Teil des Kürzels für die amtliche Schulstatistik
 	 */
-	public istKonfKoop : boolean = false;
+	public istKonfKoop: boolean = false;
 
 	/**
 	 * Gibt an, ob das Fach nur in der Sekundarstufe II unterrichtet wird.
 	 */
-	public nurSII : boolean = false;
+	public nurSII: boolean = false;
 
 	/**
 	 * Gibt an, ob das Fach bei Export der amtlichen Schulstatistik berücksichtigt werden soll oder nicht.
 	 */
-	public exportASD : boolean = false;
+	public exportASD: boolean = false;
 
 
 	/**
@@ -66,13 +66,13 @@ export class FachKatalogEintrag extends CoreTypeDataNurSchulformenUndSchulgliede
 		return 'de.svws_nrw.asd.data.fach.FachKatalogEintrag';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.asd.data.CoreTypeDataNurSchulformenUndSchulgliederungen', 'de.svws_nrw.asd.data.fach.FachKatalogEintrag', 'de.svws_nrw.asd.data.CoreTypeData'].includes(name);
 	}
 
 	public static class = new Class<FachKatalogEintrag>('de.svws_nrw.asd.data.fach.FachKatalogEintrag');
 
-	public static transpilerFromJSON(json : string): FachKatalogEintrag {
+	public static transpilerFromJSON(json: string): FachKatalogEintrag {
 		const obj = JSON.parse(json) as Partial<FachKatalogEintrag>;
 		const result = new FachKatalogEintrag();
 		if (obj.zulaessig !== undefined) {
@@ -121,7 +121,7 @@ export class FachKatalogEintrag extends CoreTypeDataNurSchulformenUndSchulgliede
 		return result;
 	}
 
-	public static transpilerToJSON(obj : FachKatalogEintrag) : string {
+	public static transpilerToJSON(obj: FachKatalogEintrag): string {
 		let result = '{';
 		result += '"zulaessig" : [ ';
 		for (let i = 0; i < obj.zulaessig.size(); i++) {
@@ -152,7 +152,7 @@ export class FachKatalogEintrag extends CoreTypeDataNurSchulformenUndSchulgliede
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<FachKatalogEintrag>) : string {
+	public static transpilerToJSONPatch(obj: Partial<FachKatalogEintrag>): string {
 		let result = '{';
 		if (obj.zulaessig !== undefined) {
 			result += '"zulaessig" : [ ';
@@ -219,6 +219,6 @@ export class FachKatalogEintrag extends CoreTypeDataNurSchulformenUndSchulgliede
 
 }
 
-export function cast_de_svws_nrw_asd_data_fach_FachKatalogEintrag(obj : unknown) : FachKatalogEintrag {
+export function cast_de_svws_nrw_asd_data_fach_FachKatalogEintrag(obj: unknown): FachKatalogEintrag {
 	return obj as FachKatalogEintrag;
 }

@@ -16,37 +16,37 @@ export class AbgangsartenManager extends JavaObject {
 	/**
 	 * der Katalog für die allgemeinbildenden Schulformen
 	 */
-	private readonly _katalogAllgemein : AbgangsartKatalog;
+	private readonly _katalogAllgemein: AbgangsartKatalog;
 
 	/**
 	 * der Katalog für die berufsbildenden Schulformen
 	 */
-	private readonly _katalogBeruf : AbgangsartKatalog;
+	private readonly _katalogBeruf: AbgangsartKatalog;
 
 	/**
 	 * Die Version der Daten für die Kombination der beiden Kataloge
 	 */
-	private readonly _version : number;
+	private readonly _version: number;
 
 	/**
 	 * Die kombinierten Daten der beiden Kataloge
 	 */
-	private readonly _alle : List<AbgangsartKatalogEintrag> = new ArrayList<AbgangsartKatalogEintrag>();
+	private readonly _alle: List<AbgangsartKatalogEintrag> = new ArrayList<AbgangsartKatalogEintrag>();
 
 	/**
 	 * Eine HashMap für den schnellen Zugriff auf die Abgangsarten anhand des Kürzels.
 	 */
-	private readonly _mapByKuerzel : JavaMap<string, AbgangsartKatalogEintrag> = new HashMap<string, AbgangsartKatalogEintrag>();
+	private readonly _mapByKuerzel: JavaMap<string, AbgangsartKatalogEintrag> = new HashMap<string, AbgangsartKatalogEintrag>();
 
 	/**
 	 * Eine HashMap für den schnellen Zugriff auf die Abgangsarten anhand der ID.
 	 */
-	private readonly _mapByID : JavaMap<number, AbgangsartKatalogEintrag> = new HashMap<number, AbgangsartKatalogEintrag>();
+	private readonly _mapByID: JavaMap<number, AbgangsartKatalogEintrag> = new HashMap<number, AbgangsartKatalogEintrag>();
 
 	/**
 	 * Eine HashMap für den schnellen Zugriff auf die Daten der Abgangsarten anhand der ID.
 	 */
-	private readonly _mapDatenByID : JavaMap<number, AbgangsartKatalogDaten> = new HashMap<number, AbgangsartKatalogDaten>();
+	private readonly _mapDatenByID: JavaMap<number, AbgangsartKatalogDaten> = new HashMap<number, AbgangsartKatalogDaten>();
 
 
 	/**
@@ -55,7 +55,7 @@ export class AbgangsartenManager extends JavaObject {
 	 * @param katalogAllgemein   der Katalog für die allgemeinbildenden Schulformen
 	 * @param katalogBeruf       der Katalog für die berufsbildenden Schulformen
 	 */
-	public constructor(katalogAllgemein : AbgangsartKatalog, katalogBeruf : AbgangsartKatalog) {
+	public constructor(katalogAllgemein: AbgangsartKatalog, katalogBeruf: AbgangsartKatalog) {
 		super();
 		this._katalogAllgemein = katalogAllgemein;
 		this._katalogBeruf = katalogBeruf;
@@ -65,7 +65,7 @@ export class AbgangsartenManager extends JavaObject {
 		for (const eintrag of this._alle) {
 			this._mapByKuerzel.put(eintrag.kuerzel, eintrag);
 			for (const daten of eintrag.historie) {
-				const alt : AbgangsartKatalogEintrag | null = this._mapByID.put(daten.id, eintrag);
+				const alt: AbgangsartKatalogEintrag | null = this._mapByID.put(daten.id, eintrag);
 				if (alt !== null)
 					throw new DeveloperNotificationException("Fehlerhafter Katalog: Doppelte ID '" + daten.id + "' bei den Abgangsarten '" + eintrag.kuerzel + "' und '" + alt.kuerzel + "'")
 				this._mapDatenByID.put(daten.id, daten);
@@ -79,7 +79,7 @@ export class AbgangsartenManager extends JavaObject {
 	 *
 	 * @return die Version
 	 */
-	public getVersion() : number {
+	public getVersion(): number {
 		return this._version;
 	}
 
@@ -90,7 +90,7 @@ export class AbgangsartenManager extends JavaObject {
 	 *
 	 * @return der Katalog-Eintrag oder null, falls das Kürzel ungültig ist.
 	 */
-	public get(kuerzel : string) : AbgangsartKatalogEintrag | null {
+	public get(kuerzel: string): AbgangsartKatalogEintrag | null {
 		return this._mapByKuerzel.get(kuerzel);
 	}
 
@@ -99,7 +99,7 @@ export class AbgangsartenManager extends JavaObject {
 	 *
 	 * @return eine Liste mit allen Katalog-Einträgen
 	 */
-	public getAll() : List<AbgangsartKatalogEintrag> | null {
+	public getAll(): List<AbgangsartKatalogEintrag> | null {
 		return this._alle;
 	}
 
@@ -113,7 +113,7 @@ export class AbgangsartenManager extends JavaObject {
 	 * @return der Katalog-Eintrag oder null, falls das Kürzel ungültig ist oder der Katalog-Eintrag
 	 *         keine Daten für das übergebene Schuljahr hat
 	 */
-	public getDaten(kuerzel : string, schuljahr : number) : AbgangsartKatalogDaten | null;
+	public getDaten(kuerzel: string, schuljahr: number) : AbgangsartKatalogDaten | null;
 
 	/**
 	 * Gibt die Katalog-Daten für die Abgangsart zurück.
@@ -122,16 +122,16 @@ export class AbgangsartenManager extends JavaObject {
 	 *
 	 * @return die Daten für die ID oder null bei einer fehlerhaften ID
 	 */
-	public getDaten(id : number) : AbgangsartKatalogDaten | null;
+	public getDaten(id: number) : AbgangsartKatalogDaten | null;
 
 	/**
 	 * Implementation for method overloads of 'getDaten'
 	 */
-	public getDaten(__param0 : number | string, __param1? : number) : AbgangsartKatalogDaten | null {
+	public getDaten(__param0: number | string, __param1?: number): AbgangsartKatalogDaten | null {
 		if (((__param0 !== undefined) && (typeof __param0 === "string")) && ((__param1 !== undefined) && typeof __param1 === "number")) {
-			const kuerzel : string = __param0;
-			const schuljahr : number = __param1 as number;
-			const eintrag : AbgangsartKatalogEintrag | null = this._mapByKuerzel.get(kuerzel);
+			const kuerzel: string = __param0;
+			const schuljahr: number = __param1 as number;
+			const eintrag: AbgangsartKatalogEintrag | null = this._mapByKuerzel.get(kuerzel);
 			if (eintrag === null)
 				return null;
 			for (const daten of eintrag.historie)
@@ -139,7 +139,7 @@ export class AbgangsartenManager extends JavaObject {
 					return daten;
 			return null;
 		} else if (((__param0 !== undefined) && typeof __param0 === "number") && (__param1 === undefined)) {
-			const id : number = __param0 as number;
+			const id: number = __param0 as number;
 			return this._mapDatenByID.get(id);
 		} else throw new Error('invalid method overload');
 	}
@@ -151,8 +151,8 @@ export class AbgangsartenManager extends JavaObject {
 	 *
 	 * @return das Kürzel der Abgangsart oder null, falls die ID ungültig ist
 	 */
-	public getKuerzel(id : number) : string | null {
-		const eintrag : AbgangsartKatalogEintrag | null = this._mapByID.get(id);
+	public getKuerzel(id: number): string | null {
+		const eintrag: AbgangsartKatalogEintrag | null = this._mapByID.get(id);
 		return (eintrag === null) ? null : eintrag.kuerzel;
 	}
 
@@ -161,7 +161,7 @@ export class AbgangsartenManager extends JavaObject {
 	 *
 	 * @return der Katalog für allgemeinbildende Schulformen
 	 */
-	public getKatalogAllgemeinbildend() : AbgangsartKatalog {
+	public getKatalogAllgemeinbildend(): AbgangsartKatalog {
 		return this._katalogAllgemein;
 	}
 
@@ -170,7 +170,7 @@ export class AbgangsartenManager extends JavaObject {
 	 *
 	 * @return der Katalog für berufsbildende Schulformen
 	 */
-	public getKatalogBerufsbildend() : AbgangsartKatalog {
+	public getKatalogBerufsbildend(): AbgangsartKatalog {
 		return this._katalogBeruf;
 	}
 
@@ -181,10 +181,10 @@ export class AbgangsartenManager extends JavaObject {
 	 *
 	 * @return der allgemeinbildende Abschluss oder null in einem unerwarteten Fehlerfall
 	 */
-	public static getAbschlussAllgemeinbildend(abschlussart : AbgangsartKatalogEintrag) : SchulabschlussAllgemeinbildend | null {
+	public static getAbschlussAllgemeinbildend(abschlussart: AbgangsartKatalogEintrag): SchulabschlussAllgemeinbildend | null {
 		if ((abschlussart.kuerzel.length < 0) || (abschlussart.kuerzel.length > 2))
 			throw new DeveloperNotificationException("Fehlerhafter Katalog-Eintrag: Das Kürzel einer Abgangsart muss entweder ein- oder zweistelig sein.")
-		const kuerzelAbschluss : string = (abschlussart.kuerzel.length === 1) ? abschlussart.kuerzel : abschlussart.kuerzel.substring(1, 2);
+		const kuerzelAbschluss: string = (abschlussart.kuerzel.length === 1) ? abschlussart.kuerzel : abschlussart.kuerzel.substring(1, 2);
 		return SchulabschlussAllgemeinbildend.data().getWertBySchluessel(kuerzelAbschluss);
 	}
 
@@ -195,7 +195,7 @@ export class AbgangsartenManager extends JavaObject {
 	 *
 	 * @return der berufsbildende Abschluss oder null, wenn nur ein allgemeinbildender Abschluss vorliegt.
 	 */
-	public static getAbschlussBerufsbildend(abschlussart : AbgangsartKatalogEintrag) : SchulabschlussBerufsbildend | null {
+	public static getAbschlussBerufsbildend(abschlussart: AbgangsartKatalogEintrag): SchulabschlussBerufsbildend | null {
 		if ((abschlussart.kuerzel.length < 0) || (abschlussart.kuerzel.length > 2))
 			throw new DeveloperNotificationException("Fehlerhafter Katalog-Eintrag: Das Kürzel einer Abgangsart muss entweder ein- oder zweistelig sein.")
 		if (abschlussart.kuerzel.length === 1)
@@ -207,7 +207,7 @@ export class AbgangsartenManager extends JavaObject {
 		return 'de.svws_nrw.core.utils.schule.AbgangsartenManager';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.utils.schule.AbgangsartenManager'].includes(name);
 	}
 
@@ -215,6 +215,6 @@ export class AbgangsartenManager extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_utils_schule_AbgangsartenManager(obj : unknown) : AbgangsartenManager {
+export function cast_de_svws_nrw_core_utils_schule_AbgangsartenManager(obj: unknown): AbgangsartenManager {
 	return obj as AbgangsartenManager;
 }

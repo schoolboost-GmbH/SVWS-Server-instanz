@@ -3,7 +3,7 @@ import { Class } from '../../java/lang/Class';
 
 export class UserNotificationException extends RuntimeException {
 
-	private static readonly serialVersionUID : number = -6612891372229214720;
+	private static readonly serialVersionUID: number = -6612891372229214720;
 
 
 	/**
@@ -11,7 +11,7 @@ export class UserNotificationException extends RuntimeException {
 	 *
 	 * @param pFehlermeldung Eine Beschreibung des Fehlers, die dem User hilft die Ursache des Fehlers zu beheben.
 	 */
-	public constructor(pFehlermeldung : string) {
+	public constructor(pFehlermeldung: string) {
 		super(pFehlermeldung);
 	}
 
@@ -21,7 +21,7 @@ export class UserNotificationException extends RuntimeException {
 	 * @param pBeschreibung Die Beschreibung der Bedingung.
 	 * @param pErfuellt     Falls TRUE, wird eine UserNotificationException geworfen.
 	 */
-	public static ifTrue(pBeschreibung : string, pErfuellt : boolean) : void {
+	public static ifTrue(pBeschreibung: string, pErfuellt: boolean): void {
 		if (pErfuellt)
 			throw new UserNotificationException(pBeschreibung)
 	}
@@ -30,7 +30,7 @@ export class UserNotificationException extends RuntimeException {
 		return 'de.svws_nrw.core.exceptions.UserNotificationException';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['java.lang.Throwable', 'java.lang.RuntimeException', 'java.lang.Exception', 'de.svws_nrw.core.exceptions.UserNotificationException', 'java.io.Serializable'].includes(name);
 	}
 
@@ -38,6 +38,6 @@ export class UserNotificationException extends RuntimeException {
 
 }
 
-export function cast_de_svws_nrw_core_exceptions_UserNotificationException(obj : unknown) : UserNotificationException {
+export function cast_de_svws_nrw_core_exceptions_UserNotificationException(obj: unknown): UserNotificationException {
 	return obj as UserNotificationException;
 }

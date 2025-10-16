@@ -10,8 +10,8 @@ export class SchuljahresabschnittsUtils extends JavaObject {
 	/**
 	 * Ein Default-Comparator für den Vergleich von Schuljahresabschnitten in Schuljahresabschnittslisten.
 	 */
-	public static readonly comparator : Comparator<Schuljahresabschnitt> = { compare : (a: Schuljahresabschnitt, b: Schuljahresabschnitt) => {
-		let cmp : number = a.schuljahr - b.schuljahr;
+	public static readonly comparator: Comparator<Schuljahresabschnitt> = { compare: (a: Schuljahresabschnitt, b: Schuljahresabschnitt) => {
+		let cmp: number = a.schuljahr - b.schuljahr;
 		if (cmp !== 0)
 			return cmp;
 		cmp = a.abschnitt - b.abschnitt;
@@ -30,7 +30,7 @@ export class SchuljahresabschnittsUtils extends JavaObject {
 		return 'de.svws_nrw.core.utils.schule.SchuljahresabschnittsUtils';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.utils.schule.SchuljahresabschnittsUtils'].includes(name);
 	}
 
@@ -38,6 +38,6 @@ export class SchuljahresabschnittsUtils extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_utils_schule_SchuljahresabschnittsUtils(obj : unknown) : SchuljahresabschnittsUtils {
+export function cast_de_svws_nrw_core_utils_schule_SchuljahresabschnittsUtils(obj: unknown): SchuljahresabschnittsUtils {
 	return obj as SchuljahresabschnittsUtils;
 }

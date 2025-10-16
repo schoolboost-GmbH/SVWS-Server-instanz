@@ -6,47 +6,47 @@ export class LehrerLernplattform extends JavaObject {
 	/**
 	 * Die ID des zugehörigen Lehrers.
 	 */
-	public idLehrer : number = 0;
+	public idLehrer: number = 0;
 
 	/**
 	 * Die ID der Lernplattform.
 	 */
-	public idLernplattform : number = 0;
+	public idLernplattform: number = 0;
 
 	/**
 	 * Die ID der Credential für den Lernplattform-Datensatz.
 	 */
-	public idCredential : number = 0;
+	public idCredential: number = 0;
 
 	/**
 	 * Die Abfrage der Einwilligung zu einer Lernplattform.
 	 */
-	public einwilligungAbgefragt : boolean = false;
+	public einwilligungAbgefragt: boolean = false;
 
 	/**
 	 * Die Einwilligung zur Nutzung einer Lernplattform.
 	 */
-	public einwilligungNutzung : boolean = false;
+	public einwilligungNutzung: boolean = false;
 
 	/**
 	 * Die Einwilligung zur Audiokonferenz einer Lernplattform.
 	 */
-	public einwilligungAudiokonferenz : boolean = false;
+	public einwilligungAudiokonferenz: boolean = false;
 
 	/**
 	 * Die Einwilligung zur VideoKonferenz einer Lernplattform.
 	 */
-	public einwilligungVideokonferenz : boolean = false;
+	public einwilligungVideokonferenz: boolean = false;
 
 	/**
 	 * Benutzername für die Lernplattform eines Lehrers
 	 */
-	public benutzername : string | null = null;
+	public benutzername: string | null = null;
 
 	/**
 	 * Initialkennwort für die Lernplattform eines Lehrers
 	 */
-	public initialKennwort : string | null = null;
+	public initialKennwort: string | null = null;
 
 
 	public constructor() {
@@ -57,13 +57,13 @@ export class LehrerLernplattform extends JavaObject {
 		return 'de.svws_nrw.core.data.lehrer.LehrerLernplattform';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.lehrer.LehrerLernplattform'].includes(name);
 	}
 
 	public static class = new Class<LehrerLernplattform>('de.svws_nrw.core.data.lehrer.LehrerLernplattform');
 
-	public static transpilerFromJSON(json : string): LehrerLernplattform {
+	public static transpilerFromJSON(json: string): LehrerLernplattform {
 		const obj = JSON.parse(json) as Partial<LehrerLernplattform>;
 		const result = new LehrerLernplattform();
 		if (obj.idLehrer === undefined)
@@ -92,7 +92,7 @@ export class LehrerLernplattform extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : LehrerLernplattform) : string {
+	public static transpilerToJSON(obj: LehrerLernplattform): string {
 		let result = '{';
 		result += '"idLehrer" : ' + obj.idLehrer.toString() + ',';
 		result += '"idLernplattform" : ' + obj.idLernplattform.toString() + ',';
@@ -108,7 +108,7 @@ export class LehrerLernplattform extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<LehrerLernplattform>) : string {
+	public static transpilerToJSONPatch(obj: Partial<LehrerLernplattform>): string {
 		let result = '{';
 		if (obj.idLehrer !== undefined) {
 			result += '"idLehrer" : ' + obj.idLehrer.toString() + ',';
@@ -144,6 +144,6 @@ export class LehrerLernplattform extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_lehrer_LehrerLernplattform(obj : unknown) : LehrerLernplattform {
+export function cast_de_svws_nrw_core_data_lehrer_LehrerLernplattform(obj: unknown): LehrerLernplattform {
 	return obj as LehrerLernplattform;
 }

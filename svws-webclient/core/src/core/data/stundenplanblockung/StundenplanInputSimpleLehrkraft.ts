@@ -6,12 +6,12 @@ export class StundenplanInputSimpleLehrkraft extends JavaObject {
 	/**
 	 * Die ID der Lehrkraft.
 	 */
-	public id : number = 0;
+	public id: number = 0;
 
 	/**
 	 * Das Kürzel der Lehrkraft. Beispielsweise 'BAR'.
 	 */
-	public kuerzel : string = "";
+	public kuerzel: string = "";
 
 
 	/**
@@ -25,13 +25,13 @@ export class StundenplanInputSimpleLehrkraft extends JavaObject {
 		return 'de.svws_nrw.core.data.stundenplanblockung.StundenplanInputSimpleLehrkraft';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.stundenplanblockung.StundenplanInputSimpleLehrkraft'].includes(name);
 	}
 
 	public static class = new Class<StundenplanInputSimpleLehrkraft>('de.svws_nrw.core.data.stundenplanblockung.StundenplanInputSimpleLehrkraft');
 
-	public static transpilerFromJSON(json : string): StundenplanInputSimpleLehrkraft {
+	public static transpilerFromJSON(json: string): StundenplanInputSimpleLehrkraft {
 		const obj = JSON.parse(json) as Partial<StundenplanInputSimpleLehrkraft>;
 		const result = new StundenplanInputSimpleLehrkraft();
 		if (obj.id === undefined)
@@ -43,7 +43,7 @@ export class StundenplanInputSimpleLehrkraft extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : StundenplanInputSimpleLehrkraft) : string {
+	public static transpilerToJSON(obj: StundenplanInputSimpleLehrkraft): string {
 		let result = '{';
 		result += '"id" : ' + obj.id.toString() + ',';
 		result += '"kuerzel" : ' + JSON.stringify(obj.kuerzel) + ',';
@@ -52,7 +52,7 @@ export class StundenplanInputSimpleLehrkraft extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<StundenplanInputSimpleLehrkraft>) : string {
+	public static transpilerToJSONPatch(obj: Partial<StundenplanInputSimpleLehrkraft>): string {
 		let result = '{';
 		if (obj.id !== undefined) {
 			result += '"id" : ' + obj.id.toString() + ',';
@@ -67,6 +67,6 @@ export class StundenplanInputSimpleLehrkraft extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_stundenplanblockung_StundenplanInputSimpleLehrkraft(obj : unknown) : StundenplanInputSimpleLehrkraft {
+export function cast_de_svws_nrw_core_data_stundenplanblockung_StundenplanInputSimpleLehrkraft(obj: unknown): StundenplanInputSimpleLehrkraft {
 	return obj as StundenplanInputSimpleLehrkraft;
 }

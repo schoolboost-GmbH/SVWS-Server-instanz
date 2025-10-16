@@ -10,7 +10,7 @@ import { GostBelegungsfehler } from '../../../../../core/abschluss/gost/GostBele
 
 export class Abi30BelegpruefungMathematik extends GostBelegpruefung {
 
-	private _mathematik : AbiturFachbelegung | null = null;
+	private _mathematik: AbiturFachbelegung | null = null;
 
 
 	/**
@@ -19,15 +19,15 @@ export class Abi30BelegpruefungMathematik extends GostBelegpruefung {
 	 * @param manager        der Daten-Manager für die Abiturdaten
 	 * @param pruefungsArt   die Art der durchzuführenden Prüfung (z.B. EF.1 oder GESAMT)
 	 */
-	public constructor(manager : AbiturdatenManager, pruefungsArt : GostBelegpruefungsArt) {
+	public constructor(manager: AbiturdatenManager, pruefungsArt: GostBelegpruefungsArt) {
 		super(manager, pruefungsArt);
 	}
 
-	protected init() : void {
+	protected init(): void {
 		this._mathematik = this.manager.getRelevanteFachbelegung(GostFachbereich.MATHEMATIK);
 	}
 
-	protected pruefeEF1() : void {
+	protected pruefeEF1(): void {
 		if ((this._mathematik === null) || !this.manager.pruefeBelegungMitSchriftlichkeitEinzeln(this._mathematik, GostSchriftlichkeit.BELIEBIG, GostHalbjahr.EF1)) {
 			this.addFehler(GostBelegungsfehler.M_10);
 			return;
@@ -36,7 +36,7 @@ export class Abi30BelegpruefungMathematik extends GostBelegpruefung {
 			this.addFehler(GostBelegungsfehler.M_11);
 	}
 
-	protected pruefeGesamt() : void {
+	protected pruefeGesamt(): void {
 		if (this._mathematik === null) {
 			this.addFehler(GostBelegungsfehler.M_10);
 			return;
@@ -51,7 +51,7 @@ export class Abi30BelegpruefungMathematik extends GostBelegpruefung {
 		return 'de.svws_nrw.core.abschluss.gost.belegpruefung.abi2030.Abi30BelegpruefungMathematik';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.abschluss.gost.belegpruefung.abi2030.Abi30BelegpruefungMathematik', 'de.svws_nrw.core.abschluss.gost.GostBelegpruefung'].includes(name);
 	}
 
@@ -59,6 +59,6 @@ export class Abi30BelegpruefungMathematik extends GostBelegpruefung {
 
 }
 
-export function cast_de_svws_nrw_core_abschluss_gost_belegpruefung_abi2030_Abi30BelegpruefungMathematik(obj : unknown) : Abi30BelegpruefungMathematik {
+export function cast_de_svws_nrw_core_abschluss_gost_belegpruefung_abi2030_Abi30BelegpruefungMathematik(obj: unknown): Abi30BelegpruefungMathematik {
 	return obj as Abi30BelegpruefungMathematik;
 }

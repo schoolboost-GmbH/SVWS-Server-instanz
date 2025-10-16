@@ -21,8 +21,8 @@ export class DTOUtils extends JavaObject {
 	 *
 	 * @return ein neues {@link GostBlockungsergebnisKursSchuelerZuordnung}-Objekt.
 	 */
-	public static newGostBlockungsergebnisKursSchuelerZuordnung(idKurs : number, idSchueler : number) : GostBlockungsergebnisKursSchuelerZuordnung {
-		const z : GostBlockungsergebnisKursSchuelerZuordnung = new GostBlockungsergebnisKursSchuelerZuordnung();
+	public static newGostBlockungsergebnisKursSchuelerZuordnung(idKurs: number, idSchueler: number): GostBlockungsergebnisKursSchuelerZuordnung {
+		const z: GostBlockungsergebnisKursSchuelerZuordnung = new GostBlockungsergebnisKursSchuelerZuordnung();
 		z.idKurs = idKurs;
 		z.idSchueler = idSchueler;
 		return z;
@@ -36,8 +36,8 @@ export class DTOUtils extends JavaObject {
 	 *
 	 * @return ein neues {@link GostBlockungsergebnisKursSchienenZuordnung}-Objekt.
 	 */
-	public static newGostBlockungsergebnisKursSchienenZuordnung(idKurs : number, idSchiene : number) : GostBlockungsergebnisKursSchienenZuordnung {
-		const z : GostBlockungsergebnisKursSchienenZuordnung = new GostBlockungsergebnisKursSchienenZuordnung();
+	public static newGostBlockungsergebnisKursSchienenZuordnung(idKurs: number, idSchiene: number): GostBlockungsergebnisKursSchienenZuordnung {
+		const z: GostBlockungsergebnisKursSchienenZuordnung = new GostBlockungsergebnisKursSchienenZuordnung();
 		z.idKurs = idKurs;
 		z.idSchiene = idSchiene;
 		return z;
@@ -50,8 +50,8 @@ export class DTOUtils extends JavaObject {
 	 *
 	 * @return ein neues {@link GostBlockungsergebnisSchiene}-Objekt.
 	 */
-	public static newGostBlockungsergebnisSchiene(idSchiene : number) : GostBlockungsergebnisSchiene {
-		const eSchiene : GostBlockungsergebnisSchiene = new GostBlockungsergebnisSchiene();
+	public static newGostBlockungsergebnisSchiene(idSchiene: number): GostBlockungsergebnisSchiene {
+		const eSchiene: GostBlockungsergebnisSchiene = new GostBlockungsergebnisSchiene();
 		eSchiene.id = idSchiene;
 		return eSchiene;
 	}
@@ -65,8 +65,8 @@ export class DTOUtils extends JavaObject {
 	 *
 	 * @return ein neues {@link GostBlockungsergebnisKurs}-Objekt.
 	 */
-	public static newGostBlockungsergebnisKurs(idKurs : number, idFach : number, idKursart : number, anzahlSchienen : number) : GostBlockungsergebnisKurs {
-		const eKurs : GostBlockungsergebnisKurs = new GostBlockungsergebnisKurs();
+	public static newGostBlockungsergebnisKurs(idKurs: number, idFach: number, idKursart: number, anzahlSchienen: number): GostBlockungsergebnisKurs {
+		const eKurs: GostBlockungsergebnisKurs = new GostBlockungsergebnisKurs();
 		eKurs.id = idKurs;
 		eKurs.fachID = idFach;
 		eKurs.kursart = idKursart;
@@ -81,8 +81,8 @@ export class DTOUtils extends JavaObject {
 	 *
 	 * @return ein neues {@link GostBlockungsergebnisKursSchienenZuordnung}-Objekt eines bestimmten Typs, mit keinem Parameter.
 	 */
-	public static newGostBlockungRegel0(typ : number) : GostBlockungRegel {
-		const r : GostBlockungRegel = new GostBlockungRegel();
+	public static newGostBlockungRegel0(typ: number): GostBlockungRegel {
+		const r: GostBlockungRegel = new GostBlockungRegel();
 		r.id = -1;
 		r.typ = typ;
 		return r;
@@ -96,8 +96,8 @@ export class DTOUtils extends JavaObject {
 	 *
 	 * @return ein neues {@link GostBlockungsergebnisKursSchienenZuordnung}-Objekt eines bestimmten Typs, mit genau einem Parameter.
 	 */
-	public static newGostBlockungRegel1(typ : number, param1 : number) : GostBlockungRegel {
-		const r : GostBlockungRegel = new GostBlockungRegel();
+	public static newGostBlockungRegel1(typ: number, param1: number): GostBlockungRegel {
+		const r: GostBlockungRegel = new GostBlockungRegel();
 		r.id = -1;
 		r.typ = typ;
 		r.parameter.add(param1);
@@ -113,8 +113,8 @@ export class DTOUtils extends JavaObject {
 	 *
 	 * @return ein neues {@link GostBlockungsergebnisKursSchienenZuordnung}-Objekt eines bestimmten Typs, mit genau zwei Parametern.
 	 */
-	public static newGostBlockungRegel2(typ : number, param1 : number, param2 : number) : GostBlockungRegel {
-		const r : GostBlockungRegel = new GostBlockungRegel();
+	public static newGostBlockungRegel2(typ: number, param1: number, param2: number): GostBlockungRegel {
+		const r: GostBlockungRegel = new GostBlockungRegel();
 		r.id = -1;
 		r.typ = typ;
 		r.parameter.add(param1);
@@ -132,8 +132,8 @@ export class DTOUtils extends JavaObject {
 	 *
 	 * @return ein neues {@link GostBlockungsergebnisKursSchienenZuordnung}-Objekt eines bestimmten Typs, mit genau drei Parametern.
 	 */
-	public static newGostBlockungRegel3(typ : number, param1 : number, param2 : number, param3 : number) : GostBlockungRegel {
-		const r : GostBlockungRegel = new GostBlockungRegel();
+	public static newGostBlockungRegel3(typ: number, param1: number, param2: number, param3: number): GostBlockungRegel {
+		const r: GostBlockungRegel = new GostBlockungRegel();
 		r.id = -1;
 		r.typ = typ;
 		r.parameter.add(param1);
@@ -150,8 +150,8 @@ export class DTOUtils extends JavaObject {
 	 *
 	 * @return TRUE, falls die Parameter der Regeln sich vom übergebenen Array unterscheiden.
 	 */
-	public static testRegelParameterChanged(r : GostBlockungRegel, a : Array<number>) : boolean {
-		for (let i : number = 0; i < a.length; i++)
+	public static testRegelParameterChanged(r: GostBlockungRegel, a: Array<number>): boolean {
+		for (let i: number = 0; i < a.length; i++)
 			if (a[i] !== r.parameter.get(i))
 				return true;
 		return false;
@@ -161,7 +161,7 @@ export class DTOUtils extends JavaObject {
 		return 'de.svws_nrw.core.utils.DTOUtils';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.utils.DTOUtils'].includes(name);
 	}
 
@@ -169,6 +169,6 @@ export class DTOUtils extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_utils_DTOUtils(obj : unknown) : DTOUtils {
+export function cast_de_svws_nrw_core_utils_DTOUtils(obj: unknown): DTOUtils {
 	return obj as DTOUtils;
 }

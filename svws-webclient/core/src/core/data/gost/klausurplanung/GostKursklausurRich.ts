@@ -9,77 +9,77 @@ export class GostKursklausurRich extends JavaObject {
 	/**
 	 * Die ID der Kursklausur.
 	 */
-	public id : number = -1;
+	public id: number = -1;
 
 	/**
 	 * Die ID der Klausur-Vorgabe.
 	 */
-	public idVorgabe : number = -1;
+	public idVorgabe: number = -1;
 
 	/**
 	 * Das Jahr, in welchem der Jahrgang Abitur machen wird.
 	 */
-	public abijahr : number = -1;
+	public abijahr: number = -1;
 
 	/**
 	 * Das Gost-Halbjahr, in dem die Klausur geschrieben wird.
 	 */
-	public halbjahr : number = -1;
+	public halbjahr: number = -1;
 
 	/**
 	 * Das Quartal, in welchem die Klausur geschrieben wird.
 	 */
-	public quartal : number = -1;
+	public quartal: number = -1;
 
 	/**
 	 * Die ID des Faches.
 	 */
-	public idFach : number = -1;
+	public idFach: number = -1;
 
 	/**
 	 * Das Kürzel einer verallgemeinerten Kursart.
 	 */
-	public kursart : string = "";
+	public kursart: string = "";
 
 	/**
 	 * Die ID des Klausurkurses.
 	 */
-	public idKurs : number = -1;
+	public idKurs: number = -1;
 
 	/**
 	 * Die Kurzbezeichnung des Klausurkurses.
 	 */
-	public kursKurzbezeichnung : string | null = "";
+	public kursKurzbezeichnung: string | null = "";
 
 	/**
 	 * Die Schiene des Kurses.
 	 */
-	public kursSchiene : Array<number> = [];
+	public kursSchiene: Array<number> = [];
 
 	/**
 	 * Die ID des Kurslehrers.
 	 */
-	public idLehrer : number | null = null;
+	public idLehrer: number | null = null;
 
 	/**
 	 * Die ID des Klausurtermins, sofern schon gesetzt.
 	 */
-	public idTermin : number | null = null;
+	public idTermin: number | null = null;
 
 	/**
 	 * Die Startzeit der Klausur in Minuten seit 0 Uhr, sofern abweichend von Startzeit des gesamten Termins.
 	 */
-	public startzeit : number | null = null;
+	public startzeit: number | null = null;
 
 	/**
 	 * Ein Array mit den IDs der zugehörigen Schüler.
 	 */
-	public schuelerIds : List<number> = new ArrayList<number>();
+	public schuelerIds: List<number> = new ArrayList<number>();
 
 	/**
 	 * Die textuelle Bemerkung zur Kursklausur, sofern vorhanden.
 	 */
-	public bemerkung : string | null = null;
+	public bemerkung: string | null = null;
 
 
 	/**
@@ -95,7 +95,7 @@ export class GostKursklausurRich extends JavaObject {
 	 * @param another     das zu vergleichende Objekt
 	 * @return true, falls die Objekte identisch sind, sonst false
 	 */
-	public equals(another : unknown | null) : boolean {
+	public equals(another: unknown | null): boolean {
 		return (another !== null) && (((another instanceof JavaObject) && (another.isTranspiledInstanceOf('de.svws_nrw.core.data.gost.klausurplanung.GostKursklausurRich')))) && (this.id === (another as unknown as GostKursklausurRich).id);
 	}
 
@@ -104,7 +104,7 @@ export class GostKursklausurRich extends JavaObject {
 	 *
 	 * @return den HashCode
 	 */
-	public hashCode() : number {
+	public hashCode(): number {
 		return JavaLong.hashCode((this.id));
 	}
 
@@ -112,13 +112,13 @@ export class GostKursklausurRich extends JavaObject {
 		return 'de.svws_nrw.core.data.gost.klausurplanung.GostKursklausurRich';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.gost.klausurplanung.GostKursklausurRich'].includes(name);
 	}
 
 	public static class = new Class<GostKursklausurRich>('de.svws_nrw.core.data.gost.klausurplanung.GostKursklausurRich');
 
-	public static transpilerFromJSON(json : string): GostKursklausurRich {
+	public static transpilerFromJSON(json: string): GostKursklausurRich {
 		const obj = JSON.parse(json) as Partial<GostKursklausurRich>;
 		const result = new GostKursklausurRich();
 		if (obj.id === undefined)
@@ -163,7 +163,7 @@ export class GostKursklausurRich extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : GostKursklausurRich) : string {
+	public static transpilerToJSON(obj: GostKursklausurRich): string {
 		let result = '{';
 		result += '"id" : ' + obj.id.toString() + ',';
 		result += '"idVorgabe" : ' + obj.idVorgabe.toString() + ',';
@@ -199,7 +199,7 @@ export class GostKursklausurRich extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<GostKursklausurRich>) : string {
+	public static transpilerToJSONPatch(obj: Partial<GostKursklausurRich>): string {
 		let result = '{';
 		if (obj.id !== undefined) {
 			result += '"id" : ' + obj.id.toString() + ',';
@@ -268,6 +268,6 @@ export class GostKursklausurRich extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_gost_klausurplanung_GostKursklausurRich(obj : unknown) : GostKursklausurRich {
+export function cast_de_svws_nrw_core_data_gost_klausurplanung_GostKursklausurRich(obj: unknown): GostKursklausurRich {
 	return obj as GostKursklausurRich;
 }

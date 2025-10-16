@@ -12,7 +12,7 @@ export class IntegerComparator extends JavaObject implements Comparator<number> 
 		super();
 	}
 
-	public compare(o1 : number, o2 : number) : number {
+	public compare(o1: number, o2: number): number {
 		return o1 - o2;
 	}
 
@@ -20,7 +20,7 @@ export class IntegerComparator extends JavaObject implements Comparator<number> 
 		return 'de.svws_nrw.core.utils.stundenplan.IntegerComparator';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.utils.stundenplan.IntegerComparator', 'java.util.Comparator'].includes(name);
 	}
 
@@ -28,6 +28,6 @@ export class IntegerComparator extends JavaObject implements Comparator<number> 
 
 }
 
-export function cast_de_svws_nrw_core_utils_stundenplan_IntegerComparator(obj : unknown) : IntegerComparator {
+export function cast_de_svws_nrw_core_utils_stundenplan_IntegerComparator(obj: unknown): IntegerComparator {
 	return obj as IntegerComparator;
 }

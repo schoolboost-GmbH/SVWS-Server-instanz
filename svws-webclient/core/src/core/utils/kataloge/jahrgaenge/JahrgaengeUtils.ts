@@ -26,7 +26,7 @@ export class JahrgaengeUtils extends JavaObject {
 	 *
 	 * @return die restlichen Jahre oder null
 	 */
-	public static getRestlicheJahre(schulform : Schulform, gliederung : Schulgliederung | null, jahrgang : string | null) : number | null {
+	public static getRestlicheJahre(schulform: Schulform, gliederung: Schulgliederung | null, jahrgang: string | null): number | null {
 		if (gliederung === null)
 			return null;
 		if ((schulform as unknown === Schulform.FW as unknown) || (schulform as unknown === Schulform.WB as unknown) || (schulform as unknown === Schulform.BK as unknown) || (schulform as unknown === Schulform.SB as unknown))
@@ -145,8 +145,8 @@ export class JahrgaengeUtils extends JavaObject {
 	 *
 	 * @return die restlichen Jahre oder null
 	 */
-	public static getRestlicheJahreBisAbitur(schulform : Schulform, gliederung : Schulgliederung | null, schuljahr : number, jahrgang : string | null) : number | null {
-		const sf : SchulformKatalogEintrag | null = schulform.daten(schuljahr);
+	public static getRestlicheJahreBisAbitur(schulform: Schulform, gliederung: Schulgliederung | null, schuljahr: number, jahrgang: string | null): number | null {
+		const sf: SchulformKatalogEintrag | null = schulform.daten(schuljahr);
 		if ((sf === null) || (!sf.hatGymOb) || (gliederung === null) || (jahrgang === null))
 			return null;
 		let _sevar_1739790870 : any;
@@ -188,8 +188,8 @@ export class JahrgaengeUtils extends JavaObject {
 	 *
 	 * @return true, falls es sich um einen Sek I-Jahrgang handelt, und ansonsten false
 	 */
-	public static istSekI(jahrgang : string) : boolean {
-		const jg : Jahrgaenge | null = Jahrgaenge.data().getWertByKuerzel(jahrgang);
+	public static istSekI(jahrgang: string): boolean {
+		const jg: Jahrgaenge | null = Jahrgaenge.data().getWertByKuerzel(jahrgang);
 		let _sevar_590951878 : any;
 		const _seexpr_590951878 = (jg);
 		if (_seexpr_590951878 === Jahrgaenge.JAHRGANG_05) {
@@ -217,8 +217,8 @@ export class JahrgaengeUtils extends JavaObject {
 	 *
 	 * @return true, falls es sich um einen Jahrgang der Gymnasialen Oberstufe handelt, und ansonsten false
 	 */
-	public static istGymOb(jahrgang : string) : boolean {
-		const jg : Jahrgaenge | null = Jahrgaenge.data().getWertByKuerzel(jahrgang);
+	public static istGymOb(jahrgang: string): boolean {
+		const jg: Jahrgaenge | null = Jahrgaenge.data().getWertByKuerzel(jahrgang);
 		let _sevar_1826259116 : any;
 		const _seexpr_1826259116 = (jg);
 		if (_seexpr_1826259116 === Jahrgaenge.EF) {
@@ -237,7 +237,7 @@ export class JahrgaengeUtils extends JavaObject {
 		return 'de.svws_nrw.core.utils.kataloge.jahrgaenge.JahrgaengeUtils';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.utils.kataloge.jahrgaenge.JahrgaengeUtils'].includes(name);
 	}
 
@@ -245,6 +245,6 @@ export class JahrgaengeUtils extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_utils_kataloge_jahrgaenge_JahrgaengeUtils(obj : unknown) : JahrgaengeUtils {
+export function cast_de_svws_nrw_core_utils_kataloge_jahrgaenge_JahrgaengeUtils(obj: unknown): JahrgaengeUtils {
 	return obj as JahrgaengeUtils;
 }

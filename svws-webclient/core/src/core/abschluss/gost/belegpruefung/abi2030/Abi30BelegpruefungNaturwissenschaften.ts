@@ -11,13 +11,13 @@ import { GostBelegungsfehler } from '../../../../../core/abschluss/gost/GostBele
 
 export class Abi30BelegpruefungNaturwissenschaften extends GostBelegpruefung {
 
-	private _naturwissenschaften : List<AbiturFachbelegung> | null = null;
+	private _naturwissenschaften: List<AbiturFachbelegung> | null = null;
 
-	private _naturwissenschaftenKlassisch : List<AbiturFachbelegung> | null = null;
+	private _naturwissenschaftenKlassisch: List<AbiturFachbelegung> | null = null;
 
-	private _anzahlDurchgehend : number = 0;
+	private _anzahlDurchgehend: number = 0;
 
-	private _anzahlDurchgehendSchriftlich : number = 0;
+	private _anzahlDurchgehendSchriftlich: number = 0;
 
 
 	/**
@@ -26,30 +26,30 @@ export class Abi30BelegpruefungNaturwissenschaften extends GostBelegpruefung {
 	 * @param manager        der Daten-Manager für die Abiturdaten
 	 * @param pruefungsArt   die Art der durchzuführenden Prüfung (z.B. EF.1 oder GESAMT)
 	 */
-	public constructor(manager : AbiturdatenManager, pruefungsArt : GostBelegpruefungsArt) {
+	public constructor(manager: AbiturdatenManager, pruefungsArt: GostBelegpruefungsArt) {
 		super(manager, pruefungsArt);
 	}
 
-	protected init() : void {
+	protected init(): void {
 		this._naturwissenschaften = this.manager.getRelevanteFachbelegungen(GostFachbereich.NATURWISSENSCHAFTLICH);
 		this._naturwissenschaftenKlassisch = this.manager.getRelevanteFachbelegungen(GostFachbereich.NATURWISSENSCHAFTLICH_KLASSISCH);
 		this._anzahlDurchgehend = 0;
 		this._anzahlDurchgehendSchriftlich = 0;
 	}
 
-	protected pruefeEF1() : void {
+	protected pruefeEF1(): void {
 		if (!this.manager.pruefeBelegungDurchgehendBelegbarExistiert(this._naturwissenschaftenKlassisch, GostSchriftlichkeit.BELIEBIG, GostHalbjahr.EF1))
 			this.addFehler(GostBelegungsfehler.NW_10);
 		if (!this.manager.pruefeBelegungExistiertMitSchriftlichkeitEinzeln(this._naturwissenschaftenKlassisch, GostSchriftlichkeit.SCHRIFTLICH, GostHalbjahr.EF1))
 			this.addFehler(GostBelegungsfehler.NW_11);
-		let fachbelegungen : List<AbiturFachbelegung> | null = this.manager.filterDurchgehendBelegbar(this._naturwissenschaften);
+		let fachbelegungen: List<AbiturFachbelegung> | null = this.manager.filterDurchgehendBelegbar(this._naturwissenschaften);
 		fachbelegungen = this.manager.filterBelegungen(fachbelegungen, GostHalbjahr.EF1);
 		this._anzahlDurchgehend = fachbelegungen.size();
 		fachbelegungen = this.manager.filterBelegungenMitSchriftlichkeit(fachbelegungen, GostSchriftlichkeit.SCHRIFTLICH, GostHalbjahr.EF1);
 		this._anzahlDurchgehendSchriftlich = fachbelegungen.size();
 	}
 
-	protected pruefeGesamt() : void {
+	protected pruefeGesamt(): void {
 		if (!this.manager.pruefeBelegungExistiert(this._naturwissenschaftenKlassisch, GostHalbjahr.EF1, GostHalbjahr.EF2, GostHalbjahr.Q11, GostHalbjahr.Q12, GostHalbjahr.Q21, GostHalbjahr.Q22))
 			this.addFehler(GostBelegungsfehler.NW_10);
 		if ((!this.manager.pruefeBelegungExistiertMitSchriftlichkeitEinzeln(this._naturwissenschaftenKlassisch, GostSchriftlichkeit.SCHRIFTLICH, GostHalbjahr.EF1)) || (!this.manager.pruefeBelegungExistiertMitSchriftlichkeitEinzeln(this._naturwissenschaftenKlassisch, GostSchriftlichkeit.SCHRIFTLICH, GostHalbjahr.EF2)))
@@ -63,7 +63,7 @@ export class Abi30BelegpruefungNaturwissenschaften extends GostBelegpruefung {
 	 *
 	 * @return die Anzahl der durchgehend belegten bzw. belegbaren Naturwissenschaften zurück.
 	 */
-	public getAnzahlDurchgehendBelegt() : number {
+	public getAnzahlDurchgehendBelegt(): number {
 		return this._anzahlDurchgehend;
 	}
 
@@ -73,7 +73,7 @@ export class Abi30BelegpruefungNaturwissenschaften extends GostBelegpruefung {
 	 *
 	 * @return die Anzahl der durchgehend schriftlich belegten bzw. belegbaren Naturwissenschaften zurück.
 	 */
-	public getAnzahlDurchgehendSchritflichBelegt() : number {
+	public getAnzahlDurchgehendSchritflichBelegt(): number {
 		return this._anzahlDurchgehendSchriftlich;
 	}
 
@@ -81,7 +81,7 @@ export class Abi30BelegpruefungNaturwissenschaften extends GostBelegpruefung {
 		return 'de.svws_nrw.core.abschluss.gost.belegpruefung.abi2030.Abi30BelegpruefungNaturwissenschaften';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.abschluss.gost.GostBelegpruefung', 'de.svws_nrw.core.abschluss.gost.belegpruefung.abi2030.Abi30BelegpruefungNaturwissenschaften'].includes(name);
 	}
 
@@ -89,6 +89,6 @@ export class Abi30BelegpruefungNaturwissenschaften extends GostBelegpruefung {
 
 }
 
-export function cast_de_svws_nrw_core_abschluss_gost_belegpruefung_abi2030_Abi30BelegpruefungNaturwissenschaften(obj : unknown) : Abi30BelegpruefungNaturwissenschaften {
+export function cast_de_svws_nrw_core_abschluss_gost_belegpruefung_abi2030_Abi30BelegpruefungNaturwissenschaften(obj: unknown): Abi30BelegpruefungNaturwissenschaften {
 	return obj as Abi30BelegpruefungNaturwissenschaften;
 }

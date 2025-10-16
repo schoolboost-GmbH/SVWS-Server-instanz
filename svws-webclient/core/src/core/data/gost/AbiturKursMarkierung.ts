@@ -6,12 +6,12 @@ export class AbiturKursMarkierung extends JavaObject {
 	/**
 	 * Gibt an, ob der Kurs in die Berechnung eingeht
 	 */
-	public fuerBerechnung : boolean = false;
+	public fuerBerechnung: boolean = false;
 
 	/**
 	 * Gibt an, ob der Kurs auf dem Zeugnis angegeben werden soll.
 	 */
-	public aufAbiturZeugnis : boolean = false;
+	public aufAbiturZeugnis: boolean = false;
 
 
 	/**
@@ -25,7 +25,7 @@ export class AbiturKursMarkierung extends JavaObject {
 	 *
 	 * @param fuerBerechnung   gibt an, on der Kurs in die Berechnung eingehen soll oder nicht
 	 */
-	public constructor(fuerBerechnung : boolean);
+	public constructor(fuerBerechnung: boolean);
 
 	/**
 	 * Erzeugt eine neue Markierung.
@@ -33,23 +33,23 @@ export class AbiturKursMarkierung extends JavaObject {
 	 * @param fuerBerechnung      gibt an, on der Kurs in die Berechnung eingehen soll oder nicht
 	 * @param aufAbiturZeugnis    gibt an, ob der Kurs auf dem Abiturzeugnis erscheinen soll
 	 */
-	public constructor(fuerBerechnung : boolean, aufAbiturZeugnis : boolean);
+	public constructor(fuerBerechnung: boolean, aufAbiturZeugnis: boolean);
 
 	/**
 	 * Implementation for method overloads of 'constructor'
 	 */
-	public constructor(__param0? : boolean, __param1? : boolean) {
+	public constructor(__param0?: boolean, __param1?: boolean) {
 		super();
 		if ((__param0 === undefined) && (__param1 === undefined)) {
 			this.fuerBerechnung = false;
 			this.aufAbiturZeugnis = true;
 		} else if (((__param0 !== undefined) && typeof __param0 === "boolean") && (__param1 === undefined)) {
-			const fuerBerechnung : boolean = __param0 as boolean;
+			const fuerBerechnung: boolean = __param0 as boolean;
 			this.fuerBerechnung = fuerBerechnung;
 			this.aufAbiturZeugnis = true;
 		} else if (((__param0 !== undefined) && typeof __param0 === "boolean") && ((__param1 !== undefined) && typeof __param1 === "boolean")) {
-			const fuerBerechnung : boolean = __param0 as boolean;
-			const aufAbiturZeugnis : boolean = __param1 as boolean;
+			const fuerBerechnung: boolean = __param0 as boolean;
+			const aufAbiturZeugnis: boolean = __param1 as boolean;
 			this.fuerBerechnung = fuerBerechnung;
 			this.aufAbiturZeugnis = aufAbiturZeugnis;
 		} else throw new Error('invalid method overload');
@@ -59,13 +59,13 @@ export class AbiturKursMarkierung extends JavaObject {
 		return 'de.svws_nrw.core.data.gost.AbiturKursMarkierung';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.gost.AbiturKursMarkierung'].includes(name);
 	}
 
 	public static class = new Class<AbiturKursMarkierung>('de.svws_nrw.core.data.gost.AbiturKursMarkierung');
 
-	public static transpilerFromJSON(json : string): AbiturKursMarkierung {
+	public static transpilerFromJSON(json: string): AbiturKursMarkierung {
 		const obj = JSON.parse(json) as Partial<AbiturKursMarkierung>;
 		const result = new AbiturKursMarkierung();
 		if (obj.fuerBerechnung === undefined)
@@ -77,7 +77,7 @@ export class AbiturKursMarkierung extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : AbiturKursMarkierung) : string {
+	public static transpilerToJSON(obj: AbiturKursMarkierung): string {
 		let result = '{';
 		result += '"fuerBerechnung" : ' + obj.fuerBerechnung.toString() + ',';
 		result += '"aufAbiturZeugnis" : ' + obj.aufAbiturZeugnis.toString() + ',';
@@ -86,7 +86,7 @@ export class AbiturKursMarkierung extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<AbiturKursMarkierung>) : string {
+	public static transpilerToJSONPatch(obj: Partial<AbiturKursMarkierung>): string {
 		let result = '{';
 		if (obj.fuerBerechnung !== undefined) {
 			result += '"fuerBerechnung" : ' + obj.fuerBerechnung.toString() + ',';
@@ -101,6 +101,6 @@ export class AbiturKursMarkierung extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_gost_AbiturKursMarkierung(obj : unknown) : AbiturKursMarkierung {
+export function cast_de_svws_nrw_core_data_gost_AbiturKursMarkierung(obj: unknown): AbiturKursMarkierung {
 	return obj as AbiturKursMarkierung;
 }

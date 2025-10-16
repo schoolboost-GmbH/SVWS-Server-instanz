@@ -6,29 +6,29 @@ export class ENMFloskel extends JavaObject {
 	/**
 	 * Das Kürzel der Floskel.
 	 */
-	public kuerzel : string | null = null;
+	public kuerzel: string | null = null;
 
 	/**
 	 * Der Text der Floskel.
 	 */
-	public text : string | null = null;
+	public text: string | null = null;
 
 	/**
 	 * Die ID des Faches, dem die Floskel zugeordnet ist, sofern die Floskel einem Fach
 	 *  zugeordnet wurde, ansonsten null.
 	 */
-	public fachID : number | null = null;
+	public fachID: number | null = null;
 
 	/**
 	 * Eine den Notenstufen ähnliche Kategorisierung
 	 */
-	public niveau : number | null = null;
+	public niveau: number | null = null;
 
 	/**
 	 * Die ID des Jahrganges, dem die Floskel zugeordnet ist, falls die Floskel einem Fach
 	 *  zugeordnet wurde, ansonsten null, falls sie für alle Jahrgänge gilt.
 	 */
-	public jahrgangID : number | null = null;
+	public jahrgangID: number | null = null;
 
 
 	/**
@@ -42,13 +42,13 @@ export class ENMFloskel extends JavaObject {
 		return 'de.svws_nrw.core.data.enm.ENMFloskel';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.enm.ENMFloskel'].includes(name);
 	}
 
 	public static class = new Class<ENMFloskel>('de.svws_nrw.core.data.enm.ENMFloskel');
 
-	public static transpilerFromJSON(json : string): ENMFloskel {
+	public static transpilerFromJSON(json: string): ENMFloskel {
 		const obj = JSON.parse(json) as Partial<ENMFloskel>;
 		const result = new ENMFloskel();
 		result.kuerzel = (obj.kuerzel === undefined) ? null : obj.kuerzel === null ? null : obj.kuerzel;
@@ -59,7 +59,7 @@ export class ENMFloskel extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : ENMFloskel) : string {
+	public static transpilerToJSON(obj: ENMFloskel): string {
 		let result = '{';
 		result += '"kuerzel" : ' + ((obj.kuerzel === null) ? 'null' : JSON.stringify(obj.kuerzel)) + ',';
 		result += '"text" : ' + ((obj.text === null) ? 'null' : JSON.stringify(obj.text)) + ',';
@@ -71,7 +71,7 @@ export class ENMFloskel extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<ENMFloskel>) : string {
+	public static transpilerToJSONPatch(obj: Partial<ENMFloskel>): string {
 		let result = '{';
 		if (obj.kuerzel !== undefined) {
 			result += '"kuerzel" : ' + ((obj.kuerzel === null) ? 'null' : JSON.stringify(obj.kuerzel)) + ',';
@@ -95,6 +95,6 @@ export class ENMFloskel extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_enm_ENMFloskel(obj : unknown) : ENMFloskel {
+export function cast_de_svws_nrw_core_data_enm_ENMFloskel(obj: unknown): ENMFloskel {
 	return obj as ENMFloskel;
 }

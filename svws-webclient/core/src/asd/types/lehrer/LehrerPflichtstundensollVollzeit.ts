@@ -18,7 +18,7 @@ export class LehrerPflichtstundensollVollzeit extends CoreTypeSimple<LehrerPflic
 	 *
 	 * @param manager   der Manager für die Daten des Core-Types
 	 */
-	public static init(manager : CoreTypeDataManager<LehrerPflichtstundensollVollzeitKatalogEintrag, LehrerPflichtstundensollVollzeit>) : void {
+	public static init(manager: CoreTypeDataManager<LehrerPflichtstundensollVollzeitKatalogEintrag, LehrerPflichtstundensollVollzeit>): void {
 		CoreTypeDataManager.putManager(LehrerPflichtstundensollVollzeit.class, manager);
 	}
 
@@ -27,7 +27,7 @@ export class LehrerPflichtstundensollVollzeit extends CoreTypeSimple<LehrerPflic
 	 *
 	 * @return der Daten-Manager
 	 */
-	public static data() : CoreTypeDataManager<LehrerPflichtstundensollVollzeitKatalogEintrag, LehrerPflichtstundensollVollzeit> {
+	public static data(): CoreTypeDataManager<LehrerPflichtstundensollVollzeitKatalogEintrag, LehrerPflichtstundensollVollzeit> {
 		return CoreTypeDataManager.getManager(LehrerPflichtstundensollVollzeit.class);
 	}
 
@@ -36,14 +36,14 @@ export class LehrerPflichtstundensollVollzeit extends CoreTypeSimple<LehrerPflic
 	 *
 	 * @return die Werte des Core-Types als Array
 	 */
-	public static values() : Array<LehrerPflichtstundensollVollzeit> {
+	public static values(): Array<LehrerPflichtstundensollVollzeit> {
 		return CoreTypeSimple.valuesByClass(LehrerPflichtstundensollVollzeit.class);
 	}
 
 	/**
 	 * Erzeugt eine Instance dieser Klasse.
 	 */
-	public getInstance() : LehrerPflichtstundensollVollzeit | null {
+	public getInstance(): LehrerPflichtstundensollVollzeit | null {
 		return new LehrerPflichtstundensollVollzeit();
 	}
 
@@ -51,7 +51,7 @@ export class LehrerPflichtstundensollVollzeit extends CoreTypeSimple<LehrerPflic
 		return 'de.svws_nrw.asd.types.lehrer.LehrerPflichtstundensollVollzeit';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.asd.types.lehrer.LehrerPflichtstundensollVollzeit', 'de.svws_nrw.asd.types.CoreType', 'java.lang.Comparable', 'de.svws_nrw.asd.types.CoreTypeSimple'].includes(name);
 	}
 
@@ -59,6 +59,6 @@ export class LehrerPflichtstundensollVollzeit extends CoreTypeSimple<LehrerPflic
 
 }
 
-export function cast_de_svws_nrw_asd_types_lehrer_LehrerPflichtstundensollVollzeit(obj : unknown) : LehrerPflichtstundensollVollzeit {
+export function cast_de_svws_nrw_asd_types_lehrer_LehrerPflichtstundensollVollzeit(obj: unknown): LehrerPflichtstundensollVollzeit {
 	return obj as LehrerPflichtstundensollVollzeit;
 }

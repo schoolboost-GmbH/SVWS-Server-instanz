@@ -6,17 +6,17 @@ export class StundenplanAufsichtsbereich extends JavaObject {
 	/**
 	 * Die ID des Aufsichtsbereichs.
 	 */
-	public id : number = -1;
+	public id: number = -1;
 
 	/**
 	 * Das Kürzel des Aufsichtsbereichs.
 	 */
-	public kuerzel : string = "";
+	public kuerzel: string = "";
 
 	/**
 	 * Die Beschreibung des Aufsichtsbereichs.
 	 */
-	public beschreibung : string = "";
+	public beschreibung: string = "";
 
 
 	/**
@@ -30,13 +30,13 @@ export class StundenplanAufsichtsbereich extends JavaObject {
 		return 'de.svws_nrw.core.data.stundenplan.StundenplanAufsichtsbereich';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.stundenplan.StundenplanAufsichtsbereich'].includes(name);
 	}
 
 	public static class = new Class<StundenplanAufsichtsbereich>('de.svws_nrw.core.data.stundenplan.StundenplanAufsichtsbereich');
 
-	public static transpilerFromJSON(json : string): StundenplanAufsichtsbereich {
+	public static transpilerFromJSON(json: string): StundenplanAufsichtsbereich {
 		const obj = JSON.parse(json) as Partial<StundenplanAufsichtsbereich>;
 		const result = new StundenplanAufsichtsbereich();
 		if (obj.id === undefined)
@@ -51,7 +51,7 @@ export class StundenplanAufsichtsbereich extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : StundenplanAufsichtsbereich) : string {
+	public static transpilerToJSON(obj: StundenplanAufsichtsbereich): string {
 		let result = '{';
 		result += '"id" : ' + obj.id.toString() + ',';
 		result += '"kuerzel" : ' + JSON.stringify(obj.kuerzel) + ',';
@@ -61,7 +61,7 @@ export class StundenplanAufsichtsbereich extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<StundenplanAufsichtsbereich>) : string {
+	public static transpilerToJSONPatch(obj: Partial<StundenplanAufsichtsbereich>): string {
 		let result = '{';
 		if (obj.id !== undefined) {
 			result += '"id" : ' + obj.id.toString() + ',';
@@ -79,6 +79,6 @@ export class StundenplanAufsichtsbereich extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_stundenplan_StundenplanAufsichtsbereich(obj : unknown) : StundenplanAufsichtsbereich {
+export function cast_de_svws_nrw_core_data_stundenplan_StundenplanAufsichtsbereich(obj: unknown): StundenplanAufsichtsbereich {
 	return obj as StundenplanAufsichtsbereich;
 }

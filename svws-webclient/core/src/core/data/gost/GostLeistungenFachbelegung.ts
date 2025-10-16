@@ -6,77 +6,77 @@ export class GostLeistungenFachbelegung extends JavaObject {
 	/**
 	 * Die ID des Datensatzes
 	 */
-	public id : number = 0;
+	public id: number = 0;
 
 	/**
 	 * Das Schuljahr der Fachbelegung
 	 */
-	public schuljahr : number = 0;
+	public schuljahr: number = 0;
 
 	/**
 	 * Das Kürzel des Halbjahres der Fachbelegung
 	 */
-	public halbjahrKuerzel : string | null = null;
+	public halbjahrKuerzel: string | null = null;
 
 	/**
 	 * Der Abschnitt, dem die Fachbelegung zugeordnet ist - unterscheidet sich z.B. im Quartalsbetrieb vom Halbjahr
 	 */
-	public abschnitt : number = 0;
+	public abschnitt: number = 0;
 
 	/**
 	 * Gibt an, ob es sich um einen gewerteten Abschnitt handelt.
 	 */
-	public abschnittGewertet : boolean = false;
+	public abschnittGewertet: boolean = false;
 
 	/**
 	 * Gibt den Jahrgang, an dem die Belegung zugeordnet ist
 	 */
-	public jahrgang : string | null = null;
+	public jahrgang: string | null = null;
 
 	/**
 	 * Die ID des Kurses
 	 */
-	public idKurs : number | null = null;
+	public idKurs: number | null = null;
 
 	/**
 	 * Gibt die ID des Fachlehrers an, bei dem der zur Fachbelegung gehörige Kurs belegt wurde.
 	 */
-	public lehrer : number | null = null;
+	public lehrer: number | null = null;
 
 	/**
 	 * Gibt die Note als Zeichenkette und mit Tendenz an
 	 */
-	public notenKuerzel : string | null = null;
+	public notenKuerzel: string | null = null;
 
 	/**
 	 * Das Kürzel der Kursart der gymnasialen Oberstufe des belegten Kurses
 	 */
-	public kursartKuerzel : string | null = null;
+	public kursartKuerzel: string | null = null;
 
 	/**
 	 * Gibt an, ob der Kurs schriftlich belegt wurde.
 	 */
-	public istSchriftlich : boolean = false;
+	public istSchriftlich: boolean = false;
 
 	/**
 	 * Gibt die Sprache als einstelliges Kürzel an, sofern der Kurs bilingual unterrichtet wurde.
 	 */
-	public bilingualeSprache : string | null = null;
+	public bilingualeSprache: string | null = null;
 
 	/**
 	 * Gibt die Anzahl der Wochenstunden für den Kurs an.
 	 */
-	public wochenstunden : number = 0;
+	public wochenstunden: number = 0;
 
 	/**
 	 * Gibt die Anzahl der Fehlstunden in dem Halbjahr an.
 	 */
-	public fehlstundenGesamt : number = 0;
+	public fehlstundenGesamt: number = 0;
 
 	/**
 	 * Gibt die Anzahl der unentschuldigten Fehlstunden in dem Halbjahr an.
 	 */
-	public fehlstundenUnentschuldigt : number = 0;
+	public fehlstundenUnentschuldigt: number = 0;
 
 
 	/**
@@ -90,13 +90,13 @@ export class GostLeistungenFachbelegung extends JavaObject {
 		return 'de.svws_nrw.core.data.gost.GostLeistungenFachbelegung';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.gost.GostLeistungenFachbelegung'].includes(name);
 	}
 
 	public static class = new Class<GostLeistungenFachbelegung>('de.svws_nrw.core.data.gost.GostLeistungenFachbelegung');
 
-	public static transpilerFromJSON(json : string): GostLeistungenFachbelegung {
+	public static transpilerFromJSON(json: string): GostLeistungenFachbelegung {
 		const obj = JSON.parse(json) as Partial<GostLeistungenFachbelegung>;
 		const result = new GostLeistungenFachbelegung();
 		if (obj.id === undefined)
@@ -133,7 +133,7 @@ export class GostLeistungenFachbelegung extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : GostLeistungenFachbelegung) : string {
+	public static transpilerToJSON(obj: GostLeistungenFachbelegung): string {
 		let result = '{';
 		result += '"id" : ' + obj.id.toString() + ',';
 		result += '"schuljahr" : ' + obj.schuljahr.toString() + ',';
@@ -155,7 +155,7 @@ export class GostLeistungenFachbelegung extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<GostLeistungenFachbelegung>) : string {
+	public static transpilerToJSONPatch(obj: Partial<GostLeistungenFachbelegung>): string {
 		let result = '{';
 		if (obj.id !== undefined) {
 			result += '"id" : ' + obj.id.toString() + ',';
@@ -209,6 +209,6 @@ export class GostLeistungenFachbelegung extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_gost_GostLeistungenFachbelegung(obj : unknown) : GostLeistungenFachbelegung {
+export function cast_de_svws_nrw_core_data_gost_GostLeistungenFachbelegung(obj: unknown): GostLeistungenFachbelegung {
 	return obj as GostLeistungenFachbelegung;
 }

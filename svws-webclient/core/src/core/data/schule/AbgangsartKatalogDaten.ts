@@ -9,27 +9,27 @@ export class AbgangsartKatalogDaten extends JavaObject {
 	/**
 	 * Die ID des Eintrags.
 	 */
-	public id : number = -1;
+	public id: number = -1;
 
 	/**
 	 * Die Beschreibung der Abgangsart.
 	 */
-	public beschreibung : string = "";
+	public beschreibung: string = "";
 
 	/**
 	 * Die Kombinationen von Schulformen, -gliederungen und Jahrgängen, bei der die Abgangsart zulässig ist.
 	 */
-	public zulaessig : List<SchulformGliederungJahrgaenge> = new ArrayList<SchulformGliederungJahrgaenge>();
+	public zulaessig: List<SchulformGliederungJahrgaenge> = new ArrayList<SchulformGliederungJahrgaenge>();
 
 	/**
 	 * Gibt an, in welchem Schuljahr der Historien-Eintrag einführt wurde. Ist kein Schuljahr bekannt, so ist null gesetzt.
 	 */
-	public gueltigVon : number | null = null;
+	public gueltigVon: number | null = null;
 
 	/**
 	 * Gibt an, bis zu welchem Schuljahr der Historien-Eintrag gültig ist. Ist kein Schuljahr bekannt, so ist null gesetzt.
 	 */
-	public gueltigBis : number | null = null;
+	public gueltigBis: number | null = null;
 
 
 	/**
@@ -43,13 +43,13 @@ export class AbgangsartKatalogDaten extends JavaObject {
 		return 'de.svws_nrw.core.data.schule.AbgangsartKatalogDaten';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.schule.AbgangsartKatalogDaten'].includes(name);
 	}
 
 	public static class = new Class<AbgangsartKatalogDaten>('de.svws_nrw.core.data.schule.AbgangsartKatalogDaten');
 
-	public static transpilerFromJSON(json : string): AbgangsartKatalogDaten {
+	public static transpilerFromJSON(json: string): AbgangsartKatalogDaten {
 		const obj = JSON.parse(json) as Partial<AbgangsartKatalogDaten>;
 		const result = new AbgangsartKatalogDaten();
 		if (obj.id === undefined)
@@ -68,7 +68,7 @@ export class AbgangsartKatalogDaten extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : AbgangsartKatalogDaten) : string {
+	public static transpilerToJSON(obj: AbgangsartKatalogDaten): string {
 		let result = '{';
 		result += '"id" : ' + obj.id.toString() + ',';
 		result += '"beschreibung" : ' + JSON.stringify(obj.beschreibung) + ',';
@@ -87,7 +87,7 @@ export class AbgangsartKatalogDaten extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<AbgangsartKatalogDaten>) : string {
+	public static transpilerToJSONPatch(obj: Partial<AbgangsartKatalogDaten>): string {
 		let result = '{';
 		if (obj.id !== undefined) {
 			result += '"id" : ' + obj.id.toString() + ',';
@@ -118,6 +118,6 @@ export class AbgangsartKatalogDaten extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_schule_AbgangsartKatalogDaten(obj : unknown) : AbgangsartKatalogDaten {
+export function cast_de_svws_nrw_core_data_schule_AbgangsartKatalogDaten(obj: unknown): AbgangsartKatalogDaten {
 	return obj as AbgangsartKatalogDaten;
 }

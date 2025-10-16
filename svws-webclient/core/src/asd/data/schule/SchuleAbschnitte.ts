@@ -8,17 +8,17 @@ export class SchuleAbschnitte extends JavaObject {
 	/**
 	 * Die Anzahl der Abschnitte pro Jahr
 	 */
-	public anzahlAbschnitte : number = 0;
+	public anzahlAbschnitte: number = 0;
 
 	/**
 	 * Die allgemeine Bezeichnung der Abschnitte (z.B. Quartal oder Halbjahr)
 	 */
-	public abschnittBez : string = "Halbjahr";
+	public abschnittBez: string = "Halbjahr";
 
 	/**
 	 * Eine Liste der einzelnen speziellen Bezeichnungnen für dei Abschnitte (z.B. 1. Quartal, 2. Quartal, ...)
 	 */
-	public bezAbschnitte : List<string> = new ArrayList<string>();
+	public bezAbschnitte: List<string> = new ArrayList<string>();
 
 
 	/**
@@ -32,13 +32,13 @@ export class SchuleAbschnitte extends JavaObject {
 		return 'de.svws_nrw.asd.data.schule.SchuleAbschnitte';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.asd.data.schule.SchuleAbschnitte'].includes(name);
 	}
 
 	public static class = new Class<SchuleAbschnitte>('de.svws_nrw.asd.data.schule.SchuleAbschnitte');
 
-	public static transpilerFromJSON(json : string): SchuleAbschnitte {
+	public static transpilerFromJSON(json: string): SchuleAbschnitte {
 		const obj = JSON.parse(json) as Partial<SchuleAbschnitte>;
 		const result = new SchuleAbschnitte();
 		if (obj.anzahlAbschnitte === undefined)
@@ -55,7 +55,7 @@ export class SchuleAbschnitte extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : SchuleAbschnitte) : string {
+	public static transpilerToJSON(obj: SchuleAbschnitte): string {
 		let result = '{';
 		result += '"anzahlAbschnitte" : ' + obj.anzahlAbschnitte.toString() + ',';
 		result += '"abschnittBez" : ' + JSON.stringify(obj.abschnittBez) + ',';
@@ -72,7 +72,7 @@ export class SchuleAbschnitte extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<SchuleAbschnitte>) : string {
+	public static transpilerToJSONPatch(obj: Partial<SchuleAbschnitte>): string {
 		let result = '{';
 		if (obj.anzahlAbschnitte !== undefined) {
 			result += '"anzahlAbschnitte" : ' + obj.anzahlAbschnitte.toString() + ',';
@@ -97,6 +97,6 @@ export class SchuleAbschnitte extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_asd_data_schule_SchuleAbschnitte(obj : unknown) : SchuleAbschnitte {
+export function cast_de_svws_nrw_asd_data_schule_SchuleAbschnitte(obj: unknown): SchuleAbschnitte {
 	return obj as SchuleAbschnitte;
 }

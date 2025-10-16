@@ -16,15 +16,15 @@ export class BKGymBelegpruefungD3 extends BKGymBelegpruefung {
 	 *
 	 * @param manager   der Manager für die Abiturdaten
 	 */
-	public constructor(manager : BKGymAbiturdatenManager) {
+	public constructor(manager: BKGymAbiturdatenManager) {
 		super(manager);
 	}
 
-	public pruefe() : void {
-		const mglStundentafeln : List<BeruflichesGymnasiumStundentafel> = this.getStundentafelnByAbiturfaechern(BeruflichesGymnasiumPruefungsordnungAnlage.D3);
+	public pruefe(): void {
+		const mglStundentafeln: List<BeruflichesGymnasiumStundentafel> = this.getStundentafelnByAbiturfaechern(BeruflichesGymnasiumPruefungsordnungAnlage.D3);
 		if (mglStundentafeln.isEmpty())
 			return;
-		const mapWahlmoeglichkeiten : JavaMap<BeruflichesGymnasiumStundentafel, BeruflichesGymnasiumStundentafelAbiturfaecherWahlmoeglichkeit> = this.manager.getWahlmoeglichekeiten(mglStundentafeln);
+		const mapWahlmoeglichkeiten: JavaMap<BeruflichesGymnasiumStundentafel, BeruflichesGymnasiumStundentafelAbiturfaecherWahlmoeglichkeit> = this.manager.getWahlmoeglichekeiten(mglStundentafeln);
 		if (mapWahlmoeglichkeiten.isEmpty()) {
 			this.addFehler(BKGymBelegungsfehler.AB_5);
 			return;
@@ -35,7 +35,7 @@ export class BKGymBelegpruefungD3 extends BKGymBelegpruefung {
 		return 'de.svws_nrw.core.abschluss.bk.d.BKGymBelegpruefungD3';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.abschluss.bk.d.BKGymBelegpruefungD3', 'de.svws_nrw.core.abschluss.bk.d.BKGymBelegpruefung'].includes(name);
 	}
 
@@ -43,6 +43,6 @@ export class BKGymBelegpruefungD3 extends BKGymBelegpruefung {
 
 }
 
-export function cast_de_svws_nrw_core_abschluss_bk_d_BKGymBelegpruefungD3(obj : unknown) : BKGymBelegpruefungD3 {
+export function cast_de_svws_nrw_core_abschluss_bk_d_BKGymBelegpruefungD3(obj: unknown): BKGymBelegpruefungD3 {
 	return obj as BKGymBelegpruefungD3;
 }

@@ -6,47 +6,47 @@ export class ENMTeilleistung extends JavaObject {
 	/**
 	 * Die ID dieser Teilleistung in der SVWS-DB (z.B. 307956)
 	 */
-	public id : number = 0;
+	public id: number = 0;
 
 	/**
 	 * Die ID der Teilleistungsart (z.B. 42)
 	 */
-	public artID : number = 0;
+	public artID: number = 0;
 
 	/**
 	 * Der Zeitstempel der letzten Änderung an der Teilleistungsart
 	 */
-	public tsArtID : string | null = null;
+	public tsArtID: string | null = null;
 
 	/**
 	 * Das Datum an dem die Teilleistung erbracht bzw. festgelegt wurde. (z.B. "2020-10-10")
 	 */
-	public datum : string | null = null;
+	public datum: string | null = null;
 
 	/**
 	 * Der Zeitstempel der letzten Änderung an dem Datum
 	 */
-	public tsDatum : string | null = null;
+	public tsDatum: string | null = null;
 
 	/**
 	 * Eine Bemerkung zu der Teilleistung (z.B. "Nachgeschrieben")
 	 */
-	public bemerkung : string | null = null;
+	public bemerkung: string | null = null;
 
 	/**
 	 * Der Zeitstempel der letzten Änderung an der Bemerkung
 	 */
-	public tsBemerkung : string | null = null;
+	public tsBemerkung: string | null = null;
 
 	/**
 	 * Das Noten-Kürzel für die Teilleistung (z.B. "1+")
 	 */
-	public note : string | null = null;
+	public note: string | null = null;
 
 	/**
 	 * Der Zeitstempel der letzten Änderung an der Note
 	 */
-	public tsNote : string | null = null;
+	public tsNote: string | null = null;
 
 
 	/**
@@ -60,13 +60,13 @@ export class ENMTeilleistung extends JavaObject {
 		return 'de.svws_nrw.core.data.enm.ENMTeilleistung';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.enm.ENMTeilleistung'].includes(name);
 	}
 
 	public static class = new Class<ENMTeilleistung>('de.svws_nrw.core.data.enm.ENMTeilleistung');
 
-	public static transpilerFromJSON(json : string): ENMTeilleistung {
+	public static transpilerFromJSON(json: string): ENMTeilleistung {
 		const obj = JSON.parse(json) as Partial<ENMTeilleistung>;
 		const result = new ENMTeilleistung();
 		if (obj.id === undefined)
@@ -85,7 +85,7 @@ export class ENMTeilleistung extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : ENMTeilleistung) : string {
+	public static transpilerToJSON(obj: ENMTeilleistung): string {
 		let result = '{';
 		result += '"id" : ' + obj.id.toString() + ',';
 		result += '"artID" : ' + obj.artID.toString() + ',';
@@ -101,7 +101,7 @@ export class ENMTeilleistung extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<ENMTeilleistung>) : string {
+	public static transpilerToJSONPatch(obj: Partial<ENMTeilleistung>): string {
 		let result = '{';
 		if (obj.id !== undefined) {
 			result += '"id" : ' + obj.id.toString() + ',';
@@ -137,6 +137,6 @@ export class ENMTeilleistung extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_enm_ENMTeilleistung(obj : unknown) : ENMTeilleistung {
+export function cast_de_svws_nrw_core_data_enm_ENMTeilleistung(obj: unknown): ENMTeilleistung {
 	return obj as ENMTeilleistung;
 }

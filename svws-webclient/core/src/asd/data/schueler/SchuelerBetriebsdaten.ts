@@ -6,62 +6,62 @@ export class SchuelerBetriebsdaten extends JavaObject {
 	/**
 	 * ID des Datensatzes
 	 */
-	public id : number = 0;
+	public id: number = 0;
 
 	/**
 	 * ID des Schülers
 	 */
-	public schueler_id : number = 0;
+	public schueler_id: number = 0;
 
 	/**
 	 * AdressID des Betriebeeintrags beim Schüler
 	 */
-	public betrieb_id : number = 0;
+	public betrieb_id: number = 0;
 
 	/**
 	 * ID der Beschäftigungsart des Schülers
 	 */
-	public beschaeftigungsart_id : number | null = null;
+	public beschaeftigungsart_id: number | null = null;
 
 	/**
 	 * Datum Vertragsbeginn des Betriebeeintrags beim Schüler
 	 */
-	public vertragsbeginn : string | null = null;
+	public vertragsbeginn: string | null = null;
 
 	/**
 	 * Datum des Vertragsende des Betriebeeintrags beim Schüler
 	 */
-	public vertragsende : string | null = null;
+	public vertragsende: string | null = null;
 
 	/**
 	 * Ausbildername des Betriebeeintrags beim Schüler
 	 */
-	public ausbilder : string | null = null;
+	public ausbilder: string | null = null;
 
 	/**
 	 * Betrieb erhält Anschreiben Ja/Nein
 	 */
-	public allgadranschreiben : boolean = false;
+	public allgadranschreiben: boolean = false;
 
 	/**
 	 * Gibt an ob es ein Praktikum ist beim Betriebeeintrags beim Schüler
 	 */
-	public praktikum : boolean = false;
+	public praktikum: boolean = false;
 
 	/**
 	 * Sortierung des Betriebeeintrags beim Schüler
 	 */
-	public sortierung : number | null = null;
+	public sortierung: number | null = null;
 
 	/**
 	 * AnsprechpartnerID des Betriebeeintrags beim Schüler
 	 */
-	public ansprechpartner_id : number | null = null;
+	public ansprechpartner_id: number | null = null;
 
 	/**
 	 * BetreuungslehrerID des Betriebeeintrags beim Schüler
 	 */
-	public betreuungslehrer_id : number | null = null;
+	public betreuungslehrer_id: number | null = null;
 
 
 	/**
@@ -75,13 +75,13 @@ export class SchuelerBetriebsdaten extends JavaObject {
 		return 'de.svws_nrw.asd.data.schueler.SchuelerBetriebsdaten';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.asd.data.schueler.SchuelerBetriebsdaten'].includes(name);
 	}
 
 	public static class = new Class<SchuelerBetriebsdaten>('de.svws_nrw.asd.data.schueler.SchuelerBetriebsdaten');
 
-	public static transpilerFromJSON(json : string): SchuelerBetriebsdaten {
+	public static transpilerFromJSON(json: string): SchuelerBetriebsdaten {
 		const obj = JSON.parse(json) as Partial<SchuelerBetriebsdaten>;
 		const result = new SchuelerBetriebsdaten();
 		if (obj.id === undefined)
@@ -109,7 +109,7 @@ export class SchuelerBetriebsdaten extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : SchuelerBetriebsdaten) : string {
+	public static transpilerToJSON(obj: SchuelerBetriebsdaten): string {
 		let result = '{';
 		result += '"id" : ' + obj.id.toString() + ',';
 		result += '"schueler_id" : ' + obj.schueler_id.toString() + ',';
@@ -128,7 +128,7 @@ export class SchuelerBetriebsdaten extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<SchuelerBetriebsdaten>) : string {
+	public static transpilerToJSONPatch(obj: Partial<SchuelerBetriebsdaten>): string {
 		let result = '{';
 		if (obj.id !== undefined) {
 			result += '"id" : ' + obj.id.toString() + ',';
@@ -173,6 +173,6 @@ export class SchuelerBetriebsdaten extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_asd_data_schueler_SchuelerBetriebsdaten(obj : unknown) : SchuelerBetriebsdaten {
+export function cast_de_svws_nrw_asd_data_schueler_SchuelerBetriebsdaten(obj: unknown): SchuelerBetriebsdaten {
 	return obj as SchuelerBetriebsdaten;
 }

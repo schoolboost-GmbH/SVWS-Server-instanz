@@ -9,7 +9,7 @@ export class GostJahrgangFachwahlenHalbjahr extends JavaObject {
 	/**
 	 * Die Fachwahlen für den Abiturbereich
 	 */
-	public fachwahlen : List<GostFachwahl> = new ArrayList<GostFachwahl>();
+	public fachwahlen: List<GostFachwahl> = new ArrayList<GostFachwahl>();
 
 
 	/**
@@ -23,13 +23,13 @@ export class GostJahrgangFachwahlenHalbjahr extends JavaObject {
 		return 'de.svws_nrw.core.data.gost.GostJahrgangFachwahlenHalbjahr';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.gost.GostJahrgangFachwahlenHalbjahr'].includes(name);
 	}
 
 	public static class = new Class<GostJahrgangFachwahlenHalbjahr>('de.svws_nrw.core.data.gost.GostJahrgangFachwahlenHalbjahr');
 
-	public static transpilerFromJSON(json : string): GostJahrgangFachwahlenHalbjahr {
+	public static transpilerFromJSON(json: string): GostJahrgangFachwahlenHalbjahr {
 		const obj = JSON.parse(json) as Partial<GostJahrgangFachwahlenHalbjahr>;
 		const result = new GostJahrgangFachwahlenHalbjahr();
 		if (obj.fachwahlen !== undefined) {
@@ -40,7 +40,7 @@ export class GostJahrgangFachwahlenHalbjahr extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : GostJahrgangFachwahlenHalbjahr) : string {
+	public static transpilerToJSON(obj: GostJahrgangFachwahlenHalbjahr): string {
 		let result = '{';
 		result += '"fachwahlen" : [ ';
 		for (let i = 0; i < obj.fachwahlen.size(); i++) {
@@ -55,7 +55,7 @@ export class GostJahrgangFachwahlenHalbjahr extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<GostJahrgangFachwahlenHalbjahr>) : string {
+	public static transpilerToJSONPatch(obj: Partial<GostJahrgangFachwahlenHalbjahr>): string {
 		let result = '{';
 		if (obj.fachwahlen !== undefined) {
 			result += '"fachwahlen" : [ ';
@@ -74,6 +74,6 @@ export class GostJahrgangFachwahlenHalbjahr extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_gost_GostJahrgangFachwahlenHalbjahr(obj : unknown) : GostJahrgangFachwahlenHalbjahr {
+export function cast_de_svws_nrw_core_data_gost_GostJahrgangFachwahlenHalbjahr(obj: unknown): GostJahrgangFachwahlenHalbjahr {
 	return obj as GostJahrgangFachwahlenHalbjahr;
 }

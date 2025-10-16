@@ -6,27 +6,27 @@ export class GostStatistikFachwahlHalbjahr extends JavaObject {
 	/**
 	 * Die Anzahl der Wahlen als mündlicher Grundkurs, Projektkurs oder Vertiefungskurs.
 	 */
-	public wahlenGKMuendlich : number = 0;
+	public wahlenGKMuendlich: number = 0;
 
 	/**
 	 * Die Anzahl der Wahlen als schriftlicher Grundkurs.
 	 */
-	public wahlenGKSchriftlich : number = 0;
+	public wahlenGKSchriftlich: number = 0;
 
 	/**
 	 * Die Gesamtzahl der Wahlen als Grundkurs, Projektkurs oder Vertiefungskurs.
 	 */
-	public wahlenGK : number = 0;
+	public wahlenGK: number = 0;
 
 	/**
 	 * Die Anzahl der Wahlen als Zusatzkurs.
 	 */
-	public wahlenZK : number = 0;
+	public wahlenZK: number = 0;
 
 	/**
 	 * Die Gesamtzahl der Wahlen als Leistungskurs.
 	 */
-	public wahlenLK : number = 0;
+	public wahlenLK: number = 0;
 
 
 	/**
@@ -40,13 +40,13 @@ export class GostStatistikFachwahlHalbjahr extends JavaObject {
 		return 'de.svws_nrw.core.data.gost.GostStatistikFachwahlHalbjahr';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.gost.GostStatistikFachwahlHalbjahr'].includes(name);
 	}
 
 	public static class = new Class<GostStatistikFachwahlHalbjahr>('de.svws_nrw.core.data.gost.GostStatistikFachwahlHalbjahr');
 
-	public static transpilerFromJSON(json : string): GostStatistikFachwahlHalbjahr {
+	public static transpilerFromJSON(json: string): GostStatistikFachwahlHalbjahr {
 		const obj = JSON.parse(json) as Partial<GostStatistikFachwahlHalbjahr>;
 		const result = new GostStatistikFachwahlHalbjahr();
 		if (obj.wahlenGKMuendlich === undefined)
@@ -67,7 +67,7 @@ export class GostStatistikFachwahlHalbjahr extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : GostStatistikFachwahlHalbjahr) : string {
+	public static transpilerToJSON(obj: GostStatistikFachwahlHalbjahr): string {
 		let result = '{';
 		result += '"wahlenGKMuendlich" : ' + obj.wahlenGKMuendlich.toString() + ',';
 		result += '"wahlenGKSchriftlich" : ' + obj.wahlenGKSchriftlich.toString() + ',';
@@ -79,7 +79,7 @@ export class GostStatistikFachwahlHalbjahr extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<GostStatistikFachwahlHalbjahr>) : string {
+	public static transpilerToJSONPatch(obj: Partial<GostStatistikFachwahlHalbjahr>): string {
 		let result = '{';
 		if (obj.wahlenGKMuendlich !== undefined) {
 			result += '"wahlenGKMuendlich" : ' + obj.wahlenGKMuendlich.toString() + ',';
@@ -103,6 +103,6 @@ export class GostStatistikFachwahlHalbjahr extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_gost_GostStatistikFachwahlHalbjahr(obj : unknown) : GostStatistikFachwahlHalbjahr {
+export function cast_de_svws_nrw_core_data_gost_GostStatistikFachwahlHalbjahr(obj: unknown): GostStatistikFachwahlHalbjahr {
 	return obj as GostStatistikFachwahlHalbjahr;
 }

@@ -8,17 +8,17 @@ export class GostBelegpruefungErgebnisFehler extends JavaObject {
 	/**
 	 * Ein eindeutiger Fehlercode für den Fehler
 	 */
-	public code : string = "";
+	public code: string = "";
 
 	/**
 	 * Die Art des Belegungsfehlers (siehe {@link GostBelegungsfehlerArt}).
 	 */
-	public art : string = "";
+	public art: string = "";
 
 	/**
 	 * Eine textuelle Beschreibung des Fehlers.
 	 */
-	public beschreibung : string = "";
+	public beschreibung: string = "";
 
 
 	/**
@@ -28,7 +28,7 @@ export class GostBelegpruefungErgebnisFehler extends JavaObject {
 	 * @param pruefArt    die Art der durchgeführten Belegungsprüfung (siehe {@link GostBelegpruefungsArt}), um
 	 *                    die konkrete Ausprägung des Textinformationen bestimmen zu können.
 	 */
-	public constructor(f : GostBelegungsfehler, pruefArt : GostBelegpruefungsArt);
+	public constructor(f: GostBelegungsfehler, pruefArt: GostBelegpruefungsArt);
 
 	/**
 	 * Erzeugt eine neue Instanz eines Fehlers beim Ergebnis der Belegprüfung.
@@ -40,11 +40,11 @@ export class GostBelegpruefungErgebnisFehler extends JavaObject {
 	/**
 	 * Implementation for method overloads of 'constructor'
 	 */
-	public constructor(__param0? : GostBelegungsfehler, __param1? : GostBelegpruefungsArt) {
+	public constructor(__param0?: GostBelegungsfehler, __param1?: GostBelegpruefungsArt) {
 		super();
 		if (((__param0 !== undefined) && ((__param0 instanceof JavaObject) && (__param0.isTranspiledInstanceOf('de.svws_nrw.core.abschluss.gost.GostBelegungsfehler')))) && ((__param1 !== undefined) && ((__param1 instanceof JavaObject) && (__param1.isTranspiledInstanceOf('de.svws_nrw.core.abschluss.gost.GostBelegpruefungsArt'))))) {
-			const f : GostBelegungsfehler = cast_de_svws_nrw_core_abschluss_gost_GostBelegungsfehler(__param0);
-			const pruefArt : GostBelegpruefungsArt = cast_de_svws_nrw_core_abschluss_gost_GostBelegpruefungsArt(__param1);
+			const f: GostBelegungsfehler = cast_de_svws_nrw_core_abschluss_gost_GostBelegungsfehler(__param0);
+			const pruefArt: GostBelegpruefungsArt = cast_de_svws_nrw_core_abschluss_gost_GostBelegpruefungsArt(__param1);
 			this.code = f.toString();
 			this.art = f.getArt().kuerzel;
 			this.beschreibung = f.getText(pruefArt);
@@ -57,13 +57,13 @@ export class GostBelegpruefungErgebnisFehler extends JavaObject {
 		return 'de.svws_nrw.core.abschluss.gost.GostBelegpruefungErgebnisFehler';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.abschluss.gost.GostBelegpruefungErgebnisFehler'].includes(name);
 	}
 
 	public static class = new Class<GostBelegpruefungErgebnisFehler>('de.svws_nrw.core.abschluss.gost.GostBelegpruefungErgebnisFehler');
 
-	public static transpilerFromJSON(json : string): GostBelegpruefungErgebnisFehler {
+	public static transpilerFromJSON(json: string): GostBelegpruefungErgebnisFehler {
 		const obj = JSON.parse(json) as Partial<GostBelegpruefungErgebnisFehler>;
 		const result = new GostBelegpruefungErgebnisFehler();
 		if (obj.code === undefined)
@@ -78,7 +78,7 @@ export class GostBelegpruefungErgebnisFehler extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : GostBelegpruefungErgebnisFehler) : string {
+	public static transpilerToJSON(obj: GostBelegpruefungErgebnisFehler): string {
 		let result = '{';
 		result += '"code" : ' + JSON.stringify(obj.code) + ',';
 		result += '"art" : ' + JSON.stringify(obj.art) + ',';
@@ -88,7 +88,7 @@ export class GostBelegpruefungErgebnisFehler extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<GostBelegpruefungErgebnisFehler>) : string {
+	public static transpilerToJSONPatch(obj: Partial<GostBelegpruefungErgebnisFehler>): string {
 		let result = '{';
 		if (obj.code !== undefined) {
 			result += '"code" : ' + JSON.stringify(obj.code) + ',';
@@ -106,6 +106,6 @@ export class GostBelegpruefungErgebnisFehler extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_abschluss_gost_GostBelegpruefungErgebnisFehler(obj : unknown) : GostBelegpruefungErgebnisFehler {
+export function cast_de_svws_nrw_core_abschluss_gost_GostBelegpruefungErgebnisFehler(obj: unknown): GostBelegpruefungErgebnisFehler {
 	return obj as GostBelegpruefungErgebnisFehler;
 }

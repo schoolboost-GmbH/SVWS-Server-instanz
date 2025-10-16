@@ -6,47 +6,47 @@ export class BetriebListeEintrag extends JavaObject {
 	/**
 	 * ID der weiteren Adresse (Betriebe)
 	 */
-	public id : number = 0;
+	public id: number = 0;
 
 	/**
 	 * Adressart des Betriebs, Fremdschlüssel auf die ID in K_Adressart
 	 */
-	public adressArt : number | null = null;
+	public adressArt: number | null = null;
 
 	/**
 	 * Name1 des Betriebs
 	 */
-	public name1 : string | null = null;
+	public name1: string | null = null;
 
 	/**
 	 * Straßenname des Betriebsdatensatz
 	 */
-	public strassenname : string | null = null;
+	public strassenname: string | null = null;
 
 	/**
 	 * Hausnummer wenn getrennt gespeichert
 	 */
-	public hausnr : string | null = null;
+	public hausnr: string | null = null;
 
 	/**
 	 * Zusatz zur Hausnummer wenn Hausnummern getrennt gespeichert werden
 	 */
-	public hausnrzusatz : string | null = null;
+	public hausnrzusatz: string | null = null;
 
 	/**
 	 * OrtID des Betriebs
 	 */
-	public ort_id : number | null = null;
+	public ort_id: number | null = null;
 
 	/**
 	 * Ortsteil-ID des Betriebs
 	 */
-	public ortsteil_id : number | null = null;
+	public ortsteil_id: number | null = null;
 
 	/**
 	 * Brache des Betriebs
 	 */
-	public branche : string | null = null;
+	public branche: string | null = null;
 
 
 	/**
@@ -60,13 +60,13 @@ export class BetriebListeEintrag extends JavaObject {
 		return 'de.svws_nrw.core.data.betrieb.BetriebListeEintrag';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.betrieb.BetriebListeEintrag'].includes(name);
 	}
 
 	public static class = new Class<BetriebListeEintrag>('de.svws_nrw.core.data.betrieb.BetriebListeEintrag');
 
-	public static transpilerFromJSON(json : string): BetriebListeEintrag {
+	public static transpilerFromJSON(json: string): BetriebListeEintrag {
 		const obj = JSON.parse(json) as Partial<BetriebListeEintrag>;
 		const result = new BetriebListeEintrag();
 		if (obj.id === undefined)
@@ -83,7 +83,7 @@ export class BetriebListeEintrag extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : BetriebListeEintrag) : string {
+	public static transpilerToJSON(obj: BetriebListeEintrag): string {
 		let result = '{';
 		result += '"id" : ' + obj.id.toString() + ',';
 		result += '"adressArt" : ' + ((obj.adressArt === null) ? 'null' : obj.adressArt.toString()) + ',';
@@ -99,7 +99,7 @@ export class BetriebListeEintrag extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<BetriebListeEintrag>) : string {
+	public static transpilerToJSONPatch(obj: Partial<BetriebListeEintrag>): string {
 		let result = '{';
 		if (obj.id !== undefined) {
 			result += '"id" : ' + obj.id.toString() + ',';
@@ -135,6 +135,6 @@ export class BetriebListeEintrag extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_betrieb_BetriebListeEintrag(obj : unknown) : BetriebListeEintrag {
+export function cast_de_svws_nrw_core_data_betrieb_BetriebListeEintrag(obj: unknown): BetriebListeEintrag {
 	return obj as BetriebListeEintrag;
 }

@@ -6,27 +6,27 @@ export class KatalogEntlassgrund extends JavaObject {
 	/**
 	 * Die ID des Entlassgrundes
 	 */
-	public id : number = 0;
+	public id: number = 0;
 
 	/**
 	 * Die Bezeichnung des Entlassgrundes
 	 */
-	public bezeichnung : string = "";
+	public bezeichnung: string = "";
 
 	/**
 	 * Die Sortierreihenfolge des Entlassgrund-Eintrags
 	 */
-	public sortierung : number = 32000;
+	public sortierung: number = 32000;
 
 	/**
 	 * Gibt an, ob der Eintrag in der Anwendung sichtbar sein soll.
 	 */
-	public istSichtbar : boolean = false;
+	public istSichtbar: boolean = false;
 
 	/**
 	 * Gibt an, ob der Eintrag in der Anwendung änderbar sein soll.
 	 */
-	public istAenderbar : boolean = false;
+	public istAenderbar: boolean = false;
 
 
 	/**
@@ -40,13 +40,13 @@ export class KatalogEntlassgrund extends JavaObject {
 		return 'de.svws_nrw.core.data.kataloge.KatalogEntlassgrund';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.kataloge.KatalogEntlassgrund'].includes(name);
 	}
 
 	public static class = new Class<KatalogEntlassgrund>('de.svws_nrw.core.data.kataloge.KatalogEntlassgrund');
 
-	public static transpilerFromJSON(json : string): KatalogEntlassgrund {
+	public static transpilerFromJSON(json: string): KatalogEntlassgrund {
 		const obj = JSON.parse(json) as Partial<KatalogEntlassgrund>;
 		const result = new KatalogEntlassgrund();
 		if (obj.id === undefined)
@@ -67,7 +67,7 @@ export class KatalogEntlassgrund extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : KatalogEntlassgrund) : string {
+	public static transpilerToJSON(obj: KatalogEntlassgrund): string {
 		let result = '{';
 		result += '"id" : ' + obj.id.toString() + ',';
 		result += '"bezeichnung" : ' + JSON.stringify(obj.bezeichnung) + ',';
@@ -79,7 +79,7 @@ export class KatalogEntlassgrund extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<KatalogEntlassgrund>) : string {
+	public static transpilerToJSONPatch(obj: Partial<KatalogEntlassgrund>): string {
 		let result = '{';
 		if (obj.id !== undefined) {
 			result += '"id" : ' + obj.id.toString() + ',';
@@ -103,6 +103,6 @@ export class KatalogEntlassgrund extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_kataloge_KatalogEntlassgrund(obj : unknown) : KatalogEntlassgrund {
+export function cast_de_svws_nrw_core_data_kataloge_KatalogEntlassgrund(obj: unknown): KatalogEntlassgrund {
 	return obj as KatalogEntlassgrund;
 }

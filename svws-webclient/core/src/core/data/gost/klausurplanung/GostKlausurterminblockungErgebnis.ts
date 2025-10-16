@@ -9,7 +9,7 @@ export class GostKlausurterminblockungErgebnis extends JavaObject {
 	/**
 	 * Ein Array mit den GostKlausurterminblockungErgebnisTerminen.
 	 */
-	public termine : List<GostKlausurterminblockungErgebnisTermin> = new ArrayList<GostKlausurterminblockungErgebnisTermin>();
+	public termine: List<GostKlausurterminblockungErgebnisTermin> = new ArrayList<GostKlausurterminblockungErgebnisTermin>();
 
 
 	/**
@@ -23,13 +23,13 @@ export class GostKlausurterminblockungErgebnis extends JavaObject {
 		return 'de.svws_nrw.core.data.gost.klausurplanung.GostKlausurterminblockungErgebnis';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.gost.klausurplanung.GostKlausurterminblockungErgebnis'].includes(name);
 	}
 
 	public static class = new Class<GostKlausurterminblockungErgebnis>('de.svws_nrw.core.data.gost.klausurplanung.GostKlausurterminblockungErgebnis');
 
-	public static transpilerFromJSON(json : string): GostKlausurterminblockungErgebnis {
+	public static transpilerFromJSON(json: string): GostKlausurterminblockungErgebnis {
 		const obj = JSON.parse(json) as Partial<GostKlausurterminblockungErgebnis>;
 		const result = new GostKlausurterminblockungErgebnis();
 		if (obj.termine !== undefined) {
@@ -40,7 +40,7 @@ export class GostKlausurterminblockungErgebnis extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : GostKlausurterminblockungErgebnis) : string {
+	public static transpilerToJSON(obj: GostKlausurterminblockungErgebnis): string {
 		let result = '{';
 		result += '"termine" : [ ';
 		for (let i = 0; i < obj.termine.size(); i++) {
@@ -55,7 +55,7 @@ export class GostKlausurterminblockungErgebnis extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<GostKlausurterminblockungErgebnis>) : string {
+	public static transpilerToJSONPatch(obj: Partial<GostKlausurterminblockungErgebnis>): string {
 		let result = '{';
 		if (obj.termine !== undefined) {
 			result += '"termine" : [ ';
@@ -74,6 +74,6 @@ export class GostKlausurterminblockungErgebnis extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_gost_klausurplanung_GostKlausurterminblockungErgebnis(obj : unknown) : GostKlausurterminblockungErgebnis {
+export function cast_de_svws_nrw_core_data_gost_klausurplanung_GostKlausurterminblockungErgebnis(obj: unknown): GostKlausurterminblockungErgebnis {
 	return obj as GostKlausurterminblockungErgebnis;
 }

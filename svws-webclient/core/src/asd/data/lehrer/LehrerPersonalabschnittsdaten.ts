@@ -10,62 +10,62 @@ export class LehrerPersonalabschnittsdaten extends JavaObject {
 	/**
 	 * Die ID des Abschnitts für den Lehrer in der Datenbank.
 	 */
-	public id : number = 0;
+	public id: number = 0;
 
 	/**
 	 * Die ID des Lehrers.
 	 */
-	public idLehrer : number = 0;
+	public idLehrer: number = 0;
 
 	/**
 	 * Die ID des Schuljahresabschnitts, zu welchem diese Abschnittdaten gehören.
 	 */
-	public idSchuljahresabschnitt : number = 0;
+	public idSchuljahresabschnitt: number = 0;
 
 	/**
 	 * Das Pflichtstundensoll des Lehrers.
 	 */
-	public pflichtstundensoll : number | null = null;
+	public pflichtstundensoll: number | null = null;
 
 	/**
 	 * Das Rechtsverhältnis unter welchem der Lehrer beschäftigt ist (z.B. Beamter auf Lebenszeit) - siehe Statistik-Katalog.
 	 */
-	public rechtsverhaeltnis : string | null = null;
+	public rechtsverhaeltnis: string | null = null;
 
 	/**
 	 * Die Art der Beschäftigung (Vollzeit, Teilzeit, etc.) - siehe Statistik-Katalog.
 	 */
-	public beschaeftigungsart : string | null = null;
+	public beschaeftigungsart: string | null = null;
 
 	/**
 	 * [ASD] Der Einsatzstatus (z.B. Stammschule, nur hier tätig)
 	 */
-	public einsatzstatus : string | null = null;
+	public einsatzstatus: string | null = null;
 
 	/**
 	 * Die Schulnummer der Stammschule, sofern diese abweicht.
 	 */
-	public stammschulnummer : string | null = null;
+	public stammschulnummer: string | null = null;
 
 	/**
 	 * Die allgemeinen Anrechnungsstunden, die den Abschnittsdaten des Lehrers zugeordnet sind.
 	 */
-	public readonly anrechnungen : List<LehrerPersonalabschnittsdatenAnrechnungsstunden> = new ArrayList<LehrerPersonalabschnittsdatenAnrechnungsstunden>();
+	public readonly anrechnungen: List<LehrerPersonalabschnittsdatenAnrechnungsstunden> = new ArrayList<LehrerPersonalabschnittsdatenAnrechnungsstunden>();
 
 	/**
 	 * Die Stunden, welche Mehrarbeitsgründe haben, dem Pflichtstundensoll hinzuzufügen sind und die den Abschnittsdaten des Lehrers zugeordnet sind.
 	 */
-	public readonly mehrleistung : List<LehrerPersonalabschnittsdatenAnrechnungsstunden> = new ArrayList<LehrerPersonalabschnittsdatenAnrechnungsstunden>();
+	public readonly mehrleistung: List<LehrerPersonalabschnittsdatenAnrechnungsstunden> = new ArrayList<LehrerPersonalabschnittsdatenAnrechnungsstunden>();
 
 	/**
 	 * Die Stunden, welche Minderarbeitsgründe haben, dem Pflichtstundensoll wegzunehmen sind und die den Abschnittsdaten des Lehrers zugeordnet sind.
 	 */
-	public readonly minderleistung : List<LehrerPersonalabschnittsdatenAnrechnungsstunden> = new ArrayList<LehrerPersonalabschnittsdatenAnrechnungsstunden>();
+	public readonly minderleistung: List<LehrerPersonalabschnittsdatenAnrechnungsstunden> = new ArrayList<LehrerPersonalabschnittsdatenAnrechnungsstunden>();
 
 	/**
 	 * Die schulspezifischen-Funktionen, die einem Lehrer in dem Abschnitt der Abschnittsdaten zugeordnet sind.
 	 */
-	public readonly funktionen : List<LehrerPersonalabschnittsdatenLehrerfunktion> = new ArrayList<LehrerPersonalabschnittsdatenLehrerfunktion>();
+	public readonly funktionen: List<LehrerPersonalabschnittsdatenLehrerfunktion> = new ArrayList<LehrerPersonalabschnittsdatenLehrerfunktion>();
 
 
 	/**
@@ -79,13 +79,13 @@ export class LehrerPersonalabschnittsdaten extends JavaObject {
 		return 'de.svws_nrw.asd.data.lehrer.LehrerPersonalabschnittsdaten';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.asd.data.lehrer.LehrerPersonalabschnittsdaten'].includes(name);
 	}
 
 	public static class = new Class<LehrerPersonalabschnittsdaten>('de.svws_nrw.asd.data.lehrer.LehrerPersonalabschnittsdaten');
 
-	public static transpilerFromJSON(json : string): LehrerPersonalabschnittsdaten {
+	public static transpilerFromJSON(json: string): LehrerPersonalabschnittsdaten {
 		const obj = JSON.parse(json) as Partial<LehrerPersonalabschnittsdaten>;
 		const result = new LehrerPersonalabschnittsdaten();
 		if (obj.id === undefined)
@@ -125,7 +125,7 @@ export class LehrerPersonalabschnittsdaten extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : LehrerPersonalabschnittsdaten) : string {
+	public static transpilerToJSON(obj: LehrerPersonalabschnittsdaten): string {
 		let result = '{';
 		result += '"id" : ' + obj.id.toString() + ',';
 		result += '"idLehrer" : ' + obj.idLehrer.toString() + ',';
@@ -172,7 +172,7 @@ export class LehrerPersonalabschnittsdaten extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<LehrerPersonalabschnittsdaten>) : string {
+	public static transpilerToJSONPatch(obj: Partial<LehrerPersonalabschnittsdaten>): string {
 		let result = '{';
 		if (obj.id !== undefined) {
 			result += '"id" : ' + obj.id.toString() + ',';
@@ -245,6 +245,6 @@ export class LehrerPersonalabschnittsdaten extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_asd_data_lehrer_LehrerPersonalabschnittsdaten(obj : unknown) : LehrerPersonalabschnittsdaten {
+export function cast_de_svws_nrw_asd_data_lehrer_LehrerPersonalabschnittsdaten(obj: unknown): LehrerPersonalabschnittsdaten {
 	return obj as LehrerPersonalabschnittsdaten;
 }

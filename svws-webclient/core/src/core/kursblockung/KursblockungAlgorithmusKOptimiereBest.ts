@@ -11,7 +11,7 @@ export class KursblockungAlgorithmusKOptimiereBest extends KursblockungAlgorithm
 	/**
 	 * Mit diesem Algorithmus werden die SuS verteilt.
 	 */
-	private readonly algoS : KursblockungAlgorithmusSSchnellW;
+	private readonly algoS: KursblockungAlgorithmusSSchnellW;
 
 
 	/**
@@ -22,16 +22,16 @@ export class KursblockungAlgorithmusKOptimiereBest extends KursblockungAlgorithm
 	 * @param pLogger Logger für Benutzerhinweise, Warnungen und Fehler.
 	 * @param pDynDat Die dynamischen Blockungsdaten.
 	 */
-	public constructor(pRandom : Random, pLogger : Logger, pDynDat : KursblockungDynDaten) {
+	public constructor(pRandom: Random, pLogger: Logger, pDynDat: KursblockungDynDaten) {
 		super(pRandom, pLogger, pDynDat);
 		this.algoS = new KursblockungAlgorithmusSSchnellW(pRandom, pLogger, pDynDat);
 	}
 
-	public toString() : string {
+	public toString(): string {
 		return "KursblockungAlgorithmusKOptimiereBest";
 	}
 
-	public berechne(pEndzeit : number) : void {
+	public berechne(pEndzeit: number): void {
 		if (this.dynDaten.gibKurseDieFreiSindAnzahl() === 0)
 			return;
 		this.dynDaten.aktionZustandLadenG();
@@ -45,7 +45,7 @@ export class KursblockungAlgorithmusKOptimiereBest extends KursblockungAlgorithm
 	 * Kurslage wird ein wenig zufällig verändert und bewertet. Falls sich die Bewertung verschlechtert, wird die
 	 * Veränderung rückgängig gemacht.
 	 */
-	private veraendereDieKurslageZufaelligEinWenig() : void {
+	private veraendereDieKurslageZufaelligEinWenig(): void {
 		do {
 			this.dynDaten.aktionSchuelerAusAllenKursenEntfernen();
 			this.dynDaten.aktionKursVerteilenEinenZufaelligenFreien();
@@ -62,7 +62,7 @@ export class KursblockungAlgorithmusKOptimiereBest extends KursblockungAlgorithm
 		return 'de.svws_nrw.core.kursblockung.KursblockungAlgorithmusKOptimiereBest';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.kursblockung.KursblockungAlgorithmusKOptimiereBest', 'de.svws_nrw.core.kursblockung.KursblockungAlgorithmusK'].includes(name);
 	}
 
@@ -70,6 +70,6 @@ export class KursblockungAlgorithmusKOptimiereBest extends KursblockungAlgorithm
 
 }
 
-export function cast_de_svws_nrw_core_kursblockung_KursblockungAlgorithmusKOptimiereBest(obj : unknown) : KursblockungAlgorithmusKOptimiereBest {
+export function cast_de_svws_nrw_core_kursblockung_KursblockungAlgorithmusKOptimiereBest(obj: unknown): KursblockungAlgorithmusKOptimiereBest {
 	return obj as KursblockungAlgorithmusKOptimiereBest;
 }

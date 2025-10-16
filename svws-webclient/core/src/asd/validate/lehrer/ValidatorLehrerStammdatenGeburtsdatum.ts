@@ -9,7 +9,7 @@ export class ValidatorLehrerStammdatenGeburtsdatum extends Validator {
 	/**
 	 * Die Lehrer-Stammdaten
 	 */
-	private readonly daten : LehrerStammdaten;
+	private readonly daten: LehrerStammdaten;
 
 
 	/**
@@ -18,26 +18,26 @@ export class ValidatorLehrerStammdatenGeburtsdatum extends Validator {
 	 * @param daten     die Daten des Validators
 	 * @param kontext   der Kontext des Validators
 	 */
-	public constructor(daten : LehrerStammdaten, kontext : ValidatorKontext) {
+	public constructor(daten: LehrerStammdaten, kontext: ValidatorKontext) {
 		super(kontext);
 		this.daten = daten;
 	}
 
-	protected pruefe() : boolean {
-		let success : boolean = true;
-		let geburtsdatum : DateManager | null = null;
-		let errorMsg : string = "";
+	protected pruefe(): boolean {
+		let success: boolean = true;
+		let geburtsdatum: DateManager | null = null;
+		let errorMsg: string = "";
 		try {
 			geburtsdatum = DateManager.from(this.daten.geburtsdatum);
 		} catch(e : any) {
 			errorMsg = e.getMessage();
 		}
-		const finalGeburtsdatum : DateManager | null = geburtsdatum;
-		success = this.exec(0, { getAsBoolean : () => finalGeburtsdatum === null }, "Das Geburtsdatum ist ungültig: " + errorMsg);
+		const finalGeburtsdatum: DateManager | null = geburtsdatum;
+		success = this.exec(0, { getAsBoolean: () => finalGeburtsdatum === null }, "Das Geburtsdatum ist ungültig: " + errorMsg);
 		if (!success)
 			return false;
-		const schuljahr : number = this.kontext().getSchuljahr();
-		success = this.exec(1, { getAsBoolean : () => finalGeburtsdatum === null || !finalGeburtsdatum.istInJahren(schuljahr - 80, schuljahr - 18) }, "Unzulässige Eintragung im Feld Jahr (Geburtsdatum). Zulässig sind die Werte " + (schuljahr - 80) + " bis " + (schuljahr - 18) + ".");
+		const schuljahr: number = this.kontext().getSchuljahr();
+		success = this.exec(1, { getAsBoolean: () => finalGeburtsdatum === null || !finalGeburtsdatum.istInJahren(schuljahr - 80, schuljahr - 18) }, "Unzulässige Eintragung im Feld Jahr (Geburtsdatum). Zulässig sind die Werte " + (schuljahr - 80) + " bis " + (schuljahr - 18) + ".");
 		return success;
 	}
 
@@ -45,7 +45,7 @@ export class ValidatorLehrerStammdatenGeburtsdatum extends Validator {
 		return 'de.svws_nrw.asd.validate.lehrer.ValidatorLehrerStammdatenGeburtsdatum';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.asd.validate.lehrer.ValidatorLehrerStammdatenGeburtsdatum', 'de.svws_nrw.asd.validate.Validator'].includes(name);
 	}
 
@@ -53,6 +53,6 @@ export class ValidatorLehrerStammdatenGeburtsdatum extends Validator {
 
 }
 
-export function cast_de_svws_nrw_asd_validate_lehrer_ValidatorLehrerStammdatenGeburtsdatum(obj : unknown) : ValidatorLehrerStammdatenGeburtsdatum {
+export function cast_de_svws_nrw_asd_validate_lehrer_ValidatorLehrerStammdatenGeburtsdatum(obj: unknown): ValidatorLehrerStammdatenGeburtsdatum {
 	return obj as ValidatorLehrerStammdatenGeburtsdatum;
 }

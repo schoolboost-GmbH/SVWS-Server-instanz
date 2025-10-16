@@ -6,37 +6,37 @@ export class ErzieherListeEintrag extends JavaObject {
 	/**
 	 * Die "Partner"-ID des Erziehers mit der Nummer des Erziehers in der DB angehangen (1 oder 2), welche diesem Erzieher im gleichen DB-Datensatz zugeordnet ist und die gleichen Addressdaten, etc. sich teil.
 	 */
-	public id : number = 0;
+	public id: number = 0;
 
 	/**
 	 * Die ID des Schülers, welchem der Erzieher zugeordnet ist.
 	 */
-	public idSchueler : number = 0;
+	public idSchueler: number = 0;
 
 	/**
 	 * Die ID der Art des Erziehereintrages
 	 */
-	public idErzieherArt : number | null = null;
+	public idErzieherArt: number | null = null;
 
 	/**
 	 * Die Anrede des Erziehers.
 	 */
-	public anrede : string | null = null;
+	public anrede: string | null = null;
 
 	/**
 	 * Der Name des Erziehers.
 	 */
-	public name : string | null = null;
+	public name: string | null = null;
 
 	/**
 	 * Der Vorname des Erziehers.
 	 */
-	public vorname : string | null = null;
+	public vorname: string | null = null;
 
 	/**
 	 * Die E-Mailadresse des  Erziehers.
 	 */
-	public email : string | null = null;
+	public email: string | null = null;
 
 
 	/**
@@ -50,13 +50,13 @@ export class ErzieherListeEintrag extends JavaObject {
 		return 'de.svws_nrw.core.data.erzieher.ErzieherListeEintrag';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.erzieher.ErzieherListeEintrag'].includes(name);
 	}
 
 	public static class = new Class<ErzieherListeEintrag>('de.svws_nrw.core.data.erzieher.ErzieherListeEintrag');
 
-	public static transpilerFromJSON(json : string): ErzieherListeEintrag {
+	public static transpilerFromJSON(json: string): ErzieherListeEintrag {
 		const obj = JSON.parse(json) as Partial<ErzieherListeEintrag>;
 		const result = new ErzieherListeEintrag();
 		if (obj.id === undefined)
@@ -73,7 +73,7 @@ export class ErzieherListeEintrag extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : ErzieherListeEintrag) : string {
+	public static transpilerToJSON(obj: ErzieherListeEintrag): string {
 		let result = '{';
 		result += '"id" : ' + obj.id.toString() + ',';
 		result += '"idSchueler" : ' + obj.idSchueler.toString() + ',';
@@ -87,7 +87,7 @@ export class ErzieherListeEintrag extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<ErzieherListeEintrag>) : string {
+	public static transpilerToJSONPatch(obj: Partial<ErzieherListeEintrag>): string {
 		let result = '{';
 		if (obj.id !== undefined) {
 			result += '"id" : ' + obj.id.toString() + ',';
@@ -117,6 +117,6 @@ export class ErzieherListeEintrag extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_erzieher_ErzieherListeEintrag(obj : unknown) : ErzieherListeEintrag {
+export function cast_de_svws_nrw_core_data_erzieher_ErzieherListeEintrag(obj: unknown): ErzieherListeEintrag {
 	return obj as ErzieherListeEintrag;
 }

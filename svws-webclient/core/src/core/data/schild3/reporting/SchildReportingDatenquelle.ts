@@ -9,42 +9,42 @@ export class SchildReportingDatenquelle extends JavaObject {
 	/**
 	 * Der Name der Datenquelle
 	 */
-	public name : string = "";
+	public name: string = "";
 
 	/**
 	 * Die Beschreibung der Datenquelle
 	 */
-	public beschreibung : string = "";
+	public beschreibung: string = "";
 
 	/**
 	 * Die Art der Daten, welche von der Datenquelle verwaltet werden
 	 */
-	public datenart : string = "";
+	public datenart: string = "";
 
 	/**
 	 * Der Name der Master-Datenquelle
 	 */
-	public master : string | null = null;
+	public master: string | null = null;
 
 	/**
 	 * Der Name des identifizierenden Attributs der Master-Datenquelle
 	 */
-	public masterattribut : string | null = null;
+	public masterattribut: string | null = null;
 
 	/**
 	 * Der Typ des Attributs der Master-Datenquelle (z.B. die ID)
 	 */
-	public mastertyp : string | null = null;
+	public mastertyp: string | null = null;
 
 	/**
 	 * Der Name des Attributs dieser Datenquelle, welches für die Verbindung zu der Master-Datenquelle genutzt wird
 	 */
-	public linkattribut : string | null = null;
+	public linkattribut: string | null = null;
 
 	/**
 	 * Die Liste der JSON-Attribute für diese Datenquelle.
 	 */
-	public attribute : List<SchildReportingDatenquelleAttribut> = new ArrayList<SchildReportingDatenquelleAttribut>();
+	public attribute: List<SchildReportingDatenquelleAttribut> = new ArrayList<SchildReportingDatenquelleAttribut>();
 
 
 	/**
@@ -58,13 +58,13 @@ export class SchildReportingDatenquelle extends JavaObject {
 		return 'de.svws_nrw.core.data.schild3.reporting.SchildReportingDatenquelle';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.schild3.reporting.SchildReportingDatenquelle'].includes(name);
 	}
 
 	public static class = new Class<SchildReportingDatenquelle>('de.svws_nrw.core.data.schild3.reporting.SchildReportingDatenquelle');
 
-	public static transpilerFromJSON(json : string): SchildReportingDatenquelle {
+	public static transpilerFromJSON(json: string): SchildReportingDatenquelle {
 		const obj = JSON.parse(json) as Partial<SchildReportingDatenquelle>;
 		const result = new SchildReportingDatenquelle();
 		if (obj.name === undefined)
@@ -88,7 +88,7 @@ export class SchildReportingDatenquelle extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : SchildReportingDatenquelle) : string {
+	public static transpilerToJSON(obj: SchildReportingDatenquelle): string {
 		let result = '{';
 		result += '"name" : ' + JSON.stringify(obj.name) + ',';
 		result += '"beschreibung" : ' + JSON.stringify(obj.beschreibung) + ',';
@@ -110,7 +110,7 @@ export class SchildReportingDatenquelle extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<SchildReportingDatenquelle>) : string {
+	public static transpilerToJSONPatch(obj: Partial<SchildReportingDatenquelle>): string {
 		let result = '{';
 		if (obj.name !== undefined) {
 			result += '"name" : ' + JSON.stringify(obj.name) + ',';
@@ -150,6 +150,6 @@ export class SchildReportingDatenquelle extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_schild3_reporting_SchildReportingDatenquelle(obj : unknown) : SchildReportingDatenquelle {
+export function cast_de_svws_nrw_core_data_schild3_reporting_SchildReportingDatenquelle(obj: unknown): SchildReportingDatenquelle {
 	return obj as SchildReportingDatenquelle;
 }

@@ -11,22 +11,22 @@ export class GostKlausurenCollectionRaumData extends JavaObject {
 	/**
 	 * Ein Array mit den Klausurräumen.
 	 */
-	public raeume : List<GostKlausurraum> = new ArrayList<GostKlausurraum>();
+	public raeume: List<GostKlausurraum> = new ArrayList<GostKlausurraum>();
 
 	/**
 	 * Ein Array mit den Klausurraumstunden.
 	 */
-	public raumstunden : List<GostKlausurraumstunde> = new ArrayList<GostKlausurraumstunde>();
+	public raumstunden: List<GostKlausurraumstunde> = new ArrayList<GostKlausurraumstunde>();
 
 	/**
 	 * Ein Array mit den Schülerklausurtermin-Raumstunden.
 	 */
-	public sktRaumstunden : List<GostSchuelerklausurterminraumstunde> = new ArrayList<GostSchuelerklausurterminraumstunde>();
+	public sktRaumstunden: List<GostSchuelerklausurterminraumstunde> = new ArrayList<GostSchuelerklausurterminraumstunde>();
 
 	/**
 	 * Ein Array mit den IDs der Klausurtermine, zu denen Raumdaten enthalten sind.
 	 */
-	public idsKlausurtermine : List<number> = new ArrayList<number>();
+	public idsKlausurtermine: List<number> = new ArrayList<number>();
 
 
 	/**
@@ -40,7 +40,7 @@ export class GostKlausurenCollectionRaumData extends JavaObject {
 	 * Fügt die Daten der übergebenen Instanz zu den aktuellen Daten hinzu.
 	 * @param data die zu hinzuzufügenden Daten
 	 */
-	public addAll(data : GostKlausurenCollectionRaumData) : void {
+	public addAll(data: GostKlausurenCollectionRaumData): void {
 		this.raeume.addAll(data.raeume);
 		this.raumstunden.addAll(data.raumstunden);
 		this.sktRaumstunden.addAll(data.sktRaumstunden);
@@ -51,13 +51,13 @@ export class GostKlausurenCollectionRaumData extends JavaObject {
 		return 'de.svws_nrw.core.data.gost.klausurplanung.GostKlausurenCollectionRaumData';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.gost.klausurplanung.GostKlausurenCollectionRaumData'].includes(name);
 	}
 
 	public static class = new Class<GostKlausurenCollectionRaumData>('de.svws_nrw.core.data.gost.klausurplanung.GostKlausurenCollectionRaumData');
 
-	public static transpilerFromJSON(json : string): GostKlausurenCollectionRaumData {
+	public static transpilerFromJSON(json: string): GostKlausurenCollectionRaumData {
 		const obj = JSON.parse(json) as Partial<GostKlausurenCollectionRaumData>;
 		const result = new GostKlausurenCollectionRaumData();
 		if (obj.raeume !== undefined) {
@@ -83,7 +83,7 @@ export class GostKlausurenCollectionRaumData extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : GostKlausurenCollectionRaumData) : string {
+	public static transpilerToJSON(obj: GostKlausurenCollectionRaumData): string {
 		let result = '{';
 		result += '"raeume" : [ ';
 		for (let i = 0; i < obj.raeume.size(); i++) {
@@ -122,7 +122,7 @@ export class GostKlausurenCollectionRaumData extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<GostKlausurenCollectionRaumData>) : string {
+	public static transpilerToJSONPatch(obj: Partial<GostKlausurenCollectionRaumData>): string {
 		let result = '{';
 		if (obj.raeume !== undefined) {
 			result += '"raeume" : [ ';
@@ -171,6 +171,6 @@ export class GostKlausurenCollectionRaumData extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_gost_klausurplanung_GostKlausurenCollectionRaumData(obj : unknown) : GostKlausurenCollectionRaumData {
+export function cast_de_svws_nrw_core_data_gost_klausurplanung_GostKlausurenCollectionRaumData(obj: unknown): GostKlausurenCollectionRaumData {
 	return obj as GostKlausurenCollectionRaumData;
 }

@@ -9,47 +9,47 @@ export class Kalender extends JavaObject {
 	/**
 	 * ID des Kalenders
 	 */
-	public id : string = "";
+	public id: string = "";
 
 	/**
 	 * Anzeigename des Kalenders
 	 */
-	public displayname : string | null = null;
+	public displayname: string | null = null;
 
 	/**
 	 * Beschreibung des Kalenders
 	 */
-	public beschreibung : string | null = null;
+	public beschreibung: string | null = null;
 
 	/**
 	 * Versionskennzeichen des Kalenders
 	 */
-	public synctoken : number = 0;
+	public synctoken: number = 0;
 
 	/**
 	 *  der Typ des Kalenders
 	 */
-	public kalenderTyp : string = "";
+	public kalenderTyp: string = "";
 
 	/**
 	 *  eine Liste der Einträge des Kalenders
 	 */
-	public kalenderEintraege : List<KalenderEintrag> = new ArrayList<KalenderEintrag>();
+	public kalenderEintraege: List<KalenderEintrag> = new ArrayList<KalenderEintrag>();
 
 	/**
 	 * ob der angemeldete Nutzer Schreibrecht auf dem Kalender hat
 	 */
-	public darfSchreiben : boolean = false;
+	public darfSchreiben: boolean = false;
 
 	/**
 	 * ob der angemeldete Nutzer Leserecht auf dem Kalender hat
 	 */
-	public darfLesen : boolean = false;
+	public darfLesen: boolean = false;
 
 	/**
 	 * BenutzerId des Besitzers dieses Kalenders
 	 */
-	public besitzer : number = 0;
+	public besitzer: number = 0;
 
 
 	/**
@@ -63,13 +63,13 @@ export class Kalender extends JavaObject {
 		return 'de.svws_nrw.core.data.kalender.Kalender';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.kalender.Kalender'].includes(name);
 	}
 
 	public static class = new Class<Kalender>('de.svws_nrw.core.data.kalender.Kalender');
 
-	public static transpilerFromJSON(json : string): Kalender {
+	public static transpilerFromJSON(json: string): Kalender {
 		const obj = JSON.parse(json) as Partial<Kalender>;
 		const result = new Kalender();
 		if (obj.id === undefined)
@@ -100,7 +100,7 @@ export class Kalender extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : Kalender) : string {
+	public static transpilerToJSON(obj: Kalender): string {
 		let result = '{';
 		result += '"id" : ' + JSON.stringify(obj.id) + ',';
 		result += '"displayname" : ' + ((obj.displayname === null) ? 'null' : JSON.stringify(obj.displayname)) + ',';
@@ -123,7 +123,7 @@ export class Kalender extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<Kalender>) : string {
+	public static transpilerToJSONPatch(obj: Partial<Kalender>): string {
 		let result = '{';
 		if (obj.id !== undefined) {
 			result += '"id" : ' + JSON.stringify(obj.id) + ',';
@@ -166,6 +166,6 @@ export class Kalender extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_kalender_Kalender(obj : unknown) : Kalender {
+export function cast_de_svws_nrw_core_data_kalender_Kalender(obj: unknown): Kalender {
 	return obj as Kalender;
 }

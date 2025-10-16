@@ -16,13 +16,13 @@ export class ValidatorLehrerPersonaldaten extends Validator {
 	 * @param stammdaten	die Stammdaten des Lehrers
 	 * @param kontext   	der Kontext des Validators
 	 */
-	public constructor(daten : LehrerPersonaldaten, stammdaten : LehrerStammdaten, kontext : ValidatorKontext) {
+	public constructor(daten: LehrerPersonaldaten, stammdaten: LehrerStammdaten, kontext: ValidatorKontext) {
 		super(kontext);
 		for (const abschnittsdaten of daten.abschnittsdaten)
 			this._validatoren.add(new ValidatorLehrerPersonalabschnittsdaten(abschnittsdaten, stammdaten, kontext));
 	}
 
-	protected pruefe() : boolean {
+	protected pruefe(): boolean {
 		return true;
 	}
 
@@ -30,7 +30,7 @@ export class ValidatorLehrerPersonaldaten extends Validator {
 		return 'de.svws_nrw.asd.validate.lehrer.ValidatorLehrerPersonaldaten';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.asd.validate.lehrer.ValidatorLehrerPersonaldaten', 'de.svws_nrw.asd.validate.Validator'].includes(name);
 	}
 
@@ -38,6 +38,6 @@ export class ValidatorLehrerPersonaldaten extends Validator {
 
 }
 
-export function cast_de_svws_nrw_asd_validate_lehrer_ValidatorLehrerPersonaldaten(obj : unknown) : ValidatorLehrerPersonaldaten {
+export function cast_de_svws_nrw_asd_validate_lehrer_ValidatorLehrerPersonaldaten(obj: unknown): ValidatorLehrerPersonaldaten {
 	return obj as ValidatorLehrerPersonaldaten;
 }

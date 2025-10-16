@@ -11,7 +11,7 @@ import { cast_java_util_Comparator } from '../../../java/util/Comparator';
 
 export class AVLSet<E> extends JavaObject implements NavigableSet<E> {
 
-	private readonly _set : NavigableSet<E>;
+	private readonly _set: NavigableSet<E>;
 
 
 	/**
@@ -25,195 +25,195 @@ export class AVLSet<E> extends JavaObject implements NavigableSet<E> {
 	 *
 	 * @param comparator Die Ordnung für die Schlüssel.
 	 */
-	public constructor(comparator : Comparator<E>);
+	public constructor(comparator: Comparator<E>);
 
 	/**
 	 * Erstellt ein neues Set mit den Daten des angegebenen Sets und nutzt dabei die Ordnung dieses Sets.
 	 *
 	 * @param set Die Map mit den Daten.
 	 */
-	public constructor(set : SortedSet<E>);
+	public constructor(set: SortedSet<E>);
 
 	/**
 	 * Implementation for method overloads of 'constructor'
 	 */
-	public constructor(__param0? : Comparator<E> | SortedSet<E>) {
+	public constructor(__param0?: Comparator<E> | SortedSet<E>) {
 		super();
 		if ((__param0 === undefined)) {
-			const map : AVLMap<E, E> = new AVLMap<E, E>();
+			const map: AVLMap<E, E> = new AVLMap<E, E>();
 			map.allowKeyAlone(true);
 			this._set = map.navigableKeySet();
 		} else if (((__param0 !== undefined) && ((__param0 !== undefined) && (__param0 instanceof Object) && (__param0 !== null) && ('compare' in __param0) && (typeof __param0.compare === 'function')) || (__param0 === null))) {
-			const comparator : Comparator<E> = cast_java_util_Comparator(__param0);
-			const map : AVLMap<E, E> = new AVLMap<E, E>(comparator);
+			const comparator: Comparator<E> = cast_java_util_Comparator(__param0);
+			const map: AVLMap<E, E> = new AVLMap<E, E>(comparator);
 			map.allowKeyAlone(true);
 			this._set = map.navigableKeySet();
 		} else if (((__param0 !== undefined) && ((__param0 instanceof JavaObject) && (__param0.isTranspiledInstanceOf('java.util.SortedSet'))) || (__param0 === null))) {
-			const set : SortedSet<E> = cast_java_util_SortedSet(__param0);
-			const map : AVLMap<E, E> = new AVLMap<E, E>();
+			const set: SortedSet<E> = cast_java_util_SortedSet(__param0);
+			const map: AVLMap<E, E> = new AVLMap<E, E>();
 			map.allowKeyAlone(true);
 			this._set = map.navigableKeySet();
 			this._set.addAll(set);
 		} else throw new Error('invalid method overload');
 	}
 
-	public comparator() : Comparator<Partial<E>> {
+	public comparator(): Comparator<Partial<E>> {
 		return this._set.comparator();
 	}
 
-	public first() : E {
+	public first(): E {
 		return this._set.first();
 	}
 
-	public last() : E {
+	public last(): E {
 		return this._set.last();
 	}
 
-	public size() : number {
+	public size(): number {
 		return this._set.size();
 	}
 
-	public isEmpty() : boolean {
+	public isEmpty(): boolean {
 		return this._set.isEmpty();
 	}
 
-	public contains(o : unknown) : boolean {
+	public contains(o: unknown): boolean {
 		return this._set.contains(o);
 	}
 
 	public toArray() : Array<unknown>;
 
-	public toArray<T>(a : Array<T>) : Array<T>;
+	public toArray<T>(a: Array<T>) : Array<T>;
 
 	/**
 	 * Implementation for method overloads of 'toArray'
 	 */
-	public toArray<T>(__param0? : Array<T>) : Array<T> | Array<unknown> {
+	public toArray<T>(__param0?: Array<T>): Array<T> | Array<unknown> {
 		if ((__param0 === undefined)) {
 			return this._set.toArray();
 		} else if (((__param0 !== undefined) && Array.isArray(__param0))) {
-			const a : Array<T> = __param0 as unknown as Array<T>;
+			const a: Array<T> = __param0 as unknown as Array<T>;
 			return this._set.toArray(a);
 		} else throw new Error('invalid method overload');
 	}
 
-	public add(e : E) : boolean {
+	public add(e: E): boolean {
 		return this._set.add(e);
 	}
 
-	public remove(o : unknown) : boolean {
+	public remove(o: unknown): boolean {
 		return this._set.remove(o);
 	}
 
-	public containsAll(c : Collection<any>) : boolean {
+	public containsAll(c: Collection<any>): boolean {
 		return this._set.containsAll(c);
 	}
 
-	public addAll(c : Collection<E>) : boolean {
+	public addAll(c: Collection<E>): boolean {
 		return this._set.addAll(c);
 	}
 
-	public retainAll(c : Collection<any>) : boolean {
+	public retainAll(c: Collection<any>): boolean {
 		return this._set.retainAll(c);
 	}
 
-	public removeAll(c : Collection<any>) : boolean {
+	public removeAll(c: Collection<any>): boolean {
 		return this._set.removeAll(c);
 	}
 
-	public clear() : void {
+	public clear(): void {
 		this._set.clear();
 	}
 
-	public lower(e : E) : E | null {
+	public lower(e: E): E | null {
 		return this._set.lower(e);
 	}
 
-	public floor(e : E) : E | null {
+	public floor(e: E): E | null {
 		return this._set.floor(e);
 	}
 
-	public ceiling(e : E) : E | null {
+	public ceiling(e: E): E | null {
 		return this._set.ceiling(e);
 	}
 
-	public higher(e : E) : E | null {
+	public higher(e: E): E | null {
 		return this._set.higher(e);
 	}
 
-	public pollFirst() : E | null {
+	public pollFirst(): E | null {
 		return this._set.pollFirst();
 	}
 
-	public pollLast() : E | null {
+	public pollLast(): E | null {
 		return this._set.pollLast();
 	}
 
-	public iterator() : JavaIterator<E> {
+	public iterator(): JavaIterator<E> {
 		return this._set.iterator();
 	}
 
-	public descendingSet() : NavigableSet<E> {
+	public descendingSet(): NavigableSet<E> {
 		return this._set.descendingSet();
 	}
 
-	public descendingIterator() : JavaIterator<E> {
+	public descendingIterator(): JavaIterator<E> {
 		return this._set.descendingIterator();
 	}
 
-	public subSet(fromElement : E, fromInclusive : boolean, toElement : E, toInclusive : boolean) : NavigableSet<E>;
+	public subSet(fromElement: E, fromInclusive: boolean, toElement: E, toInclusive: boolean) : NavigableSet<E>;
 
-	public subSet(fromElement : E, toElement : E) : SortedSet<E>;
+	public subSet(fromElement: E, toElement: E) : SortedSet<E>;
 
 	/**
 	 * Implementation for method overloads of 'subSet'
 	 */
-	public subSet(__param0 : E, __param1 : E | boolean, __param2? : E, __param3? : boolean) : NavigableSet<E> | SortedSet<E> {
+	public subSet(__param0: E, __param1: E | boolean, __param2?: E, __param3?: boolean): NavigableSet<E> | SortedSet<E> {
 		if (((__param0 !== undefined) && (__param0 !== undefined)) && ((__param1 !== undefined) && typeof __param1 === "boolean") && ((__param2 !== undefined) && (__param2 !== undefined)) && ((__param3 !== undefined) && typeof __param3 === "boolean")) {
-			const fromElement : E = __param0 as unknown as E;
-			const fromInclusive : boolean = __param1 as boolean;
-			const toElement : E = __param2 as unknown as E;
-			const toInclusive : boolean = __param3 as boolean;
+			const fromElement: E = __param0 as unknown as E;
+			const fromInclusive: boolean = __param1 as boolean;
+			const toElement: E = __param2 as unknown as E;
+			const toInclusive: boolean = __param3 as boolean;
 			return this._set.subSet(fromElement, fromInclusive, toElement, toInclusive);
 		} else if (((__param0 !== undefined) && (__param0 !== undefined)) && ((__param1 !== undefined) && (__param1 !== undefined)) && (__param2 === undefined) && (__param3 === undefined)) {
-			const fromElement : E = __param0 as unknown as E;
-			const toElement : E = __param1 as unknown as E;
+			const fromElement: E = __param0 as unknown as E;
+			const toElement: E = __param1 as unknown as E;
 			return this._set.subSet(fromElement, toElement);
 		} else throw new Error('invalid method overload');
 	}
 
-	public headSet(toElement : E, inclusive : boolean) : NavigableSet<E>;
+	public headSet(toElement: E, inclusive: boolean) : NavigableSet<E>;
 
-	public headSet(toElement : E) : SortedSet<E>;
+	public headSet(toElement: E) : SortedSet<E>;
 
 	/**
 	 * Implementation for method overloads of 'headSet'
 	 */
-	public headSet(__param0 : E, __param1? : boolean) : NavigableSet<E> | SortedSet<E> {
+	public headSet(__param0: E, __param1?: boolean): NavigableSet<E> | SortedSet<E> {
 		if (((__param0 !== undefined) && (__param0 !== undefined)) && ((__param1 !== undefined) && typeof __param1 === "boolean")) {
-			const toElement : E = __param0 as unknown as E;
-			const inclusive : boolean = __param1 as boolean;
+			const toElement: E = __param0 as unknown as E;
+			const inclusive: boolean = __param1 as boolean;
 			return this._set.headSet(toElement, inclusive);
 		} else if (((__param0 !== undefined) && (__param0 !== undefined)) && (__param1 === undefined)) {
-			const toElement : E = __param0 as unknown as E;
+			const toElement: E = __param0 as unknown as E;
 			return this._set.headSet(toElement);
 		} else throw new Error('invalid method overload');
 	}
 
-	public tailSet(fromElement : E, inclusive : boolean) : NavigableSet<E>;
+	public tailSet(fromElement: E, inclusive: boolean) : NavigableSet<E>;
 
-	public tailSet(fromElement : E) : SortedSet<E>;
+	public tailSet(fromElement: E) : SortedSet<E>;
 
 	/**
 	 * Implementation for method overloads of 'tailSet'
 	 */
-	public tailSet(__param0 : E, __param1? : boolean) : NavigableSet<E> | SortedSet<E> {
+	public tailSet(__param0: E, __param1?: boolean): NavigableSet<E> | SortedSet<E> {
 		if (((__param0 !== undefined) && (__param0 !== undefined)) && ((__param1 !== undefined) && typeof __param1 === "boolean")) {
-			const fromElement : E = __param0 as unknown as E;
-			const inclusive : boolean = __param1 as boolean;
+			const fromElement: E = __param0 as unknown as E;
+			const inclusive: boolean = __param1 as boolean;
 			return this._set.tailSet(fromElement, inclusive);
 		} else if (((__param0 !== undefined) && (__param0 !== undefined)) && (__param1 === undefined)) {
-			const fromElement : E = __param0 as unknown as E;
+			const fromElement: E = __param0 as unknown as E;
 			return this._set.tailSet(fromElement);
 		} else throw new Error('invalid method overload');
 	}
@@ -222,20 +222,20 @@ export class AVLSet<E> extends JavaObject implements NavigableSet<E> {
 		return 'de.svws_nrw.core.adt.set.AVLSet';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['java.util.SequencedSet', 'de.svws_nrw.core.adt.set.AVLSet', 'java.util.SortedSet', 'java.util.Collection', 'java.util.Set', 'java.util.NavigableSet', 'java.lang.Iterable', 'java.util.SequencedCollection'].includes(name);
 	}
 
 	public static class = new Class<AVLSet<any>>('de.svws_nrw.core.adt.set.AVLSet');
 
-	public reversed() : NavigableSet<E> {
+	public reversed(): NavigableSet<E> {
 		return this.descendingSet();
 	}
 
 	public [Symbol.iterator](): Iterator<E> {
-		const iter : JavaIterator<E> = this.iterator();
-		const result : Iterator<E> = {
-			next() : IteratorResult<E> {
+		const iter: JavaIterator<E> = this.iterator();
+		const result: Iterator<E> = {
+			next(): IteratorResult<E> {
 				if (iter.hasNext())
 					return { value : iter.next(), done : false };
 				return { value : null, done : true };
@@ -246,6 +246,6 @@ export class AVLSet<E> extends JavaObject implements NavigableSet<E> {
 
 }
 
-export function cast_de_svws_nrw_core_adt_set_AVLSet<E>(obj : unknown) : AVLSet<E> {
+export function cast_de_svws_nrw_core_adt_set_AVLSet<E>(obj: unknown): AVLSet<E> {
 	return obj as AVLSet<E>;
 }

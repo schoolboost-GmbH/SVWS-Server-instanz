@@ -15,13 +15,13 @@ export class LehrerAnrechnungsgrundKatalogEintrag extends CoreTypeDataNurSchulfo
 		return 'de.svws_nrw.asd.data.lehrer.LehrerAnrechnungsgrundKatalogEintrag';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.asd.data.CoreTypeData', 'de.svws_nrw.asd.data.lehrer.LehrerAnrechnungsgrundKatalogEintrag', 'de.svws_nrw.asd.data.CoreTypeDataNurSchulformen'].includes(name);
 	}
 
 	public static class = new Class<LehrerAnrechnungsgrundKatalogEintrag>('de.svws_nrw.asd.data.lehrer.LehrerAnrechnungsgrundKatalogEintrag');
 
-	public static transpilerFromJSON(json : string): LehrerAnrechnungsgrundKatalogEintrag {
+	public static transpilerFromJSON(json: string): LehrerAnrechnungsgrundKatalogEintrag {
 		const obj = JSON.parse(json) as Partial<LehrerAnrechnungsgrundKatalogEintrag>;
 		const result = new LehrerAnrechnungsgrundKatalogEintrag();
 		if (obj.schulformen !== undefined) {
@@ -46,7 +46,7 @@ export class LehrerAnrechnungsgrundKatalogEintrag extends CoreTypeDataNurSchulfo
 		return result;
 	}
 
-	public static transpilerToJSON(obj : LehrerAnrechnungsgrundKatalogEintrag) : string {
+	public static transpilerToJSON(obj: LehrerAnrechnungsgrundKatalogEintrag): string {
 		let result = '{';
 		result += '"schulformen" : [ ';
 		for (let i = 0; i < obj.schulformen.size(); i++) {
@@ -67,7 +67,7 @@ export class LehrerAnrechnungsgrundKatalogEintrag extends CoreTypeDataNurSchulfo
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<LehrerAnrechnungsgrundKatalogEintrag>) : string {
+	public static transpilerToJSONPatch(obj: Partial<LehrerAnrechnungsgrundKatalogEintrag>): string {
 		let result = '{';
 		if (obj.schulformen !== undefined) {
 			result += '"schulformen" : [ ';
@@ -104,6 +104,6 @@ export class LehrerAnrechnungsgrundKatalogEintrag extends CoreTypeDataNurSchulfo
 
 }
 
-export function cast_de_svws_nrw_asd_data_lehrer_LehrerAnrechnungsgrundKatalogEintrag(obj : unknown) : LehrerAnrechnungsgrundKatalogEintrag {
+export function cast_de_svws_nrw_asd_data_lehrer_LehrerAnrechnungsgrundKatalogEintrag(obj: unknown): LehrerAnrechnungsgrundKatalogEintrag {
 	return obj as LehrerAnrechnungsgrundKatalogEintrag;
 }

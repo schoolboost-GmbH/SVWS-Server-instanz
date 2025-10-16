@@ -9,7 +9,7 @@ export class ValidatorLehrerStammdatenGeschlecht extends Validator {
 	/**
 	 * Die Lehrer-Stammdaten
 	 */
-	private readonly daten : LehrerStammdaten;
+	private readonly daten: LehrerStammdaten;
 
 
 	/**
@@ -18,17 +18,17 @@ export class ValidatorLehrerStammdatenGeschlecht extends Validator {
 	 * @param daten     die Daten des Validators
 	 * @param kontext   der Kontext des Validators
 	 */
-	public constructor(daten : LehrerStammdaten, kontext : ValidatorKontext) {
+	public constructor(daten: LehrerStammdaten, kontext: ValidatorKontext) {
 		super(kontext);
 		this.daten = daten;
 	}
 
-	protected pruefe() : boolean {
-		let geschlecht : Geschlecht | null = null;
-		let success : boolean = true;
+	protected pruefe(): boolean {
+		let geschlecht: Geschlecht | null = null;
+		let success: boolean = true;
 		geschlecht = Geschlecht.fromValue(this.daten.geschlecht);
-		const finalGeschlecht : Geschlecht | null = geschlecht;
-		success = this.exec(0, { getAsBoolean : () => finalGeschlecht === null }, "Unzulässiger Schlüssel '" + this.daten.geschlecht + "' im Feld 'Geschlecht'. Die gültigen Schlüssel entnehmen Sie bitte dem Pulldownmenü.");
+		const finalGeschlecht: Geschlecht | null = geschlecht;
+		success = this.exec(0, { getAsBoolean: () => finalGeschlecht === null }, "Unzulässiger Schlüssel '" + this.daten.geschlecht + "' im Feld 'Geschlecht'. Die gültigen Schlüssel entnehmen Sie bitte dem Pulldownmenü.");
 		return success;
 	}
 
@@ -36,7 +36,7 @@ export class ValidatorLehrerStammdatenGeschlecht extends Validator {
 		return 'de.svws_nrw.asd.validate.lehrer.ValidatorLehrerStammdatenGeschlecht';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.asd.validate.lehrer.ValidatorLehrerStammdatenGeschlecht', 'de.svws_nrw.asd.validate.Validator'].includes(name);
 	}
 
@@ -44,6 +44,6 @@ export class ValidatorLehrerStammdatenGeschlecht extends Validator {
 
 }
 
-export function cast_de_svws_nrw_asd_validate_lehrer_ValidatorLehrerStammdatenGeschlecht(obj : unknown) : ValidatorLehrerStammdatenGeschlecht {
+export function cast_de_svws_nrw_asd_validate_lehrer_ValidatorLehrerStammdatenGeschlecht(obj: unknown): ValidatorLehrerStammdatenGeschlecht {
 	return obj as ValidatorLehrerStammdatenGeschlecht;
 }

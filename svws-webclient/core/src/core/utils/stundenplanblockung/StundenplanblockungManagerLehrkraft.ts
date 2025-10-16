@@ -9,22 +9,22 @@ export class StundenplanblockungManagerLehrkraft extends JavaObject {
 	/**
 	 * Die Datenbank-ID der Lehrkraft.
 	 */
-	readonly _id : number;
+	readonly _id: number;
 
 	/**
 	 * Das Kürzel der Lehrkraft. Beispielsweise 'BAR'.
 	 */
-	_kuerzel : string = "";
+	_kuerzel: string = "";
 
 	/**
 	 * TRUE, falls die Lehrkraft zur Vertretung in Springstunden herangezogen werden kann.
 	 */
-	_darf_vertreten : boolean = false;
+	_darf_vertreten: boolean = false;
 
 	/**
 	 * Alle Lerngruppen der Lehrkraft.
 	 */
-	readonly _menge_gr : List<StundenplanblockungManagerLerngruppe>;
+	readonly _menge_gr: List<StundenplanblockungManagerLerngruppe>;
 
 
 	/**
@@ -33,7 +33,7 @@ export class StundenplanblockungManagerLehrkraft extends JavaObject {
 	 * @param pLehrkraftID  Die Datenbank-ID der Lehrkraft.
 	 * @param pKuerzel      Das Kürzel der Lehrkraft.
 	 */
-	public constructor(pLehrkraftID : number, pKuerzel : string) {
+	public constructor(pLehrkraftID: number, pKuerzel: string) {
 		super();
 		this._id = pLehrkraftID;
 		this._kuerzel = pKuerzel;
@@ -45,7 +45,7 @@ export class StundenplanblockungManagerLehrkraft extends JavaObject {
 	 *
 	 * @return Die Datenbank-ID der Lehrkraft.
 	 */
-	public getID() : number {
+	public getID(): number {
 		return this._id;
 	}
 
@@ -54,7 +54,7 @@ export class StundenplanblockungManagerLehrkraft extends JavaObject {
 	 *
 	 * @return TRUE, falls die Lehrkraft zur Vertretung in Springstunden herangezogen werden kann.
 	 */
-	public getDarfVertreten() : boolean {
+	public getDarfVertreten(): boolean {
 		return this._darf_vertreten;
 	}
 
@@ -63,7 +63,7 @@ export class StundenplanblockungManagerLehrkraft extends JavaObject {
 	 *
 	 * @param pKuerzel  Das neue Kürzel der Lehrkraft.
 	 */
-	public setKuerzel(pKuerzel : string) : void {
+	public setKuerzel(pKuerzel: string): void {
 		this._kuerzel = pKuerzel;
 	}
 
@@ -71,7 +71,7 @@ export class StundenplanblockungManagerLehrkraft extends JavaObject {
 		return 'de.svws_nrw.core.utils.stundenplanblockung.StundenplanblockungManagerLehrkraft';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.utils.stundenplanblockung.StundenplanblockungManagerLehrkraft'].includes(name);
 	}
 
@@ -79,6 +79,6 @@ export class StundenplanblockungManagerLehrkraft extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_utils_stundenplanblockung_StundenplanblockungManagerLehrkraft(obj : unknown) : StundenplanblockungManagerLehrkraft {
+export function cast_de_svws_nrw_core_utils_stundenplanblockung_StundenplanblockungManagerLehrkraft(obj: unknown): StundenplanblockungManagerLehrkraft {
 	return obj as StundenplanblockungManagerLehrkraft;
 }

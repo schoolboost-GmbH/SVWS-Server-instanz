@@ -18,7 +18,7 @@ export class LehrerMehrleistungsarten extends CoreTypeSimple<LehrerMehrleistungs
 	 *
 	 * @param manager   der Manager für die Daten des Core-Types
 	 */
-	public static init(manager : CoreTypeDataManager<LehrerMehrleistungsartKatalogEintrag, LehrerMehrleistungsarten>) : void {
+	public static init(manager: CoreTypeDataManager<LehrerMehrleistungsartKatalogEintrag, LehrerMehrleistungsarten>): void {
 		CoreTypeDataManager.putManager(LehrerMehrleistungsarten.class, manager);
 	}
 
@@ -27,7 +27,7 @@ export class LehrerMehrleistungsarten extends CoreTypeSimple<LehrerMehrleistungs
 	 *
 	 * @return der Daten-Manager
 	 */
-	public static data() : CoreTypeDataManager<LehrerMehrleistungsartKatalogEintrag, LehrerMehrleistungsarten> {
+	public static data(): CoreTypeDataManager<LehrerMehrleistungsartKatalogEintrag, LehrerMehrleistungsarten> {
 		return CoreTypeDataManager.getManager(LehrerMehrleistungsarten.class);
 	}
 
@@ -36,14 +36,14 @@ export class LehrerMehrleistungsarten extends CoreTypeSimple<LehrerMehrleistungs
 	 *
 	 * @return die Werte des Core-Types als Array
 	 */
-	public static values() : Array<LehrerMehrleistungsarten> {
+	public static values(): Array<LehrerMehrleistungsarten> {
 		return CoreTypeSimple.valuesByClass(LehrerMehrleistungsarten.class);
 	}
 
 	/**
 	 * Erzeugt eine Instance dieser Klasse.
 	 */
-	public getInstance() : LehrerMehrleistungsarten | null {
+	public getInstance(): LehrerMehrleistungsarten | null {
 		return new LehrerMehrleistungsarten();
 	}
 
@@ -51,7 +51,7 @@ export class LehrerMehrleistungsarten extends CoreTypeSimple<LehrerMehrleistungs
 		return 'de.svws_nrw.asd.types.lehrer.LehrerMehrleistungsarten';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.asd.types.lehrer.LehrerMehrleistungsarten', 'de.svws_nrw.asd.types.CoreType', 'java.lang.Comparable', 'de.svws_nrw.asd.types.CoreTypeSimple'].includes(name);
 	}
 
@@ -59,6 +59,6 @@ export class LehrerMehrleistungsarten extends CoreTypeSimple<LehrerMehrleistungs
 
 }
 
-export function cast_de_svws_nrw_asd_types_lehrer_LehrerMehrleistungsarten(obj : unknown) : LehrerMehrleistungsarten {
+export function cast_de_svws_nrw_asd_types_lehrer_LehrerMehrleistungsarten(obj: unknown): LehrerMehrleistungsarten {
 	return obj as LehrerMehrleistungsarten;
 }

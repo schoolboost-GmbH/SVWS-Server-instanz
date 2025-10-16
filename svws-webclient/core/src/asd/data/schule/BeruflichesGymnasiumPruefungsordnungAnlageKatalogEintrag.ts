@@ -9,27 +9,27 @@ export class BeruflichesGymnasiumPruefungsordnungAnlageKatalogEintrag extends Co
 	/**
 	 * Der angestrebte allgemeinbildende Abschluss des Bildungsgangs
 	 */
-	public abschlussAllgemeinbildend : string = "";
+	public abschlussAllgemeinbildend: string = "";
 
 	/**
 	 * Die Schulgliederung
 	 */
-	public gliederung : string = "";
+	public gliederung: string = "";
 
 	/**
 	 * Der Fachklassenschlüssel
 	 */
-	public fachklassenschluessel : string = "";
+	public fachklassenschluessel: string = "";
 
 	/**
 	 * Die Varianten der Stundentafeln eines Bildungsgangs
 	 */
-	public stundentafeln : List<BeruflichesGymnasiumStundentafel> = new ArrayList<BeruflichesGymnasiumStundentafel>();
+	public stundentafeln: List<BeruflichesGymnasiumStundentafel> = new ArrayList<BeruflichesGymnasiumStundentafel>();
 
 	/**
 	 * Die Fussnoten zu den Stundentafeln
 	 */
-	public fussnoten : List<string> = new ArrayList<string>();
+	public fussnoten: List<string> = new ArrayList<string>();
 
 
 	/**
@@ -43,13 +43,13 @@ export class BeruflichesGymnasiumPruefungsordnungAnlageKatalogEintrag extends Co
 		return 'de.svws_nrw.asd.data.schule.BeruflichesGymnasiumPruefungsordnungAnlageKatalogEintrag';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.asd.data.CoreTypeData', 'de.svws_nrw.asd.data.schule.BeruflichesGymnasiumPruefungsordnungAnlageKatalogEintrag'].includes(name);
 	}
 
 	public static class = new Class<BeruflichesGymnasiumPruefungsordnungAnlageKatalogEintrag>('de.svws_nrw.asd.data.schule.BeruflichesGymnasiumPruefungsordnungAnlageKatalogEintrag');
 
-	public static transpilerFromJSON(json : string): BeruflichesGymnasiumPruefungsordnungAnlageKatalogEintrag {
+	public static transpilerFromJSON(json: string): BeruflichesGymnasiumPruefungsordnungAnlageKatalogEintrag {
 		const obj = JSON.parse(json) as Partial<BeruflichesGymnasiumPruefungsordnungAnlageKatalogEintrag>;
 		const result = new BeruflichesGymnasiumPruefungsordnungAnlageKatalogEintrag();
 		if (obj.id === undefined)
@@ -88,7 +88,7 @@ export class BeruflichesGymnasiumPruefungsordnungAnlageKatalogEintrag extends Co
 		return result;
 	}
 
-	public static transpilerToJSON(obj : BeruflichesGymnasiumPruefungsordnungAnlageKatalogEintrag) : string {
+	public static transpilerToJSON(obj: BeruflichesGymnasiumPruefungsordnungAnlageKatalogEintrag): string {
 		let result = '{';
 		result += '"id" : ' + obj.id.toString() + ',';
 		result += '"schluessel" : ' + JSON.stringify(obj.schluessel) + ',';
@@ -120,7 +120,7 @@ export class BeruflichesGymnasiumPruefungsordnungAnlageKatalogEintrag extends Co
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<BeruflichesGymnasiumPruefungsordnungAnlageKatalogEintrag>) : string {
+	public static transpilerToJSONPatch(obj: Partial<BeruflichesGymnasiumPruefungsordnungAnlageKatalogEintrag>): string {
 		let result = '{';
 		if (obj.id !== undefined) {
 			result += '"id" : ' + obj.id.toString() + ',';
@@ -176,6 +176,6 @@ export class BeruflichesGymnasiumPruefungsordnungAnlageKatalogEintrag extends Co
 
 }
 
-export function cast_de_svws_nrw_asd_data_schule_BeruflichesGymnasiumPruefungsordnungAnlageKatalogEintrag(obj : unknown) : BeruflichesGymnasiumPruefungsordnungAnlageKatalogEintrag {
+export function cast_de_svws_nrw_asd_data_schule_BeruflichesGymnasiumPruefungsordnungAnlageKatalogEintrag(obj: unknown): BeruflichesGymnasiumPruefungsordnungAnlageKatalogEintrag {
 	return obj as BeruflichesGymnasiumPruefungsordnungAnlageKatalogEintrag;
 }

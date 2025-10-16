@@ -6,22 +6,22 @@ export class LehrerLehrbefaehigungEintrag extends JavaObject {
 	/**
 	 * Die ID des Eintrages.
 	 */
-	public id : number = 0;
+	public id: number = 0;
 
 	/**
 	 * Die ID des Lehramteintrags des Lehrers.
 	 */
-	public idLehramt : number = 0;
+	public idLehramt: number = 0;
 
 	/**
 	 * Die Katalog-ID der Lehrbefähigung.
 	 */
-	public idLehrbefaehigung : number = 0;
+	public idLehrbefaehigung: number = 0;
 
 	/**
 	 * Die Katalog-ID des Anerkennungsgrund für die Lehrbefähigung.
 	 */
-	public idAnerkennungsgrund : number | null = null;
+	public idAnerkennungsgrund: number | null = null;
 
 
 	/**
@@ -35,13 +35,13 @@ export class LehrerLehrbefaehigungEintrag extends JavaObject {
 		return 'de.svws_nrw.asd.data.lehrer.LehrerLehrbefaehigungEintrag';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.asd.data.lehrer.LehrerLehrbefaehigungEintrag'].includes(name);
 	}
 
 	public static class = new Class<LehrerLehrbefaehigungEintrag>('de.svws_nrw.asd.data.lehrer.LehrerLehrbefaehigungEintrag');
 
-	public static transpilerFromJSON(json : string): LehrerLehrbefaehigungEintrag {
+	public static transpilerFromJSON(json: string): LehrerLehrbefaehigungEintrag {
 		const obj = JSON.parse(json) as Partial<LehrerLehrbefaehigungEintrag>;
 		const result = new LehrerLehrbefaehigungEintrag();
 		if (obj.id === undefined)
@@ -57,7 +57,7 @@ export class LehrerLehrbefaehigungEintrag extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : LehrerLehrbefaehigungEintrag) : string {
+	public static transpilerToJSON(obj: LehrerLehrbefaehigungEintrag): string {
 		let result = '{';
 		result += '"id" : ' + obj.id.toString() + ',';
 		result += '"idLehramt" : ' + obj.idLehramt.toString() + ',';
@@ -68,7 +68,7 @@ export class LehrerLehrbefaehigungEintrag extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<LehrerLehrbefaehigungEintrag>) : string {
+	public static transpilerToJSONPatch(obj: Partial<LehrerLehrbefaehigungEintrag>): string {
 		let result = '{';
 		if (obj.id !== undefined) {
 			result += '"id" : ' + obj.id.toString() + ',';
@@ -89,6 +89,6 @@ export class LehrerLehrbefaehigungEintrag extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_asd_data_lehrer_LehrerLehrbefaehigungEintrag(obj : unknown) : LehrerLehrbefaehigungEintrag {
+export function cast_de_svws_nrw_asd_data_lehrer_LehrerLehrbefaehigungEintrag(obj: unknown): LehrerLehrbefaehigungEintrag {
 	return obj as LehrerLehrbefaehigungEintrag;
 }

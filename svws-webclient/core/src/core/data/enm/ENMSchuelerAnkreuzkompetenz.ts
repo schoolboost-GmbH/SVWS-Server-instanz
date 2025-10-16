@@ -6,22 +6,22 @@ export class ENMSchuelerAnkreuzkompetenz extends JavaObject {
 	/**
 	 * Die ID des Eintrages aus der SVWS-DB
 	 */
-	public id : number = -1;
+	public id: number = -1;
 
 	/**
 	 * Die ID der der Ankreuzkompetenz, auf welches sich der Eintrag bezieht
 	 */
-	public kompetenzID : number | null = null;
+	public kompetenzID: number | null = null;
 
 	/**
 	 * Gibt für die einzelnen Stufen 1-5 der Ankreuzkompetenzen an, ob diese zugewiesen ist oder nicht (hier mit einer Verschiebung von 1 zum Array-Index).
 	 */
-	public stufen : Array<boolean> = Array(5).fill(false);
+	public stufen: Array<boolean> = Array(5).fill(false);
 
 	/**
 	 * Der Zeitstempel der letzten Änderung an den zugewiesenen Stufen
 	 */
-	public tsStufe : string | null = null;
+	public tsStufe: string | null = null;
 
 
 	/**
@@ -35,13 +35,13 @@ export class ENMSchuelerAnkreuzkompetenz extends JavaObject {
 		return 'de.svws_nrw.core.data.enm.ENMSchuelerAnkreuzkompetenz';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.enm.ENMSchuelerAnkreuzkompetenz'].includes(name);
 	}
 
 	public static class = new Class<ENMSchuelerAnkreuzkompetenz>('de.svws_nrw.core.data.enm.ENMSchuelerAnkreuzkompetenz');
 
-	public static transpilerFromJSON(json : string): ENMSchuelerAnkreuzkompetenz {
+	public static transpilerFromJSON(json: string): ENMSchuelerAnkreuzkompetenz {
 		const obj = JSON.parse(json) as Partial<ENMSchuelerAnkreuzkompetenz>;
 		const result = new ENMSchuelerAnkreuzkompetenz();
 		if (obj.id === undefined)
@@ -57,7 +57,7 @@ export class ENMSchuelerAnkreuzkompetenz extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : ENMSchuelerAnkreuzkompetenz) : string {
+	public static transpilerToJSON(obj: ENMSchuelerAnkreuzkompetenz): string {
 		let result = '{';
 		result += '"id" : ' + obj.id.toString() + ',';
 		result += '"kompetenzID" : ' + ((obj.kompetenzID === null) ? 'null' : obj.kompetenzID.toString()) + ',';
@@ -75,7 +75,7 @@ export class ENMSchuelerAnkreuzkompetenz extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<ENMSchuelerAnkreuzkompetenz>) : string {
+	public static transpilerToJSONPatch(obj: Partial<ENMSchuelerAnkreuzkompetenz>): string {
 		let result = '{';
 		if (obj.id !== undefined) {
 			result += '"id" : ' + obj.id.toString() + ',';
@@ -104,6 +104,6 @@ export class ENMSchuelerAnkreuzkompetenz extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_enm_ENMSchuelerAnkreuzkompetenz(obj : unknown) : ENMSchuelerAnkreuzkompetenz {
+export function cast_de_svws_nrw_core_data_enm_ENMSchuelerAnkreuzkompetenz(obj: unknown): ENMSchuelerAnkreuzkompetenz {
 	return obj as ENMSchuelerAnkreuzkompetenz;
 }

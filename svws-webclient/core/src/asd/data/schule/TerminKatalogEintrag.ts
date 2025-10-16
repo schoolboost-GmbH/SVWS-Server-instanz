@@ -6,12 +6,12 @@ export class TerminKatalogEintrag extends CoreTypeDataNurSchulformen {
 	/**
 	 * Der Anfang der Zeitspanne (Datum und ggf. Uhrzeit), für welche der Termin gilt. Die Uhrzeit ist optional bei ganztägigen Terminen.
 	 */
-	public von : string = "";
+	public von: string = "";
 
 	/**
 	 * Das Ende der Zeitspanne (Datum und ggf. Uhrzeit), für welche der Termin gilt. Die Uhrzeit ist optional bei ganztägigen Terminen.
 	 */
-	public bis : string = "";
+	public bis: string = "";
 
 
 	/**
@@ -25,13 +25,13 @@ export class TerminKatalogEintrag extends CoreTypeDataNurSchulformen {
 		return 'de.svws_nrw.asd.data.schule.TerminKatalogEintrag';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.asd.data.CoreTypeData', 'de.svws_nrw.asd.data.schule.TerminKatalogEintrag', 'de.svws_nrw.asd.data.CoreTypeDataNurSchulformen'].includes(name);
 	}
 
 	public static class = new Class<TerminKatalogEintrag>('de.svws_nrw.asd.data.schule.TerminKatalogEintrag');
 
-	public static transpilerFromJSON(json : string): TerminKatalogEintrag {
+	public static transpilerFromJSON(json: string): TerminKatalogEintrag {
 		const obj = JSON.parse(json) as Partial<TerminKatalogEintrag>;
 		const result = new TerminKatalogEintrag();
 		if (obj.schulformen !== undefined) {
@@ -62,7 +62,7 @@ export class TerminKatalogEintrag extends CoreTypeDataNurSchulformen {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : TerminKatalogEintrag) : string {
+	public static transpilerToJSON(obj: TerminKatalogEintrag): string {
 		let result = '{';
 		result += '"schulformen" : [ ';
 		for (let i = 0; i < obj.schulformen.size(); i++) {
@@ -85,7 +85,7 @@ export class TerminKatalogEintrag extends CoreTypeDataNurSchulformen {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<TerminKatalogEintrag>) : string {
+	public static transpilerToJSONPatch(obj: Partial<TerminKatalogEintrag>): string {
 		let result = '{';
 		if (obj.schulformen !== undefined) {
 			result += '"schulformen" : [ ';
@@ -128,6 +128,6 @@ export class TerminKatalogEintrag extends CoreTypeDataNurSchulformen {
 
 }
 
-export function cast_de_svws_nrw_asd_data_schule_TerminKatalogEintrag(obj : unknown) : TerminKatalogEintrag {
+export function cast_de_svws_nrw_asd_data_schule_TerminKatalogEintrag(obj: unknown): TerminKatalogEintrag {
 	return obj as TerminKatalogEintrag;
 }

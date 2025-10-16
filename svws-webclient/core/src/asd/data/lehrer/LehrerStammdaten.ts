@@ -9,122 +9,122 @@ export class LehrerStammdaten extends JavaObject {
 	/**
 	 * Die ID des Lehrers.
 	 */
-	public id : number = -1;
+	public id: number = -1;
 
 	/**
 	 * Das Kürzel des Lehrers.
 	 */
-	public kuerzel : string = "";
+	public kuerzel: string = "";
 
 	/**
 	 * Die Bezeichnung des Personals-Typs des Lehrers.
 	 */
-	public personalTyp : string = "";
+	public personalTyp: string = "";
 
 	/**
 	 * Ggf. die Anrede des Lehrers.
 	 */
-	public anrede : string | null = null;
+	public anrede: string | null = null;
 
 	/**
 	 * Ggf. ein akademischer Grad des Lehrers.
 	 */
-	public titel : string | null = null;
+	public titel: string | null = null;
 
 	/**
 	 * Ggf. die Amtsbezeichnung des Lehrers.
 	 */
-	public amtsbezeichnung : string | null = null;
+	public amtsbezeichnung: string | null = null;
 
 	/**
 	 * Der Nachname des Lehrers.
 	 */
-	public nachname : string = "";
+	public nachname: string = "";
 
 	/**
 	 * Der Vorname des Lehrers.
 	 */
-	public vorname : string = "";
+	public vorname: string = "";
 
 	/**
 	 * Die ID des Geschlechtes
 	 */
-	public geschlecht : number = 0;
+	public geschlecht: number = 0;
 
 	/**
 	 * Das Geburtsdatum des Lehrers.
 	 */
-	public geburtsdatum : string | null = null;
+	public geburtsdatum: string | null = null;
 
 	/**
 	 * Ggf. die ID für die Staatsangehörigkeit des Lehrers.
 	 */
-	public staatsangehoerigkeitID : string | null = null;
+	public staatsangehoerigkeitID: string | null = null;
 
 	/**
 	 * Ggf. der Straßenname im Wohnort des Lehrers.
 	 */
-	public strassenname : string | null = null;
+	public strassenname: string | null = null;
 
 	/**
 	 * Ggf. die Hausnummer zur Straße im Wohnort des Lehrers.
 	 */
-	public hausnummer : string | null = null;
+	public hausnummer: string | null = null;
 
 	/**
 	 * Ggf. der Hausnummerzusatz zur Straße im Wohnort des Lehrers.
 	 */
-	public hausnummerZusatz : string | null = null;
+	public hausnummerZusatz: string | null = null;
 
 	/**
 	 * Ggf. die ID des Wohnortes des Lehrers.
 	 */
-	public wohnortID : number | null = null;
+	public wohnortID: number | null = null;
 
 	/**
 	 * Ggf. die ID des Ortsteils im Wohnort des Lehrers.
 	 */
-	public ortsteilID : number | null = null;
+	public ortsteilID: number | null = null;
 
 	/**
 	 * Ggf. die Telefonnummer des Lehrers.
 	 */
-	public telefon : string | null = null;
+	public telefon: string | null = null;
 
 	/**
 	 * Ggf. die Mobilnummer des Lehrers.
 	 */
-	public telefonMobil : string | null = null;
+	public telefonMobil: string | null = null;
 
 	/**
 	 * Ggf. die private Email-Adresse des Lehrers.
 	 */
-	public emailPrivat : string | null = null;
+	public emailPrivat: string | null = null;
 
 	/**
 	 * Ggf. die dienstliche Email-Adresse des Lehrers.
 	 */
-	public emailDienstlich : string | null = null;
+	public emailDienstlich: string | null = null;
 
 	/**
 	 * Ggf. das Foto des Lehrers (jpg, Base64-kodiert des Lehrers.)
 	 */
-	public foto : string | null = null;
+	public foto: string | null = null;
 
 	/**
 	 * Gibt an, ob der Eintrag in der Anwendung sichtbar sein soll oder nicht.
 	 */
-	public istSichtbar : boolean = false;
+	public istSichtbar: boolean = false;
 
 	/**
 	 * Gibt an, ob der Eintrag für die Schulstatistik relevant ist oder nicht.
 	 */
-	public istRelevantFuerStatistik : boolean = false;
+	public istRelevantFuerStatistik: boolean = false;
 
 	/**
 	 * Die Liste der Schulleitungsfunktionen, welche der Schule Lehrer an der Schule hat oder hatte.
 	 */
-	public readonly leitungsfunktionen : List<Schulleitung> = new ArrayList<Schulleitung>();
+	public readonly leitungsfunktionen: List<Schulleitung> = new ArrayList<Schulleitung>();
 
 
 	/**
@@ -138,13 +138,13 @@ export class LehrerStammdaten extends JavaObject {
 		return 'de.svws_nrw.asd.data.lehrer.LehrerStammdaten';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.asd.data.lehrer.LehrerStammdaten'].includes(name);
 	}
 
 	public static class = new Class<LehrerStammdaten>('de.svws_nrw.asd.data.lehrer.LehrerStammdaten');
 
-	public static transpilerFromJSON(json : string): LehrerStammdaten {
+	public static transpilerFromJSON(json: string): LehrerStammdaten {
 		const obj = JSON.parse(json) as Partial<LehrerStammdaten>;
 		const result = new LehrerStammdaten();
 		if (obj.id === undefined)
@@ -194,7 +194,7 @@ export class LehrerStammdaten extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : LehrerStammdaten) : string {
+	public static transpilerToJSON(obj: LehrerStammdaten): string {
 		let result = '{';
 		result += '"id" : ' + obj.id.toString() + ',';
 		result += '"kuerzel" : ' + JSON.stringify(obj.kuerzel) + ',';
@@ -232,7 +232,7 @@ export class LehrerStammdaten extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<LehrerStammdaten>) : string {
+	public static transpilerToJSONPatch(obj: Partial<LehrerStammdaten>): string {
 		let result = '{';
 		if (obj.id !== undefined) {
 			result += '"id" : ' + obj.id.toString() + ',';
@@ -320,6 +320,6 @@ export class LehrerStammdaten extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_asd_data_lehrer_LehrerStammdaten(obj : unknown) : LehrerStammdaten {
+export function cast_de_svws_nrw_asd_data_lehrer_LehrerStammdaten(obj: unknown): LehrerStammdaten {
 	return obj as LehrerStammdaten;
 }

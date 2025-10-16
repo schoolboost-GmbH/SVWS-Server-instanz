@@ -6,27 +6,27 @@ export class Schuljahresabschnitt extends JavaObject {
 	/**
 	 * Die ID des Schuljahresabschnittes
 	 */
-	public id : number = 0;
+	public id: number = 0;
 
 	/**
 	 * Das Schuljahr, in welchem der Schuljahresabschnitt liegt
 	 */
-	public schuljahr : number = 0;
+	public schuljahr: number = 0;
 
 	/**
 	 * Die Nummer des Abschnitts im Schuljahr
 	 */
-	public abschnitt : number = 0;
+	public abschnitt: number = 0;
 
 	/**
 	 * Die ID des vorigen Schuljahresabschnittes
 	 */
-	public idVorigerAbschnitt : number | null = null;
+	public idVorigerAbschnitt: number | null = null;
 
 	/**
 	 * Die ID des folgenden Schuljahresabschnittes
 	 */
-	public idFolgeAbschnitt : number | null = null;
+	public idFolgeAbschnitt: number | null = null;
 
 
 	/**
@@ -40,13 +40,13 @@ export class Schuljahresabschnitt extends JavaObject {
 		return 'de.svws_nrw.asd.data.schule.Schuljahresabschnitt';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.asd.data.schule.Schuljahresabschnitt'].includes(name);
 	}
 
 	public static class = new Class<Schuljahresabschnitt>('de.svws_nrw.asd.data.schule.Schuljahresabschnitt');
 
-	public static transpilerFromJSON(json : string): Schuljahresabschnitt {
+	public static transpilerFromJSON(json: string): Schuljahresabschnitt {
 		const obj = JSON.parse(json) as Partial<Schuljahresabschnitt>;
 		const result = new Schuljahresabschnitt();
 		if (obj.id === undefined)
@@ -63,7 +63,7 @@ export class Schuljahresabschnitt extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : Schuljahresabschnitt) : string {
+	public static transpilerToJSON(obj: Schuljahresabschnitt): string {
 		let result = '{';
 		result += '"id" : ' + obj.id.toString() + ',';
 		result += '"schuljahr" : ' + obj.schuljahr.toString() + ',';
@@ -75,7 +75,7 @@ export class Schuljahresabschnitt extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<Schuljahresabschnitt>) : string {
+	public static transpilerToJSONPatch(obj: Partial<Schuljahresabschnitt>): string {
 		let result = '{';
 		if (obj.id !== undefined) {
 			result += '"id" : ' + obj.id.toString() + ',';
@@ -99,6 +99,6 @@ export class Schuljahresabschnitt extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_asd_data_schule_Schuljahresabschnitt(obj : unknown) : Schuljahresabschnitt {
+export function cast_de_svws_nrw_asd_data_schule_Schuljahresabschnitt(obj: unknown): Schuljahresabschnitt {
 	return obj as Schuljahresabschnitt;
 }

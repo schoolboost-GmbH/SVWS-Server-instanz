@@ -15,13 +15,13 @@ export class FloskelgruppenartKatalogEintrag extends CoreTypeData {
 		return 'de.svws_nrw.asd.data.schule.FloskelgruppenartKatalogEintrag';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.asd.data.schule.FloskelgruppenartKatalogEintrag', 'de.svws_nrw.asd.data.CoreTypeData'].includes(name);
 	}
 
 	public static class = new Class<FloskelgruppenartKatalogEintrag>('de.svws_nrw.asd.data.schule.FloskelgruppenartKatalogEintrag');
 
-	public static transpilerFromJSON(json : string): FloskelgruppenartKatalogEintrag {
+	public static transpilerFromJSON(json: string): FloskelgruppenartKatalogEintrag {
 		const obj = JSON.parse(json) as Partial<FloskelgruppenartKatalogEintrag>;
 		const result = new FloskelgruppenartKatalogEintrag();
 		if (obj.id === undefined)
@@ -41,7 +41,7 @@ export class FloskelgruppenartKatalogEintrag extends CoreTypeData {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : FloskelgruppenartKatalogEintrag) : string {
+	public static transpilerToJSON(obj: FloskelgruppenartKatalogEintrag): string {
 		let result = '{';
 		result += '"id" : ' + obj.id.toString() + ',';
 		result += '"schluessel" : ' + JSON.stringify(obj.schluessel) + ',';
@@ -54,7 +54,7 @@ export class FloskelgruppenartKatalogEintrag extends CoreTypeData {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<FloskelgruppenartKatalogEintrag>) : string {
+	public static transpilerToJSONPatch(obj: Partial<FloskelgruppenartKatalogEintrag>): string {
 		let result = '{';
 		if (obj.id !== undefined) {
 			result += '"id" : ' + obj.id.toString() + ',';
@@ -81,6 +81,6 @@ export class FloskelgruppenartKatalogEintrag extends CoreTypeData {
 
 }
 
-export function cast_de_svws_nrw_asd_data_schule_FloskelgruppenartKatalogEintrag(obj : unknown) : FloskelgruppenartKatalogEintrag {
+export function cast_de_svws_nrw_asd_data_schule_FloskelgruppenartKatalogEintrag(obj: unknown): FloskelgruppenartKatalogEintrag {
 	return obj as FloskelgruppenartKatalogEintrag;
 }

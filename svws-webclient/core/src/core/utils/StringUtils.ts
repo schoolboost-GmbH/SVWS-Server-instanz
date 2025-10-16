@@ -5,7 +5,7 @@ import { Class } from '../../java/lang/Class';
 
 export class StringUtils extends JavaObject {
 
-	private static readonly buchstaben : Array<string> = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"];
+	private static readonly buchstaben: Array<string> = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"];
 
 
 	private constructor() {
@@ -19,8 +19,8 @@ export class StringUtils extends JavaObject {
 	 *
 	 * @return einen durch Komma getrennten String aller Inhalte der übergebenen {@link Collection}.
 	 */
-	public static collectionToCommaSeparatedString(collection : Collection<string>) : string {
-		const sb : StringBuilder = new StringBuilder();
+	public static collectionToCommaSeparatedString(collection: Collection<string>): string {
+		const sb: StringBuilder = new StringBuilder();
 		for (const s of collection)
 			if (sb.isEmpty())
 				sb.append(s);
@@ -36,7 +36,7 @@ export class StringUtils extends JavaObject {
 	 *
 	 * @return die umgewandelte Zahl aus dem Bereich 0=A bis 25=Z in einen Buchstaben um.
 	 */
-	public static numberToLetterIndex0(number : number) : string {
+	public static numberToLetterIndex0(number: number): string {
 		return ((number < 0) || (number > 25)) ? "" : StringUtils.buchstaben[number];
 	}
 
@@ -47,7 +47,7 @@ export class StringUtils extends JavaObject {
 	 *
 	 * @return die umgewandelte Zahl aus dem Bereich 1=A bis 26=Z in einen Buchstaben um.
 	 */
-	public static numberToLetterIndex1(number : number) : string {
+	public static numberToLetterIndex1(number: number): string {
 		return ((number < 1) || (number > 26)) ? "" : StringUtils.buchstaben[number - 1];
 	}
 
@@ -59,9 +59,9 @@ export class StringUtils extends JavaObject {
 	 *
 	 * @return einen String der Zahl, welche ggf. mit Nullen vorne aufgefüllt wurde.
 	 */
-	public static padZahl(zahl : number, minGroesse : number) : string {
-		const sNumber : string | null = "" + zahl;
-		const sb : StringBuilder | null = new StringBuilder();
+	public static padZahl(zahl: number, minGroesse: number): string {
+		const sNumber: string | null = "" + zahl;
+		const sb: StringBuilder | null = new StringBuilder();
 		while ((sb.length() + sNumber.length) < minGroesse)
 			sb.append('0');
 		sb.append(sNumber);
@@ -76,8 +76,8 @@ export class StringUtils extends JavaObject {
 	 *
 	 * @return eine Kopie des String, welcher vorne mit 0en aufgefüllt wurde, bis "size" erreicht wurde.
 	 */
-	public static fillWithLeadingZeros(s : string, size : number) : string {
-		const sb : StringBuilder | null = new StringBuilder();
+	public static fillWithLeadingZeros(s: string, size: number): string {
+		const sb: StringBuilder | null = new StringBuilder();
 		while ((sb.length() + s.length) < size)
 			sb.append('0');
 		sb.append(s);
@@ -88,7 +88,7 @@ export class StringUtils extends JavaObject {
 		return 'de.svws_nrw.core.utils.StringUtils';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.utils.StringUtils'].includes(name);
 	}
 
@@ -96,6 +96,6 @@ export class StringUtils extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_utils_StringUtils(obj : unknown) : StringUtils {
+export function cast_de_svws_nrw_core_utils_StringUtils(obj: unknown): StringUtils {
 	return obj as StringUtils;
 }

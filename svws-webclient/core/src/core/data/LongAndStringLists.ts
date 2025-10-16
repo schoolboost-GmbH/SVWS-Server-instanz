@@ -8,12 +8,12 @@ export class LongAndStringLists extends JavaObject {
 	/**
 	 * Die Lehrer, die diesem Kurs bereits fest zugeordnet sind.
 	 */
-	public numbers : List<number> = new ArrayList<number>();
+	public numbers: List<number> = new ArrayList<number>();
 
 	/**
 	 * Die Lehrer, die diesem Kurs bereits fest zugeordnet sind.
 	 */
-	public strings : List<string> = new ArrayList<string>();
+	public strings: List<string> = new ArrayList<string>();
 
 
 	public constructor() {
@@ -24,13 +24,13 @@ export class LongAndStringLists extends JavaObject {
 		return 'de.svws_nrw.core.data.LongAndStringLists';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.LongAndStringLists'].includes(name);
 	}
 
 	public static class = new Class<LongAndStringLists>('de.svws_nrw.core.data.LongAndStringLists');
 
-	public static transpilerFromJSON(json : string): LongAndStringLists {
+	public static transpilerFromJSON(json: string): LongAndStringLists {
 		const obj = JSON.parse(json) as Partial<LongAndStringLists>;
 		const result = new LongAndStringLists();
 		if (obj.numbers !== undefined) {
@@ -46,7 +46,7 @@ export class LongAndStringLists extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : LongAndStringLists) : string {
+	public static transpilerToJSON(obj: LongAndStringLists): string {
 		let result = '{';
 		result += '"numbers" : [ ';
 		for (let i = 0; i < obj.numbers.size(); i++) {
@@ -69,7 +69,7 @@ export class LongAndStringLists extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<LongAndStringLists>) : string {
+	public static transpilerToJSONPatch(obj: Partial<LongAndStringLists>): string {
 		let result = '{';
 		if (obj.numbers !== undefined) {
 			result += '"numbers" : [ ';
@@ -98,6 +98,6 @@ export class LongAndStringLists extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_LongAndStringLists(obj : unknown) : LongAndStringLists {
+export function cast_de_svws_nrw_core_data_LongAndStringLists(obj: unknown): LongAndStringLists {
 	return obj as LongAndStringLists;
 }

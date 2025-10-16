@@ -8,17 +8,17 @@ export class BeruflichesGymnasiumStundentafelAbiturfaecherWahlmoeglichkeit exten
 	/**
 	 * mögliche Fächer für das 3. Abiturfach
 	 */
-	public abifach3 : List<string> = new ArrayList<string>();
+	public abifach3: List<string> = new ArrayList<string>();
 
 	/**
 	 * mögliche Fächer für das 4. Abiturfach
 	 */
-	public abifach4 : List<string> = new ArrayList<string>();
+	public abifach4: List<string> = new ArrayList<string>();
 
 	/**
 	 * mögliche Fächer für das 5. Abiturfach
 	 */
-	public abifach5 : List<string> = new ArrayList<string>();
+	public abifach5: List<string> = new ArrayList<string>();
 
 
 	/**
@@ -32,13 +32,13 @@ export class BeruflichesGymnasiumStundentafelAbiturfaecherWahlmoeglichkeit exten
 		return 'de.svws_nrw.asd.data.schule.BeruflichesGymnasiumStundentafelAbiturfaecherWahlmoeglichkeit';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.asd.data.schule.BeruflichesGymnasiumStundentafelAbiturfaecherWahlmoeglichkeit'].includes(name);
 	}
 
 	public static class = new Class<BeruflichesGymnasiumStundentafelAbiturfaecherWahlmoeglichkeit>('de.svws_nrw.asd.data.schule.BeruflichesGymnasiumStundentafelAbiturfaecherWahlmoeglichkeit');
 
-	public static transpilerFromJSON(json : string): BeruflichesGymnasiumStundentafelAbiturfaecherWahlmoeglichkeit {
+	public static transpilerFromJSON(json: string): BeruflichesGymnasiumStundentafelAbiturfaecherWahlmoeglichkeit {
 		const obj = JSON.parse(json) as Partial<BeruflichesGymnasiumStundentafelAbiturfaecherWahlmoeglichkeit>;
 		const result = new BeruflichesGymnasiumStundentafelAbiturfaecherWahlmoeglichkeit();
 		if (obj.abifach3 !== undefined) {
@@ -59,7 +59,7 @@ export class BeruflichesGymnasiumStundentafelAbiturfaecherWahlmoeglichkeit exten
 		return result;
 	}
 
-	public static transpilerToJSON(obj : BeruflichesGymnasiumStundentafelAbiturfaecherWahlmoeglichkeit) : string {
+	public static transpilerToJSON(obj: BeruflichesGymnasiumStundentafelAbiturfaecherWahlmoeglichkeit): string {
 		let result = '{';
 		result += '"abifach3" : [ ';
 		for (let i = 0; i < obj.abifach3.size(); i++) {
@@ -90,7 +90,7 @@ export class BeruflichesGymnasiumStundentafelAbiturfaecherWahlmoeglichkeit exten
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<BeruflichesGymnasiumStundentafelAbiturfaecherWahlmoeglichkeit>) : string {
+	public static transpilerToJSONPatch(obj: Partial<BeruflichesGymnasiumStundentafelAbiturfaecherWahlmoeglichkeit>): string {
 		let result = '{';
 		if (obj.abifach3 !== undefined) {
 			result += '"abifach3" : [ ';
@@ -129,6 +129,6 @@ export class BeruflichesGymnasiumStundentafelAbiturfaecherWahlmoeglichkeit exten
 
 }
 
-export function cast_de_svws_nrw_asd_data_schule_BeruflichesGymnasiumStundentafelAbiturfaecherWahlmoeglichkeit(obj : unknown) : BeruflichesGymnasiumStundentafelAbiturfaecherWahlmoeglichkeit {
+export function cast_de_svws_nrw_asd_data_schule_BeruflichesGymnasiumStundentafelAbiturfaecherWahlmoeglichkeit(obj: unknown): BeruflichesGymnasiumStundentafelAbiturfaecherWahlmoeglichkeit {
 	return obj as BeruflichesGymnasiumStundentafelAbiturfaecherWahlmoeglichkeit;
 }

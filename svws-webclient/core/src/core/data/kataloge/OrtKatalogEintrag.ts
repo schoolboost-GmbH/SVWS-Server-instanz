@@ -6,42 +6,42 @@ export class OrtKatalogEintrag extends JavaObject {
 	/**
 	 * Die ID des Katalog-Eintrags.
 	 */
-	public id : number = 0;
+	public id: number = 0;
 
 	/**
 	 * Die Postleitzahl.
 	 */
-	public plz : string | null = null;
+	public plz: string | null = null;
 
 	/**
 	 * Der Name des Ortes.
 	 */
-	public ortsname : string | null = null;
+	public ortsname: string | null = null;
 
 	/**
 	 * Der Name des Kreises.
 	 */
-	public kreis : string | null = null;
+	public kreis: string | null = null;
 
 	/**
 	 * Das Kürzel des Bundeslandes.
 	 */
-	public kuerzelBundesland : string | null = null;
+	public kuerzelBundesland: string | null = null;
 
 	/**
 	 * Gibt die Position in der Sortierreihenfolge für die Katalog-Einträge an.
 	 */
-	public sortierung : number = 0;
+	public sortierung: number = 0;
 
 	/**
 	 * Gibt an, ob der Eintrag in der Anwendung sichtbar sein soll oder nicht.
 	 */
-	public istSichtbar : boolean = false;
+	public istSichtbar: boolean = false;
 
 	/**
 	 * Gibt an, ob der Eintrag in der Anwendung änderbar sein soll oder nicht.
 	 */
-	public istAenderbar : boolean = false;
+	public istAenderbar: boolean = false;
 
 
 	/**
@@ -55,13 +55,13 @@ export class OrtKatalogEintrag extends JavaObject {
 		return 'de.svws_nrw.core.data.kataloge.OrtKatalogEintrag';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.kataloge.OrtKatalogEintrag'].includes(name);
 	}
 
 	public static class = new Class<OrtKatalogEintrag>('de.svws_nrw.core.data.kataloge.OrtKatalogEintrag');
 
-	public static transpilerFromJSON(json : string): OrtKatalogEintrag {
+	public static transpilerFromJSON(json: string): OrtKatalogEintrag {
 		const obj = JSON.parse(json) as Partial<OrtKatalogEintrag>;
 		const result = new OrtKatalogEintrag();
 		if (obj.id === undefined)
@@ -83,7 +83,7 @@ export class OrtKatalogEintrag extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : OrtKatalogEintrag) : string {
+	public static transpilerToJSON(obj: OrtKatalogEintrag): string {
 		let result = '{';
 		result += '"id" : ' + obj.id.toString() + ',';
 		result += '"plz" : ' + ((obj.plz === null) ? 'null' : JSON.stringify(obj.plz)) + ',';
@@ -98,7 +98,7 @@ export class OrtKatalogEintrag extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<OrtKatalogEintrag>) : string {
+	public static transpilerToJSONPatch(obj: Partial<OrtKatalogEintrag>): string {
 		let result = '{';
 		if (obj.id !== undefined) {
 			result += '"id" : ' + obj.id.toString() + ',';
@@ -131,6 +131,6 @@ export class OrtKatalogEintrag extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_kataloge_OrtKatalogEintrag(obj : unknown) : OrtKatalogEintrag {
+export function cast_de_svws_nrw_core_data_kataloge_OrtKatalogEintrag(obj: unknown): OrtKatalogEintrag {
 	return obj as OrtKatalogEintrag;
 }

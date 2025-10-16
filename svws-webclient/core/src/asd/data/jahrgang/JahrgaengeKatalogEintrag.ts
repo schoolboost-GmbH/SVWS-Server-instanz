@@ -15,13 +15,13 @@ export class JahrgaengeKatalogEintrag extends CoreTypeDataNurSchulformen {
 		return 'de.svws_nrw.asd.data.jahrgang.JahrgaengeKatalogEintrag';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.asd.data.jahrgang.JahrgaengeKatalogEintrag', 'de.svws_nrw.asd.data.CoreTypeData', 'de.svws_nrw.asd.data.CoreTypeDataNurSchulformen'].includes(name);
 	}
 
 	public static class = new Class<JahrgaengeKatalogEintrag>('de.svws_nrw.asd.data.jahrgang.JahrgaengeKatalogEintrag');
 
-	public static transpilerFromJSON(json : string): JahrgaengeKatalogEintrag {
+	public static transpilerFromJSON(json: string): JahrgaengeKatalogEintrag {
 		const obj = JSON.parse(json) as Partial<JahrgaengeKatalogEintrag>;
 		const result = new JahrgaengeKatalogEintrag();
 		if (obj.schulformen !== undefined) {
@@ -46,7 +46,7 @@ export class JahrgaengeKatalogEintrag extends CoreTypeDataNurSchulformen {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : JahrgaengeKatalogEintrag) : string {
+	public static transpilerToJSON(obj: JahrgaengeKatalogEintrag): string {
 		let result = '{';
 		result += '"schulformen" : [ ';
 		for (let i = 0; i < obj.schulformen.size(); i++) {
@@ -67,7 +67,7 @@ export class JahrgaengeKatalogEintrag extends CoreTypeDataNurSchulformen {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<JahrgaengeKatalogEintrag>) : string {
+	public static transpilerToJSONPatch(obj: Partial<JahrgaengeKatalogEintrag>): string {
 		let result = '{';
 		if (obj.schulformen !== undefined) {
 			result += '"schulformen" : [ ';
@@ -104,6 +104,6 @@ export class JahrgaengeKatalogEintrag extends CoreTypeDataNurSchulformen {
 
 }
 
-export function cast_de_svws_nrw_asd_data_jahrgang_JahrgaengeKatalogEintrag(obj : unknown) : JahrgaengeKatalogEintrag {
+export function cast_de_svws_nrw_asd_data_jahrgang_JahrgaengeKatalogEintrag(obj: unknown): JahrgaengeKatalogEintrag {
 	return obj as JahrgaengeKatalogEintrag;
 }

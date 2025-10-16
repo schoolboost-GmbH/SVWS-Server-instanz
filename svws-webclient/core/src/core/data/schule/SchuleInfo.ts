@@ -6,42 +6,42 @@ export class SchuleInfo extends JavaObject {
 	/**
 	 * Die eindeutige Schulnummer der Schule
 	 */
-	public schulNr : number = 0;
+	public schulNr: number = 0;
 
 	/**
 	 * Die Schulform der Schule
 	 */
-	public schulform : string = "";
+	public schulform: string = "";
 
 	/**
 	 * Die Bezeichnung der Schule
 	 */
-	public bezeichnung : string = "";
+	public bezeichnung: string = "";
 
 	/**
 	 * Der Straßenname der Straße in der die Schule liegt.
 	 */
-	public strassenname : string | null = null;
+	public strassenname: string | null = null;
 
 	/**
 	 * Die Hausnummer zur Straße in der die Schule liegt.
 	 */
-	public hausnummer : string | null = null;
+	public hausnummer: string | null = null;
 
 	/**
 	 * Ggf. der Hausnummerzusatz zur Straße in der die Schule liegt.
 	 */
-	public hausnummerZusatz : string | null = null;
+	public hausnummerZusatz: string | null = null;
 
 	/**
 	 * Die Postleitzahl des Gebietes in dem die Schule liegt.
 	 */
-	public plz : string | null = null;
+	public plz: string | null = null;
 
 	/**
 	 * Der Ort in dem die Schule liegt.
 	 */
-	public ort : string | null = null;
+	public ort: string | null = null;
 
 
 	/**
@@ -55,13 +55,13 @@ export class SchuleInfo extends JavaObject {
 		return 'de.svws_nrw.core.data.schule.SchuleInfo';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.schule.SchuleInfo'].includes(name);
 	}
 
 	public static class = new Class<SchuleInfo>('de.svws_nrw.core.data.schule.SchuleInfo');
 
-	public static transpilerFromJSON(json : string): SchuleInfo {
+	public static transpilerFromJSON(json: string): SchuleInfo {
 		const obj = JSON.parse(json) as Partial<SchuleInfo>;
 		const result = new SchuleInfo();
 		if (obj.schulNr === undefined)
@@ -81,7 +81,7 @@ export class SchuleInfo extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : SchuleInfo) : string {
+	public static transpilerToJSON(obj: SchuleInfo): string {
 		let result = '{';
 		result += '"schulNr" : ' + obj.schulNr.toString() + ',';
 		result += '"schulform" : ' + JSON.stringify(obj.schulform) + ',';
@@ -96,7 +96,7 @@ export class SchuleInfo extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<SchuleInfo>) : string {
+	public static transpilerToJSONPatch(obj: Partial<SchuleInfo>): string {
 		let result = '{';
 		if (obj.schulNr !== undefined) {
 			result += '"schulNr" : ' + obj.schulNr.toString() + ',';
@@ -129,6 +129,6 @@ export class SchuleInfo extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_schule_SchuleInfo(obj : unknown) : SchuleInfo {
+export function cast_de_svws_nrw_core_data_schule_SchuleInfo(obj: unknown): SchuleInfo {
 	return obj as SchuleInfo;
 }

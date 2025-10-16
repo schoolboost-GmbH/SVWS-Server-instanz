@@ -9,62 +9,62 @@ export class BenutzerDaten extends JavaObject {
 	/**
 	 * Die ID des Benutzers.
 	 */
-	public id : number = -1;
+	public id: number = -1;
 
 	/**
 	 * Der Typ des Benutzers.
 	 */
-	public typ : number = 0;
+	public typ: number = 0;
 
 	/**
 	 * die ID des Benutzers in der Typ-spezifischen-Tabelle (z.B. Lehrer-ID)
 	 */
-	public typID : number = -1;
+	public typID: number = -1;
 
 	/**
 	 * Der Anzeigename des Benutzers.
 	 */
-	public anzeigename : string = "";
+	public anzeigename: string = "";
 
 	/**
 	 * Der Anmeldename des Benutzers
 	 */
-	public name : string = "";
+	public name: string = "";
 
 	/**
 	 * Gibt an, ob es sich um einen Administrativen Benutzer handelt oder nicht.
 	 */
-	public istAdmin : boolean = false;
+	public istAdmin: boolean = false;
 
 	/**
 	 * Die ID der Credentials des Benutzers.
 	 */
-	public idCredentials : number = -1;
+	public idCredentials: number = -1;
 
 	/**
 	 * Die Daten der Benutzergruppen, denen dieser Benutzer zugeordnet ist.
 	 */
-	public gruppen : List<BenutzergruppeDaten> = new ArrayList<BenutzergruppeDaten>();
+	public gruppen: List<BenutzergruppeDaten> = new ArrayList<BenutzergruppeDaten>();
 
 	/**
 	 * Die Kompetenzen, die speziell diesem Benutzer zugeordnet sind.
 	 */
-	public kompetenzen : List<number> = new ArrayList<number>();
+	public kompetenzen: List<number> = new ArrayList<number>();
 
 	/**
 	 * Die IDs der Klassen bei denen der Benutzer funktionsbezogene Kompetenzen hat - entweder über Klassenleitungen oder über Abteilungsleitungen.
 	 */
-	public kompetenzenKlassen : List<number> = new ArrayList<number>();
+	public kompetenzenKlassen: List<number> = new ArrayList<number>();
 
 	/**
 	 * Die Abiturjahrgänge bei denen der Benutzer als Beratungslehrer funktionsbezogene Kompetenzen hat.
 	 */
-	public kompetenzenAbiturjahrgaenge : List<number> = new ArrayList<number>();
+	public kompetenzenAbiturjahrgaenge: List<number> = new ArrayList<number>();
 
 	/**
 	 * Die IDs der aktuellen Lehrer-Leitungsfunktionen, welche diesem Benutzer zugeordnet sind. Dies kann auch für funktionsbezogene Kompetenzen genutzt werden.
 	 */
-	public leitungsfunktionen : List<number> = new ArrayList<number>();
+	public leitungsfunktionen: List<number> = new ArrayList<number>();
 
 
 	/**
@@ -78,13 +78,13 @@ export class BenutzerDaten extends JavaObject {
 		return 'de.svws_nrw.core.data.benutzer.BenutzerDaten';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.benutzer.BenutzerDaten'].includes(name);
 	}
 
 	public static class = new Class<BenutzerDaten>('de.svws_nrw.core.data.benutzer.BenutzerDaten');
 
-	public static transpilerFromJSON(json : string): BenutzerDaten {
+	public static transpilerFromJSON(json: string): BenutzerDaten {
 		const obj = JSON.parse(json) as Partial<BenutzerDaten>;
 		const result = new BenutzerDaten();
 		if (obj.id === undefined)
@@ -136,7 +136,7 @@ export class BenutzerDaten extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : BenutzerDaten) : string {
+	public static transpilerToJSON(obj: BenutzerDaten): string {
 		let result = '{';
 		result += '"id" : ' + obj.id.toString() + ',';
 		result += '"typ" : ' + obj.typ.toString() + ',';
@@ -190,7 +190,7 @@ export class BenutzerDaten extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<BenutzerDaten>) : string {
+	public static transpilerToJSONPatch(obj: Partial<BenutzerDaten>): string {
 		let result = '{';
 		if (obj.id !== undefined) {
 			result += '"id" : ' + obj.id.toString() + ',';
@@ -270,6 +270,6 @@ export class BenutzerDaten extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_benutzer_BenutzerDaten(obj : unknown) : BenutzerDaten {
+export function cast_de_svws_nrw_core_data_benutzer_BenutzerDaten(obj: unknown): BenutzerDaten {
 	return obj as BenutzerDaten;
 }

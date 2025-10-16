@@ -6,82 +6,82 @@ export class Schild3KatalogEintragPruefungsordnungOption extends JavaObject {
 	/**
 	 * Schulformen für die die Optionen gelten
 	 */
-	public OP_Schulformen : string | null = null;
+	public OP_Schulformen: string | null = null;
 
 	/**
 	 * Kürzel der Prüfungsordung
 	 */
-	public OP_POKrz : string | null = null;
+	public OP_POKrz: string | null = null;
 
 	/**
 	 * Angezeigter Kurztext in Schild-NRW
 	 */
-	public OP_Krz : string | null = null;
+	public OP_Krz: string | null = null;
 
 	/**
 	 * Abgangsart in der Statistik B
 	 */
-	public OP_Abgangsart_B : string | null = null;
+	public OP_Abgangsart_B: string | null = null;
 
 	/**
 	 * Abgangsart in der Statistik NB
 	 */
-	public OP_Abgangsart_NB : string | null = null;
+	public OP_Abgangsart_NB: string | null = null;
 
 	/**
 	 * A=Allgemein B=Berufsbildend
 	 */
-	public OP_Art : string | null = null;
+	public OP_Art: string | null = null;
 
 	/**
 	 * Abschlusskürzel in Schild-NRW
 	 */
-	public OP_Typ : string | null = null;
+	public OP_Typ: string | null = null;
 
 	/**
 	 * Bildungsgang A oder B
 	 */
-	public OP_Bildungsgang : string | null = null;
+	public OP_Bildungsgang: string | null = null;
 
 	/**
 	 * Text des Abschlusses
 	 */
-	public OP_Name : string | null = null;
+	public OP_Name: string | null = null;
 
 	/**
 	 * Paragraph in der BASS (veraltet?)
 	 */
-	public OP_Kommentar : string | null = null;
+	public OP_Kommentar: string | null = null;
 
 	/**
 	 * Zulässig für diese Jahrgänge
 	 */
-	public OP_Jahrgaenge : string | null = null;
+	public OP_Jahrgaenge: string | null = null;
 
 	/**
 	 * Zulässig für BKIndex
 	 */
-	public OP_BKIndex : string | null = null;
+	public OP_BKIndex: string | null = null;
 
 	/**
 	 * Zulässig für diese Gliederungen
 	 */
-	public OP_BKAnl_Typ : string | null = null;
+	public OP_BKAnl_Typ: string | null = null;
 
 	/**
 	 * Reihenfolge
 	 */
-	public OP_Reihenfolge : number | null = null;
+	public OP_Reihenfolge: number | null = null;
 
 	/**
 	 * Gültig ab Schuljahr
 	 */
-	public gueltigVon : number | null = null;
+	public gueltigVon: number | null = null;
 
 	/**
 	 * Gültig bis Schuljahr
 	 */
-	public gueltigBis : number | null = null;
+	public gueltigBis: number | null = null;
 
 
 	/**
@@ -95,13 +95,13 @@ export class Schild3KatalogEintragPruefungsordnungOption extends JavaObject {
 		return 'de.svws_nrw.core.data.schild3.Schild3KatalogEintragPruefungsordnungOption';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.schild3.Schild3KatalogEintragPruefungsordnungOption'].includes(name);
 	}
 
 	public static class = new Class<Schild3KatalogEintragPruefungsordnungOption>('de.svws_nrw.core.data.schild3.Schild3KatalogEintragPruefungsordnungOption');
 
-	public static transpilerFromJSON(json : string): Schild3KatalogEintragPruefungsordnungOption {
+	public static transpilerFromJSON(json: string): Schild3KatalogEintragPruefungsordnungOption {
 		const obj = JSON.parse(json) as Partial<Schild3KatalogEintragPruefungsordnungOption>;
 		const result = new Schild3KatalogEintragPruefungsordnungOption();
 		result.OP_Schulformen = (obj.OP_Schulformen === undefined) ? null : obj.OP_Schulformen === null ? null : obj.OP_Schulformen;
@@ -123,7 +123,7 @@ export class Schild3KatalogEintragPruefungsordnungOption extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : Schild3KatalogEintragPruefungsordnungOption) : string {
+	public static transpilerToJSON(obj: Schild3KatalogEintragPruefungsordnungOption): string {
 		let result = '{';
 		result += '"OP_Schulformen" : ' + ((obj.OP_Schulformen === null) ? 'null' : JSON.stringify(obj.OP_Schulformen)) + ',';
 		result += '"OP_POKrz" : ' + ((obj.OP_POKrz === null) ? 'null' : JSON.stringify(obj.OP_POKrz)) + ',';
@@ -146,7 +146,7 @@ export class Schild3KatalogEintragPruefungsordnungOption extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<Schild3KatalogEintragPruefungsordnungOption>) : string {
+	public static transpilerToJSONPatch(obj: Partial<Schild3KatalogEintragPruefungsordnungOption>): string {
 		let result = '{';
 		if (obj.OP_Schulformen !== undefined) {
 			result += '"OP_Schulformen" : ' + ((obj.OP_Schulformen === null) ? 'null' : JSON.stringify(obj.OP_Schulformen)) + ',';
@@ -203,6 +203,6 @@ export class Schild3KatalogEintragPruefungsordnungOption extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_schild3_Schild3KatalogEintragPruefungsordnungOption(obj : unknown) : Schild3KatalogEintragPruefungsordnungOption {
+export function cast_de_svws_nrw_core_data_schild3_Schild3KatalogEintragPruefungsordnungOption(obj: unknown): Schild3KatalogEintragPruefungsordnungOption {
 	return obj as Schild3KatalogEintragPruefungsordnungOption;
 }

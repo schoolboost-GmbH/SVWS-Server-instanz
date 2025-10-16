@@ -15,13 +15,13 @@ export class LehrerBeschaeftigungsartKatalogEintrag extends CoreTypeData {
 		return 'de.svws_nrw.asd.data.lehrer.LehrerBeschaeftigungsartKatalogEintrag';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.asd.data.lehrer.LehrerBeschaeftigungsartKatalogEintrag', 'de.svws_nrw.asd.data.CoreTypeData'].includes(name);
 	}
 
 	public static class = new Class<LehrerBeschaeftigungsartKatalogEintrag>('de.svws_nrw.asd.data.lehrer.LehrerBeschaeftigungsartKatalogEintrag');
 
-	public static transpilerFromJSON(json : string): LehrerBeschaeftigungsartKatalogEintrag {
+	public static transpilerFromJSON(json: string): LehrerBeschaeftigungsartKatalogEintrag {
 		const obj = JSON.parse(json) as Partial<LehrerBeschaeftigungsartKatalogEintrag>;
 		const result = new LehrerBeschaeftigungsartKatalogEintrag();
 		if (obj.id === undefined)
@@ -41,7 +41,7 @@ export class LehrerBeschaeftigungsartKatalogEintrag extends CoreTypeData {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : LehrerBeschaeftigungsartKatalogEintrag) : string {
+	public static transpilerToJSON(obj: LehrerBeschaeftigungsartKatalogEintrag): string {
 		let result = '{';
 		result += '"id" : ' + obj.id.toString() + ',';
 		result += '"schluessel" : ' + JSON.stringify(obj.schluessel) + ',';
@@ -54,7 +54,7 @@ export class LehrerBeschaeftigungsartKatalogEintrag extends CoreTypeData {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<LehrerBeschaeftigungsartKatalogEintrag>) : string {
+	public static transpilerToJSONPatch(obj: Partial<LehrerBeschaeftigungsartKatalogEintrag>): string {
 		let result = '{';
 		if (obj.id !== undefined) {
 			result += '"id" : ' + obj.id.toString() + ',';
@@ -81,6 +81,6 @@ export class LehrerBeschaeftigungsartKatalogEintrag extends CoreTypeData {
 
 }
 
-export function cast_de_svws_nrw_asd_data_lehrer_LehrerBeschaeftigungsartKatalogEintrag(obj : unknown) : LehrerBeschaeftigungsartKatalogEintrag {
+export function cast_de_svws_nrw_asd_data_lehrer_LehrerBeschaeftigungsartKatalogEintrag(obj: unknown): LehrerBeschaeftigungsartKatalogEintrag {
 	return obj as LehrerBeschaeftigungsartKatalogEintrag;
 }

@@ -8,12 +8,12 @@ export class KAOAAnschlussoptionenKatalogEintrag extends CoreTypeData {
 	/**
 	 * Jahrgangsstufen in denen der Eintrag gemacht werden darf (SI bzw. SII)
 	 */
-	public stufen : List<string> = new ArrayList<string>();
+	public stufen: List<string> = new ArrayList<string>();
 
 	/**
 	 * Gibt an bei welchen Anschlussvereinbarungen SBO10.7 die Optionen angezeigt werden
 	 */
-	public anzeigeZusatzmerkmal : List<string> = new ArrayList<string>();
+	public anzeigeZusatzmerkmal: List<string> = new ArrayList<string>();
 
 
 	/**
@@ -27,13 +27,13 @@ export class KAOAAnschlussoptionenKatalogEintrag extends CoreTypeData {
 		return 'de.svws_nrw.asd.data.kaoa.KAOAAnschlussoptionenKatalogEintrag';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.asd.data.kaoa.KAOAAnschlussoptionenKatalogEintrag', 'de.svws_nrw.asd.data.CoreTypeData'].includes(name);
 	}
 
 	public static class = new Class<KAOAAnschlussoptionenKatalogEintrag>('de.svws_nrw.asd.data.kaoa.KAOAAnschlussoptionenKatalogEintrag');
 
-	public static transpilerFromJSON(json : string): KAOAAnschlussoptionenKatalogEintrag {
+	public static transpilerFromJSON(json: string): KAOAAnschlussoptionenKatalogEintrag {
 		const obj = JSON.parse(json) as Partial<KAOAAnschlussoptionenKatalogEintrag>;
 		const result = new KAOAAnschlussoptionenKatalogEintrag();
 		if (obj.id === undefined)
@@ -63,7 +63,7 @@ export class KAOAAnschlussoptionenKatalogEintrag extends CoreTypeData {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : KAOAAnschlussoptionenKatalogEintrag) : string {
+	public static transpilerToJSON(obj: KAOAAnschlussoptionenKatalogEintrag): string {
 		let result = '{';
 		result += '"id" : ' + obj.id.toString() + ',';
 		result += '"schluessel" : ' + JSON.stringify(obj.schluessel) + ',';
@@ -92,7 +92,7 @@ export class KAOAAnschlussoptionenKatalogEintrag extends CoreTypeData {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<KAOAAnschlussoptionenKatalogEintrag>) : string {
+	public static transpilerToJSONPatch(obj: Partial<KAOAAnschlussoptionenKatalogEintrag>): string {
 		let result = '{';
 		if (obj.id !== undefined) {
 			result += '"id" : ' + obj.id.toString() + ',';
@@ -139,6 +139,6 @@ export class KAOAAnschlussoptionenKatalogEintrag extends CoreTypeData {
 
 }
 
-export function cast_de_svws_nrw_asd_data_kaoa_KAOAAnschlussoptionenKatalogEintrag(obj : unknown) : KAOAAnschlussoptionenKatalogEintrag {
+export function cast_de_svws_nrw_asd_data_kaoa_KAOAAnschlussoptionenKatalogEintrag(obj: unknown): KAOAAnschlussoptionenKatalogEintrag {
 	return obj as KAOAAnschlussoptionenKatalogEintrag;
 }

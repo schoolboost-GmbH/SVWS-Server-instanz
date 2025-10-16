@@ -10,12 +10,12 @@ export class GostKlausurenCollectionAllData extends JavaObject {
 	/**
 	 * Ein Array mit Paaren der enthaltenen Abiturjahrgänge / GostHalbjahre.
 	 */
-	public datacontained : List<GostKlausurenCollectionHjData> = new ArrayList<GostKlausurenCollectionHjData>();
+	public datacontained: List<GostKlausurenCollectionHjData> = new ArrayList<GostKlausurenCollectionHjData>();
 
 	/**
 	 * Ein Array mit den Daten der Lehrer.
 	 */
-	public lehrer : List<LehrerListeEintrag> = new ArrayList<LehrerListeEintrag>();
+	public lehrer: List<LehrerListeEintrag> = new ArrayList<LehrerListeEintrag>();
 
 
 	/**
@@ -29,13 +29,13 @@ export class GostKlausurenCollectionAllData extends JavaObject {
 		return 'de.svws_nrw.core.data.gost.klausurplanung.GostKlausurenCollectionAllData';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.gost.klausurplanung.GostKlausurenCollectionAllData'].includes(name);
 	}
 
 	public static class = new Class<GostKlausurenCollectionAllData>('de.svws_nrw.core.data.gost.klausurplanung.GostKlausurenCollectionAllData');
 
-	public static transpilerFromJSON(json : string): GostKlausurenCollectionAllData {
+	public static transpilerFromJSON(json: string): GostKlausurenCollectionAllData {
 		const obj = JSON.parse(json) as Partial<GostKlausurenCollectionAllData>;
 		const result = new GostKlausurenCollectionAllData();
 		if (obj.datacontained !== undefined) {
@@ -51,7 +51,7 @@ export class GostKlausurenCollectionAllData extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : GostKlausurenCollectionAllData) : string {
+	public static transpilerToJSON(obj: GostKlausurenCollectionAllData): string {
 		let result = '{';
 		result += '"datacontained" : [ ';
 		for (let i = 0; i < obj.datacontained.size(); i++) {
@@ -74,7 +74,7 @@ export class GostKlausurenCollectionAllData extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<GostKlausurenCollectionAllData>) : string {
+	public static transpilerToJSONPatch(obj: Partial<GostKlausurenCollectionAllData>): string {
 		let result = '{';
 		if (obj.datacontained !== undefined) {
 			result += '"datacontained" : [ ';
@@ -103,6 +103,6 @@ export class GostKlausurenCollectionAllData extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_gost_klausurplanung_GostKlausurenCollectionAllData(obj : unknown) : GostKlausurenCollectionAllData {
+export function cast_de_svws_nrw_core_data_gost_klausurplanung_GostKlausurenCollectionAllData(obj: unknown): GostKlausurenCollectionAllData {
 	return obj as GostKlausurenCollectionAllData;
 }

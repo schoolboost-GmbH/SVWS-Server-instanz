@@ -10,37 +10,37 @@ export class BKGymLeistungen extends JavaObject {
 	/**
 	 * Die ID des Schülers, dessen Leistungen in diesem Objekt gespeichert sind.
 	 */
-	public id : number = 0;
+	public id: number = 0;
 
 	/**
 	 * Das aktuelle Schuljahr, welches dem Schüler zugeordnet ist.
 	 */
-	public aktuellesSchuljahr : number | null = null;
+	public aktuellesSchuljahr: number | null = null;
 
 	/**
 	 * Der Jahrgang, in dem sich der Schüler in dem aktuellen Schuljahr befindet.
 	 */
-	public aktuellerJahrgang : string | null = null;
+	public aktuellerJahrgang: string | null = null;
 
 	/**
 	 * Die Sprachbelegungen (Sprachenfolge) und die Sprachprüfungen des Schülers
 	 */
-	public sprachendaten : Sprachendaten | null = null;
+	public sprachendaten: Sprachendaten | null = null;
 
 	/**
 	 * Das einstellige Kürzel der bilingualen Sprache, sofern der Schüler einem bilingualen Bildungsgang angehört.
 	 */
-	public bilingualeSprache : string | null = null;
+	public bilingualeSprache: string | null = null;
 
 	/**
 	 * Gibt für die einzelnen Halbjahre an, ob gewertete Leistungsdaten vorhanden sind.
 	 */
-	public readonly bewertetesHalbjahr : Array<boolean> = Array(6).fill(false);
+	public readonly bewertetesHalbjahr: Array<boolean> = Array(6).fill(false);
 
 	/**
 	 * Die einzelnen Fächer des Schülers mit Leistungen.
 	 */
-	public readonly faecher : List<BKGymLeistungenFach> = new ArrayList<BKGymLeistungenFach>();
+	public readonly faecher: List<BKGymLeistungenFach> = new ArrayList<BKGymLeistungenFach>();
 
 
 	/**
@@ -54,13 +54,13 @@ export class BKGymLeistungen extends JavaObject {
 		return 'de.svws_nrw.core.data.bk.abi.BKGymLeistungen';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.bk.abi.BKGymLeistungen'].includes(name);
 	}
 
 	public static class = new Class<BKGymLeistungen>('de.svws_nrw.core.data.bk.abi.BKGymLeistungen');
 
-	public static transpilerFromJSON(json : string): BKGymLeistungen {
+	public static transpilerFromJSON(json: string): BKGymLeistungen {
 		const obj = JSON.parse(json) as Partial<BKGymLeistungen>;
 		const result = new BKGymLeistungen();
 		if (obj.id === undefined)
@@ -83,7 +83,7 @@ export class BKGymLeistungen extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : BKGymLeistungen) : string {
+	public static transpilerToJSON(obj: BKGymLeistungen): string {
 		let result = '{';
 		result += '"id" : ' + obj.id.toString() + ',';
 		result += '"aktuellesSchuljahr" : ' + ((obj.aktuellesSchuljahr === null) ? 'null' : obj.aktuellesSchuljahr.toString()) + ',';
@@ -111,7 +111,7 @@ export class BKGymLeistungen extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<BKGymLeistungen>) : string {
+	public static transpilerToJSONPatch(obj: Partial<BKGymLeistungen>): string {
 		let result = '{';
 		if (obj.id !== undefined) {
 			result += '"id" : ' + obj.id.toString() + ',';
@@ -156,6 +156,6 @@ export class BKGymLeistungen extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_bk_abi_BKGymLeistungen(obj : unknown) : BKGymLeistungen {
+export function cast_de_svws_nrw_core_data_bk_abi_BKGymLeistungen(obj: unknown): BKGymLeistungen {
 	return obj as BKGymLeistungen;
 }

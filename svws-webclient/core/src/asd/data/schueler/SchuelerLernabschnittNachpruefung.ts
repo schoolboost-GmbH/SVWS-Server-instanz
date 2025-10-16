@@ -6,22 +6,22 @@ export class SchuelerLernabschnittNachpruefung extends JavaObject {
 	/**
 	 * Der Grund für die Versetzung (V - Versetzung, A - Abschluss, B - berufsqualifizierend)
 	 */
-	public grund : string = "V";
+	public grund: string = "V";
 
 	/**
 	 * Die ID des Faches, auf welches sich die Leistungsdaten beziehen.
 	 */
-	public fachID : number = -1;
+	public fachID: number = -1;
 
 	/**
 	 * Das Kürzel der Note in der Nachprüfung.
 	 */
-	public note : string | null = null;
+	public note: string | null = null;
 
 	/**
 	 * Das Datum der Nachprüfung.
 	 */
-	public datum : string | null = null;
+	public datum: string | null = null;
 
 
 	/**
@@ -35,13 +35,13 @@ export class SchuelerLernabschnittNachpruefung extends JavaObject {
 		return 'de.svws_nrw.asd.data.schueler.SchuelerLernabschnittNachpruefung';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.asd.data.schueler.SchuelerLernabschnittNachpruefung'].includes(name);
 	}
 
 	public static class = new Class<SchuelerLernabschnittNachpruefung>('de.svws_nrw.asd.data.schueler.SchuelerLernabschnittNachpruefung');
 
-	public static transpilerFromJSON(json : string): SchuelerLernabschnittNachpruefung {
+	public static transpilerFromJSON(json: string): SchuelerLernabschnittNachpruefung {
 		const obj = JSON.parse(json) as Partial<SchuelerLernabschnittNachpruefung>;
 		const result = new SchuelerLernabschnittNachpruefung();
 		if (obj.grund === undefined)
@@ -55,7 +55,7 @@ export class SchuelerLernabschnittNachpruefung extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : SchuelerLernabschnittNachpruefung) : string {
+	public static transpilerToJSON(obj: SchuelerLernabschnittNachpruefung): string {
 		let result = '{';
 		result += '"grund" : ' + JSON.stringify(obj.grund) + ',';
 		result += '"fachID" : ' + obj.fachID.toString() + ',';
@@ -66,7 +66,7 @@ export class SchuelerLernabschnittNachpruefung extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<SchuelerLernabschnittNachpruefung>) : string {
+	public static transpilerToJSONPatch(obj: Partial<SchuelerLernabschnittNachpruefung>): string {
 		let result = '{';
 		if (obj.grund !== undefined) {
 			result += '"grund" : ' + JSON.stringify(obj.grund) + ',';
@@ -87,6 +87,6 @@ export class SchuelerLernabschnittNachpruefung extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_asd_data_schueler_SchuelerLernabschnittNachpruefung(obj : unknown) : SchuelerLernabschnittNachpruefung {
+export function cast_de_svws_nrw_asd_data_schueler_SchuelerLernabschnittNachpruefung(obj: unknown): SchuelerLernabschnittNachpruefung {
 	return obj as SchuelerLernabschnittNachpruefung;
 }

@@ -6,32 +6,32 @@ export class SMTPServerKonfiguration extends JavaObject {
 	/**
 	 * Die ID der Konfiguration.
 	 */
-	public id : number = -1;
+	public id: number = -1;
 
 	/**
 	 * Der Hostname des SMTP-Servers.
 	 */
-	public host : string = "";
+	public host: string = "";
 
 	/**
 	 * Die Port-Adresse des SMTP-Servers.
 	 */
-	public port : number = 25;
+	public port: number = 25;
 
 	/**
 	 * Gibt an, ob StartTLS für die SMTP-Verbindung genutzt wird oder nicht.
 	 */
-	public useStartTLS : boolean = true;
+	public useStartTLS: boolean = true;
 
 	/**
 	 * Gibt an, ob TLS für die SMTP-Verbindung genutzt wird oder nicht. Wird dies genutzt, so wird entweder ein Zertifikat im Key-Store des Servers benötigt oder es muss einem Host vertraut werden (siehe trustTLSHost).
 	 */
-	public useTLS : boolean = false;
+	public useTLS: boolean = false;
 
 	/**
 	 * Gibt an, falls nicht null, welchem Host - unabhängig von vorhandenen Zertifikaten - vertraut werden kann, '*' für jeden beliebigen Host.
 	 */
-	public trustTLSHost : string | null = null;
+	public trustTLSHost: string | null = null;
 
 
 	/**
@@ -45,13 +45,13 @@ export class SMTPServerKonfiguration extends JavaObject {
 		return 'de.svws_nrw.core.data.email.SMTPServerKonfiguration';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.email.SMTPServerKonfiguration'].includes(name);
 	}
 
 	public static class = new Class<SMTPServerKonfiguration>('de.svws_nrw.core.data.email.SMTPServerKonfiguration');
 
-	public static transpilerFromJSON(json : string): SMTPServerKonfiguration {
+	public static transpilerFromJSON(json: string): SMTPServerKonfiguration {
 		const obj = JSON.parse(json) as Partial<SMTPServerKonfiguration>;
 		const result = new SMTPServerKonfiguration();
 		if (obj.id === undefined)
@@ -73,7 +73,7 @@ export class SMTPServerKonfiguration extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : SMTPServerKonfiguration) : string {
+	public static transpilerToJSON(obj: SMTPServerKonfiguration): string {
 		let result = '{';
 		result += '"id" : ' + obj.id.toString() + ',';
 		result += '"host" : ' + JSON.stringify(obj.host) + ',';
@@ -86,7 +86,7 @@ export class SMTPServerKonfiguration extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<SMTPServerKonfiguration>) : string {
+	public static transpilerToJSONPatch(obj: Partial<SMTPServerKonfiguration>): string {
 		let result = '{';
 		if (obj.id !== undefined) {
 			result += '"id" : ' + obj.id.toString() + ',';
@@ -113,6 +113,6 @@ export class SMTPServerKonfiguration extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_email_SMTPServerKonfiguration(obj : unknown) : SMTPServerKonfiguration {
+export function cast_de_svws_nrw_core_data_email_SMTPServerKonfiguration(obj: unknown): SMTPServerKonfiguration {
 	return obj as SMTPServerKonfiguration;
 }

@@ -8,47 +8,47 @@ export class ENMLerngruppe extends JavaObject {
 	/**
 	 * Die eindeutige ID der Lerngruppe - generiert, nicht (!) aus der SVWS-DB
 	 */
-	public id : number = 0;
+	public id: number = 0;
 
 	/**
 	 * Die ID der Lerngruppe in der SVWS-DB (Die ID des Kurses oder die ID der Klasse in der Versetzungstabelle, siehe kursartID).
 	 */
-	public kID : number = 0;
+	public kID: number = 0;
 
 	/**
 	 * Die ID des Faches der Lerngruppe.
 	 */
-	public fachID : number = 0;
+	public fachID: number = 0;
 
 	/**
 	 * Gibt die ID der Kursart an. Ist dieser Wert null, so handelt es sich um Klassen-Unterricht.
 	 */
-	public kursartID : number | null = null;
+	public kursartID: number | null = null;
 
 	/**
 	 * Die Bezeichnung der Lerngruppe (z.B. D-GK4)
 	 */
-	public bezeichnung : string | null = null;
+	public bezeichnung: string | null = null;
 
 	/**
 	 * Die Bezeichnung der (allgemeinen) Kursart (z.B. GK)
 	 */
-	public kursartKuerzel : string | null = null;
+	public kursartKuerzel: string | null = null;
 
 	/**
 	 * Das einstellige Kürzel der bilingualen Sprache, sofern es sich um eine bilinguale Lerngruppe handelt. (z.B. F)
 	 */
-	public bilingualeSprache : string | null = null;
+	public bilingualeSprache: string | null = null;
 
 	/**
 	 * Die IDs der Lehrer, die der Lerngruppe zugeordnet sind.
 	 */
-	public lehrerID : List<number> = new ArrayList<number>();
+	public lehrerID: List<number> = new ArrayList<number>();
 
 	/**
 	 * Die Anzahl der Wochenstunden, falls es sich um einen Kurs handelt.
 	 */
-	public wochenstunden : number = 0;
+	public wochenstunden: number = 0;
 
 
 	/**
@@ -62,13 +62,13 @@ export class ENMLerngruppe extends JavaObject {
 		return 'de.svws_nrw.core.data.enm.ENMLerngruppe';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.enm.ENMLerngruppe'].includes(name);
 	}
 
 	public static class = new Class<ENMLerngruppe>('de.svws_nrw.core.data.enm.ENMLerngruppe');
 
-	public static transpilerFromJSON(json : string): ENMLerngruppe {
+	public static transpilerFromJSON(json: string): ENMLerngruppe {
 		const obj = JSON.parse(json) as Partial<ENMLerngruppe>;
 		const result = new ENMLerngruppe();
 		if (obj.id === undefined)
@@ -95,7 +95,7 @@ export class ENMLerngruppe extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : ENMLerngruppe) : string {
+	public static transpilerToJSON(obj: ENMLerngruppe): string {
 		let result = '{';
 		result += '"id" : ' + obj.id.toString() + ',';
 		result += '"kID" : ' + obj.kID.toString() + ',';
@@ -118,7 +118,7 @@ export class ENMLerngruppe extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<ENMLerngruppe>) : string {
+	public static transpilerToJSONPatch(obj: Partial<ENMLerngruppe>): string {
 		let result = '{';
 		if (obj.id !== undefined) {
 			result += '"id" : ' + obj.id.toString() + ',';
@@ -161,6 +161,6 @@ export class ENMLerngruppe extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_enm_ENMLerngruppe(obj : unknown) : ENMLerngruppe {
+export function cast_de_svws_nrw_core_data_enm_ENMLerngruppe(obj: unknown): ENMLerngruppe {
 	return obj as ENMLerngruppe;
 }

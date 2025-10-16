@@ -10,9 +10,9 @@ import type { JavaMap } from '../../../java/util/JavaMap';
 
 export class StundenplanblockungManagerKopplungMenge extends JavaObject {
 
-	private readonly _menge : List<StundenplanblockungManagerKopplung> = new ArrayList<StundenplanblockungManagerKopplung>();
+	private readonly _menge: List<StundenplanblockungManagerKopplung> = new ArrayList<StundenplanblockungManagerKopplung>();
 
-	private readonly _map : JavaMap<number, StundenplanblockungManagerKopplung> = new HashMap<number, StundenplanblockungManagerKopplung>();
+	private readonly _map: JavaMap<number, StundenplanblockungManagerKopplung> = new HashMap<number, StundenplanblockungManagerKopplung>();
 
 
 	/**
@@ -30,10 +30,10 @@ export class StundenplanblockungManagerKopplungMenge extends JavaObject {
 	 * @param pKuerzel               Das Kürzel der Kopplung.
 	 * @throws NullPointerException  Falls die Kopplung-ID bereits existiert.
 	 */
-	public addOrException(pKopplungID : number, pKuerzel : string) : void {
+	public addOrException(pKopplungID: number, pKuerzel: string): void {
 		if (this._map.containsKey(pKopplungID))
 			throw new NullPointerException("Die Kopplung-ID " + pKopplungID + " existiert bereits!")
-		const ko : StundenplanblockungManagerKopplung | null = new StundenplanblockungManagerKopplung(pKopplungID, pKuerzel);
+		const ko: StundenplanblockungManagerKopplung | null = new StundenplanblockungManagerKopplung(pKopplungID, pKuerzel);
 		this._map.put(pKopplungID, ko);
 		this._menge.add(ko);
 	}
@@ -46,8 +46,8 @@ export class StundenplanblockungManagerKopplungMenge extends JavaObject {
 	 * @throws NullPointerException  Falls die Kopplung-ID unbekannt ist.
 	 * @return Das {@link StundenplanblockungManagerKopplung}-Objekt zur übergebenen ID.
 	 */
-	public getOrException(pKopplungID : number) : StundenplanblockungManagerKopplung {
-		const ko : StundenplanblockungManagerKopplung | null = this._map.get(pKopplungID);
+	public getOrException(pKopplungID: number): StundenplanblockungManagerKopplung {
+		const ko: StundenplanblockungManagerKopplung | null = this._map.get(pKopplungID);
 		if (ko === null)
 			throw new NullPointerException("Kopplung-ID " + pKopplungID + " unbekannt!")
 		return ko;
@@ -60,8 +60,8 @@ export class StundenplanblockungManagerKopplungMenge extends JavaObject {
 	 * @param pRandom  Das Random-Objekt zum Erzeugen von Zufallszahlen.
 	 * @return         Liefert eine zufällige Kopplung.
 	 */
-	public getRandomOrException(pRandom : Random) : StundenplanblockungManagerKopplung {
-		const size : number = this._menge.size();
+	public getRandomOrException(pRandom: Random): StundenplanblockungManagerKopplung {
+		const size: number = this._menge.size();
 		if (size <= 0)
 			throw new NullPointerException("Es gibt keine Kopplungen!")
 		return this._menge.get(pRandom.nextInt(size));
@@ -74,8 +74,8 @@ export class StundenplanblockungManagerKopplungMenge extends JavaObject {
 	 * @param pKopplungID            Die Datenbank-ID der Kopplung.
 	 * @throws NullPointerException  Falls die Kopplung-ID unbekannt ist.
 	 */
-	public removeOrException(pKopplungID : number) : void {
-		const ko : StundenplanblockungManagerKopplung = this.getOrException(pKopplungID);
+	public removeOrException(pKopplungID: number): void {
+		const ko: StundenplanblockungManagerKopplung = this.getOrException(pKopplungID);
 		this._map.remove(pKopplungID);
 		this._menge.remove(ko);
 	}
@@ -86,7 +86,7 @@ export class StundenplanblockungManagerKopplungMenge extends JavaObject {
 	 * @param pKopplungID  Die Datenbank-ID der Kopplung.
 	 * @return TRUE, falls die Kopplung-ID existiert.
 	 */
-	public exists(pKopplungID : number) : boolean {
+	public exists(pKopplungID: number): boolean {
 		return this._map.containsKey(pKopplungID);
 	}
 
@@ -95,7 +95,7 @@ export class StundenplanblockungManagerKopplungMenge extends JavaObject {
 	 *
 	 * @return Die Menge aller Kopplungen.
 	 */
-	public getMenge() : List<StundenplanblockungManagerKopplung> | null {
+	public getMenge(): List<StundenplanblockungManagerKopplung> | null {
 		return this._menge;
 	}
 
@@ -104,7 +104,7 @@ export class StundenplanblockungManagerKopplungMenge extends JavaObject {
 	 *
 	 * @return Die Anzahl an Kopplungen.
 	 */
-	public size() : number {
+	public size(): number {
 		return this._menge.size();
 	}
 
@@ -112,7 +112,7 @@ export class StundenplanblockungManagerKopplungMenge extends JavaObject {
 		return 'de.svws_nrw.core.utils.stundenplanblockung.StundenplanblockungManagerKopplungMenge';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.utils.stundenplanblockung.StundenplanblockungManagerKopplungMenge'].includes(name);
 	}
 
@@ -120,6 +120,6 @@ export class StundenplanblockungManagerKopplungMenge extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_utils_stundenplanblockung_StundenplanblockungManagerKopplungMenge(obj : unknown) : StundenplanblockungManagerKopplungMenge {
+export function cast_de_svws_nrw_core_utils_stundenplanblockung_StundenplanblockungManagerKopplungMenge(obj: unknown): StundenplanblockungManagerKopplungMenge {
 	return obj as StundenplanblockungManagerKopplungMenge;
 }

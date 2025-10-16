@@ -6,47 +6,47 @@ export class StundenplanListeEintrag extends JavaObject {
 	/**
 	 * Die ID des Stundenplans.
 	 */
-	public id : number = -1;
+	public id: number = -1;
 
 	/**
 	 * Die textuelle Beschreibung des Stundenplans.
 	 */
-	public bezeichnung : string = "";
+	public bezeichnung: string = "";
 
 	/**
 	 * Die ID des Schuljahresabschnitts des Stundenplans.
 	 */
-	public idSchuljahresabschnitt : number = -1;
+	public idSchuljahresabschnitt: number = -1;
 
 	/**
 	 * Das Schuljahr, in welchem der Stundenplan gültig ist.
 	 */
-	public schuljahr : number = -1;
+	public schuljahr: number = -1;
 
 	/**
 	 * Der Abschnitt, in welchem der Stundenplan gültig ist (z.B. 2. Halbjahr oder 3. Quartal).
 	 */
-	public abschnitt : number = -1;
+	public abschnitt: number = -1;
 
 	/**
 	 * Das Datum, ab dem der Stundenpland gültig ist.
 	 */
-	public gueltigAb : string = "";
+	public gueltigAb: string = "";
 
 	/**
 	 * Das Datum, bis wann der Stundenplan gültig ist.
 	 */
-	public gueltigBis : string = "";
+	public gueltigBis: string = "";
 
 	/**
 	 * Gibt an, ob der Stundenplan aktiv ist. An einem Datum kann immer nur ein Stundenplan aktiv sein.
 	 */
-	public aktiv : boolean = false;
+	public aktiv: boolean = false;
 
 	/**
 	 * Das Modell für die Wochen des Stundenplans, d.h. ob es sich um einen Stundenplan für jede Woche handelt (0) oder ob es sich um einen unterschiedliche Stundenpläne in Abhängigkeit des Wochentyps handelt - z.B. A-/B-Wochen (2) handelt. Hier wird dann die maximale Anzahl der unterschiedlichen Wochentypen festgelegt. Der Wert 1 ist ungültig!
 	 */
-	public wochenTypModell : number = 0;
+	public wochenTypModell: number = 0;
 
 
 	/**
@@ -60,13 +60,13 @@ export class StundenplanListeEintrag extends JavaObject {
 		return 'de.svws_nrw.core.data.stundenplan.StundenplanListeEintrag';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.stundenplan.StundenplanListeEintrag'].includes(name);
 	}
 
 	public static class = new Class<StundenplanListeEintrag>('de.svws_nrw.core.data.stundenplan.StundenplanListeEintrag');
 
-	public static transpilerFromJSON(json : string): StundenplanListeEintrag {
+	public static transpilerFromJSON(json: string): StundenplanListeEintrag {
 		const obj = JSON.parse(json) as Partial<StundenplanListeEintrag>;
 		const result = new StundenplanListeEintrag();
 		if (obj.id === undefined)
@@ -99,7 +99,7 @@ export class StundenplanListeEintrag extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : StundenplanListeEintrag) : string {
+	public static transpilerToJSON(obj: StundenplanListeEintrag): string {
 		let result = '{';
 		result += '"id" : ' + obj.id.toString() + ',';
 		result += '"bezeichnung" : ' + JSON.stringify(obj.bezeichnung) + ',';
@@ -115,7 +115,7 @@ export class StundenplanListeEintrag extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<StundenplanListeEintrag>) : string {
+	public static transpilerToJSONPatch(obj: Partial<StundenplanListeEintrag>): string {
 		let result = '{';
 		if (obj.id !== undefined) {
 			result += '"id" : ' + obj.id.toString() + ',';
@@ -151,6 +151,6 @@ export class StundenplanListeEintrag extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_stundenplan_StundenplanListeEintrag(obj : unknown) : StundenplanListeEintrag {
+export function cast_de_svws_nrw_core_data_stundenplan_StundenplanListeEintrag(obj: unknown): StundenplanListeEintrag {
 	return obj as StundenplanListeEintrag;
 }

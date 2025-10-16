@@ -15,97 +15,97 @@ export class LernplattformV1Export extends JavaObject {
 	 * Die Revision des Lernplattform-Datenformates, um zu überprüfen, ob die Datei in dem richtigen Format vorliegt (-1 für Entwickler-Revisionen und
 	 *  ansonsten aufsteigend ab 1
 	 */
-	public revision : number = -1;
+	public revision: number = -1;
 
 	/**
 	 * Gibt die ID der Lernplattform an.
 	 */
-	public idLernplattform : number | null = null;
+	public idLernplattform: number | null = null;
 
 	/**
 	 * Enthält die Bezeichnung der Lernplattform.
 	 */
-	public lernplattformBezeichnung : string | null = null;
+	public lernplattformBezeichnung: string | null = null;
 
 	/**
 	 * Der Titel des Inhalts der Datei.
 	 */
-	public titel : string | null = "JSON für Lernplattformen";
+	public titel: string | null = "JSON für Lernplattformen";
 
 	/**
 	 * Der Titel des Inhalts der Datei.
 	 */
-	public beschreibung : string | null = "Diese JSON beinhaltet alle Daten für die Synchronisation für eine Lernplattform.";
+	public beschreibung: string | null = "Diese JSON beinhaltet alle Daten für die Synchronisation für eine Lernplattform.";
 
 	/**
 	 * Der Titel des Inhalts der Datei.
 	 */
-	public autor : string | null = "MSB SVWS";
+	public autor: string | null = "MSB SVWS";
 
 	/**
 	 * Der Zeitstempel für die Anfragen nach der Lernplattform-Datei.
 	 */
-	public anfrageZeitpunkt : string | null = null;
+	public anfrageZeitpunkt: string | null = null;
 
 	/**
 	 * Der Zeitstempel für die Antwort der Lernplattform-Datei.
 	 */
-	public antwortZeitpunkt : string | null = null;
+	public antwortZeitpunkt: string | null = null;
 
 	/**
 	 * Die Schulnummer, für welche die Lernplattform-Daten generiert wurde.
 	 */
-	public schulnummer : number = 0;
+	public schulnummer: number = 0;
 
 	/**
 	 * Das Schuljahr, für welches die Lernplattform-Daten generiert wurde.
 	 */
-	public schuljahr : number = 0;
+	public schuljahr: number = 0;
 
 	/**
 	 * Gibt die ID des Schuljahresabschnitts an, für welchen die Lernplattform-Daten generiert wurden.
 	 */
-	public idSchuljahresabschnitt : number = 0;
+	public idSchuljahresabschnitt: number = 0;
 
 	/**
 	 * Gibt an, für welchen Abschnitt innerhalb des Schuljahres die Lernplattform-Daten generiert wurden.
 	 */
-	public schulbezeichnung : string | null = null;
+	public schulbezeichnung: string | null = null;
 
 	/**
 	 * Gibt an, welche E-Mail-Adresse für die Schule hinterlegt ist.
 	 */
-	public mailadresse : string | null = null;
+	public mailadresse: string | null = null;
 
 	/**
 	 * Die Informationen zu den einzelnen Jahrgängen.
 	 */
-	public readonly jahrgaenge : List<LernplattformV1Jahrgang> = new ArrayList<LernplattformV1Jahrgang>();
+	public readonly jahrgaenge: List<LernplattformV1Jahrgang> = new ArrayList<LernplattformV1Jahrgang>();
 
 	/**
 	 * Die Informationen zu den einzelnen Klassen.
 	 */
-	public readonly klassen : List<LernplattformV1Klasse> = new ArrayList<LernplattformV1Klasse>();
+	public readonly klassen: List<LernplattformV1Klasse> = new ArrayList<LernplattformV1Klasse>();
 
 	/**
 	 * Die Informationen zu Lehrern.
 	 */
-	public readonly lehrer : List<LernplattformV1Lehrer> = new ArrayList<LernplattformV1Lehrer>();
+	public readonly lehrer: List<LernplattformV1Lehrer> = new ArrayList<LernplattformV1Lehrer>();
 
 	/**
 	 * Die Informationen zu den Fächern.
 	 */
-	public readonly faecher : List<LernplattformV1Fach> = new ArrayList<LernplattformV1Fach>();
+	public readonly faecher: List<LernplattformV1Fach> = new ArrayList<LernplattformV1Fach>();
 
 	/**
 	 * Die Informationen zu den Lerngruppen (Klassen und Kurse).
 	 */
-	public readonly lerngruppen : List<LernplattformV1Lerngruppe> = new ArrayList<LernplattformV1Lerngruppe>();
+	public readonly lerngruppen: List<LernplattformV1Lerngruppe> = new ArrayList<LernplattformV1Lerngruppe>();
 
 	/**
 	 * Die Informationen zu den Schülern.
 	 */
-	public readonly schueler : List<LernplattformV1Schueler> = new ArrayList<LernplattformV1Schueler>();
+	public readonly schueler: List<LernplattformV1Schueler> = new ArrayList<LernplattformV1Schueler>();
 
 
 	/**
@@ -119,13 +119,13 @@ export class LernplattformV1Export extends JavaObject {
 		return 'de.svws_nrw.core.data.lernplattform.v1.LernplattformV1Export';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.lernplattform.v1.LernplattformV1Export'].includes(name);
 	}
 
 	public static class = new Class<LernplattformV1Export>('de.svws_nrw.core.data.lernplattform.v1.LernplattformV1Export');
 
-	public static transpilerFromJSON(json : string): LernplattformV1Export {
+	public static transpilerFromJSON(json: string): LernplattformV1Export {
 		const obj = JSON.parse(json) as Partial<LernplattformV1Export>;
 		const result = new LernplattformV1Export();
 		if (obj.revision === undefined)
@@ -182,7 +182,7 @@ export class LernplattformV1Export extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : LernplattformV1Export) : string {
+	public static transpilerToJSON(obj: LernplattformV1Export): string {
 		let result = '{';
 		result += '"revision" : ' + obj.revision.toString() + ',';
 		result += '"idLernplattform" : ' + ((obj.idLernplattform === null) ? 'null' : obj.idLernplattform.toString()) + ',';
@@ -250,7 +250,7 @@ export class LernplattformV1Export extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<LernplattformV1Export>) : string {
+	public static transpilerToJSONPatch(obj: Partial<LernplattformV1Export>): string {
 		let result = '{';
 		if (obj.revision !== undefined) {
 			result += '"revision" : ' + obj.revision.toString() + ',';
@@ -358,6 +358,6 @@ export class LernplattformV1Export extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_lernplattform_v1_LernplattformV1Export(obj : unknown) : LernplattformV1Export {
+export function cast_de_svws_nrw_core_data_lernplattform_v1_LernplattformV1Export(obj: unknown): LernplattformV1Export {
 	return obj as LernplattformV1Export;
 }

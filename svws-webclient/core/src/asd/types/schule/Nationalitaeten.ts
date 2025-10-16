@@ -10,17 +10,17 @@ export class Nationalitaeten extends CoreTypeSimple<NationalitaetenKatalogEintra
 	/**
 	 * Eine Hashmap mit allen definierten Nationalitäten, zugeordnet zu dem dreistelligen ISO-Code
 	 */
-	private static readonly _mapISO3 : HashMap<string, Nationalitaeten> = new HashMap<string, Nationalitaeten>();
+	private static readonly _mapISO3: HashMap<string, Nationalitaeten> = new HashMap<string, Nationalitaeten>();
 
 	/**
 	 * Eine Hashmap mit allen definierten Nationalitäten, zugeordnet zu dem zweistelligen ISO-Code
 	 */
-	private static readonly _mapISO2 : HashMap<string, Nationalitaeten> = new HashMap<string, Nationalitaeten>();
+	private static readonly _mapISO2: HashMap<string, Nationalitaeten> = new HashMap<string, Nationalitaeten>();
 
 	/**
 	 * Eine Hashmap mit allen definierten Nationalitäten, zugeordnet zu DESTATIS-Code
 	 */
-	private static readonly _mapDESTATIS : HashMap<string, Nationalitaeten> = new HashMap<string, Nationalitaeten>();
+	private static readonly _mapDESTATIS: HashMap<string, Nationalitaeten> = new HashMap<string, Nationalitaeten>();
 
 
 	/**
@@ -35,7 +35,7 @@ export class Nationalitaeten extends CoreTypeSimple<NationalitaetenKatalogEintra
 	 *
 	 * @param manager   der Manager für die Daten des Core-Types
 	 */
-	public static init(manager : CoreTypeDataManager<NationalitaetenKatalogEintrag, Nationalitaeten>) : void {
+	public static init(manager: CoreTypeDataManager<NationalitaetenKatalogEintrag, Nationalitaeten>): void {
 		CoreTypeDataManager.putManager(Nationalitaeten.class, manager);
 		Nationalitaeten._mapISO3.clear();
 		Nationalitaeten._mapISO2.clear();
@@ -47,7 +47,7 @@ export class Nationalitaeten extends CoreTypeSimple<NationalitaetenKatalogEintra
 	 *
 	 * @return der Daten-Manager
 	 */
-	public static data() : CoreTypeDataManager<NationalitaetenKatalogEintrag, Nationalitaeten> {
+	public static data(): CoreTypeDataManager<NationalitaetenKatalogEintrag, Nationalitaeten> {
 		return CoreTypeDataManager.getManager(Nationalitaeten.class);
 	}
 
@@ -56,14 +56,14 @@ export class Nationalitaeten extends CoreTypeSimple<NationalitaetenKatalogEintra
 	 *
 	 * @return die Werte des Core-Types als Array
 	 */
-	public static values() : Array<Nationalitaeten> {
+	public static values(): Array<Nationalitaeten> {
 		return CoreTypeSimple.valuesByClass(Nationalitaeten.class);
 	}
 
 	/**
 	 * Erzeugt eine Instance dieser Klasse.
 	 */
-	public getInstance() : Nationalitaeten | null {
+	public getInstance(): Nationalitaeten | null {
 		return new Nationalitaeten();
 	}
 
@@ -73,7 +73,7 @@ export class Nationalitaeten extends CoreTypeSimple<NationalitaetenKatalogEintra
 	 *
 	 * @return die Map von den Kürzeln der Nationalitäten auf die zugehörigen Nationalitäten
 	 */
-	private static getMapISO3() : HashMap<string, Nationalitaeten> {
+	private static getMapISO3(): HashMap<string, Nationalitaeten> {
 		if (Nationalitaeten._mapISO3.isEmpty())
 			for (const s of Nationalitaeten.values())
 				for (const kat of s.historie())
@@ -88,7 +88,7 @@ export class Nationalitaeten extends CoreTypeSimple<NationalitaetenKatalogEintra
 	 *
 	 * @return die Map von den Kürzeln der Nationalitäten auf die zugehörigen Nationalitäten
 	 */
-	private static getMapISO2() : HashMap<string, Nationalitaeten> {
+	private static getMapISO2(): HashMap<string, Nationalitaeten> {
 		if (Nationalitaeten._mapISO2.isEmpty()) {
 			for (const s of Nationalitaeten.values())
 				for (const kat of s.historie())
@@ -104,7 +104,7 @@ export class Nationalitaeten extends CoreTypeSimple<NationalitaetenKatalogEintra
 	 *
 	 * @return die Map von den Kürzeln der Nationalitäten auf die zugehörigen Nationalitäten
 	 */
-	private static getMapDESTATIS() : HashMap<string, Nationalitaeten> {
+	private static getMapDESTATIS(): HashMap<string, Nationalitaeten> {
 		if (Nationalitaeten._mapDESTATIS.isEmpty()) {
 			for (const s of Nationalitaeten.values())
 				for (const kat of s.historie())
@@ -121,7 +121,7 @@ export class Nationalitaeten extends CoreTypeSimple<NationalitaetenKatalogEintra
 	 *
 	 * @return die Nationalität oder null, falls der Code unbekannt ist
 	 */
-	public static getByISO3(code : string | null) : Nationalitaeten | null {
+	public static getByISO3(code: string | null): Nationalitaeten | null {
 		return Nationalitaeten.getMapISO3().get(code);
 	}
 
@@ -132,7 +132,7 @@ export class Nationalitaeten extends CoreTypeSimple<NationalitaetenKatalogEintra
 	 *
 	 * @return die Nationalität oder null, falls der Code unbekannt ist
 	 */
-	public static getByISO2(code : string | null) : Nationalitaeten | null {
+	public static getByISO2(code: string | null): Nationalitaeten | null {
 		return Nationalitaeten.getMapISO2().get(code);
 	}
 
@@ -143,7 +143,7 @@ export class Nationalitaeten extends CoreTypeSimple<NationalitaetenKatalogEintra
 	 *
 	 * @return die Nationalität oder null, falls der Code unbekannt ist
 	 */
-	public static getByDESTATIS(code : string | null) : Nationalitaeten | null {
+	public static getByDESTATIS(code: string | null): Nationalitaeten | null {
 		return Nationalitaeten.getMapDESTATIS().get(code);
 	}
 
@@ -152,8 +152,8 @@ export class Nationalitaeten extends CoreTypeSimple<NationalitaetenKatalogEintra
 	 *
 	 * @return die Nationalität DEU
 	 */
-	public static getDEU() : Nationalitaeten {
-		const deu : Nationalitaeten | null = Nationalitaeten.getByISO3("DEU");
+	public static getDEU(): Nationalitaeten {
+		const deu: Nationalitaeten | null = Nationalitaeten.getByISO3("DEU");
 		if (deu === null)
 			throw new CoreTypeException("Core-Type nicht korrekt initialisiert. DEU kann nicht gefunden werden.")
 		return deu;
@@ -163,7 +163,7 @@ export class Nationalitaeten extends CoreTypeSimple<NationalitaetenKatalogEintra
 		return 'de.svws_nrw.asd.types.schule.Nationalitaeten';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.asd.types.schule.Nationalitaeten', 'de.svws_nrw.asd.types.CoreType', 'java.lang.Comparable', 'de.svws_nrw.asd.types.CoreTypeSimple'].includes(name);
 	}
 
@@ -171,6 +171,6 @@ export class Nationalitaeten extends CoreTypeSimple<NationalitaetenKatalogEintra
 
 }
 
-export function cast_de_svws_nrw_asd_types_schule_Nationalitaeten(obj : unknown) : Nationalitaeten {
+export function cast_de_svws_nrw_asd_types_schule_Nationalitaeten(obj: unknown): Nationalitaeten {
 	return obj as Nationalitaeten;
 }

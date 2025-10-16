@@ -19,7 +19,7 @@ export class ArrayMapEntrySet<K, V> extends JavaObject implements JavaSet<JavaMa
 	/**
 	 * Die {@link ArrayMap} zu der dieses Entry-Set gehört.
 	 */
-	private readonly _map : ArrayMap<K, V>;
+	private readonly _map: ArrayMap<K, V>;
 
 
 	/**
@@ -27,54 +27,54 @@ export class ArrayMapEntrySet<K, V> extends JavaObject implements JavaSet<JavaMa
 	 *
 	 * @param map   die {@link ArrayMap}, zu welcher dieses Entry-Set gehört
 	 */
-	constructor(map : ArrayMap<K, V>) {
+	constructor(map: ArrayMap<K, V>) {
 		super();
 		this._map = map;
 	}
 
-	public size() : number {
+	public size(): number {
 		return this._map.size();
 	}
 
-	public isEmpty() : boolean {
+	public isEmpty(): boolean {
 		return this._map.isEmpty();
 	}
 
-	private toEntry(obj : unknown | null) : JavaMapEntry<K, V> | null {
+	private toEntry(obj: unknown | null): JavaMapEntry<K, V> | null {
 		if (obj === null)
 			return null;
 		if (!(((obj instanceof JavaObject) && (obj.isTranspiledInstanceOf('java.util.Map.Entry')))))
 			return null;
-		const entry : JavaMapEntry<K, V> = cast_java_util_Map_Entry(obj);
+		const entry: JavaMapEntry<K, V> = cast_java_util_Map_Entry(obj);
 		return entry;
 	}
 
-	private containsEntry(entry : JavaMapEntry<K, V> | null) : boolean {
+	private containsEntry(entry: JavaMapEntry<K, V> | null): boolean {
 		if (entry === null)
 			return false;
 		if (!this._map.containsKey(entry.getKey()))
 			return false;
-		const value : V | null = this._map.get(entry.getKey());
+		const value: V | null = this._map.get(entry.getKey());
 		if (value === null)
 			return false;
 		return JavaObject.equalsTranspiler(value, (entry.getValue()));
 	}
 
-	public contains(obj : unknown | null) : boolean {
-		const entry : JavaMapEntry<K, V> | null = this.toEntry(obj);
+	public contains(obj: unknown | null): boolean {
+		const entry: JavaMapEntry<K, V> | null = this.toEntry(obj);
 		if (entry === null)
 			return false;
 		return this.containsEntry(entry);
 	}
 
-	public iterator() : JavaIterator<JavaMapEntry<K, V>> {
+	public iterator(): JavaIterator<JavaMapEntry<K, V>> {
 		return new ArrayMapEntrySetIterator<K, V>(this._map);
 	}
 
-	private getEntryList() : List<ArrayMapEntry<K, V>> {
-		const list : ArrayList<ArrayMapEntry<K, V>> = new ArrayList<ArrayMapEntry<K, V>>(this._map.size());
-		for (let i : number = 0; i < this._map.getNumberOfKeys(); i++) {
-			const value : ArrayMapEntry<K, V> | null = this._map.getEntryByIndex(i);
+	private getEntryList(): List<ArrayMapEntry<K, V>> {
+		const list: ArrayList<ArrayMapEntry<K, V>> = new ArrayList<ArrayMapEntry<K, V>>(this._map.size());
+		for (let i: number = 0; i < this._map.getNumberOfKeys(); i++) {
+			const value: ArrayMapEntry<K, V> | null = this._map.getEntryByIndex(i);
 			if (value !== null)
 				list.add(value);
 		}
@@ -83,29 +83,29 @@ export class ArrayMapEntrySet<K, V> extends JavaObject implements JavaSet<JavaMa
 
 	public toArray() : Array<unknown>;
 
-	public toArray<T>(a : Array<T>) : Array<T>;
+	public toArray<T>(a: Array<T>) : Array<T>;
 
 	/**
 	 * Implementation for method overloads of 'toArray'
 	 */
-	public toArray<T>(__param0? : Array<T>) : Array<T> | Array<unknown> {
+	public toArray<T>(__param0?: Array<T>): Array<T> | Array<unknown> {
 		if ((__param0 === undefined)) {
 			return this.getEntryList().toArray();
 		} else if (((__param0 !== undefined) && Array.isArray(__param0))) {
-			const a : Array<T> = __param0 as unknown as Array<T>;
+			const a: Array<T> = __param0 as unknown as Array<T>;
 			return this.getEntryList().toArray(a);
 		} else throw new Error('invalid method overload');
 	}
 
-	public add(e : JavaMapEntry<K, V> | null) : boolean {
+	public add(e: JavaMapEntry<K, V> | null): boolean {
 		if (e === null)
 			return false;
 		this._map.put(e.getKey(), e.getValue());
 		return true;
 	}
 
-	public remove(obj : unknown | null) : boolean {
-		const entry : JavaMapEntry<K, V> | null = this.toEntry(obj);
+	public remove(obj: unknown | null): boolean {
+		const entry: JavaMapEntry<K, V> | null = this.toEntry(obj);
 		if (entry === null)
 			return false;
 		if (!this.containsEntry(entry))
@@ -114,7 +114,7 @@ export class ArrayMapEntrySet<K, V> extends JavaObject implements JavaSet<JavaMa
 		return true;
 	}
 
-	public containsAll(collection : Collection<any> | null) : boolean {
+	public containsAll(collection: Collection<any> | null): boolean {
 		if ((collection === null) || (this as unknown === collection as unknown))
 			return true;
 		for (const obj of collection)
@@ -123,7 +123,7 @@ export class ArrayMapEntrySet<K, V> extends JavaObject implements JavaSet<JavaMa
 		return true;
 	}
 
-	public addAll(collection : Collection<JavaMapEntry<K, V>> | null) : boolean {
+	public addAll(collection: Collection<JavaMapEntry<K, V>> | null): boolean {
 		if (collection === null)
 			throw new NullPointerException()
 		if (this as unknown === collection as unknown)
@@ -134,12 +134,12 @@ export class ArrayMapEntrySet<K, V> extends JavaObject implements JavaSet<JavaMa
 		return true;
 	}
 
-	public retainAll(collection : Collection<any> | null) : boolean {
+	public retainAll(collection: Collection<any> | null): boolean {
 		if (collection === null)
 			throw new NullPointerException()
-		let changed : boolean = false;
-		for (let i : number = 0; i < this._map.getNumberOfKeys(); i++) {
-			const entry : ArrayMapEntry<K, V> | null = this._map.getEntryByIndex(i);
+		let changed: boolean = false;
+		for (let i: number = 0; i < this._map.getNumberOfKeys(); i++) {
+			const entry: ArrayMapEntry<K, V> | null = this._map.getEntryByIndex(i);
 			if (entry === null)
 				continue;
 			if (!collection.contains(entry)) {
@@ -150,10 +150,10 @@ export class ArrayMapEntrySet<K, V> extends JavaObject implements JavaSet<JavaMa
 		return changed;
 	}
 
-	public removeAll(collection : Collection<any> | null) : boolean {
+	public removeAll(collection: Collection<any> | null): boolean {
 		if (collection === null)
 			throw new NullPointerException()
-		let changed : boolean = false;
+		let changed: boolean = false;
 		for (const obj of collection) {
 			if (this.contains(obj)) {
 				this.remove(obj);
@@ -163,7 +163,7 @@ export class ArrayMapEntrySet<K, V> extends JavaObject implements JavaSet<JavaMa
 		return changed;
 	}
 
-	public clear() : void {
+	public clear(): void {
 		this._map.clear();
 	}
 
@@ -171,16 +171,16 @@ export class ArrayMapEntrySet<K, V> extends JavaObject implements JavaSet<JavaMa
 		return 'de.svws_nrw.core.adt.map.ArrayMapEntrySet';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.adt.map.ArrayMapEntrySet', 'java.util.Collection', 'java.util.Set', 'java.lang.Iterable'].includes(name);
 	}
 
 	public static class = new Class<ArrayMapEntrySet<any, any>>('de.svws_nrw.core.adt.map.ArrayMapEntrySet');
 
 	public [Symbol.iterator](): Iterator<JavaMapEntry<any, any>> {
-		const iter : JavaIterator<JavaMapEntry<any, any>> = this.iterator();
-		const result : Iterator<JavaMapEntry<any, any>> = {
-			next() : IteratorResult<JavaMapEntry<any, any>> {
+		const iter: JavaIterator<JavaMapEntry<any, any>> = this.iterator();
+		const result: Iterator<JavaMapEntry<any, any>> = {
+			next(): IteratorResult<JavaMapEntry<any, any>> {
 				if (iter.hasNext())
 					return { value : iter.next(), done : false };
 				return { value : null, done : true };
@@ -191,6 +191,6 @@ export class ArrayMapEntrySet<K, V> extends JavaObject implements JavaSet<JavaMa
 
 }
 
-export function cast_de_svws_nrw_core_adt_map_ArrayMapEntrySet<K, V>(obj : unknown) : ArrayMapEntrySet<K, V> {
+export function cast_de_svws_nrw_core_adt_map_ArrayMapEntrySet<K, V>(obj: unknown): ArrayMapEntrySet<K, V> {
 	return obj as ArrayMapEntrySet<K, V>;
 }

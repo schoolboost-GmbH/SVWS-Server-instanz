@@ -13,67 +13,67 @@ import { GostBlockungKurs } from '../../../core/data/gost/GostBlockungKurs';
 export class GostKursart extends JavaEnum<GostKursart> {
 
 	/** an array containing all values of this enumeration */
-	static readonly all_values_by_ordinal : Array<GostKursart> = [];
+	static readonly all_values_by_ordinal: Array<GostKursart> = [];
 
 	/** an array containing all values of this enumeration indexed by their name*/
-	static readonly all_values_by_name : Map<string, GostKursart> = new Map<string, GostKursart>();
+	static readonly all_values_by_name: Map<string, GostKursart> = new Map<string, GostKursart>();
 
 	/**
 	 * Leistungskurs = LK
 	 */
-	public static readonly LK : GostKursart = new GostKursart("LK", 0, 1, "LK", "Leistungskurs", Arrays.asList(ZulaessigeKursart.LK1, ZulaessigeKursart.LK2));
+	public static readonly LK: GostKursart = new GostKursart("LK", 0, 1, "LK", "Leistungskurs", Arrays.asList(ZulaessigeKursart.LK1, ZulaessigeKursart.LK2));
 
 	/**
 	 * Grundkurs = GK
 	 */
-	public static readonly GK : GostKursart = new GostKursart("GK", 1, 2, "GK", "Grundkurs", Arrays.asList(ZulaessigeKursart.GKM, ZulaessigeKursart.GKS, ZulaessigeKursart.AB3, ZulaessigeKursart.AB4, ZulaessigeKursart.EFSP));
+	public static readonly GK: GostKursart = new GostKursart("GK", 1, 2, "GK", "Grundkurs", Arrays.asList(ZulaessigeKursart.GKM, ZulaessigeKursart.GKS, ZulaessigeKursart.AB3, ZulaessigeKursart.AB4, ZulaessigeKursart.EFSP));
 
 	/**
 	 * Zusatzkurs = ZK
 	 */
-	public static readonly ZK : GostKursart = new GostKursart("ZK", 2, 3, "ZK", "Zusatzkurs", Arrays.asList(ZulaessigeKursart.ZK));
+	public static readonly ZK: GostKursart = new GostKursart("ZK", 2, 3, "ZK", "Zusatzkurs", Arrays.asList(ZulaessigeKursart.ZK));
 
 	/**
 	 * Projektkurs = PJK
 	 */
-	public static readonly PJK : GostKursart = new GostKursart("PJK", 3, 4, "PJK", "Projektkurs", Arrays.asList(ZulaessigeKursart.PJK));
+	public static readonly PJK: GostKursart = new GostKursart("PJK", 3, 4, "PJK", "Projektkurs", Arrays.asList(ZulaessigeKursart.PJK));
 
 	/**
 	 * Vertiefungskurs = VTF
 	 */
-	public static readonly VTF : GostKursart = new GostKursart("VTF", 4, 5, "VTF", "Vertiefungskurs", Arrays.asList(ZulaessigeKursart.VTF));
+	public static readonly VTF: GostKursart = new GostKursart("VTF", 4, 5, "VTF", "Vertiefungskurs", Arrays.asList(ZulaessigeKursart.VTF));
 
-	private static readonly FACHART_ID_FAKTOR : number = 1000;
+	private static readonly FACHART_ID_FAKTOR: number = 1000;
 
 	/**
 	 * Die Zuordnung der Kursarten zu dem Kürzel der Kursart
 	 */
-	private static readonly _mapKuerzel : HashMap<string, GostKursart> = new HashMap<string, GostKursart>();
+	private static readonly _mapKuerzel: HashMap<string, GostKursart> = new HashMap<string, GostKursart>();
 
 	/**
 	 * Die Zuordnung der Kursarten zu der jeweiligen zulässigen Kursart
 	 */
-	private static readonly _mapZulKursart : JavaMap<ZulaessigeKursart, GostKursart> = new ArrayMap<ZulaessigeKursart, GostKursart>(ZulaessigeKursart.values());
+	private static readonly _mapZulKursart: JavaMap<ZulaessigeKursart, GostKursart> = new ArrayMap<ZulaessigeKursart, GostKursart>(ZulaessigeKursart.values());
 
 	/**
 	 * Die eindeutige ID der Kursart der Gymnasialen Oberstufe
 	 */
-	public readonly id : number;
+	public readonly id: number;
 
 	/**
 	 * Das Kürzel der Kursart der Gymnasialen Oberstufe
 	 */
-	public readonly kuerzel : string;
+	public readonly kuerzel: string;
 
 	/**
 	 * Die textuelle Beschreibung der allgemeinen Kursart der Gymnasialen Oberstufe
 	 */
-	public readonly beschreibung : string;
+	public readonly beschreibung: string;
 
 	/**
 	 * Die Liste der Kursarten, welche zu dieser Gost-Kursart gehören
 	 */
-	private readonly kursarten : List<ZulaessigeKursart>;
+	private readonly kursarten: List<ZulaessigeKursart>;
 
 	/**
 	 * Erzeugt eine neue Kursart für die Aufzählung.
@@ -83,7 +83,7 @@ export class GostKursart extends JavaEnum<GostKursart> {
 	 * @param beschreibung   die textuelle Beschreibung der allgemeinen Kursart der Gymnasialen Oberstufe
 	 * @param kursarten      die zulässigen Kursarten, die dieser Kursart der gymnasialen Oberstufe zugeordnet sind
 	 */
-	private constructor(name : string, ordinal : number, id : number, kuerzel : string, beschreibung : string, kursarten : List<ZulaessigeKursart>) {
+	private constructor(name: string, ordinal: number, id: number, kuerzel: string, beschreibung: string, kursarten: List<ZulaessigeKursart>) {
 		super(name, ordinal);
 		GostKursart.all_values_by_ordinal.push(this);
 		GostKursart.all_values_by_name.set(name, this);
@@ -100,7 +100,7 @@ export class GostKursart extends JavaEnum<GostKursart> {
 	 *
 	 * @return         Anzahl der Wochenstunden der Kursart korrekt, true oder false
 	 */
-	public pruefeWochenstunden(anzahl : number) : boolean {
+	public pruefeWochenstunden(anzahl: number): boolean {
 		switch (this.kuerzel) {
 			case "GK": {
 				return (anzahl === 3) || (anzahl === 4);
@@ -130,7 +130,7 @@ export class GostKursart extends JavaEnum<GostKursart> {
 	 *
 	 * @return die Anzahl der Wochenstunden
 	 */
-	public getWochenstunden(istFSNeu : boolean) : number {
+	public getWochenstunden(istFSNeu: boolean): number {
 		switch (this.kuerzel) {
 			case "GK": {
 				return istFSNeu ? 4 : 3;
@@ -159,7 +159,7 @@ export class GostKursart extends JavaEnum<GostKursart> {
 	 *
 	 * @return die Map von den Kürzeln auf die Gost-Kursarten
 	 */
-	private static getMapByKuerzel() : HashMap<string, GostKursart> {
+	private static getMapByKuerzel(): HashMap<string, GostKursart> {
 		if (GostKursart._mapKuerzel.size() === 0)
 			for (const k of GostKursart.values())
 				GostKursart._mapKuerzel.put(k.kuerzel, k);
@@ -172,7 +172,7 @@ export class GostKursart extends JavaEnum<GostKursart> {
 	 *
 	 * @return die Map von den zulässigen Kursarten auf die Gost-Kursarten
 	 */
-	private static getMapByZulKursart() : JavaMap<ZulaessigeKursart, GostKursart> {
+	private static getMapByZulKursart(): JavaMap<ZulaessigeKursart, GostKursart> {
 		if (GostKursart._mapZulKursart.size() === 0)
 			for (const k of GostKursart.values())
 				for (const zulKursart of k.kursarten)
@@ -185,7 +185,7 @@ export class GostKursart extends JavaEnum<GostKursart> {
 	 *
 	 * @return die Liste der zulässigen Kursarten
 	 */
-	public getKursarten() : List<ZulaessigeKursart> {
+	public getKursarten(): List<ZulaessigeKursart> {
 		return this.kursarten;
 	}
 
@@ -198,7 +198,7 @@ export class GostKursart extends JavaEnum<GostKursart> {
 	 *
 	 * @throws DeveloperNotificationException falls die ID ungültig ist
 	 */
-	public static fromID(id : number) : GostKursart {
+	public static fromID(id: number): GostKursart {
 		switch (id) {
 			case 1: {
 				return GostKursart.LK;
@@ -228,7 +228,7 @@ export class GostKursart extends JavaEnum<GostKursart> {
 	 * @return die Kursart anhand der Kursart-ID der Fachwahl.
 	 * @throws DeveloperNotificationException falls die ID ungültig ist
 	 */
-	public static fromFachwahlOrException(pFachwahl : GostFachwahl) : GostKursart {
+	public static fromFachwahlOrException(pFachwahl: GostFachwahl): GostKursart {
 		return GostKursart.fromID(pFachwahl.kursartID);
 	}
 
@@ -239,7 +239,7 @@ export class GostKursart extends JavaEnum<GostKursart> {
 	 *
 	 * @return die Kursart oder null falls die ID ungültig ist
 	 */
-	public static fromIDorNull(id : number) : GostKursart | null {
+	public static fromIDorNull(id: number): GostKursart | null {
 		switch (id) {
 			case 1: {
 				return GostKursart.LK;
@@ -269,7 +269,7 @@ export class GostKursart extends JavaEnum<GostKursart> {
 	 *
 	 * @return die Kursart oder null, falls das Kürzel ungültig ist
 	 */
-	public static fromKuerzel(kuerzel : string | null) : GostKursart | null {
+	public static fromKuerzel(kuerzel: string | null): GostKursart | null {
 		return GostKursart.getMapByKuerzel().get(kuerzel);
 	}
 
@@ -280,8 +280,8 @@ export class GostKursart extends JavaEnum<GostKursart> {
 	 *
 	 * @return die Kursart oder null, falls das Kürzel ungültig ist
 	 */
-	public static fromKuerzelOrException(kuerzel : string | null) : GostKursart {
-		const gk : GostKursart | null = GostKursart.getMapByKuerzel().get(kuerzel);
+	public static fromKuerzelOrException(kuerzel: string | null): GostKursart {
+		const gk: GostKursart | null = GostKursart.getMapByKuerzel().get(kuerzel);
 		if (gk === null)
 			throw new DeveloperNotificationException("Invalid value for kurzel: " + kuerzel)
 		return gk;
@@ -294,7 +294,7 @@ export class GostKursart extends JavaEnum<GostKursart> {
 	 *
 	 * @return die Gost-Kursart
 	 */
-	public static fromKursart(kursart : ZulaessigeKursart | null) : GostKursart | null {
+	public static fromKursart(kursart: ZulaessigeKursart | null): GostKursart | null {
 		return GostKursart.getMapByZulKursart().get(kursart);
 	}
 
@@ -306,7 +306,7 @@ export class GostKursart extends JavaEnum<GostKursart> {
 	 *
 	 * @return pFachID * {@link #FACHART_ID_FAKTOR} + pKursartID
 	 */
-	public static getFachartID(pFachID : number, pKursartID : number) : number {
+	public static getFachartID(pFachID: number, pKursartID: number): number {
 		return (pFachID * GostKursart.FACHART_ID_FAKTOR) + pKursartID;
 	}
 
@@ -316,7 +316,7 @@ export class GostKursart extends JavaEnum<GostKursart> {
 	 *
 	 * @return pFachwahl.fachID * {@link #FACHART_ID_FAKTOR} + pFachwahl.kursartID
 	 */
-	public static getFachartIDByFachwahl(pFachwahl : GostFachwahl) : number {
+	public static getFachartIDByFachwahl(pFachwahl: GostFachwahl): number {
 		return GostKursart.getFachartID(pFachwahl.fachID, pFachwahl.kursartID);
 	}
 
@@ -327,7 +327,7 @@ export class GostKursart extends JavaEnum<GostKursart> {
 	 *
 	 * @return pKurs.fachID * {@link #FACHART_ID_FAKTOR} + pKurs.kursartID
 	 */
-	public static getFachartIDByKurs(pKurs : GostBlockungKurs) : number {
+	public static getFachartIDByKurs(pKurs: GostBlockungKurs): number {
 		return GostKursart.getFachartID(pKurs.fach_id, pKurs.kursart);
 	}
 
@@ -338,7 +338,7 @@ export class GostKursart extends JavaEnum<GostKursart> {
 	 *
 	 * @return Ganzzahlige Division von pFachartID durch {@link #FACHART_ID_FAKTOR}
 	 */
-	public static getFachID(pFachartID : number) : number {
+	public static getFachID(pFachartID: number): number {
 		return Math.trunc(pFachartID / GostKursart.FACHART_ID_FAKTOR);
 	}
 
@@ -349,11 +349,11 @@ export class GostKursart extends JavaEnum<GostKursart> {
 	 *
 	 * @return Rest der ganzzahligen Division von pFachartID durch {@link #FACHART_ID_FAKTOR}
 	 */
-	public static getKursartID(pFachartID : number) : number {
+	public static getKursartID(pFachartID: number): number {
 		return (pFachartID % GostKursart.FACHART_ID_FAKTOR) as number;
 	}
 
-	public toString() : string {
+	public toString(): string {
 		return this.kuerzel;
 	}
 
@@ -362,7 +362,7 @@ export class GostKursart extends JavaEnum<GostKursart> {
 	 *
 	 * @returns the array with enumeration values
 	 */
-	public static values() : Array<GostKursart> {
+	public static values(): Array<GostKursart> {
 		return [...this.all_values_by_ordinal];
 	}
 
@@ -373,7 +373,7 @@ export class GostKursart extends JavaEnum<GostKursart> {
 	 *
 	 * @returns the enumeration values or null
 	 */
-	public static valueOf(name : string) : GostKursart | null {
+	public static valueOf(name: string): GostKursart | null {
 		const tmp = this.all_values_by_name.get(name);
 		return (!tmp) ? null : tmp;
 	}
@@ -382,7 +382,7 @@ export class GostKursart extends JavaEnum<GostKursart> {
 		return 'de.svws_nrw.core.types.gost.GostKursart';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.types.gost.GostKursart', 'java.lang.Enum', 'java.lang.Comparable'].includes(name);
 	}
 
@@ -390,6 +390,6 @@ export class GostKursart extends JavaEnum<GostKursart> {
 
 }
 
-export function cast_de_svws_nrw_core_types_gost_GostKursart(obj : unknown) : GostKursart {
+export function cast_de_svws_nrw_core_types_gost_GostKursart(obj: unknown): GostKursart {
 	return obj as GostKursart;
 }

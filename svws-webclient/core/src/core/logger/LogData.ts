@@ -7,15 +7,15 @@ import { System } from '../../java/lang/System';
 
 export class LogData extends JavaObject implements Comparable<LogData> {
 
-	private readonly time : number;
+	private readonly time: number;
 
-	private readonly level : LogLevel;
+	private readonly level: LogLevel;
 
-	private readonly text : string;
+	private readonly text: string;
 
-	private readonly newLine : boolean;
+	private readonly newLine: boolean;
 
-	private indent : number = 0;
+	private indent: number = 0;
 
 
 	/**
@@ -26,7 +26,7 @@ export class LogData extends JavaObject implements Comparable<LogData> {
 	 * @param newLine   gibt an, ob die Log-Informationen beim Ausgeben mit einer neuen Zeile beendet werden sollen oder nicht
 	 * @param text      der Text der Log-Information
 	 */
-	public constructor(level : LogLevel, indent : number, newLine : boolean, text : string) {
+	public constructor(level: LogLevel, indent: number, newLine: boolean, text: string) {
 		super();
 		this.time = System.currentTimeMillis();
 		this.level = level;
@@ -44,7 +44,7 @@ export class LogData extends JavaObject implements Comparable<LogData> {
 	 *         sie zur gleichen Zeit geloggt wurden oder ein positiver Wert, falls diese
 	 *         Log-Information später geloggt wurde
 	 */
-	public compareTo(other : LogData) : number {
+	public compareTo(other: LogData): number {
 		if (this.time < other.time)
 			return -1;
 		if (this.time > other.time)
@@ -57,7 +57,7 @@ export class LogData extends JavaObject implements Comparable<LogData> {
 	 *
 	 * @return die Log-Informationen als JSON-String
 	 */
-	public toString() : string {
+	public toString(): string {
 		return "{ \"time\":" + this.time + ", \"level\":" + this.level.toInteger() + ", \"text\":\"" + this.getText() + "\"}";
 	}
 
@@ -66,7 +66,7 @@ export class LogData extends JavaObject implements Comparable<LogData> {
 	 *
 	 * @param indent   der Wert, um den die Einrückung erhöht wird.
 	 */
-	public addIndent(indent : number) : void {
+	public addIndent(indent: number): void {
 		this.indent += indent;
 	}
 
@@ -75,7 +75,7 @@ export class LogData extends JavaObject implements Comparable<LogData> {
 	 *
 	 * @return die Anzahl der Leerzeichen
 	 */
-	public getIndent() : number {
+	public getIndent(): number {
 		return this.indent;
 	}
 
@@ -84,7 +84,7 @@ export class LogData extends JavaObject implements Comparable<LogData> {
 	 *
 	 * @return der Zeitstempel der Log-Information
 	 */
-	public getTime() : number {
+	public getTime(): number {
 		return this.time;
 	}
 
@@ -93,7 +93,7 @@ export class LogData extends JavaObject implements Comparable<LogData> {
 	 *
 	 * @return das Log-Level der Log-Information
 	 */
-	public getLevel() : LogLevel {
+	public getLevel(): LogLevel {
 		return this.level;
 	}
 
@@ -102,7 +102,7 @@ export class LogData extends JavaObject implements Comparable<LogData> {
 	 *
 	 * @return true, falls die Ausgabe mit einer neuen Zeile beendet werden soll, ansonsten false
 	 */
-	public isNewLine() : boolean {
+	public isNewLine(): boolean {
 		return this.newLine;
 	}
 
@@ -112,19 +112,19 @@ export class LogData extends JavaObject implements Comparable<LogData> {
 	 *
 	 * @return der Text dieser Log-Information
 	 */
-	public getText() : string {
+	public getText(): string {
 		if (this.indent <= 0)
 			return this.text;
-		const indentChars : Array<string> | null = Array(this.indent).fill("");
+		const indentChars: Array<string> | null = Array(this.indent).fill("");
 		Arrays.fill(indentChars, ' ');
 		return indentChars.join("") + this.text;
 	}
 
-	public hashCode() : number {
+	public hashCode(): number {
 		return super.hashCode();
 	}
 
-	public equals(obj : unknown | null) : boolean {
+	public equals(obj: unknown | null): boolean {
 		if (obj === null)
 			return false;
 		if (((obj instanceof JavaObject) && (obj.isTranspiledInstanceOf('de.svws_nrw.core.logger.LogData'))))
@@ -136,7 +136,7 @@ export class LogData extends JavaObject implements Comparable<LogData> {
 		return 'de.svws_nrw.core.logger.LogData';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['java.lang.Comparable', 'de.svws_nrw.core.logger.LogData'].includes(name);
 	}
 
@@ -144,6 +144,6 @@ export class LogData extends JavaObject implements Comparable<LogData> {
 
 }
 
-export function cast_de_svws_nrw_core_logger_LogData(obj : unknown) : LogData {
+export function cast_de_svws_nrw_core_logger_LogData(obj: unknown): LogData {
 	return obj as LogData;
 }

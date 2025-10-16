@@ -15,13 +15,13 @@ export class LehrerRechtsverhaeltnisKatalogEintrag extends CoreTypeData {
 		return 'de.svws_nrw.asd.data.lehrer.LehrerRechtsverhaeltnisKatalogEintrag';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.asd.data.lehrer.LehrerRechtsverhaeltnisKatalogEintrag', 'de.svws_nrw.asd.data.CoreTypeData'].includes(name);
 	}
 
 	public static class = new Class<LehrerRechtsverhaeltnisKatalogEintrag>('de.svws_nrw.asd.data.lehrer.LehrerRechtsverhaeltnisKatalogEintrag');
 
-	public static transpilerFromJSON(json : string): LehrerRechtsverhaeltnisKatalogEintrag {
+	public static transpilerFromJSON(json: string): LehrerRechtsverhaeltnisKatalogEintrag {
 		const obj = JSON.parse(json) as Partial<LehrerRechtsverhaeltnisKatalogEintrag>;
 		const result = new LehrerRechtsverhaeltnisKatalogEintrag();
 		if (obj.id === undefined)
@@ -41,7 +41,7 @@ export class LehrerRechtsverhaeltnisKatalogEintrag extends CoreTypeData {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : LehrerRechtsverhaeltnisKatalogEintrag) : string {
+	public static transpilerToJSON(obj: LehrerRechtsverhaeltnisKatalogEintrag): string {
 		let result = '{';
 		result += '"id" : ' + obj.id.toString() + ',';
 		result += '"schluessel" : ' + JSON.stringify(obj.schluessel) + ',';
@@ -54,7 +54,7 @@ export class LehrerRechtsverhaeltnisKatalogEintrag extends CoreTypeData {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<LehrerRechtsverhaeltnisKatalogEintrag>) : string {
+	public static transpilerToJSONPatch(obj: Partial<LehrerRechtsverhaeltnisKatalogEintrag>): string {
 		let result = '{';
 		if (obj.id !== undefined) {
 			result += '"id" : ' + obj.id.toString() + ',';
@@ -81,6 +81,6 @@ export class LehrerRechtsverhaeltnisKatalogEintrag extends CoreTypeData {
 
 }
 
-export function cast_de_svws_nrw_asd_data_lehrer_LehrerRechtsverhaeltnisKatalogEintrag(obj : unknown) : LehrerRechtsverhaeltnisKatalogEintrag {
+export function cast_de_svws_nrw_asd_data_lehrer_LehrerRechtsverhaeltnisKatalogEintrag(obj: unknown): LehrerRechtsverhaeltnisKatalogEintrag {
 	return obj as LehrerRechtsverhaeltnisKatalogEintrag;
 }

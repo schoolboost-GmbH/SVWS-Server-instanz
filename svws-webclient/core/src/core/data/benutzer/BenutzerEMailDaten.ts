@@ -6,32 +6,32 @@ export class BenutzerEMailDaten extends JavaObject {
 	/**
 	 * Die ID des Benutzers.
 	 */
-	public id : number = -1;
+	public id: number = -1;
 
 	/**
 	 * Der Name des Benutzers für das Versenden von E-Mails.
 	 */
-	public name : string = "";
+	public name: string = "";
 
 	/**
 	 * Die Mail-Adresse des Benutzers.
 	 */
-	public address : string = "";
+	public address: string = "";
 
 	/**
 	 * Der Anmeldename für den SMTP-Server.
 	 */
-	public usernameSMTP : string = "";
+	public usernameSMTP: string = "";
 
 	/**
 	 * Das AES-verschlüsselte SMTP-Kennwort des Benutzers.
 	 */
-	public passwordSMTP : string = "";
+	public passwordSMTP: string = "";
 
 	/**
 	 * Die zu verwendende Signatur beim Versenden von E-Mails.
 	 */
-	public signatur : string = "";
+	public signatur: string = "";
 
 
 	/**
@@ -45,13 +45,13 @@ export class BenutzerEMailDaten extends JavaObject {
 		return 'de.svws_nrw.core.data.benutzer.BenutzerEMailDaten';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.benutzer.BenutzerEMailDaten'].includes(name);
 	}
 
 	public static class = new Class<BenutzerEMailDaten>('de.svws_nrw.core.data.benutzer.BenutzerEMailDaten');
 
-	public static transpilerFromJSON(json : string): BenutzerEMailDaten {
+	public static transpilerFromJSON(json: string): BenutzerEMailDaten {
 		const obj = JSON.parse(json) as Partial<BenutzerEMailDaten>;
 		const result = new BenutzerEMailDaten();
 		if (obj.id === undefined)
@@ -75,7 +75,7 @@ export class BenutzerEMailDaten extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : BenutzerEMailDaten) : string {
+	public static transpilerToJSON(obj: BenutzerEMailDaten): string {
 		let result = '{';
 		result += '"id" : ' + obj.id.toString() + ',';
 		result += '"name" : ' + JSON.stringify(obj.name) + ',';
@@ -88,7 +88,7 @@ export class BenutzerEMailDaten extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<BenutzerEMailDaten>) : string {
+	public static transpilerToJSONPatch(obj: Partial<BenutzerEMailDaten>): string {
 		let result = '{';
 		if (obj.id !== undefined) {
 			result += '"id" : ' + obj.id.toString() + ',';
@@ -115,6 +115,6 @@ export class BenutzerEMailDaten extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_benutzer_BenutzerEMailDaten(obj : unknown) : BenutzerEMailDaten {
+export function cast_de_svws_nrw_core_data_benutzer_BenutzerEMailDaten(obj: unknown): BenutzerEMailDaten {
 	return obj as BenutzerEMailDaten;
 }

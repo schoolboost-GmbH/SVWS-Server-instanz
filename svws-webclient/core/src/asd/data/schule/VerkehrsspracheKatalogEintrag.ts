@@ -6,7 +6,7 @@ export class VerkehrsspracheKatalogEintrag extends CoreTypeData {
 	/**
 	 * Der dreistellige ISO 639-2 code
 	 */
-	public iso3 : string = "";
+	public iso3: string = "";
 
 
 	/**
@@ -20,13 +20,13 @@ export class VerkehrsspracheKatalogEintrag extends CoreTypeData {
 		return 'de.svws_nrw.asd.data.schule.VerkehrsspracheKatalogEintrag';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.asd.data.CoreTypeData', 'de.svws_nrw.asd.data.schule.VerkehrsspracheKatalogEintrag'].includes(name);
 	}
 
 	public static class = new Class<VerkehrsspracheKatalogEintrag>('de.svws_nrw.asd.data.schule.VerkehrsspracheKatalogEintrag');
 
-	public static transpilerFromJSON(json : string): VerkehrsspracheKatalogEintrag {
+	public static transpilerFromJSON(json: string): VerkehrsspracheKatalogEintrag {
 		const obj = JSON.parse(json) as Partial<VerkehrsspracheKatalogEintrag>;
 		const result = new VerkehrsspracheKatalogEintrag();
 		if (obj.id === undefined)
@@ -49,7 +49,7 @@ export class VerkehrsspracheKatalogEintrag extends CoreTypeData {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : VerkehrsspracheKatalogEintrag) : string {
+	public static transpilerToJSON(obj: VerkehrsspracheKatalogEintrag): string {
 		let result = '{';
 		result += '"id" : ' + obj.id.toString() + ',';
 		result += '"schluessel" : ' + JSON.stringify(obj.schluessel) + ',';
@@ -63,7 +63,7 @@ export class VerkehrsspracheKatalogEintrag extends CoreTypeData {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<VerkehrsspracheKatalogEintrag>) : string {
+	public static transpilerToJSONPatch(obj: Partial<VerkehrsspracheKatalogEintrag>): string {
 		let result = '{';
 		if (obj.id !== undefined) {
 			result += '"id" : ' + obj.id.toString() + ',';
@@ -93,6 +93,6 @@ export class VerkehrsspracheKatalogEintrag extends CoreTypeData {
 
 }
 
-export function cast_de_svws_nrw_asd_data_schule_VerkehrsspracheKatalogEintrag(obj : unknown) : VerkehrsspracheKatalogEintrag {
+export function cast_de_svws_nrw_asd_data_schule_VerkehrsspracheKatalogEintrag(obj: unknown): VerkehrsspracheKatalogEintrag {
 	return obj as VerkehrsspracheKatalogEintrag;
 }

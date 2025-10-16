@@ -6,72 +6,72 @@ export class SchildReportingSchuelerSprachpruefungen extends JavaObject {
 	/**
 	 * Die ID des Schülers, zu dem die Laufbahnplanungsdaten gehören.
 	 */
-	public schuelerID : number = 0;
+	public schuelerID: number = 0;
 
 	/**
 	 * Das Sprachkürzel des geprüften Faches
 	 */
-	public sprache : string = "";
+	public sprache: string = "";
 
 	/**
 	 * Gibt an, in welchem ASD-Jahrgang die Prüfung abgelegt wurde
 	 */
-	public jahrgang : string = "";
+	public jahrgang: string = "";
 
 	/**
 	 * Bezeichnung des am Schulabschluss orientierte Anspruchsniveau der Sprachprüfung
 	 */
-	public anspruchsniveau : string = "";
+	public anspruchsniveau: string = "";
 
 	/**
 	 * Sprache, die durch die Prüfung ersetzt wird
 	 */
-	public ersetzteSprache : string = "";
+	public ersetzteSprache: string = "";
 
 	/**
 	 * Prüfung ist eine Prüfung im herkunftssprachlichen Unterricht
 	 */
-	public istHSUPruefung : boolean = false;
+	public istHSUPruefung: boolean = false;
 
 	/**
 	 * Prüfung ist eine Sprachfeststellungsprüfung
 	 */
-	public istFeststellungspruefung : boolean = false;
+	public istFeststellungspruefung: boolean = false;
 
 	/**
 	 * Durch die Prüfung kann die erste Pflichtfremdsprache ersetzt werden
 	 */
-	public kannErstePflichtfremdspracheErsetzen : boolean = false;
+	public kannErstePflichtfremdspracheErsetzen: boolean = false;
 
 	/**
 	 * Durch die Prüfung kann die zweite Pflichtfremdsprache ersetzt werden
 	 */
-	public kannZweitePflichtfremdspracheErsetzen : boolean = false;
+	public kannZweitePflichtfremdspracheErsetzen: boolean = false;
 
 	/**
 	 * Durch die Prüfung kann die Wahlpflichtfremdsprache ersetzt werden
 	 */
-	public kannWahlpflichtfremdspracheErsetzen : boolean = false;
+	public kannWahlpflichtfremdspracheErsetzen: boolean = false;
 
 	/**
 	 * Durch die Prüfung kann die Sprache als fortgeführte Fremdsprache in der GOSt belegt werden.
 	 */
-	public kannBelegungAlsFortgefuehrteSpracheErlauben : boolean = false;
+	public kannBelegungAlsFortgefuehrteSpracheErlauben: boolean = false;
 
 	/**
 	 * Datum der Sprachprüfung.
 	 */
-	public pruefungsdatum : string = "";
+	public pruefungsdatum: string = "";
 
 	/**
 	 * Das Kürzel des GeR-Referenzniveaus, welches durch die Prüfung erreicht wurde
 	 */
-	public referenzniveau : string = "";
+	public referenzniveau: string = "";
 
 	/**
 	 * Die Note, die in der Sprachprüfung erreicht wurde
 	 */
-	public note : string = "";
+	public note: string = "";
 
 
 	/**
@@ -85,13 +85,13 @@ export class SchildReportingSchuelerSprachpruefungen extends JavaObject {
 		return 'de.svws_nrw.core.data.schild3.reporting.SchildReportingSchuelerSprachpruefungen';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.schild3.reporting.SchildReportingSchuelerSprachpruefungen'].includes(name);
 	}
 
 	public static class = new Class<SchildReportingSchuelerSprachpruefungen>('de.svws_nrw.core.data.schild3.reporting.SchildReportingSchuelerSprachpruefungen');
 
-	public static transpilerFromJSON(json : string): SchildReportingSchuelerSprachpruefungen {
+	public static transpilerFromJSON(json: string): SchildReportingSchuelerSprachpruefungen {
 		const obj = JSON.parse(json) as Partial<SchildReportingSchuelerSprachpruefungen>;
 		const result = new SchildReportingSchuelerSprachpruefungen();
 		if (obj.schuelerID === undefined)
@@ -139,7 +139,7 @@ export class SchildReportingSchuelerSprachpruefungen extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : SchildReportingSchuelerSprachpruefungen) : string {
+	public static transpilerToJSON(obj: SchildReportingSchuelerSprachpruefungen): string {
 		let result = '{';
 		result += '"schuelerID" : ' + obj.schuelerID.toString() + ',';
 		result += '"sprache" : ' + JSON.stringify(obj.sprache) + ',';
@@ -160,7 +160,7 @@ export class SchildReportingSchuelerSprachpruefungen extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<SchildReportingSchuelerSprachpruefungen>) : string {
+	public static transpilerToJSONPatch(obj: Partial<SchildReportingSchuelerSprachpruefungen>): string {
 		let result = '{';
 		if (obj.schuelerID !== undefined) {
 			result += '"schuelerID" : ' + obj.schuelerID.toString() + ',';
@@ -211,6 +211,6 @@ export class SchildReportingSchuelerSprachpruefungen extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_schild3_reporting_SchildReportingSchuelerSprachpruefungen(obj : unknown) : SchildReportingSchuelerSprachpruefungen {
+export function cast_de_svws_nrw_core_data_schild3_reporting_SchildReportingSchuelerSprachpruefungen(obj: unknown): SchildReportingSchuelerSprachpruefungen {
 	return obj as SchildReportingSchuelerSprachpruefungen;
 }

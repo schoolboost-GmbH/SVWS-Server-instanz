@@ -6,32 +6,32 @@ export class ReligionEintrag extends JavaObject {
 	/**
 	 * Die ID des Katalog-Eintrags.
 	 */
-	public id : number = -1;
+	public id: number = -1;
 
 	/**
 	 * Die Bezeichnung bzw. der Name der Religion.
 	 */
-	public bezeichnung : string = "";
+	public bezeichnung: string = "";
 
 	/**
 	 * Die Bezeichnung bzw. der Name der Religion, wie sie auf einem Zeugnis erscheint.
 	 */
-	public bezeichnungZeugnis : string | null = "";
+	public bezeichnungZeugnis: string | null = "";
 
 	/**
 	 * Das Kürzel des Eintrages für die Statistik.
 	 */
-	public kuerzel : string | null = "";
+	public kuerzel: string | null = "";
 
 	/**
 	 * Gibt die Position in der Sortierreihenfolge für die Katalog-Einträge an.
 	 */
-	public sortierung : number = 1;
+	public sortierung: number = 1;
 
 	/**
 	 * Gibt an, ob der Eintrag in der Anwendung sichtbar sein soll oder nicht.
 	 */
-	public istSichtbar : boolean = true;
+	public istSichtbar: boolean = true;
 
 
 	/**
@@ -45,13 +45,13 @@ export class ReligionEintrag extends JavaObject {
 		return 'de.svws_nrw.core.data.schule.ReligionEintrag';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.schule.ReligionEintrag'].includes(name);
 	}
 
 	public static class = new Class<ReligionEintrag>('de.svws_nrw.core.data.schule.ReligionEintrag');
 
-	public static transpilerFromJSON(json : string): ReligionEintrag {
+	public static transpilerFromJSON(json: string): ReligionEintrag {
 		const obj = JSON.parse(json) as Partial<ReligionEintrag>;
 		const result = new ReligionEintrag();
 		if (obj.id === undefined)
@@ -71,7 +71,7 @@ export class ReligionEintrag extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : ReligionEintrag) : string {
+	public static transpilerToJSON(obj: ReligionEintrag): string {
 		let result = '{';
 		result += '"id" : ' + obj.id.toString() + ',';
 		result += '"bezeichnung" : ' + JSON.stringify(obj.bezeichnung) + ',';
@@ -84,7 +84,7 @@ export class ReligionEintrag extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<ReligionEintrag>) : string {
+	public static transpilerToJSONPatch(obj: Partial<ReligionEintrag>): string {
 		let result = '{';
 		if (obj.id !== undefined) {
 			result += '"id" : ' + obj.id.toString() + ',';
@@ -111,6 +111,6 @@ export class ReligionEintrag extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_schule_ReligionEintrag(obj : unknown) : ReligionEintrag {
+export function cast_de_svws_nrw_core_data_schule_ReligionEintrag(obj: unknown): ReligionEintrag {
 	return obj as ReligionEintrag;
 }

@@ -9,7 +9,7 @@ export class CoreTypeDataNurSchulformenUndSchulgliederungen extends CoreTypeData
 	/**
 	 * Die Informationen zu Schulformen und -gliederungen, wo die Core-Type-Daten zulässig sind.
 	 */
-	public zulaessig : List<SchulformSchulgliederung> = new ArrayList<SchulformSchulgliederung>();
+	public zulaessig: List<SchulformSchulgliederung> = new ArrayList<SchulformSchulgliederung>();
 
 
 	/**
@@ -23,13 +23,13 @@ export class CoreTypeDataNurSchulformenUndSchulgliederungen extends CoreTypeData
 		return 'de.svws_nrw.asd.data.CoreTypeDataNurSchulformenUndSchulgliederungen';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.asd.data.CoreTypeDataNurSchulformenUndSchulgliederungen', 'de.svws_nrw.asd.data.CoreTypeData'].includes(name);
 	}
 
 	public static class = new Class<CoreTypeDataNurSchulformenUndSchulgliederungen>('de.svws_nrw.asd.data.CoreTypeDataNurSchulformenUndSchulgliederungen');
 
-	public static transpilerFromJSON(json : string): CoreTypeDataNurSchulformenUndSchulgliederungen {
+	public static transpilerFromJSON(json: string): CoreTypeDataNurSchulformenUndSchulgliederungen {
 		const obj = JSON.parse(json) as Partial<CoreTypeDataNurSchulformenUndSchulgliederungen>;
 		const result = new CoreTypeDataNurSchulformenUndSchulgliederungen();
 		if (obj.id === undefined)
@@ -54,7 +54,7 @@ export class CoreTypeDataNurSchulformenUndSchulgliederungen extends CoreTypeData
 		return result;
 	}
 
-	public static transpilerToJSON(obj : CoreTypeDataNurSchulformenUndSchulgliederungen) : string {
+	public static transpilerToJSON(obj: CoreTypeDataNurSchulformenUndSchulgliederungen): string {
 		let result = '{';
 		result += '"id" : ' + obj.id.toString() + ',';
 		result += '"schluessel" : ' + JSON.stringify(obj.schluessel) + ',';
@@ -75,7 +75,7 @@ export class CoreTypeDataNurSchulformenUndSchulgliederungen extends CoreTypeData
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<CoreTypeDataNurSchulformenUndSchulgliederungen>) : string {
+	public static transpilerToJSONPatch(obj: Partial<CoreTypeDataNurSchulformenUndSchulgliederungen>): string {
 		let result = '{';
 		if (obj.id !== undefined) {
 			result += '"id" : ' + obj.id.toString() + ',';
@@ -112,6 +112,6 @@ export class CoreTypeDataNurSchulformenUndSchulgliederungen extends CoreTypeData
 
 }
 
-export function cast_de_svws_nrw_asd_data_CoreTypeDataNurSchulformenUndSchulgliederungen(obj : unknown) : CoreTypeDataNurSchulformenUndSchulgliederungen {
+export function cast_de_svws_nrw_asd_data_CoreTypeDataNurSchulformenUndSchulgliederungen(obj: unknown): CoreTypeDataNurSchulformenUndSchulgliederungen {
 	return obj as CoreTypeDataNurSchulformenUndSchulgliederungen;
 }

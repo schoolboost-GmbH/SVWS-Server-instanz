@@ -6,27 +6,27 @@ export class Sportbefreiung extends JavaObject {
 	/**
 	 * Die ID der Sportbefreiung
 	 */
-	public id : number = 0;
+	public id: number = 0;
 
 	/**
 	 * Die Bezeichnung der Sportbefreiung
 	 */
-	public bezeichnung : string | null = null;
+	public bezeichnung: string | null = null;
 
 	/**
 	 * Gibt die Position in der Sortierreihenfolge für die Katalog-Einträge an.
 	 */
-	public sortierung : number = 1;
+	public sortierung: number = 1;
 
 	/**
 	 * Gibt an, ob der Eintrag in der Anwendung sichtbar sein soll oder nicht.
 	 */
-	public istSichtbar : boolean = true;
+	public istSichtbar: boolean = true;
 
 	/**
 	 * Gibt an, ob der Eintrag in der Anwendung änderbar sein soll oder nicht.
 	 */
-	public istAenderbar : boolean = true;
+	public istAenderbar: boolean = true;
 
 
 	public constructor() {
@@ -37,13 +37,13 @@ export class Sportbefreiung extends JavaObject {
 		return 'de.svws_nrw.core.data.schule.Sportbefreiung';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.schule.Sportbefreiung'].includes(name);
 	}
 
 	public static class = new Class<Sportbefreiung>('de.svws_nrw.core.data.schule.Sportbefreiung');
 
-	public static transpilerFromJSON(json : string): Sportbefreiung {
+	public static transpilerFromJSON(json: string): Sportbefreiung {
 		const obj = JSON.parse(json) as Partial<Sportbefreiung>;
 		const result = new Sportbefreiung();
 		if (obj.id === undefined)
@@ -62,7 +62,7 @@ export class Sportbefreiung extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : Sportbefreiung) : string {
+	public static transpilerToJSON(obj: Sportbefreiung): string {
 		let result = '{';
 		result += '"id" : ' + obj.id.toString() + ',';
 		result += '"bezeichnung" : ' + ((obj.bezeichnung === null) ? 'null' : JSON.stringify(obj.bezeichnung)) + ',';
@@ -74,7 +74,7 @@ export class Sportbefreiung extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<Sportbefreiung>) : string {
+	public static transpilerToJSONPatch(obj: Partial<Sportbefreiung>): string {
 		let result = '{';
 		if (obj.id !== undefined) {
 			result += '"id" : ' + obj.id.toString() + ',';
@@ -98,6 +98,6 @@ export class Sportbefreiung extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_schule_Sportbefreiung(obj : unknown) : Sportbefreiung {
+export function cast_de_svws_nrw_core_data_schule_Sportbefreiung(obj: unknown): Sportbefreiung {
 	return obj as Sportbefreiung;
 }

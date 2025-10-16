@@ -7,112 +7,112 @@ export class FachDaten extends JavaObject {
 	/**
 	 * Die ID des Faches.
 	 */
-	public id : number = -1;
+	public id: number = -1;
 
 	/**
 	 * Das eindeutige Kürzel des Faches
 	 */
-	public kuerzel : string = "";
+	public kuerzel: string = "";
 
 	/**
 	 * Das Statistik-Kürzel des Faches
 	 */
-	public kuerzelStatistik : string = "";
+	public kuerzelStatistik: string = "";
 
 	/**
 	 * Die Bezeichnung des Faches
 	 */
-	public bezeichnung : string = "";
+	public bezeichnung: string = "";
 
 	/**
 	 * Die Sortierreihenfolge des Fächerlisten-Eintrags.
 	 */
-	public sortierung : number = 32000;
+	public sortierung: number = 32000;
 
 	/**
 	 * Gibt an, ob es sich um ein Fach der Oberstufe handelt oder nicht.
 	 */
-	public istOberstufenFach : boolean = false;
+	public istOberstufenFach: boolean = false;
 
 	/**
 	 * Gibt an, ob es sich um ein Fach handelt, welches relevant für die Prüfungsordnung ist oder nicht (z.B. bei Belegprüfungen).
 	 */
-	public istPruefungsordnungsRelevant : boolean = false;
+	public istPruefungsordnungsRelevant: boolean = false;
 
 	/**
 	 * Gibt an, ob es sich um ein Fremdsprachen-Fach handelt
 	 */
-	public istFremdsprache : boolean = false;
+	public istFremdsprache: boolean = false;
 
 	/**
 	 * Gibt an, ob es sich um ein Fremdsprachen-Fach handelt, welches in der Sekundarstufe II neu einsetzen ist.
 	 */
-	public istMoeglichAlsNeueFremdspracheInSekII : boolean = false;
+	public istMoeglichAlsNeueFremdspracheInSekII: boolean = false;
 
 	/**
 	 * Gibt an, ob der Eintrag in der Anwendung sichtbar sein soll oder nicht.
 	 */
-	public istSichtbar : boolean = false;
+	public istSichtbar: boolean = false;
 
 	/**
 	 * Das Aufgabenfeld am Berufskolleg, zu welchem das Fach gehört
 	 */
-	public aufgabenfeld : string | null = null;
+	public aufgabenfeld: string | null = null;
 
 	/**
 	 * Die Sprache in der das Fach unterrichtet wird, sofern es sich um ein bilinguales Sachefach handelt.
 	 */
-	public bilingualeSprache : string | null = null;
+	public bilingualeSprache: string | null = null;
 
 	/**
 	 * Gibt an, ob eine Nachprüfung in diesem Fach möglich ist.
 	 */
-	public istNachpruefungErlaubt : boolean = false;
+	public istNachpruefungErlaubt: boolean = false;
 
 	/**
 	 * Gibt an, ob das Fach auf einem Zeugnis erscheinen soll.
 	 */
-	public aufZeugnis : boolean = false;
+	public aufZeugnis: boolean = false;
 
 	/**
 	 * Die Bezeichnung des Faches auf allgemeinen Zeugnissen
 	 */
-	public bezeichnungZeugnis : string = "";
+	public bezeichnungZeugnis: string = "";
 
 	/**
 	 * Die Bezeichnung des Faches auf Überweisungs-Zeugnissen
 	 */
-	public bezeichnungUeberweisungszeugnis : string = "";
+	public bezeichnungUeberweisungszeugnis: string = "";
 
 	/**
 	 * Gibt die maximale Anzahl an Zeichen an, doe in Fachbemerkungen genutzt werden dürfen.
 	 */
-	public maxZeichenInFachbemerkungen : number = JavaInteger.MAX_VALUE;
+	public maxZeichenInFachbemerkungen: number = JavaInteger.MAX_VALUE;
 
 	/**
 	 * Gibt an, ob das Fach ein schriftliches Fach für die zentralen Klausuren ist oder nicht.
 	 */
-	public istSchriftlichZK : boolean = false;
+	public istSchriftlichZK: boolean = false;
 
 	/**
 	 * Gibt an, ob das Fach als schriftliches Fach für den Berufsabschluss gewertest wird (Berufskolleg).
 	 */
-	public istSchriftlichBA : boolean = false;
+	public istSchriftlichBA: boolean = false;
 
 	/**
 	 * Gibt an, ob das Fach bei der Berechnung der FHR berücksichtigt wird oder nicht (Berufskolleg).
 	 */
-	public istFHRFach : boolean = false;
+	public istFHRFach: boolean = false;
 
 	/**
 	 * Gibt an, ob das Fach ggf. bei der Aggregation von Leistungen aus früheren Lernabschnitten/Jahrgängen für eine Abschlussbrechnung berücksichtigt wird, sofern es im aktuellen Abschnitt nicht belegt wurde.
 	 */
-	public holeAusAltenLernabschnitten : boolean = false;
+	public holeAusAltenLernabschnitten: boolean = false;
 
 	/**
 	 * Gibt an, ob das Fach in anderen Datenbanktabellen referenziert ist oder nicht.
 	 */
-	public referenziertInAnderenTabellen : boolean | null = null;
+	public referenziertInAnderenTabellen: boolean | null = null;
 
 
 	/**
@@ -126,13 +126,13 @@ export class FachDaten extends JavaObject {
 		return 'de.svws_nrw.core.data.fach.FachDaten';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.fach.FachDaten'].includes(name);
 	}
 
 	public static class = new Class<FachDaten>('de.svws_nrw.core.data.fach.FachDaten');
 
-	public static transpilerFromJSON(json : string): FachDaten {
+	public static transpilerFromJSON(json: string): FachDaten {
 		const obj = JSON.parse(json) as Partial<FachDaten>;
 		const result = new FachDaten();
 		if (obj.id === undefined)
@@ -198,7 +198,7 @@ export class FachDaten extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : FachDaten) : string {
+	public static transpilerToJSON(obj: FachDaten): string {
 		let result = '{';
 		result += '"id" : ' + obj.id.toString() + ',';
 		result += '"kuerzel" : ' + JSON.stringify(obj.kuerzel) + ',';
@@ -227,7 +227,7 @@ export class FachDaten extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<FachDaten>) : string {
+	public static transpilerToJSONPatch(obj: Partial<FachDaten>): string {
 		let result = '{';
 		if (obj.id !== undefined) {
 			result += '"id" : ' + obj.id.toString() + ',';
@@ -302,6 +302,6 @@ export class FachDaten extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_fach_FachDaten(obj : unknown) : FachDaten {
+export function cast_de_svws_nrw_core_data_fach_FachDaten(obj: unknown): FachDaten {
 	return obj as FachDaten;
 }

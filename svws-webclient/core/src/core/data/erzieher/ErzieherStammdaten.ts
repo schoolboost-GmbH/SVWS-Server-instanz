@@ -6,82 +6,82 @@ export class ErzieherStammdaten extends JavaObject {
 	/**
 	 * Die ID des Erziehers.
 	 */
-	public id : number = 0;
+	public id: number = 0;
 
 	/**
 	 * Die ID des Schülers, welchem der Erzieher zugeordnet ist.
 	 */
-	public idSchueler : number = 0;
+	public idSchueler: number = 0;
 
 	/**
 	 * Die ID der Art des Erziehereintrages
 	 */
-	public idErzieherArt : number | null = null;
+	public idErzieherArt: number | null = null;
 
 	/**
 	 * Die Titel des Erziehers.
 	 */
-	public titel : string | null = null;
+	public titel: string | null = null;
 
 	/**
 	 * Die Anrede des Erziehers.
 	 */
-	public anrede : string | null = null;
+	public anrede: string | null = null;
 
 	/**
 	 * Der Name des Erziehers.
 	 */
-	public nachname : string | null = null;
+	public nachname: string | null = null;
 
 	/**
 	 * Der Vorname des Erziehers.
 	 */
-	public vorname : string | null = null;
+	public vorname: string | null = null;
 
 	/**
 	 * Ggf. der Straßenname im Wohnort des Erziehers.
 	 */
-	public strassenname : string | null = null;
+	public strassenname: string | null = null;
 
 	/**
 	 * Ggf. die Hausnummer zur Straße im Wohnort des Erziehers.
 	 */
-	public hausnummer : string | null = null;
+	public hausnummer: string | null = null;
 
 	/**
 	 * Ggf. der Hausnummerzusatz zur Straße im Wohnort des Erziehers.
 	 */
-	public hausnummerZusatz : string | null = null;
+	public hausnummerZusatz: string | null = null;
 
 	/**
 	 * Die ID des Wohnortes des Erziehers.
 	 */
-	public wohnortID : number | null = null;
+	public wohnortID: number | null = null;
 
 	/**
 	 * Die ID des Ortsteils des Erziehers.
 	 */
-	public ortsteilID : number | null = null;
+	public ortsteilID: number | null = null;
 
 	/**
 	 * Gibt an, ob der Erzieher Anschreiben erhält oder nicht.
 	 */
-	public erhaeltAnschreiben : boolean | null = null;
+	public erhaeltAnschreiben: boolean | null = null;
 
 	/**
 	 * Die E-Mailadresse des Erziehers.
 	 */
-	public eMail : string | null = null;
+	public eMail: string | null = null;
 
 	/**
 	 * Die ID der Staatsangehörigkeit des Erziehers.
 	 */
-	public staatsangehoerigkeitID : string | null = null;
+	public staatsangehoerigkeitID: string | null = null;
 
 	/**
 	 * Anmerkungen zum Erziehers.
 	 */
-	public bemerkungen : string | null = null;
+	public bemerkungen: string | null = null;
 
 
 	/**
@@ -95,13 +95,13 @@ export class ErzieherStammdaten extends JavaObject {
 		return 'de.svws_nrw.core.data.erzieher.ErzieherStammdaten';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.erzieher.ErzieherStammdaten'].includes(name);
 	}
 
 	public static class = new Class<ErzieherStammdaten>('de.svws_nrw.core.data.erzieher.ErzieherStammdaten');
 
-	public static transpilerFromJSON(json : string): ErzieherStammdaten {
+	public static transpilerFromJSON(json: string): ErzieherStammdaten {
 		const obj = JSON.parse(json) as Partial<ErzieherStammdaten>;
 		const result = new ErzieherStammdaten();
 		if (obj.id === undefined)
@@ -127,7 +127,7 @@ export class ErzieherStammdaten extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : ErzieherStammdaten) : string {
+	public static transpilerToJSON(obj: ErzieherStammdaten): string {
 		let result = '{';
 		result += '"id" : ' + obj.id.toString() + ',';
 		result += '"idSchueler" : ' + obj.idSchueler.toString() + ',';
@@ -150,7 +150,7 @@ export class ErzieherStammdaten extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<ErzieherStammdaten>) : string {
+	public static transpilerToJSONPatch(obj: Partial<ErzieherStammdaten>): string {
 		let result = '{';
 		if (obj.id !== undefined) {
 			result += '"id" : ' + obj.id.toString() + ',';
@@ -207,6 +207,6 @@ export class ErzieherStammdaten extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_erzieher_ErzieherStammdaten(obj : unknown) : ErzieherStammdaten {
+export function cast_de_svws_nrw_core_data_erzieher_ErzieherStammdaten(obj: unknown): ErzieherStammdaten {
 	return obj as ErzieherStammdaten;
 }

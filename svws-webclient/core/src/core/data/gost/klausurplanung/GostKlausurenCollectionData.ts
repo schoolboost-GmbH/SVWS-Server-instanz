@@ -13,32 +13,32 @@ export class GostKlausurenCollectionData extends JavaObject {
 	/**
 	 * Ein Array mit den Klausurvorgaben.
 	 */
-	public vorgaben : List<GostKlausurvorgabe> = new ArrayList<GostKlausurvorgabe>();
+	public vorgaben: List<GostKlausurvorgabe> = new ArrayList<GostKlausurvorgabe>();
 
 	/**
 	 * Ein Array mit den Kursklausuren.
 	 */
-	public kursklausuren : List<GostKursklausur> = new ArrayList<GostKursklausur>();
+	public kursklausuren: List<GostKursklausur> = new ArrayList<GostKursklausur>();
 
 	/**
 	 * Ein Array mit den Schülerklausuren.
 	 */
-	public schuelerklausuren : List<GostSchuelerklausur> = new ArrayList<GostSchuelerklausur>();
+	public schuelerklausuren: List<GostSchuelerklausur> = new ArrayList<GostSchuelerklausur>();
 
 	/**
 	 * Ein Array mit den Schülerklausurterminen.
 	 */
-	public schuelerklausurtermine : List<GostSchuelerklausurTermin> = new ArrayList<GostSchuelerklausurTermin>();
+	public schuelerklausurtermine: List<GostSchuelerklausurTermin> = new ArrayList<GostSchuelerklausurTermin>();
 
 	/**
 	 * Ein Array mit den Klausurterminen.
 	 */
-	public termine : List<GostKlausurtermin> = new ArrayList<GostKlausurtermin>();
+	public termine: List<GostKlausurtermin> = new ArrayList<GostKlausurtermin>();
 
 	/**
 	 * Beschreibung zur Collection
 	 */
-	public description : string | null = null;
+	public description: string | null = null;
 
 
 	/**
@@ -52,13 +52,13 @@ export class GostKlausurenCollectionData extends JavaObject {
 		return 'de.svws_nrw.core.data.gost.klausurplanung.GostKlausurenCollectionData';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.gost.klausurplanung.GostKlausurenCollectionData'].includes(name);
 	}
 
 	public static class = new Class<GostKlausurenCollectionData>('de.svws_nrw.core.data.gost.klausurplanung.GostKlausurenCollectionData');
 
-	public static transpilerFromJSON(json : string): GostKlausurenCollectionData {
+	public static transpilerFromJSON(json: string): GostKlausurenCollectionData {
 		const obj = JSON.parse(json) as Partial<GostKlausurenCollectionData>;
 		const result = new GostKlausurenCollectionData();
 		if (obj.vorgaben !== undefined) {
@@ -92,7 +92,7 @@ export class GostKlausurenCollectionData extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : GostKlausurenCollectionData) : string {
+	public static transpilerToJSON(obj: GostKlausurenCollectionData): string {
 		let result = '{';
 		result += '"vorgaben" : [ ';
 		for (let i = 0; i < obj.vorgaben.size(); i++) {
@@ -140,7 +140,7 @@ export class GostKlausurenCollectionData extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<GostKlausurenCollectionData>) : string {
+	public static transpilerToJSONPatch(obj: Partial<GostKlausurenCollectionData>): string {
 		let result = '{';
 		if (obj.vorgaben !== undefined) {
 			result += '"vorgaben" : [ ';
@@ -202,6 +202,6 @@ export class GostKlausurenCollectionData extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_gost_klausurplanung_GostKlausurenCollectionData(obj : unknown) : GostKlausurenCollectionData {
+export function cast_de_svws_nrw_core_data_gost_klausurplanung_GostKlausurenCollectionData(obj: unknown): GostKlausurenCollectionData {
 	return obj as GostKlausurenCollectionData;
 }

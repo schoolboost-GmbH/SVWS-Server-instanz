@@ -9,17 +9,17 @@ export class StundenplanblockungManagerKlasse extends JavaObject {
 	/**
 	 * Die Datenbank-ID der Klasse.
 	 */
-	_id : number = 0;
+	_id: number = 0;
 
 	/**
 	 * Das Kürzel der Klasse. Beispielsweise '05a' oder 'Q1'.
 	 */
-	_kuerzel : string = "";
+	_kuerzel: string = "";
 
 	/**
 	 * Alle Lerngruppen der Klasse.
 	 */
-	_menge_gr : List<StundenplanblockungManagerLerngruppe>;
+	_menge_gr: List<StundenplanblockungManagerLerngruppe>;
 
 
 	/**
@@ -28,7 +28,7 @@ export class StundenplanblockungManagerKlasse extends JavaObject {
 	 * @param pKlasseID  Die Datenbank-ID der Klasse.
 	 * @param pKuerzel   Das Kürzel der Klasse.
 	 */
-	public constructor(pKlasseID : number, pKuerzel : string) {
+	public constructor(pKlasseID: number, pKuerzel: string) {
 		super();
 		this._id = pKlasseID;
 		this._kuerzel = pKuerzel;
@@ -40,7 +40,7 @@ export class StundenplanblockungManagerKlasse extends JavaObject {
 	 *
 	 * @return Die Datenbank-ID der Klasse.
 	 */
-	public getID() : number {
+	public getID(): number {
 		return this._id;
 	}
 
@@ -49,7 +49,7 @@ export class StundenplanblockungManagerKlasse extends JavaObject {
 	 *
 	 * @param pKuerzel  Das neue Kürzel der Klasse.
 	 */
-	public setKuerzel(pKuerzel : string) : void {
+	public setKuerzel(pKuerzel: string): void {
 		this._kuerzel = pKuerzel;
 	}
 
@@ -57,7 +57,7 @@ export class StundenplanblockungManagerKlasse extends JavaObject {
 		return 'de.svws_nrw.core.utils.stundenplanblockung.StundenplanblockungManagerKlasse';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.utils.stundenplanblockung.StundenplanblockungManagerKlasse'].includes(name);
 	}
 
@@ -65,6 +65,6 @@ export class StundenplanblockungManagerKlasse extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_utils_stundenplanblockung_StundenplanblockungManagerKlasse(obj : unknown) : StundenplanblockungManagerKlasse {
+export function cast_de_svws_nrw_core_utils_stundenplanblockung_StundenplanblockungManagerKlasse(obj: unknown): StundenplanblockungManagerKlasse {
 	return obj as StundenplanblockungManagerKlasse;
 }

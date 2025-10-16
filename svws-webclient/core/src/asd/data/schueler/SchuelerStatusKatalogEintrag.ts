@@ -15,13 +15,13 @@ export class SchuelerStatusKatalogEintrag extends CoreTypeData {
 		return 'de.svws_nrw.asd.data.schueler.SchuelerStatusKatalogEintrag';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.asd.data.schueler.SchuelerStatusKatalogEintrag', 'de.svws_nrw.asd.data.CoreTypeData'].includes(name);
 	}
 
 	public static class = new Class<SchuelerStatusKatalogEintrag>('de.svws_nrw.asd.data.schueler.SchuelerStatusKatalogEintrag');
 
-	public static transpilerFromJSON(json : string): SchuelerStatusKatalogEintrag {
+	public static transpilerFromJSON(json: string): SchuelerStatusKatalogEintrag {
 		const obj = JSON.parse(json) as Partial<SchuelerStatusKatalogEintrag>;
 		const result = new SchuelerStatusKatalogEintrag();
 		if (obj.id === undefined)
@@ -41,7 +41,7 @@ export class SchuelerStatusKatalogEintrag extends CoreTypeData {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : SchuelerStatusKatalogEintrag) : string {
+	public static transpilerToJSON(obj: SchuelerStatusKatalogEintrag): string {
 		let result = '{';
 		result += '"id" : ' + obj.id.toString() + ',';
 		result += '"schluessel" : ' + JSON.stringify(obj.schluessel) + ',';
@@ -54,7 +54,7 @@ export class SchuelerStatusKatalogEintrag extends CoreTypeData {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<SchuelerStatusKatalogEintrag>) : string {
+	public static transpilerToJSONPatch(obj: Partial<SchuelerStatusKatalogEintrag>): string {
 		let result = '{';
 		if (obj.id !== undefined) {
 			result += '"id" : ' + obj.id.toString() + ',';
@@ -81,6 +81,6 @@ export class SchuelerStatusKatalogEintrag extends CoreTypeData {
 
 }
 
-export function cast_de_svws_nrw_asd_data_schueler_SchuelerStatusKatalogEintrag(obj : unknown) : SchuelerStatusKatalogEintrag {
+export function cast_de_svws_nrw_asd_data_schueler_SchuelerStatusKatalogEintrag(obj: unknown): SchuelerStatusKatalogEintrag {
 	return obj as SchuelerStatusKatalogEintrag;
 }

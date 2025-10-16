@@ -10,17 +10,17 @@ export abstract class KursblockungAlgorithmusPermanentK extends JavaObject {
 	/**
 	 * Ein {@link Random}-Objekt zur Steuerung des Zufalls über einen Anfangs-Seed.
 	 */
-	readonly _random : Random;
+	readonly _random: Random;
 
 	/**
 	 * Logger für Benutzerhinweise, Warnungen und Fehler.
 	 */
-	readonly logger : Logger;
+	readonly logger: Logger;
 
 	/**
 	 * Die aktuellen Blockungsdaten. Dieses Objekt dient zur Manipulation der Daten während des Blockungsvorganges.
 	 */
-	readonly dynDaten : KursblockungDynDaten;
+	readonly dynDaten: KursblockungDynDaten;
 
 
 	/**
@@ -31,7 +31,7 @@ export abstract class KursblockungAlgorithmusPermanentK extends JavaObject {
 	 * @param pLogger   Logger für Benutzerhinweise, Warnungen und Fehler.
 	 * @param input     Die Eingabedaten.
 	 */
-	protected constructor(pRandom : Random, pLogger : Logger, input : GostBlockungsdatenManager) {
+	protected constructor(pRandom: Random, pLogger: Logger, input: GostBlockungsdatenManager) {
 		super();
 		this._random = pRandom;
 		this.logger = pLogger;
@@ -43,27 +43,27 @@ export abstract class KursblockungAlgorithmusPermanentK extends JavaObject {
 	 *
 	 * @param zeitEnde  Der Zeitpunkt (in Millisekunden), bis zu dem der Algorithmus weiter optimieren darf.
 	 */
-	public abstract next(zeitEnde : number) : void;
+	public abstract next(zeitEnde: number): void;
 
 	/**
 	 * Liefert das KursblockungDynDaten-Objekt des Algorithmus.
 	 *
 	 * @return das KursblockungDynDaten-Objekt des Algorithmus.
 	 */
-	public gibDynDaten() : KursblockungDynDaten {
+	public gibDynDaten(): KursblockungDynDaten {
 		return this.dynDaten;
 	}
 
 	/**
 	 * Lädt das beste Blockungsergebnis und verteilt SuS, falls diese aufgrund des Algorithmus zuvor nicht verteilt wurden.
 	 */
-	public abstract ladeBestMitSchuelerverteilung() : void;
+	public abstract ladeBestMitSchuelerverteilung(): void;
 
 	transpilerCanonicalName(): string {
 		return 'de.svws_nrw.core.kursblockung.KursblockungAlgorithmusPermanentK';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.kursblockung.KursblockungAlgorithmusPermanentK'].includes(name);
 	}
 
@@ -71,6 +71,6 @@ export abstract class KursblockungAlgorithmusPermanentK extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_kursblockung_KursblockungAlgorithmusPermanentK(obj : unknown) : KursblockungAlgorithmusPermanentK {
+export function cast_de_svws_nrw_core_kursblockung_KursblockungAlgorithmusPermanentK(obj: unknown): KursblockungAlgorithmusPermanentK {
 	return obj as KursblockungAlgorithmusPermanentK;
 }

@@ -13,42 +13,42 @@ export class GostKlausurenCollectionHjData extends JavaObject {
 	/**
 	 * Der Abiturjahrgang.
 	 */
-	public abiturjahrgang : number = -1;
+	public abiturjahrgang: number = -1;
 
 	/**
 	 * Das Gost-Halbjahr.
 	 */
-	public gostHalbjahr : number = -1;
+	public gostHalbjahr: number = -1;
 
 	/**
 	 * Der Schuljahresabschnitt.
 	 */
-	public schuljahresabschnitt : number = -1;
+	public schuljahresabschnitt: number = -1;
 
 	/**
 	 * Die zu den Klausurdaten gehörenden Meta-Informationen wie Fachdaten, Kursdaten, Lehrerdaten, Schülerdaten.
 	 */
-	public data : GostKlausurenCollectionData = new GostKlausurenCollectionData();
+	public data: GostKlausurenCollectionData = new GostKlausurenCollectionData();
 
 	/**
 	 * Ein Array mit den Daten der Fächer.
 	 */
-	public faecher : List<GostFach> | null = null;
+	public faecher: List<GostFach> | null = null;
 
 	/**
 	 * Ein Array mit den Daten der Schüler.
 	 */
-	public schueler : List<SchuelerListeEintrag> | null = null;
+	public schueler: List<SchuelerListeEintrag> | null = null;
 
 	/**
 	 * Ein Array mit den Daten der Kurse.
 	 */
-	public kurse : List<KursDaten> = new ArrayList<KursDaten>();
+	public kurse: List<KursDaten> = new ArrayList<KursDaten>();
 
 	/**
 	 * Die zu den Klausurdaten gehörenden Raumdaten.
 	 */
-	public raumdata : GostKlausurenCollectionRaumData = new GostKlausurenCollectionRaumData();
+	public raumdata: GostKlausurenCollectionRaumData = new GostKlausurenCollectionRaumData();
 
 
 	/**
@@ -61,18 +61,18 @@ export class GostKlausurenCollectionHjData extends JavaObject {
 	 * @param abiturjahrgang der Abiturjahrgang
 	 * @param gostHalbjahr das Gost-Halbjahr
 	 */
-	public constructor(abiturjahrgang : number, gostHalbjahr : number);
+	public constructor(abiturjahrgang: number, gostHalbjahr: number);
 
 	/**
 	 * Implementation for method overloads of 'constructor'
 	 */
-	public constructor(__param0? : number, __param1? : number) {
+	public constructor(__param0?: number, __param1?: number) {
 		super();
 		if ((__param0 === undefined) && (__param1 === undefined)) {
 			// empty method body
 		} else if (((__param0 !== undefined) && typeof __param0 === "number") && ((__param1 !== undefined) && typeof __param1 === "number")) {
-			const abiturjahrgang : number = __param0 as number;
-			const gostHalbjahr : number = __param1 as number;
+			const abiturjahrgang: number = __param0 as number;
+			const gostHalbjahr: number = __param1 as number;
 			this.abiturjahrgang = abiturjahrgang;
 			this.gostHalbjahr = gostHalbjahr;
 		} else throw new Error('invalid method overload');
@@ -82,13 +82,13 @@ export class GostKlausurenCollectionHjData extends JavaObject {
 		return 'de.svws_nrw.core.data.gost.klausurplanung.GostKlausurenCollectionHjData';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.gost.klausurplanung.GostKlausurenCollectionHjData'].includes(name);
 	}
 
 	public static class = new Class<GostKlausurenCollectionHjData>('de.svws_nrw.core.data.gost.klausurplanung.GostKlausurenCollectionHjData');
 
-	public static transpilerFromJSON(json : string): GostKlausurenCollectionHjData {
+	public static transpilerFromJSON(json: string): GostKlausurenCollectionHjData {
 		const obj = JSON.parse(json) as Partial<GostKlausurenCollectionHjData>;
 		const result = new GostKlausurenCollectionHjData();
 		if (obj.abiturjahrgang === undefined)
@@ -130,7 +130,7 @@ export class GostKlausurenCollectionHjData extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : GostKlausurenCollectionHjData) : string {
+	public static transpilerToJSON(obj: GostKlausurenCollectionHjData): string {
 		let result = '{';
 		result += '"abiturjahrgang" : ' + obj.abiturjahrgang.toString() + ',';
 		result += '"gostHalbjahr" : ' + obj.gostHalbjahr.toString() + ',';
@@ -174,7 +174,7 @@ export class GostKlausurenCollectionHjData extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<GostKlausurenCollectionHjData>) : string {
+	public static transpilerToJSONPatch(obj: Partial<GostKlausurenCollectionHjData>): string {
 		let result = '{';
 		if (obj.abiturjahrgang !== undefined) {
 			result += '"abiturjahrgang" : ' + obj.abiturjahrgang.toString() + ',';
@@ -236,6 +236,6 @@ export class GostKlausurenCollectionHjData extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_gost_klausurplanung_GostKlausurenCollectionHjData(obj : unknown) : GostKlausurenCollectionHjData {
+export function cast_de_svws_nrw_core_data_gost_klausurplanung_GostKlausurenCollectionHjData(obj: unknown): GostKlausurenCollectionHjData {
 	return obj as GostKlausurenCollectionHjData;
 }

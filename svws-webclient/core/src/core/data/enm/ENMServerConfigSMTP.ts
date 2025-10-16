@@ -6,37 +6,37 @@ export class ENMServerConfigSMTP extends JavaObject {
 	/**
 	 * Die Serveradresse des SMTP-Servers
 	 */
-	public host : string | null = null;
+	public host: string | null = null;
 
 	/**
 	 * Der Port des SMTP-Servers
 	 */
-	public port : number = 587;
+	public port: number = 587;
 
 	/**
 	 * Der Benutzername für den SMTP-Login
 	 */
-	public username : string | null = null;
+	public username: string | null = null;
 
 	/**
 	 * Das Passwort für den SMTP-Login
 	 */
-	public password : string | null = null;
+	public password: string | null = null;
 
 	/**
 	 * Verwendung TLS - true für TLS bzw. false für unverschlüsselt
 	 */
-	public useTLS : boolean = true;
+	public useTLS: boolean = true;
 
 	/**
 	 * Der Absender der E-Mail
 	 */
-	public fromEmail : string | null = null;
+	public fromEmail: string | null = null;
 
 	/**
 	 * Der Name des Absenders
 	 */
-	public fromName : string | null = null;
+	public fromName: string | null = null;
 
 
 	/**
@@ -50,13 +50,13 @@ export class ENMServerConfigSMTP extends JavaObject {
 		return 'de.svws_nrw.core.data.enm.ENMServerConfigSMTP';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.enm.ENMServerConfigSMTP'].includes(name);
 	}
 
 	public static class = new Class<ENMServerConfigSMTP>('de.svws_nrw.core.data.enm.ENMServerConfigSMTP');
 
-	public static transpilerFromJSON(json : string): ENMServerConfigSMTP {
+	public static transpilerFromJSON(json: string): ENMServerConfigSMTP {
 		const obj = JSON.parse(json) as Partial<ENMServerConfigSMTP>;
 		const result = new ENMServerConfigSMTP();
 		result.host = (obj.host === undefined) ? null : obj.host === null ? null : obj.host;
@@ -73,7 +73,7 @@ export class ENMServerConfigSMTP extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : ENMServerConfigSMTP) : string {
+	public static transpilerToJSON(obj: ENMServerConfigSMTP): string {
 		let result = '{';
 		result += '"host" : ' + ((obj.host === null) ? 'null' : JSON.stringify(obj.host)) + ',';
 		result += '"port" : ' + obj.port.toString() + ',';
@@ -87,7 +87,7 @@ export class ENMServerConfigSMTP extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<ENMServerConfigSMTP>) : string {
+	public static transpilerToJSONPatch(obj: Partial<ENMServerConfigSMTP>): string {
 		let result = '{';
 		if (obj.host !== undefined) {
 			result += '"host" : ' + ((obj.host === null) ? 'null' : JSON.stringify(obj.host)) + ',';
@@ -117,6 +117,6 @@ export class ENMServerConfigSMTP extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_enm_ENMServerConfigSMTP(obj : unknown) : ENMServerConfigSMTP {
+export function cast_de_svws_nrw_core_data_enm_ENMServerConfigSMTP(obj: unknown): ENMServerConfigSMTP {
 	return obj as ENMServerConfigSMTP;
 }

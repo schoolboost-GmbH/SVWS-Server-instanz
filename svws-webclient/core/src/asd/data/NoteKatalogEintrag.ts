@@ -6,17 +6,17 @@ export class NoteKatalogEintrag extends CoreTypeData {
 	/**
 	 * Eine ID, die der Sortierung der Noteneinträge in einer Anwendung vorgibt
 	 */
-	public sortierung : number = -1;
+	public sortierung: number = -1;
 
 	/**
 	 * Die Notenpunkte, die dieser Note zugeordnet sind
 	 */
-	public notenpunkte : number | null = null;
+	public notenpunkte: number | null = null;
 
 	/**
 	 * Die Note in ausführlicher Textform, wie sie auf einem Zeugnis dargestellt wird.
 	 */
-	public textZeugnis : string = "";
+	public textZeugnis: string = "";
 
 
 	/**
@@ -30,13 +30,13 @@ export class NoteKatalogEintrag extends CoreTypeData {
 		return 'de.svws_nrw.asd.data.NoteKatalogEintrag';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.asd.data.NoteKatalogEintrag', 'de.svws_nrw.asd.data.CoreTypeData'].includes(name);
 	}
 
 	public static class = new Class<NoteKatalogEintrag>('de.svws_nrw.asd.data.NoteKatalogEintrag');
 
-	public static transpilerFromJSON(json : string): NoteKatalogEintrag {
+	public static transpilerFromJSON(json: string): NoteKatalogEintrag {
 		const obj = JSON.parse(json) as Partial<NoteKatalogEintrag>;
 		const result = new NoteKatalogEintrag();
 		if (obj.id === undefined)
@@ -63,7 +63,7 @@ export class NoteKatalogEintrag extends CoreTypeData {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : NoteKatalogEintrag) : string {
+	public static transpilerToJSON(obj: NoteKatalogEintrag): string {
 		let result = '{';
 		result += '"id" : ' + obj.id.toString() + ',';
 		result += '"schluessel" : ' + JSON.stringify(obj.schluessel) + ',';
@@ -79,7 +79,7 @@ export class NoteKatalogEintrag extends CoreTypeData {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<NoteKatalogEintrag>) : string {
+	public static transpilerToJSONPatch(obj: Partial<NoteKatalogEintrag>): string {
 		let result = '{';
 		if (obj.id !== undefined) {
 			result += '"id" : ' + obj.id.toString() + ',';
@@ -115,6 +115,6 @@ export class NoteKatalogEintrag extends CoreTypeData {
 
 }
 
-export function cast_de_svws_nrw_asd_data_NoteKatalogEintrag(obj : unknown) : NoteKatalogEintrag {
+export function cast_de_svws_nrw_asd_data_NoteKatalogEintrag(obj: unknown): NoteKatalogEintrag {
 	return obj as NoteKatalogEintrag;
 }

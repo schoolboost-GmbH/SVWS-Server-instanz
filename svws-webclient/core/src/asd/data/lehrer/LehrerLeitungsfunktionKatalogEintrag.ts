@@ -15,13 +15,13 @@ export class LehrerLeitungsfunktionKatalogEintrag extends CoreTypeData {
 		return 'de.svws_nrw.asd.data.lehrer.LehrerLeitungsfunktionKatalogEintrag';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.asd.data.lehrer.LehrerLeitungsfunktionKatalogEintrag', 'de.svws_nrw.asd.data.CoreTypeData'].includes(name);
 	}
 
 	public static class = new Class<LehrerLeitungsfunktionKatalogEintrag>('de.svws_nrw.asd.data.lehrer.LehrerLeitungsfunktionKatalogEintrag');
 
-	public static transpilerFromJSON(json : string): LehrerLeitungsfunktionKatalogEintrag {
+	public static transpilerFromJSON(json: string): LehrerLeitungsfunktionKatalogEintrag {
 		const obj = JSON.parse(json) as Partial<LehrerLeitungsfunktionKatalogEintrag>;
 		const result = new LehrerLeitungsfunktionKatalogEintrag();
 		if (obj.id === undefined)
@@ -41,7 +41,7 @@ export class LehrerLeitungsfunktionKatalogEintrag extends CoreTypeData {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : LehrerLeitungsfunktionKatalogEintrag) : string {
+	public static transpilerToJSON(obj: LehrerLeitungsfunktionKatalogEintrag): string {
 		let result = '{';
 		result += '"id" : ' + obj.id.toString() + ',';
 		result += '"schluessel" : ' + JSON.stringify(obj.schluessel) + ',';
@@ -54,7 +54,7 @@ export class LehrerLeitungsfunktionKatalogEintrag extends CoreTypeData {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<LehrerLeitungsfunktionKatalogEintrag>) : string {
+	public static transpilerToJSONPatch(obj: Partial<LehrerLeitungsfunktionKatalogEintrag>): string {
 		let result = '{';
 		if (obj.id !== undefined) {
 			result += '"id" : ' + obj.id.toString() + ',';
@@ -81,6 +81,6 @@ export class LehrerLeitungsfunktionKatalogEintrag extends CoreTypeData {
 
 }
 
-export function cast_de_svws_nrw_asd_data_lehrer_LehrerLeitungsfunktionKatalogEintrag(obj : unknown) : LehrerLeitungsfunktionKatalogEintrag {
+export function cast_de_svws_nrw_asd_data_lehrer_LehrerLeitungsfunktionKatalogEintrag(obj: unknown): LehrerLeitungsfunktionKatalogEintrag {
 	return obj as LehrerLeitungsfunktionKatalogEintrag;
 }

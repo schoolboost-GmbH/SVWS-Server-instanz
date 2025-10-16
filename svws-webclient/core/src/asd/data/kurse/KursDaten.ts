@@ -10,92 +10,92 @@ export class KursDaten extends JavaObject {
 	/**
 	 * Die ID des Kurses.
 	 */
-	public id : number = 0;
+	public id: number = 0;
 
 	/**
 	 * Die ID des Schuljahresabschnittes des Kurses.
 	 */
-	public idSchuljahresabschnitt : number = 0;
+	public idSchuljahresabschnitt: number = 0;
 
 	/**
 	 * Das Kürzel des Kurses.
 	 */
-	public kuerzel : string = "";
+	public kuerzel: string = "";
 
 	/**
 	 * Die IDs der Jahrgänge, denen der Kurs zugeordnet ist
 	 */
-	public idJahrgaenge : List<number> = new ArrayList<number>();
+	public idJahrgaenge: List<number> = new ArrayList<number>();
 
 	/**
 	 * Die ID des Faches, dem der Kurs zugeordnet ist
 	 */
-	public idFach : number = 0;
+	public idFach: number = 0;
 
 	/**
 	 * Die ID des Kurslehrers.
 	 */
-	public lehrer : number | null = null;
+	public lehrer: number | null = null;
 
 	/**
 	 * Die allgemeine Kursart, welche zur Filterung der speziellen Kursarten verwendet wird.
 	 */
-	public kursartAllg : string = "";
+	public kursartAllg: string = "";
 
 	/**
 	 * Die Sortierreihenfolge des Jahrgangslisten-Eintrags.
 	 */
-	public sortierung : number = 0;
+	public sortierung: number = 0;
 
 	/**
 	 * Gibt an, ob der Eintrag in der Anwendung sichtbar sein soll oder nicht.
 	 */
-	public istSichtbar : boolean = false;
+	public istSichtbar: boolean = false;
 
 	/**
 	 * Die Liste der zusätzlichen Lehrkräft eines Kurses.
 	 */
-	public weitereLehrer : List<KursLehrer> = new ArrayList<KursLehrer>();
+	public weitereLehrer: List<KursLehrer> = new ArrayList<KursLehrer>();
 
 	/**
 	 * Die Schüler des Kurses.
 	 */
-	public schueler : List<Schueler> = new ArrayList<Schueler>();
+	public schueler: List<Schueler> = new ArrayList<Schueler>();
 
 	/**
 	 * Die Nummern der Kurs-Schienen, in welchen sich der Kurs befindet - sofern eine Schiene zugeordnet wurde
 	 */
-	public schienen : List<number> = new ArrayList<number>();
+	public schienen: List<number> = new ArrayList<number>();
 
 	/**
 	 * Die Wochenstunden des Kurses.
 	 */
-	public wochenstunden : number = -1;
+	public wochenstunden: number = -1;
 
 	/**
 	 * Die Wochenstunden des Kurslehrers in dem Kurs.
 	 */
-	public wochenstundenLehrer : number = -1;
+	public wochenstundenLehrer: number = -1;
 
 	/**
 	 * Die Fortschreibungsart des Kurses (Keine, nur Definition mit Jahrgang behalten oder hochschreiben oder komplett)
 	 */
-	public idKursFortschreibungsart : number = 0;
+	public idKursFortschreibungsart: number = 0;
 
 	/**
 	 * Die Schulnummer des Kurses, falls der Kurs an einer anderes Schule stattfindet (z.B. im Rahmen einer Kooperation).
 	 */
-	public schulnummer : number | null = null;
+	public schulnummer: number | null = null;
 
 	/**
 	 * Gibt an, ob der Kurs epochal unterrichtet wird.
 	 */
-	public istEpochalunterricht : boolean = false;
+	public istEpochalunterricht: boolean = false;
 
 	/**
 	 * Ggf. die Zeugnisbezeichnung des Kurses
 	 */
-	public bezeichnungZeugnis : string | null = null;
+	public bezeichnungZeugnis: string | null = null;
 
 
 	/**
@@ -109,13 +109,13 @@ export class KursDaten extends JavaObject {
 		return 'de.svws_nrw.asd.data.kurse.KursDaten';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.asd.data.kurse.KursDaten'].includes(name);
 	}
 
 	public static class = new Class<KursDaten>('de.svws_nrw.asd.data.kurse.KursDaten');
 
-	public static transpilerFromJSON(json : string): KursDaten {
+	public static transpilerFromJSON(json: string): KursDaten {
 		const obj = JSON.parse(json) as Partial<KursDaten>;
 		const result = new KursDaten();
 		if (obj.id === undefined)
@@ -177,7 +177,7 @@ export class KursDaten extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : KursDaten) : string {
+	public static transpilerToJSON(obj: KursDaten): string {
 		let result = '{';
 		result += '"id" : ' + obj.id.toString() + ',';
 		result += '"idSchuljahresabschnitt" : ' + obj.idSchuljahresabschnitt.toString() + ',';
@@ -230,7 +230,7 @@ export class KursDaten extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<KursDaten>) : string {
+	public static transpilerToJSONPatch(obj: Partial<KursDaten>): string {
 		let result = '{';
 		if (obj.id !== undefined) {
 			result += '"id" : ' + obj.id.toString() + ',';
@@ -321,6 +321,6 @@ export class KursDaten extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_asd_data_kurse_KursDaten(obj : unknown) : KursDaten {
+export function cast_de_svws_nrw_asd_data_kurse_KursDaten(obj: unknown): KursDaten {
 	return obj as KursDaten;
 }

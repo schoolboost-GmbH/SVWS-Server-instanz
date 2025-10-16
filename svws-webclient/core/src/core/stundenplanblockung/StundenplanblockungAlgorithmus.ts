@@ -16,7 +16,7 @@ export class StundenplanblockungAlgorithmus extends Service {
 		return 'de.svws_nrw.core.stundenplanblockung.StundenplanblockungAlgorithmus';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.stundenplanblockung.StundenplanblockungAlgorithmus', 'de.svws_nrw.core.Service'].includes(name);
 	}
 
@@ -24,6 +24,6 @@ export class StundenplanblockungAlgorithmus extends Service {
 
 }
 
-export function cast_de_svws_nrw_core_stundenplanblockung_StundenplanblockungAlgorithmus(obj : unknown) : StundenplanblockungAlgorithmus {
+export function cast_de_svws_nrw_core_stundenplanblockung_StundenplanblockungAlgorithmus(obj: unknown): StundenplanblockungAlgorithmus {
 	return obj as StundenplanblockungAlgorithmus;
 }

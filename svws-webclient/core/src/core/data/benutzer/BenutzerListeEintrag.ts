@@ -6,37 +6,37 @@ export class BenutzerListeEintrag extends JavaObject {
 	/**
 	 * Die ID des Benutzers.
 	 */
-	public id : number = -1;
+	public id: number = -1;
 
 	/**
 	 * Der Typ des Benutzers.
 	 */
-	public typ : number = 0;
+	public typ: number = 0;
 
 	/**
 	 * die ID des Benutzers in der Typ-spezifischen-Tabelle (z.B. Lehrer-ID)
 	 */
-	public typID : number = -1;
+	public typID: number = -1;
 
 	/**
 	 * Der Anzeigename des Benutzers.
 	 */
-	public anzeigename : string = "";
+	public anzeigename: string = "";
 
 	/**
 	 * Der Anmeldename des Benutzers
 	 */
-	public name : string = "";
+	public name: string = "";
 
 	/**
 	 * Gibt an, ob es sich um einen Administrativen Benutzer handelt oder nicht.
 	 */
-	public istAdmin : boolean = false;
+	public istAdmin: boolean = false;
 
 	/**
 	 * Die ID der Credentials des Benutzers.
 	 */
-	public idCredentials : number = -1;
+	public idCredentials: number = -1;
 
 
 	/**
@@ -50,13 +50,13 @@ export class BenutzerListeEintrag extends JavaObject {
 		return 'de.svws_nrw.core.data.benutzer.BenutzerListeEintrag';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.benutzer.BenutzerListeEintrag'].includes(name);
 	}
 
 	public static class = new Class<BenutzerListeEintrag>('de.svws_nrw.core.data.benutzer.BenutzerListeEintrag');
 
-	public static transpilerFromJSON(json : string): BenutzerListeEintrag {
+	public static transpilerFromJSON(json: string): BenutzerListeEintrag {
 		const obj = JSON.parse(json) as Partial<BenutzerListeEintrag>;
 		const result = new BenutzerListeEintrag();
 		if (obj.id === undefined)
@@ -83,7 +83,7 @@ export class BenutzerListeEintrag extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : BenutzerListeEintrag) : string {
+	public static transpilerToJSON(obj: BenutzerListeEintrag): string {
 		let result = '{';
 		result += '"id" : ' + obj.id.toString() + ',';
 		result += '"typ" : ' + obj.typ.toString() + ',';
@@ -97,7 +97,7 @@ export class BenutzerListeEintrag extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<BenutzerListeEintrag>) : string {
+	public static transpilerToJSONPatch(obj: Partial<BenutzerListeEintrag>): string {
 		let result = '{';
 		if (obj.id !== undefined) {
 			result += '"id" : ' + obj.id.toString() + ',';
@@ -127,6 +127,6 @@ export class BenutzerListeEintrag extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_benutzer_BenutzerListeEintrag(obj : unknown) : BenutzerListeEintrag {
+export function cast_de_svws_nrw_core_data_benutzer_BenutzerListeEintrag(obj: unknown): BenutzerListeEintrag {
 	return obj as BenutzerListeEintrag;
 }

@@ -6,22 +6,22 @@ export class LehrerPersonalabschnittsdatenAnrechnungsstunden extends JavaObject 
 	/**
 	 * Die ID für den Eintrag von Anrechnungsstunden.
 	 */
-	public id : number = -1;
+	public id: number = -1;
 
 	/**
 	 * Die ID der Lehrerabschnittsdaten.
 	 */
-	public idAbschnittsdaten : number = -1;
+	public idAbschnittsdaten: number = -1;
 
 	/**
 	 * Die ID des Anrechnungsgrundes.
 	 */
-	public idGrund : number = -1;
+	public idGrund: number = -1;
 
 	/**
 	 * Die Anzahl der Anrechnungsstunden, welche dem Grund zugeordnet sind.
 	 */
-	public anzahl : number = 0.0;
+	public anzahl: number = 0.0;
 
 
 	/**
@@ -35,13 +35,13 @@ export class LehrerPersonalabschnittsdatenAnrechnungsstunden extends JavaObject 
 		return 'de.svws_nrw.asd.data.lehrer.LehrerPersonalabschnittsdatenAnrechnungsstunden';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.asd.data.lehrer.LehrerPersonalabschnittsdatenAnrechnungsstunden'].includes(name);
 	}
 
 	public static class = new Class<LehrerPersonalabschnittsdatenAnrechnungsstunden>('de.svws_nrw.asd.data.lehrer.LehrerPersonalabschnittsdatenAnrechnungsstunden');
 
-	public static transpilerFromJSON(json : string): LehrerPersonalabschnittsdatenAnrechnungsstunden {
+	public static transpilerFromJSON(json: string): LehrerPersonalabschnittsdatenAnrechnungsstunden {
 		const obj = JSON.parse(json) as Partial<LehrerPersonalabschnittsdatenAnrechnungsstunden>;
 		const result = new LehrerPersonalabschnittsdatenAnrechnungsstunden();
 		if (obj.id === undefined)
@@ -59,7 +59,7 @@ export class LehrerPersonalabschnittsdatenAnrechnungsstunden extends JavaObject 
 		return result;
 	}
 
-	public static transpilerToJSON(obj : LehrerPersonalabschnittsdatenAnrechnungsstunden) : string {
+	public static transpilerToJSON(obj: LehrerPersonalabschnittsdatenAnrechnungsstunden): string {
 		let result = '{';
 		result += '"id" : ' + obj.id.toString() + ',';
 		result += '"idAbschnittsdaten" : ' + obj.idAbschnittsdaten.toString() + ',';
@@ -70,7 +70,7 @@ export class LehrerPersonalabschnittsdatenAnrechnungsstunden extends JavaObject 
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<LehrerPersonalabschnittsdatenAnrechnungsstunden>) : string {
+	public static transpilerToJSONPatch(obj: Partial<LehrerPersonalabschnittsdatenAnrechnungsstunden>): string {
 		let result = '{';
 		if (obj.id !== undefined) {
 			result += '"id" : ' + obj.id.toString() + ',';
@@ -91,6 +91,6 @@ export class LehrerPersonalabschnittsdatenAnrechnungsstunden extends JavaObject 
 
 }
 
-export function cast_de_svws_nrw_asd_data_lehrer_LehrerPersonalabschnittsdatenAnrechnungsstunden(obj : unknown) : LehrerPersonalabschnittsdatenAnrechnungsstunden {
+export function cast_de_svws_nrw_asd_data_lehrer_LehrerPersonalabschnittsdatenAnrechnungsstunden(obj: unknown): LehrerPersonalabschnittsdatenAnrechnungsstunden {
 	return obj as LehrerPersonalabschnittsdatenAnrechnungsstunden;
 }

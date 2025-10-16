@@ -9,27 +9,27 @@ import { de_svws_nrw_asd_types_CoreType_getManager, de_svws_nrw_asd_types_CoreTy
 export class PrimarstufeSchuleingangsphaseBesuchsjahre extends JavaEnum<PrimarstufeSchuleingangsphaseBesuchsjahre> implements CoreType<PrimarstufeSchuleingangsphaseBesuchsjahreKatalogEintrag, PrimarstufeSchuleingangsphaseBesuchsjahre> {
 
 	/** an array containing all values of this enumeration */
-	static readonly all_values_by_ordinal : Array<PrimarstufeSchuleingangsphaseBesuchsjahre> = [];
+	static readonly all_values_by_ordinal: Array<PrimarstufeSchuleingangsphaseBesuchsjahre> = [];
 
 	/** an array containing all values of this enumeration indexed by their name*/
-	static readonly all_values_by_name : Map<string, PrimarstufeSchuleingangsphaseBesuchsjahre> = new Map<string, PrimarstufeSchuleingangsphaseBesuchsjahre>();
+	static readonly all_values_by_name: Map<string, PrimarstufeSchuleingangsphaseBesuchsjahre> = new Map<string, PrimarstufeSchuleingangsphaseBesuchsjahre>();
 
 	/**
 	 * E1: Das erste Besuchsjahr in der Schuleingangsphase
 	 */
-	public static readonly E1 : PrimarstufeSchuleingangsphaseBesuchsjahre = new PrimarstufeSchuleingangsphaseBesuchsjahre("E1", 0, );
+	public static readonly E1: PrimarstufeSchuleingangsphaseBesuchsjahre = new PrimarstufeSchuleingangsphaseBesuchsjahre("E1", 0, );
 
 	/**
 	 * E2: Das zweite Besuchsjahr in der Schuleingangsphase
 	 */
-	public static readonly E2 : PrimarstufeSchuleingangsphaseBesuchsjahre = new PrimarstufeSchuleingangsphaseBesuchsjahre("E2", 1, );
+	public static readonly E2: PrimarstufeSchuleingangsphaseBesuchsjahre = new PrimarstufeSchuleingangsphaseBesuchsjahre("E2", 1, );
 
 	/**
 	 * E3: Das dritte Besuchsjahr in der Schuleingangsphase
 	 */
-	public static readonly E3 : PrimarstufeSchuleingangsphaseBesuchsjahre = new PrimarstufeSchuleingangsphaseBesuchsjahre("E3", 2, );
+	public static readonly E3: PrimarstufeSchuleingangsphaseBesuchsjahre = new PrimarstufeSchuleingangsphaseBesuchsjahre("E3", 2, );
 
-	private constructor(name : string, ordinal : number) {
+	private constructor(name: string, ordinal: number) {
 		super(name, ordinal);
 		PrimarstufeSchuleingangsphaseBesuchsjahre.all_values_by_ordinal.push(this);
 		PrimarstufeSchuleingangsphaseBesuchsjahre.all_values_by_name.set(name, this);
@@ -40,7 +40,7 @@ export class PrimarstufeSchuleingangsphaseBesuchsjahre extends JavaEnum<Primarst
 	 *
 	 * @param manager   der Manager für die Daten des Core-Types
 	 */
-	public static init(manager : CoreTypeDataManager<PrimarstufeSchuleingangsphaseBesuchsjahreKatalogEintrag, PrimarstufeSchuleingangsphaseBesuchsjahre>) : void {
+	public static init(manager: CoreTypeDataManager<PrimarstufeSchuleingangsphaseBesuchsjahreKatalogEintrag, PrimarstufeSchuleingangsphaseBesuchsjahre>): void {
 		CoreTypeDataManager.putManager(PrimarstufeSchuleingangsphaseBesuchsjahre.class, manager);
 	}
 
@@ -49,7 +49,7 @@ export class PrimarstufeSchuleingangsphaseBesuchsjahre extends JavaEnum<Primarst
 	 *
 	 * @return der Daten-Manager
 	 */
-	public static data() : CoreTypeDataManager<PrimarstufeSchuleingangsphaseBesuchsjahreKatalogEintrag, PrimarstufeSchuleingangsphaseBesuchsjahre> {
+	public static data(): CoreTypeDataManager<PrimarstufeSchuleingangsphaseBesuchsjahreKatalogEintrag, PrimarstufeSchuleingangsphaseBesuchsjahre> {
 		return CoreTypeDataManager.getManager(PrimarstufeSchuleingangsphaseBesuchsjahre.class);
 	}
 
@@ -58,7 +58,7 @@ export class PrimarstufeSchuleingangsphaseBesuchsjahre extends JavaEnum<Primarst
 	 *
 	 * @returns the array with enumeration values
 	 */
-	public static values() : Array<PrimarstufeSchuleingangsphaseBesuchsjahre> {
+	public static values(): Array<PrimarstufeSchuleingangsphaseBesuchsjahre> {
 		return [...this.all_values_by_ordinal];
 	}
 
@@ -69,24 +69,24 @@ export class PrimarstufeSchuleingangsphaseBesuchsjahre extends JavaEnum<Primarst
 	 *
 	 * @returns the enumeration values or null
 	 */
-	public static valueOf(name : string) : PrimarstufeSchuleingangsphaseBesuchsjahre | null {
+	public static valueOf(name: string): PrimarstufeSchuleingangsphaseBesuchsjahre | null {
 		const tmp = this.all_values_by_name.get(name);
 		return (!tmp) ? null : tmp;
 	}
 
-	public getManager() : CoreTypeDataManager<PrimarstufeSchuleingangsphaseBesuchsjahreKatalogEintrag, PrimarstufeSchuleingangsphaseBesuchsjahre> {
+	public getManager(): CoreTypeDataManager<PrimarstufeSchuleingangsphaseBesuchsjahreKatalogEintrag, PrimarstufeSchuleingangsphaseBesuchsjahre> {
 		return de_svws_nrw_asd_types_CoreType_getManager(this);
 	}
 
-	public daten(schuljahr : number) : PrimarstufeSchuleingangsphaseBesuchsjahreKatalogEintrag | null {
+	public daten(schuljahr: number): PrimarstufeSchuleingangsphaseBesuchsjahreKatalogEintrag | null {
 		return de_svws_nrw_asd_types_CoreType_daten(this, schuljahr);
 	}
 
-	public statistikId() : string | null {
+	public statistikId(): string | null {
 		return de_svws_nrw_asd_types_CoreType_statistikId(this);
 	}
 
-	public historie() : List<PrimarstufeSchuleingangsphaseBesuchsjahreKatalogEintrag> {
+	public historie(): List<PrimarstufeSchuleingangsphaseBesuchsjahreKatalogEintrag> {
 		return de_svws_nrw_asd_types_CoreType_historie(this);
 	}
 
@@ -94,7 +94,7 @@ export class PrimarstufeSchuleingangsphaseBesuchsjahre extends JavaEnum<Primarst
 		return 'de.svws_nrw.asd.types.jahrgang.PrimarstufeSchuleingangsphaseBesuchsjahre';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.asd.types.jahrgang.PrimarstufeSchuleingangsphaseBesuchsjahre', 'de.svws_nrw.asd.types.CoreType', 'java.lang.Comparable', 'java.lang.Enum', 'java.lang.Comparable'].includes(name);
 	}
 
@@ -102,6 +102,6 @@ export class PrimarstufeSchuleingangsphaseBesuchsjahre extends JavaEnum<Primarst
 
 }
 
-export function cast_de_svws_nrw_asd_types_jahrgang_PrimarstufeSchuleingangsphaseBesuchsjahre(obj : unknown) : PrimarstufeSchuleingangsphaseBesuchsjahre {
+export function cast_de_svws_nrw_asd_types_jahrgang_PrimarstufeSchuleingangsphaseBesuchsjahre(obj: unknown): PrimarstufeSchuleingangsphaseBesuchsjahre {
 	return obj as PrimarstufeSchuleingangsphaseBesuchsjahre;
 }

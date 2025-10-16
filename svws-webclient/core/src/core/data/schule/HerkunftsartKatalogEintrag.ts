@@ -10,27 +10,27 @@ export class HerkunftsartKatalogEintrag extends JavaObject {
 	/**
 	 * Die ID des Katalog-Eintrags.
 	 */
-	public id : number = 0;
+	public id: number = 0;
 
 	/**
 	 * Das 2-stellige Kürzel der Herkunftsart
 	 */
-	public kuerzel : string = "";
+	public kuerzel: string = "";
 
 	/**
 	 * Die Bezeichnungen bei den jeweils zulässigen Schulformen.
 	 */
-	public bezeichnungen : List<HerkunftsartKatalogEintragBezeichnung> = new ArrayList<HerkunftsartKatalogEintragBezeichnung>();
+	public bezeichnungen: List<HerkunftsartKatalogEintragBezeichnung> = new ArrayList<HerkunftsartKatalogEintragBezeichnung>();
 
 	/**
 	 * Gibt an, in welchem Schuljahr die Herkunftsart ergänzt wurde. Ist kein Schuljahr bekannt, so ist null gesetzt.
 	 */
-	public gueltigVon : number | null = null;
+	public gueltigVon: number | null = null;
 
 	/**
 	 * Gibt an, bis zu welchem Schuljahr die Herkunftsart verwendet wird. Ist kein Schuljahr bekannt, so ist null gesetzt.
 	 */
-	public gueltigBis : number | null = null;
+	public gueltigBis: number | null = null;
 
 
 	/**
@@ -47,21 +47,21 @@ export class HerkunftsartKatalogEintrag extends JavaObject {
 	 * @param gueltigVon      das Schuljahr, wann der Eintrag eingeführt wurde oder null, falls es nicht bekannt ist und "schon immer gültig war"
 	 * @param gueltigBis      das Schuljahr, bis zu welchem der Eintrag gültig ist
 	 */
-	public constructor(id : number, kuerzel : string, bezeichnungen : List<HerkunftsartKatalogEintragBezeichnung>, gueltigVon : number | null, gueltigBis : number | null);
+	public constructor(id: number, kuerzel: string, bezeichnungen: List<HerkunftsartKatalogEintragBezeichnung>, gueltigVon: number | null, gueltigBis: number | null);
 
 	/**
 	 * Implementation for method overloads of 'constructor'
 	 */
-	public constructor(__param0? : number, __param1? : string, __param2? : List<HerkunftsartKatalogEintragBezeichnung>, __param3? : null | number, __param4? : null | number) {
+	public constructor(__param0?: number, __param1?: string, __param2?: List<HerkunftsartKatalogEintragBezeichnung>, __param3?: null | number, __param4?: null | number) {
 		super();
 		if ((__param0 === undefined) && (__param1 === undefined) && (__param2 === undefined) && (__param3 === undefined) && (__param4 === undefined)) {
 			// empty method body
 		} else if (((__param0 !== undefined) && typeof __param0 === "number") && ((__param1 !== undefined) && (typeof __param1 === "string")) && ((__param2 !== undefined) && ((__param2 instanceof JavaObject) && (__param2.isTranspiledInstanceOf('java.util.List'))) || (__param2 === null)) && ((__param3 !== undefined) && (typeof __param3 === "number") || (__param3 === null)) && ((__param4 !== undefined) && (typeof __param4 === "number") || (__param4 === null))) {
-			const id : number = __param0 as number;
-			const kuerzel : string = __param1;
-			const bezeichnungen : List<HerkunftsartKatalogEintragBezeichnung> = cast_java_util_List(__param2);
-			const gueltigVon : number | null = __param3;
-			const gueltigBis : number | null = __param4;
+			const id: number = __param0 as number;
+			const kuerzel: string = __param1;
+			const bezeichnungen: List<HerkunftsartKatalogEintragBezeichnung> = cast_java_util_List(__param2);
+			const gueltigVon: number | null = __param3;
+			const gueltigBis: number | null = __param4;
 			this.id = id;
 			this.kuerzel = kuerzel;
 			this.bezeichnungen = bezeichnungen;
@@ -74,13 +74,13 @@ export class HerkunftsartKatalogEintrag extends JavaObject {
 		return 'de.svws_nrw.core.data.schule.HerkunftsartKatalogEintrag';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.schule.HerkunftsartKatalogEintrag'].includes(name);
 	}
 
 	public static class = new Class<HerkunftsartKatalogEintrag>('de.svws_nrw.core.data.schule.HerkunftsartKatalogEintrag');
 
-	public static transpilerFromJSON(json : string): HerkunftsartKatalogEintrag {
+	public static transpilerFromJSON(json: string): HerkunftsartKatalogEintrag {
 		const obj = JSON.parse(json) as Partial<HerkunftsartKatalogEintrag>;
 		const result = new HerkunftsartKatalogEintrag();
 		if (obj.id === undefined)
@@ -99,7 +99,7 @@ export class HerkunftsartKatalogEintrag extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : HerkunftsartKatalogEintrag) : string {
+	public static transpilerToJSON(obj: HerkunftsartKatalogEintrag): string {
 		let result = '{';
 		result += '"id" : ' + obj.id.toString() + ',';
 		result += '"kuerzel" : ' + JSON.stringify(obj.kuerzel) + ',';
@@ -118,7 +118,7 @@ export class HerkunftsartKatalogEintrag extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<HerkunftsartKatalogEintrag>) : string {
+	public static transpilerToJSONPatch(obj: Partial<HerkunftsartKatalogEintrag>): string {
 		let result = '{';
 		if (obj.id !== undefined) {
 			result += '"id" : ' + obj.id.toString() + ',';
@@ -149,6 +149,6 @@ export class HerkunftsartKatalogEintrag extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_schule_HerkunftsartKatalogEintrag(obj : unknown) : HerkunftsartKatalogEintrag {
+export function cast_de_svws_nrw_core_data_schule_HerkunftsartKatalogEintrag(obj: unknown): HerkunftsartKatalogEintrag {
 	return obj as HerkunftsartKatalogEintrag;
 }

@@ -6,32 +6,32 @@ export class Haltestelle extends JavaObject {
 	/**
 	 * Die ID der Haltestelle
 	 */
-	public id : number = 0;
+	public id: number = 0;
 
 	/**
 	 * Die Bezeichnung der Haltestelle
 	 */
-	public bezeichnung : string | null = null;
+	public bezeichnung: string | null = null;
 
 	/**
 	 * Die Entfernung zwischen Schule und Haltestelle
 	 */
-	public entfernungSchule : number | null = null;
+	public entfernungSchule: number | null = null;
 
 	/**
 	 * Gibt die Position in der Sortierreihenfolge für die Katalog-Einträge an.
 	 */
-	public sortierung : number = 1;
+	public sortierung: number = 1;
 
 	/**
 	 * Gibt an, ob der Eintrag in der Anwendung sichtbar sein soll oder nicht.
 	 */
-	public istSichtbar : boolean = true;
+	public istSichtbar: boolean = true;
 
 	/**
 	 * Gibt an, ob der Eintrag in der Anwendung änderbar sein soll oder nicht.
 	 */
-	public istAenderbar : boolean = true;
+	public istAenderbar: boolean = true;
 
 
 	public constructor() {
@@ -42,13 +42,13 @@ export class Haltestelle extends JavaObject {
 		return 'de.svws_nrw.core.data.schule.Haltestelle';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.schule.Haltestelle'].includes(name);
 	}
 
 	public static class = new Class<Haltestelle>('de.svws_nrw.core.data.schule.Haltestelle');
 
-	public static transpilerFromJSON(json : string): Haltestelle {
+	public static transpilerFromJSON(json: string): Haltestelle {
 		const obj = JSON.parse(json) as Partial<Haltestelle>;
 		const result = new Haltestelle();
 		if (obj.id === undefined)
@@ -68,7 +68,7 @@ export class Haltestelle extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : Haltestelle) : string {
+	public static transpilerToJSON(obj: Haltestelle): string {
 		let result = '{';
 		result += '"id" : ' + obj.id.toString() + ',';
 		result += '"bezeichnung" : ' + ((obj.bezeichnung === null) ? 'null' : JSON.stringify(obj.bezeichnung)) + ',';
@@ -81,7 +81,7 @@ export class Haltestelle extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<Haltestelle>) : string {
+	public static transpilerToJSONPatch(obj: Partial<Haltestelle>): string {
 		let result = '{';
 		if (obj.id !== undefined) {
 			result += '"id" : ' + obj.id.toString() + ',';
@@ -108,6 +108,6 @@ export class Haltestelle extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_schule_Haltestelle(obj : unknown) : Haltestelle {
+export function cast_de_svws_nrw_core_data_schule_Haltestelle(obj: unknown): Haltestelle {
 	return obj as Haltestelle;
 }

@@ -13,32 +13,32 @@ export class HerkunftsschulnummerKatalogEintrag extends JavaObject {
 	/**
 	 * Die ID des Katalog-Eintrags.
 	 */
-	public id : number = -1;
+	public id: number = -1;
 
 	/**
 	 * Die Herkunfts-Schulnummer
 	 */
-	public schulnummer : number = -1;
+	public schulnummer: number = -1;
 
 	/**
 	 * Die Bezeichnung der Herkunfts-Schulnummer
 	 */
-	public bezeichnung : string = "";
+	public bezeichnung: string = "";
 
 	/**
 	 * Die Informationen zu Schulformen und -gliederungen, wo die Herkunfts-Schulnummer zulässig ist.
 	 */
-	public zulaessig : List<SchulformSchulgliederung> = new ArrayList<SchulformSchulgliederung>();
+	public zulaessig: List<SchulformSchulgliederung> = new ArrayList<SchulformSchulgliederung>();
 
 	/**
 	 * Gibt an, in welchem Schuljahr die Herkunfts-Schulnummer einführt wurde. Ist kein Schuljahr bekannt, so ist null gesetzt.
 	 */
-	public gueltigVon : number | null = null;
+	public gueltigVon: number | null = null;
 
 	/**
 	 * Gibt an, bis zu welchem Schuljahr die Herkunfts-Schulnummer gültig ist. Ist kein Schuljahr bekannt, so ist null gesetzt.
 	 */
-	public gueltigBis : number | null = null;
+	public gueltigBis: number | null = null;
 
 
 	/**
@@ -57,30 +57,30 @@ export class HerkunftsschulnummerKatalogEintrag extends JavaObject {
 	 *                           "schon immer gültig war"
 	 * @param gueltigBis         das Schuljahr, bis zu welchem der Eintrag gültig ist
 	 */
-	public constructor(id : number, schulnummer : number, bezeichnung : string, zulaessig : List<Pair<Schulform, Schulgliederung | null>> | null, gueltigVon : number | null, gueltigBis : number | null);
+	public constructor(id: number, schulnummer: number, bezeichnung: string, zulaessig: List<Pair<Schulform, Schulgliederung | null>> | null, gueltigVon: number | null, gueltigBis: number | null);
 
 	/**
 	 * Implementation for method overloads of 'constructor'
 	 */
-	public constructor(__param0? : number, __param1? : number, __param2? : string, __param3? : List<Pair<Schulform, Schulgliederung | null>> | null, __param4? : null | number, __param5? : null | number) {
+	public constructor(__param0?: number, __param1?: number, __param2?: string, __param3?: List<Pair<Schulform, Schulgliederung | null>> | null, __param4?: null | number, __param5?: null | number) {
 		super();
 		if ((__param0 === undefined) && (__param1 === undefined) && (__param2 === undefined) && (__param3 === undefined) && (__param4 === undefined) && (__param5 === undefined)) {
 			// empty method body
 		} else if (((__param0 !== undefined) && typeof __param0 === "number") && ((__param1 !== undefined) && typeof __param1 === "number") && ((__param2 !== undefined) && (typeof __param2 === "string")) && ((__param3 !== undefined) && ((__param3 instanceof JavaObject) && (__param3.isTranspiledInstanceOf('java.util.List'))) || (__param3 === null)) && ((__param4 !== undefined) && (typeof __param4 === "number") || (__param4 === null)) && ((__param5 !== undefined) && (typeof __param5 === "number") || (__param5 === null))) {
-			const id : number = __param0 as number;
-			const schulnummer : number = __param1 as number;
-			const bezeichnung : string = __param2;
-			const zulaessig : List<Pair<Schulform, Schulgliederung | null>> | null = cast_java_util_List(__param3);
-			const gueltigVon : number | null = __param4;
-			const gueltigBis : number | null = __param5;
+			const id: number = __param0 as number;
+			const schulnummer: number = __param1 as number;
+			const bezeichnung: string = __param2;
+			const zulaessig: List<Pair<Schulform, Schulgliederung | null>> | null = cast_java_util_List(__param3);
+			const gueltigVon: number | null = __param4;
+			const gueltigBis: number | null = __param5;
 			this.id = id;
 			this.schulnummer = schulnummer;
 			this.bezeichnung = bezeichnung;
 			if (zulaessig !== null) {
 				for (const zul of zulaessig) {
-					const sfsgl : SchulformSchulgliederung | null = new SchulformSchulgliederung();
+					const sfsgl: SchulformSchulgliederung | null = new SchulformSchulgliederung();
 					sfsgl.schulform = zul.a.name();
-					const sgl : Schulgliederung | null = zul.b;
+					const sgl: Schulgliederung | null = zul.b;
 					sfsgl.gliederung = (sgl === null) ? null : sgl.name();
 					this.zulaessig.add(sfsgl);
 				}
@@ -94,13 +94,13 @@ export class HerkunftsschulnummerKatalogEintrag extends JavaObject {
 		return 'de.svws_nrw.core.data.schule.HerkunftsschulnummerKatalogEintrag';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.schule.HerkunftsschulnummerKatalogEintrag'].includes(name);
 	}
 
 	public static class = new Class<HerkunftsschulnummerKatalogEintrag>('de.svws_nrw.core.data.schule.HerkunftsschulnummerKatalogEintrag');
 
-	public static transpilerFromJSON(json : string): HerkunftsschulnummerKatalogEintrag {
+	public static transpilerFromJSON(json: string): HerkunftsschulnummerKatalogEintrag {
 		const obj = JSON.parse(json) as Partial<HerkunftsschulnummerKatalogEintrag>;
 		const result = new HerkunftsschulnummerKatalogEintrag();
 		if (obj.id === undefined)
@@ -122,7 +122,7 @@ export class HerkunftsschulnummerKatalogEintrag extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : HerkunftsschulnummerKatalogEintrag) : string {
+	public static transpilerToJSON(obj: HerkunftsschulnummerKatalogEintrag): string {
 		let result = '{';
 		result += '"id" : ' + obj.id.toString() + ',';
 		result += '"schulnummer" : ' + obj.schulnummer.toString() + ',';
@@ -142,7 +142,7 @@ export class HerkunftsschulnummerKatalogEintrag extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<HerkunftsschulnummerKatalogEintrag>) : string {
+	public static transpilerToJSONPatch(obj: Partial<HerkunftsschulnummerKatalogEintrag>): string {
 		let result = '{';
 		if (obj.id !== undefined) {
 			result += '"id" : ' + obj.id.toString() + ',';
@@ -176,6 +176,6 @@ export class HerkunftsschulnummerKatalogEintrag extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_schule_HerkunftsschulnummerKatalogEintrag(obj : unknown) : HerkunftsschulnummerKatalogEintrag {
+export function cast_de_svws_nrw_core_data_schule_HerkunftsschulnummerKatalogEintrag(obj: unknown): HerkunftsschulnummerKatalogEintrag {
 	return obj as HerkunftsschulnummerKatalogEintrag;
 }

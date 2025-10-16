@@ -6,52 +6,52 @@ export class SchuelerSchulbesuchSchule extends JavaObject {
 	/**
 	 * Die ID der Informationen zum vorigen Schulbesuch in der Datenbank.
 	 */
-	public id : number = 0;
+	public id: number = 0;
 
 	/**
 	 * Die ID der Schule.
 	 */
-	public idSchule : number | null = null;
+	public idSchule: number | null = null;
 
 	/**
 	 * Der Schlüssel des Bildungsganges/Schulgliederung an der Schule.
 	 */
-	public schulgliederung : string | null = null;
+	public schulgliederung: string | null = null;
 
 	/**
 	 * Die ID des Grundes für die Entlassung von der Schule.
 	 */
-	public entlassgrundID : number | null = null;
+	public entlassgrundID: number | null = null;
 
 	/**
 	 * Die ID des Abschlusses, welcher an der Schule erworben wurde.
 	 */
-	public abschlussartID : string | null = null;
+	public abschlussartID: string | null = null;
 
 	/**
 	 * Die ID der Organisationsform der Schule (z.B. für Halbtagsunterricht).
 	 */
-	public organisationsFormID : string | null = null;
+	public organisationsFormID: string | null = null;
 
 	/**
 	 * Das Datum, ab dem die Schule besucht wurde.
 	 */
-	public datumVon : string | null = null;
+	public datumVon: string | null = null;
 
 	/**
 	 * Das Datum, bis wann die Schule besucht wurde.
 	 */
-	public datumBis : string | null = null;
+	public datumBis: string | null = null;
 
 	/**
 	 * Der Jahrgang, ab dem die Schule besucht wurde.
 	 */
-	public jahrgangVon : string | null = null;
+	public jahrgangVon: string | null = null;
 
 	/**
 	 * Der Jahrgang, bis zu dem die Schule besucht wurde.
 	 */
-	public jahrgangBis : string | null = null;
+	public jahrgangBis: string | null = null;
 
 
 	/**
@@ -65,13 +65,13 @@ export class SchuelerSchulbesuchSchule extends JavaObject {
 		return 'de.svws_nrw.asd.data.schueler.SchuelerSchulbesuchSchule';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.asd.data.schueler.SchuelerSchulbesuchSchule'].includes(name);
 	}
 
 	public static class = new Class<SchuelerSchulbesuchSchule>('de.svws_nrw.asd.data.schueler.SchuelerSchulbesuchSchule');
 
-	public static transpilerFromJSON(json : string): SchuelerSchulbesuchSchule {
+	public static transpilerFromJSON(json: string): SchuelerSchulbesuchSchule {
 		const obj = JSON.parse(json) as Partial<SchuelerSchulbesuchSchule>;
 		const result = new SchuelerSchulbesuchSchule();
 		if (obj.id === undefined)
@@ -89,7 +89,7 @@ export class SchuelerSchulbesuchSchule extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : SchuelerSchulbesuchSchule) : string {
+	public static transpilerToJSON(obj: SchuelerSchulbesuchSchule): string {
 		let result = '{';
 		result += '"id" : ' + obj.id.toString() + ',';
 		result += '"idSchule" : ' + ((obj.idSchule === null) ? 'null' : obj.idSchule.toString()) + ',';
@@ -106,7 +106,7 @@ export class SchuelerSchulbesuchSchule extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<SchuelerSchulbesuchSchule>) : string {
+	public static transpilerToJSONPatch(obj: Partial<SchuelerSchulbesuchSchule>): string {
 		let result = '{';
 		if (obj.id !== undefined) {
 			result += '"id" : ' + obj.id.toString() + ',';
@@ -145,6 +145,6 @@ export class SchuelerSchulbesuchSchule extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_asd_data_schueler_SchuelerSchulbesuchSchule(obj : unknown) : SchuelerSchulbesuchSchule {
+export function cast_de_svws_nrw_asd_data_schueler_SchuelerSchulbesuchSchule(obj: unknown): SchuelerSchulbesuchSchule {
 	return obj as SchuelerSchulbesuchSchule;
 }

@@ -13,9 +13,9 @@ export class StundenplanblockungManagerLerngruppeMenge extends JavaObject {
 	/**
 	 * Alle Lerngruppen.
 	 */
-	private readonly _menge : List<StundenplanblockungManagerLerngruppe> = new ArrayList<StundenplanblockungManagerLerngruppe>();
+	private readonly _menge: List<StundenplanblockungManagerLerngruppe> = new ArrayList<StundenplanblockungManagerLerngruppe>();
 
-	private readonly _map : JavaMap<number, StundenplanblockungManagerLerngruppe> = new HashMap<number, StundenplanblockungManagerLerngruppe>();
+	private readonly _map: JavaMap<number, StundenplanblockungManagerLerngruppe> = new HashMap<number, StundenplanblockungManagerLerngruppe>();
 
 
 	/**
@@ -33,10 +33,10 @@ export class StundenplanblockungManagerLerngruppeMenge extends JavaObject {
 	 * @throws NullPointerException  Falls die Lerngruppe-ID bereits existiert.
 	 * @return Die zuvor erzeugte Lerngruppe.
 	 */
-	public createOrException(pLerngruppeID : number) : StundenplanblockungManagerLerngruppe {
+	public createOrException(pLerngruppeID: number): StundenplanblockungManagerLerngruppe {
 		if (this._map.containsKey(pLerngruppeID))
 			throw new NullPointerException("Die Lerngruppe-ID " + pLerngruppeID + " existiert bereits!")
-		const gr : StundenplanblockungManagerLerngruppe | null = new StundenplanblockungManagerLerngruppe(pLerngruppeID);
+		const gr: StundenplanblockungManagerLerngruppe | null = new StundenplanblockungManagerLerngruppe(pLerngruppeID);
 		this._map.put(pLerngruppeID, gr);
 		this._menge.add(gr);
 		return gr;
@@ -50,8 +50,8 @@ export class StundenplanblockungManagerLerngruppeMenge extends JavaObject {
 	 * @throws NullPointerException  Falls die Lerngruppe-ID unbekannt ist.
 	 * @return Das {@link StundenplanblockungLerngruppe}-Objekt zur übergebenen ID.
 	 */
-	public getOrException(pLerngruppeID : number) : StundenplanblockungManagerLerngruppe {
-		const gr : StundenplanblockungManagerLerngruppe | null = this._map.get(pLerngruppeID);
+	public getOrException(pLerngruppeID: number): StundenplanblockungManagerLerngruppe {
+		const gr: StundenplanblockungManagerLerngruppe | null = this._map.get(pLerngruppeID);
 		if (gr === null)
 			throw new NullPointerException("Lerngruppe-ID " + pLerngruppeID + " unbekannt!")
 		return gr;
@@ -64,8 +64,8 @@ export class StundenplanblockungManagerLerngruppeMenge extends JavaObject {
 	 * @param pRandom  Das Random-Objekt zum Erzeugen von Zufallszahlen.
 	 * @return         Liefert eine zufällige Lerngruppe.
 	 */
-	public getRandomOrException(pRandom : Random) : StundenplanblockungManagerLerngruppe {
-		const size : number = this._menge.size();
+	public getRandomOrException(pRandom: Random): StundenplanblockungManagerLerngruppe {
+		const size: number = this._menge.size();
 		if (size <= 0)
 			throw new NullPointerException("Es gibt keine Lerngruppen!")
 		return this._menge.get(pRandom.nextInt(size));
@@ -78,8 +78,8 @@ export class StundenplanblockungManagerLerngruppeMenge extends JavaObject {
 	 * @param pLerngruppeID          Die Datenbank-ID der Lerngruppe.
 	 * @throws NullPointerException  Falls die Lerngruppe-ID unbekannt ist.
 	 */
-	public removeOrException(pLerngruppeID : number) : void {
-		const gr : StundenplanblockungManagerLerngruppe = this.getOrException(pLerngruppeID);
+	public removeOrException(pLerngruppeID: number): void {
+		const gr: StundenplanblockungManagerLerngruppe = this.getOrException(pLerngruppeID);
 		this._map.remove(pLerngruppeID);
 		this._menge.remove(gr);
 	}
@@ -89,7 +89,7 @@ export class StundenplanblockungManagerLerngruppeMenge extends JavaObject {
 	 *
 	 * @return Die Menge aller Lerngruppen.
 	 */
-	public getMenge() : List<StundenplanblockungManagerLerngruppe> | null {
+	public getMenge(): List<StundenplanblockungManagerLerngruppe> | null {
 		return this._menge;
 	}
 
@@ -99,7 +99,7 @@ export class StundenplanblockungManagerLerngruppeMenge extends JavaObject {
 	 * @param pRaumID Die Datenbank-ID des Raumes.
 	 * @return TRUE, falls die Lerngruppe-ID existiert.
 	 */
-	public exists(pRaumID : number) : boolean {
+	public exists(pRaumID: number): boolean {
 		return this._map.containsKey(pRaumID);
 	}
 
@@ -108,7 +108,7 @@ export class StundenplanblockungManagerLerngruppeMenge extends JavaObject {
 	 *
 	 * @return Die Anzahl an Lerngruppen.
 	 */
-	public size() : number {
+	public size(): number {
 		return this._menge.size();
 	}
 
@@ -116,7 +116,7 @@ export class StundenplanblockungManagerLerngruppeMenge extends JavaObject {
 		return 'de.svws_nrw.core.utils.stundenplanblockung.StundenplanblockungManagerLerngruppeMenge';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.utils.stundenplanblockung.StundenplanblockungManagerLerngruppeMenge'].includes(name);
 	}
 
@@ -124,6 +124,6 @@ export class StundenplanblockungManagerLerngruppeMenge extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_utils_stundenplanblockung_StundenplanblockungManagerLerngruppeMenge(obj : unknown) : StundenplanblockungManagerLerngruppeMenge {
+export function cast_de_svws_nrw_core_utils_stundenplanblockung_StundenplanblockungManagerLerngruppeMenge(obj: unknown): StundenplanblockungManagerLerngruppeMenge {
 	return obj as StundenplanblockungManagerLerngruppeMenge;
 }

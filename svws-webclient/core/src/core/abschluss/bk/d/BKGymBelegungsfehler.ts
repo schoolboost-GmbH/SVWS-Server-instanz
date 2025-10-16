@@ -5,90 +5,90 @@ import { Class } from '../../../../java/lang/Class';
 export class BKGymBelegungsfehler extends JavaEnum<BKGymBelegungsfehler> {
 
 	/** an array containing all values of this enumeration */
-	static readonly all_values_by_ordinal : Array<BKGymBelegungsfehler> = [];
+	static readonly all_values_by_ordinal: Array<BKGymBelegungsfehler> = [];
 
 	/** an array containing all values of this enumeration indexed by their name*/
-	static readonly all_values_by_name : Map<string, BKGymBelegungsfehler> = new Map<string, BKGymBelegungsfehler>();
+	static readonly all_values_by_name: Map<string, BKGymBelegungsfehler> = new Map<string, BKGymBelegungsfehler>();
 
 	/**
 	 * BelegungsfehlerArt LK_1
 	 */
-	public static readonly LK_1 : BKGymBelegungsfehler = new BKGymBelegungsfehler("LK_1", 0, "LK_1", BKGymBelegungsfehlerArt.BELEGUNG, "Es muss ein erster Leistungskurs gewählt werden.");
+	public static readonly LK_1: BKGymBelegungsfehler = new BKGymBelegungsfehler("LK_1", 0, "LK_1", BKGymBelegungsfehlerArt.BELEGUNG, "Es muss ein erster Leistungskurs gewählt werden.");
 
 	/**
 	 * BelegungsfehlerArt LK_2
 	 */
-	public static readonly LK_2 : BKGymBelegungsfehler = new BKGymBelegungsfehler("LK_2", 1, "LK_2", BKGymBelegungsfehlerArt.BELEGUNG, "Es muss ein zweiter Leistungskurs gewählt werden.");
+	public static readonly LK_2: BKGymBelegungsfehler = new BKGymBelegungsfehler("LK_2", 1, "LK_2", BKGymBelegungsfehlerArt.BELEGUNG, "Es muss ein zweiter Leistungskurs gewählt werden.");
 
 	/**
 	 * BelegungsfehlerArt LK_3
 	 */
-	public static readonly LK_3 : BKGymBelegungsfehler = new BKGymBelegungsfehler("LK_3", 2, "LK_3", BKGymBelegungsfehlerArt.BELEGUNG, "Die Kombination aus erstem und zweiten Leistungskurs ist für den Bildungsgang nicht zulässig.");
+	public static readonly LK_3: BKGymBelegungsfehler = new BKGymBelegungsfehler("LK_3", 2, "LK_3", BKGymBelegungsfehlerArt.BELEGUNG, "Die Kombination aus erstem und zweiten Leistungskurs ist für den Bildungsgang nicht zulässig.");
 
 	/**
 	 * BelegungsfehlerArt AB_3
 	 */
-	public static readonly AB_3 : BKGymBelegungsfehler = new BKGymBelegungsfehler("AB_3", 3, "AB_3", BKGymBelegungsfehlerArt.BELEGUNG, "Es muss ein drittes Abiturfach gewählt werden.");
+	public static readonly AB_3: BKGymBelegungsfehler = new BKGymBelegungsfehler("AB_3", 3, "AB_3", BKGymBelegungsfehlerArt.BELEGUNG, "Es muss ein drittes Abiturfach gewählt werden.");
 
 	/**
 	 * BelegungsfehlerArt AB_4
 	 */
-	public static readonly AB_4 : BKGymBelegungsfehler = new BKGymBelegungsfehler("AB_4", 4, "AB_4", BKGymBelegungsfehlerArt.BELEGUNG, "Es muss ein viertes Abiturfach gewählt werden.");
+	public static readonly AB_4: BKGymBelegungsfehler = new BKGymBelegungsfehler("AB_4", 4, "AB_4", BKGymBelegungsfehlerArt.BELEGUNG, "Es muss ein viertes Abiturfach gewählt werden.");
 
 	/**
 	 * BelegungsfehlerArt AB_5
 	 */
-	public static readonly AB_5 : BKGymBelegungsfehler = new BKGymBelegungsfehler("AB_5", 5, "AB_5", BKGymBelegungsfehlerArt.BELEGUNG, "Die gewählte Kombination aus drittem und viertem Abiturfach ist in dem Bildungsgang nicht zulässig.");
+	public static readonly AB_5: BKGymBelegungsfehler = new BKGymBelegungsfehler("AB_5", 5, "AB_5", BKGymBelegungsfehlerArt.BELEGUNG, "Die gewählte Kombination aus drittem und viertem Abiturfach ist in dem Bildungsgang nicht zulässig.");
 
 	/**
 	 * BelegungsfehlerArt ABI_11
 	 */
-	public static readonly ABI_11 : BKGymBelegungsfehler = new BKGymBelegungsfehler("ABI_11", 6, "ABI_11", BKGymBelegungsfehlerArt.BELEGUNG, "Religionslehre und Sport dürfen nicht gleichzeitig Abiturfächer sein.");
+	public static readonly ABI_11: BKGymBelegungsfehler = new BKGymBelegungsfehler("ABI_11", 6, "ABI_11", BKGymBelegungsfehlerArt.BELEGUNG, "Religionslehre und Sport dürfen nicht gleichzeitig Abiturfächer sein.");
 
 	/**
 	 * BelegungsfehlerArt ABI_12
 	 */
-	public static readonly ABI_12 : BKGymBelegungsfehler = new BKGymBelegungsfehler("ABI_12", 7, "ABI_12", BKGymBelegungsfehlerArt.SCHRIFTLICHKEIT, "In Q2.2 muss das 3. Abiturfach schriftlich belegt sein.");
+	public static readonly ABI_12: BKGymBelegungsfehler = new BKGymBelegungsfehler("ABI_12", 7, "ABI_12", BKGymBelegungsfehlerArt.SCHRIFTLICHKEIT, "In Q2.2 muss das 3. Abiturfach schriftlich belegt sein.");
 
 	/**
 	 * BelegungsfehlerArt 	ABI_13
 	 */
-	public static readonly ABI_13 : BKGymBelegungsfehler = new BKGymBelegungsfehler("ABI_13", 8, "ABI_13", BKGymBelegungsfehlerArt.SCHRIFTLICHKEIT, "In Q2.2 muss das 4. Abiturfach mündlich belegt sein.");
+	public static readonly ABI_13: BKGymBelegungsfehler = new BKGymBelegungsfehler("ABI_13", 8, "ABI_13", BKGymBelegungsfehlerArt.SCHRIFTLICHKEIT, "In Q2.2 muss das 4. Abiturfach mündlich belegt sein.");
 
 	/**
 	 * BelegungsfehlerArt ST_1
 	 */
-	public static readonly ST_1 : BKGymBelegungsfehler = new BKGymBelegungsfehler("ST_1", 9, "ST_1", BKGymBelegungsfehlerArt.BELEGUNG, "Es konnte zu den Fachbelegungen keine passende Variante für die Stundentafel in dieser Anlage gefunden werden.");
+	public static readonly ST_1: BKGymBelegungsfehler = new BKGymBelegungsfehler("ST_1", 9, "ST_1", BKGymBelegungsfehlerArt.BELEGUNG, "Es konnte zu den Fachbelegungen keine passende Variante für die Stundentafel in dieser Anlage gefunden werden.");
 
 	/**
 	 * BelegungsfehlerArt ST_2
 	 */
-	public static readonly ST_2 : BKGymBelegungsfehler = new BKGymBelegungsfehler("ST_2", 10, "ST_2", BKGymBelegungsfehlerArt.BELEGUNG, "Es konnte zu den Fachbelegungen keine eindeutige Variante für die Stundentafel in dieser Anlage gefunden werden.");
+	public static readonly ST_2: BKGymBelegungsfehler = new BKGymBelegungsfehler("ST_2", 10, "ST_2", BKGymBelegungsfehlerArt.BELEGUNG, "Es konnte zu den Fachbelegungen keine eindeutige Variante für die Stundentafel in dieser Anlage gefunden werden.");
 
 	/**
 	 * BelegungsfehlerArt ST_3_INFO
 	 */
-	public static readonly ST_3_INFO : BKGymBelegungsfehler = new BKGymBelegungsfehler("ST_3_INFO", 11, "ST_3_INFO", BKGymBelegungsfehlerArt.HINWEIS, "Es wurden mehrer potentielle Kandidaten von Fachbelegungen für einen Eintrag in der Stundetafel gefunden. Keiner von Ihnen passt optimal, so dass der geeignetste davon für die weitere Belegprüfung genutzt wurde.");
+	public static readonly ST_3_INFO: BKGymBelegungsfehler = new BKGymBelegungsfehler("ST_3_INFO", 11, "ST_3_INFO", BKGymBelegungsfehlerArt.HINWEIS, "Es wurden mehrer potentielle Kandidaten von Fachbelegungen für einen Eintrag in der Stundetafel gefunden. Keiner von Ihnen passt optimal, so dass der geeignetste davon für die weitere Belegprüfung genutzt wurde.");
 
 	/**
 	 * BelegungsfehlerArt ST_4
 	 */
-	public static readonly ST_4 : BKGymBelegungsfehler = new BKGymBelegungsfehler("ST_4", 12, "ST_4", BKGymBelegungsfehlerArt.BELEGUNG, "");
+	public static readonly ST_4: BKGymBelegungsfehler = new BKGymBelegungsfehler("ST_4", 12, "ST_4", BKGymBelegungsfehlerArt.BELEGUNG, "");
 
 	/**
 	 * Der eindeutige Code des Belegungsfehlers
 	 */
-	public readonly code : string;
+	public readonly code: string;
 
 	/**
 	 * Die Art des Fehlers
 	 */
-	public readonly art : BKGymBelegungsfehlerArt;
+	public readonly art: BKGymBelegungsfehlerArt;
 
 	/**
 	 * Der Text des Fehlers, der ausgegeben wird
 	 */
-	public readonly text : string;
+	public readonly text: string;
 
 	/**
 	 * Erstellt einen neuen Belegungsfehler für die Aufzählung (s.o.). Dabei wird ein
@@ -98,7 +98,7 @@ export class BKGymBelegungsfehler extends JavaEnum<BKGymBelegungsfehler> {
 	 * @param art    die Fehlerart (Belegungsfehler, Schriftlichkeit oder Information)
 	 * @param text   der zugeordnete Text für die Gesamtbelegprüfung oder null
 	 */
-	private constructor(name : string, ordinal : number, code : string, art : BKGymBelegungsfehlerArt, text : string) {
+	private constructor(name: string, ordinal: number, code: string, art: BKGymBelegungsfehlerArt, text: string) {
 		super(name, ordinal);
 		BKGymBelegungsfehler.all_values_by_ordinal.push(this);
 		BKGymBelegungsfehler.all_values_by_name.set(name, this);
@@ -113,7 +113,7 @@ export class BKGymBelegungsfehler extends JavaEnum<BKGymBelegungsfehler> {
 	 *
 	 * @return true, falls es sich nur um eine Information handelt, sonst false
 	 */
-	public istInfo() : boolean {
+	public istInfo(): boolean {
 		return (this.art as unknown === BKGymBelegungsfehlerArt.HINWEIS as unknown);
 	}
 
@@ -123,7 +123,7 @@ export class BKGymBelegungsfehler extends JavaEnum<BKGymBelegungsfehler> {
 	 *
 	 * @return true, falls es sich um einen "echten" Fehler handelt, sonst false
 	 */
-	public istFehler() : boolean {
+	public istFehler(): boolean {
 		return (this.art as unknown !== BKGymBelegungsfehlerArt.HINWEIS as unknown);
 	}
 
@@ -132,7 +132,7 @@ export class BKGymBelegungsfehler extends JavaEnum<BKGymBelegungsfehler> {
 	 *
 	 * @return die Art des Belegungsfehlers
 	 */
-	public getArt() : BKGymBelegungsfehlerArt {
+	public getArt(): BKGymBelegungsfehlerArt {
 		return this.art;
 	}
 
@@ -141,11 +141,11 @@ export class BKGymBelegungsfehler extends JavaEnum<BKGymBelegungsfehler> {
 	 *
 	 * @return der zugehörige Text des Belegungsfehlers
 	 */
-	public getText() : string {
+	public getText(): string {
 		return this.text;
 	}
 
-	public toString() : string {
+	public toString(): string {
 		return this.code;
 	}
 
@@ -154,7 +154,7 @@ export class BKGymBelegungsfehler extends JavaEnum<BKGymBelegungsfehler> {
 	 *
 	 * @returns the array with enumeration values
 	 */
-	public static values() : Array<BKGymBelegungsfehler> {
+	public static values(): Array<BKGymBelegungsfehler> {
 		return [...this.all_values_by_ordinal];
 	}
 
@@ -165,7 +165,7 @@ export class BKGymBelegungsfehler extends JavaEnum<BKGymBelegungsfehler> {
 	 *
 	 * @returns the enumeration values or null
 	 */
-	public static valueOf(name : string) : BKGymBelegungsfehler | null {
+	public static valueOf(name: string): BKGymBelegungsfehler | null {
 		const tmp = this.all_values_by_name.get(name);
 		return (!tmp) ? null : tmp;
 	}
@@ -174,7 +174,7 @@ export class BKGymBelegungsfehler extends JavaEnum<BKGymBelegungsfehler> {
 		return 'de.svws_nrw.core.abschluss.bk.d.BKGymBelegungsfehler';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.abschluss.bk.d.BKGymBelegungsfehler', 'java.lang.Enum', 'java.lang.Comparable'].includes(name);
 	}
 
@@ -182,6 +182,6 @@ export class BKGymBelegungsfehler extends JavaEnum<BKGymBelegungsfehler> {
 
 }
 
-export function cast_de_svws_nrw_core_abschluss_bk_d_BKGymBelegungsfehler(obj : unknown) : BKGymBelegungsfehler {
+export function cast_de_svws_nrw_core_abschluss_bk_d_BKGymBelegungsfehler(obj: unknown): BKGymBelegungsfehler {
 	return obj as BKGymBelegungsfehler;
 }

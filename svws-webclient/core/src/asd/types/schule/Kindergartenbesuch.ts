@@ -9,37 +9,37 @@ import { de_svws_nrw_asd_types_CoreType_getManager, de_svws_nrw_asd_types_CoreTy
 export class Kindergartenbesuch extends JavaEnum<Kindergartenbesuch> implements CoreType<KindergartenbesuchKatalogEintrag, Kindergartenbesuch> {
 
 	/** an array containing all values of this enumeration */
-	static readonly all_values_by_ordinal : Array<Kindergartenbesuch> = [];
+	static readonly all_values_by_ordinal: Array<Kindergartenbesuch> = [];
 
 	/** an array containing all values of this enumeration indexed by their name*/
-	static readonly all_values_by_name : Map<string, Kindergartenbesuch> = new Map<string, Kindergartenbesuch>();
+	static readonly all_values_by_name: Map<string, Kindergartenbesuch> = new Map<string, Kindergartenbesuch>();
 
 	/**
 	 * Kein Kindergartenbesuch
 	 */
-	public static readonly KEINER : Kindergartenbesuch = new Kindergartenbesuch("KEINER", 0, );
+	public static readonly KEINER: Kindergartenbesuch = new Kindergartenbesuch("KEINER", 0, );
 
 	/**
 	 * Kindergartenbesuch unter einem Jahr
 	 */
-	public static readonly MAX_1_JAHR : Kindergartenbesuch = new Kindergartenbesuch("MAX_1_JAHR", 1, );
+	public static readonly MAX_1_JAHR: Kindergartenbesuch = new Kindergartenbesuch("MAX_1_JAHR", 1, );
 
 	/**
 	 * Kindergartenbesuch unter einem Jahr
 	 */
-	public static readonly MAX_2_JAHRE : Kindergartenbesuch = new Kindergartenbesuch("MAX_2_JAHRE", 2, );
+	public static readonly MAX_2_JAHRE: Kindergartenbesuch = new Kindergartenbesuch("MAX_2_JAHRE", 2, );
 
 	/**
 	 * Kindergartenbesuch unter einem Jahr
 	 */
-	public static readonly MAX_3_JAHRE : Kindergartenbesuch = new Kindergartenbesuch("MAX_3_JAHRE", 3, );
+	public static readonly MAX_3_JAHRE: Kindergartenbesuch = new Kindergartenbesuch("MAX_3_JAHRE", 3, );
 
 	/**
 	 * Kindergartenbesuch unter einem Jahr
 	 */
-	public static readonly MIN_3_JAHRE : Kindergartenbesuch = new Kindergartenbesuch("MIN_3_JAHRE", 4, );
+	public static readonly MIN_3_JAHRE: Kindergartenbesuch = new Kindergartenbesuch("MIN_3_JAHRE", 4, );
 
-	private constructor(name : string, ordinal : number) {
+	private constructor(name: string, ordinal: number) {
 		super(name, ordinal);
 		Kindergartenbesuch.all_values_by_ordinal.push(this);
 		Kindergartenbesuch.all_values_by_name.set(name, this);
@@ -50,7 +50,7 @@ export class Kindergartenbesuch extends JavaEnum<Kindergartenbesuch> implements 
 	 *
 	 * @param manager   der Manager für die Daten des Core-Types
 	 */
-	public static init(manager : CoreTypeDataManager<KindergartenbesuchKatalogEintrag, Kindergartenbesuch>) : void {
+	public static init(manager: CoreTypeDataManager<KindergartenbesuchKatalogEintrag, Kindergartenbesuch>): void {
 		CoreTypeDataManager.putManager(Kindergartenbesuch.class, manager);
 	}
 
@@ -59,7 +59,7 @@ export class Kindergartenbesuch extends JavaEnum<Kindergartenbesuch> implements 
 	 *
 	 * @return der Daten-Manager
 	 */
-	public static data() : CoreTypeDataManager<KindergartenbesuchKatalogEintrag, Kindergartenbesuch> {
+	public static data(): CoreTypeDataManager<KindergartenbesuchKatalogEintrag, Kindergartenbesuch> {
 		return CoreTypeDataManager.getManager(Kindergartenbesuch.class);
 	}
 
@@ -68,7 +68,7 @@ export class Kindergartenbesuch extends JavaEnum<Kindergartenbesuch> implements 
 	 *
 	 * @returns the array with enumeration values
 	 */
-	public static values() : Array<Kindergartenbesuch> {
+	public static values(): Array<Kindergartenbesuch> {
 		return [...this.all_values_by_ordinal];
 	}
 
@@ -79,24 +79,24 @@ export class Kindergartenbesuch extends JavaEnum<Kindergartenbesuch> implements 
 	 *
 	 * @returns the enumeration values or null
 	 */
-	public static valueOf(name : string) : Kindergartenbesuch | null {
+	public static valueOf(name: string): Kindergartenbesuch | null {
 		const tmp = this.all_values_by_name.get(name);
 		return (!tmp) ? null : tmp;
 	}
 
-	public getManager() : CoreTypeDataManager<KindergartenbesuchKatalogEintrag, Kindergartenbesuch> {
+	public getManager(): CoreTypeDataManager<KindergartenbesuchKatalogEintrag, Kindergartenbesuch> {
 		return de_svws_nrw_asd_types_CoreType_getManager(this);
 	}
 
-	public daten(schuljahr : number) : KindergartenbesuchKatalogEintrag | null {
+	public daten(schuljahr: number): KindergartenbesuchKatalogEintrag | null {
 		return de_svws_nrw_asd_types_CoreType_daten(this, schuljahr);
 	}
 
-	public statistikId() : string | null {
+	public statistikId(): string | null {
 		return de_svws_nrw_asd_types_CoreType_statistikId(this);
 	}
 
-	public historie() : List<KindergartenbesuchKatalogEintrag> {
+	public historie(): List<KindergartenbesuchKatalogEintrag> {
 		return de_svws_nrw_asd_types_CoreType_historie(this);
 	}
 
@@ -104,7 +104,7 @@ export class Kindergartenbesuch extends JavaEnum<Kindergartenbesuch> implements 
 		return 'de.svws_nrw.asd.types.schule.Kindergartenbesuch';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.asd.types.schule.Kindergartenbesuch', 'de.svws_nrw.asd.types.CoreType', 'java.lang.Comparable', 'java.lang.Enum', 'java.lang.Comparable'].includes(name);
 	}
 
@@ -112,6 +112,6 @@ export class Kindergartenbesuch extends JavaEnum<Kindergartenbesuch> implements 
 
 }
 
-export function cast_de_svws_nrw_asd_types_schule_Kindergartenbesuch(obj : unknown) : Kindergartenbesuch {
+export function cast_de_svws_nrw_asd_types_schule_Kindergartenbesuch(obj: unknown): Kindergartenbesuch {
 	return obj as Kindergartenbesuch;
 }

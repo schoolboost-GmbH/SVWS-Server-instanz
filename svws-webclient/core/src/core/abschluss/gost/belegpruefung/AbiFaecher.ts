@@ -15,21 +15,21 @@ import { HashSet } from '../../../../java/util/HashSet';
 
 export class AbiFaecher extends GostBelegpruefung {
 
-	private mapAbiturFachbelegungen : ArrayMap<GostAbiturFach, AbiturFachbelegung> | null = null;
+	private mapAbiturFachbelegungen: ArrayMap<GostAbiturFach, AbiturFachbelegung> | null = null;
 
-	private anzahlAbiFaecher : number = 0;
+	private anzahlAbiFaecher: number = 0;
 
-	private anzahlDeutschMatheFremdsprache : number = 0;
+	private anzahlDeutschMatheFremdsprache: number = 0;
 
-	private anzahlFremdsprachen : number = 0;
+	private anzahlFremdsprachen: number = 0;
 
-	private anzahlSportReligion : number = 0;
+	private anzahlSportReligion: number = 0;
 
-	private hatAufgabenfeldI : boolean = false;
+	private hatAufgabenfeldI: boolean = false;
 
-	private hatAufgabenfeldII : boolean = false;
+	private hatAufgabenfeldII: boolean = false;
 
-	private hatAufgabenfeldIII : boolean = false;
+	private hatAufgabenfeldIII: boolean = false;
 
 
 	/**
@@ -38,11 +38,11 @@ export class AbiFaecher extends GostBelegpruefung {
 	 * @param manager         der Daten-Manager für die Abiturdaten
 	 * @param pruefungsArt   die Art der durchzuführenden Prüfung (z.B. EF.1 oder GESAMT)
 	 */
-	public constructor(manager : AbiturdatenManager, pruefungsArt : GostBelegpruefungsArt) {
+	public constructor(manager: AbiturdatenManager, pruefungsArt: GostBelegpruefungsArt) {
 		super(manager, pruefungsArt);
 	}
 
-	protected init() : void {
+	protected init(): void {
 		this.mapAbiturFachbelegungen = new ArrayMap(GostAbiturFach.values());
 		this.anzahlAbiFaecher = 0;
 		this.anzahlDeutschMatheFremdsprache = 0;
@@ -51,14 +51,14 @@ export class AbiFaecher extends GostBelegpruefung {
 		this.hatAufgabenfeldI = false;
 		this.hatAufgabenfeldII = false;
 		this.hatAufgabenfeldIII = false;
-		const alleFachbelegungen : List<AbiturFachbelegung> = this.manager.getRelevanteFachbelegungen();
+		const alleFachbelegungen: List<AbiturFachbelegung> = this.manager.getRelevanteFachbelegungen();
 		for (const fachbelegung of alleFachbelegungen) {
-			const abiturFach : GostAbiturFach | null = GostAbiturFach.fromID(fachbelegung.abiturFach);
+			const abiturFach: GostAbiturFach | null = GostAbiturFach.fromID(fachbelegung.abiturFach);
 			if (abiturFach === null)
 				continue;
 			this.mapAbiturFachbelegungen.put(abiturFach, fachbelegung);
 			this.anzahlAbiFaecher++;
-			const fach : GostFach | null = this.manager.getFach(fachbelegung);
+			const fach: GostFach | null = this.manager.getFach(fachbelegung);
 			if (fach === null)
 				continue;
 			if (GostFachbereich.FREMDSPRACHE.hat(fach) || GostFachbereich.DEUTSCH.hat(fach))
@@ -76,11 +76,11 @@ export class AbiFaecher extends GostBelegpruefung {
 		}
 	}
 
-	protected pruefeEF1() : void {
+	protected pruefeEF1(): void {
 		// empty block
 	}
 
-	protected pruefeGesamt() : void {
+	protected pruefeGesamt(): void {
 		this.pruefeLK1();
 		this.pruefeAnzahlUndAufgabenfelderAbiFaecher();
 		this.pruefeMehrfacheAbiturfaecher();
@@ -91,9 +91,9 @@ export class AbiFaecher extends GostBelegpruefung {
 	 * Gesamtprüfung Punkt 70:
 	 * Prüfe, ob der erste LK eine fortgeführte Fremdsprache, eine klassische Naturwissenschaft, Mathematik oder Deutsch ist
 	 */
-	private pruefeLK1() : void {
-		const lk1 : AbiturFachbelegung | null = (this.mapAbiturFachbelegungen === null) ? null : this.mapAbiturFachbelegungen.get(GostAbiturFach.LK1);
-		const lk1fach : GostFach | null = this.manager.getFach(lk1);
+	private pruefeLK1(): void {
+		const lk1: AbiturFachbelegung | null = (this.mapAbiturFachbelegungen === null) ? null : this.mapAbiturFachbelegungen.get(GostAbiturFach.LK1);
+		const lk1fach: GostFach | null = this.manager.getFach(lk1);
 		if ((lk1 === null) || (lk1fach === null) || !((GostFachbereich.DEUTSCH.hat(lk1fach)) || (GostFachbereich.FREMDSPRACHE.hat(lk1fach) && !lk1.istFSNeu) || (GostFachbereich.MATHEMATIK.hat(lk1fach)) || (GostFachbereich.NATURWISSENSCHAFTLICH_KLASSISCH.hat(lk1fach))))
 			this.addFehler(GostBelegungsfehler.LK1_11);
 	}
@@ -105,7 +105,7 @@ export class AbiFaecher extends GostBelegpruefung {
 	 *    und ob maximale 1 Fach im Bereich Sport und Religion liegt
 	 *    und ob Sport nicht als erstes oder drittes Abiturfach gewählt wurde
 	 */
-	private pruefeAnzahlUndAufgabenfelderAbiFaecher() : void {
+	private pruefeAnzahlUndAufgabenfelderAbiFaecher(): void {
 		if ((this.anzahlAbiFaecher !== 4) || (!this.hatAufgabenfeldI) || (!this.hatAufgabenfeldII) || (!this.hatAufgabenfeldIII))
 			this.addFehler(GostBelegungsfehler.LK1_13);
 		if (this.anzahlDeutschMatheFremdsprache < 2)
@@ -114,10 +114,10 @@ export class AbiFaecher extends GostBelegpruefung {
 			this.addFehler(GostBelegungsfehler.ABI_19);
 		if (this.anzahlSportReligion > 1)
 			this.addFehler(GostBelegungsfehler.ABI_11);
-		const lk1 : AbiturFachbelegung | null = (this.mapAbiturFachbelegungen === null) ? null : this.mapAbiturFachbelegungen.get(GostAbiturFach.LK1);
-		const lk1fach : GostFach | null = this.manager.getFach(lk1);
-		const ab3 : AbiturFachbelegung | null = (this.mapAbiturFachbelegungen === null) ? null : this.mapAbiturFachbelegungen.get(GostAbiturFach.AB3);
-		const ab3fach : GostFach | null = this.manager.getFach(ab3);
+		const lk1: AbiturFachbelegung | null = (this.mapAbiturFachbelegungen === null) ? null : this.mapAbiturFachbelegungen.get(GostAbiturFach.LK1);
+		const lk1fach: GostFach | null = this.manager.getFach(lk1);
+		const ab3: AbiturFachbelegung | null = (this.mapAbiturFachbelegungen === null) ? null : this.mapAbiturFachbelegungen.get(GostAbiturFach.AB3);
+		const ab3fach: GostFach | null = this.manager.getFach(ab3);
 		if (((lk1fach !== null) && (GostFachbereich.SPORT.hatKuerzel(lk1fach.kuerzel))) || ((ab3fach !== null) && (GostFachbereich.SPORT.hatKuerzel(ab3fach.kuerzel))))
 			this.addFehler(GostBelegungsfehler.ABI_15);
 	}
@@ -126,11 +126,11 @@ export class AbiFaecher extends GostBelegpruefung {
 	 * Gesamtprüfung: Prüfe, ob eines der Abiturfächer mehrfach belegt wurde. Es ist nicht zulässig
 	 * Abiturfächer mehrfach belegt zu haben.
 	 */
-	private pruefeMehrfacheAbiturfaecher() : void {
-		const abiFaecher : HashSet<GostAbiturFach> = new HashSet<GostAbiturFach>();
-		const alleFachbelegungen : List<AbiturFachbelegung> = this.manager.getRelevanteFachbelegungen();
+	private pruefeMehrfacheAbiturfaecher(): void {
+		const abiFaecher: HashSet<GostAbiturFach> = new HashSet<GostAbiturFach>();
+		const alleFachbelegungen: List<AbiturFachbelegung> = this.manager.getRelevanteFachbelegungen();
 		for (const fachbelegung of alleFachbelegungen) {
-			const abiturFach : GostAbiturFach | null = GostAbiturFach.fromID(fachbelegung.abiturFach);
+			const abiturFach: GostAbiturFach | null = GostAbiturFach.fromID(fachbelegung.abiturFach);
 			if (abiturFach === null)
 				continue;
 			if (!abiFaecher.contains(abiturFach)) {
@@ -161,12 +161,12 @@ export class AbiFaecher extends GostBelegpruefung {
 		}
 	}
 
-	private pruefeSchriftlichkeitVorQ22(belegung : AbiturFachbelegung | null) : boolean {
+	private pruefeSchriftlichkeitVorQ22(belegung: AbiturFachbelegung | null): boolean {
 		if (this.manager.pruefeBelegungMitSchriftlichkeit(belegung, GostSchriftlichkeit.SCHRIFTLICH, GostHalbjahr.Q11, GostHalbjahr.Q12, GostHalbjahr.Q21))
 			return true;
-		const fach : GostFach | null = this.manager.getFach(belegung);
+		const fach: GostFach | null = this.manager.getFach(belegung);
 		if (fach !== null) {
-			let belegungen : List<AbiturFachbelegung>;
+			let belegungen: List<AbiturFachbelegung>;
 			belegungen = this.manager.getFachbelegungByFachkuerzel(fach.kuerzel);
 			if ((this.manager.pruefeBelegungExistiertMitSchriftlichkeitEinzeln(belegungen, GostSchriftlichkeit.SCHRIFTLICH, GostHalbjahr.Q11)) && (this.manager.pruefeBelegungExistiertMitSchriftlichkeitEinzeln(belegungen, GostSchriftlichkeit.SCHRIFTLICH, GostHalbjahr.Q12)) && (this.manager.pruefeBelegungExistiertMitSchriftlichkeitEinzeln(belegungen, GostSchriftlichkeit.SCHRIFTLICH, GostHalbjahr.Q21)))
 				return true;
@@ -184,15 +184,15 @@ export class AbiFaecher extends GostBelegpruefung {
 	 * Prüfe ob das 3. Abiturfach von Q1.1 bis Q2.2 schriftlich belegt wurde
 	 *   und on das 4. Abiturfach von Q1.1 bis Q2.1 schriftlich und in Q2.2 mündlich belegt wurde
 	 */
-	private pruefeSchriftlichkeitAB3undAB4() : void {
-		const ab3 : AbiturFachbelegung | null = (this.mapAbiturFachbelegungen === null) ? null : this.mapAbiturFachbelegungen.get(GostAbiturFach.AB3);
+	private pruefeSchriftlichkeitAB3undAB4(): void {
+		const ab3: AbiturFachbelegung | null = (this.mapAbiturFachbelegungen === null) ? null : this.mapAbiturFachbelegungen.get(GostAbiturFach.AB3);
 		if (ab3 !== null) {
 			if (!this.pruefeSchriftlichkeitVorQ22(ab3))
 				this.addFehler(GostBelegungsfehler.ABI_17);
 			if (!this.manager.pruefeBelegungMitSchriftlichkeitEinzeln(ab3, GostSchriftlichkeit.SCHRIFTLICH, GostHalbjahr.Q22))
 				this.addFehler(GostBelegungsfehler.ABI_12);
 		}
-		const ab4 : AbiturFachbelegung | null = (this.mapAbiturFachbelegungen === null) ? null : this.mapAbiturFachbelegungen.get(GostAbiturFach.AB4);
+		const ab4: AbiturFachbelegung | null = (this.mapAbiturFachbelegungen === null) ? null : this.mapAbiturFachbelegungen.get(GostAbiturFach.AB4);
 		if (ab4 !== null) {
 			if (!this.pruefeSchriftlichkeitVorQ22(ab4))
 				this.addFehler(GostBelegungsfehler.ABI_18);
@@ -208,7 +208,7 @@ export class AbiFaecher extends GostBelegpruefung {
 	 *
 	 * @return die Abitur-Fachbelegung oder null, falls es (noch) nicht festgelegt wurde
 	 */
-	public getAbiturfach(abifach : GostAbiturFach | null) : AbiturFachbelegung | null {
+	public getAbiturfach(abifach: GostAbiturFach | null): AbiturFachbelegung | null {
 		return (this.mapAbiturFachbelegungen === null) ? null : this.mapAbiturFachbelegungen.get(abifach);
 	}
 
@@ -216,7 +216,7 @@ export class AbiFaecher extends GostBelegpruefung {
 		return 'de.svws_nrw.core.abschluss.gost.belegpruefung.AbiFaecher';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.abschluss.gost.belegpruefung.AbiFaecher', 'de.svws_nrw.core.abschluss.gost.GostBelegpruefung'].includes(name);
 	}
 
@@ -224,6 +224,6 @@ export class AbiFaecher extends GostBelegpruefung {
 
 }
 
-export function cast_de_svws_nrw_core_abschluss_gost_belegpruefung_AbiFaecher(obj : unknown) : AbiFaecher {
+export function cast_de_svws_nrw_core_abschluss_gost_belegpruefung_AbiFaecher(obj: unknown): AbiFaecher {
 	return obj as AbiFaecher;
 }

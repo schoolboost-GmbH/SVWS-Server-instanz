@@ -6,12 +6,12 @@ export class KlausurblockungNachschreiberAlgorithmusBewertung extends JavaObject
 	/**
 	 *  Die Anzahl an Terminen, auf die Nachschreib-Klausuren gelegt wurden.
 	 */
-	anzahl_termine : number = 0;
+	anzahl_termine: number = 0;
 
 	/**
 	 *  Die Anzahl an neuen zusätzlichen Terminen, auf die Nachschreib-Klausuren gelegt wurden.
 	 */
-	anzahl_zusatztermine : number = 0;
+	anzahl_zusatztermine: number = 0;
 
 
 	/**
@@ -28,7 +28,7 @@ export class KlausurblockungNachschreiberAlgorithmusBewertung extends JavaObject
 	 *
 	 * @return -1, 0 und +1, wenn dieses Objekt besser, gleich und schlechter als das übergebene Objekt ist.
 	 */
-	public compare(b : KlausurblockungNachschreiberAlgorithmusBewertung) : number {
+	public compare(b: KlausurblockungNachschreiberAlgorithmusBewertung): number {
 		if (this.anzahl_zusatztermine < b.anzahl_zusatztermine)
 			return -1;
 		if (this.anzahl_zusatztermine > b.anzahl_zusatztermine)
@@ -44,7 +44,7 @@ export class KlausurblockungNachschreiberAlgorithmusBewertung extends JavaObject
 		return 'de.svws_nrw.core.utils.gost.klausurplanung.KlausurblockungNachschreiberAlgorithmusBewertung';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.utils.gost.klausurplanung.KlausurblockungNachschreiberAlgorithmusBewertung'].includes(name);
 	}
 
@@ -52,6 +52,6 @@ export class KlausurblockungNachschreiberAlgorithmusBewertung extends JavaObject
 
 }
 
-export function cast_de_svws_nrw_core_utils_gost_klausurplanung_KlausurblockungNachschreiberAlgorithmusBewertung(obj : unknown) : KlausurblockungNachschreiberAlgorithmusBewertung {
+export function cast_de_svws_nrw_core_utils_gost_klausurplanung_KlausurblockungNachschreiberAlgorithmusBewertung(obj: unknown): KlausurblockungNachschreiberAlgorithmusBewertung {
 	return obj as KlausurblockungNachschreiberAlgorithmusBewertung;
 }

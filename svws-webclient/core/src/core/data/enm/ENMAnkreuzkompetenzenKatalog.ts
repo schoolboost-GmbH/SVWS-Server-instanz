@@ -9,17 +9,17 @@ export class ENMAnkreuzkompetenzenKatalog extends JavaObject {
 	/**
 	 * Gibt für die einzelnen Stufen 1-5 der Ankreuzkompetenzen die zu verwendenden Texte an (hier mit einer Verschiebung von 1 zum Array-Index).
 	 */
-	public textStufen : Array<string | null> = Array(5).fill(null);
+	public textStufen: Array<string | null> = Array(5).fill(null);
 
 	/**
 	 * Der für die frei definierbare Zeugnisrubrik "Sonstiges" zu verwendenden Text.
 	 */
-	public textSonstiges : string | null = null;
+	public textSonstiges: string | null = null;
 
 	/**
 	 * Die Katalog-Einträge für die Ankreuzkompetenzen, die in der Notendatei enthalten sind.
 	 */
-	public kompetenzen : List<ENMAnkreuzkompetenz> = new ArrayList<ENMAnkreuzkompetenz>();
+	public kompetenzen: List<ENMAnkreuzkompetenz> = new ArrayList<ENMAnkreuzkompetenz>();
 
 
 	/**
@@ -33,13 +33,13 @@ export class ENMAnkreuzkompetenzenKatalog extends JavaObject {
 		return 'de.svws_nrw.core.data.enm.ENMAnkreuzkompetenzenKatalog';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.enm.ENMAnkreuzkompetenzenKatalog'].includes(name);
 	}
 
 	public static class = new Class<ENMAnkreuzkompetenzenKatalog>('de.svws_nrw.core.data.enm.ENMAnkreuzkompetenzenKatalog');
 
-	public static transpilerFromJSON(json : string): ENMAnkreuzkompetenzenKatalog {
+	public static transpilerFromJSON(json: string): ENMAnkreuzkompetenzenKatalog {
 		const obj = JSON.parse(json) as Partial<ENMAnkreuzkompetenzenKatalog>;
 		const result = new ENMAnkreuzkompetenzenKatalog();
 		if (obj.textStufen !== undefined) {
@@ -56,7 +56,7 @@ export class ENMAnkreuzkompetenzenKatalog extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : ENMAnkreuzkompetenzenKatalog) : string {
+	public static transpilerToJSON(obj: ENMAnkreuzkompetenzenKatalog): string {
 		let result = '{';
 		result += '"textStufen" : [ ';
 		for (let i = 0; i < obj.textStufen.length; i++) {
@@ -80,7 +80,7 @@ export class ENMAnkreuzkompetenzenKatalog extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<ENMAnkreuzkompetenzenKatalog>) : string {
+	public static transpilerToJSONPatch(obj: Partial<ENMAnkreuzkompetenzenKatalog>): string {
 		let result = '{';
 		if (obj.textStufen !== undefined) {
 			const a = obj.textStufen;
@@ -113,6 +113,6 @@ export class ENMAnkreuzkompetenzenKatalog extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_enm_ENMAnkreuzkompetenzenKatalog(obj : unknown) : ENMAnkreuzkompetenzenKatalog {
+export function cast_de_svws_nrw_core_data_enm_ENMAnkreuzkompetenzenKatalog(obj: unknown): ENMAnkreuzkompetenzenKatalog {
 	return obj as ENMAnkreuzkompetenzenKatalog;
 }
