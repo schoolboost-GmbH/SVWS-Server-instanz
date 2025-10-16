@@ -73,7 +73,7 @@ export class RouteGost extends RouteNode<RouteDataGost, RouteApp> {
 	protected async update(to: RouteNode<any, any>, to_params: RouteParams, from: RouteNode<any, any> | undefined, from_params: RouteParams, isEntering: boolean): Promise<void | Error | RouteLocationRaw> {
 		try {
 			if (isEntering || (this.data.idSchuljahresabschnitt !== routeApp.data.aktAbschnitt.value.id)) {
-				if (isEntering && (this.data.oldView !== undefined))
+				if (isEntering && (to === this) && (this.data.oldView !== undefined))
 					return this.data.oldView.getRoute(to_params);
 				await this.data.setSchuljahresabschnitt(routeApp.data.aktAbschnitt.value.id);
 			}
