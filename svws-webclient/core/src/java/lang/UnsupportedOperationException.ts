@@ -6,7 +6,7 @@ export class UnsupportedOperationException extends RuntimeException {
 		return 'java.lang.UnsupportedOperationException';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return [
 			'java.lang.UnsupportedOperationException',
 			'java.lang.RuntimeException',
@@ -20,6 +20,6 @@ export class UnsupportedOperationException extends RuntimeException {
 }
 
 
-export function cast_java_lang_UnsupportedOperationException(obj : unknown) : UnsupportedOperationException {
+export function cast_java_lang_UnsupportedOperationException(obj: unknown): UnsupportedOperationException {
 	return obj as UnsupportedOperationException;
 }

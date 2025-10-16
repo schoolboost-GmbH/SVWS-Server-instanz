@@ -6,7 +6,7 @@ export class IllegalFormatException extends IllegalArgumentException {
 		return 'java.util.IllegalFormatException';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return [
 			'java.util.IllegalFormatException',
 			'java.lang.IllegalArgumentException',
@@ -21,6 +21,6 @@ export class IllegalFormatException extends IllegalArgumentException {
 }
 
 
-export function cast_java_lang_IllegalFormatException(obj : unknown) : IllegalFormatException {
+export function cast_java_lang_IllegalFormatException(obj: unknown): IllegalFormatException {
 	return obj as IllegalFormatException;
 }

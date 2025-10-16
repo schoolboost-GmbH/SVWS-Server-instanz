@@ -33,7 +33,10 @@ public class Utils {
 	public static void testRunTask() {
 		final long a = 5;
 		final int b = runTask(input -> input.intValue(), a);
+		final int c = runTask(Number::intValue, a);
 		if (a != b)
+			System.out.println("Fehler: Die Werte sind nicht gleich!");
+		if (a != c)
 			System.out.println("Fehler: Die Werte sind nicht gleich!");
 	}
 

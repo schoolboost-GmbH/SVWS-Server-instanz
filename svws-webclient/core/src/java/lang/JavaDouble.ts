@@ -4,21 +4,21 @@ import { NumberFormatException } from './NumberFormatException';
 
 export class JavaDouble extends JavaObject {
 
-	public static MAX_VALUE : number = Number.MAX_VALUE;
-	public static MIN_VALUE : number = Number.MIN_VALUE;
-	public static SIZE : number = 64;
-	public static BYTES : number = 8;
+	public static MAX_VALUE: number = Number.MAX_VALUE;
+	public static MIN_VALUE: number = Number.MIN_VALUE;
+	public static SIZE: number = 64;
+	public static BYTES: number = 8;
 
-	public static parseDouble(s : string | null) : number {
+	public static parseDouble(s: string | null): number {
 		if (s === null)
 			throw new NullPointerException();
-		const a : number = parseFloat(s);
+		const a: number = parseFloat(s);
 		if (Number.isNaN(a) || (a < this.MIN_VALUE) || (a > this.MAX_VALUE))
 			throw new NumberFormatException();
 		return a;
 	}
 
-	public static compare(a : number, b : number): number {
+	public static compare(a: number, b: number): number {
 		return a === b ? 0 : (a < b) ? -1 : 1;
 	}
 
@@ -26,7 +26,7 @@ export class JavaDouble extends JavaObject {
 		return 'java.lang.Double';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return [
 			'java.lang.Double',
 			'java.lang.Number',
@@ -39,6 +39,6 @@ export class JavaDouble extends JavaObject {
 }
 
 
-export function cast_java_lang_Double(obj : unknown) : number | null {
+export function cast_java_lang_Double(obj: unknown): number | null {
 	return obj as number | null;
 }

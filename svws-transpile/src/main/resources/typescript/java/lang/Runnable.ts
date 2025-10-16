@@ -1,11 +1,11 @@
 
 export interface Runnable {
 
-	run() : void;
+	run(): void;
 
 }
 
 
-export function cast_java_lang_Runnable(obj : unknown) : Runnable {
+export function cast_java_lang_Runnable(obj: unknown): Runnable {
 	return obj as Runnable;
 }

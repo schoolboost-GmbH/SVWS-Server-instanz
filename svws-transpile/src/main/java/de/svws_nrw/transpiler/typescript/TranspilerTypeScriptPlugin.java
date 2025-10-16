@@ -17,6 +17,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import javax.lang.model.element.Element;
 import javax.lang.model.element.ElementKind;
 import javax.lang.model.element.ExecutableElement;
 import javax.lang.model.element.PackageElement;
@@ -58,6 +59,8 @@ import com.sun.source.tree.IfTree;
 import com.sun.source.tree.InstanceOfTree;
 import com.sun.source.tree.LambdaExpressionTree;
 import com.sun.source.tree.LiteralTree;
+import com.sun.source.tree.MemberReferenceTree;
+import com.sun.source.tree.MemberReferenceTree.ReferenceMode;
 import com.sun.source.tree.MemberSelectTree;
 import com.sun.source.tree.MethodInvocationTree;
 import com.sun.source.tree.MethodTree;
@@ -125,6 +128,7 @@ public final class TranspilerTypeScriptPlugin extends TranspilerLanguagePlugin {
 	private static final Set<String> tsReservedKeywords = new HashSet<>(Arrays.asList("in", "of", "debugger", "export", "function", "typeOf", "var", "with"));
 
 	private static final String strString = "String";
+	private static final String strNumber = "Number";
 	private static final String strLong = "Long";
 	private static final String strInteger = "Integer";
 	private static final String strShort = "Short";
@@ -747,6 +751,37 @@ public final class TranspilerTypeScriptPlugin extends TranspilerLanguagePlugin {
 
 
 	/**
+	 * Transpiles the member reference.
+	 *
+	 * @param node   the member reference tree node
+	 *
+	 * @return the transpiled member reference
+	 */
+	public String convertMemberReference(final MemberReferenceTree node) {
+		final Element elem = transpiler.getElement(node);
+		final Tree parent = transpiler.getParent(node);
+		if ((node.getMode() == ReferenceMode.INVOKE) && (parent instanceof MethodInvocationTree mit)) {
+			// TODO find type of invocation parameter in argument list of the MethodInvocationTree (parent)
+			// transpile invocation parameter
+			if (elem instanceof ExecutableElement ee) {
+				final Element owner = ee.getEnclosingElement();
+				if (owner instanceof TypeElement ownerType) {
+					switch ("" + ownerType.getQualifiedName()) {
+						case "java.lang.Number" -> {
+							transpiler.getTranspilerUnit(node).imports.put("Number", "java.lang");
+							return "(v: number) => JavaNumber." + ee.getSimpleName() + "(v)";
+						}
+					}
+					System.out.println("");
+				}
+			}
+			throw new TranspilerException("Transpiler Error: MemberReferenceTree - Element of kind " + elem.getKind() + " not yet supported");
+		}
+		throw new TranspilerException("Transpiler Error: MemberReferenceTree of kind " + node.getKind() + " not yet supported");
+	}
+
+
+	/**
 	 * Transpiles the switch expression.
 	 *
 	 * @param node            the switch expression tree node
@@ -912,6 +947,7 @@ public final class TranspilerTypeScriptPlugin extends TranspilerLanguagePlugin {
 			case final ArrayAccessTree aa -> convertArrayAccess(aa);
 			case final TypeCastTree tc -> convertTypeCast(tc);
 			case final LambdaExpressionTree le -> convertLambdaExpression(le);
+			case final MemberReferenceTree mrt -> convertMemberReference(mrt);
 			case final InstanceOfTree io -> convertInstanceOf(io);
 			case final SwitchExpressionTree se -> switch (parent) {
 				case final ReturnTree rt -> convertSwitchExpression(se, null);
@@ -2857,6 +2893,7 @@ public final class TranspilerTypeScriptPlugin extends TranspilerLanguagePlugin {
 		return switch (packageName) {
 			case "java.lang" -> switch (className) {
 				case strObject -> "JavaObject";
+				case strNumber -> "JavaNumber";
 				case strBoolean -> "JavaBoolean";
 				case strByte -> "JavaByte";
 				case strShort -> "JavaShort";

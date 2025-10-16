@@ -6,7 +6,7 @@ export class NoSuchElementException extends RuntimeException {
 		return 'java.util.NoSuchElementException';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return [
 			'java.util.NoSuchElementException',
 			'java.lang.RuntimeException',
@@ -19,6 +19,6 @@ export class NoSuchElementException extends RuntimeException {
 
 }
 
-export function cast_java_util_NoSuchElementException(obj : unknown) : NoSuchElementException {
+export function cast_java_util_NoSuchElementException(obj: unknown): NoSuchElementException {
 	return obj as NoSuchElementException;
 }

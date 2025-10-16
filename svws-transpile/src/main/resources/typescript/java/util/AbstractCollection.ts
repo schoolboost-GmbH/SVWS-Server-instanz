@@ -13,16 +13,16 @@ export abstract class AbstractCollection<E> extends JavaObject implements Collec
 		super();
 	}
 
-	public abstract size() : number;
+	public abstract size(): number;
 
 
-	public isEmpty() : boolean {
+	public isEmpty(): boolean {
 		return this.size() === 0;
 	}
 
 
-	public contains(e : any) : boolean {
-		const it : JavaIterator<E> = this.iterator();
+	public contains(e: any): boolean {
+		const it: JavaIterator<E> = this.iterator();
 		if (e === null)
 			return false;
 		while (it.hasNext())
@@ -33,29 +33,29 @@ export abstract class AbstractCollection<E> extends JavaObject implements Collec
 
 
 	public [Symbol.iterator](): Iterator<E> {
-		const iter : JavaIterator<E> = this.iterator();
-		const result : Iterator<E> = {
-			next() : IteratorResult<E> {
+		const iter: JavaIterator<E> = this.iterator();
+		const result: Iterator<E> = {
+			next(): IteratorResult<E> {
 				if (iter.hasNext())
-					return { value : iter.next(), done : false };
-				return { value : null, done : true };
-			}
+					return { value: iter.next(), done: false };
+				return { value: null, done: true };
+			},
 		};
 		return result;
 	}
 
 
-	public abstract iterator() : JavaIterator<E>;
+	public abstract iterator(): JavaIterator<E>;
 
 
 
-	public toArray() : Array<unknown>;
-	public toArray<U>(a: Array<U>) : Array<U>;
-	public toArray<T>(__param0? : Array<T>) : Array<T> | Array<unknown> {
+	public toArray(): Array<unknown>;
+	public toArray<U>(a: Array<U>): Array<U>;
+	public toArray<T>(__param0?: Array<T>): Array<T> | Array<unknown> {
 		if ((__param0 === undefined) || (__param0 === null) || (__param0.length < this.size())) {
-			const r : Array<E> = new Array<E>(this.size());
-			const it : JavaIterator<E> = this.iterator();
-			let i : number = 0
+			const r: Array<E> = new Array<E>(this.size());
+			const it: JavaIterator<E> = this.iterator();
+			let i: number = 0;
 			while (it.hasNext()) {
 				r[i] = it.next();
 				i++;
@@ -63,19 +63,20 @@ export abstract class AbstractCollection<E> extends JavaObject implements Collec
 			return r;
 		} else if (Array.isArray(__param0)) {
 			// TODO handle the case where a is not null and try to fill into the parameter array if possible - see JavaDoc for implementation
-			throw new Error('not yet implemented')
-		} else throw new Error('invalid method overload');
+			throw new Error('not yet implemented');
+		} else
+			throw new Error('invalid method overload');
 	}
 
 
 
-	public add(e : E | null) : boolean {
+	public add(e: E | null): boolean {
 		throw new UnsupportedOperationException();
 	}
 
 
-	public remove(o : any) : boolean {
-		const it : JavaIterator<E> = this.iterator();
+	public remove(o: any): boolean {
+		const it: JavaIterator<E> = this.iterator();
 		if (o === null)
 			return false;
 		while (it.hasNext()) {
@@ -88,10 +89,10 @@ export abstract class AbstractCollection<E> extends JavaObject implements Collec
 	}
 
 
-	public containsAll(c : Collection<any> | null) : boolean {
+	public containsAll(c: Collection<any> | null): boolean {
 		if (c === null)
 			return false;
-		const it : JavaIterator<any> = c.iterator();
+		const it: JavaIterator<any> = c.iterator();
 		while (it.hasNext()) {
 			if (!this.contains(it.next()))
 				return false;
@@ -100,11 +101,11 @@ export abstract class AbstractCollection<E> extends JavaObject implements Collec
 	}
 
 
-	public addAll(c : Collection<E> | null) : boolean {
+	public addAll(c: Collection<E> | null): boolean {
 		if (c === null)
 			return false;
-		let modified : boolean = false;
-		const it : JavaIterator<E> = c.iterator();
+		let modified: boolean = false;
+		const it: JavaIterator<E> = c.iterator();
 		while (it.hasNext()) {
 			if (this.add(it.next()))
 				modified = true;
@@ -113,11 +114,11 @@ export abstract class AbstractCollection<E> extends JavaObject implements Collec
 	}
 
 
-	public removeAll(c : Collection<any> | null) : boolean {
+	public removeAll(c: Collection<any> | null): boolean {
 		if (c === null)
 			throw new NullPointerException();
-		let modified : boolean = false;
-		const iter : JavaIterator<E> = this.iterator();
+		let modified: boolean = false;
+		const iter: JavaIterator<E> = this.iterator();
 		while (iter.hasNext()) {
 			if (c.contains(iter.next())) {
 				iter.remove();
@@ -128,11 +129,11 @@ export abstract class AbstractCollection<E> extends JavaObject implements Collec
 	}
 
 
-	public retainAll(c : Collection<any> | null) : boolean {
+	public retainAll(c: Collection<any> | null): boolean {
 		if (c === null)
 			throw new NullPointerException();
-		let modified : boolean = false;
-		const iter : JavaIterator<E> = this.iterator();
+		let modified: boolean = false;
+		const iter: JavaIterator<E> = this.iterator();
 		while (iter.hasNext()) {
 			if (!c.contains(iter.next())) {
 				iter.remove();
@@ -143,8 +144,8 @@ export abstract class AbstractCollection<E> extends JavaObject implements Collec
 	}
 
 
-	public clear() : void {
-		const it : JavaIterator<E> = this.iterator();
+	public clear(): void {
+		const it: JavaIterator<E> = this.iterator();
 		while (it.hasNext()) {
 			it.next();
 			it.remove();
@@ -152,11 +153,11 @@ export abstract class AbstractCollection<E> extends JavaObject implements Collec
 	}
 
 
-	public toString() : string {
-		const iter : JavaIterator<E> = this.iterator();
+	public toString(): string {
+		const iter: JavaIterator<E> = this.iterator();
 		if (!iter.hasNext())
 			return "[]";
-		let result : string = "[";
+		let result: string = "[";
 		for (;;) {
 			result += JSON.stringify(iter.next());
 			if (!iter.hasNext())
@@ -166,7 +167,7 @@ export abstract class AbstractCollection<E> extends JavaObject implements Collec
 	}
 
 
-	public equals(obj : any): boolean {
+	public equals(obj: any): boolean {
 		// TODO check equality based on the elements in this collection
 		return (this === obj);
 	}
@@ -174,18 +175,18 @@ export abstract class AbstractCollection<E> extends JavaObject implements Collec
 
 	public hashCode(): number {
 		// TODO we need another implementation based on the elements in this collection
-		const str : string = JSON.stringify(this);
-		let hash : number = 0;
+		const str: string = JSON.stringify(this);
+		let hash: number = 0;
 		if (str.length === 0)
 			return hash;
-		for (let i : number = 0; i < str.length; i++)
+		for (let i: number = 0; i < str.length; i++)
 			hash = (((hash << 5) - hash) + str.charCodeAt(i)) | 0;
 		return hash;
 	}
 
 
 	public forEach(action: Consumer<E>): void {
-		const it : JavaIterator<E> = this.iterator();
+		const it: JavaIterator<E> = this.iterator();
 		while (it.hasNext())
 			action.accept(it.next());
 	}
@@ -195,7 +196,7 @@ export abstract class AbstractCollection<E> extends JavaObject implements Collec
 		return 'java.util.AbstractCollection';
 	}
 
-	public isTranspiledInstanceOf(name : string): boolean {
+	public isTranspiledInstanceOf(name: string): boolean {
 		return [
 			'java.util.AbstractCollection',
 			'java.util.Collection',
@@ -207,6 +208,6 @@ export abstract class AbstractCollection<E> extends JavaObject implements Collec
 }
 
 
-export function cast_java_util_AbstractCollection<E>(obj : unknown) : AbstractCollection<E> {
+export function cast_java_util_AbstractCollection<E>(obj: unknown): AbstractCollection<E> {
 	return obj as AbstractCollection<E>;
 }

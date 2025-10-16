@@ -4,7 +4,7 @@ import { AbstractStringBuilder } from './AbstractStringBuilder';
 
 export class StringBuilder extends AbstractStringBuilder implements Comparable<StringBuilder>, CharSequence {
 
-	constructor(param? : string | number) {
+	constructor(param?: string | number) {
 		if (param === undefined) {
 			super();
 		} else {
@@ -13,7 +13,7 @@ export class StringBuilder extends AbstractStringBuilder implements Comparable<S
 	}
 
 
-	public compareTo(other : StringBuilder) : number {
+	public compareTo(other: StringBuilder): number {
 		return super.compareTo(other);
 	}
 
@@ -22,7 +22,7 @@ export class StringBuilder extends AbstractStringBuilder implements Comparable<S
 		return 'java.lang.StringBuilder';
 	}
 
-	public isTranspiledInstanceOf(name : string): boolean {
+	public isTranspiledInstanceOf(name: string): boolean {
 		return [
 			'java.lang.StringBuilder',
 			'java.lang.AbstractStringBuilder',
@@ -30,12 +30,12 @@ export class StringBuilder extends AbstractStringBuilder implements Comparable<S
 			'java.lang.Comparable',
 			'java.lang.CharSequence',
 			'java.lang.Object',
-			'java.io.Serializable'
+			'java.io.Serializable',
 		].includes(name);
 	}
 
 }
 
-export function cast_java_lang_StringBuilder(obj : unknown) : StringBuilder {
+export function cast_java_lang_StringBuilder(obj: unknown): StringBuilder {
 	return obj as StringBuilder;
 }

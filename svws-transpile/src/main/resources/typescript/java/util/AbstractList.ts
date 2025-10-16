@@ -16,7 +16,7 @@ import { NullPointerException } from '../lang/NullPointerException';
 
 export abstract class AbstractList<E> extends AbstractCollection<E> implements List<E> {
 
-	modCount : number = 0;
+	modCount: number = 0;
 
 
 	protected constructor() {
@@ -25,26 +25,26 @@ export abstract class AbstractList<E> extends AbstractCollection<E> implements L
 
 
 	public [Symbol.iterator](): Iterator<E> {
-		const iter : JavaIterator<E> = this.iterator();
-		const result : Iterator<E> = {
-			next() : IteratorResult<E> {
+		const iter: JavaIterator<E> = this.iterator();
+		const result: Iterator<E> = {
+			next(): IteratorResult<E> {
 				if (iter.hasNext())
-					return { value : iter.next(), done : false };
-				return { value : null, done : true };
-			}
+					return { value: iter.next(), done: false };
+				return { value: null, done: true };
+			},
 		};
 		return result;
 	}
 
 
-	public iterator() : JavaIterator<E> {
+	public iterator(): JavaIterator<E> {
 		return new AbstractListListIterator<E>(this, 0);
 	}
 
 
-	public add(e : E | null) : boolean;
-	public add(index : number, element : E | null) : void;
-	public add(param1 : number | E | null, element? : E | null) : boolean | void {
+	public add(e: E | null): boolean;
+	public add(index: number, element: E | null): void;
+	public add(param1: number | E | null, element?: E | null): boolean | void {
 		if ((param1 === null) || (element === null))
 			throw new NullPointerException();
 		if ((typeof param1 === "number") && (element !== undefined)) {
@@ -52,13 +52,14 @@ export abstract class AbstractList<E> extends AbstractCollection<E> implements L
 		} else if ((typeof param1 !== "number") && (element === undefined)) {
 			this.add(this.size(), param1);
 			return true;
-		} else throw new Error("Invalid method overload.");
+		} else
+			throw new Error("Invalid method overload.");
 	}
 
 
-	public remove(index : number) : E;
-	public remove(e : E) : boolean;
-	public remove(param : number | E) : E | boolean {
+	public remove(index: number): E;
+	public remove(e: E): boolean;
+	public remove(param: number | E): E | boolean {
 		return super.remove(param);
 	}
 
@@ -68,8 +69,8 @@ export abstract class AbstractList<E> extends AbstractCollection<E> implements L
 	}
 
 
-	public indexOf(e : E) : number {
-		const it : ListIterator<E> = this.listIterator();
+	public indexOf(e: E): number {
+		const it: ListIterator<E> = this.listIterator();
 		if (e === null)
 			return -1;
 		while (it.hasNext())
@@ -79,8 +80,8 @@ export abstract class AbstractList<E> extends AbstractCollection<E> implements L
 	}
 
 
-	public lastIndexOf(e : E) : number {
-		const it : ListIterator<E> = this.listIterator();
+	public lastIndexOf(e: E): number {
+		const it: ListIterator<E> = this.listIterator();
 		if (e === null)
 			return -1;
 		while (it.hasPrevious())
@@ -90,25 +91,25 @@ export abstract class AbstractList<E> extends AbstractCollection<E> implements L
 	}
 
 
-	public clear() : void {
+	public clear(): void {
 		this.removeRange(0, this.size());
 	}
 
 
-	public addAll(c : Collection<E>) : boolean;
-	public addAll(index : number, c : Collection<E>) : boolean;
-	public addAll(param1 : number | Collection<E>, param2? : Collection<E>) : boolean {
+	public addAll(c: Collection<E>): boolean;
+	public addAll(index: number, c: Collection<E>): boolean;
+	public addAll(param1: number | Collection<E>, param2?: Collection<E>): boolean {
 		if (((typeof param1 === "number") && (param2 === undefined)) ||
 			((typeof param1 !== "number") && (param2 !== undefined)))
 			throw new Error("invalid method overload");
-		let index : number = (typeof param1 === "number") ? param1 : 0;
-		const c : Collection<E> | undefined = (typeof param1 === "number") ? param2 : param1;
+		let index: number = (typeof param1 === "number") ? param1 : 0;
+		const c: Collection<E> | undefined = (typeof param1 === "number") ? param2 : param1;
 		if (!c)
 			throw new Error("invalid method overload");
 		if (index < 0 || index > this.size())
 			throw new IndexOutOfBoundsException("Index: " + index + ", Size: " + this.size());
-		let modified : boolean = false;
-		const it : JavaIterator<E> = c.iterator();
+		let modified: boolean = false;
+		const it: JavaIterator<E> = c.iterator();
 		while (it.hasNext()) {
 			this.add(index++, it.next());
 			modified = true;
@@ -117,7 +118,7 @@ export abstract class AbstractList<E> extends AbstractCollection<E> implements L
 	}
 
 
-	public listIterator(param? : number) : ListIterator<E> {
+	public listIterator(param?: number): ListIterator<E> {
 		const index = (param === undefined) ? 0 : param;
 		if (index < 0 || index > this.size())
 			throw new IndexOutOfBoundsException("Index: " + index + ", Size: " + this.size());
@@ -125,16 +126,16 @@ export abstract class AbstractList<E> extends AbstractCollection<E> implements L
 	}
 
 
-	public equals(obj : any) : boolean {
+	public equals(obj: any): boolean {
 		// TODO any collection can be equal - check all elements with an iterator
 		if (!(obj instanceof AbstractList))
 			return false;
-		const e1 : ListIterator<E> = this.listIterator();
-		const c2 : AbstractList<E> = obj;
-		const e2 : ListIterator<E> = c2.listIterator();
+		const e1: ListIterator<E> = this.listIterator();
+		const c2: AbstractList<E> = obj;
+		const e2: ListIterator<E> = c2.listIterator();
 		while (e1.hasNext() && e2.hasNext()) {
-			const o1 : E = e1.next();
-			const o2 : E = e2.next();
+			const o1: E = e1.next();
+			const o2: E = e2.next();
 			if (((o1 instanceof JavaObject) && (!o1.equals(o2))) || (o1 !== o2))
 				return false;
 		}
@@ -142,10 +143,10 @@ export abstract class AbstractList<E> extends AbstractCollection<E> implements L
 	}
 
 
-	protected removeRange(fromIndex : number, toIndex : number) : void {
-		const iter : ListIterator<E> = this.listIterator(fromIndex);
+	protected removeRange(fromIndex: number, toIndex: number): void {
+		const iter: ListIterator<E> = this.listIterator(fromIndex);
 		const n = toIndex - fromIndex;
-		for (let i : number = 0; i < n ; i++) {
+		for (let i: number = 0; i < n ; i++) {
 			if (!iter.hasNext())
 				break;
 			iter.next();
@@ -153,10 +154,10 @@ export abstract class AbstractList<E> extends AbstractCollection<E> implements L
 		}
 	}
 
-	public abstract get(index : number) : E;
+	public abstract get(index: number): E;
 
 
-	public set(index : number, element : E) : E {
+	public set(index: number, element: E): E {
 		throw new UnsupportedOperationException();
 	}
 
@@ -197,20 +198,20 @@ export abstract class AbstractList<E> extends AbstractCollection<E> implements L
 		return 'java.util.AbstractList';
 	}
 
-	public isTranspiledInstanceOf(name : string): boolean {
+	public isTranspiledInstanceOf(name: string): boolean {
 		return [
 			'java.util.AbstractList',
 			'java.util.AbstractCollection',
 			'java.util.List',
 			'java.util.Collection',
 			'java.lang.Iterable',
-			'java.lang.Object'
+			'java.lang.Object',
 		].includes(name);
 	}
 
 }
 
 
-export function cast_java_util_AbstractList<E>(obj : unknown) : AbstractList<E> {
+export function cast_java_util_AbstractList<E>(obj: unknown): AbstractList<E> {
 	return obj as AbstractList<E>;
 }

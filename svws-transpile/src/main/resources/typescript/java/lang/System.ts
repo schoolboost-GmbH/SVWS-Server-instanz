@@ -4,21 +4,21 @@ import { NullPointerException } from './NullPointerException';
 
 export class System extends JavaObject {
 
-	public static arraycopy(src : Array<unknown> | null, srcPos : number, dest : Array<unknown> | null, destPos : number, length : number) : void {
+	public static arraycopy(src: Array<unknown> | null, srcPos: number, dest: Array<unknown> | null, destPos: number, length: number): void {
 		if ((src === null) || (dest === null))
 			throw new NullPointerException();
 		if ((src.length < srcPos + length) || (dest.length < destPos + length))
 			throw new IndexOutOfBoundsException();
-		for (let i : number = 0; i < length; i++) {
+		for (let i: number = 0; i < length; i++) {
 			dest[destPos + i] = src[srcPos + i];
 		}
 	}
 
-	public static currentTimeMillis() : number {
+	public static currentTimeMillis(): number {
 		return Date.now();
 	}
 
-	public static lineSeparator() : string {
+	public static lineSeparator(): string {
 		return "\n";
 	}
 
@@ -26,7 +26,7 @@ export class System extends JavaObject {
 		return 'java.lang.System';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return [
 			'java.lang.System',
 			'java.lang.Object'
@@ -36,6 +36,6 @@ export class System extends JavaObject {
 }
 
 
-export function cast_java_lang_System(obj : unknown) : System {
+export function cast_java_lang_System(obj: unknown): System {
 	return obj as System;
 }

@@ -10,18 +10,18 @@ import { JavaObject } from '../../java/lang/JavaObject';
 
 export class HashSetIterator<E> extends JavaObject implements JavaIterator<E> {
 
-	public cur : number = 0;
+	public cur: number = 0;
 
-	public last : number = -1;
+	public last: number = -1;
 
-	protected modCount : number;
+	protected modCount: number;
 
-	protected readonly hashSet : HashSet<E>;
+	protected readonly hashSet: HashSet<E>;
 
-	protected readonly elements : Array<E> = [];
+	protected readonly elements: Array<E> = [];
 
 
-	constructor(hashSet : HashSet<E>) {
+	constructor(hashSet: HashSet<E>) {
 		super();
 		this.modCount = hashSet.modCount;
 		this.hashSet = hashSet;
@@ -29,7 +29,7 @@ export class HashSetIterator<E> extends JavaObject implements JavaIterator<E> {
 	}
 
 
-	public hasNext() : boolean {
+	public hasNext(): boolean {
 		return this.cur !== this.elements.length;
 	}
 
@@ -39,8 +39,8 @@ export class HashSetIterator<E> extends JavaObject implements JavaIterator<E> {
 		try {
 			if (!this.hasNext())
 				throw new NoSuchElementException();
-			const i : number = this.cur;
-			const d : E = this.elements[i];
+			const i: number = this.cur;
+			const d: E = this.elements[i];
 			this.last = i;
 			this.cur = i + 1;
 			return d;
@@ -51,7 +51,7 @@ export class HashSetIterator<E> extends JavaObject implements JavaIterator<E> {
 	}
 
 
-	public remove() : void {
+	public remove(): void {
 		if (this.last < 0)
 			throw new IllegalStateException();
 		this.checkForComodification();
@@ -65,7 +65,7 @@ export class HashSetIterator<E> extends JavaObject implements JavaIterator<E> {
 	}
 
 
-	public checkForComodification() : void {
+	public checkForComodification(): void {
 		if (this.hashSet.modCount !== this.modCount)
 			throw new ConcurrentModificationException();
 	}
@@ -80,17 +80,17 @@ export class HashSetIterator<E> extends JavaObject implements JavaIterator<E> {
 		return 'java.util.HashSetIterator';
 	}
 
-	public isTranspiledInstanceOf(name : string): boolean {
+	public isTranspiledInstanceOf(name: string): boolean {
 		return [
 			'java.util.HashSetIterator',
 			'java.util.JavaIterator',
-			'java.lang.Object'
+			'java.lang.Object',
 		].includes(name);
 	}
 
 }
 
 
-export function cast_java_util_HashSetIterator<E>(obj : unknown) : HashSetIterator<E> {
+export function cast_java_util_HashSetIterator<E>(obj: unknown): HashSetIterator<E> {
 	return obj as HashSetIterator<E>;
 }

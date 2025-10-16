@@ -6,7 +6,7 @@ export class IllegalStateException extends RuntimeException {
 		return 'java.lang.IllegalStateException';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return [
 			'java.lang.IllegalStateException',
 			'java.lang.RuntimeException',
@@ -20,6 +20,6 @@ export class IllegalStateException extends RuntimeException {
 }
 
 
-export function cast_java_lang_IllegalStateException(obj : unknown) : IllegalStateException {
+export function cast_java_lang_IllegalStateException(obj: unknown): IllegalStateException {
 	return obj as IllegalStateException;
 }

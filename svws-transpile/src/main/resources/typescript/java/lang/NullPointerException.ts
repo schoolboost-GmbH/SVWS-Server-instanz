@@ -6,7 +6,7 @@ export class NullPointerException extends RuntimeException {
 		return 'java.lang.NullPointerException';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return [
 			'java.lang.NullPointerException',
 			'java.lang.RuntimeException',
@@ -20,7 +20,7 @@ export class NullPointerException extends RuntimeException {
 }
 
 
-export function cast_java_lang_NullPointerException(obj : unknown) : NullPointerException {
+export function cast_java_lang_NullPointerException(obj: unknown): NullPointerException {
 	return obj as NullPointerException;
 }
 

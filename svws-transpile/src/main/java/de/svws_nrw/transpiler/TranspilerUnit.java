@@ -272,6 +272,7 @@ public final class TranspilerUnit {
 					"Enum",
 					"Character",
 					"Boolean", "Byte", "Short", "Integer", "Long", "Float", "Double",
+					"Number",
 					"Math", "String", "StringBuilder",
 					"ArrayIndexOutOfBoundsException",
 					"ClassCastException",

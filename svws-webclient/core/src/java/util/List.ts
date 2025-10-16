@@ -8,74 +8,74 @@ import { NoSuchElementException } from './NoSuchElementException';
 // TODO extends SequencedCollection instead of Collection
 export interface List<E> extends Collection<E> {
 
-	size() : number;
+	size(): number;
 
-	isEmpty() : boolean;
+	isEmpty(): boolean;
 
-	contains(o : any) : boolean;
+	contains(o: any): boolean;
 
 	[Symbol.iterator](): Iterator<E>;
 
-	iterator() : JavaIterator<E>;
+	iterator(): JavaIterator<E>;
 
-	toArray() : Array<unknown>;
+	toArray(): Array<unknown>;
 
-	toArray<U>(a: Array<U>) : Array<U>;
+	toArray<U>(a: Array<U>): Array<U>;
 
-	add(e : E | null) : boolean;
+	add(e: E | null): boolean;
 
-	add(index : number, element : E | null) : void;
+	add(index: number, element: E | null): void;
 
-	remove(index : number) : E;
+	remove(index: number): E;
 
-	remove(o : any) : boolean;
+	remove(o: any): boolean;
 
-	containsAll(c : Collection<any> | null) : boolean;
+	containsAll(c: Collection<any> | null): boolean;
 
-	addAll(c : Collection<E> | null) : boolean;
+	addAll(c: Collection<E> | null): boolean;
 
-	addAll(index : number, c : Collection<E>) : boolean;
+	addAll(index: number, c: Collection<E>): boolean;
 
-	removeAll(c : Collection<any> | null) : boolean;
+	removeAll(c: Collection<any> | null): boolean;
 
-	retainAll(c : Collection<any> | null) : boolean;
+	retainAll(c: Collection<any> | null): boolean;
 
-	sort(c : Comparator<E>) : void;
+	sort(c: Comparator<E>): void;
 
-	clear() : void;
+	clear(): void;
 
-	equals(obj : any) : boolean;
+	equals(obj: any): boolean;
 
-	hashCode() : number;
-
-
-	get(index : number) : E;
-
-	set(index : number, element : E) : E;
-
-	removeElementAt(index : number) : void;
-
-	indexOf(o : any) : number;
-
-	lastIndexOf(o : any) : number;
+	hashCode(): number;
 
 
-	listIterator() : ListIterator<E>;
+	get(index: number): E;
 
-	listIterator(index : number) : ListIterator<E>;
+	set(index: number, element: E): E;
+
+	removeElementAt(index: number): void;
+
+	indexOf(o: any): number;
+
+	lastIndexOf(o: any): number;
 
 
-	addFirst(e: E | null) : void;
+	listIterator(): ListIterator<E>;
 
-	addLast(e: E | null) : void;
+	listIterator(index: number): ListIterator<E>;
 
-	getFirst() : E;
 
-	getLast() : E;
+	addFirst(e: E | null): void;
 
-	removeFirst() : E;
+	addLast(e: E | null): void;
 
-	removeLast() : E;
+	getFirst(): E;
+
+	getLast(): E;
+
+	removeFirst(): E;
+
+	removeLast(): E;
 
 }
 
@@ -84,19 +84,19 @@ export interface List<E> extends Collection<E> {
 
 
 /* Implementierung der Default-Methode addFirst */
-export function java_util_List_addFirst<E>(this: List<E>, e: E | null) : void {
+export function java_util_List_addFirst<E>(this: List<E>, e: E | null): void {
 	this.add(0, e);
 }
 
 
 /* Implementierung der Default-Methode addLast */
-export function java_util_List_addLast<E>(this: List<E>, e: E | null) : void {
+export function java_util_List_addLast<E>(this: List<E>, e: E | null): void {
 	this.add(e);
 }
 
 
 /* Implementierung der Default-Methode getFirst */
-export function java_util_List_getFirst<E>(this: List<E>) : E {
+export function java_util_List_getFirst<E>(this: List<E>): E {
 	if (this.isEmpty()) {
 		throw new NoSuchElementException();
 	} else {
@@ -106,7 +106,7 @@ export function java_util_List_getFirst<E>(this: List<E>) : E {
 
 
 /* Implementierung der Default-Methode getLast */
-export function java_util_List_getLast<E>(this: List<E>) : E {
+export function java_util_List_getLast<E>(this: List<E>): E {
 	if (this.isEmpty()) {
 		throw new NoSuchElementException();
 	} else {
@@ -116,7 +116,7 @@ export function java_util_List_getLast<E>(this: List<E>) : E {
 
 
 /* Implementierung der Default-Methode removeFirst */
-export function java_util_List_removeFirst<E>(this: List<E>) : E {
+export function java_util_List_removeFirst<E>(this: List<E>): E {
 	if (this.isEmpty()) {
 		throw new NoSuchElementException();
 	} else {
@@ -128,17 +128,17 @@ export function java_util_List_removeFirst<E>(this: List<E>) : E {
 
 
 /* Implementierung der Default-Methode removeLast */
-export function java_util_List_removeLast<E>(this: List<E>) : E {
+export function java_util_List_removeLast<E>(this: List<E>): E {
 	if (this.isEmpty()) {
 		throw new NoSuchElementException();
 	} else {
 		const e = this.get(this.size() - 1);
-		this.removeElementAt(this.size() - 1)
+		this.removeElementAt(this.size() - 1);
 		return e;
 	}
 }
 
 
-export function cast_java_util_List<E>(obj : unknown) : List<E> {
+export function cast_java_util_List<E>(obj: unknown): List<E> {
 	return obj as List<E>;
 }

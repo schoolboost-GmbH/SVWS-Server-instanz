@@ -9,9 +9,9 @@ import { UnsupportedOperationException } from '../lang/UnsupportedOperationExcep
 
 export class HashMapEntrySet<K, V> extends JavaObject implements JavaSet<JavaMapEntry<K, V>> {
 
-	protected readonly _map : HashMap<K, V>;
+	protected readonly _map: HashMap<K, V>;
 
-	public constructor(map : HashMap<K, V>) {
+	public constructor(map: HashMap<K, V>) {
 		super();
 		this._map = map;
 	}
@@ -35,34 +35,35 @@ export class HashMapEntrySet<K, V> extends JavaObject implements JavaSet<JavaMap
 	}
 
 	iterator(): JavaIterator<JavaMapEntry<K, V>> {
-		const it = this[Symbol.iterator]()
-		let next_item = it.next()
+		const it = this[Symbol.iterator]();
+		let next_item = it.next();
 		return {
-			hasNext():boolean {
-				return next_item.done ? false : true
+			hasNext(): boolean {
+				return next_item.done ? false : true;
 			},
 			next(): JavaMapEntry<K, V> {
-				const e = next_item.value
-				next_item = it.next()
+				const e = next_item.value;
+				next_item = it.next();
 				return e;
 			},
 			remove() {
 			},
-		}
+		};
 	}
 
-	public toArray() : Array<unknown>;
-	public toArray<U>(a: Array<U>) : Array<U>;
-	public toArray<T>(__param0? : Array<T>) : Array<T> | Array<unknown> {
+	public toArray(): Array<unknown>;
+	public toArray<U>(a: Array<U>): Array<U>;
+	public toArray<T>(__param0?: Array<T>): Array<T> | Array<unknown> {
 		if ((__param0 === undefined) || (__param0 === null) || (__param0.length < this.size())) {
-			const r : Array<JavaMapEntry<K,V>> = [];
+			const r: Array<JavaMapEntry<K, V>> = [];
 			for (const e of this._map)
 				r.push(e);
 			return r;
 		} else if (Array.isArray(__param0)) {
 			// TODO handle the case where a is not null and try to fill into the parameter array if possible - see JavaDoc for implementation
-			throw new Error('not yet implemented')
-		} else throw new Error('invalid method overload');
+			throw new Error('not yet implemented');
+		} else
+			throw new Error('invalid method overload');
 	}
 
 	add(e: JavaMapEntry<K, V> | null): boolean {

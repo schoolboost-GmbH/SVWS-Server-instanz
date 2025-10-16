@@ -4,9 +4,9 @@ import { JavaObject } from './JavaObject';
 
 
 function prepareAttributeOrderForStringify() {
-	return function(key : any, value : any) {
+	return function(key: any, value: any) {
 		if (value instanceof Object && !(value instanceof Array) && !(value instanceof Function)) {
-			return Object.entries(value).sort().reduce((result : any, e) => {
+			return Object.entries(value).sort().reduce((result: any, e) => {
 				result[e[0]] = e[1];
 				return result;
 			}, {});
@@ -17,10 +17,10 @@ function prepareAttributeOrderForStringify() {
 
 export class Throwable extends Error implements TranspiledObject {
 
-	protected _cause : Throwable | null = null;
+	protected _cause: Throwable | null = null;
 
-	constructor(param1? : Throwable | string | null, param2? : Throwable) {
-		super(typeof param1 === "string" ? param1 : param1?.toString());
+	constructor(param1?: Throwable | string | null, param2?: Throwable) {
+		super(typeof param1 === "string" ? param1: param1?.toString());
 		Object.setPrototypeOf(this, new.target.prototype);
 		this.name = this.constructor.name;
 
@@ -38,31 +38,31 @@ export class Throwable extends Error implements TranspiledObject {
 		}
 	}
 
-	public getMessage() : string {
+	public getMessage(): string {
 		return this.message;
 	}
 
-	public getLocalizedMessage() : string {
+	public getLocalizedMessage(): string {
 		return this.getMessage();
 	}
 
-	public getCause() : Throwable | null {
+	public getCause(): Throwable | null {
 		return this._cause;
 	}
 
-	public printStackTrace() : void {
+	public printStackTrace(): void {
 		console.error(this.stack);
 	}
 
-	public getClass<T extends TranspiledObject>() : Class<T> {
+	public getClass<T extends TranspiledObject>(): Class<T> {
 		return new Class(this.transpilerCanonicalName());
 	}
 
-	public hashCode() : number {
+	public hashCode(): number {
 		return JavaObject._hashCode(JSON.stringify(this, prepareAttributeOrderForStringify()));
 	}
 
-	public equals(obj : any) : boolean {
+	public equals(obj: any): boolean {
 		if (typeof obj !== "object")
 			return false;
 		if (!(obj instanceof Throwable))
@@ -72,11 +72,11 @@ export class Throwable extends Error implements TranspiledObject {
 		return (this === obj);
 	}
 
-	public clone() : JavaObject {
+	public clone(): JavaObject {
 		return { ...this };
 	}
 
-	public toString() : string {
+	public toString(): string {
 		return JSON.stringify(this, prepareAttributeOrderForStringify());
 	}
 
@@ -84,7 +84,7 @@ export class Throwable extends Error implements TranspiledObject {
 		return 'java.lang.Throwable';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return [
 			'java.lang.Throwable',
 			'java.lang.Object',
@@ -95,6 +95,6 @@ export class Throwable extends Error implements TranspiledObject {
 }
 
 
-export function cast_java_lang_Throwable(obj : unknown) : Throwable {
+export function cast_java_lang_Throwable(obj: unknown): Throwable {
 	return obj as Throwable;
 }

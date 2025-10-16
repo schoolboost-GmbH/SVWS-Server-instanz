@@ -6,7 +6,7 @@ export class NumberFormatException extends IllegalArgumentException {
 		return 'java.lang.NumberFormatException';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return [
 			'java.lang.NumberFormatException',
 			'java.lang.IllegalArgumentException',
@@ -21,6 +21,6 @@ export class NumberFormatException extends IllegalArgumentException {
 }
 
 
-export function cast_java_lang_NumberFormatException(obj : unknown) : NumberFormatException {
+export function cast_java_lang_NumberFormatException(obj: unknown): NumberFormatException {
 	return obj as NumberFormatException;
 }

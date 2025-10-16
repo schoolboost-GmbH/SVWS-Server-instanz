@@ -1,11 +1,11 @@
 
 export interface LongSupplier {
 
-    getAsLong() : number;
+	getAsLong(): number;
 
 }
 
 
-export function cast_java_util_function_LongSupplier(obj : unknown) : LongSupplier {
+export function cast_java_util_function_LongSupplier(obj: unknown): LongSupplier {
 	return obj as LongSupplier;
 }

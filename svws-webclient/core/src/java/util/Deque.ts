@@ -5,74 +5,74 @@ import type { Queue } from './Queue';
 
 export interface Deque<E> extends Queue<E>, SequencedCollection<E> {
 
-    size() : number;
+	size(): number;
 
-    isEmpty() : boolean;
+	isEmpty(): boolean;
 
-    contains(o : any) : boolean;
+	contains(o: any): boolean;
 
 	[Symbol.iterator](): Iterator<E>;
 
-    iterator() : JavaIterator<E>;
+	iterator(): JavaIterator<E>;
 
-    toArray() : Array<unknown>;
-    toArray<U>(a: Array<U>) : Array<U>;
+	toArray(): Array<unknown>;
+	toArray<U>(a: Array<U>): Array<U>;
 
-    add(e : E | null) : boolean;
+	add(e: E | null): boolean;
 
-    remove(o : any) : boolean;
-    remove() : E;
+	remove(o: any): boolean;
+	remove(): E;
 
-    containsAll(c : Collection<any> | null) : boolean;
+	containsAll(c: Collection<any> | null): boolean;
 
-    addAll(c : Collection<E> | null) : boolean;
+	addAll(c: Collection<E> | null): boolean;
 
-    removeAll(c : Collection<any> | null) : boolean;
+	removeAll(c: Collection<any> | null): boolean;
 
-    retainAll(c : Collection<any> | null) : boolean;
+	retainAll(c: Collection<any> | null): boolean;
 
-    clear() : void;
+	clear(): void;
 
-    equals(obj : any) : boolean;
+	equals(obj: any): boolean;
 
-    hashCode() : number;
+	hashCode(): number;
 
-    element() : E;
+	element(): E;
 
-    offer(e : E | null) : boolean;
+	offer(e: E | null): boolean;
 
-    peek() : E | null;
-    poll() : E | null;
+	peek(): E | null;
+	poll(): E | null;
 
-	addFirst(e : E | null) : void;
-    addLast(e : E | null) : void;
+	addFirst(e: E | null): void;
+	addLast(e: E | null): void;
 
-    offerFirst(e : E | null) : boolean;
-	offerLast(e : E | null) : boolean;
+	offerFirst(e: E | null): boolean;
+	offerLast(e: E | null): boolean;
 
-	removeFirst() : E;
-    removeLast() : E;
+	removeFirst(): E;
+	removeLast(): E;
 
-	pollFirst() : E | null;
-    pollLast() : E | null;
+	pollFirst(): E | null;
+	pollLast(): E | null;
 
-    getFirst() : E;
-    getLast() : E;
+	getFirst(): E;
+	getLast(): E;
 
-    peekFirst() : E | null;
-    peekLast() : E | null;
+	peekFirst(): E | null;
+	peekLast(): E | null;
 
-	removeFirstOccurrence(obj : any) : boolean;
-	removeLastOccurrence(obj : any) : boolean;
+	removeFirstOccurrence(obj: any): boolean;
+	removeLastOccurrence(obj: any): boolean;
 
-    push(e : E) : void;
-    pop() : E;
+	push(e: E): void;
+	pop(): E;
 
-    descendingIterator() : JavaIterator<E>;
+	descendingIterator(): JavaIterator<E>;
 
 }
 
 
-export function cast_java_util_Deque<E>(obj : unknown) : Deque<E> {
+export function cast_java_util_Deque<E>(obj: unknown): Deque<E> {
 	return obj as Deque<E>;
 }

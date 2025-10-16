@@ -3,42 +3,42 @@ import type { JavaIterator } from './JavaIterator';
 
 export interface Collection<E> extends JavaIterable<E> {
 
-    size() : number;
+	size(): number;
 
-    isEmpty() : boolean;
+	isEmpty(): boolean;
 
-    contains(o : any) : boolean;
+	contains(o: any): boolean;
 
 	[Symbol.iterator](): Iterator<E>;
 
-    iterator() : JavaIterator<E>;
+	iterator(): JavaIterator<E>;
 
-    toArray() : Array<unknown>;
+	toArray(): Array<unknown>;
 
-    toArray<U>(a: Array<U>) : Array<U>;
+	toArray<U>(a: Array<U>): Array<U>;
 
-    add(e : E | null) : boolean;
+	add(e: E | null): boolean;
 
-    remove(o : any) : boolean;
+	remove(o: any): boolean;
 
 
-    containsAll(c : Collection<any> | null) : boolean;
+	containsAll(c: Collection<any> | null): boolean;
 
-    addAll(c : Collection<E> | null) : boolean;
+	addAll(c: Collection<E> | null): boolean;
 
-    removeAll(c : Collection<any> | null) : boolean;
+	removeAll(c: Collection<any> | null): boolean;
 
-    retainAll(c : Collection<any> | null) : boolean;
+	retainAll(c: Collection<any> | null): boolean;
 
-    clear() : void;
+	clear(): void;
 
-    equals(obj : any) : boolean;
+	equals(obj: any): boolean;
 
-    hashCode() : number;
+	hashCode(): number;
 
 }
 
 
-export function cast_java_util_Collection<E>(obj : unknown) : Collection<E> {
+export function cast_java_util_Collection<E>(obj: unknown): Collection<E> {
 	return obj as Collection<E>;
 }

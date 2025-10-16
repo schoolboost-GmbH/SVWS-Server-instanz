@@ -4,9 +4,9 @@ import { Throwable } from './Throwable';
 
 
 function prepareAttributeOrderForStringify() {
-	return function(key : any, value : any) {
+	return function(key: any, value: any) {
 		if (value instanceof Object && !(value instanceof Array) && !(value instanceof Function)) {
-			return Object.entries(value).sort().reduce((result : any, e) => {
+			return Object.entries(value).sort().reduce((result: any, e) => {
 				result[e[0]] = e[1];
 				return result;
 			}, {});
@@ -18,24 +18,24 @@ function prepareAttributeOrderForStringify() {
 
 export abstract class JavaObject implements TranspiledObject {
 
-	public getClass<T extends TranspiledObject>() : Class<T> {
+	public getClass<T extends TranspiledObject>(): Class<T> {
 		return new Class(this.transpilerCanonicalName());
 	}
 
-	static _hashCode(str: string) : number {
-		let hash : number = 0;
+	static _hashCode(str: string): number {
+		let hash: number = 0;
 		if (str.length === 0)
 			return hash;
-		for (let i : number = 0; i < str.length; i++)
+		for (let i: number = 0; i < str.length; i++)
 			hash = (((hash << 5) - hash) + str.charCodeAt(i)) | 0;
 		return hash;
 	}
 
-	public hashCode() : number {
+	public hashCode(): number {
 		return JavaObject._hashCode(JSON.stringify(this, prepareAttributeOrderForStringify()));
 	}
 
-	public equals(obj : any) : boolean {
+	public equals(obj: any): boolean {
 		if (typeof obj !== "object")
 			return false;
 		if (!(obj instanceof JavaObject))
@@ -44,11 +44,11 @@ export abstract class JavaObject implements TranspiledObject {
 	}
 
 
-	public clone() : unknown {
+	public clone(): unknown {
 		return { ...this };
 	}
 
-	public toString() : string | null {
+	public toString(): string | null {
 		return JSON.stringify(this, prepareAttributeOrderForStringify());
 	}
 
@@ -56,13 +56,13 @@ export abstract class JavaObject implements TranspiledObject {
 		return 'java.lang.Object';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return [
 			'java.lang.Object'
 		].includes(name);
 	}
 
-	public static equalsTranspiler(obj : any, other : any) : boolean {
+	public static equalsTranspiler(obj: any, other: any): boolean {
 		if (obj instanceof JavaObject)
 			return obj.equals(other);
 		if (obj instanceof Throwable)
@@ -72,7 +72,7 @@ export abstract class JavaObject implements TranspiledObject {
 		return obj === other;
 	}
 
-	public static getTranspilerHashCode(obj : any) : number {
+	public static getTranspilerHashCode(obj: any): number {
 		if (obj === null)
 			return 0;
 		if (obj === undefined)
@@ -93,7 +93,7 @@ export abstract class JavaObject implements TranspiledObject {
 			if (obj instanceof Date)
 				return JavaObject._hashCode(JSON.stringify(obj));
 			if (obj instanceof Array) {
-				let result : number = 1;
+				let result: number = 1;
 				for (const e of obj) {
 					result *= 31;
 					if (e !== null)
@@ -115,6 +115,6 @@ export abstract class JavaObject implements TranspiledObject {
 }
 
 
-export function cast_java_lang_Object(obj : unknown) : JavaObject {
+export function cast_java_lang_Object(obj: unknown): JavaObject {
 	return obj as JavaObject;
 }

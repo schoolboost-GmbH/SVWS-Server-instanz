@@ -4,25 +4,25 @@ import { NumberFormatException } from './NumberFormatException';
 
 export class JavaInteger extends JavaObject {
 
-	public static MAX_VALUE : number = +0x7fffffff;
-	public static MIN_VALUE : number = -0x80000000;
-	public static SIZE : number = 32;
-	public static BYTES : number = 4;
+	public static MAX_VALUE: number = 0x7fffffff;
+	public static MIN_VALUE: number = -0x80000000;
+	public static SIZE: number = 32;
+	public static BYTES: number = 4;
 
-	public static parseInt(s : string | null) : number {
+	public static parseInt(s: string | null): number {
 		if (s === null)
 			throw new NullPointerException();
-		const a : number = parseInt(s, 10);
+		const a: number = parseInt(s, 10);
 		if (Number.isNaN(a) || (a < this.MIN_VALUE) || (a > this.MAX_VALUE))
 			throw new NumberFormatException();
 		return a;
 	}
 
-	public static compare(a : number, b : number): number {
+	public static compare(a: number, b: number): number {
 		return a === b ? 0 : (a < b) ? -1 : 1;
 	}
 
-	public static hashCode(value : number) : number {
+	public static hashCode(value: number): number {
 		return value;
 	}
 
@@ -30,7 +30,7 @@ export class JavaInteger extends JavaObject {
 		return 'java.lang.Integer';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return [
 			'java.lang.Integer',
 			'java.lang.Number',
@@ -43,6 +43,6 @@ export class JavaInteger extends JavaObject {
 }
 
 
-export function cast_java_lang_Integer(obj : unknown) : number | null {
+export function cast_java_lang_Integer(obj: unknown): number | null {
 	return obj as number | null;
 }

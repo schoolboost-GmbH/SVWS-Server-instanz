@@ -3,7 +3,7 @@ import { JavaObject } from './JavaObject';
 
 export class JavaMath extends JavaObject {
 
-	public static clamp(value: number, min: number, max: number) : number {
+	public static clamp(value: number, min: number, max: number): number {
 		if (min <= max)
 			return Math.min(max, Math.max(value, min));
 		if (isNaN(min))
@@ -17,7 +17,7 @@ export class JavaMath extends JavaObject {
 		return 'java.lang.Math';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return [
 			'java.lang.Math',
 			'java.lang.Object'
@@ -26,6 +26,6 @@ export class JavaMath extends JavaObject {
 
 }
 
-export function cast_java_lang_Math(obj : unknown) : JavaMath {
+export function cast_java_lang_Math(obj: unknown): JavaMath {
 	return obj as JavaMath;
 }

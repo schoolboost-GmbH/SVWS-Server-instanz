@@ -26,6 +26,7 @@ export { JavaInteger } from './java/lang/JavaInteger';
 export type { JavaIterable } from './java/lang/JavaIterable';
 export { JavaLong } from './java/lang/JavaLong';
 export { JavaMath } from './java/lang/JavaMath';
+export { JavaNumber } from './java/lang/JavaNumber';
 export { JavaObject } from './java/lang/JavaObject';
 export { JavaShort } from './java/lang/JavaShort';
 export { JavaString } from './java/lang/JavaString';

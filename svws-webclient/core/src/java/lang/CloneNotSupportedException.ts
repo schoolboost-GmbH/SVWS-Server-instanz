@@ -6,7 +6,7 @@ export class CloneNotSupportedException extends RuntimeException {
 		return 'java.lang.CloneNotSupportedException';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return [
 			'java.lang.CloneNotSupportedException',
 			'java.lang.Exception',
@@ -18,6 +18,6 @@ export class CloneNotSupportedException extends RuntimeException {
 
 }
 
-export function cast_java_lang_CloneNotSupportedException(obj : unknown) : CloneNotSupportedException {
+export function cast_java_lang_CloneNotSupportedException(obj: unknown): CloneNotSupportedException {
 	return obj as CloneNotSupportedException;
 }

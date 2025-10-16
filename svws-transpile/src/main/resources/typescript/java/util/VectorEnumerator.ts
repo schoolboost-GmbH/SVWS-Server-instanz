@@ -4,18 +4,18 @@ import { NoSuchElementException } from './NoSuchElementException';
 
 export class VectorEnumerator<E> implements Enumeration<E> {
 
-	protected vector : Vector<E>;
-	public count : number = 0;
+	protected vector: Vector<E>;
+	public count: number = 0;
 
-	public constructor(vector : Vector<E>) {
+	public constructor(vector: Vector<E>) {
 		this.vector = vector;
 	}
 
-	public hasMoreElements() : boolean  {
+	public hasMoreElements(): boolean {
 		return this.count < this.vector.size();
 	}
 
-	public nextElement() : E {
+	public nextElement(): E {
 		if (this.count < this.vector.size()) {
 			return this.vector.get(this.count++);
 		}
@@ -26,17 +26,17 @@ export class VectorEnumerator<E> implements Enumeration<E> {
 		return 'java.util.VectorEnumerator';
 	}
 
-	public isTranspiledInstanceOf(name : string): boolean {
+	public isTranspiledInstanceOf(name: string): boolean {
 		return [
 			'java.util.VectorEnumerator',
 			'java.util.Enumeration',
-			'java.lang.Object'
+			'java.lang.Object',
 		].includes(name);
 	}
 
 }
 
 
-export function cast_java_util_VectorEnumerator<E>(obj : unknown) : VectorEnumerator<E> {
+export function cast_java_util_VectorEnumerator<E>(obj: unknown): VectorEnumerator<E> {
 	return obj as VectorEnumerator<E>;
 }

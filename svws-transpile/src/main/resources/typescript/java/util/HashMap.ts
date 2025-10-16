@@ -15,9 +15,9 @@ import { HashMapEntry } from './HashMapEntry';
 import { HashMapKeySet } from './HashMapKeySet';
 
 interface HashMapIterator<E> extends Iterator<E, E> {
-	iter : IterableIterator<[number, Array<E>]>;
+	iter: IterableIterator<[number, Array<E>]>;
 	current: IteratorResult<[number, Array<E>]> | undefined;
-	pos : number;
+	pos: number;
 }
 
 /**
@@ -26,10 +26,10 @@ interface HashMapIterator<E> extends Iterator<E, E> {
 export class HashMap<K, V> extends JavaObject implements JavaMap<K, V>, Cloneable, Serializable {
 
 	// Die interne Javascript-Map zur Verwaltung der Kollisionslisten für die Hashwerte der Schlüsselwerte
-	protected readonly _map : Map<number, Array<JavaMapEntry<K, V>>> = new Map();
+	protected readonly _map: Map<number, Array<JavaMapEntry<K, V>>> = new Map();
 
 	// Die Anzahl der Elemente in der Hash-Map. Ist aufgrund der Kollisionslisten ggf. größer als die Anzahl der Elemente in der internen Javascript-Map
-	protected _size : number = 0;
+	protected _size: number = 0;
 
 
 	/**
@@ -44,7 +44,7 @@ export class HashMap<K, V> extends JavaObject implements JavaMap<K, V>, Cloneabl
 	 *
 	 * @returns die Anzahl der Werte in der Hash-Map
 	 */
-	public size() : number {
+	public size(): number {
 		return this._size;
 	}
 
@@ -53,7 +53,7 @@ export class HashMap<K, V> extends JavaObject implements JavaMap<K, V>, Cloneabl
 	 *
 	 * @returns true, wenn die Hash-Map leer ist
 	 */
-	public isEmpty() : boolean {
+	public isEmpty(): boolean {
 		return this._size === 0;
 	}
 
@@ -65,9 +65,9 @@ export class HashMap<K, V> extends JavaObject implements JavaMap<K, V>, Cloneabl
 	 *
 	 * @returns true, wen ein Wert enthalten ist
 	 */
-	public containsKey(key : K) : boolean {
+	public containsKey(key: K): boolean {
 		const hash = JavaObject.getTranspilerHashCode(key);
-		const koll : Array<JavaMapEntry<K, V>> | undefined = this._map.get(hash);
+		const koll: Array<JavaMapEntry<K, V>> | undefined = this._map.get(hash);
 		if (koll === undefined)
 			return false;
 		for (const entry of koll)
@@ -84,7 +84,7 @@ export class HashMap<K, V> extends JavaObject implements JavaMap<K, V>, Cloneabl
 	 *
 	 * @returns true, wenn der Wert enthalten ist
 	 */
-	public containsValue(value : V) : boolean {
+	public containsValue(value: V): boolean {
 		for (const [k, koll] of this._map)
 			for (const e of koll)
 				if (JavaObject.equalsTranspiler(e.getValue(), value))
@@ -101,11 +101,11 @@ export class HashMap<K, V> extends JavaObject implements JavaMap<K, V>, Cloneabl
 	 *
 	 * @returns der Wert in der Hash-Map oder null
 	 */
-	public get(key : any | null) : V | null {
+	public get(key: any | null): V | null {
 		if (key === null)
 			return null;
 		const hash = JavaObject.getTranspilerHashCode(key);
-		const koll : Array<JavaMapEntry<K, V>> | undefined = this._map.get(hash);
+		const koll: Array<JavaMapEntry<K, V>> | undefined = this._map.get(hash);
 		if (koll === undefined)
 			return null;
 		for (const entry of koll)
@@ -124,16 +124,16 @@ export class HashMap<K, V> extends JavaObject implements JavaMap<K, V>, Cloneabl
 	 *
 	 * @returns der ursprüngliche Wert oder null
 	 */
-	public put(key : K, value : V) : V | null {
+	public put(key: K, value: V): V | null {
 		// ermittle die Kollisionsliste, in die der neue Map-Eintrag eingefügt werden soll...
 		const hash = JavaObject.getTranspilerHashCode(key);
-		let koll : Array<JavaMapEntry<K, V>> | undefined = this._map.get(hash);
+		let koll: Array<JavaMapEntry<K, V>> | undefined = this._map.get(hash);
 		// ggf. muss eine neue Kollisionliste erzeugt werden, da bisher noch keine Liste für den Hash des Schlüsselwertes existiert...
 		if (koll === undefined) {
 			koll = new Array<JavaMapEntry<K, V>>();
 			this._map.set(hash, koll);
 		}
-		let oldValue : V | null = null; // gehe zunächst davon aus, dass kein Wert für den Schlüsselwert vorhanden ist...
+		let oldValue: V | null = null; // gehe zunächst davon aus, dass kein Wert für den Schlüsselwert vorhanden ist...
 		// durchwandere die Kollisionsliste und ersetze ggf. einen bereits vorhandenen Eintrag zu dem Schlüsselwert
 		for (let i = 0; i < koll.length; i++) {
 			// entferne ggf. einen Eintrag, der bereits in der Kollisionsliste vorhanden ist
@@ -160,15 +160,15 @@ export class HashMap<K, V> extends JavaObject implements JavaMap<K, V>, Cloneabl
 	 *
 	 * @returns der entfernte Wert oder null
 	 */
-	public remove(key : any) : V | null {
+	public remove(key: any): V | null {
 		if (key === null)
 			return null;
 		// ermittle die Kollisionsliste, aus der der Wert entfernt werden soll...
 		const hash = JavaObject.getTranspilerHashCode(key);
-		const koll : Array<JavaMapEntry<K, V>> | undefined = this._map.get(hash);
+		const koll: Array<JavaMapEntry<K, V>> | undefined = this._map.get(hash);
 		if (koll === undefined)
 			return null; // Keine Kollisionsliste vorhanden, also auch kein Wert...
-		let oldValue : V | null = null; // gehe zunächst davon aus, dass kein Wert für den Schlüsselwert vorhanden ist...
+		let oldValue: V | null = null; // gehe zunächst davon aus, dass kein Wert für den Schlüsselwert vorhanden ist...
 		// Entferne den Eintrag ggf. aus der Kollisionsliste und merke den entfernten Wert
 		for (let i = 0; i < koll.length; i++) {
 			// entferne ggf. einen Eintrag, der bereits in der Kollisionsliste vorhanden ist
@@ -191,7 +191,7 @@ export class HashMap<K, V> extends JavaObject implements JavaMap<K, V>, Cloneabl
 	 *
 	 * @param m   die Map, deren Werte eingefügt werden sollen
 	 */
-	public putAll(m : JavaMap<K, V>) : void {
+	public putAll(m: JavaMap<K, V>): void {
 		for (const entry of m.entrySet()) {
 			if (entry === null)
 				return;
@@ -203,7 +203,7 @@ export class HashMap<K, V> extends JavaObject implements JavaMap<K, V>, Cloneabl
 	/**
 	 * Entfernt alle Einträge aus dieser Hash-Map.
 	 */
-	public clear() : void {
+	public clear(): void {
 		this._map.clear();
 		this._size = 0;
 	}
@@ -213,7 +213,7 @@ export class HashMap<K, V> extends JavaObject implements JavaMap<K, V>, Cloneabl
 	 *
 	 * @returns das Set mit den Schlüsselwerten.
 	 */
-	public keySet() : JavaSet<K> {
+	public keySet(): JavaSet<K> {
 		return new HashMapKeySet<K, V>(this);
 	}
 
@@ -222,7 +222,7 @@ export class HashMap<K, V> extends JavaObject implements JavaMap<K, V>, Cloneabl
 	 *
 	 * @returns die Collection mit den Werten
 	 */
-	public values() : Collection<V> {
+	public values(): Collection<V> {
 		return new HashMapCollection<K, V>(this);
 	}
 
@@ -231,24 +231,24 @@ export class HashMap<K, V> extends JavaObject implements JavaMap<K, V>, Cloneabl
 	 *
 	 * @returns das Set mit den Einträgen
 	 */
-	public entrySet() : JavaSet<JavaMapEntry<K, V>> {
+	public entrySet(): JavaSet<JavaMapEntry<K, V>> {
 		return new HashMapEntrySet<K, V>(this);
 	}
 
-	public equals(o : any) : boolean {
+	public equals(o: any): boolean {
 		throw new UnsupportedOperationException();
 	}
 
-	public hashCode() : number {
+	public hashCode(): number {
 		throw new UnsupportedOperationException();
 	}
 
 
-	public computeIfAbsent(key : K, mappingFunction: JavaFunction<K, V> ) : V | null {
-		const v : V | null = this.get(key);
+	public computeIfAbsent(key: K, mappingFunction: JavaFunction<K, V>): V | null {
+		const v: V | null = this.get(key);
 		if (v !== null)
 			return v;
-		const newValue : V = mappingFunction.apply(key);
+		const newValue: V = mappingFunction.apply(key);
 		if (newValue === null)
 			return null;
 		this.put(key, newValue);
@@ -257,29 +257,29 @@ export class HashMap<K, V> extends JavaObject implements JavaMap<K, V>, Cloneabl
 
 
 	[Symbol.iterator](): Iterator<JavaMapEntry<K, V>> {
-		const result : HashMapIterator<JavaMapEntry<K, V>> = {
+		const result: HashMapIterator<JavaMapEntry<K, V>> = {
 			iter: this._map[Symbol.iterator](),
 			current: undefined,
 			pos: -1,
-			next() : IteratorResult<JavaMapEntry<K, V>> {
+			next(): IteratorResult<JavaMapEntry<K, V>> {
 				// Wenn keine aktuelles Result des internen Iterators vorliegt, dann lade die nächste Kollisionsliste
 				if (this.current === undefined)
 					this.current = this.iter.next();
 				if (this.current.done === true)
-					return { value : null, done : true };
+					return { value: null, done: true };
 				// Die Kollisionsliste ist der value in der internen Map (daher value[1])
-				const koll : Array<JavaMapEntry<K, V>> = this.current.value[1];
+				const koll: Array<JavaMapEntry<K, V>> = this.current.value[1];
 				this.pos++;
 				if (this.pos >= koll.length)
 					throw new IndexOutOfBoundsException("Hash-Map-Iterator: Fehlerhafter Index in die Kollisionsliste");
 				const entry = koll[this.pos];
 				// Die Kollisionsliste ist abgearbeitet - als nächstes muss eine neue geladen und abgearbeitet werden...
-				if (this.pos === koll.length -1) {
+				if (this.pos === koll.length - 1) {
 					this.current = undefined;
 					this.pos = -1;
 				}
-				return { value : entry, done : false };
-			}
+				return { value: entry, done: false };
+			},
 		};
 		return result;
 	}
@@ -289,20 +289,20 @@ export class HashMap<K, V> extends JavaObject implements JavaMap<K, V>, Cloneabl
 		return 'java.util.HashMap';
 	}
 
-	public isTranspiledInstanceOf(name : string): boolean {
+	public isTranspiledInstanceOf(name: string): boolean {
 		return [
 			'java.util.HashMap',
 			'java.util.AbstractMap',
 			'java.util.Map',
 			'java.lang.Object',
 			'java.lang.Cloneable',
-			'java.io.Serializable'
+			'java.io.Serializable',
 		].includes(name);
 	}
 
 }
 
 
-export function cast_java_util_HashMap<K, V>(obj : unknown) : HashMap<K, V> {
+export function cast_java_util_HashMap<K, V>(obj: unknown): HashMap<K, V> {
 	return obj as HashMap<K, V>;
 }

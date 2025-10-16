@@ -6,7 +6,7 @@ export class ClassCastException extends RuntimeException {
 		return 'java.lang.ClassCastException';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return [
 			'java.lang.ClassCastException',
 			'java.lang.RuntimeException',
@@ -19,6 +19,6 @@ export class ClassCastException extends RuntimeException {
 
 }
 
-export function cast_java_lang_ClassCastException(obj : unknown) : ClassCastException {
+export function cast_java_lang_ClassCastException(obj: unknown): ClassCastException {
 	return obj as ClassCastException;
 }

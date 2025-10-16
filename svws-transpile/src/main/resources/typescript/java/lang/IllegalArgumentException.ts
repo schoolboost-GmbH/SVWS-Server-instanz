@@ -6,7 +6,7 @@ export class IllegalArgumentException extends RuntimeException {
 		return 'java.lang.IllegalArgumentException';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return [
 			'java.lang.IllegalArgumentException',
 			'java.lang.RuntimeException',
@@ -20,6 +20,6 @@ export class IllegalArgumentException extends RuntimeException {
 }
 
 
-export function cast_java_lang_IllegalArgumentException(obj : unknown) : IllegalArgumentException {
+export function cast_java_lang_IllegalArgumentException(obj: unknown): IllegalArgumentException {
 	return obj as IllegalArgumentException;
 }

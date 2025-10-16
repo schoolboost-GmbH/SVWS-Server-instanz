@@ -2,7 +2,7 @@ import { IndexOutOfBoundsException } from './IndexOutOfBoundsException';
 
 export class ArrayIndexOutOfBoundsException extends IndexOutOfBoundsException {
 
-	public constructor(param? : string | number) {
+	public constructor(param?: string | number) {
 		super(param === undefined ? "" : (typeof param === "number" ? "Array index out of range: " + param : param));
 	}
 
@@ -10,7 +10,7 @@ export class ArrayIndexOutOfBoundsException extends IndexOutOfBoundsException {
 		return 'java.lang.ArrayIndexOutOfBoundsException';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return [
 			'java.lang.ArrayIndexOutOfBoundsException',
 			'java.lang.IndexOutOfBoundsException',
@@ -24,6 +24,6 @@ export class ArrayIndexOutOfBoundsException extends IndexOutOfBoundsException {
 
 }
 
-export function cast_java_lang_ArrayIndexOutOfBoundsException(obj : unknown) : ArrayIndexOutOfBoundsException {
+export function cast_java_lang_ArrayIndexOutOfBoundsException(obj: unknown): ArrayIndexOutOfBoundsException {
 	return obj as ArrayIndexOutOfBoundsException;
 }
