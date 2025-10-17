@@ -1,6 +1,6 @@
 {
 	"project": {
-		"version": "1.0.13-SNAPSHOT"
+		"version": "1.2.0-SNAPSHOT"
 	},
 	"schild": {
 		"version": "3.1.17"
