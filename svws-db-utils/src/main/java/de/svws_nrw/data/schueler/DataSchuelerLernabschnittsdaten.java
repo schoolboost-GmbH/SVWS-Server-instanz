@@ -155,9 +155,11 @@ public final class DataSchuelerLernabschnittsdaten extends DataManagerRevised<Lo
 		// TODO Validierung der Schulgliederung überprüfen...
 		final Schulgliederung sgl = (dto.Schulgliederung == null) ? null : Schulgliederung.data().getWertByKuerzel(dto.Schulgliederung);
 		SchulgliederungKatalogEintrag sglke = (sgl == null) ? null : sgl.daten(abschnitt.schuljahr);
-		if (sglke == null)
-			sglke = Schulgliederung.getDefault(conn.getUser().schuleGetSchulform()).daten(abschnitt.schuljahr);
-		daten.schulgliederung = sglke.kuerzel;
+		if (sglke == null) {
+			final Schulgliederung defSgl = Schulgliederung.getDefault(conn.getUser().schuleGetSchulform());
+			sglke = (defSgl != null) ? defSgl.daten(abschnitt.schuljahr) : null;
+		}
+		daten.schulgliederung = (sglke == null) ? null : sglke.kuerzel;
 		daten.jahrgangID = dto.Jahrgang_ID;
 		daten.fachklasseID = dto.Fachklasse_ID;
 		daten.schwerpunktID = dto.Schwerpunkt_ID;
