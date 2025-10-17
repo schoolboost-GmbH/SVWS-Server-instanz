@@ -15,19 +15,19 @@ import type { List } from "../../../../../../core/src/java/util/List";
 import { AuswahlManager } from "../../../AuswahlManager";
 
 
-export class ReligionenListeManager extends AuswahlManager<number, ReligionEintrag, ReligionEintrag> {
+export class KonfessionenListeManager extends AuswahlManager<number, ReligionEintrag, ReligionEintrag> {
 
 	/**
 	 * Funktionen zum Mappen von Auswahl- bzw. Daten-Objekten auf deren ID-Typ
 	 */
-	private static readonly _religionToId: JavaFunction<ReligionEintrag, number> = { apply: (r: ReligionEintrag) => r.id };
+	private static readonly _konfessionToId: JavaFunction<ReligionEintrag, number> = { apply: (r: ReligionEintrag) => r.id };
 
 	/**
 	 * Zusätzliche Maps, welche zum schnellen Zugriff auf Teilmengen der Liste verwendet werden können
 	 */
-	private readonly _religionenByIstSichtbar: HashMap2D<boolean, number, ReligionEintrag> = new HashMap2D<boolean, number, ReligionEintrag>();
+	private readonly _konfessionByIstSichtbar: HashMap2D<boolean, number, ReligionEintrag> = new HashMap2D<boolean, number, ReligionEintrag>();
 
-	private readonly _religionenByKuerzel: HashMap<string, ReligionEintrag> = new HashMap<string, ReligionEintrag>();
+	private readonly _konfessionByKuerzel: HashMap<string, ReligionEintrag> = new HashMap<string, ReligionEintrag>();
 
 	/**
 	 * Das Filter-Attribut auf nur sichtbare ReligionEintragen
@@ -52,7 +52,7 @@ export class ReligionenListeManager extends AuswahlManager<number, ReligionEintr
 	} };
 
 	/**
-	 * Ein Comparator für den Vergleich von Religion-Einträgen anhand ihres Textes.
+	 * Ein Comparator für den Vergleich von Konfessions-Einträgen anhand ihres Textes.
 	 */
 	public static readonly _comparatorText: Comparator<ReligionEintrag> = { compare: (a: ReligionEintrag, b: ReligionEintrag) => {
 		const cmp: number = JavaString.compareTo(a.bezeichnung, b.bezeichnung);
@@ -67,20 +67,20 @@ export class ReligionenListeManager extends AuswahlManager<number, ReligionEintr
 	 * @param schuljahresabschnitte        die Liste der Schuljahresabschnitte
 	 * @param schuljahresabschnittSchule   der Schuljahresabschnitt, in welchem sich die Schule aktuell befindet.
 	 * @param schulform                    die Schulform der Schule
-	 * @param religionen                   die Liste der Katalog-Einträge
+	 * @param konfessionen                 die Liste der Katalog-Einträge
 	 */
 	public constructor(schuljahresabschnitt: number, schuljahresabschnittSchule: number, schuljahresabschnitte: List<Schuljahresabschnitt>,
-		schulform: Schulform | null, religionen: List<ReligionEintrag>) {
-		super(schuljahresabschnitt, schuljahresabschnittSchule, schuljahresabschnitte, schulform, religionen, ReligionenListeManager._comparatorKuerzel,
-			ReligionenListeManager._religionToId, ReligionenListeManager._religionToId, Arrays.asList());
+		schulform: Schulform | null, konfessionen: List<ReligionEintrag>) {
+		super(schuljahresabschnitt, schuljahresabschnittSchule, schuljahresabschnitte, schulform, konfessionen, KonfessionenListeManager._comparatorKuerzel,
+			KonfessionenListeManager._konfessionToId, KonfessionenListeManager._konfessionToId, Arrays.asList());
 		this.initEintrage();
 	}
 
 	private initEintrage(): void {
 		for (const r of this.liste.list()) {
-			this._religionenByIstSichtbar.put(r.istSichtbar, r.id, r);
+			this._konfessionByIstSichtbar.put(r.istSichtbar, r.id, r);
 			if (r.kuerzel !== null)
-				this._religionenByKuerzel.put(r.kuerzel, r);
+				this._konfessionByKuerzel.put(r.kuerzel, r);
 		}
 	}
 
@@ -123,7 +123,7 @@ export class ReligionenListeManager extends AuswahlManager<number, ReligionEintr
 	}
 
 	/**
-	 * Vergleicht zwei Religionslisteneinträge anhand der spezifizierten Ordnung.
+	 * Vergleicht zwei Konfessionslisteneinträge anhand der spezifizierten Ordnung.
 	 *
 	 * @param a   der erste Eintrag
 	 * @param b   der zweite Eintrag
@@ -136,17 +136,17 @@ export class ReligionenListeManager extends AuswahlManager<number, ReligionEintr
 			const asc: boolean = (criteria.b === null) || criteria.b;
 			let cmp: number = 0;
 			if (JavaObject.equalsTranspiler("kuerzel", (field))) {
-				cmp = ReligionenListeManager._comparatorKuerzel.compare(a, b);
+				cmp = KonfessionenListeManager._comparatorKuerzel.compare(a, b);
 			} else
 				if (JavaObject.equalsTranspiler("text", (field))) {
-					cmp = ReligionenListeManager._comparatorText.compare(a, b);
+					cmp = KonfessionenListeManager._comparatorText.compare(a, b);
 				} else
 					throw new DeveloperNotificationException("Fehler bei der Sortierung. Das Sortierkriterium wird vom Manager nicht unterstützt.");
 			if (cmp === 0)
 				continue;
 			return asc ? cmp : -cmp;
 		}
-		return ReligionenListeManager._comparatorKuerzel.compare(a, b);
+		return KonfessionenListeManager._comparatorKuerzel.compare(a, b);
 	}
 
 	protected checkFilter(eintrag: ReligionEintrag): boolean {
@@ -160,18 +160,18 @@ export class ReligionenListeManager extends AuswahlManager<number, ReligionEintr
 	 *
 	 * @param srcManager Manager, aus dem die Filterinformationen übernommen werden
 	 */
-	public useFilter(srcManager: ReligionenListeManager): void {
+	public useFilter(srcManager: KonfessionenListeManager): void {
 		this.setFilterNurSichtbar(srcManager.filterNurSichtbar());
 	}
 
 	transpilerCanonicalName(): string {
-		return 'de.svws_nrw.core.utils.religion.ReligionenListeManager';
+		return 'de.svws_nrw.core.utils.konfession.KonfessionenListeManager';
 	}
 
 	isTranspiledInstanceOf(name: string): boolean {
-		return ['de.svws_nrw.core.utils.AuswahlManager', 'de.svws_nrw.core.utils.religion.ReligionenListeManager'].includes(name);
+		return ['de.svws_nrw.core.utils.AuswahlManager', 'de.svws_nrw.core.utils.konfession.KonfessionenListeManager'].includes(name);
 	}
 
-	public static class = new Class<ReligionenListeManager>('de.svws_nrw.core.utils.religion.ReligionenListeManager');
+	public static class = new Class<KonfessionenListeManager>('de.svws_nrw.core.utils.konfession.KonfessionenListeManager');
 
 }

@@ -1,9 +1,9 @@
 <template>
 	<div class="page page-grid-cards">
 		<div class="flex flex-col gap4" v-if="ServerMode.DEV.checkServerMode(serverMode)">
-			<ui-card icon="i-ri-delete-bin-line" title="Löschen" subtitle="Ausgewählte Religionen werden gelöscht." v-if="hatKompetenzLoeschen">
+			<ui-card icon="i-ri-delete-bin-line" title="Löschen" subtitle="Ausgewählte Konfessionen werden gelöscht." v-if="hatKompetenzLoeschen">
 				<template #buttonFooterLeft>
-					<svws-ui-button :disabled="!checkBeforeDelete().isEmpty() || isLoading" title="Löschen" @click="deleteReligionen" :is-loading class="mt-4">
+					<svws-ui-button :disabled="!checkBeforeDelete().isEmpty() || isLoading" title="Löschen" @click="deleteKonfessionen" :is-loading class="mt-4">
 						<svws-ui-spinner v-if="isLoading" spinning />
 						<span v-else class="icon i-ri-play-line" />
 						Löschen
@@ -21,12 +21,12 @@
 
 <script setup lang="ts">
 
-	import type { ReligionenGruppenprozesseProps } from "~/components/schule/allgemein/religionen/gruppenprozesse/SReligionenGruppenprozesseProps";
+	import type { KonfessionenGruppenprozesseProps } from "~/components/schule/allgemein/konfessionen/gruppenprozesse/SKonfessionenGruppenprozesseProps";
 	import type { List } from "@core";
 	import { computed, ref } from "vue";
 	import { BenutzerKompetenz, ServerMode } from "@core";
 
-	const props = defineProps<ReligionenGruppenprozesseProps>();
+	const props = defineProps<KonfessionenGruppenprozesseProps>();
 	const hatKompetenzLoeschen = computed(() => props.benutzerKompetenzen.has(BenutzerKompetenz.KATALOG_EINTRAEGE_LOESCHEN));
 
 	const isLoading = ref<boolean>(false);
@@ -39,7 +39,7 @@
 		status.value = undefined;
 	}
 
-	async function deleteReligionen() {
+	async function deleteKonfessionen() {
 		isLoading.value = true;
 		const [delStatus, logMessages] = await props.delete();
 		logs.value = logMessages;

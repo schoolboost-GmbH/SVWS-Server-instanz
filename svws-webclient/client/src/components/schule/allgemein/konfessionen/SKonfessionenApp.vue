@@ -13,11 +13,11 @@
 						<span class="svws-subline">{{ manager().auswahl().kuerzel }}</span>
 					</template>
 					<template v-else-if="activeViewType === ViewType.HINZUFUEGEN">
-						<h2 class="svws-headline">Anlegen einer neuen Religion...</h2>
+						<h2 class="svws-headline">Anlegen einer neuen Konfession...</h2>
 					</template>
 					<template v-else-if="activeViewType === ViewType.GRUPPENPROZESSE">
 						<h2 class="svws-headline"> Gruppenprozesse </h2>
-						<span class="svws-subline">{{ religionenSubline }}</span>
+						<span class="svws-subline">{{ konfessionenSubline }}</span>
 					</template>
 				</div>
 			</div>
@@ -36,16 +36,16 @@
 
 	import { computed } from "vue";
 	import { useRegionSwitch, ViewType } from "@ui";
-	import type { ReligionenAppProps } from "./SReligionenAppProps";
+	import type { KonfessionenAppProps } from "./SKonfessionenAppProps";
 
-	const props = defineProps<ReligionenAppProps>();
+	const props = defineProps<KonfessionenAppProps>();
 	const { focusHelpVisible, focusSwitchingEnabled } = useRegionSwitch();
 
-	const religionenSubline = computed(() => {
-		const auswahlReligionenList = props.manager().liste.auswahlSorted();
-		if (auswahlReligionenList.size() > 5)
-			return `${auswahlReligionenList.size()} Religionen ausgewählt`;
-		return [...auswahlReligionenList].map(k => k.kuerzel).join(', ');
+	const konfessionenSubline = computed(() => {
+		const auswahl = props.manager().liste.auswahlSorted();
+		if (auswahl.size() > 5)
+			return `${auswahl.size()} Konfessionen ausgewählt`;
+		return [...auswahl].map(k => k.kuerzel).join(', ');
 	});
 
 </script>

@@ -1,12 +1,12 @@
 <template>
 	<div class="h-full flex flex-col">
 		<div class="secondary-menu--headline">
-			<h1>Religionen</h1>
+			<h1>Konfessionen</h1>
 			<div><abschnitt-auswahl :daten="schuljahresabschnittsauswahl" /></div>
 		</div>
 		<div class="secondary-menu--header" />
 		<div class="secondary-menu--content">
-			<svws-ui-table :clickable="!manager().liste.auswahlExists()" :clicked="clickedEintrag" @update:clicked="religionEintrag => gotoDefaultView(religionEintrag.id)" :items="manager().filtered()"
+			<svws-ui-table :clickable="!manager().liste.auswahlExists()" :clicked="clickedEintrag" @update:clicked="eintrag => gotoDefaultView(eintrag.id)" :items="manager().filtered()"
 				:model-value="[...manager().liste.auswahl()]" @update:model-value="items => setAuswahl(items)" :columns :filter-open="true" selectable count scroll-into-view scroll allow-arrow-key-selection
 				:focus-switching-enabled :focus-help-visible>
 				<template #filterAdvanced>
@@ -18,7 +18,7 @@
 							<span class="icon i-ri-add-line" />
 						</svws-ui-button>
 						<template #content>
-							Neue Religion anlegen
+							Neue Konfession anlegen
 						</template>
 					</svws-ui-tooltip>
 				</template>
@@ -31,10 +31,10 @@
 
 	import { computed } from "vue";
 	import { BenutzerKompetenz, type ReligionEintrag, ServerMode } from "@core";
-	import type { ReligionenAuswahlProps } from "~/components/schule/allgemein/religionen/SReligionenAuswahlPops";
+	import type { KonfessionenAuswahlProps } from "~/components/schule/allgemein/konfessionen/SKonfessionenAuswahlPops";
 	import { useRegionSwitch, ViewType } from "@ui";
 
-	const props = defineProps<ReligionenAuswahlProps>();
+	const props = defineProps<KonfessionenAuswahlProps>();
 	const { focusHelpVisible, focusSwitchingEnabled } = useRegionSwitch();
 
 	const hatKompetenzAendern = computed<boolean>(() => props.benutzerKompetenzen.has(BenutzerKompetenz.KATALOG_EINTRAEGE_AENDERN));

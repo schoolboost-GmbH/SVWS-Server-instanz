@@ -2,8 +2,8 @@
 	<div class="page page-grid-cards">
 		<svws-ui-content-card title="Allgemein">
 			<svws-ui-input-wrapper>
-				<svws-ui-select label="ASD-Statistik-Religion" v-model="selectedReligion" :items="Religion.data().getListBySchuljahrAndSchulform(schuljahr, schulform)" :disabled statistics
-					:item-text="religionText" required :valid="fieldIsValid('kuerzel')" />
+				<svws-ui-select label="ASD-Statistik-Konfession" v-model="selectedKonfession" :items="Religion.data().getListBySchuljahrAndSchulform(schuljahr, schulform)" :disabled statistics
+					:item-text="konfessionText" required :valid="fieldIsValid('kuerzel')" />
 				<svws-ui-text-input v-model="data.bezeichnung" placeholder="Bezeichnung" :disabled :min-len="1" :max-len="30" required
 					:valid="fieldIsValid('bezeichnung')" />
 				<div v-if="!isUniqueInList(data.bezeichnung, props.manager().liste.list(), 'bezeichnung')" class="flex my-auto">
@@ -24,7 +24,7 @@
 				<svws-ui-checkbox v-model="data.istSichtbar" :disabled>Sichtbar</svws-ui-checkbox>
 				<div class="mt-7 flex flex-row gap-4 justify-end">
 					<svws-ui-button type="secondary" @click="cancel">Abbrechen</svws-ui-button>
-					<svws-ui-button @click="addReligion()" :disabled="!formIsValid || !hatKompetenzUpdate">Speichern</svws-ui-button>
+					<svws-ui-button @click="addKonfession()" :disabled="!formIsValid || !hatKompetenzUpdate">Speichern</svws-ui-button>
 				</div>
 			</svws-ui-input-wrapper>
 		</svws-ui-content-card>
@@ -34,19 +34,19 @@
 
 <script setup lang="ts">
 
-	import type { ReligionenNeuProps } from "./SReligionenNeuProps";
+	import type { KonfessionenNeuProps } from "./SKonfessionenNeuProps";
 	import { computed, ref, watch } from "vue";
 	import { BenutzerKompetenz, Religion, ReligionEintrag } from "@core";
 	import { isUniqueInList, mandatoryInputIsValid, optionalInputIsValid } from "~/util/validation/Validation";
 
-	const props = defineProps<ReligionenNeuProps>();
+	const props = defineProps<KonfessionenNeuProps>();
 	const hatKompetenzUpdate = computed<boolean>(() => props.benutzerKompetenzen.has(BenutzerKompetenz.KATALOG_EINTRAEGE_AENDERN));
 	const disabled = computed(() => !hatKompetenzUpdate.value);
 	const schuljahr = computed<number>(() => props.manager().getSchuljahr());
 	const isLoading = ref<boolean>(false);
 	const data = ref<ReligionEintrag>(new ReligionEintrag());
 
-	const selectedReligion = computed({
+	const selectedKonfession = computed({
 		get: () => Religion.data().getWertBySchluessel(data.value.kuerzel ?? ''),
 		set: (v: Religion | null) => data.value.kuerzel = v?.daten(props.manager().getSchuljahr())?.schluessel ?? '',
 	});
@@ -94,11 +94,11 @@
 		await props.gotoDefaultView(null);
 	}
 
-	function religionText(r: Religion) {
+	function konfessionText(r: Religion) {
 		return (r.daten(schuljahr.value)?.kuerzel ?? '—') + ' : ' + (r.daten(schuljahr.value)?.text ?? '—');
 	}
 
-	async function addReligion() {
+	async function addKonfession() {
 		if (isLoading.value)
 			return;
 

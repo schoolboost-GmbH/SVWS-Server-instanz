@@ -1,6 +1,6 @@
 import type { BenutzerKompetenz, List, ServerMode } from "@core";
 
-export interface ReligionenGruppenprozesseProps {
+export interface KonfessionenGruppenprozesseProps {
 	serverMode: ServerMode;
 	delete: () => Promise<[boolean, List<string | null>]>;
 	checkBeforeDelete: () => List<string>;

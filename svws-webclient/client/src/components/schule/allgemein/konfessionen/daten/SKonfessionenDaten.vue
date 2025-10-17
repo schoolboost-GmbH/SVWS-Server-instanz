@@ -2,7 +2,8 @@
 	<div class="page page-grid-cards">
 		<svws-ui-content-card title="Allgemein">
 			<svws-ui-input-wrapper>
-				<svws-ui-select title="ASD-Statistik-Religion" v-model="selectedReligion" :items="Religion.data().getListBySchuljahrAndSchulform(schuljahr, schulform)" :item-text="religionText"
+				<svws-ui-select title="ASD-Statistik-Konfession" v-model="selectedKonfession"
+					:items="Religion.data().getListBySchuljahrAndSchulform(schuljahr, schulform)" :item-text="konfessionText"
 					required statistics focus-class-content :readonly />
 				<svws-ui-text-input placeholder="Bezeichnung" :model-value="auswahl.bezeichnung" :readonly required :min-len="1" :max-len="30"
 					@change="v => patch({ bezeichnung: v?.trim() ?? '' })" />
@@ -23,21 +24,21 @@
 <script setup lang="ts">
 
 	import { computed } from "vue";
-	import type { ReligionenDatenProps } from "./SReligionenDatenProps";
+	import type { KonfessionenDatenProps } from "./SKonfessionenDatenProps";
 	import { BenutzerKompetenz, Religion } from "@core";
 
-	const props = defineProps<ReligionenDatenProps>();
+	const props = defineProps<KonfessionenDatenProps>();
 	const hatKompetenzUpdate = computed<boolean>(() => props.benutzerKompetenzen.has(BenutzerKompetenz.KATALOG_EINTRAEGE_AENDERN));
 	const readonly = computed(() => !hatKompetenzUpdate.value);
 	const schuljahr = computed<number>(() => props.manager().getSchuljahr());
 	const auswahl = computed(() => props.manager().auswahl());
 
-	const selectedReligion = computed<Religion | null>({
+	const selectedKonfession = computed<Religion | null>({
 		get: () => auswahl.value.kuerzel !== null ? Religion.data().getWertByKuerzel(auswahl.value.kuerzel) : null,
 		set: (value) => void props.patch({ kuerzel: value?.daten(schuljahr.value)?.kuerzel ?? null }),
 	});
 
-	function religionText(r: Religion): string {
+	function konfessionText(r: Religion): string {
 		return (r.daten(schuljahr.value)?.kuerzel ?? '—') + ' : ' + (r.daten(schuljahr.value)?.text ?? '—');
 	}
 
