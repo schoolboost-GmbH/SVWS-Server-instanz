@@ -47,7 +47,7 @@
 						<svws-ui-radio-option value="large" v-model="fontSize" name="fontSize" label="Größer" @click="updateFontSize('large')" />
 					</svws-ui-radio-group>
 				</div>
-				<ui-color-mode v-if="mode !== ServerMode.STABLE" mode="radio" auto />
+				<ui-color-mode mode="radio" auto />
 			</div>
 		</svws-ui-content-card>
 	</div>
