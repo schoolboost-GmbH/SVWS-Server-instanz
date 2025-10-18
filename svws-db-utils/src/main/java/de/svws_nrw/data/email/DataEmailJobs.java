@@ -164,6 +164,7 @@ public class DataEmailJobs {
 			final String decodedPassword = new String(aes.decryptBase64(benutzerDaten.SMTPPassword));
 			final MailSmtpSessionConfig config = new MailSmtpSessionConfig(daten.host, benutzerDaten.SMTPUsername, decodedPassword);
 			config.setPort(daten.port);
+			config.setTLS(daten.useTLS);
 			config.setStartTLS(daten.useStartTLS);
 			return config;
 		} catch (@SuppressWarnings("unused") final AESException e) {

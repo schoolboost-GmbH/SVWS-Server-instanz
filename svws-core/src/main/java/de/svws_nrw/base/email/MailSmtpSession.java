@@ -43,6 +43,10 @@ public class MailSmtpSession {
 		prop.put("mail.smtp.host", config.getHost());
 		prop.put("mail.smtp.port", "" + config.getPort());
 		prop.put("mail.smtp.ssl.trust", config.getHost());
+		if (config.isTLS()) {
+			prop.put("mail.smtp.ssl.enable", "true");
+			prop.put("mail.smtp.ssl.protocols", "TLSv1.2");
+		}
 		this.session = Session.getInstance(prop, new Authenticator() {
 			@Override
 			protected PasswordAuthentication getPasswordAuthentication() {
