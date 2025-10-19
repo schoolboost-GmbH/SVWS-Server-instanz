@@ -27,14 +27,16 @@ services:
       svws-db:
         condition: service_healthy
     ports:
-      - "${SVWS_HTTP_PORT:-8080}:8080"
-      - "${SVWS_HTTPS_PORT:-8443}:8443"
+      - target: ${SVWS_HTTP_PORT:-8080}
+        published: ${SVWS_PUBLIC_HTTP_PORT:-${SVWS_HTTP_PORT:-8080}}
+        protocol: tcp
     environment:
       MARIADB_HOST: svws-db
       MARIADB_DATABASE: ${SVWS_DATABASE:-svwsdb}
       MARIADB_USER: ${SERVICE_DB_USER:-svwsuser}
       MARIADB_PASSWORD: ${SERVICE_PASSWORD_DB:-svws_db_2024}
       MARIADB_ROOT_PASSWORD: ${SERVICE_PASSWORD_ROOT:-svws_root_2024}
+      SVWS_HTTP_PORT: ${SVWS_HTTP_PORT:-8080}
       SVWS_TLS_KEY_ALIAS: ${SVWS_TLS_KEY_ALIAS:-svwscert}
       SVWS_TLS_KEYSTORE_PATH: /opt/app/svws/conf/keystore
       SVWS_TLS_KEYSTORE_PASSWORD: ${SVWS_TLS_KEYSTORE_PASSWORD:-svwskeystore}
@@ -46,6 +48,7 @@ services:
       - svws-keystore:/opt/app/svws/conf/keystore
       - svws-app-data:/opt/app/svws/data
       - svws-app-logs:/opt/app/svws/conf/logs
+      - ./svws/svwsconfig-template-http.json:/opt/app/svws/svwsconfig-template.json:ro
 
 volumes:
   svws-db-data:
