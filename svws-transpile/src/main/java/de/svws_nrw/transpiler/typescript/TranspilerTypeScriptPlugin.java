@@ -1650,7 +1650,7 @@ public final class TranspilerTypeScriptPlugin extends TranspilerLanguagePlugin {
 					final String expression = convertExpression(ms.getExpression());
 					final Set<String> strMethods = Set.of(
 							"contains", "indexOf", "compareTo", "compareToIgnoreCase", "equalsIgnoreCase",
-							"replaceAll", "replace", "replaceFirst", "formatted", "format", "length", "isBlank", "isEmpty"
+							"replaceAll", "replace", "replaceFirst", "formatted", "format", "length", "isBlank", "isEmpty", "matches"
 					);
 					if (strMethods.contains(ms.getIdentifier().toString())) {
 						transpiler.getTranspilerUnit(node).imports.put("String", "java.lang");
@@ -1678,6 +1678,8 @@ public final class TranspilerTypeScriptPlugin extends TranspilerLanguagePlugin {
 							case "length" -> expression + ".length"; // in typescript it is not a method...
 							case "isBlank" -> "JavaString.isBlank(" + expression + ")";
 							case "isEmpty" -> "JavaString.isEmpty(" + expression + ")";
+							case "matches" ->
+								"JavaString.matches(" + expression + ", " + convertMethodInvocationParameters(node.getArguments(), null, null, true) + ")";
 							default -> throw new TranspilerException("TranspilerError: Unhandled String method");
 						};
 					}

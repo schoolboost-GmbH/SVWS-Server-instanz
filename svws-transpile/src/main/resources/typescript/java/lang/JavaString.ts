@@ -28,6 +28,11 @@ export abstract class JavaString {
 		return s.indexOf(str, fromIndex);
 	}
 
+	public static matches(s : string, regex : string): boolean {
+		const regexp = new RegExp(regex);
+		return regexp.test(s);
+	}
+
 	public static replaceFirst(s: string, regex: string, replacement: string): string {
 		return s.replace(new RegExp(regex), replacement);
 	}
@@ -50,10 +55,10 @@ export abstract class JavaString {
 				throw new IllegalFormatException();
 			const replacement = args[i];
 			const hasLeftJustifiedResult = formatParams[0] !== undefined;
-			const paddingChar = (formatParams[1] !== undefined) && (formatParams[1][0] === '0') ? '0': ' ';
+			const paddingChar = (formatParams[1] !== undefined) && (formatParams[1][0] === '0') ? '0' : ' ';
 			const paddingSize = parseInt(formatParams[1]);
-			const precision = formatParams[2] === undefined ? undefined: parseInt(formatParams[2].substr(1));
-			const base = formatParams[3] === undefined ? undefined: parseInt(formatParams[3].substr(1));
+			const precision = formatParams[2] === undefined ? undefined : parseInt(formatParams[2].substr(1));
+			const base = formatParams[3] === undefined ? undefined : parseInt(formatParams[3].substr(1));
 			let result: string = "";
 			switch (formatParams[4]) {
 				case 's':
@@ -79,7 +84,7 @@ export abstract class JavaString {
 					break;
 			}
 			while (result.length < paddingSize)
-				result = hasLeftJustifiedResult ? result + paddingChar: paddingChar + result;
+				result = hasLeftJustifiedResult ? result + paddingChar : paddingChar + result;
 			return result;
 		}
 		// TODO Erweiterung der Methode um argument_index und weitere conversion - Möglichkeiten laut https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/Formatter.html#syntax
