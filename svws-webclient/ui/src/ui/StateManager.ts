@@ -42,7 +42,7 @@ export abstract class StateManager<State extends Record<string, any>> {
 	 * @param patch   der Patch, welcher auf den Default-State angewendet wird.
 	 */
 	protected setPatchedDefaultState(patch: Partial<State>) {
-		this._state.value = Object.assign({ ... this._defaultState }, patch);
+		this._state.value = { ...this._defaultState, ...patch };
 	}
 
 	/**
@@ -52,7 +52,7 @@ export abstract class StateManager<State extends Record<string, any>> {
 	 */
 	protected setPatchedState(patch: Partial<State>, newobj: boolean = true) {
 		if (newobj)
-			this._state.value = Object.assign({ ... this._state.value }, patch);
+			this._state.value = { ...this._state.value, ...patch };
 		else
 			this._state.value = Object.assign(this._state.value, patch);
 	}

@@ -45,7 +45,7 @@ export abstract class RouteData<RouteState extends RouteStateInterface> extends 
 	 * @param patch   der Patch, welcher auf den Default-State angewendet wird.
 	 */
 	protected setPatchedDefaultStateKeepView(patch: Partial<RouteState>) {
-		const tmp = Object.assign({ ... this._state.value }, patch);
+		const tmp = { ...this._state.value, ...patch };
 		tmp.view = this._state.value.view;
 		this._state.value = tmp;
 	}
