@@ -12,27 +12,27 @@ function prepareAttributeOrderForStringify() {
 			}, {});
 		}
 		return value;
-	}
+	};
 }
 
 export class Throwable extends Error implements TranspiledObject {
 
 	protected _cause: Throwable | null = null;
 
-	constructor(param1?: Throwable | string | null, param2?: Throwable) {
-		super(typeof param1 === "string" ? param1: param1?.toString());
+	constructor(param1?: Throwable | string | null, param2?: Throwable | null) {
+		super(typeof param1 === "string" ? param1 : param1?.toString());
 		Object.setPrototypeOf(this, new.target.prototype);
 		this.name = this.constructor.name;
 
 		// TODO handle this.stack and .stack from Throwable parameter
 		if ((param1 === undefined) && (param2 === undefined)) {
 			this.message = "";
-		} else if ((typeof param1 === "string") && (param2 === undefined)) {
+		} else if ((typeof param1 === "string") && ((param2 === undefined) || (param2 === null))) {
 			this.message = param1;
 		} else if ((typeof param1 === "string") && (param2 instanceof Throwable)) {
 			this.message = param1;
 			this._cause = param2;
-		} else if ((param1 instanceof Throwable) && (param2 === undefined)) {
+		} else if ((param1 instanceof Throwable) && ((param2 === undefined) || (param2 === null))) {
 			this.message = param1.toString().valueOf();
 			this._cause = param1;
 		}

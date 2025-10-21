@@ -263,6 +263,7 @@ export { Verkehrssprache } from './asd/types/schule/Verkehrssprache';
 export { WeiterbildungskollegBildungsgangTyp } from './asd/types/schule/WeiterbildungskollegBildungsgangTyp';
 export { WeiterbildungskollegOrganisationsformen } from './asd/types/schule/WeiterbildungskollegOrganisationsformen';
 export { CoreTypeDataManager } from './asd/utils/CoreTypeDataManager';
+export { CoreTypeRessourceException } from './asd/utils/CoreTypeRessourceException';
 export { DateManager } from './asd/validate/DateManager';
 export { InvalidDateException } from './asd/validate/InvalidDateException';
 export { Validator } from './asd/validate/Validator';

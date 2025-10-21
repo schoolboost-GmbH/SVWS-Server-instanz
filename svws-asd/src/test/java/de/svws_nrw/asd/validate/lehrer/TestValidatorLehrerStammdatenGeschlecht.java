@@ -7,9 +7,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonMappingException;
-
 import de.svws_nrw.asd.data.lehrer.LehrerStammdaten;
 import de.svws_nrw.asd.data.schule.SchuleStammdaten;
 import de.svws_nrw.asd.utils.ASDCoreTypeUtils;
@@ -77,14 +74,11 @@ class TestValidatorLehrerStammdatenGeschlecht {
 	 *
 	 * @param geschlecht der Integerwert für das Geschlecht (z. B. 3 = M)
 	 * @param result     gibt an, welches Ergebnis bei den Testdaten erwartet wird
-	 * @throws JsonProcessingException
-	 * @throws JsonMappingException
 	 */
 	@DisplayName("Tests für ValidatorLehrerStammdatenGeschlecht")
 	@ParameterizedTest
 	@CsvSource(textBlock = TESTDATEN_GESCHLECHT)
-	void testValidatorLehrerStammdatenGeschlecht(final int geschlecht, final boolean result)
-			throws JsonMappingException, JsonProcessingException {
+	void testValidatorLehrerStammdatenGeschlecht(final int geschlecht, final boolean result) {
 		// Testdaten setzen
 		lehrerTestdaten_001.geschlecht = geschlecht;
 

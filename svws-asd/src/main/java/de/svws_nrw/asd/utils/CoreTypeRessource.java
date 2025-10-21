@@ -205,11 +205,14 @@ public final class CoreTypeRessource<T extends CoreTypeData, U extends CoreType<
 	 * @param typeClass   die Klasse des Core-Types
 	 *
 	 * @return die Informationen zu der Ressource
+	 *
+	 * @throws CoreTypeRessourceException wenn der Core-Type noch nicht initialisiert wurde
 	 */
-	public static <T extends CoreTypeData, U extends CoreType<T, U>> @NotNull JsonCoreTypeData<T> getData(final Class<U> typeClass) {
+	public static <T extends CoreTypeData, U extends CoreType<T, U>> @NotNull JsonCoreTypeData<T> getData(final Class<U> typeClass)
+			throws CoreTypeRessourceException {
 		final var res = get(typeClass);
 		if (res == null)
-			throw new RuntimeException("Der Core Type %s wurde noch nicht initialisiert.".formatted(typeClass.getName()));
+			throw new CoreTypeRessourceException("Der Core Type %s wurde noch nicht initialisiert.".formatted(typeClass.getName()), null);
 		return res.getData();
 	}
 
@@ -233,14 +236,16 @@ public final class CoreTypeRessource<T extends CoreTypeData, U extends CoreType<
 
 	/**
 	 * Initialisiert den Core-Type. Die Daten müssen zuvor geladen sein (siehe initAll)
+	 *
+	 * @throws CoreTypeRessourceException wenn beim Aufruf der Init-Methode des Core-Types ein Fehler auftritt (z.B. diese nicht vorhanden ist)
 	 */
-	private void init() {
+	private void init() throws CoreTypeRessourceException {
 		dataManager = new CoreTypeDataManager<>(data.getVersion(), typeClass, values, data.getData(), data.getStatistikIDs());
 		try {
 			final Method method = typeClass.getMethod("init", CoreTypeDataManager.class);
 			method.invoke(null, dataManager);
 		} catch (final NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
-			throw new RuntimeException("Fehler beim Aufruf der Init-Methode des CoreTypes %s".formatted(typeClass.getName()), e);
+			throw new CoreTypeRessourceException("Fehler beim Aufruf der Init-Methode des CoreTypes %s".formatted(typeClass.getName()), e);
 		}
 	}
 
@@ -260,17 +265,19 @@ public final class CoreTypeRessource<T extends CoreTypeData, U extends CoreType<
 	/**
 	 * Reinitialisieren der Values eines CoreTypeSimple.
 	 *
-	 * @param <S>
-	 * @param jsonCoreTypeData
+	 * @param <S>                der Typ des Core-Types
+	 * @param jsonCoreTypeData   die Daten für die erneute Initilialisierung
+	 *
+	 * @throws CoreTypeRessourceException wenn bei der Initialisierung eines Simple-Core-Types ein Fehler auftritt
 	 */
 	@SuppressWarnings("unchecked")
-	private <S extends CoreTypeSimple<T, S>> void reinitSimple(final JsonCoreTypeData<T> jsonCoreTypeData) {
+	private <S extends CoreTypeSimple<T, S>> void reinitSimple(final JsonCoreTypeData<T> jsonCoreTypeData) throws CoreTypeRessourceException {
 		final Class<S> typeClassSimple = (Class<S>) typeClass;
 		try {
 			CoreTypeSimple.initValues(typeClassSimple.getConstructor().newInstance(), typeClassSimple, jsonCoreTypeData.getData());
 		} catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException
 				| SecurityException e) {
-			throw new RuntimeException("Fehler beim Initialisieren des CoreTypeSimple %s".formatted(typeClass.getName()), e);
+			throw new CoreTypeRessourceException("Fehler beim Initialisieren des CoreTypeSimple %s".formatted(typeClass.getName()), e);
 		}
 		values = (U[]) CoreTypeSimple.valuesByClass(typeClassSimple);
 	}
@@ -343,16 +350,18 @@ public final class CoreTypeRessource<T extends CoreTypeData, U extends CoreType<
 	 * @param path        der Pfad zu der Ressource
 	 *
 	 * @return die neue Ressource
+	 *
+	 * @throws CoreTypeRessourceException wenn bei der Initialisierung eines Simple-Core-Types ein Fehler auftritt
 	 */
 	private static <T extends CoreTypeData, U extends CoreTypeSimple<T, U>> CoreTypeRessource<T, U> addSimple(final Class<U> typeClass,
-			final Class<T> dataClass, final String path) {
+			final Class<T> dataClass, final String path) throws CoreTypeRessourceException {
 		final CoreTypeRessource<T, U> res = add(typeClass, dataClass, null, path);
 		// Lazy Loading bei SimpleCoreType
 		try {
 			CoreTypeSimple.initValues(typeClass.getConstructor().newInstance(), typeClass, res.data.getData());
 		} catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException
 				| SecurityException e) {
-			throw new RuntimeException("Fehler beim Initialisieren des CoreTypeSimple %s".formatted(typeClass.getName()), e);
+			throw new CoreTypeRessourceException("Fehler beim Initialisieren des CoreTypeSimple %s".formatted(typeClass.getName()), e);
 		}
 		res.values = CoreTypeSimple.valuesByClass(typeClass);
 		return res;
@@ -367,7 +376,8 @@ public final class CoreTypeRessource<T extends CoreTypeData, U extends CoreType<
 				"de/svws_nrw/asd/types/schule/Schulform.json");
 		add(BerufskollegAnlage.class, BerufskollegAnlageKatalogEintrag.class, BerufskollegAnlage.values(),
 				"de/svws_nrw/asd/types/schule/BerufskollegAnlage.json");
-		add(BeruflichesGymnasiumPruefungsordnungAnlage.class, BeruflichesGymnasiumPruefungsordnungAnlageKatalogEintrag.class, BeruflichesGymnasiumPruefungsordnungAnlage.values(),
+		add(BeruflichesGymnasiumPruefungsordnungAnlage.class, BeruflichesGymnasiumPruefungsordnungAnlageKatalogEintrag.class,
+				BeruflichesGymnasiumPruefungsordnungAnlage.values(),
 				"de/svws_nrw/asd/types/schule/BeruflichesGymnasiumPruefungsordnungAnlage.json");
 		add(AllgemeinbildendOrganisationsformen.class, OrganisationsformKatalogEintrag.class, AllgemeinbildendOrganisationsformen.values(),
 				"de/svws_nrw/asd/types/schule/AllgemeinbildendOrganisationsformen.json");
