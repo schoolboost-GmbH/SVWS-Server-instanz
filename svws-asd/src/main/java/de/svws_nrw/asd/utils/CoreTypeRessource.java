@@ -299,7 +299,7 @@ public final class CoreTypeRessource<T extends CoreTypeData, U extends CoreType<
 	 * @param map
 	 */
 	@SuppressWarnings("unchecked")
-	public static <V extends CoreTypeData, U extends CoreType<V, U>> void reinitAll(@NotNull final Map<Class<U>, JsonCoreTypeData<V>> map) {
+	public static <V extends CoreTypeData, U extends CoreType<V, U>> void reinitAll(final Map<Class<U>, JsonCoreTypeData<V>> map) {
 		if ((map == null) || map.isEmpty())
 			throw new CoreTypeException("Liste darf nicht leer sein.");
 		// Prüfen auf unbekannte Kataloge

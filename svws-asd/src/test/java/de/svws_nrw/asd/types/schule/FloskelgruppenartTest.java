@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DisplayName("Teste den Core-Type FLoskelgruppenart")
-public class FloskelgruppenartTest {
+class FloskelgruppenartTest {
 
 	@Test
 	@DisplayName("Anzahl der Coretypes")

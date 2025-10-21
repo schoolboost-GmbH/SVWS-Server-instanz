@@ -365,7 +365,7 @@ export class CoreTypeDataManager<T extends CoreTypeData, U extends CoreType<T, U
 	 *
 	 * @return die Statistik-ID
 	 */
-	public getStatistikIdByWert(value: U): string {
+	public getStatistikIdByWert(value: U | null): string {
 		if (value === null)
 			throw new CoreTypeException("Ein Zugriff auf eine Statistik-ID ist mit null nicht möglich.")
 		const tmp: string | null = this._mapEnumToStatistikID.get(value);
@@ -381,7 +381,7 @@ export class CoreTypeDataManager<T extends CoreTypeData, U extends CoreType<T, U
 	 *
 	 * @return die Historie
 	 */
-	public getHistorieByWert(value: U): List<T> {
+	public getHistorieByWert(value: U | null): List<T> {
 		if (value === null)
 			throw new CoreTypeException("Ein Zugriff auf eine Historie ist mit null nicht möglich.")
 		const tmp: List<T> | null = this._mapEnumToHistorie.get(value);

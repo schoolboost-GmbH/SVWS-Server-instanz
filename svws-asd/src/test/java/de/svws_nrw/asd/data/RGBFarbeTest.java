@@ -7,7 +7,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 /** Diese Klasse testet die Klasse {@link RGBFarbe}*/
 @DisplayName("Diese Klasse testet die Klasse RGBFarbe")
-public class RGBFarbeTest {
+class RGBFarbeTest {
 
 	@Test
 	@DisplayName("decimalFromRgb")

@@ -115,7 +115,7 @@ export abstract class CoreTypeSimple<T extends CoreTypeData, U extends CoreTypeS
 	 * @return kleiner 0, wenn dieser Wert kleiner ist, 0, wenn sie gleich sind
 	 *     und größer 0, wenn dieser Wert größer ist
 	 */
-	public compareTo(other: U): number {
+	public compareTo(other: U | null): number {
 		if (other === null)
 			throw new NullPointerException()
 		return JavaInteger.compare(this.ordinal(), other.ordinal());
