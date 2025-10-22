@@ -68,7 +68,7 @@ public final class DataSchuelerLernabschnittsdaten extends DataManagerRevised<Lo
 		dto.AOSF = false;
 		dto.Autist = false;
 		dto.ZieldifferentesLernen = false;
-		dto.SemesterWertung = false;
+		dto.SemesterWertung = true;
 		dto.Wiederholung = false;
 		dto.FachPraktAnteilAusr = true;
 		dto.WechselNr = 0;
