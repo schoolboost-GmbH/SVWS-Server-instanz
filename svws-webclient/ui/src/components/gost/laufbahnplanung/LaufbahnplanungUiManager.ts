@@ -1851,8 +1851,10 @@ export class LaufbahnplanungUiManager {
 	 * @returns -
 	 */
 	private async stepperManuell(fach: GostFach, halbjahr: GostHalbjahr) {
-		if (this.manager().istBewertet(halbjahr))
-			return;
+		for (const hj of GostHalbjahr.values())
+			if (hj.id >= halbjahr.id)
+				if (this.manager().istBewertet(hj))
+					return;
 		const wahl = this.manager().getSchuelerFachwahl(fach.id);
 		const hj = halbjahr.id;
 		const istVTF = (this.getFachgruppe(fach) === Fachgruppe.FG_VX);
@@ -1908,8 +1910,12 @@ export class LaufbahnplanungUiManager {
 	 * @returns -
 	 */
 	private async stepperHochschreiben(fach: GostFach, halbjahr: GostHalbjahr) {
-		if ((!this.istMoeglich(fach, halbjahr)) || this.manager().istBewertet(halbjahr))
+		if (!this.istMoeglich(fach, halbjahr))
 			return;
+		for (const hj of GostHalbjahr.values())
+			if (hj.id >= halbjahr.id)
+				if (this.manager().istBewertet(hj))
+					return;
 		const wahl = this.manager().getSchuelerFachwahl(fach.id);
 		if (halbjahr === GostHalbjahr.EF1)
 			this.stepEF1WahlHochschreiben(fach, wahl);
@@ -1936,8 +1942,12 @@ export class LaufbahnplanungUiManager {
 	 * @returns -
 	 */
 	private async stepperNormal(fach: GostFach, halbjahr: GostHalbjahr) {
-		if ((!this.istMoeglich(fach, halbjahr)) || this.manager().istBewertet(halbjahr))
+		if (!this.istMoeglich(fach, halbjahr))
 			return;
+		for (const hj of GostHalbjahr.values())
+			if (hj.id >= halbjahr.id)
+				if (this.manager().istBewertet(hj))
+					return;
 		const wahl = this.manager().getSchuelerFachwahl(fach.id);
 		if (halbjahr === GostHalbjahr.EF1)
 			this.stepEF1Wahl(fach, wahl);
