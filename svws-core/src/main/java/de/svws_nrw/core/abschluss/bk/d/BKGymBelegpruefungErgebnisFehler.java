@@ -33,9 +33,9 @@ public class BKGymBelegpruefungErgebnisFehler {
 	 * @param f           der Typ des Belegungsfehlers
 	 */
 	public BKGymBelegpruefungErgebnisFehler(final @NotNull BKGymBelegungsfehler f) {
-		this.code = f.toString();
-		this.art = f.getArt().kuerzel;
-		this.beschreibung = f.getText();
+		this.code = f.code;
+		this.art = f.art.kuerzel;
+		this.beschreibung = f.text;
 	}
 
 	/**

@@ -19,8 +19,12 @@ public class BeruflichesGymnasiumStundentafelFach {
 	public @NotNull String fachbezeichnung = "";
 
 	/** Die Kursart des Fachs */
-	@Schema(description = "die Kursart des Fachs", example = "LK1")
+	@Schema(description = "die Kursart des Fachs", example = "LK")
 	public @NotNull String kursart = "";
+
+	/** Die Nummer des Abifachs hier nur 1, 2 oder null */
+	@Schema(description = "die Nummer des Abifachs", example = "1")
+	public Integer abifach = null;
 
 	/** Der Stundenumfang für alle sechs Halbjahre EF.1, EF.2, Q1.1, Q1.2, Q2.1, Q2.2 */
 	@Schema(description = "der Stundenumfang für jedes Halbjahr", example = "[2,2,3,3,3,3]")

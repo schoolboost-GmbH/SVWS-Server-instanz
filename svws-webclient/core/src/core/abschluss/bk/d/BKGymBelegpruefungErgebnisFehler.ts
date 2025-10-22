@@ -41,9 +41,9 @@ export class BKGymBelegpruefungErgebnisFehler extends JavaObject {
 		super();
 		if (((__param0 !== undefined) && ((__param0 instanceof JavaObject) && (__param0.isTranspiledInstanceOf('de.svws_nrw.core.abschluss.bk.d.BKGymBelegungsfehler'))))) {
 			const f: BKGymBelegungsfehler = cast_de_svws_nrw_core_abschluss_bk_d_BKGymBelegungsfehler(__param0);
-			this.code = f.toString();
-			this.art = f.getArt().kuerzel;
-			this.beschreibung = f.getText();
+			this.code = f.code;
+			this.art = f.art.kuerzel;
+			this.beschreibung = f.text;
 		} else if ((__param0 === undefined)) {
 			// empty method body
 		} else throw new Error('invalid method overload');

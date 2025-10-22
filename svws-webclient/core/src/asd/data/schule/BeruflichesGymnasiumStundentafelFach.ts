@@ -14,6 +14,11 @@ export class BeruflichesGymnasiumStundentafelFach extends JavaObject {
 	public kursart: string = "";
 
 	/**
+	 * Die Nummer des Abifachs hier nur 1, 2 oder null
+	 */
+	public abifach: number | null = null;
+
+	/**
 	 * Der Stundenumfang für alle sechs Halbjahre EF.1, EF.2, Q1.1, Q1.2, Q2.1, Q2.2
 	 */
 	public stundenumfang: Array<number> = Array(6).fill(0);
@@ -55,6 +60,7 @@ export class BeruflichesGymnasiumStundentafelFach extends JavaObject {
 		if (obj.kursart === undefined)
 			throw new Error('invalid json format, missing attribute kursart');
 		result.kursart = obj.kursart;
+		result.abifach = (obj.abifach === undefined) ? null : obj.abifach === null ? null : obj.abifach;
 		if (obj.stundenumfang !== undefined) {
 			for (let i = 0; i < obj.stundenumfang.length; i++) {
 				result.stundenumfang[i] = obj.stundenumfang[i];
@@ -73,6 +79,7 @@ export class BeruflichesGymnasiumStundentafelFach extends JavaObject {
 		let result = '{';
 		result += '"fachbezeichnung" : ' + JSON.stringify(obj.fachbezeichnung) + ',';
 		result += '"kursart" : ' + JSON.stringify(obj.kursart) + ',';
+		result += '"abifach" : ' + ((obj.abifach === null) ? 'null' : obj.abifach.toString()) + ',';
 		result += '"stundenumfang" : [ ';
 		for (let i = 0; i < obj.stundenumfang.length; i++) {
 			const elem = obj.stundenumfang[i];
@@ -95,6 +102,9 @@ export class BeruflichesGymnasiumStundentafelFach extends JavaObject {
 		}
 		if (obj.kursart !== undefined) {
 			result += '"kursart" : ' + JSON.stringify(obj.kursart) + ',';
+		}
+		if (obj.abifach !== undefined) {
+			result += '"abifach" : ' + ((obj.abifach === null) ? 'null' : obj.abifach.toString()) + ',';
 		}
 		if (obj.stundenumfang !== undefined) {
 			const a = obj.stundenumfang;
