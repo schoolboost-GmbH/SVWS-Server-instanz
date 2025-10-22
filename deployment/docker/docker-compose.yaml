@@ -22,7 +22,7 @@ services:
     #   - "3306:3306"
 
   svws:
-    image: ghcr.io/svws-nrw/svws-server:latest
+    image: ${SVWS_SERVER_IMAGE:-ghcr.io/svws-nrw/svws-server:latest}
     depends_on:
       - mariadb
     ports:

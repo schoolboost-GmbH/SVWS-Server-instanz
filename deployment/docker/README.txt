@@ -2,9 +2,9 @@ SVWS Docker Compose Deployment
 ==============================
 
 1. Erstelle eine `.env` Datei (oder setze die Variablen in deiner Umgebung) und definiere mindestens:
-   - `SERVICE_PASSWORD_ROOT`
-   - `SERVICE_PASSWORD_DB`
-   - optional `SERVICE_DB_USER`, `SVWS_HTTP_PORT`, `SVWS_HTTPS_PORT`, `SVWS_SERVER_IMAGE`
+   - `MARIADB_ROOT_PASSWORD`, `MARIADB_DATABASE`, `MARIADB_USER`, `MARIADB_PASSWORD`
+   - `SVWS_TLS_KEYSTORE_PASSWORD`, `SVWS_TLS_KEY_ALIAS`
+   - optional `SVWS_SERVER_IMAGE`, `SVWS_HTTP_PORT`, `SVWS_HTTPS_PORT`
 2. Nutze das vorbereitete Initialisierungs-SQL unter `deployment/docker/init-db/` oder ergänze eigene Dateien in diesem Ordner (sie werden automatisch beim ersten DB-Start ausgeführt).
 3. Starte die Umgebung mit:
    ```bash
