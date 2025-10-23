@@ -1,5 +1,12 @@
-### ValidatorGldGesamtLehrerdatenDuplikate.java
+### ValidatorGldGesamtLehrerdatenDuplikate
 
+**Zweig:** Lehrer-Stammdaten <br>
+**DTOs:** LehrerStammdaten <br>
+**Ausführungsbereich-UI:** Statistik, Gesamtprüfung <br>
+**Anzeigebereich-UI:** Statistik <br>
+**Default-SVWS/ZeBrAS:** <br>
+"svws": true, <br>
+"zebras": true, <br>
 **Default-Fehlerhärte:**<br>
 "muss": ["G", "H", "V", "S", "KS", "R", "PS", "SK", "GE", "FW", "HI", "WF", "GY", "WB", "BK", "SR", "SG", "SB"],<br>
 "kann": [],<br>
@@ -9,6 +16,7 @@
 
 **Fehlerkürzel:** GLD0 <br>
 **Altes-Fehlerkürzel:** - <br>
+**SVWS/ZeBrAS**: Default <br>
 **Fehlerhärte:** Default <br>
 **Fehlertext:** Lehrkäfte: Die ID " + LehrerStammdaten.id + " kommt mehrfach vor. <br>
 **Erläuterung:** Die Prüfung soll anschlagen, wenn eine Lehrkräfte-ID mehrfach vorkommt. <br>
@@ -18,6 +26,7 @@
 
 **Fehlerkürzel:** GLD2 <br>
 **Altes-Fehlerkürzel:** AA1 <br>
+**SVWS/ZeBrAS**: Default <br>
 **Fehlerhärte:** <br>
 "muss": [],<br>
 "kann": ["G", "H", "V", "S", "KS", "R", "PS", "SK", "GE", "FW", "HI", "WF", "GY", "WB", "BK", "SR", "SG", "SB"],<br>
