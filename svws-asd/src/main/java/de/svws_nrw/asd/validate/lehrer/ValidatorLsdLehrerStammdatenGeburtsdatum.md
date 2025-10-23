@@ -1,14 +1,22 @@
-### ValidatorLehrerStammdatenGeburtsdatum.java
+### ValidatorLsdLehrerStammdatenGeburtsdatum
 
+**Zweig:** Lehrer-Stammdaten-Geburtsdatum <br>
+**DTOs:** LehrerStammdaten <br>
+**Ausführungsbereich-UI:** Lehrkräfte, Reiter 'Individualdaten' <br>
+**Anzeigebereich-UI:** Feld 'Geburtsdatum' <br>
+**Default-SVWS/ZeBrAS:** <br>
+"svws": true, <br>
+"zebras": true, <br>
 **Default-Fehlerhärte:**<br>
-"muss": [],
-"kann": ["G", "H", "V", "S", "KS", "R", "PS", "SK", "GE", "FW", "HI", "WF", "GY", "WB", "BK", "SR", "SG", "SB"],
+"muss": [],<br>
+"kann": ["G", "H", "V", "S", "KS", "R", "PS", "SK", "GE", "FW", "HI", "WF", "GY", "WB", "BK", "SR", "SG", "SB"],<br>
 "hinweis": []
 
 ---
 
-**Fehlerkürzel:** LSG0 <br>
-**Altes-Fehlerkürzel:** <br>
+**Fehlerkürzel:** LSD0 <br>
+**Altes-Fehlerkürzel:** AD341, AD342 und AD343 <br>
+**SVWS/ZeBrAS**: Default <br>
 **Fehlerhärte:** <br>
 "muss": ["G", "H", "V", "S", "KS", "R", "PS", "SK", "GE", "FW", "HI", "WF", "GY", "WB", "BK", "SR", "SG", "SB"],<br>
 "kann": [],<br>
@@ -19,8 +27,9 @@
 
 ---
 
-**Fehlerkürzel:** LSG1 <br>
+**Fehlerkürzel:** LSD1 <br>
 **Altes-Fehlerkürzel:** AD343 <br>
+**SVWS/ZeBrAS**: Default <br>
 **Fehlerhärte:** Default <br>
 **Fehlertext:** Unzulässige Eintragung im Feld Jahr (Geburtsdatum). Zulässig sind die Werte {aktuellesSchuljahr} - 80 bis {aktuellesSchuljahr} - 18}. <br>
 **Erläuterung:** Die zulässigen Werte liegen zwischen dem aktuellen Schuljahr minus 80 und dem aktuellen Schuljahr minus 18. <br>
