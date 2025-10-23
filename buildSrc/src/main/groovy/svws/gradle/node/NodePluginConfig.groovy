@@ -31,10 +31,10 @@ abstract class NodePluginConfig {
 		this.project = p;
 		this.rootProject = p.rootProject;
 		url.convention('https://nodejs.org/dist/v');
-		version.convention('22.20.0'); // https://nodejs.org/en/download/prebuilt-installer
+		version.convention('22.21.0'); // https://nodejs.org/en/download/prebuilt-installer
 		npmVersion.convention('10.9.3');
 		tsVersion.convention('5.9.3'); // https://github.com/microsoft/TypeScript/releases
-		tsNodeTypesVersion.convention('24.6.2'); // https://www.npmjs.com/package/@types/node
+		tsNodeTypesVersion.convention('24.9.1'); // https://www.npmjs.com/package/@types/node
 	}
 
 	boolean isLinux() {
