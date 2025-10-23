@@ -287,6 +287,7 @@ export { ValidatorLehrerStammdatenGeburtsdatum } from './asd/validate/lehrer/Val
 export { ValidatorLehrerStammdatenGeschlecht } from './asd/validate/lehrer/ValidatorLehrerStammdatenGeschlecht';
 export { ValidatorLehrerStammdatenNachname } from './asd/validate/lehrer/ValidatorLehrerStammdatenNachname';
 export { ValidatorLehrerStammdatenVorname } from './asd/validate/lehrer/ValidatorLehrerStammdatenVorname';
+export { ValidatorLskLehrerStammdatenKuerzel } from './asd/validate/lehrer/ValidatorLskLehrerStammdatenKuerzel';
 export { ValidatorSchuleStammdaten } from './asd/validate/schule/ValidatorSchuleStammdaten';
 export { Service } from './core/Service';
 export { AbschlussManager } from './core/abschluss/AbschlussManager';

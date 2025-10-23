@@ -1,5 +1,6 @@
 import { ValidatorLehrerStammdatenGeschlecht } from '../../../asd/validate/lehrer/ValidatorLehrerStammdatenGeschlecht';
 import { ValidatorLehrerStammdatenNachname } from '../../../asd/validate/lehrer/ValidatorLehrerStammdatenNachname';
+import { ValidatorLskLehrerStammdatenKuerzel } from '../../../asd/validate/lehrer/ValidatorLskLehrerStammdatenKuerzel';
 import { ValidatorLehrerStammdatenGeburtsdatum } from '../../../asd/validate/lehrer/ValidatorLehrerStammdatenGeburtsdatum';
 import { LehrerStammdaten } from '../../../asd/data/lehrer/LehrerStammdaten';
 import { Class } from '../../../java/lang/Class';
@@ -22,6 +23,7 @@ export class ValidatorLehrerStammdaten extends Validator {
 		this._validatoren.add(new ValidatorLehrerStammdatenVorname(daten, kontext));
 		this._validatoren.add(new ValidatorLehrerStammdatenGeburtsdatum(daten, kontext));
 		this._validatoren.add(new ValidatorLehrerStammdatenGeschlecht(daten, kontext));
+		this._validatoren.add(new ValidatorLskLehrerStammdatenKuerzel(daten, kontext));
 	}
 
 	protected pruefe(): boolean {
