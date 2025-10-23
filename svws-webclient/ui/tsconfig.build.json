@@ -10,6 +10,7 @@
 		"resolveJsonModule": true,
 	},
 	"include": [
+		"vite.config.ts",
 		"src/**/*.ts",
 		"src/**/*.vue",
 		"components.d.ts",

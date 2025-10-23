@@ -1,5 +1,12 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
+exports[`Server > getBeschaeftigungsarten 1`] = `
+ArrayList {
+  "elementData": [],
+  "modCount": 0,
+}
+`;
+
 exports[`Server > getBetriebStammdaten 1`] = `
 BetriebStammdaten {
   "Aenderbar": true,
@@ -15392,13 +15399,6 @@ JahrgangsDaten {
   "kuerzelSchulgliederung": "***",
   "kuerzelStatistik": "EF",
   "sortierung": 60,
-}
-`;
-
-exports[`Server > getBeschaeftigungsarten 1`] = `
-ArrayList {
-  "elementData": [],
-  "modCount": 0,
 }
 `;
 
