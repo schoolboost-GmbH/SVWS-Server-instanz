@@ -15,7 +15,8 @@ export type { StundenplanSchuelerProps } from "./components/stundenplan/Stundenp
 export { default as AbschnittAuswahl } from "./components/abschnittauswahl/AbschnittAuswahl.vue";
 export { default as DatenschutzModal } from "./components/modals/DatenschutzModal.vue";
 export { default as FehlermeldungModal } from "./components/modals/FehlermeldungModal.vue";
-export { default as LogBox } from "./components/logbox/LogBox.vue";
+export { default as LogBox } from "./components/boxes/LogBox.vue";
+export { default as CodeBox } from "./components/boxes/CodeBox.vue";
 export { default as SLaufbahnplanungCardBeratung } from "./components/gost/laufbahnplanung/SLaufbahnplanungCardBeratung.vue";
 export { default as SLaufbahnplanungCardPlanung } from "./components/gost/laufbahnplanung/SLaufbahnplanungCardPlanung.vue";
 export { default as SLaufbahnplanungCardStatus } from "./components/gost/laufbahnplanung/SLaufbahnplanungCardStatus.vue";

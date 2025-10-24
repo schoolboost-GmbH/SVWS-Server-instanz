@@ -61,7 +61,7 @@ export class RouteKatalogPausenzeiten extends RouteNode<RouteDataKatalogPausenze
 			gotoEintrag: this.data.gotoEintrag,
 			addPausenzeiten: this.data.addPausenzeiten,
 			deleteEintraege: this.data.deleteEintraege,
-			setKatalogPausenzeitenImportJSON: this.data.setKatalogRaeumeImportJSON,
+			setKatalogPausenzeitenImportJSON: this.data.setKatalogPausenzeitenImportJSON,
 			stundenplanManager: () => this.data.stundenplanManager,
 			setSettingsDefaults: routeStundenplan.data.setSettingsDefaults,
 			benutzerKompetenzen: api.benutzerKompetenzen,

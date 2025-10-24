@@ -63,6 +63,7 @@ export class RouteKatalogAufsichtsbereiche extends RouteNode<RouteDataKatalogAuf
 			addEintrag: this.data.addEintrag,
 			deleteEintraege: this.data.deleteEintraege,
 			stundenplanManager: () => this.data.stundenplanManager,
+			setKatalogAufsichtsbereicheImportJSON: this.data.setKatalogAufsichtsbereicheImportJSON,
 			benutzerKompetenzen: api.benutzerKompetenzen,
 		};
 	}

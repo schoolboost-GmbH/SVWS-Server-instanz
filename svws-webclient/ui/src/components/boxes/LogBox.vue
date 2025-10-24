@@ -63,6 +63,7 @@
 		try {
 			await navigator.clipboard.writeText("```\n" + log.value + "\n```");
 		} catch (e) {
+			console.log(e);
 			copied.value = false;
 		}
 		copied.value = true;

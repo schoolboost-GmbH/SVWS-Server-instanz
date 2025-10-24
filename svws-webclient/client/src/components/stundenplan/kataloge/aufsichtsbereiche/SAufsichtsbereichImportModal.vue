@@ -1,10 +1,10 @@
 <template>
 	<slot :open-modal />
 	<svws-ui-modal v-model:show="show" class="hidden" size="medium">
-		<template #modalTitle>Räume importieren</template>
+		<template #modalTitle>Aufsichtsbereiche importieren</template>
 		<template #modalContent>
 			<div class="text-left">
-				Es werden nur Räume importiert, deren Kürzel noch nicht im Katalog vertreten sind.
+				Es werden nur Aufsichtsbereiche importiert, deren Kürzel noch nicht im Katalog vertreten sind.
 				<br>Hierbei wird das JSON-Format verwendet:
 			</div>
 			<code-box :code status :backticks="false" />
@@ -26,16 +26,15 @@
 	import { ref } from "vue";
 
 	const props = defineProps<{
-		setKatalogRaeumeImportJSON: (formData: FormData) => Promise<void>;
+		setKatalogAufsichtsbereicheImportJSON: (formData: FormData) => Promise<void>;
 	}>();
 
 	const code = `[
   {
     // wird entfernt, daher optional
-    "id": 8,
-    "kuerzel": "T1",
-    "beschreibung": "Turnhalle 1",
-    "groesse": 90
+    "id": 3,
+    "kuerzel": "AUS",
+    "beschreibung": "Außenbereich Sportplatz"
   }
 ]`;
 
@@ -66,7 +65,7 @@
 		const formData = new FormData();
 		formData.append("data", file.value);
 		try {
-			await props.setKatalogRaeumeImportJSON(formData);
+			await props.setKatalogAufsichtsbereicheImportJSON(formData);
 			show.value = false;
 		} catch (e) {
 			console.log(e);

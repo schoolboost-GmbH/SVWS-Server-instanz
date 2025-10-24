@@ -97,7 +97,7 @@ export class RouteDataKatalogPausenzeiten extends RouteData<RouteStateKatalogPau
 		this.commit();
 	};
 
-	setKatalogRaeumeImportJSON = api.call(async (formData: FormData) => {
+	setKatalogPausenzeitenImportJSON = api.call(async (formData: FormData) => {
 		const jsonFile = formData.get("data");
 		if (!(jsonFile instanceof File))
 			return;
