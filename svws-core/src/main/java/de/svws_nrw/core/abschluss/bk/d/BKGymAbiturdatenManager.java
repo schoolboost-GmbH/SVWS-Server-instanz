@@ -24,10 +24,13 @@ import jakarta.validation.constraints.NotNull;
  * Diese Klasse stellt Methoden zur Verfügung um die angegebenen Abiturdaten zu bearbeiten und Auswertungen durchzuführen.
  */
 public class BKGymAbiturdatenManager {
-	/** spezielle Fächer in den Stundentafel der Anlage D */
-	private final @NotNull String zweiteFremdsprache = "Zweite Fremdsprache";
-	private final @NotNull String neueFremdsprache = "Neue Fremdsprache";
-	private final @NotNull String wahlfach = "Wahlfach";
+	// spezielle Fächer in den Stundentafel der Anlage D
+	/** Die Zweite Fremdsprache */
+	public final @NotNull String zweiteFremdsprache = "Zweite Fremdsprache";
+	/** Die Neueinsetzende Fremdsprache */
+	public final @NotNull String neueFremdsprache = "Neue Fremdsprache";
+	/** Das Wahlfach */
+	public final @NotNull String wahlfach = "Wahlfach";
 
 	/** Die Abiturdaten des Schülers */
 	private final @NotNull BKGymAbiturdaten abidaten;
@@ -558,15 +561,16 @@ public class BKGymAbiturdatenManager {
 	public @NotNull Map<Integer, List<BeruflichesGymnasiumStundentafelFach>> getMapFaecherFromTafelByIndex(final @NotNull BeruflichesGymnasiumStundentafel tafel) {
 		final @NotNull Map<Integer, List<BeruflichesGymnasiumStundentafelFach>> mapFaecher = new HashMap<>();
 		for (final @NotNull BeruflichesGymnasiumStundentafelFach fach : tafel.faecher) {
-			List<BeruflichesGymnasiumStundentafelFach> faecher = mapFaecher.get(fach.sortierung);
-			if (faecher == null) {
-				faecher = new ArrayList<>();
-				mapFaecher.put(fach.sortierung, faecher);
-			}
 			// Nur Fächer, die mindestens in einem Halbjahr mit mehr als 0 Stunden belegt werden müssen, aufnehmen
 			if ((fach.stundenumfang[0] > 0) || (fach.stundenumfang[1] > 0) || (fach.stundenumfang[2] > 0)
-					|| (fach.stundenumfang[3] > 0) || (fach.stundenumfang[4] > 0) || (fach.stundenumfang[5] > 0))
+						|| (fach.stundenumfang[3] > 0) || (fach.stundenumfang[4] > 0) || (fach.stundenumfang[5] > 0)) {
+				List<BeruflichesGymnasiumStundentafelFach> faecher = mapFaecher.get(fach.sortierung);
+				if (faecher == null) {
+					faecher = new ArrayList<>();
+					mapFaecher.put(fach.sortierung, faecher);
+				}
 				faecher.add(fach);
+			}
 		}
 		return mapFaecher;
 	}

@@ -54,13 +54,19 @@ import { BKGymBelegpruefung } from '../../../../core/abschluss/bk/d/BKGymBelegpr
 export class BKGymAbiturdatenManager extends JavaObject {
 
 	/**
-	 * spezielle Fächer in den Stundentafel der Anlage D
+	 * Die Zweite Fremdsprache
 	 */
-	private readonly zweiteFremdsprache: string = "Zweite Fremdsprache";
+	public readonly zweiteFremdsprache: string = "Zweite Fremdsprache";
 
-	private readonly neueFremdsprache: string = "Neue Fremdsprache";
+	/**
+	 * Die Neueinsetzende Fremdsprache
+	 */
+	public readonly neueFremdsprache: string = "Neue Fremdsprache";
 
-	private readonly wahlfach: string = "Wahlfach";
+	/**
+	 * Das Wahlfach
+	 */
+	public readonly wahlfach: string = "Wahlfach";
 
 	/**
 	 * Die Abiturdaten des Schülers
@@ -604,13 +610,14 @@ export class BKGymAbiturdatenManager extends JavaObject {
 	public getMapFaecherFromTafelByIndex(tafel: BeruflichesGymnasiumStundentafel): JavaMap<number, List<BeruflichesGymnasiumStundentafelFach>> {
 		const mapFaecher: JavaMap<number, List<BeruflichesGymnasiumStundentafelFach>> = new HashMap<number, List<BeruflichesGymnasiumStundentafelFach>>();
 		for (const fach of tafel.faecher) {
-			let faecher: List<BeruflichesGymnasiumStundentafelFach> | null = mapFaecher.get(fach.sortierung);
-			if (faecher === null) {
-				faecher = new ArrayList();
-				mapFaecher.put(fach.sortierung, faecher);
-			}
-			if ((fach.stundenumfang[0] > 0) || (fach.stundenumfang[1] > 0) || (fach.stundenumfang[2] > 0) || (fach.stundenumfang[3] > 0) || (fach.stundenumfang[4] > 0) || (fach.stundenumfang[5] > 0))
+			if ((fach.stundenumfang[0] > 0) || (fach.stundenumfang[1] > 0) || (fach.stundenumfang[2] > 0) || (fach.stundenumfang[3] > 0) || (fach.stundenumfang[4] > 0) || (fach.stundenumfang[5] > 0)) {
+				let faecher: List<BeruflichesGymnasiumStundentafelFach> | null = mapFaecher.get(fach.sortierung);
+				if (faecher === null) {
+					faecher = new ArrayList();
+					mapFaecher.put(fach.sortierung, faecher);
+				}
 				faecher.add(fach);
+			}
 		}
 		return mapFaecher;
 	}

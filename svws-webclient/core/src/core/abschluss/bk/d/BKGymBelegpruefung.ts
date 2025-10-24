@@ -1,4 +1,5 @@
 import { JavaObject } from '../../../../java/lang/JavaObject';
+import { HashMap2D } from '../../../../core/adt/map/HashMap2D';
 import { BKGymAbiturdatenManager } from '../../../../core/abschluss/bk/d/BKGymAbiturdatenManager';
 import { GostAbiturFach } from '../../../../core/types/gost/GostAbiturFach';
 import { HashMap } from '../../../../java/util/HashMap';
@@ -6,8 +7,8 @@ import { ArrayList } from '../../../../java/util/ArrayList';
 import { BKGymAbiturFachbelegung } from '../../../../core/abschluss/bk/d/BKGymAbiturFachbelegung';
 import { BKGymAbiturFachbelegungHalbjahr } from '../../../../core/abschluss/bk/d/BKGymAbiturFachbelegungHalbjahr';
 import { BeruflichesGymnasiumStundentafel } from '../../../../asd/data/schule/BeruflichesGymnasiumStundentafel';
-import { DeveloperNotificationException } from '../../../../core/exceptions/DeveloperNotificationException';
 import { JavaString } from '../../../../java/lang/JavaString';
+import { DeveloperNotificationException } from '../../../../core/exceptions/DeveloperNotificationException';
 import { BKGymBelegungsfehlerTyp } from '../../../../core/abschluss/bk/d/BKGymBelegungsfehlerTyp';
 import { BKGymBelegungsfehler } from '../../../../core/abschluss/bk/d/BKGymBelegungsfehler';
 import { JavaInteger } from '../../../../java/lang/JavaInteger';
@@ -31,6 +32,11 @@ export abstract class BKGymBelegpruefung extends JavaObject {
 	readonly stundentafeln: List<BeruflichesGymnasiumStundentafel>;
 
 	/**
+	 * Eine HashMap2D für den schnellen Zugriff auf die Fächer der Stundentafeln anhand der Tafel und der Fachbezeichnung
+	 */
+	private readonly mapStundentafelFachByTafelAndFachbezeichnung: HashMap2D<BeruflichesGymnasiumStundentafel, string, BeruflichesGymnasiumStundentafelFach> = new HashMap2D<BeruflichesGymnasiumStundentafel, string, BeruflichesGymnasiumStundentafelFach>();
+
+	/**
 	 * Die Belegungsfehler, die für jede Stundentafel bei der Prüfung festgehalten werden.
 	 */
 	private readonly mapBelegungsfehler: HashMap<BeruflichesGymnasiumStundentafel, List<BKGymBelegungsfehler>> = new HashMap<BeruflichesGymnasiumStundentafel, List<BKGymBelegungsfehler>>();
@@ -45,11 +51,6 @@ export abstract class BKGymBelegpruefung extends JavaObject {
 	 */
 	private dirty: boolean = false;
 
-	/**
-	 * Flag ob Fehler ausgegeben werden sollen
-	 */
-	private fehlerAusgeben: boolean = true;
-
 
 	/**
 	 * Erzeugt eine neue Belegprüfung mit dem angegebenen Manager.
@@ -60,6 +61,18 @@ export abstract class BKGymBelegpruefung extends JavaObject {
 		super();
 		this.manager = manager;
 		this.stundentafeln = manager.getStundentafeln();
+		this.init();
+	}
+
+	/**
+	 * Initialisiert die Maps für schnelle Zugriffe
+	 */
+	private init(): void {
+		for (const tafel of this.stundentafeln) {
+			for (const fach of tafel.faecher) {
+				this.mapStundentafelFachByTafelAndFachbezeichnung.put(tafel, fach.fachbezeichnung, fach);
+			}
+		}
 	}
 
 	/**
@@ -71,8 +84,8 @@ export abstract class BKGymBelegpruefung extends JavaObject {
 	 *
 	 * @return true, falls ein Fehler vorliegt false, wenn nur ein Hinweis ausgegeben wurde.
 	 */
-	protected addFehler(tafel: BeruflichesGymnasiumStundentafel, fehler: BKGymBelegungsfehler): boolean {
-		if (this.fehlerAusgeben) {
+	protected addFehler(tafel: BeruflichesGymnasiumStundentafel | null, fehler: BKGymBelegungsfehler): boolean {
+		if (tafel !== null) {
 			const fehlerliste: List<BKGymBelegungsfehler> | null = this.mapBelegungsfehler.get(tafel);
 			if (fehlerliste !== null && !fehlerliste.contains(fehler)) {
 				fehlerliste.add(fehler);
@@ -135,9 +148,7 @@ export abstract class BKGymBelegpruefung extends JavaObject {
 			this.mapBelegungsfehler.put(tafel, new ArrayList<BKGymBelegungsfehler>());
 			const mapFaecherByIndex: JavaMap<number, List<BeruflichesGymnasiumStundentafelFach>> = this.manager.getMapFaecherFromTafelByIndex(tafel);
 			const mapBelegungByFach: JavaMap<BeruflichesGymnasiumStundentafelFach, List<BKGymAbiturFachbelegung>> = this.manager.getMapBelegungenForTafelByFach(tafel);
-			this.fehlerAusgeben = false;
 			this.bewegeBelegungZuWahlfach(tafel, mapFaecherByIndex, mapBelegungByFach);
-			this.fehlerAusgeben = true;
 			this.allgemeinePruefungen(tafel, mapFaecherByIndex, mapBelegungByFach);
 			this.spezifischePruefungen(tafel, mapFaecherByIndex, mapBelegungByFach);
 		}
@@ -157,57 +168,105 @@ export abstract class BKGymBelegpruefung extends JavaObject {
 	 * @param mapBelegungByFach   die Map mit den Fächern der Belegungen
 	 */
 	private bewegeBelegungZuWahlfach(tafel: BeruflichesGymnasiumStundentafel, mapFaecherByIndex: JavaMap<number, List<BeruflichesGymnasiumStundentafelFach>>, mapBelegungByFach: JavaMap<BeruflichesGymnasiumStundentafelFach, List<BKGymAbiturFachbelegung>>): void {
-		const wahlBelegungenNeu: List<BKGymAbiturFachbelegung> = new ArrayList<BKGymAbiturFachbelegung>();
-		let wahlBelegungen: List<BKGymAbiturFachbelegung> = new ArrayList<BKGymAbiturFachbelegung>();
-		for (const index of mapFaecherByIndex.keySet()) {
-			const faecher: List<BeruflichesGymnasiumStundentafelFach> | null = mapFaecherByIndex.get(index);
+		const wahlBelegungen: List<BKGymAbiturFachbelegung> = this.getBelegungenWahlfach(tafel, mapBelegungByFach);
+		for (const faecher of mapFaecherByIndex.values()) {
 			if (faecher === null)
 				continue;
-			if (faecher.size() === 1) {
-				const tf: BeruflichesGymnasiumStundentafelFach | null = faecher.getFirst();
-				if ((tf !== null) && this.manager.istWahlfach(tf.fachbezeichnung)) {
-					const belegungen: List<BKGymAbiturFachbelegung> | null = mapBelegungByFach.get(tf);
-					if (belegungen !== null)
-						wahlBelegungen = belegungen;
-				}
-				continue;
-			}
+			if (BKGymBelegpruefung.hatStundentafelpositionWahloption(faecher, mapBelegungByFach))
+				this.bewegeWahlfach(faecher, mapBelegungByFach, wahlBelegungen);
+		}
+	}
+
+	/**
+	 * Prüft, ob die Stundentafel eine Wahloption hat anhand der gegebenen Fächerliste der Position
+	 *
+	 * @param faecher             die Liste der Fächer einer Position der Stundentafel
+	 * @param mapBelegungByFach   die Map mit den Fächern der Belegungen
+	 *
+	 * @return true, wenn ein Wahlfach in der Position der Stundentafel vorhanden ist, sonst false
+	 */
+	private static hatStundentafelpositionWahloption(faecher: List<BeruflichesGymnasiumStundentafelFach>, mapBelegungByFach: JavaMap<BeruflichesGymnasiumStundentafelFach, List<BKGymAbiturFachbelegung>>): boolean {
+		if (faecher.size() === 1)
+			return false;
+		const iter: JavaIterator<BeruflichesGymnasiumStundentafelFach> | null = faecher.iterator();
+		while (iter.hasNext()) {
+			const tafelFach: BeruflichesGymnasiumStundentafelFach | null = iter.next();
+			const belegungen: List<BKGymAbiturFachbelegung> | null = mapBelegungByFach.get(tafelFach);
+			if ((belegungen === null) || (belegungen.isEmpty()))
+				iter.remove();
+		}
+		return faecher.size() >= 2;
+	}
+
+	/**
+	 * Bei Wahlmöglichkeiten für ein Pflichtfach wird bei Belegung mehrerer Fächer das erstbeste behalten und
+	 * die anderen Belegungen zum Wahlfach übertragen
+	 *
+	 * @param faecher             die Liste der Fächer einer Position der Stundentafel
+	 * @param mapBelegungByFach   die Map mit den Fächern der Belegungen
+	 * @param wahlBelegungen      die Liste der Belegungen des Wahlfachs
+	 */
+	private bewegeWahlfach(faecher: List<BeruflichesGymnasiumStundentafelFach>, mapBelegungByFach: JavaMap<BeruflichesGymnasiumStundentafelFach, List<BKGymAbiturFachbelegung>>, wahlBelegungen: List<BKGymAbiturFachbelegung>): void {
+		if (!this.bewegeFortgefuehrteFS(faecher, mapBelegungByFach, wahlBelegungen)) {
 			const iter: JavaIterator<BeruflichesGymnasiumStundentafelFach> | null = faecher.iterator();
+			let gefunden: boolean = false;
 			while (iter.hasNext()) {
 				const tafelFach: BeruflichesGymnasiumStundentafelFach | null = iter.next();
-				const belegungen: List<BKGymAbiturFachbelegung> | null = mapBelegungByFach.get(tafelFach);
-				if ((belegungen === null) || (belegungen.size() === 0))
+				if (gefunden) {
+					wahlBelegungen.addAll(mapBelegungByFach.get(tafelFach));
 					iter.remove();
-			}
-			if (faecher.size() < 2)
-				continue;
-			let matched: boolean = false;
-			for (let i: number = 0; i < faecher.size(); i++) {
-				let fehlerfrei: boolean = true;
-				const tafelFach: BeruflichesGymnasiumStundentafelFach | null = faecher.get(i);
-				if (tafelFach !== null) {
-					const belegungen: List<BKGymAbiturFachbelegung> | null = mapBelegungByFach.get(tafelFach);
-					if (this.manager.istZweiteFremdsprache(tafelFach.fachbezeichnung) || this.manager.istNeueFremdsprache(tafelFach.fachbezeichnung)) {
-						this.pruefeBelegungZweiteFremdsprache(tafel, tafelFach, belegungen, wahlBelegungenNeu);
-					} else
-						if ((belegungen !== null) && !belegungen.isEmpty()) {
-							if (belegungen.size() === 1) {
-								const belegung: BKGymAbiturFachbelegung | null = belegungen.getFirst();
-								if (belegung !== null) {
-									if (!matched)
-										fehlerfrei = this.pruefeBelegung(tafel, tafelFach, belegung);
-									if (matched || (!fehlerfrei && ((i + 1) < faecher.size())))
-										wahlBelegungenNeu.add(belegung);
-									if (fehlerfrei)
-										matched = true;
-								} else
-									throw new DeveloperNotificationException("In der Belegungsprüfung ist ein interner Fehler aufgetreten: Die Belegung für ein Fach ist nicht vorhanden.")
-							}
-						}
-				}
+				} else
+					gefunden = this.istPflichtFach(tafelFach, mapBelegungByFach, !iter.hasNext());
 			}
 		}
-		wahlBelegungen.addAll(wahlBelegungenNeu);
+	}
+
+	/**
+	 * Wird nur aufgerufen, wenn fortgeführte und neu einsetzende Fremdsprachen belegt sind.
+	 * Die fortgeführte Fremdsprache wird zum Wahlfach verschoben
+	 *
+	 * @param faecher             die Liste der Fächer einer Position der Stundentafel
+	 * @param mapBelegungByFach   die Map mit den Fächern der Belegungen
+	 * @param wahlBelegungen      die Liste der Belegungen für das Wahlfach
+	 *
+	 * @return true, wenn die Fremdsprachen behandelt wurden, sonst false
+	 */
+	private bewegeFortgefuehrteFS(faecher: List<BeruflichesGymnasiumStundentafelFach>, mapBelegungByFach: JavaMap<BeruflichesGymnasiumStundentafelFach, List<BKGymAbiturFachbelegung>>, wahlBelegungen: List<BKGymAbiturFachbelegung>): boolean {
+		const tafelFach: BeruflichesGymnasiumStundentafelFach | null = faecher.getFirst();
+		if ((tafelFach !== null) && (this.manager.istZweiteFremdsprache(tafelFach.fachbezeichnung) || this.manager.istNeueFremdsprache(tafelFach.fachbezeichnung))) {
+			const iter: JavaIterator<BeruflichesGymnasiumStundentafelFach> | null = faecher.iterator();
+			while (iter.hasNext()) {
+				const tf: BeruflichesGymnasiumStundentafelFach | null = iter.next();
+				if (this.manager.istZweiteFremdsprache(tf.fachbezeichnung)) {
+					wahlBelegungen.addAll(mapBelegungByFach.get(tf));
+					iter.remove();
+				}
+			}
+			return true;
+		}
+		return false;
+	}
+
+	/**
+	 * Gilt für die Positionen der Stundentafel, die Wahlmöglichkeiten vorsehen wie Physik/Chemie/Biologie.
+	 * Hier wird geprüft, ob die Belegung in Ordnung ist.
+	 *
+	 * @param tafelFach           ein Fach der Stundentafel
+	 * @param mapBelegungByFach   die Map mit den Fächern der Belegungen
+	 * @param letztesFach         ob es das letzte Fach der Position in der Stundentafel ist.
+	 *
+	 * @return true, wenn als Pflichtfach erkannt, sonst false
+	 */
+	private istPflichtFach(tafelFach: BeruflichesGymnasiumStundentafelFach | null, mapBelegungByFach: JavaMap<BeruflichesGymnasiumStundentafelFach, List<BKGymAbiturFachbelegung>>, letztesFach: boolean): boolean {
+		if (tafelFach === null)
+			return false;
+		const belegungen: List<BKGymAbiturFachbelegung> | null = mapBelegungByFach.get(tafelFach);
+		if ((belegungen === null) || (belegungen.size() !== 1))
+			return letztesFach;
+		const belegung: BKGymAbiturFachbelegung | null = belegungen.getFirst();
+		if (belegung !== null)
+			return this.pruefeBelegung(null, tafelFach, belegung);
+		throw new DeveloperNotificationException("In der Belegungsprüfung ist ein interner Fehler aufgetreten: Die Belegung für ein Fach ist nicht vorhanden.")
 	}
 
 	/**
@@ -221,42 +280,60 @@ export abstract class BKGymBelegpruefung extends JavaObject {
 	private allgemeinePruefungen(tafel: BeruflichesGymnasiumStundentafel, mapFaecherByIndex: JavaMap<number, List<BeruflichesGymnasiumStundentafelFach>>, mapBelegungByTafelfach: JavaMap<BeruflichesGymnasiumStundentafelFach, List<BKGymAbiturFachbelegung>>): void {
 		this.pruefeLKs(tafel);
 		this.pruefeAbiGrundkurse(tafel);
-		for (const index of mapFaecherByIndex.keySet()) {
-			const faecher: List<BeruflichesGymnasiumStundentafelFach> | null = mapFaecherByIndex.get(index);
-			if (faecher === null || faecher.isEmpty())
-				continue;
-			let matched: boolean = false;
-			for (let i: number = 0; i < faecher.size(); i++) {
-				let fehlerfrei: boolean = true;
-				const tafelFach: BeruflichesGymnasiumStundentafelFach | null = faecher.get(i);
-				if (tafelFach !== null) {
-					const belegungen: List<BKGymAbiturFachbelegung> | null = mapBelegungByTafelfach.get(tafelFach);
-					if (this.manager.istZweiteFremdsprache(tafelFach.fachbezeichnung) || this.manager.istNeueFremdsprache(tafelFach.fachbezeichnung)) {
-						this.pruefeBelegungZweiteFremdsprache(tafel, tafelFach, belegungen, null);
-					} else
-						if (this.manager.istWahlfach(tafelFach.fachbezeichnung)) {
-							this.pruefeBelegungWahlfach(tafel, tafelFach, belegungen);
-						} else
-							if ((belegungen === null) || belegungen.isEmpty()) {
-								if (!matched && (i + 1 >= faecher.size()))
-									this.addFehler(tafel, new BKGymBelegungsfehler(BKGymBelegungsfehlerTyp.ST_4));
-							} else {
-								if (belegungen.size() > 1)
-									this.addFehler(tafel, new BKGymBelegungsfehler(BKGymBelegungsfehlerTyp.ST_1, tafelFach.fachbezeichnung));
-								else {
-									const belegung: BKGymAbiturFachbelegung | null = belegungen.getFirst();
-									if (belegung !== null) {
-										if (!matched)
-											fehlerfrei = this.pruefeBelegung(tafel, tafelFach, belegung);
-										if (fehlerfrei)
-											matched = true;
-									} else
-										throw new DeveloperNotificationException("In der Belegungsprüfung ist ein interner Fehler aufgetreten: Die Belegung für ein Fach ist nicht vorhanden.")
-								}
-							}
-				}
-			}
+		for (const faecher of mapFaecherByIndex.values()) {
+			if (faecher !== null)
+				this.allgemeinePruefungenTafelfach(tafel, faecher, mapBelegungByTafelfach);
 		}
+	}
+
+	/**
+	 * Führt für eine Position der Stundentafel die Prüfung der Belegung durch.
+	 *
+	 * @param tafel                    die zu überprüfende Stundentafel
+	 * @param faecher                  die Liste der Fächer einer Position der Stundentafel
+	 * @param mapBelegungByTafelfach   die Map mit den Fächern der Belegungen
+	 */
+	private allgemeinePruefungenTafelfach(tafel: BeruflichesGymnasiumStundentafel, faecher: List<BeruflichesGymnasiumStundentafelFach>, mapBelegungByTafelfach: JavaMap<BeruflichesGymnasiumStundentafelFach, List<BKGymAbiturFachbelegung>>): void {
+		if (faecher.size() > 1)
+			throw new DeveloperNotificationException("In der Belegungsprüfung ist ein interner Fehler aufgetreten: Für eine Position der Stundentafel gibt es mehr als einen Eintrag.")
+		if (faecher.isEmpty())
+			throw new DeveloperNotificationException("In der Belegungsprüfung ist ein interner Fehler aufgetreten: Für eine Position der Stundentafel gibt keinen Eintrag.")
+		const tafelFach: BeruflichesGymnasiumStundentafelFach | null = faecher.getFirst();
+		if (tafelFach === null)
+			return;
+		const belegungen: List<BKGymAbiturFachbelegung> | null = mapBelegungByTafelfach.get(tafelFach);
+		if ((belegungen === null) || belegungen.isEmpty()) {
+			this.addFehler(tafel, new BKGymBelegungsfehler(BKGymBelegungsfehlerTyp.ST_4));
+			return;
+		}
+		if (this.manager.istWahlfach(tafelFach.fachbezeichnung))
+			this.pruefeBelegungWahlfach(tafel, tafelFach, belegungen);
+		else {
+			if (belegungen.size() > 1)
+				this.addFehler(tafel, new BKGymBelegungsfehler(BKGymBelegungsfehlerTyp.ST_1, tafelFach.fachbezeichnung));
+			else
+				this.pruefeBelegung(tafel, tafelFach, belegungen.getFirst());
+		}
+	}
+
+	/**
+	 * faecher enthält die Fächer einer Position der Stundentafel. Wenn Wahlmöglichkeiten bestehen sind möglicherweise
+	 * vorhandene mehrfache Belegungen schon zum Wahlfach verschoben. Daher schauen wir bei welchem Fach eine Belegung vorliegt
+	 * und geben diese zurück.
+	 *
+	 * @param faecher                  die Fächer einer Position der Stundentafel z. B. Physik, Chemie, Biologie
+	 * @param mapBelegungByTafelfach   die Map mit den Fächern der Belegungen
+	 *
+	 * @return das Fach, das pflichtmäßig belegt wurde
+	 */
+	private static findeBelegtesFach(faecher: List<BeruflichesGymnasiumStundentafelFach>, mapBelegungByTafelfach: JavaMap<BeruflichesGymnasiumStundentafelFach, List<BKGymAbiturFachbelegung>>): BeruflichesGymnasiumStundentafelFach | null {
+		for (const tafelFach of faecher)
+			if (tafelFach !== null) {
+				const belegungen: List<BKGymAbiturFachbelegung> | null = mapBelegungByTafelfach.get(tafelFach);
+				if ((belegungen !== null) && (!belegungen.isEmpty()))
+					return tafelFach;
+			}
+		return null;
 	}
 
 	/**
@@ -268,7 +345,7 @@ export abstract class BKGymBelegpruefung extends JavaObject {
 	 *
 	 * @return true, wenn die Prüfung keinen Fehler entdeckt, sonst false
 	 */
-	private pruefeBelegung(tafel: BeruflichesGymnasiumStundentafel, fachTafel: BeruflichesGymnasiumStundentafelFach, fachBelegung: BKGymAbiturFachbelegung): boolean {
+	private pruefeBelegung(tafel: BeruflichesGymnasiumStundentafel | null, fachTafel: BeruflichesGymnasiumStundentafelFach, fachBelegung: BKGymAbiturFachbelegung): boolean {
 		const successStundenumfang: boolean = this.pruefeStundenumfang(tafel, fachTafel, fachBelegung);
 		const successSchriftlichkeit: boolean = this.pruefeSchriftlich(tafel, fachTafel, fachBelegung);
 		const successAnzahl: boolean = this.pruefeAnzahlKurse(tafel, fachTafel, fachBelegung);
@@ -276,51 +353,36 @@ export abstract class BKGymBelegpruefung extends JavaObject {
 	}
 
 	/**
-	 * Führt die Belegungsprüfung für die zweite Fremdsprache durch.
-	 * Hier kann es vorkommen, dass eine dritte Fremdsprache belegt wird, die dann dem Wahlfach zugeschlagen wird.
+	 * Schlägt die Belegungen für das Wahlfach nach
 	 *
-	 * @param tafel            die Stundentafel der Anlage
-	 * @param fachTafel        das zu prüfende Fach aus der Stundentafel
-	 * @param belegungen       die zugeordnete Fachbelegung
-	 * @param wahlBelegungen   die wahlBelegungen, die ggfs. durch die dritte vorliegende Fremdsprache ergänzt wird.
+	 * @param tafel                    die betreffende Stundentafel
+	 * @param mapBelegungByTafelfach   das zugehörige Mapping der Belegungen auf die Fächer der Stundentafel
 	 *
-	 * @return true, wenn die Prüfung keinen Fehler entdeckt, sonst false
+	 * @return Die Liste der Belegungen für das Wahlfach
 	 */
-	private pruefeBelegungZweiteFremdsprache(tafel: BeruflichesGymnasiumStundentafel, fachTafel: BeruflichesGymnasiumStundentafelFach, belegungen: List<BKGymAbiturFachbelegung> | null, wahlBelegungen: List<BKGymAbiturFachbelegung> | null): boolean {
-		if (belegungen === null || belegungen.isEmpty()) {
-			this.addFehler(tafel, new BKGymBelegungsfehler(BKGymBelegungsfehlerTyp.ST_4));
-			return false;
-		}
-		let matched: boolean = false;
-		for (let i: number = 0; i < belegungen.size(); i++) {
-			let fehlerfrei: boolean = true;
-			const fachBelegung: BKGymAbiturFachbelegung | null = belegungen.get(i);
-			if (fachBelegung !== null) {
-				fehlerfrei = this.pruefeBelegung(tafel, fachTafel, fachBelegung);
-				if ((wahlBelegungen !== null) && (matched || (!fehlerfrei && ((i + 1) < belegungen.size()))))
-					wahlBelegungen.add(fachBelegung);
-				if (fehlerfrei)
-					matched = true;
-			}
-		}
-		return matched;
+	private getBelegungenWahlfach(tafel: BeruflichesGymnasiumStundentafel, mapBelegungByTafelfach: JavaMap<BeruflichesGymnasiumStundentafelFach, List<BKGymAbiturFachbelegung>>): List<BKGymAbiturFachbelegung> {
+		const tafelWahlfach: BeruflichesGymnasiumStundentafelFach | null = this.mapStundentafelFachByTafelAndFachbezeichnung.getOrNull(tafel, this.manager.wahlfach);
+		let wahlfachBelegungen: List<BKGymAbiturFachbelegung> | null = null;
+		if (tafelWahlfach !== null)
+			wahlfachBelegungen = mapBelegungByTafelfach.computeIfAbsent(tafelWahlfach, { apply: (k: BeruflichesGymnasiumStundentafelFach | null) => new ArrayList() });
+		if (wahlfachBelegungen !== null)
+			return wahlfachBelegungen;
+		return new ArrayList<BKGymAbiturFachbelegung>();
 	}
 
 	/**
 	 * Führt die Belegungsprüfung für das Wahlfach aus.
 	 * Hier muss nur die Summe der Wochenstunden pro Halbjahr erfüllt sein.
 	 *
-	 * @param tafel            die Stundentafel der Anlage
-	 * @param fachTafel        das zu prüfende Fach aus der Stundentafel
+	 * @param tafel        die Stundentafel der Anlage
+	 * @param fachTafel    das zu prüfende Fach aus der Stundentafel
 	 * @param belegungen   die zugeordnete Fachbelegung
 	 *
 	 * @return true, wenn die Prüfung keinen Fehler entdeckt, sonst false
 	 */
-	private pruefeBelegungWahlfach(tafel: BeruflichesGymnasiumStundentafel, fachTafel: BeruflichesGymnasiumStundentafelFach, belegungen: List<BKGymAbiturFachbelegung> | null): boolean {
+	private pruefeBelegungWahlfach(tafel: BeruflichesGymnasiumStundentafel | null, fachTafel: BeruflichesGymnasiumStundentafelFach, belegungen: List<BKGymAbiturFachbelegung>): boolean {
 		let success: boolean = true;
 		const summeWS: Array<number> = Array(GostHalbjahr.maxHalbjahre).fill(0);
-		if (belegungen === null)
-			return this.addFehler(tafel, new BKGymBelegungsfehler(BKGymBelegungsfehlerTyp.ST_4, fachTafel.fachbezeichnung));
 		for (const fachBelegung of belegungen)
 			for (const hj of GostHalbjahr.values()) {
 				const belegung: BKGymAbiturFachbelegungHalbjahr | null = fachBelegung.belegungen[hj.id];
@@ -342,35 +404,32 @@ export abstract class BKGymBelegpruefung extends JavaObject {
 	 *
 	 * @return true bei fehlerloser Prüfung sonst false
 	 */
-	private pruefeStundenumfang(tafel: BeruflichesGymnasiumStundentafel, fachTafel: BeruflichesGymnasiumStundentafelFach, fachBelegung: BKGymAbiturFachbelegung): boolean {
+	private pruefeStundenumfang(tafel: BeruflichesGymnasiumStundentafel | null, fachTafel: BeruflichesGymnasiumStundentafelFach, fachBelegung: BKGymAbiturFachbelegung): boolean {
 		let success: boolean = true;
 		let summeTafel: number = 0;
 		let summeBelegung: number = 0;
 		let unterbelegung: boolean = false;
 		for (const hj of GostHalbjahr.values()) {
+			summeTafel += fachTafel.stundenumfang[hj.id];
 			const belegung: BKGymAbiturFachbelegungHalbjahr | null = fachBelegung.belegungen[hj.id];
+			if ((belegung === null) && (fachTafel.stundenumfang[hj.id] > 0))
+				success = success && !this.addFehler(tafel, new BKGymBelegungsfehler(BKGymBelegungsfehlerTyp.ST_4, fachTafel.fachbezeichnung));
 			if (belegung !== null) {
-				summeTafel += fachTafel.stundenumfang[hj.id];
 				if ((belegung.notenkuerzel !== null) && (!JavaString.isEmpty(belegung.notenkuerzel))) {
 					summeBelegung += belegung.wochenstunden;
-					if (fachTafel.stundenumfang[hj.id] > belegung.wochenstunden)
-						unterbelegung = true;
+					unterbelegung = unterbelegung || (fachTafel.stundenumfang[hj.id] > belegung.wochenstunden);
 				} else
 					if (fachTafel.stundenumfang[hj.id] > 0) {
-						if (this.addFehler(tafel, new BKGymBelegungsfehler(BKGymBelegungsfehlerTyp.ST_2, fachTafel.fachbezeichnung, hj.kuerzel)))
-							success = false;
+						success = success && !(this.addFehler(tafel, new BKGymBelegungsfehler(BKGymBelegungsfehlerTyp.ST_2, fachTafel.fachbezeichnung, hj.kuerzel)));
 						unterbelegung = true;
 					}
-			} else
-				if ((fachTafel.stundenumfang[hj.id] > 0) && this.addFehler(tafel, new BKGymBelegungsfehler(BKGymBelegungsfehlerTyp.ST_4, fachTafel.fachbezeichnung)))
-					success = false;
+			}
 		}
 		if (summeTafel > summeBelegung) {
-			if (this.addFehler(tafel, new BKGymBelegungsfehler(BKGymBelegungsfehlerTyp.ST_3, fachTafel.fachbezeichnung)))
-				success = false;
-		} else
-			if (unterbelegung && this.addFehler(tafel, new BKGymBelegungsfehler(BKGymBelegungsfehlerTyp.ST_5_INFO, fachTafel.fachbezeichnung)))
-				success = false;
+			success = success && !this.addFehler(tafel, new BKGymBelegungsfehler(BKGymBelegungsfehlerTyp.ST_3, fachTafel.fachbezeichnung));
+			return success;
+		}
+		success = success && !(unterbelegung && this.addFehler(tafel, new BKGymBelegungsfehler(BKGymBelegungsfehlerTyp.ST_5_INFO, fachTafel.fachbezeichnung)));
 		return success;
 	}
 
@@ -383,7 +442,7 @@ export abstract class BKGymBelegpruefung extends JavaObject {
 	 *
 	 * @return true, wenn die Prüfung keinen Fehler entdeckt, sonst false
 	 */
-	private pruefeSchriftlich(tafel: BeruflichesGymnasiumStundentafel, fachTafel: BeruflichesGymnasiumStundentafelFach, fachBelegung: BKGymAbiturFachbelegung): boolean {
+	private pruefeSchriftlich(tafel: BeruflichesGymnasiumStundentafel | null, fachTafel: BeruflichesGymnasiumStundentafelFach, fachBelegung: BKGymAbiturFachbelegung): boolean {
 		let success: boolean = true;
 		const istAbiFach: boolean = (fachBelegung.abiturFach !== null);
 		const istLK: boolean = istAbiFach && ((fachBelegung.abiturFach === 1) || (fachBelegung.abiturFach === 2));
@@ -395,15 +454,33 @@ export abstract class BKGymBelegpruefung extends JavaObject {
 		const brauchtSchriftlichQ: boolean = brauchtSchriftlichEF || istAbiFach;
 		for (const hj of GostHalbjahr.values()) {
 			const belegungHj: BKGymAbiturFachbelegungHalbjahr | null = fachBelegung.belegungen[hj.id];
-			if ((belegungHj !== null) && (!belegungHj.schriftlich)) {
-				if (brauchtSchriftlichEF && hj.istEinfuehrungsphase() && this.addFehler(tafel, new BKGymBelegungsfehler(BKGymBelegungsfehlerTyp.KL_1, fachTafel.fachbezeichnung, hj.kuerzel)))
-					success = false;
-				if (brauchtSchriftlichQ && hj.istQualifikationsphase() && (hj as unknown !== GostHalbjahr.Q22 as unknown) && this.addFehler(tafel, new BKGymBelegungsfehler(BKGymBelegungsfehlerTyp.KL_1, fachTafel.fachbezeichnung, hj.kuerzel)))
-					success = false;
-				if (istAbiSchriftlich && (hj as unknown === GostHalbjahr.Q22 as unknown) && this.addFehler(tafel, new BKGymBelegungsfehler(BKGymBelegungsfehlerTyp.KL_1, fachTafel.fachbezeichnung, hj.kuerzel)))
-					success = false;
-			}
+			if ((belegungHj === null) || (belegungHj.schriftlich))
+				continue;
+			success = success && this.pruefeSchriftlichkeitHalbjahr(tafel, fachTafel, hj, brauchtSchriftlichEF, brauchtSchriftlichQ, istAbiSchriftlich);
 		}
+		return success;
+	}
+
+	/**
+	 * Führt die logischen Prüfungen für die Schriftlichkeit für ein Halbjahr aus.
+	 *
+	 * @param tafel                  die Stundentafel der Anlage
+	 * @param fachTafel              das zu prüfende Fach aus der Stundentafel
+	 * @param hj                     das Oberstufenhalbjahr
+	 * @param brauchtSchriftlichEF   ob das Fach in der Einführungsphase schriftlich zu belegen ist
+	 * @param brauchtSchriftlichQ    ob das Fach in der Qualifikationsphase schriftlich zu belegen ist
+	 * @param istAbiSchriftlich      ob das Fach wegen Abiturfach schriftlich zu belegen ist
+	 *
+	 * @return true, wenn keine Beanstandungen vorliegen, sonst false
+	 */
+	private pruefeSchriftlichkeitHalbjahr(tafel: BeruflichesGymnasiumStundentafel | null, fachTafel: BeruflichesGymnasiumStundentafelFach, hj: GostHalbjahr, brauchtSchriftlichEF: boolean, brauchtSchriftlichQ: boolean, istAbiSchriftlich: boolean): boolean {
+		let success: boolean = true;
+		if (brauchtSchriftlichEF && hj.istEinfuehrungsphase())
+			success = success && !this.addFehler(tafel, new BKGymBelegungsfehler(BKGymBelegungsfehlerTyp.KL_1, fachTafel.fachbezeichnung, hj.kuerzel));
+		if (brauchtSchriftlichQ && hj.istQualifikationsphase() && (hj as unknown !== GostHalbjahr.Q22 as unknown))
+			success = success && !this.addFehler(tafel, new BKGymBelegungsfehler(BKGymBelegungsfehlerTyp.KL_1, fachTafel.fachbezeichnung, hj.kuerzel));
+		if (istAbiSchriftlich && (hj as unknown === GostHalbjahr.Q22 as unknown))
+			success = success && !this.addFehler(tafel, new BKGymBelegungsfehler(BKGymBelegungsfehlerTyp.KL_1, fachTafel.fachbezeichnung, hj.kuerzel));
 		return success;
 	}
 
@@ -416,7 +493,7 @@ export abstract class BKGymBelegpruefung extends JavaObject {
 	 *
 	 * @return true, wenn die Prüfung keinen Fehler entdeckt, sonst false
 	 */
-	private pruefeAnzahlKurse(tafel: BeruflichesGymnasiumStundentafel, fachTafel: BeruflichesGymnasiumStundentafelFach | null, fachBelegung: BKGymAbiturFachbelegung | null): boolean {
+	private pruefeAnzahlKurse(tafel: BeruflichesGymnasiumStundentafel | null, fachTafel: BeruflichesGymnasiumStundentafelFach | null, fachBelegung: BKGymAbiturFachbelegung | null): boolean {
 		const success: boolean = true;
 		return success;
 	}
