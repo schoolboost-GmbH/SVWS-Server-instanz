@@ -62,62 +62,62 @@ export class Vector<E> extends AbstractList<E> implements List<E>, RandomAccess,
 	}
 
 	/**
-     * Returns the length of the Vector
-     *
-     * @returns {number}
-     */
+	 * Returns the length of the Vector
+	 *
+	 * @returns {number}
+	 */
 	public capacity(): number {
 		return this.elementData.length;
 	}
 
 
 	/**
-     * Returns the length of the Vector
-     *
-     * @returns {number}
-     */
+	 * Returns the length of the Vector
+	 *
+	 * @returns {number}
+	 */
 	public size(): number {
 		return this.elementData.length;
 	}
 
 	/**
-     * Returns whether the Vector is empty
-     *
-     * @returns {boolean}
-     */
+	 * Returns whether the Vector is empty
+	 *
+	 * @returns {boolean}
+	 */
 	public isEmpty(): boolean {
 		return this.elementData.length === 0;
 	}
 
 	/**
-     * Returns an instance of VectorEnumerator of this vector
-     *
-     * @returns {VectorEnumerator<E>}
-     */
+	 * Returns an instance of VectorEnumerator of this vector
+	 *
+	 * @returns {VectorEnumerator<E>}
+	 */
 	public elements(): Enumeration<E> {
 		return new VectorEnumerator<E>(this);
 	}
 
 	/**
-     * Returns whether the Vector contains given element
-     *
-     * @param {E} e
-     *
-     * @returns {boolean}
-     */
+	 * Returns whether the Vector contains given element
+	 *
+	 * @param {E} e
+	 *
+	 * @returns {boolean}
+	 */
 	public contains(e: E): boolean {
 		return this.indexOf(e, 0) >= 0;
 	}
 
 
 	/**
-     * Checks whether the two elements are equal or not
-     *
-     * @param e1   the first element
-     * @param e2   the second element
-     *
-     * @returns true if the elements are equal and false otherwise
-     */
+	 * Checks whether the two elements are equal or not
+	 *
+	 * @param e1   the first element
+	 * @param e2   the second element
+	 *
+	 * @returns true if the elements are equal and false otherwise
+	 */
 	protected equalElements(e1: E, e2: E): boolean {
 		if ((e1 === null) && (e2 === null))
 			return true;
@@ -134,17 +134,15 @@ export class Vector<E> extends AbstractList<E> implements List<E>, RandomAccess,
 	}
 
 	/**
-     * Returns the index of given element. Used with an index it starts searching for object from given position.
-     * Returns the position of the first found element or -1 if unsuccessful
-     *
-     * @param {E} e
-     * @param {number} index
-     * @returns {number}
-     *
-     * compare to {@link Vector#lastIndexOf}
-     */
-	public indexOf(e: E): number;
-	public indexOf(e: E, index: number): number;
+	 * Returns the index of given element. Used with an index it starts searching for object from given position.
+	 * Returns the position of the first found element or -1 if unsuccessful
+	 *
+	 * @param {E} e
+	 * @param {number} index
+	 * @returns {number}
+	 *
+	 * compare to {@link Vector#lastIndexOf}
+	 */
 	public indexOf(e: E, index?: number): number {
 		if (index === undefined)
 			return this.indexOf(e, 0);
@@ -157,17 +155,15 @@ export class Vector<E> extends AbstractList<E> implements List<E>, RandomAccess,
 	}
 
 	/**
-     * Returns the position of the last instance of e and if given an index from that position
-     * on backwards. Returns position or -1 if unsuccessful
-     *
-     * @param {E} e
-     * @param {number} index
-     * @returns {number}
-     *
-     * compare to {@link Vector#indexOf}
-     */
-	public lastIndexOf(e: E): number;
-	public lastIndexOf(e: E, index: number): number;
+	 * Returns the position of the last instance of e and if given an index from that position
+	 * on backwards. Returns position or -1 if unsuccessful
+	 *
+	 * @param {E} e
+	 * @param {number} index
+	 * @returns {number}
+	 *
+	 * compare to {@link Vector#indexOf}
+	 */
 	public lastIndexOf(e: E, index?: number): number {
 		if (index === undefined)
 			return this.lastIndexOf(e, this.elementData.length - 1);
@@ -180,12 +176,12 @@ export class Vector<E> extends AbstractList<E> implements List<E>, RandomAccess,
 	}
 
 	/**
-     * Returns the element E from index
-     *
-     * @param {number} index
-     *
-     * @returns {E}
-     */
+	 * Returns the element E from index
+	 *
+	 * @param {number} index
+	 *
+	 * @returns {E}
+	 */
 	public elementAt(index: number): E {
 		if ((index < 0) || (index >= this.elementData.length))
 			throw new ArrayIndexOutOfBoundsException("Invalid index: " + index + " (valid: 0 - " + (this.elementData.length - 1) + ")");
@@ -193,10 +189,10 @@ export class Vector<E> extends AbstractList<E> implements List<E>, RandomAccess,
 	}
 
 	/**
-     * Returns the first Element E from Vector
-     *
-     * @returns {E}
-     */
+	 * Returns the first Element E from Vector
+	 *
+	 * @returns {E}
+	 */
 	public firstElement(): E {
 		if (this.elementData.length === 0)
 			throw new NoSuchElementException();
@@ -204,24 +200,27 @@ export class Vector<E> extends AbstractList<E> implements List<E>, RandomAccess,
 	}
 
 	/**
-     * Returns the last Element E from Vector
-     *
-     * @returns {E}
-     */
+	 * Returns the last Element E from Vector
+	 *
+	 * @returns {E}
+	 */
 	public lastElement(): E {
 		if (this.elementData.length === 0)
 			throw new NoSuchElementException();
-		return this.elementData[this.elementData.length - 1];
+		const elem = this.elementData.at(-1);
+		if (elem === undefined)
+			throw new NoSuchElementException();
+		return elem;
 	}
 
 	/**
-     * Adds an element to the Vector in given position
-     *
-     * @param {E} e The new element
-     * @param {number} index position of the new element
-     *
-     * @returns {void}
-     */
+	 * Adds an element to the Vector in given position
+	 *
+	 * @param {E} e The new element
+	 * @param {number} index position of the new element
+	 *
+	 * @returns {void}
+	 */
 	public setElementAt(e: E, index: number): void {
 		if ((index < 0) || (index >= this.elementData.length))
 			throw new ArrayIndexOutOfBoundsException(`Invalid index: ${index} (valid: 0 - ${this.elementData.length - 1})`);
@@ -229,12 +228,12 @@ export class Vector<E> extends AbstractList<E> implements List<E>, RandomAccess,
 	}
 
 	/**
-     * Removes element at given position
-     *
-     * @param {number} index
-     *
-     * @returns {void}
-     */
+	 * Removes element at given position
+	 *
+	 * @param {number} index
+	 *
+	 * @returns {void}
+	 */
 	public removeElementAt(index: number): void {
 		if ((index < 0) || (index >= this.elementData.length))
 			throw new ArrayIndexOutOfBoundsException(`Invalid index: ${index} (valid: 0 - ${this.elementData.length - 1})`);
@@ -293,10 +292,10 @@ export class Vector<E> extends AbstractList<E> implements List<E>, RandomAccess,
 	}
 
 	/**
-     * Removes all elements from Vector but keeps the reference to the internal array
-     *
-     * @returns {void}
-     */
+	 * Removes all elements from Vector but keeps the reference to the internal array
+	 *
+	 * @returns {void}
+	 */
 	public removeAllElements(): void {
 		this.elementData.length = 0;
 		this.modCount++;
@@ -319,13 +318,13 @@ export class Vector<E> extends AbstractList<E> implements List<E>, RandomAccess,
 	 * @returns {Array<E>}
 	 */
 	public toArray(): Array<unknown>;
-	public toArray<T>(a: Array<T>): Array<T>;
-	public toArray<T>(__param0?: Array<T>): Array<T> | Array<unknown> {
-		if ((__param0 === undefined) || (__param0 === null) || (__param0.length < this.size())) {
+	public toArray<T>(array: Array<T> | null): Array<T>;
+	public toArray<T>(array?: Array<T> | null): Array<T> | Array<unknown> {
+		if ((array === undefined) || (array === null) || (array.length < this.size())) {
 			return [...this.elementData];
-		} else if (Array.isArray(__param0)) {
-			const a: Array<T> = __param0;
-			if (__param0.length >= this.elementData.length) {
+		} else if (Array.isArray(array)) {
+			const a: Array<T> = array;
+			if (array.length >= this.elementData.length) {
 				for (let i = 0; i < this.elementData.length; i++)
 					a[i] = this.elementData[i] as unknown as T;
 				return a;
@@ -381,7 +380,7 @@ export class Vector<E> extends AbstractList<E> implements List<E>, RandomAccess,
 		if ((typeof param1 === "number") && (param2 !== undefined)) {
 			this.insertElementAt(param2, param1);
 		} else if ((typeof param1 === "number") && (param2 === undefined)) {
-			this.addElement(Number(param1) as unknown as E);
+			this.addElement(param1 as unknown as E);
 		} else if ((typeof param1 !== "number") && (param2 === undefined)) {
 			this.addElement(param1);
 			return true;
@@ -473,7 +472,7 @@ export class Vector<E> extends AbstractList<E> implements List<E>, RandomAccess,
 		for (let i: number = nMove - 1; i >= 0; i--)
 			this.elementData[fromIndex + i] = this.elementData[toIndex + i];
 		for (let i: number = 0; i < nRemove; i++)
-			delete this.elementData[this.elementData.length - 1];
+			this.elementData.pop();
 	}
 
 
@@ -482,7 +481,7 @@ export class Vector<E> extends AbstractList<E> implements List<E>, RandomAccess,
 	 *
 	 * @param {Consumer<E>} action
 	 */
-	public forEach(action: Consumer<E>): void {
+	public forEach(action: Consumer<E> | null): void {
 		if (action === null)
 			throw new NullPointerException();
 		const expectedModCount: number = this.modCount;

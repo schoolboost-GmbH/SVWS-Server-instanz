@@ -50,9 +50,9 @@ export abstract class AbstractCollection<E> extends JavaObject implements Collec
 
 
 	public toArray(): Array<unknown>;
-	public toArray<U>(a: Array<U>): Array<U>;
-	public toArray<T>(__param0?: Array<T>): Array<T> | Array<unknown> {
-		if ((__param0 === undefined) || (__param0 === null) || (__param0.length < this.size())) {
+	public toArray<T>(array: Array<T> | null): Array<T>;
+	public toArray<T>(array?: Array<T> | null): Array<T> | Array<unknown> {
+		if ((array === undefined) || (array === null) || (array.length < this.size())) {
 			const r: Array<E> = new Array<E>(this.size());
 			const it: JavaIterator<E> = this.iterator();
 			let i: number = 0;
@@ -61,7 +61,7 @@ export abstract class AbstractCollection<E> extends JavaObject implements Collec
 				i++;
 			}
 			return r;
-		} else if (Array.isArray(__param0)) {
+		} else if (Array.isArray(array)) {
 			// TODO handle the case where a is not null and try to fill into the parameter array if possible - see JavaDoc for implementation
 			throw new Error('not yet implemented');
 		} else
@@ -185,7 +185,9 @@ export abstract class AbstractCollection<E> extends JavaObject implements Collec
 	}
 
 
-	public forEach(action: Consumer<E>): void {
+	public forEach(action: Consumer<E> | null): void {
+		if (action === null)
+			throw new NullPointerException();
 		const it: JavaIterator<E> = this.iterator();
 		while (it.hasNext())
 			action.accept(it.next());
@@ -201,7 +203,7 @@ export abstract class AbstractCollection<E> extends JavaObject implements Collec
 			'java.util.AbstractCollection',
 			'java.util.Collection',
 			'java.lang.Iterable',
-			'java.lang.Object'
+			'java.lang.Object',
 		].includes(name);
 	}
 

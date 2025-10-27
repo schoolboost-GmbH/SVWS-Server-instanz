@@ -149,12 +149,12 @@ export class DateUtils extends JavaObject {
 			const split: Array<string | null> = datumISO8601.split("-");
 			if (split.length !== 3)
 				return false;
-			let jahr: number = JavaInteger.parseInt(split[0]);
-			let monat: number = JavaInteger.parseInt(split[1]);
-			let tagImMonat: number = JavaInteger.parseInt(split[2]);
+			const jahr: number = JavaInteger.parseInt(split[0]);
+			const monat: number = JavaInteger.parseInt(split[1]);
+			const tagImMonat: number = JavaInteger.parseInt(split[2]);
 			if (DateUtils.gibIstJahrUngueltig(jahr) || monat < 1 || monat > 12)
 				return false;
-			let maxTage: number = DateUtils.daysInMonth(jahr, monat);
+			const maxTage: number = DateUtils.daysInMonth(jahr, monat);
 			return tagImMonat >= 1 && tagImMonat <= maxTage;
 		} catch(e : any) {
 			return false;
@@ -205,7 +205,7 @@ export class DateUtils extends JavaObject {
 		DeveloperNotificationException.ifTrue("kalenderwoche > gibKalenderwochenOfJahr(kalenderwochenjahr)", kalenderwoche > DateUtils.gibKalenderwochenOfJahr(kalenderwochenjahr));
 		DeveloperNotificationException.ifTrue("wochentage ist leer", wochentage.length === 0);
 		const daten: List<PairNN<Wochentag, string>> | null = new ArrayList<PairNN<Wochentag, string>>();
-		for (let wochentag of wochentage) {
+		for (const wochentag of wochentage) {
 			const wtag: Wochentag = DeveloperNotificationException.ifNull("wochentage enthält null-Einträge", wochentag);
 			daten.add(new PairNN<Wochentag, string>(wtag, DateUtils.gibDatumDesWochentagsOfJahrAndKalenderwoche(kalenderwochenjahr, kalenderwoche, wtag.id)));
 		}
@@ -498,14 +498,14 @@ export class DateUtils extends JavaObject {
 		const s: StringBuilder | null = new StringBuilder();
 		const days: number = DateUtils.DAYS_FROM_0_TO_1970 + Math.trunc(time / 86400000) + 1;
 		const years400: number = Math.trunc(days / DateUtils.DAYS_PER_400_YEARS);
-		const daysLeft400: number = days - years400 * DateUtils.DAYS_PER_400_YEARS;
+		const daysLeft400: number = days - (years400 * DateUtils.DAYS_PER_400_YEARS);
 		const years100: number = Math.trunc((daysLeft400 - 1) / DateUtils.DAYS_PER_100_YEARS);
-		const daysLeft100: number = daysLeft400 - years100 * DateUtils.DAYS_PER_100_YEARS;
+		const daysLeft100: number = daysLeft400 - (years100 * DateUtils.DAYS_PER_100_YEARS);
 		const years4: number = Math.trunc(daysLeft100 / DateUtils.DAYS_PER_4_YEARS);
 		const years1: number = Math.trunc((daysLeft100 - 1) / DateUtils.DAYS_PER_YEAR) % 4;
-		const year: number = years400 * 400 + years100 * 100 + years4 * 4 + years1;
+		const year: number = (years400 * 400) + (years100 * 100) + (years4 * 4) + years1;
 		const isLeapYear: boolean = (years1 === 0) && ((years100 === 0) || (years4 !== 0));
-		let day: number = (daysLeft400 - 60) - years100 * DateUtils.DAYS_PER_100_YEARS - years4 * DateUtils.DAYS_PER_4_YEARS - years1 * DateUtils.DAYS_PER_YEAR;
+		let day: number = (daysLeft400 - 60) - (years100 * DateUtils.DAYS_PER_100_YEARS) - (years4 * DateUtils.DAYS_PER_4_YEARS) - (years1 * DateUtils.DAYS_PER_YEAR);
 		if (day < 0)
 			day += (isLeapYear ? DateUtils.DAYS_PER_LEAP_YEAR : DateUtils.DAYS_PER_YEAR);
 		const m5: number = Math.trunc(day / 153);
@@ -514,7 +514,7 @@ export class DateUtils extends JavaObject {
 		day -= m2 * 61;
 		const m1: number = Math.trunc(day / 31);
 		day -= m1 * 31;
-		const month: number = (((m5 * 5 + m2 * 2 + m1) + 2) % 12) + 1;
+		const month: number = ((((m5 * 5) + (m2 * 2) + m1) + 2) % 12) + 1;
 		if (year < 1000)
 			s.append("0");
 		if (year < 100)
@@ -593,11 +593,10 @@ export class DateUtils extends JavaObject {
 	 *         Falls keine Überlappung besteht, wird ein leeres Array zurückgegeben.
 	 */
 	public static berechneGemeinsameTage(zeitraumAab: string, zeitraumAbis: string, zeitraumBab: string, zeitraumBbis: string): Array<string | null> {
-		let start: string | null = (JavaString.compareTo(zeitraumAab, zeitraumBab) >= 0) ? zeitraumAab : zeitraumBab;
-		let end: string | null = (JavaString.compareTo(zeitraumAbis, zeitraumBbis) <= 0) ? zeitraumAbis : zeitraumBbis;
-		if (JavaString.compareTo(start, end) > 0) {
+		const start: string | null = (JavaString.compareTo(zeitraumAab, zeitraumBab) >= 0) ? zeitraumAab : zeitraumBab;
+		const end: string | null = (JavaString.compareTo(zeitraumAbis, zeitraumBbis) <= 0) ? zeitraumAbis : zeitraumBbis;
+		if (JavaString.compareTo(start, end) > 0)
 			return Array(0).fill(null);
-		}
 		return DateUtils.gibTageAlsDatumZwischen(start, end);
 	}
 

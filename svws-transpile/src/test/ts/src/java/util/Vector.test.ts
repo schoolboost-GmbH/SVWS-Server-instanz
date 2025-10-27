@@ -84,10 +84,10 @@ describe.each([s, n, l])("java.util.Vector, getestet mit $name", ({ a, b, c, d, 
 		expect(v2.contains(c)).toBeTruthy();
 	});
 	test("removeElementAt: Vector throws on wrong index", () => {
-		expect(() => v.removeElementAt(1)).toThrow( ArrayIndexOutOfBoundsException);
+		expect(() => v.removeElementAt(1)).toThrow(ArrayIndexOutOfBoundsException);
 	});
 	test("removeElementAt: Vector throws on negative index", () => {
-		expect(() => v.removeElementAt(-2)).toThrow( ArrayIndexOutOfBoundsException);
+		expect(() => v.removeElementAt(-2)).toThrow(ArrayIndexOutOfBoundsException);
 	});
 	test("removeElementAt: Vector removes 'c' element in second position", () => {
 		v.add(c);
@@ -125,7 +125,7 @@ describe.each([s, n, l])("java.util.Vector, getestet mit $name", ({ a, b, c, d, 
 		expect(array).toEqual([a, b, c, d, e]);
 	});
 	test("elementAt: Vector throws on wrong index", () => {
-		expect(() => v.elementAt(-1)).toThrow( ArrayIndexOutOfBoundsException);
+		expect(() => v.elementAt(-1)).toThrow(ArrayIndexOutOfBoundsException);
 	});
 	test("elementAt: returns element from index", () => {
 		expect(v.elementAt(0)).toEqual(a);
@@ -138,10 +138,10 @@ describe.each([s, n, l])("java.util.Vector, getestet mit $name", ({ a, b, c, d, 
 		expect(v.lastElement()).toEqual(b);
 	});
 	test("setElementAt: Vector throws on wrong index", () => {
-		expect(() => v.setElementAt(c, 3)).toThrow( ArrayIndexOutOfBoundsException);
+		expect(() => v.setElementAt(c, 3)).toThrow(ArrayIndexOutOfBoundsException);
 	});
 	test("setElementAt: Vector throws on negative index", () => {
-		expect(() => v.setElementAt(c, -2)).toThrow( ArrayIndexOutOfBoundsException);
+		expect(() => v.setElementAt(c, -2)).toThrow(ArrayIndexOutOfBoundsException);
 	});
 	test("setElementAt: Vector sets element at index", () => {
 		v.setElementAt(b, 0);
@@ -160,7 +160,7 @@ describe.each([s, n, l])("java.util.Vector, getestet mit $name", ({ a, b, c, d, 
 	test("toString: returns string of elements", () => {
 		const string = v.toString();
 		const [obj] = JSON.parse(string);
-		expect(obj).toEqual(a)
+		expect(obj).toEqual(a);
 	});
 	test("get: returns element at index", () => {
 		expect(v.get(0)).toEqual(a);
@@ -327,7 +327,7 @@ describe.each([s, n, l])("java.util.Vector, getestet mit $name", ({ a, b, c, d, 
 	test("removeLast: removes last element of the list", () => {
 		v.add(b);
 		v.add(c);
-		expect(v.removeLast()).toBeTruthy()
+		expect(v.removeLast()).toBeTruthy();
 		expect(v.size()).toEqual(2);
 	});
 	test("getFirst: gets first element of the list", () => {
@@ -338,7 +338,7 @@ describe.each([s, n, l])("java.util.Vector, getestet mit $name", ({ a, b, c, d, 
 	test("getLast: gets last element of the list", () => {
 		v.add(b);
 		v.add(c);
-		expect(v.getLast()).toBe(c)
+		expect(v.getLast()).toBe(c);
 	});
 	test("getFirst: gets exception when list empty", () => {
 		const vv = new Vector();

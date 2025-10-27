@@ -143,8 +143,6 @@ export class ArrayList<E> extends AbstractList<E> implements List<E>, RandomAcce
 	 *
 	 * compare to {@link ArrayList#lastIndexOf}
 	 */
-	public indexOf(e: E): number;
-	public indexOf(e: E, index: number): number;
 	public indexOf(e: E, index?: number): number {
 		if (index === undefined)
 			return this.indexOf(e, 0);
@@ -166,8 +164,6 @@ export class ArrayList<E> extends AbstractList<E> implements List<E>, RandomAcce
 	 *
 	 * compare to {@link ArrayList#indexOf}
 	 */
-	public lastIndexOf(e: E): number;
-	public lastIndexOf(e: E, index: number): number;
 	public lastIndexOf(e: E, index?: number): number {
 		if (index === undefined)
 			return this.lastIndexOf(e, this.elementData.length - 1);
@@ -211,7 +207,10 @@ export class ArrayList<E> extends AbstractList<E> implements List<E>, RandomAcce
 	public lastElement(): E {
 		if (this.elementData.length === 0)
 			throw new NoSuchElementException();
-		return this.elementData[this.elementData.length - 1];
+		const elem = this.elementData.at(-1);
+		if (elem === undefined)
+			throw new NoSuchElementException();
+		return elem;
 	}
 
 	/**
@@ -319,13 +318,13 @@ export class ArrayList<E> extends AbstractList<E> implements List<E>, RandomAcce
 	 * @returns {Array<E>}
 	 */
 	public toArray(): Array<unknown>;
-	public toArray<T>(a: Array<T>): Array<T>;
-	public toArray<T>(__param0?: Array<T>): Array<T> | Array<unknown> {
-		if ((__param0 === undefined) || (__param0 === null) || (__param0.length < this.size())) {
+	public toArray<T>(aarray: Array<T> | null): Array<T>;
+	public toArray<T>(array?: Array<T> | null): Array<T> | Array<unknown> {
+		if ((array === undefined) || (array === null) || (array.length < this.size())) {
 			return [...this.elementData];
-		} else if (Array.isArray(__param0)) {
-			const a: Array<T> = __param0;
-			if (__param0.length >= this.elementData.length) {
+		} else if (Array.isArray(array)) {
+			const a: Array<T> = array;
+			if (array.length >= this.elementData.length) {
 				for (let i = 0; i < this.elementData.length; i++)
 					a[i] = this.elementData[i] as unknown as T;
 				return a;
@@ -381,7 +380,7 @@ export class ArrayList<E> extends AbstractList<E> implements List<E>, RandomAcce
 		if ((typeof param1 === "number") && (param2 !== undefined)) {
 			this.insertElementAt(param2, param1);
 		} else if ((typeof param1 === "number") && (param2 === undefined)) {
-			this.addElement(Number(param1) as unknown as E);
+			this.addElement(param1 as unknown as E);
 		} else if ((typeof param1 !== "number") && (param2 === undefined)) {
 			this.addElement(param1);
 			return true;
@@ -473,7 +472,7 @@ export class ArrayList<E> extends AbstractList<E> implements List<E>, RandomAcce
 		for (let i: number = nMove - 1; i >= 0; i--)
 			this.elementData[fromIndex + i] = this.elementData[toIndex + i];
 		for (let i: number = 0; i < nRemove; i++)
-			delete this.elementData[this.elementData.length - 1];
+			this.elementData.pop();
 	}
 
 
@@ -482,7 +481,7 @@ export class ArrayList<E> extends AbstractList<E> implements List<E>, RandomAcce
 	 *
 	 * @param {Consumer<E>} action
 	 */
-	public forEach(action: Consumer<E>): void {
+	public forEach(action: Consumer<E> | null): void {
 		if (action === null)
 			throw new NullPointerException();
 		const expectedModCount: number = this.modCount;

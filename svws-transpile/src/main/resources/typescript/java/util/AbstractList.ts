@@ -119,7 +119,7 @@ export abstract class AbstractList<E> extends AbstractCollection<E> implements L
 
 
 	public listIterator(param?: number): ListIterator<E> {
-		const index = (param === undefined) ? 0 : param;
+		const index = param ?? 0;
 		if (index < 0 || index > this.size())
 			throw new IndexOutOfBoundsException("Index: " + index + ", Size: " + this.size());
 		return new AbstractListListIterator(this, index);
