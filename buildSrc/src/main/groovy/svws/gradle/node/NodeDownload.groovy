@@ -50,15 +50,12 @@ abstract class NodeDownload extends DefaultTask {
 		}
 
 		def compFilename = this.cfg.getCompressedFilename();
+		def ant = new AntBuilder();
 		if ("zip".equals(this.cfg.getCompressedFileType())) {
-			def ant = new AntBuilder();
-			ant.with {
-				unzip(src: "${downloadPath}/${filename}", dest: this.cfg.getNodeDirectory()) { cutdirsmapper(dirs: 1) }
-			}
+			ant.unzip(src: "${downloadPath}/${filename}", dest: this.cfg.getNodeDirectory()) { cutdirsmapper(dirs: 1) }
 		} else if ("tar.gz".equals(this.cfg.getCompressedFileType())) {
-			project.exec {
-				commandLine 'tar', '-xzf', "${downloadPath}/${filename}", '--strip-components=1','-C', this.cfg.getNodeDirectory() + "/";
-			}
+			def process = [ 'tar', '-xzf', "${downloadPath}/${filename}", '--strip-components=1','-C', this.cfg.getNodeDirectory() + "/" ].execute()
+			process.waitFor()
 		} else if ("tar.xz".equals(this.cfg.getCompressedFileType())) {
 			throw new Exception("Archive type tar.xz not yet suppported by this gradle node plugin!");
 		} else {
