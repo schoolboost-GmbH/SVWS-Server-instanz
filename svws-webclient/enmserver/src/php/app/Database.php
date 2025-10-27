@@ -61,21 +61,6 @@
 		}
 
 		/**
-		 * Aktualisiere die Tabelle mit dem übergegebenen Namen und dem übergebenen Befehl.
-		 *
-		 * @param string $tablename   der Name der Tabelle
-		 * @param string $sqlpart     der Teil des SQL-Befehls hinter dem SET
-		 */
-		protected function updateSet(string $tablename, string $sqlpart): void {
-			try {
-				$sql = "UPDATE $tablename SET ".$sqlpart;
-				$this->conn->exec($sql);
-			} catch (PDOException $e) {
-				Http::exit500("Database (".$this->config->getDatabaseFile().") - Fehler beim Aktualisieren der Tabelle $tablename (".$e->getCode()."): ".$e->getMessage()." - Befehl: '$sql'");
-			}
-		}
-
-		/**
 		 * Fügt Daten mithilfe des übergebenen SQL-Strings in die Tabelle mit dem übergegebenen Namen ein.
 		 *
 		 * @param string $tablename   der Name der Tabelle
@@ -342,7 +327,7 @@
 			try {
 				$statement->execute();
 			} catch (PDOException $e) {
-				Http::exit500("Database (".$this->config->getDatabaseFile().") - Fehler beim Ausführen des Insert-Statements (".$e->getCode()."): ".$e->getMessage());
+				Http::exit500("Database (".$this->config->getDatabaseFile().") - Fehler beim Ausführen des Statements (".$e->getCode()."): ".$e->getMessage());
 			}
 		}
 
@@ -463,6 +448,85 @@
 			$this->commitTransaction();
 		}
 
+
+		private function importUpdateSchuelerGeneratePreparedStatement(mixed $alt, mixed $neu): PDOStatement {
+			$sql = "UPDATE Schueler SET ";
+			if ($alt->tsFehlstundenGesamt > $neu->tsFehlstundenGesamt)
+				$sql .= "tsFehlstundenGesamt=:tsFehlstundenGesamt,";
+			if ($alt->tsFehlstundenGesamtUnentschuldigt > $neu->tsFehlstundenGesamtUnentschuldigt)
+				$sql .= "tsFehlstundenGesamtUnentschuldigt=:tsFehlstundenGesamtUnentschuldigt,";
+			if ($alt->tsASV > $neu->tsASV)
+				$sql .= "tsASV=:tsASV,";
+			if ($alt->tsAUE > $neu->tsAUE)
+				$sql .= "tsAUE=:tsAUE,";
+			if ($alt->tsZB > $neu->tsZB)
+				$sql .= "tsZB=:tsZB,";
+			if ($alt->tsLELS > $neu->tsLELS)
+				$sql .= "tsLELS=:tsLELS,";
+			if ($alt->tsSchulformEmpf > $neu->tsSchulformEmpf)
+				$sql .= "tsSchulformEmpf=:tsSchulformEmpf,";
+			if ($alt->tsIndividuelleVersetzungsbemerkungen > $neu->tsIndividuelleVersetzungsbemerkungen)
+				$sql .= "tsIndividuelleVersetzungsbemerkungen=:tsIndividuelleVersetzungsbemerkungen,";
+			if ($alt->tsFoerderbemerkungen > $neu->tsFoerderbemerkungen)
+				$sql .= "tsFoerderbemerkungen=:tsFoerderbemerkungen,";
+			$sql .= "daten=:daten WHERE id=:id and ts=:ts";
+			return $this->prepareStatement($sql);
+		}
+
+
+		private function importUpdateSchuelerBindStatementVariables(PDOStatement $stmt, mixed $alt, mixed $neu): void {
+			$jsonAlt = json_decode($alt->daten);
+			$jsonNeu = json_decode($neu->daten);
+			if ($alt->tsFehlstundenGesamt > $neu->tsFehlstundenGesamt) {
+				$this->bindStatementValue($stmt, ":tsFehlstundenGesamt", $alt->tsFehlstundenGesamt, PDO::PARAM_STR);
+				$jsonNeu->lernabschnitt->fehlstundenGesamt = $jsonAlt->lernabschnitt->fehlstundenGesamt;
+				$jsonNeu->lernabschnitt->tsFehlstundenGesamt = $jsonAlt->lernabschnitt->tsFehlstundenGesamt;
+			}
+			if ($alt->tsFehlstundenGesamtUnentschuldigt > $neu->tsFehlstundenGesamtUnentschuldigt) {
+				$this->bindStatementValue($stmt, ":tsFehlstundenGesamtUnentschuldigt", $alt->tsFehlstundenGesamtUnentschuldigt, PDO::PARAM_STR);
+				$jsonNeu->lernabschnitt->fehlstundenGesamtUnentschuldigt = $jsonAlt->lernabschnitt->fehlstundenGesamtUnentschuldigt;
+				$jsonNeu->lernabschnitt->tsFehlstundenGesamtUnentschuldigt = $jsonAlt->lernabschnitt->tsFehlstundenGesamtUnentschuldigt;
+			}
+			if ($alt->tsASV > $neu->tsASV) {
+				$this->bindStatementValue($stmt, ":tsASV", $alt->tsASV, PDO::PARAM_STR);
+				$jsonNeu->bemerkungen->ASV = $jsonAlt->bemerkungen->ASV;
+				$jsonNeu->bemerkungen->tsASV = $jsonAlt->bemerkungen->tsASV;
+			}
+			if ($alt->tsAUE > $neu->tsAUE) {
+				$this->bindStatementValue($stmt, ":tsAUE", $alt->tsAUE, PDO::PARAM_STR);
+				$jsonNeu->bemerkungen->AUE = $jsonAlt->bemerkungen->AUE;
+				$jsonNeu->bemerkungen->tsAUE = $jsonAlt->bemerkungen->tsAUE;
+			}
+			if ($alt->tsZB > $neu->tsZB) {
+				$this->bindStatementValue($stmt, ":tsZB", $alt->tsZB, PDO::PARAM_STR);
+				$jsonNeu->bemerkungen->ZB = $jsonAlt->bemerkungen->ZB;
+				$jsonNeu->bemerkungen->tsZB = $jsonAlt->bemerkungen->tsZB;
+			}
+			if ($alt->tsLELS > $neu->tsLELS) {
+				$this->bindStatementValue($stmt, ":tsLELS", $alt->tsLELS, PDO::PARAM_STR);
+				$jsonNeu->bemerkungen->LELS = $jsonAlt->bemerkungen->LELS;
+				$jsonNeu->bemerkungen->tsLELS = $jsonAlt->bemerkungen->tsLELS;
+			}
+			if ($alt->tsSchulformEmpf > $neu->tsSchulformEmpf) {
+				$this->bindStatementValue($stmt, ":tsSchulformEmpf", $alt->tsSchulformEmpf, PDO::PARAM_STR);
+				$jsonNeu->bemerkungen->schulformEmpf = $jsonAlt->bemerkungen->schulformEmpf;
+				$jsonNeu->bemerkungen->tsSchulformEmpf = $jsonAlt->bemerkungen->tsSchulformEmpf;
+			}
+			if ($alt->tsIndividuelleVersetzungsbemerkungen > $neu->tsIndividuelleVersetzungsbemerkungen) {
+				$this->bindStatementValue($stmt, ":tsIndividuelleVersetzungsbemerkungen", $alt->tsIndividuelleVersetzungsbemerkungen, PDO::PARAM_STR);
+				$jsonNeu->bemerkungen->individuelleVersetzungsbemerkungen = $jsonAlt->bemerkungen->individuelleVersetzungsbemerkungen;
+				$jsonNeu->bemerkungen->tsIndividuelleVersetzungsbemerkungen = $jsonAlt->bemerkungen->tsIndividuelleVersetzungsbemerkungen;
+			}
+			if ($alt->tsFoerderbemerkungen > $neu->tsFoerderbemerkungen) {
+				$this->bindStatementValue($stmt, ":tsFoerderbemerkungen", $alt->tsFoerderbemerkungen, PDO::PARAM_STR);
+				$jsonNeu->bemerkungen->foerderbemerkungen = $jsonAlt->bemerkungen->foerderbemerkungen;
+				$jsonNeu->bemerkungen->tsFoerderbemerkungen = $jsonAlt->bemerkungen->tsFoerderbemerkungen;
+			}
+			$this->bindStatementValue($stmt, ":daten", json_encode($jsonNeu, JSON_UNESCAPED_SLASHES), PDO::PARAM_STR);
+			$this->bindStatementValue($stmt, ":id", $neu->id, PDO::PARAM_INT);
+			$this->bindStatementValue($stmt, ":ts", $neu->ts, PDO::PARAM_INT);
+		}
+
 		/**
 		 * Erstellt einen Abgleich von vorherigen Einträgen zu den Einträgen mit dem angegebenen Zeitstempel.
 		 *
@@ -482,10 +546,11 @@
 				$mapOld[$row->id] = $row;
 				$idsArray[] = $row->id;
 			}
-			if (count($idsArray) <= 0)
+			if (empty($idsArray))
 				return;
 			$ids = implode(",", $idsArray);
 			// Lese dann alle dazugehörigen Daten mit neuem Zeitstempel ein
+			$this->beginTransaction();
 			$diffsNeu = $this->queryAllOrExit500("SELECT * FROM Schueler WHERE ts = $ts AND id IN ($ids)", "Fehler Lesen der neuen Schülerdaten");
 			foreach ($diffsNeu as $neu) {
 				$alt = $mapOld[$neu->id];
@@ -496,60 +561,72 @@
 					|| ($alt->tsIndividuelleVersetzungsbemerkungen > $neu->tsIndividuelleVersetzungsbemerkungen)
 					|| ($alt->tsFoerderbemerkungen > $neu->tsFoerderbemerkungen));
 				if ($needUpdate > 0) {
-					$jsonAlt = json_decode($alt->daten);
-					$jsonNeu = json_decode($neu->daten);
-					$update = "";
-					if ($alt->tsFehlstundenGesamt > $neu->tsFehlstundenGesamt) {
-						$update .= "tsFehlstundenGesamt='$alt->tsFehlstundenGesamt',";
-						$jsonNeu->lernabschnitt->fehlstundenGesamt = $jsonAlt->lernabschnitt->fehlstundenGesamt;
-						$jsonNeu->lernabschnitt->tsFehlstundenGesamt = $jsonAlt->lernabschnitt->tsFehlstundenGesamt;
-					}
-					if ($alt->tsFehlstundenGesamtUnentschuldigt > $neu->tsFehlstundenGesamtUnentschuldigt) {
-						$update .= "tsFehlstundenGesamtUnentschuldigt='$alt->tsFehlstundenGesamtUnentschuldigt',";
-						$jsonNeu->lernabschnitt->fehlstundenGesamtUnentschuldigt = $jsonAlt->lernabschnitt->fehlstundenGesamtUnentschuldigt;
-						$jsonNeu->lernabschnitt->tsFehlstundenGesamtUnentschuldigt = $jsonAlt->lernabschnitt->tsFehlstundenGesamtUnentschuldigt;
-					}
-					if ($alt->tsASV > $neu->tsASV) {
-						$update .= "tsASV='$alt->tsASV',";
-						$jsonNeu->bemerkungen->ASV = $jsonAlt->bemerkungen->ASV;
-						$jsonNeu->bemerkungen->tsASV = $jsonAlt->bemerkungen->tsASV;
-					}
-					if ($alt->tsAUE > $neu->tsAUE) {
-						$update .= "tsAUE='$alt->tsAUE',";
-						$jsonNeu->bemerkungen->AUE = $jsonAlt->bemerkungen->AUE;
-						$jsonNeu->bemerkungen->tsAUE = $jsonAlt->bemerkungen->tsAUE;
-					}
-					if ($alt->tsZB > $neu->tsZB) {
-						$update .= "tsZB='$alt->tsZB',";
-						$jsonNeu->bemerkungen->ZB = $jsonAlt->bemerkungen->ZB;
-						$jsonNeu->bemerkungen->tsZB = $jsonAlt->bemerkungen->tsZB;
-					}
-					if ($alt->tsLELS > $neu->tsLELS) {
-						$update .= "tsLELS='$alt->tsLELS',";
-						$jsonNeu->bemerkungen->LELS = $jsonAlt->bemerkungen->LELS;
-						$jsonNeu->bemerkungen->tsLELS = $jsonAlt->bemerkungen->tsLELS;
-					}
-					if ($alt->tsSchulformEmpf > $neu->tsSchulformEmpf) {
-						$update .= "tsSchulformEmpf='$alt->tsSchulformEmpf',";
-						$jsonNeu->bemerkungen->schulformEmpf = $jsonAlt->bemerkungen->schulformEmpf;
-						$jsonNeu->bemerkungen->tsSchulformEmpf = $jsonAlt->bemerkungen->tsSchulformEmpf;
-					}
-					if ($alt->tsIndividuelleVersetzungsbemerkungen > $neu->tsIndividuelleVersetzungsbemerkungen) {
-						$update .= "tsIndividuelleVersetzungsbemerkungen='$alt->tsIndividuelleVersetzungsbemerkungen',";
-						$jsonNeu->bemerkungen->individuelleVersetzungsbemerkungen = $jsonAlt->bemerkungen->individuelleVersetzungsbemerkungen;
-						$jsonNeu->bemerkungen->tsIndividuelleVersetzungsbemerkungen = $jsonAlt->bemerkungen->tsIndividuelleVersetzungsbemerkungen;
-					}
-					if ($alt->tsFoerderbemerkungen > $neu->tsFoerderbemerkungen) {
-						$update .= "tsFoerderbemerkungen='$alt->tsFoerderbemerkungen',";
-						$jsonNeu->bemerkungen->foerderbemerkungen = $jsonAlt->bemerkungen->foerderbemerkungen;
-						$jsonNeu->bemerkungen->tsFoerderbemerkungen = $jsonAlt->bemerkungen->tsFoerderbemerkungen;
-					}
-					$updatedData = json_encode($jsonNeu, JSON_UNESCAPED_SLASHES);
-					$update .= "daten='$updatedData' WHERE id=$neu->id and ts=$neu->ts";
-					$this->updateSet('Schueler', $update);
+					$stmt = $this->importUpdateSchuelerGeneratePreparedStatement($alt, $neu);
+					$this->importUpdateSchuelerBindStatementVariables($stmt, $alt, $neu);
+					$this->executeStatement($stmt);
 				}
 			}
+			$this->commitTransaction();
 		}
+
+
+		private function importUpdateLeistungenGeneratePreparedStatement(mixed $alt, mixed $neu) {
+			$sql = "UPDATE Leistungsdaten SET ";
+			if ($alt->tsNote > $neu->tsNote)
+				$sql .= "tsNote=:tsNote,";
+			if ($alt->tsNoteQuartal > $neu->tsNoteQuartal)
+				$sql .= "tsNoteQuartal=:tsNoteQuartal,";
+			if ($alt->tsFehlstundenFach > $neu->tsFehlstundenFach)
+				$sql .= "tsFehlstundenFach=:tsFehlstundenFach,";
+			if ($alt->tsFehlstundenUnentschuldigtFach > $neu->tsFehlstundenUnentschuldigtFach)
+				$sql .= "tsFehlstundenUnentschuldigtFach=:tsFehlstundenUnentschuldigtFach,";
+			if ($alt->tsFachbezogeneBemerkungen > $neu->tsFachbezogeneBemerkungen)
+				$sql .= "tsFachbezogeneBemerkungen=:tsFachbezogeneBemerkungen,";
+			if ($alt->tsIstGemahnt > $neu->tsIstGemahnt)
+				$sql .= "tsIstGemahnt=:tsIstGemahnt,";
+			$sql .= "daten=:daten WHERE id=:id and ts=:ts";
+			return $this->prepareStatement($sql);
+		}
+
+
+		private function importUpdateLeistungenBindStatementVariables(PDOStatement $stmt, mixed $alt, mixed $neu): void {
+			$jsonAlt = json_decode($alt->daten);
+			$jsonNeu = json_decode($neu->daten);
+			if ($alt->tsNote > $neu->tsNote) {
+				$this->bindStatementValue($stmt, ":tsNote", $alt->tsNote, PDO::PARAM_STR);
+				$jsonNeu->note = $jsonAlt->note;
+				$jsonNeu->tsNote = $jsonAlt->tsNote;
+			}
+			if ($alt->tsNoteQuartal > $neu->tsNoteQuartal) {
+				$this->bindStatementValue($stmt, ":tsNoteQuartal", $alt->tsNoteQuartal, PDO::PARAM_STR);
+				$jsonNeu->noteQuartal = $jsonAlt->noteQuartal;
+				$jsonNeu->tsNoteQuartal = $jsonAlt->tsNoteQuartal;
+			}
+			if ($alt->tsFehlstundenFach > $neu->tsFehlstundenFach) {
+				$this->bindStatementValue($stmt, ":tsFehlstundenFach", $alt->tsFehlstundenFach, PDO::PARAM_STR);
+				$jsonNeu->fehlstundenFach = $jsonAlt->fehlstundenFach;
+				$jsonNeu->tsFehlstundenFach = $jsonAlt->tsFehlstundenFach;
+			}
+			if ($alt->tsFehlstundenUnentschuldigtFach > $neu->tsFehlstundenUnentschuldigtFach) {
+				$this->bindStatementValue($stmt, ":tsFehlstundenUnentschuldigtFach", $alt->tsFehlstundenUnentschuldigtFach, PDO::PARAM_STR);
+				$jsonNeu->fehlstundenUnentschuldigtFach = $jsonAlt->fehlstundenUnentschuldigtFach;
+				$jsonNeu->tsFehlstundenUnentschuldigtFach = $jsonAlt->tsFehlstundenUnentschuldigtFach;
+			}
+			if ($alt->tsFachbezogeneBemerkungen > $neu->tsFachbezogeneBemerkungen) {
+				$this->bindStatementValue($stmt, ":tsFachbezogeneBemerkungen", $alt->tsFachbezogeneBemerkungen, PDO::PARAM_STR);
+				$jsonNeu->fachbezogeneBemerkungen = $jsonAlt->fachbezogeneBemerkungen;
+				$jsonNeu->tsFachbezogeneBemerkungen = $jsonAlt->tsFachbezogeneBemerkungen;
+			}
+			if ($alt->tsIstGemahnt > $neu->tsIstGemahnt) {
+				$this->bindStatementValue($stmt, ":tsIstGemahnt", $alt->tsIstGemahnt, PDO::PARAM_STR);
+				$jsonNeu->istGemahnt = $jsonAlt->istGemahnt;
+				$jsonNeu->tsIstGemahnt = $jsonAlt->tsIstGemahnt;
+			}
+			$this->bindStatementValue($stmt, ":daten", json_encode($jsonNeu, JSON_UNESCAPED_SLASHES), PDO::PARAM_STR);
+			$this->bindStatementValue($stmt, ":id", $neu->id, PDO::PARAM_INT);
+			$this->bindStatementValue($stmt, ":ts", $neu->ts, PDO::PARAM_INT);
+		}
+
 
 		/**
 		 * Erstellt einen Abgleich von vorherigen Einträgen zu den Einträgen mit dem angegebenen Zeitstempel.
@@ -570,10 +647,11 @@
 				$mapOld[$row->id] = $row;
 				$idsArray[] = $row->id;
 			}
-			if (count($idsArray) <= 0)
+			if (empty($idsArray))
 				return;
 			$ids = implode(",", $idsArray);
 			// Lese dann alle dazugehörigen Daten mit neuem Zeitstempel ein
+			$this->beginTransaction();
 			$diffsNeu = $this->queryAllOrExit500("SELECT * FROM Leistungsdaten WHERE ts = $ts AND id IN ($ids)", "Fehler Lesen der neuen Leistungsdaten");
 			foreach ($diffsNeu as $neu) {
 				$alt = $mapOld[$neu->id];
@@ -583,45 +661,57 @@
 					|| ($alt->tsFachbezogeneBemerkungen > $neu->tsFachbezogeneBemerkungen)
 					|| ($alt->tsIstGemahnt > $neu->tsIstGemahnt));
 				if ($needUpdate > 0) {
-					$jsonAlt = json_decode($alt->daten);
-					$jsonNeu = json_decode($neu->daten);
-					$update = "";
-					if ($alt->tsNote > $neu->tsNote) {
-						$update .= "tsNote='$alt->tsNote',";
-						$jsonNeu->note = $jsonAlt->note;
-						$jsonNeu->tsNote = $jsonAlt->tsNote;
-					}
-					if ($alt->tsNoteQuartal > $neu->tsNoteQuartal) {
-						$update .= "tsNoteQuartal='$alt->tsNoteQuartal',";
-						$jsonNeu->noteQuartal = $jsonAlt->noteQuartal;
-						$jsonNeu->tsNoteQuartal = $jsonAlt->tsNoteQuartal;
-					}
-					if ($alt->tsFehlstundenFach > $neu->tsFehlstundenFach) {
-						$update .= "tsFehlstundenFach='$alt->tsFehlstundenFach',";
-						$jsonNeu->fehlstundenFach = $jsonAlt->fehlstundenFach;
-						$jsonNeu->tsFehlstundenFach = $jsonAlt->tsFehlstundenFach;
-					}
-					if ($alt->tsFehlstundenUnentschuldigtFach > $neu->tsFehlstundenUnentschuldigtFach) {
-						$update .= "tsFehlstundenUnentschuldigtFach='$alt->tsFehlstundenUnentschuldigtFach',";
-						$jsonNeu->fehlstundenUnentschuldigtFach = $jsonAlt->fehlstundenUnentschuldigtFach;
-						$jsonNeu->tsFehlstundenUnentschuldigtFach = $jsonAlt->tsFehlstundenUnentschuldigtFach;
-					}
-					if ($alt->tsFachbezogeneBemerkungen > $neu->tsFachbezogeneBemerkungen) {
-						$update .= "tsFachbezogeneBemerkungen='$alt->tsFachbezogeneBemerkungen',";
-						$jsonNeu->fachbezogeneBemerkungen = $jsonAlt->fachbezogeneBemerkungen;
-						$jsonNeu->tsFachbezogeneBemerkungen = $jsonAlt->tsFachbezogeneBemerkungen;
-					}
-					if ($alt->tsIstGemahnt > $neu->tsIstGemahnt) {
-						$update .= "tsIstGemahnt='$alt->tsIstGemahnt',";
-						$jsonNeu->istGemahnt = $jsonAlt->istGemahnt;
-						$jsonNeu->tsIstGemahnt = $jsonAlt->tsIstGemahnt;
-					}
-					$updatedData = json_encode($jsonNeu, JSON_UNESCAPED_SLASHES);
-					$update .= "daten='$updatedData' WHERE id=$neu->id and ts=$neu->ts";
-					$this->updateSet('Leistungsdaten', $update);
+					$stmt = $this->importUpdateLeistungenGeneratePreparedStatement($alt, $neu);
+					$this->importUpdateLeistungenBindStatementVariables($stmt, $alt, $neu);
+					$this->executeStatement($stmt);
 				}
 			}
+			$this->commitTransaction();
 		}
+
+		private function importUpdateTeilleistungenGeneratePreparedStatement(mixed $alt, mixed $neu): PDOStatement {
+			$sql = "UPDATE Teilleistungen SET ";
+			if ($alt->tsArtID > $neu->tsArtID)
+				$sql .= "tsArtID=:tsArtID,";
+			if ($alt->tsDatum > $neu->tsDatum)
+				$sql .= "tsDatum=:tsDatum,";
+			if ($alt->tsBemerkung > $neu->tsBemerkung)
+				$sql .= "tsBemerkung=:tsBemerkung,";
+			if ($alt->tsNote > $neu->tsNote)
+				$sql .= "tsNote=:tsNote,";
+			$sql .= "daten=:daten WHERE id=:id and ts=:ts";
+			return $this->prepareStatement($sql);
+		}
+
+
+		private function importUpdateTeilleistungenBindStatementVariables(PDOStatement $stmt, mixed $alt, mixed $neu): void {
+			$jsonAlt = json_decode($alt->daten);
+			$jsonNeu = json_decode($neu->daten);
+			if ($alt->tsArtID > $neu->tsArtID) {
+				$this->bindStatementValue($stmt, ":tsArtID", $alt->tsArtID, PDO::PARAM_STR);
+				$jsonNeu->artID = $jsonAlt->artID;
+				$jsonNeu->tsArtID = $jsonAlt->tsArtID;
+			}
+			if ($alt->tsDatum > $neu->tsDatum) {
+				$this->bindStatementValue($stmt, ":tsDatum", $alt->tsDatum, PDO::PARAM_STR);
+				$jsonNeu->datum = $jsonAlt->datum;
+				$jsonNeu->tsDatum = $jsonAlt->tsDatum;
+			}
+			if ($alt->tsBemerkung > $neu->tsBemerkung) {
+				$this->bindStatementValue($stmt, ":tsBemerkung", $alt->tsBemerkung, PDO::PARAM_STR);
+				$jsonNeu->bemerkung = $jsonAlt->bemerkung;
+				$jsonNeu->tsBemerkung = $jsonAlt->tsBemerkung;
+			}
+			if ($alt->tsNote > $neu->tsNote) {
+				$this->bindStatementValue($stmt, ":tsNote", $alt->tsNote, PDO::PARAM_STR);
+				$jsonNeu->note = $jsonAlt->note;
+				$jsonNeu->tsNote = $jsonAlt->tsNote;
+			}
+			$this->bindStatementValue($stmt, ":daten", json_encode($jsonNeu, JSON_UNESCAPED_SLASHES), PDO::PARAM_STR);
+			$this->bindStatementValue($stmt, ":id", $neu->id, PDO::PARAM_INT);
+			$this->bindStatementValue($stmt, ":ts", $neu->ts, PDO::PARAM_INT);
+		}
+
 
 		/**
 		 * Erstellt einen Abgleich von vorherigen Einträgen zu den Einträgen mit dem angegebenen Zeitstempel.
@@ -642,43 +732,22 @@
 				$mapOld[$row->id] = $row;
 				$idsArray[] = $row->id;
 			}
-			if (count($idsArray) <= 0)
+			if (empty($idsArray))
 				return;
 			$ids = implode(",", $idsArray);
 			// Lese dann alle dazugehörigen Daten mit neuem Zeitstempel ein
+			$this->beginTransaction();
 			$diffsNeu = $this->queryAllOrExit500("SELECT * FROM Teilleistungen WHERE ts = $ts AND id IN ($ids)", "Fehler Lesen der neuen Teilleistungen");
 			foreach ($diffsNeu as $neu) {
 				$alt = $mapOld[$neu->id];
 				$needUpdate = ($alt->tsArtID > $neu->tsArtID) || ($alt->tsDatum > $neu->tsDatum) || ($alt->tsBemerkung > $neu->tsBemerkung) || ($alt->tsNote > $neu->tsNote);
 				if ($needUpdate > 0) {
-					$jsonAlt = json_decode($alt->daten);
-					$jsonNeu = json_decode($neu->daten);
-					$update = "";
-					if ($alt->tsArtID > $neu->tsArtID) {
-						$update .= "tsArtID='$alt->tsArtID',";
-						$jsonNeu->artID = $jsonAlt->artID;
-						$jsonNeu->tsArtID = $jsonAlt->tsArtID;
-					}
-					if ($alt->tsDatum > $neu->tsDatum) {
-						$update .= "tsDatum='$alt->tsDatum',";
-						$jsonNeu->datum = $jsonAlt->datum;
-						$jsonNeu->tsDatum = $jsonAlt->tsDatum;
-					}
-					if ($alt->tsBemerkung > $neu->tsBemerkung) {
-						$update .= "tsBemerkung='$alt->tsBemerkung',";
-						$jsonNeu->bemerkung = $jsonAlt->bemerkung;
-						$jsonNeu->tsBemerkung = $jsonAlt->tsBemerkung;
-					}
-					if ($alt->tsNote > $neu->tsNote) {
-						$update .= "tsNote='$alt->tsNote',";
-						$jsonNeu->note = $jsonAlt->note;
-						$jsonNeu->tsNote = $jsonAlt->tsNote;
-					}
-					$updatedData = json_encode($jsonNeu, JSON_UNESCAPED_SLASHES);
-					$update .= "daten='$updatedData' WHERE id=$neu->id and ts=$neu->ts";
-					$this->updateSet('Teilleistungen', $update);
+					$stmt = $this->importUpdateTeilleistungenGeneratePreparedStatement($alt, $neu);
+					$this->importUpdateTeilleistungenBindStatementVariables($stmt, $alt, $neu);
+					$this->executeStatement($stmt);
 				}
 			}
+			$this->commitTransaction();
 		}
 
 		/**
@@ -700,10 +769,13 @@
 				$mapOld[$row->id] = $row;
 				$idsArray[] = $row->id;
 			}
-			if (count($idsArray) <= 0)
+			if (empty($idsArray))
 				return;
 			$ids = implode(",", $idsArray);
 			// Lese dann alle dazugehörigen Daten mit neuem Zeitstempel ein
+			$this->beginTransaction();
+			$sql = "UPDATE Ankreuzkompetenzen SET tsStufe=:tsStufe, daten=:daten WHERE id=:id AND ts=:ts";
+			$stmt = $this->prepareStatement($sql);
 			$diffsNeu = $this->queryAllOrExit500("SELECT * FROM Ankreuzkompetenzen WHERE ts = $ts AND id IN ($ids)", "Fehler Lesen der neuen Ankreuzkompetenzen beim Schüler");
 			foreach ($diffsNeu as $neu) {
 				$alt = $mapOld[$neu->id];
@@ -711,14 +783,16 @@
 				if ($needUpdate > 0) {
 					$jsonAlt = json_decode($alt->daten);
 					$jsonNeu = json_decode($neu->daten);
-					$update = "tsStufe='$alt->tsStufe',";
+					$this->bindStatementValue($stmt, ":tsStufe", $alt->tsStufe, PDO::PARAM_STR);
 					$jsonNeu->stufen = $jsonAlt->stufen;
 					$jsonNeu->tsStufe = $jsonAlt->tsStufe;
-					$updatedData = json_encode($jsonNeu, JSON_UNESCAPED_SLASHES);
-					$update .= "daten='$updatedData' WHERE id=$neu->id and ts=$neu->ts";
-					$this->updateSet('Ankreuzkompetenzen', $update);
+					$this->bindStatementValue($stmt, ":daten", json_encode($jsonNeu, JSON_UNESCAPED_SLASHES), PDO::PARAM_STR);
+					$this->bindStatementValue($stmt, ":id", $neu->id, PDO::PARAM_INT);
+					$this->bindStatementValue($stmt, ":ts", $neu->ts, PDO::PARAM_INT);
+					$this->executeStatement($stmt);
 				}
 			}
+			$this->commitTransaction();
 		}
 
 		/**
@@ -740,10 +814,13 @@
 				$mapOld[$row->id] = $row;
 				$idsArray[] = $row->id;
 			}
-			if (count($idsArray) <= 0)
+			if (empty($idsArray))
 				return;
 			$ids = implode(",", $idsArray);
 			// Lese dann alle dazugehörigen Daten mit neuem Zeitstempel ein
+			$this->beginTransaction();
+			$sql = "UPDATE Lehrer SET passwordHash=:passwordHash,tsPasswordHash=:tsPasswordHash,daten=:daten WHERE id=:id AND ts=:ts";
+			$stmt = $this->prepareStatement($sql);
 			$diffsNeu = $this->queryAllOrExit500("SELECT * FROM Lehrer WHERE ts = $ts AND id IN ($ids)", "Fehler Lesen der neuen Lehrerdaten");
 			foreach ($diffsNeu as $neu) {
 				$alt = $mapOld[$neu->id];
@@ -751,14 +828,17 @@
 				if ($needUpdate > 0) {
 					$jsonAlt = json_decode($alt->daten);
 					$jsonNeu = json_decode($neu->daten);
-					$update = "passwordHash='$alt->passwordHash', tsPasswordHash='$alt->tsPasswordHash',";
+					$this->bindStatementValue($stmt, ":passwordHash", $alt->passwordHash, PDO::PARAM_STR);
+					$this->bindStatementValue($stmt, ":tsPasswordHash", $alt->tsPasswordHash, PDO::PARAM_STR);
 					$jsonNeu->passwordHash = $jsonAlt->passwordHash;
 					$jsonNeu->tsPasswordHash = $jsonAlt->tsPasswordHash;
-					$updatedData = json_encode($jsonNeu, JSON_UNESCAPED_SLASHES);
-					$update .= "daten='$updatedData' WHERE id=$neu->id and ts=$neu->ts";
-					$this->updateSet('Lehrer', $update);
+					$this->bindStatementValue($stmt, ":daten", json_encode($jsonNeu, JSON_UNESCAPED_SLASHES), PDO::PARAM_STR);
+					$this->bindStatementValue($stmt, ":id", $neu->id, PDO::PARAM_INT);
+					$this->bindStatementValue($stmt, ":ts", $neu->ts, PDO::PARAM_INT);
+					$this->executeStatement($stmt);
 				}
 			}
+			$this->commitTransaction();
 		}
 
 		/**
@@ -1318,17 +1398,16 @@
 		 * @param object $patch   der Patch für die Daten
 		 */
 		public function patchENMLehrerPassword(string $ts, object $daten, object $patch): void {
-			$update = "";
 			if (property_exists($patch, 'passwordHash') && $this->diffStringNullable($patch->passwordHash, $daten->passwordHash) && ($ts > $daten->tsPasswordHash)) {
-				$update .= "tsPasswordHash='$ts',";
-				$update .= "passwordHash='$patch->passwordHash',";
+				$sql = "UPDATE Lehrer SET passwordHash=:passwordHash,tsPasswordHash=:tsPasswordHash,daten=:daten WHERE id=:id";
+				$stmt = $this->prepareStatement($sql);
+				$this->bindStatementValue($stmt, ":passwordHash", $patch->passwordHash, PDO::PARAM_STR);
+				$this->bindStatementValue($stmt, ":tsPasswordHash", $ts, PDO::PARAM_STR);
 				$daten->passwordHash = $patch->passwordHash;
 				$daten->tsPasswordHash = $ts;
-			}
-			if (strlen($update) > 0) {
-				$updatedData = json_encode($daten, JSON_UNESCAPED_SLASHES);
-				$update .= "daten='$updatedData' WHERE id='$patch->id'";
-				$this->updateSet('Lehrer', $update);
+				$this->bindStatementValue($stmt, ":daten", json_encode($daten, JSON_UNESCAPED_SLASHES), PDO::PARAM_STR);
+				$this->bindStatementValue($stmt, ":id", $patch->id, PDO::PARAM_INT);
+				$this->executeStatement($stmt);
 			}
 		}
 
