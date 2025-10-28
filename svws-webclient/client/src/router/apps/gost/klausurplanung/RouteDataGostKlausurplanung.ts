@@ -185,7 +185,7 @@ export class RouteDataGostKlausurplanung extends RouteData<RouteStateGostKlausur
 			}
 			this.setPatchedState(result);
 			if (!this.manager.hasFehlenddatenZuAbijahrUndHalbjahr(this.abiturjahr, this._state.value.halbjahr)) {
-				void this.reloadFehlendData();
+				this.reloadFehlendData();
 			}
 			return true;
 		} finally {
@@ -236,12 +236,13 @@ export class RouteDataGostKlausurplanung extends RouteData<RouteStateGostKlausur
 		},
 	});
 
-	reloadFehlendData = async () => {
-		const fehlendDataGzip = await api.server.getGostKlausurenCollectionAllIssuesGZip(api.schema, this.abiturjahr, this._state.value.halbjahr.id);
-		const fehlendDataBlob = await new Response(fehlendDataGzip.data.stream().pipeThrough(new DecompressionStream("gzip"))).blob();
-		const fehlendData = GostKlausurenCollectionHjData.transpilerFromJSON(await fehlendDataBlob.text());
-		this.manager.setKlausurDataFehlend(fehlendData);
-		this.commit();
+	reloadFehlendData = () => {
+		api.server.getGostKlausurenCollectionAllIssuesGZip(api.schema, this.abiturjahr, this._state.value.halbjahr.id).then(async (fehlendDataGzip) => {
+			const fehlendDataBlob = await new Response(fehlendDataGzip.data.stream().pipeThrough(new DecompressionStream("gzip"))).blob();
+			const fehlendData = GostKlausurenCollectionHjData.transpilerFromJSON(await fehlendDataBlob.text());
+			this.manager.setKlausurDataFehlend(fehlendData);
+			this.commit();
+		});
 	};
 
 	kalenderdatum = computed<string | undefined>({
@@ -348,6 +349,7 @@ export class RouteDataGostKlausurplanung extends RouteData<RouteStateGostKlausur
 		else
 			klausListe.addAll(klausuren);
 		this.manager.kursklausurRemoveAll(klausListe);
+		this.reloadFehlendData();
 		this.commit();
 		api.status.stop();
 	};
@@ -406,7 +408,7 @@ export class RouteDataGostKlausurplanung extends RouteData<RouteStateGostKlausur
 		try {
 			const neueVorgabe = await api.server.createGostKlausurenVorgabe(vorgabe, api.schema);
 			this.manager.vorgabeAdd(neueVorgabe);
-			void this.reloadFehlendData();
+			this.reloadFehlendData();
 		} finally {
 			this.commit();
 			api.status.stop();
@@ -421,10 +423,15 @@ export class RouteDataGostKlausurplanung extends RouteData<RouteStateGostKlausur
 		api.status.stop();
 	};
 
-	loescheKlausurvorgabe = async (id: number) => {
+	loescheKlausurvorgaben = async (vorgaben: List<GostKlausurvorgabe>) => {
 		api.status.start();
-		await api.server.deleteGostKlausurenVorgabe(api.schema, id);
-		this.manager.vorgabeRemoveById(id);
+		const vorgabeIds = new ArrayList<number>();
+		for (const vorgabe of vorgaben)
+			vorgabeIds.add(vorgabe.id);
+		await api.server.deleteGostKlausurenVorgabenMultiple(vorgabeIds, api.schema);
+		this.manager.vorgabeRemoveAll(vorgaben);
+		vorgaben.clear();
+		this.reloadFehlendData();
 		this.commit();
 		api.status.stop();
 	};
@@ -459,7 +466,7 @@ export class RouteDataGostKlausurplanung extends RouteData<RouteStateGostKlausur
 		api.status.start();
 		const listKlausurvorgaben = await api.server.copyGostKlausurenVorgaben(api.schema, this.abiturjahr, this.halbjahr.id, quartal);
 		this.manager.vorgabeAddAll(listKlausurvorgaben);
-		void this.reloadFehlendData();
+		this.reloadFehlendData();
 		this.commit();
 		api.status.stop();
 	};

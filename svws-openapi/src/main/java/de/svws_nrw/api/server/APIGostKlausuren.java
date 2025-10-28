@@ -188,6 +188,37 @@ public class APIGostKlausuren {
 	}
 
 	/**
+	 * Die OpenAPI-Methode für das Löschen einer {@link GostKlausurvorgabe}.
+	 *
+	 * @param schema     das Datenbankschema, in welchem die {@link GostKlausurvorgabe} gelöscht wird
+	 * @param request    die Informationen zur HTTP-Anfrage
+	 * @param ids	     die IDs der zu löschenden Klausurvorgaben
+	 *
+	 * @return die HTTP-Antwort
+	 */
+	@DELETE
+	@Path("/vorgaben/delete/multiple")
+	@Operation(summary = "Löscht eine Gost-Klausurvorgabe.", description = "Löscht eine Gost-Klausurvorgabe."
+			+ "Dabei wird geprüft, ob der SVWS-Benutzer die notwendige Berechtigung zum Löschen einer Gost-Klausurvorgabe besitzt.")
+	@ApiResponse(responseCode = "200", description = "Die Einträge wurden erfolgreich gelöscht.",
+			content = @Content(mediaType = MediaType.APPLICATION_JSON,
+					array = @ArraySchema(schema = @Schema(implementation = Long.class))))
+	@ApiResponse(responseCode = "403", description = "Der SVWS-Benutzer hat keine Rechte, um eine Gost-Klausurvorgabe zu löschen.")
+	@ApiResponse(responseCode = "404", description = "Die Gost-Klausurvorgabe wurde nicht gefunden.")
+	@ApiResponse(responseCode = "500", description = "Unspezifizierter Fehler (z.B. beim Datenbankzugriff)")
+	public Response deleteGostKlausurenVorgabenMultiple(
+			@PathParam("schema") final String schema,
+			@RequestBody(description = "Die IDs der zu löschenden UV-Stundentafel-Fächer", required = true,
+					content = @Content(mediaType = MediaType.APPLICATION_JSON,
+							array = @ArraySchema(schema = @Schema(implementation = Long.class)))) final List<Long> ids,
+			@Context final HttpServletRequest request) {
+		return DBBenutzerUtils.runWithTransaction(conn -> new DataGostKlausurenVorgabe(conn).deleteMultipleAsResponse(ids),
+				request,
+				ServerMode.STABLE,
+				BenutzerKompetenz.OBERSTUFE_KLAUSURPLANUNG_AENDERN);
+	}
+
+	/**
 	 * Kopiert die {@link GostKlausurvorgabe}-Vorlagen in einen konkreten Abiturjahrgang und gibt sie zurück.
 	 *
 	 * @param schema       das Datenbankschema, in welchem die {@link GostKlausurvorgabe}n erstellt werden

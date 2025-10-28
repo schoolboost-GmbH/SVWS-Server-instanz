@@ -117,11 +117,21 @@ public final class DataGostKlausurenSchuelerklausurTermin
 			throws ApiOperationException {
 		switch (name) {
 			case "idSchuelerklausur" -> dto.Schuelerklausur_ID = JSONMapper.convertToLong(value, false);
-			case "idTermin" -> dto.Termin_ID = JSONMapper.convertToLong(value, true);
+			case "idTermin" -> {
+				final long terminNeu = JSONMapper.convertToLong(value, true);
+				if (dto.Termin_ID != terminNeu) {
+					dto.Termin_ID = JSONMapper.convertToLong(value, true);
+					raumDataChanged =
+							new DataGostKlausurenSchuelerklausurraumstunde(conn).loescheRaumZuSchuelerklausurenTransaction(ListUtils.create1(map(dto)));
+				}
+			}
 			case "folgeNr" -> dto.Folge_Nr = JSONMapper.convertToInteger(value, false);
 			case "startzeit" -> {
-				dto.Startzeit = JSONMapper.convertToIntegerInRange(value, true, 0, 1440);
-				raumDataChanged = new DataGostKlausurenSchuelerklausurraumstunde(conn).updateRaeumeZuSchuelerklausurterminen(ListUtils.create1(map(dto)));
+				final int startzeitNeu = JSONMapper.convertToIntegerInRange(value, true, 0, 1440);
+				if (dto.Startzeit != startzeitNeu) {
+					dto.Startzeit = startzeitNeu;
+					raumDataChanged = new DataGostKlausurenSchuelerklausurraumstunde(conn).updateRaeumeZuSchuelerklausurterminen(ListUtils.create1(map(dto)));
+				}
 			}
 			case "bemerkung" -> dto.Bemerkungen =
 					DataGostKlausuren.convertEmptyStringToNull(JSONMapper.convertToString(value, true, true, Schema.tab_Gost_Klausuren_Schuelerklausuren_Termine.col_Bemerkungen.datenlaenge()));

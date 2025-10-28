@@ -335,8 +335,8 @@ public final class DataGostKlausurenSchuelerklausurraumstunde
 			skts.addAll(new DataGostKlausurenSchuelerklausurTermin(conn).getSchuelerklausurtermineZuSchuelerklausurterminids(raum.schuelerklausurterminIDs));
 		final GostKlausurtermin termin = manager.terminGetByIdOrException(raum.klausurraum.idTermin);
 
-		int minStart = manager.minKlausurstartzeitBySchuelerklausurterminMenge(skts, true);
-		int maxEnd = manager.maxKlausurendzeitBySchuelerklausurterminMenge(skts, true);
+		final int minStart = manager.minKlausurstartzeitBySchuelerklausurterminMenge(skts, true);
+		final int maxEnd = manager.maxKlausurendzeitBySchuelerklausurterminMenge(skts, true);
 
 		final LocalDate klausurdatum = LocalDate.parse(termin.datum);
 

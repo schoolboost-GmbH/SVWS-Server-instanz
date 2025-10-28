@@ -10,6 +10,10 @@
 			<div class="text-headline-md">Klausurvorgaben</div>
 			<svws-ui-table scroll id="vorgabenTable" :items="vorgaben()" :columns="cols" v-model:clicked="selectedVorgabeRow" :clickable="hatKompetenzUpdate" @click="startEdit" :no-data="vorgaben().isEmpty()"
 				:no-data-text="'Keine ' + (jahrgangsdaten?.abiturjahr === -1 ? 'Vorlagen für ' : '') + 'Klausurvorgaben für das ' + (quartalsauswahl.value !== 0 ? quartalsauswahl.value + '. Quartal im' : '') + ' Halbjahr ' + halbjahr.kuerzel + ' vorhanden.'">
+				<template #cell(checkBox)="{ rowData }">
+					<svws-ui-checkbox :title="kMan().istVorgabeVerwendetByKursklausur(rowData) ? 'Vorgabe wird in einer Kursklausur verwendet und kann nicht gelöscht werden.' : ''"
+									  :disabled="kMan().istVorgabeVerwendetByKursklausur(rowData)" :model-value="selected.contains(rowData)" @update:model-value="e => e ? selected.add(rowData) : selected.remove(rowData)" />
+				</template>
 				<template #cell(idFach)="{ value }">
 					<span class="svws-ui-badge" :style="`color: var(--color-text-uistatic); background-color: ${getBgColor(kMan().getFaecherManager(jahrgangsdaten!.abiturjahr).get(value)?.kuerzel || null)}`">{{ kMan().getFaecherManager(jahrgangsdaten!.abiturjahr).get(value)?.bezeichnung }}</span>
 				</template>
@@ -41,6 +45,7 @@
 				<template #actions>
 					<svws-ui-button type="transparent" :disabled="!hatKompetenzUpdate" @click="erzeugeVorgabenAusVorlage(quartalsauswahl.value)" v-if="jahrgangsdaten?.abiturjahr !== -1"><span class="icon i-ri-upload-2-line" />Aus Vorlage importieren</svws-ui-button>
 					<svws-ui-button type="transparent" :disabled="!hatKompetenzUpdate" @click="erzeugeDefaultKlausurvorgaben(quartalsauswahl.value)" v-else><span class="icon i-ri-upload-2-line" />Standard-Vorlagen anlegen</svws-ui-button>
+					<svws-ui-button type="trash" :disabled="selected.isEmpty() || !hatKompetenzUpdate" @click="loescheKlausurvorgaben(selected)" />
 					<svws-ui-button type="icon" @click="neueVorgabe" :disabled="!hatKompetenzUpdate || selectedVorgabeRow !== undefined" title="Neue Vorgabe erstellen"><span class="icon i-ri-add-line" /></svws-ui-button>
 				</template>
 			</svws-ui-table>
@@ -49,7 +54,7 @@
 			<div class="flex flex-row justify-between">
 				<span class="text-headline-md">{{ activeVorgabe.id === 0 ? 'Neue Vorgabe erstellen' : (activeVorgabe.id > 0 ? 'Vorgabe bearbeiten' : 'Bearbeiten') }}</span>
 				<template v-if="activeVorgabe.id > 0">
-					<svws-ui-button type="danger" @click="loescheKlausurvorgabe" :disabled="activeVorgabe.id < 0 || activeVorgabe.idFach === -1 || activeVorgabe.kursart === '' || activeVorgabe.quartal === -1 || (kMan().istVorgabeVerwendetByKursklausur(activeVorgabe))"><span class="icon i-ri-delete-bin-line" />Löschen</svws-ui-button>
+					<svws-ui-button type="trash" @click="loescheKlausurvorgabe" :disabled="activeVorgabe.id < 0 || activeVorgabe.idFach === -1 || activeVorgabe.kursart === '' || activeVorgabe.quartal === -1 || (kMan().istVorgabeVerwendetByKursklausur(activeVorgabe))" />
 				</template>
 			</div>
 			<template v-if="activeVorgabe.id < 0">
@@ -109,11 +114,9 @@
 
 <script setup lang="ts">
 
-	import type { Ref, WritableComputedRef } from 'vue';
-	import { computed, ref, onMounted, onUnmounted } from 'vue';
+	import { Ref, watch, WritableComputedRef, computed, ref, onMounted, onUnmounted } from 'vue';
 	import type { DataTableColumn } from "@ui";
-	import type { GostFach } from "@core";
-	import { BenutzerKompetenz, ArrayList, GostKlausurvorgabe, Fach } from "@core";
+	import { BenutzerKompetenz, ArrayList, GostKlausurvorgabe, Fach, GostFach, ListUtils } from "@core";
 	import type { GostKlausurplanungVorgabenProps } from "./SGostKlausurplanungVorgabenProps";
 
 	const props = defineProps<GostKlausurplanungVorgabenProps>();
@@ -124,6 +127,11 @@
 
 	const selectedVorgabeRow = ref<GostKlausurvorgabe>();
 	const activeVorgabe: Ref<GostKlausurvorgabe> = ref(new GostKlausurvorgabe());
+
+	const selected = ref<ArrayList<GostKlausurvorgabe>>(new ArrayList());
+	watch([() => props.jahrgangsdaten, () => props.halbjahr], () => {
+		selected.value.clear();
+	});
 
 	const formKursarten = computed(() => ["GK", "LK"]);
 	const formJaNein = computed(() => [{ key: true, name: "Ja" }, { key: false, name: "Nein" }]);
@@ -140,9 +148,7 @@
 	});
 
 	const faecherSortiert = computed(() => {
-		const f = new ArrayList(props.kMan().getFaecherManager(props.jahrgangsdaten!.abiturjahr).faecher());
-		//		f.sort({ compare: (a: GostFach, b: GostFach) => a.bezeichnung.localeCompare(b.bezeichnung) });
-		return f;
+		return new ArrayList(props.kMan().getFaecherManager(props.jahrgangsdaten!.abiturjahr).faecher());
 	});
 
 	const neueVorgabe = () => {
@@ -165,7 +171,7 @@
 	};
 
 	const loescheKlausurvorgabe = async () => {
-		await props.loescheKlausurvorgabe(activeVorgabe.value.id);
+		await props.loescheKlausurvorgaben(ListUtils.create1(activeVorgabe.value));
 		selectedVorgabeRow.value = undefined;
 		activeVorgabe.value = new GostKlausurvorgabe();
 	};
@@ -198,6 +204,7 @@
 	});
 
 	const cols: DataTableColumn[] = [
+		{ key: 'checkBox', label: '', span: 0, sortable: false },
 		{ key: 'idFach', label: 'Fach', span: 1.25, sortable: true },
 		{ key: 'kursart', label: 'Kursart', span: 0.5, sortable: true },
 		{ key: 'quartal', label: 'Quartal', span: 0.5, sortable: true },

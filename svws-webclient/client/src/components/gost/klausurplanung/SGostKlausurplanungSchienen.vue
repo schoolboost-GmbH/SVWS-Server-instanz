@@ -185,9 +185,17 @@
 <script setup lang="ts">
 
 	import type { GostSchuelerklausurTermin, JavaMapEntry, JavaSet, List } from "@core";
-	import { BenutzerKompetenz } from "@core";
-	import { GostKursklausur, GostKlausurtermin, HashSet, KlausurterminblockungAlgorithmen, GostKlausurterminblockungDaten, KlausurterminblockungModusKursarten, KlausurterminblockungModusQuartale, DateUtils } from "@core";
-	import { computed, ref, onMounted, onUnmounted, shallowRef } from 'vue';
+	import { BenutzerKompetenz,
+		GostKursklausur,
+		GostKlausurtermin,
+		HashSet,
+		KlausurterminblockungAlgorithmen,
+		GostKlausurterminblockungDaten,
+		KlausurterminblockungModusKursarten,
+		KlausurterminblockungModusQuartale,
+		DateUtils
+	} from "@core";
+	import {computed, ref, onMounted, onUnmounted, shallowRef, watch} from 'vue';
 	import type { GostKlausurplanungSchienenProps } from './SGostKlausurplanungSchienenProps';
 	import type { GostKlausurplanungDragData, GostKlausurplanungDropZone } from "./SGostKlausurplanung";
 	import type { DataTableColumn } from "@ui";
@@ -202,6 +210,9 @@
 
 	const dragData = ref<GostKlausurplanungDragData>(undefined);
 	const selected = shallowRef<GostKursklausur[]>([]);
+	watch([() => props.jahrgangsdaten, () => props.halbjahr], () => {
+		selected.value = [];
+	});
 
 	const onDrag = (event: DragEvent | undefined, data: GostKlausurplanungDragData) => {
 		props.terminSelected.value = undefined;

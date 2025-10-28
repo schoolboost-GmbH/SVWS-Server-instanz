@@ -185,7 +185,7 @@ export class GostKlausurplanManager extends JavaObject {
 					if (nameComparison !== 0)
 						return nameComparison;
 				} else
-					if ((sA !== null && sB === null) || (sA === null && sB !== null))
+					if (((sA !== null) && (sB === null)) || ((sA === null) && (sB !== null)))
 						throw new DeveloperNotificationException("Schüler nicht gefunden: " + kA.idSchueler + " oder " + kB.idSchueler)
 			}
 		}
@@ -634,7 +634,7 @@ export class GostKlausurplanManager extends JavaObject {
 		if (!this.stundenplanManagerGeladenByAbschnitt(idSchuljahresabschnitt))
 			throw new DeveloperNotificationException("StundenplanManager für Schuljahresabschnitt " + idSchuljahresabschnitt + " wurde nicht geladen.")
 		const liste: List<StundenplanManager> | null = this._stundenplanmanagermenge_by_schuljahresabschnitt.get(idSchuljahresabschnitt);
-		return liste !== null && !liste.isEmpty();
+		return (liste !== null) && !liste.isEmpty();
 	}
 
 	/**
@@ -646,7 +646,7 @@ export class GostKlausurplanManager extends JavaObject {
 		if (!this.stundenplanManagerGeladenByAbschnitt(idSchuljahresabschnitt))
 			return false;
 		const liste: List<StundenplanManager> | null = this._stundenplanmanagermenge_by_schuljahresabschnitt.get(idSchuljahresabschnitt);
-		return liste !== null && !liste.isEmpty();
+		return (liste !== null) && !liste.isEmpty();
 	}
 
 	/**
@@ -765,9 +765,9 @@ export class GostKlausurplanManager extends JavaObject {
 		if (exactMatch !== null)
 			return exactMatch;
 		const stundenplanManagerList: List<StundenplanManager> | null = this._stundenplanmanagermenge_by_schuljahresabschnitt.get(idSchuljahresabschnitt);
-		if (stundenplanManagerList === null || stundenplanManagerList.isEmpty())
+		if ((stundenplanManagerList === null) || stundenplanManagerList.isEmpty())
 			throw new DeveloperNotificationException(JavaString.format("Kein Stundenplanmanager zu Abschnitt %d gefunden.", idSchuljahresabschnitt))
-		if (stundenplanManagerList.size() === 1 || JavaString.compareTo(stundenplanManagerList.getFirst().getGueltigAb(), datum) > 0)
+		if ((stundenplanManagerList.size() === 1) || (JavaString.compareTo(stundenplanManagerList.getFirst().getGueltigAb(), datum) > 0))
 			return stundenplanManagerList.getFirst();
 		if (JavaString.compareTo(stundenplanManagerList.getLast().getGueltigBis(), datum) < 0)
 			return stundenplanManagerList.getLast();
@@ -790,9 +790,9 @@ export class GostKlausurplanManager extends JavaObject {
 		if (exactMatch !== null)
 			return exactMatch;
 		const stundenplanManagerList: List<StundenplanManager> | null = this._stundenplanmanagermenge_by_schuljahresabschnitt.get(idSchuljahresabschnitt);
-		if (stundenplanManagerList === null || stundenplanManagerList.isEmpty())
+		if ((stundenplanManagerList === null) || stundenplanManagerList.isEmpty())
 			return null;
-		if (stundenplanManagerList.size() === 1 && JavaString.compareTo(stundenplanManagerList.getFirst().getGueltigBis(), datum) < 0)
+		if ((stundenplanManagerList.size() === 1) && (JavaString.compareTo(stundenplanManagerList.getFirst().getGueltigBis(), datum) < 0))
 			return stundenplanManagerList.getFirst();
 		let lastManager: StundenplanManager | null = null;
 		for (const manager of stundenplanManagerList) {
@@ -833,9 +833,9 @@ export class GostKlausurplanManager extends JavaObject {
 		if (exactMatch !== null)
 			return exactMatch;
 		const stundenplanManagerList: List<StundenplanManager> | null = this._stundenplanmanagermenge_by_schuljahresabschnitt.get(idSchuljahresabschnitt);
-		if (stundenplanManagerList === null || stundenplanManagerList.isEmpty())
+		if ((stundenplanManagerList === null) || stundenplanManagerList.isEmpty())
 			return null;
-		if (stundenplanManagerList.size() === 1 && JavaString.compareTo(stundenplanManagerList.getFirst().getGueltigAb(), datum) > 0)
+		if ((stundenplanManagerList.size() === 1) && (JavaString.compareTo(stundenplanManagerList.getFirst().getGueltigAb(), datum) > 0))
 			return stundenplanManagerList.getFirst();
 		for (const manager of stundenplanManagerList) {
 			if (JavaString.compareTo(manager.getGueltigAb(), datum) > 0)
@@ -893,7 +893,7 @@ export class GostKlausurplanManager extends JavaObject {
 
 	private stundenplanManagerGetByDatumLinearSearch(datum: string): StundenplanManager {
 		for (const stundenplanManager of this._stundenplanmanager_by_schuljahresabschnitt_and_datum.getNonNullValuesAsList())
-			if (stundenplanManager !== null && JavaString.compareTo(stundenplanManager.getGueltigAb(), datum) <= 0 && JavaString.compareTo(stundenplanManager.getGueltigBis(), datum) >= 0)
+			if ((stundenplanManager !== null) && (JavaString.compareTo(stundenplanManager.getGueltigAb(), datum) <= 0) && (JavaString.compareTo(stundenplanManager.getGueltigBis(), datum) >= 0))
 				return stundenplanManager;
 		throw new DeveloperNotificationException(JavaString.format("Kein Stundenplan zu Datum %s gefunden.", datum))
 	}
@@ -961,7 +961,7 @@ export class GostKlausurplanManager extends JavaObject {
 	public getMissingHjKlausurdata(abiturjahr: number, halbjahr: number): List<GostKlausurenCollectionHjData> {
 		const jahrgaenge: List<GostKlausurenCollectionHjData> = new ArrayList<GostKlausurenCollectionHjData>();
 		const abijahreAngefordert: JavaSet<number> = new HashSet<number>();
-		const hjStart: number = (halbjahr % 2 === 0) ? halbjahr : halbjahr - 1;
+		const hjStart: number = ((halbjahr % 2) === 0) ? halbjahr : (halbjahr - 1);
 		this.addSchuljahresPaare(jahrgaenge, abiturjahr, hjStart, abijahreAngefordert);
 		switch (halbjahr) {
 			case 0:
@@ -1083,7 +1083,7 @@ export class GostKlausurplanManager extends JavaObject {
 		this._schuelerklausurterminaktuell_by_idSchuelerklausur.clear();
 		for (const skt of this._schuelerklausurterminmenge) {
 			const sktMaxFolgenummer: GostSchuelerklausurTermin | null = this._schuelerklausurterminaktuell_by_idSchuelerklausur.get(skt.idSchuelerklausur);
-			if (sktMaxFolgenummer === null || sktMaxFolgenummer.folgeNr < skt.folgeNr)
+			if ((sktMaxFolgenummer === null) || (sktMaxFolgenummer.folgeNr < skt.folgeNr))
 				this._schuelerklausurterminaktuell_by_idSchuelerklausur.put(skt.idSchuelerklausur, skt);
 		}
 	}
@@ -1216,7 +1216,7 @@ export class GostKlausurplanManager extends JavaObject {
 			const termin: GostKlausurtermin | null = this.terminOrNullBySchuelerklausurTermin(k);
 			if (termin !== null) {
 				const raumstunden: List<GostKlausurraumstunde> | null = this._raumstundenmenge_by_idSchuelerklausurtermin.get(k.id);
-				this._schuelerklausurterminaktuellmenge_by_idRaum_and_idTermin.add(((raumstunden === null) || raumstunden.isEmpty()) ? -1 : raumstunden.get(0).idRaum, termin.id, k);
+				this._schuelerklausurterminaktuellmenge_by_idRaum_and_idTermin.add(((raumstunden === null) || raumstunden.isEmpty()) ? -1 : raumstunden.getFirst().idRaum, termin.id, k);
 			}
 		}
 	}
@@ -1225,7 +1225,7 @@ export class GostKlausurplanManager extends JavaObject {
 		this._schuelerklausurterminaktuellmenge_by_idRaum_and_idKursklausur = new ListMap2DLongKeys();
 		for (const k of this._schuelerklausurterminaktuellmenge) {
 			const raumstunden: List<GostKlausurraumstunde> | null = this._raumstundenmenge_by_idSchuelerklausurtermin.get(k.id);
-			this._schuelerklausurterminaktuellmenge_by_idRaum_and_idKursklausur.add(((raumstunden === null) || raumstunden.isEmpty()) ? -1 : raumstunden.get(0).idRaum, this.kursklausurBySchuelerklausurTermin(k).id, k);
+			this._schuelerklausurterminaktuellmenge_by_idRaum_and_idKursklausur.add(((raumstunden === null) || raumstunden.isEmpty()) ? -1 : raumstunden.getFirst().idRaum, this.kursklausurBySchuelerklausurTermin(k).id, k);
 		}
 	}
 
@@ -1326,7 +1326,6 @@ export class GostKlausurplanManager extends JavaObject {
 		const vorgabe: GostKlausurvorgabe = DeveloperNotificationException.ifMapRemoveFailes(this._vorgabe_by_id, idVorgabe);
 		this._kursklausurfehlend_by_abijahr_and_halbjahr_and_quartal_and_idVorgabe_and_idKurs.removeMap4(vorgabe.abiJahrgang, vorgabe.halbjahr, vorgabe.quartal, vorgabe.id);
 		vorgabe.id = -1;
-		this.vorgabefehlendAddAllOhneUpdate(ListUtils.create1(vorgabe));
 	}
 
 	/**
@@ -2995,7 +2994,7 @@ export class GostKlausurplanManager extends JavaObject {
 			throw new DeveloperNotificationException("Keine Schülerklausurtermine zur Ermittlung der minimalen Klausurstartzeit gefunden.")
 		let minStart: number = 1440;
 		for (const skt of skts) {
-			if (!includeNachschreiber && skt.folgeNr > 0)
+			if (!includeNachschreiber && (skt.folgeNr > 0))
 				continue;
 			const skStartzeit: number = this.startzeitBySchuelerklausurterminOrException(skt);
 			if (skStartzeit < minStart)
@@ -3043,7 +3042,7 @@ export class GostKlausurplanManager extends JavaObject {
 		if (skts.isEmpty())
 			return maxEnd;
 		for (const skt of skts) {
-			if (!includeNachschreiber && skt.folgeNr > 0)
+			if (!includeNachschreiber && (skt.folgeNr > 0))
 				continue;
 			const vorgabe: GostKlausurvorgabe = this.vorgabeBySchuelerklausurTermin(skt);
 			const endzeit: number = this.startzeitBySchuelerklausurterminOrException(skt) + vorgabe.dauer + vorgabe.auswahlzeit;
@@ -3066,9 +3065,9 @@ export class GostKlausurplanManager extends JavaObject {
 		const skts: List<GostSchuelerklausurTermin> | null = this.schuelerklausurterminAktuellGetMengeByTermin(termin);
 		for (const skt of skts) {
 			const vorgabe: GostKlausurvorgabe = this.vorgabeBySchuelerklausurTermin(skt);
-			minDauer = (minDauer === -1 || vorgabe.dauer < minDauer) ? vorgabe.dauer : minDauer;
+			minDauer = ((minDauer === -1) || (vorgabe.dauer < minDauer)) ? vorgabe.dauer : minDauer;
 		}
-		return minDauer === -1 ? 0 : minDauer;
+		return (minDauer === -1) ? 0 : minDauer;
 	}
 
 	/**
@@ -3385,7 +3384,7 @@ export class GostKlausurplanManager extends JavaObject {
 				if ((schuelerEntry.getValue().size() >= threshold) && ((thresholdMinus < 0) || (schuelerEntry.getValue().size() < thresholdMinus)))
 					for (const skt of schuelerEntry.getValue()) {
 						const vorgabe: GostKlausurvorgabe = this.vorgabeBySchuelerklausurTermin(skt);
-						if (vorgabe.abiJahrgang === abijahr && vorgabe.halbjahr === halbjahr.id && (quartal === 0 || vorgabe.quartal === quartal) && !(vorgabe.halbjahr === 5 && vorgabe.quartal === 2)) {
+						if ((vorgabe.abiJahrgang === abijahr) && (vorgabe.halbjahr === halbjahr.id) && ((quartal === 0) || (vorgabe.quartal === quartal)) && !((vorgabe.halbjahr === 5) && (vorgabe.quartal === 2))) {
 							ergebnis.add(new PairNN<PairNN<number, number>, List<GostSchuelerklausurTermin>>(new PairNN(kwEntry.getKey(), schuelerEntry.getKey()), schuelerEntry.getValue()));
 							break;
 						}
@@ -3626,7 +3625,7 @@ export class GostKlausurplanManager extends JavaObject {
 	 * @return die Startzeit des {@link GostSchuelerklausurTermin}s oder <code>null</code>
 	 */
 	public startzeitBySchuelerklausurterminOrNull(skt: GostSchuelerklausurTermin): number | null {
-		return skt.startzeit !== null ? skt.startzeit : this.startzeitByKursklausurOrNull(this.kursklausurBySchuelerklausurTermin(skt));
+		return (skt.startzeit !== null) ? skt.startzeit : this.startzeitByKursklausurOrNull(this.kursklausurBySchuelerklausurTermin(skt));
 	}
 
 	/**
@@ -3785,8 +3784,7 @@ export class GostKlausurplanManager extends JavaObject {
 	 * {@link GostKursklausur} zurück.
 	 */
 	public schuelerklausurterminAktuellGetMengeByTerminAndKursklausurMultijahrgang(termin: GostKlausurtermin, kursklausur: GostKursklausur, multijahrgang: boolean): List<GostSchuelerklausurTermin> {
-		const ergebnis: List<GostSchuelerklausurTermin> | null = new ArrayList<GostSchuelerklausurTermin>();
-		ergebnis.addAll(this._schuelerklausurterminaktuellmenge_by_idTermin_and_idKursklausur.get12(termin.id, kursklausur.id));
+		const ergebnis: List<GostSchuelerklausurTermin> | null = new ArrayList<GostSchuelerklausurTermin>(this._schuelerklausurterminaktuellmenge_by_idTermin_and_idKursklausur.get12(termin.id, kursklausur.id));
 		if (termin.datum !== null)
 			for (const terminMulti of this.terminSelbesDatumGetMengeByTermin(termin, false))
 				ergebnis.addAll(this._schuelerklausurterminaktuellmenge_by_idTermin_and_idKursklausur.get12(terminMulti.id, kursklausur.id));
@@ -3860,7 +3858,7 @@ export class GostKlausurplanManager extends JavaObject {
 		let ergebnis: List<GostSchuelerklausurTermin>;
 		if (quartal > 0) {
 			ergebnis = this._schuelerklausurterminntaktuellmenge_by_abijahr_and_halbjahr_and_quartal_and_idTermin.get123(abiJahrgang, halbjahr.id, quartal);
-			let iterator: JavaIterator<GostSchuelerklausurTermin> | null = ergebnis.iterator();
+			const iterator: JavaIterator<GostSchuelerklausurTermin> | null = ergebnis.iterator();
 			while (iterator.hasNext()) {
 				if (iterator.next().idTermin === -1) {
 					iterator.remove();
@@ -3868,7 +3866,7 @@ export class GostKlausurplanManager extends JavaObject {
 			}
 		} else {
 			ergebnis = this._schuelerklausurterminntaktuellmenge_by_abijahr_and_halbjahr_and_quartal_and_idTermin.get12(abiJahrgang, halbjahr.id);
-			let iterator: JavaIterator<GostSchuelerklausurTermin> | null = ergebnis.iterator();
+			const iterator: JavaIterator<GostSchuelerklausurTermin> | null = ergebnis.iterator();
 			while (iterator.hasNext()) {
 				if (iterator.next().idTermin === -1) {
 					iterator.remove();
@@ -4031,7 +4029,7 @@ export class GostKlausurplanManager extends JavaObject {
 	 */
 	public kursLehrerByKursklausur(k: GostKursklausur): LehrerListeEintrag | null {
 		const kurs: KursDaten = this.kursdatenByKursklausur(k);
-		return kurs.lehrer === null ? null : this.getLehrerMap().get(kurs.lehrer);
+		return (kurs.lehrer === null) ? null : this.getLehrerMap().get(kurs.lehrer);
 	}
 
 	/**
@@ -4043,7 +4041,7 @@ export class GostKlausurplanManager extends JavaObject {
 	 */
 	public kursLehrerKuerzelByKursklausur(k: GostKursklausur): string | null {
 		const lle: LehrerListeEintrag | null = this.kursLehrerByKursklausur(k);
-		return lle === null ? null : lle.kuerzel;
+		return (lle === null) ? null : lle.kuerzel;
 	}
 
 	/**
@@ -4264,7 +4262,7 @@ export class GostKlausurplanManager extends JavaObject {
 		if (skts === null)
 			return false;
 		for (const skt of skts)
-			if (this.schuelerklausurBySchuelerklausurtermin(skt).idSchueler === idSchueler && this.istSchuelerklausurterminAktuell(skt))
+			if ((this.schuelerklausurBySchuelerklausurtermin(skt).idSchueler === idSchueler) && this.istSchuelerklausurterminAktuell(skt))
 				return true;
 		return false;
 	}
@@ -4376,7 +4374,7 @@ export class GostKlausurplanManager extends JavaObject {
 		if (!this._schuelerklausurterminaktuellmenge_by_idRaum_and_idKursklausur.containsKey1(raum.id))
 			return kursklausuren;
 		for (const skt of this._schuelerklausurterminaktuellmenge_by_idRaum_and_idKursklausur.get1(raum.id))
-			if (skt.folgeNr === 0 || includeNachschreiber)
+			if ((skt.folgeNr === 0) || includeNachschreiber)
 				kursklausuren.add(this.kursklausurBySchuelerklausurTermin(skt));
 		return kursklausuren;
 	}
@@ -4499,7 +4497,7 @@ export class GostKlausurplanManager extends JavaObject {
 	 * @return <code>true</code>, wenn alle {@link GostSchuelerklausurTermin}e verplant sind, sonst <code>false</code>.
 	 */
 	public isKursklausurAlleSchuelerklausurenVerplant(kk: GostKursklausur, termin: GostKlausurtermin | null): boolean {
-		const idTermin: number = termin !== null ? termin.id : DeveloperNotificationException.ifNull(JavaString.format("idTermin der Kursklausur %d", kk.id), kk.idTermin);
+		const idTermin: number = (termin !== null) ? termin.id : DeveloperNotificationException.ifNull(JavaString.format("idTermin der Kursklausur %d", kk.id), kk.idTermin);
 		if (this._schuelerklausurterminaktuellmenge_by_idTermin_and_idKursklausur.containsKey12(idTermin, kk.id)) {
 			const skts: List<GostSchuelerklausurTermin> | null = this._schuelerklausurterminaktuellmenge_by_idTermin_and_idKursklausur.get12(idTermin, kk.id);
 			for (const sk of skts)
@@ -4829,7 +4827,7 @@ export class GostKlausurplanManager extends JavaObject {
 	 * @return der zugehörige {@link StundenplanRaum}
 	 */
 	public stundenplanraumGetByKlausurraumOrNull(raum: GostKlausurraum): StundenplanRaum | null {
-		return raum.idStundenplanRaum === null ? null : this.stundenplanManagerGetByTerminOrException(this.terminGetByIdOrException(raum.idTermin)).raumGetByIdOrException(raum.idStundenplanRaum);
+		return (raum.idStundenplanRaum === null) ? null : this.stundenplanManagerGetByTerminOrException(this.terminGetByIdOrException(raum.idTermin)).raumGetByIdOrException(raum.idStundenplanRaum);
 	}
 
 	/**
@@ -4843,7 +4841,7 @@ export class GostKlausurplanManager extends JavaObject {
 	 */
 	public alleRaeumeHabenStundenplanRaumByTermin(termin: GostKlausurtermin, fremdTermine: boolean, nurVerwendet: boolean): boolean {
 		for (const raum of this.raumGetMengeByTerminIncludingFremdtermine(termin, fremdTermine))
-			if (raum.idStundenplanRaum === null && (!nurVerwendet || !this.schuelerklausurterminGetMengeByRaum(raum).isEmpty()))
+			if ((raum.idStundenplanRaum === null) && (!nurVerwendet || !this.schuelerklausurterminGetMengeByRaum(raum).isEmpty()))
 				return false;
 		return true;
 	}
@@ -4871,7 +4869,7 @@ export class GostKlausurplanManager extends JavaObject {
 	 * @return <code>true</code>, falls der übergebene {@link GostKlausurraum} ausreichend Platzkapazität hat.
 	 */
 	public raumHatAusreichendKapazitaetByRaum(raum: GostKlausurraum): boolean {
-		return (raum.idStundenplanRaum === null || this.schuelerklausurterminGetMengeByRaum(raum).size() <= this.stundenplanraumGetByKlausurraum(raum).groesse);
+		return ((raum.idStundenplanRaum === null) || (this.schuelerklausurterminGetMengeByRaum(raum).size() <= this.stundenplanraumGetByKlausurraum(raum).groesse));
 	}
 
 	/**
@@ -4884,7 +4882,7 @@ export class GostKlausurplanManager extends JavaObject {
 	public hatRaumzuteilungByKursklausur(klausur: GostKursklausur): boolean {
 		for (const skt of this.schuelerklausurterminAktuellGetMengeByTerminAndKursklausur(this.terminOrExceptionByKursklausur(klausur), klausur)) {
 			const stunden: List<GostKlausurraumstunde> | null = this._raumstundenmenge_by_idSchuelerklausurtermin.get(skt.id);
-			if (stunden !== null && !stunden.isEmpty())
+			if ((stunden !== null) && !stunden.isEmpty())
 				return true;
 		}
 		return false;
@@ -4900,11 +4898,11 @@ export class GostKlausurplanManager extends JavaObject {
 	public schuelerklausurOhneSchuelerGetMengeByJahrgang(abijahrgang: number): List<GostSchuelerklausur> {
 		const ergebnis: List<GostSchuelerklausur> = new ArrayList<GostSchuelerklausur>();
 		const sksMap: JavaMap<number, List<GostSchuelerklausur>> | null = this._schuelerklausurmenge_by_abijahr_and_idSchueler.getSubMapOrNull(abijahrgang);
-		if (sksMap === null || sksMap.isEmpty())
+		if ((sksMap === null) || sksMap.isEmpty())
 			return ergebnis;
 		for (const sk of sksMap.entrySet()) {
 			const schueler: SchuelerListeEintrag | null = this._schuelerlisteeintrag_by_id.get(sk.getKey());
-			if (!sk.getValue().isEmpty() && (schueler === null || schueler.abiturjahrgang !== abijahrgang))
+			if (!sk.getValue().isEmpty() && ((schueler === null) || (schueler.abiturjahrgang !== abijahrgang)))
 				ergebnis.addAll(sk.getValue());
 		}
 		return ergebnis;
@@ -5123,7 +5121,7 @@ export class GostKlausurplanManager extends JavaObject {
 	 */
 	public schuelerklausurraumstundeGetMengeByKlausurraumstundenmenge(raumStunden: List<GostKlausurraumstunde>): List<GostSchuelerklausurterminraumstunde> {
 		const ergebnis: List<GostSchuelerklausurterminraumstunde> = new ArrayList<GostSchuelerklausurterminraumstunde>();
-		for (let stunde of raumStunden) {
+		for (const stunde of raumStunden) {
 			const listStunden: List<GostSchuelerklausurterminraumstunde> | null = this._schuelerklausurraumstunde_by_idSchuelerklausurtermin_and_idRaumstunde.get2(stunde.id);
 			if (listStunden !== null)
 				ergebnis.addAll(listStunden);
@@ -5139,7 +5137,7 @@ export class GostKlausurplanManager extends JavaObject {
 	public zeitrasterGetMengeByRaum(raum: GostKlausurraum): List<StundenplanZeitraster> {
 		const ergebnis: List<StundenplanZeitraster> = new ArrayList<StundenplanZeitraster>();
 		const stundenplanManager: StundenplanManager = this.stundenplanManagerGetByTerminOrException(this.terminGetByRaumOrException(raum));
-		for (let stunde of this.raumstundeGetMengeByRaum(raum))
+		for (const stunde of this.raumstundeGetMengeByRaum(raum))
 			if (stunde.idZeitraster !== null) {
 				const zr: StundenplanZeitraster | null = stundenplanManager.zeitrasterGetByIdOrNull(stunde.idZeitraster);
 				if (zr !== null)
