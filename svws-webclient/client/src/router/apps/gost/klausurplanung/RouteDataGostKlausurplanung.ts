@@ -237,12 +237,13 @@ export class RouteDataGostKlausurplanung extends RouteData<RouteStateGostKlausur
 	});
 
 	reloadFehlendData = () => {
-		api.server.getGostKlausurenCollectionAllIssuesGZip(api.schema, this.abiturjahr, this._state.value.halbjahr.id).then(async (fehlendDataGzip) => {
-			const fehlendDataBlob = await new Response(fehlendDataGzip.data.stream().pipeThrough(new DecompressionStream("gzip"))).blob();
-			const fehlendData = GostKlausurenCollectionHjData.transpilerFromJSON(await fehlendDataBlob.text());
-			this.manager.setKlausurDataFehlend(fehlendData);
-			this.commit();
-		});
+		if (this.abiturjahr !== -1)
+			api.server.getGostKlausurenCollectionAllIssuesGZip(api.schema, this.abiturjahr, this._state.value.halbjahr.id).then(async (fehlendDataGzip) => {
+				const fehlendDataBlob = await new Response(fehlendDataGzip.data.stream().pipeThrough(new DecompressionStream("gzip"))).blob();
+				const fehlendData = GostKlausurenCollectionHjData.transpilerFromJSON(await fehlendDataBlob.text());
+				this.manager.setKlausurDataFehlend(fehlendData);
+				this.commit();
+			});
 	};
 
 	kalenderdatum = computed<string | undefined>({
