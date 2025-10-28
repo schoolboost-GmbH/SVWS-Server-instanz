@@ -16,35 +16,35 @@ import de.svws_nrw.db.schema.SchemaTabelleSpalte;
 public class Tabelle_Gost_Blockung_Schienen extends SchemaTabelle {
 
 	/** Die Definition der Tabellenspalte ID */
-	public SchemaTabelleSpalte col_ID = add("ID", SchemaDatentypen.BIGINT, true)
+	public final SchemaTabelleSpalte col_ID = add("ID", SchemaDatentypen.BIGINT, true)
 			.setNotNull()
 			.setJavaComment("ID der Schiene in der Blockung (generiert)");
 
 	/** Die Definition der Tabellenspalte Blockung_ID */
-	public SchemaTabelleSpalte col_Blockung_ID = add("Blockung_ID", SchemaDatentypen.BIGINT, false)
+	public final SchemaTabelleSpalte col_Blockung_ID = add("Blockung_ID", SchemaDatentypen.BIGINT, false)
 			.setNotNull()
 			.setJavaComment("ID der Blockung");
 
 	/** Die Definition der Tabellenspalte Nummer */
-	public SchemaTabelleSpalte col_Nummer = add("Nummer", SchemaDatentypen.INT, false)
+	public final SchemaTabelleSpalte col_Nummer = add("Nummer", SchemaDatentypen.INT, false)
 			.setNotNull()
 			.setJavaComment("Die Nummer der Schiene, beginnend bei 1");
 
 	/** Die Definition der Tabellenspalte Bezeichnung */
-	public SchemaTabelleSpalte col_Bezeichnung = add("Bezeichnung", SchemaDatentypen.VARCHAR, false).setDatenlaenge(255)
+	public final SchemaTabelleSpalte col_Bezeichnung = add("Bezeichnung", SchemaDatentypen.VARCHAR, false).setDatenlaenge(255)
 			.setDefault("Schiene")
 			.setNotNull()
 			.setJavaComment("Bezeichnung der Schiene (z.B. LK Schiene 1)");
 
 	/** Die Definition der Tabellenspalte Wochenstunden */
-	public SchemaTabelleSpalte col_Wochenstunden = add("Wochenstunden", SchemaDatentypen.INT, false)
+	public final SchemaTabelleSpalte col_Wochenstunden = add("Wochenstunden", SchemaDatentypen.INT, false)
 			.setDefault("3")
 			.setNotNull()
 			.setJavaComment("Die Anzahl der Wochenstunden, welche der Schiene zugeordnet sind");
 
 
 	/** Die Definition des Fremdschlüssels Gost_Blockung_Schienen_Blockung_FK */
-	public SchemaTabelleFremdschluessel fk_Gost_Blockung_Schienen_Blockung_FK = addForeignKey(
+	public final SchemaTabelleFremdschluessel fk_Gost_Blockung_Schienen_Blockung_FK = addForeignKey(
 			"Gost_Blockung_Schienen_Blockung_FK",
 			/* OnUpdate: */ SchemaFremdschluesselAktionen.CASCADE,
 			/* OnDelete: */ SchemaFremdschluesselAktionen.CASCADE,
@@ -52,12 +52,12 @@ public class Tabelle_Gost_Blockung_Schienen extends SchemaTabelle {
 	);
 
 	/** Die Definition des Non-Unique-Index Gost_Blockung_Schienen_IDX_Blockung_ID */
-	public SchemaTabelleIndex index_Gost_Blockung_Schienen_IDX_Blockung_ID = addIndex("Gost_Blockung_Schienen_IDX_Blockung_ID",
+	public final SchemaTabelleIndex index_Gost_Blockung_Schienen_IDX_Blockung_ID = addIndex("Gost_Blockung_Schienen_IDX_Blockung_ID",
 			col_Blockung_ID
 	);
 
 	/** Die Definition des Non-Unique-Index Gost_Blockung_Schienen_IDX_Blockung_ID_Nummer */
-	public SchemaTabelleIndex index_Gost_Blockung_Schienen_IDX_Blockung_ID_Nummer = addIndex("Gost_Blockung_Schienen_IDX_Blockung_ID_Nummer",
+	public final SchemaTabelleIndex index_Gost_Blockung_Schienen_IDX_Blockung_ID_Nummer = addIndex("Gost_Blockung_Schienen_IDX_Blockung_ID_Nummer",
 			col_Blockung_ID,
 			col_Nummer
 	).setRevision(SchemaRevisionen.REV_12);

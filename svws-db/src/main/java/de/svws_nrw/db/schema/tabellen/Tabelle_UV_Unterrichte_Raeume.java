@@ -15,22 +15,22 @@ import de.svws_nrw.db.schema.SchemaTabelleSpalte;
 public class Tabelle_UV_Unterrichte_Raeume extends SchemaTabelle {
 
 	/** Die Definition der Tabellenspalte Unterricht_ID */
-	public SchemaTabelleSpalte col_Unterricht_ID = add("Unterricht_ID", SchemaDatentypen.BIGINT, true)
+	public final SchemaTabelleSpalte col_Unterricht_ID = add("Unterricht_ID", SchemaDatentypen.BIGINT, true)
 			.setNotNull()
 			.setJavaComment("ID des UV_Unterrichts");
 
-  /** Fremdschlüssel auf den Raum (Tabelle UV_Raeume) */
-  public SchemaTabelleSpalte col_Raum_ID = add("Raum_ID", SchemaDatentypen.BIGINT, false)
-          .setJavaComment("Fremdschlüssel auf den Raum (Tabelle UV_Raeume)");
+	/** Fremdschlüssel auf den Raum (Tabelle UV_Raeume) */
+	public final SchemaTabelleSpalte col_Raum_ID = add("Raum_ID", SchemaDatentypen.BIGINT, false)
+			.setJavaComment("Fremdschlüssel auf den Raum (Tabelle UV_Raeume)");
 
 	/** Die Definition der Tabellenspalte Planungsabschnitt_ID */
-	public SchemaTabelleSpalte col_Planungsabschnitt_ID = add("Planungsabschnitt_ID", SchemaDatentypen.BIGINT, false)
+	public final SchemaTabelleSpalte col_Planungsabschnitt_ID = add("Planungsabschnitt_ID", SchemaDatentypen.BIGINT, false)
 			.setNotNull()
 			.setJavaComment("Die ID des Planungsabschnitts als Fremdschlüssel auf die Tabelle UV_Planungsabschnitte");
 
 
 	/** Die Definition des Fremdschlüssels UV_UnterrichteRaeume_Unterrichte_FK */
-	public SchemaTabelleFremdschluessel fk_UV_UnterrichteRaeume_Unterrichte_FK = addForeignKey(
+	public final SchemaTabelleFremdschluessel fk_UV_UnterrichteRaeume_Unterrichte_FK = addForeignKey(
 			"UV_UnterrichteRaeume_Unterrichte_FK",
 			/* OnUpdate: */ SchemaFremdschluesselAktionen.CASCADE,
 			/* OnDelete: */ SchemaFremdschluesselAktionen.CASCADE,
@@ -39,7 +39,7 @@ public class Tabelle_UV_Unterrichte_Raeume extends SchemaTabelle {
 	);
 
 	/** Die Definition des Fremdschlüssels UV_UnterrichteRaeume_Raeume_FK */
-	public SchemaTabelleFremdschluessel fk_UV_UnterrichteRaeume_Raeume_FK = addForeignKey(
+	public final SchemaTabelleFremdschluessel fk_UV_UnterrichteRaeume_Raeume_FK = addForeignKey(
 			"UV_UnterrichteRaeume_Raeume_FK",
 			/* OnUpdate: */ SchemaFremdschluesselAktionen.CASCADE,
 			/* OnDelete: */ SchemaFremdschluesselAktionen.CASCADE,

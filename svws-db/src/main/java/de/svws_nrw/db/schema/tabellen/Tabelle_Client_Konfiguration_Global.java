@@ -11,17 +11,17 @@ import de.svws_nrw.db.schema.SchemaTabelleSpalte;
 public class Tabelle_Client_Konfiguration_Global extends SchemaTabelle {
 
 	/** Die Definition der Tabellenspalte AppName */
-	public SchemaTabelleSpalte col_AppName = add("AppName", SchemaDatentypen.VARCHAR, true).setDatenlaenge(100)
+	public final SchemaTabelleSpalte col_AppName = add("AppName", SchemaDatentypen.VARCHAR, true).setDatenlaenge(100)
 			.setNotNull()
 			.setJavaComment("Der Name der Client-Anwendung, für die der Konfigurationsdatensatz gespeichert ist");
 
 	/** Die Definition der Tabellenspalte Schluessel */
-	public SchemaTabelleSpalte col_Schluessel = add("Schluessel", SchemaDatentypen.VARCHAR, true).setDatenlaenge(255)
+	public final SchemaTabelleSpalte col_Schluessel = add("Schluessel", SchemaDatentypen.VARCHAR, true).setDatenlaenge(255)
 			.setNotNull()
 			.setJavaComment("Der Schlüsselname des Konfigurationsdatensatzes");
 
 	/** Die Definition der Tabellenspalte Wert */
-	public SchemaTabelleSpalte col_Wert = add("Wert", SchemaDatentypen.TEXT, false)
+	public final SchemaTabelleSpalte col_Wert = add("Wert", SchemaDatentypen.TEXT, false)
 			.setNotNull()
 			.setJavaComment("Der Wert des Konfigurationsdatensatzes");
 

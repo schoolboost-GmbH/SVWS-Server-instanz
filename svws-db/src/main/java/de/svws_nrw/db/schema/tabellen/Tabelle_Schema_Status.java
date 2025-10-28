@@ -12,13 +12,13 @@ import de.svws_nrw.db.schema.SchemaTabelleSpalte;
 public class Tabelle_Schema_Status extends SchemaTabelle {
 
 	/** Die Definition der Tabellenspalte Revision */
-	public SchemaTabelleSpalte col_Revision = add("Revision", SchemaDatentypen.BIGINT, true)
+	public final SchemaTabelleSpalte col_Revision = add("Revision", SchemaDatentypen.BIGINT, true)
 			.setDefault("0")
 			.setNotNull()
 			.setJavaComment("Die Revision des Datenbankschemas der SVWS-DB");
 
 	/** Die Definition der Tabellenspalte IsTainted */
-	public SchemaTabelleSpalte col_IsTainted = add("IsTainted", SchemaDatentypen.INT, false)
+	public final SchemaTabelleSpalte col_IsTainted = add("IsTainted", SchemaDatentypen.INT, false)
 			.setDefault("0")
 			.setNotNull()
 			.setConverter(Boolean01Converter.class)

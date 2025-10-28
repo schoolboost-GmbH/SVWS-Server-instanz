@@ -15,28 +15,28 @@ import de.svws_nrw.db.schema.SchemaTabelleSpalte;
 public class Tabelle_UV_Stundentafeln_Faecher extends SchemaTabelle {
 
 	/** Die Definition der Tabellenspalte Stundentafel_ID */
-	public SchemaTabelleSpalte col_Stundentafel_ID = add("Stundentafel_ID", SchemaDatentypen.BIGINT, true)
+	public final SchemaTabelleSpalte col_Stundentafel_ID = add("Stundentafel_ID", SchemaDatentypen.BIGINT, true)
 			.setNotNull()
 			.setJavaComment("Fremdschlüssel auf die Stundentafel (Tabelle UV_Stundentafeln)");
 
 	/** Die Definition der Tabellenspalte Abschnitt */
-	public SchemaTabelleSpalte col_Abschnitt = add("Abschnitt", SchemaDatentypen.INT, false)
+	public final SchemaTabelleSpalte col_Abschnitt = add("Abschnitt", SchemaDatentypen.INT, false)
 			.setNotNull()
 			.setJavaComment("Abschnitt des Schuljahres");
 
 	/** Die Definition der Tabellenspalte Fach_ID */
-	public SchemaTabelleSpalte col_Fach_ID = add("Fach_ID", SchemaDatentypen.BIGINT, true)
+	public final SchemaTabelleSpalte col_Fach_ID = add("Fach_ID", SchemaDatentypen.BIGINT, true)
 			.setNotNull()
 			.setJavaComment("Fremdschlüssel auf das Fach der UV (Tabelle UV_Faecher)");
 
 	/** Die Definition der Tabellenspalte Wochenstunden */
-	public SchemaTabelleSpalte col_Wochenstunden = add("Wochenstunden", SchemaDatentypen.FLOAT, false)
+	public final SchemaTabelleSpalte col_Wochenstunden = add("Wochenstunden", SchemaDatentypen.FLOAT, false)
 			.setDefault("3")
 			.setNotNull()
 			.setJavaComment("Die Anzahl der Wochenstunden für das Fach");
 
 	/** Die Definition der Tabellenspalte DavonErgaenzungsstunden */
-	public SchemaTabelleSpalte col_DavonErgaenzungsstunden = add("DavonErgaenzungsstunden", SchemaDatentypen.FLOAT, false)
+	public final SchemaTabelleSpalte col_DavonErgaenzungsstunden = add("DavonErgaenzungsstunden", SchemaDatentypen.FLOAT, false)
 			.setDefault("0")
 			.setNotNull()
 			.setJavaComment("Die Anzahl der Ergänzungsstunden für das Fach (in Wochenstunden enthalten)");
@@ -44,7 +44,7 @@ public class Tabelle_UV_Stundentafeln_Faecher extends SchemaTabelle {
 
 
 	/** Die Definition des Fremdschlüssels auf UV_Stundentafeln */
-	public SchemaTabelleFremdschluessel fk_UVStundentafelnFaecher_UVStundentafeln_FK = addForeignKey(
+	public final SchemaTabelleFremdschluessel fk_UVStundentafelnFaecher_UVStundentafeln_FK = addForeignKey(
 			"UVStundentafelnFaecher_UVStundentafeln_FK",
 			/* OnUpdate: */ SchemaFremdschluesselAktionen.CASCADE,
 			/* OnDelete: */ SchemaFremdschluesselAktionen.CASCADE,
@@ -52,7 +52,7 @@ public class Tabelle_UV_Stundentafeln_Faecher extends SchemaTabelle {
 	);
 
 	/** Die Definition des Fremdschlüssels auf UV_Faecher */
-	public SchemaTabelleFremdschluessel fk_UVStundentafelnFaecher_UVFaecher_FK = addForeignKey(
+	public final SchemaTabelleFremdschluessel fk_UVStundentafelnFaecher_UVFaecher_FK = addForeignKey(
 			"UVStundentafelnFaecher_UVFaecher_FK",
 			/* OnUpdate: */ SchemaFremdschluesselAktionen.CASCADE,
 			/* OnDelete: */ SchemaFremdschluesselAktionen.CASCADE,

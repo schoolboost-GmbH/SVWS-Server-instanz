@@ -16,31 +16,31 @@ import de.svws_nrw.db.schema.SchemaTabelleUniqueIndex;
 public class Tabelle_Schuljahresabschnitte extends SchemaTabelle {
 
 	/** Die Definition der Tabellenspalte ID */
-	public SchemaTabelleSpalte col_ID = add("ID", SchemaDatentypen.BIGINT, true)
+	public final SchemaTabelleSpalte col_ID = add("ID", SchemaDatentypen.BIGINT, true)
 			.setNotNull()
 			.setJavaComment("ID des Schuljahresabschnittes");
 
 	/** Die Definition der Tabellenspalte Jahr */
-	public SchemaTabelleSpalte col_Jahr = add("Jahr", SchemaDatentypen.INT, false)
+	public final SchemaTabelleSpalte col_Jahr = add("Jahr", SchemaDatentypen.INT, false)
 			.setNotNull()
 			.setJavaComment("Schuljahr des Schuljahresabschnitts (z.B. 2012 für 2012/13)");
 
 	/** Die Definition der Tabellenspalte Abschnitt */
-	public SchemaTabelleSpalte col_Abschnitt = add("Abschnitt", SchemaDatentypen.INT, false)
+	public final SchemaTabelleSpalte col_Abschnitt = add("Abschnitt", SchemaDatentypen.INT, false)
 			.setNotNull()
 			.setJavaComment("Abschnitt des Schuljahresabschnitts");
 
 	/** Die Definition der Tabellenspalte VorigerAbschnitt_ID */
-	public SchemaTabelleSpalte col_VorigerAbschnitt_ID = add("VorigerAbschnitt_ID", SchemaDatentypen.BIGINT, false)
+	public final SchemaTabelleSpalte col_VorigerAbschnitt_ID = add("VorigerAbschnitt_ID", SchemaDatentypen.BIGINT, false)
 			.setJavaComment("ID des vorigen Schuljahresabschnitts");
 
 	/** Die Definition der Tabellenspalte FolgeAbschnitt_ID */
-	public SchemaTabelleSpalte col_FolgeAbschnitt_ID = add("FolgeAbschnitt_ID", SchemaDatentypen.BIGINT, false)
+	public final SchemaTabelleSpalte col_FolgeAbschnitt_ID = add("FolgeAbschnitt_ID", SchemaDatentypen.BIGINT, false)
 			.setJavaComment("ID des nachfolgenden Schuljahresabschnitts");
 
 
 	/** Trigger t_INSERT_EIGENESCHULE_ABSCHNITTE */
-	public SchemaTabelleTrigger trigger_MariaDB_INSERT_EIGENESCHULE_ABSCHNITTE = addTrigger(
+	public final SchemaTabelleTrigger trigger_MariaDB_INSERT_EIGENESCHULE_ABSCHNITTE = addTrigger(
 			"t_INSERT_EIGENESCHULE_ABSCHNITTE",
 			DBDriver.MARIA_DB,
 			"""
@@ -61,7 +61,7 @@ public class Tabelle_Schuljahresabschnitte extends SchemaTabelle {
 			.setVeraltet(SchemaRevisionen.REV_1);
 
 	/** Trigger t_INSERT_SCHUELER_ABSCHNITTE */
-	public SchemaTabelleTrigger trigger_MariaDB_INSERT_SCHUELER_ABSCHNITTE = addTrigger(
+	public final SchemaTabelleTrigger trigger_MariaDB_INSERT_SCHUELER_ABSCHNITTE = addTrigger(
 			"t_INSERT_SCHUELER_ABSCHNITTE",
 			DBDriver.MARIA_DB,
 			"""
@@ -82,7 +82,7 @@ public class Tabelle_Schuljahresabschnitte extends SchemaTabelle {
 			.setVeraltet(SchemaRevisionen.REV_1);
 
 	/** Trigger t_INSERT_SCHUELERLERNABSCHNITTDATEN_ABSCHNITTE */
-	public SchemaTabelleTrigger trigger_MariaDB_INSERT_SCHUELERLERNABSCHNITTDATEN_ABSCHNITTE = addTrigger(
+	public final SchemaTabelleTrigger trigger_MariaDB_INSERT_SCHUELERLERNABSCHNITTDATEN_ABSCHNITTE = addTrigger(
 			"t_INSERT_SCHUELERLERNABSCHNITTDATEN_ABSCHNITTE",
 			DBDriver.MARIA_DB,
 			"""
@@ -103,7 +103,7 @@ public class Tabelle_Schuljahresabschnitte extends SchemaTabelle {
 			.setVeraltet(SchemaRevisionen.REV_1);
 
 	/** Trigger t_INSERT_SCHUELERABITUR_ABSCHNITTE */
-	public SchemaTabelleTrigger trigger_MariaDB_INSERT_SCHUELERABITUR_ABSCHNITTE = addTrigger(
+	public final SchemaTabelleTrigger trigger_MariaDB_INSERT_SCHUELERABITUR_ABSCHNITTE = addTrigger(
 			"t_INSERT_SCHUELERABITUR_ABSCHNITTE",
 			DBDriver.MARIA_DB,
 			"""
@@ -124,7 +124,7 @@ public class Tabelle_Schuljahresabschnitte extends SchemaTabelle {
 			.setVeraltet(SchemaRevisionen.REV_1);
 
 	/** Trigger t_INSERT_SCHUELERANKREUZFLOSKELN_ABSCHNITTE */
-	public SchemaTabelleTrigger trigger_MariaDB_INSERT_SCHUELERANKREUZFLOSKELN_ABSCHNITTE = addTrigger(
+	public final SchemaTabelleTrigger trigger_MariaDB_INSERT_SCHUELERANKREUZFLOSKELN_ABSCHNITTE = addTrigger(
 			"t_INSERT_SCHUELERANKREUZFLOSKELN_ABSCHNITTE",
 			DBDriver.MARIA_DB,
 			"""
@@ -147,7 +147,7 @@ public class Tabelle_Schuljahresabschnitte extends SchemaTabelle {
 			.setVeraltet(SchemaRevisionen.REV_1);
 
 	/** Trigger t_INSERT_SCHUELERBKABSCHLUSS_ABSCHNITTE */
-	public SchemaTabelleTrigger trigger_MariaDB_INSERT_SCHUELERBKABSCHLUSS_ABSCHNITTE = addTrigger(
+	public final SchemaTabelleTrigger trigger_MariaDB_INSERT_SCHUELERBKABSCHLUSS_ABSCHNITTE = addTrigger(
 			"t_INSERT_SCHUELERBKABSCHLUSS_ABSCHNITTE",
 			DBDriver.MARIA_DB,
 			"""
@@ -168,7 +168,7 @@ public class Tabelle_Schuljahresabschnitte extends SchemaTabelle {
 			.setVeraltet(SchemaRevisionen.REV_1);
 
 	/** Trigger t_INSERT_SCHUELERBKFAECHER_ABSCHNITTE */
-	public SchemaTabelleTrigger trigger_MariaDB_INSERT_SCHUELERBKFAECHER_ABSCHNITTE = addTrigger(
+	public final SchemaTabelleTrigger trigger_MariaDB_INSERT_SCHUELERBKFAECHER_ABSCHNITTE = addTrigger(
 			"t_INSERT_SCHUELERBKFAECHER_ABSCHNITTE",
 			DBDriver.MARIA_DB,
 			"""
@@ -189,7 +189,7 @@ public class Tabelle_Schuljahresabschnitte extends SchemaTabelle {
 			.setVeraltet(SchemaRevisionen.REV_1);
 
 	/** Trigger t_INSERT_SCHUELERFOERDEREMPFEHLUNGEN_ABSCHNITTE */
-	public SchemaTabelleTrigger trigger_MariaDB_INSERT_SCHUELERFOERDEREMPFEHLUNGEN_ABSCHNITTE = addTrigger(
+	public final SchemaTabelleTrigger trigger_MariaDB_INSERT_SCHUELERFOERDEREMPFEHLUNGEN_ABSCHNITTE = addTrigger(
 			"t_INSERT_SCHUELERFOERDEREMPFEHLUNGEN_ABSCHNITTE",
 			DBDriver.MARIA_DB,
 			"""
@@ -212,7 +212,7 @@ public class Tabelle_Schuljahresabschnitte extends SchemaTabelle {
 			.setVeraltet(SchemaRevisionen.REV_1);
 
 	/** Trigger t_INSERT_SCHUELERKAOADATEN_ABSCHNITTE */
-	public SchemaTabelleTrigger trigger_MariaDB_INSERT_SCHUELERKAOADATEN_ABSCHNITTE = addTrigger(
+	public final SchemaTabelleTrigger trigger_MariaDB_INSERT_SCHUELERKAOADATEN_ABSCHNITTE = addTrigger(
 			"t_INSERT_SCHUELERKAOADATEN_ABSCHNITTE",
 			DBDriver.MARIA_DB,
 			"""
@@ -235,7 +235,7 @@ public class Tabelle_Schuljahresabschnitte extends SchemaTabelle {
 			.setVeraltet(SchemaRevisionen.REV_1);
 
 	/** Trigger t_INSERT_LEHRERLERNABSCHNITTSDATEN_ABSCHNITTE */
-	public SchemaTabelleTrigger trigger_MariaDB_INSERT_LEHRERLERNABSCHNITTSDATEN_ABSCHNITTE = addTrigger(
+	public final SchemaTabelleTrigger trigger_MariaDB_INSERT_LEHRERLERNABSCHNITTSDATEN_ABSCHNITTE = addTrigger(
 			"t_INSERT_LEHRERLERNABSCHNITTSDATEN_ABSCHNITTE",
 			DBDriver.MARIA_DB,
 			"""
@@ -256,7 +256,7 @@ public class Tabelle_Schuljahresabschnitte extends SchemaTabelle {
 			.setVeraltet(SchemaRevisionen.REV_1);
 
 	/** Trigger t_INSERT_LEHRERANRECHNUNG_ABSCHNITTE */
-	public SchemaTabelleTrigger trigger_MariaDB_INSERT_LEHRERANRECHNUNG_ABSCHNITTE = addTrigger(
+	public final SchemaTabelleTrigger trigger_MariaDB_INSERT_LEHRERANRECHNUNG_ABSCHNITTE = addTrigger(
 			"t_INSERT_LEHRERANRECHNUNG_ABSCHNITTE",
 			DBDriver.MARIA_DB,
 			"""
@@ -279,7 +279,7 @@ public class Tabelle_Schuljahresabschnitte extends SchemaTabelle {
 			.setVeraltet(SchemaRevisionen.REV_1);
 
 	/** Trigger t_INSERT_LEHRERENTLASTUNG_ABSCHNITTE */
-	public SchemaTabelleTrigger trigger_MariaDB_INSERT_LEHRERENTLASTUNG_ABSCHNITTE = addTrigger(
+	public final SchemaTabelleTrigger trigger_MariaDB_INSERT_LEHRERENTLASTUNG_ABSCHNITTE = addTrigger(
 			"t_INSERT_LEHRERENTLASTUNG_ABSCHNITTE",
 			DBDriver.MARIA_DB,
 			"""
@@ -302,7 +302,7 @@ public class Tabelle_Schuljahresabschnitte extends SchemaTabelle {
 			.setVeraltet(SchemaRevisionen.REV_1);
 
 	/** Trigger t_INSERT_LEHRERFUNKTIONEN_ABSCHNITTE */
-	public SchemaTabelleTrigger trigger_MariaDB_INSERT_LEHRERFUNKTIONEN_ABSCHNITTE = addTrigger(
+	public final SchemaTabelleTrigger trigger_MariaDB_INSERT_LEHRERFUNKTIONEN_ABSCHNITTE = addTrigger(
 			"t_INSERT_LEHRERFUNKTIONEN_ABSCHNITTE",
 			DBDriver.MARIA_DB,
 			"""
@@ -325,7 +325,7 @@ public class Tabelle_Schuljahresabschnitte extends SchemaTabelle {
 			.setVeraltet(SchemaRevisionen.REV_1);
 
 	/** Trigger t_INSERT_LEHRERMEHRLEISTUNG_ABSCHNITTE */
-	public SchemaTabelleTrigger trigger_MariaDB_INSERT_LEHRERMEHRLEISTUNG_ABSCHNITTE = addTrigger(
+	public final SchemaTabelleTrigger trigger_MariaDB_INSERT_LEHRERMEHRLEISTUNG_ABSCHNITTE = addTrigger(
 			"t_INSERT_LEHRERMEHRLEISTUNG_ABSCHNITTE",
 			DBDriver.MARIA_DB,
 			"""
@@ -348,7 +348,7 @@ public class Tabelle_Schuljahresabschnitte extends SchemaTabelle {
 			.setVeraltet(SchemaRevisionen.REV_1);
 
 	/** Trigger t_INSERT_KURSE_ABSCHNITTE */
-	public SchemaTabelleTrigger trigger_MariaDB_INSERT_KURSE_ABSCHNITTE = addTrigger(
+	public final SchemaTabelleTrigger trigger_MariaDB_INSERT_KURSE_ABSCHNITTE = addTrigger(
 			"t_INSERT_KURSE_ABSCHNITTE",
 			DBDriver.MARIA_DB,
 			"""
@@ -369,7 +369,7 @@ public class Tabelle_Schuljahresabschnitte extends SchemaTabelle {
 			.setVeraltet(SchemaRevisionen.REV_1);
 
 	/** Die Definition des Non-Unique-Index Schuljahresabschnitte_IDX_Jahr_Abschnitt */
-	public SchemaTabelleIndex index_Schuljahresabschnitte_IDX_Jahr_Abschnitt = addIndex("Schuljahresabschnitte_IDX_Jahr_Abschnitt",
+	public final SchemaTabelleIndex index_Schuljahresabschnitte_IDX_Jahr_Abschnitt = addIndex("Schuljahresabschnitte_IDX_Jahr_Abschnitt",
 			col_Jahr,
 			col_Abschnitt
 	)
@@ -378,7 +378,7 @@ public class Tabelle_Schuljahresabschnitte extends SchemaTabelle {
 
 
 	/** Die Definition des Unique-Index Schuljahresabschnitte_Jahr_Abschnitt_UC1 */
-	public SchemaTabelleUniqueIndex unique_Schuljahresabschnitte_Jahr_Abschnitt_UC1 = addUniqueIndex("Schuljahresabschnitte_Jahr_Abschnitt_UC1",
+	public final SchemaTabelleUniqueIndex unique_Schuljahresabschnitte_Jahr_Abschnitt_UC1 = addUniqueIndex("Schuljahresabschnitte_Jahr_Abschnitt_UC1",
 			col_Jahr,
 			col_Abschnitt
 	).setRevision(SchemaRevisionen.REV_47);

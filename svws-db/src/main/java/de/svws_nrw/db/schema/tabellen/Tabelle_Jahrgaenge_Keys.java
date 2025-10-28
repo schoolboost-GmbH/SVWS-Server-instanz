@@ -11,7 +11,7 @@ import de.svws_nrw.db.schema.SchemaTabelleSpalte;
 public class Tabelle_Jahrgaenge_Keys extends SchemaTabelle {
 
 	/** Die Definition der Tabellenspalte Kuerzel */
-	public SchemaTabelleSpalte col_Kuerzel = add("Kuerzel", SchemaDatentypen.VARCHAR, true).setDatenlaenge(2)
+	public final SchemaTabelleSpalte col_Kuerzel = add("Kuerzel", SchemaDatentypen.VARCHAR, true).setDatenlaenge(2)
 			.setNotNull()
 			.setJavaComment("Das zweistellige Kürzel des Jahrgangs");
 

@@ -15,21 +15,21 @@ import de.svws_nrw.db.schema.SchemaTabelleSpalte;
 public class Tabelle_BenutzerAllgemein extends SchemaTabelle {
 
 	/** Die Definition der Tabellenspalte ID */
-	public SchemaTabelleSpalte col_ID = add("ID", SchemaDatentypen.BIGINT, true)
+	public final SchemaTabelleSpalte col_ID = add("ID", SchemaDatentypen.BIGINT, true)
 			.setNotNull()
 			.setJavaComment("Die ID des allgemeinen Benutzers");
 
 	/** Die Definition der Tabellenspalte AnzeigeName */
-	public SchemaTabelleSpalte col_AnzeigeName = add("AnzeigeName", SchemaDatentypen.VARCHAR, false).setDatenlaenge(255)
+	public final SchemaTabelleSpalte col_AnzeigeName = add("AnzeigeName", SchemaDatentypen.VARCHAR, false).setDatenlaenge(255)
 			.setJavaComment("Der Anzeigename für den allgemeinen Benutzer");
 
 	/** Die Definition der Tabellenspalte CredentialID */
-	public SchemaTabelleSpalte col_CredentialID = add("CredentialID", SchemaDatentypen.BIGINT, false)
+	public final SchemaTabelleSpalte col_CredentialID = add("CredentialID", SchemaDatentypen.BIGINT, false)
 			.setJavaComment("Die ID des Credential-Eintrags");
 
 
 	/** Die Definition des Fremdschlüssels BenutzerAllgemein_Credential_FK */
-	public SchemaTabelleFremdschluessel fk_BenutzerAllgemein_Credential_FK = addForeignKey(
+	public final SchemaTabelleFremdschluessel fk_BenutzerAllgemein_Credential_FK = addForeignKey(
 			"BenutzerAllgemein_Credential_FK",
 			/* OnUpdate: */ SchemaFremdschluesselAktionen.CASCADE,
 			/* OnDelete: */ SchemaFremdschluesselAktionen.SET_NULL,

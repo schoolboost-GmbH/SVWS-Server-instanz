@@ -17,12 +17,12 @@ import de.svws_nrw.db.schema.SchemaTabelleSpalte;
 public class Tabelle_Benutzer extends SchemaTabelle {
 
 	/** Die Definition der Tabellenspalte ID */
-	public SchemaTabelleSpalte col_ID = add("ID", SchemaDatentypen.BIGINT, true)
+	public final SchemaTabelleSpalte col_ID = add("ID", SchemaDatentypen.BIGINT, true)
 			.setNotNull()
 			.setJavaComment("Die ID des Benutzers");
 
 	/** Die Definition der Tabellenspalte Typ */
-	public SchemaTabelleSpalte col_Typ = add("Typ", SchemaDatentypen.SMALLINT, false)
+	public final SchemaTabelleSpalte col_Typ = add("Typ", SchemaDatentypen.SMALLINT, false)
 			.setDefault("0")
 			.setNotNull()
 			.setConverter(BenutzerTypConverter.class)
@@ -30,23 +30,23 @@ public class Tabelle_Benutzer extends SchemaTabelle {
 			.setJavaComment("Der Typ des Benutzers (0 = Allgemeiner Benutzer, 1 = Lehrer bzw. Personal aus K_Lehrer, 2 = Schueler, 3 = Erzieher)");
 
 	/** Die Definition der Tabellenspalte Allgemein_ID */
-	public SchemaTabelleSpalte col_Allgemein_ID = add("Allgemein_ID", SchemaDatentypen.BIGINT, false)
+	public final SchemaTabelleSpalte col_Allgemein_ID = add("Allgemein_ID", SchemaDatentypen.BIGINT, false)
 			.setJavaComment("Die ID des allgemeinen Benutzers, falls der Benutzer es sich um einen allgemeinen Benutzer handelt");
 
 	/** Die Definition der Tabellenspalte Lehrer_ID */
-	public SchemaTabelleSpalte col_Lehrer_ID = add("Lehrer_ID", SchemaDatentypen.BIGINT, false)
+	public final SchemaTabelleSpalte col_Lehrer_ID = add("Lehrer_ID", SchemaDatentypen.BIGINT, false)
 			.setJavaComment("Die Lehrer-ID des Benutzers, falls der Benutzer es sich um einen Lehrer handelt");
 
 	/** Die Definition der Tabellenspalte Schueler_ID */
-	public SchemaTabelleSpalte col_Schueler_ID = add("Schueler_ID", SchemaDatentypen.BIGINT, false)
+	public final SchemaTabelleSpalte col_Schueler_ID = add("Schueler_ID", SchemaDatentypen.BIGINT, false)
 			.setJavaComment("Die Schüler-ID des Benutzers, falls der Benutzer es sich um einen Schüler handelt");
 
 	/** Die Definition der Tabellenspalte Erzieher_ID */
-	public SchemaTabelleSpalte col_Erzieher_ID = add("Erzieher_ID", SchemaDatentypen.BIGINT, false)
+	public final SchemaTabelleSpalte col_Erzieher_ID = add("Erzieher_ID", SchemaDatentypen.BIGINT, false)
 			.setJavaComment("Die erzieher-ID des Benutzers, falls der Benutzer es sich um einen Erzieher handelt");
 
 	/** Die Definition der Tabellenspalte IstAdmin */
-	public SchemaTabelleSpalte col_IstAdmin = add("IstAdmin", SchemaDatentypen.INT, false)
+	public final SchemaTabelleSpalte col_IstAdmin = add("IstAdmin", SchemaDatentypen.INT, false)
 			.setDefault("0")
 			.setNotNull()
 			.setConverter(Boolean01Converter.class)
@@ -54,7 +54,7 @@ public class Tabelle_Benutzer extends SchemaTabelle {
 
 
 	/** Die Definition des Fremdschlüssels Benutzer_Allgemein_FK */
-	public SchemaTabelleFremdschluessel fk_Benutzer_Allgemein_FK = addForeignKey(
+	public final SchemaTabelleFremdschluessel fk_Benutzer_Allgemein_FK = addForeignKey(
 			"Benutzer_Allgemein_FK",
 			/* OnUpdate: */ SchemaFremdschluesselAktionen.CASCADE,
 			/* OnDelete: */ SchemaFremdschluesselAktionen.CASCADE,
@@ -62,7 +62,7 @@ public class Tabelle_Benutzer extends SchemaTabelle {
 			.setRevision(SchemaRevisionen.REV_2);
 
 	/** Die Definition des Fremdschlüssels Benutzer_Lehrer_FK */
-	public SchemaTabelleFremdschluessel fk_Benutzer_Lehrer_FK = addForeignKey(
+	public final SchemaTabelleFremdschluessel fk_Benutzer_Lehrer_FK = addForeignKey(
 			"Benutzer_Lehrer_FK",
 			/* OnUpdate: */ SchemaFremdschluesselAktionen.CASCADE,
 			/* OnDelete: */ SchemaFremdschluesselAktionen.CASCADE,
@@ -70,7 +70,7 @@ public class Tabelle_Benutzer extends SchemaTabelle {
 			.setRevision(SchemaRevisionen.REV_2);
 
 	/** Die Definition des Fremdschlüssels Benutzer_Schueler_FK */
-	public SchemaTabelleFremdschluessel fk_Benutzer_Schueler_FK = addForeignKey(
+	public final SchemaTabelleFremdschluessel fk_Benutzer_Schueler_FK = addForeignKey(
 			"Benutzer_Schueler_FK",
 			/* OnUpdate: */ SchemaFremdschluesselAktionen.CASCADE,
 			/* OnDelete: */ SchemaFremdschluesselAktionen.CASCADE,
@@ -78,7 +78,7 @@ public class Tabelle_Benutzer extends SchemaTabelle {
 			.setRevision(SchemaRevisionen.REV_2);
 
 	/** Die Definition des Fremdschlüssels Benutzer_Erzieher_FK */
-	public SchemaTabelleFremdschluessel fk_Benutzer_Erzieher_FK = addForeignKey(
+	public final SchemaTabelleFremdschluessel fk_Benutzer_Erzieher_FK = addForeignKey(
 			"Benutzer_Erzieher_FK",
 			/* OnUpdate: */ SchemaFremdschluesselAktionen.CASCADE,
 			/* OnDelete: */ SchemaFremdschluesselAktionen.CASCADE,

@@ -11,7 +11,7 @@ import de.svws_nrw.db.schema.SchemaTabelleSpalte;
 public class Tabelle_Nationalitaeten_Keys extends SchemaTabelle {
 
 	/** Die Definition der Tabellenspalte DEStatisCode */
-	public SchemaTabelleSpalte col_DEStatisCode = add("DEStatisCode", SchemaDatentypen.VARCHAR, true).setDatenlaenge(3)
+	public final SchemaTabelleSpalte col_DEStatisCode = add("DEStatisCode", SchemaDatentypen.VARCHAR, true).setDatenlaenge(3)
 			.setNotNull()
 			.setJavaComment("Der dreistellige Länder-Code des statistischen Bundesamtes (DESTATIS)");
 

@@ -16,51 +16,51 @@ import de.svws_nrw.db.schema.SchemaTabelleSpalte;
 public class Tabelle_Gost_Jahrgang_Fachwahlen extends SchemaTabelle {
 
 	/** Die Definition der Tabellenspalte Abi_Jahrgang */
-	public SchemaTabelleSpalte col_Abi_Jahrgang = add("Abi_Jahrgang", SchemaDatentypen.INT, true)
+	public final SchemaTabelleSpalte col_Abi_Jahrgang = add("Abi_Jahrgang", SchemaDatentypen.INT, true)
 			.setNotNull()
 			.setJavaComment("Schuljahr, in welchem der Jahrgang das Abitur macht");
 
 	/** Die Definition der Tabellenspalte Fach_ID */
-	public SchemaTabelleSpalte col_Fach_ID = add("Fach_ID", SchemaDatentypen.BIGINT, true)
+	public final SchemaTabelleSpalte col_Fach_ID = add("Fach_ID", SchemaDatentypen.BIGINT, true)
 			.setNotNull()
 			.setJavaComment("Gymnasiale Oberstufe - Jahrgangsdaten - Fachwahlen: ID des Faches in der Fächertabelle");
 
 	/** Die Definition der Tabellenspalte EF1_Kursart */
-	public SchemaTabelleSpalte col_EF1_Kursart = add("EF1_Kursart", SchemaDatentypen.VARCHAR, false).setDatenlaenge(10)
+	public final SchemaTabelleSpalte col_EF1_Kursart = add("EF1_Kursart", SchemaDatentypen.VARCHAR, false).setDatenlaenge(10)
 			.setJavaComment("Gymnasiale Oberstufe - Jahrgangsdaten - Fachwahlen: Kursart des belegten Faches in EF.1");
 
 	/** Die Definition der Tabellenspalte EF2_Kursart */
-	public SchemaTabelleSpalte col_EF2_Kursart = add("EF2_Kursart", SchemaDatentypen.VARCHAR, false).setDatenlaenge(10)
+	public final SchemaTabelleSpalte col_EF2_Kursart = add("EF2_Kursart", SchemaDatentypen.VARCHAR, false).setDatenlaenge(10)
 			.setJavaComment("Gymnasiale Oberstufe - Jahrgangsdaten - Fachwahlen: Kursart des belegten Faches in EF.2");
 
 	/** Die Definition der Tabellenspalte Q11_Kursart */
-	public SchemaTabelleSpalte col_Q11_Kursart = add("Q11_Kursart", SchemaDatentypen.VARCHAR, false).setDatenlaenge(10)
+	public final SchemaTabelleSpalte col_Q11_Kursart = add("Q11_Kursart", SchemaDatentypen.VARCHAR, false).setDatenlaenge(10)
 			.setJavaComment("Gymnasiale Oberstufe - Jahrgangsdaten - Fachwahlen: Kursart des belegten Faches in Q1.1");
 
 	/** Die Definition der Tabellenspalte Q12_Kursart */
-	public SchemaTabelleSpalte col_Q12_Kursart = add("Q12_Kursart", SchemaDatentypen.VARCHAR, false).setDatenlaenge(10)
+	public final SchemaTabelleSpalte col_Q12_Kursart = add("Q12_Kursart", SchemaDatentypen.VARCHAR, false).setDatenlaenge(10)
 			.setJavaComment("Gymnasiale Oberstufe - Jahrgangsdaten - Fachwahlen: Kursart des belegten Faches in Q1.2");
 
 	/** Die Definition der Tabellenspalte Q21_Kursart */
-	public SchemaTabelleSpalte col_Q21_Kursart = add("Q21_Kursart", SchemaDatentypen.VARCHAR, false).setDatenlaenge(10)
+	public final SchemaTabelleSpalte col_Q21_Kursart = add("Q21_Kursart", SchemaDatentypen.VARCHAR, false).setDatenlaenge(10)
 			.setJavaComment("Gymnasiale Oberstufe - Jahrgangsdaten - Fachwahlen: Kursart des belegten Faches in Q2.1");
 
 	/** Die Definition der Tabellenspalte Q22_Kursart */
-	public SchemaTabelleSpalte col_Q22_Kursart = add("Q22_Kursart", SchemaDatentypen.VARCHAR, false).setDatenlaenge(10)
+	public final SchemaTabelleSpalte col_Q22_Kursart = add("Q22_Kursart", SchemaDatentypen.VARCHAR, false).setDatenlaenge(10)
 			.setJavaComment("Gymnasiale Oberstufe - Jahrgangsdaten - Fachwahlen: Kursart des belegten Faches in Q2.2");
 
 	/** Die Definition der Tabellenspalte AbiturFach */
-	public SchemaTabelleSpalte col_AbiturFach = add("AbiturFach", SchemaDatentypen.INT, false)
+	public final SchemaTabelleSpalte col_AbiturFach = add("AbiturFach", SchemaDatentypen.INT, false)
 			.setJavaComment("Gymnasiale Oberstufe - Jahrgangsdaten - Fachwahlen: Abiturfach 1 bis 4 oder null");
 
 	/** Die Definition der Tabellenspalte Bemerkungen */
-	public SchemaTabelleSpalte col_Bemerkungen = add("Bemerkungen", SchemaDatentypen.VARCHAR, false).setDatenlaenge(50)
+	public final SchemaTabelleSpalte col_Bemerkungen = add("Bemerkungen", SchemaDatentypen.VARCHAR, false).setDatenlaenge(50)
 			.setJavaComment("Gymnasiale Oberstufe - Jahrgangsdaten - Fachwahlen: Bemerkungen zum belegten Fach");
 
 
 
 	/** Die Definition des Fremdschlüssels Gost_Jahrgang_Fachwahlen_Abi_Jahrgang_FK */
-	public SchemaTabelleFremdschluessel fk_Gost_Jahrgang_Fachwahlen_Abi_Jahrgang_FK = addForeignKey(
+	public final SchemaTabelleFremdschluessel fk_Gost_Jahrgang_Fachwahlen_Abi_Jahrgang_FK = addForeignKey(
 			"Gost_Jahrgang_Fachwahlen_Abi_Jahrgang_FK",
 			/* OnUpdate: */ SchemaFremdschluesselAktionen.CASCADE,
 			/* OnDelete: */ SchemaFremdschluesselAktionen.CASCADE,
@@ -68,7 +68,7 @@ public class Tabelle_Gost_Jahrgang_Fachwahlen extends SchemaTabelle {
 	);
 
 	/** Die Definition des Fremdschlüssels Gost_Jahrgang_Fachwahlen_Fach_ID_FK */
-	public SchemaTabelleFremdschluessel fk_Gost_Jahrgang_Fachwahlen_Fach_ID_FK = addForeignKey(
+	public final SchemaTabelleFremdschluessel fk_Gost_Jahrgang_Fachwahlen_Fach_ID_FK = addForeignKey(
 			"Gost_Jahrgang_Fachwahlen_Fach_ID_FK",
 			/* OnUpdate: */ SchemaFremdschluesselAktionen.CASCADE,
 			/* OnDelete: */ SchemaFremdschluesselAktionen.CASCADE,
@@ -77,12 +77,12 @@ public class Tabelle_Gost_Jahrgang_Fachwahlen extends SchemaTabelle {
 
 
 	/** Die Definition des Non-Unique-Index Gost_Jahrgang_Fachwahlen_IDX_Abi_Jahrgang */
-	public SchemaTabelleIndex index_Gost_Jahrgang_Fachwahlen_IDX_Abi_Jahrgang = addIndex("Gost_Jahrgang_Fachwahlen_IDX_Abi_Jahrgang",
+	public final SchemaTabelleIndex index_Gost_Jahrgang_Fachwahlen_IDX_Abi_Jahrgang = addIndex("Gost_Jahrgang_Fachwahlen_IDX_Abi_Jahrgang",
 			col_Abi_Jahrgang
 	);
 
 	/** Die Definition des Non-Unique-Index Gost_Jahrgang_Fachwahlen_IDX_Abi_Jahrgang_Fach_ID */
-	public SchemaTabelleIndex index_Gost_Jahrgang_Fachwahlen_IDX_Abi_Jahrgang_Fach_ID = addIndex("Gost_Jahrgang_Fachwahlen_IDX_Abi_Jahrgang_Fach_ID",
+	public final SchemaTabelleIndex index_Gost_Jahrgang_Fachwahlen_IDX_Abi_Jahrgang_Fach_ID = addIndex("Gost_Jahrgang_Fachwahlen_IDX_Abi_Jahrgang_Fach_ID",
 			col_Abi_Jahrgang,
 			col_Fach_ID
 	);

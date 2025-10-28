@@ -16,18 +16,18 @@ import de.svws_nrw.db.schema.SchemaTabelleSpalte;
 public class Tabelle_Gost_Klausuren_SchuelerklausurenTermine_Raumstunden extends SchemaTabelle {
 
 	/** Die Definition der Tabellenspalte Schuelerklausurtermin_ID */
-	public SchemaTabelleSpalte col_Schuelerklausurtermin_ID = add("Schuelerklausurtermin_ID", SchemaDatentypen.BIGINT, true)
+	public final SchemaTabelleSpalte col_Schuelerklausurtermin_ID = add("Schuelerklausurtermin_ID", SchemaDatentypen.BIGINT, true)
 			.setNotNull()
 			.setJavaComment("ID des Schuelerklausurtermins");
 
 	/** Die Definition der Tabellenspalte Raumstunde_ID */
-	public SchemaTabelleSpalte col_Raumstunde_ID = add("Raumstunde_ID", SchemaDatentypen.BIGINT, true)
+	public final SchemaTabelleSpalte col_Raumstunde_ID = add("Raumstunde_ID", SchemaDatentypen.BIGINT, true)
 			.setNotNull()
 			.setJavaComment("ID der Klausurraumstunde");
 
 
 	/** Die Definition des Fremdschlüssels Gost_Klausuren_SchuelerklausurenTermine_Raumstunden_Schuelerklausurtermin_ID_FK */
-	public SchemaTabelleFremdschluessel fk_Gost_Klausuren_SchuelerklausurenTermine_Raumstunden_Schuelerklausur_ID_FK = addForeignKey(
+	public final SchemaTabelleFremdschluessel fk_Gost_Klausuren_SchuelerklausurenTermine_Raumstunden_Schuelerklausur_ID_FK = addForeignKey(
 			"Gost_Klausuren_SKT_Raumstunden_SK_ID_FK", // Fremdschlüsselname Gost_Klausuren_SchuelerklausurenTermine_Raumstunden_Schuelerklausur_ID_FK zu lang
 			/* OnUpdate: */ SchemaFremdschluesselAktionen.CASCADE,
 			/* OnDelete: */ SchemaFremdschluesselAktionen.CASCADE,
@@ -35,7 +35,7 @@ public class Tabelle_Gost_Klausuren_SchuelerklausurenTermine_Raumstunden extends
 	);
 
 	/** Die Definition des Fremdschlüssels Gost_Klausuren_SchuelerklausurenTermine_Raumstunden_KlausurRaumStunde_ID_FK */
-	public SchemaTabelleFremdschluessel fk_Gost_Klausuren_SchuelerklausurenTermine_Raumstunden_KlausurRaumStunde_ID_FK = addForeignKey(
+	public final SchemaTabelleFremdschluessel fk_Gost_Klausuren_SchuelerklausurenTermine_Raumstunden_KlausurRaumStunde_ID_FK = addForeignKey(
 			"Gost_Klausuren_SKT_Raumstunden_KRS_ID_FK", // Fremdschlüsselname Gost_Klausuren_SchuelerklausurenTermine_Raumstunden_KlausurRaumStunde_ID_FK zu lang
 			/* OnUpdate: */ SchemaFremdschluesselAktionen.CASCADE,
 			/* OnDelete: */ SchemaFremdschluesselAktionen.CASCADE,
@@ -43,13 +43,13 @@ public class Tabelle_Gost_Klausuren_SchuelerklausurenTermine_Raumstunden extends
 	);
 
 	/** Die Definition des Non-Unique-Index Gost_Klausuren_SchuelerklausurenTermine_Raumstunden_IDX_Schuelerklausur_ID */
-	public SchemaTabelleIndex index_Gost_Klausuren_SKT_Raumstunden_IDX_Schuelerklausurtermin_ID =
+	public final SchemaTabelleIndex index_Gost_Klausuren_SKT_Raumstunden_IDX_Schuelerklausurtermin_ID =
 			addIndex("Gost_Klausuren_SKT_Raumstunden_IDX_Schuelerklausurtermin_ID",
 					col_Schuelerklausurtermin_ID
 			);
 
 	/** Die Definition des Non-Unique-Index Gost_Klausuren_SchuelerklausurenTermine_Raumstunden_IDX_KlausurRaumStunde_ID */
-	public SchemaTabelleIndex index_Gost_Klausuren_SKT_Raumstunden_IDX_KlausurRaumStunde_ID =
+	public final SchemaTabelleIndex index_Gost_Klausuren_SKT_Raumstunden_IDX_KlausurRaumStunde_ID =
 			addIndex("Gost_Klausuren_SKT_Raumstunden_IDX_KlausurRaumStunde_ID",
 					col_Raumstunde_ID
 			);

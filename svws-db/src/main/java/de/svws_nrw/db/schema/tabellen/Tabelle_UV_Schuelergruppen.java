@@ -16,23 +16,23 @@ import de.svws_nrw.db.schema.SchemaTabelleUniqueIndex;
 public class Tabelle_UV_Schuelergruppen extends SchemaTabelle {
 
 	/** Die Definition der Tabellenspalte ID */
-	public SchemaTabelleSpalte col_ID = add("ID", SchemaDatentypen.BIGINT, true)
+	public final SchemaTabelleSpalte col_ID = add("ID", SchemaDatentypen.BIGINT, true)
 			.setNotNull()
 			.setJavaComment("ID der Schülergruppe (generiert, planungsspezifisch)");
 
 	/** Die Definition der Tabellenspalte Planungsabschnitt_ID */
-	public SchemaTabelleSpalte col_Planungsabschnitt_ID = add("Planungsabschnitt_ID", SchemaDatentypen.BIGINT, false)
+	public final SchemaTabelleSpalte col_Planungsabschnitt_ID = add("Planungsabschnitt_ID", SchemaDatentypen.BIGINT, false)
 			.setNotNull()
 			.setJavaComment("Die ID des Planungsabschnitts als Fremdschlüssel auf die Tabelle UV_Planungsabschnitte");
 
 	/** Die Definition der Tabellenspalte Bezeichnung */
-	public SchemaTabelleSpalte col_Bezeichnung = add("Bezeichnung", SchemaDatentypen.VARCHAR, false).setDatenlaenge(50)
+	public final SchemaTabelleSpalte col_Bezeichnung = add("Bezeichnung", SchemaDatentypen.VARCHAR, false).setDatenlaenge(50)
 			.setNotNull()
 			.setJavaComment("Eine Beschreibung / Kommentar zu dieser Schülergruppe");
 
 
 	/** Die Definition des Fremdschlüssels auf UV_Planungsabschnitte */
-	public SchemaTabelleFremdschluessel fk_UVSchuelergruppen_UVPlanungsabschnitte_FK = addForeignKey(
+	public final SchemaTabelleFremdschluessel fk_UVSchuelergruppen_UVPlanungsabschnitte_FK = addForeignKey(
 			"UVSchuelergruppen_UVPlanungsabschnitte_FK",
 			/* OnUpdate: */ SchemaFremdschluesselAktionen.CASCADE,
 			/* OnDelete: */ SchemaFremdschluesselAktionen.CASCADE,
@@ -40,9 +40,9 @@ public class Tabelle_UV_Schuelergruppen extends SchemaTabelle {
 	);
 
 	/** Unique-Index für die Kombination ID und Planungsabschnitt_ID, benötigt durch 2-teiligen FK */
-	public SchemaTabelleUniqueIndex unique_UVSchuelergruppen_UC1 = addUniqueIndex("UVSchuelergruppen_UC1",
+	public final SchemaTabelleUniqueIndex unique_UVSchuelergruppen_UC1 = addUniqueIndex("UVSchuelergruppen_UC1",
 			col_ID, col_Planungsabschnitt_ID
-	 );
+	);
 
 
 	/**

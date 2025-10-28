@@ -15,28 +15,28 @@ import de.svws_nrw.db.schema.SchemaTabelleSpalte;
 public class Tabelle_KursLehrer extends SchemaTabelle {
 
 	/** Die Definition der Tabellenspalte Kurs_ID */
-	public SchemaTabelleSpalte col_Kurs_ID = add("Kurs_ID", SchemaDatentypen.BIGINT, true)
+	public final SchemaTabelleSpalte col_Kurs_ID = add("Kurs_ID", SchemaDatentypen.BIGINT, true)
 			.setNotNull()
 			.setJavaComment("ID des Kurses zu denen der Lehrer gehört");
 
 	/** Die Definition der Tabellenspalte Lehrer_ID */
-	public SchemaTabelleSpalte col_Lehrer_ID = add("Lehrer_ID", SchemaDatentypen.BIGINT, true)
+	public final SchemaTabelleSpalte col_Lehrer_ID = add("Lehrer_ID", SchemaDatentypen.BIGINT, true)
 			.setNotNull()
 			.setJavaComment("ID des Lehrers");
 
 	/** Die Definition der Tabellenspalte Anteil */
-	public SchemaTabelleSpalte col_Anteil = add("Anteil", SchemaDatentypen.FLOAT, false)
+	public final SchemaTabelleSpalte col_Anteil = add("Anteil", SchemaDatentypen.FLOAT, false)
 			.setJavaComment("Wochenstunden für die Zusatzkraft");
 
 	/** Die Definition der Tabellenspalte SchulnrEigner */
-	public SchemaTabelleSpalte col_SchulnrEigner = add("SchulnrEigner", SchemaDatentypen.INT, false)
+	public final SchemaTabelleSpalte col_SchulnrEigner = add("SchulnrEigner", SchemaDatentypen.INT, false)
 			.setVeraltet(SchemaRevisionen.REV_1)
 			.setJavaComment("Die Schulnummer zu welcher der Datensatz gehört – wird benötigt, wenn mehrere Schulen in einem Schema der Datenbank"
 					+ " gespeichert werden");
 
 
 	/** Die Definition des Fremdschlüssels KursLehrer_Kurs_FK */
-	public SchemaTabelleFremdschluessel fk_KursLehrer_Kurs_FK = addForeignKey(
+	public final SchemaTabelleFremdschluessel fk_KursLehrer_Kurs_FK = addForeignKey(
 			"KursLehrer_Kurs_FK",
 			/* OnUpdate: */ SchemaFremdschluesselAktionen.CASCADE,
 			/* OnDelete: */ SchemaFremdschluesselAktionen.CASCADE,
@@ -44,7 +44,7 @@ public class Tabelle_KursLehrer extends SchemaTabelle {
 	);
 
 	/** Die Definition des Fremdschlüssels KursLehrer_Lehrer_FK */
-	public SchemaTabelleFremdschluessel fk_KursLehrer_Lehrer_FK = addForeignKey(
+	public final SchemaTabelleFremdschluessel fk_KursLehrer_Lehrer_FK = addForeignKey(
 			"KursLehrer_Lehrer_FK",
 			/* OnUpdate: */ SchemaFremdschluesselAktionen.CASCADE,
 			/* OnDelete: */ SchemaFremdschluesselAktionen.CASCADE,

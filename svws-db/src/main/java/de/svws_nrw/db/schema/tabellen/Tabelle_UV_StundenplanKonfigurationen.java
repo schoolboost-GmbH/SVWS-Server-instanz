@@ -15,18 +15,18 @@ import de.svws_nrw.db.schema.SchemaTabelleSpalte;
 public class Tabelle_UV_StundenplanKonfigurationen extends SchemaTabelle {
 
 	/** Die Definition der Tabellenspalte ID */
-	public SchemaTabelleSpalte col_ID = add("ID", SchemaDatentypen.BIGINT, true)
+	public final SchemaTabelleSpalte col_ID = add("ID", SchemaDatentypen.BIGINT, true)
 			.setNotNull()
 			.setJavaComment("ID der Stundenplankonfiguration (generiert)");
 
 	/** Die Definition der Tabellenspalte Planungsabschnitt_ID */
-	public SchemaTabelleSpalte col_Planungsabschnitt_ID = add("Planungsabschnitt_ID", SchemaDatentypen.BIGINT, false)
+	public final SchemaTabelleSpalte col_Planungsabschnitt_ID = add("Planungsabschnitt_ID", SchemaDatentypen.BIGINT, false)
 			.setNotNull()
 			.setJavaComment("ID des Planungsabschnitts");
 
 
 	/** Die Definition des Fremdschlüssels UVStundenplanKonfigurationen_UVPlanungsabschnitt_FK */
-	public SchemaTabelleFremdschluessel fk_UVStundenplanKonfigurationen_UVPlanungsabschnitt_FK = addForeignKey(
+	public final SchemaTabelleFremdschluessel fk_UVStundenplanKonfigurationen_UVPlanungsabschnitt_FK = addForeignKey(
 			"UVStundenplanKonfigurationen_UVPlanungsabschnitt_FK",
 			/* OnUpdate: */ SchemaFremdschluesselAktionen.CASCADE,
 			/* OnDelete: */ SchemaFremdschluesselAktionen.CASCADE,

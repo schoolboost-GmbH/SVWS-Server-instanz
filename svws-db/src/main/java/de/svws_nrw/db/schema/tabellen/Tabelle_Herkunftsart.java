@@ -11,21 +11,21 @@ import de.svws_nrw.db.schema.SchemaTabelleSpalte;
 public class Tabelle_Herkunftsart extends SchemaTabelle {
 
 	/** Die Definition der Tabellenspalte ID */
-	public SchemaTabelleSpalte col_ID = add("ID", SchemaDatentypen.BIGINT, true)
+	public final SchemaTabelleSpalte col_ID = add("ID", SchemaDatentypen.BIGINT, true)
 			.setNotNull()
 			.setJavaComment("Die ID der Herkunftsart");
 
 	/** Die Definition der Tabellenspalte Kuerzel */
-	public SchemaTabelleSpalte col_Kuerzel = add("Kuerzel", SchemaDatentypen.VARCHAR, false).setDatenlaenge(10)
+	public final SchemaTabelleSpalte col_Kuerzel = add("Kuerzel", SchemaDatentypen.VARCHAR, false).setDatenlaenge(10)
 			.setNotNull()
 			.setJavaComment("Das Kürzel der Herkunftsart");
 
 	/** Die Definition der Tabellenspalte gueltigVon */
-	public SchemaTabelleSpalte col_gueltigVon = add("gueltigVon", SchemaDatentypen.INT, false)
+	public final SchemaTabelleSpalte col_gueltigVon = add("gueltigVon", SchemaDatentypen.INT, false)
 			.setJavaComment("Gibt die Gültigkeit ab welchem Schuljahr an");
 
 	/** Die Definition der Tabellenspalte gueltigBis */
-	public SchemaTabelleSpalte col_gueltigBis = add("gueltigBis", SchemaDatentypen.INT, false)
+	public final SchemaTabelleSpalte col_gueltigBis = add("gueltigBis", SchemaDatentypen.INT, false)
 			.setJavaComment("Gibt die Gültigkeit bis zu welchem Schuljahr an");
 
 

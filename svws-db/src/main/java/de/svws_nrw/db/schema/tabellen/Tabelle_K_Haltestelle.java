@@ -13,45 +13,45 @@ import de.svws_nrw.db.schema.SchemaTabelleUniqueIndex;
 public class Tabelle_K_Haltestelle extends SchemaTabelle {
 
 	/** Die Definition der Tabellenspalte ID */
-	public SchemaTabelleSpalte col_ID = add("ID", SchemaDatentypen.BIGINT, true)
+	public final SchemaTabelleSpalte col_ID = add("ID", SchemaDatentypen.BIGINT, true)
 			.setNotNull()
 			.setJavaComment("ID der Haltestelle");
 
 	/** Die Definition der Tabellenspalte Bezeichnung */
-	public SchemaTabelleSpalte col_Bezeichnung = add("Bezeichnung", SchemaDatentypen.VARCHAR, false).setDatenlaenge(30)
+	public final SchemaTabelleSpalte col_Bezeichnung = add("Bezeichnung", SchemaDatentypen.VARCHAR, false).setDatenlaenge(30)
 			.setNotNull()
 			.setJavaComment("Bezeichnung der Haltestelle");
 
 	/** Die Definition der Tabellenspalte Sortierung */
-	public SchemaTabelleSpalte col_Sortierung = add("Sortierung", SchemaDatentypen.INT, false)
+	public final SchemaTabelleSpalte col_Sortierung = add("Sortierung", SchemaDatentypen.INT, false)
 			.setDefault("32000")
 			.setJavaComment("Sortierung der Haltestelle");
 
 	/** Die Definition der Tabellenspalte Sichtbar */
-	public SchemaTabelleSpalte col_Sichtbar = add("Sichtbar", SchemaDatentypen.VARCHAR, false).setDatenlaenge(1)
+	public final SchemaTabelleSpalte col_Sichtbar = add("Sichtbar", SchemaDatentypen.VARCHAR, false).setDatenlaenge(1)
 			.setDefault("+")
 			.setConverter(BooleanPlusMinusDefaultPlusConverter.class)
 			.setJavaComment("Sichbarkeit der Haltestelle");
 
 	/** Die Definition der Tabellenspalte Aenderbar */
-	public SchemaTabelleSpalte col_Aenderbar = add("Aenderbar", SchemaDatentypen.VARCHAR, false).setDatenlaenge(1)
+	public final SchemaTabelleSpalte col_Aenderbar = add("Aenderbar", SchemaDatentypen.VARCHAR, false).setDatenlaenge(1)
 			.setDefault("+")
 			.setConverter(BooleanPlusMinusDefaultPlusConverter.class)
 			.setJavaComment("Änderbarkeit der Haltestelle");
 
 	/** Die Definition der Tabellenspalte EntfernungSchule */
-	public SchemaTabelleSpalte col_EntfernungSchule = add("EntfernungSchule", SchemaDatentypen.FLOAT, false)
+	public final SchemaTabelleSpalte col_EntfernungSchule = add("EntfernungSchule", SchemaDatentypen.FLOAT, false)
 			.setJavaComment("Enterfung zur Schule von der Haltestelle");
 
 	/** Die Definition der Tabellenspalte SchulnrEigner */
-	public SchemaTabelleSpalte col_SchulnrEigner = add("SchulnrEigner", SchemaDatentypen.INT, false)
+	public final SchemaTabelleSpalte col_SchulnrEigner = add("SchulnrEigner", SchemaDatentypen.INT, false)
 			.setVeraltet(SchemaRevisionen.REV_1)
 			.setJavaComment("Die Schulnummer zu welcher der Datensatz gehört – wird benötigt, wenn mehrere Schulen in einem Schema der Datenbank"
 					+ " gespeichert werden");
 
 
 	/** Die Definition des Unique-Index K_Haltestelle_UC1 */
-	public SchemaTabelleUniqueIndex unique_K_Haltestelle_UC1 = addUniqueIndex("K_Haltestelle_UC1",
+	public final SchemaTabelleUniqueIndex unique_K_Haltestelle_UC1 = addUniqueIndex("K_Haltestelle_UC1",
 			col_Bezeichnung
 	);
 

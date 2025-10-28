@@ -15,23 +15,23 @@ import de.svws_nrw.db.schema.SchemaTabelleSpalte;
 public class Tabelle_LehrerNotenmodulCredentials extends SchemaTabelle {
 
 	/** Die Definition der Tabellenspalte Lehrer_ID */
-	public SchemaTabelleSpalte col_Lehrer_ID = add("Lehrer_ID", SchemaDatentypen.BIGINT, true)
+	public final SchemaTabelleSpalte col_Lehrer_ID = add("Lehrer_ID", SchemaDatentypen.BIGINT, true)
 			.setNotNull()
 			.setJavaComment("Die LehrerID des Lehrers, für den die Credentials gelten");
 
 	/** Die Definition der Tabellenspalte Initialkennwort */
-	public SchemaTabelleSpalte col_Initialkennwort = add("Initialkennwort", SchemaDatentypen.VARCHAR, false).setDatenlaenge(255)
+	public final SchemaTabelleSpalte col_Initialkennwort = add("Initialkennwort", SchemaDatentypen.VARCHAR, false).setDatenlaenge(255)
 			.setNotNull()
 			.setJavaComment("Initialkennwort für den Credential-Datensatz");
 
 	/** Die Definition der Tabellenspalte PasswordHash */
-	public SchemaTabelleSpalte col_PasswordHash = add("PasswordHash", SchemaDatentypen.VARCHAR, false).setDatenlaenge(255)
+	public final SchemaTabelleSpalte col_PasswordHash = add("PasswordHash", SchemaDatentypen.VARCHAR, false).setDatenlaenge(255)
 			.setNotNull()
 			.setJavaComment("Passwordhash für den Credential-Datensatz");
 
 
 	/** Die Definition des Fremdschlüssels LehrerNotenmodulCredentials_Lehrer_FK */
-	public SchemaTabelleFremdschluessel fk_LehrerNotenmodulCredentials_Lehrer_FK = addForeignKey(
+	public final SchemaTabelleFremdschluessel fk_LehrerNotenmodulCredentials_Lehrer_FK = addForeignKey(
 			"LehrerNotenmodulCredentials_Lehrer_FK",
 			/* OnUpdate: */ SchemaFremdschluesselAktionen.CASCADE,
 			/* OnDelete: */ SchemaFremdschluesselAktionen.CASCADE,

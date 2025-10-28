@@ -16,18 +16,18 @@ import de.svws_nrw.db.schema.SchemaTabelleSpalte;
 public class Tabelle_UV_StundenplanErgebnisse extends SchemaTabelle {
 
 	/** Die Definition der Tabellenspalte ID */
-	public SchemaTabelleSpalte col_ID = add("ID", SchemaDatentypen.BIGINT, true)
+	public final SchemaTabelleSpalte col_ID = add("ID", SchemaDatentypen.BIGINT, true)
 			.setNotNull()
 			.setJavaComment("ID der Stundenplanergebnisses (generiert)");
 
 	/** Die Definition der Tabellenspalte StundenplanKonfiguration_ID */
-	public SchemaTabelleSpalte col_StundenplanKonfiguration_ID = add("StundenplanKonfiguration_ID", SchemaDatentypen.BIGINT, false)
+	public final SchemaTabelleSpalte col_StundenplanKonfiguration_ID = add("StundenplanKonfiguration_ID", SchemaDatentypen.BIGINT, false)
 			.setNotNull()
 			.setJavaComment("ID der Stundenplankonfiguration");
 
 
 	/** Die Definition des Fremdschlüssels UVStundenplanErgebnisse_UVStundenplanKonfiguration_FK */
-	public SchemaTabelleFremdschluessel fk_UVStundenplanErgebnisse_UVStundenplanKonfiguration_FK = addForeignKey(
+	public final SchemaTabelleFremdschluessel fk_UVStundenplanErgebnisse_UVStundenplanKonfiguration_FK = addForeignKey(
 			"UVStundenplanErgebnisse_UVStundenplanKonfiguration_FK",
 			/* OnUpdate: */ SchemaFremdschluesselAktionen.CASCADE,
 			/* OnDelete: */ SchemaFremdschluesselAktionen.CASCADE,
@@ -35,7 +35,7 @@ public class Tabelle_UV_StundenplanErgebnisse extends SchemaTabelle {
 
 
 	/** Die Definition des Non-Unique-Index UV_StundenplanErgebnisse_IDX_StundenplanKonfiguration_ID */
-	public SchemaTabelleIndex index_UV_StundenplanErgebnisse_IDX_StundenplanKonfiguration_ID = addIndex("UV_StundenplanErgebnisse_IDX_StundenplanKonfiguration_ID",
+	public final SchemaTabelleIndex index_UV_StundenplanErgebnisse_IDX_StundenplanKonfiguration_ID = addIndex("UV_StundenplanErgebnisse_IDX_StundenplanKonfiguration_ID",
 			col_StundenplanKonfiguration_ID
 	);
 

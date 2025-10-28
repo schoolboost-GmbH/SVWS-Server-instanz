@@ -17,49 +17,49 @@ import de.svws_nrw.db.schema.SchemaTabelleTrigger;
 public class Tabelle_EnmLeistungsdaten extends SchemaTabelle {
 
 	/** Die Definition der Tabellenspalte ID */
-	public SchemaTabelleSpalte col_ID = add("ID", SchemaDatentypen.BIGINT, true)
+	public final SchemaTabelleSpalte col_ID = add("ID", SchemaDatentypen.BIGINT, true)
 			.setNotNull()
 			.setJavaComment("ID der Leistungsdaten");
 
 	/** Die Definition der Tabellenspalte tsNotenKrz */
-	public SchemaTabelleSpalte col_tsNotenKrz = add("tsNotenKrz", SchemaDatentypen.DATETIME, false)
+	public final SchemaTabelleSpalte col_tsNotenKrz = add("tsNotenKrz", SchemaDatentypen.DATETIME, false)
 			.setDatenlaenge(3)
 			.setNotNull()
 			.setJavaComment("Der Zeitstempel der letzten Änderung an der Note.");
 
 	/** Die Definition der Tabellenspalte tsNotenKrzQuartal */
-	public SchemaTabelleSpalte col_tsNotenKrzQuartal = add("tsNotenKrzQuartal", SchemaDatentypen.DATETIME, false)
+	public final SchemaTabelleSpalte col_tsNotenKrzQuartal = add("tsNotenKrzQuartal", SchemaDatentypen.DATETIME, false)
 			.setDatenlaenge(3)
 			.setNotNull()
 			.setJavaComment("Der Zeitstempel der letzten Änderung an der Note.");
 
 	/** Die Definition der Tabellenspalte tsFehlStd */
-	public SchemaTabelleSpalte col_tsFehlStd = add("tsFehlStd", SchemaDatentypen.DATETIME, false)
+	public final SchemaTabelleSpalte col_tsFehlStd = add("tsFehlStd", SchemaDatentypen.DATETIME, false)
 			.setDatenlaenge(3)
 			.setNotNull()
 			.setJavaComment("Der Zeitstempel der letzten Änderung an den Fehlstunden.");
 
 	/** Die Definition der Tabellenspalte tsuFehlStd */
-	public SchemaTabelleSpalte col_tsuFehlStd = add("tsuFehlStd", SchemaDatentypen.DATETIME, false)
+	public final SchemaTabelleSpalte col_tsuFehlStd = add("tsuFehlStd", SchemaDatentypen.DATETIME, false)
 			.setDatenlaenge(3)
 			.setNotNull()
 			.setJavaComment("Der Zeitstempel der letzten Änderung an den unentschuldigten Fehlstunden.");
 
 	/** Die Definition der Tabellenspalte tsuFehlStd */
-	public SchemaTabelleSpalte col_tsLernentw = add("tsLernentw", SchemaDatentypen.DATETIME, false)
+	public final SchemaTabelleSpalte col_tsLernentw = add("tsLernentw", SchemaDatentypen.DATETIME, false)
 			.setDatenlaenge(3)
 			.setNotNull()
 			.setJavaComment("Der Zeitstempel der letzten Änderung an den fachbezogenen Bemerkungen.");
 
 	/** Die Definition der Tabellenspalte tsWarnung */
-	public SchemaTabelleSpalte col_tsWarnung = add("tsWarnung", SchemaDatentypen.DATETIME, false)
+	public final SchemaTabelleSpalte col_tsWarnung = add("tsWarnung", SchemaDatentypen.DATETIME, false)
 			.setDatenlaenge(3)
 			.setNotNull()
 			.setJavaComment("Der Zeitstempel der letzten Änderung, ob gemahnt wird.");
 
 
 	/** Die Definition des Fremdschlüssels EnmLeistungsdaten_FK */
-	public SchemaTabelleFremdschluessel fk_EnmLeistungsdaten_FK = addForeignKey(
+	public final SchemaTabelleFremdschluessel fk_EnmLeistungsdaten_FK = addForeignKey(
 			"EnmLeistungsdaten_FK",
 			/* OnUpdate: */ SchemaFremdschluesselAktionen.CASCADE,
 			/* OnDelete: */ SchemaFremdschluesselAktionen.CASCADE,
@@ -67,7 +67,7 @@ public class Tabelle_EnmLeistungsdaten extends SchemaTabelle {
 
 
 	/** Trigger t_INSERT_EnmLeistungsdaten */
-	public SchemaTabelleTrigger trigger_MariaDB_INSERT_EnmLeistungsdaten = addTrigger(
+	public final SchemaTabelleTrigger trigger_MariaDB_INSERT_EnmLeistungsdaten = addTrigger(
 			"t_INSERT_EnmLeistungsdaten",
 			DBDriver.MARIA_DB,
 			"""
@@ -76,7 +76,7 @@ public class Tabelle_EnmLeistungsdaten extends SchemaTabelle {
 			""", Schema.tab_SchuelerLeistungsdaten, Schema.tab_EnmLeistungsdaten);
 
 	/** Trigger t_UPDATE_EnmLeistungsdaten */
-	public SchemaTabelleTrigger trigger_MariaDB_UPDATE_EnmLeistungsdaten = addTrigger(
+	public final SchemaTabelleTrigger trigger_MariaDB_UPDATE_EnmLeistungsdaten = addTrigger(
 			"t_UPDATE_EnmLeistungsdaten",
 			DBDriver.MARIA_DB,
 			"""

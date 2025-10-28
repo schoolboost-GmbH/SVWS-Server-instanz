@@ -18,36 +18,36 @@ import de.svws_nrw.db.schema.SchemaTabelleUniqueIndex;
 public class Tabelle_Gost_Klausuren_Kursklausuren extends SchemaTabelle {
 
 	/** Die Definition der Tabellenspalte ID */
-	public SchemaTabelleSpalte col_ID = add("ID", SchemaDatentypen.BIGINT, true)
+	public final SchemaTabelleSpalte col_ID = add("ID", SchemaDatentypen.BIGINT, true)
 			.setNotNull()
 			.setJavaComment("ID der Kursklausur (generiert)");
 
 	/** Die Definition der Tabellenspalte Vorgabe_ID */
-	public SchemaTabelleSpalte col_Vorgabe_ID = add("Vorgabe_ID", SchemaDatentypen.BIGINT, false)
+	public final SchemaTabelleSpalte col_Vorgabe_ID = add("Vorgabe_ID", SchemaDatentypen.BIGINT, false)
 			.setNotNull()
 			.setJavaComment("ID der Klausurvorgaben");
 
 	/** Die Definition der Tabellenspalte Kurs_ID */
-	public SchemaTabelleSpalte col_Kurs_ID = add("Kurs_ID", SchemaDatentypen.BIGINT, false)
+	public final SchemaTabelleSpalte col_Kurs_ID = add("Kurs_ID", SchemaDatentypen.BIGINT, false)
 			.setNotNull()
 			.setJavaComment("Kurs_ID der Klausur");
 
 	/** Die Definition der Tabellenspalte Termin_ID */
-	public SchemaTabelleSpalte col_Termin_ID = add("Termin_ID", SchemaDatentypen.BIGINT, false)
+	public final SchemaTabelleSpalte col_Termin_ID = add("Termin_ID", SchemaDatentypen.BIGINT, false)
 			.setJavaComment("ID des Klausurtermins");
 
 	/** Die Definition der Tabellenspalte Startzeit */
-	public SchemaTabelleSpalte col_Startzeit = add("Startzeit", SchemaDatentypen.TIME, false)
+	public final SchemaTabelleSpalte col_Startzeit = add("Startzeit", SchemaDatentypen.TIME, false)
 			.setConverter(UhrzeitConverter.class)
 			.setJavaComment("Startzeit der Klausur, wenn abweichend von Startzeit der Klausur-Schiene");
 
 	/** Die Definition der Tabellenspalte Bemerkungen */
-	public SchemaTabelleSpalte col_Bemerkungen = add("Bemerkungen", SchemaDatentypen.TEXT, false)
+	public final SchemaTabelleSpalte col_Bemerkungen = add("Bemerkungen", SchemaDatentypen.TEXT, false)
 			.setJavaComment("Text für Bemerkungen zur Kursklausur");
 
 
 	/** Die Definition des Fremdschlüssels Gost_Klausuren_Kursklausuren_Vorgabe_ID_FK */
-	public SchemaTabelleFremdschluessel fk_Gost_Klausuren_Kursklausuren_Vorgabe_ID_FK = addForeignKey(
+	public final SchemaTabelleFremdschluessel fk_Gost_Klausuren_Kursklausuren_Vorgabe_ID_FK = addForeignKey(
 			"Gost_Klausuren_Kursklausuren_Vorgabe_ID_FK",
 			/* OnUpdate: */ SchemaFremdschluesselAktionen.CASCADE,
 			/* OnDelete: */ SchemaFremdschluesselAktionen.RESTRICT,
@@ -55,7 +55,7 @@ public class Tabelle_Gost_Klausuren_Kursklausuren extends SchemaTabelle {
 	);
 
 	/** Die Definition des Fremdschlüssels Gost_Klausuren_Kursklausuren_Kurs_ID_FK */
-	public SchemaTabelleFremdschluessel fk_Gost_Klausuren_Kursklausuren_Kurs_ID_FK = addForeignKey(
+	public final SchemaTabelleFremdschluessel fk_Gost_Klausuren_Kursklausuren_Kurs_ID_FK = addForeignKey(
 			"Gost_Klausuren_Kursklausuren_Kurs_ID_FK",
 			/* OnUpdate: */ SchemaFremdschluesselAktionen.CASCADE,
 			/* OnDelete: */ SchemaFremdschluesselAktionen.CASCADE,
@@ -63,7 +63,7 @@ public class Tabelle_Gost_Klausuren_Kursklausuren extends SchemaTabelle {
 	);
 
 	/** Die Definition des Fremdschlüssels Gost_Klausuren_Kursklausuren_Termin_ID_FK */
-	public SchemaTabelleFremdschluessel fk_Gost_Klausuren_Kursklausuren_Termin_ID_FK = addForeignKey(
+	public final SchemaTabelleFremdschluessel fk_Gost_Klausuren_Kursklausuren_Termin_ID_FK = addForeignKey(
 			"Gost_Klausuren_Kursklausuren_Termin_ID_FK",
 			/* OnUpdate: */ SchemaFremdschluesselAktionen.CASCADE,
 			/* OnDelete: */ SchemaFremdschluesselAktionen.SET_NULL,
@@ -72,17 +72,17 @@ public class Tabelle_Gost_Klausuren_Kursklausuren extends SchemaTabelle {
 
 
 	/** Die Definition des Unique-Index Gost_Klausuren_Kursklausuren_UC1 */
-	public SchemaTabelleUniqueIndex unique_Gost_Klausuren_Kursklausuren_UC1 = addUniqueIndex("Gost_Klausuren_Kursklausuren_UC1",
+	public final SchemaTabelleUniqueIndex unique_Gost_Klausuren_Kursklausuren_UC1 = addUniqueIndex("Gost_Klausuren_Kursklausuren_UC1",
 			col_Vorgabe_ID, col_Kurs_ID
 	);
 
 	/** Die Definition des Non-Unique-Index Gost_Klausuren_Kursklausuren_IDX_Vorgabe_ID */
-	public SchemaTabelleIndex index_Gost_Klausuren_Kursklausuren_IDX_Vorgabe_ID = addIndex("Gost_Klausuren_Kursklausuren_IDX_Vorgabe_ID",
+	public final SchemaTabelleIndex index_Gost_Klausuren_Kursklausuren_IDX_Vorgabe_ID = addIndex("Gost_Klausuren_Kursklausuren_IDX_Vorgabe_ID",
 			col_Vorgabe_ID
 	);
 
 	/** Die Definition des Non-Unique-Index Gost_Klausuren_Kursklausuren_IDX_Termin_ID */
-	public SchemaTabelleIndex index_Gost_Klausuren_Kursklausuren_IDX_Termin_ID = addIndex("Gost_Klausuren_Kursklausuren_IDX_Termin_ID",
+	public final SchemaTabelleIndex index_Gost_Klausuren_Kursklausuren_IDX_Termin_ID = addIndex("Gost_Klausuren_Kursklausuren_IDX_Termin_ID",
 			col_Termin_ID
 	);
 

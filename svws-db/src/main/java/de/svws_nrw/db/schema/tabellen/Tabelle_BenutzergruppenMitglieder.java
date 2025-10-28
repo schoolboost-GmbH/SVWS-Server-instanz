@@ -15,18 +15,18 @@ import de.svws_nrw.db.schema.SchemaTabelleSpalte;
 public class Tabelle_BenutzergruppenMitglieder extends SchemaTabelle {
 
 	/** Die Definition der Tabellenspalte Gruppe_ID */
-	public SchemaTabelleSpalte col_Gruppe_ID = add("Gruppe_ID", SchemaDatentypen.BIGINT, true)
+	public final SchemaTabelleSpalte col_Gruppe_ID = add("Gruppe_ID", SchemaDatentypen.BIGINT, true)
 			.setNotNull()
 			.setJavaComment("Die ID der Benutzergruppe");
 
 	/** Die Definition der Tabellenspalte Benutzer_ID */
-	public SchemaTabelleSpalte col_Benutzer_ID = add("Benutzer_ID", SchemaDatentypen.BIGINT, true)
+	public final SchemaTabelleSpalte col_Benutzer_ID = add("Benutzer_ID", SchemaDatentypen.BIGINT, true)
 			.setNotNull()
 			.setJavaComment("Die ID des Benutzers");
 
 
 	/** Die Definition des Fremdschlüssels BenutzergruppenMitglieder_Benutzergruppen_FK */
-	public SchemaTabelleFremdschluessel fk_BenutzergruppenMitglieder_Benutzergruppen_FK = addForeignKey(
+	public final SchemaTabelleFremdschluessel fk_BenutzergruppenMitglieder_Benutzergruppen_FK = addForeignKey(
 			"BenutzergruppenMitglieder_Benutzergruppen_FK",
 			/* OnUpdate: */ SchemaFremdschluesselAktionen.CASCADE,
 			/* OnDelete: */ SchemaFremdschluesselAktionen.CASCADE,
@@ -34,7 +34,7 @@ public class Tabelle_BenutzergruppenMitglieder extends SchemaTabelle {
 			.setRevision(SchemaRevisionen.REV_2);
 
 	/** Die Definition des Fremdschlüssels BenutzergruppenMitglieder_Benutzer_FK */
-	public SchemaTabelleFremdschluessel fk_BenutzergruppenMitglieder_Benutzer_FK = addForeignKey(
+	public final SchemaTabelleFremdschluessel fk_BenutzergruppenMitglieder_Benutzer_FK = addForeignKey(
 			"BenutzergruppenMitglieder_Benutzer_FK",
 			/* OnUpdate: */ SchemaFremdschluesselAktionen.CASCADE,
 			/* OnDelete: */ SchemaFremdschluesselAktionen.CASCADE,

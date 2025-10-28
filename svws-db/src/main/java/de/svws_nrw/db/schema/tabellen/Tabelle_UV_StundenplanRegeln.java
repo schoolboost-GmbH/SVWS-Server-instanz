@@ -17,24 +17,24 @@ import de.svws_nrw.db.schema.SchemaTabelleSpalte;
 public class Tabelle_UV_StundenplanRegeln extends SchemaTabelle {
 
 	/** Die Definition der Tabellenspalte ID */
-	public SchemaTabelleSpalte col_ID = add("ID", SchemaDatentypen.BIGINT, true)
+	public final SchemaTabelleSpalte col_ID = add("ID", SchemaDatentypen.BIGINT, true)
 			.setNotNull()
 			.setJavaComment("ID der Stundenplanregel (generiert)");
 
 	/** Die Definition der Tabellenspalte StundenplanKonfiguration_ID */
-	public SchemaTabelleSpalte col_StundenplanKonfiguration_ID = add("StundenplanKonfiguration_ID", SchemaDatentypen.BIGINT, false)
+	public final SchemaTabelleSpalte col_StundenplanKonfiguration_ID = add("StundenplanKonfiguration_ID", SchemaDatentypen.BIGINT, false)
 			.setNotNull()
 			.setJavaComment("ID der Stundenplankonfiguration");
 
 	/** Die Definition der Tabellenspalte Typ */
-	public SchemaTabelleSpalte col_Typ = add("Typ", SchemaDatentypen.INT, false)
+	public final SchemaTabelleSpalte col_Typ = add("Typ", SchemaDatentypen.INT, false)
 			.setNotNull()
 			.setConverter(GostKursblockungRegelTypConverter.class)
 			.setJavaComment("Die ID des Typs der Regeldefinition (siehe Core-Type GostKursblockungRegeltyp)");
 
 
 	/** Die Definition des Fremdschlüssels UVStundenplanRegeln_UVStundenplanKonfiguration_FK */
-	public SchemaTabelleFremdschluessel fk_UVStundenplanRegeln_UVStundenplanKonfiguration_FK = addForeignKey(
+	public final SchemaTabelleFremdschluessel fk_UVStundenplanRegeln_UVStundenplanKonfiguration_FK = addForeignKey(
 			"UVStundenplanRegeln_UVStundenplanKonfiguration_FK",
 			/* OnUpdate: */ SchemaFremdschluesselAktionen.CASCADE,
 			/* OnDelete: */ SchemaFremdschluesselAktionen.CASCADE,
@@ -42,7 +42,7 @@ public class Tabelle_UV_StundenplanRegeln extends SchemaTabelle {
 
 
 	/** Die Definition des Non-Unique-Index UV_StundenplanRegeln_IDX_StundenplanKonfiguration_ID_Typ */
-	public SchemaTabelleIndex index_UV_StundenplanRegeln_IDX_StundenplanKonfiguration_ID_Typ = addIndex("UV_StundenplanRegeln_IDX_StundenplanKonfiguration_ID_Typ",
+	public final SchemaTabelleIndex index_UV_StundenplanRegeln_IDX_StundenplanKonfiguration_ID_Typ = addIndex("UV_StundenplanRegeln_IDX_StundenplanKonfiguration_ID_Typ",
 			col_StundenplanKonfiguration_ID,
 			col_Typ
 	);

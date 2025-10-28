@@ -15,33 +15,33 @@ import de.svws_nrw.db.schema.SchemaTabelleSpalte;
 public class Tabelle_Floskeln extends SchemaTabelle {
 
 	/** Die Definition der Tabellenspalte Kuerzel */
-	public SchemaTabelleSpalte col_Kuerzel = add("Kuerzel", SchemaDatentypen.VARCHAR, true).setDatenlaenge(10)
+	public final SchemaTabelleSpalte col_Kuerzel = add("Kuerzel", SchemaDatentypen.VARCHAR, true).setDatenlaenge(10)
 			.setNotNull()
 			.setJavaComment("Kürzel für die Floskel wird beim Import automatisch vergeben");
 
 	/** Die Definition der Tabellenspalte FloskelText */
-	public SchemaTabelleSpalte col_FloskelText = add("FloskelText", SchemaDatentypen.TEXT, false)
+	public final SchemaTabelleSpalte col_FloskelText = add("FloskelText", SchemaDatentypen.TEXT, false)
 			.setNotNull()
 			.setJavaComment("Text der Floskel");
 
 	/** Die Definition der Tabellenspalte FloskelGruppe */
-	public SchemaTabelleSpalte col_FloskelGruppe = add("FloskelGruppe", SchemaDatentypen.VARCHAR, false).setDatenlaenge(10)
+	public final SchemaTabelleSpalte col_FloskelGruppe = add("FloskelGruppe", SchemaDatentypen.VARCHAR, false).setDatenlaenge(10)
 			.setJavaComment("Gruppe der Floskel");
 
 	/** Die Definition der Tabellenspalte FloskelFach */
-	public SchemaTabelleSpalte col_FloskelFach = add("FloskelFach", SchemaDatentypen.VARCHAR, false).setDatenlaenge(20)
+	public final SchemaTabelleSpalte col_FloskelFach = add("FloskelFach", SchemaDatentypen.VARCHAR, false).setDatenlaenge(20)
 			.setJavaComment("Fach bei Fachfloskeln");
 
 	/** Die Definition der Tabellenspalte FloskelNiveau */
-	public SchemaTabelleSpalte col_FloskelNiveau = add("FloskelNiveau", SchemaDatentypen.VARCHAR, false).setDatenlaenge(2)
+	public final SchemaTabelleSpalte col_FloskelNiveau = add("FloskelNiveau", SchemaDatentypen.VARCHAR, false).setDatenlaenge(2)
 			.setJavaComment("Niveau bei Fachfloskeln");
 
 	/** Die Definition der Tabellenspalte FloskelJahrgang */
-	public SchemaTabelleSpalte col_FloskelJahrgang = add("FloskelJahrgang", SchemaDatentypen.VARCHAR, false).setDatenlaenge(2)
+	public final SchemaTabelleSpalte col_FloskelJahrgang = add("FloskelJahrgang", SchemaDatentypen.VARCHAR, false).setDatenlaenge(2)
 			.setJavaComment("Jahrgang bei Fachfloskeln");
 
 	/** Die Definition der Tabellenspalte SchulnrEigner */
-	public SchemaTabelleSpalte col_SchulnrEigner = add("SchulnrEigner", SchemaDatentypen.INT, false)
+	public final SchemaTabelleSpalte col_SchulnrEigner = add("SchulnrEigner", SchemaDatentypen.INT, false)
 			.setNotNull()
 			.setVeraltet(SchemaRevisionen.REV_1)
 			.setJavaComment(
@@ -49,7 +49,7 @@ public class Tabelle_Floskeln extends SchemaTabelle {
 
 
 	/** Die Definition des Fremdschlüssels Floskeln_Floskelgruppe_Floskelgruppen_FK */
-	public SchemaTabelleFremdschluessel fk_Floskeln_Floskelgruppe_Floskelgruppen_FK = addForeignKey(
+	public final SchemaTabelleFremdschluessel fk_Floskeln_Floskelgruppe_Floskelgruppen_FK = addForeignKey(
 			"Floskeln_Floskelgruppe_Floskelgruppen_FK",
 			/* OnUpdate: */ SchemaFremdschluesselAktionen.CASCADE,
 			/* OnDelete: */ SchemaFremdschluesselAktionen.SET_NULL,

@@ -16,53 +16,53 @@ import de.svws_nrw.db.schema.SchemaTabelleUniqueIndex;
 public class Tabelle_CredentialsLernplattformen extends SchemaTabelle {
 
 	/** Die Definition der Tabellenspalte ID */
-	public SchemaTabelleSpalte col_ID = add("ID", SchemaDatentypen.BIGINT, true)
+	public final SchemaTabelleSpalte col_ID = add("ID", SchemaDatentypen.BIGINT, true)
 			.setNotNull()
 			.setJavaComment("ID des Datensatzes für die externen Account-Credentials (Lernplattformen)");
 
 	/** Die Definition der Tabellenspalte LernplattformID */
-	public SchemaTabelleSpalte col_LernplattformID = add("LernplattformID", SchemaDatentypen.BIGINT, false)
+	public final SchemaTabelleSpalte col_LernplattformID = add("LernplattformID", SchemaDatentypen.BIGINT, false)
 			.setNotNull()
 			.setJavaComment("ID der Lernplattform");
 
 	/** Die Definition der Tabellenspalte Benutzername */
-	public SchemaTabelleSpalte col_Benutzername = add("Benutzername", SchemaDatentypen.VARCHAR, false).setDatenlaenge(255)
+	public final SchemaTabelleSpalte col_Benutzername = add("Benutzername", SchemaDatentypen.VARCHAR, false).setDatenlaenge(255)
 			.setNotNull()
 			.setJavaComment("Benutzername für den Credential-Datensatz");
 
 	/** Die Definition der Tabellenspalte BenutzernamePseudonym */
-	public SchemaTabelleSpalte col_BenutzernamePseudonym = add("BenutzernamePseudonym", SchemaDatentypen.VARCHAR, false).setDatenlaenge(255)
+	public final SchemaTabelleSpalte col_BenutzernamePseudonym = add("BenutzernamePseudonym", SchemaDatentypen.VARCHAR, false).setDatenlaenge(255)
 			.setJavaComment("Der pseudonymisierte Benutzername für den Credential-Datensatz");
 
 	/** Die Definition der Tabellenspalte Initialkennwort */
-	public SchemaTabelleSpalte col_Initialkennwort = add("Initialkennwort", SchemaDatentypen.VARCHAR, false).setDatenlaenge(255)
+	public final SchemaTabelleSpalte col_Initialkennwort = add("Initialkennwort", SchemaDatentypen.VARCHAR, false).setDatenlaenge(255)
 			.setJavaComment("Initialkennwort für den Credential-Datensatz");
 
 	/** Die Definition der Tabellenspalte PashwordHash */
-	public SchemaTabelleSpalte col_PashwordHash = add("PashwordHash", SchemaDatentypen.VARCHAR, false).setDatenlaenge(255)
+	public final SchemaTabelleSpalte col_PashwordHash = add("PashwordHash", SchemaDatentypen.VARCHAR, false).setDatenlaenge(255)
 			.setJavaComment("Passwordhash für den Credential-Datensatz");
 
 	/** Die Definition der Tabellenspalte RSAPublicKey */
-	public SchemaTabelleSpalte col_RSAPublicKey = add("RSAPublicKey", SchemaDatentypen.TEXT, false)
+	public final SchemaTabelleSpalte col_RSAPublicKey = add("RSAPublicKey", SchemaDatentypen.TEXT, false)
 			.setJavaComment("RSAPublicKey für den Credential-Datensatz");
 
 	/** Die Definition der Tabellenspalte RSAPrivateKey */
-	public SchemaTabelleSpalte col_RSAPrivateKey = add("RSAPrivateKey", SchemaDatentypen.TEXT, false)
+	public final SchemaTabelleSpalte col_RSAPrivateKey = add("RSAPrivateKey", SchemaDatentypen.TEXT, false)
 			.setJavaComment("RSAPrivateKey für den Credential-Datensatz");
 
 	/** Die Definition der Tabellenspalte AES */
-	public SchemaTabelleSpalte col_AES = add("AES", SchemaDatentypen.TEXT, false)
+	public final SchemaTabelleSpalte col_AES = add("AES", SchemaDatentypen.TEXT, false)
 			.setJavaComment("AES-Schlüssel für den Credential-Datensatz");
 
 	/** Die Definition der Tabellenspalte SchulnrEigner */
-	public SchemaTabelleSpalte col_SchulnrEigner = add("SchulnrEigner", SchemaDatentypen.INT, false)
+	public final SchemaTabelleSpalte col_SchulnrEigner = add("SchulnrEigner", SchemaDatentypen.INT, false)
 			.setVeraltet(SchemaRevisionen.REV_1)
 			.setJavaComment("DEPRECATED: Die Schulnummer zu welcher der Datensatz gehört – wird benötigt, wenn mehrere Schulen in einem Schema der Datenbank"
 					+ " gespeichert werden");
 
 
 	/** Die Definition des Fremdschlüssels CredentialsLernplattformen_Lernplattform_FK */
-	public SchemaTabelleFremdschluessel fk_CredentialsLernplattformen_Lernplattform_FK = addForeignKey(
+	public final SchemaTabelleFremdschluessel fk_CredentialsLernplattformen_Lernplattform_FK = addForeignKey(
 			"CredentialsLernplattformen_Lernplattform_FK",
 			/* OnUpdate: */ SchemaFremdschluesselAktionen.CASCADE,
 			/* OnDelete: */ SchemaFremdschluesselAktionen.CASCADE,
@@ -70,7 +70,7 @@ public class Tabelle_CredentialsLernplattformen extends SchemaTabelle {
 
 
 	/** Die Definition des Unique-Index CredentialsLernplattformen_UC1 */
-	public SchemaTabelleUniqueIndex unique_CredentialsLernplattformen_UC1 = addUniqueIndex("CredentialsLernplattformen_UC1",
+	public final SchemaTabelleUniqueIndex unique_CredentialsLernplattformen_UC1 = addUniqueIndex("CredentialsLernplattformen_UC1",
 			col_Benutzername,
 			col_LernplattformID);
 

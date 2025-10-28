@@ -12,47 +12,47 @@ import de.svws_nrw.db.schema.SchemaTabelleSpalte;
 public class Tabelle_Personengruppen extends SchemaTabelle {
 
 	/** Die Definition der Tabellenspalte ID */
-	public SchemaTabelleSpalte col_ID = add("ID", SchemaDatentypen.BIGINT, true)
+	public final SchemaTabelleSpalte col_ID = add("ID", SchemaDatentypen.BIGINT, true)
 			.setNotNull()
 			.setJavaComment("ID der Personengruppe");
 
 	/** Die Definition der Tabellenspalte SchulnrEigner */
-	public SchemaTabelleSpalte col_SchulnrEigner = add("SchulnrEigner", SchemaDatentypen.INT, false)
+	public final SchemaTabelleSpalte col_SchulnrEigner = add("SchulnrEigner", SchemaDatentypen.INT, false)
 			.setNotNull()
 			.setVeraltet(SchemaRevisionen.REV_1)
 			.setJavaComment("Die Schulnummer zu welcher der Datensatz gehört – wird benötigt, wenn mehrere Schulen in einem Schema der Datenbank"
 					+ " gespeichert werden");
 
 	/** Die Definition der Tabellenspalte Gruppenname */
-	public SchemaTabelleSpalte col_Gruppenname = add("Gruppenname", SchemaDatentypen.VARCHAR, false).setDatenlaenge(100)
+	public final SchemaTabelleSpalte col_Gruppenname = add("Gruppenname", SchemaDatentypen.VARCHAR, false).setDatenlaenge(100)
 			.setNotNull()
 			.setJavaComment("Gruppenname der Personengruppe");
 
 	/** Die Definition der Tabellenspalte Zusatzinfo */
-	public SchemaTabelleSpalte col_Zusatzinfo = add("Zusatzinfo", SchemaDatentypen.VARCHAR, false).setDatenlaenge(100)
+	public final SchemaTabelleSpalte col_Zusatzinfo = add("Zusatzinfo", SchemaDatentypen.VARCHAR, false).setDatenlaenge(100)
 			.setJavaComment("Zusatzinfo der Personengruppe");
 
 	/** Die Definition der Tabellenspalte SammelEmail */
-	public SchemaTabelleSpalte col_SammelEmail = add("SammelEmail", SchemaDatentypen.VARCHAR, false).setDatenlaenge(100)
+	public final SchemaTabelleSpalte col_SammelEmail = add("SammelEmail", SchemaDatentypen.VARCHAR, false).setDatenlaenge(100)
 			.setJavaComment("Sammel-E-Mail-Adresse der Personengruppe");
 
 	/** Die Definition der Tabellenspalte GruppenArt */
-	public SchemaTabelleSpalte col_GruppenArt = add("GruppenArt", SchemaDatentypen.VARCHAR, false).setDatenlaenge(20)
+	public final SchemaTabelleSpalte col_GruppenArt = add("GruppenArt", SchemaDatentypen.VARCHAR, false).setDatenlaenge(20)
 			.setJavaComment("Gruppenart  der Personengruppe");
 
 	/** Die Definition der Tabellenspalte XMLExport */
-	public SchemaTabelleSpalte col_XMLExport = add("XMLExport", SchemaDatentypen.VARCHAR, false).setDatenlaenge(1)
+	public final SchemaTabelleSpalte col_XMLExport = add("XMLExport", SchemaDatentypen.VARCHAR, false).setDatenlaenge(1)
 			.setDefault("+")
 			.setConverter(BooleanPlusMinusDefaultPlusConverter.class)
 			.setJavaComment("Steuert den LogineoXML-Export");
 
 	/** Die Definition der Tabellenspalte Sortierung */
-	public SchemaTabelleSpalte col_Sortierung = add("Sortierung", SchemaDatentypen.INT, false)
+	public final SchemaTabelleSpalte col_Sortierung = add("Sortierung", SchemaDatentypen.INT, false)
 			.setDefault("32000")
 			.setJavaComment("Sortierung der Personengruppe");
 
 	/** Die Definition der Tabellenspalte Sichtbar */
-	public SchemaTabelleSpalte col_Sichtbar = add("Sichtbar", SchemaDatentypen.VARCHAR, false).setDatenlaenge(1)
+	public final SchemaTabelleSpalte col_Sichtbar = add("Sichtbar", SchemaDatentypen.VARCHAR, false).setDatenlaenge(1)
 			.setDefault("+")
 			.setConverter(BooleanPlusMinusDefaultPlusConverter.class)
 			.setJavaComment("Sichtbarkeit der Personengruppe");

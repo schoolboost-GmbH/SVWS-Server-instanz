@@ -15,17 +15,17 @@ import de.svws_nrw.db.schema.SchemaTabelleSpalte;
 public class Tabelle_UV_Planungsabschnitte_Zeitraster extends SchemaTabelle {
 
 	/** Die Definition der Tabellenspalte Planungsabschnitt_ID */
-	public SchemaTabelleSpalte col_Planungsabschnitt_ID = add("Planungsabschnitt_ID", SchemaDatentypen.BIGINT, true)
+	public final SchemaTabelleSpalte col_Planungsabschnitt_ID = add("Planungsabschnitt_ID", SchemaDatentypen.BIGINT, true)
 			.setNotNull()
 			.setJavaComment("Die ID des Planungsabschnitts als Fremdschlüssel auf die Tabelle UV_Planungsabschnitte");
 
 	/** Die Definition der Tabellenspalte Zeitraster */
-	public SchemaTabelleSpalte col_Zeitraster_ID = add("Zeitraster_ID", SchemaDatentypen.BIGINT, true)
+	public final SchemaTabelleSpalte col_Zeitraster_ID = add("Zeitraster_ID", SchemaDatentypen.BIGINT, true)
 			.setNotNull()
 			.setJavaComment("ID des Zeitrasters des Planungsabschnitts");
 
 	/** Die Definition des Fremdschlüssels auf UV_Planungsabschnitte */
-	public SchemaTabelleFremdschluessel fk_UVPlanungsabschnitteZeitraster_UVPlanungsabschnitte_FK = addForeignKey(
+	public final SchemaTabelleFremdschluessel fk_UVPlanungsabschnitteZeitraster_UVPlanungsabschnitte_FK = addForeignKey(
 			"UVPlanungsabschnitteZeitraster_UVPlanungsabschnitte_FK",
 			/* OnUpdate: */ SchemaFremdschluesselAktionen.CASCADE,
 			/* OnDelete: */ SchemaFremdschluesselAktionen.CASCADE,
@@ -33,7 +33,7 @@ public class Tabelle_UV_Planungsabschnitte_Zeitraster extends SchemaTabelle {
 	);
 
 	/** Die Definition des Fremdschlüssels Zeitraster_FK */
-	public SchemaTabelleFremdschluessel fk_UVPlanungsabschnitteZeitraster_UVZeitraster_FK = addForeignKey(
+	public final SchemaTabelleFremdschluessel fk_UVPlanungsabschnitteZeitraster_UVZeitraster_FK = addForeignKey(
 			"UVPlanungsabschnitteZeitraster_UVZeitraster_FK",
 			/* OnUpdate: */ SchemaFremdschluesselAktionen.CASCADE,
 			/* OnDelete: */ SchemaFremdschluesselAktionen.RESTRICT,

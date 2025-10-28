@@ -16,45 +16,45 @@ import de.svws_nrw.db.schema.SchemaTabelleUniqueIndex;
 public class Tabelle_UV_Lerngruppen_Lehrer extends SchemaTabelle {
 
 	/** Die Definition der Tabellenspalte ID */
-	public SchemaTabelleSpalte col_ID = add("ID", SchemaDatentypen.BIGINT, true)
+	public final SchemaTabelleSpalte col_ID = add("ID", SchemaDatentypen.BIGINT, true)
 			.setNotNull()
 			.setJavaComment("ID des Lerngruppen-Lehrers (generiert, planungsspezifisch)");
 
 	/** Die Definition der Tabellenspalte Planungsabschnitt_ID */
-	public SchemaTabelleSpalte col_Planungsabschnitt_ID = add("Planungsabschnitt_ID", SchemaDatentypen.BIGINT, false)
+	public final SchemaTabelleSpalte col_Planungsabschnitt_ID = add("Planungsabschnitt_ID", SchemaDatentypen.BIGINT, false)
 			.setNotNull()
 			.setJavaComment("Die ID des Planungsabschnitts als Fremdschlüssel auf die Tabelle UV_Planungsabschnitte");
 
 	/** Die Definition der Tabellenspalte Lerngruppe_ID */
-	public SchemaTabelleSpalte col_Lerngruppe_ID = add("Lerngruppe_ID", SchemaDatentypen.BIGINT, false)
+	public final SchemaTabelleSpalte col_Lerngruppe_ID = add("Lerngruppe_ID", SchemaDatentypen.BIGINT, false)
 			.setNotNull()
 			.setJavaComment("ID der UV_Lerngruppe");
 
 	/** Die Definition der Tabellenspalte Lehrer_ID */
-	public SchemaTabelleSpalte col_Lehrer_ID = add("Lehrer_ID", SchemaDatentypen.BIGINT, false)
+	public final SchemaTabelleSpalte col_Lehrer_ID = add("Lehrer_ID", SchemaDatentypen.BIGINT, false)
 			.setNotNull()
 			.setJavaComment("ID des Lehrers, welcher der Lerngruppe zugeordnet ist");
 
 	/** Die Definition der Tabellenspalte Reihenfolge */
-	public SchemaTabelleSpalte col_Reihenfolge = add("Reihenfolge", SchemaDatentypen.INT, false)
+	public final SchemaTabelleSpalte col_Reihenfolge = add("Reihenfolge", SchemaDatentypen.INT, false)
 			.setDefault("1")
 			.setNotNull()
 			.setJavaComment("Eine Reihenfolge für die Lehrer, z.B. zur Unterscheidung der eigentlichen Hauptlehrkraft (z.B. 1) und einer Zusatzkraft (z.B. 2)");
 
 	/** Die Definition der Tabellenspalte Wochenstunden */
-	public SchemaTabelleSpalte col_Wochenstunden = add("Wochenstunden", SchemaDatentypen.FLOAT, false)
+	public final SchemaTabelleSpalte col_Wochenstunden = add("Wochenstunden", SchemaDatentypen.FLOAT, false)
 			.setNotNull()
 			.setJavaComment("Die Anzahl der Wochenstunden für die der Lehrer in dem Kurs eingesetzt wird");
 
 	/** Die Definition der Tabellenspalte WochenstundenAngerechnet */
-	public SchemaTabelleSpalte col_WochenstundenAngerechnet = add("WochenstundenAngerechnet", SchemaDatentypen.FLOAT, false)
+	public final SchemaTabelleSpalte col_WochenstundenAngerechnet = add("WochenstundenAngerechnet", SchemaDatentypen.FLOAT, false)
 			.setNotNull()
 			.setJavaComment("Die Anzahl der Wochenstunden, die deputatswirksam sind");
 
 
 
 	/** Die Definition des Fremdschlüssels UV_Lerngruppen_Lehrer_Lerngruppe_FK */
-	public SchemaTabelleFremdschluessel fk_UV_Lerngruppen_Lehrer_Lerngruppe_FK = addForeignKey(
+	public final SchemaTabelleFremdschluessel fk_UV_Lerngruppen_Lehrer_Lerngruppe_FK = addForeignKey(
 			"UV_Lerngruppen_Lehrer_Lerngruppe_FK",
 			/* OnUpdate: */ SchemaFremdschluesselAktionen.CASCADE,
 			/* OnDelete: */ SchemaFremdschluesselAktionen.CASCADE,
@@ -63,7 +63,7 @@ public class Tabelle_UV_Lerngruppen_Lehrer extends SchemaTabelle {
 	);
 
 	/** Die Definition des Fremdschlüssels UV_LerngruppenLehrer_PlanungsabschnitteLehrer_FK */
-	public SchemaTabelleFremdschluessel fk_UVLerngruppenLehrer_UVPlanungsabschnitteLehrer_FK = addForeignKey(
+	public final SchemaTabelleFremdschluessel fk_UVLerngruppenLehrer_UVPlanungsabschnitteLehrer_FK = addForeignKey(
 			"UVLerngruppenLehrer_UVPlanungsabschnitteLehrer_FK",
 			/* OnUpdate: */ SchemaFremdschluesselAktionen.CASCADE,
 			/* OnDelete: */ SchemaFremdschluesselAktionen.CASCADE,
@@ -72,22 +72,22 @@ public class Tabelle_UV_Lerngruppen_Lehrer extends SchemaTabelle {
 	);
 
 	/** Die Definition des Unique-Index UV_Lerngruppen_Lehrer_UC1 */
-	public SchemaTabelleUniqueIndex unique_UV_Lerngruppen_Lehrer_UC1 = addUniqueIndex("UV_Lerngruppen_Lehrer_UC1",
+	public final SchemaTabelleUniqueIndex unique_UV_Lerngruppen_Lehrer_UC1 = addUniqueIndex("UV_Lerngruppen_Lehrer_UC1",
 			col_Lerngruppe_ID,
 			col_Lehrer_ID
 	);
 
 	/** Die Definition des Unique-Index UV_Lerngruppen_Lehrer_UC2 */
-	public SchemaTabelleUniqueIndex unique_UV_Lerngruppen_Lehrer_UC2 = addUniqueIndex("UV_Lerngruppen_Lehrer_UC2",
+	public final SchemaTabelleUniqueIndex unique_UV_Lerngruppen_Lehrer_UC2 = addUniqueIndex("UV_Lerngruppen_Lehrer_UC2",
 			col_Lerngruppe_ID,
 			col_Reihenfolge
 	);
 
 	/** Unique-Index für die Kombination ID und Planungsabschnitt_ID, benötigt durch 2-teiligen FK */
-	public SchemaTabelleUniqueIndex unique_UV_Lerngruppen_Lehrer_UC3 = addUniqueIndex("UV_Lerngruppen_Lehrer_UC3",
+	public final SchemaTabelleUniqueIndex unique_UV_Lerngruppen_Lehrer_UC3 = addUniqueIndex("UV_Lerngruppen_Lehrer_UC3",
 			col_ID,
 			col_Planungsabschnitt_ID
-	 );
+	);
 
 
 	/**

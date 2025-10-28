@@ -16,32 +16,32 @@ import de.svws_nrw.db.schema.SchemaTabelleUniqueIndex;
 public class Tabelle_Stundenplan_Schienen extends SchemaTabelle {
 
 	/** Die Definition der Tabellenspalte ID */
-	public SchemaTabelleSpalte col_ID = add("ID", SchemaDatentypen.BIGINT, true)
+	public final SchemaTabelleSpalte col_ID = add("ID", SchemaDatentypen.BIGINT, true)
 			.setNotNull()
 			.setJavaComment("Die ID identifiziert einen Schieneneintrag für einen Stundenplan eindeutig");
 
 	/** Die Definition der Tabellenspalte Stundenplan_ID */
-	public SchemaTabelleSpalte col_Stundenplan_ID = add("Stundenplan_ID", SchemaDatentypen.BIGINT, false)
+	public final SchemaTabelleSpalte col_Stundenplan_ID = add("Stundenplan_ID", SchemaDatentypen.BIGINT, false)
 			.setNotNull()
 			.setJavaComment("Die ID des Stundenplans, dem dieser Schieneneintrag zugeordnet wird");
 
 	/** Die Definition der Tabellenspalte Jahrgang_ID */
-	public SchemaTabelleSpalte col_Jahrgang_ID = add("Jahrgang_ID", SchemaDatentypen.BIGINT, false)
+	public final SchemaTabelleSpalte col_Jahrgang_ID = add("Jahrgang_ID", SchemaDatentypen.BIGINT, false)
 			.setJavaComment("ID des Jahrgangs dem die Schiene zugeordnet wird");
 
 	/** Die Definition der Tabellenspalte Nummer */
-	public SchemaTabelleSpalte col_Nummer = add("Nummer", SchemaDatentypen.INT, false)
+	public final SchemaTabelleSpalte col_Nummer = add("Nummer", SchemaDatentypen.INT, false)
 			.setNotNull()
 			.setJavaComment("Die Nummer der Schiene");
 
 	/** Die Definition der Tabellenspalte Bezeichnung */
-	public SchemaTabelleSpalte col_Bezeichnung = add("Bezeichnung", SchemaDatentypen.VARCHAR, false).setDatenlaenge(100)
+	public final SchemaTabelleSpalte col_Bezeichnung = add("Bezeichnung", SchemaDatentypen.VARCHAR, false).setDatenlaenge(100)
 			.setNotNull()
 			.setJavaComment("Die Bezeichnung der Schiene");
 
 
 	/** Die Definition des Fremdschlüssels Stundenplan_Schienen_Stundenplan_FK */
-	public SchemaTabelleFremdschluessel fk_Stundenplan_Schienen_Stundenplan_FK = addForeignKey(
+	public final SchemaTabelleFremdschluessel fk_Stundenplan_Schienen_Stundenplan_FK = addForeignKey(
 			"Stundenplan_Schienen_Stundenplan_FK",
 			/* OnUpdate: */ SchemaFremdschluesselAktionen.CASCADE,
 			/* OnDelete: */ SchemaFremdschluesselAktionen.CASCADE,
@@ -50,7 +50,7 @@ public class Tabelle_Stundenplan_Schienen extends SchemaTabelle {
 
 
 	/** Die Definition des Fremdschlüssels Stundenplan_Schienen_Jahrgang_FK */
-	public SchemaTabelleFremdschluessel fk_Stundenplan_Schienen_Jahrgang_FK = addForeignKey(
+	public final SchemaTabelleFremdschluessel fk_Stundenplan_Schienen_Jahrgang_FK = addForeignKey(
 			"Stundenplan_Schienen_Jahrgang_FK",
 			/* OnUpdate: */ SchemaFremdschluesselAktionen.CASCADE,
 			/* OnDelete: */ SchemaFremdschluesselAktionen.SET_NULL,
@@ -59,7 +59,7 @@ public class Tabelle_Stundenplan_Schienen extends SchemaTabelle {
 
 
 	/** Die Definition des Unique-Index Stundenplan_Schienen_UC1 */
-	public SchemaTabelleUniqueIndex unique_Stundenplan_Schienen_UC1 = addUniqueIndex("Stundenplan_Schienen_UC1",
+	public final SchemaTabelleUniqueIndex unique_Stundenplan_Schienen_UC1 = addUniqueIndex("Stundenplan_Schienen_UC1",
 			col_Stundenplan_ID,
 			col_Jahrgang_ID,
 			col_Nummer

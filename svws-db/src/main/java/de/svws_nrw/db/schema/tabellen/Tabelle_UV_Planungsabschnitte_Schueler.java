@@ -17,34 +17,34 @@ public class Tabelle_UV_Planungsabschnitte_Schueler extends SchemaTabelle {
 	// Neue Tabelle Tabelle_UV_Gost_Schueler_Fachwahlen (planungsabschnitts-spezifisch) -> erstmal zurückstellen
 
 //	/** Die Definition der Tabellenspalte ID */
-//	public SchemaTabelleSpalte col_ID = add("ID", SchemaDatentypen.BIGINT, true)
+//	public final SchemaTabelleSpalte col_ID = add("ID", SchemaDatentypen.BIGINT, true)
 //			.setNotNull()
 //			.setJavaComment("ID des UV-Schuelers (generiert, planungsspezifisch)");
 
 	/** Die Definition der Tabellenspalte Planungsabschnitt_ID */
-	public SchemaTabelleSpalte col_Planungsabschnitt_ID = add("Planungsabschnitt_ID", SchemaDatentypen.BIGINT, true)
+	public final SchemaTabelleSpalte col_Planungsabschnitt_ID = add("Planungsabschnitt_ID", SchemaDatentypen.BIGINT, true)
 			.setNotNull()
 			.setJavaComment("Die ID des Planungsabschnitts als Fremdschlüssel auf die Tabelle UV_Planungsabschnitte");
 
 	/** Die Definition der Tabellenspalte Schueler_ID */
-	public SchemaTabelleSpalte col_Schueler_ID = add("Schueler_ID", SchemaDatentypen.BIGINT, true)
+	public final SchemaTabelleSpalte col_Schueler_ID = add("Schueler_ID", SchemaDatentypen.BIGINT, true)
 			.setNotNull()
 			.setJavaComment("Die ID des Schülers als Fremdschlüssel auf die Tabelle Schueler");
 
 	/** Die Definition der Tabellenspalte Jahrgang_ID */
-	public SchemaTabelleSpalte col_Jahrgang_ID = add("Jahrgang_ID", SchemaDatentypen.BIGINT, false)
+	public final SchemaTabelleSpalte col_Jahrgang_ID = add("Jahrgang_ID", SchemaDatentypen.BIGINT, false)
 			.setNotNull()
 			.setJavaComment("ID des Jahrgangs der dem Schüler zugeordnet wird");
 
 	/** Die Definition der Tabellenspalte Klassen_ID */
-	public SchemaTabelleSpalte col_Klasse_ID = add("Klasse_ID", SchemaDatentypen.BIGINT, false)
+	public final SchemaTabelleSpalte col_Klasse_ID = add("Klasse_ID", SchemaDatentypen.BIGINT, false)
 			.setNotNull()
 			.setJavaComment("Klassen_ID des Schülers für den Planungsabschnitt");
 
 
 
 	/** Die Definition des Fremdschlüssels auf UV_Planungsabschnitte */
-	public SchemaTabelleFremdschluessel fk_UVPlanungsabschnitteSchueler_UVPlanungsabschnitte_FK = addForeignKey(
+	public final SchemaTabelleFremdschluessel fk_UVPlanungsabschnitteSchueler_UVPlanungsabschnitte_FK = addForeignKey(
 			"UVPlanungsabschnitteSchueler_UVPlanungsabschnitte_FK",
 			/* OnUpdate: */ SchemaFremdschluesselAktionen.CASCADE,
 			/* OnDelete: */ SchemaFremdschluesselAktionen.CASCADE,
@@ -52,7 +52,7 @@ public class Tabelle_UV_Planungsabschnitte_Schueler extends SchemaTabelle {
 	);
 
 	/** Die Definition des Fremdschlüssels auf Schueler */
-	public SchemaTabelleFremdschluessel fk_UVPlanungsabschnitteSchueler_Schueler_FK = addForeignKey(
+	public final SchemaTabelleFremdschluessel fk_UVPlanungsabschnitteSchueler_Schueler_FK = addForeignKey(
 			"UVPlanungsabschnitteSchueler_Schueler",
 			/* OnUpdate: */ SchemaFremdschluesselAktionen.CASCADE,
 			/* OnDelete: */ SchemaFremdschluesselAktionen.CASCADE,
@@ -60,7 +60,7 @@ public class Tabelle_UV_Planungsabschnitte_Schueler extends SchemaTabelle {
 	);
 
 	/** Die Definition des Fremdschlüssels UVPlanungsabschnitteSchueler_EigeneSchuleJahrgaenge_FK */
-	public SchemaTabelleFremdschluessel fk_UVPlanungsabschnitteSchueler_EigeneSchuleJahrgaenge_FK = addForeignKey(
+	public final SchemaTabelleFremdschluessel fk_UVPlanungsabschnitteSchueler_EigeneSchuleJahrgaenge_FK = addForeignKey(
 			"UVPlanungsabschnitteSchueler_EigeneSchuleJahrgaenge_FK",
 			/* OnUpdate: */ SchemaFremdschluesselAktionen.CASCADE,
 			/* OnDelete: */ SchemaFremdschluesselAktionen.CASCADE,
@@ -68,7 +68,7 @@ public class Tabelle_UV_Planungsabschnitte_Schueler extends SchemaTabelle {
 	);
 
 	/** Die Definition des Fremdschlüssels UVPlanungsabschnitteSchueler_UVKlassen_FK */
-	public SchemaTabelleFremdschluessel fk_UVPlanungsabschnitteSchueler_UVKlassen_FK = addForeignKey(
+	public final SchemaTabelleFremdschluessel fk_UVPlanungsabschnitteSchueler_UVKlassen_FK = addForeignKey(
 			"UVPlanungsabschnitteSchueler_UVKlassen_FK",
 			/* OnUpdate: */ SchemaFremdschluesselAktionen.CASCADE,
 			/* OnDelete: */ SchemaFremdschluesselAktionen.RESTRICT,
@@ -77,14 +77,14 @@ public class Tabelle_UV_Planungsabschnitte_Schueler extends SchemaTabelle {
 	);
 
 //	/** Unique-Index für die Kombination ID und Planungsabschnitt_ID, benötigt durch 2-teiligen FK */
-//    public SchemaTabelleUniqueIndex unique_UVPlanungsabschnitteSchueler_UC1 = addUniqueIndex("UVPlanungsabschnitteSchueler_UC1",
-//    		col_ID, col_Planungsabschnitt_ID
-//    );
+//	public final SchemaTabelleUniqueIndex unique_UVPlanungsabschnitteSchueler_UC1 = addUniqueIndex("UVPlanungsabschnitteSchueler_UC1",
+//			col_ID, col_Planungsabschnitt_ID
+//	);
 
-//    /** Unique-Index für die Kombination Schueler_ID und Planungsabschnitt_ID */
-//    public SchemaTabelleUniqueIndex unique_UVPlanungsabschnitteSchueler_UC2 = addUniqueIndex("UVPlanungsabschnitteSchueler_UC2",
-//    		col_Schueler_ID, col_Planungsabschnitt_ID
-//    );
+//	/** Unique-Index für die Kombination Schueler_ID und Planungsabschnitt_ID */
+//	public final SchemaTabelleUniqueIndex unique_UVPlanungsabschnitteSchueler_UC2 = addUniqueIndex("UVPlanungsabschnitteSchueler_UC2",
+//			col_Schueler_ID, col_Planungsabschnitt_ID
+//	);
 
 	/**
 	 * Erstellt die Schema-Defintion für die Tabelle UV_Planungsabschnitte_Schueler.

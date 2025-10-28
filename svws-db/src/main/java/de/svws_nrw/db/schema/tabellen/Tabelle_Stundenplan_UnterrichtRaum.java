@@ -16,24 +16,24 @@ import de.svws_nrw.db.schema.SchemaTabelleUniqueIndex;
 public class Tabelle_Stundenplan_UnterrichtRaum extends SchemaTabelle {
 
 	/** Die Definition der Tabellenspalte ID */
-	public SchemaTabelleSpalte col_ID = add("ID", SchemaDatentypen.BIGINT, true)
+	public final SchemaTabelleSpalte col_ID = add("ID", SchemaDatentypen.BIGINT, true)
 			.setNotNull()
 			.setJavaComment("Die eindeutige ID für die Zuordnung des Raumes zum Unterricht");
 
 	/** Die Definition der Tabellenspalte Unterricht_ID */
-	public SchemaTabelleSpalte col_Unterricht_ID = add("Unterricht_ID", SchemaDatentypen.BIGINT, false)
+	public final SchemaTabelleSpalte col_Unterricht_ID = add("Unterricht_ID", SchemaDatentypen.BIGINT, false)
 			.setNotNull()
 			.setJavaComment("Die ID des Unterricht-Eintrages im Stundenplan");
 
 	/** Die Definition der Tabellenspalte Raum_ID */
-	public SchemaTabelleSpalte col_Raum_ID = add("Raum_ID", SchemaDatentypen.BIGINT, false)
+	public final SchemaTabelleSpalte col_Raum_ID = add("Raum_ID", SchemaDatentypen.BIGINT, false)
 			.setNotNull()
 			.setJavaComment("Die ID des zugewiesenen Raumes. Sollten ggf. mehrere Räume zugewiesen werden, so müssen für eine Unterricht-ID"
 					+ " mehrere Datensätze vorliegen");
 
 
 	/** Die Definition des Fremdschlüssels Stundenplan_UnterrichtRaum_Raeume_FK */
-	public SchemaTabelleFremdschluessel fk_Stundenplan_UnterrichtRaum_Raeume_FK = addForeignKey(
+	public final SchemaTabelleFremdschluessel fk_Stundenplan_UnterrichtRaum_Raeume_FK = addForeignKey(
 			"Stundenplan_UnterrichtRaum_Raeume_FK",
 			/* OnUpdate: */ SchemaFremdschluesselAktionen.CASCADE,
 			/* OnDelete: */ SchemaFremdschluesselAktionen.CASCADE,
@@ -41,7 +41,7 @@ public class Tabelle_Stundenplan_UnterrichtRaum extends SchemaTabelle {
 	);
 
 	/** Die Definition des Fremdschlüssels Stundenplan_UnterrichtRaum_Unterricht_FK */
-	public SchemaTabelleFremdschluessel fk_Stundenplan_UnterrichtRaum_Unterricht_FK = addForeignKey(
+	public final SchemaTabelleFremdschluessel fk_Stundenplan_UnterrichtRaum_Unterricht_FK = addForeignKey(
 			"Stundenplan_UnterrichtRaum_Unterricht_FK",
 			/* OnUpdate: */ SchemaFremdschluesselAktionen.CASCADE,
 			/* OnDelete: */ SchemaFremdschluesselAktionen.CASCADE,
@@ -50,7 +50,7 @@ public class Tabelle_Stundenplan_UnterrichtRaum extends SchemaTabelle {
 
 
 	/** Die Definition des Unique-Index Stundenplan_UnterrichtRaum_UC1 */
-	public SchemaTabelleUniqueIndex unique_Stundenplan_UnterrichtRaum_UC1 = addUniqueIndex("Stundenplan_UnterrichtRaum_UC1",
+	public final SchemaTabelleUniqueIndex unique_Stundenplan_UnterrichtRaum_UC1 = addUniqueIndex("Stundenplan_UnterrichtRaum_UC1",
 			col_Unterricht_ID,
 			col_Raum_ID
 	);

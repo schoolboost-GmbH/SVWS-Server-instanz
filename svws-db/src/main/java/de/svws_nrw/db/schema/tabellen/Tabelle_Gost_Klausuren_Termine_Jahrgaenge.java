@@ -17,37 +17,37 @@ import de.svws_nrw.db.schema.SchemaTabelleSpalte;
 public class Tabelle_Gost_Klausuren_Termine_Jahrgaenge extends SchemaTabelle {
 
 	/** Die Definition der Tabellenspalte Termin_ID */
-	public SchemaTabelleSpalte col_Termin_ID = add("Termin_ID", SchemaDatentypen.BIGINT, true)
+	public final SchemaTabelleSpalte col_Termin_ID = add("Termin_ID", SchemaDatentypen.BIGINT, true)
 			.setNotNull()
 			.setJavaComment("Termin_ID des Klausurtermins");
 
 	/** Die Definition der Tabellenspalte Abi_Jahrgang */
-	public SchemaTabelleSpalte col_Abi_Jahrgang = add("Abi_Jahrgang", SchemaDatentypen.INT, true)
+	public final SchemaTabelleSpalte col_Abi_Jahrgang = add("Abi_Jahrgang", SchemaDatentypen.INT, true)
 			.setNotNull()
 			.setJavaComment("Der Abiturjahrgang, der zum Klausurtermin zugelassen werden soll.");
 
 	/** Die Definition der Tabellenspalte Quartal */
-	public SchemaTabelleSpalte col_Quartal = add("Quartal", SchemaDatentypen.INT, false)
+	public final SchemaTabelleSpalte col_Quartal = add("Quartal", SchemaDatentypen.INT, false)
 			.setNotNull()
 			.setJavaComment("Das Quartal, in dem die Klausur geschrieben wird.");
 
 	/** Die Definition der Tabellenspalte Bezeichnung */
-	public SchemaTabelleSpalte col_Bezeichnung = add("Bezeichnung", SchemaDatentypen.TEXT, false)
+	public final SchemaTabelleSpalte col_Bezeichnung = add("Bezeichnung", SchemaDatentypen.TEXT, false)
 			.setJavaComment("Text für Bezeichnung des Klausurtermins");
 
 	/** Die Definition der Tabellenspalte Bemerkungen */
-	public SchemaTabelleSpalte col_Bemerkungen = add("Bemerkungen", SchemaDatentypen.TEXT, false)
+	public final SchemaTabelleSpalte col_Bemerkungen = add("Bemerkungen", SchemaDatentypen.TEXT, false)
 			.setJavaComment("Text für Bemerkungen des Klausurtermins");
 
 	/** Die Definition der Tabellenspalte IstHaupttermin */
-	public SchemaTabelleSpalte col_IstHaupttermin = add("IstHaupttermin", SchemaDatentypen.INT, false)
+	public final SchemaTabelleSpalte col_IstHaupttermin = add("IstHaupttermin", SchemaDatentypen.INT, false)
 			.setDefault("1")
 			.setNotNull()
 			.setConverter(Boolean01Converter.class)
 			.setJavaComment("Gibt an, ob es sich bei dem Termin um den Haupttermin (1) handelt oder einen Nachschreibtermin (0).");
 
 	/** Die Definition der Tabellenspalte NachschreiberZugelassen */
-	public SchemaTabelleSpalte col_NachschreiberZugelassen = add("NachschreiberZugelassen", SchemaDatentypen.INT, false)
+	public final SchemaTabelleSpalte col_NachschreiberZugelassen = add("NachschreiberZugelassen", SchemaDatentypen.INT, false)
 			.setDefault("0")
 			.setNotNull()
 			.setConverter(Boolean01Converter.class)
@@ -55,7 +55,7 @@ public class Tabelle_Gost_Klausuren_Termine_Jahrgaenge extends SchemaTabelle {
 
 
 	/** Die Definition des Fremdschlüssels Gost_Klausuren_Termine_Jahrgaenge_Termin_ID_FK */
-	public SchemaTabelleFremdschluessel fk_Gost_Klausuren_Termine_Jahrgaenge_Termin_ID_FK = addForeignKey(
+	public final SchemaTabelleFremdschluessel fk_Gost_Klausuren_Termine_Jahrgaenge_Termin_ID_FK = addForeignKey(
 			"Gost_Klausuren_Termine_Jahrgaenge_Termin_ID_FK",
 			/* OnUpdate: */ SchemaFremdschluesselAktionen.CASCADE,
 			/* OnDelete: */ SchemaFremdschluesselAktionen.CASCADE,
@@ -63,7 +63,7 @@ public class Tabelle_Gost_Klausuren_Termine_Jahrgaenge extends SchemaTabelle {
 	);
 
 	/** Die Definition des Fremdschlüssels Gost_Klausuren_Termine_Jahrgaenge_Abi_Jahrgang_FK */
-	public SchemaTabelleFremdschluessel fk_Gost_Klausuren_Termine_Jahrgaenge_Abi_Jahrgang_FK = addForeignKey(
+	public final SchemaTabelleFremdschluessel fk_Gost_Klausuren_Termine_Jahrgaenge_Abi_Jahrgang_FK = addForeignKey(
 			"Gost_Klausuren_Termine_Jahrgaenge_Abi_Jahrgang_FK",
 			/* OnUpdate: */ SchemaFremdschluesselAktionen.CASCADE,
 			/* OnDelete: */ SchemaFremdschluesselAktionen.CASCADE,
@@ -71,7 +71,7 @@ public class Tabelle_Gost_Klausuren_Termine_Jahrgaenge extends SchemaTabelle {
 	);
 
 	/** Die Definition des Non-Unique-Index Gost_Klausuren_Termine_Jahrgaenge_IDX_Abi_Jahrgang */
-	public SchemaTabelleIndex index_Gost_Klausuren_Termine_Jahrgaenge_IDX_Abi_Jahrgang = addIndex("Gost_Klausuren_Termine_Jahrgaenge_IDX_Abi_Jahrgang",
+	public final SchemaTabelleIndex index_Gost_Klausuren_Termine_Jahrgaenge_IDX_Abi_Jahrgang = addIndex("Gost_Klausuren_Termine_Jahrgaenge_IDX_Abi_Jahrgang",
 			col_Abi_Jahrgang
 	);
 

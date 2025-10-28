@@ -15,23 +15,23 @@ import de.svws_nrw.db.schema.SchemaTabelleSpalte;
 public class Tabelle_UV_Schuelergruppen_Constraint_Schuelergruppen extends SchemaTabelle {
 
 	/** Die Definition der Tabellenspalte ID */
-	public SchemaTabelleSpalte col_Schuelergruppe_ID = add("Schuelergruppe_ID", SchemaDatentypen.BIGINT, true)
+	public final SchemaTabelleSpalte col_Schuelergruppe_ID = add("Schuelergruppe_ID", SchemaDatentypen.BIGINT, true)
 			.setNotNull()
 			.setJavaComment("ID der Schülergruppe");
 
 	/** Die Definition der Tabellenspalte Schuelergruppe_Valid_ID */
-	public SchemaTabelleSpalte col_Schuelergruppe_Valid_ID = add("Schuelergruppe_Vaild_ID", SchemaDatentypen.BIGINT, true)
+	public final SchemaTabelleSpalte col_Schuelergruppe_Valid_ID = add("Schuelergruppe_Vaild_ID", SchemaDatentypen.BIGINT, true)
 			.setNotNull()
 			.setJavaComment("ID der Schülergruppe, deren Schüler dieser Schülergruppe angehören dürfen");
 
 	/** Die Definition der Tabellenspalte Planungsabschnitt_ID */
-	public SchemaTabelleSpalte col_Planungsabschnitt_ID = add("Planungsabschnitt_ID", SchemaDatentypen.BIGINT, false)
+	public final SchemaTabelleSpalte col_Planungsabschnitt_ID = add("Planungsabschnitt_ID", SchemaDatentypen.BIGINT, false)
 			.setNotNull()
 			.setJavaComment("Die ID des Planungsabschnitts als Fremdschlüssel auf die Tabelle UV_Planungsabschnitte");
 
 
 	/** Die Definition des Fremdschlüssels auf UV_Schuelergruppen */
-	public SchemaTabelleFremdschluessel fk_UVSchuelergruppenSchuelergruppen_UVSchuelergruppen_FK1 = addForeignKey(
+	public final SchemaTabelleFremdschluessel fk_UVSchuelergruppenSchuelergruppen_UVSchuelergruppen_FK1 = addForeignKey(
 			"UVSchuelergruppenSchuelergruppen_UVSchuelergruppen_FK1",
 			/* OnUpdate: */ SchemaFremdschluesselAktionen.CASCADE,
 			/* OnDelete: */ SchemaFremdschluesselAktionen.CASCADE,
@@ -39,14 +39,14 @@ public class Tabelle_UV_Schuelergruppen_Constraint_Schuelergruppen extends Schem
 			new Pair<>(col_Planungsabschnitt_ID, Schema.tab_UV_Schuelergruppen.col_Planungsabschnitt_ID)
 	);
 
-    /** Fremdschlüssel auf die Tabelle UV_Schuelergruppen */
-    public SchemaTabelleFremdschluessel fk_UVSchuelergruppenSchuelergruppen_UVSchuelergruppen_FK2 = addForeignKey(
-            "UVSchuelergruppenSchuelergruppen_UVSchuelergruppen_FK2",
-            /* OnUpdate: */ SchemaFremdschluesselAktionen.CASCADE,
-            /* OnDelete: */ SchemaFremdschluesselAktionen.CASCADE,
-            new Pair<>(col_Schuelergruppe_Valid_ID, Schema.tab_UV_Schuelergruppen.col_ID),
-            new Pair<>(col_Planungsabschnitt_ID, Schema.tab_UV_Schuelergruppen.col_Planungsabschnitt_ID)
-    );
+	/** Fremdschlüssel auf die Tabelle UV_Schuelergruppen */
+	public final SchemaTabelleFremdschluessel fk_UVSchuelergruppenSchuelergruppen_UVSchuelergruppen_FK2 = addForeignKey(
+			"UVSchuelergruppenSchuelergruppen_UVSchuelergruppen_FK2",
+			/* OnUpdate: */ SchemaFremdschluesselAktionen.CASCADE,
+			/* OnDelete: */ SchemaFremdschluesselAktionen.CASCADE,
+			new Pair<>(col_Schuelergruppe_Valid_ID, Schema.tab_UV_Schuelergruppen.col_ID),
+			new Pair<>(col_Planungsabschnitt_ID, Schema.tab_UV_Schuelergruppen.col_Planungsabschnitt_ID)
+	);
 
 
 	/**

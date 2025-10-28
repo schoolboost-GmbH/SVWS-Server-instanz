@@ -16,7 +16,7 @@ import de.svws_nrw.db.schema.SchemaTabelleSpalte;
 public class Tabelle_KAoA_Zusatzmerkmal_Keys extends SchemaTabelle {
 
 	/** Die Definition der Tabellenspalte ID */
-	public SchemaTabelleSpalte col_ID = add("ID", SchemaDatentypen.BIGINT, true)
+	public final SchemaTabelleSpalte col_ID = add("ID", SchemaDatentypen.BIGINT, true)
 			.setNotNull()
 			.setJavaComment("Die eindeutige ID des Zusatzmerkmals");
 

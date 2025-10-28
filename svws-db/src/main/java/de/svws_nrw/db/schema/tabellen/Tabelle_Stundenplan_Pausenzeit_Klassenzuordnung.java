@@ -16,23 +16,23 @@ import de.svws_nrw.db.schema.SchemaTabelleUniqueIndex;
 public class Tabelle_Stundenplan_Pausenzeit_Klassenzuordnung extends SchemaTabelle {
 
 	/** Die Definition der Tabellenspalte ID */
-	public SchemaTabelleSpalte col_ID = add("ID", SchemaDatentypen.BIGINT, true)
+	public final SchemaTabelleSpalte col_ID = add("ID", SchemaDatentypen.BIGINT, true)
 			.setNotNull()
 			.setJavaComment("Die eindeutige ID für die Zuordnung einer Klasse zu einer Pausenzeit");
 
 	/** Die Definition der Tabellenspalte Pausenzeit_ID */
-	public SchemaTabelleSpalte col_Pausenzeit_ID = add("Pausenzeit_ID", SchemaDatentypen.BIGINT, false)
+	public final SchemaTabelleSpalte col_Pausenzeit_ID = add("Pausenzeit_ID", SchemaDatentypen.BIGINT, false)
 			.setNotNull()
 			.setJavaComment("Die ID des Pausenzeit-Eintrages im Stundenplan");
 
 	/** Die Definition der Tabellenspalte Klassen_ID */
-	public SchemaTabelleSpalte col_Klassen_ID = add("Klassen_ID", SchemaDatentypen.BIGINT, false)
+	public final SchemaTabelleSpalte col_Klassen_ID = add("Klassen_ID", SchemaDatentypen.BIGINT, false)
 			.setNotNull()
 			.setJavaComment("Die ID der zugeordneten Klasse.");
 
 
 	/** Die Definition des Fremdschlüssels Stundenplan_Pausenzeit_Klassenzuordnung_Klassen_FK */
-	public SchemaTabelleFremdschluessel fk_Stundenplan_Pausenzeit_Klassenzuordnung_Klassen_FK = addForeignKey(
+	public final SchemaTabelleFremdschluessel fk_Stundenplan_Pausenzeit_Klassenzuordnung_Klassen_FK = addForeignKey(
 			"Stundenplan_Pausenzeit_Klassenzuordnung_Klassen_FK",
 			/* OnUpdate: */ SchemaFremdschluesselAktionen.CASCADE,
 			/* OnDelete: */ SchemaFremdschluesselAktionen.CASCADE,
@@ -40,7 +40,7 @@ public class Tabelle_Stundenplan_Pausenzeit_Klassenzuordnung extends SchemaTabel
 	);
 
 	/** Die Definition des Fremdschlüssels Stundenplan_Pausenzeit_Klassenzuordnung_Pausenzeit_FK */
-	public SchemaTabelleFremdschluessel fk_Stundenplan_Pausenzeit_Klassenzuordnung_Pausenzeit_FK = addForeignKey(
+	public final SchemaTabelleFremdschluessel fk_Stundenplan_Pausenzeit_Klassenzuordnung_Pausenzeit_FK = addForeignKey(
 			"Stundenplan_Pausenzeit_Klassenzuordnung_Pausenzeit_FK",
 			/* OnUpdate: */ SchemaFremdschluesselAktionen.CASCADE,
 			/* OnDelete: */ SchemaFremdschluesselAktionen.CASCADE,
@@ -49,7 +49,7 @@ public class Tabelle_Stundenplan_Pausenzeit_Klassenzuordnung extends SchemaTabel
 
 
 	/** Die Definition des Unique-Index Stundenplan_Pausenzeit_Klassenzuordnung_UC1 */
-	public SchemaTabelleUniqueIndex unique_Stundenplan_Pausenzeit_Klassenzuordnung_UC1 = addUniqueIndex("Stundenplan_Pausenzeit_Klassenzuordnung_UC1",
+	public final SchemaTabelleUniqueIndex unique_Stundenplan_Pausenzeit_Klassenzuordnung_UC1 = addUniqueIndex("Stundenplan_Pausenzeit_Klassenzuordnung_UC1",
 			col_Pausenzeit_ID,
 			col_Klassen_ID
 	);

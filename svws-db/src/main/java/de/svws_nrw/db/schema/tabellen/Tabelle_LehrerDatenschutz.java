@@ -16,38 +16,38 @@ import de.svws_nrw.db.schema.SchemaTabelleSpalte;
 public class Tabelle_LehrerDatenschutz extends SchemaTabelle {
 
 	/** Die Definition der Tabellenspalte LehrerID */
-	public SchemaTabelleSpalte col_LehrerID = add("LehrerID", SchemaDatentypen.BIGINT, true)
+	public final SchemaTabelleSpalte col_LehrerID = add("LehrerID", SchemaDatentypen.BIGINT, true)
 			.setNotNull()
 			.setJavaComment("LehrerID des Datenschutzeintrags");
 
 	/** Die Definition der Tabellenspalte DatenschutzID */
-	public SchemaTabelleSpalte col_DatenschutzID = add("DatenschutzID", SchemaDatentypen.BIGINT, true)
+	public final SchemaTabelleSpalte col_DatenschutzID = add("DatenschutzID", SchemaDatentypen.BIGINT, true)
 			.setNotNull()
 			.setJavaComment("DatenschutzID des Eintrags");
 
 	/** Die Definition der Tabellenspalte Status */
-	public SchemaTabelleSpalte col_Status = add("Status", SchemaDatentypen.INT, false)
+	public final SchemaTabelleSpalte col_Status = add("Status", SchemaDatentypen.INT, false)
 			.setDefault("0")
 			.setNotNull()
 			.setConverter(Boolean01Converter.class)
 			.setJavaComment("Status des Datenschutz-Eintrags (true/false)");
 
 	/** Die Definition der Tabellenspalte Abgefragt */
-	public SchemaTabelleSpalte col_Abgefragt = add("Abgefragt", SchemaDatentypen.INT, false)
+	public final SchemaTabelleSpalte col_Abgefragt = add("Abgefragt", SchemaDatentypen.INT, false)
 			.setDefault("0")
 			.setNotNull()
 			.setConverter(Boolean01Converter.class)
 			.setJavaComment("Status der Abfrage Datenschutz-Eintrags (true/false)");
 
 	/** Die Definition der Tabellenspalte SchulnrEigner */
-	public SchemaTabelleSpalte col_SchulnrEigner = add("SchulnrEigner", SchemaDatentypen.INT, false)
+	public final SchemaTabelleSpalte col_SchulnrEigner = add("SchulnrEigner", SchemaDatentypen.INT, false)
 			.setVeraltet(SchemaRevisionen.REV_1)
 			.setJavaComment("DEPRECATED: Die Schulnummer zu welcher der Datensatz gehört – wird benötigt, wenn mehrere Schulen in einem Schema der Datenbank"
 					+ " gespeichert werden");
 
 
 	/** Die Definition des Fremdschlüssels LehrerDatenschutz_Lehrer_FK */
-	public SchemaTabelleFremdschluessel fk_LehrerDatenschutz_Lehrer_FK = addForeignKey(
+	public final SchemaTabelleFremdschluessel fk_LehrerDatenschutz_Lehrer_FK = addForeignKey(
 			"LehrerDatenschutz_Lehrer_FK",
 			/* OnUpdate: */ SchemaFremdschluesselAktionen.CASCADE,
 			/* OnDelete: */ SchemaFremdschluesselAktionen.CASCADE,
@@ -55,7 +55,7 @@ public class Tabelle_LehrerDatenschutz extends SchemaTabelle {
 	);
 
 	/** Die Definition des Fremdschlüssels LehrerDatenschutz_Datenschutz_FK */
-	public SchemaTabelleFremdschluessel fk_LehrerDatenschutz_Datenschutz_FK = addForeignKey(
+	public final SchemaTabelleFremdschluessel fk_LehrerDatenschutz_Datenschutz_FK = addForeignKey(
 			"LehrerDatenschutz_Datenschutz_FK",
 			/* OnUpdate: */ SchemaFremdschluesselAktionen.CASCADE,
 			/* OnDelete: */ SchemaFremdschluesselAktionen.CASCADE,

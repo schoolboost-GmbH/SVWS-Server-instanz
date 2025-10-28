@@ -17,24 +17,24 @@ import de.svws_nrw.db.schema.SchemaTabelleSpalte;
 public class Tabelle_Gost_Blockung_Regeln extends SchemaTabelle {
 
 	/** Die Definition der Tabellenspalte ID */
-	public SchemaTabelleSpalte col_ID = add("ID", SchemaDatentypen.BIGINT, true)
+	public final SchemaTabelleSpalte col_ID = add("ID", SchemaDatentypen.BIGINT, true)
 			.setNotNull()
 			.setJavaComment("ID der Regel (generiert)");
 
 	/** Die Definition der Tabellenspalte Blockung_ID */
-	public SchemaTabelleSpalte col_Blockung_ID = add("Blockung_ID", SchemaDatentypen.BIGINT, false)
+	public final SchemaTabelleSpalte col_Blockung_ID = add("Blockung_ID", SchemaDatentypen.BIGINT, false)
 			.setNotNull()
 			.setJavaComment("ID der Blockung");
 
 	/** Die Definition der Tabellenspalte Typ */
-	public SchemaTabelleSpalte col_Typ = add("Typ", SchemaDatentypen.INT, false)
+	public final SchemaTabelleSpalte col_Typ = add("Typ", SchemaDatentypen.INT, false)
 			.setNotNull()
 			.setConverter(GostKursblockungRegelTypConverter.class)
 			.setJavaComment("Die ID des Typs der Regeldefinition (siehe Core-Type GostKursblockungRegeltyp)");
 
 
 	/** Die Definition des Fremdschlüssels Gost_Blockung_Regeln_Blockung_FK */
-	public SchemaTabelleFremdschluessel fk_Gost_Blockung_Regeln_Blockung_FK = addForeignKey(
+	public final SchemaTabelleFremdschluessel fk_Gost_Blockung_Regeln_Blockung_FK = addForeignKey(
 			"Gost_Blockung_Regeln_Blockung_FK",
 			/* OnUpdate: */ SchemaFremdschluesselAktionen.CASCADE,
 			/* OnDelete: */ SchemaFremdschluesselAktionen.CASCADE,
@@ -42,12 +42,12 @@ public class Tabelle_Gost_Blockung_Regeln extends SchemaTabelle {
 	);
 
 	/** Die Definition des Non-Unique-Index Gost_Blockung_Regeln_IDX_Blockung_ID */
-	public SchemaTabelleIndex index_Gost_Blockung_Regeln_IDX_Blockung_ID = addIndex("Gost_Blockung_Regeln_IDX_Blockung_ID",
+	public final SchemaTabelleIndex index_Gost_Blockung_Regeln_IDX_Blockung_ID = addIndex("Gost_Blockung_Regeln_IDX_Blockung_ID",
 			col_Blockung_ID
 	);
 
 	/** Die Definition des Non-Unique-Index Gost_Blockung_Regeln_IDX_Blockung_ID_Typ */
-	public SchemaTabelleIndex index_Gost_Blockung_Regeln_IDX_Blockung_ID_Typ = addIndex("Gost_Blockung_Regeln_IDX_Blockung_ID_Typ",
+	public final SchemaTabelleIndex index_Gost_Blockung_Regeln_IDX_Blockung_ID_Typ = addIndex("Gost_Blockung_Regeln_IDX_Blockung_ID_Typ",
 			col_Blockung_ID,
 			col_Typ
 	).setRevision(SchemaRevisionen.REV_12);
