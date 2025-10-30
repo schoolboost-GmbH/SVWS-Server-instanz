@@ -1,0 +1,9 @@
+{
+  "erfolgreich" : false,
+   "fehlercodes" : [ {
+       "code" : "ST_4",
+       "art" : "BELEGUNG",
+       "beschreibung" : "Das Fach Wahlfach der Stundentafel wurde nicht belegt."
+     } ],
+  "log" : [ ]
+} 

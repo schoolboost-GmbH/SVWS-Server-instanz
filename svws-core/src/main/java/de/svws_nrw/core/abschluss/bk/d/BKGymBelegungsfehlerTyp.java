@@ -38,11 +38,20 @@ public enum BKGymBelegungsfehlerTyp {
 	/** BelegungsfehlerArt ST_4 | Parameter: Fachbezeichnung */
 	ST_4("ST_4", BKGymBelegungsfehlerArt.BELEGUNG, 10, "Das Fach %s der Stundentafel wurde nicht belegt."),
 
-	/** BelegungsfehlerArt ST_5_INFO | Parameter: Fachbezeichnung, Halbjahr */
+	/** BelegungsfehlerArt ST_5_INFO | Parameter: Fachbezeichnung */
 	ST_5_INFO("ST_5_INFO", BKGymBelegungsfehlerArt.HINWEIS, 0, "Der Stundenumfang des Fachs %s ist in der Summe erfüllt, aber nicht in allen Halbjahren."),
 
 	/** BelegungsfehlerArt KL_1 Klausur | Parameter: Fachbezeichnung, Halbjahr */
-	KL_1("KL_1", BKGymBelegungsfehlerArt.SCHRIFTLICHKEIT, 2, "Im Fach %s fehlt die Klausurbelegung im Halbjahr %s.");
+	KL_1("KL_1", BKGymBelegungsfehlerArt.SCHRIFTLICHKEIT, 2, "Im Fach %s fehlt die Klausurbelegung im Halbjahr %s."),
+
+	/** BelegungsfehlerArt KL_2 Klausur | Parameter: Fachbezeichnung, Halbjahr */
+	KL_2("KL_2", BKGymBelegungsfehlerArt.SCHRIFTLICHKEIT, 2, "Im LK-Fach %s fehlt die Klausurbelegung im Halbjahr %s."),
+
+	/** BelegungsfehlerArt KL_3 Klausur | Parameter: Fachbezeichnung, Halbjahr */
+	KL_3("KL_3", BKGymBelegungsfehlerArt.SCHRIFTLICHKEIT, 2, "In der Fremdsprache %s fehlt die Klausurbelegung im Halbjahr %s."),
+
+	/** BelegungsfehlerArt KL_4 Klausur | Parameter: Fachbezeichnung, Halbjahr */
+	KL_4("KL_4", BKGymBelegungsfehlerArt.SCHRIFTLICHKEIT, 2, "Im Abiturfach %s fehlt die Klausurbelegung im Halbjahr %s.");
 
 
 	/** Der eindeutige Code des Belegungsfehlers */

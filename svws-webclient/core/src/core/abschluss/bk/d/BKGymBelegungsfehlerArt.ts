@@ -1,5 +1,6 @@
 import { JavaEnum } from '../../../../java/lang/JavaEnum';
 import { Class } from '../../../../java/lang/Class';
+import { DeveloperNotificationException } from '../../../../core/exceptions/DeveloperNotificationException';
 
 export class BKGymBelegungsfehlerArt extends JavaEnum<BKGymBelegungsfehlerArt> {
 
@@ -53,26 +54,21 @@ export class BKGymBelegungsfehlerArt extends JavaEnum<BKGymBelegungsfehlerArt> {
 	 *
 	 * @return die Belegungsfehler-Art
 	 */
-	public static fromKuerzel(kuerzel: string | null): BKGymBelegungsfehlerArt | null {
-		if (kuerzel === null)
-			return null;
-		switch (kuerzel) {
-			case "BELEGUNG": {
-				return BKGymBelegungsfehlerArt.BELEGUNG;
-			}
-			case "SCHRIFTLICHKEIT": {
-				return BKGymBelegungsfehlerArt.SCHRIFTLICHKEIT;
-			}
-			case "SCHULSPEZIFISCH": {
-				return BKGymBelegungsfehlerArt.SCHULSPEZIFISCH;
-			}
-			case "HINWEIS": {
-				return BKGymBelegungsfehlerArt.HINWEIS;
-			}
-			default: {
-				return null;
-			}
+	public static fromKuerzel(kuerzel: string): BKGymBelegungsfehlerArt {
+		let _sevar_2055730872 : any;
+		const _seexpr_2055730872 = (kuerzel);
+		if (_seexpr_2055730872 === "BELEGUNG") {
+			_sevar_2055730872 = BKGymBelegungsfehlerArt.BELEGUNG;
+		} else if (_seexpr_2055730872 === "SCHRIFTLICHKEIT") {
+			_sevar_2055730872 = BKGymBelegungsfehlerArt.SCHRIFTLICHKEIT;
+		} else if (_seexpr_2055730872 === "SCHULSPEZIFISCH") {
+			_sevar_2055730872 = BKGymBelegungsfehlerArt.SCHULSPEZIFISCH;
+		} else if (_seexpr_2055730872 === "HINWEIS") {
+			_sevar_2055730872 = BKGymBelegungsfehlerArt.HINWEIS;
+		} else {
+			throw new DeveloperNotificationException("Die Belegungsfehlerart " + kuerzel + " gibt es nicht.");
 		}
+		return _sevar_2055730872;
 	}
 
 	public toString(): string {

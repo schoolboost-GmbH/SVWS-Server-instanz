@@ -146,10 +146,10 @@ class TestBKGymBelegpruefung {
 									? "Fehler: Belegprüfung war erfolgreich, obwohl der Testfall vorgibt, dass sie fehlschlagen muss!"
 									: "Fehler: Belegprüfung war nicht erfolgreich, obwohl der Testfall vorgibt, dass sie erfolgreich sein muss!");
 
-							// Prüfe, ob alle Fehlercodes des Testfalls gefunden wurden und ob zuviele Fehlercodes im Vergleich zum Testfall gefunden wurden.
+							// Prüfe, ob sich die dokumentierten Fehler des Testfalls von den gefundenen unterscheiden.
 							final List<String> testfallFehler =
-									vergleichErgebnis.fehlercodes.stream().map(error -> error.code).toList();
-							final List<String> ergebnisFehler = ergebnis.fehlercodes.stream().map(error -> error.code).toList();
+									vergleichErgebnis.fehlercodes.stream().map(error -> error.beschreibung).toList();
+							final List<String> ergebnisFehler = ergebnis.fehlercodes.stream().map(error -> error.beschreibung).toList();
 							final String zuwenig = testfallFehler.stream().filter(error -> !ergebnisFehler.contains(error)).collect(Collectors.joining(", "));
 							final String zuviele = ergebnisFehler.stream().filter(error -> !testfallFehler.contains(error)).collect(Collectors.joining(", "));
 							if ((!"".equals(zuwenig)) || (!"".equals(zuviele)))

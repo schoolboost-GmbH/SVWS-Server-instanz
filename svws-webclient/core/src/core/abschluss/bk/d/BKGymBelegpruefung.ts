@@ -303,7 +303,7 @@ export abstract class BKGymBelegpruefung extends JavaObject {
 			return;
 		const belegungen: List<BKGymAbiturFachbelegung> | null = mapBelegungByTafelfach.get(tafelFach);
 		if ((belegungen === null) || belegungen.isEmpty()) {
-			this.addFehler(tafel, new BKGymBelegungsfehler(BKGymBelegungsfehlerTyp.ST_4));
+			this.addFehler(tafel, new BKGymBelegungsfehler(BKGymBelegungsfehlerTyp.ST_4, tafelFach.fachbezeichnung));
 			return;
 		}
 		if (this.manager.istWahlfach(tafelFach.fachbezeichnung))
@@ -314,26 +314,6 @@ export abstract class BKGymBelegpruefung extends JavaObject {
 			else
 				this.pruefeBelegung(tafel, tafelFach, belegungen.getFirst());
 		}
-	}
-
-	/**
-	 * faecher enthält die Fächer einer Position der Stundentafel. Wenn Wahlmöglichkeiten bestehen sind möglicherweise
-	 * vorhandene mehrfache Belegungen schon zum Wahlfach verschoben. Daher schauen wir bei welchem Fach eine Belegung vorliegt
-	 * und geben diese zurück.
-	 *
-	 * @param faecher                  die Fächer einer Position der Stundentafel z. B. Physik, Chemie, Biologie
-	 * @param mapBelegungByTafelfach   die Map mit den Fächern der Belegungen
-	 *
-	 * @return das Fach, das pflichtmäßig belegt wurde
-	 */
-	private static findeBelegtesFach(faecher: List<BeruflichesGymnasiumStundentafelFach>, mapBelegungByTafelfach: JavaMap<BeruflichesGymnasiumStundentafelFach, List<BKGymAbiturFachbelegung>>): BeruflichesGymnasiumStundentafelFach | null {
-		for (const tafelFach of faecher)
-			if (tafelFach !== null) {
-				const belegungen: List<BKGymAbiturFachbelegung> | null = mapBelegungByTafelfach.get(tafelFach);
-				if ((belegungen !== null) && (!belegungen.isEmpty()))
-					return tafelFach;
-			}
-		return null;
 	}
 
 	/**
@@ -348,8 +328,7 @@ export abstract class BKGymBelegpruefung extends JavaObject {
 	private pruefeBelegung(tafel: BeruflichesGymnasiumStundentafel | null, fachTafel: BeruflichesGymnasiumStundentafelFach, fachBelegung: BKGymAbiturFachbelegung): boolean {
 		const successStundenumfang: boolean = this.pruefeStundenumfang(tafel, fachTafel, fachBelegung);
 		const successSchriftlichkeit: boolean = this.pruefeSchriftlich(tafel, fachTafel, fachBelegung);
-		const successAnzahl: boolean = this.pruefeAnzahlKurse(tafel, fachTafel, fachBelegung);
-		return successStundenumfang && successSchriftlichkeit && successAnzahl;
+		return successStundenumfang && successSchriftlichkeit;
 	}
 
 	/**
@@ -384,13 +363,13 @@ export abstract class BKGymBelegpruefung extends JavaObject {
 		let success: boolean = true;
 		const summeWS: Array<number> = Array(GostHalbjahr.maxHalbjahre).fill(0);
 		for (const fachBelegung of belegungen)
-			for (const hj of GostHalbjahr.values()) {
+			for (const hj of GostHalbjahr.getQualifikationsphase()) {
 				const belegung: BKGymAbiturFachbelegungHalbjahr | null = fachBelegung.belegungen[hj.id];
 				if (belegung !== null)
 					summeWS[hj.id] += belegung.wochenstunden;
 			}
-		for (const hj of GostHalbjahr.values())
-			if ((summeWS[hj.id] < fachTafel.stundenumfang[hj.id]) && this.addFehler(tafel, new BKGymBelegungsfehler(BKGymBelegungsfehlerTyp.ST_3)))
+		for (const hj of GostHalbjahr.getQualifikationsphase())
+			if ((summeWS[hj.id] < fachTafel.stundenumfang[hj.id]) && this.addFehler(tafel, new BKGymBelegungsfehler(BKGymBelegungsfehlerTyp.ST_3, fachTafel.fachbezeichnung)))
 				success = false;
 		return success;
 	}
@@ -409,27 +388,27 @@ export abstract class BKGymBelegpruefung extends JavaObject {
 		let summeTafel: number = 0;
 		let summeBelegung: number = 0;
 		let unterbelegung: boolean = false;
-		for (const hj of GostHalbjahr.values()) {
+		for (const hj of GostHalbjahr.getQualifikationsphase()) {
 			summeTafel += fachTafel.stundenumfang[hj.id];
 			const belegung: BKGymAbiturFachbelegungHalbjahr | null = fachBelegung.belegungen[hj.id];
 			if ((belegung === null) && (fachTafel.stundenumfang[hj.id] > 0))
-				success = success && !this.addFehler(tafel, new BKGymBelegungsfehler(BKGymBelegungsfehlerTyp.ST_4, fachTafel.fachbezeichnung));
+				success = !this.addFehler(tafel, new BKGymBelegungsfehler(BKGymBelegungsfehlerTyp.ST_4, fachTafel.fachbezeichnung)) && success;
 			if (belegung !== null) {
 				if ((belegung.notenkuerzel !== null) && (!JavaString.isEmpty(belegung.notenkuerzel))) {
 					summeBelegung += belegung.wochenstunden;
 					unterbelegung = unterbelegung || (fachTafel.stundenumfang[hj.id] > belegung.wochenstunden);
 				} else
 					if (fachTafel.stundenumfang[hj.id] > 0) {
-						success = success && !(this.addFehler(tafel, new BKGymBelegungsfehler(BKGymBelegungsfehlerTyp.ST_2, fachTafel.fachbezeichnung, hj.kuerzel)));
+						success = !(this.addFehler(tafel, new BKGymBelegungsfehler(BKGymBelegungsfehlerTyp.ST_2, fachTafel.fachbezeichnung, hj.kuerzel))) && success;
 						unterbelegung = true;
 					}
 			}
 		}
 		if (summeTafel > summeBelegung) {
-			success = success && !this.addFehler(tafel, new BKGymBelegungsfehler(BKGymBelegungsfehlerTyp.ST_3, fachTafel.fachbezeichnung));
+			success = !this.addFehler(tafel, new BKGymBelegungsfehler(BKGymBelegungsfehlerTyp.ST_3, fachTafel.fachbezeichnung)) && success;
 			return success;
 		}
-		success = success && !(unterbelegung && this.addFehler(tafel, new BKGymBelegungsfehler(BKGymBelegungsfehlerTyp.ST_5_INFO, fachTafel.fachbezeichnung)));
+		success = !(unterbelegung && this.addFehler(tafel, new BKGymBelegungsfehler(BKGymBelegungsfehlerTyp.ST_5_INFO, fachTafel.fachbezeichnung))) && success;
 		return success;
 	}
 
@@ -443,59 +422,83 @@ export abstract class BKGymBelegpruefung extends JavaObject {
 	 * @return true, wenn die Prüfung keinen Fehler entdeckt, sonst false
 	 */
 	private pruefeSchriftlich(tafel: BeruflichesGymnasiumStundentafel | null, fachTafel: BeruflichesGymnasiumStundentafelFach, fachBelegung: BKGymAbiturFachbelegung): boolean {
-		let success: boolean = true;
-		const istAbiFach: boolean = (fachBelegung.abiturFach !== null);
-		const istLK: boolean = istAbiFach && ((fachBelegung.abiturFach === 1) || (fachBelegung.abiturFach === 2));
-		const istAbiSchriftlich: boolean = istAbiFach && (fachBelegung.abiturFach !== 4);
-		const istMathe: boolean = (JavaObject.equalsTranspiler("Mathematik", (fachTafel.fachbezeichnung)));
-		const istDeutsch: boolean = (JavaObject.equalsTranspiler("Deutsch", (fachTafel.fachbezeichnung)));
-		const istFS: boolean = this.manager.istFremdsprachenbelegung(fachBelegung);
-		const brauchtSchriftlichEF: boolean = istLK || istMathe || istDeutsch || istFS;
-		const brauchtSchriftlichQ: boolean = brauchtSchriftlichEF || istAbiFach;
-		for (const hj of GostHalbjahr.values()) {
-			const belegungHj: BKGymAbiturFachbelegungHalbjahr | null = fachBelegung.belegungen[hj.id];
-			if ((belegungHj === null) || (belegungHj.schriftlich))
-				continue;
-			success = success && this.pruefeSchriftlichkeitHalbjahr(tafel, fachTafel, hj, brauchtSchriftlichEF, brauchtSchriftlichQ, istAbiSchriftlich);
-		}
+		let success: boolean;
+		success = this.pruefeSchriftlichEF(GostHalbjahr.EF1, tafel, fachTafel, fachBelegung);
+		success = this.pruefeSchriftlichEF(GostHalbjahr.EF2, tafel, fachTafel, fachBelegung) && success;
+		success = this.pruefeSchriftlichQ1(GostHalbjahr.Q11, tafel, fachTafel, fachBelegung) && success;
+		success = this.pruefeSchriftlichQ1(GostHalbjahr.Q12, tafel, fachTafel, fachBelegung) && success;
+		success = this.pruefeSchriftlichQ2(GostHalbjahr.Q21, tafel, fachTafel, fachBelegung) && success;
+		success = this.pruefeSchriftlichQ2(GostHalbjahr.Q22, tafel, fachTafel, fachBelegung) && success;
 		return success;
 	}
 
 	/**
-	 * Führt die logischen Prüfungen für die Schriftlichkeit für ein Halbjahr aus.
+	 * In der EF muss in mindestens vier Fächern, in den LK-Fächern, Deutsch, Mathematik und Fremdsprachen in jedem Fall
 	 *
-	 * @param tafel                  die Stundentafel der Anlage
-	 * @param fachTafel              das zu prüfende Fach aus der Stundentafel
-	 * @param hj                     das Oberstufenhalbjahr
-	 * @param brauchtSchriftlichEF   ob das Fach in der Einführungsphase schriftlich zu belegen ist
-	 * @param brauchtSchriftlichQ    ob das Fach in der Qualifikationsphase schriftlich zu belegen ist
-	 * @param istAbiSchriftlich      ob das Fach wegen Abiturfach schriftlich zu belegen ist
-	 *
-	 * @return true, wenn keine Beanstandungen vorliegen, sonst false
-	 */
-	private pruefeSchriftlichkeitHalbjahr(tafel: BeruflichesGymnasiumStundentafel | null, fachTafel: BeruflichesGymnasiumStundentafelFach, hj: GostHalbjahr, brauchtSchriftlichEF: boolean, brauchtSchriftlichQ: boolean, istAbiSchriftlich: boolean): boolean {
-		let success: boolean = true;
-		if (brauchtSchriftlichEF && hj.istEinfuehrungsphase())
-			success = success && !this.addFehler(tafel, new BKGymBelegungsfehler(BKGymBelegungsfehlerTyp.KL_1, fachTafel.fachbezeichnung, hj.kuerzel));
-		if (brauchtSchriftlichQ && hj.istQualifikationsphase() && (hj as unknown !== GostHalbjahr.Q22 as unknown))
-			success = success && !this.addFehler(tafel, new BKGymBelegungsfehler(BKGymBelegungsfehlerTyp.KL_1, fachTafel.fachbezeichnung, hj.kuerzel));
-		if (istAbiSchriftlich && (hj as unknown === GostHalbjahr.Q22 as unknown))
-			success = success && !this.addFehler(tafel, new BKGymBelegungsfehler(BKGymBelegungsfehlerTyp.KL_1, fachTafel.fachbezeichnung, hj.kuerzel));
-		return success;
-	}
-
-	/**
-	 * Prüft, ob die Mindestanzahl einzubringender Kurse vorhanden ist.
-	 *
+	 * @param hj             das Oberstufenhalbjahr
 	 * @param tafel          die Stundentafel der Anlage
 	 * @param fachTafel      das zu prüfende Fach aus der Stundentafel
 	 * @param fachBelegung   die zugeordnete Fachbelegung
 	 *
 	 * @return true, wenn die Prüfung keinen Fehler entdeckt, sonst false
 	 */
-	private pruefeAnzahlKurse(tafel: BeruflichesGymnasiumStundentafel | null, fachTafel: BeruflichesGymnasiumStundentafelFach | null, fachBelegung: BKGymAbiturFachbelegung | null): boolean {
-		const success: boolean = true;
-		return success;
+	private pruefeSchriftlichEF(hj: GostHalbjahr, tafel: BeruflichesGymnasiumStundentafel | null, fachTafel: BeruflichesGymnasiumStundentafelFach, fachBelegung: BKGymAbiturFachbelegung): boolean {
+		const belegungHj: BKGymAbiturFachbelegungHalbjahr | null = fachBelegung.belegungen[hj.id];
+		if ((belegungHj === null) || (belegungHj.schriftlich))
+			return true;
+		if (JavaObject.equalsTranspiler("Deutsch", (fachTafel.fachbezeichnung)) || JavaObject.equalsTranspiler("Mathematik", (fachTafel.fachbezeichnung)))
+			return !this.addFehler(tafel, new BKGymBelegungsfehler(BKGymBelegungsfehlerTyp.KL_1, fachTafel.fachbezeichnung, hj.kuerzel));
+		if ((fachBelegung.abiturFach !== null) && (fachBelegung.abiturFach <= 2))
+			return !this.addFehler(tafel, new BKGymBelegungsfehler(BKGymBelegungsfehlerTyp.KL_2, fachTafel.fachbezeichnung, hj.kuerzel));
+		if (this.manager.istFremdsprachenbelegung(fachBelegung))
+			return !this.addFehler(tafel, new BKGymBelegungsfehler(BKGymBelegungsfehlerTyp.KL_3, fachTafel.fachbezeichnung, hj.kuerzel));
+		return true;
+	}
+
+	/**
+	 * In der Q1 müssen allen Abiturfächer schriftlich belegt sein. Deutsch, Mathematik,
+	 * Fremdsprachen und die Fächer der Berufsabschlussprüfung in jedem Fall
+	 *
+	 * @param hj             das Oberstufenhalbjahr
+	 * @param tafel          die Stundentafel der Anlage
+	 * @param fachTafel      das zu prüfende Fach aus der Stundentafel
+	 * @param fachBelegung   die zugeordnete Fachbelegung
+	 *
+	 * @return true, wenn die Prüfung keinen Fehler entdeckt, sonst false
+	 */
+	private pruefeSchriftlichQ1(hj: GostHalbjahr, tafel: BeruflichesGymnasiumStundentafel | null, fachTafel: BeruflichesGymnasiumStundentafelFach, fachBelegung: BKGymAbiturFachbelegung): boolean {
+		const belegungHj: BKGymAbiturFachbelegungHalbjahr | null = fachBelegung.belegungen[hj.id];
+		if ((belegungHj === null) || (belegungHj.schriftlich))
+			return true;
+		if (JavaObject.equalsTranspiler("Deutsch", (fachTafel.fachbezeichnung)) || JavaObject.equalsTranspiler("Mathematik", (fachTafel.fachbezeichnung)))
+			return !this.addFehler(tafel, new BKGymBelegungsfehler(BKGymBelegungsfehlerTyp.KL_1, fachTafel.fachbezeichnung, hj.kuerzel));
+		if ((fachBelegung.abiturFach !== null) && (fachBelegung.abiturFach <= 4))
+			return !this.addFehler(tafel, new BKGymBelegungsfehler(BKGymBelegungsfehlerTyp.KL_4, fachTafel.fachbezeichnung, hj.kuerzel));
+		if (this.manager.istFremdsprachenbelegung(fachBelegung))
+			return !this.addFehler(tafel, new BKGymBelegungsfehler(BKGymBelegungsfehlerTyp.KL_3, fachTafel.fachbezeichnung, hj.kuerzel));
+		return true;
+	}
+
+	/**
+	 * In der Q2 müssen das erste bis dritte Abiturfach schriftlich belegt sein. Deutsch, Mathematik,
+	 * Nur in der Q21 auch die Fremdsprachen
+	 *
+	 * @param hj             das Oberstufenhalbjahr
+	 * @param tafel          die Stundentafel der Anlage
+	 * @param fachTafel      das zu prüfende Fach aus der Stundentafel
+	 * @param fachBelegung   die zugeordnete Fachbelegung
+	 *
+	 * @return true, wenn die Prüfung keinen Fehler entdeckt, sonst false
+	 */
+	private pruefeSchriftlichQ2(hj: GostHalbjahr, tafel: BeruflichesGymnasiumStundentafel | null, fachTafel: BeruflichesGymnasiumStundentafelFach, fachBelegung: BKGymAbiturFachbelegung): boolean {
+		const belegungHj: BKGymAbiturFachbelegungHalbjahr | null = fachBelegung.belegungen[hj.id];
+		if ((belegungHj === null) || (belegungHj.schriftlich))
+			return true;
+		if ((fachBelegung.abiturFach !== null) && (fachBelegung.abiturFach <= 3))
+			return !this.addFehler(tafel, new BKGymBelegungsfehler(BKGymBelegungsfehlerTyp.KL_4, fachTafel.fachbezeichnung, hj.kuerzel));
+		if ((GostHalbjahr.Q21 as unknown === hj as unknown) && this.manager.istFremdsprachenbelegung(fachBelegung))
+			return !this.addFehler(tafel, new BKGymBelegungsfehler(BKGymBelegungsfehlerTyp.KL_3, fachTafel.fachbezeichnung, hj.kuerzel));
+		return true;
 	}
 
 	/**

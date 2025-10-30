@@ -332,6 +332,9 @@ export { BKGymBelegpruefungErgebnisFehler } from './core/abschluss/bk/d/BKGymBel
 export { BKGymBelegungsfehler } from './core/abschluss/bk/d/BKGymBelegungsfehler';
 export { BKGymBelegungsfehlerArt } from './core/abschluss/bk/d/BKGymBelegungsfehlerArt';
 export { BKGymBelegungsfehlerTyp } from './core/abschluss/bk/d/BKGymBelegungsfehlerTyp';
+export { BKGymPruefbedingung } from './core/abschluss/bk/d/BKGymPruefbedingung';
+export { BKGymPruefbedingungArt } from './core/abschluss/bk/d/BKGymPruefbedingungArt';
+export { BKGymPruefungsArt } from './core/abschluss/bk/d/BKGymPruefungsArt';
 export { AbschlussFaecherGruppe } from './core/abschluss/ge/AbschlussFaecherGruppe';
 export { AbschlussFaecherGruppen } from './core/abschluss/ge/AbschlussFaecherGruppen';
 export { ServiceAbschlussHA10 } from './core/abschluss/ge/ServiceAbschlussHA10';
