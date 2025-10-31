@@ -166,6 +166,21 @@
 			"gueltigBis": null
 		} ]
 	}, {
+		"validator": "de.svws_nrw.asd.validate.lehrer.ValidatorLppbLehrerPersonaldatenPersonalabschnittsdatenBeschaeftigungsart",
+		"historie": [ {
+			"zebras": true,
+			"svws": true,
+			"praefix": "LPPB",
+			"pruefschritte": [ {
+				"nummer": -1,
+				"muss": [],
+				"kann": ["G", "H", "V", "S", "KS", "R", "PS", "SK", "GE", "FW", "HI", "WF", "GY", "WB", "BK", "SR", "SG", "SB"],
+				"hinweis": []
+			} ],
+			"gueltigVon": null,
+			"gueltigBis": null
+		} ]
+	}, {
 		"validator": "de.svws_nrw.asd.validate.lehrer.ValidatorLskLehrerStammdatenKuerzel",
 		"historie": [ {
 			"zebras": true,
