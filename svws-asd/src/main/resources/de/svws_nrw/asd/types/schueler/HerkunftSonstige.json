@@ -1,0 +1,159 @@
+{
+    "version": 1,
+    "daten": [
+      {
+        "bezeichner": "AS",
+        "idStatistik": "1",
+        "historie": [
+          {
+            "id": 1000,
+            "schluessel": "AS",
+            "kuerzel": "AS",
+            "text": "Ausländische Schüler/-innen, die seit den letzten amtlichen Schuldaten aus dem Ausland zugezogen sind",
+            "schulformen": ["BK", "SB", "WB", "FW", "HI", "WF", "G", "GE", "GM", "GY", "H", "PS", "R", "KS", "S", "SG", "SK", "SR", "V"],
+            "gueltigVon": null,
+            "gueltigBis": 2022
+          },
+          {
+            "id": 1001,
+            "schluessel": "AS",
+            "kuerzel": "AS",
+            "text": "Ausländische Schüler/-innen, die seit den letzten amtlichen Schuldaten aus dem Ausland zugezogen sind",
+            "schulformen": ["BK", "SB", "WB", "FW", "HI", "WF", "G", "GE", "GY", "H", "PS", "R", "KS", "S", "SG", "SK", "SR", "V"],
+            "gueltigVon": 2023,
+            "gueltigBis": null
+          }
+        ]
+      },
+      {
+        "bezeichner": "ES",
+        "idStatistik": "2",
+        "historie": [
+          {
+            "id": 2000,
+            "schluessel": "ES",
+            "kuerzel": "ES",
+            "text": "Keine Schule bzw. kein Förderschulkindergarten (Einschulung)",
+            "schulformen": ["FW", "HI", "WF", "G", "PS", "KS", "S", "V"],
+            "gueltigVon": null,
+            "gueltigBis": null
+          }
+        ]
+      },
+      {
+        "bezeichner": "FE",
+        "idStatistik": "3",
+        "historie": [
+          {
+            "id": 3000,
+            "schluessel": "FE",
+            "kuerzel": "FE",
+            "text": "Hausfrüherziehung für Hör- bzw. Sehgeschädigte",
+            "schulformen": ["FW", "HI", "WF", "KS", "S"],
+            "gueltigVon": null,
+            "gueltigBis": null
+          }
+        ]
+      },
+      {
+        "bezeichner": "HU",
+        "idStatistik": "4",
+        "historie": [
+          {
+            "id": 4000,
+            "schluessel": "HU",
+            "kuerzel": "HU",
+            "text": "Hochschule, Universität",
+            "schulformen": ["BK", "SB"],
+            "gueltigVon": null,
+            "gueltigBis": null
+          }
+        ]
+      },
+      {
+        "bezeichner": "SK",
+        "idStatistik": "5",
+        "historie": [
+          {
+            "id": 5000,
+            "schluessel": "SK",
+            "kuerzel": "SK",
+            "text": "Förderschulkindergarten (einschließlich frühkindliche Förderung)",
+            "schulformen": ["FW", "HI", "WF", "G", "PS", "KS", "S", "V"],
+            "gueltigVon": null,
+            "gueltigBis": null
+          }
+        ]
+      },
+      {
+        "bezeichner": "UN",
+        "idStatistik": "6",
+        "historie": [
+          {
+            "id": 6000,
+            "schluessel": "UN",
+            "kuerzel": "UN",
+            "text": "Herkunft noch unbekannt (nur Gliederung A12, A13, A17 - A19)",
+            "schulformen": ["BK", "SB"],
+            "gueltigVon": null,
+            "gueltigBis": null
+          }
+        ]
+      },
+      {
+        "bezeichner": "WZ",
+        "idStatistik": "7",
+        "historie": [
+          {
+            "id": 8000,
+            "schluessel": "WZ",
+            "kuerzel": "WZ",
+            "text": "Wehr-, Zivil- oder Bundesfreiwilligendienst",
+            "schulformen": ["BK", "SB", "WB"],
+            "gueltigVon": null,
+            "gueltigBis": null
+          }
+        ]
+      },
+      {
+        "bezeichner": "XB",
+        "idStatistik": "8",
+        "historie": [
+          {
+            "id": 9000,
+            "schluessel": "XB",
+            "kuerzel": "XB",
+            "text": "Berufstätigkeit (z. B. vor Besuch einer Fachschule)",
+            "schulformen": ["BK", "SB", "WB"],
+            "gueltigVon": null,
+            "gueltigBis": null
+          }
+        ]
+      },
+      {
+        "bezeichner": "XS",
+        "idStatistik": "9",
+        "historie": [
+          {
+            "id": 10000,
+            "schluessel": "XS",
+            "kuerzel": "XS",
+            "text": "Sonstige Schule bzw. keine Schule, auch seit den letzten amtlichen Schuldaten aus dem Ausland zugezogene deutsche Schüler/-innen",
+            "schulformen": ["BK", "SB", "WB", "FW", "HI", "WF", "G", "GE", "GM", "GY", "H", "PS", "R", "KS", "S", "SG", "SK", "SR", "V"],
+            "gueltigVon": null,
+            "gueltigBis": 2022
+          },
+          {
+            "id": 10001,
+            "schluessel": "XS",
+            "kuerzel": "XS",
+            "text": "Sonstige Schule bzw. keine Schule, auch seit den letzten amtlichen Schuldaten aus dem Ausland zugezogene deutsche Schüler/-innen",
+            "schulformen": ["BK", "SB", "WB", "FW", "HI", "WF", "G", "GE", "GY", "H", "PS", "R", "KS", "S", "SG", "SK", "SR", "V"],
+            "gueltigVon": 2023,
+            "gueltigBis": null
+          }
+        ]
+      }
+    ]
+  }
+  

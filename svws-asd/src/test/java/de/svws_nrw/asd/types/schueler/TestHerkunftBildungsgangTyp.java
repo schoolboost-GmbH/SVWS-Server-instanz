@@ -49,7 +49,7 @@ class TestHerkunftBildungsgangTyp {
 	@Test
 	@DisplayName("Teste CoreType HerkunftBildungsgangTyp: Korrekter Text beim Wert KL.")
 	void testHerkunftBildungsgangTyp_TextBeiKL() {
-		assertEquals("KOLLEG", HerkunftBildungsgangTyp.data().getHistorieByWert(HerkunftBildungsgangTyp.KL).getFirst().text);
+		assertEquals("Weiterbildungskolleg: Kolleg", HerkunftBildungsgangTyp.data().getHistorieByWert(HerkunftBildungsgangTyp.KL).getFirst().text);
 	}
 
 }
