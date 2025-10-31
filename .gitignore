@@ -456,3 +456,6 @@ svws-server-app/Temp
 
 # Lockfile, falls ein client mit deno gestartet wird
 deno.lock
+
+# Helix editor
+.helix
