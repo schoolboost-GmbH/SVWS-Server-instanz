@@ -1,7 +1,10 @@
 <template>
 	<div class="page page-grid-cards">
-		<div class="flex flex-col gap-y-16 lg:gap-y-16" v-if="ServerMode.DEV.checkServerMode(serverMode)">
-			<ui-card icon="i-ri-delete-bin-line" title="Löschen" subtitle="Ausgewählte Schulen werden gelöscht.">
+		<div v-if="!hatIrgendwelcheKompetenzen">
+			Für die Nutzung der Gruppenprozesse fehlen Benutzerkompetenzen.
+		</div>
+		<div v-if="ServerMode.DEV.checkServerMode(serverMode)" class="flex flex-col gap-y-16 lg:gap-y-16">
+			<ui-card v-if="hatKompetenzLoeschen" icon="i-ri-delete-bin-line" title="Löschen" subtitle="Ausgewählte Schulen werden gelöscht.">
 				<div>
 					<!-- TODO: Vollständige Vorbedingungsprüfung für das Löschen einbauen -->
 					<span v-if="false">Alle ausgewählten Schulen sind bereit zum Löschen.</span>
@@ -33,12 +36,15 @@
 
 <script setup lang="ts">
 
-	import { ref } from "vue";
+	import { computed, ref } from "vue";
 	import type { KatalogSchuleGruppenprozesseProps } from "./SKatalogSchuleGruppenprozesseProps";
 	import type { List } from "@core";
-	import { ServerMode } from "@core";
+	import { BenutzerKompetenz, ServerMode } from "@core";
 
 	const props = defineProps<KatalogSchuleGruppenprozesseProps>();
+
+	const hatKompetenzLoeschen = computed(() => props.benutzerKompetenzen.has(BenutzerKompetenz.KATALOG_EINTRAEGE_LOESCHEN));
+	const hatIrgendwelcheKompetenzen = computed(() => hatKompetenzLoeschen.value);
 
 	const loading = ref<boolean>(false);
 	const logs = ref<List<string | null> | undefined>();

@@ -1,10 +1,6 @@
 
-import type {
-	KlassenDaten, Schueler, List, LehrerListeEintrag, SimpleOperationResponse, ApiFile, ReportingParameter, StundenplanListeEintrag } from "@core";
-import {
-	UserNotificationException,
-} from "@core";
-import { ArrayList, DeveloperNotificationException } from "@core";
+import type { KlassenDaten, Schueler, List, LehrerListeEintrag, SimpleOperationResponse, ApiFile, ReportingParameter, StundenplanListeEintrag } from "@core";
+import { BenutzerKompetenz, UserNotificationException, ArrayList, DeveloperNotificationException } from "@core";
 
 import { api } from "~/router/Api";
 import { RouteManager } from "~/router/RouteManager";
@@ -116,10 +112,12 @@ export class RouteDataKlassen extends RouteDataAuswahl<KlassenListeManager, Rout
 	}
 
 	public async updateMapStundenplaene() {
-		const listStundenplaene = await api.server.getStundenplanlisteFuerAbschnitt(api.schema, this.idSchuljahresabschnitt);
 		const mapStundenplaene = new Map<number, StundenplanListeEintrag>();
-		for (const l of listStundenplaene)
-			mapStundenplaene.set(l.id, l);
+		if (api.benutzerKompetenzen.has(BenutzerKompetenz.STUNDENPLAN_ALLGEMEIN_ANSEHEN)) {
+			const listStundenplaene = await api.server.getStundenplanlisteFuerAbschnitt(api.schema, this.idSchuljahresabschnitt);
+			for (const l of listStundenplaene)
+				mapStundenplaene.set(l.id, l);
+		}
 		this.setPatchedState({ mapStundenplaene });
 	}
 

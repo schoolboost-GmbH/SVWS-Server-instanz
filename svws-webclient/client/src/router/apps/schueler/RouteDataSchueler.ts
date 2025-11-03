@@ -107,12 +107,13 @@ export class RouteDataSchueler extends RouteDataAuswahl<SchuelerListeManager, Ro
 
 		return response;
 	}
-
 	public async updateMapStundenplaene() {
-		const listStundenplaene = await api.server.getStundenplanlisteFuerAbschnitt(api.schema, this.idSchuljahresabschnitt);
 		const mapStundenplaene = new Map<number, StundenplanListeEintrag>();
-		for (const l of listStundenplaene)
-			mapStundenplaene.set(l.id, l);
+		if (api.benutzerKompetenzen.has(BenutzerKompetenz.STUNDENPLAN_ALLGEMEIN_ANSEHEN)) {
+			const listStundenplaene = await api.server.getStundenplanlisteFuerAbschnitt(api.schema, this.idSchuljahresabschnitt);
+			for (const l of listStundenplaene)
+				mapStundenplaene.set(l.id, l);
+		}
 		this.setPatchedState({ mapStundenplaene });
 	}
 

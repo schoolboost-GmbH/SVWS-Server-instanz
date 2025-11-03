@@ -1,6 +1,9 @@
 <template>
 	<div class="page page-grid-cards">
-		<div class="flex flex-col gap-4">
+		<div v-if="!hatIrgendwelcheKompetenzen">
+			Für die Nutzung der Gruppenprozesse fehlen Benutzerkompetenzen.
+		</div>
+		<div v-else class="flex flex-col gap-4">
 			<ui-card v-if="hatKompetenzDruckenSchuelerIndividualdaten" icon="i-ri-printer-line" title="Klassenliste drucken oder versenden" subtitle="Eine Liste mit den Daten der Schülerinnen und Schüler der ausgewählten Klassen drucken oder versenden."
 				:is-open="currentAction === 'druckKlasseListeSchuelerKontaktdatenErzieher'" @update:is-open="isOpen => setCurrentAction('druckKlasseListeSchuelerKontaktdatenErzieher', isOpen)">
 				<svws-ui-input-wrapper :grid="4" class="p-2">
@@ -162,6 +165,8 @@
 	const hatKompetenzDruckenStundenplan = computed(() => (props.benutzerKompetenzen.has(BenutzerKompetenz.UNTERRICHTSVERTEILUNG_ANSEHEN) && hatKompetenzDrucken.value));
 	const hatKompetenzDruckenSchuelerIndividualdaten = computed(() => (props.benutzerKompetenzen.has(BenutzerKompetenz.SCHUELER_INDIVIDUALDATEN_ANSEHEN) && hatKompetenzDrucken.value));
 	const hatKompetenzLoeschen = computed(() => props.benutzerKompetenzen.has(BenutzerKompetenz.UNTERRICHTSVERTEILUNG_ALLGEMEIN_AENDERN));
+
+	const hatIrgendwelcheKompetenzen = computed(() => hatKompetenzDrucken.value || hatKompetenzLoeschen.value || hatKompetenzDruckenStundenplan.value || hatKompetenzDruckenSchuelerIndividualdaten.value);
 
 	const isPrintDisabled = computed<boolean>(() => !props.manager().liste.auswahlExists() || loading.value);
 	const isPrintStundenplanDisabled = computed<boolean>(() => isPrintDisabled.value || stundenplanAuswahl.value === undefined);
@@ -401,8 +406,8 @@
 							break;
 					}
 				}
-				emailDaten.betreff = (((emailBetreff.value.trim().length) !== 0) ? emailBetreff.value : ("Klassenliste mit Kontaktdaten"));
-				emailDaten.text = (((emailText.value.trim().length) !== 0) ? emailText.value : ("Im Anhang dieser E-Mail ist die Klassenliste mit Kontaktdaten enthalten."));
+				emailDaten.betreff = ((emailBetreff.value.trim().length === 0) ? ("Klassenliste mit Kontaktdaten") : emailBetreff.value);
+				emailDaten.text = ((emailText.value.trim().length === 0) ? ("Im Anhang dieser E-Mail ist die Klassenliste mit Kontaktdaten enthalten.") : emailText.value);
 				break;
 			case 'druckKlasseStundenplan':
 				if (stundenplanAuswahl.value === undefined)
@@ -426,8 +431,8 @@
 							break;
 					}
 				}
-				emailDaten.betreff = (((emailBetreff.value.trim().length) !== 0) ? emailBetreff.value : ("Stundenplan " + stundenplanAuswahl.value.bezeichnung));
-				emailDaten.text = (((emailText.value.trim().length) !== 0) ? emailText.value : ("Im Anhang dieser E-Mail ist der Stundenplan " + stundenplanAuswahl.value.bezeichnung + " enthalten."));
+				emailDaten.betreff = (((emailBetreff.value.trim().length) === 0) ? ("Stundenplan " + stundenplanAuswahl.value.bezeichnung) : emailBetreff.value);
+				emailDaten.text = (((emailText.value.trim().length) === 0) ? ("Im Anhang dieser E-Mail ist der Stundenplan " + stundenplanAuswahl.value.bezeichnung + " enthalten.") : emailText.value);
 				break;
 			default:
 				return;

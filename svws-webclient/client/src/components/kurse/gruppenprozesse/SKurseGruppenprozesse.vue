@@ -1,6 +1,9 @@
 <template>
 	<div class="page page-grid-cards">
-		<div class="flex flex-col gap-4">
+		<div v-if="!hatIrgendwelcheKompetenzen">
+			Für die Nutzung der Gruppenprozesse fehlen Benutzerkompetenzen.
+		</div>
+		<div v-else class="flex flex-col gap-4">
 			<!-- Karte: Kursliste Schüler-Kontaktdaten/Erzieher drucken/versenden -->
 			<ui-card v-if="hatKompetenzDruckenSchuelerIndividualdaten" icon="i-ri-printer-line" title="Kursliste drucken oder versenden" subtitle="Eine Liste mit den Daten der Schülerinnen und Schüler der ausgewählten Kurse drucken oder versenden."
 				:is-open="currentAction === 'druckKursListeSchuelerKontaktdatenErzieher'" @update:is-open="isOpen => setCurrentAction('druckKursListeSchuelerKontaktdatenErzieher', isOpen)">
@@ -75,7 +78,7 @@
 				</svws-ui-input-wrapper>
 			</ui-card>
 			<!-- Karte: Löschen (bestehende Funktionalität, DEV) -->
-			<ui-card v-if="ServerMode.DEV.checkServerMode(serverMode)" icon="i-ri-delete-bin-line" title="Löschen" subtitle="Ausgewählte Kurse werden gelöscht."
+			<ui-card v-if="ServerMode.DEV.checkServerMode(serverMode) && hatKompetenzLoeschen" icon="i-ri-delete-bin-line" title="Löschen" subtitle="Ausgewählte Kurse werden gelöscht."
 				:is-open="currentAction === 'delete'" @update:is-open="(isOpen) => setCurrentAction('delete', isOpen)">
 				<div>
 					<span v-if="preConditionCheck[0]">Alle ausgewählten Kurse sind bereit zum Löschen.</span>
@@ -121,6 +124,9 @@
 
 	const hatKompetenzDrucken = computed(() => (props.benutzerKompetenzen.has(BenutzerKompetenz.BERICHTE_ALLE_FORMULARE_DRUCKEN) || props.benutzerKompetenzen.has(BenutzerKompetenz.BERICHTE_STANDARDFORMULARE_DRUCKEN)));
 	const hatKompetenzDruckenSchuelerIndividualdaten = computed(() => (props.benutzerKompetenzen.has(BenutzerKompetenz.SCHUELER_INDIVIDUALDATEN_ANSEHEN) && hatKompetenzDrucken.value));
+	const hatKompetenzLoeschen = computed(() => props.benutzerKompetenzen.has(BenutzerKompetenz.UNTERRICHTSVERTEILUNG_ALLGEMEIN_AENDERN));
+
+	const hatIrgendwelcheKompetenzen = computed(() => hatKompetenzDrucken.value || hatKompetenzLoeschen.value || hatKompetenzDruckenSchuelerIndividualdaten.value);
 
 	// Auswahlabhängige States
 	const isPrintDisabled = computed<boolean>(() => !props.manager().liste.auswahlExists() || loading.value);
@@ -327,8 +333,8 @@
 						break;
 				}
 			}
-			emailDaten.betreff = (((emailBetreff.value.trim().length) !== 0) ? emailBetreff.value : ("Kursliste mit Kontaktdaten"));
-			emailDaten.text = (((emailText.value.trim().length) !== 0) ? emailText.value : ("Im Anhang dieser E-Mail ist die Kursliste mit Kontaktdaten enthalten."));
+			emailDaten.betreff = (((emailBetreff.value.trim().length) === 0) ? ("Kursliste mit Kontaktdaten") : emailBetreff.value);
+			emailDaten.text = (((emailText.value.trim().length) === 0) ? ("Im Anhang dieser E-Mail ist die Kursliste mit Kontaktdaten enthalten.") : emailText.value);
 		} else {
 			return;
 		}

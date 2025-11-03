@@ -27,6 +27,7 @@ export class RouteKatalogSchuleGruppenprozesse extends RouteNode<any, RouteKatal
 	public getProps(to: RouteLocationNormalized): KatalogSchuleGruppenprozesseProps {
 		return {
 			serverMode: api.mode,
+			benutzerKompetenzen: api.benutzerKompetenzen,
 			schulform: api.schulform,
 			schulgliederungen: api.schulgliederungen,
 			delete: routeKatalogSchulen.data.delete,

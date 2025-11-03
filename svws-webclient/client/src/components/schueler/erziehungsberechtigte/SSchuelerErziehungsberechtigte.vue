@@ -5,7 +5,7 @@
 	<div class="page page-grid-cards">
 		<svws-ui-content-card title="Erziehungsberechtigte" class="col-span-full">
 			<svws-ui-table class="contentFocusField" :items="sortedData" :columns :no-data="data().size() === 0" clickable :clicked="erzieher"
-				@update:clicked="value => erzieher = value" v-model="selectedErz" :selectable="true" focus-first-element>
+				@update:clicked="value => erzieher = value" v-model="selectedErz" :selectable="hatKompetenzUpdate" focus-first-element>
 				<template #header(erhaeltAnschreiben)>
 					<svws-ui-tooltip>
 						<span class="icon i-ri-mail-send-line" />
@@ -31,14 +31,11 @@
 				</template>
 				<template #cell(actions)="{ rowData }">
 					<!-- Button zum Hinzufügen eines Erziehers an der zweiten Position, wird nur angezeigt wenn noch keine zweite Position in einem Eintrag existiert -->
-					<svws-ui-button v-if="isSuffix1(rowData.id) && !hasSuffix2(rowData.id)"
-						@click.stop="openModalForPos2(rowData)" :disabled="!hatKompetenzUpdate">
-						+
-					</svws-ui-button>
+					<svws-ui-button v-if="isSuffix1(rowData.id) && !hasSuffix2(rowData.id) && hatKompetenzUpdate" @click.stop="openModalForPos2(rowData)"> + </svws-ui-button>
 				</template>
-				<template #actions>
-					<svws-ui-button @click="deleteErzieherRequest" type="trash" :disabled="(selectedErz.length === 0) || (!hatKompetenzUpdate)" />
-					<svws-ui-button @click="addModal" type="icon" title="Erziehungsberechtigten hinzufügen" :disabled="!hatKompetenzUpdate">
+				<template #actions v-if="hatKompetenzUpdate">
+					<svws-ui-button @click="deleteErzieherRequest" type="trash" :disabled="(selectedErz.length === 0)" />
+					<svws-ui-button @click="addModal" type="icon" title="Erziehungsberechtigten hinzufügen">
 						<span class="icon i-ri-add-line" />
 					</svws-ui-button>
 				</template>
@@ -88,16 +85,16 @@
 						<svws-ui-text-input placeholder="E-Mail Adresse" v-model="zweiterErz.eMail" type="email" verify-email :readonly />
 						<ui-select label="Staatsangehörigkeit" v-model="zweiteErzStaatsangehoerigkeit" :manager="staatsangehoerigkeitenManager" :readonly searchable />
 					</svws-ui-input-wrapper>
-					<div class="mt-7 flex flex-row gap-4 justify-end">
+					<div v-if="hatKompetenzUpdate" class="mt-7 flex flex-row gap-4 justify-end">
 						<svws-ui-button type="secondary" @click="showPatchPosModal = false">Abbrechen</svws-ui-button>
 						<svws-ui-button @click="saveSecondErzieher" :disabled="(!stringIsValid(zweiterErz.vorname, true, 120))
-							|| (!stringIsValid(zweiterErz.nachname, true, 120)) || (!hatKompetenzUpdate)">
+							|| (!stringIsValid(zweiterErz.nachname, true, 120))">
 							Zweiten Erzieher speichern
 						</svws-ui-button>
 					</div>
 				</template>
 			</svws-ui-modal>
-			<SSchuelerErziehungsberechtigteModal v-model:erster-erz="ersterErz"
+			<s-schueler-erziehungsberechtigte-modal v-model:erster-erz="ersterErz"
 				v-model:zweiter-erz="zweiterErz"
 				:show-modal="showModal"
 				:map-erzieherarten="mapErzieherarten"

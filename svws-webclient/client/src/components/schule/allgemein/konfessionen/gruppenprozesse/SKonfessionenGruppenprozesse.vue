@@ -1,6 +1,9 @@
 <template>
 	<div class="page page-grid-cards">
-		<div class="flex flex-col gap4" v-if="ServerMode.DEV.checkServerMode(serverMode)">
+		<div v-if="!hatIrgendwelcheKompetenzen">
+			Für die Nutzung der Gruppenprozesse fehlen Benutzerkompetenzen.
+		</div>
+		<div v-if="ServerMode.DEV.checkServerMode(serverMode)" class="flex flex-col gap-4">
 			<ui-card icon="i-ri-delete-bin-line" title="Löschen" subtitle="Ausgewählte Konfessionen werden gelöscht." v-if="hatKompetenzLoeschen">
 				<template #buttonFooterLeft>
 					<svws-ui-button :disabled="!checkBeforeDelete().isEmpty() || isLoading" title="Löschen" @click="deleteKonfessionen" :is-loading class="mt-4">
@@ -28,6 +31,7 @@
 
 	const props = defineProps<KonfessionenGruppenprozesseProps>();
 	const hatKompetenzLoeschen = computed(() => props.benutzerKompetenzen.has(BenutzerKompetenz.KATALOG_EINTRAEGE_LOESCHEN));
+	const hatIrgendwelcheKompetenzen = computed(() => hatKompetenzLoeschen.value);
 
 	const isLoading = ref<boolean>(false);
 	const logs = ref<List<string | null> | undefined>();

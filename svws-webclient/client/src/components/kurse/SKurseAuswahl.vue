@@ -24,8 +24,8 @@
 				<template #cell(lehrer)="{ value }"> {{ getLehrerKuerzel(value) }} </template>
 				<template #cell(idJahrgaenge)="{ value }"> {{ getJahrgangsKuerzel(value) }} </template>
 				<template #cell(schueler)="{ value }">{{ value.size() }}</template>
-				<template #actions>
-					<svws-ui-tooltip position="bottom" v-if="ServerMode.DEV.checkServerMode(serverMode) && hatKompetenzAendern">
+				<template #actions v-if="ServerMode.DEV.checkServerMode(serverMode) && hatKompetenzAendern">
+					<svws-ui-tooltip position="bottom">
 						<svws-ui-button :disabled="activeViewType === ViewType.HINZUFUEGEN" type="icon" @click="props.gotoHinzufuegenView(true)" :has-focus="rowsFiltered.length === 0">
 							<span class="icon i-ri-add-line" />
 						</svws-ui-button>

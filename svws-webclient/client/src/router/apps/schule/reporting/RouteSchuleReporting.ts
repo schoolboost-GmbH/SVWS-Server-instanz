@@ -1,4 +1,4 @@
-import type { RouteLocationNormalized, RouteLocationRaw, RouteParams } from "vue-router";
+import type { RouteLocationNormalized } from "vue-router";
 
 import { BenutzerKompetenz, Schulform, ServerMode } from "@core";
 
@@ -16,16 +16,11 @@ const SSchuleReporting = () => import("~/components/schule/reporting/SSchuleRepo
 export class RouteSchuleReporting extends RouteNode<RouteDataSchuleReporting, RouteApp> {
 
 	public constructor() {
-		super(Schulform.values(), [BenutzerKompetenz.KEINE], "schule.reporting", "reporting", SSchuleReporting, new RouteDataSchuleReporting());
+		super(Schulform.values(), [BenutzerKompetenz.BERICHTE_ALLE_FORMULARE_DRUCKEN], "schule.reporting", "reporting", SSchuleReporting, new RouteDataSchuleReporting());
 		super.mode = ServerMode.DEV;
 		super.propHandler = (route) => this.getProps(route);
 		super.text = "Reporting";
 		super.menugroup = RouteSchuleMenuGroup.REPORTING;
-	}
-
-	protected async update(to: RouteNode<any, any>, to_params: RouteParams, from: RouteNode<any, any> | undefined, from_params: RouteParams, isEntering: boolean): Promise<void | Error | RouteLocationRaw> {
-		// if (isEntering)
-		// 	await routeSchuleReporting.data.ladeDaten();
 	}
 
 	public getProps(to: RouteLocationNormalized): SchuleReportingProps {

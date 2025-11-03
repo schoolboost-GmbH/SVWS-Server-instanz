@@ -27,7 +27,7 @@ export abstract class RouteNode<TRouteData extends RouteData<any>, TRouteParent 
 	/** Ein Set mit den Schulformen, für welche eine Route erlaubt ist oder nicht */
 	protected _schulformenErlaubt: Set<Schulform> = new Set();
 
-	/** Ein Set mit den Kompetenzen die ein angemeldeter Benutzer für die Route benötigt */
+	/** Ein Set mit den Kompetenzen von denen der angemeldete Benutzer mindestens eine benötigt */
 	protected _kompetenzenBenoetigt: Set<BenutzerKompetenz> = new Set();
 
 	/**

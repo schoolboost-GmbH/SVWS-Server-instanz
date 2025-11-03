@@ -1,6 +1,6 @@
 <template>
 	<Teleport to=".svws-ui-header--actions" defer>
-		<svws-ui-button @click="downloadPDF" type="secondary"><svws-ui-spinner v-if="loading" spinning /><span v-else class="icon i-ri-printer-line" /> Schulbescheinigung drucken</svws-ui-button>
+		<svws-ui-button v-if="hatKompetenzDrucken" @click="downloadPDF" type="secondary"><svws-ui-spinner v-if="loading" spinning /><span v-else class="icon i-ri-printer-line" /> Schulbescheinigung drucken</svws-ui-button>
 		<svws-ui-modal-hilfe> <hilfe-schueler-individualdaten /> </svws-ui-modal-hilfe>
 	</Teleport>
 	<div class="page page-grid-cards">
@@ -197,6 +197,7 @@
 
 	const hatKompetenzAnsehen = computed<boolean>(() => props.benutzerKompetenzen.has(BenutzerKompetenz.SCHUELER_INDIVIDUALDATEN_ANSEHEN));
 	const readonly = computed<boolean>(() => !props.benutzerKompetenzen.has(BenutzerKompetenz.SCHUELER_INDIVIDUALDATEN_AENDERN));
+	const hatKompetenzDrucken = computed(() => (props.benutzerKompetenzen.has(BenutzerKompetenz.BERICHTE_ALLE_FORMULARE_DRUCKEN) || props.benutzerKompetenzen.has(BenutzerKompetenz.BERICHTE_STANDARDFORMULARE_DRUCKEN)));
 
 	const data = computed<SchuelerStammdaten>(() => props.schuelerListeManager().daten());
 
@@ -222,7 +223,7 @@
 
 	const selectedTelefonArt = computed<TelefonArt | null>({
 		get: () => props.mapTelefonArten.get(newEntryTelefonnummer.value.idTelefonArt) ?? null,
-		set: (selected) => newEntryTelefonnummer.value.idTelefonArt = (selected !== null) ? selected.id : 0,
+		set: (selected) => newEntryTelefonnummer.value.idTelefonArt = (selected === null) ? 0 : selected.id,
 	});
 
 	enum Mode { ADD, PATCH, DEFAULT }
@@ -296,7 +297,7 @@
 			const curDate = new Date();
 			const diffYear = curDate.getFullYear() - date[0];
 			return (diffYear > 3) && (diffYear < 51);
-		} catch (e) {
+		} catch {
 			return false;
 		}
 	}
@@ -341,7 +342,7 @@
 
 
 	const staatsangehoerigkeit = computed<Nationalitaeten>({
-		get: () => Nationalitaeten.getByISO3(data.value.staatsangehoerigkeitID) || Nationalitaeten.getDEU(),
+		get: () => Nationalitaeten.getByISO3(data.value.staatsangehoerigkeitID) ?? Nationalitaeten.getDEU(),
 		set: (value) => void props.patch({ staatsangehoerigkeitID: value.historie().getLast().iso3 }),
 	});
 
@@ -369,27 +370,27 @@
 	const min = max - 100;
 
 	const geburtsland = computed<Nationalitaeten>({
-		get: () => Nationalitaeten.getByISO3(data.value.geburtsland) || Nationalitaeten.getDEU(),
+		get: () => Nationalitaeten.getByISO3(data.value.geburtsland) ?? Nationalitaeten.getDEU(),
 		set: (value) => void props.patch({ geburtsland: value.historie().getLast().iso3 }),
 	});
 
 	const geburtslandMutter = computed<Nationalitaeten>({
-		get: () => Nationalitaeten.getByISO3(data.value.geburtslandMutter) || Nationalitaeten.getDEU(),
+		get: () => Nationalitaeten.getByISO3(data.value.geburtslandMutter) ?? Nationalitaeten.getDEU(),
 		set: (value) => void props.patch({ geburtslandMutter: value.historie().getLast().iso3 }),
 	});
 
 	const geburtslandVater = computed<Nationalitaeten>({
-		get: () => Nationalitaeten.getByISO3(data.value.geburtslandVater) || Nationalitaeten.getDEU(),
+		get: () => Nationalitaeten.getByISO3(data.value.geburtslandVater) ?? Nationalitaeten.getDEU(),
 		set: (value) => void props.patch({ geburtslandVater: value.historie().getLast().iso3 }),
 	});
 
 	const verkehrsprache = computed<Verkehrssprache>({
-		get: () => Verkehrssprache.getByIsoKuerzel(data.value.verkehrspracheFamilie) || Verkehrssprache.data().getWertBySchluesselOrException("de"),
+		get: () => Verkehrssprache.getByIsoKuerzel(data.value.verkehrspracheFamilie) ?? Verkehrssprache.data().getWertBySchluesselOrException("de"),
 		set: (value) => void props.patch({ verkehrspracheFamilie: value.historie().getLast().iso3 }),
 	});
 
 	const inputStammschule = computed<SchulEintrag | undefined>({
-		get: () => (data.value.externeSchulNr === null) ? undefined : (props.mapSchulen.get(data.value.externeSchulNr) || undefined),
+		get: () => (data.value.externeSchulNr === null) ? undefined : (props.mapSchulen.get(data.value.externeSchulNr) ?? undefined),
 		set: (value) => void props.patch({ externeSchulNr: value === undefined ? null : value.schulnummerStatistik }),
 	});
 

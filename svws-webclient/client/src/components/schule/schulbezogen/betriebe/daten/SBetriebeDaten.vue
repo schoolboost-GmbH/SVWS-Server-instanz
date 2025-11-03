@@ -51,10 +51,10 @@
 				<template #cell(email)="{ rowData }">
 					<svws-ui-text-input :model-value="rowData.email" @change="email=>patchBetriebAnpsrechpartner({email}, rowData.id)" headless required />
 				</template>
-				<template #actions>
-					<svws-ui-button @click="remove" type="trash" :disabled="!selected.length || !hatKompetenzUpdate" />
+				<template #actions v-if="hatKompetenzUpdate">
+					<svws-ui-button @click="remove" type="trash" :disabled="!selected.length" />
 					<s-card-betriebe-add-anprechpartner-modal v-slot="{ openModal }" :add-betrieb-ansprechpartner :benutzer-kompetenzen="props.benutzerKompetenzen">
-						<svws-ui-button @click="openModal()" type="icon" title="Ansprechpartner hinzufügen" :disabled="!hatKompetenzUpdate"> <span class="icon i-ri-add-line" /> </svws-ui-button>
+						<svws-ui-button @click="openModal()" type="icon" title="Ansprechpartner hinzufügen"> <span class="icon i-ri-add-line" /> </svws-ui-button>
 					</s-card-betriebe-add-anprechpartner-modal>
 				</template>
 			</svws-ui-table>
@@ -83,7 +83,7 @@
 	];
 
 	const inputWohnortID = computed<OrtKatalogEintrag | null>({
-		get: () => props.daten.ort_id !== null ? props.mapOrte.get(props.daten.ort_id) ?? null : null,
+		get: () => props.daten.ort_id === null ? null : props.mapOrte.get(props.daten.ort_id) ?? null,
 		set: (val) =>	void props.patch({ ort_id: val?.id }),
 	});
 

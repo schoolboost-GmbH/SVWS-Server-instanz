@@ -18,7 +18,7 @@ const SSchulenApp = () => import("~/components/schule/allgemein/schulen/SSchulen
 export class RouteKatalogSchulen extends RouteAuswahlNode<KatalogSchuleListeManager, RouteDataKatalogSchulen, RouteApp> {
 
 	public constructor() {
-		super(Schulform.values(), [BenutzerKompetenz.KATALOG_EINTRAEGE_ANSEHEN, BenutzerKompetenz.KATALOG_EINTRAEGE_AENDERN], "schule.schulen", "schule/schulen/:id(\\d+)?", SSchulenApp, SSchulenAuswahl, new RouteDataKatalogSchulen());
+		super(Schulform.values(), [BenutzerKompetenz.KATALOG_EINTRAEGE_ANSEHEN, BenutzerKompetenz.KATALOG_EINTRAEGE_AENDERN], "schule.schulen", String.raw`schule/schulen/:id(\d+)?`, SSchulenApp, SSchulenAuswahl, new RouteDataKatalogSchulen());
 		super.mode = ServerMode.DEV;
 		super.text = "Schulen";
 		super.menugroup = RouteSchuleMenuGroup.ALLGEMEIN;
