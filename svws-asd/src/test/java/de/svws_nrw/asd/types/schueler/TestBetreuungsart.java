@@ -43,11 +43,11 @@ class TestBetreuungsart {
 	 *
 	 * CoreType: Betreuungsart
 	 * Testfall: Prüft den Text beim ersten Wert von NUR_ACHT_BIS_EINS
-	 * Ergebnis: Erwarteter Wert - "Körperliche und motorische Entwicklung"
+	 * Ergebnis: Erwarteter Wert - "ausschließlich Schule von acht bis eins"
 	 */
 	@Test
 	@DisplayName("Teste CoreType Betreuungsart: Korrekter Text beim Wert NUR_ACHT_BIS_EINS.")
-	void testFoerderschwerpunkt_TextBeiKB() {
+	void testBetreuungsart_TextBeiNUR_ACHT_BIS_EINS() {
 		assertEquals("ausschließlich Schule von acht bis eins",
 				Betreuungsart.data().getHistorieByWert(Betreuungsart.NUR_ACHT_BIS_EINS).getFirst().text);
 	}

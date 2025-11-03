@@ -49,6 +49,7 @@ import ZulaessigeKursart from "@json/kurse/ZulaessigeKursart.json";
 import Foerderschwerpunkt from "@json/schule/Foerderschwerpunkt.json";
 import Termin from "@json/schule/Termin.json";
 import Betreuungsart from "@json/schueler/Betreuungsart.json";
+import FormOffenerGanztag from "@json/schule/FormOffenerGanztag.json";
 import LehrerAnrechnungsgrund from "@json/lehrer/LehrerAnrechnungsgrund.json";
 import LehrerMehrleistungsarten from "@json/lehrer/LehrerMehrleistungsarten.json";
 import LehrerMinderleistungsarten from "@json/lehrer/LehrerMinderleistungsarten.json";
@@ -113,6 +114,7 @@ export class JsonCoreTypeReaderStatic extends JsonCoreTypeReader {
 		this.mapCoreTypeNameJsonDataImport.set("Foerderschwerpunkt", Foerderschwerpunkt);
 		this.mapCoreTypeNameJsonDataImport.set("Termin", Termin);
 		this.mapCoreTypeNameJsonDataImport.set("Betreuungsart", Betreuungsart);
+		this.mapCoreTypeNameJsonDataImport.set("FormOffenerGanztag", FormOffenerGanztag);
 		this.mapCoreTypeNameJsonDataImport.set("LehrerAnrechnungsgrund", LehrerAnrechnungsgrund);
 		this.mapCoreTypeNameJsonDataImport.set("LehrerMehrleistungsarten", LehrerMehrleistungsarten);
 		this.mapCoreTypeNameJsonDataImport.set("LehrerMinderleistungsarten", LehrerMinderleistungsarten);
@@ -120,7 +122,7 @@ export class JsonCoreTypeReaderStatic extends JsonCoreTypeReader {
 		this.mapCoreTypeNameJsonDataImport.set("Nationalitaeten", Nationalitaeten);
 		this.mapCoreTypeNameJsonDataImport.set("ValidatorenFehlerartKontext", ValidatorenFehlerartKontext);
 		this.mapCoreTypeNameJsonDataImport.set("Floskelgruppenart", Floskelgruppenart);
-		for (const [k,v] of this.mapCoreTypeNameJsonDataImport.entries())
+		for (const [k, v] of this.mapCoreTypeNameJsonDataImport.entries())
 			this.mapCoreTypeNameJsonData.set(k, JSON.stringify(v));
 	}
 }

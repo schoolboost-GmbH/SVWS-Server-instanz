@@ -187,6 +187,7 @@ export { BerufskollegAnlageKatalogEintrag } from './asd/data/schule/Berufskolleg
 export { BildungsgangTypKatalogEintrag } from './asd/data/schule/BildungsgangTypKatalogEintrag';
 export { FloskelgruppenartKatalogEintrag } from './asd/data/schule/FloskelgruppenartKatalogEintrag';
 export { FoerderschwerpunktKatalogEintrag } from './asd/data/schule/FoerderschwerpunktKatalogEintrag';
+export { FormOffenerGanztagKatalogEintrag } from './asd/data/schule/FormOffenerGanztagKatalogEintrag';
 export { KindergartenbesuchKatalogEintrag } from './asd/data/schule/KindergartenbesuchKatalogEintrag';
 export { NationalitaetenKatalogEintrag } from './asd/data/schule/NationalitaetenKatalogEintrag';
 export { OrganisationsformKatalogEintrag } from './asd/data/schule/OrganisationsformKatalogEintrag';
@@ -253,6 +254,7 @@ export { BerufskollegBildungsgangTyp } from './asd/types/schule/BerufskollegBild
 export { BerufskollegOrganisationsformen } from './asd/types/schule/BerufskollegOrganisationsformen';
 export { Floskelgruppenart } from './asd/types/schule/Floskelgruppenart';
 export { Foerderschwerpunkt } from './asd/types/schule/Foerderschwerpunkt';
+export { FormOffenerGanztag } from './asd/types/schule/FormOffenerGanztag';
 export { Kindergartenbesuch } from './asd/types/schule/Kindergartenbesuch';
 export { Nationalitaeten } from './asd/types/schule/Nationalitaeten';
 export { Religion } from './asd/types/schule/Religion';
