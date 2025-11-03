@@ -1,5 +1,5 @@
 <template>
-	<svws-ui-app-layout :no-secondary-menu="!menu.hasSubmenu" :tertiary-menu="menu.hasAuswahlliste" secondary-menu-small>
+	<svws-ui-app-layout ref="appLayout" :no-secondary-menu="!menu.hasSubmenu" :tertiary-menu="menu.hasAuswahlliste" secondary-menu-small>
 		<template #sidebar>
 			<svws-ui-menu :focus-switching-enabled :focus-help-visible>
 				<template #header>
@@ -146,15 +146,27 @@
 	const props = defineProps<AppProps>();
 
 	const { focusHelpVisible, focusSwitchingEnabled, enable, disable } = useRegionSwitch();
-	onMounted(() => enable());
+	const appLayout = ref();
+	onMounted(() => {
+		if (props.menu.current.name === 'statistik')
+			appLayout.value?.setSecondSidebarExpanded(false);
+		else
+			appLayout.value?.setSecondSidebarExpanded(true);
+		enable();
+	});
 	onUnmounted(() => disable());
 
 	watch(() => props.menu.current.name, (m) => {
 		const mainText = props.menu.mainEntry.text;
 		const subText = props.menu.current.text;
-		const title = mainText + " - " + ((mainText !== subText) ? subText + " - " : "") + schulname.value;
+		const title = mainText + " - " + ((mainText === subText) ? "" : subText + " - ") + schulname.value;
 		if (document.title !== title)
 			document.title = title;
+		// Collapse sidebar for statistik
+		if (m === 'statistik')
+			appLayout.value?.setSecondSidebarExpanded(false);
+		else
+			appLayout.value?.setSecondSidebarExpanded(true);
 	});
 
 	const schulname = computed<string>(() => {
@@ -185,7 +197,7 @@
 	async function copyToClipboard() {
 		try {
 			await navigator.clipboard.writeText(`${version} ${githash}`);
-		} catch (e) {
+		} catch {
 			copied.value = false;
 		}
 		copied.value = true;
@@ -231,10 +243,10 @@
 	}
 
 	// Dieser Listener gilt nur für Promises
-	window.addEventListener("unhandledrejection", errorHandler);
+	globalThis.addEventListener("unhandledrejection", errorHandler);
 
 	// Dieser Listener fängt alle anderen Fehler ab
-	window.addEventListener("error", errorHandler);
+	globalThis.addEventListener("error", errorHandler);
 
 	onErrorCaptured((reason) => {
 		api.status.stop();
@@ -248,7 +260,7 @@
 	async function createCapturedError(reason: Error) {
 		console.warn(reason);
 		counter.value++;
-		let name = `Fehler ${reason.name !== 'Error' ? ': ' + reason.name : ''}`;
+		let name = `Fehler ${reason.name === 'Error' ? '' : ': ' + reason.name}`;
 		let message = reason.message;
 		let log = null;
 		if (reason instanceof DeveloperNotificationException)

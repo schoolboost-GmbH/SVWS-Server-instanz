@@ -118,4 +118,14 @@
 		secondSidebarExpanded.value = localStorage.getItem('secondSidebarExpanded') === 'true';
 	}
 
+	function setSecondSidebarExpanded(expanded: boolean): void {
+		secondSidebarExpanded.value = expanded;
+		localStorage.setItem('secondSidebarExpanded', expanded ? 'true' : 'false');
+	}
+
+	defineExpose({
+		setSecondSidebarExpanded,
+	});
+
+
 </script>
