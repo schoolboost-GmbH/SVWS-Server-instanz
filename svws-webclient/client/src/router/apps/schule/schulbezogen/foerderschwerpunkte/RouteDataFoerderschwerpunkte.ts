@@ -1,6 +1,6 @@
 import type { RouteStateAuswahlInterface } from "~/router/RouteDataAuswahl";
 import type { RouteParamsRawGeneric } from "vue-router";
-import type { List, SimpleOperationResponse , FoerderschwerpunktEintrag } from "@core";
+import type { List, SimpleOperationResponse, FoerderschwerpunktEintrag } from "@core";
 import { RouteDataAuswahl } from "~/router/RouteDataAuswahl";
 import { ArrayList } from "@core";
 import { ViewType, FoerderschwerpunkteListeManager } from "@ui";
@@ -15,7 +15,7 @@ const defaultState = {
 	view: routeFoerderschwerpunkteDaten,
 	activeViewType: ViewType.DEFAULT,
 	oldView: undefined,
-}
+};
 
 export class RouteDataFoerderschwerpunkte extends RouteDataAuswahl<FoerderschwerpunkteListeManager, RouteStateAuswahlInterface<FoerderschwerpunkteListeManager>> {
 
@@ -27,7 +27,7 @@ export class RouteDataFoerderschwerpunkte extends RouteDataAuswahl<Foerderschwer
 		const foerderschwerpunkte = await api.server.getKatalogFoerderschwerpunkte(api.schema);
 		const manager = new FoerderschwerpunkteListeManager(api.abschnitt.id, api.schuleStammdaten.idSchuljahresabschnitt, api.schuleStammdaten.abschnitte,
 			api.schulform, foerderschwerpunkte);
-		return { manager }
+		return { manager };
 	}
 
 	public addID(param: RouteParamsRawGeneric, id: number): void {
@@ -50,11 +50,11 @@ export class RouteDataFoerderschwerpunkte extends RouteDataAuswahl<Foerderschwer
 		return `Förderschwerpunkt ${foerderschwerpunkt?.text ?? '???'} (ID: ${id}) wurde erfolgreich gelöscht.`;
 	}
 
-	addFoerderschwerpunkt = async (data: Partial<FoerderschwerpunktEintrag>) : Promise<void> => {
+	addFoerderschwerpunkt = async (data: Partial<FoerderschwerpunktEintrag>): Promise<void> => {
 		const result = await api.server.addKatalogFoerderschwerpunkt(data, api.schema);
 		this.manager.liste.add(result);
 		this.commit();
 		await this.gotoDefaultView(result.id);
-	}
+	};
 
 }

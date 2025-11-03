@@ -15,13 +15,13 @@ export class LehrerMehrleistungsartKatalogEintrag extends CoreTypeDataNurSchulfo
 		return 'de.svws_nrw.asd.data.lehrer.LehrerMehrleistungsartKatalogEintrag';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.asd.data.CoreTypeData', 'de.svws_nrw.asd.data.lehrer.LehrerMehrleistungsartKatalogEintrag', 'de.svws_nrw.asd.data.CoreTypeDataNurSchulformen'].includes(name);
 	}
 
 	public static class = new Class<LehrerMehrleistungsartKatalogEintrag>('de.svws_nrw.asd.data.lehrer.LehrerMehrleistungsartKatalogEintrag');
 
-	public static transpilerFromJSON(json : string): LehrerMehrleistungsartKatalogEintrag {
+	public static transpilerFromJSON(json: string): LehrerMehrleistungsartKatalogEintrag {
 		const obj = JSON.parse(json) as Partial<LehrerMehrleistungsartKatalogEintrag>;
 		const result = new LehrerMehrleistungsartKatalogEintrag();
 		if (obj.schulformen !== undefined) {
@@ -46,7 +46,7 @@ export class LehrerMehrleistungsartKatalogEintrag extends CoreTypeDataNurSchulfo
 		return result;
 	}
 
-	public static transpilerToJSON(obj : LehrerMehrleistungsartKatalogEintrag) : string {
+	public static transpilerToJSON(obj: LehrerMehrleistungsartKatalogEintrag): string {
 		let result = '{';
 		result += '"schulformen" : [ ';
 		for (let i = 0; i < obj.schulformen.size(); i++) {
@@ -67,7 +67,7 @@ export class LehrerMehrleistungsartKatalogEintrag extends CoreTypeDataNurSchulfo
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<LehrerMehrleistungsartKatalogEintrag>) : string {
+	public static transpilerToJSONPatch(obj: Partial<LehrerMehrleistungsartKatalogEintrag>): string {
 		let result = '{';
 		if (obj.schulformen !== undefined) {
 			result += '"schulformen" : [ ';
@@ -104,6 +104,6 @@ export class LehrerMehrleistungsartKatalogEintrag extends CoreTypeDataNurSchulfo
 
 }
 
-export function cast_de_svws_nrw_asd_data_lehrer_LehrerMehrleistungsartKatalogEintrag(obj : unknown) : LehrerMehrleistungsartKatalogEintrag {
+export function cast_de_svws_nrw_asd_data_lehrer_LehrerMehrleistungsartKatalogEintrag(obj: unknown): LehrerMehrleistungsartKatalogEintrag {
 	return obj as LehrerMehrleistungsartKatalogEintrag;
 }

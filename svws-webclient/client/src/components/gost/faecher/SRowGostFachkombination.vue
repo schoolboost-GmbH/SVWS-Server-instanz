@@ -48,12 +48,12 @@
 <script setup lang="ts">
 
 	import { computed } from "vue";
-	import type { GostJahrgangFachkombination, GostFach, GostFaecherManager, List} from "@core";
+	import type { GostJahrgangFachkombination, GostFach, GostFaecherManager, List } from "@core";
 	import { GostLaufbahnplanungFachkombinationTyp, GostKursart, GostHalbjahr, Fach } from "@core";
 
 	const props = defineProps<{
 		faecherManager: () => GostFaecherManager;
-		patchFachkombination: (data: Partial<GostJahrgangFachkombination>, id : number) => Promise<void>;
+		patchFachkombination: (data: Partial<GostJahrgangFachkombination>, id: number) => Promise<void>;
 		removeFachkombination: (id: number) => Promise<GostJahrgangFachkombination | undefined>;
 		typ: GostLaufbahnplanungFachkombinationTyp;
 		kombination: GostJahrgangFachkombination;
@@ -89,7 +89,7 @@
 	const gueltigEF1 = computed<boolean>({
 		get: () => props.kombination.gueltigInHalbjahr[GostHalbjahr.EF1.id],
 		set: (value) => {
-			const result : boolean[] = [...props.kombination.gueltigInHalbjahr];
+			const result: boolean[] = [...props.kombination.gueltigInHalbjahr];
 			result[GostHalbjahr.EF1.id] = value;
 			void props.patchFachkombination({ gueltigInHalbjahr: result }, props.kombination.id);
 		},
@@ -98,7 +98,7 @@
 	const gueltigEF2 = computed<boolean>({
 		get: () => props.kombination.gueltigInHalbjahr[GostHalbjahr.EF2.id],
 		set: (value) => {
-			const result : boolean[] = [...props.kombination.gueltigInHalbjahr];
+			const result: boolean[] = [...props.kombination.gueltigInHalbjahr];
 			result[GostHalbjahr.EF2.id] = value;
 			void props.patchFachkombination({ gueltigInHalbjahr: result }, props.kombination.id);
 		},
@@ -107,7 +107,7 @@
 	const gueltigQ11 = computed<boolean>({
 		get: () => props.kombination.gueltigInHalbjahr[GostHalbjahr.Q11.id],
 		set: (value) => {
-			const result : boolean[] = [...props.kombination.gueltigInHalbjahr];
+			const result: boolean[] = [...props.kombination.gueltigInHalbjahr];
 			result[GostHalbjahr.Q11.id] = value;
 			void props.patchFachkombination({ gueltigInHalbjahr: result }, props.kombination.id);
 		},
@@ -116,7 +116,7 @@
 	const gueltigQ12 = computed<boolean>({
 		get: () => props.kombination.gueltigInHalbjahr[GostHalbjahr.Q12.id],
 		set: (value) => {
-			const result : boolean[] = [...props.kombination.gueltigInHalbjahr];
+			const result: boolean[] = [...props.kombination.gueltigInHalbjahr];
 			result[GostHalbjahr.Q12.id] = value;
 			void props.patchFachkombination({ gueltigInHalbjahr: result }, props.kombination.id);
 		},
@@ -125,7 +125,7 @@
 	const gueltigQ21 = computed<boolean>({
 		get: () => props.kombination.gueltigInHalbjahr[GostHalbjahr.Q21.id],
 		set: (value) => {
-			const result : boolean[] = [...props.kombination.gueltigInHalbjahr];
+			const result: boolean[] = [...props.kombination.gueltigInHalbjahr];
 			result[GostHalbjahr.Q21.id] = value;
 			void props.patchFachkombination({ gueltigInHalbjahr: result }, props.kombination.id);
 		},
@@ -134,7 +134,7 @@
 	const gueltigQ22 = computed<boolean>({
 		get: () => props.kombination.gueltigInHalbjahr[GostHalbjahr.Q22.id],
 		set: (value) => {
-			const result : boolean[] = [...props.kombination.gueltigInHalbjahr];
+			const result: boolean[] = [...props.kombination.gueltigInHalbjahr];
 			result[GostHalbjahr.Q22.id] = value;
 			void props.patchFachkombination({ gueltigInHalbjahr: result }, props.kombination.id);
 		},
@@ -142,10 +142,10 @@
 
 	const hinweistext = computed<string>(() => {
 		const typ = (GostLaufbahnplanungFachkombinationTyp.ERFORDERLICH.getValue() === props.kombination.typ)
-			? 'erfordert' : 'erlaubt kein'
+			? 'erfordert' : 'erlaubt kein';
 		const k1 = kursart1.value?.kuerzel ?? '';
 		const k2 = kursart2.value?.kuerzel ?? '';
 		return `${fach1.value?.kuerzel ?? ''} ${k1} ${typ} ${fach2.value?.kuerzel ?? ''} ${k2}`;
-	})
+	});
 
 </script>

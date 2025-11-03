@@ -15,7 +15,7 @@ const defaultState = {
 	view: routeFahrschuelerartenDaten,
 	activeViewType: ViewType.DEFAULT,
 	oldView: undefined,
-}
+};
 
 export class RouteDataFahrschuelerarten extends RouteDataAuswahl<FahrschuelerartenListeManager, RouteStateAuswahlInterface<FahrschuelerartenListeManager>> {
 
@@ -27,7 +27,7 @@ export class RouteDataFahrschuelerarten extends RouteDataAuswahl<Fahrschuelerart
 		const fahrschuelerarten = await api.server.getFahrschuelerarten(api.schema);
 		const manager = new FahrschuelerartenListeManager(api.abschnitt.id, api.schuleStammdaten.idSchuljahresabschnitt, api.schuleStammdaten.abschnitte,
 			api.schulform, fahrschuelerarten);
-		return { manager }
+		return { manager };
 	}
 
 	public addID(param: RouteParamsRawGeneric, id: number): void {
@@ -50,10 +50,10 @@ export class RouteDataFahrschuelerarten extends RouteDataAuswahl<Fahrschuelerart
 		return `Fahrschülerart ${fahrschuelerart?.bezeichnung ?? '???'} (ID: ${id}) wurde erfolgreich gelöscht.`;
 	}
 
-	addFahrschuelerart = async (data: Partial<Fahrschuelerart>) : Promise<void> => {
+	addFahrschuelerart = async (data: Partial<Fahrschuelerart>): Promise<void> => {
 		const result = await api.server.addFahrschuelerart(data, api.schema);
 		this.manager.liste.add(result);
 		this.commit();
 		await this.gotoDefaultView(result.id);
-	}
+	};
 }

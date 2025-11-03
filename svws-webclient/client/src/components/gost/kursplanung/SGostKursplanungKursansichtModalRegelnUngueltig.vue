@@ -48,6 +48,6 @@
 	const openModal = () => {
 		selected.value = [...props.manager().regelGetMapUngueltig().values()];
 		show.value = true;
-	}
+	};
 
 </script>

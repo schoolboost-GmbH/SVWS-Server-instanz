@@ -43,10 +43,10 @@
 			if (idFolgejahrgang === null)
 				return undefined;
 
-			const jahrgangsDaten = props.manager().liste.get(idFolgejahrgang)
+			const jahrgangsDaten = props.manager().liste.get(idFolgejahrgang);
 			return jahrgangsDaten ?? undefined;
 		},
-		set: (value) => void props.patch({idFolgejahrgang: value?.id}),
+		set: (value) => void props.patch({ idFolgejahrgang: value?.id }),
 	});
 
 	const schulgliederung = computed<Schulgliederung | null>({
@@ -56,7 +56,7 @@
 		},
 		set: (value) => {
 			const kuerzel = value?.daten(props.schuljahr)?.kuerzel;
-			void props.patch({kuerzelSchulgliederung: kuerzel ?? null});
+			void props.patch({ kuerzelSchulgliederung: kuerzel ?? null });
 		},
 	});
 
@@ -67,7 +67,7 @@
 		},
 		set: (value) => {
 			const kuerzelStatistik = value?.daten(props.schuljahr)?.kuerzel ?? null;
-			void props.patch({kuerzelStatistik});
+			void props.patch({ kuerzelStatistik });
 		},
 	});
 
@@ -89,7 +89,7 @@
 
 	const textFolgejahrgang = (jahrgang: JahrgangsDaten) => {
 		return (JavaString.isBlank(jahrgang.kuerzel)) ? jahrgang.bezeichnung : jahrgang.kuerzel + ' : ' + jahrgang.bezeichnung;
-	}
+	};
 
 
 	function bezeichnungIsValid(bezeichnung: string | null): boolean {
@@ -117,12 +117,12 @@
 
 	async function patchKuerzel(kuerzel: string | null) {
 		if (kuerzelIsValid(kuerzel))
-			await props.patch( { kuerzel: kuerzel?.trim() ?? undefined });
+			await props.patch({ kuerzel: kuerzel?.trim() ?? undefined });
 	}
 
 	async function patchBezeichnung(bezeichnung: string | null) {
 		if (bezeichnungIsValid(bezeichnung))
-			await props.patch( { bezeichnung : bezeichnung?.trim() ?? undefined });
+			await props.patch({ bezeichnung: bezeichnung?.trim() ?? undefined });
 	}
 
 

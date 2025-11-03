@@ -18,7 +18,7 @@ export class Einschulungsart extends CoreTypeSimple<EinschulungsartKatalogEintra
 	 *
 	 * @param manager   der Manager für die Daten des Core-Types
 	 */
-	public static init(manager : CoreTypeDataManager<EinschulungsartKatalogEintrag, Einschulungsart>) : void {
+	public static init(manager: CoreTypeDataManager<EinschulungsartKatalogEintrag, Einschulungsart>): void {
 		CoreTypeDataManager.putManager(Einschulungsart.class, manager);
 	}
 
@@ -27,7 +27,7 @@ export class Einschulungsart extends CoreTypeSimple<EinschulungsartKatalogEintra
 	 *
 	 * @return der Daten-Manager
 	 */
-	public static data() : CoreTypeDataManager<EinschulungsartKatalogEintrag, Einschulungsart> {
+	public static data(): CoreTypeDataManager<EinschulungsartKatalogEintrag, Einschulungsart> {
 		return CoreTypeDataManager.getManager(Einschulungsart.class);
 	}
 
@@ -36,14 +36,14 @@ export class Einschulungsart extends CoreTypeSimple<EinschulungsartKatalogEintra
 	 *
 	 * @return die Werte des Core-Types als Array
 	 */
-	public static values() : Array<Einschulungsart> {
+	public static values(): Array<Einschulungsart> {
 		return CoreTypeSimple.valuesByClass(Einschulungsart.class);
 	}
 
 	/**
 	 * Erzeugt eine Instance dieser Klasse.
 	 */
-	public getInstance() : Einschulungsart | null {
+	public getInstance(): Einschulungsart | null {
 		return new Einschulungsart();
 	}
 
@@ -52,7 +52,7 @@ export class Einschulungsart extends CoreTypeSimple<EinschulungsartKatalogEintra
 	 *
 	 * @return der letzten Historieneintrag zu dem Core-Type-Wert
 	 */
-	public getLetzterEintrag() : EinschulungsartKatalogEintrag {
+	public getLetzterEintrag(): EinschulungsartKatalogEintrag {
 		return this.getManager().getHistorieByWert(this).getLast();
 	}
 
@@ -60,7 +60,7 @@ export class Einschulungsart extends CoreTypeSimple<EinschulungsartKatalogEintra
 		return 'de.svws_nrw.asd.types.schueler.Einschulungsart';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.asd.types.schueler.Einschulungsart', 'de.svws_nrw.asd.types.CoreType', 'java.lang.Comparable', 'de.svws_nrw.asd.types.CoreTypeSimple'].includes(name);
 	}
 
@@ -68,6 +68,6 @@ export class Einschulungsart extends CoreTypeSimple<EinschulungsartKatalogEintra
 
 }
 
-export function cast_de_svws_nrw_asd_types_schueler_Einschulungsart(obj : unknown) : Einschulungsart {
+export function cast_de_svws_nrw_asd_types_schueler_Einschulungsart(obj: unknown): Einschulungsart {
 	return obj as Einschulungsart;
 }

@@ -32,7 +32,7 @@
 
 	const selectedItems = ref<BenutzergruppeListeEintrag[]>([]);
 
-	const cols : DataTableColumn[] = [
+	const cols: DataTableColumn[] = [
 		{ key: "bezeichnung", label: "Bezeichnung", sortable: true },
 	];
 

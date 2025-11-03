@@ -193,11 +193,11 @@
 	import type { ComponentExposed } from 'vue-component-type-helpers';
 	import type { SchuelerSprachenProps } from './SSchuelerSprachenProps';
 	import type { DataTableColumn, SvwsUiSelect } from "@ui";
-	import type { Sprachbelegung , Sprachpruefung} from '@core';
+	import type { Sprachbelegung, Sprachpruefung } from '@core';
 	import { Schulform, Sprachreferenzniveau, Fach, Jahrgaenge, Note, Schulgliederung, Sprachpruefungniveau, ServerMode, BenutzerKompetenz, ArrayList } from '@core';
 
 	const props = defineProps<SchuelerSprachenProps>();
-	const readonly = computed<boolean>(() => !( props.benutzerKompetenzen.has(BenutzerKompetenz.SCHUELER_LEISTUNGSDATEN_FUNKTIONSBEZOGEN_AENDERN)
+	const readonly = computed<boolean>(() => !(props.benutzerKompetenzen.has(BenutzerKompetenz.SCHUELER_LEISTUNGSDATEN_FUNKTIONSBEZOGEN_AENDERN)
 		|| (props.benutzerKompetenzen.has(BenutzerKompetenz.SCHUELER_LEISTUNGSDATEN_ALLE_AENDERN)
 			&& props.benutzerKompetenzenKlassen.has(props.schuelerListeManager().auswahl().idKlasse))
 	));
@@ -222,7 +222,8 @@
 					{ key: "belegungBisJahrgang", label: "bis Jg", tooltip: "belegt bis Jahrgang" },
 					{ key: "belegungBisAbschnitt", label: "Halbjahr", tooltip: "belegt bis Abschnitt", divider: true }]),
 			{ key: "referenzniveau", label: "Referenzniveau", tooltip: "das erreichte Referenzniveau nach dem gemeinsamen europäischen Referenznahmen", span: 2 },
-		]}
+		];
+	}
 	);
 
 	const colsSprachpruefungenHSU = computed<DataTableColumn[]>(() => {
@@ -235,7 +236,7 @@
 			{ key: "note", label: "Note", tooltip: "Prüfungsnote", minWidth: 2 },
 			{ key: "referenzniveau", label: "Referenzniveau", tooltip: "Das Kürzel des Referenzniveau nach dem gemeinsamen europäischen Referenznahmen, welches durch die Prüfung erreicht wurde", minWidth: 3 },
 			{ key: "pruefungsdatum", label: "Prüfungsdatum", tooltip: "Prüfungsdatum", minWidth: 3 },
-		]
+		];
 	});
 	const colsSprachpruefungenFP = computed<DataTableColumn[]>(() => {
 		const schulgliederung = Schulgliederung.data().getWertByKuerzel(props.schuelerListeManager().auswahl().schulgliederung);
@@ -248,7 +249,7 @@
 			{ key: "note", label: "Note", tooltip: "Prüfungsnote", minWidth: 2 },
 			{ key: "referenzniveau", label: "Referenzniveau", tooltip: "Das Kürzel des Referenzniveau nach dem gemeinsamen europäischen Referenznahmen, welches durch die Prüfung erreicht wurde", minWidth: 3 },
 			{ key: "pruefungsdatum", label: "Prüfungsdatum", tooltip: "Prüfungsdatum", minWidth: 3 },
-		]
+		];
 	});
 
 	const verfuegbareSprachen = computed(() => {
@@ -263,7 +264,7 @@
 				sprachen.push(k);
 		}
 		return sprachen;
-	})
+	});
 
 	const verfuegbareSprachenPruefungenHerkunftsprachlich = computed(() => {
 		const pruefungenHKFS = new Set();
@@ -277,7 +278,7 @@
 				sprachen.push(k);
 		}
 		return sprachen;
-	})
+	});
 
 	const verfuegbareSprachenPruefungenFeststellungErsatz = computed(() => {
 		const pruefungenFeststellung = new Set();
@@ -291,7 +292,7 @@
 				sprachen.push(k);
 		}
 		return sprachen;
-	})
+	});
 
 	const sprachpruefungenHSU = computed(() => {
 		const list = [];
@@ -299,7 +300,7 @@
 			if (s.istHSUPruefung)
 				list.push(s);
 		return list;
-	})
+	});
 
 	const sprachpruefungenFP = computed(() => {
 		const list = [];
@@ -307,7 +308,7 @@
 			if (!s.istHSUPruefung)
 				list.push(s);
 		return list;
-	})
+	});
 
 	const sprachJahrgaenge = computed(() => {
 		const schulform = props.schuelerListeManager().schulform();
@@ -327,7 +328,7 @@
 		const jahrgaenge = [];
 		for (const jahrgang of jahrgaenge_list)
 			if ((jahrgangVon !== null) && (jahrgang.ordinal() > jahrgangVon.ordinal()))
-				jahrgaenge.push(jahrgang)
+				jahrgaenge.push(jahrgang);
 		return jahrgaenge;
 	});
 
@@ -340,23 +341,23 @@
 		return jgDaten.kuerzel;
 	}
 
-	const latein = [{text: 'Kleines Latinum'}, {text: 'Latinum'}];
+	const latein = [{ text: 'Kleines Latinum' }, { text: 'Latinum' }];
 	const latinum = computed(() => {
 		if (hatKleinesLatinum.value)
 			return latein[0];
 		if (hatLatinum.value)
 			return latein[1];
-		return
-	})
+		return;
+	});
 
-	async function patchLatinum(item:any) {
-		console.log(item)
+	async function patchLatinum(item: any) {
+		console.log(item);
 		if (item === undefined)
-			await props.patchSprachbelegung({hatKleinesLatinum: false, hatLatinum: false}, 'L');
+			await props.patchSprachbelegung({ hatKleinesLatinum: false, hatLatinum: false }, 'L');
 		if (item === latein[0])
-			await props.patchSprachbelegung({hatKleinesLatinum: true, hatLatinum: false}, 'L');
+			await props.patchSprachbelegung({ hatKleinesLatinum: true, hatLatinum: false }, 'L');
 		if (item === latein[1])
-			await props.patchSprachbelegung({hatKleinesLatinum: false, hatLatinum: true}, 'L');
+			await props.patchSprachbelegung({ hatKleinesLatinum: false, hatLatinum: true }, 'L');
 	}
 
 	const hatKleinesLatinum = computed<boolean>(() => {
@@ -364,7 +365,7 @@
 			if (sprache.sprache === 'L')
 				return sprache.hatKleinesLatinum;
 		return false;
-	})
+	});
 
 	const hatLatinum = computed<boolean>(() => {
 		for (const sprache of props.sprachbelegungen())
@@ -380,7 +381,7 @@
 					return sprache.hatGraecum;
 			return false;
 		},
-		set: (hatGraecum) => void props.patchSprachbelegung({hatGraecum}, 'G'),
+		set: (hatGraecum) => void props.patchSprachbelegung({ hatGraecum }, 'G'),
 	});
 
 	const hatHebraicum = computed<boolean>({
@@ -390,7 +391,7 @@
 					return sprache.hatHebraicum;
 			return false;
 		},
-		set: (hatHebraicum) => void props.patchSprachbelegung({hatHebraicum}, 'H'),
+		set: (hatHebraicum) => void props.patchSprachbelegung({ hatHebraicum }, 'H'),
 	});
 
 	async function remove() {
@@ -399,10 +400,10 @@
 		auswahl.value = [];
 	}
 	async function suchen() {
-		//suche Sprache
+		// suche Sprache
 	}
 	async function ermitteln() {
-		//ermittel Sprache
+		// ermittel Sprache
 	}
 
 	async function hinzufuegen(sprache: undefined | null | string) {
@@ -461,11 +462,11 @@
 		for (const pruefung of list)
 			await props.removeSprachpruefung(pruefung);
 		if (hsu)
-			auswahlPrHSU.value = []
+			auswahlPrHSU.value = [];
 		else
 			auswahlPrFP.value = [];
 	}
 
-	const ersetzt = [{key: '1. Pflichtfremdsprache'}, {key: '2. Pflichtfremdsprache'}, {key: 'Wahlpflichtfremdsprache'}];
+	const ersetzt = [{ key: '1. Pflichtfremdsprache' }, { key: '2. Pflichtfremdsprache' }, { key: 'Wahlpflichtfremdsprache' }];
 
 </script>

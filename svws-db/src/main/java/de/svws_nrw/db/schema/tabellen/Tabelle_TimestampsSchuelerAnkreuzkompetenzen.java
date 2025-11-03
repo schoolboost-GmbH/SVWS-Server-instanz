@@ -17,19 +17,19 @@ import de.svws_nrw.db.schema.SchemaTabelleTrigger;
 public class Tabelle_TimestampsSchuelerAnkreuzkompetenzen extends SchemaTabelle {
 
 	/** Die Definition der Tabellenspalte ID */
-	public SchemaTabelleSpalte col_ID = add("ID", SchemaDatentypen.BIGINT, true)
+	public final SchemaTabelleSpalte col_ID = add("ID", SchemaDatentypen.BIGINT, true)
 			.setNotNull()
 			.setJavaComment("ID der Schüler-Ankreuzkompetenz");
 
 	/** Die Definition der Tabellenspalte tsStufe */
-	public SchemaTabelleSpalte col_tsStufe = add("tsStufe", SchemaDatentypen.DATETIME, false)
+	public final SchemaTabelleSpalte col_tsStufe = add("tsStufe", SchemaDatentypen.DATETIME, false)
 			.setDatenlaenge(3)
 			.setNotNull()
 			.setJavaComment("Der Zeitstempel der letzten Änderung an der Stufe, welche der Ankreuzkompetenz zugeordnet ist.");
 
 
 	/** Die Definition des Fremdschlüssels TimestampsSchuelerAnkreuzkompetenzen_FK */
-	public SchemaTabelleFremdschluessel fk_TimestampsSchuelerAnkreuzkompetenzen_FK = addForeignKey(
+	public final SchemaTabelleFremdschluessel fk_TimestampsSchuelerAnkreuzkompetenzen_FK = addForeignKey(
 			"TimestampsSchuelerAnkreuzkompetenzen_FK",
 			/* OnUpdate: */ SchemaFremdschluesselAktionen.CASCADE,
 			/* OnDelete: */ SchemaFremdschluesselAktionen.CASCADE,
@@ -37,7 +37,7 @@ public class Tabelle_TimestampsSchuelerAnkreuzkompetenzen extends SchemaTabelle 
 
 
 	/** Trigger t_INSERT_TimestampsSchuelerAnkreuzkompetenzen */
-	public SchemaTabelleTrigger trigger_MariaDB_INSERT_TimestampsSchuelerAnkreuzkompetenzen = addTrigger(
+	public final SchemaTabelleTrigger trigger_MariaDB_INSERT_TimestampsSchuelerAnkreuzkompetenzen = addTrigger(
 			"t_INSERT_TimestampsSchuelerAnkreuzkompetenzen",
 			DBDriver.MARIA_DB,
 			"""
@@ -46,7 +46,7 @@ public class Tabelle_TimestampsSchuelerAnkreuzkompetenzen extends SchemaTabelle 
 			""", Schema.tab_SchuelerAnkreuzfloskeln, Schema.tab_TimestampsSchuelerAnkreuzkompetenzen);
 
 	/** Trigger t_UPDATE_TimestampsSchuelerAnkreuzkompetenzen */
-	public SchemaTabelleTrigger trigger_MariaDB_UPDATE_TimestampsSchuelerAnkreuzkompetenzen = addTrigger(
+	public final SchemaTabelleTrigger trigger_MariaDB_UPDATE_TimestampsSchuelerAnkreuzkompetenzen = addTrigger(
 			"t_UPDATE_TimestampsSchuelerAnkreuzkompetenzen",
 			DBDriver.MARIA_DB,
 			"""

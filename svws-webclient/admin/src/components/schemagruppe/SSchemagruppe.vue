@@ -42,12 +42,12 @@
 	});
 
 	function setCurrentAction(newAction: string, open: boolean) {
-		if(newAction === oldAction.value.name && !open)
+		if (newAction === oldAction.value.name && !open)
 			return;
 		oldAction.value.name = currentAction.value;
 		oldAction.value.open = (currentAction.value === "") ? false : true;
-		if(open === true)
-			currentAction.value= newAction;
+		if (open === true)
+			currentAction.value = newAction;
 		else
 			currentAction.value = "";
 	}
@@ -57,8 +57,8 @@
 	}
 
 	const checkDeletable = computed<[boolean, List<string>]>(() => {
-		const log : List<string> = new ArrayList();
-		let result : boolean = true;
+		const log: List<string> = new ArrayList();
+		let result: boolean = true;
 		if (currentAction.value === 'delete') {
 			for (const schema of props.auswahlGruppe) {
 				if (schema.username === props.apiUsername) {
@@ -69,7 +69,7 @@
 		} else {
 			result = false;
 		}
-		return [ result, log ];
+		return [result, log];
 	});
 
 </script>

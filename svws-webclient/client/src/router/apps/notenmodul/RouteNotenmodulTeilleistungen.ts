@@ -1,7 +1,7 @@
 import type { RouteLocationRaw, RouteParams } from "vue-router";
 import { BenutzerKompetenz, Schulform, ServerMode } from "@core";
 import { ConfigElement } from "@ui";
-import type { EnmLerngruppenAuswahlListeManager} from "@ui";
+import type { EnmLerngruppenAuswahlListeManager } from "@ui";
 
 import { routeNotenmodul } from "./RouteNotenmodul";
 import { RouteNotenmodulMenuGroup } from "./RouteNotenmodulMenuGroup";
@@ -27,7 +27,7 @@ export class RouteNotenmodulTeilleistungen extends RouteAuswahlNode<EnmLerngrupp
 			BenutzerKompetenz.NOTENMODUL_NOTEN_AENDERN_ALLGEMEIN,
 			BenutzerKompetenz.NOTENMODUL_NOTEN_AENDERN_FUNKTION,
 		], "notenmodul.teilleistungen", "notenmodul/teilleistungen", NotenmodulTeilleistungenApp, NotenmodulTeilleistungenAuswahl, new RouteDataNotenmodulTeilleistungen());
-		super.mode = ServerMode.DEV;
+		super.mode = ServerMode.ALPHA;
 		super.getAuswahlListProps = (props) => (<NotenmodulTeilleistungenAuswahlProps>{
 			...props,
 			enmManager: () => routeNotenmodul.data.manager,
@@ -61,7 +61,7 @@ export class RouteNotenmodulTeilleistungen extends RouteAuswahlNode<EnmLerngrupp
 		super.menugroup = RouteNotenmodulMenuGroup.ALLGEMEIN;
 	}
 
-	protected async update(to: RouteNode<any, any>, to_params: RouteParams, from: RouteNode<any, any> | undefined, from_params: RouteParams, isEntering: boolean) : Promise<void | Error | RouteLocationRaw> {
+	protected async update(to: RouteNode<any, any>, to_params: RouteParams, from: RouteNode<any, any> | undefined, from_params: RouteParams, isEntering: boolean): Promise<void | Error | RouteLocationRaw> {
 		if (isEntering && (!(from?.name.startsWith("notenmodul") ?? false)))
 			await routeNotenmodul.data.ladeDaten();
 		if (to.name === this.name)

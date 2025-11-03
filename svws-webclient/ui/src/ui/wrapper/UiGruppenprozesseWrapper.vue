@@ -6,19 +6,19 @@
 				<template #content>
 					<div class="py-1 px-1 flex flex-col">
 						{{ tooltipTextActual }}
-						<div class="w-auto bg-white h-0.5 my-2"/>
+						<div class="w-auto bg-white h-0.5 my-2" />
 						{{ tooltipTextAfter }}
 					</div>
 				</template>
 				<div class="h-full min-h-8 w-8 px-1 bg-ui-brand hover:bg-ui-brand-hover rounded content-center center align-middle cursor-pointer">
-					<span v-if="pendingIndicatorHovered" class="inline-block i-ri-close-line icon-lg h-full min-h-8 w-full align-middle bg-white"/>
-					<span v-else class="inline-block i-ri-information-line icon-lg h-full min-h-8 w-full align-middle bg-white"/>
+					<span v-if="pendingIndicatorHovered" class="inline-block i-ri-close-line icon-lg h-full min-h-8 w-full align-middle bg-white" />
+					<span v-else class="inline-block i-ri-information-line icon-lg h-full min-h-8 w-full align-middle bg-white" />
 				</div>
 			</SvwsUiTooltip>
 		</div>
 
 		<div ref="container" class="grow grid items-center">
-			<slot/>
+			<slot />
 		</div>
 
 		<div class="pt-3 ms-2 me-4 w-auto h-full flex justify-center" :id="`Clearbutton-${String(attributeName)}`">
@@ -27,10 +27,9 @@
 					Aktuellen Wert löschen
 				</template>
 				<span class="icon-lg i-ri-delete-bin-line" @click="setNull"
-					:class="{ 'icon-ui-danger cursor-pointer': showClearButton, 'icon-ui-disabled': !showClearButton }"
-				/>
+					:class="{ 'icon-ui-danger cursor-pointer': showClearButton, 'icon-ui-disabled': !showClearButton }" />
 			</SvwsUiTooltip>
-			<div v-else class="min-w-6"/>
+			<div v-else class="min-w-6" />
 		</div>
 	</div>
 </template>
@@ -59,10 +58,10 @@
 		for (const obj of props.pendingStateManager().auswahlManager.getListeDaten().values()) {
 			const key = ((obj[props.attributeName] === null) || (obj[props.attributeName] === undefined)) ? 'Keine Daten' : obj[props.attributeName];
 			const keyAmount = keyAmounts.get(key);
-			keyAmounts.put(key, (keyAmount === null) ? 1 : keyAmount + 1)
+			keyAmounts.put(key, (keyAmount === null) ? 1 : keyAmount + 1);
 		}
 		return keyAmounts;
-	})
+	});
 
 	const attributeValue = computed(() => {
 		// Prüfe, ob Attribut in Generic <T> vorhanden sein kann
@@ -77,14 +76,14 @@
 		for (const keyAmount of actualValuesWithAmount.value.values())
 			amount += keyAmount;
 		return amount;
-	})
+	});
 
 	const showClearButton = computed<boolean>(() => {
 		for (const key of actualValuesWithAmount.value.keySet())
 			if ((key !== 'Keine Daten') && (attributeValue.value !== null))
 				return true;
 		return false;
-	})
+	});
 
 	const tooltipTextActual = computed<string>(() => {
 		let tooltipActual = 'Aktuell: ';
@@ -95,7 +94,7 @@
 		}
 		const tailCut = tooltipActual.slice(0, -2);
 		return tailCut.length > 200 ? `${tailCut.slice(0, 200)} ...` : tailCut;
-	})
+	});
 
 	const tooltipTextAfter = computed(() => {
 		let tooltipAfter = 'Nachher: ';
@@ -107,7 +106,7 @@
 
 		tooltipAfter += ` (${pendingAmountOverall.value})`;
 		return tooltipAfter;
-	})
+	});
 
 	// Entfernt den aktuellen pendingState für das Attribut
 	function revert() {

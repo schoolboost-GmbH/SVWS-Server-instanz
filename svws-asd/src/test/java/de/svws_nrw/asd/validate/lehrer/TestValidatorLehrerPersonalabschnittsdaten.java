@@ -6,6 +6,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 import de.svws_nrw.asd.data.lehrer.LehrerPersonalabschnittsdaten;
 import de.svws_nrw.asd.data.lehrer.LehrerStammdaten;
@@ -40,9 +42,21 @@ class TestValidatorLehrerPersonalabschnittsdaten {
 	static final LehrerStammdaten lsdTestdaten_001 = JsonReader.fromResource(
 			"de/svws_nrw/asd/validate/lehrer/Testdaten_001_LehrerStammdaten.json", LehrerStammdaten.class);
 	/** Personalabschnittsdaten des Lehrers */
-	static final LehrerPersonalabschnittsdaten lpadTestdaten_002 = JsonReader.fromResource(
-			"de/svws_nrw/asd/validate/lehrer/Testdaten_002_LehrerPersonalabschnittsdaten.json",
+	static final LehrerPersonalabschnittsdaten LehrerPersonalabschnittsdaten_Plausibel = JsonReader.fromResource(
+			"de/svws_nrw/asd/validate/lehrer/Testdaten_Plausibel_LehrerPersonalabschnittsdaten.json",
 			LehrerPersonalabschnittsdaten.class);
+
+	private static final String TESTDATEN_LAP3 = """
+	        0, 'A', 'WV'  , true
+	        0, 'A', 'WT'  , true
+	        1.5, 'A', 'WT'  , true
+	        0, 'X', 'WT'  , true
+	        0, 'A', 'XX'  , true
+	        0, 'X', 'XX'  , false
+	        0, 'X', 'XX'  , false
+	        0, 'X', 'wr'  , false
+	        """;
+
 
 	/**
 	 * Initialisiert die Core-Types, damit die Tests ausgeführt werden können.
@@ -70,7 +84,7 @@ class TestValidatorLehrerPersonalabschnittsdaten {
 
 		// Erzeuge den Kontext für die Validierung
 		final ValidatorKontext kontext = new ValidatorKontext(schuleTestdaten_001, true);
-		final ValidatorLehrerPersonalabschnittsdaten validator = new ValidatorLehrerPersonalabschnittsdaten(lpadTestdaten_002, lsdTestdaten_001, kontext);
+		final ValidatorLehrerPersonalabschnittsdaten validator = new ValidatorLehrerPersonalabschnittsdaten(LehrerPersonalabschnittsdaten_Plausibel, lsdTestdaten_001, kontext);
 		assertEquals(true, validator.run());
 	}
 
@@ -90,7 +104,7 @@ class TestValidatorLehrerPersonalabschnittsdaten {
 
 		// Erzeuge den Kontext für die Validierung
 		final ValidatorKontext kontext = new ValidatorKontext(schuleTestdaten_001, true);
-		final ValidatorLehrerPersonalabschnittsdaten validator = new ValidatorLehrerPersonalabschnittsdaten(lpadTestdaten_002, lsdTestdaten_001, kontext);
+		final ValidatorLehrerPersonalabschnittsdaten validator = new ValidatorLehrerPersonalabschnittsdaten(LehrerPersonalabschnittsdaten_Plausibel, lsdTestdaten_001, kontext);
 		assertEquals(false, validator.run());
 	}
 
@@ -110,7 +124,7 @@ class TestValidatorLehrerPersonalabschnittsdaten {
 
 		// Erzeuge den Kontext für die Validierung
 		final ValidatorKontext kontext = new ValidatorKontext(schuleTestdaten_001, true);
-		final ValidatorLehrerPersonalabschnittsdatenPflichtstundensoll validator = new ValidatorLehrerPersonalabschnittsdatenPflichtstundensoll(lpadTestdaten_002, kontext);
+		final ValidatorLehrerPersonalabschnittsdatenPflichtstundensoll validator = new ValidatorLehrerPersonalabschnittsdatenPflichtstundensoll(LehrerPersonalabschnittsdaten_Plausibel, kontext);
 		assertEquals(true, validator.run());
 	}
 
@@ -130,7 +144,7 @@ class TestValidatorLehrerPersonalabschnittsdaten {
 
 		// Erzeuge den Kontext für die Validierung
 		final ValidatorKontext kontext = new ValidatorKontext(schuleTestdaten_001, true);
-		LehrerPersonalabschnittsdaten lpad = lpadTestdaten_002;
+		LehrerPersonalabschnittsdaten lpad = LehrerPersonalabschnittsdaten_Plausibel;
 		lpad.pflichtstundensoll = 42.0;
 		final ValidatorLehrerPersonalabschnittsdatenPflichtstundensoll validator = new ValidatorLehrerPersonalabschnittsdatenPflichtstundensoll(lpad, kontext);
 		assertEquals(false, validator.run());
@@ -155,7 +169,7 @@ class TestValidatorLehrerPersonalabschnittsdaten {
 
 		try {
 			final @NotNull DateManager geburtsdatum = DateManager.from(lsdTestdaten_001.geburtsdatum);
-			final ValidatorLehrerPersonalabschnittsdatenRechtsverhaeltnis validator = new ValidatorLehrerPersonalabschnittsdatenRechtsverhaeltnis(lpadTestdaten_002, geburtsdatum, kontext);
+			final ValidatorLehrerPersonalabschnittsdatenRechtsverhaeltnis validator = new ValidatorLehrerPersonalabschnittsdatenRechtsverhaeltnis(LehrerPersonalabschnittsdaten_Plausibel, geburtsdatum, kontext);
 			assertEquals(true, validator.run());
 		} catch (@SuppressWarnings("unused") final InvalidDateException e) {
 			assertEquals(true, false); // darf hier nicht hin
@@ -180,7 +194,7 @@ class TestValidatorLehrerPersonalabschnittsdaten {
 
 		try {
 			final @NotNull DateManager geburtsdatum = DateManager.from("2004-01-01");
-			final ValidatorLehrerPersonalabschnittsdatenRechtsverhaeltnis validator = new ValidatorLehrerPersonalabschnittsdatenRechtsverhaeltnis(lpadTestdaten_002, geburtsdatum, kontext);
+			final ValidatorLehrerPersonalabschnittsdatenRechtsverhaeltnis validator = new ValidatorLehrerPersonalabschnittsdatenRechtsverhaeltnis(LehrerPersonalabschnittsdaten_Plausibel, geburtsdatum, kontext);
 			assertEquals(false, validator.run());
 		} catch (@SuppressWarnings("unused") final InvalidDateException e) {
 			assertEquals(true, false); // darf hier nicht hin
@@ -206,10 +220,38 @@ class TestValidatorLehrerPersonalabschnittsdaten {
 		// Wir erwarten eine InvalidDateException bei der Übergabe des Datums.
 		try {
 			final @NotNull DateManager geburtsdatum = DateManager.from("01.01.1990");
-			new ValidatorLehrerPersonalabschnittsdatenRechtsverhaeltnis(lpadTestdaten_002, geburtsdatum, kontext);
+			new ValidatorLehrerPersonalabschnittsdatenRechtsverhaeltnis(LehrerPersonalabschnittsdaten_Plausibel, geburtsdatum, kontext);
 		} catch (final InvalidDateException e) {
 			assertTrue(e.getMessage().contains("ist nicht konform zu ISO8601"));
 		}
+	}
+
+	/**
+	 * Test von ValidatorLehrerStammdatenPflichtstundensoll
+	 *
+	 * CoreType: LehrerPersonalabschnittsdaten
+	 *
+	 * @param pflichtstundensoll der Doublewert für die Stunden (z. B. 27.5)
+	 * @param einsatzstatus
+	 * @param beschaeftigungsart
+	 * @param result     gibt an, welches Ergebnis bei den Testdaten erwartet wird
+	 */
+	@DisplayName("Tests für ValidatorLehrerPersonalabschnittsdatenPflichtstundensoll")
+	@ParameterizedTest
+	@CsvSource(textBlock = TESTDATEN_LAP3)
+	void testValidatorLehrerStammdatenGeschlecht(final double pflichtstundensoll, final String einsatzstatus, final String beschaeftigungsart, final boolean result) {
+		// Testdaten setzen
+		LehrerPersonalabschnittsdaten_Plausibel.pflichtstundensoll = pflichtstundensoll;
+		LehrerPersonalabschnittsdaten_Plausibel.einsatzstatus = einsatzstatus;
+		LehrerPersonalabschnittsdaten_Plausibel.beschaeftigungsart = beschaeftigungsart;
+
+		// Erzeuge den Kontext für die Validierung
+		final ValidatorKontext kontext = new ValidatorKontext(schuleTestdaten_001, true);
+		final ValidatorLehrerPersonalabschnittsdatenPflichtstundensoll validator =
+				new ValidatorLehrerPersonalabschnittsdatenPflichtstundensoll(LehrerPersonalabschnittsdaten_Plausibel, kontext);
+
+		assertEquals(result, validator.run());
+
 	}
 
 	/**
@@ -218,7 +260,7 @@ class TestValidatorLehrerPersonalabschnittsdaten {
 	 * @param pflichtstunden - die Pflichtstundenzahl
 	 */
 	void setzeTestdaten(final double pflichtstunden) {
-		lpadTestdaten_002.pflichtstundensoll = pflichtstunden;
+		LehrerPersonalabschnittsdaten_Plausibel.pflichtstundensoll = pflichtstunden;
 	}
 
 }

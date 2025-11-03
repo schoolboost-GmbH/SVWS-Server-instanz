@@ -11,22 +11,22 @@ export abstract class GostBelegpruefung extends JavaObject {
 	/**
 	 * Eine ggf. zuvor durchgeführte Abitur-Belegprüfung, welche in dieser Belegprüfung als Voraussetzung vorhanden sein muss.
 	 */
-	protected readonly pruefungen_vorher : Array<GostBelegpruefung>;
+	protected readonly pruefungen_vorher: Array<GostBelegpruefung>;
 
 	/**
 	 * Der Daten-Manager für die Abiturdaten
 	 */
-	protected readonly manager : AbiturdatenManager;
+	protected readonly manager: AbiturdatenManager;
 
 	/**
 	 * Die Art der Belegprüfung (nur EF.1, Gesamte Oberstufe, evtl. weitere)
 	 */
-	protected readonly pruefungs_art : GostBelegpruefungsArt;
+	protected readonly pruefungs_art: GostBelegpruefungsArt;
 
 	/**
 	 * Ein Set von Belegungsfehlern, die bei der Gesamtprüfung entstanden sind.
 	 */
-	private readonly belegungsfehler : List<GostBelegungsfehler> = new ArrayList<GostBelegungsfehler>();
+	private readonly belegungsfehler: List<GostBelegungsfehler> = new ArrayList<GostBelegungsfehler>();
 
 
 	/**
@@ -36,7 +36,7 @@ export abstract class GostBelegpruefung extends JavaObject {
 	 * @param pruefungsArt      die Art der durchzuführenden Prüfung (z.B. EF.1 oder GESAMT)
 	 * @param pruefungenVorher   eine vorher durchgeführte Abiturprüfung
 	 */
-	protected constructor(manager : AbiturdatenManager, pruefungsArt : GostBelegpruefungsArt, ...pruefungenVorher : Array<GostBelegpruefung>) {
+	protected constructor(manager: AbiturdatenManager, pruefungsArt: GostBelegpruefungsArt, ...pruefungenVorher: Array<GostBelegpruefung>) {
 		super();
 		this.pruefungen_vorher = pruefungenVorher;
 		this.manager = manager;
@@ -46,7 +46,7 @@ export abstract class GostBelegpruefung extends JavaObject {
 	/**
 	 * Führt eine Belegprüfung durch.
 	 */
-	public pruefe() : void {
+	public pruefe(): void {
 		this.init();
 		if (this.pruefungs_art as unknown === GostBelegpruefungsArt.EF1 as unknown)
 			this.pruefeEF1();
@@ -61,7 +61,7 @@ export abstract class GostBelegpruefung extends JavaObject {
 	 *
 	 * @param fehler   der hinzuzufügende Belegungsfehler
 	 */
-	protected addFehler(fehler : GostBelegungsfehler) : void {
+	protected addFehler(fehler: GostBelegungsfehler): void {
 		if (!this.belegungsfehler.contains(fehler))
 			this.belegungsfehler.add(fehler);
 	}
@@ -71,7 +71,7 @@ export abstract class GostBelegpruefung extends JavaObject {
 	 *
 	 * @return die Belegungsfehler
 	 */
-	public getBelegungsfehler() : List<GostBelegungsfehler> {
+	public getBelegungsfehler(): List<GostBelegungsfehler> {
 		return this.belegungsfehler;
 	}
 
@@ -80,7 +80,7 @@ export abstract class GostBelegpruefung extends JavaObject {
 	 *
 	 * @return true, falls ein "echter" Belegungsfehler vorliegt.
 	 */
-	public hatBelegungsfehler() : boolean {
+	public hatBelegungsfehler(): boolean {
 		for (const fehler of this.belegungsfehler) {
 			if (!fehler.istInfo())
 				return false;
@@ -91,17 +91,17 @@ export abstract class GostBelegpruefung extends JavaObject {
 	/**
 	 * Initialisiert die Daten für die Belegprüfungen mithilfe des Abiturdaten-Managers
 	 */
-	protected abstract init() : void;
+	protected abstract init(): void;
 
 	/**
 	 * Führt alle Belegprüfungen für die EF.1 durch.
 	 */
-	protected abstract pruefeEF1() : void;
+	protected abstract pruefeEF1(): void;
 
 	/**
 	 * Führt alle Belegprüfungen für die gesamte Oberstufe durch.
 	 */
-	protected abstract pruefeGesamt() : void;
+	protected abstract pruefeGesamt(): void;
 
 	/**
 	 * Gibt zurück, ob die angegebenen Belegprüfungsfehler einen "echten" Fehler beinhalten
@@ -111,7 +111,7 @@ export abstract class GostBelegpruefung extends JavaObject {
 	 *
 	 * @return true, falls kein "echter" Belegprüfungsfehler aufgetreten ist, sonst false
 	 */
-	public static istErfolgreich(alleFehler : List<GostBelegungsfehler>) : boolean {
+	public static istErfolgreich(alleFehler: List<GostBelegungsfehler>): boolean {
 		for (const fehler of alleFehler) {
 			if (!fehler.istInfo())
 				return false;
@@ -127,8 +127,8 @@ export abstract class GostBelegpruefung extends JavaObject {
 	 *
 	 * @return die Menge der Belegprüfungsfehler
 	 */
-	public static getBelegungsfehlerAlle(pruefungen : List<GostBelegpruefung>) : List<GostBelegungsfehler> {
-		const fehler : ArrayList<GostBelegungsfehler> = new ArrayList<GostBelegungsfehler>();
+	public static getBelegungsfehlerAlle(pruefungen: List<GostBelegpruefung>): List<GostBelegungsfehler> {
+		const fehler: ArrayList<GostBelegungsfehler> = new ArrayList<GostBelegungsfehler>();
 		for (const pruefung of pruefungen) {
 			fehler.addAll(pruefung.getBelegungsfehler());
 		}
@@ -139,7 +139,7 @@ export abstract class GostBelegpruefung extends JavaObject {
 		return 'de.svws_nrw.core.abschluss.gost.GostBelegpruefung';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.abschluss.gost.GostBelegpruefung'].includes(name);
 	}
 
@@ -147,6 +147,6 @@ export abstract class GostBelegpruefung extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_abschluss_gost_GostBelegpruefung(obj : unknown) : GostBelegpruefung {
+export function cast_de_svws_nrw_core_abschluss_gost_GostBelegpruefung(obj: unknown): GostBelegpruefung {
 	return obj as GostBelegpruefung;
 }

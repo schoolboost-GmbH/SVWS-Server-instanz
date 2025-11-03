@@ -9,17 +9,17 @@ export class KlausurblockungSchienenAlgorithmusGreedy3 extends KlausurblockungSc
 	/**
 	 * Die kleinste Schienenanzahl, die bisher gefunden wurde.
 	 */
-	private _minSchienen : number = 0;
+	private _minSchienen: number = 0;
 
 	/**
 	 * Bis zu welchem Zeitpunkt die Rekursion laufen darf.
 	 */
-	private _zeitEnde : number = 0;
+	private _zeitEnde: number = 0;
 
 	/**
 	 * TRUE, falls mindestens eine Lösung gefunden wurde.
 	 */
-	private _saved : boolean = false;
+	private _saved: boolean = false;
 
 
 	/**
@@ -28,15 +28,15 @@ export class KlausurblockungSchienenAlgorithmusGreedy3 extends KlausurblockungSc
 	 * @param pRandom   Ein {@link Random}-Objekt zur Steuerung des Zufalls über einen Anfangs-Seed.
 	 * @param pDynDaten Die aktuellen Blockungsdaten.
 	 */
-	public constructor(pRandom : Random, pDynDaten : KlausurblockungSchienenDynDaten) {
+	public constructor(pRandom: Random, pDynDaten: KlausurblockungSchienenDynDaten) {
 		super(pRandom, pDynDaten);
 	}
 
-	public toString() : string {
+	public toString(): string {
 		return "Backtracking";
 	}
 
-	public berechne(pZeitEnde : number) : void {
+	public berechne(pZeitEnde: number): void {
 		this._minSchienen = this._dynDaten.gibAnzahlKlausuren();
 		this._zeitEnde = pZeitEnde;
 		this._dynDaten.aktionKlausurenAusSchienenEntfernen();
@@ -47,12 +47,12 @@ export class KlausurblockungSchienenAlgorithmusGreedy3 extends KlausurblockungSc
 			this._dynDaten.aktionZustand2Speichern();
 	}
 
-	private berechneRekursiv() : void {
+	private berechneRekursiv(): void {
 		if (this._dynDaten.gibAnzahlSchienen() > this._minSchienen)
 			return;
 		if ((this._saved) && (System.currentTimeMillis() > this._zeitEnde))
 			return;
-		const klausurNr : number = (this._dynDaten.gibAnzahlSchienen() === 0) ? this._dynDaten.gibKlausurDieFreiIstMitDenMeistenFreienNachbarn() : this._dynDaten.gibKlausurDieFreiIstMitDenMeistenNachbarsfarben();
+		const klausurNr: number = (this._dynDaten.gibAnzahlSchienen() === 0) ? this._dynDaten.gibKlausurDieFreiIstMitDenMeistenFreienNachbarn() : this._dynDaten.gibKlausurDieFreiIstMitDenMeistenNachbarsfarben();
 		if (klausurNr < 0) {
 			if (!this._saved || this._dynDaten.gibIstBesserAlsZustand1()) {
 				this._minSchienen = this._dynDaten.gibAnzahlSchienen();
@@ -61,9 +61,9 @@ export class KlausurblockungSchienenAlgorithmusGreedy3 extends KlausurblockungSc
 			}
 			return;
 		}
-		for (let schiene : number = 0; schiene < this._minSchienen; schiene++) {
-			const schienenAnzahl : number = this._dynDaten.gibAnzahlSchienen();
-			const differenz : number = (schiene < schienenAnzahl) ? 0 : ((schiene - schienenAnzahl) + 1);
+		for (let schiene: number = 0; schiene < this._minSchienen; schiene++) {
+			const schienenAnzahl: number = this._dynDaten.gibAnzahlSchienen();
+			const differenz: number = (schiene < schienenAnzahl) ? 0 : ((schiene - schienenAnzahl) + 1);
 			this._dynDaten.aktionSchienenAnzahlVeraendern(+differenz);
 			if (this._dynDaten.aktionSetzeKlausurInSchiene(klausurNr, schiene)) {
 				this.berechneRekursiv();
@@ -77,7 +77,7 @@ export class KlausurblockungSchienenAlgorithmusGreedy3 extends KlausurblockungSc
 		return 'de.svws_nrw.core.utils.gost.klausurplanung.KlausurblockungSchienenAlgorithmusGreedy3';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.utils.gost.klausurplanung.KlausurblockungSchienenAlgorithmusGreedy3', 'de.svws_nrw.core.utils.gost.klausurplanung.KlausurblockungSchienenAlgorithmusAbstract'].includes(name);
 	}
 
@@ -85,6 +85,6 @@ export class KlausurblockungSchienenAlgorithmusGreedy3 extends KlausurblockungSc
 
 }
 
-export function cast_de_svws_nrw_core_utils_gost_klausurplanung_KlausurblockungSchienenAlgorithmusGreedy3(obj : unknown) : KlausurblockungSchienenAlgorithmusGreedy3 {
+export function cast_de_svws_nrw_core_utils_gost_klausurplanung_KlausurblockungSchienenAlgorithmusGreedy3(obj: unknown): KlausurblockungSchienenAlgorithmusGreedy3 {
 	return obj as KlausurblockungSchienenAlgorithmusGreedy3;
 }

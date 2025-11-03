@@ -31,7 +31,7 @@ export class RouteGostAbitur extends RouteNode<RouteDataGostAbitur, RouteGost> {
 		super.text = "Abitur";
 		this.isHidden = (params?: RouteParams) => {
 			return this.checkHidden(params);
-		}
+		};
 		super.children = [
 			routeGostAbiturZulassung,
 			routeGostAbiturNoteneingabe,
@@ -42,7 +42,7 @@ export class RouteGostAbitur extends RouteNode<RouteDataGostAbitur, RouteGost> {
 
 	protected checkHidden(params?: RouteParams) {
 		try {
-			const { abiturjahr } = (params !== undefined) ? RouteNode.getIntParams(params, ["abiturjahr"]) : {abiturjahr: undefined};
+			const { abiturjahr } = (params !== undefined) ? RouteNode.getIntParams(params, ["abiturjahr"]) : { abiturjahr: undefined };
 			if (abiturjahr === undefined)
 				return false;
 			const eintrag = routeGost.data.mapAbiturjahrgaenge.get(abiturjahr);
@@ -59,9 +59,9 @@ export class RouteGostAbitur extends RouteNode<RouteDataGostAbitur, RouteGost> {
 		}
 	}
 
-	protected async update(to: RouteNode<any, any>, to_params: RouteParams, from: RouteNode<any, any> | undefined, from_params: RouteParams, isEntering: boolean) : Promise<void | Error | RouteLocationRaw> {
+	protected async update(to: RouteNode<any, any>, to_params: RouteParams, from: RouteNode<any, any> | undefined, from_params: RouteParams, isEntering: boolean): Promise<void | Error | RouteLocationRaw> {
 		try {
-			const { abiturjahr } = RouteNode.getIntParams(to_params, [ "abiturjahr" ]);
+			const { abiturjahr } = RouteNode.getIntParams(to_params, ["abiturjahr"]);
 			if (abiturjahr === undefined)
 				throw new DeveloperNotificationException("Fehler: Kein Abiturjahrgang in der URL angegeben.");
 			const eintrag = routeGost.data.mapAbiturjahrgaenge.get(abiturjahr);
@@ -69,7 +69,7 @@ export class RouteGostAbitur extends RouteNode<RouteDataGostAbitur, RouteGost> {
 				return routeGost.getRoute({ abiturjahr });
 			try {
 				await this.data.setAbiturjahr(eintrag, isEntering);
-			} catch(error) {
+			} catch (error) {
 				return routeGost.getRoute({ abiturjahr });
 			}
 			if (to === this)
@@ -101,7 +101,7 @@ export class RouteGostAbitur extends RouteNode<RouteDataGostAbitur, RouteGost> {
 			throw new DeveloperNotificationException("Unbekannte Route");
 		await RouteManager.doRoute(this.getRouteView(node));
 		this.data.setView(node, this.children);
-	}
+	};
 
 }
 

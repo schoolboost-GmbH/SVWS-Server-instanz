@@ -11,18 +11,18 @@ export class AVLMapSubCollectionIterator<K, V> extends JavaObject implements Jav
 	/**
 	 *  Die {@link AVLMapSubMap} auf der dieser Iterator operiert.
 	 */
-	private readonly _sub : AVLMapSubMap<K, V>;
+	private readonly _sub: AVLMapSubMap<K, V>;
 
 	/**
 	 *  Der aktuelle Eintrag. Ein NULL-Wert bedeutet, dass das Element bereits entfernt wurde oder der Iterator auf einer
 	 *  ungültigen Position ist (z.B. vor dem ersten Element).
 	 */
-	private _current : AVLMapNode<K, V> | null = null;
+	private _current: AVLMapNode<K, V> | null = null;
 
 	/**
 	 *  Der nächste Eintrag. Ein NULL-Wert bedeutet, dass kein nächster Eintrag existiert.
 	 */
-	private _next : AVLMapNode<K, V> | null = null;
+	private _next: AVLMapNode<K, V> | null = null;
 
 
 	/**
@@ -30,14 +30,14 @@ export class AVLMapSubCollectionIterator<K, V> extends JavaObject implements Jav
 	 *
 	 * @param sub Die {@link AVLMapSubMap} auf der dieser Iterator operiert.
 	 */
-	constructor(sub : AVLMapSubMap<K, V>) {
+	constructor(sub: AVLMapSubMap<K, V>) {
 		super();
 		this._sub = sub;
 		this._current = null;
 		this._next = this._sub.bcGetFirstEntryAsNode();
 	}
 
-	public next() : V {
+	public next(): V {
 		if (this._next === null)
 			throw new NoSuchElementException()
 		this._current = this._next;
@@ -45,11 +45,11 @@ export class AVLMapSubCollectionIterator<K, V> extends JavaObject implements Jav
 		return this._current._val;
 	}
 
-	public hasNext() : boolean {
+	public hasNext(): boolean {
 		return this._next !== null;
 	}
 
-	public remove() : void {
+	public remove(): void {
 		if (this._current === null)
 			throw new IllegalStateException()
 		this._sub.remove(this._current.getKey());
@@ -60,7 +60,7 @@ export class AVLMapSubCollectionIterator<K, V> extends JavaObject implements Jav
 		return 'de.svws_nrw.core.adt.map.AVLMapSubCollectionIterator';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['java.util.Iterator', 'de.svws_nrw.core.adt.map.AVLMapSubCollectionIterator'].includes(name);
 	}
 
@@ -68,6 +68,6 @@ export class AVLMapSubCollectionIterator<K, V> extends JavaObject implements Jav
 
 }
 
-export function cast_de_svws_nrw_core_adt_map_AVLMapSubCollectionIterator<K, V>(obj : unknown) : AVLMapSubCollectionIterator<K, V> {
+export function cast_de_svws_nrw_core_adt_map_AVLMapSubCollectionIterator<K, V>(obj: unknown): AVLMapSubCollectionIterator<K, V> {
 	return obj as AVLMapSubCollectionIterator<K, V>;
 }

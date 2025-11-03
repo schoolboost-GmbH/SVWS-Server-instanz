@@ -6,32 +6,32 @@ export class FoerderschwerpunktEintrag extends JavaObject {
 	/**
 	 * Die ID des Katalog-Eintrags.
 	 */
-	public id : number = 0;
+	public id: number = 0;
 
 	/**
 	 * Das Kürzel des Eintrags.
 	 */
-	public kuerzel : string = "";
+	public kuerzel: string = "";
 
 	/**
 	 * Die textuelle Beschreibung des Katalog-Eintrags.
 	 */
-	public text : string = "";
+	public text: string = "";
 
 	/**
 	 * Das Kürzel des Eintrags im Rahmen der amtlichen Schulstatisik.
 	 */
-	public kuerzelStatistik : string = "";
+	public kuerzelStatistik: string = "";
 
 	/**
 	 * Gibt an, ob der Eintrag in der Anwendung sichtbar sein soll oder nicht.
 	 */
-	public istSichtbar : boolean = false;
+	public istSichtbar: boolean = false;
 
 	/**
 	 * Die Sortierreihenfolge des Förderschwerpunkt-Eintrags.
 	 */
-	public sortierung : number = 0;
+	public sortierung: number = 0;
 
 
 	/**
@@ -45,13 +45,13 @@ export class FoerderschwerpunktEintrag extends JavaObject {
 		return 'de.svws_nrw.core.data.schule.FoerderschwerpunktEintrag';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.schule.FoerderschwerpunktEintrag'].includes(name);
 	}
 
 	public static class = new Class<FoerderschwerpunktEintrag>('de.svws_nrw.core.data.schule.FoerderschwerpunktEintrag');
 
-	public static transpilerFromJSON(json : string): FoerderschwerpunktEintrag {
+	public static transpilerFromJSON(json: string): FoerderschwerpunktEintrag {
 		const obj = JSON.parse(json) as Partial<FoerderschwerpunktEintrag>;
 		const result = new FoerderschwerpunktEintrag();
 		if (obj.id === undefined)
@@ -75,7 +75,7 @@ export class FoerderschwerpunktEintrag extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : FoerderschwerpunktEintrag) : string {
+	public static transpilerToJSON(obj: FoerderschwerpunktEintrag): string {
 		let result = '{';
 		result += '"id" : ' + obj.id.toString() + ',';
 		result += '"kuerzel" : ' + JSON.stringify(obj.kuerzel) + ',';
@@ -88,7 +88,7 @@ export class FoerderschwerpunktEintrag extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<FoerderschwerpunktEintrag>) : string {
+	public static transpilerToJSONPatch(obj: Partial<FoerderschwerpunktEintrag>): string {
 		let result = '{';
 		if (obj.id !== undefined) {
 			result += '"id" : ' + obj.id.toString() + ',';
@@ -115,6 +115,6 @@ export class FoerderschwerpunktEintrag extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_schule_FoerderschwerpunktEintrag(obj : unknown) : FoerderschwerpunktEintrag {
+export function cast_de_svws_nrw_core_data_schule_FoerderschwerpunktEintrag(obj: unknown): FoerderschwerpunktEintrag {
 	return obj as FoerderschwerpunktEintrag;
 }

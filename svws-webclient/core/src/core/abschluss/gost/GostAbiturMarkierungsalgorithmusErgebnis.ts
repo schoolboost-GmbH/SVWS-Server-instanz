@@ -9,17 +9,17 @@ export class GostAbiturMarkierungsalgorithmusErgebnis extends JavaObject {
 	/**
 	 * gibt an, ob der Algorithmus erfolgreich durchgeführt wurde
 	 */
-	public erfolgreich : boolean = false;
+	public erfolgreich: boolean = false;
 
 	/**
 	 * eine Liste der vorgenommenen Markierungen von Halbjahres-Belegungen in der Qualifikationsphase
 	 */
-	public markierungen : List<GostAbiturMarkierungsalgorithmusMarkierung> = new ArrayList<GostAbiturMarkierungsalgorithmusMarkierung>();
+	public markierungen: List<GostAbiturMarkierungsalgorithmusMarkierung> = new ArrayList<GostAbiturMarkierungsalgorithmusMarkierung>();
 
 	/**
 	 * Ein Log, der den Ablauf des Markierungsalgorithmus verdeutlicht
 	 */
-	public log : List<string> = new ArrayList<string>();
+	public log: List<string> = new ArrayList<string>();
 
 
 	/**
@@ -33,13 +33,13 @@ export class GostAbiturMarkierungsalgorithmusErgebnis extends JavaObject {
 		return 'de.svws_nrw.core.abschluss.gost.GostAbiturMarkierungsalgorithmusErgebnis';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.abschluss.gost.GostAbiturMarkierungsalgorithmusErgebnis'].includes(name);
 	}
 
 	public static class = new Class<GostAbiturMarkierungsalgorithmusErgebnis>('de.svws_nrw.core.abschluss.gost.GostAbiturMarkierungsalgorithmusErgebnis');
 
-	public static transpilerFromJSON(json : string): GostAbiturMarkierungsalgorithmusErgebnis {
+	public static transpilerFromJSON(json: string): GostAbiturMarkierungsalgorithmusErgebnis {
 		const obj = JSON.parse(json) as Partial<GostAbiturMarkierungsalgorithmusErgebnis>;
 		const result = new GostAbiturMarkierungsalgorithmusErgebnis();
 		if (obj.erfolgreich === undefined)
@@ -58,7 +58,7 @@ export class GostAbiturMarkierungsalgorithmusErgebnis extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : GostAbiturMarkierungsalgorithmusErgebnis) : string {
+	public static transpilerToJSON(obj: GostAbiturMarkierungsalgorithmusErgebnis): string {
 		let result = '{';
 		result += '"erfolgreich" : ' + obj.erfolgreich.toString() + ',';
 		result += '"markierungen" : [ ';
@@ -82,7 +82,7 @@ export class GostAbiturMarkierungsalgorithmusErgebnis extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<GostAbiturMarkierungsalgorithmusErgebnis>) : string {
+	public static transpilerToJSONPatch(obj: Partial<GostAbiturMarkierungsalgorithmusErgebnis>): string {
 		let result = '{';
 		if (obj.erfolgreich !== undefined) {
 			result += '"erfolgreich" : ' + obj.erfolgreich.toString() + ',';
@@ -114,6 +114,6 @@ export class GostAbiturMarkierungsalgorithmusErgebnis extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_abschluss_gost_GostAbiturMarkierungsalgorithmusErgebnis(obj : unknown) : GostAbiturMarkierungsalgorithmusErgebnis {
+export function cast_de_svws_nrw_core_abschluss_gost_GostAbiturMarkierungsalgorithmusErgebnis(obj: unknown): GostAbiturMarkierungsalgorithmusErgebnis {
 	return obj as GostAbiturMarkierungsalgorithmusErgebnis;
 }

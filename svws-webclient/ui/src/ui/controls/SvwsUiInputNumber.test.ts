@@ -304,15 +304,15 @@ describe("Funktionen in SvwsUiInputNumber", () => {
 		});
 
 		const input = wrapper.find({ ref: 'input' });
-		const btnPlus = wrapper.find({ref: 'btnPlus'});
-		const btnMinus = wrapper.find({ref: 'btnMinus'});
+		const btnPlus = wrapper.find({ ref: 'btnPlus' });
+		const btnMinus = wrapper.find({ ref: 'btnMinus' });
 
-		await input.trigger("blur",{ relatedTarget: btnPlus.element });
-		await input.trigger("blur",{ relatedTarget: btnMinus.element });
-		await input.trigger("btnPlus",{ relatedTarget: input.element });
-		await input.trigger("btnPlus",{ relatedTarget: btnMinus.element });
-		await input.trigger("btnMinus",{ relatedTarget: input.element });
-		await input.trigger("btnMinus",{ relatedTarget: btnPlus.element });
+		await input.trigger("blur", { relatedTarget: btnPlus.element });
+		await input.trigger("blur", { relatedTarget: btnMinus.element });
+		await input.trigger("btnPlus", { relatedTarget: input.element });
+		await input.trigger("btnPlus", { relatedTarget: btnMinus.element });
+		await input.trigger("btnMinus", { relatedTarget: input.element });
+		await input.trigger("btnMinus", { relatedTarget: btnPlus.element });
 		expect(wrapper.emitted('blur')).toBe(undefined);
 	});
 

@@ -1,6 +1,6 @@
 import type { RouteLocationNormalized, RouteLocationRaw, RouteParams } from "vue-router";
 
-import type { DeveloperNotificationException} from "@core";
+import type { DeveloperNotificationException } from "@core";
 import { BenutzerKompetenz, ServerMode } from "@core";
 
 import { RouteNode } from "~/router/RouteNode";
@@ -26,14 +26,14 @@ export class RouteGostAbiturNoteneingabe extends RouteNode<any, RouteGostAbitur>
 		super.text = "Noteneingabe";
 		this.isHidden = (params?: RouteParams) => {
 			return this.checkHidden(params);
-		}
+		};
 		super.children = [
 		];
 	}
 
 	protected checkHidden(params?: RouteParams) {
 		try {
-			const { abiturjahr } = (params !== undefined) ? RouteNode.getIntParams(params, ["abiturjahr"]) : {abiturjahr: undefined};
+			const { abiturjahr } = (params !== undefined) ? RouteNode.getIntParams(params, ["abiturjahr"]) : { abiturjahr: undefined };
 			if (abiturjahr === undefined)
 				return false;
 			const eintrag = routeGost.data.mapAbiturjahrgaenge.get(abiturjahr);
@@ -50,7 +50,7 @@ export class RouteGostAbiturNoteneingabe extends RouteNode<any, RouteGostAbitur>
 		}
 	}
 
-	protected async update(to: RouteNode<any, any>, to_params: RouteParams, from: RouteNode<any, any> | undefined, from_params: RouteParams, isEntering: boolean) : Promise<void | Error | RouteLocationRaw> {
+	protected async update(to: RouteNode<any, any>, to_params: RouteParams, from: RouteNode<any, any> | undefined, from_params: RouteParams, isEntering: boolean): Promise<void | Error | RouteLocationRaw> {
 	}
 
 	public getProps(to: RouteLocationNormalized): GostAbiturNoteneingabeProps {

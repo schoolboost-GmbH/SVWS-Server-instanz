@@ -23,42 +23,42 @@ export class ValidatorManager extends JavaObject {
 	/**
 	 * Die Version der Fehlerart-Kontexte
 	 */
-	private static _version : number = 0;
+	private static _version: number = 0;
 
 	/**
 	 * Die Fehlerart-Kontexte für jeden Validator als Historienliste
 	 */
-	private static _data : JavaMap<string, List<ValidatorFehlerartKontext>>;
+	private static _data: JavaMap<string, List<ValidatorFehlerartKontext>>;
 
 	/**
 	 * Die ValidatorManager pro Schulform für den SVWS-Kontext
 	 */
-	private static _managerSVWS : JavaMap<Schulform, ValidatorManager> = new HashMap<Schulform, ValidatorManager>();
+	private static _managerSVWS: JavaMap<Schulform, ValidatorManager> = new HashMap<Schulform, ValidatorManager>();
 
 	/**
 	 * Die ValidatorManager pro Schulform für deb Zebras-Kontext
 	 */
-	private static _managerZebras : JavaMap<Schulform, ValidatorManager> = new HashMap<Schulform, ValidatorManager>();
+	private static _managerZebras: JavaMap<Schulform, ValidatorManager> = new HashMap<Schulform, ValidatorManager>();
 
 	/**
 	 * Die Schulform, für den der ValidatorManager gilt
 	 */
-	private readonly _schulform : Schulform;
+	private readonly _schulform: Schulform;
 
 	/**
 	 * Die Umgebung, für den der ValidatorManager erzeugt wurde: true = ZeBrAS ; false = SVWS
 	 */
-	private readonly _isZebras : boolean;
+	private readonly _isZebras: boolean;
 
 	/**
 	 * Eine geschachtelte Map, die einem Schuljahr eine Map mit der Zuordnung der Validatoren zu den Prüfschritten und deren Fehlerarten für die Schulform _schulform
 	 */
-	private readonly _mapSchuljahrValidatornameToFehlerart : HashMap<number, HashMap<string, HashMap<number, ValidatorFehlerart>>> = new HashMap<number, HashMap<string, HashMap<number, ValidatorFehlerart>>>();
+	private readonly _mapSchuljahrValidatornameToFehlerart: HashMap<number, HashMap<string, HashMap<number, ValidatorFehlerart>>> = new HashMap<number, HashMap<string, HashMap<number, ValidatorFehlerart>>>();
 
 	/**
 	 * Eine geschachtelte Map, die einem Schuljahr eine Map mit der Zuordnung der Validatoren zu den Fehlercode-Präfixen des Validators
 	 */
-	private readonly _mapSchuljahrValidatornameToFehlercodePraefix : HashMap<number, HashMap<string, string>> = new HashMap<number, HashMap<string, string>>();
+	private readonly _mapSchuljahrValidatornameToFehlercodePraefix: HashMap<number, HashMap<string, string>> = new HashMap<number, HashMap<string, string>>();
 
 
 	/**
@@ -68,7 +68,7 @@ export class ValidatorManager extends JavaObject {
 	 * @param zebras      die Umgebung, in der gerade validiert wird: true: ZeBrAS  false: SVWS
 	 * @param schulform   die Schulform, für die gerade
 	 */
-	private constructor(schulform : Schulform, zebras : boolean) {
+	private constructor(schulform: Schulform, zebras: boolean) {
 		super();
 		this._schulform = schulform;
 		this._isZebras = zebras;
@@ -80,23 +80,23 @@ export class ValidatorManager extends JavaObject {
 	 * @param version	Die Versionsnummer der Daten zu den Fehlerart-Kontexten.
 	 * @param data		Die aus der JSON-Datei eingelesenen Daten.
 	 */
-	public static init(version : number, data : JavaMap<string, List<ValidatorFehlerartKontext>>) : void {
+	public static init(version: number, data: JavaMap<string, List<ValidatorFehlerartKontext>>): void {
 		ValidatorManager._version = version;
 		ValidatorManager._data = data;
 		ValidatorManager._managerSVWS = new HashMap();
 		ValidatorManager._managerZebras = new HashMap();
 		for (const entry of ValidatorManager._data.entrySet()) {
-			const validatorName : string = entry.getKey();
-			const list : List<ValidatorFehlerartKontext> = entry.getValue();
-			const mapZeitraeumeBySchulform : HashMap<string, List<PairNN<number, number>>> = new HashMap<string, List<PairNN<number, number>>>();
+			const validatorName: string = entry.getKey();
+			const list: List<ValidatorFehlerartKontext> = entry.getValue();
+			const mapZeitraeumeBySchulform: HashMap<string, List<PairNN<number, number>>> = new HashMap<string, List<PairNN<number, number>>>();
 			for (const eintrag of list) {
-				let prfDefault : ValidatorFehlerartKontextPruefschritt | null = null;
+				let prfDefault: ValidatorFehlerartKontextPruefschritt | null = null;
 				for (const prf of eintrag.pruefschritte) {
 					if (prf.nummer < -1)
 						throw new CoreTypeException(JavaString.format("Fehler bei der Definition der Prüfschritte. Der Validator %s hat eine Nummer für einen Prüfschritt angegeben, der kleiner als -1 ist.", validatorName))
 					if (prf.nummer === -1) {
 						prfDefault = prf;
-						const zeitraum : PairNN<number, number> = ValidatorManager.createZeitraum(eintrag.gueltigVon, eintrag.gueltigBis);
+						const zeitraum: PairNN<number, number> = ValidatorManager.createZeitraum(eintrag.gueltigVon, eintrag.gueltigBis);
 						ValidatorManager.addZeitraum(mapZeitraeumeBySchulform, zeitraum, prf.muss);
 						ValidatorManager.addZeitraum(mapZeitraeumeBySchulform, zeitraum, prf.kann);
 						ValidatorManager.addZeitraum(mapZeitraeumeBySchulform, zeitraum, prf.hinweis);
@@ -106,8 +106,8 @@ export class ValidatorManager extends JavaObject {
 					throw new CoreTypeException(JavaString.format("Fehler bei der Definition der Prüfschritte. Der Validator %s hat keine Default-Definition für Prüfschritte.", validatorName))
 			}
 			for (const zeitraeume of mapZeitraeumeBySchulform.entrySet()) {
-				const l : List<CoreTypeData> = new ArrayList<CoreTypeData>();
-				const sf : Schulform | null = Schulform.valueOf(zeitraeume.getKey());
+				const l: List<CoreTypeData> = new ArrayList<CoreTypeData>();
+				const sf: Schulform | null = Schulform.valueOf(zeitraeume.getKey());
 				if (sf !== null)
 					l.addAll(sf.historie());
 				if (!ValidatorManager.pruefeAufZeitraumueberdeckung(validatorName, ValidatorManager.createSchulformZeitraumListe(l), zeitraeume.getValue()))
@@ -125,16 +125,16 @@ export class ValidatorManager extends JavaObject {
 	 *
 	 * @return der Validator-Manager
 	 */
-	public static getManager(schulform : Schulform, isZebras : boolean) : ValidatorManager {
+	public static getManager(schulform: Schulform, isZebras: boolean): ValidatorManager {
 		if (isZebras) {
-			let vm : ValidatorManager | null = ValidatorManager._managerZebras.get(schulform);
+			let vm: ValidatorManager | null = ValidatorManager._managerZebras.get(schulform);
 			if (vm === null) {
 				vm = new ValidatorManager(schulform, true);
 				ValidatorManager._managerZebras.put(schulform, vm);
 			}
 			return vm;
 		}
-		let vm : ValidatorManager | null = ValidatorManager._managerSVWS.get(schulform);
+		let vm: ValidatorManager | null = ValidatorManager._managerSVWS.get(schulform);
 		if (vm === null) {
 			vm = new ValidatorManager(schulform, false);
 			ValidatorManager._managerSVWS.put(schulform, vm);
@@ -147,7 +147,7 @@ export class ValidatorManager extends JavaObject {
 	 *
 	 * @return die Version
 	 */
-	public static getVersion() : number {
+	public static getVersion(): number {
 		return ValidatorManager._version;
 	}
 
@@ -156,7 +156,7 @@ export class ValidatorManager extends JavaObject {
 	 *
 	 * @return das nicht-leeres Set der Validatoren-Namen
 	 */
-	public static getValidatornamenAsSet() : JavaSet<string> {
+	public static getValidatornamenAsSet(): JavaSet<string> {
 		return ValidatorManager._data.keySet();
 	}
 
@@ -167,8 +167,8 @@ export class ValidatorManager extends JavaObject {
 	 *
 	 * @return die Historie
 	 */
-	public static getValidatorHistorie(validator : string) : List<ValidatorFehlerartKontext> {
-		const tmp : List<ValidatorFehlerartKontext> | null = ValidatorManager._data.get(validator);
+	public static getValidatorHistorie(validator: string): List<ValidatorFehlerartKontext> {
+		const tmp: List<ValidatorFehlerartKontext> | null = ValidatorManager._data.get(validator);
 		if (tmp === null)
 			throw new CoreTypeException("Der Validator " + validator + " existiert nicht in 'validatoren.json'.")
 		return tmp;
@@ -182,8 +182,8 @@ export class ValidatorManager extends JavaObject {
 	 *
 	 * @return die Map, die für das gegebene Schuljahr die Fehlerart pro Validator enthält
 	 */
-	private getValidatornameToFehlerartCache(schuljahr : number) : HashMap<string, HashMap<number, ValidatorFehlerart>> {
-		const mapValidatorToFehlerart : HashMap<string, HashMap<number, ValidatorFehlerart>> = this.computeIfAbsentValidatornameToFehlerart(schuljahr);
+	private getValidatornameToFehlerartCache(schuljahr: number): HashMap<string, HashMap<number, ValidatorFehlerart>> {
+		const mapValidatorToFehlerart: HashMap<string, HashMap<number, ValidatorFehlerart>> = this.computeIfAbsentValidatornameToFehlerart(schuljahr);
 		if (mapValidatorToFehlerart.isEmpty())
 			this.createCache(schuljahr);
 		return mapValidatorToFehlerart;
@@ -196,8 +196,8 @@ export class ValidatorManager extends JavaObject {
 	 *
 	 * @return das benötigte Objekt
 	 */
-	private computeIfAbsentValidatornameToFehlerart(schuljahr : number) : HashMap<string, HashMap<number, ValidatorFehlerart>> {
-		let mapValidatorToFehlerart : HashMap<string, HashMap<number, ValidatorFehlerart>> | null = this._mapSchuljahrValidatornameToFehlerart.get(schuljahr);
+	private computeIfAbsentValidatornameToFehlerart(schuljahr: number): HashMap<string, HashMap<number, ValidatorFehlerart>> {
+		let mapValidatorToFehlerart: HashMap<string, HashMap<number, ValidatorFehlerart>> | null = this._mapSchuljahrValidatornameToFehlerart.get(schuljahr);
 		if (mapValidatorToFehlerart === null) {
 			mapValidatorToFehlerart = new HashMap();
 			this._mapSchuljahrValidatornameToFehlerart.put(schuljahr, mapValidatorToFehlerart);
@@ -213,8 +213,8 @@ export class ValidatorManager extends JavaObject {
 	 *
 	 * @return die Map, die für das gegebene Schuljahr das Fehlercode-Präfix pro Validator enthält
 	 */
-	private getValidatornameToFehlercodePraefixCache(schuljahr : number) : HashMap<string, string> {
-		const mapValidatorToFehlercodePraefix : HashMap<string, string> = this.computeIfAbsentValidatornameToFehlercodePraefix(schuljahr);
+	private getValidatornameToFehlercodePraefixCache(schuljahr: number): HashMap<string, string> {
+		const mapValidatorToFehlercodePraefix: HashMap<string, string> = this.computeIfAbsentValidatornameToFehlercodePraefix(schuljahr);
 		if (mapValidatorToFehlercodePraefix.isEmpty())
 			this.createCache(schuljahr);
 		return mapValidatorToFehlercodePraefix;
@@ -227,8 +227,8 @@ export class ValidatorManager extends JavaObject {
 	 *
 	 * @return das benötigte Objekt
 	 */
-	private computeIfAbsentValidatornameToFehlercodePraefix(schuljahr : number) : HashMap<string, string> {
-		let mapValidatorToFehlercodePraefix : HashMap<string, string> | null = this._mapSchuljahrValidatornameToFehlercodePraefix.get(schuljahr);
+	private computeIfAbsentValidatornameToFehlercodePraefix(schuljahr: number): HashMap<string, string> {
+		let mapValidatorToFehlercodePraefix: HashMap<string, string> | null = this._mapSchuljahrValidatornameToFehlercodePraefix.get(schuljahr);
 		if (mapValidatorToFehlercodePraefix === null) {
 			mapValidatorToFehlercodePraefix = new HashMap();
 			this._mapSchuljahrValidatornameToFehlercodePraefix.put(schuljahr, mapValidatorToFehlercodePraefix);
@@ -244,8 +244,8 @@ export class ValidatorManager extends JavaObject {
 	 *
 	 * @return das benötigte Objekt
 	 */
-	private static computeIfAbsentFehlerartValidator(art : ValidatorFehlerart, map : JavaMap<ValidatorFehlerart, List<string>>) : List<string> {
-		let list : List<string> | null = map.get(art);
+	private static computeIfAbsentFehlerartValidator(art: ValidatorFehlerart, map: JavaMap<ValidatorFehlerart, List<string>>): List<string> {
+		let list: List<string> | null = map.get(art);
 		if (list === null) {
 			list = new ArrayList();
 			map.put(art, list);
@@ -260,8 +260,8 @@ export class ValidatorManager extends JavaObject {
 	 * @param map - die HashMap mit den ArrayLists
 	 * @return das benötigte Objekt
 	 */
-	private static computeIfAbsentZeitraeumeSchulform(schulform : string, map : HashMap<string, List<PairNN<number, number>>>) : List<PairNN<number, number>> {
-		let list : List<PairNN<number, number>> | null = map.get(schulform);
+	private static computeIfAbsentZeitraeumeSchulform(schulform: string, map: HashMap<string, List<PairNN<number, number>>>): List<PairNN<number, number>> {
+		let list: List<PairNN<number, number>> | null = map.get(schulform);
 		if (list === null) {
 			list = new ArrayList();
 			map.put(schulform, list);
@@ -274,35 +274,35 @@ export class ValidatorManager extends JavaObject {
 	 *
 	 * @param schuljahr   das Schuljahr
 	 */
-	private createCache(schuljahr : number) : void {
-		const mapValidatorToFehlerart : HashMap<string, HashMap<number, ValidatorFehlerart>> = this.computeIfAbsentValidatornameToFehlerart(schuljahr);
+	private createCache(schuljahr: number): void {
+		const mapValidatorToFehlerart: HashMap<string, HashMap<number, ValidatorFehlerart>> = this.computeIfAbsentValidatornameToFehlerart(schuljahr);
 		mapValidatorToFehlerart.clear();
-		const mapValidatorToFehlercodePraefix : HashMap<string, string> = this.computeIfAbsentValidatornameToFehlercodePraefix(schuljahr);
+		const mapValidatorToFehlercodePraefix: HashMap<string, string> = this.computeIfAbsentValidatornameToFehlercodePraefix(schuljahr);
 		mapValidatorToFehlercodePraefix.clear();
-		const praefixe : JavaSet<string> | null = new HashSet<string>();
+		const praefixe: JavaSet<string> | null = new HashSet<string>();
 		for (const entry of ValidatorManager._data.entrySet()) {
-			const validatorName : string = entry.getKey();
-			const list : List<ValidatorFehlerartKontext> = entry.getValue();
-			const mapPruefschrittToFehlerart : HashMap<number, ValidatorFehlerart> = new HashMap<number, ValidatorFehlerart>();
+			const validatorName: string = entry.getKey();
+			const list: List<ValidatorFehlerartKontext> = entry.getValue();
+			const mapPruefschrittToFehlerart: HashMap<number, ValidatorFehlerart> = new HashMap<number, ValidatorFehlerart>();
 			mapValidatorToFehlerart.put(validatorName, mapPruefschrittToFehlerart);
 			for (const eintrag of list) {
 				for (const prf of eintrag.pruefschritte) {
-					const hasHart : boolean = prf.muss.contains(this._schulform.name());
-					const hasMuss : boolean = prf.kann.contains(this._schulform.name());
-					const hasHinweis : boolean = prf.hinweis.contains(this._schulform.name());
+					const hasHart: boolean = prf.muss.contains(this._schulform.name());
+					const hasMuss: boolean = prf.kann.contains(this._schulform.name());
+					const hasHinweis: boolean = prf.hinweis.contains(this._schulform.name());
 					if ((hasHart && hasMuss) || (hasMuss && hasHinweis) || (hasHart && hasHinweis))
 						throw new CoreTypeException("Ein Validator kann bei einer Schulform nicht bei einem Prüfschritt gleichzeitig bei mehreren Fehlerarten aktiv sein.")
 				}
-				const validatorAktivInUmgebungUndSchuljahr : boolean = (this._isZebras ? eintrag.zebras : eintrag.svws) && ((eintrag.gueltigVon === null) || (eintrag.gueltigVon <= schuljahr)) && ((eintrag.gueltigBis === null) || (schuljahr <= eintrag.gueltigBis));
+				const validatorAktivInUmgebungUndSchuljahr: boolean = (this._isZebras ? eintrag.zebras : eintrag.svws) && ((eintrag.gueltigVon === null) || (eintrag.gueltigVon <= schuljahr)) && ((eintrag.gueltigBis === null) || (schuljahr <= eintrag.gueltigBis));
 				if (validatorAktivInUmgebungUndSchuljahr) {
 					if (praefixe.contains(eintrag.praefix))
 						throw new CoreTypeException(JavaString.format("Das Fehlercode-Präfix eines Validators muss eindeutig sein. Das Präfix %s wurde mehrfach verwendet.", eintrag.praefix))
 					praefixe.add(eintrag.praefix);
 					mapValidatorToFehlercodePraefix.put(validatorName, eintrag.praefix);
 					for (const prf of eintrag.pruefschritte) {
-						const hasHart : boolean = prf.muss.contains(this._schulform.name());
-						const hasMuss : boolean = prf.kann.contains(this._schulform.name());
-						const hasHinweis : boolean = prf.hinweis.contains(this._schulform.name());
+						const hasHart: boolean = prf.muss.contains(this._schulform.name());
+						const hasMuss: boolean = prf.kann.contains(this._schulform.name());
+						const hasHinweis: boolean = prf.hinweis.contains(this._schulform.name());
 						if (hasHart)
 							mapPruefschrittToFehlerart.put(prf.nummer, ValidatorFehlerart.MUSS);
 						else
@@ -328,18 +328,18 @@ export class ValidatorManager extends JavaObject {
 	 *
 	 * @return die Fehlerart des Validators für das angegebene Schuljahr
 	 */
-	public getFehlerartBySchuljahrAndValidatorNameAndPruefschritt(schuljahr : number, validator : string, pruefschritt : number) : ValidatorFehlerart | null {
+	public getFehlerartBySchuljahrAndValidatorNameAndPruefschritt(schuljahr: number, validator: string, pruefschritt: number): ValidatorFehlerart | null {
 		if (pruefschritt < -1)
 			return null;
-		const mapPruefschritt : HashMap<number, ValidatorFehlerart> | null = this.getValidatornameToFehlerartCache(schuljahr).get(validator);
+		const mapPruefschritt: HashMap<number, ValidatorFehlerart> | null = this.getValidatornameToFehlerartCache(schuljahr).get(validator);
 		if (mapPruefschritt === null)
 			return null;
 		if (pruefschritt >= 0) {
-			const art : ValidatorFehlerart | null = mapPruefschritt.get(pruefschritt);
+			const art: ValidatorFehlerart | null = mapPruefschritt.get(pruefschritt);
 			if (art !== null)
 				return art;
 		}
-		const art : ValidatorFehlerart | null = mapPruefschritt.get(-1);
+		const art: ValidatorFehlerart | null = mapPruefschritt.get(-1);
 		return (art === null) ? ValidatorFehlerart.UNGENUTZT : art;
 	}
 
@@ -353,8 +353,8 @@ export class ValidatorManager extends JavaObject {
 	 *
 	 * @return die Fehlerart des Validators für das angegebene Schuljahr
 	 */
-	public getFehlerartBySchuljahrAndValidatorClassAndPruefschritt<T extends Validator>(schuljahr : number, validator : Class<T>, pruefschritt : number) : ValidatorFehlerart {
-		const tmp : ValidatorFehlerart | null = this.getFehlerartBySchuljahrAndValidatorNameAndPruefschritt(schuljahr, validator.getCanonicalName(), pruefschritt);
+	public getFehlerartBySchuljahrAndValidatorClassAndPruefschritt<T extends Validator>(schuljahr: number, validator: Class<T>, pruefschritt: number): ValidatorFehlerart {
+		const tmp: ValidatorFehlerart | null = this.getFehlerartBySchuljahrAndValidatorNameAndPruefschritt(schuljahr, validator.getCanonicalName(), pruefschritt);
 		return (tmp === null) ? ValidatorFehlerart.UNGENUTZT : tmp;
 	}
 
@@ -366,9 +366,9 @@ export class ValidatorManager extends JavaObject {
 	 * @param fehlerart      die Fehlerart des Validators
 	 * @param pruefschritt   die Nummer des Prüfschrittes
 	 */
-	public setFehlerartBySchuljahr(schuljahr : number, validator : string, fehlerart : ValidatorFehlerart, pruefschritt : number) : void {
-		const mapValidator : HashMap<string, HashMap<number, ValidatorFehlerart>> = this.getValidatornameToFehlerartCache(schuljahr);
-		let mapPruefschritt : HashMap<number, ValidatorFehlerart> | null = mapValidator.get(validator);
+	public setFehlerartBySchuljahr(schuljahr: number, validator: string, fehlerart: ValidatorFehlerart, pruefschritt: number): void {
+		const mapValidator: HashMap<string, HashMap<number, ValidatorFehlerart>> = this.getValidatornameToFehlerartCache(schuljahr);
+		let mapPruefschritt: HashMap<number, ValidatorFehlerart> | null = mapValidator.get(validator);
 		if (mapPruefschritt === null) {
 			mapPruefschritt = new HashMap();
 			mapValidator.put(validator, mapPruefschritt);
@@ -384,12 +384,12 @@ export class ValidatorManager extends JavaObject {
 	 *
 	 * @return true, falls der Validator in dem Schuljahr aktiv ist.
 	 */
-	public isValidatorActiveInSchuljahr(schuljahr : number, validator : string) : boolean {
-		const mapValidator : HashMap<string, HashMap<number, ValidatorFehlerart>> = this.getValidatornameToFehlerartCache(schuljahr);
-		const mapPruefschritt : HashMap<number, ValidatorFehlerart> | null = mapValidator.get(validator);
+	public isValidatorActiveInSchuljahr(schuljahr: number, validator: string): boolean {
+		const mapValidator: HashMap<string, HashMap<number, ValidatorFehlerart>> = this.getValidatornameToFehlerartCache(schuljahr);
+		const mapPruefschritt: HashMap<number, ValidatorFehlerart> | null = mapValidator.get(validator);
 		if (mapPruefschritt === null)
 			return false;
-		const fa : ValidatorFehlerart | null = mapPruefschritt.get(-1);
+		const fa: ValidatorFehlerart | null = mapPruefschritt.get(-1);
 		return (fa !== null) && (fa as unknown !== ValidatorFehlerart.UNGENUTZT as unknown);
 	}
 
@@ -402,12 +402,12 @@ export class ValidatorManager extends JavaObject {
 	 *
 	 * @return true, falls der Validator in dem Schuljahr aktiv ist.
 	 */
-	public isPruefschrittActiveInSchuljahr(schuljahr : number, validator : string, pruefschritt : number) : boolean {
-		const mapValidator : HashMap<string, HashMap<number, ValidatorFehlerart>> = this.getValidatornameToFehlerartCache(schuljahr);
-		const mapPruefschritt : HashMap<number, ValidatorFehlerart> | null = mapValidator.get(validator);
+	public isPruefschrittActiveInSchuljahr(schuljahr: number, validator: string, pruefschritt: number): boolean {
+		const mapValidator: HashMap<string, HashMap<number, ValidatorFehlerart>> = this.getValidatornameToFehlerartCache(schuljahr);
+		const mapPruefschritt: HashMap<number, ValidatorFehlerart> | null = mapValidator.get(validator);
 		if (mapPruefschritt === null)
 			return false;
-		let fa : ValidatorFehlerart | null = mapPruefschritt.get(pruefschritt);
+		let fa: ValidatorFehlerart | null = mapPruefschritt.get(pruefschritt);
 		if (fa === null)
 			fa = mapPruefschritt.get(-1);
 		return (fa !== null) && (fa as unknown !== ValidatorFehlerart.UNGENUTZT as unknown);
@@ -421,8 +421,8 @@ export class ValidatorManager extends JavaObject {
 	 *
 	 * @return das Fehlercode-Präfix des Validators für das angegebene Schuljahr
 	 */
-	public getFehlercodePraefixBySchuljahrAndValidatorName(schuljahr : number, validator : string) : string {
-		const code : string | null = this.getValidatornameToFehlercodePraefixCache(schuljahr).get(validator);
+	public getFehlercodePraefixBySchuljahrAndValidatorName(schuljahr: number, validator: string): string {
+		const code: string | null = this.getValidatornameToFehlercodePraefixCache(schuljahr).get(validator);
 		if (code === null)
 			throw new ValidatorException(JavaString.format("Fehler beim Zugriff auf den Fehlercode-Präfix für den Validator %s im Schuljahr %d.", validator, schuljahr))
 		return code;
@@ -437,7 +437,7 @@ export class ValidatorManager extends JavaObject {
 	 *
 	 * @return das Fehlercode-Präfix des Validators für das angegebene Schuljahr
 	 */
-	public getFehlercodePraefixBySchuljahrAndValidatorClass<T extends Validator>(schuljahr : number, validator : Class<T>) : string {
+	public getFehlercodePraefixBySchuljahrAndValidatorClass<T extends Validator>(schuljahr: number, validator: Class<T>): string {
 		return this.getFehlercodePraefixBySchuljahrAndValidatorName(schuljahr, validator.getCanonicalName());
 	}
 
@@ -448,9 +448,9 @@ export class ValidatorManager extends JavaObject {
 	 * @param zeitraum						Ein Zeitraum, in dem die Schulformen in der Liste schulformen gültig sind
 	 * @param schulformen					Die Liste der in dem Zeitraum gültigen Schulformen.
 	 */
-	private static addZeitraum(mapZeitraeumeBySchulform : HashMap<string, List<PairNN<number, number>>>, zeitraum : PairNN<number, number>, schulformen : List<string>) : void {
+	private static addZeitraum(mapZeitraeumeBySchulform: HashMap<string, List<PairNN<number, number>>>, zeitraum: PairNN<number, number>, schulformen: List<string>): void {
 		for (const schulform of schulformen) {
-			const zeitraeumeBySchulform : List<PairNN<number, number>> = ValidatorManager.computeIfAbsentZeitraeumeSchulform(schulform, mapZeitraeumeBySchulform);
+			const zeitraeumeBySchulform: List<PairNN<number, number>> = ValidatorManager.computeIfAbsentZeitraeumeSchulform(schulform, mapZeitraeumeBySchulform);
 			zeitraeumeBySchulform.add(zeitraum);
 		}
 	}
@@ -462,8 +462,8 @@ export class ValidatorManager extends JavaObject {
 	 *
 	 * @return die Liste der Zeiträume
 	 */
-	private static createSchulformZeitraumListe(historie : List<CoreTypeData>) : List<PairNN<number, number>> {
-		const zeitraeume : List<PairNN<number, number>> = new ArrayList<PairNN<number, number>>();
+	private static createSchulformZeitraumListe(historie: List<CoreTypeData>): List<PairNN<number, number>> {
+		const zeitraeume: List<PairNN<number, number>> = new ArrayList<PairNN<number, number>>();
 		for (const eintrag of historie)
 			zeitraeume.add(ValidatorManager.createZeitraum(eintrag.gueltigVon, eintrag.gueltigBis));
 		return zeitraeume;
@@ -497,13 +497,13 @@ export class ValidatorManager extends JavaObject {
 	 *
 	 * @return true, falls untermenge wirklich eine Untermenge von Obermenge ist und ansonsten false
 	 */
-	private static pruefeAufZeitraumueberdeckung(validatorName : string, obermenge : List<PairNN<number, number>>, untermenge : List<PairNN<number, number>>) : boolean {
+	private static pruefeAufZeitraumueberdeckung(validatorName: string, obermenge: List<PairNN<number, number>>, untermenge: List<PairNN<number, number>>): boolean {
 		if (obermenge.isEmpty())
 			return untermenge.isEmpty();
-		const listObermenge : List<number> | null = ValidatorManager.getZeitraumListe(validatorName, obermenge);
-		const listUntermenge : List<number> | null = ValidatorManager.getZeitraumListe(validatorName, untermenge);
-		let iObermenge : number = 0;
-		let iUntermenge : number = 0;
+		const listObermenge: List<number> | null = ValidatorManager.getZeitraumListe(validatorName, obermenge);
+		const listUntermenge: List<number> | null = ValidatorManager.getZeitraumListe(validatorName, untermenge);
+		let iObermenge: number = 0;
+		let iUntermenge: number = 0;
 		do {
 			if (iUntermenge >= listUntermenge.size())
 				return true;
@@ -535,9 +535,9 @@ export class ValidatorManager extends JavaObject {
 	 *
 	 * @return Liste mit den Jahreszahlen, welche die Paare von gültigen Zeiträumen für den Algorithmus aufbereitet enthält.
 	 */
-	private static getZeitraumListe(validatorName : string, vbs : List<PairNN<number, number>>) : List<number> {
-		const list : List<number> | null = new ArrayList<number>();
-		let i : number = 0;
+	private static getZeitraumListe(validatorName: string, vbs: List<PairNN<number, number>>): List<number> {
+		const list: List<number> | null = new ArrayList<number>();
+		let i: number = 0;
 		list.add(vbs.get(0).a);
 		while (i + 1 < vbs.size()) {
 			if (vbs.get(i).b > vbs.get(i + 1).a)
@@ -563,9 +563,9 @@ export class ValidatorManager extends JavaObject {
 	 *
 	 * @return Das Zeitraum-Paar mit übersetzten Null-Werten.
 	 */
-	private static createZeitraum(von : number | null, bis : number | null) : PairNN<number, number> {
-		const v : number = (von === null ? JavaInteger.MIN_VALUE : von);
-		const b : number = (bis === null ? JavaInteger.MAX_VALUE : bis + 1);
+	private static createZeitraum(von: number | null, bis: number | null): PairNN<number, number> {
+		const v: number = (von === null ? JavaInteger.MIN_VALUE : von);
+		const b: number = (bis === null ? JavaInteger.MAX_VALUE : bis + 1);
 		return new PairNN<number, number>(v, b);
 	}
 
@@ -573,7 +573,7 @@ export class ValidatorManager extends JavaObject {
 		return 'de.svws_nrw.asd.validate.ValidatorManager';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.asd.validate.ValidatorManager'].includes(name);
 	}
 
@@ -581,6 +581,6 @@ export class ValidatorManager extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_asd_validate_ValidatorManager(obj : unknown) : ValidatorManager {
+export function cast_de_svws_nrw_asd_validate_ValidatorManager(obj: unknown): ValidatorManager {
 	return obj as ValidatorManager;
 }

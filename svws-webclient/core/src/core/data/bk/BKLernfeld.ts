@@ -8,27 +8,27 @@ export class BKLernfeld extends JavaObject {
 	/**
 	 * Die Nummer des Lernfelds.
 	 */
-	public nummer : number = -1;
+	public nummer: number = -1;
 
 	/**
 	 * Die Bezeichnung des Lernfelds
 	 */
-	public bezeichnung : string = "";
+	public bezeichnung: string = "";
 
 	/**
 	 * Die Bündelfächer, denen das Lernfeld zugeordnet ist.
 	 */
-	public buendelfaecher : List<string> = new ArrayList<string>();
+	public buendelfaecher: List<string> = new ArrayList<string>();
 
 	/**
 	 * Das Ausbildungsjahr, in dem das Lernfeld unterrichtet wird.
 	 */
-	public ausbildungsjahr : number = -1;
+	public ausbildungsjahr: number = -1;
 
 	/**
 	 * Der Zeitrichtwert, der den zeitlichen Umfang des Lernfelds in 45Min. Einheiten angibt.
 	 */
-	public zeitrichtwert : number = -1;
+	public zeitrichtwert: number = -1;
 
 
 	/**
@@ -42,13 +42,13 @@ export class BKLernfeld extends JavaObject {
 		return 'de.svws_nrw.core.data.bk.BKLernfeld';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.bk.BKLernfeld'].includes(name);
 	}
 
 	public static class = new Class<BKLernfeld>('de.svws_nrw.core.data.bk.BKLernfeld');
 
-	public static transpilerFromJSON(json : string): BKLernfeld {
+	public static transpilerFromJSON(json: string): BKLernfeld {
 		const obj = JSON.parse(json) as Partial<BKLernfeld>;
 		const result = new BKLernfeld();
 		if (obj.nummer === undefined)
@@ -71,7 +71,7 @@ export class BKLernfeld extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : BKLernfeld) : string {
+	public static transpilerToJSON(obj: BKLernfeld): string {
 		let result = '{';
 		result += '"nummer" : ' + obj.nummer.toString() + ',';
 		result += '"bezeichnung" : ' + JSON.stringify(obj.bezeichnung) + ',';
@@ -90,7 +90,7 @@ export class BKLernfeld extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<BKLernfeld>) : string {
+	public static transpilerToJSONPatch(obj: Partial<BKLernfeld>): string {
 		let result = '{';
 		if (obj.nummer !== undefined) {
 			result += '"nummer" : ' + obj.nummer.toString() + ',';
@@ -121,6 +121,6 @@ export class BKLernfeld extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_bk_BKLernfeld(obj : unknown) : BKLernfeld {
+export function cast_de_svws_nrw_core_data_bk_BKLernfeld(obj: unknown): BKLernfeld {
 	return obj as BKLernfeld;
 }

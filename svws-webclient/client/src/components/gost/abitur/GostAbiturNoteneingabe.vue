@@ -196,7 +196,7 @@
 	const auswahlAbiturfach = shallowRef<GostAbiturFach | null>(null);
 	const abiturfachSelectManager = computed<SelectManager<GostAbiturFach>>(() => {
 		const abiManager = props.managerMap().isEmpty() ? null : props.managerMap().values().iterator().next();
-		const values = [ GostAbiturFach.LK1, GostAbiturFach.LK2, GostAbiturFach.AB3, GostAbiturFach.AB4 ];
+		const values = [GostAbiturFach.LK1, GostAbiturFach.LK2, GostAbiturFach.AB3, GostAbiturFach.AB4];
 		if ((abiManager !== null) && AbiturdatenManager.nutzeExperimentellenCode(props.serverMode, abiManager.daten().abiturjahr))
 			values.push(GostAbiturFach.AB5);
 		return new SelectManager({ options: values, optionDisplayText: f => f.kuerzel, selectionDisplayText: f => f.kuerzel	});
@@ -209,7 +209,7 @@
 			const kurs = (idKurs === null) ? null : props.mapKurse.get(idKurs);
 			if (kurs === null)
 				continue;
-			const list = result.computeIfAbsent(kurs, { apply : (k: KursDaten) => new ArrayList<SchuelerAbiturbelegung>() });
+			const list = result.computeIfAbsent(kurs, { apply: (k: KursDaten) => new ArrayList<SchuelerAbiturbelegung>() });
 			if (list === null)
 				continue;
 			list.add(row);
@@ -224,7 +224,7 @@
 			const lehrer = (idLehrer === null) ? null : props.mapLehrer.get(idLehrer);
 			if (lehrer === null)
 				continue;
-			const list = result.computeIfAbsent(lehrer, { apply : (l: LehrerListeEintrag) => new ArrayList<SchuelerAbiturbelegung>() });
+			const list = result.computeIfAbsent(lehrer, { apply: (l: LehrerListeEintrag) => new ArrayList<SchuelerAbiturbelegung>() });
 			if (list === null)
 				continue;
 			list.add(row);
@@ -248,7 +248,7 @@
 					abiFaecher.add(belegung.abiturFach);
 					tmp.add(belegung);
 				}
-				tmp.sort(<Comparator<AbiturFachbelegung>>{ compare(a, b) { return a.abiturFach! - b.abiturFach!; } });
+				tmp.sort(<Comparator<AbiturFachbelegung>>{ compare(a, b) { return a.abiturFach! - b.abiturFach! } });
 				for (const belegung of tmp) {
 					if (belegung.abiturFach === null)
 						continue;
@@ -285,16 +285,16 @@
 		return row.belegung.block2PunkteZwischenstand < (row.hatAbiFach5 ? 20 : 25);
 	}
 
-	function getNotenpunkteFromKuerzel(notenkuerzel: string | null, schuljahr: number) : number | null {
+	function getNotenpunkteFromKuerzel(notenkuerzel: string | null, schuljahr: number): number | null {
 		if (notenkuerzel === null)
 			return null;
-		const nke : NoteKatalogEintrag | null = Note.fromKuerzel(notenkuerzel).daten(schuljahr);
+		const nke: NoteKatalogEintrag | null = Note.fromKuerzel(notenkuerzel).daten(schuljahr);
 		if ((nke === null) || (nke.notenpunkte === null))
 			return null;
 		return nke.notenpunkte;
 	}
 
-	function istDefizit(row: SchuelerAbiturbelegung) : boolean {
+	function istDefizit(row: SchuelerAbiturbelegung): boolean {
 		const np = getNotenpunkteFromKuerzel(row.belegung.block2NotenKuerzelPruefung, row.manager.getSchuljahr());
 		return (np !== null) && (np < 5);
 	}
@@ -312,7 +312,7 @@
 
 	function getFachfarbe(row: SchuelerAbiturbelegung): string {
 		const gruppe = getFachgruppe(row);
-		const farbe : RGBFarbe = (gruppe === null) ? new RGBFarbe() : gruppe.getFarbe(row.manager.getSchuljahr());
+		const farbe: RGBFarbe = (gruppe === null) ? new RGBFarbe() : gruppe.getFarbe(row.manager.getSchuljahr());
 		return "rgb(" + farbe.red + "," + farbe.green + "," + farbe.blue + ")";
 	}
 
@@ -331,30 +331,30 @@
 		return tmp;
 	}
 
-	function updateNotenpunkte(row: SchuelerAbiturbelegung, value: string | null) : void {
+	function updateNotenpunkte(row: SchuelerAbiturbelegung, value: string | null): void {
 		void props.updateAbiturpruefungsdaten(() => row.manager, { fachID: row.belegung.fachID, block2NotenKuerzelPruefung: value }, true);
 	}
 
-	function updatePflichtPruefung(row: SchuelerAbiturbelegung, value: boolean) : void {
+	function updatePflichtPruefung(row: SchuelerAbiturbelegung, value: boolean): void {
 		void props.updateAbiturpruefungsdaten(() => row.manager, { fachID: row.belegung.fachID, block2MuendlichePruefungBestehen: value }, false);
 	}
 
-	function updateFreiwilligePruefung(row: SchuelerAbiturbelegung, value: boolean) : void {
+	function updateFreiwilligePruefung(row: SchuelerAbiturbelegung, value: boolean): void {
 		void props.updateAbiturpruefungsdaten(() => row.manager, { fachID: row.belegung.fachID, block2MuendlichePruefungFreiwillig: value }, false);
 	}
 
-	function updatePruefungsreihenfolge(row: SchuelerAbiturbelegung, value: number | null) : void {
+	function updatePruefungsreihenfolge(row: SchuelerAbiturbelegung, value: number | null): void {
 		void props.updateAbiturpruefungsdaten(() => row.manager, { fachID: row.belegung.fachID, block2MuendlichePruefungReihenfolge: value }, false);
 	}
 
-	function updateNotenpunkteMdl(row: SchuelerAbiturbelegung, value: string | null) : void {
+	function updateNotenpunkteMdl(row: SchuelerAbiturbelegung, value: string | null): void {
 		void props.updateAbiturpruefungsdaten(() => row.manager, { fachID: row.belegung.fachID, block2MuendlichePruefungNotenKuerzel: value }, false);
 	}
 
 	function inputPruefungsnote(row: SchuelerAbiturbelegung) {
 		const key = 'PrüfungsnoteAbiFach_' + row.schueler.id + '_' + row.abiturfach;
-		const setter = (value : string | null) => updateNotenpunkte(row, value);
-		return (element : Element | ComponentPublicInstance<unknown> | null) => {
+		const setter = (value: string | null) => updateNotenpunkte(row, value);
+		return (element: Element | ComponentPublicInstance<unknown> | null) => {
 			const input = gridManager.applyInputAbiturNotenpunkte(key, 1, row.index, element, setter, row.manager.daten().schuljahrAbitur);
 			if (input !== null)
 				watchEffect(() => gridManager.update(key, row.belegung.block2NotenKuerzelPruefung));
@@ -363,8 +363,8 @@
 
 	function inputPflichtPruefung(row: SchuelerAbiturbelegung) {
 		const key = 'PflichtPrüfungAbiFach_' + row.schueler.id + '_' + row.abiturfach;
-		const setter = (value : boolean) => updatePflichtPruefung(row, value);
-		return (element : Element | ComponentPublicInstance<unknown> | null) => {
+		const setter = (value: boolean) => updatePflichtPruefung(row, value);
+		return (element: Element | ComponentPublicInstance<unknown> | null) => {
 			const input = gridManager.applyInputToggle(key, 2, row.index, element, setter);
 			if (input !== null)
 				watchEffect(() => gridManager.update(key, (row.belegung.block2MuendlichePruefungBestehen === true) || (row.belegung.block2MuendlichePruefungAbweichung === true)));
@@ -373,8 +373,8 @@
 
 	function inputFreiwilligePruefung(row: SchuelerAbiturbelegung) {
 		const key = 'FreiwilligePrüfungAbiFach_' + row.schueler.id + '_' + row.abiturfach;
-		const setter = (value : boolean) => updateFreiwilligePruefung(row, value);
-		return (element : Element | ComponentPublicInstance<unknown> | null) => {
+		const setter = (value: boolean) => updateFreiwilligePruefung(row, value);
+		return (element: Element | ComponentPublicInstance<unknown> | null) => {
 			const input = gridManager.applyInputToggle(key, 3, row.index, element, setter);
 			if (input !== null)
 				watchEffect(() => gridManager.update(key, row.belegung.block2MuendlichePruefungFreiwillig ?? false));
@@ -383,8 +383,8 @@
 
 	function inputPruefungsreihenfolge(row: SchuelerAbiturbelegung) {
 		const key = 'PrüfungsreihenfolgeAbiFach_' + row.schueler.id + '_' + row.abiturfach;
-		const setter = (value : number | null) => updatePruefungsreihenfolge(row, value);
-		return (element : Element | ComponentPublicInstance<unknown> | null) => {
+		const setter = (value: number | null) => updatePruefungsreihenfolge(row, value);
+		return (element: Element | ComponentPublicInstance<unknown> | null) => {
 			const input = gridManager.applyInputAbiturPruefungsreihenfolge(key, 4, row.index, element, setter);
 			if (input !== null)
 				watchEffect(() => gridManager.update(key, row.belegung.block2MuendlichePruefungReihenfolge));
@@ -393,8 +393,8 @@
 
 	function inputPruefungsnoteMdl(row: SchuelerAbiturbelegung) {
 		const key = 'PrüfungsnoteMdlAbiFach_' + row.schueler.id + '_' + row.abiturfach;
-		const setter = (value : string | null) => updateNotenpunkteMdl(row, value);
-		return (element : Element | ComponentPublicInstance<unknown> | null) => {
+		const setter = (value: string | null) => updateNotenpunkteMdl(row, value);
+		return (element: Element | ComponentPublicInstance<unknown> | null) => {
 			const input = gridManager.applyInputAbiturNotenpunkte(key, 5, row.index, element, setter, row.manager.daten().schuljahrAbitur);
 			if (input !== null)
 				watchEffect(() => gridManager.update(key, row.belegung.block2MuendlichePruefungNotenKuerzel));

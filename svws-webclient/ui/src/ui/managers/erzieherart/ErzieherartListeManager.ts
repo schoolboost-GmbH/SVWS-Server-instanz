@@ -20,24 +20,24 @@ export class ErzieherartListeManager extends AuswahlManager<number, Erzieherart,
 	/**
 	 * Funktionen zum Mappen von Auswahl- bzw. Daten-Objekten auf deren ID-Typ
 	 */
-	private static readonly _erzieherartenToId : JavaFunction<Erzieherart, number> = { apply : (ea: Erzieherart) => ea.id };
+	private static readonly _erzieherartenToId: JavaFunction<Erzieherart, number> = { apply: (ea: Erzieherart) => ea.id };
 
 	/**
 	 * Sets mit Listen zur aktuellen Auswahl
 	 */
-	private readonly idsVerwendeteErzieherarten : HashSet<number> = new HashSet<number>();
+	private readonly idsVerwendeteErzieherarten: HashSet<number> = new HashSet<number>();
 
 	/**
 	 * Ein Default-Comparator für den Vergleich von Erzieherarten in Erzieherartlisten.
 	 */
-	public static readonly comparator : Comparator<Erzieherart> = { compare : (a: Erzieherart, b: Erzieherart) => {
+	public static readonly comparator: Comparator<Erzieherart> = { compare: (a: Erzieherart, b: Erzieherart) => {
 		let cmp: number = JavaString.compareTo(a.bezeichnung, b.bezeichnung);
 		if (cmp === 0)
 			cmp = JavaLong.compare(a.id, b.id);
 		return cmp;
 	} };
 
-	protected onSetDaten(eintrag: Erzieherart, daten: Erzieherart) : boolean {
+	protected onSetDaten(eintrag: Erzieherart, daten: Erzieherart): boolean {
 		if (JavaObject.equalsTranspiler(daten.bezeichnung, (eintrag.bezeichnung)))
 			return false;
 
@@ -55,8 +55,8 @@ export class ErzieherartListeManager extends AuswahlManager<number, Erzieherart,
 	 * @param schulform                    die Schulform der Schule
 	 * @param erzieherarten     	       die Liste der Erzieherart
 	 */
-	public constructor(schuljahresabschnitt : number, schuljahresabschnittSchule : number, schuljahresabschnitte : List<Schuljahresabschnitt>,
-		schulform : Schulform | null, erzieherarten : List<Erzieherart>) {
+	public constructor(schuljahresabschnitt: number, schuljahresabschnittSchule: number, schuljahresabschnitte: List<Schuljahresabschnitt>,
+		schulform: Schulform | null, erzieherarten: List<Erzieherart>) {
 		super(schuljahresabschnitt, schuljahresabschnittSchule, schuljahresabschnitte, schulform, erzieherarten, ErzieherartListeManager.comparator,
 			ErzieherartListeManager._erzieherartenToId, ErzieherartListeManager._erzieherartenToId, Arrays.asList(new Pair("erzieherart", true)));
 	}
@@ -66,26 +66,26 @@ export class ErzieherartListeManager extends AuswahlManager<number, Erzieherart,
 	 *
 	 * @return Das Set mit IDs von Erzieherarten, die Schüler haben
 	 */
-	public getIdsVerwendeteErzieherarten() : JavaSet<number> {
+	public getIdsVerwendeteErzieherarten(): JavaSet<number> {
 		return this.idsVerwendeteErzieherarten;
 	}
 
-	protected onMehrfachauswahlChanged() : void {
+	protected onMehrfachauswahlChanged(): void {
 		this.idsVerwendeteErzieherarten.clear();
 		for (const e of this.liste.auswahl())
 			if (e.anzahlErziehungsberechtigte !== 0)
 				this.idsVerwendeteErzieherarten.add(e.id);
 	}
 
-	protected compareAuswahl(a : Erzieherart, b : Erzieherart) : number {
+	protected compareAuswahl(a: Erzieherart, b: Erzieherart): number {
 		for (const criteria of this._order) {
-			const field : string | null = criteria.a;
-			const asc : boolean = (criteria.b === null) || criteria.b;
-			let cmp : number = 0;
+			const field: string | null = criteria.a;
+			const asc: boolean = (criteria.b === null) || criteria.b;
+			let cmp: number = 0;
 			if (JavaObject.equalsTranspiler("erzieherart", (field))) {
 				cmp = ErzieherartListeManager.comparator.compare(a, b);
 			} else
-				throw new DeveloperNotificationException("Fehler bei der Sortierung. Das Sortierkriterium wird vom Manager nicht unterstützt.")
+				throw new DeveloperNotificationException("Fehler bei der Sortierung. Das Sortierkriterium wird vom Manager nicht unterstützt.");
 			if (cmp === 0)
 				continue;
 			return asc ? cmp : -cmp;
@@ -93,7 +93,7 @@ export class ErzieherartListeManager extends AuswahlManager<number, Erzieherart,
 		return JavaLong.compare(a.id, b.id);
 	}
 
-	protected checkFilter() : boolean {
+	protected checkFilter(): boolean {
 		return true;
 	}
 
@@ -101,7 +101,7 @@ export class ErzieherartListeManager extends AuswahlManager<number, Erzieherart,
 		return 'de.svws_nrw.core.utils.erzieherart.ErzieherartListeManager';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.utils.AuswahlManager', 'de.svws_nrw.core.utils.erzieherart.ErzieherartListeManager'].includes(name);
 	}
 
@@ -109,6 +109,6 @@ export class ErzieherartListeManager extends AuswahlManager<number, Erzieherart,
 
 }
 
-export function cast_de_svws_nrw_core_utils_erzieherart_ErzieherartListeManager(obj : unknown) : ErzieherartListeManager {
+export function cast_de_svws_nrw_core_utils_erzieherart_ErzieherartListeManager(obj: unknown): ErzieherartListeManager {
 	return obj as ErzieherartListeManager;
 }

@@ -15,7 +15,7 @@ export class KursblockungAlgorithmusPermanentKFachgruppe extends KursblockungAlg
 	 * @param logger  Logger für Benutzerhinweise, Warnungen und Fehler.
 	 * @param input   Die dynamischen Blockungsdaten.
 	 */
-	public constructor(random : Random, logger : Logger, input : GostBlockungsdatenManager) {
+	public constructor(random: Random, logger: Logger, input: GostBlockungsdatenManager) {
 		super(random, logger, input);
 		if (this.dynDaten.gibKurseDieFreiSindAnzahl() === 0)
 			return;
@@ -25,11 +25,11 @@ export class KursblockungAlgorithmusPermanentKFachgruppe extends KursblockungAlg
 		this.dynDaten.aktionZustandSpeichernK();
 	}
 
-	public toString() : string {
+	public toString(): string {
 		return "KursblockungAlgorithmusPermanentKFachgruppe";
 	}
 
-	public next(zeitEnde : number) : void {
+	public next(zeitEnde: number): void {
 		do {
 			this.verteileKurse();
 		} while (System.currentTimeMillis() < zeitEnde);
@@ -38,7 +38,7 @@ export class KursblockungAlgorithmusPermanentKFachgruppe extends KursblockungAlg
 	/**
 	 * Kurse werden so verteilt, dass immer eine Fachgruppe zerstört und neuverteilt wird.
 	 */
-	private verteileKurse() : void {
+	private verteileKurse(): void {
 		do {
 			this.dynDaten.aktionSchuelerAusAllenKursenEntfernen();
 			this.dynDaten.aktionKursVerteilenEineZufaelligeFachgruppe();
@@ -57,7 +57,7 @@ export class KursblockungAlgorithmusPermanentKFachgruppe extends KursblockungAlg
 		this.dynDaten.aktionZustandLadenK();
 	}
 
-	public ladeBestMitSchuelerverteilung() : void {
+	public ladeBestMitSchuelerverteilung(): void {
 		this.dynDaten.aktionZustandLadenK();
 	}
 
@@ -65,7 +65,7 @@ export class KursblockungAlgorithmusPermanentKFachgruppe extends KursblockungAlg
 		return 'de.svws_nrw.core.kursblockung.KursblockungAlgorithmusPermanentKFachgruppe';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.kursblockung.KursblockungAlgorithmusPermanentK', 'de.svws_nrw.core.kursblockung.KursblockungAlgorithmusPermanentKFachgruppe'].includes(name);
 	}
 
@@ -73,6 +73,6 @@ export class KursblockungAlgorithmusPermanentKFachgruppe extends KursblockungAlg
 
 }
 
-export function cast_de_svws_nrw_core_kursblockung_KursblockungAlgorithmusPermanentKFachgruppe(obj : unknown) : KursblockungAlgorithmusPermanentKFachgruppe {
+export function cast_de_svws_nrw_core_kursblockung_KursblockungAlgorithmusPermanentKFachgruppe(obj: unknown): KursblockungAlgorithmusPermanentKFachgruppe {
 	return obj as KursblockungAlgorithmusPermanentKFachgruppe;
 }

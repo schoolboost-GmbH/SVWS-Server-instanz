@@ -23,11 +23,11 @@
 
 	const { focusHelpVisible, focusSwitchingEnabled } = useRegionSwitch();
 
-	const columns = [ { key: "kuerzelAnzeige", label: "Klasse" } ];
+	const columns = [{ key: "kuerzelAnzeige", label: "Klasse" }];
 
 	onBeforeMount(() => props.setAuswahlEinzel(getFirst()));
 
-	function getFirst() : ENMKlasse | null {
+	function getFirst(): ENMKlasse | null {
 		const list = props.enmManager().listKlassenKlassenlehrer;
 		if (list.isEmpty())
 			return null;

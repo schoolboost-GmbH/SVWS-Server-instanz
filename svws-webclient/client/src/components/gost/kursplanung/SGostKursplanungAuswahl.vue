@@ -48,8 +48,8 @@
 	const istRueckgaengigMoeglich = computed<boolean[]>(() => {
 		const jgdaten = props.jahrgangsdaten();
 		if (jgdaten === undefined)
-			return [ false, false, false, false, false, false ];
-		const result : boolean[] = [];
+			return [false, false, false, false, false, false];
+		const result: boolean[] = [];
 		for (const hj of GostHalbjahr.values())
 			result.push(!jgdaten.existierenNotenInLeistungsdaten[hj.id] && jgdaten.istBlockungFestgelegt[hj.id]);
 		return result;

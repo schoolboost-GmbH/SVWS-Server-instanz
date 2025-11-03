@@ -6,7 +6,7 @@ import { api } from "~/router/Api";
 import { routeSportbefreiungen } from "~/router/apps/schule/schulbezogen/sportbefreiungen/RouteSportbefreiungen";
 import type { RouteSportbefreiungen } from "~/router/apps/schule/schulbezogen/sportbefreiungen/RouteSportbefreiungen";
 
-const SSportbefreiungenDaten = () => import("~/components/schule/schulbezogen/sportbefreiungen/daten/SSportbefreiungenDaten.vue")
+const SSportbefreiungenDaten = () => import("~/components/schule/schulbezogen/sportbefreiungen/daten/SSportbefreiungenDaten.vue");
 
 export class RouteSportbefreiungenDaten extends RouteNode<any, RouteSportbefreiungen> {
 
@@ -15,7 +15,7 @@ export class RouteSportbefreiungenDaten extends RouteNode<any, RouteSportbefreiu
 			"daten", SSportbefreiungenDaten);
 		super.mode = ServerMode.DEV;
 		super.propHandler = (route) => this.getProps(route);
-		super.text = "Sportbefreiung"
+		super.text = "Sportbefreiung";
 	}
 
 	public getProps(to: RouteLocationNormalized): SportbefreiungenDatenProps {
@@ -23,7 +23,7 @@ export class RouteSportbefreiungenDaten extends RouteNode<any, RouteSportbefreiu
 			manager: () => routeSportbefreiungen.data.manager,
 			benutzerKompetenzen: api.benutzerKompetenzen,
 			patch: routeSportbefreiungen.data.patch,
-		}
+		};
 	}
 }
 

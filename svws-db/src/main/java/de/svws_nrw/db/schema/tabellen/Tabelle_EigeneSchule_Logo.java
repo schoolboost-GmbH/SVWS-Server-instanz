@@ -15,17 +15,17 @@ import de.svws_nrw.db.schema.SchemaTabelleSpalte;
 public class Tabelle_EigeneSchule_Logo extends SchemaTabelle {
 
 	/** Die Definition der Tabellenspalte ID */
-	public SchemaTabelleSpalte col_EigeneSchule_ID = add("EigeneSchule_ID", SchemaDatentypen.BIGINT, true)
+	public final SchemaTabelleSpalte col_EigeneSchule_ID = add("EigeneSchule_ID", SchemaDatentypen.BIGINT, true)
 			.setNotNull()
 			.setJavaComment("ID des Datensatzes der eigenen Schule");
 
 	/** Die Definition der Tabellenspalte LogoBase64 */
-	public SchemaTabelleSpalte col_LogoBase64 = add("LogoBase64", SchemaDatentypen.TEXT, false)
+	public final SchemaTabelleSpalte col_LogoBase64 = add("LogoBase64", SchemaDatentypen.TEXT, false)
 			.setJavaComment("Das Logo der Schule als Bild im Base64-Format");
 
 
 	/** Die Definition des Fremdschlüssels EigeneSchule_Logo_FK */
-	public SchemaTabelleFremdschluessel fk_EigeneSchule_Logo_FK = addForeignKey(
+	public final SchemaTabelleFremdschluessel fk_EigeneSchule_Logo_FK = addForeignKey(
 			"EigeneSchule_Logo_FK",
 			/* OnUpdate: */ SchemaFremdschluesselAktionen.CASCADE,
 			/* OnDelete: */ SchemaFremdschluesselAktionen.CASCADE,

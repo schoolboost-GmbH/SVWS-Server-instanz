@@ -15,13 +15,13 @@ export class LehrerMinderleistungsartKatalogEintrag extends CoreTypeDataNurSchul
 		return 'de.svws_nrw.asd.data.lehrer.LehrerMinderleistungsartKatalogEintrag';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.asd.data.lehrer.LehrerMinderleistungsartKatalogEintrag', 'de.svws_nrw.asd.data.CoreTypeData', 'de.svws_nrw.asd.data.CoreTypeDataNurSchulformen'].includes(name);
 	}
 
 	public static class = new Class<LehrerMinderleistungsartKatalogEintrag>('de.svws_nrw.asd.data.lehrer.LehrerMinderleistungsartKatalogEintrag');
 
-	public static transpilerFromJSON(json : string): LehrerMinderleistungsartKatalogEintrag {
+	public static transpilerFromJSON(json: string): LehrerMinderleistungsartKatalogEintrag {
 		const obj = JSON.parse(json) as Partial<LehrerMinderleistungsartKatalogEintrag>;
 		const result = new LehrerMinderleistungsartKatalogEintrag();
 		if (obj.schulformen !== undefined) {
@@ -46,7 +46,7 @@ export class LehrerMinderleistungsartKatalogEintrag extends CoreTypeDataNurSchul
 		return result;
 	}
 
-	public static transpilerToJSON(obj : LehrerMinderleistungsartKatalogEintrag) : string {
+	public static transpilerToJSON(obj: LehrerMinderleistungsartKatalogEintrag): string {
 		let result = '{';
 		result += '"schulformen" : [ ';
 		for (let i = 0; i < obj.schulformen.size(); i++) {
@@ -67,7 +67,7 @@ export class LehrerMinderleistungsartKatalogEintrag extends CoreTypeDataNurSchul
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<LehrerMinderleistungsartKatalogEintrag>) : string {
+	public static transpilerToJSONPatch(obj: Partial<LehrerMinderleistungsartKatalogEintrag>): string {
 		let result = '{';
 		if (obj.schulformen !== undefined) {
 			result += '"schulformen" : [ ';
@@ -104,6 +104,6 @@ export class LehrerMinderleistungsartKatalogEintrag extends CoreTypeDataNurSchul
 
 }
 
-export function cast_de_svws_nrw_asd_data_lehrer_LehrerMinderleistungsartKatalogEintrag(obj : unknown) : LehrerMinderleistungsartKatalogEintrag {
+export function cast_de_svws_nrw_asd_data_lehrer_LehrerMinderleistungsartKatalogEintrag(obj: unknown): LehrerMinderleistungsartKatalogEintrag {
 	return obj as LehrerMinderleistungsartKatalogEintrag;
 }

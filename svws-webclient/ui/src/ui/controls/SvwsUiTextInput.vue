@@ -130,7 +130,7 @@
 		required?: boolean;
 		readonly?: boolean;
 		headless?: boolean;
-		isSelectInput? : boolean;
+		isSelectInput?: boolean;
 		focus?: boolean;
 		rounded?: boolean;
 		url?: boolean;
@@ -150,7 +150,7 @@
 		statistics: false,
 		valid: (value: string | null) => true,
 		validator: undefined,
-		doValidate: (validator: V, value: string | null) : boolean => validator.run(),
+		doValidate: (validator: V, value: string | null): boolean => validator.run(),
 		disabled: false,
 		required: false,
 		readonly: false,
@@ -190,7 +190,7 @@
 
 	watch(() => props.modelValue, (value: string | null) => updateData(value), { immediate: false });
 
-	const validatorEmail = (value: string | null) : boolean => ((value === null) || (value === '')) ? true : (
+	const validatorEmail = (value: string | null): boolean => ((value === null) || (value === '')) ? true : (
 		/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))[^@]?$/.test(value) ||
 		/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(value)
 	);
@@ -208,7 +208,7 @@
 		if (tmpIsValid)
 			tmpIsValid = props.valid(data.value);
 		return tmpIsValid;
-	})
+	});
 
 	function updateData(value: string | null) {
 		if (data.value !== value) {
@@ -221,13 +221,13 @@
 		if ((props.minLen === undefined) || ((data.value === null) && (props.minLen <= 0)))
 			return true;
 		return (data.value !== null) && (data.value.toLocaleString().length >= props.minLen);
-	})
+	});
 
 	const maxLenValid = computed((): boolean => {
 		if ((props.maxLen === undefined) || (data.value === null))
 			return true;
 		return data.value.toLocaleString().length <= props.maxLen;
-	})
+	});
 
 	function onInput(event: Event) {
 		const value = (event.target as HTMLInputElement).value;

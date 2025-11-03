@@ -6,22 +6,22 @@ export class KatalogEintragStrassen extends JavaObject {
 	/**
 	 * Katalog von ITNRW Straßen: zugehörige Ort
 	 */
-	public Ort : string | null = null;
+	public Ort: string | null = null;
 
 	/**
 	 * Katalog von ITNRW Straßen: zugehöriger Regionalschlüssel
 	 */
-	public RegSchl : string | null = null;
+	public RegSchl: string | null = null;
 
 	/**
 	 * Katalog von ITNRW Straßen: Straßenname
 	 */
-	public Strasse : string | null = null;
+	public Strasse: string | null = null;
 
 	/**
 	 * Katalog von ITNRW Straßen: aktueller Stand
 	 */
-	public Stand : string | null = null;
+	public Stand: string | null = null;
 
 
 	/**
@@ -35,13 +35,13 @@ export class KatalogEintragStrassen extends JavaObject {
 		return 'de.svws_nrw.core.data.kataloge.KatalogEintragStrassen';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.kataloge.KatalogEintragStrassen'].includes(name);
 	}
 
 	public static class = new Class<KatalogEintragStrassen>('de.svws_nrw.core.data.kataloge.KatalogEintragStrassen');
 
-	public static transpilerFromJSON(json : string): KatalogEintragStrassen {
+	public static transpilerFromJSON(json: string): KatalogEintragStrassen {
 		const obj = JSON.parse(json) as Partial<KatalogEintragStrassen>;
 		const result = new KatalogEintragStrassen();
 		result.Ort = (obj.Ort === undefined) ? null : obj.Ort === null ? null : obj.Ort;
@@ -51,7 +51,7 @@ export class KatalogEintragStrassen extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : KatalogEintragStrassen) : string {
+	public static transpilerToJSON(obj: KatalogEintragStrassen): string {
 		let result = '{';
 		result += '"Ort" : ' + ((obj.Ort === null) ? 'null' : JSON.stringify(obj.Ort)) + ',';
 		result += '"RegSchl" : ' + ((obj.RegSchl === null) ? 'null' : JSON.stringify(obj.RegSchl)) + ',';
@@ -62,7 +62,7 @@ export class KatalogEintragStrassen extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<KatalogEintragStrassen>) : string {
+	public static transpilerToJSONPatch(obj: Partial<KatalogEintragStrassen>): string {
 		let result = '{';
 		if (obj.Ort !== undefined) {
 			result += '"Ort" : ' + ((obj.Ort === null) ? 'null' : JSON.stringify(obj.Ort)) + ',';
@@ -83,6 +83,6 @@ export class KatalogEintragStrassen extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_kataloge_KatalogEintragStrassen(obj : unknown) : KatalogEintragStrassen {
+export function cast_de_svws_nrw_core_data_kataloge_KatalogEintragStrassen(obj: unknown): KatalogEintragStrassen {
 	return obj as KatalogEintragStrassen;
 }

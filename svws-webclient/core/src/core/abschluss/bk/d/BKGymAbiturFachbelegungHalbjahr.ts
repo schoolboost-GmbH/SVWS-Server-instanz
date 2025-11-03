@@ -6,62 +6,62 @@ export class BKGymAbiturFachbelegungHalbjahr extends JavaObject {
 	/**
 	 * Das Kürzel des Halbjahres der Fachbelegung
 	 */
-	public halbjahrKuerzel : string = "";
+	public halbjahrKuerzel: string = "";
 
 	/**
 	 * Das Kürzel der Kursart der Gymnasialen Oberstufe dieser Fachbelegung
 	 */
-	public kursartKuerzel : string = "";
+	public kursartKuerzel: string = "";
 
 	/**
 	 * Gibt an, ob das Fach schriftlich belegt wurde oder nicht.
 	 */
-	public schriftlich : boolean = false;
+	public schriftlich: boolean = false;
 
 	/**
 	 * Das einstellige Kürzel der bilingualen Sprache, sofern das Fach bilingual unterrichtet wurde.
 	 */
-	public biliSprache : string | null = null;
+	public biliSprache: string | null = null;
 
 	/**
 	 * Die ID des Kurses
 	 */
-	public idKurs : number | null = null;
+	public idKurs: number | null = null;
 
 	/**
 	 * Die ID des unterrichtenden Lehrers, welcher die Note erteilt.
 	 */
-	public lehrer : number | null = null;
+	public lehrer: number | null = null;
 
 	/**
 	 * Die Wochenstundenzahl, mir der das Fach belegt wurde
 	 */
-	public wochenstunden : number = 0;
+	public wochenstunden: number = 0;
 
 	/**
 	 * Die Anzahl der Fehlstunden.
 	 */
-	public fehlstundenGesamt : number = 0;
+	public fehlstundenGesamt: number = 0;
 
 	/**
 	 * Die Anzahl der unentschuldigten Fehlstunden.
 	 */
-	public fehlstundenUnentschuldigt : number = 0;
+	public fehlstundenUnentschuldigt: number = 0;
 
 	/**
 	 * Das Notenkürzel der erteilten Note. Das Kürzel ist ein leerer String, falls keine Note in den Leistungsdaten gesetzt ist. Der Wert null ist nur zulässig, wenn Fachwahlen vorliegen, für die keine Leistungsdaten hinterlegt sind.
 	 */
-	public notenkuerzel : string | null = null;
+	public notenkuerzel: string | null = null;
 
 	/**
 	 * Gibt an, ob die Belegung für den Block I gewertet wird oder nicht - nicht alle Kursbelegungen müssen laut Prüfungsordnung in die Abiturnote einfliessen
 	 */
-	public block1gewertet : boolean | null = null;
+	public block1gewertet: boolean | null = null;
 
 	/**
 	 * Gibt an, ob die Belegung des Kurses auf dem Abiturzeugnis angezeigt werden soll oder nicht. Eine Belegung kann auf Wunsch des Prüflings bei nicht gewerteten Kursen nicht auf dem Zeugnis erscheinen.
 	 */
-	public block1kursAufZeugnis : boolean | null = null;
+	public block1kursAufZeugnis: boolean | null = null;
 
 
 	/**
@@ -75,13 +75,13 @@ export class BKGymAbiturFachbelegungHalbjahr extends JavaObject {
 		return 'de.svws_nrw.core.abschluss.bk.d.BKGymAbiturFachbelegungHalbjahr';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.abschluss.bk.d.BKGymAbiturFachbelegungHalbjahr'].includes(name);
 	}
 
 	public static class = new Class<BKGymAbiturFachbelegungHalbjahr>('de.svws_nrw.core.abschluss.bk.d.BKGymAbiturFachbelegungHalbjahr');
 
-	public static transpilerFromJSON(json : string): BKGymAbiturFachbelegungHalbjahr {
+	public static transpilerFromJSON(json: string): BKGymAbiturFachbelegungHalbjahr {
 		const obj = JSON.parse(json) as Partial<BKGymAbiturFachbelegungHalbjahr>;
 		const result = new BKGymAbiturFachbelegungHalbjahr();
 		if (obj.halbjahrKuerzel === undefined)
@@ -111,7 +111,7 @@ export class BKGymAbiturFachbelegungHalbjahr extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : BKGymAbiturFachbelegungHalbjahr) : string {
+	public static transpilerToJSON(obj: BKGymAbiturFachbelegungHalbjahr): string {
 		let result = '{';
 		result += '"halbjahrKuerzel" : ' + JSON.stringify(obj.halbjahrKuerzel) + ',';
 		result += '"kursartKuerzel" : ' + JSON.stringify(obj.kursartKuerzel) + ',';
@@ -130,7 +130,7 @@ export class BKGymAbiturFachbelegungHalbjahr extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<BKGymAbiturFachbelegungHalbjahr>) : string {
+	public static transpilerToJSONPatch(obj: Partial<BKGymAbiturFachbelegungHalbjahr>): string {
 		let result = '{';
 		if (obj.halbjahrKuerzel !== undefined) {
 			result += '"halbjahrKuerzel" : ' + JSON.stringify(obj.halbjahrKuerzel) + ',';
@@ -175,6 +175,6 @@ export class BKGymAbiturFachbelegungHalbjahr extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_abschluss_bk_d_BKGymAbiturFachbelegungHalbjahr(obj : unknown) : BKGymAbiturFachbelegungHalbjahr {
+export function cast_de_svws_nrw_core_abschluss_bk_d_BKGymAbiturFachbelegungHalbjahr(obj: unknown): BKGymAbiturFachbelegungHalbjahr {
 	return obj as BKGymAbiturFachbelegungHalbjahr;
 }

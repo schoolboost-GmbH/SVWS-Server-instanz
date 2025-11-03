@@ -6,22 +6,22 @@ export class LernplattformV1Jahrgang extends JavaObject {
 	/**
 	 * Die ID des Jahrgangs aus der SVWS-DB (z. B. 12)
 	 */
-	public id : number = 0;
+	public id: number = 0;
 
 	/**
 	 * Das Kürzel des Jahrgangs, wie es im Rahmen der amtlichen Schulstatistik verwendet wird. (z. B. EFA)
 	 */
-	public kuerzel : string | null = null;
+	public kuerzel: string | null = null;
 
 	/**
 	 * Das Kürzel der Jahrgangs, wie er im Rahmen der Schule benannt wird und angezeigt werden soll. (z. B. EF)
 	 */
-	public kuerzelAnzeige : string | null = null;
+	public kuerzelAnzeige: string | null = null;
 
 	/**
 	 * Die Bezeichnung des Jahrgangs, welche bei der amtlichen Statistik verwendet wird.
 	 */
-	public bezeichnung : string | null = null;
+	public bezeichnung: string | null = null;
 
 
 	/**
@@ -35,13 +35,13 @@ export class LernplattformV1Jahrgang extends JavaObject {
 		return 'de.svws_nrw.core.data.lernplattform.v1.LernplattformV1Jahrgang';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.lernplattform.v1.LernplattformV1Jahrgang'].includes(name);
 	}
 
 	public static class = new Class<LernplattformV1Jahrgang>('de.svws_nrw.core.data.lernplattform.v1.LernplattformV1Jahrgang');
 
-	public static transpilerFromJSON(json : string): LernplattformV1Jahrgang {
+	public static transpilerFromJSON(json: string): LernplattformV1Jahrgang {
 		const obj = JSON.parse(json) as Partial<LernplattformV1Jahrgang>;
 		const result = new LernplattformV1Jahrgang();
 		if (obj.id === undefined)
@@ -53,7 +53,7 @@ export class LernplattformV1Jahrgang extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : LernplattformV1Jahrgang) : string {
+	public static transpilerToJSON(obj: LernplattformV1Jahrgang): string {
 		let result = '{';
 		result += '"id" : ' + obj.id.toString() + ',';
 		result += '"kuerzel" : ' + ((obj.kuerzel === null) ? 'null' : JSON.stringify(obj.kuerzel)) + ',';
@@ -64,7 +64,7 @@ export class LernplattformV1Jahrgang extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<LernplattformV1Jahrgang>) : string {
+	public static transpilerToJSONPatch(obj: Partial<LernplattformV1Jahrgang>): string {
 		let result = '{';
 		if (obj.id !== undefined) {
 			result += '"id" : ' + obj.id.toString() + ',';
@@ -85,6 +85,6 @@ export class LernplattformV1Jahrgang extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_lernplattform_v1_LernplattformV1Jahrgang(obj : unknown) : LernplattformV1Jahrgang {
+export function cast_de_svws_nrw_core_data_lernplattform_v1_LernplattformV1Jahrgang(obj: unknown): LernplattformV1Jahrgang {
 	return obj as LernplattformV1Jahrgang;
 }

@@ -1,6 +1,9 @@
 package svws.gradle.node;
 
 import javax.inject.Inject
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import groovy.ant.AntBuilder;
 import org.apache.tools.ant.Project
 import org.gradle.api.DefaultTask;
 import org.gradle.api.tasks.Copy;
@@ -28,37 +31,33 @@ abstract class NodeDownload extends DefaultTask {
 	@TaskAction
 	def download() {
 		def downloadPath = this.cfg.getDownloadDirectory();
+		def filenameWithOutExt = this.cfg.getCompressedFilename();
 		def filename = this.cfg.getCompressedFilenameExt();
 		def file = new File("${downloadPath}/${filename}");
 		if (file.exists()) {
 			println "Datei ${filename} wurde bereits heruntergeladen, skipping download"
 		} else {
-			project.mkdir(downloadPath);
+			Files.createDirectories(Paths.get(downloadPath));
 			def url = this.cfg.getDownloadURL();
 			println "Downloading ${filename} from ${url}...";
 			def username = this.cfg.getDownloadUser();
 			if (username == null) {
-			    ant.get(src: url, dest: file)
+				ant.get(src: url, dest: file)
 			} else {
 				def userpasswd = this.cfg.getDownloadPasswd();
-			    ant.get(src: url, dest: file, username: username, password: userpasswd)
+				ant.get(src: url, dest: file, username: username, password: userpasswd)
 			}
 		}
 
 		def compFilename = this.cfg.getCompressedFilename();
+		def ant = new AntBuilder();
 		if ("zip".equals(this.cfg.getCompressedFileType())) {
-			project.copy {
-				eachFile { f ->	f.relativePath = new RelativePath(true, f.relativePath.segments.drop(1)) }
-				from project.zipTree("${downloadPath}/${filename}").matching{ include "${compFilename}/**" };				
-				includeEmptyDirs = false    
-				into this.cfg.getNodeDirectory()
-			}
+			ant.unzip(src: "${downloadPath}/${filename}", dest: this.cfg.getNodeDirectory()) { cutdirsmapper(dirs: 1) }
 		} else if ("tar.gz".equals(this.cfg.getCompressedFileType())) {
-			project.exec {
-				commandLine 'tar', '-xzf', "${downloadPath}/${filename}", '--strip-components=1','-C', this.cfg.getNodeDirectory() + "/";
-			}
+			def process = [ 'tar', '-xzf', "${downloadPath}/${filename}", '--strip-components=1','-C', this.cfg.getNodeDirectory() + "/" ].execute()
+			process.waitFor()
 		} else if ("tar.xz".equals(this.cfg.getCompressedFileType())) {
-			throw new Exception("Archive type tar.xz not yet suppported by this gradle node plugin!");			
+			throw new Exception("Archive type tar.xz not yet suppported by this gradle node plugin!");
 		} else {
 			throw new Exception("Archive type not supported by this gradle node plugin!");
 		}

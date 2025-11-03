@@ -11,12 +11,12 @@ import de.svws_nrw.db.schema.SchemaTabelleSpalte;
 public class Tabelle_Schema_AutoInkremente extends SchemaTabelle {
 
 	/** Die Definition der Tabellenspalte NameTabelle */
-	public SchemaTabelleSpalte col_NameTabelle = add("NameTabelle", SchemaDatentypen.VARCHAR, true).setDatenlaenge(200)
+	public final SchemaTabelleSpalte col_NameTabelle = add("NameTabelle", SchemaDatentypen.VARCHAR, true).setDatenlaenge(200)
 			.setNotNull()
 			.setJavaComment("Gibt den Tabellennamen an, für dessen Auto-Inkrement der ID-Wert verwendet werden soll.");
 
 	/** Die Definition der Tabellenspalte MaxID */
-	public SchemaTabelleSpalte col_MaxID = add("MaxID", SchemaDatentypen.BIGINT, false)
+	public final SchemaTabelleSpalte col_MaxID = add("MaxID", SchemaDatentypen.BIGINT, false)
 			.setDefault("1")
 			.setNotNull()
 			.setJavaComment("Die ID des höchsten jemals in die DB geschriebenen ID-Wertes bei der zugehörigen Tabelle");

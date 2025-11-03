@@ -6,17 +6,17 @@ export class KursLehrer extends JavaObject {
 	/**
 	 * Die ID des Kurslehrers.
 	 */
-	public idLehrer : number = 0;
+	public idLehrer: number = 0;
 
 	/**
 	 * Die ID des Kurses
 	 */
-	public idKurs : number = 0;
+	public idKurs: number = 0;
 
 	/**
 	 * Die Wochenstunden des Kurslehrers in dem Kurs.
 	 */
-	public wochenstundenLehrer : number = -1;
+	public wochenstundenLehrer: number = -1;
 
 
 	public constructor() {
@@ -27,13 +27,13 @@ export class KursLehrer extends JavaObject {
 		return 'de.svws_nrw.asd.data.kurse.KursLehrer';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.asd.data.kurse.KursLehrer'].includes(name);
 	}
 
 	public static class = new Class<KursLehrer>('de.svws_nrw.asd.data.kurse.KursLehrer');
 
-	public static transpilerFromJSON(json : string): KursLehrer {
+	public static transpilerFromJSON(json: string): KursLehrer {
 		const obj = JSON.parse(json) as Partial<KursLehrer>;
 		const result = new KursLehrer();
 		if (obj.idLehrer === undefined)
@@ -48,7 +48,7 @@ export class KursLehrer extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : KursLehrer) : string {
+	public static transpilerToJSON(obj: KursLehrer): string {
 		let result = '{';
 		result += '"idLehrer" : ' + obj.idLehrer.toString() + ',';
 		result += '"idKurs" : ' + obj.idKurs.toString() + ',';
@@ -58,7 +58,7 @@ export class KursLehrer extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<KursLehrer>) : string {
+	public static transpilerToJSONPatch(obj: Partial<KursLehrer>): string {
 		let result = '{';
 		if (obj.idLehrer !== undefined) {
 			result += '"idLehrer" : ' + obj.idLehrer.toString() + ',';
@@ -76,6 +76,6 @@ export class KursLehrer extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_asd_data_kurse_KursLehrer(obj : unknown) : KursLehrer {
+export function cast_de_svws_nrw_asd_data_kurse_KursLehrer(obj: unknown): KursLehrer {
 	return obj as KursLehrer;
 }

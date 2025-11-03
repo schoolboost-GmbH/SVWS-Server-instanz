@@ -370,7 +370,7 @@ public class CoreTypeDataManager<T extends CoreTypeData, U extends CoreType<T, U
 	 *
 	 * @return die Statistik-ID
 	 */
-	public @NotNull String getStatistikIdByWert(final @NotNull U value) {
+	public @NotNull String getStatistikIdByWert(final U value) {
 		if (value == null)
 			throw new CoreTypeException("Ein Zugriff auf eine Statistik-ID ist mit null nicht möglich.");
 		final String tmp = _mapEnumToStatistikID.get(value);
@@ -387,7 +387,7 @@ public class CoreTypeDataManager<T extends CoreTypeData, U extends CoreType<T, U
 	 *
 	 * @return die Historie
 	 */
-	public @NotNull List<T> getHistorieByWert(final @NotNull U value) {
+	public @NotNull List<T> getHistorieByWert(final U value) {
 		if (value == null)
 			throw new CoreTypeException("Ein Zugriff auf eine Historie ist mit null nicht möglich.");
 		final List<T> tmp = _mapEnumToHistorie.get(value);

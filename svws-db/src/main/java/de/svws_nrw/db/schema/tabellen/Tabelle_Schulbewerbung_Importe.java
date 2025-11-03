@@ -15,24 +15,24 @@ import de.svws_nrw.db.schema.SchemaTabelleSpalte;
 public class Tabelle_Schulbewerbung_Importe extends SchemaTabelle {
 
 	/** Die Definition der Tabellenspalte Schueler_ID */
-	public SchemaTabelleSpalte col_Schueler_ID = add("Schueler_ID", SchemaDatentypen.BIGINT, true)
+	public final SchemaTabelleSpalte col_Schueler_ID = add("Schueler_ID", SchemaDatentypen.BIGINT, true)
 			.setNotNull()
 			.setJavaComment("Schüler-ID des Schülers, für welchen die Import-Daten speichert werden");
 
 	/** Die Definition der Tabellenspalte LastSync */
-	public SchemaTabelleSpalte col_LastSync = add("LastSync", SchemaDatentypen.DATETIME, false)
+	public final SchemaTabelleSpalte col_LastSync = add("LastSync", SchemaDatentypen.DATETIME, false)
 			.setDatenlaenge(3)
 			.setNotNull()
 			.setJavaComment("Der Zeitstempel der letzten Synchronisation der Daten mit schulbewerbung.de");
 
 	/** Die Definition der Tabellenspalte LastXML */
-	public SchemaTabelleSpalte col_LastXML = add("LastXML", SchemaDatentypen.TEXT, false)
+	public final SchemaTabelleSpalte col_LastXML = add("LastXML", SchemaDatentypen.TEXT, false)
 			.setNotNull()
 			.setJavaComment("Das XML der letzten Synchronisation der Daten mit schulbewerbung.de");
 
 
 	/** Die Definition des Fremdschlüssels Schulbewerbung_Importe_Schueler_FK */
-	public SchemaTabelleFremdschluessel fk_Schulbewerbung_Importe_Schueler_FK = addForeignKey(
+	public final SchemaTabelleFremdschluessel fk_Schulbewerbung_Importe_Schueler_FK = addForeignKey(
 			"Schulbewerbung_Importe_Schueler_FK",
 			/* OnUpdate: */ SchemaFremdschluesselAktionen.CASCADE,
 			/* OnDelete: */ SchemaFremdschluesselAktionen.CASCADE,

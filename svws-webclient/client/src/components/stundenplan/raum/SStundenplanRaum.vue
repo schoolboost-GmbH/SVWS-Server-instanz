@@ -65,7 +65,7 @@
 	const ignoreEmpty = computed<boolean>({
 		get: () => props.ganzerStundenplanRaeume(),
 		set: (value) => void props.setGanzerStundenplanRaeume(value),
-	})
+	});
 
 	function wochentypen(): List<number> {
 		let modell = props.stundenplanManager().getWochenTypModell();

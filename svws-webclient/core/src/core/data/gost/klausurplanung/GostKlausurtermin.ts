@@ -7,57 +7,57 @@ export class GostKlausurtermin extends JavaObject {
 	/**
 	 * Die ID des Klausurtermins.
 	 */
-	public id : number = -1;
+	public id: number = -1;
 
 	/**
 	 * Die ID des Schuljahresabschnitts, in welchem der Termin liegt.
 	 */
-	public idSchuljahresabschnitt : number = -1;
+	public idSchuljahresabschnitt: number = -1;
 
 	/**
 	 * Das Jahr, in welchem der Jahrgang Abitur machen wird.
 	 */
-	public abijahr : number = -1;
+	public abijahr: number = -1;
 
 	/**
 	 * Das Gost-Halbjahr, in dem die Klausurg geschrieben wird.
 	 */
-	public halbjahr : number = -1;
+	public halbjahr: number = -1;
 
 	/**
 	 * Das Quartal, in welchem die Klausur gechrieben wird.
 	 */
-	public quartal : number = -1;
+	public quartal: number = -1;
 
 	/**
 	 * Das Datum des Klausurtermins, falls schon gesetzt.
 	 */
-	public datum : string | null = null;
+	public datum: string | null = null;
 
 	/**
 	 * Die Startzeit des Klausurtermins in Minuten seit 0 Uhr, falls schon gesetzt.
 	 */
-	public startzeit : number | null = null;
+	public startzeit: number | null = null;
 
 	/**
 	 * Die Bezeichnung des Klausurtermins, falls schon gesetzt.
 	 */
-	public bezeichnung : string | null = null;
+	public bezeichnung: string | null = null;
 
 	/**
 	 * Die textuelle Bemerkung zum Termin, sofern vorhanden.
 	 */
-	public bemerkung : string | null = null;
+	public bemerkung: string | null = null;
 
 	/**
 	 * Die Information, ob es sich um einen Haupttermin handelt oder nicht.
 	 */
-	public istHaupttermin : boolean = false;
+	public istHaupttermin: boolean = false;
 
 	/**
 	 * Die Information, ob es bei einen Haupttermin Nachschreibklausuren zugelassen sind oder nicht.
 	 */
-	public nachschreiberZugelassen : boolean = false;
+	public nachschreiberZugelassen: boolean = false;
 
 
 	/**
@@ -73,7 +73,7 @@ export class GostKlausurtermin extends JavaObject {
 	 * @param another     das zu vergleichende Objekt
 	 * @return true, falls die Objekte indentisch sind, sonst false
 	 */
-	public equals(another : unknown | null) : boolean {
+	public equals(another: unknown | null): boolean {
 		return (another !== null) && (((another instanceof JavaObject) && (another.isTranspiledInstanceOf('de.svws_nrw.core.data.gost.klausurplanung.GostKlausurtermin')))) && (this.id === (another as unknown as GostKlausurtermin).id);
 	}
 
@@ -82,7 +82,7 @@ export class GostKlausurtermin extends JavaObject {
 	 *
 	 * @return den HashCode
 	 */
-	public hashCode() : number {
+	public hashCode(): number {
 		return JavaLong.hashCode((this.id));
 	}
 
@@ -90,13 +90,13 @@ export class GostKlausurtermin extends JavaObject {
 		return 'de.svws_nrw.core.data.gost.klausurplanung.GostKlausurtermin';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.gost.klausurplanung.GostKlausurtermin'].includes(name);
 	}
 
 	public static class = new Class<GostKlausurtermin>('de.svws_nrw.core.data.gost.klausurplanung.GostKlausurtermin');
 
-	public static transpilerFromJSON(json : string): GostKlausurtermin {
+	public static transpilerFromJSON(json: string): GostKlausurtermin {
 		const obj = JSON.parse(json) as Partial<GostKlausurtermin>;
 		const result = new GostKlausurtermin();
 		if (obj.id === undefined)
@@ -127,7 +127,7 @@ export class GostKlausurtermin extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : GostKlausurtermin) : string {
+	public static transpilerToJSON(obj: GostKlausurtermin): string {
 		let result = '{';
 		result += '"id" : ' + obj.id.toString() + ',';
 		result += '"idSchuljahresabschnitt" : ' + obj.idSchuljahresabschnitt.toString() + ',';
@@ -145,7 +145,7 @@ export class GostKlausurtermin extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<GostKlausurtermin>) : string {
+	public static transpilerToJSONPatch(obj: Partial<GostKlausurtermin>): string {
 		let result = '{';
 		if (obj.id !== undefined) {
 			result += '"id" : ' + obj.id.toString() + ',';
@@ -187,6 +187,6 @@ export class GostKlausurtermin extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_gost_klausurplanung_GostKlausurtermin(obj : unknown) : GostKlausurtermin {
+export function cast_de_svws_nrw_core_data_gost_klausurplanung_GostKlausurtermin(obj: unknown): GostKlausurtermin {
 	return obj as GostKlausurtermin;
 }

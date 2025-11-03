@@ -45,7 +45,7 @@
 	const props = defineProps<SchemaNeuProps>();
 
 	const loading = ref<boolean>(false);
-	const logs = shallowRef<List<string|null> | undefined>(undefined);
+	const logs = shallowRef<List<string | null> | undefined>(undefined);
 	const status = shallowRef<boolean | undefined>(undefined);
 
 	const currentAction = ref<string>('');
@@ -61,12 +61,12 @@
 	}
 
 	function setCurrentAction(newAction: string, open: boolean) {
-		if(newAction === oldAction.value.name && !open)
+		if (newAction === oldAction.value.name && !open)
 			return;
 		oldAction.value.name = currentAction.value;
 		oldAction.value.open = (currentAction.value === "") ? false : true;
-		if(open === true)
-			currentAction.value= newAction;
+		if (open === true)
+			currentAction.value = newAction;
 		else
 			currentAction.value = "";
 	}
@@ -81,7 +81,7 @@
 		if ((username === null) || (username === 'root') || (username === props.apiUsername))
 			return false;
 		return true;
-	}
+	};
 
 // bg-ui-0 text-ui-0 rounded-xl max-h-96 w-full Bugfix Tailwind TODO
 </script>

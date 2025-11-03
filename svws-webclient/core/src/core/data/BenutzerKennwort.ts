@@ -6,12 +6,12 @@ export class BenutzerKennwort extends JavaObject {
 	/**
 	 * Der Benutzername.
 	 */
-	public user : string | null = null;
+	public user: string | null = null;
 
 	/**
 	 * Das Kennwort des Benutzers.
 	 */
-	public password : string | null = null;
+	public password: string | null = null;
 
 
 	/**
@@ -25,13 +25,13 @@ export class BenutzerKennwort extends JavaObject {
 		return 'de.svws_nrw.core.data.BenutzerKennwort';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.BenutzerKennwort'].includes(name);
 	}
 
 	public static class = new Class<BenutzerKennwort>('de.svws_nrw.core.data.BenutzerKennwort');
 
-	public static transpilerFromJSON(json : string): BenutzerKennwort {
+	public static transpilerFromJSON(json: string): BenutzerKennwort {
 		const obj = JSON.parse(json) as Partial<BenutzerKennwort>;
 		const result = new BenutzerKennwort();
 		result.user = (obj.user === undefined) ? null : obj.user === null ? null : obj.user;
@@ -39,7 +39,7 @@ export class BenutzerKennwort extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : BenutzerKennwort) : string {
+	public static transpilerToJSON(obj: BenutzerKennwort): string {
 		let result = '{';
 		result += '"user" : ' + ((obj.user === null) ? 'null' : JSON.stringify(obj.user)) + ',';
 		result += '"password" : ' + ((obj.password === null) ? 'null' : JSON.stringify(obj.password)) + ',';
@@ -48,7 +48,7 @@ export class BenutzerKennwort extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<BenutzerKennwort>) : string {
+	public static transpilerToJSONPatch(obj: Partial<BenutzerKennwort>): string {
 		let result = '{';
 		if (obj.user !== undefined) {
 			result += '"user" : ' + ((obj.user === null) ? 'null' : JSON.stringify(obj.user)) + ',';
@@ -63,6 +63,6 @@ export class BenutzerKennwort extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_BenutzerKennwort(obj : unknown) : BenutzerKennwort {
+export function cast_de_svws_nrw_core_data_BenutzerKennwort(obj: unknown): BenutzerKennwort {
 	return obj as BenutzerKennwort;
 }

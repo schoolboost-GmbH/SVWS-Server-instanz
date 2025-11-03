@@ -27,7 +27,7 @@ export class RouteNotenmodulLeistungen extends RouteAuswahlNode<EnmLerngruppenAu
 			BenutzerKompetenz.NOTENMODUL_NOTEN_AENDERN_ALLGEMEIN,
 			BenutzerKompetenz.NOTENMODUL_NOTEN_AENDERN_FUNKTION,
 		], "notenmodul.leistungen", "notenmodul/leistungen", NotenmodulLeistungenApp, NotenmodulLeistungenAuswahl, new RouteDataNotenmodulLeistungen());
-		super.mode = ServerMode.DEV;
+		super.mode = ServerMode.ALPHA;
 		super.getAuswahlListProps = (props) => (<NotenmodulLeistungenAuswahlProps>{
 			...props,
 			enmManager: () => routeNotenmodul.data.manager,
@@ -65,7 +65,7 @@ export class RouteNotenmodulLeistungen extends RouteAuswahlNode<EnmLerngruppenAu
 		super.menugroup = RouteNotenmodulMenuGroup.ALLGEMEIN;
 	}
 
-	protected async update(to: RouteNode<any, any>, to_params: RouteParams, from: RouteNode<any, any> | undefined, from_params: RouteParams, isEntering: boolean) : Promise<void | Error | RouteLocationRaw> {
+	protected async update(to: RouteNode<any, any>, to_params: RouteParams, from: RouteNode<any, any> | undefined, from_params: RouteParams, isEntering: boolean): Promise<void | Error | RouteLocationRaw> {
 		if (isEntering && (!(from?.name.startsWith("notenmodul") ?? false)))
 			await routeNotenmodul.data.ladeDaten();
 		if (to.name === this.name)

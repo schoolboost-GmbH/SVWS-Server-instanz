@@ -8,17 +8,17 @@ export class StundenplanblockungRegel extends JavaObject {
 	/**
 	 * Die Datenbank-ID der Regel.
 	 */
-	public id : number = 0;
+	public id: number = 0;
 
 	/**
 	 * Der Type der Regel - siehe {@link GostKursblockungRegelTyp}
 	 */
-	public typ : number = -1;
+	public typ: number = -1;
 
 	/**
 	 * Eine Liste der Regel-Parameter
 	 */
-	public parameter : List<number> = new ArrayList<number>();
+	public parameter: List<number> = new ArrayList<number>();
 
 
 	/**
@@ -32,13 +32,13 @@ export class StundenplanblockungRegel extends JavaObject {
 		return 'de.svws_nrw.core.data.stundenplanblockung.StundenplanblockungRegel';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.stundenplanblockung.StundenplanblockungRegel'].includes(name);
 	}
 
 	public static class = new Class<StundenplanblockungRegel>('de.svws_nrw.core.data.stundenplanblockung.StundenplanblockungRegel');
 
-	public static transpilerFromJSON(json : string): StundenplanblockungRegel {
+	public static transpilerFromJSON(json: string): StundenplanblockungRegel {
 		const obj = JSON.parse(json) as Partial<StundenplanblockungRegel>;
 		const result = new StundenplanblockungRegel();
 		if (obj.id === undefined)
@@ -55,7 +55,7 @@ export class StundenplanblockungRegel extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : StundenplanblockungRegel) : string {
+	public static transpilerToJSON(obj: StundenplanblockungRegel): string {
 		let result = '{';
 		result += '"id" : ' + obj.id.toString() + ',';
 		result += '"typ" : ' + obj.typ.toString() + ',';
@@ -72,7 +72,7 @@ export class StundenplanblockungRegel extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<StundenplanblockungRegel>) : string {
+	public static transpilerToJSONPatch(obj: Partial<StundenplanblockungRegel>): string {
 		let result = '{';
 		if (obj.id !== undefined) {
 			result += '"id" : ' + obj.id.toString() + ',';
@@ -97,6 +97,6 @@ export class StundenplanblockungRegel extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_stundenplanblockung_StundenplanblockungRegel(obj : unknown) : StundenplanblockungRegel {
+export function cast_de_svws_nrw_core_data_stundenplanblockung_StundenplanblockungRegel(obj: unknown): StundenplanblockungRegel {
 	return obj as StundenplanblockungRegel;
 }

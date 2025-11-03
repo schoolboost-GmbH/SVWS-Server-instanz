@@ -50,7 +50,7 @@ export class RouteDataSchueler extends RouteDataAuswahl<SchuelerListeManager, Ro
 		return this._state.value.mapStundenplaene;
 	}
 
-	protected async createManager(idSchuljahresabschnitt : number) : Promise<Partial<RouteStateSchueler>> {
+	protected async createManager(idSchuljahresabschnitt: number): Promise<Partial<RouteStateSchueler>> {
 		// Lade die Daten von der API
 		const auswahllisteGzip = await api.server.getSchuelerAuswahllisteFuerAbschnitt(api.schema, idSchuljahresabschnitt);
 		const auswahllisteBlob = await new Response(auswahllisteGzip.data.stream().pipeThrough(new DecompressionStream("gzip"))).blob();
@@ -78,7 +78,7 @@ export class RouteDataSchueler extends RouteDataAuswahl<SchuelerListeManager, Ro
 		return { manager };
 	}
 
-	public async ladeDaten(auswahl: SchuelerListeEintrag | null, state: Partial<RouteStateSchueler>) : Promise<SchuelerStammdaten | null> {
+	public async ladeDaten(auswahl: SchuelerListeEintrag | null, state: Partial<RouteStateSchueler>): Promise<SchuelerStammdaten | null> {
 		if (auswahl === null)
 			return null;
 		const res = await api.server.getSchuelerStammdaten(api.schema, auswahl.id);
@@ -96,7 +96,7 @@ export class RouteDataSchueler extends RouteDataAuswahl<SchuelerListeManager, Ro
 			return null;
 
 		const ids: List<number> = new ArrayList();
-		for (const eintrag of auswahlList){
+		for (const eintrag of auswahlList) {
 			ids.add(eintrag.id);
 		}
 		const response = await api.server.getSchuelerStammdatenMultiple(ids, api.schema);
@@ -107,12 +107,13 @@ export class RouteDataSchueler extends RouteDataAuswahl<SchuelerListeManager, Ro
 
 		return response;
 	}
-
 	public async updateMapStundenplaene() {
-		const listStundenplaene = await api.server.getStundenplanlisteFuerAbschnitt(api.schema, this.idSchuljahresabschnitt);
 		const mapStundenplaene = new Map<number, StundenplanListeEintrag>();
-		for (const l of listStundenplaene)
-			mapStundenplaene.set(l.id, l);
+		if (api.benutzerKompetenzen.has(BenutzerKompetenz.STUNDENPLAN_ALLGEMEIN_ANSEHEN)) {
+			const listStundenplaene = await api.server.getStundenplanlisteFuerAbschnitt(api.schema, this.idSchuljahresabschnitt);
+			for (const l of listStundenplaene)
+				mapStundenplaene.set(l.id, l);
+		}
 		this.setPatchedState({ mapStundenplaene });
 	}
 
@@ -130,21 +131,21 @@ export class RouteDataSchueler extends RouteDataAuswahl<SchuelerListeManager, Ro
 		await this.setSchuljahresabschnitt(idSchulJahresabschnitt, true);
 		this.manager.setDaten(schuelerStammdaten);
 		return schuelerStammdaten;
-	}
+	};
 
 	getSchuelerKlassenFuerAbschnitt = async (idAbschnitt: number): Promise<List<KlassenDaten>> => {
 		return await api.server.getKlassenFuerAbschnitt(api.schema, idAbschnitt);
-	}
+	};
 
-	patchSchuelerLernabschnitt = async (data : Partial<SchuelerLernabschnittsdaten>, idEintrag: number) : Promise<void> => {
+	patchSchuelerLernabschnitt = async (data: Partial<SchuelerLernabschnittsdaten>, idEintrag: number): Promise<void> => {
 		await api.server.patchSchuelerLernabschnittsdaten(data, api.schema, idEintrag);
 		Object.assign(idEintrag, data);
 		this.commit();
-	}
+	};
 
-	patchSchuelerSchulbesuchdaten = async (data: Partial<SchuelerSchulbesuchsdaten>, idEintrag: number) : Promise<void> => {
+	patchSchuelerSchulbesuchdaten = async (data: Partial<SchuelerSchulbesuchsdaten>, idEintrag: number): Promise<void> => {
 		await api.server.patchSchuelerSchulbesuch(data, api.schema, idEintrag);
-	}
+	};
 
 	get getListSchuelerTelefoneintraege(): List<SchuelerTelefon> {
 		const list = new ArrayList<SchuelerTelefon>();
@@ -170,9 +171,9 @@ export class RouteDataSchueler extends RouteDataAuswahl<SchuelerListeManager, Ro
 		listSchuelerErziehereintraege.add(erzieher);
 		this.setPatchedState({ listSchuelerErziehereintraege });
 		return erzieher;
-	}
+	};
 
-	patchSchuelerErziehereintrag = async (data : Partial<ErzieherStammdaten>, idEintrag: number) => {
+	patchSchuelerErziehereintrag = async (data: Partial<ErzieherStammdaten>, idEintrag: number) => {
 		await api.server.patchErzieherStammdaten(data, api.schema, idEintrag);
 		const listSchuelerErziehereintraege = this.getListSchuelerErziehereintraege;
 		for (const e of listSchuelerErziehereintraege)
@@ -181,13 +182,13 @@ export class RouteDataSchueler extends RouteDataAuswahl<SchuelerListeManager, Ro
 				break;
 			}
 		this.setPatchedState({ listSchuelerErziehereintraege });
-	}
+	};
 
-	patchSchuelerErzieherAnPosition = async (data : Partial<ErzieherStammdaten>, idEintrag: number, idSchueler: number, pos: number) => {
+	patchSchuelerErzieherAnPosition = async (data: Partial<ErzieherStammdaten>, idEintrag: number, idSchueler: number, pos: number) => {
 		await api.server.patchErzieherStammdatenZweitePosition(data, api.schema, idEintrag, pos);
 		const listSchuelerErziehereintraege = await api.server.getSchuelerErzieher(api.schema, idSchueler);
 		this.setPatchedState({ listSchuelerErziehereintraege });
-	}
+	};
 
 	deleteSchuelerErziehereintrage = async (idsEintraege: List<number>): Promise<void> => {
 		await api.server.deleteErzieherStammdaten(idsEintraege, api.schema);
@@ -202,14 +203,14 @@ export class RouteDataSchueler extends RouteDataAuswahl<SchuelerListeManager, Ro
 			}
 		}
 		this.setPatchedState({ listSchuelerErziehereintraege });
-	}
+	};
 
 	addSchuelerTelefoneintrag = async (data: Partial<SchuelerTelefon>, idSchueler: number): Promise<void> => {
 		const telefon = await api.server.addSchuelerTelefon(data, api.schema, idSchueler);
 		const listSchuelerTelefoneintraege = this.getListSchuelerTelefoneintraege;
 		listSchuelerTelefoneintraege.add(telefon);
 		this.setPatchedState({ listSchuelerTelefoneintraege });
-	}
+	};
 
 	patchSchuelerTelefoneintrag = async (data: Partial<SchuelerTelefon>, idEintrag: number): Promise<void> => {
 		await api.server.patchSchuelerTelefon(data, api.schema, idEintrag);
@@ -220,14 +221,14 @@ export class RouteDataSchueler extends RouteDataAuswahl<SchuelerListeManager, Ro
 				break;
 			}
 		this.setPatchedState({ listSchuelerTelefoneintraege });
-	}
+	};
 
 	deleteSchuelerTelefoneintrage = async (idsEintraege: List<number>): Promise<void> => {
 		await api.server.deleteSchuelerTelefone(idsEintraege, api.schema);
 		const listSchuelerTelefoneintraege = this.getListSchuelerTelefoneintraege;
 		for (const id of idsEintraege) {
-			for (let i = 0; i < listSchuelerTelefoneintraege .size(); i++) {
-				const eintrag = listSchuelerTelefoneintraege .get(i);
+			for (let i = 0; i < listSchuelerTelefoneintraege.size(); i++) {
+				const eintrag = listSchuelerTelefoneintraege.get(i);
 				if (eintrag.id === id) {
 					listSchuelerTelefoneintraege.removeElementAt(i);
 					break;
@@ -235,14 +236,14 @@ export class RouteDataSchueler extends RouteDataAuswahl<SchuelerListeManager, Ro
 			}
 		}
 		this.setPatchedState({ listSchuelerTelefoneintraege });
-	}
+	};
 
 	addSchuelerVermerkeintrag = async (data: Partial<SchuelerVermerke>): Promise<void> => {
 		const vermerk = await api.server.addVermerk(data, api.schema);
 		const listSchuelerVermerkeintraege = this.getListSchuelerVermerkeintraege;
 		listSchuelerVermerkeintraege.add(vermerk);
 		this.setPatchedState({ listSchuelerVermerkeintraege });
-	}
+	};
 
 	patchSchuelerVermerkeintrag = async (data: Partial<SchuelerVermerke>, idEintrag: number): Promise<void> => {
 		await api.server.patchSchuelerVermerke(data, api.schema, idEintrag);
@@ -253,14 +254,14 @@ export class RouteDataSchueler extends RouteDataAuswahl<SchuelerListeManager, Ro
 				break;
 			}
 		this.setPatchedState({ listSchuelerVermerkeintraege });
-	}
+	};
 
 	deleteSchuelerVermerkeintrage = async (idsEintraege: List<number>): Promise<void> => {
 		await api.server.deleteSchuelerVermerke(idsEintraege, api.schema);
 		const listSchuelerVermerkeintraege = this.getListSchuelerVermerkeintraege;
 		for (const id of idsEintraege) {
-			for (let i = 0; i < listSchuelerVermerkeintraege .size(); i++) {
-				const eintrag = listSchuelerVermerkeintraege .get(i);
+			for (let i = 0; i < listSchuelerVermerkeintraege.size(); i++) {
+				const eintrag = listSchuelerVermerkeintraege.get(i);
 				if (eintrag.id === id) {
 					listSchuelerVermerkeintraege.removeElementAt(i);
 					break;
@@ -268,9 +269,9 @@ export class RouteDataSchueler extends RouteDataAuswahl<SchuelerListeManager, Ro
 			}
 		}
 		this.setPatchedState({ listSchuelerVermerkeintraege });
-	}
+	};
 
-	protected async doPatch(data : Partial<SchuelerStammdaten>, id: number) : Promise<void> {
+	protected async doPatch(data: Partial<SchuelerStammdaten>, id: number): Promise<void> {
 		await api.server.patchSchuelerStammdaten(data, api.schema, id);
 	}
 
@@ -278,7 +279,7 @@ export class RouteDataSchueler extends RouteDataAuswahl<SchuelerListeManager, Ro
 		return await api.server.deleteSchueler(ids, api.schema);
 	}
 
-	protected deleteMessage(id: number, schueler: SchuelerListeEintrag | null) : string {
+	protected deleteMessage(id: number, schueler: SchuelerListeEintrag | null): string {
 		return `Schüler ${(schueler?.vorname ?? '???') + ' ' + (schueler?.nachname ?? '???')} (ID: ${id.toString()}) wurde erfolgreich gelöscht.`;
 	}
 
@@ -291,7 +292,7 @@ export class RouteDataSchueler extends RouteDataAuswahl<SchuelerListeManager, Ro
 			errorLog.add('Es ist kein Schüler ausgewählt.');
 
 		return [errorLog.isEmpty(), errorLog];
-	}
+	};
 
 	getPDF = api.call(async (reportingParameter: ReportingParameter): Promise<ApiFile> => {
 		if (this.manager.liste.auswahlExists() || this.manager.hasDaten()) {
@@ -299,7 +300,7 @@ export class RouteDataSchueler extends RouteDataAuswahl<SchuelerListeManager, Ro
 			return await api.server.pdfReport(reportingParameter, api.schema);
 		}
 		throw new UserNotificationException("Dieser Report kann nur gedruckt werden, wenn mindestens ein Schüler ausgewählt ist.");
-	})
+	});
 
 	sendEMail = api.call(async (reportingParameter: ReportingParameter): Promise<SimpleOperationResponse> => {
 		if (this.manager.liste.auswahlExists() || this.manager.hasDaten()) {
@@ -307,19 +308,19 @@ export class RouteDataSchueler extends RouteDataAuswahl<SchuelerListeManager, Ro
 			return await api.server.emailReport(reportingParameter, api.schema);
 		}
 		throw new UserNotificationException("Dieser Report kann nur versendet werden, wenn mindestens ein Schüler ausgewählt ist.");
-	})
+	});
 
 	fetchEMailJobStatus = api.call(async (jobId: number): Promise<SimpleOperationResponse> => {
 		if (this.manager.liste.auswahlExists() || this.manager.hasDaten())
 			return await api.server.getEmailJobStatus(api.schema, jobId);
 		throw new UserNotificationException("Dieser Report kann nur versendet werden, wenn mindestens ein Schüler ausgewählt ist.");
-	})
+	});
 
 	fetchEMailJobLog = api.call(async (jobId: number): Promise<SimpleOperationResponse> => {
 		if (this.manager.liste.auswahlExists() || this.manager.hasDaten())
 			return await api.server.getEmailJobLog(api.schema, jobId);
 		throw new UserNotificationException("Dieser Report kann nur versendet werden, wenn mindestens ein Schüler ausgewählt ist.");
-	})
+	});
 
 	patchMultiple = async (pendingStateManager: PendingStateManager<any>): Promise<void> => {
 		api.status.start();
@@ -339,6 +340,6 @@ export class RouteDataSchueler extends RouteDataAuswahl<SchuelerListeManager, Ro
 		pendingStateManager.resetPendingState();
 		this.commit();
 		api.status.stop();
-	}
+	};
 
 }

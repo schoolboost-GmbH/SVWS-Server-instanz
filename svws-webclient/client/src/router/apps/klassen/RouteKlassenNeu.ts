@@ -14,16 +14,16 @@ const SKlassenNeu = () => import("~/components/klassen/SKlassenNeu.vue");
 export class RouteKlassenNeu extends RouteNode<any, RouteKlassen> {
 
 	public constructor() {
-		super(Schulform.values(), [ BenutzerKompetenz.UNTERRICHTSVERTEILUNG_ALLGEMEIN_AENDERN ], "klassen.neu", "neu", SKlassenNeu);
-		super.types = new Set([ ViewType.HINZUFUEGEN ]);
+		super(Schulform.values(), [BenutzerKompetenz.UNTERRICHTSVERTEILUNG_ALLGEMEIN_AENDERN], "klassen.neu", "neu", SKlassenNeu);
+		super.types = new Set([ViewType.HINZUFUEGEN]);
 		super.mode = ServerMode.STABLE;
 		super.propHandler = (route) => this.getProps(route);
 		super.text = "Klasse Neu";
 		super.setCheckpoint = true;
 	}
 
-	public addRouteParamsFromState() : RouteParamsRawGeneric {
-		return { id : "" };
+	public addRouteParamsFromState(): RouteParamsRawGeneric {
+		return { id: "" };
 	}
 
 	public getProps(to: RouteLocationNormalized): KlassenNeuProps {

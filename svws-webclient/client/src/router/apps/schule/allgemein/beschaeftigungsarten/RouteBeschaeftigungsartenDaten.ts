@@ -6,7 +6,7 @@ import { RouteNode } from "~/router/RouteNode";
 import { api } from "~/router/Api";
 import { routeBeschaeftigungsarten } from "~/router/apps/schule/allgemein/beschaeftigungsarten/RouteBeschaeftigungsarten";
 
-const SBeschaeftigungsartenDaten = () => import("~/components/schule/allgemein/beschaeftigungsarten/daten/SBeschaeftigungsartenDaten.vue")
+const SBeschaeftigungsartenDaten = () => import("~/components/schule/allgemein/beschaeftigungsarten/daten/SBeschaeftigungsartenDaten.vue");
 
 export class RouteBeschaeftigungsartenDaten extends RouteNode<any, RouteBeschaeftigungsarten> {
 
@@ -23,7 +23,7 @@ export class RouteBeschaeftigungsartenDaten extends RouteNode<any, RouteBeschaef
 			manager: () => routeBeschaeftigungsarten.data.manager,
 			benutzerKompetenzen: api.benutzerKompetenzen,
 			patch: routeBeschaeftigungsarten.data.patch,
-		}
+		};
 	}
 }
 

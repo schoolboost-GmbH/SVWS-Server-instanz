@@ -16,46 +16,46 @@ import de.svws_nrw.db.schema.SchemaTabelleSpalte;
 public class Tabelle_SchuelerEinzelleistungen extends SchemaTabelle {
 
 	/** Die Definition der Tabellenspalte SchulnrEigner */
-	public SchemaTabelleSpalte col_SchulnrEigner = add("SchulnrEigner", SchemaDatentypen.INT, false)
+	public final SchemaTabelleSpalte col_SchulnrEigner = add("SchulnrEigner", SchemaDatentypen.INT, false)
 			.setNotNull()
 			.setVeraltet(SchemaRevisionen.REV_1)
 			.setJavaComment("Die Schulnummer zu welcher der Datensatz gehört – wird benötigt, wenn mehrere Schulen in einem Schema der Datenbank"
 					+ " gespeichert werden");
 
 	/** Die Definition der Tabellenspalte ID */
-	public SchemaTabelleSpalte col_ID = add("ID", SchemaDatentypen.BIGINT, true)
+	public final SchemaTabelleSpalte col_ID = add("ID", SchemaDatentypen.BIGINT, true)
 			.setNotNull()
 			.setJavaComment("ID der Teilleistung");
 
 	/** Die Definition der Tabellenspalte Datum */
-	public SchemaTabelleSpalte col_Datum = add("Datum", SchemaDatentypen.DATE, false)
+	public final SchemaTabelleSpalte col_Datum = add("Datum", SchemaDatentypen.DATE, false)
 			.setConverter(DatumConverter.class)
 			.setJavaComment("Datum der Teilleistung");
 
 	/** Die Definition der Tabellenspalte Lehrer_ID */
-	public SchemaTabelleSpalte col_Lehrer_ID = add("Lehrer_ID", SchemaDatentypen.BIGINT, false)
+	public final SchemaTabelleSpalte col_Lehrer_ID = add("Lehrer_ID", SchemaDatentypen.BIGINT, false)
 			.setJavaComment("LehrerID der Teilleistung");
 
 	/** Die Definition der Tabellenspalte Art_ID */
-	public SchemaTabelleSpalte col_Art_ID = add("Art_ID", SchemaDatentypen.BIGINT, false)
+	public final SchemaTabelleSpalte col_Art_ID = add("Art_ID", SchemaDatentypen.BIGINT, false)
 			.setJavaComment("Art der Teilleistung");
 
 	/** Die Definition der Tabellenspalte Bemerkung */
-	public SchemaTabelleSpalte col_Bemerkung = add("Bemerkung", SchemaDatentypen.VARCHAR, false).setDatenlaenge(100)
+	public final SchemaTabelleSpalte col_Bemerkung = add("Bemerkung", SchemaDatentypen.VARCHAR, false).setDatenlaenge(100)
 			.setJavaComment("Bemerkung zur Teilleistung");
 
 	/** Die Definition der Tabellenspalte Leistung_ID */
-	public SchemaTabelleSpalte col_Leistung_ID = add("Leistung_ID", SchemaDatentypen.BIGINT, false)
+	public final SchemaTabelleSpalte col_Leistung_ID = add("Leistung_ID", SchemaDatentypen.BIGINT, false)
 			.setNotNull()
 			.setJavaComment("LeistungsdatenID der Teilleistung");
 
 	/** Die Definition der Tabellenspalte NotenKrz */
-	public SchemaTabelleSpalte col_NotenKrz = add("NotenKrz", SchemaDatentypen.VARCHAR, false).setDatenlaenge(2)
+	public final SchemaTabelleSpalte col_NotenKrz = add("NotenKrz", SchemaDatentypen.VARCHAR, false).setDatenlaenge(2)
 			.setJavaComment("Notenkürzel der Teilleistung");
 
 
 	/** Die Definition des Fremdschlüssels SchuelerEinzelleistungen_Art_FK */
-	public SchemaTabelleFremdschluessel fk_SchuelerEinzelleistungen_Art_FK = addForeignKey(
+	public final SchemaTabelleFremdschluessel fk_SchuelerEinzelleistungen_Art_FK = addForeignKey(
 			"SchuelerEinzelleistungen_Art_FK",
 			/* OnUpdate: */ SchemaFremdschluesselAktionen.CASCADE,
 			/* OnDelete: */ SchemaFremdschluesselAktionen.SET_NULL,
@@ -63,7 +63,7 @@ public class Tabelle_SchuelerEinzelleistungen extends SchemaTabelle {
 	).setRevision(SchemaRevisionen.REV_2);
 
 	/** Die Definition des Fremdschlüssels SchuelerEinzelleistungen_Lehrer_FK */
-	public SchemaTabelleFremdschluessel fk_SchuelerEinzelleistungen_Lehrer_FK = addForeignKey(
+	public final SchemaTabelleFremdschluessel fk_SchuelerEinzelleistungen_Lehrer_FK = addForeignKey(
 			"SchuelerEinzelleistungen_Lehrer_FK",
 			/* OnUpdate: */ SchemaFremdschluesselAktionen.CASCADE,
 			/* OnDelete: */ SchemaFremdschluesselAktionen.SET_NULL,
@@ -71,7 +71,7 @@ public class Tabelle_SchuelerEinzelleistungen extends SchemaTabelle {
 	).setRevision(SchemaRevisionen.REV_2);
 
 	/** Die Definition des Fremdschlüssels SchuelerEinzelleistungen_Leistungsdaten_FK */
-	public SchemaTabelleFremdschluessel fk_SchuelerEinzelleistungen_Leistungsdaten_FK = addForeignKey(
+	public final SchemaTabelleFremdschluessel fk_SchuelerEinzelleistungen_Leistungsdaten_FK = addForeignKey(
 			"SchuelerEinzelleistungen_Leistungsdaten_FK",
 			/* OnUpdate: */ SchemaFremdschluesselAktionen.CASCADE,
 			/* OnDelete: */ SchemaFremdschluesselAktionen.CASCADE,

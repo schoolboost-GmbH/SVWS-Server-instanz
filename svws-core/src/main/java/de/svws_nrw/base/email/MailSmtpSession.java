@@ -43,6 +43,10 @@ public class MailSmtpSession {
 		prop.put("mail.smtp.host", config.getHost());
 		prop.put("mail.smtp.port", "" + config.getPort());
 		prop.put("mail.smtp.ssl.trust", config.getHost());
+		if (config.isTLS()) {
+			prop.put("mail.smtp.ssl.enable", "true");
+			prop.put("mail.smtp.ssl.protocols", "TLSv1.2");
+		}
 		this.session = Session.getInstance(prop, new Authenticator() {
 			@Override
 			protected PasswordAuthentication getPasswordAuthentication() {
@@ -73,7 +77,10 @@ public class MailSmtpSession {
 		try {
 			if (addresses == null)
 				return new InternetAddress[0];
-			final String[] arrayAddresses = addresses.split(",");
+			final String tmp = addresses.trim().replace(" ", "");
+			if (tmp.isBlank())
+				return new InternetAddress[0];
+			final String[] arrayAddresses = tmp.split(",");
 			final Pattern p = Pattern.compile("(.*)<([^<>]*)>\\s*");
 			final InternetAddress[] result = new InternetAddress[arrayAddresses.length];
 			for (int i = 0; i < arrayAddresses.length; i++) {

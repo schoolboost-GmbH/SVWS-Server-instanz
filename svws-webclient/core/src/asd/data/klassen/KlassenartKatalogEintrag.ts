@@ -16,13 +16,13 @@ export class KlassenartKatalogEintrag extends CoreTypeDataNurSchulformenUndSchul
 		return 'de.svws_nrw.asd.data.klassen.KlassenartKatalogEintrag';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.asd.data.CoreTypeDataNurSchulformenUndSchulgliederungen', 'de.svws_nrw.asd.data.klassen.KlassenartKatalogEintrag', 'de.svws_nrw.asd.data.CoreTypeData'].includes(name);
 	}
 
 	public static class = new Class<KlassenartKatalogEintrag>('de.svws_nrw.asd.data.klassen.KlassenartKatalogEintrag');
 
-	public static transpilerFromJSON(json : string): KlassenartKatalogEintrag {
+	public static transpilerFromJSON(json: string): KlassenartKatalogEintrag {
 		const obj = JSON.parse(json) as Partial<KlassenartKatalogEintrag>;
 		const result = new KlassenartKatalogEintrag();
 		if (obj.zulaessig !== undefined) {
@@ -47,7 +47,7 @@ export class KlassenartKatalogEintrag extends CoreTypeDataNurSchulformenUndSchul
 		return result;
 	}
 
-	public static transpilerToJSON(obj : KlassenartKatalogEintrag) : string {
+	public static transpilerToJSON(obj: KlassenartKatalogEintrag): string {
 		let result = '{';
 		result += '"zulaessig" : [ ';
 		for (let i = 0; i < obj.zulaessig.size(); i++) {
@@ -68,7 +68,7 @@ export class KlassenartKatalogEintrag extends CoreTypeDataNurSchulformenUndSchul
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<KlassenartKatalogEintrag>) : string {
+	public static transpilerToJSONPatch(obj: Partial<KlassenartKatalogEintrag>): string {
 		let result = '{';
 		if (obj.zulaessig !== undefined) {
 			result += '"zulaessig" : [ ';
@@ -105,6 +105,6 @@ export class KlassenartKatalogEintrag extends CoreTypeDataNurSchulformenUndSchul
 
 }
 
-export function cast_de_svws_nrw_asd_data_klassen_KlassenartKatalogEintrag(obj : unknown) : KlassenartKatalogEintrag {
+export function cast_de_svws_nrw_asd_data_klassen_KlassenartKatalogEintrag(obj: unknown): KlassenartKatalogEintrag {
 	return obj as KlassenartKatalogEintrag;
 }

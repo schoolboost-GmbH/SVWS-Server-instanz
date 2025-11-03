@@ -49,6 +49,6 @@
 	}
 
 	defineExpose({
-		status
+		status,
 	});
 </script>

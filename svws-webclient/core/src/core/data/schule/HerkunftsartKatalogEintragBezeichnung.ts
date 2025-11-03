@@ -7,17 +7,17 @@ export class HerkunftsartKatalogEintragBezeichnung extends JavaObject {
 	/**
 	 * Das Kürzel der Schulform
 	 */
-	public schulform : string = "";
+	public schulform: string = "";
 
 	/**
 	 * Die Kurz-Bezeichnung der Herkunftsart
 	 */
-	public kurzBezeichnung : string = "";
+	public kurzBezeichnung: string = "";
 
 	/**
 	 * Die Bezeichnung der Herkunftsart
 	 */
-	public bezeichnung : string = "";
+	public bezeichnung: string = "";
 
 
 	/**
@@ -32,19 +32,19 @@ export class HerkunftsartKatalogEintragBezeichnung extends JavaObject {
 	 * @param kurzBezeichnung   die Kurz-Bezeichnung der Herkunftsart
 	 * @param bezeichnung       die Bezeichnung der Herkunftsart
 	 */
-	public constructor(schulform : Schulform, kurzBezeichnung : string, bezeichnung : string);
+	public constructor(schulform: Schulform, kurzBezeichnung: string, bezeichnung: string);
 
 	/**
 	 * Implementation for method overloads of 'constructor'
 	 */
-	public constructor(__param0? : Schulform, __param1? : string, __param2? : string) {
+	public constructor(__param0?: Schulform, __param1?: string, __param2?: string) {
 		super();
 		if ((__param0 === undefined) && (__param1 === undefined) && (__param2 === undefined)) {
 			// empty method body
 		} else if (((__param0 !== undefined) && ((__param0 instanceof JavaObject) && (__param0.isTranspiledInstanceOf('de.svws_nrw.asd.types.schule.Schulform')))) && ((__param1 !== undefined) && (typeof __param1 === "string")) && ((__param2 !== undefined) && (typeof __param2 === "string"))) {
-			const schulform : Schulform = cast_de_svws_nrw_asd_types_schule_Schulform(__param0);
-			const kurzBezeichnung : string = __param1;
-			const bezeichnung : string = __param2;
+			const schulform: Schulform = cast_de_svws_nrw_asd_types_schule_Schulform(__param0);
+			const kurzBezeichnung: string = __param1;
+			const bezeichnung: string = __param2;
 			this.schulform = schulform.name();
 			this.kurzBezeichnung = kurzBezeichnung;
 			this.bezeichnung = bezeichnung;
@@ -55,13 +55,13 @@ export class HerkunftsartKatalogEintragBezeichnung extends JavaObject {
 		return 'de.svws_nrw.core.data.schule.HerkunftsartKatalogEintragBezeichnung';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.schule.HerkunftsartKatalogEintragBezeichnung'].includes(name);
 	}
 
 	public static class = new Class<HerkunftsartKatalogEintragBezeichnung>('de.svws_nrw.core.data.schule.HerkunftsartKatalogEintragBezeichnung');
 
-	public static transpilerFromJSON(json : string): HerkunftsartKatalogEintragBezeichnung {
+	public static transpilerFromJSON(json: string): HerkunftsartKatalogEintragBezeichnung {
 		const obj = JSON.parse(json) as Partial<HerkunftsartKatalogEintragBezeichnung>;
 		const result = new HerkunftsartKatalogEintragBezeichnung();
 		if (obj.schulform === undefined)
@@ -76,7 +76,7 @@ export class HerkunftsartKatalogEintragBezeichnung extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : HerkunftsartKatalogEintragBezeichnung) : string {
+	public static transpilerToJSON(obj: HerkunftsartKatalogEintragBezeichnung): string {
 		let result = '{';
 		result += '"schulform" : ' + JSON.stringify(obj.schulform) + ',';
 		result += '"kurzBezeichnung" : ' + JSON.stringify(obj.kurzBezeichnung) + ',';
@@ -86,7 +86,7 @@ export class HerkunftsartKatalogEintragBezeichnung extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<HerkunftsartKatalogEintragBezeichnung>) : string {
+	public static transpilerToJSONPatch(obj: Partial<HerkunftsartKatalogEintragBezeichnung>): string {
 		let result = '{';
 		if (obj.schulform !== undefined) {
 			result += '"schulform" : ' + JSON.stringify(obj.schulform) + ',';
@@ -104,6 +104,6 @@ export class HerkunftsartKatalogEintragBezeichnung extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_schule_HerkunftsartKatalogEintragBezeichnung(obj : unknown) : HerkunftsartKatalogEintragBezeichnung {
+export function cast_de_svws_nrw_core_data_schule_HerkunftsartKatalogEintragBezeichnung(obj: unknown): HerkunftsartKatalogEintragBezeichnung {
 	return obj as HerkunftsartKatalogEintragBezeichnung;
 }

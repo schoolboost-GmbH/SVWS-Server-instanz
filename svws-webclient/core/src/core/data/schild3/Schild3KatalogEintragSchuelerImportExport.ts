@@ -6,52 +6,52 @@ export class Schild3KatalogEintragSchuelerImportExport extends JavaObject {
 	/**
 	 * Tabelle mit den Daten für den Import-Export
 	 */
-	public Tabelle : string | null = null;
+	public Tabelle: string | null = null;
 
 	/**
 	 * Anzeigename
 	 */
-	public TabellenAnzeige : string | null = null;
+	public TabellenAnzeige: string | null = null;
 
 	/**
 	 * Master-Tabelle
 	 */
-	public MasterTable : string | null = null;
+	public MasterTable: string | null = null;
 
 	/**
 	 * SQL-Befehl für dem Export
 	 */
-	public ExpCmd : string | null = null;
+	public ExpCmd: string | null = null;
 
 	/**
 	 * SQL-Befehl zum Ermitteln der Feldnamen
 	 */
-	public SrcGetFieldsSQL : string | null = null;
+	public SrcGetFieldsSQL: string | null = null;
 
 	/**
 	 * SQL-Befehl zum Enternen der Daten
 	 */
-	public DeleteSQL : string | null = null;
+	public DeleteSQL: string | null = null;
 
 	/**
 	 * SQL-Befehl zum Ermitteln der IDs
 	 */
-	public DstGetIDSQL : string | null = null;
+	public DstGetIDSQL: string | null = null;
 
 	/**
 	 * Hauptfeld
 	 */
-	public HauptFeld : string | null = null;
+	public HauptFeld: string | null = null;
 
 	/**
 	 * Detail-Feld
 	 */
-	public DetailFeld : string | null = null;
+	public DetailFeld: string | null = null;
 
 	/**
 	 * Reihenfolge
 	 */
-	public Reihenfolge : number | null = null;
+	public Reihenfolge: number | null = null;
 
 
 	/**
@@ -65,13 +65,13 @@ export class Schild3KatalogEintragSchuelerImportExport extends JavaObject {
 		return 'de.svws_nrw.core.data.schild3.Schild3KatalogEintragSchuelerImportExport';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.schild3.Schild3KatalogEintragSchuelerImportExport'].includes(name);
 	}
 
 	public static class = new Class<Schild3KatalogEintragSchuelerImportExport>('de.svws_nrw.core.data.schild3.Schild3KatalogEintragSchuelerImportExport');
 
-	public static transpilerFromJSON(json : string): Schild3KatalogEintragSchuelerImportExport {
+	public static transpilerFromJSON(json: string): Schild3KatalogEintragSchuelerImportExport {
 		const obj = JSON.parse(json) as Partial<Schild3KatalogEintragSchuelerImportExport>;
 		const result = new Schild3KatalogEintragSchuelerImportExport();
 		result.Tabelle = (obj.Tabelle === undefined) ? null : obj.Tabelle === null ? null : obj.Tabelle;
@@ -87,7 +87,7 @@ export class Schild3KatalogEintragSchuelerImportExport extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : Schild3KatalogEintragSchuelerImportExport) : string {
+	public static transpilerToJSON(obj: Schild3KatalogEintragSchuelerImportExport): string {
 		let result = '{';
 		result += '"Tabelle" : ' + ((obj.Tabelle === null) ? 'null' : JSON.stringify(obj.Tabelle)) + ',';
 		result += '"TabellenAnzeige" : ' + ((obj.TabellenAnzeige === null) ? 'null' : JSON.stringify(obj.TabellenAnzeige)) + ',';
@@ -104,7 +104,7 @@ export class Schild3KatalogEintragSchuelerImportExport extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<Schild3KatalogEintragSchuelerImportExport>) : string {
+	public static transpilerToJSONPatch(obj: Partial<Schild3KatalogEintragSchuelerImportExport>): string {
 		let result = '{';
 		if (obj.Tabelle !== undefined) {
 			result += '"Tabelle" : ' + ((obj.Tabelle === null) ? 'null' : JSON.stringify(obj.Tabelle)) + ',';
@@ -143,6 +143,6 @@ export class Schild3KatalogEintragSchuelerImportExport extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_schild3_Schild3KatalogEintragSchuelerImportExport(obj : unknown) : Schild3KatalogEintragSchuelerImportExport {
+export function cast_de_svws_nrw_core_data_schild3_Schild3KatalogEintragSchuelerImportExport(obj: unknown): Schild3KatalogEintragSchuelerImportExport {
 	return obj as Schild3KatalogEintragSchuelerImportExport;
 }

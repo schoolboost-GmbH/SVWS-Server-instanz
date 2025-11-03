@@ -13,15 +13,15 @@ const SGostGruppenprozesse = () => import("~/components/gost/gruppenprozesse/SGo
 export class RoutegostGruppenprozesse extends RouteNode<any, RouteGost> {
 
 	public constructor() {
-		super(Schulform.values(), [ BenutzerKompetenz.OBERSTUFE_ABITURJAHRGAENGE_VERWALTEN ], "gost.gruppenprozesse", "gruppenprozesse", SGostGruppenprozesse);
-		super.types = new Set([ ViewType.GRUPPENPROZESSE ]);
+		super(Schulform.values(), [BenutzerKompetenz.OBERSTUFE_ABITURJAHRGAENGE_VERWALTEN], "gost.gruppenprozesse", "gruppenprozesse", SGostGruppenprozesse);
+		super.types = new Set([ViewType.GRUPPENPROZESSE]);
 		super.mode = ServerMode.STABLE;
 		super.propHandler = (route) => this.getProps(route);
 		super.text = "Gruppenprozesse";
 	}
 
-	public addRouteParamsFromState() : RouteParamsRawGeneric {
-		return { id : "" };
+	public addRouteParamsFromState(): RouteParamsRawGeneric {
+		return { id: "" };
 	}
 
 	public getProps(to: RouteLocationNormalized): GostGruppenprozesseProps {

@@ -6,32 +6,32 @@ export class MigrateBody extends JavaObject {
 	/**
 	 * Gibt den Benutzernamen für die Quelldatenbank an.
 	 */
-	public srcUsername : string | null = null;
+	public srcUsername: string | null = null;
 
 	/**
 	 * Gibt das Kennwort für die Quelldatenbank an.
 	 */
-	public srcPassword : string | null = null;
+	public srcPassword: string | null = null;
 
 	/**
 	 * Gibt den Ort der Quelldatenbank an.
 	 */
-	public srcLocation : string | null = null;
+	public srcLocation: string | null = null;
 
 	/**
 	 * Gibt den Schema-Namen der Quelldatenbank.
 	 */
-	public srcSchema : string | null = null;
+	public srcSchema: string | null = null;
 
 	/**
 	 * Der Benutzername für den administrativen Zugang auf das neu zu erstellende Datenbank-Schema.
 	 */
-	public schemaUsername : string | null = null;
+	public schemaUsername: string | null = null;
 
 	/**
 	 * Das Kennwort für den administrativen Zugang auf das neu zu erstellende Datenbank-Schema.
 	 */
-	public schemaUserPassword : string | null = null;
+	public schemaUserPassword: string | null = null;
 
 
 	/**
@@ -45,13 +45,13 @@ export class MigrateBody extends JavaObject {
 		return 'de.svws_nrw.core.data.db.MigrateBody';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.db.MigrateBody'].includes(name);
 	}
 
 	public static class = new Class<MigrateBody>('de.svws_nrw.core.data.db.MigrateBody');
 
-	public static transpilerFromJSON(json : string): MigrateBody {
+	public static transpilerFromJSON(json: string): MigrateBody {
 		const obj = JSON.parse(json) as Partial<MigrateBody>;
 		const result = new MigrateBody();
 		result.srcUsername = (obj.srcUsername === undefined) ? null : obj.srcUsername === null ? null : obj.srcUsername;
@@ -63,7 +63,7 @@ export class MigrateBody extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : MigrateBody) : string {
+	public static transpilerToJSON(obj: MigrateBody): string {
 		let result = '{';
 		result += '"srcUsername" : ' + ((obj.srcUsername === null) ? 'null' : JSON.stringify(obj.srcUsername)) + ',';
 		result += '"srcPassword" : ' + ((obj.srcPassword === null) ? 'null' : JSON.stringify(obj.srcPassword)) + ',';
@@ -76,7 +76,7 @@ export class MigrateBody extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<MigrateBody>) : string {
+	public static transpilerToJSONPatch(obj: Partial<MigrateBody>): string {
 		let result = '{';
 		if (obj.srcUsername !== undefined) {
 			result += '"srcUsername" : ' + ((obj.srcUsername === null) ? 'null' : JSON.stringify(obj.srcUsername)) + ',';
@@ -103,6 +103,6 @@ export class MigrateBody extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_db_MigrateBody(obj : unknown) : MigrateBody {
+export function cast_de_svws_nrw_core_data_db_MigrateBody(obj: unknown): MigrateBody {
 	return obj as MigrateBody;
 }

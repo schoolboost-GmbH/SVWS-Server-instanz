@@ -13,15 +13,15 @@ export class KlausurterminblockungAlgorithmusGreedy1 extends Klausurterminblocku
 	 * @param pRandom   Ein {@link Random}-Objekt zur Steuerung des Zufalls über einen Anfangs-Seed.
 	 * @param pDynDaten Die aktuellen Blockungsdaten.
 	 */
-	public constructor(pRandom : Random, pDynDaten : KlausurterminblockungDynDaten) {
+	public constructor(pRandom: Random, pDynDaten: KlausurterminblockungDynDaten) {
 		super(pRandom, pDynDaten);
 	}
 
-	public toString() : string {
+	public toString(): string {
 		return "Klausurgruppen zufällig, Termine zufällig";
 	}
 
-	public berechne(pZeitEnde : number) : void {
+	public berechne(pZeitEnde: number): void {
 		this._dynDaten.aktion_Clear_KlausurgruppenZufaellig_TermineZufaellig();
 		this._dynDaten.aktionZustand1Speichern();
 		while (System.currentTimeMillis() < pZeitEnde) {
@@ -39,7 +39,7 @@ export class KlausurterminblockungAlgorithmusGreedy1 extends Klausurterminblocku
 		return 'de.svws_nrw.core.utils.gost.klausurplanung.KlausurterminblockungAlgorithmusGreedy1';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.utils.gost.klausurplanung.KlausurterminblockungAlgorithmusGreedy1', 'de.svws_nrw.core.utils.gost.klausurplanung.KlausurterminblockungAlgorithmusAbstract'].includes(name);
 	}
 
@@ -47,6 +47,6 @@ export class KlausurterminblockungAlgorithmusGreedy1 extends Klausurterminblocku
 
 }
 
-export function cast_de_svws_nrw_core_utils_gost_klausurplanung_KlausurterminblockungAlgorithmusGreedy1(obj : unknown) : KlausurterminblockungAlgorithmusGreedy1 {
+export function cast_de_svws_nrw_core_utils_gost_klausurplanung_KlausurterminblockungAlgorithmusGreedy1(obj: unknown): KlausurterminblockungAlgorithmusGreedy1 {
 	return obj as KlausurterminblockungAlgorithmusGreedy1;
 }

@@ -450,7 +450,7 @@
 
 <script setup lang="ts">
 
-	import type { PropType} from 'vue';
+	import type { PropType } from 'vue';
 	import { defineComponent, reactive } from 'vue';
 	import { DeveloperNotificationException } from '../../../core/src/core/exceptions/DeveloperNotificationException';
 
@@ -507,7 +507,7 @@
 			'text-ui-ondanger', 'text-ui-ondanger-hover', 'text-ui-ondanger-secondary',
 		]],
 		['onsuccess', [
-			'text-ui-onsuccess', 'text-ui-onsuccess-hover','text-ui-onsuccess-secondary',
+			'text-ui-onsuccess', 'text-ui-onsuccess-hover', 'text-ui-onsuccess-secondary',
 		]],
 		['onwarning', [
 			'text-ui-onwarning', 'text-ui-onwarning-hover',	'text-ui-onwarning-secondary',
@@ -623,7 +623,7 @@
 	]);
 
 	const shadowColorMap: Map<string, string[]> = new Map([
-		['default', ['shadow-ui-0', 'shadow-ui-10', 'shadow-ui-25', 'shadow-ui-50', 'shadow-ui-75', 'shadow-ui-100'	]],
+		['default', ['shadow-ui-0', 'shadow-ui-10', 'shadow-ui-25', 'shadow-ui-50', 'shadow-ui-75', 'shadow-ui-100']],
 	]);
 
 	// Eine Map, die den type-Namen zusammen mit den dazugehörigen Farben enthält.
@@ -637,7 +637,7 @@
 		role: ['', 'brand', 'statistic', 'selected', 'danger', 'success', 'warning', 'caution', 'neutral', 'disabled', 'onbrand', 'onstatistic', 'onselected', 'ondanger', 'onsuccess', 'onwarning', 'oncaution', 'onneutral', 'ondisabled'],
 		prominence: ['', 'secondary', '0', '10', '25', '50', '75', '100'],
 		interaction: ['', 'hover'],
-	}
+	};
 
 	// Eine Inline-Komponente, die pro Theme verwendet wird. Das Auslagern in diese Komponente verhindert, dass im Template mehrmals Funktionen für Kontraste
 	// und Hintergrundfarben aufgerufen werden müssen.
@@ -654,13 +654,13 @@
 		},
 		setup(props, { slots }) {
 			return () => {
-				return slots.default ? slots.default({ contrast: props.contrastValues, backgroundColor: props.background }) : null
-			}
+				return slots.default ? slots.default({ contrast: props.contrastValues, backgroundColor: props.background }) : null;
+			};
 		},
 	});
 
 	// Enthält alle Informationen für die Vorschau der Textfarben auf der rechten Bildschirmseite.
-	const colorPreview = reactive ({
+	const colorPreview = reactive({
 		color: '',
 		background: '',
 		dark: false,
@@ -773,10 +773,12 @@
 			.split('-')
 			.map((part, index, parts) => {
 				// Erster Teil wird 'bg'
-				if (index === 0) return 'bg';
+				if (index === 0)
+					return 'bg';
 
 				// Das 'on' am Anfang des dritten Teils entfernen
-				if (index === 2 && part.startsWith('on')) return part.replace(/^on/, '');
+				if (index === 2 && part.startsWith('on'))
+					return part.replace(/^on/, '');
 
 				// Wenn der String mit '-secondary-hover' endet, entferne '-secondary'
 				if (index === parts.length - 2 && part === 'secondary' && parts[parts.length - 1] === 'hover') {
@@ -821,7 +823,7 @@
 		const rsrgb = rgb.r / 255;
 		const gsrgb = rgb.g / 255;
 		const bsrgb = rgb.b / 255;
-		//sRGB-Gammakorrektur
+		// sRGB-Gammakorrektur
 		const r = rsrgb <= 0.03928 ? rsrgb * lowc : Math.pow((rsrgb + 0.055) / 1.055, 2.4);
 		const g = gsrgb <= 0.03928 ? gsrgb * lowc : Math.pow((gsrgb + 0.055) / 1.055, 2.4);
 		const b = bsrgb <= 0.03928 ? bsrgb * lowc : Math.pow((bsrgb + 0.055) / 1.055, 2.4);
@@ -879,7 +881,7 @@
 	 *
 	 * @returns { r: number; g: number; b: number }   ein Objekt mit den RGB-Werten
 	 */
-	function hexToRgb (color: string): { r: number; g: number; b: number }{
+	function hexToRgb(color: string): { r: number; g: number; b: number } {
 		// entfernt das '#' Zeichen
 		let hex = color.slice(1);
 		// Wandelt 3-stellige Hexadezimalwerte in 6-stellige um, indem die Buchstaben verdoppelt werden
@@ -900,7 +902,7 @@
 	 *
 	 * @returns { r: number; g: number; b: number }   ein Objekt mit den RGB-Werten
 	 */
-	function rgbStringToRgb (color: string): { r: number; g: number; b: number } {
+	function rgbStringToRgb(color: string): { r: number; g: number; b: number } {
 		// Extrahiere die Zahlen aus dem RGB-Farbwert, der als string übergeben wird.
 		const match = color.match(/\d+/g);
 		// Prüft, ob ein gültiger Wert übergeben wurde
@@ -944,14 +946,19 @@
 		const hueToRGB = (p: number, q: number, tRaw: number): number => {
 			let t = tRaw;
 			// Bereinige t, wenn es außerhalb des [0, 1]-Bereichs liegt
-			if (t < 0) t += 1;
-			if (t > 1) t -= 1;
+			if (t < 0)
+				t += 1;
+			if (t > 1)
+				t -= 1;
 
 			// Berechne RGB basierend auf dem Wert von t (Hue)
 			// Diese Berechnungen kommen aus den HSL-to-RGB Formeln
-			if (t < (1 / 6)) return p + ((q - p) * 6 * t); // Farbton zwischen 0 und 60°
-			if (t < (1 / 2)) return q; // Farbton zwischen 60° und 180°
-			if (t < (2 / 3)) return p + ((q - p) * ((2 / 3) - t) * 6); // Farbton zwischen 180° und 240°
+			if (t < (1 / 6))
+				return p + ((q - p) * 6 * t); // Farbton zwischen 0 und 60°
+			if (t < (1 / 2))
+				return q; // Farbton zwischen 60° und 180°
+			if (t < (2 / 3))
+				return p + ((q - p) * ((2 / 3) - t) * 6); // Farbton zwischen 180° und 240°
 			return p; // Farbton zwischen 240° und 360°
 		};
 
@@ -983,8 +990,8 @@
 	 *
 	 * @returns { contrastRatio: string, contrastLevel: string }   ein Objekt mit dem Kontrastverhältnis und dem Kontrastlevel
 	 */
-	function getContrast(color: string, dark: boolean) : { contrastRatio: string, contrastLevel: string } {
-		return { contrastLevel:'', contrastRatio: ''}
+	function getContrast(color: string, dark: boolean): { contrastRatio: string, contrastLevel: string } {
+		return { contrastLevel: '', contrastRatio: '' };
 		const foreground = resolveComputedColor(color, dark);
 		const background = resolveComputedColor(getBackgroundColor(color), dark);
 
@@ -993,13 +1000,13 @@
 		// Berechnen des Kontrastverhältnisses
 		const contrast = getContrastLuminance(getContrastRelativeLuminance(bg), getContrastRelativeLuminance(fg));
 		// Bewerten des Kontrastverhältnisses gemäß WCAG-Richtlinien
-		let score ="";
+		let score = "";
 		if (contrast >= 7)
-			score ="AAA";
+			score = "AAA";
 		else if (contrast >= 4.5)
-			score ="AALargeAAA";
+			score = "AALargeAAA";
 		else if (contrast >= 3)
-			score ="noneLargeAA";
+			score = "noneLargeAA";
 		else
 			score = "none";
 		return { contrastRatio: contrast.toFixed(2), contrastLevel: score };
@@ -1013,7 +1020,7 @@
 	async function copyToClipboard(color: string) {
 		try {
 			await navigator.clipboard.writeText(color);
-		} catch(e) {
+		} catch (e) {
 			throw new DeveloperNotificationException("Beim Kopieren ist ein Fehler aufgetreten!");
 		}
 	}

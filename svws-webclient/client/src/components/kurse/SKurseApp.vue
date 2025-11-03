@@ -72,6 +72,6 @@
 		if (auswahlKurseList.size() > 5)
 			return `${auswahlKurseList.size()} Kurse ausgewählt`;
 		return [...auswahlKurseList].map(k => k.kuerzel).join(', ');
-	})
+	});
 
 </script>

@@ -12,8 +12,8 @@ export interface SchuelerLernabschnittLeistungenProps {
 	schuleSchuljahresabschnitt: () => Schuljahresabschnitt;
 	schuelerListeManager: () => SchuelerListeManager;
 	manager: () => SchuelerLernabschnittManager;
-	patch: (data : Partial<SchuelerLernabschnittsdaten>) => Promise<void>;
-	patchLeistung: (data : Partial<SchuelerLeistungsdaten>, id : number) => Promise<void>;
-	addLeistung: (fachID : number) => Promise<void>;
+	patch: (data: Partial<SchuelerLernabschnittsdaten>) => Promise<void>;
+	patchLeistung: (data: Partial<SchuelerLeistungsdaten>, id: number) => Promise<void>;
+	addLeistung: (fachID: number) => Promise<void>;
 	deleteLeistungen: (leistungenIDs: List<number>) => Promise<void>;
 }

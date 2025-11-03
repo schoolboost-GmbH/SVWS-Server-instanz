@@ -13,13 +13,13 @@
 	import { ArrayList } from '../../../../../core/src/java/util/ArrayList';
 	import type { List } from '../../../../../core/src/java/util/List';
 
-	const fehlerliste: List<GostBelegpruefungErgebnisFehler> = new ArrayList()
+	const fehlerliste: List<GostBelegpruefungErgebnisFehler> = new ArrayList();
 	const f1 = new GostBelegpruefungErgebnisFehler();
 	f1.art = GostBelegungsfehlerArt.HINWEIS.kuerzel;
-	f1.beschreibung = "Testfehler 1"
+	f1.beschreibung = "Testfehler 1";
 	const f2 = new GostBelegpruefungErgebnisFehler();
 	f2.art = GostBelegungsfehlerArt.HINWEIS.kuerzel;
-	f2.beschreibung = "Testfehler 2"
+	f2.beschreibung = "Testfehler 2";
 	fehlerliste.add(f1);
 	fehlerliste.add(f2);
 

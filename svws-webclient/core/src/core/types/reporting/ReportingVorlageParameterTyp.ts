@@ -4,52 +4,52 @@ import { Class } from '../../../java/lang/Class';
 export class ReportingVorlageParameterTyp extends JavaEnum<ReportingVorlageParameterTyp> {
 
 	/** an array containing all values of this enumeration */
-	static readonly all_values_by_ordinal : Array<ReportingVorlageParameterTyp> = [];
+	static readonly all_values_by_ordinal: Array<ReportingVorlageParameterTyp> = [];
 
 	/** an array containing all values of this enumeration indexed by their name*/
-	static readonly all_values_by_name : Map<string, ReportingVorlageParameterTyp> = new Map<string, ReportingVorlageParameterTyp>();
+	static readonly all_values_by_name: Map<string, ReportingVorlageParameterTyp> = new Map<string, ReportingVorlageParameterTyp>();
 
 	/**
 	 * Vorlage-Parameter wurde vom Typ her noch nicht festgelegt.
 	 */
-	public static readonly UNDEFINED : ReportingVorlageParameterTyp = new ReportingVorlageParameterTyp("UNDEFINED", 0, 0);
+	public static readonly UNDEFINED: ReportingVorlageParameterTyp = new ReportingVorlageParameterTyp("UNDEFINED", 0, 0);
 
 	/**
 	 * Vorlage-Parameter des Typs BOOLEAN
 	 */
-	public static readonly BOOLEAN : ReportingVorlageParameterTyp = new ReportingVorlageParameterTyp("BOOLEAN", 1, 1);
+	public static readonly BOOLEAN: ReportingVorlageParameterTyp = new ReportingVorlageParameterTyp("BOOLEAN", 1, 1);
 
 	/**
 	 * Vorlage-Parameter des Typs String
 	 */
-	public static readonly STRING : ReportingVorlageParameterTyp = new ReportingVorlageParameterTyp("STRING", 2, 2);
+	public static readonly STRING: ReportingVorlageParameterTyp = new ReportingVorlageParameterTyp("STRING", 2, 2);
 
 	/**
 	 * Vorlage-Parameter des Typs LONG
 	 */
-	public static readonly LONG : ReportingVorlageParameterTyp = new ReportingVorlageParameterTyp("LONG", 3, 3);
+	public static readonly LONG: ReportingVorlageParameterTyp = new ReportingVorlageParameterTyp("LONG", 3, 3);
 
 	/**
 	 * Vorlage-Parameter des Typs INTEGER
 	 */
-	public static readonly INTEGER : ReportingVorlageParameterTyp = new ReportingVorlageParameterTyp("INTEGER", 4, 4);
+	public static readonly INTEGER: ReportingVorlageParameterTyp = new ReportingVorlageParameterTyp("INTEGER", 4, 4);
 
 	/**
 	 * Vorlage-Parameter des Typs DECIMAL
 	 */
-	public static readonly DECIMAL : ReportingVorlageParameterTyp = new ReportingVorlageParameterTyp("DECIMAL", 5, 5);
+	public static readonly DECIMAL: ReportingVorlageParameterTyp = new ReportingVorlageParameterTyp("DECIMAL", 5, 5);
 
 	/**
 	 * Die ID des Vorlage-Parameter-Typs
 	 */
-	private readonly id : number;
+	private readonly id: number;
 
 	/**
 	 * Erstellt einen neuen ReportingDVorlageParameterTyp
 	 *
 	 * @param id Die ID des ReportingVorlageParameterTyp
 	 */
-	private constructor(name : string, ordinal : number, id : number) {
+	private constructor(name: string, ordinal: number, id: number) {
 		super(name, ordinal);
 		ReportingVorlageParameterTyp.all_values_by_ordinal.push(this);
 		ReportingVorlageParameterTyp.all_values_by_name.set(name, this);
@@ -61,7 +61,7 @@ export class ReportingVorlageParameterTyp extends JavaEnum<ReportingVorlageParam
 	 *
 	 * @return Die ID dieses ReportingDVorlageParameterTyp
 	 */
-	public getId() : number {
+	public getId(): number {
 		return this.id;
 	}
 
@@ -72,7 +72,7 @@ export class ReportingVorlageParameterTyp extends JavaEnum<ReportingVorlageParam
 	 *
 	 * @return 		Der ReportingDVorlageParameterTyp
 	 */
-	public static getByID(id : number) : ReportingVorlageParameterTyp {
+	public static getByID(id: number): ReportingVorlageParameterTyp {
 		for (const dp of ReportingVorlageParameterTyp.values())
 			if (dp.id === id)
 				return dp;
@@ -84,7 +84,7 @@ export class ReportingVorlageParameterTyp extends JavaEnum<ReportingVorlageParam
 	 *
 	 * @returns the array with enumeration values
 	 */
-	public static values() : Array<ReportingVorlageParameterTyp> {
+	public static values(): Array<ReportingVorlageParameterTyp> {
 		return [...this.all_values_by_ordinal];
 	}
 
@@ -95,7 +95,7 @@ export class ReportingVorlageParameterTyp extends JavaEnum<ReportingVorlageParam
 	 *
 	 * @returns the enumeration values or null
 	 */
-	public static valueOf(name : string) : ReportingVorlageParameterTyp | null {
+	public static valueOf(name: string): ReportingVorlageParameterTyp | null {
 		const tmp = this.all_values_by_name.get(name);
 		return (!tmp) ? null : tmp;
 	}
@@ -104,7 +104,7 @@ export class ReportingVorlageParameterTyp extends JavaEnum<ReportingVorlageParam
 		return 'de.svws_nrw.core.types.reporting.ReportingVorlageParameterTyp';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.types.reporting.ReportingVorlageParameterTyp', 'java.lang.Enum', 'java.lang.Comparable'].includes(name);
 	}
 
@@ -112,6 +112,6 @@ export class ReportingVorlageParameterTyp extends JavaEnum<ReportingVorlageParam
 
 }
 
-export function cast_de_svws_nrw_core_types_reporting_ReportingVorlageParameterTyp(obj : unknown) : ReportingVorlageParameterTyp {
+export function cast_de_svws_nrw_core_types_reporting_ReportingVorlageParameterTyp(obj: unknown): ReportingVorlageParameterTyp {
 	return obj as ReportingVorlageParameterTyp;
 }

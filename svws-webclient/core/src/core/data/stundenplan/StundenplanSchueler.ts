@@ -6,22 +6,22 @@ export class StundenplanSchueler extends JavaObject {
 	/**
 	 * Die ID des Schülers.
 	 */
-	public id : number = -1;
+	public id: number = -1;
 
 	/**
 	 * Der Nachname des Schülers.
 	 */
-	public nachname : string = "";
+	public nachname: string = "";
 
 	/**
 	 * Der Vorname des Schülers.
 	 */
-	public vorname : string = "";
+	public vorname: string = "";
 
 	/**
 	 * Die ID der Klasse in der sich der Schüler befindet.
 	 */
-	public idKlasse : number = -1;
+	public idKlasse: number = -1;
 
 
 	/**
@@ -35,13 +35,13 @@ export class StundenplanSchueler extends JavaObject {
 		return 'de.svws_nrw.core.data.stundenplan.StundenplanSchueler';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.stundenplan.StundenplanSchueler'].includes(name);
 	}
 
 	public static class = new Class<StundenplanSchueler>('de.svws_nrw.core.data.stundenplan.StundenplanSchueler');
 
-	public static transpilerFromJSON(json : string): StundenplanSchueler {
+	public static transpilerFromJSON(json: string): StundenplanSchueler {
 		const obj = JSON.parse(json) as Partial<StundenplanSchueler>;
 		const result = new StundenplanSchueler();
 		if (obj.id === undefined)
@@ -59,7 +59,7 @@ export class StundenplanSchueler extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : StundenplanSchueler) : string {
+	public static transpilerToJSON(obj: StundenplanSchueler): string {
 		let result = '{';
 		result += '"id" : ' + obj.id.toString() + ',';
 		result += '"nachname" : ' + JSON.stringify(obj.nachname) + ',';
@@ -70,7 +70,7 @@ export class StundenplanSchueler extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<StundenplanSchueler>) : string {
+	public static transpilerToJSONPatch(obj: Partial<StundenplanSchueler>): string {
 		let result = '{';
 		if (obj.id !== undefined) {
 			result += '"id" : ' + obj.id.toString() + ',';
@@ -91,6 +91,6 @@ export class StundenplanSchueler extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_stundenplan_StundenplanSchueler(obj : unknown) : StundenplanSchueler {
+export function cast_de_svws_nrw_core_data_stundenplan_StundenplanSchueler(obj: unknown): StundenplanSchueler {
 	return obj as StundenplanSchueler;
 }

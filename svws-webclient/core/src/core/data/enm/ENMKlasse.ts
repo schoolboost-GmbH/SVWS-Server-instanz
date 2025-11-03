@@ -8,32 +8,32 @@ export class ENMKlasse extends JavaObject {
 	/**
 	 * Die ID der Klasse aus der SVWS-DB (z.B. 16)
 	 */
-	public id : number = 0;
+	public id: number = 0;
 
 	/**
 	 * Das Kürzel der Klasse, wie es im Rahmen der amtlichen Schulstatistik verwendet wird. (z.B. EF)
 	 */
-	public kuerzel : string | null = null;
+	public kuerzel: string | null = null;
 
 	/**
 	 * Das Kürzel ser Klasse, wie er im Rahmen der Schule benannt wird und angezeigt werden soll. (z.B. EF)
 	 */
-	public kuerzelAnzeige : string | null = null;
+	public kuerzelAnzeige: string | null = null;
 
 	/**
 	 * Die ID des Jahrgangs aus der SVWS-DB zu der die Klasse gehört (z.B. 11) oder null, falls es sich um eine jahrgangsübergreifende Klasse handelt
 	 */
-	public idJahrgang : number | null = null;
+	public idJahrgang: number | null = null;
 
 	/**
 	 * Die Reihenfolge der Klasse bei der Sortierung der Klasse. (z.B. 8)
 	 */
-	public sortierung : number = 0;
+	public sortierung: number = 0;
 
 	/**
 	 * Die IDs der zugeordneten Klassenlehrer.
 	 */
-	public klassenlehrer : List<number> = new ArrayList<number>();
+	public klassenlehrer: List<number> = new ArrayList<number>();
 
 
 	/**
@@ -47,13 +47,13 @@ export class ENMKlasse extends JavaObject {
 		return 'de.svws_nrw.core.data.enm.ENMKlasse';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.enm.ENMKlasse'].includes(name);
 	}
 
 	public static class = new Class<ENMKlasse>('de.svws_nrw.core.data.enm.ENMKlasse');
 
-	public static transpilerFromJSON(json : string): ENMKlasse {
+	public static transpilerFromJSON(json: string): ENMKlasse {
 		const obj = JSON.parse(json) as Partial<ENMKlasse>;
 		const result = new ENMKlasse();
 		if (obj.id === undefined)
@@ -73,7 +73,7 @@ export class ENMKlasse extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : ENMKlasse) : string {
+	public static transpilerToJSON(obj: ENMKlasse): string {
 		let result = '{';
 		result += '"id" : ' + obj.id.toString() + ',';
 		result += '"kuerzel" : ' + ((obj.kuerzel === null) ? 'null' : JSON.stringify(obj.kuerzel)) + ',';
@@ -93,7 +93,7 @@ export class ENMKlasse extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<ENMKlasse>) : string {
+	public static transpilerToJSONPatch(obj: Partial<ENMKlasse>): string {
 		let result = '{';
 		if (obj.id !== undefined) {
 			result += '"id" : ' + obj.id.toString() + ',';
@@ -127,6 +127,6 @@ export class ENMKlasse extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_enm_ENMKlasse(obj : unknown) : ENMKlasse {
+export function cast_de_svws_nrw_core_data_enm_ENMKlasse(obj: unknown): ENMKlasse {
 	return obj as ENMKlasse;
 }

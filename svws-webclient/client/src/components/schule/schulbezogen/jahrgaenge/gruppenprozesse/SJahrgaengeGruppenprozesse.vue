@@ -61,7 +61,7 @@
 		if (currentAction.value === 'delete')
 			return props.deleteCheck();
 		return [true, []];
-	})
+	});
 
 	function setCurrentAction(newAction: string, open: boolean) {
 		if (newAction === oldAction.value.name && !open)
@@ -69,7 +69,7 @@
 		oldAction.value.name = currentAction.value;
 		oldAction.value.open = (currentAction.value === "");
 		if (open)
-			currentAction.value= newAction;
+			currentAction.value = newAction;
 		else
 			currentAction.value = "";
 	}

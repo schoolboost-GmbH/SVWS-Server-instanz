@@ -15,13 +15,13 @@ export class SchulabschlussBerufsbildendKatalogEintrag extends CoreTypeData {
 		return 'de.svws_nrw.asd.data.schule.SchulabschlussBerufsbildendKatalogEintrag';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.asd.data.schule.SchulabschlussBerufsbildendKatalogEintrag', 'de.svws_nrw.asd.data.CoreTypeData'].includes(name);
 	}
 
 	public static class = new Class<SchulabschlussBerufsbildendKatalogEintrag>('de.svws_nrw.asd.data.schule.SchulabschlussBerufsbildendKatalogEintrag');
 
-	public static transpilerFromJSON(json : string): SchulabschlussBerufsbildendKatalogEintrag {
+	public static transpilerFromJSON(json: string): SchulabschlussBerufsbildendKatalogEintrag {
 		const obj = JSON.parse(json) as Partial<SchulabschlussBerufsbildendKatalogEintrag>;
 		const result = new SchulabschlussBerufsbildendKatalogEintrag();
 		if (obj.id === undefined)
@@ -41,7 +41,7 @@ export class SchulabschlussBerufsbildendKatalogEintrag extends CoreTypeData {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : SchulabschlussBerufsbildendKatalogEintrag) : string {
+	public static transpilerToJSON(obj: SchulabschlussBerufsbildendKatalogEintrag): string {
 		let result = '{';
 		result += '"id" : ' + obj.id.toString() + ',';
 		result += '"schluessel" : ' + JSON.stringify(obj.schluessel) + ',';
@@ -54,7 +54,7 @@ export class SchulabschlussBerufsbildendKatalogEintrag extends CoreTypeData {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<SchulabschlussBerufsbildendKatalogEintrag>) : string {
+	public static transpilerToJSONPatch(obj: Partial<SchulabschlussBerufsbildendKatalogEintrag>): string {
 		let result = '{';
 		if (obj.id !== undefined) {
 			result += '"id" : ' + obj.id.toString() + ',';
@@ -81,6 +81,6 @@ export class SchulabschlussBerufsbildendKatalogEintrag extends CoreTypeData {
 
 }
 
-export function cast_de_svws_nrw_asd_data_schule_SchulabschlussBerufsbildendKatalogEintrag(obj : unknown) : SchulabschlussBerufsbildendKatalogEintrag {
+export function cast_de_svws_nrw_asd_data_schule_SchulabschlussBerufsbildendKatalogEintrag(obj: unknown): SchulabschlussBerufsbildendKatalogEintrag {
 	return obj as SchulabschlussBerufsbildendKatalogEintrag;
 }

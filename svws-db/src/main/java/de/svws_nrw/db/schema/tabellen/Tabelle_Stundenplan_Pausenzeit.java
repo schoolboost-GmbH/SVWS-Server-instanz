@@ -17,41 +17,41 @@ import de.svws_nrw.db.schema.SchemaTabelleUniqueIndex;
 public class Tabelle_Stundenplan_Pausenzeit extends SchemaTabelle {
 
 	/** Die Definition der Tabellenspalte ID */
-	public SchemaTabelleSpalte col_ID = add("ID", SchemaDatentypen.BIGINT, true)
+	public final SchemaTabelleSpalte col_ID = add("ID", SchemaDatentypen.BIGINT, true)
 			.setNotNull()
 			.setJavaComment("Eine ID, die einen Pausenzeit-Eintrag eindeutig identifiziert - hat keinen Bezug zur ID der Katalog-Tabelle");
 
 	/** Die Definition der Tabellenspalte Stundenplan_ID */
-	public SchemaTabelleSpalte col_Stundenplan_ID = add("Stundenplan_ID", SchemaDatentypen.BIGINT, false)
+	public final SchemaTabelleSpalte col_Stundenplan_ID = add("Stundenplan_ID", SchemaDatentypen.BIGINT, false)
 			.setNotNull()
 			.setJavaComment("Die ID des Stundenplans, dem dies Pausenzeit zugeordnet ist");
 
 	/** Die Definition der Tabellenspalte Tag */
-	public SchemaTabelleSpalte col_Tag = add("Tag", SchemaDatentypen.INT, false)
+	public final SchemaTabelleSpalte col_Tag = add("Tag", SchemaDatentypen.INT, false)
 			.setNotNull()
 			.setJavaComment("Der Wochentag laut ISO-8601 Standard: (1 - Montag, 2 - Dienstag, ...)");
 
 	/** Die Definition der Tabellenspalte Beginn */
-	public SchemaTabelleSpalte col_Beginn = add("Beginn", SchemaDatentypen.TIME, false)
+	public final SchemaTabelleSpalte col_Beginn = add("Beginn", SchemaDatentypen.TIME, false)
 			.setNotNull()
 			.setConverter(UhrzeitConverter.class)
 			.setJavaComment("Die Uhrzeit, wann die Pausenzeit beginnt");
 
 	/** Die Definition der Tabellenspalte Ende */
-	public SchemaTabelleSpalte col_Ende = add("Ende", SchemaDatentypen.TIME, false)
+	public final SchemaTabelleSpalte col_Ende = add("Ende", SchemaDatentypen.TIME, false)
 			.setNotNull()
 			.setConverter(UhrzeitConverter.class)
 			.setJavaComment("Die Uhrzeit, wann die Pausenzeit endet");
 
 	/** Die Definition der Tabellenspalte Bezeichnung */
-	public SchemaTabelleSpalte col_Bezeichnung = add("Bezeichnung", SchemaDatentypen.VARCHAR, false).setDatenlaenge(40)
+	public final SchemaTabelleSpalte col_Bezeichnung = add("Bezeichnung", SchemaDatentypen.VARCHAR, false).setDatenlaenge(40)
 			.setNotNull()
 			.setDefault("Pause")
 			.setJavaComment("Eine kurze Bezeichnung, welche die Art der Pausenzeit genauer beschreibt (z.B. Mittagspause)");
 
 
 	/** Die Definition des Fremdschlüssels Stundenplan_Pausenzeit_Stundenplan_FK */
-	public SchemaTabelleFremdschluessel fk_Stundenplan_Pausenzeit_Stundenplan_FK = addForeignKey(
+	public final SchemaTabelleFremdschluessel fk_Stundenplan_Pausenzeit_Stundenplan_FK = addForeignKey(
 			"Stundenplan_Pausenzeit_Stundenplan_FK",
 			/* OnUpdate: */ SchemaFremdschluesselAktionen.CASCADE,
 			/* OnDelete: */ SchemaFremdschluesselAktionen.CASCADE,
@@ -60,7 +60,7 @@ public class Tabelle_Stundenplan_Pausenzeit extends SchemaTabelle {
 
 
 	/** Die Definition des Unique-Index Stundenplan_Pausenzeit_UC1 */
-	public SchemaTabelleUniqueIndex unique_Stundenplan_Pausenzeit_UC1 = addUniqueIndex("Stundenplan_Pausenzeit_UC1",
+	public final SchemaTabelleUniqueIndex unique_Stundenplan_Pausenzeit_UC1 = addUniqueIndex("Stundenplan_Pausenzeit_UC1",
 			col_Stundenplan_ID,
 			col_Beginn,
 			col_Ende,

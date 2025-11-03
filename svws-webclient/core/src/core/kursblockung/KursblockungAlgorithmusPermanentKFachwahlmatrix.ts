@@ -15,24 +15,24 @@ export class KursblockungAlgorithmusPermanentKFachwahlmatrix extends Kursblockun
 	 * @param logger  Logger für Benutzerhinweise, Warnungen und Fehler.
 	 * @param input   Die dynamischen Blockungsdaten.
 	 */
-	public constructor(random : Random, logger : Logger, input : GostBlockungsdatenManager) {
+	public constructor(random: Random, logger: Logger, input: GostBlockungsdatenManager) {
 		super(random, logger, input);
 		this.dynDaten.aktionSchuelerAusAllenKursenEntfernen();
 		this.dynDaten.aktionKurseFreieZufaelligVerteilen();
 		this.dynDaten.aktionZustandSpeichernK();
 	}
 
-	public toString() : string {
+	public toString(): string {
 		return "KursblockungAlgorithmusPermanentKFachwahlmatrix";
 	}
 
-	public next(zeitEnde : number) : void {
+	public next(zeitEnde: number): void {
 		do {
 			this.optimiere();
 		} while (System.currentTimeMillis() < zeitEnde);
 	}
 
-	private optimiere() : void {
+	private optimiere(): void {
 		do {
 			this.dynDaten.aktionKursVerteilenEinenZufaelligenFreien();
 			if (this.dynDaten.gibCompareZustandK_NW_KD_FW() > 0) {
@@ -43,7 +43,7 @@ export class KursblockungAlgorithmusPermanentKFachwahlmatrix extends Kursblockun
 		this.dynDaten.aktionZustandLadenK();
 	}
 
-	public ladeBestMitSchuelerverteilung() : void {
+	public ladeBestMitSchuelerverteilung(): void {
 		this.dynDaten.aktionZustandLadenK();
 		this.dynDaten.aktionSchuelerVerteilenMitGewichtetenBipartitemMatching();
 	}
@@ -52,7 +52,7 @@ export class KursblockungAlgorithmusPermanentKFachwahlmatrix extends Kursblockun
 		return 'de.svws_nrw.core.kursblockung.KursblockungAlgorithmusPermanentKFachwahlmatrix';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.kursblockung.KursblockungAlgorithmusPermanentK', 'de.svws_nrw.core.kursblockung.KursblockungAlgorithmusPermanentKFachwahlmatrix'].includes(name);
 	}
 
@@ -60,6 +60,6 @@ export class KursblockungAlgorithmusPermanentKFachwahlmatrix extends Kursblockun
 
 }
 
-export function cast_de_svws_nrw_core_kursblockung_KursblockungAlgorithmusPermanentKFachwahlmatrix(obj : unknown) : KursblockungAlgorithmusPermanentKFachwahlmatrix {
+export function cast_de_svws_nrw_core_kursblockung_KursblockungAlgorithmusPermanentKFachwahlmatrix(obj: unknown): KursblockungAlgorithmusPermanentKFachwahlmatrix {
 	return obj as KursblockungAlgorithmusPermanentKFachwahlmatrix;
 }

@@ -6,27 +6,27 @@ export class Fahrschuelerart extends JavaObject {
 	/**
 	 * Die ID der Fahrschülerart.
 	 */
-	public id : number = 0;
+	public id: number = 0;
 
 	/**
 	 * Die Bezeichnung der Fahrschülerart.
 	 */
-	public bezeichnung : string | null = "";
+	public bezeichnung: string | null = "";
 
 	/**
 	 * gibt an, ob die Fahrschülerart in der Anwendung sichtbar sein soll oder nicht
 	 */
-	public istSichtbar : boolean = true;
+	public istSichtbar: boolean = true;
 
 	/**
 	 * Gibt an, ob die Fahrschülerart in der Anwendung änderbar sein soll oder nicht.
 	 */
-	public istAenderbar : boolean = true;
+	public istAenderbar: boolean = true;
 
 	/**
 	 * Gibt die Position in der Sortierreihenfolge für die Fahrschülerarten an.
 	 */
-	public sortierung : number = 1;
+	public sortierung: number = 1;
 
 
 	/**
@@ -40,13 +40,13 @@ export class Fahrschuelerart extends JavaObject {
 		return 'de.svws_nrw.core.data.schule.Fahrschuelerart';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.schule.Fahrschuelerart'].includes(name);
 	}
 
 	public static class = new Class<Fahrschuelerart>('de.svws_nrw.core.data.schule.Fahrschuelerart');
 
-	public static transpilerFromJSON(json : string): Fahrschuelerart {
+	public static transpilerFromJSON(json: string): Fahrschuelerart {
 		const obj = JSON.parse(json) as Partial<Fahrschuelerart>;
 		const result = new Fahrschuelerart();
 		if (obj.id === undefined)
@@ -65,7 +65,7 @@ export class Fahrschuelerart extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : Fahrschuelerart) : string {
+	public static transpilerToJSON(obj: Fahrschuelerart): string {
 		let result = '{';
 		result += '"id" : ' + obj.id.toString() + ',';
 		result += '"bezeichnung" : ' + ((obj.bezeichnung === null) ? 'null' : JSON.stringify(obj.bezeichnung)) + ',';
@@ -77,7 +77,7 @@ export class Fahrschuelerart extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<Fahrschuelerart>) : string {
+	public static transpilerToJSONPatch(obj: Partial<Fahrschuelerart>): string {
 		let result = '{';
 		if (obj.id !== undefined) {
 			result += '"id" : ' + obj.id.toString() + ',';
@@ -101,6 +101,6 @@ export class Fahrschuelerart extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_schule_Fahrschuelerart(obj : unknown) : Fahrschuelerart {
+export function cast_de_svws_nrw_core_data_schule_Fahrschuelerart(obj: unknown): Fahrschuelerart {
 	return obj as Fahrschuelerart;
 }

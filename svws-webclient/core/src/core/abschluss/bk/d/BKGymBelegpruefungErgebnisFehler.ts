@@ -7,17 +7,17 @@ export class BKGymBelegpruefungErgebnisFehler extends JavaObject {
 	/**
 	 * Ein eindeutiger Fehlercode für den Fehler
 	 */
-	public code : string = "";
+	public code: string = "";
 
 	/**
 	 * Die Art des Belegungsfehlers.
 	 */
-	public art : string = "";
+	public art: string = "";
 
 	/**
 	 * Eine textuelle Beschreibung des Fehlers.
 	 */
-	public beschreibung : string = "";
+	public beschreibung: string = "";
 
 
 	/**
@@ -25,7 +25,7 @@ export class BKGymBelegpruefungErgebnisFehler extends JavaObject {
 	 *
 	 * @param f           der Typ des Belegungsfehlers
 	 */
-	public constructor(f : BKGymBelegungsfehler);
+	public constructor(f: BKGymBelegungsfehler);
 
 	/**
 	 * Erzeugt eine neue Instanz eines Fehlers beim Ergebnis der Belegprüfung.
@@ -37,13 +37,13 @@ export class BKGymBelegpruefungErgebnisFehler extends JavaObject {
 	/**
 	 * Implementation for method overloads of 'constructor'
 	 */
-	public constructor(__param0? : BKGymBelegungsfehler) {
+	public constructor(__param0?: BKGymBelegungsfehler) {
 		super();
 		if (((__param0 !== undefined) && ((__param0 instanceof JavaObject) && (__param0.isTranspiledInstanceOf('de.svws_nrw.core.abschluss.bk.d.BKGymBelegungsfehler'))))) {
-			const f : BKGymBelegungsfehler = cast_de_svws_nrw_core_abschluss_bk_d_BKGymBelegungsfehler(__param0);
-			this.code = f.toString();
-			this.art = f.getArt().kuerzel;
-			this.beschreibung = f.getText();
+			const f: BKGymBelegungsfehler = cast_de_svws_nrw_core_abschluss_bk_d_BKGymBelegungsfehler(__param0);
+			this.code = f.code;
+			this.art = f.art.kuerzel;
+			this.beschreibung = f.text;
 		} else if ((__param0 === undefined)) {
 			// empty method body
 		} else throw new Error('invalid method overload');
@@ -53,13 +53,13 @@ export class BKGymBelegpruefungErgebnisFehler extends JavaObject {
 		return 'de.svws_nrw.core.abschluss.bk.d.BKGymBelegpruefungErgebnisFehler';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.abschluss.bk.d.BKGymBelegpruefungErgebnisFehler'].includes(name);
 	}
 
 	public static class = new Class<BKGymBelegpruefungErgebnisFehler>('de.svws_nrw.core.abschluss.bk.d.BKGymBelegpruefungErgebnisFehler');
 
-	public static transpilerFromJSON(json : string): BKGymBelegpruefungErgebnisFehler {
+	public static transpilerFromJSON(json: string): BKGymBelegpruefungErgebnisFehler {
 		const obj = JSON.parse(json) as Partial<BKGymBelegpruefungErgebnisFehler>;
 		const result = new BKGymBelegpruefungErgebnisFehler();
 		if (obj.code === undefined)
@@ -74,7 +74,7 @@ export class BKGymBelegpruefungErgebnisFehler extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : BKGymBelegpruefungErgebnisFehler) : string {
+	public static transpilerToJSON(obj: BKGymBelegpruefungErgebnisFehler): string {
 		let result = '{';
 		result += '"code" : ' + JSON.stringify(obj.code) + ',';
 		result += '"art" : ' + JSON.stringify(obj.art) + ',';
@@ -84,7 +84,7 @@ export class BKGymBelegpruefungErgebnisFehler extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<BKGymBelegpruefungErgebnisFehler>) : string {
+	public static transpilerToJSONPatch(obj: Partial<BKGymBelegpruefungErgebnisFehler>): string {
 		let result = '{';
 		if (obj.code !== undefined) {
 			result += '"code" : ' + JSON.stringify(obj.code) + ',';
@@ -102,6 +102,6 @@ export class BKGymBelegpruefungErgebnisFehler extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_abschluss_bk_d_BKGymBelegpruefungErgebnisFehler(obj : unknown) : BKGymBelegpruefungErgebnisFehler {
+export function cast_de_svws_nrw_core_abschluss_bk_d_BKGymBelegpruefungErgebnisFehler(obj: unknown): BKGymBelegpruefungErgebnisFehler {
 	return obj as BKGymBelegpruefungErgebnisFehler;
 }

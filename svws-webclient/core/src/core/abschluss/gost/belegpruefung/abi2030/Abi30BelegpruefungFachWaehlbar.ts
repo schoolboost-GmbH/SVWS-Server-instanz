@@ -18,19 +18,19 @@ export class Abi30BelegpruefungFachWaehlbar extends GostBelegpruefung {
 	 * @param manager        der Daten-Manager für die Abiturdaten
 	 * @param pruefungsArt   die Art der durchzuführenden Prüfung (z.B. EF.1 oder GESAMT)
 	 */
-	public constructor(manager : AbiturdatenManager, pruefungsArt : GostBelegpruefungsArt) {
+	public constructor(manager: AbiturdatenManager, pruefungsArt: GostBelegpruefungsArt) {
 		super(manager, pruefungsArt);
 	}
 
-	protected init() : void {
+	protected init(): void {
 		// empty block
 	}
 
-	private pruefeFachbelegungHalbjahr(fach : GostFach, fachbelegung : AbiturFachbelegung, halbjahr : GostHalbjahr) : void {
-		const fbHalbjahr : AbiturFachbelegungHalbjahr | null = fachbelegung.belegungen[halbjahr.id];
+	private pruefeFachbelegungHalbjahr(fach: GostFach, fachbelegung: AbiturFachbelegung, halbjahr: GostHalbjahr): void {
+		const fbHalbjahr: AbiturFachbelegungHalbjahr | null = fachbelegung.belegungen[halbjahr.id];
 		if (fbHalbjahr === null)
 			return;
-		let istwaehlbar : boolean;
+		let istwaehlbar: boolean;
 		const _seexpr_358622684 = (halbjahr);
 		if (_seexpr_358622684 === GostHalbjahr.EF1) {
 			istwaehlbar = fach.istMoeglichEF1;
@@ -52,16 +52,16 @@ export class Abi30BelegpruefungFachWaehlbar extends GostBelegpruefung {
 			this.addFehler(GostBelegungsfehler.WAEHLBARKEIT_1);
 	}
 
-	private static hatLKFachbelegung(fachbelegung : AbiturFachbelegung) : boolean {
+	private static hatLKFachbelegung(fachbelegung: AbiturFachbelegung): boolean {
 		for (const halbjahr of GostHalbjahr.getQualifikationsphase()) {
-			const fbHalbjahr : AbiturFachbelegungHalbjahr | null = fachbelegung.belegungen[halbjahr.id];
+			const fbHalbjahr: AbiturFachbelegungHalbjahr | null = fachbelegung.belegungen[halbjahr.id];
 			if ((fbHalbjahr !== null) && JavaObject.equalsTranspiler("LK", (fbHalbjahr.kursartKuerzel)))
 				return true;
 		}
 		return false;
 	}
 
-	private pruefeFachbelegungAbitur(fach : GostFach, fachbelegung : AbiturFachbelegung) : void {
+	private pruefeFachbelegungAbitur(fach: GostFach, fachbelegung: AbiturFachbelegung): void {
 		if (fachbelegung.abiturFach === null)
 			return;
 		if ((!fach.istMoeglichAbiLK) && ((fachbelegung.abiturFach === 1) || (fachbelegung.abiturFach === 2) || (Abi30BelegpruefungFachWaehlbar.hatLKFachbelegung(fachbelegung))))
@@ -70,9 +70,9 @@ export class Abi30BelegpruefungFachWaehlbar extends GostBelegpruefung {
 			this.addFehler(GostBelegungsfehler.WAEHLBARKEIT_2);
 	}
 
-	protected pruefeEF1() : void {
+	protected pruefeEF1(): void {
 		for (const fachbelegung of this.manager.getFachbelegungen()) {
-			const fach : GostFach | null = this.manager.faecher().get(fachbelegung.fachID);
+			const fach: GostFach | null = this.manager.faecher().get(fachbelegung.fachID);
 			if (fach === null) {
 				this.addFehler(GostBelegungsfehler.WAEHLBARKEIT_0);
 				continue;
@@ -81,9 +81,9 @@ export class Abi30BelegpruefungFachWaehlbar extends GostBelegpruefung {
 		}
 	}
 
-	protected pruefeGesamt() : void {
+	protected pruefeGesamt(): void {
 		for (const fachbelegung of this.manager.getFachbelegungen()) {
-			const fach : GostFach | null = this.manager.faecher().get(fachbelegung.fachID);
+			const fach: GostFach | null = this.manager.faecher().get(fachbelegung.fachID);
 			if (fach === null) {
 				this.addFehler(GostBelegungsfehler.WAEHLBARKEIT_0);
 				continue;
@@ -98,7 +98,7 @@ export class Abi30BelegpruefungFachWaehlbar extends GostBelegpruefung {
 		return 'de.svws_nrw.core.abschluss.gost.belegpruefung.abi2030.Abi30BelegpruefungFachWaehlbar';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.abschluss.gost.GostBelegpruefung', 'de.svws_nrw.core.abschluss.gost.belegpruefung.abi2030.Abi30BelegpruefungFachWaehlbar'].includes(name);
 	}
 
@@ -106,6 +106,6 @@ export class Abi30BelegpruefungFachWaehlbar extends GostBelegpruefung {
 
 }
 
-export function cast_de_svws_nrw_core_abschluss_gost_belegpruefung_abi2030_Abi30BelegpruefungFachWaehlbar(obj : unknown) : Abi30BelegpruefungFachWaehlbar {
+export function cast_de_svws_nrw_core_abschluss_gost_belegpruefung_abi2030_Abi30BelegpruefungFachWaehlbar(obj: unknown): Abi30BelegpruefungFachWaehlbar {
 	return obj as Abi30BelegpruefungFachWaehlbar;
 }

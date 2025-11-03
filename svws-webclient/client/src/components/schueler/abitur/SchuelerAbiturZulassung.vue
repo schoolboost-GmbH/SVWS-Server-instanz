@@ -115,10 +115,10 @@
 		return res;
 	});
 
-	function istQPhaseBewertet() : boolean {
+	function istQPhaseBewertet(): boolean {
 		const man = props.managerLaufbahnplanung();
 		return (man.istBewertet(GostHalbjahr.Q11) && man.istBewertet(GostHalbjahr.Q12)
-			&& man.istBewertet(GostHalbjahr.Q21) && man.istBewertet(GostHalbjahr.Q22))
+			&& man.istBewertet(GostHalbjahr.Q21) && man.istBewertet(GostHalbjahr.Q22));
 	}
 
 	async function copyMarkierungsergebnisToClipboard() {
@@ -126,7 +126,7 @@
 			const ergebnis = props.managerLaufbahnplanung().getErgebnisMarkierungsalgorithmus();
 			const json = GostAbiturMarkierungsalgorithmusErgebnis.transpilerToJSON(ergebnis);
 			await navigator.clipboard.writeText(JSON.stringify(JSON.parse(json), null, 2));
-		} catch(e) {
+		} catch (e) {
 			// do nothing
 		}
 	}

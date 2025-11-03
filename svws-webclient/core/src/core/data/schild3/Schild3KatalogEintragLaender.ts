@@ -6,27 +6,27 @@ export class Schild3KatalogEintragLaender extends JavaObject {
 	/**
 	 * Bundesländer/Nachbarländer Kurztext
 	 */
-	public Kurztext : string | null = null;
+	public Kurztext: string | null = null;
 
 	/**
 	 * Bundesländer/Nachbarländer Langtext
 	 */
-	public Langtext : string | null = null;
+	public Langtext: string | null = null;
 
 	/**
 	 * Bundesländer/Nachbarländer Sortierung
 	 */
-	public Sortierung : number | null = null;
+	public Sortierung: number | null = null;
 
 	/**
 	 * Gültig ab Schuljahr
 	 */
-	public gueltigVon : number | null = null;
+	public gueltigVon: number | null = null;
 
 	/**
 	 * Gültig bis Schuljahr
 	 */
-	public gueltigBis : number | null = null;
+	public gueltigBis: number | null = null;
 
 
 	/**
@@ -40,13 +40,13 @@ export class Schild3KatalogEintragLaender extends JavaObject {
 		return 'de.svws_nrw.core.data.schild3.Schild3KatalogEintragLaender';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.schild3.Schild3KatalogEintragLaender'].includes(name);
 	}
 
 	public static class = new Class<Schild3KatalogEintragLaender>('de.svws_nrw.core.data.schild3.Schild3KatalogEintragLaender');
 
-	public static transpilerFromJSON(json : string): Schild3KatalogEintragLaender {
+	public static transpilerFromJSON(json: string): Schild3KatalogEintragLaender {
 		const obj = JSON.parse(json) as Partial<Schild3KatalogEintragLaender>;
 		const result = new Schild3KatalogEintragLaender();
 		result.Kurztext = (obj.Kurztext === undefined) ? null : obj.Kurztext === null ? null : obj.Kurztext;
@@ -57,7 +57,7 @@ export class Schild3KatalogEintragLaender extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : Schild3KatalogEintragLaender) : string {
+	public static transpilerToJSON(obj: Schild3KatalogEintragLaender): string {
 		let result = '{';
 		result += '"Kurztext" : ' + ((obj.Kurztext === null) ? 'null' : JSON.stringify(obj.Kurztext)) + ',';
 		result += '"Langtext" : ' + ((obj.Langtext === null) ? 'null' : JSON.stringify(obj.Langtext)) + ',';
@@ -69,7 +69,7 @@ export class Schild3KatalogEintragLaender extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<Schild3KatalogEintragLaender>) : string {
+	public static transpilerToJSONPatch(obj: Partial<Schild3KatalogEintragLaender>): string {
 		let result = '{';
 		if (obj.Kurztext !== undefined) {
 			result += '"Kurztext" : ' + ((obj.Kurztext === null) ? 'null' : JSON.stringify(obj.Kurztext)) + ',';
@@ -93,6 +93,6 @@ export class Schild3KatalogEintragLaender extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_schild3_Schild3KatalogEintragLaender(obj : unknown) : Schild3KatalogEintragLaender {
+export function cast_de_svws_nrw_core_data_schild3_Schild3KatalogEintragLaender(obj: unknown): Schild3KatalogEintragLaender {
 	return obj as Schild3KatalogEintragLaender;
 }

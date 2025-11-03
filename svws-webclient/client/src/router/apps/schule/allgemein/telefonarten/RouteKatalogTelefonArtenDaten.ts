@@ -11,7 +11,7 @@ const STelefonArtenDaten = () => import("~/components/schule/allgemein/telefonar
 export class RouteKatalogTelefonArtenDaten extends RouteNode<any, RouteKatalogTelefonArten> {
 
 	public constructor() {
-		super(Schulform.values(), [ BenutzerKompetenz.KATALOG_EINTRAEGE_ANSEHEN, BenutzerKompetenz.KATALOG_EINTRAEGE_AENDERN ], "schule.telefonarten.daten", "daten", STelefonArtenDaten);
+		super(Schulform.values(), [BenutzerKompetenz.KATALOG_EINTRAEGE_ANSEHEN, BenutzerKompetenz.KATALOG_EINTRAEGE_AENDERN], "schule.telefonarten.daten", "daten", STelefonArtenDaten);
 		super.mode = ServerMode.DEV;
 		super.propHandler = (route) => this.getProps(route);
 		super.text = "Telefonarten";

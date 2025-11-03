@@ -40,7 +40,7 @@
 <script setup lang="ts">
 
 	import type { AbteilungenNeuProps } from "~/components/schule/schulbezogen/abteilungen/SAbteilungenNeuProps";
-	import type { DataTableColumn} from "@ui";
+	import type { DataTableColumn } from "@ui";
 	import type { KlassenDaten, LehrerListeEintrag, List } from "@core";
 	import { BenutzerKompetenz, Abteilung, AbteilungKlassenzuordnung, ArrayList } from "@core";
 	import { SelectManager } from "@ui";
@@ -52,7 +52,7 @@
 	const disabled = computed(() => !hatKompetenzAdd.value);
 	const data = ref<Abteilung>(new Abteilung());
 	const isLoading = ref<boolean>(false);
-	const klassenToBeAdded = ref<KlassenDaten[]>([])
+	const klassenToBeAdded = ref<KlassenDaten[]>([]);
 
 	const idLehrer = computed({
 		get: () => props.manager().getLehrer().get(data.value.idAbteilungsleiter),
@@ -64,7 +64,7 @@
 		selectionDisplayText: v => v.vorname + ' ' + v.nachname,
 	});
 
-	function fieldIsValid(field: keyof Abteilung | null) : (v: string | null) => boolean {
+	function fieldIsValid(field: keyof Abteilung | null): (v: string | null) => boolean {
 		return (v: string | null) => {
 			switch (field) {
 				case 'bezeichnung':
@@ -78,14 +78,14 @@
 				default:
 					return true;
 			}
-		}
+		};
 	}
 
 	function bezeichnungIsValid(value: string | null) {
 		if (!mandatoryInputIsValid(value, 50))
 			return false;
 
-		return isUniqueInList(value, props.manager().liste.list(), 'bezeichnung')
+		return isUniqueInList(value, props.manager().liste.list(), 'bezeichnung');
 	}
 
 	const formIsValid = computed(() => {
@@ -94,8 +94,8 @@
 			const validateField = fieldIsValid(field as keyof Abteilung);
 			const fieldValue = data.value[field as keyof Abteilung] as string | null;
 			return validateField(fieldValue);
-		})
-	})
+		});
+	});
 
 	async function add() {
 		if (isLoading.value)
@@ -116,8 +116,8 @@
 			return new ArrayList<AbteilungKlassenzuordnung>();
 
 		const klassenzuordnungen = new ArrayList<AbteilungKlassenzuordnung>();
-		for (const klasse of klassenToBeAdded.value ) {
-			const zuordnung = new AbteilungKlassenzuordnung()
+		for (const klasse of klassenToBeAdded.value) {
+			const zuordnung = new AbteilungKlassenzuordnung();
 			zuordnung.idAbteilung = idAbteilung;
 			zuordnung.idKlasse = klasse.id;
 			const { id, ...partialData } = zuordnung;
@@ -135,7 +135,7 @@
 		{ key: "kuerzel", label: "Klasse" },
 	];
 
-	watch(() => data.value, async() => {
+	watch(() => data.value, async () => {
 		if (isLoading.value)
 			return;
 

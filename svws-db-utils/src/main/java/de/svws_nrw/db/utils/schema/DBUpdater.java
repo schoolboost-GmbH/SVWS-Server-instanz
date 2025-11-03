@@ -1,6 +1,7 @@
 package de.svws_nrw.db.utils.schema;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import de.svws_nrw.config.SVWSKonfiguration;
 import de.svws_nrw.core.logger.Logger;
@@ -43,7 +44,7 @@ public class DBUpdater {
 	 * Erzeugt einen neuen {@link DBUpdater}.
 	 *
 	 * @param schemaManager   der Schema-Manager, welcher verwendet wird
-	 * @param returnOnError   gibt an, ob Operatioen bei Einzelfehlern abgebrochen werden sollen
+	 * @param returnOnError   gibt an, ob Operationen bei Einzelfehlern abgebrochen werden sollen
 	 */
 	DBUpdater(final DBSchemaManager schemaManager, final boolean returnOnError) {
 		this.schemaManager = schemaManager;
@@ -76,13 +77,13 @@ public class DBUpdater {
 			if (!dropIndices(conn, neue_revision))
 				throw new DBException("Fehler beim Verwerfen der Indizes");
 
-			// 3. Update-Schritt: DROP_UNIQUE_CONSTRAINTS
-			if (!dropUniqueConstraints(conn, neue_revision))
-				throw new DBException("Fehler beim Verwerfen der Unique-Constraints");
-
-			// 4. Update-Schritt: DROP_FOREIGN_KEYS
+			// 3. Update-Schritt: DROP_FOREIGN_KEYS
 			if (!dropForeignKeys(conn, neue_revision))
 				throw new DBException("Fehler beim Verwerfen der Fremdschlüssel");
+
+			// 4. Update-Schritt: DROP_UNIQUE_CONSTRAINTS
+			if (!dropUniqueConstraints(conn, neue_revision))
+				throw new DBException("Fehler beim Verwerfen der Unique-Constraints");
 
 			// 5. Update-Schritt: CREATE_TABLES
 			if (!createNewTables(conn, neue_revision))
@@ -100,17 +101,17 @@ public class DBUpdater {
 			if (!executeManualSQLCommands(conn, neue_revision))
 				throw new DBException("Fehler beim Ausführen der manuellen SQL-Befehle");
 
-			// 9. Update-Schritt: ADD_FOREIGN_KEYS
-			if (!addNewForeignKeys(conn, neue_revision))
-				throw new DBException("Fehler beim Hinzufügen der neuen Fremdschlüssel");
-
-			// 10. Update-Schritt: ADD_UNIQUE_CONSTRAINTS
+			// 9. Update-Schritt: ADD_UNIQUE_CONSTRAINTS
 			if (!addNewUniqueConstraints(conn, neue_revision))
 				throw new DBException("Fehler beim Hinzufügen der neuen Unique-Constraints");
 
-			// 11. Update-Schritt: ADD_INDICES
+			// 10. Update-Schritt: ADD_INDICES
 			if (!addNewIndices(conn, neue_revision))
 				throw new DBException("Fehler beim Hinzufügen der neuen Indizes");
+
+			// 11. Update-Schritt: ADD_FOREIGN_KEYS
+			if (!addNewForeignKeys(conn, neue_revision))
+				throw new DBException("Fehler beim Hinzufügen der neuen Fremdschlüssel");
 
 			// 12. Update-Schritt: ADD_TRIGGER
 			if (!createNewTrigger(conn, neue_revision))
@@ -522,6 +523,8 @@ public class DBUpdater {
 					break;
 			}
 		}
+		final String names = tabs.stream().map(t -> String.format("\"%s\"", t.name())).collect(Collectors.joining(","));
+		conn.transactionNativeUpdate("DELETE FROM Schema_AutoInkremente WHERE NameTabelle IN (" + names + ")");
 		logger.modifyIndent(-2);
 		return result;
 	}
@@ -631,11 +634,11 @@ public class DBUpdater {
 		}
 		final List<View> views = DBSchemaViews.getInstance().getViewsCreated(revision);
 		if ((views == null) || (views.isEmpty())) {
-			logger.logLn(0, "0 Tabellen");
+			logger.logLn(0, "0 Views");
 			return true;
 		}
 		boolean result = true;
-		logger.logLn(0, views.size() + " Tabellen...");
+		logger.logLn(0, views.size() + " Views...");
 		logger.modifyIndent(2);
 		for (final View view : views) {
 			final String sql = view.getSQLCreate(conn.getDBDriver());

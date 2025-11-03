@@ -3,9 +3,9 @@ import { Class } from '../../../java/lang/Class';
 
 export class StundenplanblockungManagerSchule extends JavaObject {
 
-	private static readonly _tage_pro_woche : number = 5;
+	private static readonly _tage_pro_woche: number = 5;
 
-	private static readonly _stunden_pro_tag : number = 9;
+	private static readonly _stunden_pro_tag: number = 9;
 
 
 	/**
@@ -20,7 +20,7 @@ export class StundenplanblockungManagerSchule extends JavaObject {
 	 *
 	 * @return Die Anzahl an Unterrichtstagen in der Woche.
 	 */
-	public get_tage_pro_woche() : number {
+	public get_tage_pro_woche(): number {
 		return StundenplanblockungManagerSchule._tage_pro_woche;
 	}
 
@@ -28,7 +28,7 @@ export class StundenplanblockungManagerSchule extends JavaObject {
 	 * Liefert die maximale Anzahl an Stunden pro Tag.
 	 * @return Die maximale Anzahl an Stunden pro Tag.
 	 */
-	public get_stunden_pro_tag() : number {
+	public get_stunden_pro_tag(): number {
 		return StundenplanblockungManagerSchule._stunden_pro_tag;
 	}
 
@@ -36,7 +36,7 @@ export class StundenplanblockungManagerSchule extends JavaObject {
 		return 'de.svws_nrw.core.utils.stundenplanblockung.StundenplanblockungManagerSchule';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.utils.stundenplanblockung.StundenplanblockungManagerSchule'].includes(name);
 	}
 
@@ -44,6 +44,6 @@ export class StundenplanblockungManagerSchule extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_utils_stundenplanblockung_StundenplanblockungManagerSchule(obj : unknown) : StundenplanblockungManagerSchule {
+export function cast_de_svws_nrw_core_utils_stundenplanblockung_StundenplanblockungManagerSchule(obj: unknown): StundenplanblockungManagerSchule {
 	return obj as StundenplanblockungManagerSchule;
 }

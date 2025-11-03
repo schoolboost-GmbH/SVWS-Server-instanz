@@ -35,7 +35,7 @@
 <script setup lang="ts">
 
 	import type { KurseNeuProps } from "~/components/kurse/SKurseNeuProps";
-	import type { JahrgangsDaten, FachDaten, LehrerListeEintrag, List } from "@core"
+	import type { JahrgangsDaten, FachDaten, LehrerListeEintrag, List } from "@core";
 	import { ArrayList, BenutzerKompetenz, JavaString, KursDaten, KursFortschreibungsart, ZulaessigeKursart } from "@core";
 	import { computed, ref, watch } from "vue";
 
@@ -49,12 +49,12 @@
 	const idLehrer = computed({
 		get: () => props.manager().lehrer.get(data.value.lehrer ?? -1),
 		set: (v: LehrerListeEintrag | null) => data.value.lehrer = v?.id ?? null,
-	})
+	});
 
 	const idFach = computed({
 		get: () => props.manager().faecher.get(data.value.idFach),
 		set: (v: FachDaten) => data.value.idFach = v.id,
-	})
+	});
 
 	const auswahlJahrgaenge = computed({
 		get: () => {
@@ -71,12 +71,12 @@
 			value.forEach(j => result.add(j.id));
 			data.value.idJahrgaenge = result;
 		},
-	})
+	});
 
 	const idKursFortschreibungsart = computed({
 		get: () => KursFortschreibungsart.fromID(data.value.idKursFortschreibungsart),
 		set: (v: KursFortschreibungsart | null) => data.value.idKursFortschreibungsart = v?.id ?? 0,
-	})
+	});
 
 	const schienen = computed<number[]>({
 		get: () => {
@@ -136,7 +136,7 @@
 				default:
 					return true;
 			}
-		}
+		};
 	}
 
 	function kuerzelIsValid() {
@@ -161,8 +161,8 @@
 			const validateField = fieldIsValid(field as keyof KursDaten);
 			const fieldValue = data.value[field as keyof KursDaten] as string | null;
 			return validateField(fieldValue);
-		})
-	})
+		});
+	});
 
 	async function addKurs() {
 		if (isLoading.value)
@@ -181,7 +181,7 @@
 		void props.goToDefaultView(null);
 	}
 
-	watch(() => data.value, async() => {
+	watch(() => data.value, async () => {
 		if (isLoading.value)
 			return;
 		props.checkpoint.active = true;

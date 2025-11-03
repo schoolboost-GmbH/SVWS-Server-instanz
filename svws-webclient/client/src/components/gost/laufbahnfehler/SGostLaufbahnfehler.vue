@@ -133,14 +133,14 @@
 	});
 
 	const columns: DataTableColumn[] = [
-		{key: "linkToSchueler", label: " ", fixedWidth: 1.75, align: "center"},
-		{key: 'name', label: 'Name, Vorname', span: 2, sortable: true},
-		{key: 'beratung', labe: 'Beratung', fixedWidth: 5.5, align: "center", sortable: true},
-		{key: 'ruecklauf', labe: 'Rücklauf', fixedWidth: 5.5, align: "center", sortable: true},
-		{key: 'hinweise', label: 'K/WS', tooltip: 'Gibt an, ob Hinweise zu der Anzahl von Kursen oder Wochenstunden vorliegen', fixedWidth: 3.5, align: 'center'},
-		{key: 'ergebnis', label: 'Fehler', tooltip: 'Anzahl der Fehler insgesamt', fixedWidth: 3.5, align: 'right', sortable: true},
+		{ key: "linkToSchueler", label: " ", fixedWidth: 1.75, align: "center" },
+		{ key: 'name', label: 'Name, Vorname', span: 2, sortable: true },
+		{ key: 'beratung', labe: 'Beratung', fixedWidth: 5.5, align: "center", sortable: true },
+		{ key: 'ruecklauf', labe: 'Rücklauf', fixedWidth: 5.5, align: "center", sortable: true },
+		{ key: 'hinweise', label: 'K/WS', tooltip: 'Gibt an, ob Hinweise zu der Anzahl von Kursen oder Wochenstunden vorliegen', fixedWidth: 3.5, align: 'center' },
+		{ key: 'ergebnis', label: 'Fehler', tooltip: 'Anzahl der Fehler insgesamt', fixedWidth: 3.5, align: 'right', sortable: true },
 	];
-	const sortByAndOrder = ref<SortByAndOrder | undefined>()
+	const sortByAndOrder = ref<SortByAndOrder | undefined>();
 
 	const dataSorted = computed(() => {
 		const temp = sortByAndOrder.value;
@@ -158,9 +158,9 @@
 				default:
 					return 0;
 			}
-		})
+		});
 		return temp.order === true ? arr : arr.reverse();
-	})
+	});
 
 	const showModalImport = ref<boolean>(false);
 
@@ -178,11 +178,11 @@
 				erlaubt = false;
 			if (props.filterNeuaufnahmen() && (SchuelerStatus.data().getWertByID(e.schueler.status) !== SchuelerStatus.NEUAUFNAHME))
 				erlaubt = false;
-			if(erlaubt)
+			if (erlaubt)
 				a.add(e);
 		}
 		return a;
-	})
+	});
 
 	const ids = ref(new Set<number>());
 	const auswahl = computed<GostBelegpruefungsErgebnisse[]>({
@@ -198,7 +198,7 @@
 			for (const s of value)
 				ids.value.add(s.schueler.id);
 		},
-	})
+	});
 
 	function resetAuswahl() {
 		auswahl.value = [];
@@ -210,9 +210,9 @@
 			? schueler_state.value
 			: filtered.value.isEmpty() ? new GostBelegpruefungsErgebnisse() : filtered.value.get(0),
 		set: (value) => schueler_state.value = value,
-	})
+	});
 
-	const art = computed<'ef1'|'gesamt'|'auto'>({
+	const art = computed<'ef1' | 'gesamt' | 'auto'>({
 		get: () => {
 			return props.gostBelegpruefungsArt() === GostBelegpruefungsArt.EF1 ? 'ef1' : 'gesamt';
 		},
@@ -234,7 +234,7 @@
 		return res;
 	}
 
-	function counterAnzahlOderWochenstunden(fehlercodes: List<GostBelegpruefungErgebnisFehler> | undefined) : number {
+	function counterAnzahlOderWochenstunden(fehlercodes: List<GostBelegpruefungErgebnisFehler> | undefined): number {
 		if (fehlercodes === undefined)
 			return 0;
 		let res = 0;

@@ -9,7 +9,7 @@ export class Verkehrssprache extends CoreTypeSimple<VerkehrsspracheKatalogEintra
 	/**
 	 * Eine Hashmap mit allen definierten Verkehrssprachen, zugeordnet zu ihren dreistelligen ISO 639-2-Codes
 	 */
-	private static readonly _mapIso3 : HashMap<string, Verkehrssprache> = new HashMap<string, Verkehrssprache>();
+	private static readonly _mapIso3: HashMap<string, Verkehrssprache> = new HashMap<string, Verkehrssprache>();
 
 
 	/**
@@ -24,7 +24,7 @@ export class Verkehrssprache extends CoreTypeSimple<VerkehrsspracheKatalogEintra
 	 *
 	 * @param manager   der Manager für die Daten des Core-Types
 	 */
-	public static init(manager : CoreTypeDataManager<VerkehrsspracheKatalogEintrag, Verkehrssprache>) : void {
+	public static init(manager: CoreTypeDataManager<VerkehrsspracheKatalogEintrag, Verkehrssprache>): void {
 		CoreTypeDataManager.putManager(Verkehrssprache.class, manager);
 		Verkehrssprache._mapIso3.clear();
 		for (const sprache of manager.getWerte())
@@ -38,7 +38,7 @@ export class Verkehrssprache extends CoreTypeSimple<VerkehrsspracheKatalogEintra
 	 *
 	 * @return der Daten-Manager
 	 */
-	public static data() : CoreTypeDataManager<VerkehrsspracheKatalogEintrag, Verkehrssprache> {
+	public static data(): CoreTypeDataManager<VerkehrsspracheKatalogEintrag, Verkehrssprache> {
 		return CoreTypeDataManager.getManager(Verkehrssprache.class);
 	}
 
@@ -47,14 +47,14 @@ export class Verkehrssprache extends CoreTypeSimple<VerkehrsspracheKatalogEintra
 	 *
 	 * @return die Werte des Core-Types als Array
 	 */
-	public static values() : Array<Verkehrssprache> {
+	public static values(): Array<Verkehrssprache> {
 		return CoreTypeSimple.valuesByClass(Verkehrssprache.class);
 	}
 
 	/**
 	 * Erzeugt eine Instance dieser Klasse.
 	 */
-	public getInstance() : Verkehrssprache | null {
+	public getInstance(): Verkehrssprache | null {
 		return new Verkehrssprache();
 	}
 
@@ -67,7 +67,7 @@ export class Verkehrssprache extends CoreTypeSimple<VerkehrsspracheKatalogEintra
 	 *
 	 * @return die Verkehrssprache oder null, falls das Kürzel unbekannt ist
 	 */
-	public static getByIsoKuerzel(kuerzel : string | null) : Verkehrssprache | null {
+	public static getByIsoKuerzel(kuerzel: string | null): Verkehrssprache | null {
 		if (kuerzel === null)
 			return null;
 		if (kuerzel.length === 2)
@@ -79,7 +79,7 @@ export class Verkehrssprache extends CoreTypeSimple<VerkehrsspracheKatalogEintra
 		return 'de.svws_nrw.asd.types.schule.Verkehrssprache';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.asd.types.schule.Verkehrssprache', 'de.svws_nrw.asd.types.CoreType', 'java.lang.Comparable', 'de.svws_nrw.asd.types.CoreTypeSimple'].includes(name);
 	}
 
@@ -87,6 +87,6 @@ export class Verkehrssprache extends CoreTypeSimple<VerkehrsspracheKatalogEintra
 
 }
 
-export function cast_de_svws_nrw_asd_types_schule_Verkehrssprache(obj : unknown) : Verkehrssprache {
+export function cast_de_svws_nrw_asd_types_schule_Verkehrssprache(obj: unknown): Verkehrssprache {
 	return obj as Verkehrssprache;
 }

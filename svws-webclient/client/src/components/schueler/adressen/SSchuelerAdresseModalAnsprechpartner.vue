@@ -31,7 +31,7 @@
 
 	const props = defineProps<{
 		ansprechpartner: BetriebAnsprechpartner;
-		patchAnsprechpartner: (data : Partial<BetriebAnsprechpartner>, id : number) => Promise<void>;
+		patchAnsprechpartner: (data: Partial<BetriebAnsprechpartner>, id: number) => Promise<void>;
 	}>();
 
 	const show = ref<boolean>(false);

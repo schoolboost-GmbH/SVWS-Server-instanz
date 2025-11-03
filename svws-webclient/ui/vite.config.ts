@@ -1,9 +1,10 @@
+/// <reference types="vitest/config" />
 import { defineConfig, searchForWorkspaceRoot } from "vite";
 import { resolve } from "node:path";
 import Components from "unplugin-vue-components/vite";
 import Vue from "@vitejs/plugin-vue";
-import Markdown from 'unplugin-vue-markdown/vite'
-import tailwindcss from '@tailwindcss/vite'
+import Markdown from 'unplugin-vue-markdown/vite';
+import tailwindcss from '@tailwindcss/vite';
 
 export default defineConfig({
 	server: { fs: { allow: [searchForWorkspaceRoot(process.cwd())] } },
@@ -11,7 +12,7 @@ export default defineConfig({
 		environment: "happy-dom",
 		reporters: ["default", "junit", "verbose"],
 		outputFile: { junit: "build/testresults/junit.xml" },
-		include: [ "src/**/*.test.ts" ],
+		include: ["src/**/*.test.ts"],
 	},
 	resolve: {
 		alias: {
@@ -36,7 +37,5 @@ export default defineConfig({
 			output: { globals: { vue: "Vue" } },
 		},
 	},
-	define: {
-		__VUE_OPTIONS_API__: false,
-	},
+	define: { __VUE_OPTIONS_API__: false },
 });

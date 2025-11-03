@@ -1,9 +1,14 @@
 <template>
 	<slot :open-modal />
-	<svws-ui-modal v-model:show="show" class="hidden">
+	<svws-ui-modal v-model:show="show" class="hidden" size="medium">
 		<template #modalTitle>Räume importieren</template>
 		<template #modalContent>
-			Es werden nur Räume importiert, deren Kürzel noch nicht im Katalog vertreten sind.
+			<div class="text-left">
+				Es werden nur Räume importiert, deren Kürzel noch nicht im Katalog vertreten sind.
+				<br>Hierbei wird das JSON-Format verwendet:
+			</div>
+			<code-box :code status :backticks="false" />
+			<div class="mt-2" />
 			<svws-ui-input-wrapper :grid="2">
 				<input type="file" accept=".json" @change="onFileChanged" :disabled="loading">
 				<svws-ui-spinner :spinning="loading" />
@@ -24,6 +29,16 @@
 		setKatalogRaeumeImportJSON: (formData: FormData) => Promise<void>;
 	}>();
 
+	const code = `[
+  {
+    // wird entfernt, daher optional
+    "id": 8,
+    "kuerzel": "T1",
+    "beschreibung": "Turnhalle 1",
+    "groesse": 90
+  }
+]`;
+
 	const show = ref<boolean>(false);
 
 	const status = ref<boolean | undefined>(undefined);
@@ -32,7 +47,7 @@
 
 	const openModal = () => {
 		show.value = true;
-	}
+	};
 
 	function onFileChanged(event: Event) {
 		const target = event.target as HTMLInputElement;

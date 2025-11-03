@@ -4,50 +4,50 @@ import { Class } from '../../../java/lang/Class';
 export class GostAbiturFach extends JavaEnum<GostAbiturFach> {
 
 	/** an array containing all values of this enumeration */
-	static readonly all_values_by_ordinal : Array<GostAbiturFach> = [];
+	static readonly all_values_by_ordinal: Array<GostAbiturFach> = [];
 
 	/** an array containing all values of this enumeration indexed by their name*/
-	static readonly all_values_by_name : Map<string, GostAbiturFach> = new Map<string, GostAbiturFach>();
+	static readonly all_values_by_name: Map<string, GostAbiturFach> = new Map<string, GostAbiturFach>();
 
 	/**
 	 * 1. Leistungskurs = LK1
 	 */
-	public static readonly LK1 : GostAbiturFach = new GostAbiturFach("LK1", 0, 1, "LK1", "1. Leistungskurs");
+	public static readonly LK1: GostAbiturFach = new GostAbiturFach("LK1", 0, 1, "LK1", "1. Leistungskurs");
 
 	/**
 	 * 2. Leistungskurs = LK2
 	 */
-	public static readonly LK2 : GostAbiturFach = new GostAbiturFach("LK2", 1, 2, "LK2", "2. Leistungskurs");
+	public static readonly LK2: GostAbiturFach = new GostAbiturFach("LK2", 1, 2, "LK2", "2. Leistungskurs");
 
 	/**
 	 * 3. Abiturfach (GK, schriftlich in der Abiturprüfung) = AB3
 	 */
-	public static readonly AB3 : GostAbiturFach = new GostAbiturFach("AB3", 2, 3, "AB3", "3. Abiturfach (GK, schriftlich)");
+	public static readonly AB3: GostAbiturFach = new GostAbiturFach("AB3", 2, 3, "AB3", "3. Abiturfach (GK, schriftlich)");
 
 	/**
 	 * 4. Abiturfach (GK, mündlich in der Abiturprüfung) = AB4
 	 */
-	public static readonly AB4 : GostAbiturFach = new GostAbiturFach("AB4", 3, 4, "AB4", "4. Abiturfach (GK, mündlich)");
+	public static readonly AB4: GostAbiturFach = new GostAbiturFach("AB4", 3, 4, "AB4", "4. Abiturfach (GK, mündlich)");
 
 	/**
 	 * 5. Abiturfach (GK/PJK/BLL)
 	 */
-	public static readonly AB5 : GostAbiturFach = new GostAbiturFach("AB5", 4, 5, "AB5", "5. Abiturfach (GK/PJK/BLL)");
+	public static readonly AB5: GostAbiturFach = new GostAbiturFach("AB5", 4, 5, "AB5", "5. Abiturfach (GK/PJK/BLL)");
 
 	/**
 	 * Die ID bzw. Nummer der Abiturfachart (1-5)
 	 */
-	public readonly id : number;
+	public readonly id: number;
 
 	/**
 	 * Das Kürzel der Abiturfachart, welches auch in speziellen Kursarten genutzt wird.
 	 */
-	public readonly kuerzel : string;
+	public readonly kuerzel: string;
 
 	/**
 	 * Die textuelle Beschreibung der Abiturfachart.
 	 */
-	public readonly beschreibung : string;
+	public readonly beschreibung: string;
 
 	/**
 	 * Erstellt eine Abiturfachart für diese Aufzählung der Abiturfacharten.
@@ -56,7 +56,7 @@ export class GostAbiturFach extends JavaEnum<GostAbiturFach> {
 	 * @param kuerzel        das Kürzel der Abiturfachart, welches auch in speziellen Kursarten genutzt wird
 	 * @param beschreibung   die textuelle Beschreibung der Abiturfachart
 	 */
-	private constructor(name : string, ordinal : number, id : number, kuerzel : string, beschreibung : string) {
+	private constructor(name: string, ordinal: number, id: number, kuerzel: string, beschreibung: string) {
 		super(name, ordinal);
 		GostAbiturFach.all_values_by_ordinal.push(this);
 		GostAbiturFach.all_values_by_name.set(name, this);
@@ -72,7 +72,7 @@ export class GostAbiturFach extends JavaEnum<GostAbiturFach> {
 	 *
 	 * @return die Abiturfachart oder null falls die ID ungültig ist
 	 */
-	public static fromID(id : number | null) : GostAbiturFach | null {
+	public static fromID(id: number | null): GostAbiturFach | null {
 		if (id === null)
 			return null;
 		switch (id) {
@@ -104,7 +104,7 @@ export class GostAbiturFach extends JavaEnum<GostAbiturFach> {
 	 *
 	 * @return die Abiturfachart oder null, falls die ID ungültig ist
 	 */
-	public static fromIDString(strID : string | null) : GostAbiturFach | null {
+	public static fromIDString(strID: string | null): GostAbiturFach | null {
 		if (strID === null)
 			return null;
 		switch (strID) {
@@ -136,7 +136,7 @@ export class GostAbiturFach extends JavaEnum<GostAbiturFach> {
 	 *
 	 * @return die Abiturfachart oder null, falls das Kürzel ungültig ist
 	 */
-	public static fromKuerzel(kuerzel : string | null) : GostAbiturFach | null {
+	public static fromKuerzel(kuerzel: string | null): GostAbiturFach | null {
 		switch (kuerzel) {
 			case "LK1": {
 				return GostAbiturFach.LK1;
@@ -159,7 +159,7 @@ export class GostAbiturFach extends JavaEnum<GostAbiturFach> {
 		}
 	}
 
-	public toString() : string {
+	public toString(): string {
 		return this.kuerzel;
 	}
 
@@ -168,7 +168,7 @@ export class GostAbiturFach extends JavaEnum<GostAbiturFach> {
 	 *
 	 * @returns the array with enumeration values
 	 */
-	public static values() : Array<GostAbiturFach> {
+	public static values(): Array<GostAbiturFach> {
 		return [...this.all_values_by_ordinal];
 	}
 
@@ -179,7 +179,7 @@ export class GostAbiturFach extends JavaEnum<GostAbiturFach> {
 	 *
 	 * @returns the enumeration values or null
 	 */
-	public static valueOf(name : string) : GostAbiturFach | null {
+	public static valueOf(name: string): GostAbiturFach | null {
 		const tmp = this.all_values_by_name.get(name);
 		return (!tmp) ? null : tmp;
 	}
@@ -188,7 +188,7 @@ export class GostAbiturFach extends JavaEnum<GostAbiturFach> {
 		return 'de.svws_nrw.core.types.gost.GostAbiturFach';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.types.gost.GostAbiturFach', 'java.lang.Enum', 'java.lang.Comparable'].includes(name);
 	}
 
@@ -196,6 +196,6 @@ export class GostAbiturFach extends JavaEnum<GostAbiturFach> {
 
 }
 
-export function cast_de_svws_nrw_core_types_gost_GostAbiturFach(obj : unknown) : GostAbiturFach {
+export function cast_de_svws_nrw_core_types_gost_GostAbiturFach(obj: unknown): GostAbiturFach {
 	return obj as GostAbiturFach;
 }

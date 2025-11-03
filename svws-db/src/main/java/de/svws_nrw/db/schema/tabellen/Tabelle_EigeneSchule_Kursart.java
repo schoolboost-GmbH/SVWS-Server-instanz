@@ -13,52 +13,52 @@ import de.svws_nrw.db.schema.SchemaTabelleUniqueIndex;
 public class Tabelle_EigeneSchule_Kursart extends SchemaTabelle {
 
 	/** Die Definition der Tabellenspalte ID */
-	public SchemaTabelleSpalte col_ID = add("ID", SchemaDatentypen.BIGINT, true)
+	public final SchemaTabelleSpalte col_ID = add("ID", SchemaDatentypen.BIGINT, true)
 			.setNotNull()
 			.setJavaComment("ID des Kursarteneintrag");
 
 	/** Die Definition der Tabellenspalte Bezeichnung */
-	public SchemaTabelleSpalte col_Bezeichnung = add("Bezeichnung", SchemaDatentypen.VARCHAR, false).setDatenlaenge(120)
+	public final SchemaTabelleSpalte col_Bezeichnung = add("Bezeichnung", SchemaDatentypen.VARCHAR, false).setDatenlaenge(120)
 			.setJavaComment("Bezeichnung des Kursarteneintrags IT.NRW");
 
 	/** Die Definition der Tabellenspalte InternBez */
-	public SchemaTabelleSpalte col_InternBez = add("InternBez", SchemaDatentypen.VARCHAR, false).setDatenlaenge(20)
+	public final SchemaTabelleSpalte col_InternBez = add("InternBez", SchemaDatentypen.VARCHAR, false).setDatenlaenge(20)
 			.setJavaComment("Interne Bezeichnung Kursarteneintrag");
 
 	/** Die Definition der Tabellenspalte Kursart */
-	public SchemaTabelleSpalte col_Kursart = add("Kursart", SchemaDatentypen.VARCHAR, false).setDatenlaenge(10)
+	public final SchemaTabelleSpalte col_Kursart = add("Kursart", SchemaDatentypen.VARCHAR, false).setDatenlaenge(10)
 			.setJavaComment("Kürzel Kursart");
 
 	/** Die Definition der Tabellenspalte KursartAllg */
-	public SchemaTabelleSpalte col_KursartAllg = add("KursartAllg", SchemaDatentypen.VARCHAR, false).setDatenlaenge(10)
+	public final SchemaTabelleSpalte col_KursartAllg = add("KursartAllg", SchemaDatentypen.VARCHAR, false).setDatenlaenge(10)
 			.setJavaComment("Allgemeine Bezeichnung Kursart (zB GK bei GKM)");
 
 	/** Die Definition der Tabellenspalte Sortierung */
-	public SchemaTabelleSpalte col_Sortierung = add("Sortierung", SchemaDatentypen.INT, false)
+	public final SchemaTabelleSpalte col_Sortierung = add("Sortierung", SchemaDatentypen.INT, false)
 			.setDefault("32000")
 			.setJavaComment("Sortierung der Kursart");
 
 	/** Die Definition der Tabellenspalte Sichtbar */
-	public SchemaTabelleSpalte col_Sichtbar = add("Sichtbar", SchemaDatentypen.VARCHAR, false).setDatenlaenge(1)
+	public final SchemaTabelleSpalte col_Sichtbar = add("Sichtbar", SchemaDatentypen.VARCHAR, false).setDatenlaenge(1)
 			.setDefault("+")
 			.setConverter(BooleanPlusMinusDefaultPlusConverter.class)
 			.setJavaComment("Sichtbarkeit der Kursart");
 
 	/** Die Definition der Tabellenspalte Aenderbar */
-	public SchemaTabelleSpalte col_Aenderbar = add("Aenderbar", SchemaDatentypen.VARCHAR, false).setDatenlaenge(1)
+	public final SchemaTabelleSpalte col_Aenderbar = add("Aenderbar", SchemaDatentypen.VARCHAR, false).setDatenlaenge(1)
 			.setDefault("+")
 			.setConverter(BooleanPlusMinusDefaultPlusConverter.class)
 			.setJavaComment("Kursart änderbar Ja Nein");
 
 	/** Die Definition der Tabellenspalte SchulnrEigner */
-	public SchemaTabelleSpalte col_SchulnrEigner = add("SchulnrEigner", SchemaDatentypen.INT, false)
+	public final SchemaTabelleSpalte col_SchulnrEigner = add("SchulnrEigner", SchemaDatentypen.INT, false)
 			.setVeraltet(SchemaRevisionen.REV_1)
 			.setJavaComment(
 					"Die Schulnummer zu welcher der Datensatz gehört – wird benötigt, wenn mehrere Schulen in einem Schema der Datenbank gespeichert werden");
 
 
 	/** Die Definition des Unique-Index EigeneSchule_Kursart_UC1 */
-	public SchemaTabelleUniqueIndex unique_EigeneSchule_Kursart_UC1 = addUniqueIndex("EigeneSchule_Kursart_UC1",
+	public final SchemaTabelleUniqueIndex unique_EigeneSchule_Kursart_UC1 = addUniqueIndex("EigeneSchule_Kursart_UC1",
 			col_KursartAllg,
 			col_Kursart);
 

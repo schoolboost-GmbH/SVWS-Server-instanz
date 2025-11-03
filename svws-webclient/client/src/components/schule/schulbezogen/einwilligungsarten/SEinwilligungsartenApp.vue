@@ -38,7 +38,7 @@
 
 	import { computed } from "vue";
 	import { useRegionSwitch, ViewType } from "@ui";
-	import type {EinwilligungsartenAppProps} from "~/components/schule/schulbezogen/einwilligungsarten/SEinwilligungsartenAppProps";
+	import type { EinwilligungsartenAppProps } from "~/components/schule/schulbezogen/einwilligungsarten/SEinwilligungsartenAppProps";
 
 	const props = defineProps<EinwilligungsartenAppProps>();
 
@@ -49,5 +49,5 @@
 		if (list.size() > 5)
 			return `${list.size()} Einwilligungsarten ausgewählt`;
 		return [...list].map(k => k.bezeichnung).join(', ');
-	})
+	});
 </script>

@@ -17,39 +17,39 @@ import de.svws_nrw.db.schema.SchemaTabelleUniqueIndex;
 public class Tabelle_UV_ZeitrasterEintraege extends SchemaTabelle {
 
     /** Eindeutige ID des Eintrags (automatisch generiert) */
-    public SchemaTabelleSpalte col_ID = add("ID", SchemaDatentypen.BIGINT, true)
+    public final SchemaTabelleSpalte col_ID = add("ID", SchemaDatentypen.BIGINT, true)
             .setNotNull()
             .setJavaComment("Eindeutige ID des Zeitraster-Eintrags (automatisch generiert)");
 
     /** Fremdschlüssel auf das Zeitraster (Tabelle UV_Zeitraster) */
-    public SchemaTabelleSpalte col_Zeitraster_ID = add("Zeitraster_ID", SchemaDatentypen.BIGINT, false)
+    public final SchemaTabelleSpalte col_Zeitraster_ID = add("Zeitraster_ID", SchemaDatentypen.BIGINT, false)
             .setNotNull()
             .setJavaComment("Fremdschlüssel auf das Zeitraster (Tabelle UV_Zeitraster)");
 
     /** Wochentag des Eintrags als INT (z. B. 1=Montag) */
-    public SchemaTabelleSpalte col_Tag = add("Tag", SchemaDatentypen.INT, false)
+    public final SchemaTabelleSpalte col_Tag = add("Tag", SchemaDatentypen.INT, false)
             .setNotNull()
             .setJavaComment("Wochentag des Zeitraster-Eintrags als Integer (z. B. 1=Montag)");
 
     /** Stunde innerhalb des Tages als INT */
-    public SchemaTabelleSpalte col_Stunde = add("Stunde", SchemaDatentypen.INT, false)
+    public final SchemaTabelleSpalte col_Stunde = add("Stunde", SchemaDatentypen.INT, false)
             .setNotNull()
             .setJavaComment("Stunde des Zeitraster-Eintrags");
 
     /** Beginn der Stunde (Uhrzeit als TIME) */
-    public SchemaTabelleSpalte col_Beginn = add("Beginn", SchemaDatentypen.TIME, false)
+    public final SchemaTabelleSpalte col_Beginn = add("Beginn", SchemaDatentypen.TIME, false)
 			.setNotNull()
 			.setConverter(UhrzeitConverter.class)
             .setJavaComment("Beginn der Stunde (Uhrzeit als TIME)");
 
     /** Ende der Stunde (Uhrzeit als TIME) */
-    public SchemaTabelleSpalte col_Ende = add("Ende", SchemaDatentypen.TIME, false)
+    public final SchemaTabelleSpalte col_Ende = add("Ende", SchemaDatentypen.TIME, false)
 			.setNotNull()
 			.setConverter(UhrzeitConverter.class)
             .setJavaComment("Ende der Stunde (Uhrzeit als TIME)");
 
     /** Fremdschlüssel auf die Tabelle UV_Zeitraster */
-    public SchemaTabelleFremdschluessel fk_UVZeitrasterEintraege_UVZeitraster_FK = addForeignKey(
+    public final SchemaTabelleFremdschluessel fk_UVZeitrasterEintraege_UVZeitraster_FK = addForeignKey(
             "UVZeitrasterEintraege_UVZeitraster_FK",
             /* OnUpdate: */ SchemaFremdschluesselAktionen.CASCADE,
             /* OnDelete: */ SchemaFremdschluesselAktionen.CASCADE,
@@ -57,7 +57,7 @@ public class Tabelle_UV_ZeitrasterEintraege extends SchemaTabelle {
     );
 
     /** Unique-Index für die Kombination Stunde, Tag und Zeitraster */
-    public SchemaTabelleUniqueIndex unique_UVZeitrasterEintraege_UC1 = addUniqueIndex("UVZeitrasterEintraege_UC1",
+    public final SchemaTabelleUniqueIndex unique_UVZeitrasterEintraege_UC1 = addUniqueIndex("UVZeitrasterEintraege_UC1",
             col_Zeitraster_ID, col_Tag, col_Stunde
     );
 

@@ -8,17 +8,17 @@ export class SchulformGliederungJahrgaenge extends JavaObject {
 	/**
 	 * Das Kürzel der Schulform
 	 */
-	public schulform : string = "";
+	public schulform: string = "";
 
 	/**
 	 * Das Kürzel der Schulgliederung bzw. des Bildungsganges. Null, falls alle Gliederungen der Schulform gemeint sind.
 	 */
-	public gliederung : string | null = null;
+	public gliederung: string | null = null;
 
 	/**
 	 * Die Liste der Jahrgänge.
 	 */
-	public jahrgaenge : List<string> = new ArrayList<string>();
+	public jahrgaenge: List<string> = new ArrayList<string>();
 
 
 	/**
@@ -32,13 +32,13 @@ export class SchulformGliederungJahrgaenge extends JavaObject {
 		return 'de.svws_nrw.core.data.schule.SchulformGliederungJahrgaenge';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.schule.SchulformGliederungJahrgaenge'].includes(name);
 	}
 
 	public static class = new Class<SchulformGliederungJahrgaenge>('de.svws_nrw.core.data.schule.SchulformGliederungJahrgaenge');
 
-	public static transpilerFromJSON(json : string): SchulformGliederungJahrgaenge {
+	public static transpilerFromJSON(json: string): SchulformGliederungJahrgaenge {
 		const obj = JSON.parse(json) as Partial<SchulformGliederungJahrgaenge>;
 		const result = new SchulformGliederungJahrgaenge();
 		if (obj.schulform === undefined)
@@ -53,7 +53,7 @@ export class SchulformGliederungJahrgaenge extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : SchulformGliederungJahrgaenge) : string {
+	public static transpilerToJSON(obj: SchulformGliederungJahrgaenge): string {
 		let result = '{';
 		result += '"schulform" : ' + JSON.stringify(obj.schulform) + ',';
 		result += '"gliederung" : ' + ((obj.gliederung === null) ? 'null' : JSON.stringify(obj.gliederung)) + ',';
@@ -70,7 +70,7 @@ export class SchulformGliederungJahrgaenge extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<SchulformGliederungJahrgaenge>) : string {
+	public static transpilerToJSONPatch(obj: Partial<SchulformGliederungJahrgaenge>): string {
 		let result = '{';
 		if (obj.schulform !== undefined) {
 			result += '"schulform" : ' + JSON.stringify(obj.schulform) + ',';
@@ -95,6 +95,6 @@ export class SchulformGliederungJahrgaenge extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_schule_SchulformGliederungJahrgaenge(obj : unknown) : SchulformGliederungJahrgaenge {
+export function cast_de_svws_nrw_core_data_schule_SchulformGliederungJahrgaenge(obj: unknown): SchulformGliederungJahrgaenge {
 	return obj as SchulformGliederungJahrgaenge;
 }

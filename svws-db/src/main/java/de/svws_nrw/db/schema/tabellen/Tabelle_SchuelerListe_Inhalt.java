@@ -15,24 +15,24 @@ import de.svws_nrw.db.schema.SchemaTabelleSpalte;
 public class Tabelle_SchuelerListe_Inhalt extends SchemaTabelle {
 
 	/** Die Definition der Tabellenspalte Liste_ID */
-	public SchemaTabelleSpalte col_Liste_ID = add("Liste_ID", SchemaDatentypen.BIGINT, true)
+	public final SchemaTabelleSpalte col_Liste_ID = add("Liste_ID", SchemaDatentypen.BIGINT, true)
 			.setNotNull()
 			.setJavaComment("ID der individuellen Schülerliste");
 
 	/** Die Definition der Tabellenspalte Schueler_ID */
-	public SchemaTabelleSpalte col_Schueler_ID = add("Schueler_ID", SchemaDatentypen.BIGINT, true)
+	public final SchemaTabelleSpalte col_Schueler_ID = add("Schueler_ID", SchemaDatentypen.BIGINT, true)
 			.setNotNull()
 			.setJavaComment("SchülerID des Schülers der zur individuellen Schülerliste gehört");
 
 	/** Die Definition der Tabellenspalte SchulnrEigner */
-	public SchemaTabelleSpalte col_SchulnrEigner = add("SchulnrEigner", SchemaDatentypen.INT, false)
+	public final SchemaTabelleSpalte col_SchulnrEigner = add("SchulnrEigner", SchemaDatentypen.INT, false)
 			.setVeraltet(SchemaRevisionen.REV_1)
 			.setJavaComment("Die Schulnummer zu welcher der Datensatz gehört – wird benötigt, wenn mehrere Schulen in einem Schema der Datenbank"
 					+ " gespeichert werden");
 
 
 	/** Die Definition des Fremdschlüssels SchuelerListeInhalt_Liste_FK */
-	public SchemaTabelleFremdschluessel fk_SchuelerListeInhalt_Liste_FK = addForeignKey(
+	public final SchemaTabelleFremdschluessel fk_SchuelerListeInhalt_Liste_FK = addForeignKey(
 			"SchuelerListeInhalt_Liste_FK",
 			/* OnUpdate: */ SchemaFremdschluesselAktionen.CASCADE,
 			/* OnDelete: */ SchemaFremdschluesselAktionen.CASCADE,
@@ -40,7 +40,7 @@ public class Tabelle_SchuelerListe_Inhalt extends SchemaTabelle {
 	);
 
 	/** Die Definition des Fremdschlüssels SchuelerListeInhalt_Schueler_FK */
-	public SchemaTabelleFremdschluessel fk_SchuelerListeInhalt_Schueler_FK = addForeignKey(
+	public final SchemaTabelleFremdschluessel fk_SchuelerListeInhalt_Schueler_FK = addForeignKey(
 			"SchuelerListeInhalt_Schueler_FK",
 			/* OnUpdate: */ SchemaFremdschluesselAktionen.CASCADE,
 			/* OnDelete: */ SchemaFremdschluesselAktionen.CASCADE,

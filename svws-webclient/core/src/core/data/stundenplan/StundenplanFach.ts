@@ -7,32 +7,32 @@ export class StundenplanFach extends JavaObject {
 	/**
 	 * Die ID des Faches.
 	 */
-	public id : number = -1;
+	public id: number = -1;
 
 	/**
 	 * Das Kürzel des Faches.
 	 */
-	public kuerzel : string = "";
+	public kuerzel: string = "";
 
 	/**
 	 * Das Statistik-Kürzel des Faches.
 	 */
-	public kuerzelStatistik : string = "";
+	public kuerzelStatistik: string = "";
 
 	/**
 	 * Die Bezeichnung des Faches.
 	 */
-	public bezeichnung : string = "";
+	public bezeichnung: string = "";
 
 	/**
 	 * Eine Nummer, welche die Sortierreihenfolge bei den Fächern angibt.
 	 */
-	public sortierung : number = 32000;
+	public sortierung: number = 32000;
 
 	/**
 	 * Die Farbe, die zur Darstellung des Faches genutzt werden soll - sofern vom Standard abgewichen werden soll.
 	 */
-	public farbe : RGBFarbe | null = null;
+	public farbe: RGBFarbe | null = null;
 
 
 	/**
@@ -46,13 +46,13 @@ export class StundenplanFach extends JavaObject {
 		return 'de.svws_nrw.core.data.stundenplan.StundenplanFach';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.stundenplan.StundenplanFach'].includes(name);
 	}
 
 	public static class = new Class<StundenplanFach>('de.svws_nrw.core.data.stundenplan.StundenplanFach');
 
-	public static transpilerFromJSON(json : string): StundenplanFach {
+	public static transpilerFromJSON(json: string): StundenplanFach {
 		const obj = JSON.parse(json) as Partial<StundenplanFach>;
 		const result = new StundenplanFach();
 		if (obj.id === undefined)
@@ -74,7 +74,7 @@ export class StundenplanFach extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : StundenplanFach) : string {
+	public static transpilerToJSON(obj: StundenplanFach): string {
 		let result = '{';
 		result += '"id" : ' + obj.id.toString() + ',';
 		result += '"kuerzel" : ' + JSON.stringify(obj.kuerzel) + ',';
@@ -87,7 +87,7 @@ export class StundenplanFach extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<StundenplanFach>) : string {
+	public static transpilerToJSONPatch(obj: Partial<StundenplanFach>): string {
 		let result = '{';
 		if (obj.id !== undefined) {
 			result += '"id" : ' + obj.id.toString() + ',';
@@ -114,6 +114,6 @@ export class StundenplanFach extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_stundenplan_StundenplanFach(obj : unknown) : StundenplanFach {
+export function cast_de_svws_nrw_core_data_stundenplan_StundenplanFach(obj: unknown): StundenplanFach {
 	return obj as StundenplanFach;
 }

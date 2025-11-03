@@ -7,32 +7,32 @@ export class GostKursklausur extends JavaObject {
 	/**
 	 * Die ID der Kursklausur.
 	 */
-	public id : number = -1;
+	public id: number = -1;
 
 	/**
 	 * Die ID der Klausur-Vorgabe.
 	 */
-	public idVorgabe : number = -1;
+	public idVorgabe: number = -1;
 
 	/**
 	 * Die ID des Klausurkurses.
 	 */
-	public idKurs : number = -1;
+	public idKurs: number = -1;
 
 	/**
 	 * Die ID des Klausurtermins, sofern schon gesetzt.
 	 */
-	public idTermin : number | null = null;
+	public idTermin: number | null = null;
 
 	/**
 	 * Die Startzeit der Klausur in Minuten seit 0 Uhr, sofern abweichend von Startzeit des gesamten Termins.
 	 */
-	public startzeit : number | null = null;
+	public startzeit: number | null = null;
 
 	/**
 	 * Die textuelle Bemerkung zur Kursklausur, sofern vorhanden.
 	 */
-	public bemerkung : string | null = null;
+	public bemerkung: string | null = null;
 
 
 	/**
@@ -48,7 +48,7 @@ export class GostKursklausur extends JavaObject {
 	 * @param another     das zu vergleichende Objekt
 	 * @return true, falls die Objekte indentisch sind, sonst false
 	 */
-	public equals(another : unknown | null) : boolean {
+	public equals(another: unknown | null): boolean {
 		return (another !== null) && (((another instanceof JavaObject) && (another.isTranspiledInstanceOf('de.svws_nrw.core.data.gost.klausurplanung.GostKursklausur')))) && (this.id === (another as unknown as GostKursklausur).id);
 	}
 
@@ -57,7 +57,7 @@ export class GostKursklausur extends JavaObject {
 	 *
 	 * @return den HashCode
 	 */
-	public hashCode() : number {
+	public hashCode(): number {
 		return JavaLong.hashCode((this.id));
 	}
 
@@ -65,13 +65,13 @@ export class GostKursklausur extends JavaObject {
 		return 'de.svws_nrw.core.data.gost.klausurplanung.GostKursklausur';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.gost.klausurplanung.GostKursklausur'].includes(name);
 	}
 
 	public static class = new Class<GostKursklausur>('de.svws_nrw.core.data.gost.klausurplanung.GostKursklausur');
 
-	public static transpilerFromJSON(json : string): GostKursklausur {
+	public static transpilerFromJSON(json: string): GostKursklausur {
 		const obj = JSON.parse(json) as Partial<GostKursklausur>;
 		const result = new GostKursklausur();
 		if (obj.id === undefined)
@@ -89,7 +89,7 @@ export class GostKursklausur extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : GostKursklausur) : string {
+	public static transpilerToJSON(obj: GostKursklausur): string {
 		let result = '{';
 		result += '"id" : ' + obj.id.toString() + ',';
 		result += '"idVorgabe" : ' + obj.idVorgabe.toString() + ',';
@@ -102,7 +102,7 @@ export class GostKursklausur extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<GostKursklausur>) : string {
+	public static transpilerToJSONPatch(obj: Partial<GostKursklausur>): string {
 		let result = '{';
 		if (obj.id !== undefined) {
 			result += '"id" : ' + obj.id.toString() + ',';
@@ -129,6 +129,6 @@ export class GostKursklausur extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_gost_klausurplanung_GostKursklausur(obj : unknown) : GostKursklausur {
+export function cast_de_svws_nrw_core_data_gost_klausurplanung_GostKursklausur(obj: unknown): GostKursklausur {
 	return obj as GostKursklausur;
 }

@@ -15,13 +15,13 @@ export class KAOABerufsfeldKatalogEintrag extends CoreTypeData {
 		return 'de.svws_nrw.asd.data.kaoa.KAOABerufsfeldKatalogEintrag';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.asd.data.kaoa.KAOABerufsfeldKatalogEintrag', 'de.svws_nrw.asd.data.CoreTypeData'].includes(name);
 	}
 
 	public static class = new Class<KAOABerufsfeldKatalogEintrag>('de.svws_nrw.asd.data.kaoa.KAOABerufsfeldKatalogEintrag');
 
-	public static transpilerFromJSON(json : string): KAOABerufsfeldKatalogEintrag {
+	public static transpilerFromJSON(json: string): KAOABerufsfeldKatalogEintrag {
 		const obj = JSON.parse(json) as Partial<KAOABerufsfeldKatalogEintrag>;
 		const result = new KAOABerufsfeldKatalogEintrag();
 		if (obj.id === undefined)
@@ -41,7 +41,7 @@ export class KAOABerufsfeldKatalogEintrag extends CoreTypeData {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : KAOABerufsfeldKatalogEintrag) : string {
+	public static transpilerToJSON(obj: KAOABerufsfeldKatalogEintrag): string {
 		let result = '{';
 		result += '"id" : ' + obj.id.toString() + ',';
 		result += '"schluessel" : ' + JSON.stringify(obj.schluessel) + ',';
@@ -54,7 +54,7 @@ export class KAOABerufsfeldKatalogEintrag extends CoreTypeData {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<KAOABerufsfeldKatalogEintrag>) : string {
+	public static transpilerToJSONPatch(obj: Partial<KAOABerufsfeldKatalogEintrag>): string {
 		let result = '{';
 		if (obj.id !== undefined) {
 			result += '"id" : ' + obj.id.toString() + ',';
@@ -81,6 +81,6 @@ export class KAOABerufsfeldKatalogEintrag extends CoreTypeData {
 
 }
 
-export function cast_de_svws_nrw_asd_data_kaoa_KAOABerufsfeldKatalogEintrag(obj : unknown) : KAOABerufsfeldKatalogEintrag {
+export function cast_de_svws_nrw_asd_data_kaoa_KAOABerufsfeldKatalogEintrag(obj: unknown): KAOABerufsfeldKatalogEintrag {
 	return obj as KAOABerufsfeldKatalogEintrag;
 }

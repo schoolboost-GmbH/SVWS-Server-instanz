@@ -8,22 +8,22 @@ export class AbschlussErgebnis extends JavaObject {
 	/**
 	 * Gibt an, ob der Abschluss erfolgreich erworben wurde, bzw. bei einer Prognose, ob ein ein Abschluss erworben wurde.
 	 */
-	public erworben : boolean = false;
+	public erworben: boolean = false;
 
 	/**
 	 * Gibt an, welcher Abschluss geprüft wurde.
 	 */
-	public abschluss : string | null = null;
+	public abschluss: string | null = null;
 
 	/**
 	 * Eine Liste der Kuerzel für mögliche Nachprüfungsfächer.
 	 */
-	public npFaecher : List<string> | null = null;
+	public npFaecher: List<string> | null = null;
 
 	/**
 	 * Der Log der Abschlussberechnung.
 	 */
-	public log : List<string> | null = null;
+	public log: List<string> | null = null;
 
 
 	/**
@@ -37,13 +37,13 @@ export class AbschlussErgebnis extends JavaObject {
 		return 'de.svws_nrw.core.data.abschluss.AbschlussErgebnis';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.abschluss.AbschlussErgebnis'].includes(name);
 	}
 
 	public static class = new Class<AbschlussErgebnis>('de.svws_nrw.core.data.abschluss.AbschlussErgebnis');
 
-	public static transpilerFromJSON(json : string): AbschlussErgebnis {
+	public static transpilerFromJSON(json: string): AbschlussErgebnis {
 		const obj = JSON.parse(json) as Partial<AbschlussErgebnis>;
 		const result = new AbschlussErgebnis();
 		if (obj.erworben === undefined)
@@ -69,7 +69,7 @@ export class AbschlussErgebnis extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : AbschlussErgebnis) : string {
+	public static transpilerToJSON(obj: AbschlussErgebnis): string {
 		let result = '{';
 		result += '"erworben" : ' + obj.erworben.toString() + ',';
 		result += '"abschluss" : ' + ((obj.abschluss === null) ? 'null' : JSON.stringify(obj.abschluss)) + ',';
@@ -102,7 +102,7 @@ export class AbschlussErgebnis extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<AbschlussErgebnis>) : string {
+	public static transpilerToJSONPatch(obj: Partial<AbschlussErgebnis>): string {
 		let result = '{';
 		if (obj.erworben !== undefined) {
 			result += '"erworben" : ' + obj.erworben.toString() + ',';
@@ -145,6 +145,6 @@ export class AbschlussErgebnis extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_abschluss_AbschlussErgebnis(obj : unknown) : AbschlussErgebnis {
+export function cast_de_svws_nrw_core_data_abschluss_AbschlussErgebnis(obj: unknown): AbschlussErgebnis {
 	return obj as AbschlussErgebnis;
 }

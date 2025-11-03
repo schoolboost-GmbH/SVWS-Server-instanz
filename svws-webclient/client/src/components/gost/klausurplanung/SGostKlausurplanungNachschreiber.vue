@@ -178,7 +178,7 @@
 	};
 
 	async function blocken() {
-		showModalAutomatischBlocken.value = false
+		showModalAutomatischBlocken.value = false;
 		loading.value = true;
 		const config = new GostNachschreibterminblockungKonfiguration();
 		config.termine = termine.value;
@@ -198,10 +198,10 @@
 	const onDrop = async (zone: GostKlausurplanungDropZone) => {
 		if (dragData.value instanceof GostKursklausur || dragData.value instanceof GostSchuelerklausurTermin) {
 			if (zone === undefined && dragData.value.idTermin !== null)
-				await props.patchKlausur(dragData.value, {idTermin: null});
+				await props.patchKlausur(dragData.value, { idTermin: null });
 			else if (zone instanceof GostKlausurtermin) {
 				if (zone.id !== dragData.value.idTermin) {
-					await props.patchKlausur(dragData.value, {idTermin: zone.id});
+					await props.patchKlausur(dragData.value, { idTermin: zone.id });
 					terminSelected.value = zone;
 				}
 			}
@@ -214,15 +214,15 @@
 		if (klausur instanceof GostKursklausur && dragData.value !== undefined)
 			return {
 				"bg-ui-danger text-ui-ondanger": props.kMan().konfliktZuKursklausurBySchuelerklausur((dragData.value as GostSchuelerklausurTermin), klausur),
-			}
+			};
 		else if (klausur instanceof GostSchuelerklausurTermin && dragData.value !== undefined)
 			return {
 				"bg-ui-danger text-ui-ondanger": props.kMan().schuelerklausurGetByIdOrException(klausur.idSchuelerklausur).idSchueler === props.kMan().schuelerklausurGetByIdOrException((dragData.value as GostSchuelerklausurTermin).idSchuelerklausur).idSchueler,
-			}
+			};
 		else if (klausur instanceof GostSchuelerklausurTermin && termin !== undefined) {
 			return {
 				"bg-ui-danger text-ui-ondanger": props.kMan().konfliktPaarGetMengeTerminAndSchuelerklausurtermin(termin, klausur).size() > 0,
-			}
+			};
 		}
 	};
 

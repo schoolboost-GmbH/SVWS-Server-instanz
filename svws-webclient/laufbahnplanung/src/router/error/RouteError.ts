@@ -15,15 +15,15 @@ export class RouteError extends RouteNode<unknown, any> {
 		super.text = "Fehler";
 	}
 
-	public async enter(to: RouteNode<unknown, any>, to_params: RouteParams) : Promise<void | Error | RouteLocationRaw> {
+	public async enter(to: RouteNode<unknown, any>, to_params: RouteParams): Promise<void | Error | RouteLocationRaw> {
 	}
 
-	protected async update(to: RouteNode<unknown, any>, to_params: RouteParams) : Promise<void | Error | RouteLocationRaw> {
+	protected async update(to: RouteNode<unknown, any>, to_params: RouteParams): Promise<void | Error | RouteLocationRaw> {
 		if (to_params.error instanceof Array)
 			throw new Error("Fehler: Die Parameter der Route dürfen keine Arrays sein");
 	}
 
-	public getRoute(error?: Error, errorcode? : number): RouteLocationRaw {
+	public getRoute(error?: Error, errorcode?: number): RouteLocationRaw {
 		routerManager.resetErrorState();
 		routerManager.errorcode = errorcode;
 		routerManager.error = error;
@@ -34,8 +34,8 @@ export class RouteError extends RouteNode<unknown, any> {
 	public getProps(): ErrorProps {
 		return {
 			code: routerManager.errorcode,
-			error: routerManager.error
-		}
+			error: routerManager.error,
+		};
 	}
 
 }

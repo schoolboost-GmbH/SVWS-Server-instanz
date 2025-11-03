@@ -33,7 +33,7 @@ export abstract class GridInput<KEY, DATA> {
 	protected _isNewFocus = shallowRef<boolean>(true);
 
 	// Gibt eine Richtung an, in die navigiert wird, falls eine Eingabe mit ENTER bestätigt wird
-	public navigateOnEnter : null | 'DOWN' | 'RIGHT' = 'DOWN';
+	public navigateOnEnter: null | 'DOWN' | 'RIGHT' = 'DOWN';
 
 
 	/**
@@ -45,7 +45,7 @@ export abstract class GridInput<KEY, DATA> {
 	 * @param row           die Zeile, in welcher sich das Input befindet
 	 * @param elem          das HTML-Element, welches dem Grid-Input und damit der Zelle des Grid zugeordnet ist
 	 */
-	constructor(gridManager: GridManager<KEY, any, Collection<any> | List<any>>, key: KEY, col: number, row: number, elem : HTMLElement) {
+	constructor(gridManager: GridManager<KEY, any, Collection<any> | List<any>>, key: KEY, col: number, row: number, elem: HTMLElement) {
 		this._gridManager = gridManager;
 		this._key = key;
 		this._col = col;
@@ -63,28 +63,28 @@ export abstract class GridInput<KEY, DATA> {
 	/**
 	 * Gibt den Grid-Manager zurück, welcher dieses Grid-Input verwaltet
 	 */
-	public get gridManager() : GridManager<KEY, any, Collection<any> | List<any>> {
+	public get gridManager(): GridManager<KEY, any, Collection<any> | List<any>> {
 		return this._gridManager;
 	}
 
 	/**
 	 * Gibt den eindeutigen Schlüssel zur Identifikation des Input zurück
 	 */
-	public get key() : KEY {
+	public get key(): KEY {
 		return this._key;
 	}
 
 	/**
 	 * Gibt die Spalte zurück, in welcher sich das Input befindet
 	 */
-	public get col() : number {
+	public get col(): number {
 		return this._col;
 	}
 
 	/**
 	 * Gibt die Zeile zurück, in welcher sich das Input befindet
 	 */
-	public get row() : number {
+	public get row(): number {
 		return this._row;
 	}
 
@@ -92,7 +92,7 @@ export abstract class GridInput<KEY, DATA> {
 	 * Setzte die Spalte, in welcher sich das Input befindet.
 	 * Wichtig: Diese Methode darf nur vom zugehörigen Grid-Manager aufgerufen werden.
 	 */
-	public setCol(value : number) {
+	public setCol(value: number) {
 		if (value < 0)
 			throw new DeveloperNotificationException("Eine Spaltennummer kleiner 0 ist unzulässig.");
 		this._col = value;
@@ -102,7 +102,7 @@ export abstract class GridInput<KEY, DATA> {
 	 * Setzte die Zeile, in welcher sich das Input befindet.
 	 * Wichtig: Diese Methode darf nur vom zugehörigen Grid-Manager aufgerufen werden.
 	 */
-	public setRow(value : number) {
+	public setRow(value: number) {
 		if (value < 0)
 			throw new DeveloperNotificationException("Eine Zeilennummer kleiner 0 ist unzulässig.");
 		this._row = value;
@@ -111,7 +111,7 @@ export abstract class GridInput<KEY, DATA> {
 	/**
 	 * Gibt das HTML-Element des Inputs zurück.
 	 */
-	public get element() : HTMLElement {
+	public get element(): HTMLElement {
 		return this._elem;
 	}
 
@@ -127,7 +127,7 @@ export abstract class GridInput<KEY, DATA> {
 	/**
 	 * Interne Methode zur Handhabung, wenn das HTML-Element den Fokus erhält
 	 */
-	private handleFocus() : void {
+	private handleFocus(): void {
 		this.gridManager.focusInput = this;
 		this._isNewFocus.value = true;
 		this.onFocus();
@@ -136,14 +136,14 @@ export abstract class GridInput<KEY, DATA> {
 	/**
 	 * Eine Methode, welche überschrieben werden kann, um auf das Erhalten des Fokus zu reagieren.
 	 */
-	public onFocus() : void {
+	public onFocus(): void {
 		// override method in subclass if necessary
 	}
 
 	/**
 	 * Interne Methode zur Handhabung, wenn das HTML-Element den Fokus verliert
 	 */
-	private handleBlur() : void {
+	private handleBlur(): void {
 		this.gridManager.focusInput = null;
 		this.onBlur();
 		this._isNewFocus.value = true;
@@ -152,7 +152,7 @@ export abstract class GridInput<KEY, DATA> {
 	/**
 	 * Eine Methode, welche überschrieben werden kann, um auf das Verlieren des Fokus zu reagieren.
 	 */
-	public onBlur() : void {
+	public onBlur(): void {
 		// override method in subclass if necessary
 	}
 
@@ -161,7 +161,7 @@ export abstract class GridInput<KEY, DATA> {
 	 *
 	 * @param event   das Tastaturereignis
 	 */
-	private handleKeyDown(event : KeyboardEvent) : void {
+	private handleKeyDown(event: KeyboardEvent): void {
 		if (this.onKeyDown(event))
 			this._isNewFocus.value = false;
 	}
@@ -174,7 +174,7 @@ export abstract class GridInput<KEY, DATA> {
 	 *
 	 * @returns true   es hat aufgrund des Tastaturereignisses eine Änderung am Zustand des Inputs stattgefunden
 	 */
-	public onKeyDown(event : KeyboardEvent) : boolean {
+	public onKeyDown(event: KeyboardEvent): boolean {
 		// override method in subclass if necessary
 		return false;
 	}
@@ -184,7 +184,7 @@ export abstract class GridInput<KEY, DATA> {
 	 *
 	 * @param event   das Mausereignis
 	 */
-	private handleClick(event : MouseEvent) : void {
+	private handleClick(event: MouseEvent): void {
 		if (this.onClick(event))
 			this._isNewFocus.value = false;
 	}
@@ -197,7 +197,7 @@ export abstract class GridInput<KEY, DATA> {
 	 *
 	 * @returns true   es hat aufgrund des Klickereignisses eine Änderung am Zustand des Inputs stattgefunden
 	 */
-	public onClick(event : MouseEvent) : boolean {
+	public onClick(event: MouseEvent): boolean {
 		// override method in subclass if necessary
 		return false;
 	}
@@ -210,7 +210,7 @@ export abstract class GridInput<KEY, DATA> {
 	 *
 	 * @returns true   wenn aufgrund des Tastaturereignisses eine Navigation stattgefunden hat.
 	 */
-	public onKeyDownNavigation(event : KeyboardEvent) : boolean {
+	public onKeyDownNavigation(event: KeyboardEvent): boolean {
 		if (event.key === "ArrowDown") {
 			this.navigateDown();
 			event.preventDefault();
@@ -257,56 +257,56 @@ export abstract class GridInput<KEY, DATA> {
 	/**
 	 * Es soll das Grid-Input oberhalb von diesem Grid-Input fokussiert werden.
 	 */
-	public navigateUp() : void {
+	public navigateUp(): void {
 		this._gridManager.focusPrevRowElement(this);
 	}
 
 	/**
 	 * Es soll das Grid-Input unterhalb von diesem Grid-Input fokussiert werden.
 	 */
-	public navigateDown() : void {
+	public navigateDown(): void {
 		this._gridManager.focusNextRowElement(this);
 	}
 
 	/**
 	 * Es soll das Grid-Input links von diesem Grid-Input fokussiert werden.
 	 */
-	public navigateLeft() : void {
+	public navigateLeft(): void {
 		this._gridManager.focusPrevColElement(this);
 	}
 
 	/**
 	 * Es soll das Grid-Input rechts von diesem Grid-Input fokussiert werden.
 	 */
-	public navigateRight() : void {
+	public navigateRight(): void {
 		this._gridManager.focusNextColElement(this);
 	}
 
 	/**
 	 * Es soll das Grid-Input eine Seite im Body oberhalb von diesem Grid-Input fokussiert werden.
 	 */
-	public navigatePageUp() : void {
+	public navigatePageUp(): void {
 		this._gridManager.focusPrevRowElementPageUp(this);
 	}
 
 	/**
 	 * Es soll das Grid-Input eine Seite im Body unterhalb von diesem Grid-Input fokussiert werden.
 	 */
-	public navigatePageDown() : void {
+	public navigatePageDown(): void {
 		this._gridManager.focusNextRowElementPageDown(this);
 	}
 
 	/**
 	 * Es soll das Grid-Input ganz oben im Body fokussiert werden.
 	 */
-	public navigateTop() : void {
+	public navigateTop(): void {
 		this._gridManager.focusTopElement(this);
 	}
 
 	/**
 	 * Es soll das Grid-Input ganz unten im Body fokussiert werden.
 	 */
-	public navigateBottom() : void {
+	public navigateBottom(): void {
 		this._gridManager.focusBottomElement(this);
 	}
 

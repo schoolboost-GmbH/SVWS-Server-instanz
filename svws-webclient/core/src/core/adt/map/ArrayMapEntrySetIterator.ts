@@ -12,18 +12,18 @@ export class ArrayMapEntrySetIterator<K, V> extends JavaObject implements JavaIt
 	/**
 	 * Die {@link ArrayMap}, deren Schlüsselwerte iteriert werden.
 	 */
-	private readonly _map : ArrayMap<K, V>;
+	private readonly _map: ArrayMap<K, V>;
 
 	/**
 	 * Die aktuelle Position in der Map. Der Wert null bedeutet, dass sich der Iterator vor dem
 	 *  ersten Element befindet.
 	 */
-	private _current : number | null = null;
+	private _current: number | null = null;
 
 	/**
 	 * Die nächste Position in der Map. Der wert null bedeutet, dass kein nächster Eintrag vorhanden ist.
 	 */
-	private _next : number | null = null;
+	private _next: number | null = null;
 
 
 	/**
@@ -31,38 +31,38 @@ export class ArrayMapEntrySetIterator<K, V> extends JavaObject implements JavaIt
 	 *
 	 * @param map  die {@link ArrayMap}
 	 */
-	constructor(map : ArrayMap<K, V>) {
+	constructor(map: ArrayMap<K, V>) {
 		super();
 		this._map = map;
 		this._current = null;
 		this._next = this.getNextIndex(this._current);
 	}
 
-	private getNextIndex(from : number | null) : number | null {
-		const start : number = (from === null) ? 0 : (from + 1);
-		for (let i : number = start; i < this._map.getNumberOfKeys(); i++) {
+	private getNextIndex(from: number | null): number | null {
+		const start: number = (from === null) ? 0 : (from + 1);
+		for (let i: number = start; i < this._map.getNumberOfKeys(); i++) {
 			if (this._map.getEntryByIndex(i) !== null)
 				return i;
 		}
 		return null;
 	}
 
-	public next() : JavaMapEntry<K, V> {
+	public next(): JavaMapEntry<K, V> {
 		if (this._next === null)
 			throw new NoSuchElementException()
 		this._current = this._next;
 		this._next = this.getNextIndex(this._current);
-		const result : ArrayMapEntry<K, V> | null = this._map.getEntryByIndex(this._current);
+		const result: ArrayMapEntry<K, V> | null = this._map.getEntryByIndex(this._current);
 		if (result === null)
 			throw new NoSuchElementException()
 		return result;
 	}
 
-	public hasNext() : boolean {
+	public hasNext(): boolean {
 		return this._next !== null;
 	}
 
-	public remove() : void {
+	public remove(): void {
 		if (this._current === null)
 			throw new IllegalStateException()
 		this._map.remove(this._map.getKeyAt(this._current));
@@ -73,7 +73,7 @@ export class ArrayMapEntrySetIterator<K, V> extends JavaObject implements JavaIt
 		return 'de.svws_nrw.core.adt.map.ArrayMapEntrySetIterator';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['java.util.Iterator', 'de.svws_nrw.core.adt.map.ArrayMapEntrySetIterator'].includes(name);
 	}
 
@@ -81,6 +81,6 @@ export class ArrayMapEntrySetIterator<K, V> extends JavaObject implements JavaIt
 
 }
 
-export function cast_de_svws_nrw_core_adt_map_ArrayMapEntrySetIterator<K, V>(obj : unknown) : ArrayMapEntrySetIterator<K, V> {
+export function cast_de_svws_nrw_core_adt_map_ArrayMapEntrySetIterator<K, V>(obj: unknown): ArrayMapEntrySetIterator<K, V> {
 	return obj as ArrayMapEntrySetIterator<K, V>;
 }

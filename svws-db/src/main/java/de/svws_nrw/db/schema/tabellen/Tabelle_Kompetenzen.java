@@ -19,23 +19,23 @@ import de.svws_nrw.db.schema.SchemaTabelleSpalte;
 public class Tabelle_Kompetenzen extends SchemaTabelle {
 
 	/** Die Definition der Tabellenspalte KO_ID */
-	public SchemaTabelleSpalte col_KO_ID = add("KO_ID", SchemaDatentypen.BIGINT, true)
+	public final SchemaTabelleSpalte col_KO_ID = add("KO_ID", SchemaDatentypen.BIGINT, true)
 			.setNotNull()
 			.setJavaComment("ID für die Berechtigungskompetenz");
 
 	/** Die Definition der Tabellenspalte KO_Gruppe */
-	public SchemaTabelleSpalte col_KO_Gruppe = add("KO_Gruppe", SchemaDatentypen.BIGINT, false)
+	public final SchemaTabelleSpalte col_KO_Gruppe = add("KO_Gruppe", SchemaDatentypen.BIGINT, false)
 			.setNotNull()
 			.setJavaComment("Gruppe der Berechtigungskompetenz");
 
 	/** Die Definition der Tabellenspalte KO_Bezeichnung */
-	public SchemaTabelleSpalte col_KO_Bezeichnung = add("KO_Bezeichnung", SchemaDatentypen.VARCHAR, false).setDatenlaenge(64)
+	public final SchemaTabelleSpalte col_KO_Bezeichnung = add("KO_Bezeichnung", SchemaDatentypen.VARCHAR, false).setDatenlaenge(64)
 			.setNotNull()
 			.setJavaComment("Bezeichnung der Berechtigungskompetenz");
 
 
 	/** Die Definition des Fremdschlüssels Kompetenzen_Kompetenzgruppen_FK */
-	public SchemaTabelleFremdschluessel fk_Kompetenzen_Kompetenzgruppen_FK = addForeignKey(
+	public final SchemaTabelleFremdschluessel fk_Kompetenzen_Kompetenzgruppen_FK = addForeignKey(
 			"Kompetenzen_Kompetenzgruppen_FK",
 			/* OnUpdate: */ SchemaFremdschluesselAktionen.CASCADE,
 			/* OnDelete: */ SchemaFremdschluesselAktionen.CASCADE,

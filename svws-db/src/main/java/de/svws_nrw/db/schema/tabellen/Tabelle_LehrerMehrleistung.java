@@ -16,51 +16,51 @@ import de.svws_nrw.db.schema.SchemaTabelleUniqueIndex;
 public class Tabelle_LehrerMehrleistung extends SchemaTabelle {
 
 	/** Die Definition der Tabellenspalte ID */
-	public SchemaTabelleSpalte col_ID = add("ID", SchemaDatentypen.BIGINT, true)
+	public final SchemaTabelleSpalte col_ID = add("ID", SchemaDatentypen.BIGINT, true)
 			.setNotNull()
 			.setJavaComment("ID für den Eintrag für die Mehrarbeitsstunden eines Lehrers");
 
 	/** Die Definition der Tabellenspalte Lehrer_ID */
-	public SchemaTabelleSpalte col_Lehrer_ID = add("Lehrer_ID", SchemaDatentypen.BIGINT, false)
+	public final SchemaTabelleSpalte col_Lehrer_ID = add("Lehrer_ID", SchemaDatentypen.BIGINT, false)
 			.setNotNull()
 			.setVeraltet(SchemaRevisionen.REV_1)
 			.setJavaComment("DEPRECATED: Lehrer-ID die zu den Mehrarbeitsstunden gehört, in LehrerAbchnittsdaten enthalten");
 
 	/** Die Definition der Tabellenspalte Abschnitt_ID */
-	public SchemaTabelleSpalte col_Abschnitt_ID = add("Abschnitt_ID", SchemaDatentypen.BIGINT, false)
+	public final SchemaTabelleSpalte col_Abschnitt_ID = add("Abschnitt_ID", SchemaDatentypen.BIGINT, false)
 			.setNotNull()
 			.setJavaComment("ID der Lehrerabschnittsdaten");
 
 	/** Die Definition der Tabellenspalte MehrleistungsgrundKrz */
-	public SchemaTabelleSpalte col_MehrleistungsgrundKrz = add("MehrleistungsgrundKrz", SchemaDatentypen.VARCHAR, false).setDatenlaenge(10)
+	public final SchemaTabelleSpalte col_MehrleistungsgrundKrz = add("MehrleistungsgrundKrz", SchemaDatentypen.VARCHAR, false).setDatenlaenge(10)
 			.setNotNull()
 			.setJavaComment("Mehrarbeitsstunden Kürzel");
 
 	/** Die Definition der Tabellenspalte MehrleistungStd */
-	public SchemaTabelleSpalte col_MehrleistungStd = add("MehrleistungStd", SchemaDatentypen.FLOAT, false)
+	public final SchemaTabelleSpalte col_MehrleistungStd = add("MehrleistungStd", SchemaDatentypen.FLOAT, false)
 			.setJavaComment("Anzahl Mehrarbeitsstunden");
 
 	/** Die Definition der Tabellenspalte Jahr */
-	public SchemaTabelleSpalte col_Jahr = add("Jahr", SchemaDatentypen.INT, false)
+	public final SchemaTabelleSpalte col_Jahr = add("Jahr", SchemaDatentypen.INT, false)
 			.setNotNull()
 			.setVeraltet(SchemaRevisionen.REV_1)
 			.setJavaComment("Schuljahr der Mehrarbeitsstunden");
 
 	/** Die Definition der Tabellenspalte Abschnitt */
-	public SchemaTabelleSpalte col_Abschnitt = add("Abschnitt", SchemaDatentypen.INT, false)
+	public final SchemaTabelleSpalte col_Abschnitt = add("Abschnitt", SchemaDatentypen.INT, false)
 			.setNotNull()
 			.setVeraltet(SchemaRevisionen.REV_1)
 			.setJavaComment("Abschnitt der Mehrarbeitsstunden");
 
 	/** Die Definition der Tabellenspalte SchulnrEigner */
-	public SchemaTabelleSpalte col_SchulnrEigner = add("SchulnrEigner", SchemaDatentypen.INT, false)
+	public final SchemaTabelleSpalte col_SchulnrEigner = add("SchulnrEigner", SchemaDatentypen.INT, false)
 			.setVeraltet(SchemaRevisionen.REV_1)
 			.setJavaComment("Die Schulnummer zu welcher der Datensatz gehört – wird benötigt, wenn mehrere Schulen in einem Schema der Datenbank"
 					+ " gespeichert werden");
 
 
 	/** Die Definition des Fremdschlüssels LehrerMehrleistung_Abschnitt_FK */
-	public SchemaTabelleFremdschluessel fk_LehrerMehrleistung_Abschnitt_FK = addForeignKey(
+	public final SchemaTabelleFremdschluessel fk_LehrerMehrleistung_Abschnitt_FK = addForeignKey(
 			"LehrerMehrleistung_Abschnitt_FK",
 			/* OnUpdate: */ SchemaFremdschluesselAktionen.CASCADE,
 			/* OnDelete: */ SchemaFremdschluesselAktionen.CASCADE,
@@ -68,7 +68,7 @@ public class Tabelle_LehrerMehrleistung extends SchemaTabelle {
 	);
 
 	/** Die Definition des Fremdschlüssels LehrerMehrleistung_Lehrer_FK */
-	public SchemaTabelleFremdschluessel fk_LehrerMehrleistung_Lehrer_FK = addForeignKey(
+	public final SchemaTabelleFremdschluessel fk_LehrerMehrleistung_Lehrer_FK = addForeignKey(
 			"LehrerMehrleistung_Lehrer_FK",
 			/* OnUpdate: */ SchemaFremdschluesselAktionen.CASCADE,
 			/* OnDelete: */ SchemaFremdschluesselAktionen.CASCADE,
@@ -77,7 +77,7 @@ public class Tabelle_LehrerMehrleistung extends SchemaTabelle {
 
 
 	/** Die Definition des Unique-Index LehrerMehrleistung_UC1 */
-	public SchemaTabelleUniqueIndex unique_LehrerMehrleistung_UC1 = addUniqueIndex("LehrerMehrleistung_UC1",
+	public final SchemaTabelleUniqueIndex unique_LehrerMehrleistung_UC1 = addUniqueIndex("LehrerMehrleistung_UC1",
 			col_Abschnitt_ID,
 			col_MehrleistungsgrundKrz
 	).setRevision(SchemaRevisionen.REV_2);

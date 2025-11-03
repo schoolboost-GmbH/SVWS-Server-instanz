@@ -70,11 +70,11 @@
 		regelHinzufuegen: () => void;
 		apiStatus: ApiStatus;
 		nurRegelverletzungen: boolean;
-	}>()
+	}>();
 
 	const emit = defineEmits<{
 		(e: 'update:modelValue', v: GostBlockungRegel | undefined): void;
-	}>()
+	}>();
 
 	// eslint-Regel wird verletzt. props.regelTyp wird aber nicht geändert, es gibt für jede Regel eine Komponente
 	// eslint-disable-next-line vue/no-setup-props-reactivity-loss
@@ -105,7 +105,7 @@
 		emit('update:modelValue', regel);
 	}
 
-	const cols = computed(() => [ { key: 'information', label: ' ', fixedWidth: 2 }, ...props.columns, { key: 'entfernen', label: ' ', fixedWidth: 3 } ]);
+	const cols = computed(() => [{ key: 'information', label: ' ', fixedWidth: 2 }, ...props.columns, { key: 'entfernen', label: ' ', fixedWidth: 3 }]);
 
 	const gridTemplateColumns = computed<string>(() =>
 		"grid-template-columns: " + cols.value.map(column => {
@@ -114,7 +114,7 @@
 			const span = column.span ?? 1;
 			const min = (fixedWidth > 0) ? (fixedWidth + 'rem') : (minWidth > 0 ? (minWidth + 'rem') : '4rem');
 			const max = (fixedWidth > 0) ? (fixedWidth + 'rem') : span + 'fr';
-			return `minmax(${min}, ${max})`
+			return `minmax(${min}, ${max})`;
 		}).join(' '));
 
 </script>

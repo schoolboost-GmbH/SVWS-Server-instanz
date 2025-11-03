@@ -13,17 +13,17 @@ export class SchuldateiUtils extends JavaObject {
 	/**
 	 * Das Anfangs-Schuljahr in einem Zeitraum, der abgibt, dass der Wert schon immer gültig war
 	 */
-	public static readonly _immerGueltigAb : number = 1980;
+	public static readonly _immerGueltigAb: number = 1980;
 
 	/**
 	 * Das End-Schuljahr in einem Zeitraum, der abgibt, dass der Wert in seiner Gültigkeit noch nicht eingeschränkt ist
 	 */
-	public static readonly _immerGueltigBis : number = 9999;
+	public static readonly _immerGueltigBis: number = 9999;
 
 	/**
 	 * Der Comparator zur Sortierung der Zeiträume gueltigab - gueltigbis in absteigender Reihenfolge
 	 */
-	public static readonly _comparatorSchuldateieintragZeitraumDescending : Comparator<SchuldateiEintrag> = { compare : (a: SchuldateiEintrag, b: SchuldateiEintrag) => {
+	public static readonly _comparatorSchuldateieintragZeitraumDescending: Comparator<SchuldateiEintrag> = { compare: (a: SchuldateiEintrag, b: SchuldateiEintrag) => {
 		if (JavaObject.equalsTranspiler(b.gueltigab, (a.gueltigab)))
 			return SchuldateiUtils.compare(b.gueltigbis, a.gueltigbis);
 		return SchuldateiUtils.compare(b.gueltigab, a.gueltigab);
@@ -46,12 +46,12 @@ export class SchuldateiUtils extends JavaObject {
 	 * @throws IllegalArgumentException falls der String sich nicht parsen lässt oder
 	 *     die Datumsangabe fehlerhaft ist
 	 */
-	private static splitDate(date : string) : Array<number> {
-		const dmy : Array<string> = date.split("\\.");
+	private static splitDate(date: string): Array<number> {
+		const dmy: Array<string> = date.split("\\.");
 		if (dmy.length !== 3)
 			throw new IllegalArgumentException("Der Datumswert '" + date + "' ist fehlerhaft.")
 		try {
-			const result : Array<number> = Array(3).fill(0);
+			const result: Array<number> = Array(3).fill(0);
 			result[0] = JavaInteger.parseInt(dmy[0]);
 			if ((result[0] < 1) || (result[0] > 31))
 				throw new NumberFormatException("Die Angabe des Tages ist fehlerhaft.")
@@ -74,9 +74,9 @@ export class SchuldateiUtils extends JavaObject {
 	 *
 	 * @throws IllegalArgumentException im Fehlerfall
 	 */
-	public static schuljahrAusDatum(date : string) : number {
-		const dmy : Array<number> = SchuldateiUtils.splitDate(date);
-		let jahr : number = dmy[2];
+	public static schuljahrAusDatum(date: string): number {
+		const dmy: Array<number> = SchuldateiUtils.splitDate(date);
+		let jahr: number = dmy[2];
 		if (dmy[1] < 8)
 			jahr--;
 		return jahr;
@@ -99,9 +99,9 @@ export class SchuldateiUtils extends JavaObject {
 	 *
 	 * @throws IllegalArgumentException im Fehlerfall
 	 */
-	public static schuljahrGueltigAb(ab : string) : number {
-		const dmyAb : Array<number> = SchuldateiUtils.splitDate(ab);
-		let jahrAb : number = dmyAb[2];
+	public static schuljahrGueltigAb(ab: string): number {
+		const dmyAb: Array<number> = SchuldateiUtils.splitDate(ab);
+		let jahrAb: number = dmyAb[2];
 		if ((dmyAb[1] > 8) || ((dmyAb[1] === 8) && (dmyAb[0] > 1)))
 			jahrAb++;
 		return jahrAb;
@@ -124,7 +124,7 @@ export class SchuldateiUtils extends JavaObject {
 	 *
 	 * @throws IllegalArgumentException im Fehlerfall
 	 */
-	public static schuljahrGueltigBis(bis : string) : number {
+	public static schuljahrGueltigBis(bis: string): number {
 		return SchuldateiUtils.schuljahrAusDatum(bis);
 	}
 
@@ -139,14 +139,14 @@ export class SchuldateiUtils extends JavaObject {
 	 *
 	 * @throws IllegalArgumentException wenn die Datumsangaben fehlerhaft sind
 	 */
-	public static istFrueher(a : string | null, b : string | null) : boolean {
+	public static istFrueher(a: string | null, b: string | null): boolean {
 		if ((a === null) || (JavaString.isBlank(a)))
 			return false;
 		if ((b === null) || (JavaString.isBlank(b)))
 			return true;
-		const dmyA : Array<number> = SchuldateiUtils.splitDate(a);
-		const dmyB : Array<number> = SchuldateiUtils.splitDate(b);
-		let cmp : number = JavaInteger.compare(dmyA[2], dmyB[2]);
+		const dmyA: Array<number> = SchuldateiUtils.splitDate(a);
+		const dmyB: Array<number> = SchuldateiUtils.splitDate(b);
+		let cmp: number = JavaInteger.compare(dmyA[2], dmyB[2]);
 		if (cmp < 0)
 			return true;
 		if (cmp > 0)
@@ -171,14 +171,14 @@ export class SchuldateiUtils extends JavaObject {
 	 *
 	 * @throws IllegalArgumentException wenn die Datumsangaben fehlerhaft sind
 	 */
-	public static compare(a : string | null, b : string | null) : number {
+	public static compare(a: string | null, b: string | null): number {
 		if ((a === null) || (JavaString.isBlank(a)))
 			return 1;
 		if ((b === null) || (JavaString.isBlank(b)))
 			return -1;
-		const dmyA : Array<number> = SchuldateiUtils.splitDate(a);
-		const dmyB : Array<number> = SchuldateiUtils.splitDate(b);
-		let cmp : number = JavaInteger.compare(dmyA[2], dmyB[2]);
+		const dmyA: Array<number> = SchuldateiUtils.splitDate(a);
+		const dmyB: Array<number> = SchuldateiUtils.splitDate(b);
+		let cmp: number = JavaInteger.compare(dmyA[2], dmyB[2]);
 		if (cmp !== 0)
 			return cmp;
 		cmp = JavaInteger.compare(dmyA[1], dmyB[1]);
@@ -197,14 +197,14 @@ export class SchuldateiUtils extends JavaObject {
 	 *
 	 * @throws IllegalArgumentException falls die Formatierung der Datumswerte im Schuldatei-Eintrag fehlerhaft sind
 	 */
-	public static pruefeSchuljahr(schuljahr : number, eintrag : SchuldateiEintrag) : boolean {
+	public static pruefeSchuljahr(schuljahr: number, eintrag: SchuldateiEintrag): boolean {
 		if ((eintrag.gueltigab !== null) && (!JavaString.isBlank(eintrag.gueltigab))) {
-			const dmy : Array<number> = SchuldateiUtils.splitDate(eintrag.gueltigab);
+			const dmy: Array<number> = SchuldateiUtils.splitDate(eintrag.gueltigab);
 			if (!((dmy[2] <= schuljahr) || ((dmy[2] === (schuljahr + 1)) && (dmy[1] < 8))))
 				return false;
 		}
 		if ((eintrag.gueltigbis !== null) && (!JavaString.isBlank(eintrag.gueltigbis))) {
-			const dmy : Array<number> = SchuldateiUtils.splitDate(eintrag.gueltigbis);
+			const dmy: Array<number> = SchuldateiUtils.splitDate(eintrag.gueltigbis);
 			if (!((dmy[2] >= (schuljahr + 1)) || ((dmy[2] === schuljahr) && (dmy[1] > 7))))
 				return false;
 		}
@@ -224,7 +224,7 @@ export class SchuldateiUtils extends JavaObject {
 	 *
 	 * @return				ob die Einträge überlappend sind
 	 */
-	public static pruefeUeberlappung(eintrag1 : SchuldateiEintrag, eintrag2 : SchuldateiEintrag) : boolean {
+	public static pruefeUeberlappung(eintrag1: SchuldateiEintrag, eintrag2: SchuldateiEintrag): boolean {
 		return !(SchuldateiUtils.istFrueher(eintrag1.gueltigbis, eintrag2.gueltigab) || SchuldateiUtils.istFrueher(eintrag2.gueltigbis, eintrag1.gueltigab));
 	}
 
@@ -232,7 +232,7 @@ export class SchuldateiUtils extends JavaObject {
 		return 'de.svws_nrw.schulen.v1.utils.SchuldateiUtils';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.schulen.v1.utils.SchuldateiUtils'].includes(name);
 	}
 
@@ -240,6 +240,6 @@ export class SchuldateiUtils extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_schulen_v1_utils_SchuldateiUtils(obj : unknown) : SchuldateiUtils {
+export function cast_de_svws_nrw_schulen_v1_utils_SchuldateiUtils(obj: unknown): SchuldateiUtils {
 	return obj as SchuldateiUtils;
 }

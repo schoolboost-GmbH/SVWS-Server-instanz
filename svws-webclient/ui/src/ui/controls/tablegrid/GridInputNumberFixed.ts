@@ -9,7 +9,7 @@ import type { Collection } from "../../../../../core/src/java/util/Collection";
 export class GridInputNumberFixed<KEY> extends GridInputInnerText<KEY, number | null> {
 
 	// Der Setter zum Schreiben der Daten
-	protected _setter : (value: number | null) => void;
+	protected _setter: (value: number | null) => void;
 
 	// Der zwischengespeicherte Wert des Input-Elements, anhand der Anzahl der Nachkommastellen (dp) verschoben
 	protected _zahl: number | null = null;
@@ -18,10 +18,10 @@ export class GridInputNumberFixed<KEY> extends GridInputInnerText<KEY, number | 
 	protected _nachkommastelle: number = 0;
 
 	// Die maximale Anzahl an zulässigen Nachkommastellen (decimal places)
-	protected _dp : number = 2;
+	protected _dp: number = 2;
 
 	// Die maximale Zahl, die erlaubt ist
-	protected _max : number | null = null;
+	protected _max: number | null = null;
 
 	/**
 	 * Erzeugt ein neues Grid-Input für ein HTMLElement, welches die Notepunkte im Abitur in dem innerText
@@ -50,7 +50,7 @@ export class GridInputNumberFixed<KEY> extends GridInputInnerText<KEY, number | 
 	 *
 	 * @param value   der Wert
 	 */
-	public update(value: number | null) : void {
+	public update(value: number | null): void {
 		if (value === null) {
 			this.reset();
 			return;
@@ -100,7 +100,7 @@ export class GridInputNumberFixed<KEY> extends GridInputInnerText<KEY, number | 
 	/**
 	 * Schreibt die internen Daten dieses Inputs mithilfe des Setters.
 	 */
-	public commit() : void {
+	public commit(): void {
 		if (this._zahl === null)
 			this._setter(null);
 		else if (this._nachkommastelle === 0)
@@ -116,7 +116,7 @@ export class GridInputNumberFixed<KEY> extends GridInputInnerText<KEY, number | 
 	 *
 	 * @returns true, falls das Anhängen der Ziffer zulässig war und sonst false
 	 */
-	public append(ziffer : number): boolean {
+	public append(ziffer: number): boolean {
 		const tmp = (this._zahl === null) ? ziffer : ((this._zahl * 10) + ziffer);
 		if ((this._max !== null) && (tmp > this._max * Math.pow(10, this._nachkommastelle)))
 			return false;
@@ -153,7 +153,7 @@ export class GridInputNumberFixed<KEY> extends GridInputInnerText<KEY, number | 
 	 *
 	 * @returns true   es hat aufgrund des Tastaturereignisses eine Änderung am Zustand des Inputs stattgefunden
 	 */
-	public onKeyDown(event : KeyboardEvent) : boolean {
+	public onKeyDown(event: KeyboardEvent): boolean {
 		if (super.onKeyDownNavigation(event))
 			return false;
 		// Lösche ggf. den aktuellen Wert

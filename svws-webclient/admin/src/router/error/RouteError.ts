@@ -4,7 +4,7 @@ import type { ErrorProps } from "~/components/error/SErrorProps";
 import { routerManager } from "~/router/RouteManager";
 import { ServerMode } from "@core/core/types/ServerMode";
 
-const SError = () => import("~/components/error/SError.vue")
+const SError = () => import("~/components/error/SError.vue");
 
 export class RouteError extends RouteNode<unknown, any> {
 
@@ -15,12 +15,12 @@ export class RouteError extends RouteNode<unknown, any> {
 		super.text = "Fehler";
 	}
 
-	protected async update(to: RouteNode<unknown, any>, to_params: RouteParams) : Promise<void | Error | RouteLocationRaw> {
+	protected async update(to: RouteNode<unknown, any>, to_params: RouteParams): Promise<void | Error | RouteLocationRaw> {
 		if (to_params.error instanceof Array)
 			throw new Error("Fehler: Die Parameter der Route dürfen keine Arrays sein");
 	}
 
-	public getRoute(error?: Error, errorcode? : number): RouteLocationRaw {
+	public getRoute(error?: Error, errorcode?: number): RouteLocationRaw {
 		routerManager.resetErrorState();
 		routerManager.errorcode = errorcode;
 		routerManager.error = error;
@@ -32,7 +32,7 @@ export class RouteError extends RouteNode<unknown, any> {
 		return {
 			code: routerManager.errorcode,
 			error: routerManager.error,
-		}
+		};
 	}
 
 }

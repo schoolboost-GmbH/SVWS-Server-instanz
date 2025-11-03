@@ -10,12 +10,12 @@ export class Schuldatei extends JavaObject {
 	/**
 	 * Die Version der Schuldatei.
 	 */
-	public version : SchuldateiVersion = new SchuldateiVersion();
+	public version: SchuldateiVersion = new SchuldateiVersion();
 
 	/**
 	 * Die Organisationseinheit des Eintrags
 	 */
-	public organisationseinheiten : List<SchuldateiOrganisationseinheit> = new ArrayList<SchuldateiOrganisationseinheit>();
+	public organisationseinheiten: List<SchuldateiOrganisationseinheit> = new ArrayList<SchuldateiOrganisationseinheit>();
 
 
 	/**
@@ -29,13 +29,13 @@ export class Schuldatei extends JavaObject {
 		return 'de.svws_nrw.schulen.v1.data.Schuldatei';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.schulen.v1.data.Schuldatei'].includes(name);
 	}
 
 	public static class = new Class<Schuldatei>('de.svws_nrw.schulen.v1.data.Schuldatei');
 
-	public static transpilerFromJSON(json : string): Schuldatei {
+	public static transpilerFromJSON(json: string): Schuldatei {
 		const obj = JSON.parse(json) as Partial<Schuldatei>;
 		const result = new Schuldatei();
 		if (obj.version === undefined)
@@ -49,7 +49,7 @@ export class Schuldatei extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : Schuldatei) : string {
+	public static transpilerToJSON(obj: Schuldatei): string {
 		let result = '{';
 		result += '"version" : ' + SchuldateiVersion.transpilerToJSON(obj.version) + ',';
 		result += '"organisationseinheiten" : [ ';
@@ -65,7 +65,7 @@ export class Schuldatei extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<Schuldatei>) : string {
+	public static transpilerToJSONPatch(obj: Partial<Schuldatei>): string {
 		let result = '{';
 		if (obj.version !== undefined) {
 			result += '"version" : ' + SchuldateiVersion.transpilerToJSON(obj.version) + ',';
@@ -87,6 +87,6 @@ export class Schuldatei extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_schulen_v1_data_Schuldatei(obj : unknown) : Schuldatei {
+export function cast_de_svws_nrw_schulen_v1_data_Schuldatei(obj: unknown): Schuldatei {
 	return obj as Schuldatei;
 }

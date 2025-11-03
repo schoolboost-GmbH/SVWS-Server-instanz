@@ -256,7 +256,7 @@
 	import { ValidatorLehrerStammdatenVorname } from "../../../../../core/src/asd/validate/lehrer/ValidatorLehrerStammdatenVorname";
 	import { CoreTypeSelectManager } from "./selectManager/CoreTypeSelectManager";
 	import { SelectManager } from "./selectManager/SelectManager";
-	import Docs from "./UiSelect.story.md"
+	import Docs from "./UiSelect.story.md";
 
 	const state = reactive({
 		searchable: false,
@@ -291,10 +291,10 @@
 		"Kirsche", "Kiwi", "Lemon", "Litschi", "Melone", "Orange", "Papaya", "Pfirsich", "Pflaume", "Rote Johannisbeere", "Zitronenmelisse",
 	];
 	const carItems: { marke: string, color: string, baujahr: number }[] = [{ marke: "BMW", color: "blue", baujahr: 2006 },
-		{ marke: "Audi", color: "red", baujahr: 2008}, { marke: "Opel", color: "schwarz", baujahr: 2006 }];
+		{ marke: "Audi", color: "red", baujahr: 2008 }, { marke: "Opel", color: "schwarz", baujahr: 2006 }];
 
 
-	const stringSelectManager = new SelectManager({options: fruitItems});
+	const stringSelectManager = new SelectManager({ options: fruitItems });
 
 	const coreTypeSelectManager = new CoreTypeSelectManager({
 		clazz: LehrerRechtsverhaeltnis.class, schuljahr: 2018, schulformen: Schulform.GY,
@@ -340,20 +340,26 @@
 	});
 
 	const sortById = (a: LehrerRechtsverhaeltnisKatalogEintrag, b: LehrerRechtsverhaeltnisKatalogEintrag) => {
-		if (a.id < b.id) return -1;
-		if (a.id > b.id) return 1;
+		if (a.id < b.id)
+			return -1;
+		if (a.id > b.id)
+			return 1;
 		return 0;
 	};
 
 	const sortByKuerzel = (a: LehrerRechtsverhaeltnisKatalogEintrag, b: LehrerRechtsverhaeltnisKatalogEintrag) => {
-		if (a.kuerzel < b.kuerzel) return -1;
-		if (a.kuerzel > b.kuerzel) return 1;
+		if (a.kuerzel < b.kuerzel)
+			return -1;
+		if (a.kuerzel > b.kuerzel)
+			return 1;
 		return 0;
 	};
 
 	const sortByText = (a: LehrerRechtsverhaeltnisKatalogEintrag, b: LehrerRechtsverhaeltnisKatalogEintrag) => {
-		if (a.text < b.text) return -1;
-		if (a.text > b.text) return 1;
+		if (a.text < b.text)
+			return -1;
+		if (a.text > b.text)
+			return 1;
 		return 0;
 	};
 
@@ -397,9 +403,9 @@
 	const mussValidatorSelection = ref<string | undefined>();
 
 
-	const sHinweisValidatorSelectManager = new SelectManager({options: ["Christian", "Anna"]});
+	const sHinweisValidatorSelectManager = new SelectManager({ options: ["Christian", "Anna"] });
 
-	const sKannValidatorSelectManager = new SelectManager({options: ["30 Pflichtstunden", "100 Pflichtstunden"] });
+	const sKannValidatorSelectManager = new SelectManager({ options: ["30 Pflichtstunden", "100 Pflichtstunden"] });
 
 	const sMussValidatorSelectManager = new SelectManager({ options: ["Müller", "Meier"] });
 
@@ -436,7 +442,7 @@
 		return validator.run();
 	}
 
-	function getSourceString (multi = false) {
+	function getSourceString(multi = false) {
 		return `<ui-select
         label="..."
         :manager="..."

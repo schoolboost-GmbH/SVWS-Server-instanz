@@ -6,22 +6,22 @@ export class LernplattformV1Fach extends JavaObject {
 	/**
 	 * Die ID des Faches in der SVWS-DB.
 	 */
-	public id : number = 0;
+	public id: number = 0;
 
 	/**
 	 * Das Kürzel des Faches, wie es im Rahmen der amtlichen Schulstatistik verwendet wird. (z.B. D)
 	 */
-	public kuerzel : string | null = "";
+	public kuerzel: string | null = "";
 
 	/**
 	 * Die Kürzelanzeige des Faches, wie es im Rahmen der Schule benannt wird und angezeigt werden soll. (z.B. D)
 	 */
-	public kuerzelAnzeige : string | null = "";
+	public kuerzelAnzeige: string | null = "";
 
 	/**
 	 * Gibt an, ob es sich bei dem Fach um eine Fremdsprache handelt oder nicht.
 	 */
-	public istFremdsprache : boolean = false;
+	public istFremdsprache: boolean = false;
 
 
 	/**
@@ -35,13 +35,13 @@ export class LernplattformV1Fach extends JavaObject {
 		return 'de.svws_nrw.core.data.lernplattform.v1.LernplattformV1Fach';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.lernplattform.v1.LernplattformV1Fach'].includes(name);
 	}
 
 	public static class = new Class<LernplattformV1Fach>('de.svws_nrw.core.data.lernplattform.v1.LernplattformV1Fach');
 
-	public static transpilerFromJSON(json : string): LernplattformV1Fach {
+	public static transpilerFromJSON(json: string): LernplattformV1Fach {
 		const obj = JSON.parse(json) as Partial<LernplattformV1Fach>;
 		const result = new LernplattformV1Fach();
 		if (obj.id === undefined)
@@ -55,7 +55,7 @@ export class LernplattformV1Fach extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : LernplattformV1Fach) : string {
+	public static transpilerToJSON(obj: LernplattformV1Fach): string {
 		let result = '{';
 		result += '"id" : ' + obj.id.toString() + ',';
 		result += '"kuerzel" : ' + ((obj.kuerzel === null) ? 'null' : JSON.stringify(obj.kuerzel)) + ',';
@@ -66,7 +66,7 @@ export class LernplattformV1Fach extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<LernplattformV1Fach>) : string {
+	public static transpilerToJSONPatch(obj: Partial<LernplattformV1Fach>): string {
 		let result = '{';
 		if (obj.id !== undefined) {
 			result += '"id" : ' + obj.id.toString() + ',';
@@ -87,6 +87,6 @@ export class LernplattformV1Fach extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_lernplattform_v1_LernplattformV1Fach(obj : unknown) : LernplattformV1Fach {
+export function cast_de_svws_nrw_core_data_lernplattform_v1_LernplattformV1Fach(obj: unknown): LernplattformV1Fach {
 	return obj as LernplattformV1Fach;
 }

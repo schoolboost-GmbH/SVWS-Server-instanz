@@ -37,7 +37,7 @@ const defaultState = <RouteStateDataSchuelerNeuSchnelleingabe> {
 	mapOrtsteile: new Map(),
 	schuelerSchulbesuchManager: undefined,
 	schuelerLernabschnittsManager: undefined,
-}
+};
 
 export class RouteDataSchuelerNeuSchnelleingabe extends RouteData<RouteStateDataSchuelerNeuSchnelleingabe> {
 
@@ -45,8 +45,8 @@ export class RouteDataSchuelerNeuSchnelleingabe extends RouteData<RouteStateData
 		super(defaultState);
 	}
 
-	public async ladeKataloge() : Promise<void> {
-		const fahrschuelerarten = await api.server.getFahrschuelerarten(api.schema)
+	public async ladeKataloge(): Promise<void> {
+		const fahrschuelerarten = await api.server.getFahrschuelerarten(api.schema);
 		const mapFahrschuelerarten = new Map();
 		for (const fa of fahrschuelerarten)
 			mapFahrschuelerarten.set(fa.id, fa);
@@ -56,12 +56,12 @@ export class RouteDataSchuelerNeuSchnelleingabe extends RouteData<RouteStateData
 		for (const h of haltestellen)
 			mapHaltestellen.set(h.id, h);
 		// Lade den Katalog der Religionen
-		const religionen = await api.server.getReligionen(api.schema)
+		const religionen = await api.server.getReligionen(api.schema);
 		const mapReligionen = new Map();
 		for (const r of religionen)
 			mapReligionen.set(r.id, r);
 		// Lade den Katalog der Kindergärten
-		const kindergaerten = await api.server.getKindergaerten(api.schema)
+		const kindergaerten = await api.server.getKindergaerten(api.schema);
 		const mapKindergaerten = new Map();
 		for (const k of kindergaerten)
 			mapKindergaerten.set(k.id, k);
@@ -81,7 +81,7 @@ export class RouteDataSchuelerNeuSchnelleingabe extends RouteData<RouteStateData
 		for (const va of vermerkArten)
 			mapVermerkArten.set(va.id, va);
 		// Lade den Katalog der Einschulungsarten
-		const einschulungsarten = await api.server.getEinschulungsarten(api.schema)
+		const einschulungsarten = await api.server.getEinschulungsarten(api.schema);
 		const mapEinschulungsarten = new Map();
 		for (const e of einschulungsarten)
 			mapEinschulungsarten.set(e.id, e);
@@ -112,7 +112,7 @@ export class RouteDataSchuelerNeuSchnelleingabe extends RouteData<RouteStateData
 
 	private async createSchuelerSchulbesuchManager(auswahl: SchuelerListeEintrag): Promise<SchuelerSchulbesuchManager> {
 		const schuelerSchulbesuchsdaten: SchuelerSchulbesuchsdaten = await api.server.getSchuelerSchulbesuch(api.schema, auswahl.id);
-		const kindergaerten = await api.server.getKindergaerten(api.schema)
+		const kindergaerten = await api.server.getKindergaerten(api.schema);
 		const schulen = new ArrayList<SchulEintrag>();
 		const merkmale = new ArrayList<Merkmal>();
 		const entlassgruende = new ArrayList<KatalogEntlassgrund>();
@@ -132,7 +132,7 @@ export class RouteDataSchuelerNeuSchnelleingabe extends RouteData<RouteStateData
 	public async ladeDaten(auswahl: SchuelerListeEintrag | null): Promise<SchuelerStammdaten | null> {
 		if (auswahl === null)
 			return null;
-		const res = await api.server.getSchuelerStammdaten(api.schema, auswahl.id);
+		const schuelerStammdaten = await api.server.getSchuelerStammdaten(api.schema, auswahl.id);
 		const schuelerSchulbesuchManager = await this.createSchuelerSchulbesuchManager(auswahl);
 
 		let schuelerLernabschnittsManager: SchuelerLernabschnittManager | undefined = undefined;
@@ -141,38 +141,34 @@ export class RouteDataSchuelerNeuSchnelleingabe extends RouteData<RouteStateData
 		const found = this.selectBevorzugtenAbschnitt(listAbschnitte);
 		if (found !== null) {
 			const daten = await api.server.getSchuelerLernabschnittsdatenByID(api.schema, found.id);
-			const [ listKurse, listKlassen, listLehrer, listFaecher, listFoerderschwerpunkte, listJahrgaenge ] = await Promise.all([
-				api.server.getKurseFuerAbschnitt(api.schema, found.schuljahresabschnitt),
-				api.server.getKlassenFuerAbschnitt(api.schema, found.schuljahresabschnitt),
-				api.server.getLehrerFuerAbschnitt(api.schema, found.schuljahresabschnitt),
+			const [listFaecher, listJahrgaenge] = await Promise.all([
 				api.server.getFaecher(api.schema),
-				api.server.getKatalogFoerderschwerpunkte(api.schema),
 				api.server.getJahrgaenge(api.schema),
 			]);
 			const schuljahresabschnitt = api.mapAbschnitte.value.get(daten.schuljahresabschnitt);
 			if (schuljahresabschnitt !== undefined) {
 				schuelerLernabschnittsManager = new SchuelerLernabschnittManager(
 					api.schulform, auswahl, daten, schuljahresabschnitt,
-					listFaecher, listFoerderschwerpunkte, listJahrgaenge,
-					listKlassen, listKurse, listLehrer
+					listFaecher, new ArrayList(), listJahrgaenge,
+					new ArrayList(), new ArrayList(), new ArrayList()
 				);
 			}
 		}
 
 		this.setPatchedState({ schuelerSchulbesuchManager, schuelerLernabschnittsManager });
-		return res;
+		return schuelerStammdaten;
 	}
 
 	public async ladeInitialeDatenFuerWeiterenSchueler(auswahl: SchuelerListeEintrag | null): Promise<SchuelerStammdatenNeu | null> {
 		if (auswahl === null)
 			return null;
 		const schuelerDaten: SchuelerStammdatenNeu = new SchuelerStammdatenNeu();
-		const result = await api.server.getSchuelerStammdaten(api.schema, auswahl.id);
+		const schuelerStammdaten = await api.server.getSchuelerStammdaten(api.schema, auswahl.id);
 
-		schuelerDaten.anmeldedatum = result.anmeldedatum;
-		schuelerDaten.aufnahmedatum = result.aufnahmedatum;
-		schuelerDaten.beginnBildungsgang = result.beginnBildungsgang;
-		schuelerDaten.dauerBildungsgang = result.dauerBildungsgang;
+		schuelerDaten.anmeldedatum = schuelerStammdaten.anmeldedatum;
+		schuelerDaten.aufnahmedatum = schuelerStammdaten.aufnahmedatum;
+		schuelerDaten.beginnBildungsgang = schuelerStammdaten.beginnBildungsgang;
+		schuelerDaten.dauerBildungsgang = schuelerStammdaten.dauerBildungsgang;
 
 		const listAbschnitte = await api.server.getSchuelerLernabschnittsliste(api.schema, auswahl.id);
 		// wähle bevorzugt einen Eintrag für den aktuellen Schuljahresabschnitt, WechselNr = 0, sonst letzten Eintrag
@@ -239,7 +235,7 @@ export class RouteDataSchuelerNeuSchnelleingabe extends RouteData<RouteStateData
 
 	get schuelerSchulbesuchManager(): SchuelerSchulbesuchManager {
 		if (this._state.value.schuelerSchulbesuchManager === undefined)
-			throw new DeveloperNotificationException("SchülerSchulbesuchManager nicht initialisiert.")
+			throw new DeveloperNotificationException("SchülerSchulbesuchManager nicht initialisiert.");
 		return this._state.value.schuelerSchulbesuchManager;
 	}
 }

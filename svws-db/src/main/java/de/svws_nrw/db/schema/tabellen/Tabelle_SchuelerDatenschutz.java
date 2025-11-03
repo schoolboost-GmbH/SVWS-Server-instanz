@@ -17,31 +17,31 @@ import de.svws_nrw.db.schema.SchemaTabelleSpalte;
 public class Tabelle_SchuelerDatenschutz extends SchemaTabelle {
 
 	/** Die Definition der Tabellenspalte Schueler_ID */
-	public SchemaTabelleSpalte col_Schueler_ID = add("Schueler_ID", SchemaDatentypen.BIGINT, true)
+	public final SchemaTabelleSpalte col_Schueler_ID = add("Schueler_ID", SchemaDatentypen.BIGINT, true)
 			.setNotNull()
 			.setJavaComment("Fremdschlüssel auf Tabelle Schueler");
 
 	/** Die Definition der Tabellenspalte Datenschutz_ID */
-	public SchemaTabelleSpalte col_Datenschutz_ID = add("Datenschutz_ID", SchemaDatentypen.BIGINT, true)
+	public final SchemaTabelleSpalte col_Datenschutz_ID = add("Datenschutz_ID", SchemaDatentypen.BIGINT, true)
 			.setNotNull()
 			.setJavaComment("Fremdschlüssel auf den Katalog der DSGVO-Merkmale");
 
 	/** Die Definition der Tabellenspalte Status */
-	public SchemaTabelleSpalte col_Status = add("Status", SchemaDatentypen.VARCHAR, false).setDatenlaenge(1)
+	public final SchemaTabelleSpalte col_Status = add("Status", SchemaDatentypen.VARCHAR, false).setDatenlaenge(1)
 			.setDefault("-")
 			.setNotNull()
 			.setConverter(BooleanPlusMinusDefaultMinusConverter.class)
 			.setJavaComment("Gibt an ob eine Zustimmung zum Merkmal vorliegt.");
 
 	/** Die Definition der Tabellenspalte SchulnrEigner */
-	public SchemaTabelleSpalte col_SchulnrEigner = add("SchulnrEigner", SchemaDatentypen.INT, false)
+	public final SchemaTabelleSpalte col_SchulnrEigner = add("SchulnrEigner", SchemaDatentypen.INT, false)
 			.setNotNull()
 			.setVeraltet(SchemaRevisionen.REV_1)
 			.setJavaComment("Die Schulnummer zu welcher der Datensatz gehört – wird benötigt, wenn mehrere Schulen in einem Schema der Datenbank"
 					+ " gespeichert werden");
 
 	/** Die Definition der Tabellenspalte Abgefragt */
-	public SchemaTabelleSpalte col_Abgefragt = add("Abgefragt", SchemaDatentypen.INT, false)
+	public final SchemaTabelleSpalte col_Abgefragt = add("Abgefragt", SchemaDatentypen.INT, false)
 			.setDefault("0")
 			.setNotNull()
 			.setConverter(Boolean01Converter.class)
@@ -49,7 +49,7 @@ public class Tabelle_SchuelerDatenschutz extends SchemaTabelle {
 
 
 	/** Die Definition des Fremdschlüssels SchuelerDatenschutz_K_Datenschutz_FK */
-	public SchemaTabelleFremdschluessel fk_SchuelerDatenschutz_K_Datenschutz_FK = addForeignKey(
+	public final SchemaTabelleFremdschluessel fk_SchuelerDatenschutz_K_Datenschutz_FK = addForeignKey(
 			"SchuelerDatenschutz_K_Datenschutz_FK",
 			/* OnUpdate: */ SchemaFremdschluesselAktionen.CASCADE,
 			/* OnDelete: */ SchemaFremdschluesselAktionen.CASCADE,
@@ -57,7 +57,7 @@ public class Tabelle_SchuelerDatenschutz extends SchemaTabelle {
 	);
 
 	/** Die Definition des Fremdschlüssels SchuelerDatenschutz_Schueler_FK */
-	public SchemaTabelleFremdschluessel fk_SchuelerDatenschutz_Schueler_FK = addForeignKey(
+	public final SchemaTabelleFremdschluessel fk_SchuelerDatenschutz_Schueler_FK = addForeignKey(
 			"SchuelerDatenschutz_Schueler_FK",
 			/* OnUpdate: */ SchemaFremdschluesselAktionen.CASCADE,
 			/* OnDelete: */ SchemaFremdschluesselAktionen.CASCADE,

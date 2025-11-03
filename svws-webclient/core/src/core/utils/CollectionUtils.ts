@@ -25,11 +25,11 @@ export class CollectionUtils extends JavaObject {
 	 *
 	 * @return das "Set of V" des Schlüssels. Erstellt ein leeres "Set of V", falls eine solche Zuordnung nicht existierte.
 	 */
-	public static getOrCreateHashSet<K, V>(map : JavaMap<K, JavaSet<V>>, key : K) : JavaSet<V> {
-		const set : JavaSet<V> | null = map.get(key);
+	public static getOrCreateHashSet<K, V>(map: JavaMap<K, JavaSet<V>>, key: K): JavaSet<V> {
+		const set: JavaSet<V> | null = map.get(key);
 		if (set !== null)
 			return set;
-		const setNeu : HashSet<V> = new HashSet<V>();
+		const setNeu: HashSet<V> = new HashSet<V>();
 		map.put(key, setNeu);
 		return setNeu;
 	}
@@ -43,8 +43,8 @@ export class CollectionUtils extends JavaObject {
 	 *
 	 * @return eine gefilterte {@link Collection} und liefert die Ergebnismenge in einem {@link Set}.
 	 */
-	public static toFilteredHashSet<E>(values : Collection<E>, predicate : Predicate<E>) : JavaSet<E> {
-		const set : HashSet<E> = new HashSet<E>();
+	public static toFilteredHashSet<E>(values: Collection<E>, predicate: Predicate<E>): JavaSet<E> {
+		const set: HashSet<E> = new HashSet<E>();
 		for (const e of values)
 			if (predicate.test(e))
 				set.add(e);
@@ -60,8 +60,8 @@ export class CollectionUtils extends JavaObject {
 	 *
 	 * @return eine gefilterte {@link Collection} und liefert die Ergebnismenge in einer {@link List}.
 	 */
-	public static toFilteredArrayList<E>(values : Collection<E>, predicate : Predicate<E>) : List<E> {
-		const set : ArrayList<E> = new ArrayList<E>();
+	public static toFilteredArrayList<E>(values: Collection<E>, predicate: Predicate<E>): List<E> {
+		const set: ArrayList<E> = new ArrayList<E>();
 		for (const e of values)
 			if (predicate.test(e))
 				set.add(e);
@@ -72,7 +72,7 @@ export class CollectionUtils extends JavaObject {
 		return 'de.svws_nrw.core.utils.CollectionUtils';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.utils.CollectionUtils'].includes(name);
 	}
 
@@ -80,6 +80,6 @@ export class CollectionUtils extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_utils_CollectionUtils(obj : unknown) : CollectionUtils {
+export function cast_de_svws_nrw_core_utils_CollectionUtils(obj: unknown): CollectionUtils {
 	return obj as CollectionUtils;
 }

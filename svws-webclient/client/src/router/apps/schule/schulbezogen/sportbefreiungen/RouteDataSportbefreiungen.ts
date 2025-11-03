@@ -15,7 +15,7 @@ const defaultState = {
 	view: routeSportbefreiungenDaten,
 	activeViewType: ViewType.DEFAULT,
 	oldView: undefined,
-}
+};
 
 export class RouteDataSportbefreiungen extends RouteDataAuswahl<SportbefreiungenListeManager, RouteStateAuswahlInterface<SportbefreiungenListeManager>> {
 
@@ -27,7 +27,7 @@ export class RouteDataSportbefreiungen extends RouteDataAuswahl<Sportbefreiungen
 		const sportbefreiungen = await api.server.getSportbefreiungen(api.schema);
 		const manager = new SportbefreiungenListeManager(api.abschnitt.id, api.schuleStammdaten.idSchuljahresabschnitt, api.schuleStammdaten.abschnitte,
 			api.schulform, sportbefreiungen);
-		return { manager }
+		return { manager };
 	}
 
 	public addID(param: RouteParamsRawGeneric, id: number): void {
@@ -50,10 +50,10 @@ export class RouteDataSportbefreiungen extends RouteDataAuswahl<Sportbefreiungen
 		return `Sportbefreiung ${sportbefreiung?.bezeichnung ?? '???'} (ID: ${id}) wurde erfolgreich gelöscht.`;
 	}
 
-	addSportbefreiung = async (data: Partial<Sportbefreiung>) : Promise<void> => {
+	addSportbefreiung = async (data: Partial<Sportbefreiung>): Promise<void> => {
 		const result = await api.server.addSportbefreiung(data, api.schema);
 		this.manager.liste.add(result);
 		this.commit();
 		await this.gotoDefaultView(result.id);
-	}
+	};
 }

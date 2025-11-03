@@ -10,22 +10,22 @@ export class SchuelerblockungInput extends JavaObject {
 	/**
 	 * Die Anzahl an vorhandenen Schienen.
 	 */
-	public schienen : number = 0;
+	public schienen: number = 0;
 
 	/**
 	 * Alle Kurse, die zu den Fachwahlen des Schülers passen.
 	 */
-	public kurse : List<SchuelerblockungInputKurs> = new ArrayList<SchuelerblockungInputKurs>();
+	public kurse: List<SchuelerblockungInputKurs> = new ArrayList<SchuelerblockungInputKurs>();
 
 	/**
 	 * Alle Fachwahlen des Schülers.
 	 */
-	public fachwahlen : List<GostFachwahl> = new ArrayList<GostFachwahl>();
+	public fachwahlen: List<GostFachwahl> = new ArrayList<GostFachwahl>();
 
 	/**
 	 * Zu jeder Fachwahl eine textuelle Darstellung.
 	 */
-	public fachwahlenText : List<string> = new ArrayList<string>();
+	public fachwahlenText: List<string> = new ArrayList<string>();
 
 
 	/**
@@ -39,13 +39,13 @@ export class SchuelerblockungInput extends JavaObject {
 		return 'de.svws_nrw.core.data.kursblockung.SchuelerblockungInput';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.kursblockung.SchuelerblockungInput'].includes(name);
 	}
 
 	public static class = new Class<SchuelerblockungInput>('de.svws_nrw.core.data.kursblockung.SchuelerblockungInput');
 
-	public static transpilerFromJSON(json : string): SchuelerblockungInput {
+	public static transpilerFromJSON(json: string): SchuelerblockungInput {
 		const obj = JSON.parse(json) as Partial<SchuelerblockungInput>;
 		const result = new SchuelerblockungInput();
 		if (obj.schienen === undefined)
@@ -69,7 +69,7 @@ export class SchuelerblockungInput extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : SchuelerblockungInput) : string {
+	public static transpilerToJSON(obj: SchuelerblockungInput): string {
 		let result = '{';
 		result += '"schienen" : ' + obj.schienen.toString() + ',';
 		result += '"kurse" : [ ';
@@ -101,7 +101,7 @@ export class SchuelerblockungInput extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<SchuelerblockungInput>) : string {
+	public static transpilerToJSONPatch(obj: Partial<SchuelerblockungInput>): string {
 		let result = '{';
 		if (obj.schienen !== undefined) {
 			result += '"schienen" : ' + obj.schienen.toString() + ',';
@@ -143,6 +143,6 @@ export class SchuelerblockungInput extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_kursblockung_SchuelerblockungInput(obj : unknown) : SchuelerblockungInput {
+export function cast_de_svws_nrw_core_data_kursblockung_SchuelerblockungInput(obj: unknown): SchuelerblockungInput {
 	return obj as SchuelerblockungInput;
 }

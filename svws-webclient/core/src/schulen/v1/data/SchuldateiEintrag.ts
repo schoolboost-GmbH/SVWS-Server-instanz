@@ -6,17 +6,17 @@ export class SchuldateiEintrag extends JavaObject {
 	/**
 	 * Gibt an, ab wann der Eintrag gültig ist
 	 */
-	public gueltigab : string | null = null;
+	public gueltigab: string | null = null;
 
 	/**
 	 * Gibt an, bis wann der Eintrag gültig ist
 	 */
-	public gueltigbis : string | null = null;
+	public gueltigbis: string | null = null;
 
 	/**
 	 * Das Änderungsdatum der letzten Änderung des Eintrags an
 	 */
-	public geaendertam : string | null = null;
+	public geaendertam: string | null = null;
 
 
 	/**
@@ -30,13 +30,13 @@ export class SchuldateiEintrag extends JavaObject {
 		return 'de.svws_nrw.schulen.v1.data.SchuldateiEintrag';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.schulen.v1.data.SchuldateiEintrag'].includes(name);
 	}
 
 	public static class = new Class<SchuldateiEintrag>('de.svws_nrw.schulen.v1.data.SchuldateiEintrag');
 
-	public static transpilerFromJSON(json : string): SchuldateiEintrag {
+	public static transpilerFromJSON(json: string): SchuldateiEintrag {
 		const obj = JSON.parse(json) as Partial<SchuldateiEintrag>;
 		const result = new SchuldateiEintrag();
 		result.gueltigab = (obj.gueltigab === undefined) ? null : obj.gueltigab === null ? null : obj.gueltigab;
@@ -45,7 +45,7 @@ export class SchuldateiEintrag extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : SchuldateiEintrag) : string {
+	public static transpilerToJSON(obj: SchuldateiEintrag): string {
 		let result = '{';
 		result += '"gueltigab" : ' + ((obj.gueltigab === null) ? 'null' : JSON.stringify(obj.gueltigab)) + ',';
 		result += '"gueltigbis" : ' + ((obj.gueltigbis === null) ? 'null' : JSON.stringify(obj.gueltigbis)) + ',';
@@ -55,7 +55,7 @@ export class SchuldateiEintrag extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<SchuldateiEintrag>) : string {
+	public static transpilerToJSONPatch(obj: Partial<SchuldateiEintrag>): string {
 		let result = '{';
 		if (obj.gueltigab !== undefined) {
 			result += '"gueltigab" : ' + ((obj.gueltigab === null) ? 'null' : JSON.stringify(obj.gueltigab)) + ',';
@@ -73,6 +73,6 @@ export class SchuldateiEintrag extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_schulen_v1_data_SchuldateiEintrag(obj : unknown) : SchuldateiEintrag {
+export function cast_de_svws_nrw_schulen_v1_data_SchuldateiEintrag(obj: unknown): SchuldateiEintrag {
 	return obj as SchuldateiEintrag;
 }

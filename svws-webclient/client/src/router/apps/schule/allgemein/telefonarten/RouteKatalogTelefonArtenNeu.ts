@@ -13,8 +13,8 @@ const STelefonArtenNeu = () => import("~/components/schule/allgemein/telefonarte
 export class RouteKatalogTelefonArtenNeu extends RouteNode<any, RouteKatalogTelefonArten> {
 
 	public constructor() {
-		super(Schulform.values(), [ BenutzerKompetenz.KATALOG_EINTRAEGE_AENDERN ], "schule.telefonarten.neu", "neu", STelefonArtenNeu);
-		super.types = new Set([ ViewType.HINZUFUEGEN ]);
+		super(Schulform.values(), [BenutzerKompetenz.KATALOG_EINTRAEGE_AENDERN], "schule.telefonarten.neu", "neu", STelefonArtenNeu);
+		super.types = new Set([ViewType.HINZUFUEGEN]);
 		super.mode = ServerMode.DEV;
 		super.propHandler = (route) => this.getProps(route);
 		super.text = "Telefonarten Neu";

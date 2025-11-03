@@ -1,4 +1,6 @@
 import { LehrerPersonaldaten } from '../../../asd/data/lehrer/LehrerPersonaldaten';
+import { ValidatorLplLehrerPersonaldatenLehramt } from '../../../asd/validate/lehrer/ValidatorLplLehrerPersonaldatenLehramt';
+import { DateManager } from '../../../asd/validate/DateManager';
 import { ValidatorLehrerPersonalabschnittsdaten } from '../../../asd/validate/lehrer/ValidatorLehrerPersonalabschnittsdaten';
 import { LehrerPersonalabschnittsdaten } from '../../../asd/data/lehrer/LehrerPersonalabschnittsdaten';
 import { LehrerStammdaten } from '../../../asd/data/lehrer/LehrerStammdaten';
@@ -16,13 +18,18 @@ export class ValidatorLehrerPersonaldaten extends Validator {
 	 * @param stammdaten	die Stammdaten des Lehrers
 	 * @param kontext   	der Kontext des Validators
 	 */
-	public constructor(daten : LehrerPersonaldaten, stammdaten : LehrerStammdaten, kontext : ValidatorKontext) {
+	public constructor(daten: LehrerPersonaldaten, stammdaten: LehrerStammdaten, kontext: ValidatorKontext) {
 		super(kontext);
 		for (const abschnittsdaten of daten.abschnittsdaten)
 			this._validatoren.add(new ValidatorLehrerPersonalabschnittsdaten(abschnittsdaten, stammdaten, kontext));
+		try {
+			this._validatoren.add(new ValidatorLplLehrerPersonaldatenLehramt(daten, DateManager.from(stammdaten.geburtsdatum), kontext));
+		} catch(e : any) {
+			e.printStackTrace();
+		}
 	}
 
-	protected pruefe() : boolean {
+	protected pruefe(): boolean {
 		return true;
 	}
 
@@ -30,7 +37,7 @@ export class ValidatorLehrerPersonaldaten extends Validator {
 		return 'de.svws_nrw.asd.validate.lehrer.ValidatorLehrerPersonaldaten';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.asd.validate.lehrer.ValidatorLehrerPersonaldaten', 'de.svws_nrw.asd.validate.Validator'].includes(name);
 	}
 
@@ -38,6 +45,6 @@ export class ValidatorLehrerPersonaldaten extends Validator {
 
 }
 
-export function cast_de_svws_nrw_asd_validate_lehrer_ValidatorLehrerPersonaldaten(obj : unknown) : ValidatorLehrerPersonaldaten {
+export function cast_de_svws_nrw_asd_validate_lehrer_ValidatorLehrerPersonaldaten(obj: unknown): ValidatorLehrerPersonaldaten {
 	return obj as ValidatorLehrerPersonaldaten;
 }

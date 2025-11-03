@@ -6,17 +6,17 @@ export class Aufsichtsbereich extends JavaObject {
 	/**
 	 * Die ID des Aufsichtsbereichs.
 	 */
-	public id : number = -1;
+	public id: number = -1;
 
 	/**
 	 * Das Kürzel des Aufsichtsbereichs.
 	 */
-	public kuerzel : string = "";
+	public kuerzel: string = "";
 
 	/**
 	 * Die Beschreibung des Aufsichtsbereichs.
 	 */
-	public beschreibung : string = "";
+	public beschreibung: string = "";
 
 
 	/**
@@ -30,13 +30,13 @@ export class Aufsichtsbereich extends JavaObject {
 		return 'de.svws_nrw.core.data.schule.Aufsichtsbereich';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.schule.Aufsichtsbereich'].includes(name);
 	}
 
 	public static class = new Class<Aufsichtsbereich>('de.svws_nrw.core.data.schule.Aufsichtsbereich');
 
-	public static transpilerFromJSON(json : string): Aufsichtsbereich {
+	public static transpilerFromJSON(json: string): Aufsichtsbereich {
 		const obj = JSON.parse(json) as Partial<Aufsichtsbereich>;
 		const result = new Aufsichtsbereich();
 		if (obj.id === undefined)
@@ -51,7 +51,7 @@ export class Aufsichtsbereich extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : Aufsichtsbereich) : string {
+	public static transpilerToJSON(obj: Aufsichtsbereich): string {
 		let result = '{';
 		result += '"id" : ' + obj.id.toString() + ',';
 		result += '"kuerzel" : ' + JSON.stringify(obj.kuerzel) + ',';
@@ -61,7 +61,7 @@ export class Aufsichtsbereich extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<Aufsichtsbereich>) : string {
+	public static transpilerToJSONPatch(obj: Partial<Aufsichtsbereich>): string {
 		let result = '{';
 		if (obj.id !== undefined) {
 			result += '"id" : ' + obj.id.toString() + ',';
@@ -79,6 +79,6 @@ export class Aufsichtsbereich extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_schule_Aufsichtsbereich(obj : unknown) : Aufsichtsbereich {
+export function cast_de_svws_nrw_core_data_schule_Aufsichtsbereich(obj: unknown): Aufsichtsbereich {
 	return obj as Aufsichtsbereich;
 }

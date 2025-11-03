@@ -64,7 +64,7 @@
 		if (auswahlLehrerList.size() > 5)
 			return `${auswahlLehrerList.size()} Lehrer ausgewählt`;
 		return [...auswahlLehrerList].map(k => k.kuerzel).join(', ');
-	})
+	});
 
 	async function resetSelection() {
 		await props.gotoDefaultView(props.manager().getVorherigeAuswahl()?.id);

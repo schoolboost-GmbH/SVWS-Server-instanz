@@ -31,6 +31,6 @@
 		sprachendaten: () => Sprachendaten;
 	}>();
 
-	const columns = [{key: 'sprache', label: 'Sprachprüfung'}, {key: 'typ', label: 'Typ'}, {key: 'anspruchsniveauId', label: "Niveau"}, {key: 'ersetzt', label: 'Ersetzt'}, {key: 'note', label: 'Note'}];
+	const columns = [{ key: 'sprache', label: 'Sprachprüfung' }, { key: 'typ', label: 'Typ' }, { key: 'anspruchsniveauId', label: "Niveau" }, { key: 'ersetzt', label: 'Ersetzt' }, { key: 'note', label: 'Note' }];
 
 </script>

@@ -6,27 +6,27 @@ export class StundenplanZeitraster extends JavaObject {
 	/**
 	 * Die ID des Zeitraster-Eintrages.
 	 */
-	public id : number = -1;
+	public id: number = -1;
 
 	/**
 	 * Der {@link Wochentag} an dem der Unterricht stattfindet (1=Montag, 2=Dienstag, ..., 7=Sonntag)
 	 */
-	public wochentag : number = 1;
+	public wochentag: number = 1;
 
 	/**
 	 * Die Nummer der Unterrichtsstunde an dem Wochentag
 	 */
-	public unterrichtstunde : number = 1;
+	public unterrichtstunde: number = 1;
 
 	/**
 	 * Die Uhrzeit in Minuten seit 0 Uhr, wann die Unterrichtsstunde beginnt. NULL bedeutet "noch nicht definiert".
 	 */
-	public stundenbeginn : number | null = null;
+	public stundenbeginn: number | null = null;
 
 	/**
 	 * Die Uhrzeit in Minuten seit 0 Uhr, wann die Unterrichtsstunde endet. NULL bedeutet "noch nicht definiert".
 	 */
-	public stundenende : number | null = null;
+	public stundenende: number | null = null;
 
 
 	/**
@@ -40,13 +40,13 @@ export class StundenplanZeitraster extends JavaObject {
 		return 'de.svws_nrw.core.data.stundenplan.StundenplanZeitraster';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.stundenplan.StundenplanZeitraster'].includes(name);
 	}
 
 	public static class = new Class<StundenplanZeitraster>('de.svws_nrw.core.data.stundenplan.StundenplanZeitraster');
 
-	public static transpilerFromJSON(json : string): StundenplanZeitraster {
+	public static transpilerFromJSON(json: string): StundenplanZeitraster {
 		const obj = JSON.parse(json) as Partial<StundenplanZeitraster>;
 		const result = new StundenplanZeitraster();
 		if (obj.id === undefined)
@@ -63,7 +63,7 @@ export class StundenplanZeitraster extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : StundenplanZeitraster) : string {
+	public static transpilerToJSON(obj: StundenplanZeitraster): string {
 		let result = '{';
 		result += '"id" : ' + obj.id.toString() + ',';
 		result += '"wochentag" : ' + obj.wochentag.toString() + ',';
@@ -75,7 +75,7 @@ export class StundenplanZeitraster extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<StundenplanZeitraster>) : string {
+	public static transpilerToJSONPatch(obj: Partial<StundenplanZeitraster>): string {
 		let result = '{';
 		if (obj.id !== undefined) {
 			result += '"id" : ' + obj.id.toString() + ',';
@@ -99,6 +99,6 @@ export class StundenplanZeitraster extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_stundenplan_StundenplanZeitraster(obj : unknown) : StundenplanZeitraster {
+export function cast_de_svws_nrw_core_data_stundenplan_StundenplanZeitraster(obj: unknown): StundenplanZeitraster {
 	return obj as StundenplanZeitraster;
 }

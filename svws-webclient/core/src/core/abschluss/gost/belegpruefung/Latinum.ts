@@ -9,7 +9,7 @@ import { GostBelegungsfehler } from '../../../../core/abschluss/gost/GostBelegun
 
 export class Latinum extends GostBelegpruefung {
 
-	private latein : AbiturFachbelegung | null = null;
+	private latein: AbiturFachbelegung | null = null;
 
 
 	/**
@@ -18,20 +18,20 @@ export class Latinum extends GostBelegpruefung {
 	 * @param manager        der Daten-Manager für die Abiturdaten
 	 * @param pruefungsArt   die Art der durchzuführenden Prüfung (z.B. EF.1 oder GESAMT)
 	 */
-	public constructor(manager : AbiturdatenManager, pruefungsArt : GostBelegpruefungsArt) {
+	public constructor(manager: AbiturdatenManager, pruefungsArt: GostBelegpruefungsArt) {
 		super(manager, pruefungsArt);
 	}
 
-	protected init() : void {
+	protected init(): void {
 		this.latein = this.manager.getSprachbelegung("L");
 	}
 
-	protected pruefeEF1() : void {
+	protected pruefeEF1(): void {
 		if (SprachendatenUtils.hatSprachbelegungMitMin2JahrenDauerEndeSekI(this.manager.getSprachendaten(), "L") && (!this.manager.pruefeBelegung(this.latein, GostHalbjahr.EF1)))
 			this.addFehler(GostBelegungsfehler.L_10_INFO);
 	}
 
-	protected pruefeGesamt() : void {
+	protected pruefeGesamt(): void {
 		if (SprachendatenUtils.hatSprachbelegungMitMin2JahrenDauerEndeSekI(this.manager.getSprachendaten(), "L")) {
 			if (SprachendatenUtils.hatSprachbelegungMitMin4JahrenDauerEndeSekI(this.manager.getSprachendaten(), "L")) {
 				if (!this.manager.pruefeBelegung(this.latein, GostHalbjahr.EF1, GostHalbjahr.EF2))
@@ -47,7 +47,7 @@ export class Latinum extends GostBelegpruefung {
 		return 'de.svws_nrw.core.abschluss.gost.belegpruefung.Latinum';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.abschluss.gost.belegpruefung.Latinum', 'de.svws_nrw.core.abschluss.gost.GostBelegpruefung'].includes(name);
 	}
 
@@ -55,6 +55,6 @@ export class Latinum extends GostBelegpruefung {
 
 }
 
-export function cast_de_svws_nrw_core_abschluss_gost_belegpruefung_Latinum(obj : unknown) : Latinum {
+export function cast_de_svws_nrw_core_abschluss_gost_belegpruefung_Latinum(obj: unknown): Latinum {
 	return obj as Latinum;
 }

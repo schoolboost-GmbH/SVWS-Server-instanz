@@ -9,67 +9,67 @@ export class ENMBKAbschluss extends JavaObject {
 	/**
 	 * Gibt an, ob der Schüler die Zulassung für die Abschlussprüfung hat.
 	 */
-	public hatZulassung : boolean = false;
+	public hatZulassung: boolean = false;
 
 	/**
 	 * Gibt an, ob der Schüler die Abschlussprüfung bestanden hat.
 	 */
-	public hatBestanden : boolean = false;
+	public hatBestanden: boolean = false;
 
 	/**
 	 * Gibt an, ob der Schüler die Zulassung zum Erwerb der erweiterten beruflichen Kenntnisse hat.
 	 */
-	public hatZulassungErweiterteBeruflicheKenntnisse : boolean = false;
+	public hatZulassungErweiterteBeruflicheKenntnisse: boolean = false;
 
 	/**
 	 * Gibt an, ob der Schüler die erweiterten beruflichen Kenntnisse erworben hat.
 	 */
-	public hatErworbenErweiterteBeruflicheKenntnisse : boolean = false;
+	public hatErworbenErweiterteBeruflicheKenntnisse: boolean = false;
 
 	/**
 	 * Das Notenkürzel der Note der praktischen Prüfung.
 	 */
-	public notePraktischePruefung : string | null = null;
+	public notePraktischePruefung: string | null = null;
 
 	/**
 	 * Das Notenkürzel der Note aus dem Kolloqium.
 	 */
-	public noteKolloqium : string | null = null;
+	public noteKolloqium: string | null = null;
 
 	/**
 	 * Gibt an, ob der Schüler die Zulassung zur Berufsabschlussprüfung hat.
 	 */
-	public hatZulassungBerufsabschlusspruefung : boolean = false;
+	public hatZulassungBerufsabschlusspruefung: boolean = false;
 
 	/**
 	 * Gibt an, ob der Schüler die Berufsabschlussprüfung bestanden hat.
 	 */
-	public hatBestandenBerufsabschlusspruefung : boolean = false;
+	public hatBestandenBerufsabschlusspruefung: boolean = false;
 
 	/**
 	 * Gibt das Thema der Abschlussarbeit an.
 	 */
-	public themaAbschlussarbeit : string | null = null;
+	public themaAbschlussarbeit: string | null = null;
 
 	/**
 	 * Gibt an, ob eine Berufsabschlussprüfung vorhanden ist oder nicht.
 	 */
-	public istVorhandenBerufsabschlusspruefung : boolean = false;
+	public istVorhandenBerufsabschlusspruefung: boolean = false;
 
 	/**
 	 * Das Notenkürzel der Note aus der Fachpraxis.
 	 */
-	public noteFachpraxis : string | null = null;
+	public noteFachpraxis: string | null = null;
 
 	/**
 	 * Gibt an, ob der fachpraktische Teil ausreichend ist oder nicht.
 	 */
-	public istFachpraktischerTeilAusreichend : boolean = false;
+	public istFachpraktischerTeilAusreichend: boolean = false;
 
 	/**
 	 * Die Informationen zu den einzelnen Fächern, die dem Abschluss zugeordnet sind.
 	 */
-	public faecher : List<ENMBKFach> = new ArrayList<ENMBKFach>();
+	public faecher: List<ENMBKFach> = new ArrayList<ENMBKFach>();
 
 
 	/**
@@ -83,13 +83,13 @@ export class ENMBKAbschluss extends JavaObject {
 		return 'de.svws_nrw.core.data.enm.ENMBKAbschluss';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.enm.ENMBKAbschluss'].includes(name);
 	}
 
 	public static class = new Class<ENMBKAbschluss>('de.svws_nrw.core.data.enm.ENMBKAbschluss');
 
-	public static transpilerFromJSON(json : string): ENMBKAbschluss {
+	public static transpilerFromJSON(json: string): ENMBKAbschluss {
 		const obj = JSON.parse(json) as Partial<ENMBKAbschluss>;
 		const result = new ENMBKAbschluss();
 		if (obj.hatZulassung === undefined)
@@ -128,7 +128,7 @@ export class ENMBKAbschluss extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : ENMBKAbschluss) : string {
+	public static transpilerToJSON(obj: ENMBKAbschluss): string {
 		let result = '{';
 		result += '"hatZulassung" : ' + obj.hatZulassung.toString() + ',';
 		result += '"hatBestanden" : ' + obj.hatBestanden.toString() + ',';
@@ -155,7 +155,7 @@ export class ENMBKAbschluss extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<ENMBKAbschluss>) : string {
+	public static transpilerToJSONPatch(obj: Partial<ENMBKAbschluss>): string {
 		let result = '{';
 		if (obj.hatZulassung !== undefined) {
 			result += '"hatZulassung" : ' + obj.hatZulassung.toString() + ',';
@@ -210,6 +210,6 @@ export class ENMBKAbschluss extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_enm_ENMBKAbschluss(obj : unknown) : ENMBKAbschluss {
+export function cast_de_svws_nrw_core_data_enm_ENMBKAbschluss(obj: unknown): ENMBKAbschluss {
 	return obj as ENMBKAbschluss;
 }

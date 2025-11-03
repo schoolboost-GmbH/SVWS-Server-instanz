@@ -10,12 +10,12 @@ export class SchuldateiKataloge extends JavaObject {
 	/**
 	 * Die Version der Schuldatei.
 	 */
-	public version : SchuldateiVersion = new SchuldateiVersion();
+	public version: SchuldateiVersion = new SchuldateiVersion();
 
 	/**
 	 * Die Katalog-Einträge
 	 */
-	public kataloge : List<SchuldateiKatalogeintrag> = new ArrayList<SchuldateiKatalogeintrag>();
+	public kataloge: List<SchuldateiKatalogeintrag> = new ArrayList<SchuldateiKatalogeintrag>();
 
 
 	/**
@@ -29,13 +29,13 @@ export class SchuldateiKataloge extends JavaObject {
 		return 'de.svws_nrw.schulen.v1.data.SchuldateiKataloge';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.schulen.v1.data.SchuldateiKataloge'].includes(name);
 	}
 
 	public static class = new Class<SchuldateiKataloge>('de.svws_nrw.schulen.v1.data.SchuldateiKataloge');
 
-	public static transpilerFromJSON(json : string): SchuldateiKataloge {
+	public static transpilerFromJSON(json: string): SchuldateiKataloge {
 		const obj = JSON.parse(json) as Partial<SchuldateiKataloge>;
 		const result = new SchuldateiKataloge();
 		if (obj.version === undefined)
@@ -49,7 +49,7 @@ export class SchuldateiKataloge extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : SchuldateiKataloge) : string {
+	public static transpilerToJSON(obj: SchuldateiKataloge): string {
 		let result = '{';
 		result += '"version" : ' + SchuldateiVersion.transpilerToJSON(obj.version) + ',';
 		result += '"kataloge" : [ ';
@@ -65,7 +65,7 @@ export class SchuldateiKataloge extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<SchuldateiKataloge>) : string {
+	public static transpilerToJSONPatch(obj: Partial<SchuldateiKataloge>): string {
 		let result = '{';
 		if (obj.version !== undefined) {
 			result += '"version" : ' + SchuldateiVersion.transpilerToJSON(obj.version) + ',';
@@ -87,6 +87,6 @@ export class SchuldateiKataloge extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_schulen_v1_data_SchuldateiKataloge(obj : unknown) : SchuldateiKataloge {
+export function cast_de_svws_nrw_schulen_v1_data_SchuldateiKataloge(obj: unknown): SchuldateiKataloge {
 	return obj as SchuldateiKataloge;
 }

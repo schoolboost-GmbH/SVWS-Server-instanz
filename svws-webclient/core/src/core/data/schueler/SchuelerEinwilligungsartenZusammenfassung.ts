@@ -6,27 +6,27 @@ export class SchuelerEinwilligungsartenZusammenfassung extends JavaObject {
 	/**
 	 * Die ID des Schülerdatensatzes.
 	 */
-	public id : number = 0;
+	public id: number = 0;
 
 	/**
 	 * Der Nachname des Schülerdatensatzes.
 	 */
-	public nachname : string = "";
+	public nachname: string = "";
 
 	/**
 	 * Der Vorname des Schülerdatensatzes.
 	 */
-	public vorname : string = "";
+	public vorname: string = "";
 
 	/**
 	 * Die ID der entsprechenden Einwilligungsart
 	 */
-	public idEinwilligungsart : number = 0;
+	public idEinwilligungsart: number = 0;
 
 	/**
 	 * Die Anzahl der Einwilligungen der entsprechenden Einwilligungsart
 	 */
-	public anzahlEinwilligungen : number = 0;
+	public anzahlEinwilligungen: number = 0;
 
 
 	/**
@@ -40,13 +40,13 @@ export class SchuelerEinwilligungsartenZusammenfassung extends JavaObject {
 		return 'de.svws_nrw.core.data.schueler.SchuelerEinwilligungsartenZusammenfassung';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.schueler.SchuelerEinwilligungsartenZusammenfassung'].includes(name);
 	}
 
 	public static class = new Class<SchuelerEinwilligungsartenZusammenfassung>('de.svws_nrw.core.data.schueler.SchuelerEinwilligungsartenZusammenfassung');
 
-	public static transpilerFromJSON(json : string): SchuelerEinwilligungsartenZusammenfassung {
+	public static transpilerFromJSON(json: string): SchuelerEinwilligungsartenZusammenfassung {
 		const obj = JSON.parse(json) as Partial<SchuelerEinwilligungsartenZusammenfassung>;
 		const result = new SchuelerEinwilligungsartenZusammenfassung();
 		if (obj.id === undefined)
@@ -67,7 +67,7 @@ export class SchuelerEinwilligungsartenZusammenfassung extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : SchuelerEinwilligungsartenZusammenfassung) : string {
+	public static transpilerToJSON(obj: SchuelerEinwilligungsartenZusammenfassung): string {
 		let result = '{';
 		result += '"id" : ' + obj.id.toString() + ',';
 		result += '"nachname" : ' + JSON.stringify(obj.nachname) + ',';
@@ -79,7 +79,7 @@ export class SchuelerEinwilligungsartenZusammenfassung extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<SchuelerEinwilligungsartenZusammenfassung>) : string {
+	public static transpilerToJSONPatch(obj: Partial<SchuelerEinwilligungsartenZusammenfassung>): string {
 		let result = '{';
 		if (obj.id !== undefined) {
 			result += '"id" : ' + obj.id.toString() + ',';
@@ -103,6 +103,6 @@ export class SchuelerEinwilligungsartenZusammenfassung extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_schueler_SchuelerEinwilligungsartenZusammenfassung(obj : unknown) : SchuelerEinwilligungsartenZusammenfassung {
+export function cast_de_svws_nrw_core_data_schueler_SchuelerEinwilligungsartenZusammenfassung(obj: unknown): SchuelerEinwilligungsartenZusammenfassung {
 	return obj as SchuelerEinwilligungsartenZusammenfassung;
 }

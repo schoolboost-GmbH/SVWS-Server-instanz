@@ -13,32 +13,32 @@ export class SchuelerListe extends JavaObject {
 	/**
 	 * Die ID des Schuljahresabschnitts.
 	 */
-	public idSchuljahresabschnitt : number = -1;
+	public idSchuljahresabschnitt: number = -1;
 
 	/**
 	 * Die Listen-Einträge für die Schüler
 	 */
-	public readonly schueler : List<SchuelerListeEintrag> = new ArrayList<SchuelerListeEintrag>();
+	public readonly schueler: List<SchuelerListeEintrag> = new ArrayList<SchuelerListeEintrag>();
 
 	/**
 	 * Die Klassen-Daten
 	 */
-	public readonly klassen : List<KlassenDaten> = new ArrayList<KlassenDaten>();
+	public readonly klassen: List<KlassenDaten> = new ArrayList<KlassenDaten>();
 
 	/**
 	 * Die Kurs-Daten
 	 */
-	public readonly kurse : List<KursDaten> = new ArrayList<KursDaten>();
+	public readonly kurse: List<KursDaten> = new ArrayList<KursDaten>();
 
 	/**
 	 * Die Jahrgangs-Daten
 	 */
-	public readonly jahrgaenge : List<JahrgangsDaten> = new ArrayList<JahrgangsDaten>();
+	public readonly jahrgaenge: List<JahrgangsDaten> = new ArrayList<JahrgangsDaten>();
 
 	/**
 	 * Die Daten zu den Jahrgängen der Gymnasialen Oberstufe
 	 */
-	public readonly jahrgaengeGost : List<GostJahrgang> = new ArrayList<GostJahrgang>();
+	public readonly jahrgaengeGost: List<GostJahrgang> = new ArrayList<GostJahrgang>();
 
 
 	/**
@@ -52,13 +52,13 @@ export class SchuelerListe extends JavaObject {
 		return 'de.svws_nrw.core.data.schueler.SchuelerListe';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.schueler.SchuelerListe'].includes(name);
 	}
 
 	public static class = new Class<SchuelerListe>('de.svws_nrw.core.data.schueler.SchuelerListe');
 
-	public static transpilerFromJSON(json : string): SchuelerListe {
+	public static transpilerFromJSON(json: string): SchuelerListe {
 		const obj = JSON.parse(json) as Partial<SchuelerListe>;
 		const result = new SchuelerListe();
 		if (obj.idSchuljahresabschnitt === undefined)
@@ -92,7 +92,7 @@ export class SchuelerListe extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : SchuelerListe) : string {
+	public static transpilerToJSON(obj: SchuelerListe): string {
 		let result = '{';
 		result += '"idSchuljahresabschnitt" : ' + obj.idSchuljahresabschnitt.toString() + ',';
 		result += '"schueler" : [ ';
@@ -140,7 +140,7 @@ export class SchuelerListe extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<SchuelerListe>) : string {
+	public static transpilerToJSONPatch(obj: Partial<SchuelerListe>): string {
 		let result = '{';
 		if (obj.idSchuljahresabschnitt !== undefined) {
 			result += '"idSchuljahresabschnitt" : ' + obj.idSchuljahresabschnitt.toString() + ',';
@@ -202,6 +202,6 @@ export class SchuelerListe extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_schueler_SchuelerListe(obj : unknown) : SchuelerListe {
+export function cast_de_svws_nrw_core_data_schueler_SchuelerListe(obj: unknown): SchuelerListe {
 	return obj as SchuelerListe;
 }

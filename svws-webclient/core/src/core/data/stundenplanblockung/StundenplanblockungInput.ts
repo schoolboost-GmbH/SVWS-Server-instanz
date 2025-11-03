@@ -14,32 +14,32 @@ export class StundenplanblockungInput extends JavaObject {
 	/**
 	 * Alle Lehrkräfte, die an der Stundenplanberechnung beteiligt sind.
 	 */
-	public lehrkraefte : List<StundenplanblockungLehrkraft> = new ArrayList<StundenplanblockungLehrkraft>();
+	public lehrkraefte: List<StundenplanblockungLehrkraft> = new ArrayList<StundenplanblockungLehrkraft>();
 
 	/**
 	 * Alle Klassen, die an der Stundenplanberechnung beteiligt sind.
 	 */
-	public klassen : List<StundenplanblockungKlasse> = new ArrayList<StundenplanblockungKlasse>();
+	public klassen: List<StundenplanblockungKlasse> = new ArrayList<StundenplanblockungKlasse>();
 
 	/**
 	 * Alle Fächer, die an der Stundenplanberechnung beteiligt sind.
 	 */
-	public faecher : List<StundenplanblockungFach> = new ArrayList<StundenplanblockungFach>();
+	public faecher: List<StundenplanblockungFach> = new ArrayList<StundenplanblockungFach>();
 
 	/**
 	 * Alle Räume, die an der Stundenplanberechnung beteiligt sind.
 	 */
-	public raeume : List<StundenplanblockungRaum> = new ArrayList<StundenplanblockungRaum>();
+	public raeume: List<StundenplanblockungRaum> = new ArrayList<StundenplanblockungRaum>();
 
 	/**
 	 * Alle Kopplungen, die an der Stundenplanberechnung beteiligt sind.
 	 */
-	public kopplungen : List<StundenplanblockungKopplung> = new ArrayList<StundenplanblockungKopplung>();
+	public kopplungen: List<StundenplanblockungKopplung> = new ArrayList<StundenplanblockungKopplung>();
 
 	/**
 	 * Alle Lerngruppen, die an der Stundenplanberechnung beteiligt sind.
 	 */
-	public lerngruppen : List<StundenplanblockungLerngruppe> = new ArrayList<StundenplanblockungLerngruppe>();
+	public lerngruppen: List<StundenplanblockungLerngruppe> = new ArrayList<StundenplanblockungLerngruppe>();
 
 
 	/**
@@ -53,13 +53,13 @@ export class StundenplanblockungInput extends JavaObject {
 		return 'de.svws_nrw.core.data.stundenplanblockung.StundenplanblockungInput';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.stundenplanblockung.StundenplanblockungInput'].includes(name);
 	}
 
 	public static class = new Class<StundenplanblockungInput>('de.svws_nrw.core.data.stundenplanblockung.StundenplanblockungInput');
 
-	public static transpilerFromJSON(json : string): StundenplanblockungInput {
+	public static transpilerFromJSON(json: string): StundenplanblockungInput {
 		const obj = JSON.parse(json) as Partial<StundenplanblockungInput>;
 		const result = new StundenplanblockungInput();
 		if (obj.lehrkraefte !== undefined) {
@@ -95,7 +95,7 @@ export class StundenplanblockungInput extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : StundenplanblockungInput) : string {
+	public static transpilerToJSON(obj: StundenplanblockungInput): string {
 		let result = '{';
 		result += '"lehrkraefte" : [ ';
 		for (let i = 0; i < obj.lehrkraefte.size(); i++) {
@@ -150,7 +150,7 @@ export class StundenplanblockungInput extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<StundenplanblockungInput>) : string {
+	public static transpilerToJSONPatch(obj: Partial<StundenplanblockungInput>): string {
 		let result = '{';
 		if (obj.lehrkraefte !== undefined) {
 			result += '"lehrkraefte" : [ ';
@@ -219,6 +219,6 @@ export class StundenplanblockungInput extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_stundenplanblockung_StundenplanblockungInput(obj : unknown) : StundenplanblockungInput {
+export function cast_de_svws_nrw_core_data_stundenplanblockung_StundenplanblockungInput(obj: unknown): StundenplanblockungInput {
 	return obj as StundenplanblockungInput;
 }

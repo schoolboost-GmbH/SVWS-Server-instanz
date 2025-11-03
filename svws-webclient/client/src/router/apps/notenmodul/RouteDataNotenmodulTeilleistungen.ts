@@ -1,4 +1,4 @@
-import type { EnmLerngruppenAuswahlEintrag} from "@ui";
+import type { EnmLerngruppenAuswahlEintrag } from "@ui";
 import { EnmLerngruppenAuswahlListeManager, ViewType } from "@ui";
 import { api } from "~/router/Api";
 import type { RouteStateAuswahlInterface } from "~/router/RouteDataAuswahl";
@@ -6,7 +6,7 @@ import { RouteDataAuswahl } from "~/router/RouteDataAuswahl";
 import { routeNotenmodulTeilleistungenData } from "./RouteNotenmodulTeilleistungenData";
 import { routeNotenmodul } from "./RouteNotenmodul";
 import type { RouteParamsRawGeneric } from "vue-router";
-import type { ENMLerngruppe, List, SimpleOperationResponse} from "@core";
+import type { ENMLerngruppe, List, SimpleOperationResponse } from "@core";
 import { UnsupportedOperationException } from "@core";
 
 
@@ -51,19 +51,19 @@ export class RouteDataNotenmodulTeilleistungen extends RouteDataAuswahl<EnmLerng
 	}
 
 	protected async doDelete(ids: List<number>): Promise<List<SimpleOperationResponse>> {
-		throw new UnsupportedOperationException("Die Methode ist nicht implementiert.")
+		throw new UnsupportedOperationException("Die Methode ist nicht implementiert.");
 	}
 
 	protected deleteMessage(id: number, eintrag: any): string {
-		throw new UnsupportedOperationException("Die Methode ist nicht implementiert.")
+		throw new UnsupportedOperationException("Die Methode ist nicht implementiert.");
 	}
 
-	get columnsVisible(): Map<string, boolean|null> {
-		return new Map<string, boolean|null>(JSON.parse(api.config.getValue("notenmodul.teilleistungen.table.columns")));
+	get columnsVisible(): Map<string, boolean | null> {
+		return new Map<string, boolean | null>(JSON.parse(api.config.getValue("notenmodul.teilleistungen.table.columns")));
 	}
 
-	setColumnsVisible = async (value: Map<string, boolean|null>) => {
+	setColumnsVisible = async (value: Map<string, boolean | null>) => {
 		await api.config.setValue('notenmodul.teilleistungen.table.columns', JSON.stringify([...value]));
-	}
+	};
 
 }

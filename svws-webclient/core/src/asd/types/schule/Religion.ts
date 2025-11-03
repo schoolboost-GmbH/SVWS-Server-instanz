@@ -9,67 +9,67 @@ import { ReligionKatalogEintrag } from '../../../asd/data/schule/ReligionKatalog
 export class Religion extends JavaEnum<Religion> implements CoreType<ReligionKatalogEintrag, Religion> {
 
 	/** an array containing all values of this enumeration */
-	static readonly all_values_by_ordinal : Array<Religion> = [];
+	static readonly all_values_by_ordinal: Array<Religion> = [];
 
 	/** an array containing all values of this enumeration indexed by their name*/
-	static readonly all_values_by_name : Map<string, Religion> = new Map<string, Religion>();
+	static readonly all_values_by_name: Map<string, Religion> = new Map<string, Religion>();
 
 	/**
 	 * Religion: alevitisch
 	 */
-	public static readonly AR : Religion = new Religion("AR", 0, );
+	public static readonly AR: Religion = new Religion("AR", 0, );
 
 	/**
 	 * Religion: evangelisch
 	 */
-	public static readonly ER : Religion = new Religion("ER", 1, );
+	public static readonly ER: Religion = new Religion("ER", 1, );
 
 	/**
 	 * Religion: jüdisch
 	 */
-	public static readonly HR : Religion = new Religion("HR", 2, );
+	public static readonly HR: Religion = new Religion("HR", 2, );
 
 	/**
 	 * Religion: islamisch
 	 */
-	public static readonly IR : Religion = new Religion("IR", 3, );
+	public static readonly IR: Religion = new Religion("IR", 3, );
 
 	/**
 	 * Religion: katholisch
 	 */
-	public static readonly KR : Religion = new Religion("KR", 4, );
+	public static readonly KR: Religion = new Religion("KR", 4, );
 
 	/**
 	 * Religion: mennonitische BG NRW
 	 */
-	public static readonly ME : Religion = new Religion("ME", 5, );
+	public static readonly ME: Religion = new Religion("ME", 5, );
 
 	/**
 	 * Religion: ohne Bekenntnis
 	 */
-	public static readonly OH : Religion = new Religion("OH", 6, );
+	public static readonly OH: Religion = new Religion("OH", 6, );
 
 	/**
 	 * Religion: griechisch-orthodox
 	 */
-	public static readonly OR : Religion = new Religion("OR", 7, );
+	public static readonly OR: Religion = new Religion("OR", 7, );
 
 	/**
 	 * Religion: syrisch-orthodox
 	 */
-	public static readonly SO : Religion = new Religion("SO", 8, );
+	public static readonly SO: Religion = new Religion("SO", 8, );
 
 	/**
 	 * Religion: sonstige orthodoxe
 	 */
-	public static readonly XO : Religion = new Religion("XO", 9, );
+	public static readonly XO: Religion = new Religion("XO", 9, );
 
 	/**
 	 * Religion: andere Religionen
 	 */
-	public static readonly XR : Religion = new Religion("XR", 10, );
+	public static readonly XR: Religion = new Religion("XR", 10, );
 
-	private constructor(name : string, ordinal : number) {
+	private constructor(name: string, ordinal: number) {
 		super(name, ordinal);
 		Religion.all_values_by_ordinal.push(this);
 		Religion.all_values_by_name.set(name, this);
@@ -80,7 +80,7 @@ export class Religion extends JavaEnum<Religion> implements CoreType<ReligionKat
 	 *
 	 * @param manager   der Manager für die Daten des Core-Types
 	 */
-	public static init(manager : CoreTypeDataManager<ReligionKatalogEintrag, Religion>) : void {
+	public static init(manager: CoreTypeDataManager<ReligionKatalogEintrag, Religion>): void {
 		CoreTypeDataManager.putManager(Religion.class, manager);
 	}
 
@@ -89,7 +89,7 @@ export class Religion extends JavaEnum<Religion> implements CoreType<ReligionKat
 	 *
 	 * @return der Daten-Manager
 	 */
-	public static data() : CoreTypeDataManager<ReligionKatalogEintrag, Religion> {
+	public static data(): CoreTypeDataManager<ReligionKatalogEintrag, Religion> {
 		return CoreTypeDataManager.getManager(Religion.class);
 	}
 
@@ -98,7 +98,7 @@ export class Religion extends JavaEnum<Religion> implements CoreType<ReligionKat
 	 *
 	 * @returns the array with enumeration values
 	 */
-	public static values() : Array<Religion> {
+	public static values(): Array<Religion> {
 		return [...this.all_values_by_ordinal];
 	}
 
@@ -109,24 +109,24 @@ export class Religion extends JavaEnum<Religion> implements CoreType<ReligionKat
 	 *
 	 * @returns the enumeration values or null
 	 */
-	public static valueOf(name : string) : Religion | null {
+	public static valueOf(name: string): Religion | null {
 		const tmp = this.all_values_by_name.get(name);
 		return (!tmp) ? null : tmp;
 	}
 
-	public getManager() : CoreTypeDataManager<ReligionKatalogEintrag, Religion> {
+	public getManager(): CoreTypeDataManager<ReligionKatalogEintrag, Religion> {
 		return de_svws_nrw_asd_types_CoreType_getManager(this);
 	}
 
-	public daten(schuljahr : number) : ReligionKatalogEintrag | null {
+	public daten(schuljahr: number): ReligionKatalogEintrag | null {
 		return de_svws_nrw_asd_types_CoreType_daten(this, schuljahr);
 	}
 
-	public statistikId() : string | null {
+	public statistikId(): string | null {
 		return de_svws_nrw_asd_types_CoreType_statistikId(this);
 	}
 
-	public historie() : List<ReligionKatalogEintrag> {
+	public historie(): List<ReligionKatalogEintrag> {
 		return de_svws_nrw_asd_types_CoreType_historie(this);
 	}
 
@@ -134,7 +134,7 @@ export class Religion extends JavaEnum<Religion> implements CoreType<ReligionKat
 		return 'de.svws_nrw.asd.types.schule.Religion';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.asd.types.schule.Religion', 'de.svws_nrw.asd.types.CoreType', 'java.lang.Comparable', 'java.lang.Enum', 'java.lang.Comparable'].includes(name);
 	}
 
@@ -142,6 +142,6 @@ export class Religion extends JavaEnum<Religion> implements CoreType<ReligionKat
 
 }
 
-export function cast_de_svws_nrw_asd_types_schule_Religion(obj : unknown) : Religion {
+export function cast_de_svws_nrw_asd_types_schule_Religion(obj: unknown): Religion {
 	return obj as Religion;
 }

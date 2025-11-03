@@ -6,67 +6,67 @@ export class JahrgangsDaten extends JavaObject {
 	/**
 	 * Die ID des Jahrgangs.
 	 */
-	public id : number = 0;
+	public id: number = 0;
 
 	/**
 	 * Das schulinterne Kürzel des Jahrgangs.
 	 */
-	public kuerzel : string | null = null;
+	public kuerzel: string | null = null;
 
 	/**
 	 * Die schulinterne Kurzbezeichnung
 	 */
-	public kurzbezeichnung : string | null = null;
+	public kurzbezeichnung: string | null = null;
 
 	/**
 	 * Das dem Jahrgang zugeordnete Statistik-Kürzel.
 	 */
-	public kuerzelStatistik : string | null = null;
+	public kuerzelStatistik: string | null = null;
 
 	/**
 	 * Die dem Jahrgang zugeordnete schulinterne Bezeichnung.
 	 */
-	public bezeichnung : string = "";
+	public bezeichnung: string = "";
 
 	/**
 	 * Die Sortierreihenfolge des Jahrgangslisten-Eintrags.
 	 */
-	public sortierung : number = 0;
+	public sortierung: number = 0;
 
 	/**
 	 * Die ID der Schulgliederung, der der Eintrag zugeordnet ist.
 	 */
-	public kuerzelSchulgliederung : string | null = null;
+	public kuerzelSchulgliederung: string | null = null;
 
 	/**
 	 * Die ID des Folgejahrgangs, sofern einer definiert ist, ansonsten null
 	 */
-	public idFolgejahrgang : number | null = null;
+	public idFolgejahrgang: number | null = null;
 
 	/**
 	 * Gibt die Anzahl der Restabschnitte bis zum Abschluss bei der Schulform an
 	 */
-	public anzahlRestabschnitte : number | null = null;
+	public anzahlRestabschnitte: number | null = null;
 
 	/**
 	 * Gibt an, ob der Eintrag in der Anwendung sichtbar sein soll oder nicht.
 	 */
-	public istSichtbar : boolean = false;
+	public istSichtbar: boolean = false;
 
 	/**
 	 * Gibt an, von welchem Schuljahresabschnitt an der Jahrgang gültig ist (einschließlich), null bedeutet von dem ersten Abschnitt an
 	 */
-	public gueltigVon : number | null = null;
+	public gueltigVon: number | null = null;
 
 	/**
 	 * Gibt an, bis zu welchem Schuljahresabschnitt an der Jahrgang gültig ist (einschließlich), null bedeutet bis zum letzten Abschnitt, Ende offen
 	 */
-	public gueltigBis : number | null = null;
+	public gueltigBis: number | null = null;
 
 	/**
 	 * Gibt an, ob der Jahrgang in anderen Datenbanktabellen referenziert ist oder nicht.
 	 */
-	public referenziertInAnderenTabellen : boolean | null = null;
+	public referenziertInAnderenTabellen: boolean | null = null;
 
 
 	/**
@@ -80,13 +80,13 @@ export class JahrgangsDaten extends JavaObject {
 		return 'de.svws_nrw.core.data.jahrgang.JahrgangsDaten';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.jahrgang.JahrgangsDaten'].includes(name);
 	}
 
 	public static class = new Class<JahrgangsDaten>('de.svws_nrw.core.data.jahrgang.JahrgangsDaten');
 
-	public static transpilerFromJSON(json : string): JahrgangsDaten {
+	public static transpilerFromJSON(json: string): JahrgangsDaten {
 		const obj = JSON.parse(json) as Partial<JahrgangsDaten>;
 		const result = new JahrgangsDaten();
 		if (obj.id === undefined)
@@ -113,7 +113,7 @@ export class JahrgangsDaten extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : JahrgangsDaten) : string {
+	public static transpilerToJSON(obj: JahrgangsDaten): string {
 		let result = '{';
 		result += '"id" : ' + obj.id.toString() + ',';
 		result += '"kuerzel" : ' + ((obj.kuerzel === null) ? 'null' : JSON.stringify(obj.kuerzel)) + ',';
@@ -133,7 +133,7 @@ export class JahrgangsDaten extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<JahrgangsDaten>) : string {
+	public static transpilerToJSONPatch(obj: Partial<JahrgangsDaten>): string {
 		let result = '{';
 		if (obj.id !== undefined) {
 			result += '"id" : ' + obj.id.toString() + ',';
@@ -181,6 +181,6 @@ export class JahrgangsDaten extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_jahrgang_JahrgangsDaten(obj : unknown) : JahrgangsDaten {
+export function cast_de_svws_nrw_core_data_jahrgang_JahrgangsDaten(obj: unknown): JahrgangsDaten {
 	return obj as JahrgangsDaten;
 }

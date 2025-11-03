@@ -6,7 +6,7 @@ export class IndexOutOfBoundsException extends RuntimeException {
 		return 'java.lang.IndexOutOfBoundsException';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return [
 			'java.lang.IndexOutOfBoundsException',
 			'java.lang.RuntimeException',
@@ -20,6 +20,6 @@ export class IndexOutOfBoundsException extends RuntimeException {
 }
 
 
-export function cast_java_lang_IndexOutOfBoundsException(obj : unknown) : IndexOutOfBoundsException {
+export function cast_java_lang_IndexOutOfBoundsException(obj: unknown): IndexOutOfBoundsException {
 	return obj as IndexOutOfBoundsException;
 }

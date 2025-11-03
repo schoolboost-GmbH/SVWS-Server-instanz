@@ -3,9 +3,11 @@ package de.svws_nrw.data.gost;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.function.BiFunction;
 import java.util.stream.Collectors;
 
@@ -190,8 +192,7 @@ public final class DataGostJahrgangsliste extends DataManager<Integer> {
 		// Lade die Vorlage für den neuen Abiturjahrgang
 		final DTOGostJahrgangsdaten jahrgangsdatenVorlage = DataGostJahrgangsdaten.getVorlage(conn);
 
-		// Erstelle die Jahrgangsdaten mit Default-Werten, Beratungslehrer sind zunächst
-		// nicht zugeordnet
+		// Erstelle die Jahrgangsdaten mit Default-Werten, Beratungslehrer sind zunächst nicht zugeordnet
 		jahrgangsdaten = new DTOGostJahrgangsdaten(abiturjahr);
 		jahrgangsdaten.ZusatzkursGEErstesHalbjahr = jahrgangsdatenVorlage.ZusatzkursGEErstesHalbjahr;
 		jahrgangsdaten.ZusatzkursGEVorhanden = jahrgangsdatenVorlage.ZusatzkursGEVorhanden;
@@ -253,6 +254,8 @@ public final class DataGostJahrgangsliste extends DataManager<Integer> {
 			final List<DTOSchueler> schueler = DBUtilsGostLaufbahn.getSchuelerOfAbiturjahrgang(conn, abiturjahr);
 			if ((schueler != null) && (!schueler.isEmpty())) {
 				final List<Long> schuelerIDs = schueler.stream().map(s -> s.ID).toList();
+				final Set<Long> schuelerIDsBereitsVorhanden = schuelerIDs.isEmpty() ? Collections.emptySet()
+						: conn.queryByKeyList(DTOGostSchueler.class, schuelerIDs).stream().map(s -> s.Schueler_ID).collect(Collectors.toSet());
 				final List<Integer> abschnitte = Arrays.asList(1, 2);
 				final List<DTOSchuljahresabschnitte> schuljahresabschnitte =
 						conn.queryList(DTOSchuljahresabschnitte.QUERY_LIST_BY_ABSCHNITT, DTOSchuljahresabschnitte.class, abschnitte);
@@ -269,8 +272,10 @@ public final class DataGostJahrgangsliste extends DataManager<Integer> {
 						: conn.queryList(DTOSchuelerLeistungsdaten.QUERY_LIST_BY_ABSCHNITT_ID, DTOSchuelerLeistungsdaten.class, lernabschnittIDs);
 				final Map<Long, List<DTOSchuelerLeistungsdaten>> mapLeistungsdaten =
 						leistungsdaten.stream().collect(Collectors.groupingBy(l -> l.Abschnitt_ID));
-
 				for (final long schueler_id : schuelerIDs) {
+					// Wenn der Schüler bereits Daten für die Laufbahnplanung hat, so müssen diese auch nicht ergänzt werden
+					if (schuelerIDsBereitsVorhanden.contains(schueler_id))
+						continue;
 					final List<DTOSchuelerLernabschnittsdaten> slas = mapLernabschnitte.get(schueler_id);
 					if ((slas == null) || (slas.isEmpty()))
 						continue;

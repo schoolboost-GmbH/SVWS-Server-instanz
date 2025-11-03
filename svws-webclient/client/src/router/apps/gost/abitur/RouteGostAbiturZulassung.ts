@@ -26,7 +26,7 @@ export class RouteGostAbiturZulassung extends RouteNode<any, RouteGostAbitur> {
 		];
 	}
 
-	protected async update(to: RouteNode<any, any>, to_params: RouteParams, from: RouteNode<any, any> | undefined, from_params: RouteParams, isEntering: boolean) : Promise<void | Error | RouteLocationRaw> {
+	protected async update(to: RouteNode<any, any>, to_params: RouteParams, from: RouteNode<any, any> | undefined, from_params: RouteParams, isEntering: boolean): Promise<void | Error | RouteLocationRaw> {
 	}
 
 	public getProps(to: RouteLocationNormalized): GostAbiturZulassungProps {

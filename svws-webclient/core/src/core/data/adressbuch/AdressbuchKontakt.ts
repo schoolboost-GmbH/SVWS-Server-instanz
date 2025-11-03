@@ -9,77 +9,77 @@ export class AdressbuchKontakt extends AdressbuchEintrag {
 	/**
 	 * Der Nachname des Kontakts.
 	 */
-	public nachname : string = "";
+	public nachname: string = "";
 
 	/**
 	 * Der Vorname des Schülerdatensatzes.
 	 */
-	public vorname : string = "";
+	public vorname: string = "";
 
 	/**
 	 * Der Straßenname des Kontakts.
 	 */
-	public strassenname : string | null = null;
+	public strassenname: string | null = null;
 
 	/**
 	 * Die Hausnummer des Kontakts.
 	 */
-	public hausnummer : string | null = null;
+	public hausnummer: string | null = null;
 
 	/**
 	 * Ggf. der Hausnummerzusatz des Kontakts.
 	 */
-	public hausnummerZusatz : string | null = null;
+	public hausnummerZusatz: string | null = null;
 
 	/**
 	 * Die Postleitzahl des Kontakts.
 	 */
-	public plz : string | null = null;
+	public plz: string | null = null;
 
 	/**
 	 * Der Ort des Kontakts.
 	 */
-	public ort : string | null = null;
+	public ort: string | null = null;
 
 	/**
 	 * Die Telefonnummern des Kontakts.
 	 */
-	public telefonnummern : List<Telefonnummer> = new ArrayList<Telefonnummer>();
+	public telefonnummern: List<Telefonnummer> = new ArrayList<Telefonnummer>();
 
 	/**
 	 * Die Mailadresse des Kontakts.
 	 */
-	public email : string | null = null;
+	public email: string | null = null;
 
 	/**
 	 * Die Webadresse des Kontakts
 	 */
-	public webAdresse : string | null = "";
+	public webAdresse: string | null = "";
 
 	/**
 	 * Die Kategorien dieses Kontakts
 	 */
-	public kategorien : List<string> = new ArrayList<string>();
+	public kategorien: List<string> = new ArrayList<string>();
 
 	/**
 	 *  Die Organisation dieses Kontakts
 	 */
-	public organisation : string | null = null;
+	public organisation: string | null = null;
 
 	/**
 	 *  Die Rolle innerhalb der Organisation dieses Kontakts
 	 */
-	public rolle : string | null = null;
+	public rolle: string | null = null;
 
 	/**
 	 * Die ID des Adressbuchkontakts des Kinds
 	 */
-	public idKind : string | null = null;
+	public idKind: string | null = null;
 
 	/**
 	 * Die ID des Adressbuchkontakts der Eltern
 	 */
-	public idEltern : string | null = null;
+	public idEltern: string | null = null;
 
 
 	/**
@@ -93,13 +93,13 @@ export class AdressbuchKontakt extends AdressbuchEintrag {
 		return 'de.svws_nrw.core.data.adressbuch.AdressbuchKontakt';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.adressbuch.AdressbuchKontakt', 'de.svws_nrw.core.data.adressbuch.AdressbuchEintrag'].includes(name);
 	}
 
 	public static class = new Class<AdressbuchKontakt>('de.svws_nrw.core.data.adressbuch.AdressbuchKontakt');
 
-	public static transpilerFromJSON(json : string): AdressbuchKontakt {
+	public static transpilerFromJSON(json: string): AdressbuchKontakt {
 		const obj = JSON.parse(json) as Partial<AdressbuchKontakt>;
 		const result = new AdressbuchKontakt();
 		if (obj.id === undefined)
@@ -144,7 +144,7 @@ export class AdressbuchKontakt extends AdressbuchEintrag {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : AdressbuchKontakt) : string {
+	public static transpilerToJSON(obj: AdressbuchKontakt): string {
 		let result = '{';
 		result += '"id" : ' + JSON.stringify(obj.id) + ',';
 		result += '"adressbuchId" : ' + JSON.stringify(obj.adressbuchId) + ',';
@@ -184,7 +184,7 @@ export class AdressbuchKontakt extends AdressbuchEintrag {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<AdressbuchKontakt>) : string {
+	public static transpilerToJSONPatch(obj: Partial<AdressbuchKontakt>): string {
 		let result = '{';
 		if (obj.id !== undefined) {
 			result += '"id" : ' + JSON.stringify(obj.id) + ',';
@@ -264,6 +264,6 @@ export class AdressbuchKontakt extends AdressbuchEintrag {
 
 }
 
-export function cast_de_svws_nrw_core_data_adressbuch_AdressbuchKontakt(obj : unknown) : AdressbuchKontakt {
+export function cast_de_svws_nrw_core_data_adressbuch_AdressbuchKontakt(obj: unknown): AdressbuchKontakt {
 	return obj as AdressbuchKontakt;
 }

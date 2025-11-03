@@ -18,14 +18,14 @@ export function phoneNumberIsValid(input: string | null, maxLength: number) {
 	return /^\+?\d+([-/]?\d+)*$/.test(input) && input.length <= maxLength;
 }
 
-export function plzIsValid(input: string | null, maxLength : number) {
+export function plzIsValid(input: string | null, maxLength: number) {
 	if (input === null || JavaString.isBlank(input))
 		return true;
 
 	if (input.length > maxLength)
 		return false;
 
-	return /^\d+$/.test(input)
+	return /^\d+$/.test(input);
 }
 
 export function mandatoryInputIsValid(value: string | null, maxLength: number) {
@@ -35,7 +35,7 @@ export function mandatoryInputIsValid(value: string | null, maxLength: number) {
 	return (!JavaString.isBlank(value)) && (value.length <= maxLength);
 }
 
-export function optionalInputIsValid(input : string | null, maxLength: number) {
+export function optionalInputIsValid(input: string | null, maxLength: number) {
 	if ((input === null) || (JavaString.isBlank(input)))
 		return true;
 

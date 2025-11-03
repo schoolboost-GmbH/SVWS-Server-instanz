@@ -16,24 +16,24 @@ import de.svws_nrw.db.schema.SchemaTabelleUniqueIndex;
 public class Tabelle_Stundenplan_UnterrichtSchiene extends SchemaTabelle {
 
 	/** Die Definition der Tabellenspalte ID */
-	public SchemaTabelleSpalte col_ID = add("ID", SchemaDatentypen.BIGINT, true)
+	public final SchemaTabelleSpalte col_ID = add("ID", SchemaDatentypen.BIGINT, true)
 			.setNotNull()
 			.setJavaComment("Die eindeutige ID für die Zuordnung der Schiene zum Unterricht");
 
 	/** Die Definition der Tabellenspalte Unterricht_ID */
-	public SchemaTabelleSpalte col_Unterricht_ID = add("Unterricht_ID", SchemaDatentypen.BIGINT, false)
+	public final SchemaTabelleSpalte col_Unterricht_ID = add("Unterricht_ID", SchemaDatentypen.BIGINT, false)
 			.setNotNull()
 			.setJavaComment("Die ID des Unterricht-Eintrages im Stundenplan");
 
 	/** Die Definition der Tabellenspalte Schiene_ID */
-	public SchemaTabelleSpalte col_Schiene_ID = add("Schiene_ID", SchemaDatentypen.BIGINT, false)
+	public final SchemaTabelleSpalte col_Schiene_ID = add("Schiene_ID", SchemaDatentypen.BIGINT, false)
 			.setNotNull()
 			.setJavaComment("Die ID der zugewiesenen Schiene. Sollten ggf. mehrere Schienen zugewiesen werden, so müssen für eine Unterricht-ID"
 					+ " mehrere Datensätze vorliegen");
 
 
 	/** Die Definition des Fremdschlüssels Stundenplan_UnterrichtSchiene_Schienen_FK */
-	public SchemaTabelleFremdschluessel fk_Stundenplan_UnterrichtSchiene_Schienen_FK = addForeignKey(
+	public final SchemaTabelleFremdschluessel fk_Stundenplan_UnterrichtSchiene_Schienen_FK = addForeignKey(
 			"Stundenplan_UnterrichtSchiene_Schienen_FK",
 			/* OnUpdate: */ SchemaFremdschluesselAktionen.CASCADE,
 			/* OnDelete: */ SchemaFremdschluesselAktionen.CASCADE,
@@ -41,7 +41,7 @@ public class Tabelle_Stundenplan_UnterrichtSchiene extends SchemaTabelle {
 	);
 
 	/** Die Definition des Fremdschlüssels Stundenplan_UnterrichtSchiene_Unterricht_FK */
-	public SchemaTabelleFremdschluessel fk_Stundenplan_UnterrichtSchiene_Unterricht_FK = addForeignKey(
+	public final SchemaTabelleFremdschluessel fk_Stundenplan_UnterrichtSchiene_Unterricht_FK = addForeignKey(
 			"Stundenplan_UnterrichtSchiene_Unterricht_FK",
 			/* OnUpdate: */ SchemaFremdschluesselAktionen.CASCADE,
 			/* OnDelete: */ SchemaFremdschluesselAktionen.CASCADE,
@@ -50,7 +50,7 @@ public class Tabelle_Stundenplan_UnterrichtSchiene extends SchemaTabelle {
 
 
 	/** Die Definition des Unique-Index Stundenplan_UnterrichtSchiene_UC1 */
-	public SchemaTabelleUniqueIndex unique_Stundenplan_UnterrichtSchiene_UC1 = addUniqueIndex("Stundenplan_UnterrichtSchiene_UC1",
+	public final SchemaTabelleUniqueIndex unique_Stundenplan_UnterrichtSchiene_UC1 = addUniqueIndex("Stundenplan_UnterrichtSchiene_UC1",
 			col_Unterricht_ID,
 			col_Schiene_ID
 	);

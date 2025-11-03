@@ -8,9 +8,9 @@ import { GostBelegungsfehler } from '../../../../core/abschluss/gost/GostBelegun
 
 export class Schwerpunkt extends GostBelegpruefung {
 
-	private _hatSchwerpunktFremdsprachen : boolean = false;
+	private _hatSchwerpunktFremdsprachen: boolean = false;
 
-	private _hatSchwerpunktNaturwissenschaften : boolean = false;
+	private _hatSchwerpunktNaturwissenschaften: boolean = false;
 
 
 	/**
@@ -21,17 +21,17 @@ export class Schwerpunkt extends GostBelegpruefung {
 	 * @param pruefungSprachen   das Ergebnis für die Belegprüfung der Sprachen
 	 * @param pruefungNawi       das Ergebnis für die Belegprüfung der Naturwissenschaften
 	 */
-	public constructor(manager : AbiturdatenManager, pruefungsArt : GostBelegpruefungsArt, pruefungSprachen : Fremdsprachen, pruefungNawi : Naturwissenschaften) {
+	public constructor(manager: AbiturdatenManager, pruefungsArt: GostBelegpruefungsArt, pruefungSprachen: Fremdsprachen, pruefungNawi: Naturwissenschaften) {
 		super(manager, pruefungsArt, pruefungSprachen, pruefungNawi);
 	}
 
-	protected init() : void {
+	protected init(): void {
 		// empty block
 	}
 
-	protected pruefeEF1() : void {
-		const pruefung_sprachen : Fremdsprachen = (cast_de_svws_nrw_core_abschluss_gost_belegpruefung_Fremdsprachen(this.pruefungen_vorher[0]));
-		const pruefung_nawi : Naturwissenschaften = (cast_de_svws_nrw_core_abschluss_gost_belegpruefung_Naturwissenschaften(this.pruefungen_vorher[1]));
+	protected pruefeEF1(): void {
+		const pruefung_sprachen: Fremdsprachen = (cast_de_svws_nrw_core_abschluss_gost_belegpruefung_Fremdsprachen(this.pruefungen_vorher[0]));
+		const pruefung_nawi: Naturwissenschaften = (cast_de_svws_nrw_core_abschluss_gost_belegpruefung_Naturwissenschaften(this.pruefungen_vorher[1]));
 		this._hatSchwerpunktFremdsprachen = (pruefung_sprachen.getAnzahlDurchgehendSchritflichBelegt() >= 2);
 		this._hatSchwerpunktNaturwissenschaften = (pruefung_nawi.getAnzahlDurchgehendBelegt() >= 2) && (pruefung_nawi.getAnzahlDurchgehendSchritflichBelegt() >= 1);
 		if (this._hatSchwerpunktFremdsprachen && (this._hatSchwerpunktNaturwissenschaften))
@@ -47,9 +47,9 @@ export class Schwerpunkt extends GostBelegpruefung {
 		this.addFehler(GostBelegungsfehler.NW_FS_10);
 	}
 
-	protected pruefeGesamt() : void {
-		const pruefung_sprachen : Fremdsprachen = (cast_de_svws_nrw_core_abschluss_gost_belegpruefung_Fremdsprachen(this.pruefungen_vorher[0]));
-		const pruefung_nawi : Naturwissenschaften = (cast_de_svws_nrw_core_abschluss_gost_belegpruefung_Naturwissenschaften(this.pruefungen_vorher[1]));
+	protected pruefeGesamt(): void {
+		const pruefung_sprachen: Fremdsprachen = (cast_de_svws_nrw_core_abschluss_gost_belegpruefung_Fremdsprachen(this.pruefungen_vorher[0]));
+		const pruefung_nawi: Naturwissenschaften = (cast_de_svws_nrw_core_abschluss_gost_belegpruefung_Naturwissenschaften(this.pruefungen_vorher[1]));
 		this._hatSchwerpunktFremdsprachen = (pruefung_sprachen.getAnzahlDurchgehendSchritflichBelegt() >= 2);
 		this._hatSchwerpunktNaturwissenschaften = (pruefung_nawi.getAnzahlDurchgehendBelegt() >= 2) && (pruefung_nawi.getAnzahlDurchgehendSchritflichBelegt() >= 1);
 		if (this._hatSchwerpunktFremdsprachen && this._hatSchwerpunktNaturwissenschaften)
@@ -70,7 +70,7 @@ export class Schwerpunkt extends GostBelegpruefung {
 	 *
 	 * @return true, wenn ein fremdsprachlicher Schwerpunkt vorliegt
 	 */
-	public hatSchwerpunktFremdsprachen() : boolean {
+	public hatSchwerpunktFremdsprachen(): boolean {
 		return this._hatSchwerpunktFremdsprachen;
 	}
 
@@ -79,7 +79,7 @@ export class Schwerpunkt extends GostBelegpruefung {
 	 *
 	 * @return true, wenn ein naturwissenschaftlicher Schwerpunkt vorliegt
 	 */
-	public hatSchwerpunktNaturwissenschaften() : boolean {
+	public hatSchwerpunktNaturwissenschaften(): boolean {
 		return this._hatSchwerpunktNaturwissenschaften;
 	}
 
@@ -87,7 +87,7 @@ export class Schwerpunkt extends GostBelegpruefung {
 		return 'de.svws_nrw.core.abschluss.gost.belegpruefung.Schwerpunkt';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.abschluss.gost.GostBelegpruefung', 'de.svws_nrw.core.abschluss.gost.belegpruefung.Schwerpunkt'].includes(name);
 	}
 
@@ -95,6 +95,6 @@ export class Schwerpunkt extends GostBelegpruefung {
 
 }
 
-export function cast_de_svws_nrw_core_abschluss_gost_belegpruefung_Schwerpunkt(obj : unknown) : Schwerpunkt {
+export function cast_de_svws_nrw_core_abschluss_gost_belegpruefung_Schwerpunkt(obj: unknown): Schwerpunkt {
 	return obj as Schwerpunkt;
 }

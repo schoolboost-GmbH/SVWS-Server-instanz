@@ -9,10 +9,10 @@ import type { TabData } from "./TabData";
 export class TabManager {
 
 	// Der aktuell ausgewählte Tab
-	private _tab : ShallowRef<TabData>;
+	private _tab: ShallowRef<TabData>;
 
 	// Das Array mit den verwalteten Tabs (siehe Konstruktor)
-	private _tabs : TabData[];
+	private _tabs: TabData[];
 
 	// Die Callback-Funktion, falls das Tab neu gesetzt wird.
 	private _setTab: (value: TabData) => Promise<void>;
@@ -34,7 +34,7 @@ export class TabManager {
 	 * @param setTab   der Callback, falls ein neues aktives Tab gesetzt wird
 	 * @param hidden   ein optionales Array, mit dem das attribute hide bei den Tabs gesetzt werden kann
 	 */
-	public constructor(tabs : TabData[], tab : TabData, setTab: (value: TabData) => Promise<void>, hidden?: boolean[]) {
+	public constructor(tabs: TabData[], tab: TabData, setTab: (value: TabData) => Promise<void>, hidden?: boolean[]) {
 		this._tabs = tabs;
 		this._tab = shallowRef(tab);
 		this._setTab = setTab;
@@ -56,22 +56,22 @@ export class TabManager {
 	/**
 	 * Gibt die Liste der Tabs zurück.
 	 */
-	public get tabs() : Array<TabData> {
+	public get tabs(): Array<TabData> {
 		return this._tabs;
 	}
 
 	/**
 	 * Gibt das aktuell ausgewählte Tab zurück.
 	 */
-	public get tab() : TabData {
+	public get tab(): TabData {
 		return this._tab.value;
 	}
 
 	/**
 	 * Gibt ein Array mit den Tab-Groups zurück.
 	 */
-	public get tabgroups() : string[] {
-		return [ ... this._tabgroups.keys()];
+	public get tabgroups(): string[] {
+		return [... this._tabgroups.keys()];
 	}
 
 	/**
@@ -79,7 +79,7 @@ export class TabManager {
 	 * so wird das erste sichtbare Tab zurückgegeben. In dem Sonderfall, dass es kein anderes sichtbares
 	 * Tab gibt wird das aktuelle Tab zurückgegeben.
 	 */
-	public get nextTab() : TabData {
+	public get nextTab(): TabData {
 		let i = this._mapNameToIndex.get(this._tab.value.name) ?? -1;
 		do {
 			i++;
@@ -96,7 +96,7 @@ export class TabManager {
 	 * so wird das letzte sichtbare Tab zurückgegeben. In dem Sonderfall, dass es kein anderes sichtbares
 	 * Tab gibt wird das aktuelle Tab zurückgegeben.
 	 */
-	public get prevTab() : TabData {
+	public get prevTab(): TabData {
 		let i = this._mapNameToIndex.get(this._tab.value.name) ?? -1;
 		do {
 			i--;
@@ -113,7 +113,7 @@ export class TabManager {
 	 *
 	 * @param value   das neu zu setzende Tab
 	 */
-	public async setTab(value : TabData) {
+	public async setTab(value: TabData) {
 		await this._setTab(value);
 		this._tab.value = value;
 	}
@@ -123,7 +123,7 @@ export class TabManager {
 	 *
 	 * @param hidden   ein Array, mit dem das attribute hide bei den Tabs gesetzt werden kann
 	 */
-	public updateHidden(hidden: boolean[]) : void {
+	public updateHidden(hidden: boolean[]): void {
 		for (let i = 0; (i < this._tabs.length) && i < (hidden.length); i++)
 			this._tabs[i].hide = hidden[i];
 	}
@@ -135,7 +135,7 @@ export class TabManager {
 	 *
 	 * @returns die Tab-Daten
 	 */
-	public getTab(name: string) : TabData {
+	public getTab(name: string): TabData {
 		const result = this._mapName.get(name);
 		if (result === undefined)
 			throw new Error("Der Name des Tabs " + name + " ist nicht bekannt.");
@@ -147,7 +147,7 @@ export class TabManager {
 	 *
 	 * @param name   der Name des Tabs
 	 */
-	public isHidden(name: string) : boolean {
+	public isHidden(name: string): boolean {
 		return this.getTab(name).hide ?? false;
 	}
 
@@ -156,7 +156,7 @@ export class TabManager {
 	 *
 	 * @param name   der Name des Tabs
 	 */
-	public isVisible(name: string) : boolean {
+	public isVisible(name: string): boolean {
 		return !(this.getTab(name).hide ?? false);
 	}
 
@@ -168,7 +168,7 @@ export class TabManager {
 	 *
 	 * @returns das Bild
 	 */
-	public getImage(name: string) : string | null {
+	public getImage(name: string): string | null {
 		return this.getTab(name).image ?? null;
 	}
 
@@ -180,7 +180,7 @@ export class TabManager {
 	 *
 	 * @returns das Array mit den Tabs
 	 */
-	public getTabsOfGroup(groupname : string) : Array<TabData> {
+	public getTabsOfGroup(groupname: string): Array<TabData> {
 		return this._tabgroups.get(groupname) ?? new Array<TabData>();
 	}
 

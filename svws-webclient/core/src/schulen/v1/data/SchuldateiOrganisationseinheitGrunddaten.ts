@@ -6,92 +6,92 @@ export class SchuldateiOrganisationseinheitGrunddaten extends SchuldateiEintrag 
 	/**
 	 * Die ID der Grunddaten.
 	 */
-	public id : string = "";
+	public id: string = "";
 
 	/**
 	 * Die Schulnummer.
 	 */
-	public schulnummer : string = "";
+	public schulnummer: string = "";
 
 	/**
 	 * Die Amtsbezeichnung der Organisationseinheit
 	 */
-	public amtsbez1 : string = "";
+	public amtsbez1: string = "";
 
 	/**
 	 * Die Amtsbezeichnung der Organisationseinheit
 	 */
-	public amtsbez2 : string = "";
+	public amtsbez2: string = "";
 
 	/**
 	 * Die Amtsbezeichnung der Organisationseinheit
 	 */
-	public amtsbez3 : string = "";
+	public amtsbez3: string = "";
 
 	/**
 	 * Die Kurzbezeichnung der Organisationseinheit
 	 */
-	public kurzbezeichnung : string = "";
+	public kurzbezeichnung: string = "";
 
 	/**
 	 * Der Rechtsstatus der Organisationseinheit 1=öffentlich, 2=privat
 	 */
-	public rechtsstatus : string = "";
+	public rechtsstatus: string = "";
 
 	/**
 	 * Schulträgernummer der Organisationseinheit
 	 */
-	public schultraegernummer : string = "";
+	public schultraegernummer: string = "";
 
 	/**
 	 * Art der Trägerschaft der Schule
 	 */
-	public artdertraegerschaft : string = "";
+	public artdertraegerschaft: string = "";
 
 	/**
 	 * Betriebsschlüssel der Schule
 	 */
-	public schulbetriebsschluessel : string = "";
+	public schulbetriebsschluessel: string = "";
 
 	/**
 	 * Kapitel der Schule
 	 */
-	public kapitel : string = "";
+	public kapitel: string = "";
 
 	/**
 	 * Obere Schulaufsicht der Schule
 	 */
-	public obereschulaufsicht : string = "";
+	public obereschulaufsicht: string = "";
 
 	/**
 	 * Untere Schulaufsicht der Schule
 	 */
-	public untereschulaufsicht : string = "";
+	public untereschulaufsicht: string = "";
 
 	/**
 	 * Zentrum für schulpraktische Lehrerausbildung ZFSL
 	 */
-	public zfsl : string = "";
+	public zfsl: string = "";
 
 	/**
 	 * Dienststellenschlüssel bzw. Personalbereich der Organisationseinheit
 	 */
-	public dienststellenschluessel : string = "";
+	public dienststellenschluessel: string = "";
 
 	/**
 	 * Personalteilbereich der Organisationseinheit
 	 */
-	public ptb : string = "";
+	public ptb: string = "";
 
 	/**
 	 * Gibt an ob die Schule Internatsbetrieb hat
 	 */
-	public internatsbetrieb : string = "";
+	public internatsbetrieb: string = "";
 
 	/**
 	 * Anzahl der Internatsplätze
 	 */
-	public internatsplaetze : number = 0;
+	public internatsplaetze: number = 0;
 
 
 	/**
@@ -105,13 +105,13 @@ export class SchuldateiOrganisationseinheitGrunddaten extends SchuldateiEintrag 
 		return 'de.svws_nrw.schulen.v1.data.SchuldateiOrganisationseinheitGrunddaten';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.schulen.v1.data.SchuldateiEintrag', 'de.svws_nrw.schulen.v1.data.SchuldateiOrganisationseinheitGrunddaten'].includes(name);
 	}
 
 	public static class = new Class<SchuldateiOrganisationseinheitGrunddaten>('de.svws_nrw.schulen.v1.data.SchuldateiOrganisationseinheitGrunddaten');
 
-	public static transpilerFromJSON(json : string): SchuldateiOrganisationseinheitGrunddaten {
+	public static transpilerFromJSON(json: string): SchuldateiOrganisationseinheitGrunddaten {
 		const obj = JSON.parse(json) as Partial<SchuldateiOrganisationseinheitGrunddaten>;
 		const result = new SchuldateiOrganisationseinheitGrunddaten();
 		result.gueltigab = (obj.gueltigab === undefined) ? null : obj.gueltigab === null ? null : obj.gueltigab;
@@ -174,7 +174,7 @@ export class SchuldateiOrganisationseinheitGrunddaten extends SchuldateiEintrag 
 		return result;
 	}
 
-	public static transpilerToJSON(obj : SchuldateiOrganisationseinheitGrunddaten) : string {
+	public static transpilerToJSON(obj: SchuldateiOrganisationseinheitGrunddaten): string {
 		let result = '{';
 		result += '"gueltigab" : ' + ((obj.gueltigab === null) ? 'null' : JSON.stringify(obj.gueltigab)) + ',';
 		result += '"gueltigbis" : ' + ((obj.gueltigbis === null) ? 'null' : JSON.stringify(obj.gueltigbis)) + ',';
@@ -202,7 +202,7 @@ export class SchuldateiOrganisationseinheitGrunddaten extends SchuldateiEintrag 
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<SchuldateiOrganisationseinheitGrunddaten>) : string {
+	public static transpilerToJSONPatch(obj: Partial<SchuldateiOrganisationseinheitGrunddaten>): string {
 		let result = '{';
 		if (obj.gueltigab !== undefined) {
 			result += '"gueltigab" : ' + ((obj.gueltigab === null) ? 'null' : JSON.stringify(obj.gueltigab)) + ',';
@@ -274,6 +274,6 @@ export class SchuldateiOrganisationseinheitGrunddaten extends SchuldateiEintrag 
 
 }
 
-export function cast_de_svws_nrw_schulen_v1_data_SchuldateiOrganisationseinheitGrunddaten(obj : unknown) : SchuldateiOrganisationseinheitGrunddaten {
+export function cast_de_svws_nrw_schulen_v1_data_SchuldateiOrganisationseinheitGrunddaten(obj: unknown): SchuldateiOrganisationseinheitGrunddaten {
 	return obj as SchuldateiOrganisationseinheitGrunddaten;
 }

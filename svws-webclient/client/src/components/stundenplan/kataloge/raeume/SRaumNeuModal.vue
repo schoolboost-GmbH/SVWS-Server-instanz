@@ -32,7 +32,7 @@
 
 	const openModal = () => {
 		show.value = true;
-	}
+	};
 
 	async function importer() {
 		await props.addRaum(item.value);

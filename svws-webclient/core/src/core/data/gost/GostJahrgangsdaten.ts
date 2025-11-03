@@ -9,78 +9,78 @@ export class GostJahrgangsdaten extends JavaObject {
 	/**
 	 * Das Jahr, in welchem der Jahrgang Abitur machen wird oder -1 für die Vorlage für einen neuen Abiturjahrgang.
 	 */
-	public abiturjahr : number = 0;
+	public abiturjahr: number = 0;
 
 	/**
 	 * Die aktuelle Jahrgangsstufe, welche dem Abiturjahrgang zugeordnet ist.
 	 */
-	public jahrgang : string | null = null;
+	public jahrgang: string | null = null;
 
 	/**
 	 * Das aktuelle Halbjahr, in dem sich der Jahrgang laut Schuljahrsabschnitt der Schule befindet.
 	 */
-	public halbjahr : number = 0;
+	public halbjahr: number = 0;
 
 	/**
 	 * Die textuelle Bezeichnung für den Abiturjahrgang
 	 */
-	public bezeichnung : string | null = null;
+	public bezeichnung: string | null = null;
 
 	/**
 	 * Gibt an, ob das Abitur für diesen Jahrgang bereits abgeschlossen ist, d.h. die Schule sich bereits in einem späteren Schuljahr befindet.
 	 */
-	public istAbgeschlossen : boolean = false;
+	public istAbgeschlossen: boolean = false;
 
 	/**
 	 * Der derzeitige Beratungstext, welcher auf einem Ausdruck eines Schülerlaufbahnbogens für die
 	 *  gymnasiale Oberstufe gedruckt wird.
 	 */
-	public textBeratungsbogen : string | null = null;
+	public textBeratungsbogen: string | null = null;
 
 	/**
 	 * Der derzeitige Text, der beim Versenden einer Beratungsdatei per Mail verwendet wird.
 	 */
-	public textMailversand : string | null = null;
+	public textMailversand: string | null = null;
 
 	/**
 	 * Legt fest, ob ein Zusatzkurs in Geschichte angeboten wird.
 	 */
-	public hatZusatzkursGE : boolean = true;
+	public hatZusatzkursGE: boolean = true;
 
 	/**
 	 * Das eindeutige Kürzel des Halbjahrs, zu dem ein Zusatzkurs in Geschichte beginnt.
 	 */
-	public beginnZusatzkursGE : string | null = null;
+	public beginnZusatzkursGE: string | null = null;
 
 	/**
 	 * Legt fest, ob ein Zusatzkurs in Sozialwissenschaften angeboten wird.
 	 */
-	public hatZusatzkursSW : boolean = true;
+	public hatZusatzkursSW: boolean = true;
 
 	/**
 	 * Das eindeutige Kürzel des Halbjahrs, zu dem ein Zusatzkurs in Sozialwissenschaften beginnt.
 	 */
-	public beginnZusatzkursSW : string | null = null;
+	public beginnZusatzkursSW: string | null = null;
 
 	/**
 	 * Gibt die Anzahl der Blockung in der Kursplanung für die jeweilige Halbjahre der Oberstufe bei dem Abiturjahrgang an. Diese müssen nicht zwingend persistiert sein (Index 0=EF.1, 1=EF.2, ...)
 	 */
-	public anzahlKursblockungen : Array<number> = Array(6).fill(0);
+	public anzahlKursblockungen: Array<number> = Array(6).fill(0);
 
 	/**
 	 * Gibt an, ob für die jeweiligen Halbjahre der Oberstufe bereits eine Blockung in den Leistungsdaten persistiert wurde (0=EF.1, 1=EF.2, ...)
 	 */
-	public istBlockungFestgelegt : Array<boolean> = Array(6).fill(false);
+	public istBlockungFestgelegt: Array<boolean> = Array(6).fill(false);
 
 	/**
 	 * Gibt an, ob für die jeweiligen Halbjahre der Oberstufe bereits (Quartals-)Noten in den Leistungsdaten vorhanden sind (0=EF.1, 1=EF.2, ...)
 	 */
-	public existierenNotenInLeistungsdaten : Array<boolean> = Array(6).fill(false);
+	public existierenNotenInLeistungsdaten: Array<boolean> = Array(6).fill(false);
 
 	/**
 	 * Die Liste der Beratungslehrer für diesen Jahrgang der gymnasialen Oberstufe
 	 */
-	public readonly beratungslehrer : List<GostBeratungslehrer> = new ArrayList<GostBeratungslehrer>();
+	public readonly beratungslehrer: List<GostBeratungslehrer> = new ArrayList<GostBeratungslehrer>();
 
 
 	/**
@@ -94,13 +94,13 @@ export class GostJahrgangsdaten extends JavaObject {
 		return 'de.svws_nrw.core.data.gost.GostJahrgangsdaten';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.gost.GostJahrgangsdaten'].includes(name);
 	}
 
 	public static class = new Class<GostJahrgangsdaten>('de.svws_nrw.core.data.gost.GostJahrgangsdaten');
 
-	public static transpilerFromJSON(json : string): GostJahrgangsdaten {
+	public static transpilerFromJSON(json: string): GostJahrgangsdaten {
 		const obj = JSON.parse(json) as Partial<GostJahrgangsdaten>;
 		const result = new GostJahrgangsdaten();
 		if (obj.abiturjahr === undefined)
@@ -147,7 +147,7 @@ export class GostJahrgangsdaten extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : GostJahrgangsdaten) : string {
+	public static transpilerToJSON(obj: GostJahrgangsdaten): string {
 		let result = '{';
 		result += '"abiturjahr" : ' + obj.abiturjahr.toString() + ',';
 		result += '"jahrgang" : ' + ((obj.jahrgang === null) ? 'null' : JSON.stringify(obj.jahrgang)) + ',';
@@ -197,7 +197,7 @@ export class GostJahrgangsdaten extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<GostJahrgangsdaten>) : string {
+	public static transpilerToJSONPatch(obj: Partial<GostJahrgangsdaten>): string {
 		let result = '{';
 		if (obj.abiturjahr !== undefined) {
 			result += '"abiturjahr" : ' + obj.abiturjahr.toString() + ',';
@@ -282,6 +282,6 @@ export class GostJahrgangsdaten extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_gost_GostJahrgangsdaten(obj : unknown) : GostJahrgangsdaten {
+export function cast_de_svws_nrw_core_data_gost_GostJahrgangsdaten(obj: unknown): GostJahrgangsdaten {
 	return obj as GostJahrgangsdaten;
 }

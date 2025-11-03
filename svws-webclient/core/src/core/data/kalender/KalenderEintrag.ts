@@ -6,57 +6,57 @@ export class KalenderEintrag extends JavaObject {
 	/**
 	 * ID des Kalendereintrags
 	 */
-	public id : string = "";
+	public id: string = "";
 
 	/**
 	 * ID des Kalenders
 	 */
-	public kalenderId : string = "";
+	public kalenderId: string = "";
 
 	/**
 	 *  URI der ICS-Repräsentation des Kalendereintrags
 	 */
-	public uid : string = "";
+	public uid: string = "";
 
 	/**
 	 *  Versionskennzeichen des Kontaks
 	 */
-	public version : string = "";
+	public version: string = "";
 
 	/**
 	 * das serialisierte .ics dieses Kalendereintrags
 	 */
-	public data : string = "";
+	public data: string = "";
 
 	/**
 	 * der Startzeitpunkt dieses Kalendereintrags als SQL-Timestamp
 	 */
-	public kalenderStart : string | null = null;
+	public kalenderStart: string | null = null;
 
 	/**
 	 * der Endzeitpunkt dieses Kalendereintrags als SQL-Timestamp
 	 */
-	public kalenderEnde : string | null = null;
+	public kalenderEnde: string | null = null;
 
 	/**
 	 * ob der angemeldete Nutzer Schreibrecht auf dem Kalender hat
 	 */
-	public darfSchreiben : boolean = false;
+	public darfSchreiben: boolean = false;
 
 	/**
 	 * ob der angemeldete Nutzer Leserecht auf dem Kalender hat
 	 */
-	public darfLesen : boolean = false;
+	public darfLesen: boolean = false;
 
 	/**
 	 * ob der angemeldete Benutzer Besitzer des Kalenders ist, zu dem dieser Eintrag gehört
 	 */
-	public istBesitzer : boolean = false;
+	public istBesitzer: boolean = false;
 
 	/**
 	 * der Typ des Kalendereintrags
 	 */
-	public kalenderTyp : string = "VEVENT";
+	public kalenderTyp: string = "VEVENT";
 
 
 	/**
@@ -70,13 +70,13 @@ export class KalenderEintrag extends JavaObject {
 		return 'de.svws_nrw.core.data.kalender.KalenderEintrag';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.kalender.KalenderEintrag'].includes(name);
 	}
 
 	public static class = new Class<KalenderEintrag>('de.svws_nrw.core.data.kalender.KalenderEintrag');
 
-	public static transpilerFromJSON(json : string): KalenderEintrag {
+	public static transpilerFromJSON(json: string): KalenderEintrag {
 		const obj = JSON.parse(json) as Partial<KalenderEintrag>;
 		const result = new KalenderEintrag();
 		if (obj.id === undefined)
@@ -111,7 +111,7 @@ export class KalenderEintrag extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : KalenderEintrag) : string {
+	public static transpilerToJSON(obj: KalenderEintrag): string {
 		let result = '{';
 		result += '"id" : ' + JSON.stringify(obj.id) + ',';
 		result += '"kalenderId" : ' + JSON.stringify(obj.kalenderId) + ',';
@@ -129,7 +129,7 @@ export class KalenderEintrag extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<KalenderEintrag>) : string {
+	public static transpilerToJSONPatch(obj: Partial<KalenderEintrag>): string {
 		let result = '{';
 		if (obj.id !== undefined) {
 			result += '"id" : ' + JSON.stringify(obj.id) + ',';
@@ -171,6 +171,6 @@ export class KalenderEintrag extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_kalender_KalenderEintrag(obj : unknown) : KalenderEintrag {
+export function cast_de_svws_nrw_core_data_kalender_KalenderEintrag(obj: unknown): KalenderEintrag {
 	return obj as KalenderEintrag;
 }

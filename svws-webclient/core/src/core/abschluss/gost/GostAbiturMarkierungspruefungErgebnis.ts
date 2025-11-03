@@ -8,12 +8,12 @@ export class GostAbiturMarkierungspruefungErgebnis extends JavaObject {
 	/**
 	 * gibt an, ob die Prüfung erfolgreich war
 	 */
-	public erfolgreich : boolean = false;
+	public erfolgreich: boolean = false;
 
 	/**
 	 * Ein Log, der den Ablauf der Markierungsprüfung verdeutlicht
 	 */
-	public log : List<string> = new ArrayList<string>();
+	public log: List<string> = new ArrayList<string>();
 
 
 	/**
@@ -27,13 +27,13 @@ export class GostAbiturMarkierungspruefungErgebnis extends JavaObject {
 		return 'de.svws_nrw.core.abschluss.gost.GostAbiturMarkierungspruefungErgebnis';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.abschluss.gost.GostAbiturMarkierungspruefungErgebnis'].includes(name);
 	}
 
 	public static class = new Class<GostAbiturMarkierungspruefungErgebnis>('de.svws_nrw.core.abschluss.gost.GostAbiturMarkierungspruefungErgebnis');
 
-	public static transpilerFromJSON(json : string): GostAbiturMarkierungspruefungErgebnis {
+	public static transpilerFromJSON(json: string): GostAbiturMarkierungspruefungErgebnis {
 		const obj = JSON.parse(json) as Partial<GostAbiturMarkierungspruefungErgebnis>;
 		const result = new GostAbiturMarkierungspruefungErgebnis();
 		if (obj.erfolgreich === undefined)
@@ -47,7 +47,7 @@ export class GostAbiturMarkierungspruefungErgebnis extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : GostAbiturMarkierungspruefungErgebnis) : string {
+	public static transpilerToJSON(obj: GostAbiturMarkierungspruefungErgebnis): string {
 		let result = '{';
 		result += '"erfolgreich" : ' + obj.erfolgreich.toString() + ',';
 		result += '"log" : [ ';
@@ -63,7 +63,7 @@ export class GostAbiturMarkierungspruefungErgebnis extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<GostAbiturMarkierungspruefungErgebnis>) : string {
+	public static transpilerToJSONPatch(obj: Partial<GostAbiturMarkierungspruefungErgebnis>): string {
 		let result = '{';
 		if (obj.erfolgreich !== undefined) {
 			result += '"erfolgreich" : ' + obj.erfolgreich.toString() + ',';
@@ -85,6 +85,6 @@ export class GostAbiturMarkierungspruefungErgebnis extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_abschluss_gost_GostAbiturMarkierungspruefungErgebnis(obj : unknown) : GostAbiturMarkierungspruefungErgebnis {
+export function cast_de_svws_nrw_core_abschluss_gost_GostAbiturMarkierungspruefungErgebnis(obj: unknown): GostAbiturMarkierungspruefungErgebnis {
 	return obj as GostAbiturMarkierungspruefungErgebnis;
 }

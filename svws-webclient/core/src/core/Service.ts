@@ -8,12 +8,12 @@ export abstract class Service extends JavaObject {
 	/**
 	 * Die Instanz des Logger, der von diesem Service genutzt wird
 	 */
-	protected logger : Logger = new Logger();
+	protected logger: Logger = new Logger();
 
 	/**
 	 * Die Instanz des Consumers von Log-Informationen. In diesem Fall eine einfache ArrayList
 	 */
-	protected log : LogConsumerList = new LogConsumerList();
+	protected log: LogConsumerList = new LogConsumerList();
 
 
 	/**
@@ -29,7 +29,7 @@ export abstract class Service extends JavaObject {
 	 *
 	 * @return die Logger-Instanz.
 	 */
-	public getLogger() : Logger {
+	public getLogger(): Logger {
 		return this.logger;
 	}
 
@@ -38,7 +38,7 @@ export abstract class Service extends JavaObject {
 	 *
 	 * @return das Log dieses Services
 	 */
-	public getLog() : LogConsumerList {
+	public getLog(): LogConsumerList {
 		return this.log;
 	}
 
@@ -46,7 +46,7 @@ export abstract class Service extends JavaObject {
 		return 'de.svws_nrw.core.Service';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.Service'].includes(name);
 	}
 
@@ -54,6 +54,6 @@ export abstract class Service extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_Service(obj : unknown) : Service {
+export function cast_de_svws_nrw_core_Service(obj: unknown): Service {
 	return obj as Service;
 }

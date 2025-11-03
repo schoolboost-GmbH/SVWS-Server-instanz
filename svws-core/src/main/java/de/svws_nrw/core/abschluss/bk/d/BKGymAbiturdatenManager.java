@@ -2,8 +2,10 @@ package de.svws_nrw.core.abschluss.bk.d;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import de.svws_nrw.asd.data.schule.BeruflichesGymnasiumPruefungsordnungAnlageKatalogEintrag;
 import de.svws_nrw.asd.data.schule.BeruflichesGymnasiumStundentafel;
@@ -22,6 +24,13 @@ import jakarta.validation.constraints.NotNull;
  * Diese Klasse stellt Methoden zur Verfügung um die angegebenen Abiturdaten zu bearbeiten und Auswertungen durchzuführen.
  */
 public class BKGymAbiturdatenManager {
+	// spezielle Fächer in den Stundentafel der Anlage D
+	/** Die Zweite Fremdsprache */
+	public final @NotNull String zweiteFremdsprache = "Zweite Fremdsprache";
+	/** Die Neueinsetzende Fremdsprache */
+	public final @NotNull String neueFremdsprache = "Neue Fremdsprache";
+	/** Das Wahlfach */
+	public final @NotNull String wahlfach = "Wahlfach";
 
 	/** Die Abiturdaten des Schülers */
 	private final @NotNull BKGymAbiturdaten abidaten;
@@ -31,6 +40,9 @@ public class BKGymAbiturdatenManager {
 
 	/** Der Fachklassen-Schlüssel des Bildungsgangs des Schülers */
 	private final @NotNull String fks;
+
+	/** Die Anlage, die zur Schulgliederung und Fachklasse gehört */
+	private final @NotNull BeruflichesGymnasiumPruefungsordnungAnlage anlage;
 
 	/** Der Manager für die Fächer des beruflichen Gymnasiums */
 	private final @NotNull BKGymFaecherManager faecherManager;
@@ -64,7 +76,7 @@ public class BKGymAbiturdatenManager {
 	 * @param gliederung       die Schulgliederung des Bildungsgangs des Schülers
 	 * @param fks              der fünfstellige Fachklassenschlüssel des Bildungsgangs des Schülers
 	 * @param faecherManager   der Manager für die Fächer
-	 * @param bisHalbjahr      die Art der Belegpruefung - bis zu welchem Halbjahr geprüft werden soll
+	 * @param bisHalbjahr      die Art der Belegprüfung - bis zu welchem Halbjahr geprüft werden soll
 	 */
 	public BKGymAbiturdatenManager(final @NotNull BKGymAbiturdaten abidaten, final @NotNull Schulgliederung gliederung, final @NotNull String fks,
 			final @NotNull BKGymFaecherManager faecherManager, final @NotNull GostHalbjahr bisHalbjahr) {
@@ -73,6 +85,7 @@ public class BKGymAbiturdatenManager {
 		this.fks = fks;
 		this.faecherManager = faecherManager;
 		this.bisHalbjahr = bisHalbjahr;
+		this.anlage = bestimmeAnlage();
 		this.belegpruefung = getBelegpruefung();
 		init();
 		this.belegpruefung.pruefe();
@@ -107,14 +120,67 @@ public class BKGymAbiturdatenManager {
 
 
 	/**
-	 * Erstellt eine Belegprüfung zu einer Fachklasse in der Schulgliederung D01.
+	 * Ermittelt die Anlage zu einer Fachklasse in der Schulgliederung D01.
 	 *
-	 * @return der Belegprüfungsalgorithmus
+	 * @return die Anlage
 	 */
-	private @NotNull BKGymBelegpruefung createBelegpruefungD01() {
+	private @NotNull BeruflichesGymnasiumPruefungsordnungAnlage bestimmeAnlage() {
+		return switch (gliederung) {
+			case D01 -> getAnlageD01();
+			case D02 -> getAnlageD02();
+			default ->
+				throw new DeveloperNotificationException("Die Belegprüfung für die Schulgliederung " + gliederung.name() + " wird noch nicht unterstützt.");
+		};
+	}
+
+
+	private @NotNull BeruflichesGymnasiumPruefungsordnungAnlage getAnlageD01() {
 		return switch (fks) {
-			case "10200" -> new BKGymBelegpruefungD1(this);
-			case "10600" -> new BKGymBelegpruefungD3(this);
+			case "10100" -> BeruflichesGymnasiumPruefungsordnungAnlage.D6;
+			case "10200" -> BeruflichesGymnasiumPruefungsordnungAnlage.D1;
+			case "10300" -> BeruflichesGymnasiumPruefungsordnungAnlage.D7;
+			case "10400" -> BeruflichesGymnasiumPruefungsordnungAnlage.D8;
+			case "10500" -> BeruflichesGymnasiumPruefungsordnungAnlage.D2;
+			case "10600" -> BeruflichesGymnasiumPruefungsordnungAnlage.D3;
+			case "10700" -> BeruflichesGymnasiumPruefungsordnungAnlage.D4;
+			// case "10800" -> BeruflichesGymnasiumPruefungsordnungAnlage.D;
+			case "10900" -> BeruflichesGymnasiumPruefungsordnungAnlage.D12;
+			// case "11000" -> BeruflichesGymnasiumPruefungsordnungAnlage.D;
+			case "11100" -> BeruflichesGymnasiumPruefungsordnungAnlage.D9;
+			case "11200" -> BeruflichesGymnasiumPruefungsordnungAnlage.D13;
+			// case "11300" -> BeruflichesGymnasiumPruefungsordnungAnlage.D;
+			case "11400" -> BeruflichesGymnasiumPruefungsordnungAnlage.D10;
+			case "11500" -> BeruflichesGymnasiumPruefungsordnungAnlage.D3a;
+			default -> throw new DeveloperNotificationException("Die Belegprüfung für die Schulgliederung " + gliederung.name()
+					+ " und den Fachklassenschlüssel " + fks + " wird noch nicht unterstützt.");
+		};
+	}
+
+
+	private @NotNull BeruflichesGymnasiumPruefungsordnungAnlage getAnlageD02() {
+		return switch (fks) {
+			case "10100" -> BeruflichesGymnasiumPruefungsordnungAnlage.D14;
+			case "10200" -> BeruflichesGymnasiumPruefungsordnungAnlage.D27;
+			case "10300" -> BeruflichesGymnasiumPruefungsordnungAnlage.D22;
+			case "10400" -> BeruflichesGymnasiumPruefungsordnungAnlage.D23;
+			// case "10500" -> BeruflichesGymnasiumPruefungsordnungAnlage.D;
+			case "10600" -> BeruflichesGymnasiumPruefungsordnungAnlage.D25;
+			case "10700" -> BeruflichesGymnasiumPruefungsordnungAnlage.D15;
+			// case "10800" -> BeruflichesGymnasiumPruefungsordnungAnlage.D;
+			case "10900" -> BeruflichesGymnasiumPruefungsordnungAnlage.D19;
+			case "11000" -> BeruflichesGymnasiumPruefungsordnungAnlage.D16;
+			case "11100" -> BeruflichesGymnasiumPruefungsordnungAnlage.D17;
+			// case "11200" -> BeruflichesGymnasiumPruefungsordnungAnlage.D;
+			case "11300" -> BeruflichesGymnasiumPruefungsordnungAnlage.D18;
+			case "11400" -> BeruflichesGymnasiumPruefungsordnungAnlage.D20;
+			case "11500" -> BeruflichesGymnasiumPruefungsordnungAnlage.D21;
+			// case "11600" -> BeruflichesGymnasiumPruefungsordnungAnlage.D;
+			// case "11700" -> BeruflichesGymnasiumPruefungsordnungAnlage.D;
+			// case "11800" -> BeruflichesGymnasiumPruefungsordnungAnlage.D;
+			// case "11900" -> BeruflichesGymnasiumPruefungsordnungAnlage.D;
+			case "12000" -> BeruflichesGymnasiumPruefungsordnungAnlage.D17a;
+			case "12100" -> BeruflichesGymnasiumPruefungsordnungAnlage.D15a;
+			case "12200" -> BeruflichesGymnasiumPruefungsordnungAnlage.D28;
 			default -> throw new DeveloperNotificationException("Die Belegprüfung für die Schulgliederung " + gliederung.name()
 					+ " und den Fachklassenschlüssel " + fks + " wird noch nicht unterstützt.");
 		};
@@ -127,12 +193,39 @@ public class BKGymAbiturdatenManager {
 	 * @return der Belegprüfungsalgorithmus
 	 */
 	private @NotNull BKGymBelegpruefung getBelegpruefung() {
-		final @NotNull BKGymBelegpruefung pruefung = switch (gliederung) {
-			case D01 -> createBelegpruefungD01();
+		return switch (anlage) {
+			case D1 -> new BKGymBelegpruefungD1(this);
+			case D2 -> new BKGymBelegpruefungD2(this);
+			case D3 -> new BKGymBelegpruefungD3(this);
+			case D3a -> new BKGymBelegpruefungD3a(this);
+			case D4 -> new BKGymBelegpruefungD4(this);
+			// case D5 -> new BKGymBelegpruefungD(this);
+			case D6 -> new BKGymBelegpruefungD6(this);
+			case D7 -> new BKGymBelegpruefungD7(this);
+			case D8 -> new BKGymBelegpruefungD8(this);
+			case D9 -> new BKGymBelegpruefungD9(this);
+			case D10 -> new BKGymBelegpruefungD10(this);
+			// case D11 -> new BKGymBelegpruefungD(this);
+			case D12 -> new BKGymBelegpruefungD12(this);
+			case D13 -> new BKGymBelegpruefungD13(this);
+			case D14 -> new BKGymBelegpruefungD14(this);
+			case D15 -> new BKGymBelegpruefungD15(this);
+			case D15a -> new BKGymBelegpruefungD15a(this);
+			case D16 -> new BKGymBelegpruefungD16(this);
+			case D17 -> new BKGymBelegpruefungD17(this);
+			case D17a -> new BKGymBelegpruefungD17a(this);
+			case D18 -> new BKGymBelegpruefungD18(this);
+			case D19 -> new BKGymBelegpruefungD19(this);
+			case D20 -> new BKGymBelegpruefungD20(this);
+			case D21 -> new BKGymBelegpruefungD21(this);
+			case D22 -> new BKGymBelegpruefungD22(this);
+			case D23 -> new BKGymBelegpruefungD23(this);
+			case D25 -> new BKGymBelegpruefungD25(this);
+			case D27 -> new BKGymBelegpruefungD27(this);
+			case D28 -> new BKGymBelegpruefungD28(this);
 			default ->
 				throw new DeveloperNotificationException("Die Belegprüfung für die Schulgliederung " + gliederung.name() + " wird noch nicht unterstützt.");
 		};
-		return pruefung;
 	}
 
 
@@ -143,6 +236,16 @@ public class BKGymAbiturdatenManager {
 	 */
 	public @NotNull BKGymAbiturdaten getAbidaten() {
 		return abidaten;
+	}
+
+
+	/**
+	 * Getter für den Zugriff auf die Anlage
+	 *
+	 * @return die Anlage
+	 */
+	public @NotNull BeruflichesGymnasiumPruefungsordnungAnlage getAnlage() {
+		return anlage;
 	}
 
 
@@ -175,6 +278,40 @@ public class BKGymAbiturdatenManager {
 		return fks;
 	}
 
+
+	/**
+	 * Prüft ob es sich um die Bezeichnung für das symbolische Wahlfach handelt.
+	 * @param bezeichnung   eine Fachbezeichnung aus der Stundentafel
+	 *
+	 * @return true wenn es die Repräsentation für das Wahlfach ist, sonst false
+	 */
+	public boolean istWahlfach(final @NotNull String bezeichnung) {
+		return bezeichnung.equals(wahlfach);
+	}
+
+
+	/**
+	 * Prüft ob es sich um die Bezeichnung für das symbolische Fach Zweite Fremdsprache handelt.
+	 * @param bezeichnung   eine Fachbezeichnung aus der Stundentafel
+	 *
+	 * @return true wenn es die Repräsentation für die zweite Fremdsprache ist, sonst false
+	 */
+	public boolean istZweiteFremdsprache(final @NotNull String bezeichnung) {
+		return bezeichnung.equals(zweiteFremdsprache);
+	}
+
+
+	/**
+	 * Prüft ob es sich um die Bezeichnung für das symbolische Fach Neue Fremdsprache handelt.
+	 * @param bezeichnung   eine Fachbezeichnung aus der Stundentafel
+	 *
+	 * @return true wenn es die Repräsentation für das Wahlfach ist, sonst false
+	 */
+	public boolean istNeueFremdsprache(final @NotNull String bezeichnung) {
+		return bezeichnung.equals(neueFremdsprache);
+	}
+
+
 	/**
 	 * Getter für den Zugriff auf das Schuljahr in dem das Abitur stattfindet
 	 *
@@ -202,6 +339,18 @@ public class BKGymAbiturdatenManager {
 
 
 	/**
+	 * Liefert eine Belegung anhand der Fachbezeichnung zurück
+	 *
+	 * @param bezeichnung   das Fach
+	 *
+	 * @return die Fachbelegung
+	 */
+	public BKGymAbiturFachbelegung getFachbelegungByBezeichnung(@NotNull final String bezeichnung) {
+		return mapFachbelegungenByFachbezeichnung.get(bezeichnung);
+	}
+
+
+	/**
 	 * Gibt das Abiturfachdaten für das geforderte Abiturfach zurück.
 	 *
 	 * @param abiFach Das n. Abiturfach, das gewünscht ist
@@ -225,6 +374,53 @@ public class BKGymAbiturdatenManager {
 		if ((fbFach == null) || (fbFach.bezeichnung == null))
 			return false;
 		return fbFach.istFremdsprache;
+	}
+
+	/**
+	 * Prüft, ob es sich bei der Fachbelegung um eine Belegung einer neu einsetzenden Fremdsprache handelt.
+	 *
+	 * @param fb   die Fachbelegung
+	 *
+	 * @return true, wenn es sich um ein neu einsetzende Fremdsprachenbelegung handelt, und ansonsten false
+	 */
+	public boolean istNeueFremdsprachenbelegung(final @NotNull BKGymAbiturFachbelegung fb) {
+		// Prüfe, ob das Fach in der Fächerliste des Abiturjahrgangs überhaupt existiert
+		final BKGymFach fbFach = faecherManager.get(fb.fachID);
+		if ((fbFach == null) || (fbFach.bezeichnung == null))
+			return false;
+		return fbFach.istFremdSpracheNeuEinsetzend;
+	}
+
+
+	/**
+	 * liefert die Fachbezeichnung einer Belegung
+	 *
+	 * @param fb   die Fachbelegung
+	 *
+	 * @return die Fachbezeichnung
+	 */
+	public @NotNull String getFachbezeichnungFromFachbelegung(final @NotNull BKGymAbiturFachbelegung fb) {
+		// Prüfe, ob das Fach in der Fächerliste des Abiturjahrgangs überhaupt existiert
+		final BKGymFach fbFach = faecherManager.get(fb.fachID);
+		if ((fbFach == null) || (fbFach.bezeichnung == null))
+			return new String();
+		return fbFach.bezeichnung;
+	}
+
+
+	/**
+	 * liefert die Fachbezeichnung einer Belegung
+	 *
+	 * @param fb   die Fachbelegung
+	 *
+	 * @return die Fachbezeichnung
+	 */
+	public @NotNull String getFachkuerzelFromFachbelegung(final @NotNull BKGymAbiturFachbelegung fb) {
+		// Prüfe, ob das Fach in der Fächerliste des Abiturjahrgangs überhaupt existiert
+		final BKGymFach fbFach = faecherManager.get(fb.fachID);
+		if ((fbFach == null) || (fbFach.kuerzelAnzeige == null))
+			return new String();
+		return fbFach.kuerzelAnzeige;
 	}
 
 
@@ -272,7 +468,7 @@ public class BKGymAbiturdatenManager {
 	 *
 	 * @return true, wenn die Belegung mit der angegebenen Kursart gültig ist und ansonsten FALSE
 	 */
-	private boolean isValidKursartFachbelegung(final @NotNull BeruflichesGymnasiumStundentafel tafel, final @NotNull BKGymAbiturFachbelegung fb,
+	public boolean isValidKursartFachbelegung(final @NotNull BeruflichesGymnasiumStundentafel tafel, final @NotNull BKGymAbiturFachbelegung fb,
 			final @NotNull GostAbiturFach abifach) {
 		// Prüfe zunächst, ob die Fachbelegung der Stundentafel zugeordnet werden kann
 		final BeruflichesGymnasiumStundentafelFach tafelFach = getFachByBelegung(tafel, fb);
@@ -280,8 +476,9 @@ public class BKGymAbiturdatenManager {
 			return false;
 
 		// Prüfe ggf. ob die Kursart LK1 bzw. LK2 ist, sofern es sich um eine Abiturfachbelegung im LK-Bereich handeln soll
-		if ((abifach == GostAbiturFach.LK1) || (abifach == GostAbiturFach.LK2))
-			return tafelFach.kursart.equals(abifach.kuerzel);
+		if (((abifach == GostAbiturFach.LK1) && (tafelFach.abifach != null) && (tafelFach.abifach == 1))
+				|| ((abifach == GostAbiturFach.LK2) && (tafelFach.abifach != null) && (tafelFach.abifach == 2)))
+			return tafelFach.kursart.equals("LK");
 
 		// Prüfe ggf. ob die Kursart AB3, AB4 oder AB5 ist, sofern es sich um eine Abiturfachbelegung im GK-Bereich handeln soll (nur grobe Prüfung!)
 		if ((abifach == GostAbiturFach.AB3) || (abifach == GostAbiturFach.AB4) || (abifach == GostAbiturFach.AB5)) {
@@ -297,36 +494,6 @@ public class BKGymAbiturdatenManager {
 
 		// Bei einem Nicht-Abiturfach genügt es, wenn das Fach in der Stundentafel existiert
 		return true;
-	}
-
-
-	/**
-	 * Bestimmt zu der übergebenen Anlage der Prüfungsordnung die möglichen Stundentafel-Variante anhand der Leistungskurs-Kombinationen.
-	 *
-	 * @param anlage   die Anlage der Prüfungsordnung, deren Stundentafel bestimmt werden soll
-	 *
-	 * @return die Liste der möglichen Variante anhand der belegten Leistungskurse
-	 */
-	public @NotNull List<BeruflichesGymnasiumStundentafel> getStundentafelByLeistungskurse(final @NotNull BeruflichesGymnasiumPruefungsordnungAnlage anlage) {
-		// Bestimme die Liste der für die Prüfungsordnung möglichen Stundentafeln - Gebe im Fehlerfall eine leere Liste zurück
-		final @NotNull List<BeruflichesGymnasiumStundentafel> result = new ArrayList<>();
-		final int schuljahr = getSchuljahrAbitur();
-		final BeruflichesGymnasiumPruefungsordnungAnlageKatalogEintrag poke = anlage.daten(schuljahr);
-		if (poke == null)
-			return result;
-
-		// Bestimme die Leistungskursbelegungen. Fehlt eine, so gebe eine leere Liste an Stundentafeln zurück
-		final BKGymAbiturFachbelegung lk1 = getAbiFachbelegung(GostAbiturFach.LK1);
-		final BKGymAbiturFachbelegung lk2 = getAbiFachbelegung(GostAbiturFach.LK2);
-		if ((lk1 == null) || (lk2 == null))
-			return result;
-
-		// Bestimme die Stundentafeln, die zu der LK-Kombination passen
-		for (final BeruflichesGymnasiumStundentafel tafel : poke.stundentafeln)
-			if (isValidKursartFachbelegung(tafel, lk1, GostAbiturFach.LK1) && isValidKursartFachbelegung(tafel, lk2, GostAbiturFach.LK2))
-				result.add(tafel);
-
-		return result;
 	}
 
 	/**
@@ -364,49 +531,24 @@ public class BKGymAbiturdatenManager {
 
 
 	/**
-	 * Bestimmt die Wahlmöglichkeit, welche zu der Belelgung des dritten und vierten Abiturfaches passt.
+	 * Prüft ob die Fachkombination für das dritte und vierte Abiturfach gültig ist.
 	 *
-	 * @param tafel   die Stundentafel
+	 * @param tafel   die zu prüfende Stundentafel mit ihren Wahlmöglichkeiten
+	 * @param ab3     die Belegung des dritten Abiturfaches
+	 * @param ab4     die Belegung des vierten Abiturfaches
 	 *
-	 * @return die Wahlmöglichkeit oder null, wenn keine passt
+	 * @return true, wenn die Wahlmöglichkeit besteht, ansonsten false
 	 */
-	public BeruflichesGymnasiumStundentafelAbiturfaecherWahlmoeglichkeit getWahlmoeglichkeitAusStundentafel(
-			final @NotNull BeruflichesGymnasiumStundentafel tafel) {
-		// 3. und 4. Abiturfach werden benötigt...
-		final BKGymAbiturFachbelegung ab3 = getAbiFachbelegung(GostAbiturFach.AB3);
-		final BKGymAbiturFachbelegung ab4 = getAbiFachbelegung(GostAbiturFach.AB4);
-		if ((ab3 == null) || (ab4 == null))
-			return null;
-
-		// Bestimme die eindeutige Wahlmöglichekti anhand des dritten und vierten Faches
-		BeruflichesGymnasiumStundentafelAbiturfaecherWahlmoeglichkeit found = null;
+	public boolean pruefeAbiGrundkurswahl(final @NotNull BeruflichesGymnasiumStundentafel tafel, final @NotNull BKGymAbiturFachbelegung ab3,
+			final @NotNull BKGymAbiturFachbelegung ab4) {
+		// Bestimme ob das dritte und vierte Abiturfach gültig gewählt wurden
 		for (final @NotNull BeruflichesGymnasiumStundentafelAbiturfaecherWahlmoeglichkeit wm : tafel.wahlmoeglichkeiten) {
-			if (!isValidWahlmoeglichkeit(wm, ab3, ab4))
-				continue;
-			if (found != null)
-				throw new DeveloperNotificationException(
-						"In der Definition der Prüfungsordnung ist ein Fehler aufgetreten: Eine Abiturfachkombination darf in der Definition zur Prüfungsordnung der Anlage bei einer Variante nicht mehrfach auftreten.");
-			found = wm;
+			if (isValidWahlmoeglichkeit(wm, ab3, ab4))
+				return true;
 		}
-		return found;
+		return false;
 	}
 
-	/**
-	 * Liefert eine Zuordnung der gefundenen Wahlmöglichkeiten zu deren Stundentafeln als Map.
-	 *
-	 * @param tafeln   die zu prüfenden Stundetafeln mit ihren Wahlmöglichkeiten
-	 *
-	 * @return die Map
-	 */
-	public @NotNull Map<BeruflichesGymnasiumStundentafel, BeruflichesGymnasiumStundentafelAbiturfaecherWahlmoeglichkeit> getWahlmoeglichekeiten(final @NotNull List<BeruflichesGymnasiumStundentafel> tafeln) {
-		final @NotNull Map<BeruflichesGymnasiumStundentafel, BeruflichesGymnasiumStundentafelAbiturfaecherWahlmoeglichkeit> result = new HashMap<>();
-		for (final BeruflichesGymnasiumStundentafel tafel : tafeln) {
-			final BeruflichesGymnasiumStundentafelAbiturfaecherWahlmoeglichkeit wm = getWahlmoeglichkeitAusStundentafel(tafel);
-			if (wm != null)
-				result.put(tafel, wm);
-		}
-		return result;
-	}
 
 	/**
 	 * Liefert eine Map, die zu jedem Index der Fachtafel die zugehörigen Fächer liefert.
@@ -419,14 +561,82 @@ public class BKGymAbiturdatenManager {
 	public @NotNull Map<Integer, List<BeruflichesGymnasiumStundentafelFach>> getMapFaecherFromTafelByIndex(final @NotNull BeruflichesGymnasiumStundentafel tafel) {
 		final @NotNull Map<Integer, List<BeruflichesGymnasiumStundentafelFach>> mapFaecher = new HashMap<>();
 		for (final @NotNull BeruflichesGymnasiumStundentafelFach fach : tafel.faecher) {
-			List<BeruflichesGymnasiumStundentafelFach> faecher = mapFaecher.get(fach.sortierung);
-			if (faecher == null) {
-				faecher = new ArrayList<>();
-				mapFaecher.put(fach.sortierung, faecher);
+			// Nur Fächer, die mindestens in einem Halbjahr mit mehr als 0 Stunden belegt werden müssen, aufnehmen
+			if ((fach.stundenumfang[0] > 0) || (fach.stundenumfang[1] > 0) || (fach.stundenumfang[2] > 0)
+						|| (fach.stundenumfang[3] > 0) || (fach.stundenumfang[4] > 0) || (fach.stundenumfang[5] > 0)) {
+				List<BeruflichesGymnasiumStundentafelFach> faecher = mapFaecher.get(fach.sortierung);
+				if (faecher == null) {
+					faecher = new ArrayList<>();
+					mapFaecher.put(fach.sortierung, faecher);
+				}
+				faecher.add(fach);
 			}
-			faecher.add(fach);
 		}
 		return mapFaecher;
+	}
+
+
+	/**
+	 * Liefert eine Map, die zu jedem Fach der Stundentafel die zugehörigen Belegungen zuordnet.
+	 *
+	 * @param tafel   die Stundentafel aus der APO-BK Anlage D
+	 *
+	 * @return die Map
+	 */
+	public @NotNull Map<BeruflichesGymnasiumStundentafelFach, List<BKGymAbiturFachbelegung>> getMapBelegungenForTafelByFach(final @NotNull BeruflichesGymnasiumStundentafel tafel) {
+		final @NotNull Map<BeruflichesGymnasiumStundentafelFach, List<BKGymAbiturFachbelegung>> mapBelegungenByFach = new HashMap<>();
+		final @NotNull Set<BKGymAbiturFachbelegung> zugeordnet = new HashSet<>();
+		@NotNull List<BKGymAbiturFachbelegung> zweiteFremdspracheBelegungen = new ArrayList<>();
+		@NotNull List<BKGymAbiturFachbelegung> neueFremdspracheBelegungen = new ArrayList<>();
+		@NotNull List<BKGymAbiturFachbelegung> wahlfachBelegungen = new ArrayList<>();
+		// Zuordnung der Belegungen für alle Fächer außer den Platzhalterfächern Zweite Fremdsprache und Wahlfach
+		for (final @NotNull BeruflichesGymnasiumStundentafelFach fach : tafel.faecher) {
+			List<BKGymAbiturFachbelegung> belegungen = mapBelegungenByFach.get(fach);
+			if (belegungen == null) {
+				belegungen = new ArrayList<>();
+				mapBelegungenByFach.put(fach, belegungen);
+			}
+			final BKGymAbiturFachbelegung belegung = getFachbelegungByBezeichnung(fach.fachbezeichnung);
+			if (belegung != null) {
+				belegungen.add(belegung);
+				zugeordnet.add(belegung);
+			} else if (istZweiteFremdsprache(fach.fachbezeichnung))
+				zweiteFremdspracheBelegungen = belegungen;
+			else if (istNeueFremdsprache(fach.fachbezeichnung))
+				neueFremdspracheBelegungen = belegungen;
+			else if (istWahlfach(fach.fachbezeichnung))
+				wahlfachBelegungen = belegungen;
+		}
+		// Zuordnung der Fremdsprachen zur zweiten Fremdsprache und der nicht genutzten Fächern zu den Wahlfächern
+		final @NotNull List<BKGymAbiturFachbelegung> fachbelegungen = abidaten.fachbelegungen;
+		for (final BKGymAbiturFachbelegung fachbelegung : fachbelegungen) {
+			if (!zugeordnet.contains(fachbelegung)) {
+				if (istNeueFremdsprachenbelegung(fachbelegung))
+					neueFremdspracheBelegungen.add(fachbelegung);
+				else if (istFremdsprachenbelegung(fachbelegung))
+					zweiteFremdspracheBelegungen.add(fachbelegung);
+				else
+					wahlfachBelegungen.add(fachbelegung);
+			}
+		}
+
+		return mapBelegungenByFach;
+	}
+
+
+	/**
+	 * Liefert die Stundentafeln, die zur APO-BK-Anlage dieses Managers gehören
+	 *
+	 * @return die Liste der Stundentafeln
+	 */
+	public @NotNull List<BeruflichesGymnasiumStundentafel> getStundentafeln() {
+		// Bestimme die Liste der für die Prüfungsordnung möglichen Stundentafeln - Gebe im Fehlerfall eine leere Liste zurück
+		final @NotNull List<BeruflichesGymnasiumStundentafel> result = new ArrayList<>();
+		final int schuljahr = getSchuljahrAbitur();
+		final BeruflichesGymnasiumPruefungsordnungAnlageKatalogEintrag poke = anlage.daten(schuljahr);
+		if (poke == null)
+			return result;
+		return poke.stundentafeln;
 	}
 
 }

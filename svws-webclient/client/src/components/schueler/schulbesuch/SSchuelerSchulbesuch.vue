@@ -265,13 +265,13 @@
 	});
 
 	// --- Tabelle Merkmale ---
-	const merkmale = computed(() => [...props.manager().daten.merkmale])
+	const merkmale = computed(() => [...props.manager().daten.merkmale]);
 	const newEntryMerkmal = ref<SchuelerSchulbesuchMerkmal>(new SchuelerSchulbesuchMerkmal());
 	const columnsMerkmale: DataTableColumn[] = [
-		{ key: "merkmal", label: "Merkmal", statistic: true},
-		{ key: "datumVon", label: "Von"},
-		{ key: "datumBis", label: "Bis"},
-	]
+		{ key: "merkmal", label: "Merkmal", statistic: true },
+		{ key: "datumVon", label: "Von" },
+		{ key: "datumBis", label: "Bis" },
+	];
 
 	// --- Merkmale Modal ---
 	const merkmaleFilteredNotCreated = computed(() => {
@@ -300,12 +300,12 @@
 
 	function closeModalMerkmal() {
 		resetMerkmal();
-		setMode(Mode.DEFAULT)
+		setMode(Mode.DEFAULT);
 		showModalMerkmal.value = false;
 	}
 
 	// --- api calls Merkmal ---
-	async function sendRequestMerkmal(type : Mode) {
+	async function sendRequestMerkmal(type: Mode) {
 		const { id, ...partialDataWithoutId } = newEntryMerkmal.value;
 		if (type === Mode.ADD)
 			await props.addSchuelerSchulbesuchMerkmal(partialDataWithoutId);
@@ -315,7 +315,7 @@
 	}
 
 	// Patch
-	function patchMerkmal(merkmal : SchuelerSchulbesuchMerkmal) {
+	function patchMerkmal(merkmal: SchuelerSchulbesuchMerkmal) {
 		resetMerkmal();
 		setMode(Mode.PATCH);
 		newEntryMerkmal.value.id = merkmal.id;
@@ -338,9 +338,9 @@
 	}
 
 	// --- Table Bisherige Schulen ---
-	const bisherigeSchulen = computed(() => [...props.manager().daten.alleSchulen])
+	const bisherigeSchulen = computed(() => [...props.manager().daten.alleSchulen]);
 	const newEntryBisherigeSchule = ref<SchuelerSchulbesuchSchule>(new SchuelerSchulbesuchSchule());
-	enum Mode { ADD, PATCH , DEFAULT }
+	enum Mode { ADD, PATCH, DEFAULT }
 	const currentMode = ref<Mode>(Mode.DEFAULT);
 	const columnsBisherigeSchulen: DataTableColumn[] = [
 		{ key: "schulform", label: "Schulform", span: 0.2, align: "center" },
@@ -351,17 +351,17 @@
 		{ key: "jahrgangBis", label: "Jahrgang Bis", span: 0.2, align: "center" },
 		{ key: "schulgliederung", label: "Schulgliederung", align: "center" },
 		{ key: "entlassart", label: "Entlassart", span: 0.2, align: "center" },
-	]
+	];
 	// datumBis (+ watcher) wird als computed benötigt, damit die Vorauswahl der Schulgliederung direkt in das Datenobjekt (newEntryBisherigeSchule) geschrieben wird.
 	const newEntryBisherigeSchuleDatumBis = computed({
 		get: () => newEntryBisherigeSchule.value.datumBis,
 		set: (val: string) => newEntryBisherigeSchule.value.datumBis = val,
-	})
+	});
 
 	watch(newEntryBisherigeSchuleDatumBis, () => {
 		if (currentMode.value === Mode.ADD)
 			newEntryBisherigeSchule.value.schulgliederung = schulgliederungenBisherigeSchule.value[0]?.schluessel ?? null;
-	})
+	});
 
 	// --- Bisherige Schulen Modal ---
 	const showModalBisherigeSchule = ref<boolean>(false);
@@ -381,7 +381,7 @@
 
 	function closeModalBisherigeSchule() {
 		resetBisherigeSchule();
-		setMode(Mode.DEFAULT)
+		setMode(Mode.DEFAULT);
 		showModalBisherigeSchule.value = false;
 	}
 
@@ -406,7 +406,7 @@
 		if (selectedSchuleForNewEntryBisherigeSchule.value.idSchulform === null)
 			return null;
 		return Schulform.data().getWertByID(selectedSchuleForNewEntryBisherigeSchule.value.idSchulform);
-	})
+	});
 
 	const schulgliederungenBisherigeSchule = computed<SchulgliederungKatalogEintrag[]>(() => {
 		if ((!schulformEintragSelectedSchuleNewEntryBisherigeSchule.value) || (newEntryBisherigeSchule.value.datumBis === null))
@@ -433,14 +433,14 @@
 	});
 
 	const jahrgangVonManager = new CoreTypeSelectManager({ clazz: Jahrgaenge.class, schuljahr: schuljahrNewEntryBisherigeSchuleDatumVon,
-		schulformen: schulformSelectedSchuleNEwEntryBisherigeSchule, selectionDisplayText: "text", optionDisplayText: "text" })
+		schulformen: schulformSelectedSchuleNEwEntryBisherigeSchule, selectionDisplayText: "text", optionDisplayText: "text" });
 
 	const jahrgangBisManager = new CoreTypeSelectManager({ clazz: Jahrgaenge.class, schuljahr: schuljahrNewEntryBisherigeSchuleDatumBis,
-		schulformen: schulformSelectedSchuleNEwEntryBisherigeSchule, selectionDisplayText: "text", optionDisplayText: "text" })
+		schulformen: schulformSelectedSchuleNEwEntryBisherigeSchule, selectionDisplayText: "text", optionDisplayText: "text" });
 
 	const schulgliederungBisherigeSchule = computed({
 		get: () => newEntryBisherigeSchule.value.schulgliederung === "" ? schulgliederungenBisherigeSchule.value[0] : findGliederung(),
-		set: (v : SchulgliederungKatalogEintrag) => newEntryBisherigeSchule.value.schulgliederung = v.schluessel,
+		set: (v: SchulgliederungKatalogEintrag) => newEntryBisherigeSchule.value.schulgliederung = v.schluessel,
 	});
 
 	function findGliederung() {
@@ -461,7 +461,7 @@
 	});
 
 	// --- api calls Bisherige Schulen ---
-	async function sendRequestBisherigeSchule(type : Mode) {
+	async function sendRequestBisherigeSchule(type: Mode) {
 		const { id, ...partialDataWithoutId } = newEntryBisherigeSchule.value;
 		if (type === Mode.ADD)
 			await props.addSchuelerSchulbesuchSchule(partialDataWithoutId);
@@ -471,7 +471,7 @@
 	}
 
 	// Patch
-	function patchBisherigeSchule(schule : SchuelerSchulbesuchSchule) {
+	function patchBisherigeSchule(schule: SchuelerSchulbesuchSchule) {
 		resetBisherigeSchule();
 		setMode(Mode.PATCH);
 		newEntryBisherigeSchule.value.id = schule.id;
@@ -501,7 +501,7 @@
 	// --- allgemeiner Abschnitt ---
 	// ToDo: Schulform.GY entfernen
 	const schuleHatPrimarstufe = computed(() => {
-		const erlaubteSchulformen = [ Schulform.G, Schulform.FW, Schulform.WF, Schulform.GM, Schulform.KS, Schulform.S, Schulform.GE, Schulform.V, Schulform.GY ];
+		const erlaubteSchulformen = [Schulform.G, Schulform.FW, Schulform.WF, Schulform.GM, Schulform.KS, Schulform.S, Schulform.GE, Schulform.V, Schulform.GY];
 		return erlaubteSchulformen.includes(props.schulform);
 	});
 
@@ -517,33 +517,33 @@
 		return s.name;
 	}
 
-	function textMerkmal(m : Merkmal) {
+	function textMerkmal(m: Merkmal) {
 		if (m.bezeichnung === null)
 			return '';
 		return m.bezeichnung;
 	}
 
-	function textJahrgang(j : Jahrgaenge) {
+	function textJahrgang(j: Jahrgaenge) {
 		return j.daten(props.manager().schuljahr)?.kuerzel ?? '-';
 	}
 
-	function textEinschulungsart(e : Einschulungsart) {
-		return e.daten(props.manager().schuljahr)?.text + ' - '+ e.daten(props.manager().schuljahr)?.beschreibung;
+	function textEinschulungsart(e: Einschulungsart) {
+		return e.daten(props.manager().schuljahr)?.text + ' - ' + e.daten(props.manager().schuljahr)?.beschreibung;
 	}
 
-	function textEPJahre(p : PrimarstufeSchuleingangsphaseBesuchsjahre) {
+	function textEPJahre(p: PrimarstufeSchuleingangsphaseBesuchsjahre) {
 		return p.daten(props.manager().schuljahr)?.text ?? '-';
 	}
 
-	function textUebergangsempfehlung(u : Uebergangsempfehlung) {
+	function textUebergangsempfehlung(u: Uebergangsempfehlung) {
 		return u.daten(props.manager().schuljahr)?.text ?? '-';
 	}
 
-	function textSchulformSek1(s : Schulform) {
+	function textSchulformSek1(s: Schulform) {
 		return s.daten(props.manager().schuljahr)?.text ?? '-';
 	}
 
-	function textSchulgliederung(v : string | null) {
+	function textSchulgliederung(v: string | null) {
 		if (v === null)
 			return '-';
 		const wertBySchluessel = Schulgliederung.data().getWertBySchluessel(v);
@@ -551,7 +551,7 @@
 			return '-';
 		const historienEintrag = wertBySchluessel.daten(props.manager().schuljahr);
 		if (!historienEintrag)
-			return '-'
+			return '-';
 		return historienEintrag.text;
 	}
 

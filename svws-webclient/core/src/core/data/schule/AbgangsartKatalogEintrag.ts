@@ -9,12 +9,12 @@ export class AbgangsartKatalogEintrag extends JavaObject {
 	/**
 	 * Das eindeutige Kürzel des Katalog-Eintrags.
 	 */
-	public kuerzel : string = "";
+	public kuerzel: string = "";
 
 	/**
 	 * Die Historie des Katalog-Eintrags.
 	 */
-	public historie : List<AbgangsartKatalogDaten> = new ArrayList<AbgangsartKatalogDaten>();
+	public historie: List<AbgangsartKatalogDaten> = new ArrayList<AbgangsartKatalogDaten>();
 
 
 	/**
@@ -28,13 +28,13 @@ export class AbgangsartKatalogEintrag extends JavaObject {
 		return 'de.svws_nrw.core.data.schule.AbgangsartKatalogEintrag';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.schule.AbgangsartKatalogEintrag'].includes(name);
 	}
 
 	public static class = new Class<AbgangsartKatalogEintrag>('de.svws_nrw.core.data.schule.AbgangsartKatalogEintrag');
 
-	public static transpilerFromJSON(json : string): AbgangsartKatalogEintrag {
+	public static transpilerFromJSON(json: string): AbgangsartKatalogEintrag {
 		const obj = JSON.parse(json) as Partial<AbgangsartKatalogEintrag>;
 		const result = new AbgangsartKatalogEintrag();
 		if (obj.kuerzel === undefined)
@@ -48,7 +48,7 @@ export class AbgangsartKatalogEintrag extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : AbgangsartKatalogEintrag) : string {
+	public static transpilerToJSON(obj: AbgangsartKatalogEintrag): string {
 		let result = '{';
 		result += '"kuerzel" : ' + JSON.stringify(obj.kuerzel) + ',';
 		result += '"historie" : [ ';
@@ -64,7 +64,7 @@ export class AbgangsartKatalogEintrag extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<AbgangsartKatalogEintrag>) : string {
+	public static transpilerToJSONPatch(obj: Partial<AbgangsartKatalogEintrag>): string {
 		let result = '{';
 		if (obj.kuerzel !== undefined) {
 			result += '"kuerzel" : ' + JSON.stringify(obj.kuerzel) + ',';
@@ -86,6 +86,6 @@ export class AbgangsartKatalogEintrag extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_schule_AbgangsartKatalogEintrag(obj : unknown) : AbgangsartKatalogEintrag {
+export function cast_de_svws_nrw_core_data_schule_AbgangsartKatalogEintrag(obj: unknown): AbgangsartKatalogEintrag {
 	return obj as AbgangsartKatalogEintrag;
 }

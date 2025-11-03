@@ -65,12 +65,12 @@
 
 	const strasse = computed(() => AdressenUtils.combineStrasse(props.schule().strassenname ?? "", props.schule().hausnummer ?? "", props.schule().hausnummerZusatz ?? ""));
 
-	const patchStrasse = (value: string | null ) => {
+	const patchStrasse = (value: string | null) => {
 		if (value !== null) {
-			const [ strassenname, hausnummer, hausnummerZusatz ] = AdressenUtils.splitStrasse(value);
+			const [strassenname, hausnummer, hausnummerZusatz] = AdressenUtils.splitStrasse(value);
 			void props.patch({ strassenname, hausnummer, hausnummerZusatz });
 		}
-	}
+	};
 
 	const textSchulform = computed<string>(() => {
 		let schuljahr = -1;

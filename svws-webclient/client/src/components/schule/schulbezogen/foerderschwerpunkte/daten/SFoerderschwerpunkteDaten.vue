@@ -23,7 +23,7 @@
 	import { computed } from "vue";
 	import type { FoerderschwerpunkteDatenProps } from "~/components/schule/schulbezogen/foerderschwerpunkte/daten/SFoerderschwerpunkteDatenProps";
 
-	const props = defineProps<FoerderschwerpunkteDatenProps>()
+	const props = defineProps<FoerderschwerpunkteDatenProps>();
 	const hatKompetenzUpdate = computed<boolean>(() => props.benutzerKompetenzen.has(BenutzerKompetenz.KATALOG_EINTRAEGE_AENDERN));
 	const readonly = computed<boolean>(() => !hatKompetenzUpdate.value);
 

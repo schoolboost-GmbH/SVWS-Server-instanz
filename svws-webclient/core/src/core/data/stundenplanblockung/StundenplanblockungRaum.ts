@@ -6,12 +6,12 @@ export class StundenplanblockungRaum extends JavaObject {
 	/**
 	 * Die Datenbank-ID des Raumes.
 	 */
-	public id : number = 0;
+	public id: number = 0;
 
 	/**
 	 * Das Kürzel des Raumes. Beispielsweise 'E21'.
 	 */
-	public kuerzel : string = "";
+	public kuerzel: string = "";
 
 
 	/**
@@ -25,13 +25,13 @@ export class StundenplanblockungRaum extends JavaObject {
 		return 'de.svws_nrw.core.data.stundenplanblockung.StundenplanblockungRaum';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.stundenplanblockung.StundenplanblockungRaum'].includes(name);
 	}
 
 	public static class = new Class<StundenplanblockungRaum>('de.svws_nrw.core.data.stundenplanblockung.StundenplanblockungRaum');
 
-	public static transpilerFromJSON(json : string): StundenplanblockungRaum {
+	public static transpilerFromJSON(json: string): StundenplanblockungRaum {
 		const obj = JSON.parse(json) as Partial<StundenplanblockungRaum>;
 		const result = new StundenplanblockungRaum();
 		if (obj.id === undefined)
@@ -43,7 +43,7 @@ export class StundenplanblockungRaum extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : StundenplanblockungRaum) : string {
+	public static transpilerToJSON(obj: StundenplanblockungRaum): string {
 		let result = '{';
 		result += '"id" : ' + obj.id.toString() + ',';
 		result += '"kuerzel" : ' + JSON.stringify(obj.kuerzel) + ',';
@@ -52,7 +52,7 @@ export class StundenplanblockungRaum extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<StundenplanblockungRaum>) : string {
+	public static transpilerToJSONPatch(obj: Partial<StundenplanblockungRaum>): string {
 		let result = '{';
 		if (obj.id !== undefined) {
 			result += '"id" : ' + obj.id.toString() + ',';
@@ -67,6 +67,6 @@ export class StundenplanblockungRaum extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_stundenplanblockung_StundenplanblockungRaum(obj : unknown) : StundenplanblockungRaum {
+export function cast_de_svws_nrw_core_data_stundenplanblockung_StundenplanblockungRaum(obj: unknown): StundenplanblockungRaum {
 	return obj as StundenplanblockungRaum;
 }

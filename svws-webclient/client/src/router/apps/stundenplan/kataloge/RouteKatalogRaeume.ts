@@ -13,13 +13,13 @@ import { RouteDataKatalogRaeume } from "./RouteDataKatalogRaeume";
 import { RouteStundenplan } from "../RouteStundenplan";
 import { api } from "~/router/Api";
 
-const SRaeumeAuswahl = () => import("~/components/stundenplan/kataloge/raeume/SRaeumeAuswahl.vue")
-const SRaeume = () => import("~/components/stundenplan/kataloge/raeume/SRaeume.vue")
+const SRaeumeAuswahl = () => import("~/components/stundenplan/kataloge/raeume/SRaeumeAuswahl.vue");
+const SRaeume = () => import("~/components/stundenplan/kataloge/raeume/SRaeume.vue");
 
 export class RouteKatalogRaeume extends RouteNode<RouteDataKatalogRaeume, RouteStundenplan> {
 
 	public constructor() {
-		super(Schulform.values(), [ BenutzerKompetenz.KEINE ], "stundenplan.kataloge.raeume", "raeume/:idRaum(\\d+)?", SRaeume, new RouteDataKatalogRaeume());
+		super(Schulform.values(), [BenutzerKompetenz.KEINE], "stundenplan.kataloge.raeume", "raeume/:idRaum(\\d+)?", SRaeume, new RouteDataKatalogRaeume());
 		super.mode = ServerMode.STABLE;
 		super.propHandler = (route) => this.getProps(route);
 		super.text = "Räume";
@@ -27,11 +27,11 @@ export class RouteKatalogRaeume extends RouteNode<RouteDataKatalogRaeume, RouteS
 		super.setView("eintraege", SRaeumeAuswahl, (route) => this.getAuswahlProps(route));
 	}
 
-	protected async update(to: RouteNode<any, any>, to_params: RouteParams, from: RouteNode<any, any> | undefined, from_params: RouteParams, isEntering: boolean, redirected: RouteNode<any, any> | undefined) : Promise<void | Error | RouteLocationRaw> {
+	protected async update(to: RouteNode<any, any>, to_params: RouteParams, from: RouteNode<any, any> | undefined, from_params: RouteParams, isEntering: boolean, redirected: RouteNode<any, any> | undefined): Promise<void | Error | RouteLocationRaw> {
 		try {
 			if (isEntering)
 				await this.data.ladeListe();
-			const { idSchuljahresabschnitt, idRaum } = RouteNode.getIntParams(to_params, [ "idSchuljahresabschnitt", "idRaum" ]);
+			const { idSchuljahresabschnitt, idRaum } = RouteNode.getIntParams(to_params, ["idSchuljahresabschnitt", "idRaum"]);
 			if (idSchuljahresabschnitt === undefined)
 				throw new DeveloperNotificationException("Beim Aufruf der Route ist kein gültiger Schuljahresabschnitt gesetzt.");
 			const eintrag = (idRaum !== undefined) ? this.data.raumListeManager.liste.get(idRaum) : null;
@@ -50,8 +50,8 @@ export class RouteKatalogRaeume extends RouteNode<RouteDataKatalogRaeume, RouteS
 		return super.update(to, to_params, from, from_params, isEntering, redirected);
 	}
 
-	public addRouteParamsFromState() : RouteParamsRawGeneric {
-		return { idRaum : this.data.raumListeManager.auswahlID() ?? undefined };
+	public addRouteParamsFromState(): RouteParamsRawGeneric {
+		return { idRaum: this.data.raumListeManager.auswahlID() ?? undefined };
 	}
 
 	public getAuswahlProps(to: RouteLocationNormalized): RaeumeAuswahlProps {

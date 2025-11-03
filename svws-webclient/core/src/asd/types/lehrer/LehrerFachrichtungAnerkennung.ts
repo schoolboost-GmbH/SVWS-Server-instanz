@@ -9,32 +9,32 @@ import { de_svws_nrw_asd_types_CoreType_getManager, de_svws_nrw_asd_types_CoreTy
 export class LehrerFachrichtungAnerkennung extends JavaEnum<LehrerFachrichtungAnerkennung> implements CoreType<LehrerFachrichtungAnerkennungKatalogEintrag, LehrerFachrichtungAnerkennung> {
 
 	/** an array containing all values of this enumeration */
-	static readonly all_values_by_ordinal : Array<LehrerFachrichtungAnerkennung> = [];
+	static readonly all_values_by_ordinal: Array<LehrerFachrichtungAnerkennung> = [];
 
 	/** an array containing all values of this enumeration indexed by their name*/
-	static readonly all_values_by_name : Map<string, LehrerFachrichtungAnerkennung> = new Map<string, LehrerFachrichtungAnerkennung>();
+	static readonly all_values_by_name: Map<string, LehrerFachrichtungAnerkennung> = new Map<string, LehrerFachrichtungAnerkennung>();
 
 	/**
 	 * Fachrichtungsanerkennung 'erworben durch LABG/OVP bzw. Laufbahnverordnung'
 	 */
-	public static readonly ID4 : LehrerFachrichtungAnerkennung = new LehrerFachrichtungAnerkennung("ID4", 0, );
+	public static readonly ID4: LehrerFachrichtungAnerkennung = new LehrerFachrichtungAnerkennung("ID4", 0, );
 
 	/**
 	 * Fachrichtungsanerkennung 'Unterrichtserlaubnis (z. B. Zertifikatskurs)'
 	 */
-	public static readonly ID5 : LehrerFachrichtungAnerkennung = new LehrerFachrichtungAnerkennung("ID5", 1, );
+	public static readonly ID5: LehrerFachrichtungAnerkennung = new LehrerFachrichtungAnerkennung("ID5", 1, );
 
 	/**
 	 * Fachrichtungsanerkennung 'mehrjähriger Unterricht ohne Lehramtsprüfung oder Unterrichtserlaubnis'
 	 */
-	public static readonly ID6 : LehrerFachrichtungAnerkennung = new LehrerFachrichtungAnerkennung("ID6", 2, );
+	public static readonly ID6: LehrerFachrichtungAnerkennung = new LehrerFachrichtungAnerkennung("ID6", 2, );
 
 	/**
 	 * Fachrichtungsanerkennung 'sonstige'
 	 */
-	public static readonly ID7 : LehrerFachrichtungAnerkennung = new LehrerFachrichtungAnerkennung("ID7", 3, );
+	public static readonly ID7: LehrerFachrichtungAnerkennung = new LehrerFachrichtungAnerkennung("ID7", 3, );
 
-	private constructor(name : string, ordinal : number) {
+	private constructor(name: string, ordinal: number) {
 		super(name, ordinal);
 		LehrerFachrichtungAnerkennung.all_values_by_ordinal.push(this);
 		LehrerFachrichtungAnerkennung.all_values_by_name.set(name, this);
@@ -45,7 +45,7 @@ export class LehrerFachrichtungAnerkennung extends JavaEnum<LehrerFachrichtungAn
 	 *
 	 * @param manager   der Manager für die Daten des Core-Types
 	 */
-	public static init(manager : CoreTypeDataManager<LehrerFachrichtungAnerkennungKatalogEintrag, LehrerFachrichtungAnerkennung>) : void {
+	public static init(manager: CoreTypeDataManager<LehrerFachrichtungAnerkennungKatalogEintrag, LehrerFachrichtungAnerkennung>): void {
 		CoreTypeDataManager.putManager(LehrerFachrichtungAnerkennung.class, manager);
 	}
 
@@ -54,7 +54,7 @@ export class LehrerFachrichtungAnerkennung extends JavaEnum<LehrerFachrichtungAn
 	 *
 	 * @return der Daten-Manager
 	 */
-	public static data() : CoreTypeDataManager<LehrerFachrichtungAnerkennungKatalogEintrag, LehrerFachrichtungAnerkennung> {
+	public static data(): CoreTypeDataManager<LehrerFachrichtungAnerkennungKatalogEintrag, LehrerFachrichtungAnerkennung> {
 		return CoreTypeDataManager.getManager(LehrerFachrichtungAnerkennung.class);
 	}
 
@@ -63,7 +63,7 @@ export class LehrerFachrichtungAnerkennung extends JavaEnum<LehrerFachrichtungAn
 	 *
 	 * @returns the array with enumeration values
 	 */
-	public static values() : Array<LehrerFachrichtungAnerkennung> {
+	public static values(): Array<LehrerFachrichtungAnerkennung> {
 		return [...this.all_values_by_ordinal];
 	}
 
@@ -74,24 +74,24 @@ export class LehrerFachrichtungAnerkennung extends JavaEnum<LehrerFachrichtungAn
 	 *
 	 * @returns the enumeration values or null
 	 */
-	public static valueOf(name : string) : LehrerFachrichtungAnerkennung | null {
+	public static valueOf(name: string): LehrerFachrichtungAnerkennung | null {
 		const tmp = this.all_values_by_name.get(name);
 		return (!tmp) ? null : tmp;
 	}
 
-	public getManager() : CoreTypeDataManager<LehrerFachrichtungAnerkennungKatalogEintrag, LehrerFachrichtungAnerkennung> {
+	public getManager(): CoreTypeDataManager<LehrerFachrichtungAnerkennungKatalogEintrag, LehrerFachrichtungAnerkennung> {
 		return de_svws_nrw_asd_types_CoreType_getManager(this);
 	}
 
-	public daten(schuljahr : number) : LehrerFachrichtungAnerkennungKatalogEintrag | null {
+	public daten(schuljahr: number): LehrerFachrichtungAnerkennungKatalogEintrag | null {
 		return de_svws_nrw_asd_types_CoreType_daten(this, schuljahr);
 	}
 
-	public statistikId() : string | null {
+	public statistikId(): string | null {
 		return de_svws_nrw_asd_types_CoreType_statistikId(this);
 	}
 
-	public historie() : List<LehrerFachrichtungAnerkennungKatalogEintrag> {
+	public historie(): List<LehrerFachrichtungAnerkennungKatalogEintrag> {
 		return de_svws_nrw_asd_types_CoreType_historie(this);
 	}
 
@@ -99,7 +99,7 @@ export class LehrerFachrichtungAnerkennung extends JavaEnum<LehrerFachrichtungAn
 		return 'de.svws_nrw.asd.types.lehrer.LehrerFachrichtungAnerkennung';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.asd.types.lehrer.LehrerFachrichtungAnerkennung', 'de.svws_nrw.asd.types.CoreType', 'java.lang.Comparable', 'java.lang.Enum', 'java.lang.Comparable'].includes(name);
 	}
 
@@ -107,6 +107,6 @@ export class LehrerFachrichtungAnerkennung extends JavaEnum<LehrerFachrichtungAn
 
 }
 
-export function cast_de_svws_nrw_asd_types_lehrer_LehrerFachrichtungAnerkennung(obj : unknown) : LehrerFachrichtungAnerkennung {
+export function cast_de_svws_nrw_asd_types_lehrer_LehrerFachrichtungAnerkennung(obj: unknown): LehrerFachrichtungAnerkennung {
 	return obj as LehrerFachrichtungAnerkennung;
 }

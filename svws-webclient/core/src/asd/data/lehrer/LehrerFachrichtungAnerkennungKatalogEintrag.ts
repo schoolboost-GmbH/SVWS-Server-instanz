@@ -15,13 +15,13 @@ export class LehrerFachrichtungAnerkennungKatalogEintrag extends CoreTypeData {
 		return 'de.svws_nrw.asd.data.lehrer.LehrerFachrichtungAnerkennungKatalogEintrag';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.asd.data.lehrer.LehrerFachrichtungAnerkennungKatalogEintrag', 'de.svws_nrw.asd.data.CoreTypeData'].includes(name);
 	}
 
 	public static class = new Class<LehrerFachrichtungAnerkennungKatalogEintrag>('de.svws_nrw.asd.data.lehrer.LehrerFachrichtungAnerkennungKatalogEintrag');
 
-	public static transpilerFromJSON(json : string): LehrerFachrichtungAnerkennungKatalogEintrag {
+	public static transpilerFromJSON(json: string): LehrerFachrichtungAnerkennungKatalogEintrag {
 		const obj = JSON.parse(json) as Partial<LehrerFachrichtungAnerkennungKatalogEintrag>;
 		const result = new LehrerFachrichtungAnerkennungKatalogEintrag();
 		if (obj.id === undefined)
@@ -41,7 +41,7 @@ export class LehrerFachrichtungAnerkennungKatalogEintrag extends CoreTypeData {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : LehrerFachrichtungAnerkennungKatalogEintrag) : string {
+	public static transpilerToJSON(obj: LehrerFachrichtungAnerkennungKatalogEintrag): string {
 		let result = '{';
 		result += '"id" : ' + obj.id.toString() + ',';
 		result += '"schluessel" : ' + JSON.stringify(obj.schluessel) + ',';
@@ -54,7 +54,7 @@ export class LehrerFachrichtungAnerkennungKatalogEintrag extends CoreTypeData {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<LehrerFachrichtungAnerkennungKatalogEintrag>) : string {
+	public static transpilerToJSONPatch(obj: Partial<LehrerFachrichtungAnerkennungKatalogEintrag>): string {
 		let result = '{';
 		if (obj.id !== undefined) {
 			result += '"id" : ' + obj.id.toString() + ',';
@@ -81,6 +81,6 @@ export class LehrerFachrichtungAnerkennungKatalogEintrag extends CoreTypeData {
 
 }
 
-export function cast_de_svws_nrw_asd_data_lehrer_LehrerFachrichtungAnerkennungKatalogEintrag(obj : unknown) : LehrerFachrichtungAnerkennungKatalogEintrag {
+export function cast_de_svws_nrw_asd_data_lehrer_LehrerFachrichtungAnerkennungKatalogEintrag(obj: unknown): LehrerFachrichtungAnerkennungKatalogEintrag {
 	return obj as LehrerFachrichtungAnerkennungKatalogEintrag;
 }

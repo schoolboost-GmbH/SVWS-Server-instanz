@@ -29,7 +29,7 @@ export class RouteFoerderschwerpunkteNeu extends RouteNode<any, RouteFoerderschw
 			checkpoint: this.checkpoint,
 			benutzerKompetenzen: api.benutzerKompetenzen,
 			continueRoutingAfterCheckpoint: () => RouteManager.continueRoutingAfterCheckpoint(),
-		}
+		};
 	}
 }
 

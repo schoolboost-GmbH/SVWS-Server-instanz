@@ -15,13 +15,13 @@ export class LehrerEinsatzstatusKatalogEintrag extends CoreTypeData {
 		return 'de.svws_nrw.asd.data.lehrer.LehrerEinsatzstatusKatalogEintrag';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.asd.data.lehrer.LehrerEinsatzstatusKatalogEintrag', 'de.svws_nrw.asd.data.CoreTypeData'].includes(name);
 	}
 
 	public static class = new Class<LehrerEinsatzstatusKatalogEintrag>('de.svws_nrw.asd.data.lehrer.LehrerEinsatzstatusKatalogEintrag');
 
-	public static transpilerFromJSON(json : string): LehrerEinsatzstatusKatalogEintrag {
+	public static transpilerFromJSON(json: string): LehrerEinsatzstatusKatalogEintrag {
 		const obj = JSON.parse(json) as Partial<LehrerEinsatzstatusKatalogEintrag>;
 		const result = new LehrerEinsatzstatusKatalogEintrag();
 		if (obj.id === undefined)
@@ -41,7 +41,7 @@ export class LehrerEinsatzstatusKatalogEintrag extends CoreTypeData {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : LehrerEinsatzstatusKatalogEintrag) : string {
+	public static transpilerToJSON(obj: LehrerEinsatzstatusKatalogEintrag): string {
 		let result = '{';
 		result += '"id" : ' + obj.id.toString() + ',';
 		result += '"schluessel" : ' + JSON.stringify(obj.schluessel) + ',';
@@ -54,7 +54,7 @@ export class LehrerEinsatzstatusKatalogEintrag extends CoreTypeData {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<LehrerEinsatzstatusKatalogEintrag>) : string {
+	public static transpilerToJSONPatch(obj: Partial<LehrerEinsatzstatusKatalogEintrag>): string {
 		let result = '{';
 		if (obj.id !== undefined) {
 			result += '"id" : ' + obj.id.toString() + ',';
@@ -81,6 +81,6 @@ export class LehrerEinsatzstatusKatalogEintrag extends CoreTypeData {
 
 }
 
-export function cast_de_svws_nrw_asd_data_lehrer_LehrerEinsatzstatusKatalogEintrag(obj : unknown) : LehrerEinsatzstatusKatalogEintrag {
+export function cast_de_svws_nrw_asd_data_lehrer_LehrerEinsatzstatusKatalogEintrag(obj: unknown): LehrerEinsatzstatusKatalogEintrag {
 	return obj as LehrerEinsatzstatusKatalogEintrag;
 }

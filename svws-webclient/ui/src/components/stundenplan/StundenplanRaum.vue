@@ -49,11 +49,11 @@
 		return (ids.toArray() as number[]).map(s => props.manager().schieneGetByIdOrException(s).nummer).join(', ');
 	}
 
-	function getSchienen(wochentag: number, stunde: number, wochentyp: number) : List<StundenplanSchiene> {
+	function getSchienen(wochentag: number, stunde: number, wochentyp: number): List<StundenplanSchiene> {
 		throw new DeveloperNotificationException("Die Anzeige von Schienen wird beim der Raumansicht nicht unterstützt.");
 	}
 
-	function getUnterricht(wochentag: number, stunde: number, wochentyp: number, schiene: number | null) : List<StundenplanUnterricht> {
+	function getUnterricht(wochentag: number, stunde: number, wochentyp: number, schiene: number | null): List<StundenplanUnterricht> {
 		return props.manager().unterrichtGetMengeByRaumIdAndWochentagAndStundeAndWochentypAndSchieneAndInklusiveOrEmptyList(props.id, wochentag, stunde, wochentyp, schiene ?? -2, false);
 	}
 
@@ -61,7 +61,7 @@
 		return props.manager().zeitrasterHatUnterrichtMitWochentyp1BisNByRaumIdWochentagAndStunde(props.id, Wochentag.fromIDorException(wochentag), stunde);
 	}
 
-	function getPausenzeiten() : List<StundenplanPausenzeit> {
+	function getPausenzeiten(): List<StundenplanPausenzeit> {
 		throw new DeveloperNotificationException("Die Anzeige von Pausenzeiten wird bei der Raumansicht nicht unterstützt.");
 	}
 
@@ -69,11 +69,11 @@
 		return false;
 	}
 
-	function getPausenzeitenWochentag(wochentag: number) : List<StundenplanPausenzeit> {
+	function getPausenzeitenWochentag(wochentag: number): List<StundenplanPausenzeit> {
 		throw new DeveloperNotificationException("Die Anzeige von Pausenzeiten wird bei der Raumansicht nicht unterstützt.");
 	}
 
-	function getPausenaufsichtenPausenzeit(idPausenzeit: number) : List<StundenplanPausenaufsicht> {
+	function getPausenaufsichtenPausenzeit(idPausenzeit: number): List<StundenplanPausenaufsicht> {
 		throw new DeveloperNotificationException("Die Anzeige von Pausenzeiten wird bei der Raumansicht nicht unterstützt.");
 	}
 

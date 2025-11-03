@@ -6,47 +6,47 @@ export class Schild3KatalogEintragPruefungsordnung extends JavaObject {
 	/**
 	 * Zulässige Schulformen der Prüfungsordnungen
 	 */
-	public PO_Schulform : string | null = null;
+	public PO_Schulform: string | null = null;
 
 	/**
 	 * Erstes Kürzel
 	 */
-	public PO_Krz : string | null = null;
+	public PO_Krz: string | null = null;
 
 	/**
 	 * Zweites Kürzel
 	 */
-	public PO_Name : string | null = null;
+	public PO_Name: string | null = null;
 
 	/**
 	 * Zulässige Gliederungen
 	 */
-	public PO_SGL : string | null = null;
+	public PO_SGL: string | null = null;
 
 	/**
 	 * Deprecated
 	 */
-	public PO_MinJahrgang : number | null = null;
+	public PO_MinJahrgang: number | null = null;
 
 	/**
 	 * Deprecated
 	 */
-	public PO_MaxJahrgang : number | null = null;
+	public PO_MaxJahrgang: number | null = null;
 
 	/**
 	 * Zulässige Jahrgänge
 	 */
-	public PO_Jahrgaenge : string | null = null;
+	public PO_Jahrgaenge: string | null = null;
 
 	/**
 	 * Gültig ab Schuljahr
 	 */
-	public gueltigVon : number | null = null;
+	public gueltigVon: number | null = null;
 
 	/**
 	 * Gültig bis Schuljahr
 	 */
-	public gueltigBis : number | null = null;
+	public gueltigBis: number | null = null;
 
 
 	/**
@@ -60,13 +60,13 @@ export class Schild3KatalogEintragPruefungsordnung extends JavaObject {
 		return 'de.svws_nrw.core.data.schild3.Schild3KatalogEintragPruefungsordnung';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.schild3.Schild3KatalogEintragPruefungsordnung'].includes(name);
 	}
 
 	public static class = new Class<Schild3KatalogEintragPruefungsordnung>('de.svws_nrw.core.data.schild3.Schild3KatalogEintragPruefungsordnung');
 
-	public static transpilerFromJSON(json : string): Schild3KatalogEintragPruefungsordnung {
+	public static transpilerFromJSON(json: string): Schild3KatalogEintragPruefungsordnung {
 		const obj = JSON.parse(json) as Partial<Schild3KatalogEintragPruefungsordnung>;
 		const result = new Schild3KatalogEintragPruefungsordnung();
 		result.PO_Schulform = (obj.PO_Schulform === undefined) ? null : obj.PO_Schulform === null ? null : obj.PO_Schulform;
@@ -81,7 +81,7 @@ export class Schild3KatalogEintragPruefungsordnung extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : Schild3KatalogEintragPruefungsordnung) : string {
+	public static transpilerToJSON(obj: Schild3KatalogEintragPruefungsordnung): string {
 		let result = '{';
 		result += '"PO_Schulform" : ' + ((obj.PO_Schulform === null) ? 'null' : JSON.stringify(obj.PO_Schulform)) + ',';
 		result += '"PO_Krz" : ' + ((obj.PO_Krz === null) ? 'null' : JSON.stringify(obj.PO_Krz)) + ',';
@@ -97,7 +97,7 @@ export class Schild3KatalogEintragPruefungsordnung extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<Schild3KatalogEintragPruefungsordnung>) : string {
+	public static transpilerToJSONPatch(obj: Partial<Schild3KatalogEintragPruefungsordnung>): string {
 		let result = '{';
 		if (obj.PO_Schulform !== undefined) {
 			result += '"PO_Schulform" : ' + ((obj.PO_Schulform === null) ? 'null' : JSON.stringify(obj.PO_Schulform)) + ',';
@@ -133,6 +133,6 @@ export class Schild3KatalogEintragPruefungsordnung extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_schild3_Schild3KatalogEintragPruefungsordnung(obj : unknown) : Schild3KatalogEintragPruefungsordnung {
+export function cast_de_svws_nrw_core_data_schild3_Schild3KatalogEintragPruefungsordnung(obj: unknown): Schild3KatalogEintragPruefungsordnung {
 	return obj as Schild3KatalogEintragPruefungsordnung;
 }

@@ -36,7 +36,7 @@
 	const isLoading = ref<boolean>(false);
 	const bezeichnungIsTooLong = computed(() => data.value.bezeichnung.length > 30);
 
-	function fieldIsValid(field: keyof TelefonArt | null) : (v: string | null) => boolean {
+	function fieldIsValid(field: keyof TelefonArt | null): (v: string | null) => boolean {
 		return (v: string | null) => {
 			switch (field) {
 				case 'bezeichnung':
@@ -44,7 +44,7 @@
 				default:
 					return true;
 			}
-		}
+		};
 	}
 
 	const formIsValid = computed(() => {
@@ -53,8 +53,8 @@
 			const validateField = fieldIsValid(field as keyof TelefonArt);
 			const fieldValue = data.value[field as keyof TelefonArt] as string | null;
 			return validateField(fieldValue);
-		})
-	})
+		});
+	});
 
 	function bezeichnungIsValid(value: string | null) {
 		if (!mandatoryInputIsValid(value, 30))
@@ -79,7 +79,7 @@
 		await props.gotoDefaultView(null);
 	}
 
-	watch(() => data.value, async() => {
+	watch(() => data.value, async () => {
 		if (isLoading.value)
 			return;
 

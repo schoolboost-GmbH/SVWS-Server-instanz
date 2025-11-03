@@ -1,6 +1,9 @@
 <template>
 	<div class="page page-grid-cards">
-		<svws-ui-input-wrapper class="flex flex-col gap-4">
+		<div v-if="!hatIrgendwelcheKompetenzen">
+			Für die Nutzung der Gruppenprozesse fehlen Benutzerkompetenzen.
+		</div>
+		<svws-ui-input-wrapper v-else class="flex flex-col gap-4">
 			<ui-card v-if="hatKompetenzDruckenSchuelerIndividualdaten" icon="i-ri-printer-line" title="Schülerliste drucken" subtitle="Drucke eine Liste mit den Daten der ausgewählten Schülerinnen und Schüler."
 				:is-open="currentAction === 'druckSchuelerListeKontaktdatenErzieher'" @update:is-open="isOpen => setCurrentAction('druckSchuelerListeKontaktdatenErzieher', isOpen)">
 				<svws-ui-input-wrapper :grid="4" class="p-2">
@@ -207,10 +210,12 @@
 	const hatKompetenzDruckenSchuelerIndividualdaten = computed(() => (props.benutzerKompetenzen.has(BenutzerKompetenz.SCHUELER_INDIVIDUALDATEN_ANSEHEN) && hatKompetenzDrucken.value));
 	const hatKompetenzLoeschen = computed(() => props.benutzerKompetenzen.has(BenutzerKompetenz.SCHUELER_LOESCHEN));
 
-	const isPrintDisabled = computed<boolean>(() => !props.schuelerListeManager().liste.auswahlExists() || loading.value)
-	const isPrintStundenplanDisabled = computed<boolean>(() => isPrintDisabled.value || stundenplanAuswahl.value === undefined)
-	const isEmailStundenplanDisabled = computed<boolean>(() => isPrintStundenplanDisabled.value || ((emailBetreff.value.trim().length) === 0) || ((emailText.value.trim().length) === 0))
-	const isDeleteDisabled = computed<boolean>(() => !hatKompetenzLoeschen.value || !props.schuelerListeManager().liste.auswahlExists() || !props.deleteSchuelerCheck()[0] || loading.value)
+	const hatIrgendwelcheKompetenzen = computed(() => hatKompetenzDrucken.value || hatKompetenzLoeschen.value || hatKompetenzDruckenStundenplan.value || hatKompetenzDruckenSchuelerIndividualdaten.value);
+
+	const isPrintDisabled = computed<boolean>(() => !props.schuelerListeManager().liste.auswahlExists() || loading.value);
+	const isPrintStundenplanDisabled = computed<boolean>(() => isPrintDisabled.value || stundenplanAuswahl.value === undefined);
+	const isEmailStundenplanDisabled = computed<boolean>(() => isPrintStundenplanDisabled.value || ((emailBetreff.value.trim().length) === 0) || ((emailText.value.trim().length) === 0));
+	const isDeleteDisabled = computed<boolean>(() => !hatKompetenzLoeschen.value || !props.schuelerListeManager().liste.auswahlExists() || !props.deleteSchuelerCheck()[0] || loading.value);
 
 	const stundenplanAuswahl = ref<StundenplanListeEintrag>();
 	const currentAction = ref<Action>('');
@@ -223,13 +228,13 @@
 			+ toDateStr(eintrag.gueltigAb) + '—'
 			+ toDateStr(eintrag.gueltigBis)
 			+ ' (KW ' + toKW(eintrag.gueltigAb) + '—'
-			+ toKW(eintrag.gueltigBis) + ')'
-	}
+			+ toKW(eintrag.gueltigBis) + ')';
+	};
 
-	const stundenplaene = computed<Array<StundenplanListeEintrag>>(() => [...props.mapStundenplaene.values()])
+	const stundenplaene = computed<Array<StundenplanListeEintrag>>(() => [...props.mapStundenplaene.values()]);
 	const stundenplanSelectManager = new SelectManager({
 		options: stundenplaene, optionDisplayText: stundenplanDisplayText, selectionDisplayText: stundenplanDisplayText,
-	})
+	});
 
 	const option1 = ref(false);
 	const option2 = ref(false);
@@ -422,7 +427,7 @@
 		loading.value = false;
 	}
 
-	const jobId = ref<number | null>(null)
+	const jobId = ref<number | null>(null);
 
 	async function sendPdfByEmail() {
 		if (stundenplanAuswahl.value === undefined)
@@ -538,14 +543,14 @@
 		option4096.value = false;
 	}
 
-	const wochentag = ['So.', 'Mo.', 'Di.', 'Mi.', 'Do.', 'Fr.', 'Sa.', 'So.' ];
+	const wochentag = ['So.', 'Mo.', 'Di.', 'Mi.', 'Do.', 'Fr.', 'Sa.', 'So.'];
 
-	function toDateStr(iso: string) : string {
+	function toDateStr(iso: string): string {
 		const date = DateUtils.extractFromDateISO8601(iso);
 		return wochentag[date[3] % 7] + " " + date[2] + "." + date[1] + "." + date[0];
 	}
 
-	function toKW(iso: string) : string {
+	function toKW(iso: string): string {
 		const date = DateUtils.extractFromDateISO8601(iso);
 		return "" + date[5];
 	}

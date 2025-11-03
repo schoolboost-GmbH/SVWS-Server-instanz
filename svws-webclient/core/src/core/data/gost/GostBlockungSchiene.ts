@@ -6,22 +6,22 @@ export class GostBlockungSchiene extends JavaObject {
 	/**
 	 * Die ID der Schiene
 	 */
-	public id : number = -1;
+	public id: number = -1;
 
 	/**
 	 * Die Nummer der Schiene bei der Blockung (zur Sortierung)
 	 */
-	public nummer : number = 1;
+	public nummer: number = 1;
 
 	/**
 	 * Bezeichnung der Schiene (z.B. LK Schiene 1)
 	 */
-	public bezeichnung : string = "Neue Schiene";
+	public bezeichnung: string = "Neue Schiene";
 
 	/**
 	 * Die Anzahl der Wochenstunden, welche der Schiene zugeordnet sind
 	 */
-	public wochenstunden : number = 3;
+	public wochenstunden: number = 3;
 
 
 	/**
@@ -35,13 +35,13 @@ export class GostBlockungSchiene extends JavaObject {
 		return 'de.svws_nrw.core.data.gost.GostBlockungSchiene';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.gost.GostBlockungSchiene'].includes(name);
 	}
 
 	public static class = new Class<GostBlockungSchiene>('de.svws_nrw.core.data.gost.GostBlockungSchiene');
 
-	public static transpilerFromJSON(json : string): GostBlockungSchiene {
+	public static transpilerFromJSON(json: string): GostBlockungSchiene {
 		const obj = JSON.parse(json) as Partial<GostBlockungSchiene>;
 		const result = new GostBlockungSchiene();
 		if (obj.id === undefined)
@@ -59,7 +59,7 @@ export class GostBlockungSchiene extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : GostBlockungSchiene) : string {
+	public static transpilerToJSON(obj: GostBlockungSchiene): string {
 		let result = '{';
 		result += '"id" : ' + obj.id.toString() + ',';
 		result += '"nummer" : ' + obj.nummer.toString() + ',';
@@ -70,7 +70,7 @@ export class GostBlockungSchiene extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<GostBlockungSchiene>) : string {
+	public static transpilerToJSONPatch(obj: Partial<GostBlockungSchiene>): string {
 		let result = '{';
 		if (obj.id !== undefined) {
 			result += '"id" : ' + obj.id.toString() + ',';
@@ -91,6 +91,6 @@ export class GostBlockungSchiene extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_gost_GostBlockungSchiene(obj : unknown) : GostBlockungSchiene {
+export function cast_de_svws_nrw_core_data_gost_GostBlockungSchiene(obj: unknown): GostBlockungSchiene {
 	return obj as GostBlockungSchiene;
 }

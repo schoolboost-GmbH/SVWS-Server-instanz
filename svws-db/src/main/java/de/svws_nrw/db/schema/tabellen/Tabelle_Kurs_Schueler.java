@@ -17,29 +17,29 @@ import de.svws_nrw.db.schema.SchemaTabelleTrigger;
 public class Tabelle_Kurs_Schueler extends SchemaTabelle {
 
 	/** Die Definition der Tabellenspalte Kurs_ID */
-	public SchemaTabelleSpalte col_Kurs_ID = add("Kurs_ID", SchemaDatentypen.BIGINT, true)
+	public final SchemaTabelleSpalte col_Kurs_ID = add("Kurs_ID", SchemaDatentypen.BIGINT, true)
 			.setNotNull()
 			.setJavaComment("Die eindeutige ID des Kurses – verweist auf den Kurs");
 
 	/** Die Definition der Tabellenspalte Schueler_ID */
-	public SchemaTabelleSpalte col_Schueler_ID = add("Schueler_ID", SchemaDatentypen.BIGINT, true)
+	public final SchemaTabelleSpalte col_Schueler_ID = add("Schueler_ID", SchemaDatentypen.BIGINT, true)
 			.setNotNull()
 			.setJavaComment("Die eindeutige ID des Schülers – verweist auf den Schüler");
 
 	/** Die Definition der Tabellenspalte LernabschnittWechselNr */
-	public SchemaTabelleSpalte col_LernabschnittWechselNr = add("LernabschnittWechselNr", SchemaDatentypen.SMALLINT, true)
+	public final SchemaTabelleSpalte col_LernabschnittWechselNr = add("LernabschnittWechselNr", SchemaDatentypen.SMALLINT, true)
 			.setDefault("0")
 			.setJavaComment("Wird für Wiederholungen im Laufenden Schuljahresabschnitt genutzt 0=aktueller/neuester Lernabschnitt 1=vor dem ersten Wechsel"
 					+ " 2=vor dem zweiten Wechsel usw");
 
 	/** Die Definition der Tabellenspalte Leistung_ID */
-	public SchemaTabelleSpalte col_Leistung_ID = add("Leistung_ID", SchemaDatentypen.BIGINT, true)
+	public final SchemaTabelleSpalte col_Leistung_ID = add("Leistung_ID", SchemaDatentypen.BIGINT, true)
 			.setNotNull()
 			.setJavaComment("Die eindeutige ID der Leistungsdaten, in denen die Zuordnung stattgefunden hat");
 
 
 	/** Die Definition des Fremdschlüssels KursSchueler_Kurse_FK */
-	public SchemaTabelleFremdschluessel fk_KursSchueler_Kurse_FK = addForeignKey(
+	public final SchemaTabelleFremdschluessel fk_KursSchueler_Kurse_FK = addForeignKey(
 			"KursSchueler_Kurse_FK",
 			/* OnUpdate: */ SchemaFremdschluesselAktionen.CASCADE,
 			/* OnDelete: */ SchemaFremdschluesselAktionen.CASCADE,
@@ -47,7 +47,7 @@ public class Tabelle_Kurs_Schueler extends SchemaTabelle {
 	);
 
 	/** Die Definition des Fremdschlüssels KursSchueler_Schueler_FK */
-	public SchemaTabelleFremdschluessel fk_KursSchueler_Schueler_FK = addForeignKey(
+	public final SchemaTabelleFremdschluessel fk_KursSchueler_Schueler_FK = addForeignKey(
 			"KursSchueler_Schueler_FK",
 			/* OnUpdate: */ SchemaFremdschluesselAktionen.CASCADE,
 			/* OnDelete: */ SchemaFremdschluesselAktionen.CASCADE,
@@ -55,7 +55,7 @@ public class Tabelle_Kurs_Schueler extends SchemaTabelle {
 	);
 
 	/** Die Definition des Fremdschlüssels KursSchueler_SchuelerLeistungsdaten_FK */
-	public SchemaTabelleFremdschluessel fk_KursSchueler_SchuelerLeistungsdaten_FK = addForeignKey(
+	public final SchemaTabelleFremdschluessel fk_KursSchueler_SchuelerLeistungsdaten_FK = addForeignKey(
 			"KursSchueler_SchuelerLeistungsdaten_FK",
 			/* OnUpdate: */ SchemaFremdschluesselAktionen.CASCADE,
 			/* OnDelete: */ SchemaFremdschluesselAktionen.CASCADE,
@@ -64,7 +64,7 @@ public class Tabelle_Kurs_Schueler extends SchemaTabelle {
 
 
 	/** Trigger t_INSERT_SCHUELERLEISTUNGSDATEN_KURS_SCHUELER_VERALTET_REV_34 */
-	public SchemaTabelleTrigger trigger_MariaDB_INSERT_SCHUELERLEISTUNGSDATEN_KURS_SCHUELER_VERALTET_REV_34 = addTrigger(
+	public final SchemaTabelleTrigger trigger_MariaDB_INSERT_SCHUELERLEISTUNGSDATEN_KURS_SCHUELER_VERALTET_REV_34 = addTrigger(
 			"t_INSERT_SCHUELERLEISTUNGSDATEN_KURS_SCHUELER",
 			DBDriver.MARIA_DB,
 			"""
@@ -83,7 +83,7 @@ public class Tabelle_Kurs_Schueler extends SchemaTabelle {
 			.setVeraltet(SchemaRevisionen.REV_34);
 
 	/** Trigger t_INSERT_SCHUELERLEISTUNGSDATEN_KURS_SCHUELER */
-	public SchemaTabelleTrigger trigger_MariaDB_INSERT_SCHUELERLEISTUNGSDATEN_KURS_SCHUELER = addTrigger(
+	public final SchemaTabelleTrigger trigger_MariaDB_INSERT_SCHUELERLEISTUNGSDATEN_KURS_SCHUELER = addTrigger(
 			"t_INSERT_SCHUELERLEISTUNGSDATEN_KURS_SCHUELER",
 			DBDriver.MARIA_DB,
 			"""
@@ -101,7 +101,7 @@ public class Tabelle_Kurs_Schueler extends SchemaTabelle {
 			.setRevision(SchemaRevisionen.REV_34);
 
 	/** Trigger t_UPDATE_SCHUELERLEISTUNGSDATEN_KURS_SCHUELER_VERALTET_REV_34 */
-	public SchemaTabelleTrigger trigger_MariaDB_UPDATE_SCHUELERLEISTUNGSDATEN_KURS_SCHUELER_VERALTET_REV_34 = addTrigger(
+	public final SchemaTabelleTrigger trigger_MariaDB_UPDATE_SCHUELERLEISTUNGSDATEN_KURS_SCHUELER_VERALTET_REV_34 = addTrigger(
 			"t_UPDATE_SCHUELERLEISTUNGSDATEN_KURS_SCHUELER",
 			DBDriver.MARIA_DB,
 			"""
@@ -132,7 +132,7 @@ public class Tabelle_Kurs_Schueler extends SchemaTabelle {
 			.setVeraltet(SchemaRevisionen.REV_34);
 
 	/** Trigger t_UPDATE_SCHUELERLEISTUNGSDATEN_KURS_SCHUELER */
-	public SchemaTabelleTrigger trigger_MariaDB_UPDATE_SCHUELERLEISTUNGSDATEN_KURS_SCHUELER = addTrigger(
+	public final SchemaTabelleTrigger trigger_MariaDB_UPDATE_SCHUELERLEISTUNGSDATEN_KURS_SCHUELER = addTrigger(
 			"t_UPDATE_SCHUELERLEISTUNGSDATEN_KURS_SCHUELER",
 			DBDriver.MARIA_DB,
 			"""
@@ -162,7 +162,7 @@ public class Tabelle_Kurs_Schueler extends SchemaTabelle {
 			.setRevision(SchemaRevisionen.REV_34);
 
 	/** Trigger t_DELETE_SCHUELERLEISTUNGSDATEN_KURS_SCHUELER_VERALTET_REV_34 */
-	public SchemaTabelleTrigger trigger_MariaDB_DELETE_SCHUELERLEISTUNGSDATEN_KURS_SCHUELER_VERALTET_REV_34 = addTrigger(
+	public final SchemaTabelleTrigger trigger_MariaDB_DELETE_SCHUELERLEISTUNGSDATEN_KURS_SCHUELER_VERALTET_REV_34 = addTrigger(
 			"t_DELETE_SCHUELERLEISTUNGSDATEN_KURS_SCHUELER",
 			DBDriver.MARIA_DB,
 			"""
@@ -181,7 +181,7 @@ public class Tabelle_Kurs_Schueler extends SchemaTabelle {
 			.setVeraltet(SchemaRevisionen.REV_34);
 
 	/** Trigger t_UPDATE_SCHUELERLERNABSCHNITTSDATEN_KURS_SCHUELER */
-	public SchemaTabelleTrigger trigger_MariaDB_UPDATE_SCHUELERLERNABSCHNITTSDATEN_KURS_SCHUELER = addTrigger(
+	public final SchemaTabelleTrigger trigger_MariaDB_UPDATE_SCHUELERLERNABSCHNITTSDATEN_KURS_SCHUELER = addTrigger(
 			"t_UPDATE_SCHUELERLERNABSCHNITTSDATEN_KURS_SCHUELER",
 			DBDriver.MARIA_DB,
 			"""
@@ -199,7 +199,7 @@ public class Tabelle_Kurs_Schueler extends SchemaTabelle {
 			.setRevision(SchemaRevisionen.REV_42);
 
 	/** Trigger t_INSERT_SCHUELERLEISTUNGSDATEN_KURS_SCHUELER_VERALTET_REV_34 */
-	public SchemaTabelleTrigger trigger_SQLite_INSERT_SCHUELERLEISTUNGSDATEN_KURS_SCHUELER_VERALTET_REV_34 = addTrigger(
+	public final SchemaTabelleTrigger trigger_SQLite_INSERT_SCHUELERLEISTUNGSDATEN_KURS_SCHUELER_VERALTET_REV_34 = addTrigger(
 			"t_INSERT_SCHUELERLEISTUNGSDATEN_KURS_SCHUELER",
 			DBDriver.SQLITE,
 			"""
@@ -214,7 +214,7 @@ public class Tabelle_Kurs_Schueler extends SchemaTabelle {
 			.setVeraltet(SchemaRevisionen.REV_34);
 
 	/** Trigger t_INSERT_SCHUELERLEISTUNGSDATEN_KURS_SCHUELER */
-	public SchemaTabelleTrigger trigger_SQLite_INSERT_SCHUELERLEISTUNGSDATEN_KURS_SCHUELER = addTrigger(
+	public final SchemaTabelleTrigger trigger_SQLite_INSERT_SCHUELERLEISTUNGSDATEN_KURS_SCHUELER = addTrigger(
 			"t_INSERT_SCHUELERLEISTUNGSDATEN_KURS_SCHUELER",
 			DBDriver.SQLITE,
 			"""
@@ -228,7 +228,7 @@ public class Tabelle_Kurs_Schueler extends SchemaTabelle {
 			.setRevision(SchemaRevisionen.REV_34);
 
 	/** Trigger t_UPDATE_SCHUELERLEISTUNGSDATEN_KURS_SCHUELER_1 */
-	public SchemaTabelleTrigger trigger_SQLite_UPDATE_SCHUELERLEISTUNGSDATEN_KURS_SCHUELER_1 = addTrigger(
+	public final SchemaTabelleTrigger trigger_SQLite_UPDATE_SCHUELERLEISTUNGSDATEN_KURS_SCHUELER_1 = addTrigger(
 			"t_UPDATE_SCHUELERLEISTUNGSDATEN_KURS_SCHUELER_1",
 			DBDriver.SQLITE,
 			"""
@@ -265,7 +265,7 @@ public class Tabelle_Kurs_Schueler extends SchemaTabelle {
 			.setRevision(SchemaRevisionen.REV_2);
 
 	/** Trigger t_UPDATE_SCHUELERLEISTUNGSDATEN_KURS_SCHUELER_2 */
-	public SchemaTabelleTrigger trigger_SQLite_UPDATE_SCHUELERLEISTUNGSDATEN_KURS_SCHUELER_2 = addTrigger(
+	public final SchemaTabelleTrigger trigger_SQLite_UPDATE_SCHUELERLEISTUNGSDATEN_KURS_SCHUELER_2 = addTrigger(
 			"t_UPDATE_SCHUELERLEISTUNGSDATEN_KURS_SCHUELER_2",
 			DBDriver.SQLITE,
 			"""
@@ -294,7 +294,7 @@ public class Tabelle_Kurs_Schueler extends SchemaTabelle {
 			.setRevision(SchemaRevisionen.REV_2);
 
 	/** Trigger t_UPDATE_SCHUELERLEISTUNGSDATEN_KURS_SCHUELER_3 */
-	public SchemaTabelleTrigger trigger_SQLite_UPDATE_SCHUELERLEISTUNGSDATEN_KURS_SCHUELER_3 = addTrigger(
+	public final SchemaTabelleTrigger trigger_SQLite_UPDATE_SCHUELERLEISTUNGSDATEN_KURS_SCHUELER_3 = addTrigger(
 			"t_UPDATE_SCHUELERLEISTUNGSDATEN_KURS_SCHUELER_3",
 			DBDriver.SQLITE,
 			"""
@@ -320,7 +320,7 @@ public class Tabelle_Kurs_Schueler extends SchemaTabelle {
 			.setRevision(SchemaRevisionen.REV_2);
 
 	/** Trigger t_UPDATE_SCHUELERLEISTUNGSDATEN_KURS_SCHUELER_4_VERALTET_REV_34 */
-	public SchemaTabelleTrigger trigger_SQLite_UPDATE_SCHUELERLEISTUNGSDATEN_KURS_SCHUELER_4_VERALTET_REV_34 = addTrigger(
+	public final SchemaTabelleTrigger trigger_SQLite_UPDATE_SCHUELERLEISTUNGSDATEN_KURS_SCHUELER_4_VERALTET_REV_34 = addTrigger(
 			"t_UPDATE_SCHUELERLEISTUNGSDATEN_KURS_SCHUELER_4",
 			DBDriver.SQLITE,
 			"""
@@ -345,7 +345,7 @@ public class Tabelle_Kurs_Schueler extends SchemaTabelle {
 			.setVeraltet(SchemaRevisionen.REV_34);
 
 	/** Trigger t_UPDATE_SCHUELERLEISTUNGSDATEN_KURS_SCHUELER_4 */
-	public SchemaTabelleTrigger trigger_SQLite_UPDATE_SCHUELERLEISTUNGSDATEN_KURS_SCHUELER_4 = addTrigger(
+	public final SchemaTabelleTrigger trigger_SQLite_UPDATE_SCHUELERLEISTUNGSDATEN_KURS_SCHUELER_4 = addTrigger(
 			"t_UPDATE_SCHUELERLEISTUNGSDATEN_KURS_SCHUELER_4",
 			DBDriver.SQLITE,
 			"""
@@ -370,7 +370,7 @@ public class Tabelle_Kurs_Schueler extends SchemaTabelle {
 			.setRevision(SchemaRevisionen.REV_34);
 
 	/** Trigger t_DELETE_SCHUELERLEISTUNGSDATEN_KURS_SCHUELER_VERALTET_REV_34 */
-	public SchemaTabelleTrigger trigger_SQLite_DELETE_SCHUELERLEISTUNGSDATEN_KURS_SCHUELER_VERALTET_REV_34 = addTrigger(
+	public final SchemaTabelleTrigger trigger_SQLite_DELETE_SCHUELERLEISTUNGSDATEN_KURS_SCHUELER_VERALTET_REV_34 = addTrigger(
 			"t_DELETE_SCHUELERLEISTUNGSDATEN_KURS_SCHUELER",
 			DBDriver.SQLITE,
 			"""

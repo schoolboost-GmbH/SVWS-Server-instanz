@@ -6,22 +6,22 @@ export class ENMNote extends JavaObject {
 	/**
 	 * Die ID der Note.
 	 */
-	public id : number = 0;
+	public id: number = 0;
 
 	/**
 	 * Die Kurzschreibweise der Note als Zahl ggf. mit Tendenz (+/-), ggf. auch ein Kürzel für PseudoNoten
 	 */
-	public kuerzel : string | null = null;
+	public kuerzel: string | null = null;
 
 	/**
 	 * Die Notenpunkte, die dieser Note ggf. zugeordnet sind
 	 */
-	public notenpunkte : number | null = null;
+	public notenpunkte: number | null = null;
 
 	/**
 	 * Die Note in ausführlicher Textform ggf. mit Tendenz (plus/minus)
 	 */
-	public text : string | null = null;
+	public text: string | null = null;
 
 
 	/**
@@ -35,13 +35,13 @@ export class ENMNote extends JavaObject {
 		return 'de.svws_nrw.core.data.enm.ENMNote';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.enm.ENMNote'].includes(name);
 	}
 
 	public static class = new Class<ENMNote>('de.svws_nrw.core.data.enm.ENMNote');
 
-	public static transpilerFromJSON(json : string): ENMNote {
+	public static transpilerFromJSON(json: string): ENMNote {
 		const obj = JSON.parse(json) as Partial<ENMNote>;
 		const result = new ENMNote();
 		if (obj.id === undefined)
@@ -53,7 +53,7 @@ export class ENMNote extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : ENMNote) : string {
+	public static transpilerToJSON(obj: ENMNote): string {
 		let result = '{';
 		result += '"id" : ' + obj.id.toString() + ',';
 		result += '"kuerzel" : ' + ((obj.kuerzel === null) ? 'null' : JSON.stringify(obj.kuerzel)) + ',';
@@ -64,7 +64,7 @@ export class ENMNote extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<ENMNote>) : string {
+	public static transpilerToJSONPatch(obj: Partial<ENMNote>): string {
 		let result = '{';
 		if (obj.id !== undefined) {
 			result += '"id" : ' + obj.id.toString() + ',';
@@ -85,6 +85,6 @@ export class ENMNote extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_enm_ENMNote(obj : unknown) : ENMNote {
+export function cast_de_svws_nrw_core_data_enm_ENMNote(obj: unknown): ENMNote {
 	return obj as ENMNote;
 }

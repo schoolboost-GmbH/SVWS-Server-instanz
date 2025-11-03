@@ -18,14 +18,14 @@ export class RouteGostKlausurplanungKalender extends RouteNode<any, RouteGostKla
 		super(schulformenGymOb, [
 			BenutzerKompetenz.OBERSTUFE_KLAUSURPLANUNG_ANSEHEN_ALLGEMEIN,
 			BenutzerKompetenz.OBERSTUFE_KLAUSURPLANUNG_ANSEHEN_FUNKTION,
-			BenutzerKompetenz.OBERSTUFE_KLAUSURPLANUNG_AENDERN
+			BenutzerKompetenz.OBERSTUFE_KLAUSURPLANUNG_AENDERN,
 		], "gost.klausurplanung.kalender", "kalender/:datum(\\d+)?/:idtermin(\\d+)?", SGostKlausurplanungKalender);
 		super.mode = ServerMode.STABLE;
 		super.propHandler = (route) => this.getProps(route);
 		super.text = "Kalender";
 		this.isHidden = (params?: RouteParams) => {
 			return this.checkHidden(params);
-		}
+		};
 	}
 
 	public checkHidden(params?: RouteParams) {
@@ -34,7 +34,7 @@ export class RouteGostKlausurplanungKalender extends RouteNode<any, RouteGostKla
 		return false;
 	}
 
-	protected async update(to: RouteNode<any, any>, to_params: RouteParams, from: RouteNode<any, any> | undefined, from_params: RouteParams, isEntering: boolean, redirected: RouteNode<any, any> | undefined) : Promise<void | Error | RouteLocationRaw> {
+	protected async update(to: RouteNode<any, any>, to_params: RouteParams, from: RouteNode<any, any> | undefined, from_params: RouteParams, isEntering: boolean, redirected: RouteNode<any, any> | undefined): Promise<void | Error | RouteLocationRaw> {
 		try {
 			if (!routeGostKlausurplanung.data.manager.stundenplanManagerExistsByAbschnitt(routeGostKlausurplanung.data.abschnitt!.id))
 				return routeGostKlausurplanungVorgaben.getRoute();
@@ -64,12 +64,12 @@ export class RouteGostKlausurplanungKalender extends RouteNode<any, RouteGostKla
 				const stundenplan = routeGostKlausurplanung.data.manager.stundenplanManagerGetByAbschnittAndDatumOrNull(routeGostKlausurplanung.data.abschnitt!.id, datum);
 				routeGostKlausurplanung.data.kalenderdatum.value = stundenplan === null ? routeGostKlausurplanung.data.manager.stundenplanManagerGetByAbschnittAndDatumOrClosest(routeGostKlausurplanung.data.abschnitt!.id, datum).getGueltigAb() : datum;
 			}
-		} catch(e) {
+		} catch (e) {
 			return await routeError.getErrorRoute(e instanceof Error ? e : new DeveloperNotificationException("Unbekannter Fehler beim Laden der Klausurplanungsdaten."));
 		}
 	}
 
-	public addRouteParamsFromState() : RouteParamsRawGeneric {
+	public addRouteParamsFromState(): RouteParamsRawGeneric {
 		const datum = routeGostKlausurplanung.data.kalenderdatum.value?.replace(/-/g, "") ?? undefined;
 		const idtermin = routeGostKlausurplanung.data.terminSelected.value?.id ?? undefined;
 		return { datum, idtermin };
@@ -90,7 +90,7 @@ export class RouteGostKlausurplanungKalender extends RouteNode<any, RouteGostKla
 			terminSelected: routeGostKlausurplanung.data.terminSelected,
 			gotoKalenderdatum: routeGostKlausurplanung.data.gotoKalenderdatum,
 			gotoRaumzeitTermin: routeGostKlausurplanung.data.gotoRaumzeitTermin,
-		}
+		};
 	}
 
 }

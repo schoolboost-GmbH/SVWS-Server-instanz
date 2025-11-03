@@ -154,7 +154,7 @@
 		patchLehrbefaehigung: (eintrag: LehrerLehrbefaehigungEintrag, patch: Partial<LehrerLehrbefaehigungEintrag>) => Promise<void>;
 		addLehrbefaehigung: (eintrag: Partial<LehrerLehrbefaehigungEintrag>) => Promise<void>;
 		removeLehrbefaehigungen: (eintraege: List<LehrerLehrbefaehigungEintrag>) => Promise<void>;
-		patchFachrichtung: (eintrag: LehrerFachrichtungEintrag, patch : Partial<LehrerFachrichtungEintrag>) => Promise<void>;
+		patchFachrichtung: (eintrag: LehrerFachrichtungEintrag, patch: Partial<LehrerFachrichtungEintrag>) => Promise<void>;
 		addFachrichtung: (eintrag: Partial<LehrerFachrichtungEintrag>) => Promise<void>;
 		removeFachrichtungen: (eintraege: List<LehrerFachrichtungEintrag>) => Promise<void>;
 	}>();
@@ -167,7 +167,7 @@
 	const auswahlLehramtNeu = shallowRef<LehrerLehramtKatalogEintrag | null>(null);
 	const lehraemterSelectManager = computed(() => new CoreTypeSelectManager({
 		clazz: LehrerLehramt.class, schuljahr: props.schuljahr, schulformen: props.lehrerListeManager().schulform(),
-		filters: [ { key: 'vorhandene', apply: filterLehraemter } ],
+		filters: [{ key: 'vorhandene', apply: filterLehraemter }],
 		selectionDisplayText: 'text', optionDisplayText: 'kuerzelText',
 	}));
 	const lehraemterVorhanden = computed<JavaSet<number>>(() => {
@@ -205,13 +205,13 @@
 
 	const lehrbefaehigungenSelectManager = computed(() => new CoreTypeSelectManager({
 		clazz: LehrerLehrbefaehigung.class, schuljahr: props.schuljahr, schulformen: props.lehrerListeManager().schulform(),
-		filters: [ { key: 'vorhandene', apply: filterLehrbefaehigungen } ],
+		filters: [{ key: 'vorhandene', apply: filterLehrbefaehigungen }],
 		selectionDisplayText: 'text', optionDisplayText: 'kuerzelText',
 	}));
 
 	const fachrichtungenSelectManager = computed(() => new CoreTypeSelectManager({
 		clazz: LehrerFachrichtung.class, schuljahr: props.schuljahr, schulformen: props.lehrerListeManager().schulform(),
-		filters: [ { key: 'vorhandene', apply: filterFachrichtungen } ],
+		filters: [{ key: 'vorhandene', apply: filterFachrichtungen }],
 		selectionDisplayText: 'text', optionDisplayText: 'kuerzelText',
 	}));
 
@@ -302,28 +302,28 @@
 		],
 	});
 
-	function getLehramt(eintrag: LehrerLehramtEintrag) : LehrerLehramt {
+	function getLehramt(eintrag: LehrerLehramtEintrag): LehrerLehramt {
 		return LehrerLehramt.data().getWertByID(eintrag.idKatalogLehramt);
 	}
 
-	function getLehramtAnerkennung(eintrag: LehrerLehramtEintrag) : LehrerLehramtAnerkennung | null {
+	function getLehramtAnerkennung(eintrag: LehrerLehramtEintrag): LehrerLehramtAnerkennung | null {
 		return (eintrag.idAnerkennungsgrund === null) ? null : LehrerLehramtAnerkennung.data().getWertByID(eintrag.idAnerkennungsgrund);
 	}
 
-	function getLehrbefaehigungAnerkennung(eintrag: LehrerLehrbefaehigungEintrag) : LehrerLehrbefaehigungAnerkennung | null {
+	function getLehrbefaehigungAnerkennung(eintrag: LehrerLehrbefaehigungEintrag): LehrerLehrbefaehigungAnerkennung | null {
 		return (eintrag.idAnerkennungsgrund === null) ? null : LehrerLehrbefaehigungAnerkennung.data().getWertByID(eintrag.idAnerkennungsgrund);
 	}
 
-	function getLehrbefaehigungText(eintrag: LehrerLehrbefaehigungEintrag) : string {
+	function getLehrbefaehigungText(eintrag: LehrerLehrbefaehigungEintrag): string {
 		const katalogEintrag = LehrerLehrbefaehigung.data().getEintragByID(eintrag.idLehrbefaehigung);
 		return (katalogEintrag === null) ? '—' : katalogEintrag.kuerzel + ' - ' + katalogEintrag.text;
 	}
 
-	function getFachrichtung(eintrag: LehrerFachrichtungEintrag) : LehrerFachrichtung {
+	function getFachrichtung(eintrag: LehrerFachrichtungEintrag): LehrerFachrichtung {
 		return LehrerFachrichtung.data().getWertByID(eintrag.idFachrichtung);
 	}
 
-	function getFachrichtungAnerkennung(eintrag: LehrerFachrichtungEintrag) : LehrerFachrichtungAnerkennung | null {
+	function getFachrichtungAnerkennung(eintrag: LehrerFachrichtungEintrag): LehrerFachrichtungAnerkennung | null {
 		return (eintrag.idAnerkennungsgrund === null) ? null : LehrerFachrichtungAnerkennung.data().getWertByID(eintrag.idAnerkennungsgrund);
 	}
 

@@ -9,17 +9,17 @@ export class ENMConfigResponse extends JavaObject {
 	/**
 	 * ID des zugehörigen Objektes.
 	 */
-	public config : ENMServerConfig | null = null;
+	public config: ENMServerConfig | null = null;
 
 	/**
 	 * Gibt an, ob die Operation erfolgreich war.
 	 */
-	public success : boolean = false;
+	public success: boolean = false;
 
 	/**
 	 * Das Log der Operation.
 	 */
-	public log : List<string> = new ArrayList<string>();
+	public log: List<string> = new ArrayList<string>();
 
 
 	/**
@@ -33,13 +33,13 @@ export class ENMConfigResponse extends JavaObject {
 		return 'de.svws_nrw.core.data.enm.ENMConfigResponse';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.enm.ENMConfigResponse'].includes(name);
 	}
 
 	public static class = new Class<ENMConfigResponse>('de.svws_nrw.core.data.enm.ENMConfigResponse');
 
-	public static transpilerFromJSON(json : string): ENMConfigResponse {
+	public static transpilerFromJSON(json: string): ENMConfigResponse {
 		const obj = JSON.parse(json) as Partial<ENMConfigResponse>;
 		const result = new ENMConfigResponse();
 		result.config = ((obj.config === undefined) || (obj.config === null)) ? null : ENMServerConfig.transpilerFromJSON(JSON.stringify(obj.config));
@@ -54,7 +54,7 @@ export class ENMConfigResponse extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : ENMConfigResponse) : string {
+	public static transpilerToJSON(obj: ENMConfigResponse): string {
 		let result = '{';
 		result += '"config" : ' + ((obj.config === null) ? 'null' : ENMServerConfig.transpilerToJSON(obj.config)) + ',';
 		result += '"success" : ' + obj.success.toString() + ',';
@@ -71,7 +71,7 @@ export class ENMConfigResponse extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<ENMConfigResponse>) : string {
+	public static transpilerToJSONPatch(obj: Partial<ENMConfigResponse>): string {
 		let result = '{';
 		if (obj.config !== undefined) {
 			result += '"config" : ' + ((obj.config === null) ? 'null' : ENMServerConfig.transpilerToJSON(obj.config)) + ',';
@@ -96,6 +96,6 @@ export class ENMConfigResponse extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_enm_ENMConfigResponse(obj : unknown) : ENMConfigResponse {
+export function cast_de_svws_nrw_core_data_enm_ENMConfigResponse(obj: unknown): ENMConfigResponse {
 	return obj as ENMConfigResponse;
 }

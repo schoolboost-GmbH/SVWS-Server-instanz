@@ -9,17 +9,17 @@ export class StundenplanblockungManagerStundenelement extends JavaObject {
 	/**
 	 * Die Datenbank-ID des Stundenelementes.
 	 */
-	private readonly _id : number;
+	private readonly _id: number;
 
 	/**
 	 * Das Kürzel der Kopplung. Beispielsweise '7RE'.
 	 */
-	private _kuerzel : string = "";
+	private _kuerzel: string = "";
 
 	/**
 	 * Alle Lerngruppen der Kopplungen.
 	 */
-	private readonly _lerngruppen : List<StundenplanblockungManagerLerngruppe> = new ArrayList<StundenplanblockungManagerLerngruppe>();
+	private readonly _lerngruppen: List<StundenplanblockungManagerLerngruppe> = new ArrayList<StundenplanblockungManagerLerngruppe>();
 
 
 	/**
@@ -28,7 +28,7 @@ export class StundenplanblockungManagerStundenelement extends JavaObject {
 	 * @param pKopplungID  Die Datenbank-ID der Kopplung.
 	 * @param pKuerzel     Das Kürzel der Kopplung.
 	 */
-	public constructor(pKopplungID : number, pKuerzel : string) {
+	public constructor(pKopplungID: number, pKuerzel: string) {
 		super();
 		this._id = pKopplungID;
 		this._kuerzel = pKuerzel;
@@ -39,7 +39,7 @@ export class StundenplanblockungManagerStundenelement extends JavaObject {
 	 *
 	 * @return Die Datenbank-ID der Kopplung.
 	 */
-	public getID() : number {
+	public getID(): number {
 		return this._id;
 	}
 
@@ -48,7 +48,7 @@ export class StundenplanblockungManagerStundenelement extends JavaObject {
 	 *
 	 * @param pKuerzel  Das neue Kürzel der Kopplung.
 	 */
-	public setKuerzel(pKuerzel : string) : void {
+	public setKuerzel(pKuerzel: string): void {
 		this._kuerzel = pKuerzel;
 	}
 
@@ -56,7 +56,7 @@ export class StundenplanblockungManagerStundenelement extends JavaObject {
 		return 'de.svws_nrw.core.utils.stundenplanblockung.StundenplanblockungManagerStundenelement';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.utils.stundenplanblockung.StundenplanblockungManagerStundenelement'].includes(name);
 	}
 
@@ -64,6 +64,6 @@ export class StundenplanblockungManagerStundenelement extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_utils_stundenplanblockung_StundenplanblockungManagerStundenelement(obj : unknown) : StundenplanblockungManagerStundenelement {
+export function cast_de_svws_nrw_core_utils_stundenplanblockung_StundenplanblockungManagerStundenelement(obj: unknown): StundenplanblockungManagerStundenelement {
 	return obj as StundenplanblockungManagerStundenelement;
 }

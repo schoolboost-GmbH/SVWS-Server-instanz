@@ -9,12 +9,12 @@ export class BKBildungsplanKatalog extends JavaObject {
 	/**
 	 * Die Version des Katalogs. Diese wird bei Änderungen am Katalog erhöht.
 	 */
-	public version : number = -1;
+	public version: number = -1;
 
 	/**
 	 * Die Einträge des Katalogs.
 	 */
-	public lehrplaene : List<BKBildungsplanKatalogEintrag> = new ArrayList<BKBildungsplanKatalogEintrag>();
+	public lehrplaene: List<BKBildungsplanKatalogEintrag> = new ArrayList<BKBildungsplanKatalogEintrag>();
 
 
 	/**
@@ -28,13 +28,13 @@ export class BKBildungsplanKatalog extends JavaObject {
 		return 'de.svws_nrw.core.data.bk.BKBildungsplanKatalog';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.bk.BKBildungsplanKatalog'].includes(name);
 	}
 
 	public static class = new Class<BKBildungsplanKatalog>('de.svws_nrw.core.data.bk.BKBildungsplanKatalog');
 
-	public static transpilerFromJSON(json : string): BKBildungsplanKatalog {
+	public static transpilerFromJSON(json: string): BKBildungsplanKatalog {
 		const obj = JSON.parse(json) as Partial<BKBildungsplanKatalog>;
 		const result = new BKBildungsplanKatalog();
 		if (obj.version === undefined)
@@ -48,7 +48,7 @@ export class BKBildungsplanKatalog extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : BKBildungsplanKatalog) : string {
+	public static transpilerToJSON(obj: BKBildungsplanKatalog): string {
 		let result = '{';
 		result += '"version" : ' + obj.version.toString() + ',';
 		result += '"lehrplaene" : [ ';
@@ -64,7 +64,7 @@ export class BKBildungsplanKatalog extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<BKBildungsplanKatalog>) : string {
+	public static transpilerToJSONPatch(obj: Partial<BKBildungsplanKatalog>): string {
 		let result = '{';
 		if (obj.version !== undefined) {
 			result += '"version" : ' + obj.version.toString() + ',';
@@ -86,6 +86,6 @@ export class BKBildungsplanKatalog extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_bk_BKBildungsplanKatalog(obj : unknown) : BKBildungsplanKatalog {
+export function cast_de_svws_nrw_core_data_bk_BKBildungsplanKatalog(obj: unknown): BKBildungsplanKatalog {
 	return obj as BKBildungsplanKatalog;
 }

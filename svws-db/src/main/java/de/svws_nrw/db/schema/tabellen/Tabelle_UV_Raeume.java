@@ -12,24 +12,24 @@ import de.svws_nrw.db.schema.SchemaTabelleSpalte;
 public class Tabelle_UV_Raeume extends SchemaTabelle {
 
 	/** Die Definition der Tabellenspalte ID */
-	public SchemaTabelleSpalte col_ID = add("ID", SchemaDatentypen.BIGINT, true)
+	public final SchemaTabelleSpalte col_ID = add("ID", SchemaDatentypen.BIGINT, true)
 			.setNotNull()
 			.setJavaComment("ID des UV-Raums (generiert, planungsspezifisch)");
 
 	/** Die Definition der Tabellenspalte Kuerzel */
-	public SchemaTabelleSpalte col_Kuerzel = add("Kuerzel", SchemaDatentypen.VARCHAR, false).setDatenlaenge(20)
+	public final SchemaTabelleSpalte col_Kuerzel = add("Kuerzel", SchemaDatentypen.VARCHAR, false).setDatenlaenge(20)
 			.setNotNull()
 			.setJavaComment("Das Kürzel des Raums");
 
 	/** Die Definition der Tabellenspalte GueltigAb */
-	public SchemaTabelleSpalte col_GueltigAb = add("GueltigAb", SchemaDatentypen.DATE, false)
+	public final SchemaTabelleSpalte col_GueltigAb = add("GueltigAb", SchemaDatentypen.DATE, false)
 			.setDefault("1899-01-01")
 			.setNotNull()
 			.setConverter(DatumConverter.class)
 			.setJavaComment("Das Datum, ab dem der Raum gültig ist");
 
 	/** Die Definition der Tabellenspalte GueltigBis */
-	public SchemaTabelleSpalte col_GueltigBis = add("GueltigBis", SchemaDatentypen.DATE, false)
+	public final SchemaTabelleSpalte col_GueltigBis = add("GueltigBis", SchemaDatentypen.DATE, false)
 			.setConverter(DatumConverter.class)
 			.setJavaComment("Das Datum, bis wann der Raum gültig ist. Ist kein Datum gesetzt, gilt der Raum unbegrenzt weiter.");
 

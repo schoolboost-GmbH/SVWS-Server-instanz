@@ -179,7 +179,7 @@
 	import { computed, toRef, toRaw, ref, watch, nextTick, onMounted } from "vue";
 	import type { DataTableColumn, InputType, SortByAndOrder } from "../../types";
 
-	type DataTableColumnSource = DataTableColumn | string
+	type DataTableColumnSource = DataTableColumn | string;
 
 	type DataTableColumnInternal = {
 		[key: string]: unknown;
@@ -199,14 +199,14 @@
 		divider: boolean;
 		toggle: boolean;
 		toggleInvisible: boolean;
-	}
+	};
 
 	type DataTableCell = {
 		rowIndex: number;
 		rowData: DataTableItem;
 		column: DataTableColumnInternal;
 		value: any;
-	}
+	};
 
 	type DataTableRow = {
 		selectable: boolean;
@@ -214,7 +214,7 @@
 		source: DataTableItem;
 		cells: DataTableCell[];
 		isEditing?: boolean;
-	}
+	};
 
 	defineOptions({ inheritAttrs: false });
 
@@ -248,8 +248,8 @@
 			allowArrowKeySelection?: boolean;
 			unselectable?: Set<DataTableItem>;
 			focusFirstElement?: boolean;
-			focusSwitchingEnabled? : boolean;
-			focusHelpVisible? : boolean;
+			focusSwitchingEnabled?: boolean;
+			focusHelpVisible?: boolean;
 			multiSelectFocusEnabled?: boolean;
 			lockSelectable?: boolean;
 			rowDraggable?: (item: DataTableItem) => boolean;
@@ -278,7 +278,7 @@
 			filterHide: true,
 			filtered: false,
 			filterReset: undefined,
-			sortByAndOrder: () => ({key: null, order: null}),
+			sortByAndOrder: () => ({ key: null, order: null }),
 			sortByMulti: undefined,
 			toggleColumns: false,
 			scroll: false,
@@ -312,7 +312,7 @@
 	}
 	function getKeys<K extends object>(items: Iterable<K>): string[] {
 		const accumulatedObject = [...items].reduce((accumulator, value) => {
-			return {...accumulator, ...value};
+			return { ...accumulator, ...value };
 		}, {});
 		return Object.keys(accumulatedObject);
 	}
@@ -321,12 +321,12 @@
 		if (!props.allowArrowKeySelection)
 			return;
 		let targetIndex;
-		if (index === list.size-1 && !backwards)
+		if (index === list.size - 1 && !backwards)
 			targetIndex = 0;
 		else if (index === 0 && backwards)
-			targetIndex = list.size-1;
+			targetIndex = list.size - 1;
 		else
-			targetIndex = backwards ? index-1 : index+1;
+			targetIndex = backwards ? index - 1 : index + 1;
 		const ele = list.get(targetIndex);
 		if ((ele !== null) && (ele !== undefined))
 			ele.focus();
@@ -352,8 +352,8 @@
 			toggle: input.toggle ?? false,
 			toggleInvisible: input.toggleInvisible ?? false,
 			statistic: input.statistic ?? false,
-		}
-	}
+		};
+	};
 
 	const columnsComputed = computed(() =>
 		(props.columns.length === 0)
@@ -362,12 +362,12 @@
 
 	const gridTemplateColumns = computed<string>(() =>
 		columnsComputed.value.map(column =>
-			`minmax(${ column.fixedWidth > 0 ? (column.fixedWidth + 'rem') : (column.minWidth > 0 ? (column.minWidth + 'rem') : '4rem') }, ${ column.fixedWidth > 0 ? (column.fixedWidth + 'rem') : column.span + 'fr' })`
+			`minmax(${column.fixedWidth > 0 ? (column.fixedWidth + 'rem') : (column.minWidth > 0 ? (column.minWidth + 'rem') : '4rem')}, ${column.fixedWidth > 0 ? (column.fixedWidth + 'rem') : column.span + 'fr'})`
 		).join(' '));
 
 	const gridTemplateColumnsComputed = computed(() => gridTemplateColumns.value.length > 0 ? gridTemplateColumns.value : 'repeat(auto-fit, minmax(0, 1fr))');
 
-	const getGridTemplateColumns = computed(() => `grid-template-columns: ${props.selectable ? '2rem': ''} ${gridTemplateColumnsComputed.value}`);
+	const getGridTemplateColumns = computed(() => `grid-template-columns: ${props.selectable ? '2rem' : ''} ${gridTemplateColumnsComputed.value}`);
 
 	const rowsComputed = computed<DataTableRow[]>(() => [...props.items].map((source, index) =>
 		({ selectable: !props.unselectable.has(toRaw(source)), initialIndex: index, source: toRaw(source), cells:
@@ -377,18 +377,18 @@
 	const sortedRows = computed(() => {
 		if (rowsComputed.value.length < 0 || props.sortByMulti !== undefined)
 			return rowsComputed.value;
-		const columnIndex = columnsComputed.value.findIndex( ({ key, sortable }) => (internalSortByAndOrder.value.key === key) && sortable);
-		if ((columnIndex < 0) || (columnIndex > columnsComputed.value.length -1))
+		const columnIndex = columnsComputed.value.findIndex(({ key, sortable }) => (internalSortByAndOrder.value.key === key) && sortable);
+		if ((columnIndex < 0) || (columnIndex > columnsComputed.value.length - 1))
 			return rowsComputed.value;
-		const sortingOrderRatio = internalSortByAndOrder.value.order === false ? -1 : 1
+		const sortingOrderRatio = internalSortByAndOrder.value.order === false ? -1 : 1;
 		return [...rowsComputed.value].sort((a, b) => {
 			if (internalSortByAndOrder.value.order === null)
 				return a.initialIndex - b.initialIndex;
 			const firstValue = String(a.cells[columnIndex].value);
 			const secondValue = String(b.cells[columnIndex].value);
 			return sortingOrderRatio * (firstValue.localeCompare(secondValue));
-		})
-	})
+		});
+	});
 
 	function cycleSorting(value: boolean | null | undefined) {
 		if (value === null || value === undefined)
@@ -399,13 +399,13 @@
 	}
 
 	// eslint-disable-next-line vue/no-setup-props-reactivity-loss
-	const internalSortByAndOrder = ref<SortByAndOrder>(props.sortByAndOrder)
+	const internalSortByAndOrder = ref<SortByAndOrder>(props.sortByAndOrder);
 
 	function toggleSorting(column: DataTableColumnInternal) {
-		const neu: SortByAndOrder = {key: column.key, order: true};
+		const neu: SortByAndOrder = { key: column.key, order: true };
 		if (column.key === internalSortByAndOrder.value.key)
 			neu.order = cycleSorting(internalSortByAndOrder.value.order);
-		else if (props.sortByMulti !== undefined){
+		else if (props.sortByMulti !== undefined) {
 			const alt = props.sortByMulti.get(column.key);
 			neu.order = cycleSorting(alt);
 		}
@@ -421,13 +421,13 @@
 		emit('update:filterOpen', isFilterOpen.value);
 	}
 
-	const selectedItemsRaw = computed(() => (props.modelValue ?? []).map(i => toRaw(i)))
+	const selectedItemsRaw = computed(() => (props.modelValue ?? []).map(i => toRaw(i)));
 	const allRowsSelected = computed(() => (sortedRows.value.length === 0) ? false : sortedRows.value.filter(row => !props.unselectable.has(row.source)).every(isRowSelected));
 	const someNotAllRowsSelected = computed(() => (sortedRows.value.length === 0) ? false : sortedRows.value.some(isRowSelected) && !allRowsSelected.value);
 	const selectedItemsNotListed = computed(() => selectedItemsRaw.value.filter(i => !sortedRows.value.some(r => toRaw(r.source) === i)));
 
 	function isRowSelected(row: DataTableRow) {
-		return selectedItemsRaw.value.includes(row.source)
+		return selectedItemsRaw.value.includes(row.source);
 	}
 
 	function selectAllRows() {
@@ -447,14 +447,14 @@
 	}
 
 	function selectRow(row: DataTableRow) {
-		emit('update:modelValue', selectedItemsRaw.value.concat(row.source))
+		emit('update:modelValue', selectedItemsRaw.value.concat(row.source));
 	}
 
 	function unselectRow(row: DataTableRow) {
-		const index = selectedItemsRaw.value.indexOf(row.source)
-		const newSelection = selectedItemsRaw.value.slice()
-		newSelection.splice(index, 1)
-		emit('update:modelValue', newSelection)
+		const index = selectedItemsRaw.value.indexOf(row.source);
+		const newSelection = selectedItemsRaw.value.slice();
+		newSelection.splice(index, 1);
+		emit('update:modelValue', newSelection);
 	}
 
 	function toggleRowSelection(row: DataTableRow) {
@@ -474,7 +474,7 @@
 	}
 
 	const clickedItemRaw = computed(() => (toRaw(props.clicked) ?? null));
-	const clickedItemIndex = ref<number|undefined>();
+	const clickedItemIndex = ref<number | undefined>();
 
 	function isRowClicked(row: DataTableRow) {
 		const is = row.source === clickedItemRaw.value;
@@ -524,7 +524,7 @@
 		if ((clickedElementHtml !== undefined) && (clickedElementHtml !== null)) {
 			if (typeof clickedElementHtml.scrollIntoViewIfNeeded === "function")
 				clickedElementHtml.scrollIntoViewIfNeeded(scrollOptions);
-			else if(!isInView(clickedElementHtml))
+			else if (!isInView(clickedElementHtml))
 				clickedElementHtml.scrollIntoView(scrollOptions);
 		}
 	}
@@ -569,11 +569,11 @@
 
 	function rowDragListeners(row: DataTableItem) {
 		if (!props.rowDraggable(row))
-			return {} // keine Drag-Listener
+			return {}; // keine Drag-Listener
 		return {
 			dragstart: (event: DragEvent) => props.rowDragstart(event, row),
-			dragend:   (event: DragEvent) => props.rowDragend(event, row),
-		}
+			dragend: (event: DragEvent) => props.rowDragend(event, row),
+		};
 	}
 
 </script>

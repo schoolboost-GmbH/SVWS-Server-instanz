@@ -7,22 +7,22 @@ export class GostKlausurraum extends JavaObject {
 	/**
 	 * Die ID des Klausurraums.
 	 */
-	public id : number = -1;
+	public id: number = -1;
 
 	/**
 	 * Die ID des Klausurtermins.
 	 */
-	public idTermin : number = -1;
+	public idTermin: number = -1;
 
 	/**
 	 * Die ID des Stundenplan_Raumes.
 	 */
-	public idStundenplanRaum : number | null = null;
+	public idStundenplanRaum: number | null = null;
 
 	/**
 	 * Die textuelle Bemerkung zum Klausurraum, sofern vorhanden.
 	 */
-	public bemerkung : string | null = null;
+	public bemerkung: string | null = null;
 
 
 	/**
@@ -38,7 +38,7 @@ export class GostKlausurraum extends JavaObject {
 	 * @param another     das zu vergleichende Objekt
 	 * @return true, falls die Objekte indentisch sind, sonst false
 	 */
-	public equals(another : unknown | null) : boolean {
+	public equals(another: unknown | null): boolean {
 		return (another !== null) && (((another instanceof JavaObject) && (another.isTranspiledInstanceOf('de.svws_nrw.core.data.gost.klausurplanung.GostKlausurraum')))) && (this.id === (another as unknown as GostKlausurraum).id);
 	}
 
@@ -47,7 +47,7 @@ export class GostKlausurraum extends JavaObject {
 	 *
 	 * @return den HashCode
 	 */
-	public hashCode() : number {
+	public hashCode(): number {
 		return JavaLong.hashCode((this.id));
 	}
 
@@ -55,13 +55,13 @@ export class GostKlausurraum extends JavaObject {
 		return 'de.svws_nrw.core.data.gost.klausurplanung.GostKlausurraum';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.gost.klausurplanung.GostKlausurraum'].includes(name);
 	}
 
 	public static class = new Class<GostKlausurraum>('de.svws_nrw.core.data.gost.klausurplanung.GostKlausurraum');
 
-	public static transpilerFromJSON(json : string): GostKlausurraum {
+	public static transpilerFromJSON(json: string): GostKlausurraum {
 		const obj = JSON.parse(json) as Partial<GostKlausurraum>;
 		const result = new GostKlausurraum();
 		if (obj.id === undefined)
@@ -75,7 +75,7 @@ export class GostKlausurraum extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : GostKlausurraum) : string {
+	public static transpilerToJSON(obj: GostKlausurraum): string {
 		let result = '{';
 		result += '"id" : ' + obj.id.toString() + ',';
 		result += '"idTermin" : ' + obj.idTermin.toString() + ',';
@@ -86,7 +86,7 @@ export class GostKlausurraum extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<GostKlausurraum>) : string {
+	public static transpilerToJSONPatch(obj: Partial<GostKlausurraum>): string {
 		let result = '{';
 		if (obj.id !== undefined) {
 			result += '"id" : ' + obj.id.toString() + ',';
@@ -107,6 +107,6 @@ export class GostKlausurraum extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_gost_klausurplanung_GostKlausurraum(obj : unknown) : GostKlausurraum {
+export function cast_de_svws_nrw_core_data_gost_klausurplanung_GostKlausurraum(obj: unknown): GostKlausurraum {
 	return obj as GostKlausurraum;
 }

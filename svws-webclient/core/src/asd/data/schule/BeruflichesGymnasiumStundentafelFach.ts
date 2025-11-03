@@ -6,27 +6,32 @@ export class BeruflichesGymnasiumStundentafelFach extends JavaObject {
 	/**
 	 * Die Bezeichnung des Fachs laut Prüfungsordnung
 	 */
-	public fachbezeichnung : string = "";
+	public fachbezeichnung: string = "";
 
 	/**
 	 * Die Kursart des Fachs
 	 */
-	public kursart : string = "";
+	public kursart: string = "";
+
+	/**
+	 * Die Nummer des Abifachs hier nur 1, 2 oder null
+	 */
+	public abifach: number | null = null;
 
 	/**
 	 * Der Stundenumfang für alle sechs Halbjahre EF.1, EF.2, Q1.1, Q1.2, Q2.1, Q2.2
 	 */
-	public stundenumfang : Array<number> = Array(6).fill(0);
+	public stundenumfang: Array<number> = Array(6).fill(0);
 
 	/**
 	 * Der Zeugnisbereich des Fachs
 	 */
-	public zeugnisbereich : string = "";
+	public zeugnisbereich: string = "";
 
 	/**
 	 * Die Position des Fachs in der Stundentafel
 	 */
-	public sortierung : number = 0;
+	public sortierung: number = 0;
 
 
 	/**
@@ -40,13 +45,13 @@ export class BeruflichesGymnasiumStundentafelFach extends JavaObject {
 		return 'de.svws_nrw.asd.data.schule.BeruflichesGymnasiumStundentafelFach';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.asd.data.schule.BeruflichesGymnasiumStundentafelFach'].includes(name);
 	}
 
 	public static class = new Class<BeruflichesGymnasiumStundentafelFach>('de.svws_nrw.asd.data.schule.BeruflichesGymnasiumStundentafelFach');
 
-	public static transpilerFromJSON(json : string): BeruflichesGymnasiumStundentafelFach {
+	public static transpilerFromJSON(json: string): BeruflichesGymnasiumStundentafelFach {
 		const obj = JSON.parse(json) as Partial<BeruflichesGymnasiumStundentafelFach>;
 		const result = new BeruflichesGymnasiumStundentafelFach();
 		if (obj.fachbezeichnung === undefined)
@@ -55,6 +60,7 @@ export class BeruflichesGymnasiumStundentafelFach extends JavaObject {
 		if (obj.kursart === undefined)
 			throw new Error('invalid json format, missing attribute kursart');
 		result.kursart = obj.kursart;
+		result.abifach = (obj.abifach === undefined) ? null : obj.abifach === null ? null : obj.abifach;
 		if (obj.stundenumfang !== undefined) {
 			for (let i = 0; i < obj.stundenumfang.length; i++) {
 				result.stundenumfang[i] = obj.stundenumfang[i];
@@ -69,10 +75,11 @@ export class BeruflichesGymnasiumStundentafelFach extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : BeruflichesGymnasiumStundentafelFach) : string {
+	public static transpilerToJSON(obj: BeruflichesGymnasiumStundentafelFach): string {
 		let result = '{';
 		result += '"fachbezeichnung" : ' + JSON.stringify(obj.fachbezeichnung) + ',';
 		result += '"kursart" : ' + JSON.stringify(obj.kursart) + ',';
+		result += '"abifach" : ' + ((obj.abifach === null) ? 'null' : obj.abifach.toString()) + ',';
 		result += '"stundenumfang" : [ ';
 		for (let i = 0; i < obj.stundenumfang.length; i++) {
 			const elem = obj.stundenumfang[i];
@@ -88,13 +95,16 @@ export class BeruflichesGymnasiumStundentafelFach extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<BeruflichesGymnasiumStundentafelFach>) : string {
+	public static transpilerToJSONPatch(obj: Partial<BeruflichesGymnasiumStundentafelFach>): string {
 		let result = '{';
 		if (obj.fachbezeichnung !== undefined) {
 			result += '"fachbezeichnung" : ' + JSON.stringify(obj.fachbezeichnung) + ',';
 		}
 		if (obj.kursart !== undefined) {
 			result += '"kursart" : ' + JSON.stringify(obj.kursart) + ',';
+		}
+		if (obj.abifach !== undefined) {
+			result += '"abifach" : ' + ((obj.abifach === null) ? 'null' : obj.abifach.toString()) + ',';
 		}
 		if (obj.stundenumfang !== undefined) {
 			const a = obj.stundenumfang;
@@ -120,6 +130,6 @@ export class BeruflichesGymnasiumStundentafelFach extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_asd_data_schule_BeruflichesGymnasiumStundentafelFach(obj : unknown) : BeruflichesGymnasiumStundentafelFach {
+export function cast_de_svws_nrw_asd_data_schule_BeruflichesGymnasiumStundentafelFach(obj: unknown): BeruflichesGymnasiumStundentafelFach {
 	return obj as BeruflichesGymnasiumStundentafelFach;
 }

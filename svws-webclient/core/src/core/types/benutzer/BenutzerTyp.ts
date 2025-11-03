@@ -4,40 +4,40 @@ import { Class } from '../../../java/lang/Class';
 export class BenutzerTyp extends JavaEnum<BenutzerTyp> {
 
 	/** an array containing all values of this enumeration */
-	static readonly all_values_by_ordinal : Array<BenutzerTyp> = [];
+	static readonly all_values_by_ordinal: Array<BenutzerTyp> = [];
 
 	/** an array containing all values of this enumeration indexed by their name*/
-	static readonly all_values_by_name : Map<string, BenutzerTyp> = new Map<string, BenutzerTyp>();
+	static readonly all_values_by_name: Map<string, BenutzerTyp> = new Map<string, BenutzerTyp>();
 
 	/**
 	 * Ein allgemeiner Benutzertyp
 	 */
-	public static readonly ALLGEMEIN : BenutzerTyp = new BenutzerTyp("ALLGEMEIN", 0, 0, "Allgemein");
+	public static readonly ALLGEMEIN: BenutzerTyp = new BenutzerTyp("ALLGEMEIN", 0, 0, "Allgemein");
 
 	/**
 	 * Ein Benutzertyp für Lehrer und weiteres Personal
 	 */
-	public static readonly LEHRER : BenutzerTyp = new BenutzerTyp("LEHRER", 1, 1, "Lehrer/Personal");
+	public static readonly LEHRER: BenutzerTyp = new BenutzerTyp("LEHRER", 1, 1, "Lehrer/Personal");
 
 	/**
 	 * Ein Benutzertyp für Schüler
 	 */
-	public static readonly SCHUELER : BenutzerTyp = new BenutzerTyp("SCHUELER", 2, 2, "Schüler");
+	public static readonly SCHUELER: BenutzerTyp = new BenutzerTyp("SCHUELER", 2, 2, "Schüler");
 
 	/**
 	 * Ein Benutzertyp für Erzieher
 	 */
-	public static readonly ERZIEHER : BenutzerTyp = new BenutzerTyp("ERZIEHER", 3, 3, "Erzieher");
+	public static readonly ERZIEHER: BenutzerTyp = new BenutzerTyp("ERZIEHER", 3, 3, "Erzieher");
 
 	/**
 	 * Die ID des Benutzertyps
 	 */
-	public readonly id : number;
+	public readonly id: number;
 
 	/**
 	 * Die textuelle Bezeichnung des Benutzertyps.
 	 */
-	public readonly bezeichnung : string;
+	public readonly bezeichnung: string;
 
 	/**
 	 * Erzeugt einen neuen Benutzertyp für die Aufzählung.
@@ -45,7 +45,7 @@ export class BenutzerTyp extends JavaEnum<BenutzerTyp> {
 	 * @param id                  die ID des Benutzertyps
 	 * @param bezeichnung         die Bezeichnung des Benutzertyps
 	 */
-	private constructor(name : string, ordinal : number, id : number, bezeichnung : string) {
+	private constructor(name: string, ordinal: number, id: number, bezeichnung: string) {
 		super(name, ordinal);
 		BenutzerTyp.all_values_by_ordinal.push(this);
 		BenutzerTyp.all_values_by_name.set(name, this);
@@ -60,7 +60,7 @@ export class BenutzerTyp extends JavaEnum<BenutzerTyp> {
 	 *
 	 * @return die Benutzerkompetenz oder null, falls die ID fehlerhaft ist
 	 */
-	public static getByID(id : number) : BenutzerTyp | null {
+	public static getByID(id: number): BenutzerTyp | null {
 		switch (id) {
 			case 0: {
 				return BenutzerTyp.ALLGEMEIN;
@@ -85,7 +85,7 @@ export class BenutzerTyp extends JavaEnum<BenutzerTyp> {
 	 *
 	 * @returns the array with enumeration values
 	 */
-	public static values() : Array<BenutzerTyp> {
+	public static values(): Array<BenutzerTyp> {
 		return [...this.all_values_by_ordinal];
 	}
 
@@ -96,7 +96,7 @@ export class BenutzerTyp extends JavaEnum<BenutzerTyp> {
 	 *
 	 * @returns the enumeration values or null
 	 */
-	public static valueOf(name : string) : BenutzerTyp | null {
+	public static valueOf(name: string): BenutzerTyp | null {
 		const tmp = this.all_values_by_name.get(name);
 		return (!tmp) ? null : tmp;
 	}
@@ -105,7 +105,7 @@ export class BenutzerTyp extends JavaEnum<BenutzerTyp> {
 		return 'de.svws_nrw.core.types.benutzer.BenutzerTyp';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.types.benutzer.BenutzerTyp', 'java.lang.Enum', 'java.lang.Comparable'].includes(name);
 	}
 
@@ -113,6 +113,6 @@ export class BenutzerTyp extends JavaEnum<BenutzerTyp> {
 
 }
 
-export function cast_de_svws_nrw_core_types_benutzer_BenutzerTyp(obj : unknown) : BenutzerTyp {
+export function cast_de_svws_nrw_core_types_benutzer_BenutzerTyp(obj: unknown): BenutzerTyp {
 	return obj as BenutzerTyp;
 }

@@ -5,7 +5,7 @@ import { routeApp, type RouteApp } from "~/router/apps/RouteApp";
 
 import type { LadeDatenProps } from "~/components/LadeDatenProps";
 
-const LadeDaten = () => import("~/components/LadeDaten.vue")
+const LadeDaten = () => import("~/components/LadeDaten.vue");
 
 
 export class RouteLadeDaten extends RouteNode<unknown, RouteApp> {
@@ -16,14 +16,14 @@ export class RouteLadeDaten extends RouteNode<unknown, RouteApp> {
 		super.text = "Laden";
 	}
 
-	public async enter(to: RouteNode<unknown, any>, to_params: RouteParams) : Promise<void | Error | RouteLocationRaw> {
+	public async enter(to: RouteNode<unknown, any>, to_params: RouteParams): Promise<void | Error | RouteLocationRaw> {
 	}
 
-	protected async update(to: RouteNode<unknown, any>, to_params: RouteParams) : Promise<void | Error | RouteLocationRaw> {
+	protected async update(to: RouteNode<unknown, any>, to_params: RouteParams): Promise<void | Error | RouteLocationRaw> {
 	}
 
-	public getRoute() : RouteLocationRaw {
-		return { name: this.name, params: { }};
+	public getRoute(): RouteLocationRaw {
+		return { name: this.name, params: { } };
 	}
 
 	public getProps(to: RouteLocationNormalized): LadeDatenProps {

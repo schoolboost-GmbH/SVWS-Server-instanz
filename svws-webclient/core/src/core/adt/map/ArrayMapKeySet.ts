@@ -16,7 +16,7 @@ export class ArrayMapKeySet<K, V> extends JavaObject implements JavaSet<K> {
 	/**
 	 * Die {@link ArrayMap} zu der dieses Key-Set gehört.
 	 */
-	private readonly _map : ArrayMap<K, V>;
+	private readonly _map: ArrayMap<K, V>;
 
 
 	/**
@@ -24,31 +24,31 @@ export class ArrayMapKeySet<K, V> extends JavaObject implements JavaSet<K> {
 	 *
 	 * @param map   die {@link ArrayMap}, zu welcher dieses Key-set gehört
 	 */
-	constructor(map : ArrayMap<K, V>) {
+	constructor(map: ArrayMap<K, V>) {
 		super();
 		this._map = map;
 	}
 
-	public size() : number {
+	public size(): number {
 		return this._map.size();
 	}
 
-	public isEmpty() : boolean {
+	public isEmpty(): boolean {
 		return this._map.isEmpty();
 	}
 
-	public contains(obj : unknown | null) : boolean {
+	public contains(obj: unknown | null): boolean {
 		return this._map.containsKey(obj);
 	}
 
-	public iterator() : JavaIterator<K> {
+	public iterator(): JavaIterator<K> {
 		return new ArrayMapKeySetIterator<K, V>(this._map);
 	}
 
-	private getKeyList() : List<K> {
-		const list : ArrayList<K> = new ArrayList<K>(this._map.size());
-		for (let i : number = 0; i < this._map.getNumberOfKeys(); i++) {
-			const value : ArrayMapEntry<K, V> | null = this._map.getEntryByIndex(i);
+	private getKeyList(): List<K> {
+		const list: ArrayList<K> = new ArrayList<K>(this._map.size());
+		for (let i: number = 0; i < this._map.getNumberOfKeys(); i++) {
+			const value: ArrayMapEntry<K, V> | null = this._map.getEntryByIndex(i);
 			if (value !== null)
 				list.add(value.getKey());
 		}
@@ -57,29 +57,29 @@ export class ArrayMapKeySet<K, V> extends JavaObject implements JavaSet<K> {
 
 	public toArray() : Array<unknown>;
 
-	public toArray<T>(a : Array<T>) : Array<T>;
+	public toArray<T>(a: Array<T>) : Array<T>;
 
 	/**
 	 * Implementation for method overloads of 'toArray'
 	 */
-	public toArray<T>(__param0? : Array<T>) : Array<T> | Array<unknown> {
+	public toArray<T>(__param0?: Array<T>): Array<T> | Array<unknown> {
 		if ((__param0 === undefined)) {
 			return this.getKeyList().toArray();
 		} else if (((__param0 !== undefined) && Array.isArray(__param0))) {
-			const a : Array<T> = __param0 as unknown as Array<T>;
+			const a: Array<T> = __param0 as unknown as Array<T>;
 			return this.getKeyList().toArray(a);
 		} else throw new Error('invalid method overload');
 	}
 
-	public add(e : K) : boolean {
+	public add(e: K): boolean {
 		throw new UnsupportedOperationException("add: Es kann kein Schlüsselwert ohne zugeordnetem Wert hinzugefügt werden (null ist nicht erlaubt).")
 	}
 
-	public remove(obj : unknown | null) : boolean {
+	public remove(obj: unknown | null): boolean {
 		return this._map.remove(obj) !== null;
 	}
 
-	public containsAll(collection : Collection<any> | null) : boolean {
+	public containsAll(collection: Collection<any> | null): boolean {
 		if ((collection === null) || (this as unknown === collection as unknown))
 			return true;
 		for (const obj of collection)
@@ -88,16 +88,16 @@ export class ArrayMapKeySet<K, V> extends JavaObject implements JavaSet<K> {
 		return true;
 	}
 
-	public addAll(c : Collection<K> | null) : boolean {
+	public addAll(c: Collection<K> | null): boolean {
 		throw new UnsupportedOperationException("addAll: Es kann kein Schlüsselwert ohne zugeordnetem Wert hinzugefügt werden (null ist nicht erlaubt).")
 	}
 
-	public retainAll(collection : Collection<any> | null) : boolean {
+	public retainAll(collection: Collection<any> | null): boolean {
 		if (collection === null)
 			throw new NullPointerException()
-		let changed : boolean = false;
-		for (let i : number = 0; i < this._map.getNumberOfKeys(); i++) {
-			const entry : ArrayMapEntry<K, V> | null = this._map.getEntryByIndex(i);
+		let changed: boolean = false;
+		for (let i: number = 0; i < this._map.getNumberOfKeys(); i++) {
+			const entry: ArrayMapEntry<K, V> | null = this._map.getEntryByIndex(i);
 			if (entry === null)
 				continue;
 			if (!collection.contains(entry.getKey())) {
@@ -108,10 +108,10 @@ export class ArrayMapKeySet<K, V> extends JavaObject implements JavaSet<K> {
 		return changed;
 	}
 
-	public removeAll(collection : Collection<any> | null) : boolean {
+	public removeAll(collection: Collection<any> | null): boolean {
 		if (collection === null)
 			throw new NullPointerException()
-		let removed : boolean = false;
+		let removed: boolean = false;
 		for (const obj of collection) {
 			if (this._map.containsKey(obj)) {
 				this._map.remove(obj);
@@ -121,7 +121,7 @@ export class ArrayMapKeySet<K, V> extends JavaObject implements JavaSet<K> {
 		return removed;
 	}
 
-	public clear() : void {
+	public clear(): void {
 		this._map.clear();
 	}
 
@@ -129,16 +129,16 @@ export class ArrayMapKeySet<K, V> extends JavaObject implements JavaSet<K> {
 		return 'de.svws_nrw.core.adt.map.ArrayMapKeySet';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['java.util.Collection', 'java.util.Set', 'de.svws_nrw.core.adt.map.ArrayMapKeySet', 'java.lang.Iterable'].includes(name);
 	}
 
 	public static class = new Class<ArrayMapKeySet<any, any>>('de.svws_nrw.core.adt.map.ArrayMapKeySet');
 
 	public [Symbol.iterator](): Iterator<K> {
-		const iter : JavaIterator<K> = this.iterator();
-		const result : Iterator<K> = {
-			next() : IteratorResult<K> {
+		const iter: JavaIterator<K> = this.iterator();
+		const result: Iterator<K> = {
+			next(): IteratorResult<K> {
 				if (iter.hasNext())
 					return { value : iter.next(), done : false };
 				return { value : null, done : true };
@@ -149,6 +149,6 @@ export class ArrayMapKeySet<K, V> extends JavaObject implements JavaSet<K> {
 
 }
 
-export function cast_de_svws_nrw_core_adt_map_ArrayMapKeySet<K, V>(obj : unknown) : ArrayMapKeySet<K, V> {
+export function cast_de_svws_nrw_core_adt_map_ArrayMapKeySet<K, V>(obj: unknown): ArrayMapKeySet<K, V> {
 	return obj as ArrayMapKeySet<K, V>;
 }

@@ -36,6 +36,6 @@
 	}
 	const closeModal = () => {
 		show.value = false;
-	}
+	};
 
 </script>

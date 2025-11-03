@@ -69,7 +69,7 @@
 
 	import { computed, ref } from "vue";
 	import type { ErrorProps } from "./SErrorProps";
-	import { SimpleOperationResponse} from "@core";
+	import { SimpleOperationResponse } from "@core";
 	import { DeveloperNotificationException, OpenApiError, UserNotificationException } from "@core";
 
 	type CapturedError = {
@@ -81,17 +81,17 @@
 	};
 
 	const props = defineProps<ErrorProps>();
-	const copied = ref<boolean|null>(null);
+	const copied = ref<boolean | null>(null);
 
 	const errorDescription = computed(() => {
 		if (props.error instanceof DeveloperNotificationException)
-			return "Programmierfehler: Bitte melden Sie diesen Fehler."
+			return "Programmierfehler: Bitte melden Sie diesen Fehler.";
 		else if (props.error instanceof UserNotificationException)
 			return "Nutzungsfehler: Dieser Fehler wurde durch eine nicht vorgesehene Nutzung der verwendeten Funktion hervorgerufen, z.B. durch unmögliche Kombinationen etc.";
 		else if (props.error instanceof OpenApiError)
 			return "API-Fehler: Dieser Fehler wird durch eine fehlerhafte Kommunikation mit dem Server verursacht. In der Regel bedeutet das, dass die verschickten Daten nicht den Vorgaben entsprechen.";
 		return "Unbekannter Fehler";
-	})
+	});
 
 	const errorText = computed<string | null>(() => {
 		if (props.errortext === undefined)
@@ -121,15 +121,15 @@
 		const name = errorDescription.value;
 		const message = reason.message;
 		const log = errorSimpleOperationResponse.value;
-		return { id: 0, name, message, stack: reason.stack?.split("\n") || '', log }
+		return { id: 0, name, message, stack: reason.stack?.split("\n") || '', log };
 	}
 
 	async function copyToClipboard() {
 		const capturedError = await createCapturedError();
 		const json = JSON.stringify({ env: { mode: props.api.mode.text, version: props.api.version, commit: props.api.githash, kompetenzen: props.benutzerKompetenzen.values().toArray().toString(), userAgent: window.navigator.userAgent }, capturedError }, null, 2);
 		try {
-			await navigator.clipboard.writeText("```json\n"+json+"\n```");
-		} catch(e) {
+			await navigator.clipboard.writeText("```json\n" + json + "\n```");
+		} catch (e) {
 			copied.value = false;
 		}
 		copied.value = true;

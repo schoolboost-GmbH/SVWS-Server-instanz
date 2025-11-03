@@ -6,12 +6,12 @@ export class Telefonnummer extends JavaObject {
 	/**
 	 *  die Art der Telefonnummer
 	 */
-	public type : string = "";
+	public type: string = "";
 
 	/**
 	 *  die Telefon-, Fax- oder Pagernummer
 	 */
-	public number : string = "";
+	public number: string = "";
 
 
 	/**
@@ -25,13 +25,13 @@ export class Telefonnummer extends JavaObject {
 		return 'de.svws_nrw.core.data.adressbuch.Telefonnummer';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.adressbuch.Telefonnummer'].includes(name);
 	}
 
 	public static class = new Class<Telefonnummer>('de.svws_nrw.core.data.adressbuch.Telefonnummer');
 
-	public static transpilerFromJSON(json : string): Telefonnummer {
+	public static transpilerFromJSON(json: string): Telefonnummer {
 		const obj = JSON.parse(json) as Partial<Telefonnummer>;
 		const result = new Telefonnummer();
 		if (obj.type === undefined)
@@ -43,7 +43,7 @@ export class Telefonnummer extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : Telefonnummer) : string {
+	public static transpilerToJSON(obj: Telefonnummer): string {
 		let result = '{';
 		result += '"type" : ' + JSON.stringify(obj.type) + ',';
 		result += '"number" : ' + JSON.stringify(obj.number) + ',';
@@ -52,7 +52,7 @@ export class Telefonnummer extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<Telefonnummer>) : string {
+	public static transpilerToJSONPatch(obj: Partial<Telefonnummer>): string {
 		let result = '{';
 		if (obj.type !== undefined) {
 			result += '"type" : ' + JSON.stringify(obj.type) + ',';
@@ -67,6 +67,6 @@ export class Telefonnummer extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_adressbuch_Telefonnummer(obj : unknown) : Telefonnummer {
+export function cast_de_svws_nrw_core_data_adressbuch_Telefonnummer(obj: unknown): Telefonnummer {
 	return obj as Telefonnummer;
 }

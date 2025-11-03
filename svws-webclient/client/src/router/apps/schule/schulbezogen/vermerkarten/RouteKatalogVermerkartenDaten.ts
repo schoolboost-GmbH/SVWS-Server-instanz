@@ -13,7 +13,7 @@ const SVermerkartenDaten = () => import("~/components/schule/schulbezogen/vermer
 export class RouteKatalogVermerkartenDaten extends RouteNode<any, RouteKatalogVermerkarten> {
 
 	public constructor() {
-		super(Schulform.values(), [ BenutzerKompetenz.KATALOG_EINTRAEGE_ANSEHEN, BenutzerKompetenz.KATALOG_EINTRAEGE_AENDERN ], "schule.vermerke.daten", "daten", SVermerkartenDaten);
+		super(Schulform.values(), [BenutzerKompetenz.KATALOG_EINTRAEGE_ANSEHEN, BenutzerKompetenz.KATALOG_EINTRAEGE_AENDERN], "schule.vermerke.daten", "daten", SVermerkartenDaten);
 		super.mode = ServerMode.STABLE;
 		super.propHandler = (route) => this.getProps(route);
 		super.text = "Vermerkart";
@@ -21,7 +21,7 @@ export class RouteKatalogVermerkartenDaten extends RouteNode<any, RouteKatalogVe
 
 	gotoSchueler = async (schuelerVermerkartZusammenfassung: SchuelerVermerkartZusammenfassung) => {
 		await RouteManager.doRoute(routeSchuelerVermerke.getRoute({ id: schuelerVermerkartZusammenfassung.id }));
-	}
+	};
 
 	public getProps(to: RouteLocationNormalized): VermerkartenDatenProps {
 		return {

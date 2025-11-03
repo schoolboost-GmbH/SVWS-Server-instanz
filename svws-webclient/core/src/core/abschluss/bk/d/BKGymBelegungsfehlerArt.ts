@@ -1,45 +1,46 @@
 import { JavaEnum } from '../../../../java/lang/JavaEnum';
 import { Class } from '../../../../java/lang/Class';
+import { DeveloperNotificationException } from '../../../../core/exceptions/DeveloperNotificationException';
 
 export class BKGymBelegungsfehlerArt extends JavaEnum<BKGymBelegungsfehlerArt> {
 
 	/** an array containing all values of this enumeration */
-	static readonly all_values_by_ordinal : Array<BKGymBelegungsfehlerArt> = [];
+	static readonly all_values_by_ordinal: Array<BKGymBelegungsfehlerArt> = [];
 
 	/** an array containing all values of this enumeration indexed by their name*/
-	static readonly all_values_by_name : Map<string, BKGymBelegungsfehlerArt> = new Map<string, BKGymBelegungsfehlerArt>();
+	static readonly all_values_by_name: Map<string, BKGymBelegungsfehlerArt> = new Map<string, BKGymBelegungsfehlerArt>();
 
 	/**
 	 * Belegungsfehler
 	 */
-	public static readonly BELEGUNG : BKGymBelegungsfehlerArt = new BKGymBelegungsfehlerArt("BELEGUNG", 0, "BELEGUNG");
+	public static readonly BELEGUNG: BKGymBelegungsfehlerArt = new BKGymBelegungsfehlerArt("BELEGUNG", 0, "BELEGUNG");
 
 	/**
 	 * Fehler bei der Schriftlichkeit
 	 */
-	public static readonly SCHRIFTLICHKEIT : BKGymBelegungsfehlerArt = new BKGymBelegungsfehlerArt("SCHRIFTLICHKEIT", 1, "SCHRIFTLICHKEIT");
+	public static readonly SCHRIFTLICHKEIT: BKGymBelegungsfehlerArt = new BKGymBelegungsfehlerArt("SCHRIFTLICHKEIT", 1, "SCHRIFTLICHKEIT");
 
 	/**
 	 * Fehler in Bezug auf schulische Rahmenbedingungen - Zusatzkursbeginn oder nicht erlaubte oder geforderte Fachkombinationen
 	 */
-	public static readonly SCHULSPEZIFISCH : BKGymBelegungsfehlerArt = new BKGymBelegungsfehlerArt("SCHULSPEZIFISCH", 2, "SCHULSPEZIFISCH");
+	public static readonly SCHULSPEZIFISCH: BKGymBelegungsfehlerArt = new BKGymBelegungsfehlerArt("SCHULSPEZIFISCH", 2, "SCHULSPEZIFISCH");
 
 	/**
 	 * Information, aber kein Fehler
 	 */
-	public static readonly HINWEIS : BKGymBelegungsfehlerArt = new BKGymBelegungsfehlerArt("HINWEIS", 3, "HINWEIS");
+	public static readonly HINWEIS: BKGymBelegungsfehlerArt = new BKGymBelegungsfehlerArt("HINWEIS", 3, "HINWEIS");
 
 	/**
 	 * Das Kürzel für die Belegungsfehlerart
 	 */
-	public readonly kuerzel : string;
+	public readonly kuerzel: string;
 
 	/**
 	 * Erzeugt ein neues Abitur-Belegungsfehler-Objekt
 	 *
 	 * @param kuerzel        das Kürzel der Fehler-Art
 	 */
-	private constructor(name : string, ordinal : number, kuerzel : string) {
+	private constructor(name: string, ordinal: number, kuerzel: string) {
 		super(name, ordinal);
 		BKGymBelegungsfehlerArt.all_values_by_ordinal.push(this);
 		BKGymBelegungsfehlerArt.all_values_by_name.set(name, this);
@@ -53,29 +54,24 @@ export class BKGymBelegungsfehlerArt extends JavaEnum<BKGymBelegungsfehlerArt> {
 	 *
 	 * @return die Belegungsfehler-Art
 	 */
-	public static fromKuerzel(kuerzel : string | null) : BKGymBelegungsfehlerArt | null {
-		if (kuerzel === null)
-			return null;
-		switch (kuerzel) {
-			case "BELEGUNG": {
-				return BKGymBelegungsfehlerArt.BELEGUNG;
-			}
-			case "SCHRIFTLICHKEIT": {
-				return BKGymBelegungsfehlerArt.SCHRIFTLICHKEIT;
-			}
-			case "SCHULSPEZIFISCH": {
-				return BKGymBelegungsfehlerArt.SCHULSPEZIFISCH;
-			}
-			case "HINWEIS": {
-				return BKGymBelegungsfehlerArt.HINWEIS;
-			}
-			default: {
-				return null;
-			}
+	public static fromKuerzel(kuerzel: string): BKGymBelegungsfehlerArt {
+		let _sevar_2055730872 : any;
+		const _seexpr_2055730872 = (kuerzel);
+		if (_seexpr_2055730872 === "BELEGUNG") {
+			_sevar_2055730872 = BKGymBelegungsfehlerArt.BELEGUNG;
+		} else if (_seexpr_2055730872 === "SCHRIFTLICHKEIT") {
+			_sevar_2055730872 = BKGymBelegungsfehlerArt.SCHRIFTLICHKEIT;
+		} else if (_seexpr_2055730872 === "SCHULSPEZIFISCH") {
+			_sevar_2055730872 = BKGymBelegungsfehlerArt.SCHULSPEZIFISCH;
+		} else if (_seexpr_2055730872 === "HINWEIS") {
+			_sevar_2055730872 = BKGymBelegungsfehlerArt.HINWEIS;
+		} else {
+			throw new DeveloperNotificationException("Die Belegungsfehlerart " + kuerzel + " gibt es nicht.");
 		}
+		return _sevar_2055730872;
 	}
 
-	public toString() : string {
+	public toString(): string {
 		return this.kuerzel;
 	}
 
@@ -84,7 +80,7 @@ export class BKGymBelegungsfehlerArt extends JavaEnum<BKGymBelegungsfehlerArt> {
 	 *
 	 * @returns the array with enumeration values
 	 */
-	public static values() : Array<BKGymBelegungsfehlerArt> {
+	public static values(): Array<BKGymBelegungsfehlerArt> {
 		return [...this.all_values_by_ordinal];
 	}
 
@@ -95,7 +91,7 @@ export class BKGymBelegungsfehlerArt extends JavaEnum<BKGymBelegungsfehlerArt> {
 	 *
 	 * @returns the enumeration values or null
 	 */
-	public static valueOf(name : string) : BKGymBelegungsfehlerArt | null {
+	public static valueOf(name: string): BKGymBelegungsfehlerArt | null {
 		const tmp = this.all_values_by_name.get(name);
 		return (!tmp) ? null : tmp;
 	}
@@ -104,7 +100,7 @@ export class BKGymBelegungsfehlerArt extends JavaEnum<BKGymBelegungsfehlerArt> {
 		return 'de.svws_nrw.core.abschluss.bk.d.BKGymBelegungsfehlerArt';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.abschluss.bk.d.BKGymBelegungsfehlerArt', 'java.lang.Enum', 'java.lang.Comparable'].includes(name);
 	}
 
@@ -112,6 +108,6 @@ export class BKGymBelegungsfehlerArt extends JavaEnum<BKGymBelegungsfehlerArt> {
 
 }
 
-export function cast_de_svws_nrw_core_abschluss_bk_d_BKGymBelegungsfehlerArt(obj : unknown) : BKGymBelegungsfehlerArt {
+export function cast_de_svws_nrw_core_abschluss_bk_d_BKGymBelegungsfehlerArt(obj: unknown): BKGymBelegungsfehlerArt {
 	return obj as BKGymBelegungsfehlerArt;
 }

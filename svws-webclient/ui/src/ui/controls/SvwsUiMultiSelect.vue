@@ -97,7 +97,7 @@
 		itemFilter: (items: Iterable<Item> | Item[], searchText: string) => Array.isArray(items) ? items : [...items],
 		useNull: false,
 		headless: false,
-	})
+	});
 
 	const emit = defineEmits<{
 		(e: "update:modelValue", items: Item[]): void;
@@ -106,7 +106,7 @@
 
 	const methodsTextField = shallowRef<{ focus: () => void } | undefined>(undefined);
 
-	const refList = ref<ComponentExposed<typeof SvwsUiDropdownList>|null|undefined>(null);
+	const refList = ref<ComponentExposed<typeof SvwsUiDropdownList> | null | undefined>(null);
 
 	const showList = ref(false);
 	const listIdPrefix = useId();
@@ -153,7 +153,7 @@
 		for (const item of props.modelValue)
 			set.add(toRaw(item));
 		return set;
-	})
+	});
 
 	const data = shallowRef(new Set(rawModelValues.value));
 
@@ -169,7 +169,7 @@
 
 	const selectedItem = computed({
 		get: () => {
-			const [ e ] = data.value.keys();
+			const [e] = data.value.keys();
 			return e;
 		},
 		set: (item) => {
@@ -201,7 +201,7 @@
 	}
 
 	const sortedList = computed<Item[]>(() => {
-		let arr
+		let arr;
 		if (Array.isArray(props.items))
 			arr = props.items;
 		else if (props.items instanceof Map)
@@ -306,7 +306,7 @@
 		{
 			placement: 'bottom',
 			middleware: [flip(), shift(), offset(2), size({
-				apply({rects, elements}) {
+				apply({ rects, elements }) {
 					Object.assign(elements.floating.style, {
 						width: `${rects.reference.width}px`,
 					});
@@ -321,6 +321,6 @@
 
 	const content = computed<Item[]>(() => [...data.value]);
 
-	defineExpose({content});
+	defineExpose({ content });
 
 </script>

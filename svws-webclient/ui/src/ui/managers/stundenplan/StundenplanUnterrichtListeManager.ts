@@ -1,113 +1,113 @@
-import { AttributMitAuswahl } from '../../../../../core/src/core/utils/AttributMitAuswahl';
-import { StundenplanKlasse } from '../../../../../core/src/core/data/stundenplan/StundenplanKlasse';
-import { Schulform } from '../../../../../core/src/asd/types/schule/Schulform';
+import type { StundenplanKlasse } from '../../../../../core/src/core/data/stundenplan/StundenplanKlasse';
+import type { Schulform } from '../../../../../core/src/asd/types/schule/Schulform';
 import { ArrayList } from '../../../../../core/src/java/util/ArrayList';
-import { StundenplanManager } from '../../../../../core/src/core/utils/stundenplan/StundenplanManager';
-import { StundenplanKurs } from '../../../../../core/src/core/data/stundenplan/StundenplanKurs';
-import { StundenplanZeitraster } from '../../../../../core/src/core/data/stundenplan/StundenplanZeitraster';
+import type { StundenplanManager } from '../../../../../core/src/core/utils/stundenplan/StundenplanManager';
+import type { StundenplanKurs } from '../../../../../core/src/core/data/stundenplan/StundenplanKurs';
+import type { StundenplanZeitraster } from '../../../../../core/src/core/data/stundenplan/StundenplanZeitraster';
 import { StundenplanUnterrichtUtils } from '../../../../../core/src/core/utils/stundenplan/StundenplanUnterrichtUtils';
 import { AuswahlManager } from '../../AuswahlManager';
+import { AttributMitAuswahl } from '../../AttributMitAuswahl';
 import type { JavaFunction } from '../../../../../core/src/java/util/function/JavaFunction';
-import { StundenplanSchueler } from '../../../../../core/src/core/data/stundenplan/StundenplanSchueler';
-import { StundenplanRaum } from '../../../../../core/src/core/data/stundenplan/StundenplanRaum';
-import { StundenplanLehrer } from '../../../../../core/src/core/data/stundenplan/StundenplanLehrer';
-import { StundenplanSchiene } from '../../../../../core/src/core/data/stundenplan/StundenplanSchiene';
-import { StundenplanFach } from '../../../../../core/src/core/data/stundenplan/StundenplanFach';
-import { StundenplanUnterricht } from '../../../../../core/src/core/data/stundenplan/StundenplanUnterricht';
+import type { StundenplanSchueler } from '../../../../../core/src/core/data/stundenplan/StundenplanSchueler';
+import type { StundenplanRaum } from '../../../../../core/src/core/data/stundenplan/StundenplanRaum';
+import type { StundenplanLehrer } from '../../../../../core/src/core/data/stundenplan/StundenplanLehrer';
+import type { StundenplanSchiene } from '../../../../../core/src/core/data/stundenplan/StundenplanSchiene';
+import type { StundenplanFach } from '../../../../../core/src/core/data/stundenplan/StundenplanFach';
+import type { StundenplanUnterricht } from '../../../../../core/src/core/data/stundenplan/StundenplanUnterricht';
 import type { List } from '../../../../../core/src/java/util/List';
 import { Class } from '../../../../../core/src/java/lang/Class';
-import { Wochentag } from '../../../../../core/src/core/types/Wochentag';
+import type { Wochentag } from '../../../../../core/src/core/types/Wochentag';
 import { Arrays } from '../../../../../core/src/java/util/Arrays';
-import { Schuljahresabschnitt } from '../../../../../core/src/asd/data/schule/Schuljahresabschnitt';
+import type { Schuljahresabschnitt } from '../../../../../core/src/asd/data/schule/Schuljahresabschnitt';
 
 export class StundenplanUnterrichtListeManager extends AuswahlManager<number, StundenplanUnterricht, StundenplanUnterricht> {
 
 	/**
 	 * Der StundenplanManager
 	 */
-	private readonly stundenplanManager : StundenplanManager;
+	private readonly stundenplanManager: StundenplanManager;
 
 	/**
 	 * Funktionen zum Mappen von Auswahl- bzw. Daten-Objekten auf deren ID-Typ
 	 */
-	private static readonly _unterrichtToId : JavaFunction<StundenplanUnterricht, number> = { apply : (s: StundenplanUnterricht) => s.id };
+	private static readonly _unterrichtToId: JavaFunction<StundenplanUnterricht, number> = { apply: (s: StundenplanUnterricht) => s.id };
 
 	/**
 	 * Das Filter-Attribut für die Lehrer
 	 */
-	public readonly lehrer : AttributMitAuswahl<number, StundenplanLehrer>;
+	public readonly lehrer: AttributMitAuswahl<number, StundenplanLehrer>;
 
-	private static readonly _lehrerToId : JavaFunction<StundenplanLehrer, number> = { apply : (l: StundenplanLehrer) => l.id };
+	private static readonly _lehrerToId: JavaFunction<StundenplanLehrer, number> = { apply: (l: StundenplanLehrer) => l.id };
 
 	/**
 	 * Das Filter-Attribut für die Schüler
 	 */
-	public readonly schueler : AttributMitAuswahl<number, StundenplanSchueler>;
+	public readonly schueler: AttributMitAuswahl<number, StundenplanSchueler>;
 
-	private static readonly _schuelerToId : JavaFunction<StundenplanSchueler, number> = { apply : (s: StundenplanSchueler) => s.id };
+	private static readonly _schuelerToId: JavaFunction<StundenplanSchueler, number> = { apply: (s: StundenplanSchueler) => s.id };
 
 	/**
 	 * Das Filter-Attribut für die Klassen
 	 */
-	public readonly klassen : AttributMitAuswahl<number, StundenplanKlasse>;
+	public readonly klassen: AttributMitAuswahl<number, StundenplanKlasse>;
 
-	private static readonly _klasseToId : JavaFunction<StundenplanKlasse, number> = { apply : (k: StundenplanKlasse) => k.id };
+	private static readonly _klasseToId: JavaFunction<StundenplanKlasse, number> = { apply: (k: StundenplanKlasse) => k.id };
 
 	/**
 	 * Das Filter-Attribut für die Kurse
 	 */
-	public readonly kurse : AttributMitAuswahl<number, StundenplanKurs>;
+	public readonly kurse: AttributMitAuswahl<number, StundenplanKurs>;
 
-	private static readonly _kursToId : JavaFunction<StundenplanKurs, number> = { apply : (k: StundenplanKurs) => k.id };
+	private static readonly _kursToId: JavaFunction<StundenplanKurs, number> = { apply: (k: StundenplanKurs) => k.id };
 
 	/**
 	 * Das Filter-Attribut für die Räume
 	 */
-	public readonly raeume : AttributMitAuswahl<number, StundenplanRaum>;
+	public readonly raeume: AttributMitAuswahl<number, StundenplanRaum>;
 
-	private static readonly _raumToId : JavaFunction<StundenplanRaum, number> = { apply : (r: StundenplanRaum) => r.id };
+	private static readonly _raumToId: JavaFunction<StundenplanRaum, number> = { apply: (r: StundenplanRaum) => r.id };
 
 	/**
 	 * Das Filter-Attribut für die Schienen
 	 */
-	public readonly schienen : AttributMitAuswahl<number, StundenplanSchiene>;
+	public readonly schienen: AttributMitAuswahl<number, StundenplanSchiene>;
 
-	private static readonly _schieneToId : JavaFunction<StundenplanSchiene, number> = { apply : (s: StundenplanSchiene) => s.id };
+	private static readonly _schieneToId: JavaFunction<StundenplanSchiene, number> = { apply: (s: StundenplanSchiene) => s.id };
 
 	/**
 	 * Das Filter-Attribut für die Fächer
 	 */
-	public readonly faecher : AttributMitAuswahl<number, StundenplanFach>;
+	public readonly faecher: AttributMitAuswahl<number, StundenplanFach>;
 
-	private static readonly _fachToId : JavaFunction<StundenplanFach, number> = { apply : (f: StundenplanFach) => f.id };
+	private static readonly _fachToId: JavaFunction<StundenplanFach, number> = { apply: (f: StundenplanFach) => f.id };
 
 	/**
 	 * Das Filter-Attribut für die Wochentage
 	 */
-	public readonly wochentage : AttributMitAuswahl<number, Wochentag>;
+	public readonly wochentage: AttributMitAuswahl<number, Wochentag>;
 
-	private static readonly _wochentagToId : JavaFunction<Wochentag, number> = { apply : (w: Wochentag) => w.id };
+	private static readonly _wochentagToId: JavaFunction<Wochentag, number> = { apply: (w: Wochentag) => w.id };
 
 	/**
 	 * Das Filter-Attribut für die Zeitraster
 	 */
-	public readonly zeitraster : AttributMitAuswahl<number, StundenplanZeitraster>;
+	public readonly zeitraster: AttributMitAuswahl<number, StundenplanZeitraster>;
 
-	private static readonly _zeitrasterToId : JavaFunction<StundenplanZeitraster, number> = { apply : (z: StundenplanZeitraster) => z.id };
+	private static readonly _zeitrasterToId: JavaFunction<StundenplanZeitraster, number> = { apply: (z: StundenplanZeitraster) => z.id };
 
 	/**
 	 * Das Filter-Attribut für die Stunden
 	 */
-	public readonly stunden : AttributMitAuswahl<number, number>;
+	public readonly stunden: AttributMitAuswahl<number, number>;
 
-	private static readonly _stundeToStunde : JavaFunction<number, number> = { apply : (s: number) => s };
+	private static readonly _stundeToStunde: JavaFunction<number, number> = { apply: (s: number) => s };
 
 	/**
 	 * Das Filter-Attribut für die Wochentypen
 	 */
-	public readonly wochentypen : AttributMitAuswahl<number, number>;
+	public readonly wochentypen: AttributMitAuswahl<number, number>;
 
-	private static readonly _wochentypToWochentyp : JavaFunction<number, number> = { apply : (w: number) => w };
+	private static readonly _wochentypToWochentyp: JavaFunction<number, number> = { apply: (w: number) => w };
 
 
 	/**
@@ -118,7 +118,7 @@ export class StundenplanUnterrichtListeManager extends AuswahlManager<number, St
 	 * @param schuljahresabschnitte        die Liste der Schuljahresabschnitte
 	 * @param schuljahresabschnittSchule   der Schuljahresabschnitt, in dem sich die Schule aktuell befindet
 	 */
-	public constructor(schulform : Schulform | null, stundenplanManager : StundenplanManager, schuljahresabschnitte : List<Schuljahresabschnitt>, schuljahresabschnittSchule : number) {
+	public constructor(schulform: Schulform | null, stundenplanManager: StundenplanManager, schuljahresabschnitte: List<Schuljahresabschnitt>, schuljahresabschnittSchule: number) {
 		super(stundenplanManager.getIDSchuljahresabschnitt(), schuljahresabschnittSchule, schuljahresabschnitte, schulform, stundenplanManager.unterrichtGetMengeAsList(), StundenplanUnterrichtUtils.comparator, StundenplanUnterrichtListeManager._unterrichtToId, StundenplanUnterrichtListeManager._unterrichtToId, Arrays.asList());
 		this.stundenplanManager = stundenplanManager;
 		this.klassen = new AttributMitAuswahl(stundenplanManager.klasseGetMengeVerwendetAsList(), StundenplanUnterrichtListeManager._klasseToId, StundenplanUnterrichtUtils.comparatorKlassen, this._eventHandlerFilterChanged);
@@ -127,12 +127,12 @@ export class StundenplanUnterrichtListeManager extends AuswahlManager<number, St
 		this.faecher = new AttributMitAuswahl(stundenplanManager.fachGetMengeVerwendetAsList(), StundenplanUnterrichtListeManager._fachToId, StundenplanUnterrichtUtils.comparatorFaecher, this._eventHandlerFilterChanged);
 		this.kurse = new AttributMitAuswahl(stundenplanManager.kursGetMengeVerwendetAsList(), StundenplanUnterrichtListeManager._kursToId, StundenplanUnterrichtUtils.comparatorKurse, this._eventHandlerFilterChanged);
 		this.wochentage = new AttributMitAuswahl(Arrays.asList(...stundenplanManager.zeitrasterGetWochentageAlsEnumRange()), StundenplanUnterrichtListeManager._wochentagToId, StundenplanUnterrichtUtils.comparatorWochentage, this._eventHandlerFilterChanged);
-		const tmpStunden : List<number> = new ArrayList<number>();
+		const tmpStunden: List<number> = new ArrayList<number>();
 		for (const s of stundenplanManager.zeitrasterGetStundenRange())
 			tmpStunden.add(s);
 		this.stunden = new AttributMitAuswahl(tmpStunden, StundenplanUnterrichtListeManager._stundeToStunde, StundenplanUnterrichtUtils.comparatorStunden, this._eventHandlerFilterChanged);
-		const tmpWochentypen : List<number> = new ArrayList<number>();
-		for (let w : number = 0; w <= stundenplanManager.getWochenTypModell(); w++)
+		const tmpWochentypen: List<number> = new ArrayList<number>();
+		for (let w: number = 0; w <= stundenplanManager.getWochenTypModell(); w++)
 			tmpWochentypen.add(w);
 		this.wochentypen = new AttributMitAuswahl(tmpWochentypen, StundenplanUnterrichtListeManager._wochentypToWochentyp, StundenplanUnterrichtUtils.comparatorWochentypen, this._eventHandlerFilterChanged);
 		this.raeume = new AttributMitAuswahl(stundenplanManager.raumGetMengeVerwendetAsList(), StundenplanUnterrichtListeManager._raumToId, StundenplanUnterrichtUtils.comparatorRaeume, this._eventHandlerFilterChanged);
@@ -148,7 +148,7 @@ export class StundenplanUnterrichtListeManager extends AuswahlManager<number, St
 	 *
 	 * @return das Ergebnis des Vergleichs (-1 kleine, 0 gleich und 1 größer)
 	 */
-	protected compareAuswahl(a : StundenplanUnterricht, b : StundenplanUnterricht) : number {
+	protected compareAuswahl(a: StundenplanUnterricht, b: StundenplanUnterricht): number {
 		return StundenplanUnterrichtUtils.comparator.compare(a, b);
 	}
 
@@ -157,15 +157,15 @@ export class StundenplanUnterrichtListeManager extends AuswahlManager<number, St
 	 * die in Unterrichten verwendeten Attributwerte. Diese Methode sollten bei allen Änderungen an der Menge der
 	 * Unterrichte aufgerufen werden.
 	 */
-	public updateAttributAuswahl() : void {
+	public updateAttributAuswahl(): void {
 		// empty block
 	}
 
-	protected onFilterChanged() : void {
+	protected onFilterChanged(): void {
 		// empty block
 	}
 
-	private static checkContains<T>(attr : AttributMitAuswahl<number, T>, list : List<number>) : boolean {
+	private static checkContains<T>(attr: AttributMitAuswahl<number, T>, list: List<number>): boolean {
 		if (!attr.auswahlExists())
 			return true;
 		for (const id of list)
@@ -174,7 +174,7 @@ export class StundenplanUnterrichtListeManager extends AuswahlManager<number, St
 		return false;
 	}
 
-	protected checkFilter(eintrag : StundenplanUnterricht) : boolean {
+	protected checkFilter(eintrag: StundenplanUnterricht): boolean {
 		if (this.faecher.auswahlExists() && (!this.faecher.auswahlHasKey(eintrag.idFach)))
 			return false;
 		if (this.kurse.auswahlExists() && ((eintrag.idKurs === null) || (!this.kurse.auswahlHasKey(eintrag.idKurs))))
@@ -183,7 +183,7 @@ export class StundenplanUnterrichtListeManager extends AuswahlManager<number, St
 			return false;
 		if (this.wochentypen.auswahlExists() && (!this.wochentypen.auswahlHasKey(eintrag.wochentyp)))
 			return false;
-		const zeitraster : StundenplanZeitraster = this.stundenplanManager.zeitrasterGetByIdOrException(eintrag.idZeitraster);
+		const zeitraster: StundenplanZeitraster = this.stundenplanManager.zeitrasterGetByIdOrException(eintrag.idZeitraster);
 		if (this.wochentage.auswahlExists() && (!this.wochentage.auswahlHasKey(zeitraster.wochentag)))
 			return false;
 		if (this.stunden.auswahlExists() && (!this.stunden.auswahlHasKey(zeitraster.unterrichtstunde)))
@@ -196,8 +196,8 @@ export class StundenplanUnterrichtListeManager extends AuswahlManager<number, St
 			return false;
 		if (!StundenplanUnterrichtListeManager.checkContains(this.schienen, eintrag.schienen))
 			return false;
-		const listeSchueler : List<StundenplanSchueler> = this.stundenplanManager.schuelerGetMengeByUnterrichtIdAsList(eintrag.id);
-		const listIdSchueler : List<number> = new ArrayList<number>();
+		const listeSchueler: List<StundenplanSchueler> = this.stundenplanManager.schuelerGetMengeByUnterrichtIdAsList(eintrag.id);
+		const listIdSchueler: List<number> = new ArrayList<number>();
 		for (const s of listeSchueler)
 			listIdSchueler.add(s.id);
 		if (!StundenplanUnterrichtListeManager.checkContains(this.schueler, listIdSchueler))
@@ -210,7 +210,7 @@ export class StundenplanUnterrichtListeManager extends AuswahlManager<number, St
 	 *
 	 * @param srcManager Manager, aus dem die Filterinformationen übernommen werden
 	 */
-	public useFilter(srcManager : StundenplanUnterrichtListeManager) : void {
+	public useFilter(srcManager: StundenplanUnterrichtListeManager): void {
 		this.faecher.setAuswahl(srcManager.faecher);
 		this.klassen.setAuswahl(srcManager.klassen);
 		this.kurse.setAuswahl(srcManager.kurse);
@@ -228,7 +228,7 @@ export class StundenplanUnterrichtListeManager extends AuswahlManager<number, St
 		return 'de.svws_nrw.core.utils.stundenplan.StundenplanUnterrichtListeManager';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.utils.AuswahlManager', 'de.svws_nrw.core.utils.stundenplan.StundenplanUnterrichtListeManager'].includes(name);
 	}
 
@@ -236,6 +236,6 @@ export class StundenplanUnterrichtListeManager extends AuswahlManager<number, St
 
 }
 
-export function cast_de_svws_nrw_core_utils_stundenplan_StundenplanUnterrichtListeManager(obj : unknown) : StundenplanUnterrichtListeManager {
+export function cast_de_svws_nrw_core_utils_stundenplan_StundenplanUnterrichtListeManager(obj: unknown): StundenplanUnterrichtListeManager {
 	return obj as StundenplanUnterrichtListeManager;
 }

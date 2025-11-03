@@ -9,137 +9,137 @@ export class BetriebStammdaten extends JavaObject {
 	/**
 	 * ID der weiteren Adresse (Betriebe)
 	 */
-	public id : number = -1;
+	public id: number = -1;
 
 	/**
 	 * Adressart des Betriebs, Fremdschlüssel auf die ID in K_Adressart
 	 */
-	public adressArt : number | null = null;
+	public adressArt: number | null = null;
 
 	/**
 	 * Name1 des Betriebs
 	 */
-	public name1 : string = "";
+	public name1: string = "";
 
 	/**
 	 * Name2 des Betriebs
 	 */
-	public name2 : string = "";
+	public name2: string = "";
 
 	/**
 	 * Straßenname des Betriebsdatensatz
 	 */
-	public strassenname : string = "";
+	public strassenname: string = "";
 
 	/**
 	 * Hausnummer wenn getrennt gespeichert
 	 */
-	public hausnr : string = "";
+	public hausnr: string = "";
 
 	/**
 	 * Zusatz zur Hausnummer wenn Hausnummern getrennt gespeichert werden
 	 */
-	public hausnrzusatz : string = "";
+	public hausnrzusatz: string = "";
 
 	/**
 	 * OrtID des Betriebs
 	 */
-	public ort_id : number | null = null;
+	public ort_id: number | null = null;
 
 	/**
 	 * Erste Telefonnummer des Betriebs
 	 */
-	public telefon1 : string = "";
+	public telefon1: string = "";
 
 	/**
 	 * Zweite Telefonnummer des Betriebs
 	 */
-	public telefon2 : string = "";
+	public telefon2: string = "";
 
 	/**
 	 * Faxnummer des Betriebs
 	 */
-	public fax : string = "";
+	public fax: string = "";
 
 	/**
 	 * E-MailAdresse des Betriebes
 	 */
-	public email : string = "";
+	public email: string = "";
 
 	/**
 	 * Bemerkung zum Betrieb
 	 */
-	public bemerkungen : string = "";
+	public bemerkungen: string = "";
 
 	/**
 	 * Sortierung des Betriebsdatensatz
 	 */
-	public sortierung : number = 32000;
+	public sortierung: number = 32000;
 
 	/**
 	 * Gibt an, ob der Betrieb ausbildet
 	 */
-	public ausbildungsbetrieb : boolean = false;
+	public ausbildungsbetrieb: boolean = false;
 
 	/**
 	 * Gibt an, ob der Betrieb Praktikumsplätze bietet
 	 */
-	public bietetPraktika : boolean = false;
+	public bietetPraktika: boolean = false;
 
 	/**
 	 * Branche des Betriebs
 	 */
-	public branche : string = "";
+	public branche: string = "";
 
 	/**
 	 * Adresszusatz zum Betrieb
 	 */
-	public zusatz1 : string = "";
+	public zusatz1: string = "";
 
 	/**
 	 * Adresszusatz2 zum Betrieb
 	 */
-	public zusatz2 : string = "";
+	public zusatz2: string = "";
 
 	/**
 	 * Sichtbarkeit des Datensatzes
 	 */
-	public Sichtbar : boolean = true;
+	public Sichtbar: boolean = true;
 
 	/**
 	 * Datensatz ist änderbar Ja Nein
 	 */
-	public Aenderbar : boolean = true;
+	public Aenderbar: boolean = true;
 
 	/**
 	 * Bezeichnung des Maßnahmenträgers
 	 */
-	public Massnahmentraeger : boolean = false;
+	public Massnahmentraeger: boolean = false;
 
 	/**
 	 * Belehrung nach Infektionsschutzgesetz notwendig Ja Nein
 	 */
-	public BelehrungISG : boolean = false;
+	public BelehrungISG: boolean = false;
 
 	/**
 	 * GU_ID des Betriebsdatensatzes (für Import zur Erkennung)
 	 */
-	public GU_ID : string = "";
+	public GU_ID: string = "";
 
 	/**
 	 * Wird für diesen Betrieb ein Erweitertes Führungszeugnis benötigt?
 	 */
-	public ErwFuehrungszeugnis : boolean = false;
+	public ErwFuehrungszeugnis: boolean = false;
 
 	/**
 	 * Externe ID des Betriebsdatensatzes
 	 */
-	public ExtID : string | null = null;
+	public ExtID: string | null = null;
 
 	/**
 	 * Ein Array mit den Ansprechpartnern im Betrieb.
 	 */
-	public ansprechpartner : List<BetriebAnsprechpartner> = new ArrayList<BetriebAnsprechpartner>();
+	public ansprechpartner: List<BetriebAnsprechpartner> = new ArrayList<BetriebAnsprechpartner>();
 
 
 	/**
@@ -153,13 +153,13 @@ export class BetriebStammdaten extends JavaObject {
 		return 'de.svws_nrw.core.data.betrieb.BetriebStammdaten';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.betrieb.BetriebStammdaten'].includes(name);
 	}
 
 	public static class = new Class<BetriebStammdaten>('de.svws_nrw.core.data.betrieb.BetriebStammdaten');
 
-	public static transpilerFromJSON(json : string): BetriebStammdaten {
+	public static transpilerFromJSON(json: string): BetriebStammdaten {
 		const obj = JSON.parse(json) as Partial<BetriebStammdaten>;
 		const result = new BetriebStammdaten();
 		if (obj.id === undefined)
@@ -242,7 +242,7 @@ export class BetriebStammdaten extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : BetriebStammdaten) : string {
+	public static transpilerToJSON(obj: BetriebStammdaten): string {
 		let result = '{';
 		result += '"id" : ' + obj.id.toString() + ',';
 		result += '"adressArt" : ' + ((obj.adressArt === null) ? 'null' : obj.adressArt.toString()) + ',';
@@ -283,7 +283,7 @@ export class BetriebStammdaten extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<BetriebStammdaten>) : string {
+	public static transpilerToJSONPatch(obj: Partial<BetriebStammdaten>): string {
 		let result = '{';
 		if (obj.id !== undefined) {
 			result += '"id" : ' + obj.id.toString() + ',';
@@ -380,6 +380,6 @@ export class BetriebStammdaten extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_betrieb_BetriebStammdaten(obj : unknown) : BetriebStammdaten {
+export function cast_de_svws_nrw_core_data_betrieb_BetriebStammdaten(obj: unknown): BetriebStammdaten {
 	return obj as BetriebStammdaten;
 }

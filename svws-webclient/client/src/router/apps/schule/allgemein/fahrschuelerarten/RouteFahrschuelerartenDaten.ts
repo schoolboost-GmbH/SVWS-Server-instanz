@@ -6,7 +6,7 @@ import { RouteNode } from "~/router/RouteNode";
 import { api } from "~/router/Api";
 import { routeFahrschuelerarten } from "~/router/apps/schule/allgemein/fahrschuelerarten/RouteFahrschuelerarten";
 
-const SFahrschuelerartenDaten = () => import("~/components/schule/allgemein/fahrschuelerarten/daten/SFahrschuelerartenDaten.vue")
+const SFahrschuelerartenDaten = () => import("~/components/schule/allgemein/fahrschuelerarten/daten/SFahrschuelerartenDaten.vue");
 
 export class RouteFahrschuelerartenDaten extends RouteNode<any, RouteFahrschuelerarten> {
 
@@ -23,7 +23,7 @@ export class RouteFahrschuelerartenDaten extends RouteNode<any, RouteFahrschuele
 			manager: () => routeFahrschuelerarten.data.manager,
 			benutzerKompetenzen: api.benutzerKompetenzen,
 			patch: routeFahrschuelerarten.data.patch,
-		}
+		};
 	}
 }
 

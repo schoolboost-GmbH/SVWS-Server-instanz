@@ -15,22 +15,22 @@ import de.svws_nrw.db.schema.SchemaTabelleSpalte;
 public class Tabelle_Kompetenzgruppen extends SchemaTabelle {
 
 	/** Die Definition der Tabellenspalte KG_ID */
-	public SchemaTabelleSpalte col_KG_ID = add("KG_ID", SchemaDatentypen.BIGINT, true)
+	public final SchemaTabelleSpalte col_KG_ID = add("KG_ID", SchemaDatentypen.BIGINT, true)
 			.setNotNull()
 			.setJavaComment("ID der Kompetenzgruppe");
 
 	/** Die Definition der Tabellenspalte KG_Bezeichnung */
-	public SchemaTabelleSpalte col_KG_Bezeichnung = add("KG_Bezeichnung", SchemaDatentypen.VARCHAR, false).setDatenlaenge(50)
+	public final SchemaTabelleSpalte col_KG_Bezeichnung = add("KG_Bezeichnung", SchemaDatentypen.VARCHAR, false).setDatenlaenge(50)
 			.setNotNull()
 			.setJavaComment("Bezeichnung der Kompetenzgruppe");
 
 	/** Die Definition der Tabellenspalte KG_Spalte */
-	public SchemaTabelleSpalte col_KG_Spalte = add("KG_Spalte", SchemaDatentypen.BIGINT, false)
+	public final SchemaTabelleSpalte col_KG_Spalte = add("KG_Spalte", SchemaDatentypen.BIGINT, false)
 			.setNotNull()
 			.setJavaComment("Spalte in der Benutzerverwaltung für die Kompetenzgruppe");
 
 	/** Die Definition der Tabellenspalte KG_Zeile */
-	public SchemaTabelleSpalte col_KG_Zeile = add("KG_Zeile", SchemaDatentypen.BIGINT, false)
+	public final SchemaTabelleSpalte col_KG_Zeile = add("KG_Zeile", SchemaDatentypen.BIGINT, false)
 			.setNotNull()
 			.setJavaComment("Zeile in der Benutzerverwaltung für die Kompetenzgruppe");
 

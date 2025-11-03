@@ -322,7 +322,7 @@
 	import { BenutzerKompetenz, SchuelerTelefon, ArrayList, ErzieherStammdaten, AdressenUtils, Geschlecht, Kindergartenbesuch, Nationalitaeten, SchuelerStatus, Schulform, Verkehrssprache, ServerMode, DateUtils, SchuelerVermerke } from "@core";
 	import { computed, ref, watch } from "vue";
 	import type { SchuelerNeuSchnelleingabeProps } from "~/components/schueler/SSchuelerNeuSchnelleingabeProps";
-	import { erzieherArtSort,orte_sort, ortsteilSort } from "~/utils/helfer";
+	import { erzieherArtSort, orte_sort, ortsteilSort } from "~/utils/helfer";
 	import type { DataTableColumn } from "@ui";
 	import { CoreTypeSelectManager, SelectManager } from "@ui";
 	import { emailIsValid, mandatoryInputIsValid, optionalInputIsValid, phoneNumberIsValid } from "~/util/validation/Validation";
@@ -341,7 +341,7 @@
 	const dataSchuelerLernabschnittdaten = computed(() => props.schuelerLernabschnittManager().lernabschnittGet());
 
 	const schulenMitPrimaerstufe = computed(() => {
-		const erlaubteSchulformen = [ Schulform.G, Schulform.FW, Schulform.WF, Schulform.GM, Schulform.KS, Schulform.S, Schulform.GE, Schulform.V];
+		const erlaubteSchulformen = [Schulform.G, Schulform.FW, Schulform.WF, Schulform.GM, Schulform.KS, Schulform.S, Schulform.GE, Schulform.V];
 		return erlaubteSchulformen.includes(props.schulform);
 	});
 
@@ -349,14 +349,14 @@
 
 	const schuljahresabschnitte = computed(() => Array.from(props.schuelerListeManager().schuljahresabschnitte.list()));
 
-	const schuljahresabschnittsManager = new SelectManager({ options: schuljahresabschnitte.value, optionDisplayText: i => `${i.schuljahr}/${(i.schuljahr + 1) % 100}.${i.abschnitt}`, selectionDisplayText: i => `${i.schuljahr}/${(i.schuljahr + 1) % 100}.${i.abschnitt}`});
+	const schuljahresabschnittsManager = new SelectManager({ options: schuljahresabschnitte.value, optionDisplayText: i => `${i.schuljahr}/${(i.schuljahr + 1) % 100}.${i.abschnitt}`, selectionDisplayText: i => `${i.schuljahr}/${(i.schuljahr + 1) % 100}.${i.abschnitt}` });
 
 	const schuljahresabschnitt = computed({
 		get: () => {
 			const id = dataSchuelerLernabschnittdaten.value.schuljahresabschnitt;
 			return schuljahresabschnitte.value.find(i => i.id === id) ?? null;
 		},
-		set:(value) => {
+		set: (value) => {
 			dataSchuelerLernabschnittdaten.value.schuljahresabschnitt = value?.id ?? -1;
 			void loadKlassenFuerAbschnitt(value?.id ?? -1);
 		},
@@ -364,14 +364,14 @@
 
 	const jahrgaenge = computed(() => Array.from(props.schuelerListeManager().jahrgaenge.list()));
 
-	const jahrgangManager = new SelectManager({ options: jahrgaenge.value, optionDisplayText: i => i.kuerzel ?? '' , selectionDisplayText: i => i.kuerzel ?? '' });
+	const jahrgangManager = new SelectManager({ options: jahrgaenge.value, optionDisplayText: i => i.kuerzel ?? '', selectionDisplayText: i => i.kuerzel ?? '' });
 
 	const jahrgang = computed({
 		get: () => {
 			const id = dataSchuelerLernabschnittdaten.value.jahrgangID ?? -1;
 			return jahrgaenge.value.find(i => i.id === id) ?? null;
 		},
-		set:(value) => dataSchuelerLernabschnittdaten.value.jahrgangID = value?.id ?? -1,
+		set: (value) => dataSchuelerLernabschnittdaten.value.jahrgangID = value?.id ?? -1,
 	});
 
 	const klassenFuerAbschnitt = ref<KlassenDaten[]>([]);
@@ -389,14 +389,14 @@
 		return klassenFuerAbschnitt.value.length > 0 ? klassenFuerAbschnitt.value : global;
 	});
 
-	const klassenManager = new SelectManager({ options: klassen.value, optionDisplayText: i => i.kuerzel ?? '' , selectionDisplayText: i => i.kuerzel ?? '' });
+	const klassenManager = new SelectManager({ options: klassen.value, optionDisplayText: i => i.kuerzel ?? '', selectionDisplayText: i => i.kuerzel ?? '' });
 
 	const klasse = computed({
 		get: () => {
 			const id = dataSchuelerLernabschnittdaten.value.klassenID ?? -1;
 			return klassen.value.find(i => i.id === id) ?? null;
 		},
-		set:(value) => dataSchuelerLernabschnittdaten.value.klassenID = value?.id ?? -1,
+		set: (value) => dataSchuelerLernabschnittdaten.value.klassenID = value?.id ?? -1,
 	});
 
 
@@ -407,7 +407,7 @@
 
 	const kindergaerten = computed(() => props.mapKindergaerten.values());
 
-	const nameKindergartenManager = new SelectManager({ options: kindergaerten.value, optionDisplayText: i => i.bezeichnung, selectionDisplayText: i => i.bezeichnung })
+	const nameKindergartenManager = new SelectManager({ options: kindergaerten.value, optionDisplayText: i => i.bezeichnung, selectionDisplayText: i => i.bezeichnung });
 
 	const auswahlKindergartenID = ref(dataSchulbesuchsdaten.value.idKindergarten);
 
@@ -420,11 +420,11 @@
 			auswahlKindergartenID.value = value?.id ?? -1;
 			void props.patchSchuelerSchulbesuchsdaten({ idKindergarten: value?.id ?? null }, data.value.id);
 		},
-	})
+	});
 
 	const orte = computed(() => props.mapOrte.values());
 
-	const wohnortManager = new SelectManager({ options: orte.value, optionDisplayText: i => `${i.plz} ${i.ortsname}`, sort: orte_sort, selectionDisplayText: i => `${i.plz} ${i.ortsname}` })
+	const wohnortManager = new SelectManager({ options: orte.value, optionDisplayText: i => `${i.plz} ${i.ortsname}`, sort: orte_sort, selectionDisplayText: i => `${i.plz} ${i.ortsname}` });
 
 	const auswahlWohnortID = ref(data.value.wohnortID ?? null);
 
@@ -436,7 +436,7 @@
 		set: (value) => {
 
 			auswahlWohnortID.value = value?.id ?? -1;
-			void props.patch({ wohnortID: value?.id ?? null}, data.value.id);
+			void props.patch({ wohnortID: value?.id ?? null }, data.value.id);
 		},
 	});
 
@@ -474,18 +474,18 @@
 
 	const geschlecht = ref(Geschlecht.fromValue(data.value.geschlecht));
 
-	const geschlechtManager = new SelectManager({ options: Geschlecht.values(), optionDisplayText: i => i.text, selectionDisplayText: i => i.text })
+	const geschlechtManager = new SelectManager({ options: Geschlecht.values(), optionDisplayText: i => i.text, selectionDisplayText: i => i.text });
 
 	async function setGeschlecht(value: Geschlecht | null | undefined): Promise<void> {
 		geschlecht.value = value ?? null;
-		ortsteilManager.setConfig()
+		ortsteilManager.setConfig();
 		data.value.geschlecht = value?.id ?? -1;
 		await props.patch({ geschlecht: value?.id }, data.value.id);
 	}
 
 	const einschulungsarten = computed(() => props.mapEinschulungsarten);
 
-	const einschulungsartManager = new SelectManager({ options: einschulungsarten.value.values(), optionDisplayText: i => i.text, selectionDisplayText: i => i.text })
+	const einschulungsartManager = new SelectManager({ options: einschulungsarten.value.values(), optionDisplayText: i => i.text, selectionDisplayText: i => i.text });
 
 	const auswahlEinschulungsart = ref(dataSchulbesuchsdaten.value.grundschuleEinschulungsartID);
 
@@ -543,7 +543,7 @@
 		},
 		set: (value) => {
 			staatsangehoerigkeitID.value = value?.iso3 ?? null;
-			void props.patch({ staatsangehoerigkeitID: value?.iso3 ?? null}, data.value.id)
+			void props.patch({ staatsangehoerigkeitID: value?.iso3 ?? null }, data.value.id);
 		},
 	});
 
@@ -555,13 +555,13 @@
 		},
 		set: (value) => {
 			staatsangehoerigkeit2ID.value = value?.iso3 ?? null;
-			void props.patch({ staatsangehoerigkeit2ID: value?.iso3 ?? null}, data.value.id)
+			void props.patch({ staatsangehoerigkeit2ID: value?.iso3 ?? null }, data.value.id);
 		},
 	});
 
 	const religionen = computed(() => props.mapReligionen.values());
 
-	const religionManager = new SelectManager({ options: religionen.value, optionDisplayText: i => i.bezeichnungZeugnis ?? '', selectionDisplayText: i => i.bezeichnungZeugnis ?? '' })
+	const religionManager = new SelectManager({ options: religionen.value, optionDisplayText: i => i.bezeichnungZeugnis ?? '', selectionDisplayText: i => i.bezeichnungZeugnis ?? '' });
 
 	const auswahlReligionID = ref(data.value.religionID);
 
@@ -575,43 +575,43 @@
 			auswahlReligionID.value = value?.id ?? -1;
 			void props.patch({ religionID: value?.id ?? null }, data.value.id);
 		},
-	})
+	});
 
-	const geburtslandManager = new CoreTypeSelectManager({ clazz: Nationalitaeten.class, schuljahr: schuljahr, optionDisplayText: "text", selectionDisplayText: "text" })
+	const geburtslandManager = new CoreTypeSelectManager({ clazz: Nationalitaeten.class, schuljahr: schuljahr, optionDisplayText: "text", selectionDisplayText: "text" });
 
 	const auswahlGeburtsland = ref(data.value.geburtsland ?? null);
 
 	const geburtsland = computed<NationalitaetenKatalogEintrag | null>({
-		get: () :NationalitaetenKatalogEintrag | null => {
+		get: (): NationalitaetenKatalogEintrag | null => {
 			return Nationalitaeten.getByISO3(auswahlGeburtsland.value)?.daten(schuljahr.value) ?? null;
 		},
 		set: (value) => {
 			auswahlGeburtsland.value = value?.iso3 ?? null;
-			void props.patch({ geburtsland: value?.iso3 }, data.value.id)
+			void props.patch({ geburtsland: value?.iso3 }, data.value.id);
 		},
 	});
 
 	const auswahlGeburtslandMutter = ref(data.value.geburtslandMutter ?? null);
 
 	const geburtslandMutter = computed<NationalitaetenKatalogEintrag | null>({
-		get: () :NationalitaetenKatalogEintrag | null => {
+		get: (): NationalitaetenKatalogEintrag | null => {
 			return Nationalitaeten.getByISO3(auswahlGeburtslandMutter.value)?.daten(schuljahr.value) ?? null;
 		},
 		set: (value) => {
 			auswahlGeburtslandMutter.value = value?.iso3 ?? null;
-			void props.patch({ geburtslandMutter: value?.iso3 }, data.value.id)
+			void props.patch({ geburtslandMutter: value?.iso3 }, data.value.id);
 		},
 	});
 
 	const auswahlGeburtslandVater = ref(data.value.geburtslandVater ?? null);
 
 	const geburtslandVater = computed<NationalitaetenKatalogEintrag | null>({
-		get: () :NationalitaetenKatalogEintrag | null => {
+		get: (): NationalitaetenKatalogEintrag | null => {
 			return Nationalitaeten.getByISO3(auswahlGeburtslandVater.value)?.daten(schuljahr.value) ?? null;
 		},
 		set: (value) => {
 			auswahlGeburtslandVater.value = value?.iso3 ?? null;
-			void props.patch({ geburtslandVater: value?.iso3 }, data.value.id)
+			void props.patch({ geburtslandVater: value?.iso3 }, data.value.id);
 		},
 	});
 
@@ -620,12 +620,12 @@
 	const auswahlVerkehrssprache = ref(data.value.verkehrspracheFamilie ?? null);
 
 	const verkehrssprache = computed<VerkehrsspracheKatalogEintrag | null>({
-		get: () :VerkehrsspracheKatalogEintrag | null => {
+		get: (): VerkehrsspracheKatalogEintrag | null => {
 			return Verkehrssprache.getByIsoKuerzel(auswahlVerkehrssprache.value)?.daten(schuljahr.value) ?? null;
 		},
 		set: (value) => {
 			auswahlVerkehrssprache.value = value?.iso3 ?? null;
-			void props.patch({ verkehrspracheFamilie: value?.iso3 }, data.value.id)
+			void props.patch({ verkehrspracheFamilie: value?.iso3 }, data.value.id);
 		},
 	});
 
@@ -674,7 +674,7 @@
 		},
 	});
 
-	const dauerKindergartenManager = new CoreTypeSelectManager({clazz: Kindergartenbesuch.class, schuljahr: schuljahr, optionDisplayText: "text", selectionDisplayText: "text" })
+	const dauerKindergartenManager = new CoreTypeSelectManager({ clazz: Kindergartenbesuch.class, schuljahr: schuljahr, optionDisplayText: "text", selectionDisplayText: "text" });
 
 	const dauerKindergartenbesuchID = ref(dataSchulbesuchsdaten.value.idDauerKindergartenbesuch ?? null);
 
@@ -694,8 +694,8 @@
 	const aufnahmedatumError = ref<string | null>();
 	const beginnBildungsgangError = ref<string | null>();
 
-	//validation logic
-	function fieldIsValid(field: keyof SchuelerStammdaten | null):(v: string | null) => boolean {
+	// validation logic
+	function fieldIsValid(field: keyof SchuelerStammdaten | null): (v: string | null) => boolean {
 		return (v: string | null) => {
 			switch (field) {
 				case 'nachname':
@@ -723,7 +723,7 @@
 				default:
 					return true;
 			}
-		}
+		};
 	}
 
 	async function patchIfValid(field: string, value: string | null | undefined) {
@@ -745,11 +745,13 @@
 				await props.patch({ telefon: v ?? null }, data.value.id);
 				return;
 			case 'telefonMobil':
-				if ((v !== null) && (v.length > 0) && !phoneNumberIsValid(v, 20)) return;
+				if ((v !== null) && (v.length > 0) && !phoneNumberIsValid(v, 20))
+					return;
 				await props.patch({ telefonMobil: v ?? null }, data.value.id);
 				return;
 			case 'emailPrivat':
-				if ((v !== null) && (v.length > 0) && !emailIsValid(v, 100)) return;
+				if ((v !== null) && (v.length > 0) && !emailIsValid(v, 100))
+					return;
 				await props.patch({ emailPrivat: v ?? null }, data.value.id);
 				return;
 			default:
@@ -860,7 +862,7 @@
 
 	const selectedErz = ref<ErzieherStammdaten[]>([]);
 
-	const ersterErz = ref<ErzieherStammdaten>(new ErzieherStammdaten())
+	const ersterErz = ref<ErzieherStammdaten>(new ErzieherStammdaten());
 	const zweiterErz = ref<ErzieherStammdaten>(new ErzieherStammdaten());
 
 	const showModalErzieher = ref<boolean>(false);
@@ -883,9 +885,9 @@
 
 	const columnsErzieher: DataTableColumn[] = [
 		{ key: "idErzieherArt", label: "Art" },
-		{ key: "name", label: "Name"},
-		{ key: "eMail", label: "E-Mail"},
-		{ key: "adresse", label: "Adresse"},
+		{ key: "name", label: "Name" },
+		{ key: "eMail", label: "E-Mail" },
+		{ key: "adresse", label: "Adresse" },
 		{ key: "erhaeltAnschreiben", label: "Anschreiben", tooltip: "Erhält Anschreiben", fixedWidth: 3, align: "center" },
 		{ key: "actions", label: "2. Person", tooltip: "Weiteres Elternteil hinzufügen", fixedWidth: 10, align: "center" },
 	];
@@ -937,7 +939,7 @@
 		set: (value) => {
 			if (erzieher.value === undefined)
 				return;
-			zweiterErz.value.staatsangehoerigkeitID = value?.iso3 ?? null
+			zweiterErz.value.staatsangehoerigkeitID = value?.iso3 ?? null;
 		},
 	});
 
@@ -1132,7 +1134,7 @@
 		{ key: "telefonnummer", label: "Telefonnummern" },
 		{ key: "bemerkung", label: "Bemerkung", span: 2 },
 		{ key: "istGesperrt", label: "Gesperrt", span: 1, align: "right" },
-	]
+	];
 
 	const telefonArten = computed(() => props.mapTelefonArten.values());
 
@@ -1219,7 +1221,7 @@
 		{ key: "angelegtVon", label: "Angelegt von" },
 		{ key: "geaendertVon", label: "Geändert von" },
 		{ key: "datum", label: "Erstellt am", span: 1, align: "right" },
-	]
+	];
 
 	const vermerkArten = computed(() => props.mapVermerkArten.values());
 

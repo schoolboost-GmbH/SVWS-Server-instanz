@@ -6,7 +6,7 @@ export class SchulformKatalogEintrag extends CoreTypeData {
 	/**
 	 * Gibt an, ob eine Schule der Schulform eine gymnasiale Oberstufe haben kann oder nicht.
 	 */
-	public hatGymOb : boolean = false;
+	public hatGymOb: boolean = false;
 
 
 	/**
@@ -20,13 +20,13 @@ export class SchulformKatalogEintrag extends CoreTypeData {
 		return 'de.svws_nrw.asd.data.schule.SchulformKatalogEintrag';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.asd.data.CoreTypeData', 'de.svws_nrw.asd.data.schule.SchulformKatalogEintrag'].includes(name);
 	}
 
 	public static class = new Class<SchulformKatalogEintrag>('de.svws_nrw.asd.data.schule.SchulformKatalogEintrag');
 
-	public static transpilerFromJSON(json : string): SchulformKatalogEintrag {
+	public static transpilerFromJSON(json: string): SchulformKatalogEintrag {
 		const obj = JSON.parse(json) as Partial<SchulformKatalogEintrag>;
 		const result = new SchulformKatalogEintrag();
 		if (obj.id === undefined)
@@ -49,7 +49,7 @@ export class SchulformKatalogEintrag extends CoreTypeData {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : SchulformKatalogEintrag) : string {
+	public static transpilerToJSON(obj: SchulformKatalogEintrag): string {
 		let result = '{';
 		result += '"id" : ' + obj.id.toString() + ',';
 		result += '"schluessel" : ' + JSON.stringify(obj.schluessel) + ',';
@@ -63,7 +63,7 @@ export class SchulformKatalogEintrag extends CoreTypeData {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<SchulformKatalogEintrag>) : string {
+	public static transpilerToJSONPatch(obj: Partial<SchulformKatalogEintrag>): string {
 		let result = '{';
 		if (obj.id !== undefined) {
 			result += '"id" : ' + obj.id.toString() + ',';
@@ -93,6 +93,6 @@ export class SchulformKatalogEintrag extends CoreTypeData {
 
 }
 
-export function cast_de_svws_nrw_asd_data_schule_SchulformKatalogEintrag(obj : unknown) : SchulformKatalogEintrag {
+export function cast_de_svws_nrw_asd_data_schule_SchulformKatalogEintrag(obj: unknown): SchulformKatalogEintrag {
 	return obj as SchulformKatalogEintrag;
 }

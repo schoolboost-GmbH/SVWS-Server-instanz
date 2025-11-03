@@ -154,13 +154,13 @@
 		minOptions: undefined,
 		maxOptions: undefined,
 		validator: undefined,
-		doValidate: (validator: V) : boolean => validator.run(),
+		doValidate: (validator: V): boolean => validator.run(),
 	});
 
 
 	// model mit der aktuellen Selektion
 	const model = defineModel<Iterable<T> | null>();
-	const modelArray = computed( () => Array.from(toRaw(model.value) ?? []));
+	const modelArray = computed(() => Array.from(toRaw(model.value) ?? []));
 
 	/**
 	 * Watcher auf die aktuelle Selektion über das model.
@@ -195,7 +195,7 @@
 		}
 	);
 
-	//Die Vererbung der Attribute wird abgestellt, damit diese manuell an die richtigen Stellen weitergeleitet werden kann
+	// Die Vererbung der Attribute wird abgestellt, damit diese manuell an die richtigen Stellen weitergeleitet werden kann
 	defineOptions({ inheritAttrs: false });
 	const attrs = useAttrs();
 

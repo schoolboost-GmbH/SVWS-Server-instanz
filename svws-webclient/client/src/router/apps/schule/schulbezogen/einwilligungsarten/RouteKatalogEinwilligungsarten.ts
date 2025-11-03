@@ -16,7 +16,7 @@ const SEinwilligungsartenApp = () => import("~/components/schule/schulbezogen/ei
 export class RouteKatalogEinwilligungsarten extends RouteAuswahlNode<EinwilligungsartenListeManager, RouteDataKatalogEinwilligungsarten, RouteApp> {
 
 	public constructor() {
-		super(Schulform.values(), [ BenutzerKompetenz.KATALOG_EINTRAEGE_ANSEHEN, BenutzerKompetenz.KATALOG_EINTRAEGE_AENDERN ], "schule.einwilligungsarten", "schule/einwilligungsarten/:id(\\d+)?", SEinwilligungsartenApp, SEinwilligungsartenAuswahl, new RouteDataKatalogEinwilligungsarten());
+		super(Schulform.values(), [BenutzerKompetenz.KATALOG_EINTRAEGE_ANSEHEN, BenutzerKompetenz.KATALOG_EINTRAEGE_AENDERN], "schule.einwilligungsarten", "schule/einwilligungsarten/:id(\\d+)?", SEinwilligungsartenApp, SEinwilligungsartenAuswahl, new RouteDataKatalogEinwilligungsarten());
 		super.mode = ServerMode.DEV;
 		super.text = "Einwilligungsarten";
 		super.menugroup = RouteSchuleMenuGroup.SCHULBEZOGEN;

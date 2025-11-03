@@ -9,12 +9,12 @@ export class BenutzerConfig extends JavaObject {
 	/**
 	 * Die Konfiguration, die dem Benutzer zugeordnet ist.
 	 */
-	public user : List<BenutzerConfigElement> = new ArrayList<BenutzerConfigElement>();
+	public user: List<BenutzerConfigElement> = new ArrayList<BenutzerConfigElement>();
 
 	/**
 	 * Die globale Konfiguration, die auch für den Benutzer gilt.
 	 */
-	public global : List<BenutzerConfigElement> = new ArrayList<BenutzerConfigElement>();
+	public global: List<BenutzerConfigElement> = new ArrayList<BenutzerConfigElement>();
 
 
 	/**
@@ -28,13 +28,13 @@ export class BenutzerConfig extends JavaObject {
 		return 'de.svws_nrw.core.data.benutzer.BenutzerConfig';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.benutzer.BenutzerConfig'].includes(name);
 	}
 
 	public static class = new Class<BenutzerConfig>('de.svws_nrw.core.data.benutzer.BenutzerConfig');
 
-	public static transpilerFromJSON(json : string): BenutzerConfig {
+	public static transpilerFromJSON(json: string): BenutzerConfig {
 		const obj = JSON.parse(json) as Partial<BenutzerConfig>;
 		const result = new BenutzerConfig();
 		if (obj.user !== undefined) {
@@ -50,7 +50,7 @@ export class BenutzerConfig extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : BenutzerConfig) : string {
+	public static transpilerToJSON(obj: BenutzerConfig): string {
 		let result = '{';
 		result += '"user" : [ ';
 		for (let i = 0; i < obj.user.size(); i++) {
@@ -73,7 +73,7 @@ export class BenutzerConfig extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<BenutzerConfig>) : string {
+	public static transpilerToJSONPatch(obj: Partial<BenutzerConfig>): string {
 		let result = '{';
 		if (obj.user !== undefined) {
 			result += '"user" : [ ';
@@ -102,6 +102,6 @@ export class BenutzerConfig extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_benutzer_BenutzerConfig(obj : unknown) : BenutzerConfig {
+export function cast_de_svws_nrw_core_data_benutzer_BenutzerConfig(obj: unknown): BenutzerConfig {
 	return obj as BenutzerConfig;
 }

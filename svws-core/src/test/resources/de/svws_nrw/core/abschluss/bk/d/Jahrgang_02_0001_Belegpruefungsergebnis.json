@@ -1,9 +1,5 @@
 {
   "erfolgreich" : true,
-  "fehlercodes" : [ {
-    "code" : "ST_3_INFO",
-    "art" : "HINWEIS",
-    "beschreibung" : "Es wurden mehrer potentielle Kandidaten von Fachbelegungen für einen Eintrag in der Stundetafel gefunden. Keiner von Ihnen passt optimal, so dass der geeignetste davon für die weitere Belegprüfung genutzt wurde."
-  } ],
+  "fehlercodes" : [ ],
   "log" : [ ]
 }

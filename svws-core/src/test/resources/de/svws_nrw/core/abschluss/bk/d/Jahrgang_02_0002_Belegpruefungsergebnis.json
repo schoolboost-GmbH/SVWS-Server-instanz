@@ -1,0 +1,21 @@
+{
+  "erfolgreich" : false,
+  "fehlercodes" : [ {
+      "code" : "ST_2",
+      "art" : "BELEGUNG",
+      "beschreibung" : "Das Fach Chemie weist im Halbjahr Q1.1 keine Note auf, obwohl es belegt werden muss."
+    }, {
+      "code" : "ST_2",
+      "art" : "BELEGUNG",
+      "beschreibung" : "Das Fach Chemie weist im Halbjahr Q1.2 keine Note auf, obwohl es belegt werden muss."
+    }, {
+      "code" : "ST_3",
+      "art" : "BELEGUNG",
+      "beschreibung" : "Das Fach Chemie der Stundentafel wurde nicht im nötigen Stundenumfang belegt."
+    }, {
+      "code" : "ST_5_INFO",
+      "art" : "HINWEIS",
+      "beschreibung" : "Der Stundenumfang des Fachs Wirtschaftslehre ist in der Summe erfüllt, aber nicht in allen Halbjahren."
+    } ],
+  "log" : [ ]
+}

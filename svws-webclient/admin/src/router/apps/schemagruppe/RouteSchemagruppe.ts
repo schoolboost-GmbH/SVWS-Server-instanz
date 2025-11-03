@@ -10,8 +10,8 @@ import type { SchemaAuswahlProps } from "~/components/schema/SSchemaAuswahlProps
 import { api } from "~/router/Api";
 import { ServerMode } from "@core/core/types/ServerMode";
 
-const SSchemaAuswahl = () => import("~/components/schema/SSchemaAuswahl.vue")
-const SSchemagruppe = () => import("~/components/schemagruppe/SSchemagruppe.vue")
+const SSchemaAuswahl = () => import("~/components/schema/SSchemaAuswahl.vue");
+const SSchemagruppe = () => import("~/components/schemagruppe/SSchemagruppe.vue");
 
 
 export class RouteSchemagruppe extends RouteNode<unknown, RouteApp> {
@@ -24,12 +24,12 @@ export class RouteSchemagruppe extends RouteNode<unknown, RouteApp> {
 		super.setView("liste", SSchemaAuswahl, (route) => this.getAuswahlProps(route));
 	}
 
-	protected async update(to: RouteNode<unknown, any>, to_params: RouteParams) : Promise<void | Error | RouteLocationRaw> {
+	protected async update(to: RouteNode<unknown, any>, to_params: RouteParams): Promise<void | Error | RouteLocationRaw> {
 		if (routeSchema.data.auswahlGruppe.length === 0)
 			return routeSchema.getRoute();
 	}
 
-	public getRoute() : RouteLocationRaw {
+	public getRoute(): RouteLocationRaw {
 		return { name: this.name };
 	}
 

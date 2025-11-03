@@ -189,7 +189,7 @@
 	});
 
 	const columns: Array<DataTableColumn> = [
-		{ key: "kuerzel", label: "Kürzel", align: 'center', minWidth: 5, span: 0.75},
+		{ key: "kuerzel", label: "Kürzel", align: 'center', minWidth: 5, span: 0.75 },
 		{ key: "bezeichnung", label: "Bezeichnung", align: 'center', span: 3, minWidth: 12 },
 		{ key: "wstd", label: "WS", tooltip: "Wochenstunden", align: 'center', fixedWidth: 3 },
 		{ key: "folge", label: "Folge", align: 'center', fixedWidth: 4.5 },
@@ -219,7 +219,7 @@
 		// Fächer-IDs zu statischer Liste hinzufügen um Fächer durchschalten zu können
 		for (const fach of props.manager.alleFaecher)
 			faecherIds.push(fach.id);
-	})
+	});
 
 	// Fokus setzen: Fach wechseln (hoch/runter) oder Halbjahr wechseln (links/rechts)
 	function switchFocus(event: KeyboardEvent) {
@@ -255,18 +255,18 @@
 				activeHalbjahrId.value = halbjahrId;
 				break;
 			case "ArrowRight":
-				activeFachId.value = fachId
+				activeFachId.value = fachId;
 				activeHalbjahrId.value = (halbjahrId + 1) % (GostHalbjahr.values().length + 1);
 				break;
 			case "ArrowLeft":
-				activeFachId.value = fachId
+				activeFachId.value = fachId;
 				activeHalbjahrId.value = halbjahrId === 0 ? GostHalbjahr.values().length : (halbjahrId - 1);
 				break;
 		}
 	}
 
 	function getFachIndexById(fachId: number): number {
-		for (let i=0; i <= faecherIds.length; i++)
+		for (let i = 0; i <= faecherIds.length; i++)
 			if (faecherIds[i] === fachId)
 				return i;
 		return -1;

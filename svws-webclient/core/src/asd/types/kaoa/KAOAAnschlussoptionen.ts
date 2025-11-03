@@ -13,202 +13,317 @@ import { KAOAZusatzmerkmal } from '../../../asd/types/kaoa/KAOAZusatzmerkmal';
 export class KAOAAnschlussoptionen extends JavaEnum<KAOAAnschlussoptionen> implements CoreType<KAOAAnschlussoptionenKatalogEintrag, KAOAAnschlussoptionen> {
 
 	/** an array containing all values of this enumeration */
-	static readonly all_values_by_ordinal : Array<KAOAAnschlussoptionen> = [];
+	static readonly all_values_by_ordinal: Array<KAOAAnschlussoptionen> = [];
 
 	/** an array containing all values of this enumeration indexed by their name*/
-	static readonly all_values_by_name : Map<string, KAOAAnschlussoptionen> = new Map<string, KAOAAnschlussoptionen>();
+	static readonly all_values_by_name: Map<string, KAOAAnschlussoptionen> = new Map<string, KAOAAnschlussoptionen>();
 
 	/**
 	 * KAoA-Anschlussoption: Berufspraxisstufe einer Förderschule für Geistige Entwicklung
 	 */
-	public static readonly BE : KAOAAnschlussoptionen = new KAOAAnschlussoptionen("BE", 0, );
+	public static readonly BE: KAOAAnschlussoptionen = new KAOAAnschlussoptionen("BE", 0, );
 
 	/**
 	 * KAoA-Anschlussoption: Gymnasiale Oberstufe der Gesamtschule oder des Gymnasiums
 	 */
-	public static readonly GY : KAOAAnschlussoptionen = new KAOAAnschlussoptionen("GY", 1, );
+	public static readonly GY: KAOAAnschlussoptionen = new KAOAAnschlussoptionen("GY", 1, );
 
 	/**
 	 * KAoA-Anschlussoption: Berufskolleg - Einjährige Ausbildungsvorbereitung in Vollzeit (AV) - Anlage A
 	 */
-	public static readonly AV : KAOAAnschlussoptionen = new KAOAAnschlussoptionen("AV", 2, );
+	public static readonly AV: KAOAAnschlussoptionen = new KAOAAnschlussoptionen("AV", 2, );
 
 	/**
 	 * KAoA-Anschlussoption: Berufskolleg - Einjährige Berufsfachschule Typ I (BFS I) - Anlage B
 	 */
-	public static readonly BFSI : KAOAAnschlussoptionen = new KAOAAnschlussoptionen("BFSI", 3, );
+	public static readonly BFSI: KAOAAnschlussoptionen = new KAOAAnschlussoptionen("BFSI", 3, );
 
 	/**
 	 * KAoA-Anschlussoption: Berufskolleg - Einjährige Berufsfachschule Typ II (BFS II) - Anlage B
 	 */
-	public static readonly BFSII : KAOAAnschlussoptionen = new KAOAAnschlussoptionen("BFSII", 4, );
+	public static readonly BFSII: KAOAAnschlussoptionen = new KAOAAnschlussoptionen("BFSII", 4, );
 
 	/**
 	 * KAoA-Anschlussoption: Berufskolleg - Zweijährige [Höhere] Berufsfachschule - Anlage C
 	 */
-	public static readonly HOEBFS : KAOAAnschlussoptionen = new KAOAAnschlussoptionen("HOEBFS", 5, );
+	public static readonly HOEBFS: KAOAAnschlussoptionen = new KAOAAnschlussoptionen("HOEBFS", 5, );
 
 	/**
 	 * KAoA-Anschlussoption: Berufskolleg - Zweijährige Fachoberschule (FOS 11/12) - Anlage C
 	 */
-	public static readonly FOS : KAOAAnschlussoptionen = new KAOAAnschlussoptionen("FOS", 6, );
+	public static readonly FOS: KAOAAnschlussoptionen = new KAOAAnschlussoptionen("FOS", 6, );
 
 	/**
 	 * KAoA-Anschlussoption: Berufskolleg - Berufliches Gymnasium - Anlage D
 	 */
-	public static readonly BERUFGY : KAOAAnschlussoptionen = new KAOAAnschlussoptionen("BERUFGY", 7, );
+	public static readonly BERUFGY: KAOAAnschlussoptionen = new KAOAAnschlussoptionen("BERUFGY", 7, );
 
 	/**
 	 * KAoA-Anschlussoption: Duale Berufsausbildung (inkl. Beamtenlaufbahn im mittleren Dienst)
 	 */
-	public static readonly DUAL : KAOAAnschlussoptionen = new KAOAAnschlussoptionen("DUAL", 8, );
+	public static readonly DUAL: KAOAAnschlussoptionen = new KAOAAnschlussoptionen("DUAL", 8, );
 
 	/**
 	 * KAoA-Anschlussoption: Berufskolleg - schulische Ausbildung zwei- oder dreijährig in der Berufsfachschule Anlage B oder C oder am Beruflichen Gymnasium
 	 */
-	public static readonly SCHUAUS : KAOAAnschlussoptionen = new KAOAAnschlussoptionen("SCHUAUS", 9, );
+	public static readonly SCHUAUS: KAOAAnschlussoptionen = new KAOAAnschlussoptionen("SCHUAUS", 9, );
 
 	/**
 	 * KAoA-Anschlussoption: Schulische Ausbildung in Berufen des Gesundheitswesens und der Altenpflege
 	 */
-	public static readonly SCHUGA : KAOAAnschlussoptionen = new KAOAAnschlussoptionen("SCHUGA", 10, );
+	public static readonly SCHUGA: KAOAAnschlussoptionen = new KAOAAnschlussoptionen("SCHUGA", 10, );
 
 	/**
 	 * KAoA-Anschlussoption: Berufsausbildung in einer außerbetrieblichen Einrichtung (BaE kooperativ/integrativ)
 	 */
-	public static readonly BAE : KAOAAnschlussoptionen = new KAOAAnschlussoptionen("BAE", 11, );
+	public static readonly BAE: KAOAAnschlussoptionen = new KAOAAnschlussoptionen("BAE", 11, );
 
 	/**
 	 * KAoA-Anschlussoption: Betriebliche Ausbildung in gesondert geregelten Berufen (Fachpraktikerausbildung/Werkerausbildung) für Jugendliche mit Behinderung
 	 */
-	public static readonly FACHAUS : KAOAAnschlussoptionen = new KAOAAnschlussoptionen("FACHAUS", 12, );
+	public static readonly FACHAUS: KAOAAnschlussoptionen = new KAOAAnschlussoptionen("FACHAUS", 12, );
 
 	/**
 	 * KAoA-Anschlussoption: Berufsvorbereitende Bildungsmaßnahme der Agentur für Arbeit (BvB), auch rehaspezifisch
 	 */
-	public static readonly BVB : KAOAAnschlussoptionen = new KAOAAnschlussoptionen("BVB", 13, );
+	public static readonly BVB: KAOAAnschlussoptionen = new KAOAAnschlussoptionen("BVB", 13, );
 
 	/**
 	 * KAoA-Anschlussoption: Einstiegsqualifizierung (EQ und EQ plus)
 	 */
-	public static readonly EQ : KAOAAnschlussoptionen = new KAOAAnschlussoptionen("EQ", 14, );
+	public static readonly EQ: KAOAAnschlussoptionen = new KAOAAnschlussoptionen("EQ", 14, );
 
 	/**
 	 * KAoA-Anschlussoption: Werkstattjahr.NRW
 	 */
-	public static readonly WERK : KAOAAnschlussoptionen = new KAOAAnschlussoptionen("WERK", 15, );
+	public static readonly WERK: KAOAAnschlussoptionen = new KAOAAnschlussoptionen("WERK", 15, );
 
 	/**
 	 * KAoA-Anschlussoption: Jugendwerkstatt
 	 */
-	public static readonly JUWERK : KAOAAnschlussoptionen = new KAOAAnschlussoptionen("JUWERK", 16, );
+	public static readonly JUWERK: KAOAAnschlussoptionen = new KAOAAnschlussoptionen("JUWERK", 16, );
 
 	/**
 	 * KAoA-Anschlussoption: weitere Maßnahmen gemäß SGB II/III/VIII (z. B. Aktivierungshilfen, Projekte der Jugendberufshilfe)
 	 */
-	public static readonly MASS : KAOAAnschlussoptionen = new KAOAAnschlussoptionen("MASS", 17, );
+	public static readonly MASS: KAOAAnschlussoptionen = new KAOAAnschlussoptionen("MASS", 17, );
 
 	/**
 	 * KAoA-Anschlussoption: Abendrealschule oder VHS zum Nachholen des Schulabschlusses
 	 */
-	public static readonly VHS : KAOAAnschlussoptionen = new KAOAAnschlussoptionen("VHS", 18, );
+	public static readonly VHS: KAOAAnschlussoptionen = new KAOAAnschlussoptionen("VHS", 18, );
 
 	/**
 	 * KAoA-Anschlussoption: betriebliche Langzeitpraktika (ohne EQ) (z.B. zum Erwerb der vollen FHR)
 	 */
-	public static readonly PRAKT : KAOAAnschlussoptionen = new KAOAAnschlussoptionen("PRAKT", 19, );
+	public static readonly PRAKT: KAOAAnschlussoptionen = new KAOAAnschlussoptionen("PRAKT", 19, );
 
 	/**
 	 * KAoA-Anschlussoption: Freiwilligendienste, Freiwilliger Wehrdienst/Laufbahn Bundeswehr und ähnliche Anschlussoptionen
 	 */
-	public static readonly FREI : KAOAAnschlussoptionen = new KAOAAnschlussoptionen("FREI", 20, );
+	public static readonly FREI: KAOAAnschlussoptionen = new KAOAAnschlussoptionen("FREI", 20, );
 
 	/**
 	 * KAoA-Anschlussoption: Sozialversicherungspflichtige Beschäftigung als ungelernte Kraft
 	 */
-	public static readonly SVP : KAOAAnschlussoptionen = new KAOAAnschlussoptionen("SVP", 21, );
+	public static readonly SVP: KAOAAnschlussoptionen = new KAOAAnschlussoptionen("SVP", 21, );
 
 	/**
 	 * KAoA-Anschlussoption: Außerbetriebliche Ausbildung für Menschen mit Behinderung im Berufsbildungswerk (BBW)
 	 */
-	public static readonly BBW : KAOAAnschlussoptionen = new KAOAAnschlussoptionen("BBW", 22, );
+	public static readonly BBW: KAOAAnschlussoptionen = new KAOAAnschlussoptionen("BBW", 22, );
 
 	/**
 	 * KAoA-Anschlussoption: Begleitete betriebliche Ausbildung (bbA) für Menschen mit Behinderung
 	 */
-	public static readonly BBA : KAOAAnschlussoptionen = new KAOAAnschlussoptionen("BBA", 23, );
+	public static readonly BBA: KAOAAnschlussoptionen = new KAOAAnschlussoptionen("BBA", 23, );
 
 	/**
 	 * KAoA-Anschlussoption: Unterstützte Beschäftigung (UB) für Menschen mit Behinderung
 	 */
-	public static readonly UB : KAOAAnschlussoptionen = new KAOAAnschlussoptionen("UB", 24, );
+	public static readonly UB: KAOAAnschlussoptionen = new KAOAAnschlussoptionen("UB", 24, );
 
 	/**
 	 * KAoA-Anschlussoption: Diagnose der Arbeitsmarktfähigkeit besonders betroffener behinderter Menschen (DIA-AM)
 	 */
-	public static readonly DIAAM : KAOAAnschlussoptionen = new KAOAAnschlussoptionen("DIAAM", 25, );
+	public static readonly DIAAM: KAOAAnschlussoptionen = new KAOAAnschlussoptionen("DIAAM", 25, );
 
 	/**
 	 * KAoA-Anschlussoption: Maßnahmen im Eingangsverfahren und im Berufsbildungsbereich in Werkstätten für behinderte Menschen (WfbM)
 	 */
-	public static readonly WFBM : KAOAAnschlussoptionen = new KAOAAnschlussoptionen("WFBM", 26, );
+	public static readonly WFBM: KAOAAnschlussoptionen = new KAOAAnschlussoptionen("WFBM", 26, );
 
 	/**
 	 * KAoA-Anschlussoption: Betreuung in Tagesförderstätten für schwerst- und schwermehrfachbehinderte Menschen
 	 */
-	public static readonly TAG : KAOAAnschlussoptionen = new KAOAAnschlussoptionen("TAG", 27, );
+	public static readonly TAG: KAOAAnschlussoptionen = new KAOAAnschlussoptionen("TAG", 27, );
 
 	/**
 	 * KAoA-Anschlussoption: Verbleib zu Hause bei einer Schwerst- und Schwermehrfachbehinderung
 	 */
-	public static readonly HAUSE : KAOAAnschlussoptionen = new KAOAAnschlussoptionen("HAUSE", 28, );
+	public static readonly HAUSE: KAOAAnschlussoptionen = new KAOAAnschlussoptionen("HAUSE", 28, );
 
 	/**
 	 * KAoA-Anschlussoption: weitere rehaspezifische Maßnahmen für Menschen mit Behinderung
 	 */
-	public static readonly REHA : KAOAAnschlussoptionen = new KAOAAnschlussoptionen("REHA", 29, );
+	public static readonly REHA: KAOAAnschlussoptionen = new KAOAAnschlussoptionen("REHA", 29, );
 
 	/**
 	 * KAoA-Anschlussoption: Minijob
 	 */
-	public static readonly MINI : KAOAAnschlussoptionen = new KAOAAnschlussoptionen("MINI", 30, );
+	public static readonly MINI: KAOAAnschlussoptionen = new KAOAAnschlussoptionen("MINI", 30, );
 
 	/**
 	 * KAoA-Anschlussoption: Schwangerschaft/Elternzeit
 	 */
-	public static readonly SCHWAN : KAOAAnschlussoptionen = new KAOAAnschlussoptionen("SCHWAN", 31, );
+	public static readonly SCHWAN: KAOAAnschlussoptionen = new KAOAAnschlussoptionen("SCHWAN", 31, );
 
 	/**
 	 * KAoA-Anschlussoption: Schulabsenz, daher Verbleib unbekannt
 	 */
-	public static readonly ABSENZ : KAOAAnschlussoptionen = new KAOAAnschlussoptionen("ABSENZ", 32, );
+	public static readonly ABSENZ: KAOAAnschlussoptionen = new KAOAAnschlussoptionen("ABSENZ", 32, );
 
 	/**
 	 * KAoA-Anschlussoption: Verbleib unbekannt - andere Gründe
 	 */
-	public static readonly UNBE : KAOAAnschlussoptionen = new KAOAAnschlussoptionen("UNBE", 33, );
+	public static readonly UNBE: KAOAAnschlussoptionen = new KAOAAnschlussoptionen("UNBE", 33, );
 
 	/**
-	 * KAoA-Anschlussoption: Noch kein Anschluss
+	 * KAoA-Anschlussoption: Kontakt besteht - noch kein Anschluss (Grund bitte unter Anmerkungen angeben)
 	 */
-	public static readonly NOKEAN : KAOAAnschlussoptionen = new KAOAAnschlussoptionen("NOKEAN", 34, );
+	public static readonly NOKEAN: KAOAAnschlussoptionen = new KAOAAnschlussoptionen("NOKEAN", 34, );
 
 	/**
 	 * KAoA-Anschlussoption: Duales Studium (inkl. Beamtenausbildung im gehobenen Dienst)
 	 */
-	public static readonly DUASTUD : KAOAAnschlussoptionen = new KAOAAnschlussoptionen("DUASTUD", 35, );
+	public static readonly DUASTUD: KAOAAnschlussoptionen = new KAOAAnschlussoptionen("DUASTUD", 35, );
 
 	/**
 	 * KAoA-Anschlussoption: Hochschulstudium
 	 */
-	public static readonly STUD : KAOAAnschlussoptionen = new KAOAAnschlussoptionen("STUD", 36, );
+	public static readonly STUD: KAOAAnschlussoptionen = new KAOAAnschlussoptionen("STUD", 36, );
+
+	/**
+	 * KAoA-Anschlussoption: Wiederholung oder Verbleib an der Schule im zieldifferenten Bildungsgang des Gemeinsamen Lernens
+	 */
+	public static readonly WIED: KAOAAnschlussoptionen = new KAOAAnschlussoptionen("WIED", 37, );
+
+	/**
+	 * KAoA-Anschlussoption: Berufspraxisstufe einer Förderschule
+	 */
+	public static readonly BEF: KAOAAnschlussoptionen = new KAOAAnschlussoptionen("BEF", 38, );
+
+	/**
+	 * KAoA-Anschlussoption: Berufskolleg - Einjährige Ausbildungsvorbereitung in Vollzeit (AV-VZ) - Anlage A
+	 */
+	public static readonly AVVZ: KAOAAnschlussoptionen = new KAOAAnschlussoptionen("AVVZ", 39, );
+
+	/**
+	 * KAoA-Anschlussoption: Berufskolleg - Einjährige Berufsfachschule 1 (BFS1) - Anlage B
+	 */
+	public static readonly BFSIB: KAOAAnschlussoptionen = new KAOAAnschlussoptionen("BFSIB", 40, );
+
+	/**
+	 * KAoA-Anschlussoption: Berufskolleg - Einjährige Berufsfachschule 2 (BFS2) - Anlage B
+	 */
+	public static readonly BFSIIB: KAOAAnschlussoptionen = new KAOAAnschlussoptionen("BFSIIB", 41, );
+
+	/**
+	 * KAoA-Anschlussoption: Duale Berufsausbildung im Betrieb und an der Berufsschule am Berufskolleg
+	 */
+	public static readonly DUALBB: KAOAAnschlussoptionen = new KAOAAnschlussoptionen("DUALBB", 42, );
+
+	/**
+	 * KAoA-Anschlussoption: Fachpraktikerausbildung/Werkerausbildung  Betriebliche Ausbildung in gesondert geregelten Berufen für Jugendliche mit Behinderung
+	 */
+	public static readonly FACHWERK: KAOAAnschlussoptionen = new KAOAAnschlussoptionen("FACHWERK", 43, );
+
+	/**
+	 * KAoA-Anschlussoption: Beamtenlaufbahn einfacher Dienst
+	 */
+	public static readonly BAED: KAOAAnschlussoptionen = new KAOAAnschlussoptionen("BAED", 44, );
+
+	/**
+	 * KAoA-Anschlussoption: Beamtenlaufbahn mittlerer Dienst
+	 */
+	public static readonly BAMD: KAOAAnschlussoptionen = new KAOAAnschlussoptionen("BAMD", 45, );
+
+	/**
+	 * KAoA-Anschlussoption: Beamtenlaufbahn gehobener Dienst
+	 */
+	public static readonly BAGD: KAOAAnschlussoptionen = new KAOAAnschlussoptionen("BAGD", 46, );
+
+	/**
+	 * KAoA-Anschlussoption: Schulische Ausbildung in Pflegeberufen und Gesundheitsberufen
+	 */
+	public static readonly SCHUPGA: KAOAAnschlussoptionen = new KAOAAnschlussoptionen("SCHUPGA", 47, );
+
+	/**
+	 * KAoA-Anschlussoption: Berufskolleg - 2-jährige vollzeitschulische Ausbildung (Sozialassistenz, Kinderpflege, Assistenz für Ernährung und Versorgung) an der Berufsfachschule Anlage B
+	 */
+	public static readonly BKAUSZW: KAOAAnschlussoptionen = new KAOAAnschlussoptionen("BKAUSZW", 48, );
+
+	/**
+	 * KAoA-Anschlussoption: Berufskolleg  Assistentenausbildung 3-jährig vollzeitschulisch (verkürzt 2-jährig) an der Berufsfachschule Anlage C oder am Beruflichen Gymnasium
+	 */
+	public static readonly BKAUSDR: KAOAAnschlussoptionen = new KAOAAnschlussoptionen("BKAUSDR", 49, );
+
+	/**
+	 * KAoA-Anschlussoption: Einstiegsqualifizierung (EQ
+	 */
+	public static readonly EINQUA: KAOAAnschlussoptionen = new KAOAAnschlussoptionen("EINQUA", 50, );
+
+	/**
+	 * KAoA-Anschlussoption: Berufsvorbereitende Bildungsmaßnahme (BvB), auch rehaspezifisch
+	 */
+	public static readonly BVBR: KAOAAnschlussoptionen = new KAOAAnschlussoptionen("BVBR", 51, );
+
+	/**
+	 * KAoA-Anschlussoption: Werkstattjahr (Berufsvorbereitende Bildungsmaßnahmen mit produktionsorientiertem Ansatz und Aktivierungshilfen für Jüngere mit produktionsorientiertem Ansatz
+	 */
+	public static readonly WSJ: KAOAAnschlussoptionen = new KAOAAnschlussoptionen("WSJ", 52, );
+
+	/**
+	 * KAoA-Anschlussoption: Abendrealschule oder Weiterbildungsträger wie z. B. VHS zum Nachholen des Schulabschlusses
+	 */
+	public static readonly ABEND: KAOAAnschlussoptionen = new KAOAAnschlussoptionen("ABEND", 53, );
+
+	/**
+	 * KAoA-Anschlussoption: Freiwilligendienste, Freiwilliger Wehrdienst/Laufbahn Bundeswehr und ähnliche Anschlussoptionen (siehe Glossar)
+	 */
+	public static readonly FREIBUND: KAOAAnschlussoptionen = new KAOAAnschlussoptionen("FREIBUND", 54, );
+
+	/**
+	 * KAoA-Anschlussoption: Selbstständige/r Unternehmer/in
+	 */
+	public static readonly SU: KAOAAnschlussoptionen = new KAOAAnschlussoptionen("SU", 55, );
+
+	/**
+	 * KAoA-Anschlussoption: Sonstige Ausbildung bzw. berufliche Qualifizierung, die nicht den aufgeführten Anschlüssen zuzuordnen ist  (Ausbildung bitte unter Anmerkungen angeben)
+	 */
+	public static readonly AUSSON: KAOAAnschlussoptionen = new KAOAAnschlussoptionen("AUSSON", 56, );
+
+	/**
+	 * KAoA-Anschlussoption: Elternzeit
+	 */
+	public static readonly ELTERN: KAOAAnschlussoptionen = new KAOAAnschlussoptionen("ELTERN", 57, );
+
+	/**
+	 * KAoA-Anschlussoption: Verbleib zu Hause - Elternentscheidung nach Vollzeitschulpflicht bei einer Mehrfach- oder Schwerstmehrfachbehinderung
+	 */
+	public static readonly HAUS: KAOAAnschlussoptionen = new KAOAAnschlussoptionen("HAUS", 58, );
+
+	/**
+	 * KAoA-Anschlussoption: Verbleib unbekannt - andere Gründe (bitte unter Anmerkungen angeben
+	 */
+	public static readonly VERUN: KAOAAnschlussoptionen = new KAOAAnschlussoptionen("VERUN", 59, );
 
 	/**
 	 * (Integer, Long) -> Schuljahr, idZusatzmerkmal
 	 */
-	private static readonly _mapEintraegeBySchuljahrAndZusatzmerkmal : JavaMap<number, JavaMap<number, List<KAOAAnschlussoptionenKatalogEintrag>>> = new HashMap<number, JavaMap<number, List<KAOAAnschlussoptionenKatalogEintrag>>>();
+	private static readonly _mapEintraegeBySchuljahrAndZusatzmerkmal: JavaMap<number, JavaMap<number, List<KAOAAnschlussoptionenKatalogEintrag>>> = new HashMap<number, JavaMap<number, List<KAOAAnschlussoptionenKatalogEintrag>>>();
 
-	private constructor(name : string, ordinal : number) {
+	private constructor(name: string, ordinal: number) {
 		super(name, ordinal);
 		KAOAAnschlussoptionen.all_values_by_ordinal.push(this);
 		KAOAAnschlussoptionen.all_values_by_name.set(name, this);
@@ -219,7 +334,7 @@ export class KAOAAnschlussoptionen extends JavaEnum<KAOAAnschlussoptionen> imple
 	 *
 	 * @param manager   der Manager für die Daten des Core-Types
 	 */
-	public static init(manager : CoreTypeDataManager<KAOAAnschlussoptionenKatalogEintrag, KAOAAnschlussoptionen>) : void {
+	public static init(manager: CoreTypeDataManager<KAOAAnschlussoptionenKatalogEintrag, KAOAAnschlussoptionen>): void {
 		CoreTypeDataManager.putManager(KAOAAnschlussoptionen.class, manager);
 		KAOAAnschlussoptionen._mapEintraegeBySchuljahrAndZusatzmerkmal.clear();
 	}
@@ -229,7 +344,7 @@ export class KAOAAnschlussoptionen extends JavaEnum<KAOAAnschlussoptionen> imple
 	 *
 	 * @return der Daten-Manager
 	 */
-	public static data() : CoreTypeDataManager<KAOAAnschlussoptionenKatalogEintrag, KAOAAnschlussoptionen> {
+	public static data(): CoreTypeDataManager<KAOAAnschlussoptionenKatalogEintrag, KAOAAnschlussoptionen> {
 		return CoreTypeDataManager.getManager(KAOAAnschlussoptionen.class);
 	}
 
@@ -243,15 +358,15 @@ export class KAOAAnschlussoptionen extends JavaEnum<KAOAAnschlussoptionen> imple
 	 *
 	 * @return alle zulässigen KAoA-Anschlussoption-Historien-Einträge für das angegebene Zusatzmerkmal in dem angegebenen Schuljahr.
 	 */
-	public static getEintraegeBySchuljahrAndIdZusatzmerkmal(schuljahr : number, idZusatzmerkmal : number) : List<KAOAAnschlussoptionenKatalogEintrag> {
-		let mapEintraegeByZusatzmerkmal : JavaMap<number, List<KAOAAnschlussoptionenKatalogEintrag>> | null = KAOAAnschlussoptionen._mapEintraegeBySchuljahrAndZusatzmerkmal.get(schuljahr);
+	public static getEintraegeBySchuljahrAndIdZusatzmerkmal(schuljahr: number, idZusatzmerkmal: number): List<KAOAAnschlussoptionenKatalogEintrag> {
+		let mapEintraegeByZusatzmerkmal: JavaMap<number, List<KAOAAnschlussoptionenKatalogEintrag>> | null = KAOAAnschlussoptionen._mapEintraegeBySchuljahrAndZusatzmerkmal.get(schuljahr);
 		if (mapEintraegeByZusatzmerkmal !== null) {
-			const result : List<KAOAAnschlussoptionenKatalogEintrag> | null = mapEintraegeByZusatzmerkmal.get(idZusatzmerkmal);
+			const result: List<KAOAAnschlussoptionenKatalogEintrag> | null = mapEintraegeByZusatzmerkmal.get(idZusatzmerkmal);
 			return (result !== null) ? result : new ArrayList();
 		}
 		mapEintraegeByZusatzmerkmal = KAOAAnschlussoptionen.cacheEintraegeBySchuljahrAndIdZusatzmerkmal(schuljahr);
 		KAOAAnschlussoptionen._mapEintraegeBySchuljahrAndZusatzmerkmal.put(schuljahr, mapEintraegeByZusatzmerkmal);
-		const result : List<KAOAAnschlussoptionenKatalogEintrag> | null = mapEintraegeByZusatzmerkmal.get(idZusatzmerkmal);
+		const result: List<KAOAAnschlussoptionenKatalogEintrag> | null = mapEintraegeByZusatzmerkmal.get(idZusatzmerkmal);
 		return (result !== null) ? result : new ArrayList();
 	}
 
@@ -261,10 +376,10 @@ export class KAOAAnschlussoptionen extends JavaEnum<KAOAAnschlussoptionen> imple
 	 * @param schuljahr   das Schuljahr
 	 * @return einen Cache der zulässigen KAoA-Anschlussoption-Historien-Einträge je Zusatzmerkmal in dem angegebenen Schuljahr.
 	 */
-	private static cacheEintraegeBySchuljahrAndIdZusatzmerkmal(schuljahr : number) : JavaMap<number, List<KAOAAnschlussoptionenKatalogEintrag>> {
-		const cache : JavaMap<number, List<KAOAAnschlussoptionenKatalogEintrag>> | null = new HashMap<number, List<KAOAAnschlussoptionenKatalogEintrag>>();
+	private static cacheEintraegeBySchuljahrAndIdZusatzmerkmal(schuljahr: number): JavaMap<number, List<KAOAAnschlussoptionenKatalogEintrag>> {
+		const cache: JavaMap<number, List<KAOAAnschlussoptionenKatalogEintrag>> | null = new HashMap<number, List<KAOAAnschlussoptionenKatalogEintrag>>();
 		for (const zusatzmerkmalHistorienEintrag of KAOAZusatzmerkmal.data().getEintraegeBySchuljahr(schuljahr)) {
-			const result : List<KAOAAnschlussoptionenKatalogEintrag> | null = new ArrayList<KAOAAnschlussoptionenKatalogEintrag>();
+			const result: List<KAOAAnschlussoptionenKatalogEintrag> | null = new ArrayList<KAOAAnschlussoptionenKatalogEintrag>();
 			for (const anschlussoptionHistorienEintrag of KAOAAnschlussoptionen.data().getEintraegeBySchuljahr(schuljahr))
 				if (anschlussoptionHistorienEintrag.anzeigeZusatzmerkmal.contains(KAOAZusatzmerkmal.data().getWertByID(zusatzmerkmalHistorienEintrag.id).name()))
 					result.add(anschlussoptionHistorienEintrag);
@@ -278,7 +393,7 @@ export class KAOAAnschlussoptionen extends JavaEnum<KAOAAnschlussoptionen> imple
 	 *
 	 * @returns the array with enumeration values
 	 */
-	public static values() : Array<KAOAAnschlussoptionen> {
+	public static values(): Array<KAOAAnschlussoptionen> {
 		return [...this.all_values_by_ordinal];
 	}
 
@@ -289,24 +404,24 @@ export class KAOAAnschlussoptionen extends JavaEnum<KAOAAnschlussoptionen> imple
 	 *
 	 * @returns the enumeration values or null
 	 */
-	public static valueOf(name : string) : KAOAAnschlussoptionen | null {
+	public static valueOf(name: string): KAOAAnschlussoptionen | null {
 		const tmp = this.all_values_by_name.get(name);
 		return (!tmp) ? null : tmp;
 	}
 
-	public getManager() : CoreTypeDataManager<KAOAAnschlussoptionenKatalogEintrag, KAOAAnschlussoptionen> {
+	public getManager(): CoreTypeDataManager<KAOAAnschlussoptionenKatalogEintrag, KAOAAnschlussoptionen> {
 		return de_svws_nrw_asd_types_CoreType_getManager(this);
 	}
 
-	public daten(schuljahr : number) : KAOAAnschlussoptionenKatalogEintrag | null {
+	public daten(schuljahr: number): KAOAAnschlussoptionenKatalogEintrag | null {
 		return de_svws_nrw_asd_types_CoreType_daten(this, schuljahr);
 	}
 
-	public statistikId() : string | null {
+	public statistikId(): string | null {
 		return de_svws_nrw_asd_types_CoreType_statistikId(this);
 	}
 
-	public historie() : List<KAOAAnschlussoptionenKatalogEintrag> {
+	public historie(): List<KAOAAnschlussoptionenKatalogEintrag> {
 		return de_svws_nrw_asd_types_CoreType_historie(this);
 	}
 
@@ -314,7 +429,7 @@ export class KAOAAnschlussoptionen extends JavaEnum<KAOAAnschlussoptionen> imple
 		return 'de.svws_nrw.asd.types.kaoa.KAOAAnschlussoptionen';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.asd.types.CoreType', 'java.lang.Comparable', 'de.svws_nrw.asd.types.kaoa.KAOAAnschlussoptionen', 'java.lang.Enum', 'java.lang.Comparable'].includes(name);
 	}
 
@@ -322,6 +437,6 @@ export class KAOAAnschlussoptionen extends JavaEnum<KAOAAnschlussoptionen> imple
 
 }
 
-export function cast_de_svws_nrw_asd_types_kaoa_KAOAAnschlussoptionen(obj : unknown) : KAOAAnschlussoptionen {
+export function cast_de_svws_nrw_asd_types_kaoa_KAOAAnschlussoptionen(obj: unknown): KAOAAnschlussoptionen {
 	return obj as KAOAAnschlussoptionen;
 }

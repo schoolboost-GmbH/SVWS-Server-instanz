@@ -191,7 +191,7 @@
 	import { CoreTypeSelectManager } from "./selectManager/CoreTypeSelectManager";
 	import { SelectManager } from "./selectManager/SelectManager";
 	import type { LehrerRechtsverhaeltnisKatalogEintrag } from "../../../../../core/src/asd/data/lehrer/LehrerRechtsverhaeltnisKatalogEintrag";
-	import Docs from "./UiSelectMulti.story.md"
+	import Docs from "./UiSelectMulti.story.md";
 
 	const state = reactive({
 		searchable: false,
@@ -226,10 +226,10 @@
 		"Kirsche", "Kiwi", "Lemon", "Litschi", "Melone", "Orange", "Papaya", "Pfirsich", "Pflaume", "Rote Johannisbeere", "Zitronenmelisse",
 	];
 	const carItems: { marke: string, color: string, baujahr: number }[] = [{ marke: "BMW", color: "blue", baujahr: 2006 },
-		{ marke: "Audi", color: "red", baujahr: 2008}, { marke: "Opel", color: "schwarz", baujahr: 2006 }];
+		{ marke: "Audi", color: "red", baujahr: 2008 }, { marke: "Opel", color: "schwarz", baujahr: 2006 }];
 
 
-	const stringSelectManager = new SelectManager({options: fruitItems});
+	const stringSelectManager = new SelectManager({ options: fruitItems });
 
 	const coreTypeSelectManager = new CoreTypeSelectManager({
 		clazz: LehrerRechtsverhaeltnis.class, schuljahr: 2018, schulformen: Schulform.GY,
@@ -275,20 +275,26 @@
 	});
 
 	const sortById = (a: LehrerRechtsverhaeltnisKatalogEintrag, b: LehrerRechtsverhaeltnisKatalogEintrag) => {
-		if (a.id < b.id) return -1;
-		if (a.id > b.id) return 1;
+		if (a.id < b.id)
+			return -1;
+		if (a.id > b.id)
+			return 1;
 		return 0;
 	};
 
 	const sortByKuerzel = (a: LehrerRechtsverhaeltnisKatalogEintrag, b: LehrerRechtsverhaeltnisKatalogEintrag) => {
-		if (a.kuerzel < b.kuerzel) return -1;
-		if (a.kuerzel > b.kuerzel) return 1;
+		if (a.kuerzel < b.kuerzel)
+			return -1;
+		if (a.kuerzel > b.kuerzel)
+			return 1;
 		return 0;
 	};
 
 	const sortByText = (a: LehrerRechtsverhaeltnisKatalogEintrag, b: LehrerRechtsverhaeltnisKatalogEintrag) => {
-		if (a.text < b.text) return -1;
-		if (a.text > b.text) return 1;
+		if (a.text < b.text)
+			return -1;
+		if (a.text > b.text)
+			return 1;
 		return 0;
 	};
 
@@ -310,7 +316,7 @@
 		sort: computedSort,
 	});
 
-	function getSourceString (multi = false) {
+	function getSourceString(multi = false) {
 		return `<ui-select-multi
         label="..."
         :manager="..."

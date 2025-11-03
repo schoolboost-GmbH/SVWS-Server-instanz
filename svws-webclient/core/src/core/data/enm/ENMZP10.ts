@@ -6,37 +6,37 @@ export class ENMZP10 extends JavaObject {
 	/**
 	 * Die ID des Faches der zentralen Prüfungen
 	 */
-	public fachID : number = 0;
+	public fachID: number = 0;
 
 	/**
 	 * Das Kürzel der Vornote für dieses Fach
 	 */
-	public vornote : string | null = null;
+	public vornote: string | null = null;
 
 	/**
 	 * Das Kürzel der Note,die bei der schriftlichen Prüfung erreicht wurde
 	 */
-	public noteSchriftlichePruefung : string | null = null;
+	public noteSchriftlichePruefung: string | null = null;
 
 	/**
 	 * Gibt an, ob eine mündliche Prüfung stattfinden muss
 	 */
-	public muendlichePruefung : boolean = false;
+	public muendlichePruefung: boolean = false;
 
 	/**
 	 * Gibt an, ob eine freiwillige mündliche Prüfung stattfindet
 	 */
-	public muendlichePruefungFreiwillig : boolean = false;
+	public muendlichePruefungFreiwillig: boolean = false;
 
 	/**
 	 * Das Kürzel der Note,die bei der mündlichen Prüfung erreicht wurde, sofern eine stattfindet
 	 */
-	public noteMuendlichePruefung : string | null = null;
+	public noteMuendlichePruefung: string | null = null;
 
 	/**
 	 * Das Kürzel der Abschlussnote nach der ZP10-Prüfung
 	 */
-	public abschlussnote : string | null = null;
+	public abschlussnote: string | null = null;
 
 
 	/**
@@ -50,13 +50,13 @@ export class ENMZP10 extends JavaObject {
 		return 'de.svws_nrw.core.data.enm.ENMZP10';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.enm.ENMZP10'].includes(name);
 	}
 
 	public static class = new Class<ENMZP10>('de.svws_nrw.core.data.enm.ENMZP10');
 
-	public static transpilerFromJSON(json : string): ENMZP10 {
+	public static transpilerFromJSON(json: string): ENMZP10 {
 		const obj = JSON.parse(json) as Partial<ENMZP10>;
 		const result = new ENMZP10();
 		if (obj.fachID === undefined)
@@ -75,7 +75,7 @@ export class ENMZP10 extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : ENMZP10) : string {
+	public static transpilerToJSON(obj: ENMZP10): string {
 		let result = '{';
 		result += '"fachID" : ' + obj.fachID.toString() + ',';
 		result += '"vornote" : ' + ((obj.vornote === null) ? 'null' : JSON.stringify(obj.vornote)) + ',';
@@ -89,7 +89,7 @@ export class ENMZP10 extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<ENMZP10>) : string {
+	public static transpilerToJSONPatch(obj: Partial<ENMZP10>): string {
 		let result = '{';
 		if (obj.fachID !== undefined) {
 			result += '"fachID" : ' + obj.fachID.toString() + ',';
@@ -119,6 +119,6 @@ export class ENMZP10 extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_enm_ENMZP10(obj : unknown) : ENMZP10 {
+export function cast_de_svws_nrw_core_data_enm_ENMZP10(obj: unknown): ENMZP10 {
 	return obj as ENMZP10;
 }

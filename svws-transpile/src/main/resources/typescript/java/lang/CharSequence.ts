@@ -3,29 +3,29 @@ import { StringIndexOutOfBoundsException } from './StringIndexOutOfBoundsExcepti
 
 export interface CharSequence {
 
-	length() : number;
+	length(): number;
 
-	charAt(index : number) : string;
+	charAt(index: number): string;
 
-	isEmpty() : boolean;
+	isEmpty(): boolean;
 
-	subSequence(start : number, end : number) : CharSequence;
+	subSequence(start: number, end: number): CharSequence;
 
-	toString() : string | null;
+	toString(): string | null;
 
 }
 
-export function compare(cs1 : CharSequence | null, cs2 : CharSequence | null) : number {
+export function compare(cs1: CharSequence | null, cs2: CharSequence | null): number {
 	if ((cs1 === null) || (cs2 === null))
 		throw new NullPointerException();
 	if (cs1 === cs2)
 		return 0;
-	for (let i : number = 0, len = Math.min(cs1.length(), cs2.length()); i < len; i++) {
-		const a : string = cs1.charAt(i);
-		const b : string = cs2.charAt(i);
+	for (let i: number = 0, len = Math.min(cs1.length(), cs2.length()); i < len; i++) {
+		const a: string = cs1.charAt(i);
+		const b: string = cs2.charAt(i);
 		if (a !== b) {
-			const cpA : number | undefined = a.codePointAt(0);
-			const cpB : number | undefined = b.codePointAt(0);
+			const cpA: number | undefined = a.codePointAt(0);
+			const cpB: number | undefined = b.codePointAt(0);
 			if (cpA === undefined)
 				throw new StringIndexOutOfBoundsException(0);
 			if (cpB === undefined)
@@ -37,6 +37,6 @@ export function compare(cs1 : CharSequence | null, cs2 : CharSequence | null) : 
 }
 
 
-export function cast_java_lang_CharSequence(obj : unknown) : CharSequence {
+export function cast_java_lang_CharSequence(obj: unknown): CharSequence {
 	return obj as CharSequence;
 }

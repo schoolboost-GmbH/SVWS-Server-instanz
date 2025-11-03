@@ -10,13 +10,13 @@ const SFaecherDaten = () => import("~/components/schule/schulbezogen/faecher/dat
 export class RouteFaecherDaten extends RouteNode<any, RouteFaecher> {
 
 	public constructor() {
-		super(Schulform.values(), [ BenutzerKompetenz.KATALOG_EINTRAEGE_ANSEHEN, BenutzerKompetenz.KATALOG_EINTRAEGE_AENDERN ], "schule.faecher.daten", "daten", SFaecherDaten);
+		super(Schulform.values(), [BenutzerKompetenz.KATALOG_EINTRAEGE_ANSEHEN, BenutzerKompetenz.KATALOG_EINTRAEGE_AENDERN], "schule.faecher.daten", "daten", SFaecherDaten);
 		super.mode = ServerMode.STABLE;
 		super.propHandler = (route) => this.getProps(route);
 		super.text = "Fach";
 	}
 
-	public async update(to: RouteNode<any, any>, to_params: RouteParams) : Promise<void | Error | RouteLocationRaw> {
+	public async update(to: RouteNode<any, any>, to_params: RouteParams): Promise<void | Error | RouteLocationRaw> {
 		if (routeFaecher.data.manager.auswahlID() === null)
 			return routeFaecher.getRoute();
 	}

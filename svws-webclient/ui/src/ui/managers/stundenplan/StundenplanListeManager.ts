@@ -1,7 +1,7 @@
 import { JavaObject } from '../../../../../core/src/java/lang/JavaObject';
-import { Schulform } from '../../../../../core/src/asd/types/schule/Schulform';
+import type { Schulform } from '../../../../../core/src/asd/types/schule/Schulform';
 import { ArrayList } from '../../../../../core/src/java/util/ArrayList';
-import { StundenplanManager } from '../../../../../core/src/core/utils/stundenplan/StundenplanManager';
+import type { StundenplanManager } from '../../../../../core/src/core/utils/stundenplan/StundenplanManager';
 import { JavaString } from '../../../../../core/src/java/lang/JavaString';
 import { DeveloperNotificationException } from '../../../../../core/src/core/exceptions/DeveloperNotificationException';
 import { DateUtils } from '../../../../../core/src/core/utils/DateUtils';
@@ -13,15 +13,15 @@ import { JavaLong } from '../../../../../core/src/java/lang/JavaLong';
 import type { List } from '../../../../../core/src/java/util/List';
 import { Class } from '../../../../../core/src/java/lang/Class';
 import { Arrays } from '../../../../../core/src/java/util/Arrays';
-import { Schuljahresabschnitt } from '../../../../../core/src/asd/data/schule/Schuljahresabschnitt';
+import type { Schuljahresabschnitt } from '../../../../../core/src/asd/data/schule/Schuljahresabschnitt';
 
 export class StundenplanListeManager extends AuswahlManager<number, StundenplanListeEintrag, StundenplanManager> {
 
 	/**
 	 * Ein Default-Comparator für den Vergleich von Stundenplänen in Stundenplanlisten.
 	 */
-	public static readonly comparator : Comparator<StundenplanListeEintrag> = { compare : (a: StundenplanListeEintrag, b: StundenplanListeEintrag) => {
-		let cmp : number = a.schuljahr - b.schuljahr;
+	public static readonly comparator: Comparator<StundenplanListeEintrag> = { compare: (a: StundenplanListeEintrag, b: StundenplanListeEintrag) => {
+		let cmp: number = a.schuljahr - b.schuljahr;
 		if (cmp !== 0)
 			return cmp;
 		cmp = a.abschnitt - b.abschnitt;
@@ -38,21 +38,21 @@ export class StundenplanListeManager extends AuswahlManager<number, StundenplanL
 	/**
 	 * Funktionen zum Mappen von Auswahl- bzw. Daten-Objekten auf deren ID-Typ
 	 */
-	private static readonly _listeEintragToId : JavaFunction<StundenplanListeEintrag, number> = { apply : (s: StundenplanListeEintrag) => s.id };
+	private static readonly _listeEintragToId: JavaFunction<StundenplanListeEintrag, number> = { apply: (s: StundenplanListeEintrag) => s.id };
 
-	private static readonly _stundenplanToId : JavaFunction<StundenplanManager, number> = { apply : (s: StundenplanManager) => s.stundenplanGetID() };
+	private static readonly _stundenplanToId: JavaFunction<StundenplanManager, number> = { apply: (s: StundenplanManager) => s.stundenplanGetID() };
 
 	/**
 	 * Das Filter-Attribut auf nur aktive Stundenpläne
 	 */
-	private _filterNurAktiv : boolean = false;
+	private _filterNurAktiv: boolean = false;
 
 	/**
 	 * Die gefilterte Liste, sofern sie schon berechnet wurde
 	 */
-	protected _aktive : List<StundenplanListeEintrag> | null = null;
+	protected _aktive: List<StundenplanListeEintrag> | null = null;
 
-	private _stundenplanVorlage : StundenplanListeEintrag | null = null;
+	private _stundenplanVorlage: StundenplanListeEintrag | null = null;
 
 
 	/**
@@ -65,20 +65,20 @@ export class StundenplanListeManager extends AuswahlManager<number, StundenplanL
 	 * @param stundenplanListe    die Liste der Stundenpläne
 	 * @param createVorlage ob eine Vorlage erstellt werden soll
 	 */
-	public constructor(schuljahresabschnitt : number, schuljahresabschnittSchule : number, schuljahresabschnitte : List<Schuljahresabschnitt>, schulform : Schulform | null, stundenplanListe : List<StundenplanListeEintrag>, createVorlage : boolean) {
+	public constructor(schuljahresabschnitt: number, schuljahresabschnittSchule: number, schuljahresabschnitte: List<Schuljahresabschnitt>, schulform: Schulform | null, stundenplanListe: List<StundenplanListeEintrag>, createVorlage: boolean) {
 		super(schuljahresabschnitt, schuljahresabschnittSchule, schuljahresabschnitte, schulform, stundenplanListe, StundenplanListeManager.comparator, StundenplanListeManager._listeEintragToId, StundenplanListeManager._stundenplanToId, Arrays.asList());
 		if (createVorlage)
 			this.addStundenplanVorlage();
 	}
 
-	protected checkFilter(eintrag : StundenplanListeEintrag) : boolean {
+	protected checkFilter(eintrag: StundenplanListeEintrag): boolean {
 		if (this._filterNurAktiv && !eintrag.aktiv)
 			return false;
 		return true;
 	}
 
-	protected compareAuswahl(a : StundenplanListeEintrag, b : StundenplanListeEintrag) : number {
-		let cmp : number = a.schuljahr - b.schuljahr;
+	protected compareAuswahl(a: StundenplanListeEintrag, b: StundenplanListeEintrag): number {
+		let cmp: number = a.schuljahr - b.schuljahr;
 		if (cmp !== 0)
 			return cmp;
 		cmp = a.abschnitt - b.abschnitt;
@@ -92,15 +92,15 @@ export class StundenplanListeManager extends AuswahlManager<number, StundenplanL
 		if (cmp !== 0)
 			return cmp;
 		for (const criteria of this._order) {
-			const field : string | null = criteria.a;
-			const asc : boolean = (criteria.b === null) || criteria.b;
+			const field: string | null = criteria.a;
+			const asc: boolean = (criteria.b === null) || criteria.b;
 			if (JavaObject.equalsTranspiler("gueltigAb", (field)))
 				cmp = JavaString.compareTo(a.gueltigAb, b.gueltigAb);
 			else
 				if (JavaObject.equalsTranspiler("bezeichnung", (field)))
 					cmp = JavaString.compareTo(a.bezeichnung, b.bezeichnung);
 				else
-					throw new DeveloperNotificationException("Fehler bei der Sortierung. Das Sortierkriterium wird vom Manager nicht unterstützt.")
+					throw new DeveloperNotificationException("Fehler bei der Sortierung. Das Sortierkriterium wird vom Manager nicht unterstützt.");
 			if (cmp === 0)
 				continue;
 			return asc ? cmp : -cmp;
@@ -114,9 +114,9 @@ export class StundenplanListeManager extends AuswahlManager<number, StundenplanL
 	 *
 	 * @return die gefilterte Liste
 	 */
-	public filtered() : List<StundenplanListeEintrag> {
-		const hasCache : boolean = this._filtered !== null;
-		const filtered : List<StundenplanListeEintrag> | null = super.filtered();
+	public filtered(): List<StundenplanListeEintrag> {
+		const hasCache: boolean = this._filtered !== null;
+		const filtered: List<StundenplanListeEintrag> | null = super.filtered();
 		if (hasCache)
 			return filtered;
 		if (this._stundenplanVorlage !== null)
@@ -129,7 +129,7 @@ export class StundenplanListeManager extends AuswahlManager<number, StundenplanL
 	 *
 	 * @return die Liste der aktiven Stundenpläne
 	 */
-	public aktive() : List<StundenplanListeEintrag> {
+	public aktive(): List<StundenplanListeEintrag> {
 		if (this._filtered === null || this._aktive === null) {
 			this._aktive = new ArrayList();
 			for (const stundenplan of this.liste.list()) {
@@ -147,7 +147,7 @@ export class StundenplanListeManager extends AuswahlManager<number, StundenplanL
 	 *
 	 * @throws DeveloperNotificationException   falls die Daten nicht in der Auswahlliste vorhanden ist
 	 */
-	public setDaten(daten : StundenplanManager | null) : void {
+	public setDaten(daten: StundenplanManager | null): void {
 		if (daten !== null && daten.stundenplanGetID() === -1) {
 			this._vorherigeAuswahl = this._daten;
 			this._daten = daten;
@@ -165,11 +165,11 @@ export class StundenplanListeManager extends AuswahlManager<number, StundenplanL
 	 *
 	 * @throws DeveloperNotificationException wenn keine gültige Auswahl vorliegt
 	 */
-	public auswahl() : StundenplanListeEintrag {
+	public auswahl(): StundenplanListeEintrag {
 		if (this._daten === null || this._daten.stundenplanGetID() !== -1)
 			return super.auswahl();
 		if (this._stundenplanVorlage === null)
-			throw new DeveloperNotificationException("Es existiert kein Vorlagen-Stundenplan.")
+			throw new DeveloperNotificationException("Es existiert kein Vorlagen-Stundenplan.");
 		return this._stundenplanVorlage;
 	}
 
@@ -180,7 +180,7 @@ export class StundenplanListeManager extends AuswahlManager<number, StundenplanL
 	 *
 	 * @return <code>true</code> wenn die Bezeichnung des Stundenplans gültig ist, ansonsten <code>false</code>
 	 */
-	public static validateBezeichnung(bezeichnung : string | null) : boolean {
+	public static validateBezeichnung(bezeichnung: string | null): boolean {
 		if (bezeichnung === null)
 			return false;
 		return bezeichnung.trim().length <= 150;
@@ -197,10 +197,10 @@ export class StundenplanListeManager extends AuswahlManager<number, StundenplanL
 	 *
 	 * @return <code>true</code> wenn das Datum gültig ist, ansonsten <code>false</code>
 	 */
-	public validateGueltigAb(gueltigAb : string | null, gueltigBis : string | null, aktiv : boolean, checkUeberschneidung : boolean) : boolean {
+	public validateGueltigAb(gueltigAb: string | null, gueltigBis: string | null, aktiv: boolean, checkUeberschneidung: boolean): boolean {
 		if (gueltigAb === null || !DateUtils.isValidDate(gueltigAb))
 			return false;
-		const gueltigBisComputed : string | null = (gueltigBis !== null ? gueltigBis : this.auswahl().gueltigBis);
+		const gueltigBisComputed: string | null = (gueltigBis !== null ? gueltigBis : this.auswahl().gueltigBis);
 		if (JavaString.compareTo(gueltigAb, gueltigBisComputed) > 0)
 			return false;
 		if (aktiv || checkUeberschneidung) {
@@ -223,10 +223,10 @@ export class StundenplanListeManager extends AuswahlManager<number, StundenplanL
 	 *
 	 * @return <code>true</code> wenn das Datum gültig ist, ansonsten <code>false</code>
 	 */
-	public validateGueltigBis(gueltigAb : string | null, gueltigBis : string | null, aktiv : boolean) : boolean {
+	public validateGueltigBis(gueltigAb: string | null, gueltigBis: string | null, aktiv: boolean): boolean {
 		if (gueltigBis === null || !DateUtils.isValidDate(gueltigBis))
 			return false;
-		const gueltigAbComputed : string | null = (gueltigAb !== null ? gueltigAb : this.auswahl().gueltigAb);
+		const gueltigAbComputed: string | null = (gueltigAb !== null ? gueltigAb : this.auswahl().gueltigAb);
 		if (JavaString.compareTo(gueltigBis, gueltigAbComputed) < 0)
 			return false;
 		if (aktiv) {
@@ -246,7 +246,7 @@ export class StundenplanListeManager extends AuswahlManager<number, StundenplanL
 	 *
 	 * @return <code>true</code> wenn es eine Überschneidung gibt, ansonsten <code>false</code>
 	 */
-	public istKonfliktfreiZuAktivenStundenplaenen(gueltigAb : string | null, gueltigBis : string | null) : boolean {
+	public istKonfliktfreiZuAktivenStundenplaenen(gueltigAb: string | null, gueltigBis: string | null): boolean {
 		for (const sp of this.aktive())
 			if ((!this.hasDaten() || this.auswahl().id !== sp.id) && (DateUtils.berechneGemeinsameTage((gueltigAb !== null ? gueltigAb : this.auswahl().gueltigAb), (gueltigBis !== null ? gueltigBis : this.auswahl().gueltigBis), sp.gueltigAb, sp.gueltigBis).length > 0))
 				return false;
@@ -258,14 +258,14 @@ export class StundenplanListeManager extends AuswahlManager<number, StundenplanL
 	 *
 	 * @return der letzte Stundenplan in der Liste oder <code>null</code>, falls die Liste leer ist.
 	 */
-	public getLastAktivStundenplan() : StundenplanListeEintrag | null {
+	public getLastAktivStundenplan(): StundenplanListeEintrag | null {
 		return this.aktive().isEmpty() ? null : this.aktive().getLast();
 	}
 
 	/**
 	 * Erstellt eine Stundenplan-Vorlage und fügt sie der Auswahl-Liste hinzu.
 	 */
-	private addStundenplanVorlage() : void {
+	private addStundenplanVorlage(): void {
 		this._stundenplanVorlage = new StundenplanListeEintrag();
 		this._stundenplanVorlage.id = -1;
 		this._stundenplanVorlage.bezeichnung = "Allgemeine Vorlagen";
@@ -277,9 +277,9 @@ export class StundenplanListeManager extends AuswahlManager<number, StundenplanL
 	 * @return den Vorlagen-Stundenplan.
 	 * @throws DeveloperNotificationException wenn kein Vorlagen-Stundenplan gesetzt ist.
 	 */
-	public getStundenplanVorlage() : StundenplanListeEintrag {
+	public getStundenplanVorlage(): StundenplanListeEintrag {
 		if (this._stundenplanVorlage === null)
-			throw new DeveloperNotificationException("Kein Vorlagen-Stundenplan gesetzt.")
+			throw new DeveloperNotificationException("Kein Vorlagen-Stundenplan gesetzt.");
 		return this._stundenplanVorlage;
 	}
 
@@ -288,7 +288,7 @@ export class StundenplanListeManager extends AuswahlManager<number, StundenplanL
 	 *
 	 * @return <code>true</code> wenn es sich um die Vorlage handelt, ansonsten <code>false</code>
 	 */
-	public auswahlIsVorlage() : boolean {
+	public auswahlIsVorlage(): boolean {
 		return this.hasDaten() && this.auswahl() === this._stundenplanVorlage;
 	}
 
@@ -297,7 +297,7 @@ export class StundenplanListeManager extends AuswahlManager<number, StundenplanL
 	 *
 	 * @return true, wenn nur aktive Stundenpläne angezeigt werden und ansonsten false
 	 */
-	public filterNurAktiv() : boolean {
+	public filterNurAktiv(): boolean {
 		return this._filterNurAktiv;
 	}
 
@@ -306,12 +306,12 @@ export class StundenplanListeManager extends AuswahlManager<number, StundenplanL
 	 *
 	 * @param value   true, wenn der Filter aktiviert werden soll, und ansonsten false
 	 */
-	public setFilterNurAktiv(value : boolean) : void {
+	public setFilterNurAktiv(value: boolean): void {
 		this._filterNurAktiv = value;
 		this._eventHandlerFilterChanged.run();
 	}
 
-	protected onSetDaten(eintrag : StundenplanListeEintrag, daten : StundenplanManager) : boolean {
+	protected onSetDaten(eintrag: StundenplanListeEintrag, daten: StundenplanManager): boolean {
 		return true;
 	}
 
@@ -319,7 +319,7 @@ export class StundenplanListeManager extends AuswahlManager<number, StundenplanL
 		return 'de.svws_nrw.core.utils.stundenplan.StundenplanListeManager';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.utils.AuswahlManager', 'de.svws_nrw.core.utils.stundenplan.StundenplanListeManager'].includes(name);
 	}
 
@@ -327,6 +327,6 @@ export class StundenplanListeManager extends AuswahlManager<number, StundenplanL
 
 }
 
-export function cast_de_svws_nrw_core_utils_stundenplan_StundenplanListeManager(obj : unknown) : StundenplanListeManager {
+export function cast_de_svws_nrw_core_utils_stundenplan_StundenplanListeManager(obj: unknown): StundenplanListeManager {
 	return obj as StundenplanListeManager;
 }

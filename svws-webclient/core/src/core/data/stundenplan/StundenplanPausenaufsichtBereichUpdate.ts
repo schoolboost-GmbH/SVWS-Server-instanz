@@ -9,12 +9,12 @@ export class StundenplanPausenaufsichtBereichUpdate extends JavaObject {
 	/**
 	 * Die zu entfernenden Zuordnungen
 	 */
-	public listEntfernen : List<StundenplanPausenaufsichtBereich> = new ArrayList<StundenplanPausenaufsichtBereich>();
+	public listEntfernen: List<StundenplanPausenaufsichtBereich> = new ArrayList<StundenplanPausenaufsichtBereich>();
 
 	/**
 	 * Die hinzuzufügenden Zuordnungen
 	 */
-	public listHinzuzufuegen : List<StundenplanPausenaufsichtBereich> = new ArrayList<StundenplanPausenaufsichtBereich>();
+	public listHinzuzufuegen: List<StundenplanPausenaufsichtBereich> = new ArrayList<StundenplanPausenaufsichtBereich>();
 
 
 	/**
@@ -28,13 +28,13 @@ export class StundenplanPausenaufsichtBereichUpdate extends JavaObject {
 		return 'de.svws_nrw.core.data.stundenplan.StundenplanPausenaufsichtBereichUpdate';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.stundenplan.StundenplanPausenaufsichtBereichUpdate'].includes(name);
 	}
 
 	public static class = new Class<StundenplanPausenaufsichtBereichUpdate>('de.svws_nrw.core.data.stundenplan.StundenplanPausenaufsichtBereichUpdate');
 
-	public static transpilerFromJSON(json : string): StundenplanPausenaufsichtBereichUpdate {
+	public static transpilerFromJSON(json: string): StundenplanPausenaufsichtBereichUpdate {
 		const obj = JSON.parse(json) as Partial<StundenplanPausenaufsichtBereichUpdate>;
 		const result = new StundenplanPausenaufsichtBereichUpdate();
 		if (obj.listEntfernen !== undefined) {
@@ -50,7 +50,7 @@ export class StundenplanPausenaufsichtBereichUpdate extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : StundenplanPausenaufsichtBereichUpdate) : string {
+	public static transpilerToJSON(obj: StundenplanPausenaufsichtBereichUpdate): string {
 		let result = '{';
 		result += '"listEntfernen" : [ ';
 		for (let i = 0; i < obj.listEntfernen.size(); i++) {
@@ -73,7 +73,7 @@ export class StundenplanPausenaufsichtBereichUpdate extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<StundenplanPausenaufsichtBereichUpdate>) : string {
+	public static transpilerToJSONPatch(obj: Partial<StundenplanPausenaufsichtBereichUpdate>): string {
 		let result = '{';
 		if (obj.listEntfernen !== undefined) {
 			result += '"listEntfernen" : [ ';
@@ -102,6 +102,6 @@ export class StundenplanPausenaufsichtBereichUpdate extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_stundenplan_StundenplanPausenaufsichtBereichUpdate(obj : unknown) : StundenplanPausenaufsichtBereichUpdate {
+export function cast_de_svws_nrw_core_data_stundenplan_StundenplanPausenaufsichtBereichUpdate(obj: unknown): StundenplanPausenaufsichtBereichUpdate {
 	return obj as StundenplanPausenaufsichtBereichUpdate;
 }

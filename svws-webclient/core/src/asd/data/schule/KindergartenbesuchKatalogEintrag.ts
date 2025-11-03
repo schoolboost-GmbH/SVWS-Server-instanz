@@ -15,13 +15,13 @@ export class KindergartenbesuchKatalogEintrag extends CoreTypeData {
 		return 'de.svws_nrw.asd.data.schule.KindergartenbesuchKatalogEintrag';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.asd.data.schule.KindergartenbesuchKatalogEintrag', 'de.svws_nrw.asd.data.CoreTypeData'].includes(name);
 	}
 
 	public static class = new Class<KindergartenbesuchKatalogEintrag>('de.svws_nrw.asd.data.schule.KindergartenbesuchKatalogEintrag');
 
-	public static transpilerFromJSON(json : string): KindergartenbesuchKatalogEintrag {
+	public static transpilerFromJSON(json: string): KindergartenbesuchKatalogEintrag {
 		const obj = JSON.parse(json) as Partial<KindergartenbesuchKatalogEintrag>;
 		const result = new KindergartenbesuchKatalogEintrag();
 		if (obj.id === undefined)
@@ -41,7 +41,7 @@ export class KindergartenbesuchKatalogEintrag extends CoreTypeData {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : KindergartenbesuchKatalogEintrag) : string {
+	public static transpilerToJSON(obj: KindergartenbesuchKatalogEintrag): string {
 		let result = '{';
 		result += '"id" : ' + obj.id.toString() + ',';
 		result += '"schluessel" : ' + JSON.stringify(obj.schluessel) + ',';
@@ -54,7 +54,7 @@ export class KindergartenbesuchKatalogEintrag extends CoreTypeData {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<KindergartenbesuchKatalogEintrag>) : string {
+	public static transpilerToJSONPatch(obj: Partial<KindergartenbesuchKatalogEintrag>): string {
 		let result = '{';
 		if (obj.id !== undefined) {
 			result += '"id" : ' + obj.id.toString() + ',';
@@ -81,6 +81,6 @@ export class KindergartenbesuchKatalogEintrag extends CoreTypeData {
 
 }
 
-export function cast_de_svws_nrw_asd_data_schule_KindergartenbesuchKatalogEintrag(obj : unknown) : KindergartenbesuchKatalogEintrag {
+export function cast_de_svws_nrw_asd_data_schule_KindergartenbesuchKatalogEintrag(obj: unknown): KindergartenbesuchKatalogEintrag {
 	return obj as KindergartenbesuchKatalogEintrag;
 }

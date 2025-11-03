@@ -22,7 +22,7 @@ export class SelectManager<T> extends BaseSelectManager<T> {
 
 	protected _optionDisplayText = shallowRef<((option: T) => string)>((option) => option?.toString() ?? "");
 
-	public constructor (config?: SelectManagerConfig<T>) {
+	public constructor(config?: SelectManagerConfig<T>) {
 		super(config);
 		this.initSelectManager(config);
 	}

@@ -116,14 +116,14 @@
 	type Auswahl = {
 		fachwahl: GostStatistikFachwahl | undefined;
 		halbjahr: GostHalbjahr | undefined;
-	}
+	};
 
 	const aktuell = ref<Auswahl>({
 		fachwahl: undefined, // fachwahlenstatistik.value.at(0)
 		halbjahr: undefined, // GostHalbjahr.EF1
 	});
 
-	function onClick(fws : GostStatistikFachwahl, halbjahr: GostHalbjahr | undefined): void {
+	function onClick(fws: GostStatistikFachwahl, halbjahr: GostHalbjahr | undefined): void {
 		if (fws.id === aktuell.value.fachwahl?.id) {
 			// Das gleiche Fach wurde angeklickt
 			if (halbjahr === undefined) { // Klick auf das Fach
@@ -153,14 +153,14 @@
 		}
 	}
 
-	function getBgColor(fws: GostStatistikFachwahl) : string {
+	function getBgColor(fws: GostStatistikFachwahl): string {
 		if (fws.kuerzelStatistik === null)
 			return 'rgb(220,220,220)';
 		return Fach.getBySchluesselOrDefault(fws.kuerzelStatistik).getHMTLFarbeRGBA(schuljahr.value, 1.0);
 	}
 
-	function doSortSchuelerListeByNachnameAndVornameAndId(liste : List<SchuelerListeEintrag>): List<SchuelerListeEintrag> {
-		liste.sort({ compare(a : SchuelerListeEintrag, b : SchuelerListeEintrag) : number {
+	function doSortSchuelerListeByNachnameAndVornameAndId(liste: List<SchuelerListeEintrag>): List<SchuelerListeEintrag> {
+		liste.sort({ compare(a: SchuelerListeEintrag, b: SchuelerListeEintrag): number {
 			let cmp = a.nachname.localeCompare(b.nachname);
 			if (cmp !== 0)
 				return cmp;
@@ -172,9 +172,9 @@
 		return liste;
 	}
 
-	function getSchuelerListe(idFach : number, halbjahr: GostHalbjahr, col: number) : List<SchuelerListeEintrag> {
+	function getSchuelerListe(idFach: number, halbjahr: GostHalbjahr, col: number): List<SchuelerListeEintrag> {
 		const result = new ArrayList<SchuelerListeEintrag>();
-		let schuelermenge : List<number> = new ArrayList<number>();
+		let schuelermenge: List<number> = new ArrayList<number>();
 		if (col === 1)
 			schuelermenge = props.fachwahlenManager.schuelerGetMengeGKSchriftlichByFachAndHalbjahrAsListOrException(idFach, halbjahr);
 		else if (col === 2)

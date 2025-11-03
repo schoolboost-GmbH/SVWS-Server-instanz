@@ -31,11 +31,11 @@
 	}>();
 
 	const columns = [
-		{key: 'idZeitraster', label: 'Stunde'},
-		{key: 'klassen', label: 'Klassen'},
-		{key: 'idFach', label: 'Fach'},
-		{key: 'lehrer', label: 'Lehrer'},
-		{key: 'raeume', label: 'Räume'},
+		{ key: 'idZeitraster', label: 'Stunde' },
+		{ key: 'klassen', label: 'Klassen' },
+		{ key: 'idFach', label: 'Fach' },
+		{ key: 'lehrer', label: 'Lehrer' },
+		{ key: 'raeume', label: 'Räume' },
 	];
 
 	const selected = shallowRef([]);

@@ -81,12 +81,12 @@
 		underConstruction: false,
 	});
 
-	const copied = ref<boolean|null>(null);
+	const copied = ref<boolean | null>(null);
 
 	async function copyToClipboard() {
 		try {
 			await navigator.clipboard.writeText(`${props.version} ${props.githash}`);
-		} catch(e) {
+		} catch (e) {
 			copied.value = false;
 		}
 		copied.value = true;

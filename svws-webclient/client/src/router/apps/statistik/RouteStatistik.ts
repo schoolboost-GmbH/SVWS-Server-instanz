@@ -12,13 +12,13 @@ import type { StatistikAppProps } from "~/components/statistik/SStatistikAppProp
 import { api } from "~/router/Api";
 import { AppMenuGroup } from "@ui";
 
-const SStatistikAuswahl = () => import("~/components/statistik/SStatistikAuswahl.vue")
-const SStatistikApp = () => import("~/components/statistik/SStatistikApp.vue")
+const SStatistikAuswahl = () => import("~/components/statistik/SStatistikAuswahl.vue");
+const SStatistikApp = () => import("~/components/statistik/SStatistikApp.vue");
 
 export class RouteStatistik extends RouteNode<any, RouteApp> {
 
 	public constructor() {
-		super(Schulform.values(), [ BenutzerKompetenz.KEINE ], "statistik", "statistik", SStatistikApp);
+		super(Schulform.values(), [BenutzerKompetenz.KEINE], "statistik", "statistik", SStatistikApp);
 		super.mode = ServerMode.DEV;
 		super.propHandler = (route) => this.getProps(route);
 		super.text = "Statistik";
@@ -31,7 +31,7 @@ export class RouteStatistik extends RouteNode<any, RouteApp> {
 
 	protected getAuswahlComputedProperty(): WritableComputedRef<undefined> {
 		// TODO
-		return computed({ get(): undefined { return undefined; }, set(value: undefined) { }});
+		return computed({ get(): undefined { return undefined }, set(value: undefined) { } });
 	}
 
 	public getProps(to: RouteLocationNormalized): StatistikAppProps {

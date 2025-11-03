@@ -12,16 +12,17 @@ import type { KlassenAuswahlProps } from "~/components/klassen/SKlassenAuswahlPr
 import { RouteAuswahlNode } from "~/router/RouteAuswahlNode";
 import { routeKlasseGruppenprozesse } from "./RouteKlassenGruppenprozesse";
 import { routeKlassenNeu } from "./RouteKlassenNeu";
-import { AppMenuGroup, KlassenListeManager } from "@ui";
+import type { KlassenListeManager } from "@ui";
+import { AppMenuGroup } from "@ui";
 
 
-const SKlassenAuswahl = () => import("~/components/klassen/SKlassenAuswahl.vue")
-const SKlassenApp = () => import("~/components/klassen/SKlassenApp.vue")
+const SKlassenAuswahl = () => import("~/components/klassen/SKlassenAuswahl.vue");
+const SKlassenApp = () => import("~/components/klassen/SKlassenApp.vue");
 
 export class RouteKlassen extends RouteAuswahlNode<KlassenListeManager, RouteDataKlassen, RouteApp> {
 
 	public constructor() {
-		super(Schulform.values(), [ BenutzerKompetenz.UNTERRICHTSVERTEILUNG_ANSEHEN ], "klassen", "klassen/:id(-?\\d+)?", SKlassenApp, SKlassenAuswahl, new RouteDataKlassen());
+		super(Schulform.values(), [BenutzerKompetenz.UNTERRICHTSVERTEILUNG_ANSEHEN], "klassen", "klassen/:id(-?\\d+)?", SKlassenApp, SKlassenAuswahl, new RouteDataKlassen());
 		super.mode = ServerMode.STABLE;
 		super.text = "Klassen";
 		super.children = [

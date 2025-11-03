@@ -10,97 +10,97 @@ import { de_svws_nrw_asd_types_CoreType_getManager, de_svws_nrw_asd_types_CoreTy
 export class BerufskollegOrganisationsformen extends JavaEnum<BerufskollegOrganisationsformen> implements CoreType<OrganisationsformKatalogEintrag, BerufskollegOrganisationsformen> {
 
 	/** an array containing all values of this enumeration */
-	static readonly all_values_by_ordinal : Array<BerufskollegOrganisationsformen> = [];
+	static readonly all_values_by_ordinal: Array<BerufskollegOrganisationsformen> = [];
 
 	/** an array containing all values of this enumeration indexed by their name*/
-	static readonly all_values_by_name : Map<string, BerufskollegOrganisationsformen> = new Map<string, BerufskollegOrganisationsformen>();
+	static readonly all_values_by_name: Map<string, BerufskollegOrganisationsformen> = new Map<string, BerufskollegOrganisationsformen>();
 
 	/**
 	 * Organisationsform: Teilzeitunterricht (außerhalb der TZ-Berufsschule)
 	 */
-	public static readonly TEILZEIT : BerufskollegOrganisationsformen = new BerufskollegOrganisationsformen("TEILZEIT", 0, );
+	public static readonly TEILZEIT: BerufskollegOrganisationsformen = new BerufskollegOrganisationsformen("TEILZEIT", 0, );
 
 	/**
 	 * Organisationsform: Teilzeitunterricht ohne Blockunterricht (Normalklasse) TZ-Berufsschule
 	 */
-	public static readonly TEILZEIT_NORMALKLASSE : BerufskollegOrganisationsformen = new BerufskollegOrganisationsformen("TEILZEIT_NORMALKLASSE", 1, );
+	public static readonly TEILZEIT_NORMALKLASSE: BerufskollegOrganisationsformen = new BerufskollegOrganisationsformen("TEILZEIT_NORMALKLASSE", 1, );
 
 	/**
 	 * Organisationsform: Teilzeitunterricht ohne Blockunterricht (Bezirksfachklasse) TZ-Berufsschule
 	 */
-	public static readonly TEILZEIT_BEZIRKSFACHKLASSE : BerufskollegOrganisationsformen = new BerufskollegOrganisationsformen("TEILZEIT_BEZIRKSFACHKLASSE", 2, );
+	public static readonly TEILZEIT_BEZIRKSFACHKLASSE: BerufskollegOrganisationsformen = new BerufskollegOrganisationsformen("TEILZEIT_BEZIRKSFACHKLASSE", 2, );
 
 	/**
 	 * Organisationsform: Teilzeitunterricht ohne Blockunterricht (Landesfachklasse) TZ-Berufsschule
 	 */
-	public static readonly TEILZEIT_LANDESFACHKLASSE : BerufskollegOrganisationsformen = new BerufskollegOrganisationsformen("TEILZEIT_LANDESFACHKLASSE", 3, );
+	public static readonly TEILZEIT_LANDESFACHKLASSE: BerufskollegOrganisationsformen = new BerufskollegOrganisationsformen("TEILZEIT_LANDESFACHKLASSE", 3, );
 
 	/**
 	 * Organisationsform: Vollzeitunterricht
 	 */
-	public static readonly VOLLZEIT : BerufskollegOrganisationsformen = new BerufskollegOrganisationsformen("VOLLZEIT", 4, );
+	public static readonly VOLLZEIT: BerufskollegOrganisationsformen = new BerufskollegOrganisationsformen("VOLLZEIT", 4, );
 
 	/**
 	 * Organisationsform: Blockunterricht z.Zt. im Unterricht (Normalklasse) im dualen System
 	 */
-	public static readonly DUAL_BLOCK_IM_UNTERRICHT : BerufskollegOrganisationsformen = new BerufskollegOrganisationsformen("DUAL_BLOCK_IM_UNTERRICHT", 5, );
+	public static readonly DUAL_BLOCK_IM_UNTERRICHT: BerufskollegOrganisationsformen = new BerufskollegOrganisationsformen("DUAL_BLOCK_IM_UNTERRICHT", 5, );
 
 	/**
 	 * Organisationsform: Blockunterricht z.Zt. nicht im Unterricht (Normalklasse) im dualen System
 	 */
-	public static readonly DUAL_BLOCK_NICHT_IM_UNTERRICHT : BerufskollegOrganisationsformen = new BerufskollegOrganisationsformen("DUAL_BLOCK_NICHT_IM_UNTERRICHT", 6, );
+	public static readonly DUAL_BLOCK_NICHT_IM_UNTERRICHT: BerufskollegOrganisationsformen = new BerufskollegOrganisationsformen("DUAL_BLOCK_NICHT_IM_UNTERRICHT", 6, );
 
 	/**
 	 * Organisationsform: Block- und Teilzeitunterr. z.Zt. im Block- oder TZ-Unterricht (Normalklasse) im dualen System
 	 */
-	public static readonly DUAL_BLOCK_TEILZEIT_IM_UNTERRICHT : BerufskollegOrganisationsformen = new BerufskollegOrganisationsformen("DUAL_BLOCK_TEILZEIT_IM_UNTERRICHT", 7, );
+	public static readonly DUAL_BLOCK_TEILZEIT_IM_UNTERRICHT: BerufskollegOrganisationsformen = new BerufskollegOrganisationsformen("DUAL_BLOCK_TEILZEIT_IM_UNTERRICHT", 7, );
 
 	/**
 	 * Organisationsform: Ganztagsunterricht (Normalklasse) im dualen System
 	 */
-	public static readonly DUAL_GANZTAG : BerufskollegOrganisationsformen = new BerufskollegOrganisationsformen("DUAL_GANZTAG", 8, );
+	public static readonly DUAL_GANZTAG: BerufskollegOrganisationsformen = new BerufskollegOrganisationsformen("DUAL_GANZTAG", 8, );
 
 	/**
 	 * Organisationsform: Blockunterricht z.Zt. im Unterricht (Bezirksfachklasse) im dualen System
 	 */
-	public static readonly DUAL_BLOCK_IM_UNTERRICHT_BEZIRKSFACHKLASSE : BerufskollegOrganisationsformen = new BerufskollegOrganisationsformen("DUAL_BLOCK_IM_UNTERRICHT_BEZIRKSFACHKLASSE", 9, );
+	public static readonly DUAL_BLOCK_IM_UNTERRICHT_BEZIRKSFACHKLASSE: BerufskollegOrganisationsformen = new BerufskollegOrganisationsformen("DUAL_BLOCK_IM_UNTERRICHT_BEZIRKSFACHKLASSE", 9, );
 
 	/**
 	 * Organisationsform: Blockunterricht z.Zt. nicht im Unterricht (Bezirksfachklasse) im dualen System
 	 */
-	public static readonly DUAL_BLOCK_NICHT_IM_UNTERRICHT_BEZIRKSFACHKLASSE : BerufskollegOrganisationsformen = new BerufskollegOrganisationsformen("DUAL_BLOCK_NICHT_IM_UNTERRICHT_BEZIRKSFACHKLASSE", 10, );
+	public static readonly DUAL_BLOCK_NICHT_IM_UNTERRICHT_BEZIRKSFACHKLASSE: BerufskollegOrganisationsformen = new BerufskollegOrganisationsformen("DUAL_BLOCK_NICHT_IM_UNTERRICHT_BEZIRKSFACHKLASSE", 10, );
 
 	/**
 	 * Organisationsform: Block- und Teilzeitunterr. z.Zt. im Block- oder TZ-Unterricht (Bezirksfachklasse) im dualen System
 	 */
-	public static readonly DUAL_BLOCK_TEILZEIT_IM_UNTERRICHT_BEZIRKSFACHKLASSE : BerufskollegOrganisationsformen = new BerufskollegOrganisationsformen("DUAL_BLOCK_TEILZEIT_IM_UNTERRICHT_BEZIRKSFACHKLASSE", 11, );
+	public static readonly DUAL_BLOCK_TEILZEIT_IM_UNTERRICHT_BEZIRKSFACHKLASSE: BerufskollegOrganisationsformen = new BerufskollegOrganisationsformen("DUAL_BLOCK_TEILZEIT_IM_UNTERRICHT_BEZIRKSFACHKLASSE", 11, );
 
 	/**
 	 * Organisationsform: Ganztagsunterricht (Bezirksfachklasse) im dualen System
 	 */
-	public static readonly DUAL_GANZTAG_BEZIRKSFACHKLASSE : BerufskollegOrganisationsformen = new BerufskollegOrganisationsformen("DUAL_GANZTAG_BEZIRKSFACHKLASSE", 12, );
+	public static readonly DUAL_GANZTAG_BEZIRKSFACHKLASSE: BerufskollegOrganisationsformen = new BerufskollegOrganisationsformen("DUAL_GANZTAG_BEZIRKSFACHKLASSE", 12, );
 
 	/**
 	 * Organisationsform: Blockunterricht z.Zt. im Unterricht (Landesfachklasse) im dualen System
 	 */
-	public static readonly DUAL_BLOCK_IM_UNTERRICHT_LANDESFACHKLASSE : BerufskollegOrganisationsformen = new BerufskollegOrganisationsformen("DUAL_BLOCK_IM_UNTERRICHT_LANDESFACHKLASSE", 13, );
+	public static readonly DUAL_BLOCK_IM_UNTERRICHT_LANDESFACHKLASSE: BerufskollegOrganisationsformen = new BerufskollegOrganisationsformen("DUAL_BLOCK_IM_UNTERRICHT_LANDESFACHKLASSE", 13, );
 
 	/**
 	 * Organisationsform: Blockunterricht z.Zt. nicht im Unterricht (Landesfachklasse) im dualen System
 	 */
-	public static readonly DUAL_BLOCK_NICHT_IM_UNTERRICHT_LANDESFACHKLASSE : BerufskollegOrganisationsformen = new BerufskollegOrganisationsformen("DUAL_BLOCK_NICHT_IM_UNTERRICHT_LANDESFACHKLASSE", 14, );
+	public static readonly DUAL_BLOCK_NICHT_IM_UNTERRICHT_LANDESFACHKLASSE: BerufskollegOrganisationsformen = new BerufskollegOrganisationsformen("DUAL_BLOCK_NICHT_IM_UNTERRICHT_LANDESFACHKLASSE", 14, );
 
 	/**
 	 * Organisationsform: Block- und Teilzeitunterr. z.Zt. im Block- oder TZ-Unterricht (Landesfachklasse) im dualen System
 	 */
-	public static readonly DUAL_BLOCK_TEILZEIT_IM_UNTERRICHT_LANDESFACHKLASSE : BerufskollegOrganisationsformen = new BerufskollegOrganisationsformen("DUAL_BLOCK_TEILZEIT_IM_UNTERRICHT_LANDESFACHKLASSE", 15, );
+	public static readonly DUAL_BLOCK_TEILZEIT_IM_UNTERRICHT_LANDESFACHKLASSE: BerufskollegOrganisationsformen = new BerufskollegOrganisationsformen("DUAL_BLOCK_TEILZEIT_IM_UNTERRICHT_LANDESFACHKLASSE", 15, );
 
 	/**
 	 * Organisationsform: Ganztagsunterricht (Landesfachklasse) im dualen System
 	 */
-	public static readonly DUAL_GANZTAG_LANDESFACHKLASSE : BerufskollegOrganisationsformen = new BerufskollegOrganisationsformen("DUAL_GANZTAG_LANDESFACHKLASSE", 16, );
+	public static readonly DUAL_GANZTAG_LANDESFACHKLASSE: BerufskollegOrganisationsformen = new BerufskollegOrganisationsformen("DUAL_GANZTAG_LANDESFACHKLASSE", 16, );
 
-	private constructor(name : string, ordinal : number) {
+	private constructor(name: string, ordinal: number) {
 		super(name, ordinal);
 		BerufskollegOrganisationsformen.all_values_by_ordinal.push(this);
 		BerufskollegOrganisationsformen.all_values_by_name.set(name, this);
@@ -111,7 +111,7 @@ export class BerufskollegOrganisationsformen extends JavaEnum<BerufskollegOrgani
 	 *
 	 * @param manager   der Manager für die Daten des Core-Types
 	 */
-	public static init(manager : CoreTypeDataManager<OrganisationsformKatalogEintrag, BerufskollegOrganisationsformen>) : void {
+	public static init(manager: CoreTypeDataManager<OrganisationsformKatalogEintrag, BerufskollegOrganisationsformen>): void {
 		CoreTypeDataManager.putManager(BerufskollegOrganisationsformen.class, manager);
 	}
 
@@ -120,7 +120,7 @@ export class BerufskollegOrganisationsformen extends JavaEnum<BerufskollegOrgani
 	 *
 	 * @return der Daten-Manager
 	 */
-	public static data() : CoreTypeDataManager<OrganisationsformKatalogEintrag, BerufskollegOrganisationsformen> {
+	public static data(): CoreTypeDataManager<OrganisationsformKatalogEintrag, BerufskollegOrganisationsformen> {
 		return CoreTypeDataManager.getManager(BerufskollegOrganisationsformen.class);
 	}
 
@@ -132,7 +132,7 @@ export class BerufskollegOrganisationsformen extends JavaEnum<BerufskollegOrgani
 	 *
 	 * @return true, falls die Schulform zulässig ist, und ansonsten false
 	 */
-	public hatSchulform(schuljahr : number, sf : Schulform) : boolean {
+	public hatSchulform(schuljahr: number, sf: Schulform): boolean {
 		return BerufskollegOrganisationsformen.data().hatSchulform(schuljahr, sf, this);
 	}
 
@@ -141,7 +141,7 @@ export class BerufskollegOrganisationsformen extends JavaEnum<BerufskollegOrgani
 	 *
 	 * @returns the array with enumeration values
 	 */
-	public static values() : Array<BerufskollegOrganisationsformen> {
+	public static values(): Array<BerufskollegOrganisationsformen> {
 		return [...this.all_values_by_ordinal];
 	}
 
@@ -152,24 +152,24 @@ export class BerufskollegOrganisationsformen extends JavaEnum<BerufskollegOrgani
 	 *
 	 * @returns the enumeration values or null
 	 */
-	public static valueOf(name : string) : BerufskollegOrganisationsformen | null {
+	public static valueOf(name: string): BerufskollegOrganisationsformen | null {
 		const tmp = this.all_values_by_name.get(name);
 		return (!tmp) ? null : tmp;
 	}
 
-	public getManager() : CoreTypeDataManager<OrganisationsformKatalogEintrag, BerufskollegOrganisationsformen> {
+	public getManager(): CoreTypeDataManager<OrganisationsformKatalogEintrag, BerufskollegOrganisationsformen> {
 		return de_svws_nrw_asd_types_CoreType_getManager(this);
 	}
 
-	public daten(schuljahr : number) : OrganisationsformKatalogEintrag | null {
+	public daten(schuljahr: number): OrganisationsformKatalogEintrag | null {
 		return de_svws_nrw_asd_types_CoreType_daten(this, schuljahr);
 	}
 
-	public statistikId() : string | null {
+	public statistikId(): string | null {
 		return de_svws_nrw_asd_types_CoreType_statistikId(this);
 	}
 
-	public historie() : List<OrganisationsformKatalogEintrag> {
+	public historie(): List<OrganisationsformKatalogEintrag> {
 		return de_svws_nrw_asd_types_CoreType_historie(this);
 	}
 
@@ -177,7 +177,7 @@ export class BerufskollegOrganisationsformen extends JavaEnum<BerufskollegOrgani
 		return 'de.svws_nrw.asd.types.schule.BerufskollegOrganisationsformen';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.asd.types.schule.BerufskollegOrganisationsformen', 'de.svws_nrw.asd.types.CoreType', 'java.lang.Comparable', 'java.lang.Enum', 'java.lang.Comparable'].includes(name);
 	}
 
@@ -185,6 +185,6 @@ export class BerufskollegOrganisationsformen extends JavaEnum<BerufskollegOrgani
 
 }
 
-export function cast_de_svws_nrw_asd_types_schule_BerufskollegOrganisationsformen(obj : unknown) : BerufskollegOrganisationsformen {
+export function cast_de_svws_nrw_asd_types_schule_BerufskollegOrganisationsformen(obj: unknown): BerufskollegOrganisationsformen {
 	return obj as BerufskollegOrganisationsformen;
 }

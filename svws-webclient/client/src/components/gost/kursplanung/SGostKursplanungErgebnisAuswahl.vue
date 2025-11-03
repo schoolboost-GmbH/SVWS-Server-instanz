@@ -109,7 +109,7 @@
 
 	const selected_ergebnisse = ref<GostBlockungsergebnis[]>([]);
 
-	function getErgebnisse() : List<GostBlockungsergebnis> {
+	function getErgebnisse(): List<GostBlockungsergebnis> {
 		return props.getDatenmanager().ergebnisGetListeSortiertNachBewertung();
 	}
 
@@ -124,16 +124,16 @@
 		await props.removeErgebnisse([props.auswahlErgebnis]);
 	}
 
-	function hatErgebnismanager(ergebnis: GostBlockungsergebnis) : boolean {
+	function hatErgebnismanager(ergebnis: GostBlockungsergebnis): boolean {
 		return props.getDatenmanager().ergebnisManagerExists(ergebnis.id);
 	}
 
-	function getErgebnismanager(ergebnis: GostBlockungsergebnis) : GostBlockungsergebnisManager {
+	function getErgebnismanager(ergebnis: GostBlockungsergebnis): GostBlockungsergebnisManager {
 		return props.getDatenmanager().ergebnisManagerGet(ergebnis.id);
 	}
 
 	function bgColor(code: number): string {
-		return `hsl(${Math.round((1 - code) * 120)},100%,75%)`
+		return `hsl(${Math.round((1 - code) * 120)},100%,75%)`;
 	}
 
 </script>

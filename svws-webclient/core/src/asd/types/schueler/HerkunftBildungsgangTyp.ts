@@ -9,52 +9,52 @@ import { de_svws_nrw_asd_types_CoreType_getManager, de_svws_nrw_asd_types_CoreTy
 export class HerkunftBildungsgangTyp extends JavaEnum<HerkunftBildungsgangTyp> implements CoreType<HerkunftBildungsgangTypKatalogEintrag, HerkunftBildungsgangTyp> {
 
 	/** an array containing all values of this enumeration */
-	static readonly all_values_by_ordinal : Array<HerkunftBildungsgangTyp> = [];
+	static readonly all_values_by_ordinal: Array<HerkunftBildungsgangTyp> = [];
 
 	/** an array containing all values of this enumeration indexed by their name*/
-	static readonly all_values_by_name : Map<string, HerkunftBildungsgangTyp> = new Map<string, HerkunftBildungsgangTyp>();
+	static readonly all_values_by_name: Map<string, HerkunftBildungsgangTyp> = new Map<string, HerkunftBildungsgangTyp>();
 
 	/**
 	 * Weiterbildungskolleg: Abendgymnasium
 	 */
-	public static readonly AG : HerkunftBildungsgangTyp = new HerkunftBildungsgangTyp("AG", 0, );
+	public static readonly AG: HerkunftBildungsgangTyp = new HerkunftBildungsgangTyp("AG", 0, );
 
 	/**
 	 * Weiterbildungskolleg: Abendrealschule
 	 */
-	public static readonly AR : HerkunftBildungsgangTyp = new HerkunftBildungsgangTyp("AR", 1, );
+	public static readonly AR: HerkunftBildungsgangTyp = new HerkunftBildungsgangTyp("AR", 1, );
 
 	/**
 	 * Weiterbildungskolleg: Abendrealschule
 	 */
-	public static readonly KL : HerkunftBildungsgangTyp = new HerkunftBildungsgangTyp("KL", 2, );
+	public static readonly KL: HerkunftBildungsgangTyp = new HerkunftBildungsgangTyp("KL", 2, );
 
 	/**
 	 * Berufskolleg: Berufsfachschule
 	 */
-	public static readonly BF : HerkunftBildungsgangTyp = new HerkunftBildungsgangTyp("BF", 3, );
+	public static readonly BF: HerkunftBildungsgangTyp = new HerkunftBildungsgangTyp("BF", 3, );
 
 	/**
 	 * Berufskolleg: Berufschule
 	 */
-	public static readonly BS : HerkunftBildungsgangTyp = new HerkunftBildungsgangTyp("BS", 4, );
+	public static readonly BS: HerkunftBildungsgangTyp = new HerkunftBildungsgangTyp("BS", 4, );
 
 	/**
 	 * Berufskolleg: Berufliches Gymnasium
 	 */
-	public static readonly BY : HerkunftBildungsgangTyp = new HerkunftBildungsgangTyp("BY", 5, );
+	public static readonly BY: HerkunftBildungsgangTyp = new HerkunftBildungsgangTyp("BY", 5, );
 
 	/**
 	 * Berufskolleg: Fachoberschule
 	 */
-	public static readonly FO : HerkunftBildungsgangTyp = new HerkunftBildungsgangTyp("FO", 6, );
+	public static readonly FO: HerkunftBildungsgangTyp = new HerkunftBildungsgangTyp("FO", 6, );
 
 	/**
 	 * Berufskolleg: Fachschule
 	 */
-	public static readonly FS : HerkunftBildungsgangTyp = new HerkunftBildungsgangTyp("FS", 7, );
+	public static readonly FS: HerkunftBildungsgangTyp = new HerkunftBildungsgangTyp("FS", 7, );
 
-	private constructor(name : string, ordinal : number) {
+	private constructor(name: string, ordinal: number) {
 		super(name, ordinal);
 		HerkunftBildungsgangTyp.all_values_by_ordinal.push(this);
 		HerkunftBildungsgangTyp.all_values_by_name.set(name, this);
@@ -65,7 +65,7 @@ export class HerkunftBildungsgangTyp extends JavaEnum<HerkunftBildungsgangTyp> i
 	 *
 	 * @param manager   der Manager für die Daten des Core-Types
 	 */
-	public static init(manager : CoreTypeDataManager<HerkunftBildungsgangTypKatalogEintrag, HerkunftBildungsgangTyp>) : void {
+	public static init(manager: CoreTypeDataManager<HerkunftBildungsgangTypKatalogEintrag, HerkunftBildungsgangTyp>): void {
 		CoreTypeDataManager.putManager(HerkunftBildungsgangTyp.class, manager);
 	}
 
@@ -74,7 +74,7 @@ export class HerkunftBildungsgangTyp extends JavaEnum<HerkunftBildungsgangTyp> i
 	 *
 	 * @return der Daten-Manager
 	 */
-	public static data() : CoreTypeDataManager<HerkunftBildungsgangTypKatalogEintrag, HerkunftBildungsgangTyp> {
+	public static data(): CoreTypeDataManager<HerkunftBildungsgangTypKatalogEintrag, HerkunftBildungsgangTyp> {
 		return CoreTypeDataManager.getManager(HerkunftBildungsgangTyp.class);
 	}
 
@@ -83,7 +83,7 @@ export class HerkunftBildungsgangTyp extends JavaEnum<HerkunftBildungsgangTyp> i
 	 *
 	 * @returns the array with enumeration values
 	 */
-	public static values() : Array<HerkunftBildungsgangTyp> {
+	public static values(): Array<HerkunftBildungsgangTyp> {
 		return [...this.all_values_by_ordinal];
 	}
 
@@ -94,24 +94,24 @@ export class HerkunftBildungsgangTyp extends JavaEnum<HerkunftBildungsgangTyp> i
 	 *
 	 * @returns the enumeration values or null
 	 */
-	public static valueOf(name : string) : HerkunftBildungsgangTyp | null {
+	public static valueOf(name: string): HerkunftBildungsgangTyp | null {
 		const tmp = this.all_values_by_name.get(name);
 		return (!tmp) ? null : tmp;
 	}
 
-	public getManager() : CoreTypeDataManager<HerkunftBildungsgangTypKatalogEintrag, HerkunftBildungsgangTyp> {
+	public getManager(): CoreTypeDataManager<HerkunftBildungsgangTypKatalogEintrag, HerkunftBildungsgangTyp> {
 		return de_svws_nrw_asd_types_CoreType_getManager(this);
 	}
 
-	public daten(schuljahr : number) : HerkunftBildungsgangTypKatalogEintrag | null {
+	public daten(schuljahr: number): HerkunftBildungsgangTypKatalogEintrag | null {
 		return de_svws_nrw_asd_types_CoreType_daten(this, schuljahr);
 	}
 
-	public statistikId() : string | null {
+	public statistikId(): string | null {
 		return de_svws_nrw_asd_types_CoreType_statistikId(this);
 	}
 
-	public historie() : List<HerkunftBildungsgangTypKatalogEintrag> {
+	public historie(): List<HerkunftBildungsgangTypKatalogEintrag> {
 		return de_svws_nrw_asd_types_CoreType_historie(this);
 	}
 
@@ -119,7 +119,7 @@ export class HerkunftBildungsgangTyp extends JavaEnum<HerkunftBildungsgangTyp> i
 		return 'de.svws_nrw.asd.types.schueler.HerkunftBildungsgangTyp';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.asd.types.schueler.HerkunftBildungsgangTyp', 'de.svws_nrw.asd.types.CoreType', 'java.lang.Comparable', 'java.lang.Enum', 'java.lang.Comparable'].includes(name);
 	}
 
@@ -127,6 +127,6 @@ export class HerkunftBildungsgangTyp extends JavaEnum<HerkunftBildungsgangTyp> i
 
 }
 
-export function cast_de_svws_nrw_asd_types_schueler_HerkunftBildungsgangTyp(obj : unknown) : HerkunftBildungsgangTyp {
+export function cast_de_svws_nrw_asd_types_schueler_HerkunftBildungsgangTyp(obj: unknown): HerkunftBildungsgangTyp {
 	return obj as HerkunftBildungsgangTyp;
 }

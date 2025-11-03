@@ -9,47 +9,47 @@ export class Abteilung extends JavaObject {
 	/**
 	 * Die ID des Eintrags für die Abteilung
 	 */
-	public id : number = -1;
+	public id: number = -1;
 
 	/**
 	 * Die Bezeichnung der Abteilung (max. 50 Zeichen)
 	 */
-	public bezeichnung : string = "";
+	public bezeichnung: string = "";
 
 	/**
 	 * Die ID des Schuljahresabschnitts für den die Abteilung definiert ist.
 	 */
-	public idSchuljahresabschnitt : number = 0;
+	public idSchuljahresabschnitt: number = 0;
 
 	/**
 	 * Die Lehrer-ID des Abteilungsleiters, sofern die Abteilung einen zugewiesen hat.
 	 */
-	public idAbteilungsleiter : number | null = null;
+	public idAbteilungsleiter: number | null = null;
 
 	/**
 	 * Die Bezeichnung des Raums des Abteilungsleiters (z.B. für Briefköpfe, max. 20 Zeichen)
 	 */
-	public raum : string | null = null;
+	public raum: string | null = null;
 
 	/**
 	 * Die eMail-Adresse des Abteilungsleiters (max. 100 Zeichen)
 	 */
-	public email : string | null = null;
+	public email: string | null = null;
 
 	/**
 	 * Die interne telefonische Durchwahl des Abteilungsleiters
 	 */
-	public durchwahl : string | null = null;
+	public durchwahl: string | null = null;
 
 	/**
 	 * Gibt einen Wert für die Sortierung der Abteilungen an.
 	 */
-	public sortierung : number = 32000;
+	public sortierung: number = 32000;
 
 	/**
 	 * Die Zuordnung der Klassen zu der Abteilung.
 	 */
-	public readonly klassenzuordnungen : List<AbteilungKlassenzuordnung> = new ArrayList<AbteilungKlassenzuordnung>();
+	public readonly klassenzuordnungen: List<AbteilungKlassenzuordnung> = new ArrayList<AbteilungKlassenzuordnung>();
 
 
 	/**
@@ -63,13 +63,13 @@ export class Abteilung extends JavaObject {
 		return 'de.svws_nrw.core.data.schule.Abteilung';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.schule.Abteilung'].includes(name);
 	}
 
 	public static class = new Class<Abteilung>('de.svws_nrw.core.data.schule.Abteilung');
 
-	public static transpilerFromJSON(json : string): Abteilung {
+	public static transpilerFromJSON(json: string): Abteilung {
 		const obj = JSON.parse(json) as Partial<Abteilung>;
 		const result = new Abteilung();
 		if (obj.id === undefined)
@@ -96,7 +96,7 @@ export class Abteilung extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : Abteilung) : string {
+	public static transpilerToJSON(obj: Abteilung): string {
 		let result = '{';
 		result += '"id" : ' + obj.id.toString() + ',';
 		result += '"bezeichnung" : ' + JSON.stringify(obj.bezeichnung) + ',';
@@ -119,7 +119,7 @@ export class Abteilung extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<Abteilung>) : string {
+	public static transpilerToJSONPatch(obj: Partial<Abteilung>): string {
 		let result = '{';
 		if (obj.id !== undefined) {
 			result += '"id" : ' + obj.id.toString() + ',';
@@ -162,6 +162,6 @@ export class Abteilung extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_schule_Abteilung(obj : unknown) : Abteilung {
+export function cast_de_svws_nrw_core_data_schule_Abteilung(obj: unknown): Abteilung {
 	return obj as Abteilung;
 }

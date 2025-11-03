@@ -38,7 +38,7 @@
 			return;
 		const formData = new FormData();
 		for (let i = 0; i < target.files.length; i++)
-			formData.append("data", target.files[i], "lpfile" + (i+1));
+			formData.append("data", target.files[i], "lpfile" + (i + 1));
 		try {
 			await props.importLaufbahnplanung(formData);
 			emit('update:show', false);

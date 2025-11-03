@@ -8,32 +8,32 @@ export class StundenplanKlasse extends JavaObject {
 	/**
 	 * Die ID der Klasse.
 	 */
-	public id : number = -1;
+	public id: number = -1;
 
 	/**
 	 * Das Kürzel der Klasse. Darf nicht "blank" sein.
 	 */
-	public kuerzel : string = "";
+	public kuerzel: string = "";
 
 	/**
 	 * Die Bezeichnung der Klasse, z.B. "Eichhörnchen". Darf "blank" sein.
 	 */
-	public bezeichnung : string = "";
+	public bezeichnung: string = "";
 
 	/**
 	 * Die Sortierreihenfolge des Klassenlisten-Eintrags.
 	 */
-	public sortierung : number = 32000;
+	public sortierung: number = 32000;
 
 	/**
 	 * Die Liste der {@link StundenplanJahrgang}-IDs denen die Klasse zugeordnet ist.
 	 */
-	public jahrgaenge : List<number> = new ArrayList<number>();
+	public jahrgaenge: List<number> = new ArrayList<number>();
 
 	/**
 	 * Die Liste der IDs der  {@link StundenplanSchueler}, die der Klasse zugeordnet sind.
 	 */
-	public schueler : List<number> = new ArrayList<number>();
+	public schueler: List<number> = new ArrayList<number>();
 
 
 	/**
@@ -47,13 +47,13 @@ export class StundenplanKlasse extends JavaObject {
 		return 'de.svws_nrw.core.data.stundenplan.StundenplanKlasse';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.stundenplan.StundenplanKlasse'].includes(name);
 	}
 
 	public static class = new Class<StundenplanKlasse>('de.svws_nrw.core.data.stundenplan.StundenplanKlasse');
 
-	public static transpilerFromJSON(json : string): StundenplanKlasse {
+	public static transpilerFromJSON(json: string): StundenplanKlasse {
 		const obj = JSON.parse(json) as Partial<StundenplanKlasse>;
 		const result = new StundenplanKlasse();
 		if (obj.id === undefined)
@@ -81,7 +81,7 @@ export class StundenplanKlasse extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : StundenplanKlasse) : string {
+	public static transpilerToJSON(obj: StundenplanKlasse): string {
 		let result = '{';
 		result += '"id" : ' + obj.id.toString() + ',';
 		result += '"kuerzel" : ' + JSON.stringify(obj.kuerzel) + ',';
@@ -108,7 +108,7 @@ export class StundenplanKlasse extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<StundenplanKlasse>) : string {
+	public static transpilerToJSONPatch(obj: Partial<StundenplanKlasse>): string {
 		let result = '{';
 		if (obj.id !== undefined) {
 			result += '"id" : ' + obj.id.toString() + ',';
@@ -149,6 +149,6 @@ export class StundenplanKlasse extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_stundenplan_StundenplanKlasse(obj : unknown) : StundenplanKlasse {
+export function cast_de_svws_nrw_core_data_stundenplan_StundenplanKlasse(obj: unknown): StundenplanKlasse {
 	return obj as StundenplanKlasse;
 }

@@ -9,17 +9,17 @@ export class StundenplanblockungManagerRaum extends JavaObject {
 	/**
 	 * Die Datenbank-ID des Raumes.
 	 */
-	private readonly _id : number;
+	private readonly _id: number;
 
 	/**
 	 * Das Kürzel des Raumes. Beispielsweise 'E01'.
 	 */
-	private _kuerzel : string = "";
+	private _kuerzel: string = "";
 
 	/**
 	 * Alle Lerngruppen der Räume.
 	 */
-	private _lerngruppen : List<StundenplanblockungManagerLerngruppe> = new ArrayList<StundenplanblockungManagerLerngruppe>();
+	private _lerngruppen: List<StundenplanblockungManagerLerngruppe> = new ArrayList<StundenplanblockungManagerLerngruppe>();
 
 
 	/**
@@ -28,7 +28,7 @@ export class StundenplanblockungManagerRaum extends JavaObject {
 	 * @param pRaumID   Die Datenbank-ID des Raumes.
 	 * @param pKuerzel  Das Kürzel des Raumes.
 	 */
-	public constructor(pRaumID : number, pKuerzel : string) {
+	public constructor(pRaumID: number, pKuerzel: string) {
 		super();
 		this._id = pRaumID;
 		this._kuerzel = pKuerzel;
@@ -40,7 +40,7 @@ export class StundenplanblockungManagerRaum extends JavaObject {
 	 *
 	 * @return Die Datenbank-ID des Raumes.
 	 */
-	public getID() : number {
+	public getID(): number {
 		return this._id;
 	}
 
@@ -49,7 +49,7 @@ export class StundenplanblockungManagerRaum extends JavaObject {
 	 *
 	 * @param pKuerzel  Das neue Kürzel des Raumes.
 	 */
-	public setKuerzel(pKuerzel : string) : void {
+	public setKuerzel(pKuerzel: string): void {
 		this._kuerzel = pKuerzel;
 	}
 
@@ -57,7 +57,7 @@ export class StundenplanblockungManagerRaum extends JavaObject {
 		return 'de.svws_nrw.core.utils.stundenplanblockung.StundenplanblockungManagerRaum';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.utils.stundenplanblockung.StundenplanblockungManagerRaum'].includes(name);
 	}
 
@@ -65,6 +65,6 @@ export class StundenplanblockungManagerRaum extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_utils_stundenplanblockung_StundenplanblockungManagerRaum(obj : unknown) : StundenplanblockungManagerRaum {
+export function cast_de_svws_nrw_core_utils_stundenplanblockung_StundenplanblockungManagerRaum(obj: unknown): StundenplanblockungManagerRaum {
 	return obj as StundenplanblockungManagerRaum;
 }

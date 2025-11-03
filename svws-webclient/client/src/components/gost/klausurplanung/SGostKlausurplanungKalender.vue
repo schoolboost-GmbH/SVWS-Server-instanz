@@ -165,9 +165,9 @@
 	import { ref, onMounted, computed } from "vue";
 	import type { GostKlausurplanungKalenderProps } from "./SGostKlausurplanungKalenderProps";
 	import type { GostKlausurplanungDragData, GostKlausurplanungDropZone } from "./SGostKlausurplanung";
-	import type { Wochentag, StundenplanKalenderwochenzuordnung, List, GostKursklausur, JavaMapEntry, JavaSet, GostSchuelerklausurTermin} from "@core";
-	import { StundenplanZeitraster} from "@core";
-	import { GostKlausurtermin, DateUtils, ArrayList, BenutzerKompetenz} from "@core";
+	import type { Wochentag, StundenplanKalenderwochenzuordnung, List, GostKursklausur, JavaMapEntry, JavaSet, GostSchuelerklausurTermin } from "@core";
+	import { StundenplanZeitraster } from "@core";
+	import { GostKlausurtermin, DateUtils, ArrayList, BenutzerKompetenz } from "@core";
 
 	const props = defineProps<GostKlausurplanungKalenderProps>();
 
@@ -176,7 +176,7 @@
 	const kalenderwoche = (datum?: string) => {
 		if (datum === undefined)
 			datum = props.kalenderdatum.value!;
-		return props.kMan().stundenplanManagerGetByAbschnittAndDatumOrException(props.abschnitt!.id, datum).kalenderwochenzuordnungGetByDatum(datum)
+		return props.kMan().stundenplanManagerGetByAbschnittAndDatumOrException(props.abschnitt!.id, datum).kalenderwochenzuordnungGetByDatum(datum);
 	};
 
 	const stundenplanManager = () => props.kMan().stundenplanManagerGetByAbschnittAndKwOrException(props.abschnitt!.id, kalenderwoche().jahr, kalenderwoche().kw);
@@ -206,10 +206,10 @@
 	async function verschiebeKlausurTrotzRaumzuweisung() {
 		if (klausurMoveDragData)
 			if (klausurMoveDropZone === undefined)
-				await props.patchKlausurtermin(klausurMoveDragData.id, {datum: null, startzeit: null});
+				await props.patchKlausurtermin(klausurMoveDragData.id, { datum: null, startzeit: null });
 			else if (klausurMoveDropZone instanceof StundenplanZeitraster) {
 				const date = stundenplanManager().datumGetByKwzAndZeitraster(kalenderwoche(), klausurMoveDropZone);
-				await props.patchKlausurtermin(klausurMoveDragData.id, {datum: date, startzeit: klausurMoveDropZone.stundenbeginn});
+				await props.patchKlausurtermin(klausurMoveDragData.id, { datum: date, startzeit: klausurMoveDropZone.stundenbeginn });
 			}
 		props.terminSelected.value = undefined;
 
@@ -224,12 +224,12 @@
 		else
 			konflikte = props.kMan().klausurenProSchueleridExceedingKWThresholdByKwAndAbijahrAndThreshold(kalenderwoche().kw, props.jahrgangsdaten.abiturjahr, threshold, thresholdOnly).entrySet();
 		return konflikte.toArray() as JavaMapEntry<number, JavaSet<GostSchuelerklausurTermin>>[];
-	}
+	};
 
 	const anzahlProKwKonflikte = (threshold: number, thresholdOnly: boolean, showMore: boolean) => {
 		const konflikte = anzahlProKwKonflikte2(threshold, thresholdOnly);
 		return showMore ? konflikte : konflikte.slice(0, 3);
-	}
+	};
 
 	const berechneKwzDatum = (by: number) => {
 		const datum = new Date(props.kalenderdatum.value!);
@@ -240,18 +240,18 @@
 			return undefined;
 		const kw = stundenplan.kalenderwochenzuordnungGetByDatum(datumStr);
 		return DateUtils.gibDatumDesMontagsOfJahrAndKalenderwoche(kw.jahr, kw.kw);
-	}
+	};
 
 	async function navKalenderdatum(by: number) {
 		await props.gotoKalenderdatum(berechneKwzDatum(by), props.terminSelected.value);
 	}
 
-	function checkDropZoneTerminAuswahl(event: DragEvent) : void {
+	function checkDropZoneTerminAuswahl(event: DragEvent): void {
 		if (props.terminSelected.value?.datum !== null)
 			event.preventDefault();
 	}
 
-	function checkDropZoneZeitraster(event: DragEvent, zeitraster: StundenplanZeitraster | undefined) : void {
+	function checkDropZoneZeitraster(event: DragEvent, zeitraster: StundenplanZeitraster | undefined): void {
 		zeitrasterSelected.value = zeitraster;
 		event.preventDefault();
 	}
@@ -274,7 +274,7 @@
 		return summe;
 	}
 
-	function isDraggable(object: any) : boolean {
+	function isDraggable(object: any): boolean {
 		return hatKompetenzUpdate.value;
 	}
 

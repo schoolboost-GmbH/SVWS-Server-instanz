@@ -10,17 +10,17 @@
 
 	const props = withDefaults(defineProps<{
 		title?: string;
-		modelValue?: number|undefined;
+		modelValue?: number | undefined;
 	}>(), {
 		title: '',
 		modelValue: undefined,
 	});
 
 	const emit = defineEmits<{
-		(e: 'update:modelValue', event: number|undefined): void;
+		(e: 'update:modelValue', event: number | undefined): void;
 	}>();
 
-	const checked = computed<number|null>({
+	const checked = computed<number | null>({
 		get: () => props.modelValue ?? null,
 		set: (value) =>	emit("update:modelValue", value ?? undefined),
 	});

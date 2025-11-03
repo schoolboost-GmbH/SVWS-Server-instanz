@@ -5,42 +5,42 @@ import { JavaString } from '../../../java/lang/JavaString';
 export class SprachBelegungSekI extends JavaEnum<SprachBelegungSekI> {
 
 	/** an array containing all values of this enumeration */
-	static readonly all_values_by_ordinal : Array<SprachBelegungSekI> = [];
+	static readonly all_values_by_ordinal: Array<SprachBelegungSekI> = [];
 
 	/** an array containing all values of this enumeration indexed by their name*/
-	static readonly all_values_by_name : Map<string, SprachBelegungSekI> = new Map<string, SprachBelegungSekI>();
+	static readonly all_values_by_name: Map<string, SprachBelegungSekI> = new Map<string, SprachBelegungSekI>();
 
 	/**
 	 * Gibt an, dass eine Sprache in der Sekundarstufe I nicht oder weniger als 2 Jahre belegt wurde
 	 */
-	public static readonly NICHT_BELEGT : SprachBelegungSekI = new SprachBelegungSekI("NICHT_BELEGT", 0, 0);
+	public static readonly NICHT_BELEGT: SprachBelegungSekI = new SprachBelegungSekI("NICHT_BELEGT", 0, 0);
 
 	/**
 	 * Gibt an, dass eine Sprache in der Sekundarstufe I mindestens 2 Jahre - aber nicht 4 oder mehr Jahre - belegt wurde
 	 */
-	public static readonly MIND_2_JAHRE : SprachBelegungSekI = new SprachBelegungSekI("MIND_2_JAHRE", 1, 2);
+	public static readonly MIND_2_JAHRE: SprachBelegungSekI = new SprachBelegungSekI("MIND_2_JAHRE", 1, 2);
 
 	/**
 	 * Gibt an, dass eine Sprache in der Sekundarstufe I mindestens 4 Jahre - aber nicht ab Klasse 5 - belegt wurde
 	 */
-	public static readonly MIND_4_JAHRE : SprachBelegungSekI = new SprachBelegungSekI("MIND_4_JAHRE", 2, 4);
+	public static readonly MIND_4_JAHRE: SprachBelegungSekI = new SprachBelegungSekI("MIND_4_JAHRE", 2, 4);
 
 	/**
 	 * Gibt an, dass eine Sprache in der Sekundarstufe I ab Klasse 5, d.h. 5 (in G8) oder 6 Jahre belegt wurde.
 	 */
-	public static readonly AB_JAHRGANG_5 : SprachBelegungSekI = new SprachBelegungSekI("AB_JAHRGANG_5", 3, 6);
+	public static readonly AB_JAHRGANG_5: SprachBelegungSekI = new SprachBelegungSekI("AB_JAHRGANG_5", 3, 6);
 
 	/**
 	 * Die Dauer der Sprachbelegung in der SekI - der Wert kann von der realen Belegung abweichen, da nur die relevante Dauer angeben ist und im Falle des Jahrgangs 5 abweichen kann, falls der G8-Bildungsgang vorliegt
 	 */
-	public readonly dauer : number;
+	public readonly dauer: number;
 
 	/**
 	 * Erstellt einen neuen enum-Wert mit der angegebenen Dauer der Sprachbelegung.
 	 *
 	 * @param dauer   die Dauer der Sprachbelegung in der Sek I
 	 */
-	private constructor(name : string, ordinal : number, dauer : number) {
+	private constructor(name: string, ordinal: number, dauer: number) {
 		super(name, ordinal);
 		SprachBelegungSekI.all_values_by_ordinal.push(this);
 		SprachBelegungSekI.all_values_by_name.set(name, this);
@@ -56,7 +56,7 @@ export class SprachBelegungSekI extends JavaEnum<SprachBelegungSekI> {
 	 *
 	 * @return die Sprachbelegung in der Sek I
 	 */
-	public static getByASDJahrgang(kuerzel : string | null) : SprachBelegungSekI {
+	public static getByASDJahrgang(kuerzel: string | null): SprachBelegungSekI {
 		if (kuerzel === null)
 			return SprachBelegungSekI.NICHT_BELEGT;
 		if (JavaString.compareTo(kuerzel, "05") <= 0)
@@ -77,7 +77,7 @@ export class SprachBelegungSekI extends JavaEnum<SprachBelegungSekI> {
 	 *
 	 * @return die Sprachbelegung in der Sek I
 	 */
-	public static getByDauer(dauer : number) : SprachBelegungSekI {
+	public static getByDauer(dauer: number): SprachBelegungSekI {
 		if (dauer <= 0)
 			return SprachBelegungSekI.NICHT_BELEGT;
 		if (dauer <= 3)
@@ -92,7 +92,7 @@ export class SprachBelegungSekI extends JavaEnum<SprachBelegungSekI> {
 	 *
 	 * @returns the array with enumeration values
 	 */
-	public static values() : Array<SprachBelegungSekI> {
+	public static values(): Array<SprachBelegungSekI> {
 		return [...this.all_values_by_ordinal];
 	}
 
@@ -103,7 +103,7 @@ export class SprachBelegungSekI extends JavaEnum<SprachBelegungSekI> {
 	 *
 	 * @returns the enumeration values or null
 	 */
-	public static valueOf(name : string) : SprachBelegungSekI | null {
+	public static valueOf(name: string): SprachBelegungSekI | null {
 		const tmp = this.all_values_by_name.get(name);
 		return (!tmp) ? null : tmp;
 	}
@@ -112,7 +112,7 @@ export class SprachBelegungSekI extends JavaEnum<SprachBelegungSekI> {
 		return 'de.svws_nrw.core.types.fach.SprachBelegungSekI';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.types.fach.SprachBelegungSekI', 'java.lang.Enum', 'java.lang.Comparable'].includes(name);
 	}
 
@@ -120,6 +120,6 @@ export class SprachBelegungSekI extends JavaEnum<SprachBelegungSekI> {
 
 }
 
-export function cast_de_svws_nrw_core_types_fach_SprachBelegungSekI(obj : unknown) : SprachBelegungSekI {
+export function cast_de_svws_nrw_core_types_fach_SprachBelegungSekI(obj: unknown): SprachBelegungSekI {
 	return obj as SprachBelegungSekI;
 }

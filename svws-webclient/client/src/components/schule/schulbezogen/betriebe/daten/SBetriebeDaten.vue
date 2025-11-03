@@ -51,10 +51,10 @@
 				<template #cell(email)="{ rowData }">
 					<svws-ui-text-input :model-value="rowData.email" @change="email=>patchBetriebAnpsrechpartner({email}, rowData.id)" headless required />
 				</template>
-				<template #actions>
-					<svws-ui-button @click="remove" type="trash" :disabled="!selected.length || !hatKompetenzUpdate" />
+				<template #actions v-if="hatKompetenzUpdate">
+					<svws-ui-button @click="remove" type="trash" :disabled="!selected.length" />
 					<s-card-betriebe-add-anprechpartner-modal v-slot="{ openModal }" :add-betrieb-ansprechpartner :benutzer-kompetenzen="props.benutzerKompetenzen">
-						<svws-ui-button @click="openModal()" type="icon" title="Ansprechpartner hinzufügen" :disabled="!hatKompetenzUpdate"> <span class="icon i-ri-add-line" /> </svws-ui-button>
+						<svws-ui-button @click="openModal()" type="icon" title="Ansprechpartner hinzufügen"> <span class="icon i-ri-add-line" /> </svws-ui-button>
 					</s-card-betriebe-add-anprechpartner-modal>
 				</template>
 			</svws-ui-table>
@@ -65,31 +65,31 @@
 <script setup lang="ts">
 	import { ref, computed, watch } from 'vue';
 	import type { BetriebeDatenProps } from './SBetriebeDatenProps';
-	import type { BetriebAnsprechpartner, KatalogEintrag, OrtKatalogEintrag} from '@core';
+	import type { BetriebAnsprechpartner, KatalogEintrag, OrtKatalogEintrag } from '@core';
 	import { BenutzerKompetenz } from '@core';
 
-	const props = defineProps<BetriebeDatenProps>()
+	const props = defineProps<BetriebeDatenProps>();
 	const selected = ref<BetriebAnsprechpartner[]>([]);
 	const hatKompetenzUpdate = computed<boolean>(() => props.benutzerKompetenzen.has(BenutzerKompetenz.SCHUELER_INDIVIDUALDATEN_AENDERN));
 	const readonly = computed(() => !hatKompetenzUpdate.value);
 
 	const columns = [
-		{key: 'anrede', label: 'Anrede', span: 1},
-		{key: 'name', label: 'Name', span: 2},
-		{key: 'vorname', label: 'Rufname', span: 2},
-		{key: 'telefon', label: 'Telefon', span: 2},
-		{key: 'email', label: 'Email', span: 3},
-		{key: 'id', label: 'ID', span: 0.5},
-	]
+		{ key: 'anrede', label: 'Anrede', span: 1 },
+		{ key: 'name', label: 'Name', span: 2 },
+		{ key: 'vorname', label: 'Rufname', span: 2 },
+		{ key: 'telefon', label: 'Telefon', span: 2 },
+		{ key: 'email', label: 'Email', span: 3 },
+		{ key: 'id', label: 'ID', span: 0.5 },
+	];
 
 	const inputWohnortID = computed<OrtKatalogEintrag | null>({
-		get: () => props.daten.ort_id !== null ? props.mapOrte.get(props.daten.ort_id) ?? null : null,
-		set: (val) =>	void props.patch({ ort_id : val?.id }),
+		get: () => props.daten.ort_id === null ? null : props.mapOrte.get(props.daten.ort_id) ?? null,
+		set: (val) =>	void props.patch({ ort_id: val?.id }),
 	});
 
 	const beschaeftigungsart = computed<KatalogEintrag | null>({
 		get: () => (props.daten.adressArt === null) ? null : props.mapBeschaeftigungsarten.get(props.daten.adressArt) ?? null,
-		set: (value) => void props.patch({ adressArt: value?.id}),
+		set: (value) => void props.patch({ adressArt: value?.id }),
 	});
 
 	watch(() => props.daten, () => selected.value = []);

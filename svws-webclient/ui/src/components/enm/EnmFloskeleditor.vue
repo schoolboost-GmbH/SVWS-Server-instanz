@@ -95,19 +95,19 @@
 	import { SelectManager } from '../../ui/controls/select/selectManager/SelectManager';
 
 	type RowType = { gruppe: ENMFloskelgruppe, floskel: ENMFloskel | null };
-	type StrOrUndef = string|undefined;
+	type StrOrUndef = string | undefined;
 
 	const props = defineProps<{
 		enmManager: () => EnmManager;
-		lerngruppenAuswahl: () => Array<EnmLerngruppenAuswahlEintrag|ENMKlasse>;
+		lerngruppenAuswahl: () => Array<EnmLerngruppenAuswahlEintrag | ENMKlasse>;
 		auswahl: { klasse: ENMKlasse | null, schueler: ENMSchueler | null, leistung: ENMLeistung | null };
-		patch: (value: string|null) => Promise<void>;
+		patch: (value: string | null) => Promise<void>;
 		erlaubteHauptgruppe: BemerkungenHauptgruppe;
 		initialRow: number | null;
 		onUpdate: (row: number | null, focus: boolean) => void;
 	}>();
 
-	const show = defineModel<boolean>({default: true});
+	const show = defineModel<boolean>({ default: true });
 
 	const lastRow = ref<number | null>(null);
 
@@ -134,7 +134,7 @@
 			for (const lerngruppenAuswahl of props.lerngruppenAuswahl())
 				if (lerngruppenAuswahl instanceof ENMKlasse) {
 					const listSchueler = props.enmManager().mapKlassenSchueler.get(lerngruppenAuswahl.id);
-					const klasse = props.enmManager().mapKlassen.get(lerngruppenAuswahl.id)
+					const klasse = props.enmManager().mapKlassen.get(lerngruppenAuswahl.id);
 					if ((klasse === null) || (listSchueler === null))
 						continue;
 					const list = new ArrayList<PairNN<string, ENMSchueler>>();
@@ -156,7 +156,7 @@
 			return result;
 		}),
 		getRowKey: row => `${row.a}_${row.b.id}`,
-		columns: [ { kuerzel: "Name", name: "Name, Vorname", width: '15rem' } ],
+		columns: [{ kuerzel: "Name", name: "Name, Vorname", width: '15rem' }],
 	});
 
 	const gridManager = new GridManager<string, RowType, List<RowType>>({
@@ -212,7 +212,7 @@
 				if (floskel.niveau !== null)
 					niveauSet.value.add(floskel.niveau);
 			}
-		return { jahrgangSet, niveauSet, floskelgruppen }
+		return { jahrgangSet, niveauSet, floskelgruppen };
 	}).value;
 
 	const jahrgangManager = computed(() => new SelectManager({
@@ -232,12 +232,12 @@
 			return jahrgangSelectedMemo.value;
 		},
 		set: (value) => jahrgangSelectedMemo.value = value,
-	})
+	});
 
 	function inputBemerkung(floskel: ENMFloskel, col: number, index: number) {
 		const key = `Floskel_${floskel.kuerzel}`;
 		const setter = () => ergaenzeFloskel(floskel);
-		return (element : Element | ComponentPublicInstance<unknown> | null) => {
+		return (element: Element | ComponentPublicInstance<unknown> | null) => {
 			const input = gridManager.applyInputToggle(key, col, index, element, setter);
 			if (input !== null) {
 				gridManager.update(key, false);
@@ -249,7 +249,7 @@
 	function auswahlSchueler(index: number) {
 		const key = `Schueler_${index}`;
 		const setter = () => props.onUpdate(index, false);
-		return (element : Element | ComponentPublicInstance<unknown> | null) => {
+		return (element: Element | ComponentPublicInstance<unknown> | null) => {
 			const input = gridManagerSchueler.applyInputToggle(key, 1, index, element, setter);
 			if (input !== null) {
 				gridManagerSchueler.update(key, false);
@@ -260,7 +260,7 @@
 		};
 	}
 
-	const bemerkung = computed<string|null>(() => {
+	const bemerkung = computed<string | null>(() => {
 		const auswahl = props.auswahl;
 		if (auswahl.schueler === null)
 			return null;
@@ -278,7 +278,7 @@
 		}
 	});
 
-	const text = ref<string|null>(null);
+	const text = ref<string | null>(null);
 	const showButtons = computed(() => text.value !== bemerkung.value);
 
 	watch(bemerkung, () => text.value = bemerkung.value, { immediate: true });
@@ -289,7 +289,8 @@
 	function onInput(value: string) {
 		if (value.length > 1)
 			text.value = value;
-		else text.value = null;
+		else
+			text.value = null;
 	}
 
 	const gruppenMap = computed(() => {
@@ -360,15 +361,15 @@
 			} else if (nachname !== undefined) {
 				return schueler.nachname ?? '???';
 			} else if (weibl !== undefined) {
-				return schueler.geschlecht === 'w' ? 'in':'';
+				return schueler.geschlecht === 'w' ? 'in' : '';
 			} else if (ein !== undefined) {
-				return schueler.geschlecht === 'w' ? 'in':'e';
+				return schueler.geschlecht === 'w' ? 'in' : 'e';
 			} else if (anrede !== undefined) {
 				return anredeMap.value.get(schueler.geschlecht ?? 'm') ?? '';
 			} else if (mwdx !== undefined) {
 				const arr = match.slice(1, -1).split('%');
 				const mwdxMap = new Map([['m', arr[0] ?? ''], ['w', arr[1] ?? ''], ['d', arr[2] ?? ''], ['x', arr[3] ?? '']]);
-				return mwdxMap.get((schueler.geschlecht ?? 'x') as 'm'|'w'|'d'|'x')!;
+				return mwdxMap.get((schueler.geschlecht ?? 'x') as 'm' | 'w' | 'd' | 'x')!;
 			} else if (kuerzel !== undefined) {
 				return floskelMap.value.get(kuerzel.toLocaleLowerCase())?.text ?? '???';
 			}

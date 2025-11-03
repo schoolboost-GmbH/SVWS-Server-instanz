@@ -496,6 +496,8 @@ public class APIClient {
 				case "ZulaessigeKursart" -> JsonReader.fromResource("de/svws_nrw/asd/types/kurse/ZulaessigeKursart.json");
 				case "Foerderschwerpunkt" -> JsonReader.fromResource("de/svws_nrw/asd/types/schule/Foerderschwerpunkt.json");
 				case "Termin" -> JsonReader.fromResource("de/svws_nrw/asd/types/schule/Termin.json");
+				case "Betreuungsart" -> JsonReader.fromResource("de/svws_nrw/asd/types/schueler/Betreuungsart.json");
+				case "FormOffenerGanztag" -> JsonReader.fromResource("de/svws_nrw/asd/types/schule/FormOffenerGanztag.json");
 				case "LehrerAnrechnungsgrund" -> JsonReader.fromResource("de/svws_nrw/asd/types/lehrer/LehrerAnrechnungsgrund.json");
 				case "LehrerMehrleistungsarten" -> JsonReader.fromResource("de/svws_nrw/asd/types/lehrer/LehrerMehrleistungsarten.json");
 				case "LehrerMinderleistungsarten" -> JsonReader.fromResource("de/svws_nrw/asd/types/lehrer/LehrerMinderleistungsarten.json");

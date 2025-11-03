@@ -15,112 +15,112 @@ export class SchuldateiManager extends JavaObject {
 	/**
 	 * Die Daten der Schuldatei
 	 */
-	private readonly _schuldatei : Schuldatei;
+	private readonly _schuldatei: Schuldatei;
 
 	/**
 	 * Die Kataloge zu der Schuldatei
 	 */
-	private readonly _kataloge : SchuldateiKataloge;
+	private readonly _kataloge: SchuldateiKataloge;
 
 	/**
 	 * Die Kataloge zu der Schuldatei anhand ihrer Namen
 	 */
-	private readonly _mapKataloge : JavaMap<string, SchuldateiKatalogManager> = new HashMap<string, SchuldateiKatalogManager>();
+	private readonly _mapKataloge: JavaMap<string, SchuldateiKatalogManager> = new HashMap<string, SchuldateiKatalogManager>();
 
 	/**
 	 * Der Katalog der Arten von Adressen
 	 */
-	public readonly katalogAddressarten : SchuldateiKatalogManager;
+	public readonly katalogAddressarten: SchuldateiKatalogManager;
 
 	/**
 	 * Der Katalog der Arten von Attributen
 	 */
-	public readonly katalogAttribute : SchuldateiKatalogManager;
+	public readonly katalogAttribute: SchuldateiKatalogManager;
 
 	/**
 	 * Der Katalog der Schulbetriebsschlüssel (Betriebsschlüssel)
 	 */
-	public readonly katalogSchulbetriebsschluessel : SchuldateiKatalogManager;
+	public readonly katalogSchulbetriebsschluessel: SchuldateiKatalogManager;
 
 	/**
 	 * Der Katalog der Erreichbarkeiten
 	 */
-	public readonly katalogErreichbarkeiten : SchuldateiKatalogManager;
+	public readonly katalogErreichbarkeiten: SchuldateiKatalogManager;
 
 	/**
 	 * Der Katalog der Foerderschwerpunkte
 	 */
-	public readonly katalogFoerderschwerpunkte : SchuldateiKatalogManager;
+	public readonly katalogFoerderschwerpunkte: SchuldateiKatalogManager;
 
 	/**
 	 * Der Katalog der Gliederung
 	 */
-	public readonly katalogGliederungen : SchuldateiKatalogManager;
+	public readonly katalogGliederungen: SchuldateiKatalogManager;
 
 	/**
 	 * Der Katalog der Hauptstandortart (Hauptstandortadresse)
 	 */
-	public readonly katalogHauptstandort : SchuldateiKatalogManager;
+	public readonly katalogHauptstandort: SchuldateiKatalogManager;
 
 	/**
 	 * Der Katalog der Art von Heimen/Internaten
 	 */
-	public readonly katalogHeimInternat : SchuldateiKatalogManager;
+	public readonly katalogHeimInternat: SchuldateiKatalogManager;
 
 	/**
 	 * Der Katalog der Kommunikationsgruppen
 	 */
-	public readonly katalogKommunikationsgruppen : SchuldateiKatalogManager;
+	public readonly katalogKommunikationsgruppen: SchuldateiKatalogManager;
 
 	/**
 	 * Der Katalog der Liegenschaften
 	 */
-	public readonly katalogLiegenschaftsarten : SchuldateiKatalogManager;
+	public readonly katalogLiegenschaftsarten: SchuldateiKatalogManager;
 
 	/**
 	 * Der Katalog der Merkmal
 	 */
-	public readonly katalogMerkmale : SchuldateiKatalogManager;
+	public readonly katalogMerkmale: SchuldateiKatalogManager;
 
 	/**
 	 * Der Katalog der Eigenschaften von Organisationseinheiten
 	 */
-	public readonly katalogOergangisationseinheitEigenschaften : SchuldateiKatalogManager;
+	public readonly katalogOergangisationseinheitEigenschaften: SchuldateiKatalogManager;
 
 	/**
 	 * Der Katalog der Arten von Organisationseinheiten
 	 */
-	public readonly katalogOrganisationseinheitarten : SchuldateiKatalogManager;
+	public readonly katalogOrganisationseinheitarten: SchuldateiKatalogManager;
 
 	/**
 	 * Der Katalog der Qualitäten zu den Ortskoordinaten
 	 */
-	public readonly katalogQualitaetenVerortung : SchuldateiKatalogManager;
+	public readonly katalogQualitaetenVerortung: SchuldateiKatalogManager;
 
 	/**
 	 * Der Katalog des Rechtstatus von Schulen
 	 */
-	public readonly katalogRechtsstatus : SchuldateiKatalogManager;
+	public readonly katalogRechtsstatus: SchuldateiKatalogManager;
 
 	/**
 	 * Der Katalog der Schularten
 	 */
-	public readonly katalogSchularten : SchuldateiKatalogManager;
+	public readonly katalogSchularten: SchuldateiKatalogManager;
 
 	/**
 	 * Der Katalog der Schulformen
 	 */
-	public readonly katalogSchulformen : SchuldateiKatalogManager;
+	public readonly katalogSchulformen: SchuldateiKatalogManager;
 
 	/**
 	 * Der Katalog der Schulträger
 	 */
-	public readonly katalogArtDerTraegerschaft : SchuldateiKatalogManager;
+	public readonly katalogArtDerTraegerschaft: SchuldateiKatalogManager;
 
 	/**
 	 * Eine Map mit den Managern für alle Organisationseinheiten, welche den Schulnummern ihrer Organisationseinheiten zugeordnet sind
 	 */
-	private readonly _mapOrganisationseinheitManagerBySchulnummer : JavaMap<string, SchuldateiOrganisationseinheitManager> = new HashMap<string, SchuldateiOrganisationseinheitManager>();
+	private readonly _mapOrganisationseinheitManagerBySchulnummer: JavaMap<string, SchuldateiOrganisationseinheitManager> = new HashMap<string, SchuldateiOrganisationseinheitManager>();
 
 
 	/**
@@ -130,12 +130,12 @@ export class SchuldateiManager extends JavaObject {
 	 * @param schuldatei   die Schuldatei
 	 * @param kataloge     die Kataloge zu der Schuldatei
 	 */
-	public constructor(schuldatei : Schuldatei, kataloge : SchuldateiKataloge) {
+	public constructor(schuldatei: Schuldatei, kataloge: SchuldateiKataloge) {
 		super();
 		this._schuldatei = schuldatei;
 		this._kataloge = kataloge;
 		for (const eintrag of kataloge.kataloge) {
-			const katalog : SchuldateiKatalogManager | null = this._mapKataloge.computeIfAbsent(eintrag.katalog, { apply : (k: string) => new SchuldateiKatalogManager(k) });
+			const katalog: SchuldateiKatalogManager | null = this._mapKataloge.computeIfAbsent(eintrag.katalog, { apply: (k: string) => new SchuldateiKatalogManager(k) });
 			if (katalog !== null)
 				katalog.addEintrag(eintrag);
 		}
@@ -194,8 +194,8 @@ export class SchuldateiManager extends JavaObject {
 	 *
 	 * @throws IllegalArgumentException falls kein Katalog mit dem Namen existiert
 	 */
-	private getKatalogFromMap(nameKatalog : string) : SchuldateiKatalogManager {
-		const katalog : SchuldateiKatalogManager | null = this._mapKataloge.get(nameKatalog);
+	private getKatalogFromMap(nameKatalog: string): SchuldateiKatalogManager {
+		const katalog: SchuldateiKatalogManager | null = this._mapKataloge.get(nameKatalog);
 		if (katalog === null)
 			throw new IllegalArgumentException("Die Kataloge enthält keine Einträge für den Katalog mit dem Namen '" + nameKatalog + "'")
 		return katalog;
@@ -206,7 +206,7 @@ export class SchuldateiManager extends JavaObject {
 	 *
 	 * @return die Liste aller Organisationseinheiten der Schuldatei
 	 */
-	public getList() : List<SchuldateiOrganisationseinheit> {
+	public getList(): List<SchuldateiOrganisationseinheit> {
 		return this._schuldatei.organisationseinheiten;
 	}
 
@@ -217,7 +217,7 @@ export class SchuldateiManager extends JavaObject {
 	 *
 	 * @return der Manager für die Organisationseinheit
 	 */
-	public getOrganisationsheinheitManager(schulnummer : string) : SchuldateiOrganisationseinheitManager | null {
+	public getOrganisationsheinheitManager(schulnummer: string): SchuldateiOrganisationseinheitManager | null {
 		return this._mapOrganisationseinheitManagerBySchulnummer.get(schulnummer);
 	}
 
@@ -225,7 +225,7 @@ export class SchuldateiManager extends JavaObject {
 		return 'de.svws_nrw.schulen.v1.utils.SchuldateiManager';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.schulen.v1.utils.SchuldateiManager'].includes(name);
 	}
 
@@ -233,6 +233,6 @@ export class SchuldateiManager extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_schulen_v1_utils_SchuldateiManager(obj : unknown) : SchuldateiManager {
+export function cast_de_svws_nrw_schulen_v1_utils_SchuldateiManager(obj: unknown): SchuldateiManager {
 	return obj as SchuldateiManager;
 }

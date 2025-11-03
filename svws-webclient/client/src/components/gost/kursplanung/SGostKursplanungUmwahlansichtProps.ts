@@ -10,7 +10,7 @@ export interface GostKursplanungUmwahlansichtProps {
 	hatErgebnis: boolean,
 	regelnUpdate: (update: GostBlockungRegelUpdate) => Promise<void>;
 	updateKursSchuelerZuordnungen: (update: GostBlockungsergebnisKursSchuelerZuordnungUpdate) => Promise<boolean>;
-	autoKursSchuelerZuordnung: (idSchueler : number) => Promise<void>;
+	autoKursSchuelerZuordnung: (idSchueler: number) => Promise<void>;
 	gotoSchueler: (idSchueler: number) => Promise<void>;
 	gotoLaufbahnplanung: (idSchueler: number) => Promise<void>;
 	getDatenmanager: () => GostBlockungsdatenManager;

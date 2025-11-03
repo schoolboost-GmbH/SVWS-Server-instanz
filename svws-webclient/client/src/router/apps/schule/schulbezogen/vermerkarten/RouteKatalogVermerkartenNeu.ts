@@ -13,8 +13,8 @@ const SVermerkartenNeu = () => import("~/components/schule/schulbezogen/vermerka
 export class RouteKatalogVermerkartNeu extends RouteNode<any, RouteKatalogVermerkarten> {
 
 	public constructor() {
-		super(Schulform.values(), [ BenutzerKompetenz.KATALOG_EINTRAEGE_AENDERN ], "schule.vermerkarten.neu", "neu", SVermerkartenNeu);
-		super.types = new Set([ ViewType.HINZUFUEGEN ]);
+		super(Schulform.values(), [BenutzerKompetenz.KATALOG_EINTRAEGE_AENDERN], "schule.vermerkarten.neu", "neu", SVermerkartenNeu);
+		super.types = new Set([ViewType.HINZUFUEGEN]);
 		super.mode = ServerMode.DEV;
 		super.propHandler = (route) => this.getProps(route);
 		super.text = "Vermerkart Neu";

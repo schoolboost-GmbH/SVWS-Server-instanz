@@ -8,17 +8,17 @@ export class KAOAMerkmalKatalogEintrag extends CoreTypeData {
 	/**
 	 * Die Kategorie, welcher das Merkmal zugeordnet ist.
 	 */
-	public kategorie : string = "";
+	public kategorie: string = "";
 
 	/**
 	 * Die Optionsart des Merkmals.
 	 */
-	public optionsart : string | null = null;
+	public optionsart: string | null = null;
 
 	/**
 	 * Die Anlagen des Berufskollegs bei denen der Eintrag gemacht werden darf
 	 */
-	public bkAnlagen : List<string> = new ArrayList<string>();
+	public bkAnlagen: List<string> = new ArrayList<string>();
 
 
 	/**
@@ -32,13 +32,13 @@ export class KAOAMerkmalKatalogEintrag extends CoreTypeData {
 		return 'de.svws_nrw.asd.data.kaoa.KAOAMerkmalKatalogEintrag';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.asd.data.CoreTypeData', 'de.svws_nrw.asd.data.kaoa.KAOAMerkmalKatalogEintrag'].includes(name);
 	}
 
 	public static class = new Class<KAOAMerkmalKatalogEintrag>('de.svws_nrw.asd.data.kaoa.KAOAMerkmalKatalogEintrag');
 
-	public static transpilerFromJSON(json : string): KAOAMerkmalKatalogEintrag {
+	public static transpilerFromJSON(json: string): KAOAMerkmalKatalogEintrag {
 		const obj = JSON.parse(json) as Partial<KAOAMerkmalKatalogEintrag>;
 		const result = new KAOAMerkmalKatalogEintrag();
 		if (obj.id === undefined)
@@ -67,7 +67,7 @@ export class KAOAMerkmalKatalogEintrag extends CoreTypeData {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : KAOAMerkmalKatalogEintrag) : string {
+	public static transpilerToJSON(obj: KAOAMerkmalKatalogEintrag): string {
 		let result = '{';
 		result += '"id" : ' + obj.id.toString() + ',';
 		result += '"schluessel" : ' + JSON.stringify(obj.schluessel) + ',';
@@ -90,7 +90,7 @@ export class KAOAMerkmalKatalogEintrag extends CoreTypeData {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<KAOAMerkmalKatalogEintrag>) : string {
+	public static transpilerToJSONPatch(obj: Partial<KAOAMerkmalKatalogEintrag>): string {
 		let result = '{';
 		if (obj.id !== undefined) {
 			result += '"id" : ' + obj.id.toString() + ',';
@@ -133,6 +133,6 @@ export class KAOAMerkmalKatalogEintrag extends CoreTypeData {
 
 }
 
-export function cast_de_svws_nrw_asd_data_kaoa_KAOAMerkmalKatalogEintrag(obj : unknown) : KAOAMerkmalKatalogEintrag {
+export function cast_de_svws_nrw_asd_data_kaoa_KAOAMerkmalKatalogEintrag(obj: unknown): KAOAMerkmalKatalogEintrag {
 	return obj as KAOAMerkmalKatalogEintrag;
 }

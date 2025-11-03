@@ -1,4 +1,4 @@
-import type { Abiturdaten, GostSchuelerFachwahl, LehrerListeEintrag, List , GostBeratungslehrer } from "@core";
+import type { Abiturdaten, GostSchuelerFachwahl, LehrerListeEintrag, List, GostBeratungslehrer } from "@core";
 import { GostBelegpruefungErgebnis, GostFaecherManager, GostJahrgang, GostJahrgangsdaten, AbiturdatenManager, GostBelegpruefungsArt, BenutzerTyp, GostHalbjahr, DeveloperNotificationException, ArrayList } from "@core";
 
 import { api } from "~/router/Api";
@@ -66,7 +66,7 @@ export class RouteDataGostBeratung extends RouteData<RouteStateDataGostBeratung>
 		return this._state.value.faecherManager;
 	}
 	set faecherManager(faecherManager: GostFaecherManager | undefined) {
-		this.setPatchedState({ faecherManager })
+		this.setPatchedState({ faecherManager });
 	}
 
 	get abiturdatenManager(): AbiturdatenManager {
@@ -96,7 +96,7 @@ export class RouteDataGostBeratung extends RouteData<RouteStateDataGostBeratung>
 		if (abiturdatenManager.pruefeBelegungExistiert(abiturdatenManager.getFachbelegungen(), GostHalbjahr.EF2, GostHalbjahr.Q11, GostHalbjahr.Q12, GostHalbjahr.Q21, GostHalbjahr.Q22))
 			return abiturdatenManager;
 		return new AbiturdatenManager(api.mode, abiturdaten, this._state.value.gostJahrgangsdaten, this._state.value.faecherManager, GostBelegpruefungsArt.EF1);
-	}
+	};
 
 	setGostBelegpruefungErgebnis = async () => {
 		const abiturdatenManager = await this.createAbiturdatenmanager();
@@ -104,16 +104,16 @@ export class RouteDataGostBeratung extends RouteData<RouteStateDataGostBeratung>
 			return;
 		const gostBelegpruefungErgebnis = abiturdatenManager.getBelegpruefungErgebnis();
 		this.setPatchedState({ abiturdatenManager, gostBelegpruefungErgebnis });
-	}
+	};
 
 	setWahl = async (fachID: number, wahl: GostSchuelerFachwahl) => {
 		await api.server.patchGostAbiturjahrgangFachwahl(wahl, api.schema, this.auswahl, fachID);
 		const abiturdaten = await api.server.getGostAbiturjahrgangLaufbahnplanung(api.schema, this.auswahl);
 		this._state.value.abiturdaten = abiturdaten;
 		await this.setGostBelegpruefungErgebnis();
-	}
+	};
 
-	get gostBelegpruefungsArt(): 'ef1'|'gesamt'|'auto' {
+	get gostBelegpruefungsArt(): 'ef1' | 'gesamt' | 'auto' {
 		const s = api.config.getValue("app.gost.belegpruefungsart");
 		if (s === 'ef1' || s === 'gesamt' || s === 'auto')
 			return s;
@@ -121,12 +121,12 @@ export class RouteDataGostBeratung extends RouteData<RouteStateDataGostBeratung>
 		throw new DeveloperNotificationException("Es wurde eine fehlerhafte Belegpruefungsart als Standardauswahl hinterlegt");
 	}
 
-	setGostBelegpruefungsArt = async (gostBelegpruefungsArt: 'ef1'|'gesamt'|'auto') => {
+	setGostBelegpruefungsArt = async (gostBelegpruefungsArt: 'ef1' | 'gesamt' | 'auto') => {
 		await api.config.setValue("app.gost.belegpruefungsart", gostBelegpruefungsArt);
 		await this.setGostBelegpruefungErgebnis();
-	}
+	};
 
-	public async ladeDaten(auswahl: number, isEntering : boolean) {
+	public async ladeDaten(auswahl: number, isEntering: boolean) {
 		if ((auswahl === this._state.value.auswahl) && !isEntering)
 			return;
 		else {
@@ -144,9 +144,9 @@ export class RouteDataGostBeratung extends RouteData<RouteStateDataGostBeratung>
 				const mapLehrer = new Map<number, LehrerListeEintrag>();
 				for (const l of listLehrer)
 					mapLehrer.set(l.id, l);
-				this.setPatchedState({ auswahl, abiturdaten, gostJahrgang, gostJahrgangsdaten, faecherManager, mapLehrer })
+				this.setPatchedState({ auswahl, abiturdaten, gostJahrgang, gostJahrgangsdaten, faecherManager, mapLehrer });
 				await this.setGostBelegpruefungErgebnis();
-			} catch(error) {
+			} catch (error) {
 				throw new DeveloperNotificationException("Die Laufbahndaten konnten nicht eingeholt werden, sind für diesen Abiturjahrgang Laufbahndaten möglich?");
 			}
 		}
@@ -157,15 +157,15 @@ export class RouteDataGostBeratung extends RouteData<RouteStateDataGostBeratung>
 		const abiturdaten = await api.server.getGostAbiturjahrgangLaufbahnplanung(api.schema, this.auswahl);
 		this._state.value.abiturdaten = abiturdaten;
 		await this.setGostBelegpruefungErgebnis();
-	}
+	};
 
 	addBeratungslehrer = async (id: number) => {
 		api.status.start();
 		const lehrer = await api.server.addGostAbiturjahrgangBeratungslehrer(id, api.schema, this.gostJahrgangsdaten.abiturjahr);
 		this._state.value.gostJahrgangsdaten.beratungslehrer.add(lehrer);
-		this.setPatchedState({gostJahrgangsdaten: this._state.value.gostJahrgangsdaten});
+		this.setPatchedState({ gostJahrgangsdaten: this._state.value.gostJahrgangsdaten });
 		api.status.stop();
-	}
+	};
 
 	removeBeratungslehrer = async (eintraege: GostBeratungslehrer[]) => {
 		api.status.start();
@@ -177,9 +177,9 @@ export class RouteDataGostBeratung extends RouteData<RouteStateDataGostBeratung>
 					this.gostJahrgangsdaten.beratungslehrer.removeElementAt(i);
 			}
 		}
-		this.setPatchedState({gostJahrgangsdaten: this._state.value.gostJahrgangsdaten});
+		this.setPatchedState({ gostJahrgangsdaten: this._state.value.gostJahrgangsdaten });
 		api.status.stop();
-	}
+	};
 
 	gotoKursblockung = (halbjahr: GostHalbjahr) => RouteManager.doRoute(routeGostKursplanung.getRouteHalbjahr(this.auswahl, halbjahr.id));
 

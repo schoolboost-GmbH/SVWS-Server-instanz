@@ -36,7 +36,7 @@ class WorkerKursblockung {
 	 *
 	 * @returns true, falls der Algorithmus initialisiert wurde, und ansonsten false
 	 */
-	public isInitialized() : boolean {
+	public isInitialized(): boolean {
 		return (this.algo !== null);
 	}
 
@@ -51,7 +51,7 @@ class WorkerKursblockung {
 		this.reader.mapCoreTypeNameJsonData = mapCoreTypeNameJsonData;
 		this.reader.readAll();
 		const faecherManager = new GostFaecherManager(blockungsdaten.abijahrgang - 1, faecher);
-		const datenmanager = new GostBlockungsdatenManager(blockungsdaten, faecherManager)
+		const datenmanager = new GostBlockungsdatenManager(blockungsdaten, faecherManager);
 		this.algo = new KursblockungAlgorithmusPermanent(datenmanager);
 	}
 
@@ -62,7 +62,7 @@ class WorkerKursblockung {
 	 *               gestellt bekommt, bevor eine Rückmeldung des Workers erfolgen soll
 	 * @returns true, falls neue Ergebenisse vorliegen, und ansonsten false.
 	 */
-	public next(val: number) : boolean {
+	public next(val: number): boolean {
 		if (this.algo === null)
 			return false;
 		return this.algo.next(val);
@@ -74,7 +74,7 @@ class WorkerKursblockung {
 	 *
 	 * @returns die aktuell besten Blockungsergebnisse
 	 */
-	public getBlockungsergebnisse() : List<GostBlockungsergebnis> {
+	public getBlockungsergebnisse(): List<GostBlockungsergebnis> {
 		const result = new ArrayList<GostBlockungsergebnis>();
 		if (this.algo === null)
 			return result;
@@ -89,13 +89,13 @@ class WorkerKursblockung {
 	 *
 	 * @param message   die Nachricht
 	 */
-	protected handleInit(message : WorkerKursblockungRequestInit) {
+	protected handleInit(message: WorkerKursblockungRequestInit) {
 		if (!this.isInitialized()) {
 			const faecherListe = new ArrayList<GostFach>();
 			for (const fach of message.faecher)
 				faecherListe.add(GostFach.transpilerFromJSON(fach));
 			const blockungsdaten = GostBlockungsdaten.transpilerFromJSON(message.blockungsdaten);
-			const mapCoreTypeNameJsonData = message.mapCoreTypeNameJsonData
+			const mapCoreTypeNameJsonData = message.mapCoreTypeNameJsonData;
 			this.init(faecherListe, blockungsdaten, mapCoreTypeNameJsonData);
 		}
 		postMessage(<WorkerKursblockungReplyInit>{ cmd: 'init', initialized: this.isInitialized() });
@@ -110,7 +110,7 @@ class WorkerKursblockung {
 	 */
 	protected handleNext(message: WorkerKursblockungRequestNext) {
 		const result = this.next(message.interval);
-		postMessage(<WorkerKursblockungReplyNext>{cmd: 'next', hasUpdate: result });
+		postMessage(<WorkerKursblockungReplyNext>{ cmd: 'next', hasUpdate: result });
 	}
 
 	/**
@@ -124,7 +124,7 @@ class WorkerKursblockung {
 		const result = new Array<string>();
 		for (const ergebnis of ergebnisse)
 			result.push(GostBlockungsergebnis.transpilerToJSON(ergebnis));
-		postMessage(<WorkerKursblockungReplyErgebnisse>{cmd: 'getErgebnisse', ergebnisse: result });
+		postMessage(<WorkerKursblockungReplyErgebnisse>{ cmd: 'getErgebnisse', ergebnisse: result });
 	}
 
 
@@ -133,7 +133,7 @@ class WorkerKursblockung {
 	 *
 	 * @param event   das eingehende Message-Event
 	 */
-	public messageHandler = (event: MessageEvent) : void => {
+	public messageHandler = (event: MessageEvent): void => {
 		const cmd: WorkerKursblockungMessageType = event.data.cmd;
 		try {
 			switch (cmd) {
@@ -142,9 +142,9 @@ class WorkerKursblockung {
 				case 'getErgebnisse': this.handleGetErgebnisse(event.data); return;
 			}
 		} catch (error) {
-			postMessage(<WorkerKursblockungErrorMessage>{cmd: 'Error', task: cmd, error});
+			postMessage(<WorkerKursblockungErrorMessage>{ cmd: 'Error', task: cmd, error });
 		}
-	}
+	};
 
 }
 

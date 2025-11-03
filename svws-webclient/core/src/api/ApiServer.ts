@@ -7171,6 +7171,36 @@ export class ApiServer extends BaseApi {
 
 
 	/**
+	 * Implementierung der DELETE-Methode deleteGostKlausurenVorgabenMultiple für den Zugriff auf die URL https://{hostname}/db/{schema}/gost/klausuren/vorgaben/delete/multiple
+	 *
+	 * Löscht eine Gost-Klausurvorgabe.Dabei wird geprüft, ob der SVWS-Benutzer die notwendige Berechtigung zum Löschen einer Gost-Klausurvorgabe besitzt.
+	 *
+	 * Mögliche HTTP-Antworten:
+	 *   Code 200: Die Einträge wurden erfolgreich gelöscht.
+	 *     - Mime-Type: application/json
+	 *     - Rückgabe-Typ: List<Long>
+	 *   Code 403: Der SVWS-Benutzer hat keine Rechte, um eine Gost-Klausurvorgabe zu löschen.
+	 *   Code 404: Die Gost-Klausurvorgabe wurde nicht gefunden.
+	 *   Code 500: Unspezifizierter Fehler (z.B. beim Datenbankzugriff)
+	 *
+	 * @param {List<number>} data - der Request-Body für die HTTP-Methode
+	 * @param {string} schema - der Pfad-Parameter schema
+	 *
+	 * @returns Die Einträge wurden erfolgreich gelöscht.
+	 */
+	public async deleteGostKlausurenVorgabenMultiple(data : List<number>, schema : string) : Promise<List<number>> {
+		const path = "/db/{schema}/gost/klausuren/vorgaben/delete/multiple"
+			.replace(/{schema\s*(:[^{}]+({[^{}]+})*)?}/g, schema);
+		const body : string = "[" + (data.toArray() as Array<number>).map(d => JSON.stringify(d)).join() + "]";
+		const result : string = await super.deleteJSON(path, body);
+		const obj = JSON.parse(result);
+		const ret = new ArrayList<number>();
+		obj.forEach((elem: any) => { const text : string = JSON.stringify(elem); ret.add(parseFloat(JSON.parse(text))); });
+		return ret;
+	}
+
+
+	/**
 	 * Implementierung der GET-Methode copyGostKlausurenVorgaben für den Zugriff auf die URL https://{hostname}/db/{schema}/gost/klausuren/vorgaben/vorlagen/copyto/abiturjahrgang/{abiturjahr : -?\d+}/halbjahr/{halbjahr : -?\d+}/quartal/{quartal : -?\d+}
 	 *
 	 * Kopiert die Klausurvorgabe-Vorlagen in einen konkreten Abiturjahrgang und gibt sie zurück.Dabei wird geprüft, ob der SVWS-Benutzer die notwendige Berechtigung zum Anlegen der Gost-Klausurvorgaben besitzt.

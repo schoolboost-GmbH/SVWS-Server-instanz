@@ -9,17 +9,17 @@ export abstract class KursblockungAlgorithmusK extends JavaObject {
 	/**
 	 * Ein {@link Random}-Objekt zur Steuerung des Zufalls über einen Anfangs-Seed.
 	 */
-	protected readonly _random : Random;
+	protected readonly _random: Random;
 
 	/**
 	 * Logger für Benutzerhinweise, Warnungen und Fehler.
 	 */
-	protected readonly logger : Logger;
+	protected readonly logger: Logger;
 
 	/**
 	 * Die aktuellen Blockungsdaten. Dieses Objekt dient zur Manipulation der Daten während des Blockungsvorganges.
 	 */
-	protected readonly dynDaten : KursblockungDynDaten;
+	protected readonly dynDaten: KursblockungDynDaten;
 
 
 	/**
@@ -30,7 +30,7 @@ export abstract class KursblockungAlgorithmusK extends JavaObject {
 	 * @param pLogger   Logger für Benutzerhinweise, Warnungen und Fehler.
 	 * @param pDynDaten Die aktuellen Blockungsdaten.
 	 */
-	protected constructor(pRandom : Random, pLogger : Logger, pDynDaten : KursblockungDynDaten) {
+	protected constructor(pRandom: Random, pLogger: Logger, pDynDaten: KursblockungDynDaten) {
 		super();
 		this._random = pRandom;
 		this.logger = pLogger;
@@ -43,13 +43,13 @@ export abstract class KursblockungAlgorithmusK extends JavaObject {
 	 *
 	 * @param pTimeEndMillis Die Endzeit (in Millisekunden).
 	 */
-	public abstract berechne(pTimeEndMillis : number) : void;
+	public abstract berechne(pTimeEndMillis: number): void;
 
 	transpilerCanonicalName(): string {
 		return 'de.svws_nrw.core.kursblockung.KursblockungAlgorithmusK';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.kursblockung.KursblockungAlgorithmusK'].includes(name);
 	}
 
@@ -57,6 +57,6 @@ export abstract class KursblockungAlgorithmusK extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_kursblockung_KursblockungAlgorithmusK(obj : unknown) : KursblockungAlgorithmusK {
+export function cast_de_svws_nrw_core_kursblockung_KursblockungAlgorithmusK(obj: unknown): KursblockungAlgorithmusK {
 	return obj as KursblockungAlgorithmusK;
 }

@@ -10,9 +10,9 @@ import type { JavaMap } from '../../../java/util/JavaMap';
 
 export class StundenplanblockungManagerRaumMenge extends JavaObject {
 
-	private readonly _menge : List<StundenplanblockungManagerRaum> = new ArrayList<StundenplanblockungManagerRaum>();
+	private readonly _menge: List<StundenplanblockungManagerRaum> = new ArrayList<StundenplanblockungManagerRaum>();
 
-	private readonly _map : JavaMap<number, StundenplanblockungManagerRaum> = new HashMap<number, StundenplanblockungManagerRaum>();
+	private readonly _map: JavaMap<number, StundenplanblockungManagerRaum> = new HashMap<number, StundenplanblockungManagerRaum>();
 
 
 	/**
@@ -31,10 +31,10 @@ export class StundenplanblockungManagerRaumMenge extends JavaObject {
 	 *
 	 * @throws NullPointerException  Falls die Raum-ID bereits existiert.
 	 */
-	public addOrException(pRaumID : number, pKuerzel : string) : void {
+	public addOrException(pRaumID: number, pKuerzel: string): void {
 		if (this._map.containsKey(pRaumID))
 			throw new NullPointerException("Die Raum-ID " + pRaumID + " existiert bereits!")
-		const ra : StundenplanblockungManagerRaum = new StundenplanblockungManagerRaum(pRaumID, pKuerzel);
+		const ra: StundenplanblockungManagerRaum = new StundenplanblockungManagerRaum(pRaumID, pKuerzel);
 		this._map.put(pRaumID, ra);
 		this._menge.add(ra);
 	}
@@ -47,8 +47,8 @@ export class StundenplanblockungManagerRaumMenge extends JavaObject {
 	 * @throws NullPointerException  Falls die Raum-ID unbekannt ist.
 	 * @return Das {@link StundenplanblockungManagerRaum}-Objekt zur übergebenen ID.
 	 */
-	public getOrException(pRaumID : number) : StundenplanblockungManagerRaum {
-		const ra : StundenplanblockungManagerRaum | null = this._map.get(pRaumID);
+	public getOrException(pRaumID: number): StundenplanblockungManagerRaum {
+		const ra: StundenplanblockungManagerRaum | null = this._map.get(pRaumID);
 		if (ra === null)
 			throw new NullPointerException("Raum-ID " + pRaumID + " unbekannt!")
 		return ra;
@@ -62,8 +62,8 @@ export class StundenplanblockungManagerRaumMenge extends JavaObject {
 	 *
 	 * @return         Liefert einen zufälligen Raum.
 	 */
-	public getRandomOrException(pRandom : Random) : StundenplanblockungManagerRaum {
-		const size : number = this._menge.size();
+	public getRandomOrException(pRandom: Random): StundenplanblockungManagerRaum {
+		const size: number = this._menge.size();
 		if (size <= 0)
 			throw new NullPointerException("Es gibt keine Räume!")
 		return this._menge.get(pRandom.nextInt(size));
@@ -77,8 +77,8 @@ export class StundenplanblockungManagerRaumMenge extends JavaObject {
 	 *
 	 * @throws NullPointerException  Falls die Raum-ID unbekannt ist.
 	 */
-	public removeOrException(pRaumID : number) : void {
-		const ra : StundenplanblockungManagerRaum = this.getOrException(pRaumID);
+	public removeOrException(pRaumID: number): void {
+		const ra: StundenplanblockungManagerRaum = this.getOrException(pRaumID);
 		this._map.remove(pRaumID);
 		this._menge.remove(ra);
 	}
@@ -88,7 +88,7 @@ export class StundenplanblockungManagerRaumMenge extends JavaObject {
 	 *
 	 * @return Die Menge aller Räume.
 	 */
-	public getMenge() : List<StundenplanblockungManagerRaum> | null {
+	public getMenge(): List<StundenplanblockungManagerRaum> | null {
 		return this._menge;
 	}
 
@@ -98,7 +98,7 @@ export class StundenplanblockungManagerRaumMenge extends JavaObject {
 	 * @param pRaumID Die Datenbank-ID des Raumes.
 	 * @return TRUE, falls die Raum-ID existiert.
 	 */
-	public exists(pRaumID : number) : boolean {
+	public exists(pRaumID: number): boolean {
 		return this._map.containsKey(pRaumID);
 	}
 
@@ -107,7 +107,7 @@ export class StundenplanblockungManagerRaumMenge extends JavaObject {
 	 *
 	 * @return Die Anzahl an Räume.
 	 */
-	public size() : number {
+	public size(): number {
 		return this._menge.size();
 	}
 
@@ -115,7 +115,7 @@ export class StundenplanblockungManagerRaumMenge extends JavaObject {
 		return 'de.svws_nrw.core.utils.stundenplanblockung.StundenplanblockungManagerRaumMenge';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.utils.stundenplanblockung.StundenplanblockungManagerRaumMenge'].includes(name);
 	}
 
@@ -123,6 +123,6 @@ export class StundenplanblockungManagerRaumMenge extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_utils_stundenplanblockung_StundenplanblockungManagerRaumMenge(obj : unknown) : StundenplanblockungManagerRaumMenge {
+export function cast_de_svws_nrw_core_utils_stundenplanblockung_StundenplanblockungManagerRaumMenge(obj: unknown): StundenplanblockungManagerRaumMenge {
 	return obj as StundenplanblockungManagerRaumMenge;
 }

@@ -19,15 +19,15 @@
 <script setup lang="ts">
 
 	import { computed } from "vue";
-	import type {BenutzergruppenManager, BenutzerKompetenz } from "@core";
+	import type { BenutzergruppenManager, BenutzerKompetenz } from "@core";
 
 	const props = defineProps<{
 		getBenutzergruppenManager: () => BenutzergruppenManager;
 		showInfo: boolean;
 		kompetenz: BenutzerKompetenz;
 		istAdmin: boolean;
-		addKompetenz : (kompetenz: BenutzerKompetenz) => Promise<boolean>;
-		removeKompetenz : (kompetenz: BenutzerKompetenz) => Promise<boolean>;
+		addKompetenz: (kompetenz: BenutzerKompetenz) => Promise<boolean>;
+		removeKompetenz: (kompetenz: BenutzerKompetenz) => Promise<boolean>;
 	}>();
 
 	const aktiviert = computed(() => props.istAdmin);

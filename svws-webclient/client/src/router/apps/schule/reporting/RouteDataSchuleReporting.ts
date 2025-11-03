@@ -14,6 +14,6 @@ export class RouteDataSchuleReporting extends RouteData<RouteStateInterface> {
 
 	createReport = async (param: ReportingParameter): Promise<ApiFile> => {
 		return await api.server.pdfReport(param, api.schema);
-	}
+	};
 
 }

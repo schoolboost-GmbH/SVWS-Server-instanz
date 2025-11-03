@@ -19,117 +19,117 @@ export class ENMDaten extends JavaObject {
 	/**
 	 * Die Revision des ENM-Datenformates, um zu überprüfen, ob die Datei in dem richtigen Format vorliegt (-1 für Entwickler-Revisionen und ansonsten aufsteigend ab 1
 	 */
-	public enmRevision : number = 1;
+	public enmRevision: number = 1;
 
 	/**
 	 * Die Schulnummer, für welche die ENM-Daten generiert wurden.
 	 */
-	public schulnummer : number = 0;
+	public schulnummer: number = 0;
 
 	/**
 	 * Das Schuljahr, für welches die ENM-Daten generiert wurden.
 	 */
-	public schuljahr : number = 0;
+	public schuljahr: number = 0;
 
 	/**
 	 * Die Anzahl der Abschnitte an der Schule (2: Halbjahrsmodus, 4: Quartalsmodus)
 	 */
-	public anzahlAbschnitte : number = 0;
+	public anzahlAbschnitte: number = 0;
 
 	/**
 	 * Gibt an, für welchen Abschnitt innerhalb des Schuljahres die ENM-Daten generiert wurden.
 	 */
-	public aktuellerAbschnitt : number = 0;
+	public aktuellerAbschnitt: number = 0;
 
 	/**
 	 * Gibt den öffentlichen Schlüssel an, welcher für die Verschlüsselung und den Rückversand der Datei genutzt werden soll.
 	 */
-	public publicKey : string | null = null;
+	public publicKey: string | null = null;
 
 	/**
 	 * Gibt die SVWS-ID des Lehrers an, für den die externe Notendatei generiert wurde. Ist die ID = NULL, enthält das Objekt alle Lehrerdaten.
 	 */
-	public lehrerID : number | null = null;
+	public lehrerID: number | null = null;
 
 	/**
 	 * Gibt an, ob die Fehlstunden-Eingabe durch das externe Notenmodul erlaubt ist oder nicht.
 	 */
-	public fehlstundenEingabe : boolean = false;
+	public fehlstundenEingabe: boolean = false;
 
 	/**
 	 * Gibt an, ob die Fehlstunden für die Sekundarstufe I fachbezogen eingetragen werden oder nicht.
 	 */
-	public fehlstundenSIFachbezogen : boolean = false;
+	public fehlstundenSIFachbezogen: boolean = false;
 
 	/**
 	 * Gibt an, ob die Fehlstunden für die Sekundarstufe II fachbezogen eingetragen werden oder nicht.
 	 */
-	public fehlstundenSIIFachbezogen : boolean = false;
+	public fehlstundenSIIFachbezogen: boolean = false;
 
 	/**
 	 * Gibt das Kürzel der Schulform der Schule an.
 	 */
-	public schulform : string | null = null;
+	public schulform: string | null = null;
 
 	/**
 	 * Gibt die Mailadresse an, an welche die verschlüsselte Datei zurückgesendet werden soll (z.B. mail@schule.nrw.de).
 	 */
-	public mailadresse : string | null = null;
+	public mailadresse: string | null = null;
 
 	/**
 	 * Der Katalog mit den gültigen Einträgen von Noten (als Übersicht für das ENM-Tool)
 	 */
-	public noten : List<ENMNote> = new ArrayList<ENMNote>();
+	public noten: List<ENMNote> = new ArrayList<ENMNote>();
 
 	/**
 	 * Der Katalog mit den gültigen Einträgen von Förderschwerpunkten (als Übersicht für das ENM-Tool)
 	 */
-	public foerderschwerpunkte : List<ENMFoerderschwerpunkt> = new ArrayList<ENMFoerderschwerpunkt>();
+	public foerderschwerpunkte: List<ENMFoerderschwerpunkt> = new ArrayList<ENMFoerderschwerpunkt>();
 
 	/**
 	 * Die Informationen zu den einzelnen Jahrgängen, die in der Notendatei enthalten sind.
 	 */
-	public jahrgaenge : List<ENMJahrgang> = new ArrayList<ENMJahrgang>();
+	public jahrgaenge: List<ENMJahrgang> = new ArrayList<ENMJahrgang>();
 
 	/**
 	 * Die Informationen zu den einzelnen Klassen, die in der Notendatei enthalten sind.
 	 */
-	public klassen : List<ENMKlasse> = new ArrayList<ENMKlasse>();
+	public klassen: List<ENMKlasse> = new ArrayList<ENMKlasse>();
 
 	/**
 	 * Die Informationen der vordefinierten Floskelgruppen und deren Floskeln.
 	 */
-	public floskelgruppen : List<ENMFloskelgruppe> = new ArrayList<ENMFloskelgruppe>();
+	public floskelgruppen: List<ENMFloskelgruppe> = new ArrayList<ENMFloskelgruppe>();
 
 	/**
 	 * Die Informationen zu Lehrern, die in der Notendatei vorhanden sind.
 	 */
-	public lehrer : List<ENMLehrer> = new ArrayList<ENMLehrer>();
+	public lehrer: List<ENMLehrer> = new ArrayList<ENMLehrer>();
 
 	/**
 	 * Die Informationen zu den Fächern, die in der Notendatei vorhanden sind.
 	 */
-	public faecher : List<ENMFach> = new ArrayList<ENMFach>();
+	public faecher: List<ENMFach> = new ArrayList<ENMFach>();
 
 	/**
 	 * Der Katalog der Ankreuzkompetenzen (Grundschulzeugnisse und Inklusionszeugnisse)
 	 */
-	public ankreuzkompetenzen : ENMAnkreuzkompetenzenKatalog = new ENMAnkreuzkompetenzenKatalog();
+	public ankreuzkompetenzen: ENMAnkreuzkompetenzenKatalog = new ENMAnkreuzkompetenzenKatalog();
 
 	/**
 	 * Die Informationen zu den Teilleistungsarten, die in der Notendatei vorhanden sind.
 	 */
-	public teilleistungsarten : List<ENMTeilleistungsart> = new ArrayList<ENMTeilleistungsart>();
+	public teilleistungsarten: List<ENMTeilleistungsart> = new ArrayList<ENMTeilleistungsart>();
 
 	/**
 	 * Die Informationen zu den Lerngruppen (Klassen und Kurse), die in der Notendatei vorhanden sind.
 	 */
-	public lerngruppen : List<ENMLerngruppe> = new ArrayList<ENMLerngruppe>();
+	public lerngruppen: List<ENMLerngruppe> = new ArrayList<ENMLerngruppe>();
 
 	/**
 	 * Die Informationen zu den Schülern, deren Noten in dieser Notendatei verwaltet werden.
 	 */
-	public schueler : List<ENMSchueler> = new ArrayList<ENMSchueler>();
+	public schueler: List<ENMSchueler> = new ArrayList<ENMSchueler>();
 
 
 	/**
@@ -143,13 +143,13 @@ export class ENMDaten extends JavaObject {
 		return 'de.svws_nrw.core.data.enm.ENMDaten';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.enm.ENMDaten'].includes(name);
 	}
 
 	public static class = new Class<ENMDaten>('de.svws_nrw.core.data.enm.ENMDaten');
 
-	public static transpilerFromJSON(json : string): ENMDaten {
+	public static transpilerFromJSON(json: string): ENMDaten {
 		const obj = JSON.parse(json) as Partial<ENMDaten>;
 		const result = new ENMDaten();
 		if (obj.enmRevision === undefined)
@@ -236,7 +236,7 @@ export class ENMDaten extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : ENMDaten) : string {
+	public static transpilerToJSON(obj: ENMDaten): string {
 		let result = '{';
 		result += '"enmRevision" : ' + obj.enmRevision.toString() + ',';
 		result += '"schulnummer" : ' + obj.schulnummer.toString() + ',';
@@ -336,7 +336,7 @@ export class ENMDaten extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<ENMDaten>) : string {
+	public static transpilerToJSONPatch(obj: Partial<ENMDaten>): string {
 		let result = '{';
 		if (obj.enmRevision !== undefined) {
 			result += '"enmRevision" : ' + obj.enmRevision.toString() + ',';
@@ -484,6 +484,6 @@ export class ENMDaten extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_enm_ENMDaten(obj : unknown) : ENMDaten {
+export function cast_de_svws_nrw_core_data_enm_ENMDaten(obj: unknown): ENMDaten {
 	return obj as ENMDaten;
 }

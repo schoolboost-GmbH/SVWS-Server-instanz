@@ -15,17 +15,17 @@ import de.svws_nrw.db.schema.SchemaTabelleSpalte;
 public class Tabelle_KlassenLehrer extends SchemaTabelle {
 
 	/** Die Definition der Tabellenspalte Klassen_ID */
-	public SchemaTabelleSpalte col_Klassen_ID = add("Klassen_ID", SchemaDatentypen.BIGINT, true)
+	public final SchemaTabelleSpalte col_Klassen_ID = add("Klassen_ID", SchemaDatentypen.BIGINT, true)
 			.setNotNull()
 			.setJavaComment("ID der Klasse");
 
 	/** Die Definition der Tabellenspalte Lehrer_ID */
-	public SchemaTabelleSpalte col_Lehrer_ID = add("Lehrer_ID", SchemaDatentypen.BIGINT, true)
+	public final SchemaTabelleSpalte col_Lehrer_ID = add("Lehrer_ID", SchemaDatentypen.BIGINT, true)
 			.setNotNull()
 			.setJavaComment("ID des Lehrers");
 
 	/** Die Definition der Tabellenspalte Reihenfolge */
-	public SchemaTabelleSpalte col_Reihenfolge = add("Reihenfolge", SchemaDatentypen.INT, false)
+	public final SchemaTabelleSpalte col_Reihenfolge = add("Reihenfolge", SchemaDatentypen.INT, false)
 			.setDefault("1")
 			.setNotNull()
 			.setJavaComment("Die Reihenfolge, in welcher die Klassenlehrer in der Klassen angegeben werden. Kann zur Unterscheidung zwischen Klassenlehrern (1)"
@@ -33,7 +33,7 @@ public class Tabelle_KlassenLehrer extends SchemaTabelle {
 
 
 	/** Die Definition des Fremdschlüssels Klassenlehrer_Klasse_FK */
-	public SchemaTabelleFremdschluessel fk_Klassenlehrer_Klasse_FK = addForeignKey(
+	public final SchemaTabelleFremdschluessel fk_Klassenlehrer_Klasse_FK = addForeignKey(
 			"Klassenlehrer_Klasse_FK",
 			/* OnUpdate: */ SchemaFremdschluesselAktionen.CASCADE,
 			/* OnDelete: */ SchemaFremdschluesselAktionen.CASCADE,
@@ -41,7 +41,7 @@ public class Tabelle_KlassenLehrer extends SchemaTabelle {
 	).setRevision(SchemaRevisionen.REV_2);
 
 	/** Die Definition des Fremdschlüssels Klassenlehrer_Lehrer_FK */
-	public SchemaTabelleFremdschluessel fk_Klassenlehrer_Lehrer_FK = addForeignKey(
+	public final SchemaTabelleFremdschluessel fk_Klassenlehrer_Lehrer_FK = addForeignKey(
 			"Klassenlehrer_Lehrer_FK",
 			/* OnUpdate: */ SchemaFremdschluesselAktionen.CASCADE,
 			/* OnDelete: */ SchemaFremdschluesselAktionen.CASCADE,

@@ -10,32 +10,32 @@ export class LehrerLehramtEintrag extends JavaObject {
 	/**
 	 * Die ID des Lehramt-Eintrags.
 	 */
-	public id : number = 0;
+	public id: number = 0;
 
 	/**
 	 * Die ID des Lehrers.
 	 */
-	public idLehrer : number = 0;
+	public idLehrer: number = 0;
 
 	/**
 	 * Die Katalog-ID des Lehramtes.
 	 */
-	public idKatalogLehramt : number = 0;
+	public idKatalogLehramt: number = 0;
 
 	/**
 	 * Die ID des Anerkennungsgrund für das Lehramt.
 	 */
-	public idAnerkennungsgrund : number | null = null;
+	public idAnerkennungsgrund: number | null = null;
 
 	/**
 	 * Die Fachrichtungen des Lehrers für diesen Lehramteintrag.
 	 */
-	public readonly fachrichtungen : List<LehrerFachrichtungEintrag> = new ArrayList<LehrerFachrichtungEintrag>();
+	public readonly fachrichtungen: List<LehrerFachrichtungEintrag> = new ArrayList<LehrerFachrichtungEintrag>();
 
 	/**
 	 * Die Lehrbefähigungen des Lehrers für diesen Lehramteintrag.
 	 */
-	public readonly lehrbefaehigungen : List<LehrerLehrbefaehigungEintrag> = new ArrayList<LehrerLehrbefaehigungEintrag>();
+	public readonly lehrbefaehigungen: List<LehrerLehrbefaehigungEintrag> = new ArrayList<LehrerLehrbefaehigungEintrag>();
 
 
 	/**
@@ -49,13 +49,13 @@ export class LehrerLehramtEintrag extends JavaObject {
 		return 'de.svws_nrw.asd.data.lehrer.LehrerLehramtEintrag';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.asd.data.lehrer.LehrerLehramtEintrag'].includes(name);
 	}
 
 	public static class = new Class<LehrerLehramtEintrag>('de.svws_nrw.asd.data.lehrer.LehrerLehramtEintrag');
 
-	public static transpilerFromJSON(json : string): LehrerLehramtEintrag {
+	public static transpilerFromJSON(json: string): LehrerLehramtEintrag {
 		const obj = JSON.parse(json) as Partial<LehrerLehramtEintrag>;
 		const result = new LehrerLehramtEintrag();
 		if (obj.id === undefined)
@@ -81,7 +81,7 @@ export class LehrerLehramtEintrag extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : LehrerLehramtEintrag) : string {
+	public static transpilerToJSON(obj: LehrerLehramtEintrag): string {
 		let result = '{';
 		result += '"id" : ' + obj.id.toString() + ',';
 		result += '"idLehrer" : ' + obj.idLehrer.toString() + ',';
@@ -108,7 +108,7 @@ export class LehrerLehramtEintrag extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<LehrerLehramtEintrag>) : string {
+	public static transpilerToJSONPatch(obj: Partial<LehrerLehramtEintrag>): string {
 		let result = '{';
 		if (obj.id !== undefined) {
 			result += '"id" : ' + obj.id.toString() + ',';
@@ -149,6 +149,6 @@ export class LehrerLehramtEintrag extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_asd_data_lehrer_LehrerLehramtEintrag(obj : unknown) : LehrerLehramtEintrag {
+export function cast_de_svws_nrw_asd_data_lehrer_LehrerLehramtEintrag(obj: unknown): LehrerLehramtEintrag {
 	return obj as LehrerLehramtEintrag;
 }

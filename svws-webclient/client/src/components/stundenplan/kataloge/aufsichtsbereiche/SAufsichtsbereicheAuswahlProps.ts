@@ -10,4 +10,5 @@ export interface AufsichtsbereicheAuswahlProps {
 	gotoEintrag: (eintrag: Aufsichtsbereich) => Promise<RoutingStatus>;
 	schuljahresabschnittsauswahl: () => AbschnittAuswahlDaten;
 	stundenplanManager: () => StundenplanManager;
+	setKatalogAufsichtsbereicheImportJSON: (formData: FormData) => Promise<void>;
 }

@@ -1,6 +1,6 @@
 import { RouteData, type RouteStateInterface } from "~/router/RouteData";
 
-import type { List, SchuelerListeEintrag , Lernplattform, SchuelerLernplattform } from "@core";
+import type { List, SchuelerListeEintrag, Lernplattform, SchuelerLernplattform } from "@core";
 import { ArrayList, DeveloperNotificationException } from "@core";
 import { api } from "~/router/Api";
 
@@ -37,7 +37,7 @@ export class RouteDataSchuelerLernplattformen extends RouteData<RouteStateSchuel
 		return this._state.value.mapLernplattformen;
 	}
 
-	patch = async (data : Partial<SchuelerLernplattform> | undefined, idLernplattform: number) => {
+	patch = async (data: Partial<SchuelerLernplattform> | undefined, idLernplattform: number) => {
 		if (data === undefined)
 			throw new DeveloperNotificationException("Beim Aufruf der Patch-Methode sind keine gültigen Daten geladen.");
 		api.status.start();
@@ -49,7 +49,7 @@ export class RouteDataSchuelerLernplattformen extends RouteData<RouteStateSchuel
 				Object.assign(lernplattform, data);
 		this.commit();
 		api.status.stop();
-	}
+	};
 
 	public async ladeDaten(auswahl: SchuelerListeEintrag | null | undefined) {
 		if ((auswahl === null) || (auswahl === undefined)) {

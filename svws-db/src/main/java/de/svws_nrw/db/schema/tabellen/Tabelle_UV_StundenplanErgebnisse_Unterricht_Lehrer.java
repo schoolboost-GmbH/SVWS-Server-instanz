@@ -15,37 +15,37 @@ import de.svws_nrw.db.schema.SchemaTabelleSpalte;
 public class Tabelle_UV_StundenplanErgebnisse_Unterricht_Lehrer extends SchemaTabelle {
 
 	/** Die Definition der Tabellenspalte Ergebnis_ID */
-	public SchemaTabelleSpalte col_Ergebnis_ID = add("Ergebnis_ID", SchemaDatentypen.BIGINT, true)
+	public final SchemaTabelleSpalte col_Ergebnis_ID = add("Ergebnis_ID", SchemaDatentypen.BIGINT, true)
 			.setNotNull()
 			.setJavaComment("Fremdschlüssel auf das Stundenplanergebnis");
 
 	/** Die Definition der Tabellenspalte Unterricht_ID */
-	public SchemaTabelleSpalte col_Unterricht_ID = add("Unterricht_ID", SchemaDatentypen.BIGINT, true)
+	public final SchemaTabelleSpalte col_Unterricht_ID = add("Unterricht_ID", SchemaDatentypen.BIGINT, true)
 			.setNotNull()
 			.setJavaComment("Fremdschlüssel auf den UV_Unterricht");
 
 	/** Die Definition der Tabellenspalte Lehrer_ID */
-	public SchemaTabelleSpalte col_Lehrer_ID = add("Lehrer_ID", SchemaDatentypen.BIGINT, true)
+	public final SchemaTabelleSpalte col_Lehrer_ID = add("Lehrer_ID", SchemaDatentypen.BIGINT, true)
 			.setNotNull()
 			.setJavaComment("Fremdschlüssel auf den UV_Lerngruppen_Lehrer");
 
 
 	/** Die Definition des Fremdschlüssels UVStundenplanErgUntLehrer_UVStundenplanErg_FK */
-	public SchemaTabelleFremdschluessel fk_UVStundenplanErgUntLehrer_UVStundenplanErg_FK = addForeignKey(
+	public final SchemaTabelleFremdschluessel fk_UVStundenplanErgUntLehrer_UVStundenplanErg_FK = addForeignKey(
 			"UVStundenplanErgeUntLehrer_UVStundenplanErg_FK",
 			/* OnUpdate: */ SchemaFremdschluesselAktionen.CASCADE,
 			/* OnDelete: */ SchemaFremdschluesselAktionen.CASCADE,
 			new Pair<>(col_Ergebnis_ID, Schema.tab_UV_StundenplanErgebnisse.col_ID));
 
 	/** Die Definition des Fremdschlüssels UVStundenplanErgUntLehrer_UVUnt_FK */
-	public SchemaTabelleFremdschluessel fk_UVStundenplanErgUntLehrer_UVUnt_FK = addForeignKey(
+	public final SchemaTabelleFremdschluessel fk_UVStundenplanErgUntLehrer_UVUnt_FK = addForeignKey(
 			"UVStundenplanErgUntLehrer_UVUnt_FK",
 			/* OnUpdate: */ SchemaFremdschluesselAktionen.CASCADE,
 			/* OnDelete: */ SchemaFremdschluesselAktionen.CASCADE,
 			new Pair<>(col_Unterricht_ID, Schema.tab_UV_Unterrichte.col_ID));
 
 	/** Die Definition des Fremdschlüssels UVStundenplanErgUntLehrer_UVLerngrLehrer_FK */
-	public SchemaTabelleFremdschluessel fk_UVStundenplanErgUntLehrer_UVLerngrLehrer_FK = addForeignKey(
+	public final SchemaTabelleFremdschluessel fk_UVStundenplanErgUntLehrer_UVLerngrLehrer_FK = addForeignKey(
 			"UVStundenplanErgUntLehrer_UVLerngrLehrer_FK",
 			/* OnUpdate: */ SchemaFremdschluesselAktionen.CASCADE,
 			/* OnDelete: */ SchemaFremdschluesselAktionen.CASCADE,

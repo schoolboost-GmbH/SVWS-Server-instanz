@@ -7,22 +7,22 @@ export class ReportingEMailDaten extends JavaObject {
 	/**
 	 * Steuert, an wen versendet wird. Die Werte sind gemäß {@link ReportingEMailEmpfaengerTyp} zu wählen.
 	 */
-	public empfaengerTyp : number = ReportingEMailEmpfaengerTyp.UNDEFINED.getId();
+	public empfaengerTyp: number = ReportingEMailEmpfaengerTyp.UNDEFINED.getId();
 
 	/**
 	 * Gibt an, ob bei fehlender oder fehlerhafter schulischer E-Mail-Adresse die private E-Mail-Adresse genutzt werden soll.
 	 */
-	public istPrivateEmailAlternative : boolean = false;
+	public istPrivateEmailAlternative: boolean = false;
 
 	/**
 	 * Der Betreff der E-Mail.
 	 */
-	public betreff : string = "";
+	public betreff: string = "";
 
 	/**
 	 * Der Text der E-Mail.
 	 */
-	public text : string = "";
+	public text: string = "";
 
 
 	/**
@@ -38,13 +38,13 @@ export class ReportingEMailDaten extends JavaObject {
 		return 'de.svws_nrw.core.data.reporting.ReportingEMailDaten';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.reporting.ReportingEMailDaten'].includes(name);
 	}
 
 	public static class = new Class<ReportingEMailDaten>('de.svws_nrw.core.data.reporting.ReportingEMailDaten');
 
-	public static transpilerFromJSON(json : string): ReportingEMailDaten {
+	public static transpilerFromJSON(json: string): ReportingEMailDaten {
 		const obj = JSON.parse(json) as Partial<ReportingEMailDaten>;
 		const result = new ReportingEMailDaten();
 		if (obj.empfaengerTyp === undefined)
@@ -62,7 +62,7 @@ export class ReportingEMailDaten extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : ReportingEMailDaten) : string {
+	public static transpilerToJSON(obj: ReportingEMailDaten): string {
 		let result = '{';
 		result += '"empfaengerTyp" : ' + obj.empfaengerTyp.toString() + ',';
 		result += '"istPrivateEmailAlternative" : ' + obj.istPrivateEmailAlternative.toString() + ',';
@@ -73,7 +73,7 @@ export class ReportingEMailDaten extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<ReportingEMailDaten>) : string {
+	public static transpilerToJSONPatch(obj: Partial<ReportingEMailDaten>): string {
 		let result = '{';
 		if (obj.empfaengerTyp !== undefined) {
 			result += '"empfaengerTyp" : ' + obj.empfaengerTyp.toString() + ',';
@@ -94,6 +94,6 @@ export class ReportingEMailDaten extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_reporting_ReportingEMailDaten(obj : unknown) : ReportingEMailDaten {
+export function cast_de_svws_nrw_core_data_reporting_ReportingEMailDaten(obj: unknown): ReportingEMailDaten {
 	return obj as ReportingEMailDaten;
 }

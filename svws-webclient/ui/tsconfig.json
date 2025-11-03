@@ -1,14 +1,14 @@
 {
 	"extends": "../../tsconfig.base.json",
 	"compilerOptions": {
-		"resolveJsonModule": true,
-		"checkJs": true,
+		"outDir": "./dist",
+		"baseUrl": ".",
 		"paths": {
 			"@json/*": ["../../svws-asd/src/main/resources/de/svws_nrw/asd/types/*"],
 		},
-		"outDir": "./dist",
-		"baseUrl": ".",
 		"types": [ "vite/client" ],
+		"resolveJsonModule": true,
+		"checkJs": true,
 	},
 	"include": [
 		"env.d.ts",

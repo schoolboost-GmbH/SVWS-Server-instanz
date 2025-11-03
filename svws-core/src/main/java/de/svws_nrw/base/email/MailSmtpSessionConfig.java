@@ -8,7 +8,10 @@ import jakarta.validation.constraints.NotNull;
 public class MailSmtpSessionConfig {
 
 	// Gibt an, ob Start-TLS verwendet werden soll oder nicht
-	private boolean _starttls = true;
+	private boolean _starttls = false;
+
+	// Gibt an, on TLS verwendet werden soll oder nicht
+	private boolean _tls = false;
 
 	// Die IP-Addresse oder der DNS-Name des SMTP-Hosts
 	private final @NotNull String _host;
@@ -35,6 +38,24 @@ public class MailSmtpSessionConfig {
 		this._host = host;
 		this._username = username;
 		this._password = password;
+	}
+
+	/**
+	 * Gibt zurück, ob TLS verwendet wird.
+	 *
+	 * @return true, falls TLS verwendet wird
+	 */
+	public boolean isTLS() {
+		return _tls;
+	}
+
+	/**
+	 * Setzt in der Konfiguration, ob TLS verwendet werden soll.
+	 *
+	 * @param tls   true, falls TLS verwendet werden soll und ansonsten false
+	 */
+	public void setTLS(final boolean tls) {
+		this._tls = tls;
 	}
 
 	/**

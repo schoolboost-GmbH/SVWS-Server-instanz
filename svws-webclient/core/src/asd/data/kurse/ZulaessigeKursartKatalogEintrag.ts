@@ -7,27 +7,27 @@ export class ZulaessigeKursartKatalogEintrag extends CoreTypeDataNurSchulformenU
 	/**
 	 * Die Nummer der Kursart entsprechend der Vorgaben der amtlichen Schulstatistik
 	 */
-	public nummer : string = "";
+	public nummer: string = "";
 
 	/**
 	 * Ergänzende Bemerkungen zu der Kursart
 	 */
-	public bemerkungen : string | null = null;
+	public bemerkungen: string | null = null;
 
 	/**
 	 * Das Kürzel einer verallgemeinerten Kursart, sofern diese angegeben ist
 	 */
-	public kuerzelAllg : string | null = null;
+	public kuerzelAllg: string | null = null;
 
 	/**
 	 * Die Bezeichnung der verallgemeinerter Kursart, sofern diese angegeben ist
 	 */
-	public bezeichnungAllg : string | null = null;
+	public bezeichnungAllg: string | null = null;
 
 	/**
 	 * Gibt an, ob die Kursart in der Gymnasialen Oberstufe zulässig ist
 	 */
-	public erlaubtGOSt : boolean = false;
+	public erlaubtGOSt: boolean = false;
 
 
 	/**
@@ -41,13 +41,13 @@ export class ZulaessigeKursartKatalogEintrag extends CoreTypeDataNurSchulformenU
 		return 'de.svws_nrw.asd.data.kurse.ZulaessigeKursartKatalogEintrag';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.asd.data.CoreTypeDataNurSchulformenUndSchulgliederungen', 'de.svws_nrw.asd.data.CoreTypeData', 'de.svws_nrw.asd.data.kurse.ZulaessigeKursartKatalogEintrag'].includes(name);
 	}
 
 	public static class = new Class<ZulaessigeKursartKatalogEintrag>('de.svws_nrw.asd.data.kurse.ZulaessigeKursartKatalogEintrag');
 
-	public static transpilerFromJSON(json : string): ZulaessigeKursartKatalogEintrag {
+	public static transpilerFromJSON(json: string): ZulaessigeKursartKatalogEintrag {
 		const obj = JSON.parse(json) as Partial<ZulaessigeKursartKatalogEintrag>;
 		const result = new ZulaessigeKursartKatalogEintrag();
 		if (obj.zulaessig !== undefined) {
@@ -81,7 +81,7 @@ export class ZulaessigeKursartKatalogEintrag extends CoreTypeDataNurSchulformenU
 		return result;
 	}
 
-	public static transpilerToJSON(obj : ZulaessigeKursartKatalogEintrag) : string {
+	public static transpilerToJSON(obj: ZulaessigeKursartKatalogEintrag): string {
 		let result = '{';
 		result += '"zulaessig" : [ ';
 		for (let i = 0; i < obj.zulaessig.size(); i++) {
@@ -107,7 +107,7 @@ export class ZulaessigeKursartKatalogEintrag extends CoreTypeDataNurSchulformenU
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<ZulaessigeKursartKatalogEintrag>) : string {
+	public static transpilerToJSONPatch(obj: Partial<ZulaessigeKursartKatalogEintrag>): string {
 		let result = '{';
 		if (obj.zulaessig !== undefined) {
 			result += '"zulaessig" : [ ';
@@ -159,6 +159,6 @@ export class ZulaessigeKursartKatalogEintrag extends CoreTypeDataNurSchulformenU
 
 }
 
-export function cast_de_svws_nrw_asd_data_kurse_ZulaessigeKursartKatalogEintrag(obj : unknown) : ZulaessigeKursartKatalogEintrag {
+export function cast_de_svws_nrw_asd_data_kurse_ZulaessigeKursartKatalogEintrag(obj: unknown): ZulaessigeKursartKatalogEintrag {
 	return obj as ZulaessigeKursartKatalogEintrag;
 }

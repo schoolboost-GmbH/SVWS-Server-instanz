@@ -10,17 +10,17 @@ export class Sprachendaten extends JavaObject {
 	/**
 	 * Die ID des Schülers, dessen Sprachenfolge in diesem Objekt gespeichert ist.
 	 */
-	public schuelerID : number = 0;
+	public schuelerID: number = 0;
 
 	/**
 	 * Die Liste der Sprachbelegungen.
 	 */
-	public belegungen : List<Sprachbelegung> = new ArrayList<Sprachbelegung>();
+	public belegungen: List<Sprachbelegung> = new ArrayList<Sprachbelegung>();
 
 	/**
 	 * Die Liste der Sprachpruefungen.
 	 */
-	public pruefungen : List<Sprachpruefung> = new ArrayList<Sprachpruefung>();
+	public pruefungen: List<Sprachpruefung> = new ArrayList<Sprachpruefung>();
 
 
 	/**
@@ -34,13 +34,13 @@ export class Sprachendaten extends JavaObject {
 		return 'de.svws_nrw.asd.data.schueler.Sprachendaten';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.asd.data.schueler.Sprachendaten'].includes(name);
 	}
 
 	public static class = new Class<Sprachendaten>('de.svws_nrw.asd.data.schueler.Sprachendaten');
 
-	public static transpilerFromJSON(json : string): Sprachendaten {
+	public static transpilerFromJSON(json: string): Sprachendaten {
 		const obj = JSON.parse(json) as Partial<Sprachendaten>;
 		const result = new Sprachendaten();
 		if (obj.schuelerID === undefined)
@@ -59,7 +59,7 @@ export class Sprachendaten extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : Sprachendaten) : string {
+	public static transpilerToJSON(obj: Sprachendaten): string {
 		let result = '{';
 		result += '"schuelerID" : ' + obj.schuelerID.toString() + ',';
 		result += '"belegungen" : [ ';
@@ -83,7 +83,7 @@ export class Sprachendaten extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<Sprachendaten>) : string {
+	public static transpilerToJSONPatch(obj: Partial<Sprachendaten>): string {
 		let result = '{';
 		if (obj.schuelerID !== undefined) {
 			result += '"schuelerID" : ' + obj.schuelerID.toString() + ',';
@@ -115,6 +115,6 @@ export class Sprachendaten extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_asd_data_schueler_Sprachendaten(obj : unknown) : Sprachendaten {
+export function cast_de_svws_nrw_asd_data_schueler_Sprachendaten(obj: unknown): Sprachendaten {
 	return obj as Sprachendaten;
 }

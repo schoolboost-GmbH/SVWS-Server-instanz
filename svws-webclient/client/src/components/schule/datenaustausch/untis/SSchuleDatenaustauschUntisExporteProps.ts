@@ -10,6 +10,6 @@ export interface SchuleDatenaustauschUntisExporteProps {
 	exportUntisFachwahlenGPU015: (sidvariante: number, gpu002: string) => Promise<string[]>;
 	exportUntisKlausurenGPU017: (sidvariante: number, gpu002: string) => Promise<string[]>;
 	exportUntisSchienenGPU019: (gpu002: string) => Promise<string[]>;
-	ladeBlockungslisten: (abijahrgaenge : number[]) => Promise<Array<List<GostBlockungListeneintrag>>>;
+	ladeBlockungslisten: (abijahrgaenge: number[]) => Promise<Array<List<GostBlockungListeneintrag>>>;
 	exportUntisBlockung: (sidvariante: number, gpu002: string, blockungsergebnisse: number[]) => Promise<string[]>;
 }

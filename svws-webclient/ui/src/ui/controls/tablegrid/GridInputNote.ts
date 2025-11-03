@@ -11,7 +11,7 @@ import type { Collection } from "../../../../../core/src/java/util/Collection";
 export class GridInputNote<KEY> extends GridInputInnerText<KEY, string | null> {
 
 	// Der Setter zum Schreiben der Daten
-	protected _setter : (value: string | null) => void;
+	protected _setter: (value: string | null) => void;
 
 	// Der zwischengespeicherte Wert des Input-Elements als String
 	protected _noteTemp = shallowRef<string>("");
@@ -49,11 +49,11 @@ export class GridInputNote<KEY> extends GridInputInnerText<KEY, string | null> {
 		super.updateText(null);
 	}
 
-	private getNoteFromKuerzel(value: string | null) : Note {
+	private getNoteFromKuerzel(value: string | null): Note {
 		return Note.fromKuerzel(value);
 	}
 
-	private getNotenKuerzelFromNote(value: Note) : string | null {
+	private getNotenKuerzelFromNote(value: Note): string | null {
 		const eintrag = value.daten(this._schuljahr);
 		return (eintrag === null) ? null : eintrag.kuerzel;
 	}
@@ -74,7 +74,7 @@ export class GridInputNote<KEY> extends GridInputInnerText<KEY, string | null> {
 	/**
 	 * Schreibt die internen Daten dieses Inputs mithilfe des Setters.
 	 */
-	public commit() : void {
+	public commit(): void {
 		if (this._note.value === Note.KEINE) {
 			super.updateText("");
 			this._setter(null);
@@ -90,7 +90,7 @@ export class GridInputNote<KEY> extends GridInputInnerText<KEY, string | null> {
 	 *
 	 * @returns true, falls das Anhängen des Zeichens zulässig war und sonst false
 	 */
-	public append(ziffer : string): boolean {
+	public append(ziffer: string): boolean {
 		const len = this._noteTemp.value.length;
 		const tmp = this._noteTemp.value + ziffer;
 		const note = Note.fromKuerzel(tmp);
@@ -122,7 +122,7 @@ export class GridInputNote<KEY> extends GridInputInnerText<KEY, string | null> {
 	 *
 	 * @returns true   es hat aufgrund des Tastaturereignisses eine Änderung am Zustand des Inputs stattgefunden
 	 */
-	public onKeyDown(event : KeyboardEvent) : boolean {
+	public onKeyDown(event: KeyboardEvent): boolean {
 		if (super.onKeyDownNavigation(event))
 			return false;
 		// Lösche ggf. den aktuellen Wert

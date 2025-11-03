@@ -12,88 +12,88 @@ export class GostLaufbahnplanungDaten extends JavaObject {
 	/**
 	 * Die Revision des LP-Datenformates, um zu überprüfen, ob die Datei in dem richtigen Format vorliegt (-1 für Entwickler-Revisionen und ansonsten aufsteigend ab 1)
 	 */
-	public lpRevision : number = 1;
+	public lpRevision: number = 1;
 
 	/**
 	 * Die Schulnummer der Schule, welcher die Laufbahndaten zugeordnet sind.
 	 */
-	public schulNr : number = 0;
+	public schulNr: number = 0;
 
 	/**
 	 * Der erste Teil (von dreien) der Bezeichnung der Schule
 	 */
-	public schulBezeichnung1 : string = "";
+	public schulBezeichnung1: string = "";
 
 	/**
 	 * Der zweite Teil (von dreien) der Bezeichnung der Schule
 	 */
-	public schulBezeichnung2 : string = "";
+	public schulBezeichnung2: string = "";
 
 	/**
 	 * Der dritte Teil (von dreien) der Bezeichnung der Schule
 	 */
-	public schulBezeichnung3 : string = "";
+	public schulBezeichnung3: string = "";
 
 	/**
 	 * Anmerkungen zu diesen Daten
 	 */
-	public anmerkungen : string = "";
+	public anmerkungen: string = "";
 
 	/**
 	 * Das Kalenderjahr, in dem der Schüler sein Abitur ablegt bzw. ablegen wird.
 	 */
-	public abiturjahr : number = -1;
+	public abiturjahr: number = -1;
 
 	/**
 	 * Die aktuelle Jahrgangsstufe, welche dem Abiturjahrgang zugeordnet ist.
 	 */
-	public jahrgang : string | null = null;
+	public jahrgang: string | null = null;
 
 	/**
 	 * Der derzeitige Beratungstext, welcher auf einem Ausdruck eines Schülerlaufbahnbogens für die
 	 *  gymnasiale Oberstufe gedruckt wird.
 	 */
-	public textBeratungsbogen : string | null = null;
+	public textBeratungsbogen: string | null = null;
 
 	/**
 	 * Legt fest, ob ein Zusatzkurs in Geschichte angeboten wird.
 	 */
-	public hatZusatzkursGE : boolean = true;
+	public hatZusatzkursGE: boolean = true;
 
 	/**
 	 * Das eindeutige Kürzel des Halbjahrs, zu dem ein Zusatzkurs in Geschichte beginnt.
 	 */
-	public beginnZusatzkursGE : string | null = null;
+	public beginnZusatzkursGE: string | null = null;
 
 	/**
 	 * Legt fest, ob ein Zusatzkurs in Sozialwissenschaften angeboten wird.
 	 */
-	public hatZusatzkursSW : boolean = true;
+	public hatZusatzkursSW: boolean = true;
 
 	/**
 	 * Das eindeutige Kürzel des Halbjahrs, zu dem ein Zusatzkurs in Sozialwissenschaften beginnt.
 	 */
-	public beginnZusatzkursSW : string | null = null;
+	public beginnZusatzkursSW: string | null = null;
 
 	/**
 	 * Die Liste der Beratungslehrer für diesen Jahrgang
 	 */
-	public readonly beratungslehrer : List<GostBeratungslehrer> = new ArrayList<GostBeratungslehrer>();
+	public readonly beratungslehrer: List<GostBeratungslehrer> = new ArrayList<GostBeratungslehrer>();
 
 	/**
 	 * Die Liste der Fächer der gymnasialen Oberstufe für diesen Jahrgang
 	 */
-	public readonly faecher : List<GostFach> = new ArrayList<GostFach>();
+	public readonly faecher: List<GostFach> = new ArrayList<GostFach>();
 
 	/**
 	 * Die Liste der notwendigen und der unzulässigen Kursart-spezifischen Fach-Kombinationen für diesen Jahrgang
 	 */
-	public readonly fachkombinationen : List<GostJahrgangFachkombination> = new ArrayList<GostJahrgangFachkombination>();
+	public readonly fachkombinationen: List<GostJahrgangFachkombination> = new ArrayList<GostJahrgangFachkombination>();
 
 	/**
 	 * Die Liste der Schüler mit ihren Laufbahnplanungsdaten.
 	 */
-	public readonly schueler : List<GostLaufbahnplanungDatenSchueler> = new ArrayList<GostLaufbahnplanungDatenSchueler>();
+	public readonly schueler: List<GostLaufbahnplanungDatenSchueler> = new ArrayList<GostLaufbahnplanungDatenSchueler>();
 
 
 	/**
@@ -107,13 +107,13 @@ export class GostLaufbahnplanungDaten extends JavaObject {
 		return 'de.svws_nrw.core.data.gost.GostLaufbahnplanungDaten';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.gost.GostLaufbahnplanungDaten'].includes(name);
 	}
 
 	public static class = new Class<GostLaufbahnplanungDaten>('de.svws_nrw.core.data.gost.GostLaufbahnplanungDaten');
 
-	public static transpilerFromJSON(json : string): GostLaufbahnplanungDaten {
+	public static transpilerFromJSON(json: string): GostLaufbahnplanungDaten {
 		const obj = JSON.parse(json) as Partial<GostLaufbahnplanungDaten>;
 		const result = new GostLaufbahnplanungDaten();
 		if (obj.lpRevision === undefined)
@@ -170,7 +170,7 @@ export class GostLaufbahnplanungDaten extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : GostLaufbahnplanungDaten) : string {
+	public static transpilerToJSON(obj: GostLaufbahnplanungDaten): string {
 		let result = '{';
 		result += '"lpRevision" : ' + obj.lpRevision.toString() + ',';
 		result += '"schulNr" : ' + obj.schulNr.toString() + ',';
@@ -222,7 +222,7 @@ export class GostLaufbahnplanungDaten extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<GostLaufbahnplanungDaten>) : string {
+	public static transpilerToJSONPatch(obj: Partial<GostLaufbahnplanungDaten>): string {
 		let result = '{';
 		if (obj.lpRevision !== undefined) {
 			result += '"lpRevision" : ' + obj.lpRevision.toString() + ',';
@@ -310,6 +310,6 @@ export class GostLaufbahnplanungDaten extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_gost_GostLaufbahnplanungDaten(obj : unknown) : GostLaufbahnplanungDaten {
+export function cast_de_svws_nrw_core_data_gost_GostLaufbahnplanungDaten(obj: unknown): GostLaufbahnplanungDaten {
 	return obj as GostLaufbahnplanungDaten;
 }

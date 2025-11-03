@@ -61,11 +61,11 @@
 
 	const props = defineProps<GostFachwahlenAbiturProps>();
 
-	const aktuell = ref<GostStatistikFachwahl | undefined>(undefined); //fachwahlenstatistik.value.length === 0 ? undefined : fachwahlenstatistik.value.at(0)
+	const aktuell = ref<GostStatistikFachwahl | undefined>(undefined); // fachwahlenstatistik.value.length === 0 ? undefined : fachwahlenstatistik.value.at(0)
 
 	const schuljahr = computed<number>(() => props.faecherManager.getSchuljahr());
 
-	function getBgColor(fws: GostStatistikFachwahl) : string {
+	function getBgColor(fws: GostStatistikFachwahl): string {
 		if (fws.kuerzelStatistik === null)
 			return 'rgb(220,220,220)';
 		return Fach.getBySchluesselOrDefault(fws.kuerzelStatistik).getHMTLFarbeRGBA(schuljahr.value, 1.0);
@@ -75,14 +75,14 @@
 		aktuell.value = (aktuell.value?.id === fws.id) ? undefined : fws;
 	}
 
-	function getSchuelerListe(idFach : number, abifach: GostAbiturFach) : List<SchuelerListeEintrag> {
+	function getSchuelerListe(idFach: number, abifach: GostAbiturFach): List<SchuelerListeEintrag> {
 		const result = new ArrayList<SchuelerListeEintrag>();
 		for (const id of props.fachwahlenManager.schuelerGetMengeByFachAndAbifachAsListOrException(idFach, abifach)) {
 			const schueler = props.mapSchueler.get(id);
 			if (schueler !== undefined)
 				result.add(schueler);
 		}
-		result.sort({ compare(a : SchuelerListeEintrag, b : SchuelerListeEintrag) : number {
+		result.sort({ compare(a: SchuelerListeEintrag, b: SchuelerListeEintrag): number {
 			let cmp = a.nachname.localeCompare(b.nachname);
 			if (cmp !== 0)
 				return cmp;

@@ -19,32 +19,32 @@ export class ServiceAbschlussHA9 extends Service {
 	/**
 	 * Filter für alle nicht ausgeglichenen Defizite
 	 */
-	private static readonly filterDefizit : Predicate<GEAbschlussFach> = { test : (f: GEAbschlussFach) => (f.note > 4) && (!f.ausgeglichen) };
+	private static readonly filterDefizit: Predicate<GEAbschlussFach> = { test: (f: GEAbschlussFach) => (f.note > 4) && (!f.ausgeglichen) };
 
 	/**
 	 * Filter für alle mangelhaften Fächer
 	 */
-	private static readonly filterMangelhaft : Predicate<GEAbschlussFach> = { test : (f: GEAbschlussFach) => f.note === 5 };
+	private static readonly filterMangelhaft: Predicate<GEAbschlussFach> = { test: (f: GEAbschlussFach) => f.note === 5 };
 
 	/**
 	 * Filter für alle ungenügenden Fächer
 	 */
-	private static readonly filterUngenuegend : Predicate<GEAbschlussFach> = { test : (f: GEAbschlussFach) => f.note === 6 };
+	private static readonly filterUngenuegend: Predicate<GEAbschlussFach> = { test: (f: GEAbschlussFach) => f.note === 6 };
 
 	/**
 	 * Filter für alle Fächer, welche als E-Kurs belegt wurden.
 	 */
-	private static readonly filterEKurse : Predicate<GEAbschlussFach> = { test : (f: GEAbschlussFach) => (GELeistungsdifferenzierteKursart.E.hat(f.kursart)) };
+	private static readonly filterEKurse: Predicate<GEAbschlussFach> = { test: (f: GEAbschlussFach) => (GELeistungsdifferenzierteKursart.E.hat(f.kursart)) };
 
 	/**
 	 * Filter zur Bestimmung aller Fremdsprachen, die nicht als E-Kurs belegt wurden.
 	 */
-	private static readonly filterWeitereFremdsprachen : Predicate<GEAbschlussFach> = { test : (f: GEAbschlussFach) => (!JavaObject.equalsTranspiler("E", (f.kuerzel)) && (f.istFremdsprache !== null) && (f.istFremdsprache)) };
+	private static readonly filterWeitereFremdsprachen: Predicate<GEAbschlussFach> = { test: (f: GEAbschlussFach) => (!JavaObject.equalsTranspiler("E", (f.kuerzel)) && (f.istFremdsprache !== null) && (f.istFremdsprache)) };
 
 	/**
 	 * Die Zeichenkette, welche zum Trennen von Teilen des Logs verwendet wird.
 	 */
-	private static readonly LOG_SEPERATOR : string = "______________________________";
+	private static readonly LOG_SEPERATOR: string = "______________________________";
 
 
 	/**
@@ -62,7 +62,7 @@ export class ServiceAbschlussHA9 extends Service {
 	 *
 	 * @return das Ergebnis der Abschlussberechnung
 	 */
-	public berechne(input : GEAbschlussFaecher) : AbschlussErgebnis {
+	public berechne(input: GEAbschlussFaecher): AbschlussErgebnis {
 		if (JavaObject.equalsTranspiler("10", (input.jahrgang))) {
 			this.logger.logLn(LogLevel.INFO, "Im Jahrgang 10 gibt es keinen HA9-Abschluss mehr.");
 			return AbschlussManager.getErgebnis(null, false);
@@ -79,7 +79,7 @@ export class ServiceAbschlussHA9 extends Service {
 			this.logger.logLn(LogLevel.DEBUG, " => Fehler: Es wurden Fächer mit dem gleichen Kürzel zur Abschlussprüfung übergeben. Dies ist nicht zulässig.");
 			return AbschlussManager.getErgebnis(null, false);
 		}
-		const faecher : AbschlussFaecherGruppen = new AbschlussFaecherGruppen(new AbschlussFaecherGruppe(input.faecher, Arrays.asList("D", "M"), null), new AbschlussFaecherGruppe(input.faecher, null, Arrays.asList("D", "M", "LBNW", "LBAL")));
+		const faecher: AbschlussFaecherGruppen = new AbschlussFaecherGruppen(new AbschlussFaecherGruppe(input.faecher, Arrays.asList("D", "M"), null), new AbschlussFaecherGruppe(input.faecher, null, Arrays.asList("D", "M", "LBNW", "LBAL")));
 		if (!faecher.fg1.istVollstaendig(Arrays.asList("D", "M"))) {
 			this.logger.logLn(LogLevel.DEBUG, ServiceAbschlussHA9.LOG_SEPERATOR);
 			this.logger.logLn(LogLevel.DEBUG, " => Fehler: Es wurden nicht alle nötigen Leistungen für die Fächergruppe 1 gefunden.");
@@ -90,7 +90,7 @@ export class ServiceAbschlussHA9 extends Service {
 			this.logger.logLn(LogLevel.DEBUG, " => Fehler: Keine Leistungen für die Fächergruppe 2 gefunden.");
 			return AbschlussManager.getErgebnis(null, false);
 		}
-		const weitereFS : List<GEAbschlussFach> = faecher.fg2.entferneFaecher(ServiceAbschlussHA9.filterWeitereFremdsprachen);
+		const weitereFS: List<GEAbschlussFach> = faecher.fg2.entferneFaecher(ServiceAbschlussHA9.filterWeitereFremdsprachen);
 		if (!weitereFS.isEmpty()) {
 			for (const fs of weitereFS) {
 				if (fs.bezeichnung === null)
@@ -99,18 +99,18 @@ export class ServiceAbschlussHA9 extends Service {
 			}
 		}
 		this.logger.logLn(LogLevel.DEBUG, " - ggf. Verbessern der E-Kurs-Noten für die Defizitberechnung:");
-		const tmpFaecher : List<GEAbschlussFach> = faecher.getFaecher(ServiceAbschlussHA9.filterEKurse);
+		const tmpFaecher: List<GEAbschlussFach> = faecher.getFaecher(ServiceAbschlussHA9.filterEKurse);
 		for (const f of tmpFaecher) {
 			if (f.kuerzel === null)
 				continue;
-			const note : number = f.note;
-			const note_neu : number = (note === 1) ? 1 : (note - 1);
+			const note: number = f.note;
+			const note_neu: number = (note === 1) ? 1 : (note - 1);
 			this.logger.logLn(LogLevel.DEBUG, "   " + f.kuerzel + "(E):" + note + "->" + note_neu);
 			f.note = note_neu;
 		}
 		this.logger.logLn(LogLevel.DEBUG, " -> FG1: Fächer " + faecher.fg1.toString());
 		this.logger.logLn(LogLevel.DEBUG, " -> FG2: Fächer " + faecher.fg2.toString());
-		const abschlussergebnis : AbschlussErgebnis = this.pruefeDefizite(faecher, "");
+		const abschlussergebnis: AbschlussErgebnis = this.pruefeDefizite(faecher, "");
 		if (abschlussergebnis.erworben) {
 			this.logger.logLn(LogLevel.DEBUG, ServiceAbschlussHA9.LOG_SEPERATOR);
 			this.logger.logLn(LogLevel.INFO, " => HA 9: APO-SI §40 (3)");
@@ -131,13 +131,13 @@ export class ServiceAbschlussHA9 extends Service {
 	 *
 	 * @return das Ergebnis der Abschlussberechnung in Bezug die Defizitberechnung
 	 */
-	private pruefeDefizite(faecher : AbschlussFaecherGruppen, logIndent : string) : AbschlussErgebnis {
-		const fg1_defizite : number = faecher.fg1.getFaecherAnzahl(ServiceAbschlussHA9.filterDefizit);
-		const fg2_defizite : number = faecher.fg2.getFaecherAnzahl(ServiceAbschlussHA9.filterDefizit);
-		const ges_defizite : number = fg1_defizite + fg2_defizite;
-		const fg1_mangelhaft : number = faecher.fg1.getFaecherAnzahl(ServiceAbschlussHA9.filterMangelhaft);
-		const fg1_ungenuegend : number = faecher.fg1.getFaecherAnzahl(ServiceAbschlussHA9.filterUngenuegend);
-		const fg2_ungenuegend : number = faecher.fg2.getFaecherAnzahl(ServiceAbschlussHA9.filterUngenuegend);
+	private pruefeDefizite(faecher: AbschlussFaecherGruppen, logIndent: string): AbschlussErgebnis {
+		const fg1_defizite: number = faecher.fg1.getFaecherAnzahl(ServiceAbschlussHA9.filterDefizit);
+		const fg2_defizite: number = faecher.fg2.getFaecherAnzahl(ServiceAbschlussHA9.filterDefizit);
+		const ges_defizite: number = fg1_defizite + fg2_defizite;
+		const fg1_mangelhaft: number = faecher.fg1.getFaecherAnzahl(ServiceAbschlussHA9.filterMangelhaft);
+		const fg1_ungenuegend: number = faecher.fg1.getFaecherAnzahl(ServiceAbschlussHA9.filterUngenuegend);
+		const fg2_ungenuegend: number = faecher.fg2.getFaecherAnzahl(ServiceAbschlussHA9.filterUngenuegend);
 		if (fg1_defizite > 0)
 			this.logger.logLn(LogLevel.DEBUG, logIndent + " -> FG1: Defizit" + (fg1_defizite > 1 ? "e" : "") + ": " + faecher.fg1.getKuerzelListe(ServiceAbschlussHA9.filterDefizit));
 		if (fg2_defizite > 0)
@@ -159,11 +159,11 @@ export class ServiceAbschlussHA9 extends Service {
 			this.logger.logLn(LogLevel.DEBUG, logIndent + " -> zu viele Defizite: Insgesamt mehr als 3 Defizite");
 			return AbschlussManager.getErgebnis(SchulabschlussAllgemeinbildend.HA9, false);
 		}
-		const hatNP : boolean = (fg1_mangelhaft === 2) || (ges_defizite === 3);
+		const hatNP: boolean = (fg1_mangelhaft === 2) || (ges_defizite === 3);
 		if (hatNP) {
-			const np_faecher : List<string> = (fg1_mangelhaft === 2) ? faecher.fg1.getKuerzel(ServiceAbschlussHA9.filterMangelhaft) : faecher.getKuerzel(ServiceAbschlussHA9.filterMangelhaft);
+			const np_faecher: List<string> = (fg1_mangelhaft === 2) ? faecher.fg1.getKuerzel(ServiceAbschlussHA9.filterMangelhaft) : faecher.getKuerzel(ServiceAbschlussHA9.filterMangelhaft);
 			this.logger.logLn(LogLevel.DEBUG, logIndent + " -> zu viele Defizite: " + ((fg1_mangelhaft === 2) ? "2x5 in FG1, aber kein weiteres Defizit in FG2" : "3 Defizite nicht erlaubt"));
-			const abschlussergebnis : AbschlussErgebnis = AbschlussManager.getErgebnisNachpruefung(SchulabschlussAllgemeinbildend.HA9, np_faecher);
+			const abschlussergebnis: AbschlussErgebnis = AbschlussManager.getErgebnisNachpruefung(SchulabschlussAllgemeinbildend.HA9, np_faecher);
 			this.logger.logLn(LogLevel.INFO, " -> Nachprüfungsmöglichkeit(en) in " + AbschlussManager.getNPFaecherString(abschlussergebnis));
 			return abschlussergebnis;
 		}
@@ -179,7 +179,7 @@ export class ServiceAbschlussHA9 extends Service {
 		return 'de.svws_nrw.core.abschluss.ge.ServiceAbschlussHA9';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.abschluss.ge.ServiceAbschlussHA9', 'de.svws_nrw.core.Service'].includes(name);
 	}
 
@@ -187,6 +187,6 @@ export class ServiceAbschlussHA9 extends Service {
 
 }
 
-export function cast_de_svws_nrw_core_abschluss_ge_ServiceAbschlussHA9(obj : unknown) : ServiceAbschlussHA9 {
+export function cast_de_svws_nrw_core_abschluss_ge_ServiceAbschlussHA9(obj: unknown): ServiceAbschlussHA9 {
 	return obj as ServiceAbschlussHA9;
 }

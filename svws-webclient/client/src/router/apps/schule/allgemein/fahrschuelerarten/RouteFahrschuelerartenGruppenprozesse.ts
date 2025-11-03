@@ -15,7 +15,7 @@ export class RouteFahrschuelerartenGruppenprozesse extends RouteNode<any, RouteF
 
 	public constructor() {
 		super(Schulform.values(), [BenutzerKompetenz.KATALOG_EINTRAEGE_ANSEHEN, BenutzerKompetenz.KATALOG_EINTRAEGE_AENDERN,
-			BenutzerKompetenz.KATALOG_EINTRAEGE_LOESCHEN], "schule.fahrschuelerarten.gruppenprozesse" , "gruppenprozesse", SFahrschuelerartenGruppenprozesse);
+			BenutzerKompetenz.KATALOG_EINTRAEGE_LOESCHEN], "schule.fahrschuelerarten.gruppenprozesse", "gruppenprozesse", SFahrschuelerartenGruppenprozesse);
 		super.types = new Set([ViewType.GRUPPENPROZESSE]);
 		super.mode = ServerMode.DEV;
 		super.propHandler = (route) => this.getProps(route);
@@ -23,7 +23,7 @@ export class RouteFahrschuelerartenGruppenprozesse extends RouteNode<any, RouteF
 	}
 
 	public getRoute(): RouteLocationRaw {
-		return { name: this.name, params: {idSchuljahresabschnitt: routeApp.data.idSchuljahresabschnitt, id: ""}}
+		return { name: this.name, params: { idSchuljahresabschnitt: routeApp.data.idSchuljahresabschnitt, id: "" } };
 	}
 
 	public getProps(to: RouteLocationNormalized): FahrschuelerartenGruppenprozesseProps {
@@ -33,7 +33,7 @@ export class RouteFahrschuelerartenGruppenprozesse extends RouteNode<any, RouteF
 			benutzerKompetenzen: api.benutzerKompetenzen,
 			deleteFahrschuelerarten: routeFahrschuelerarten.data.delete,
 			manager: () => routeFahrschuelerarten.data.manager,
-		}
+		};
 	}
 }
 

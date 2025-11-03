@@ -22,8 +22,8 @@ export class ListUtils extends JavaObject {
 	 *
 	 * @return eine gefilterte Kopie der Liste.
 	 */
-	public static getCopyFiltered<E>(list : List<E>, filter : Predicate<E>) : List<E> {
-		const listFiltered : ArrayList<E> = new ArrayList<E>();
+	public static getCopyFiltered<E>(list: List<E>, filter: Predicate<E>): List<E> {
+		const listFiltered: ArrayList<E> = new ArrayList<E>();
 		for (const t of list)
 			if (filter.test(t))
 				listFiltered.add(t);
@@ -39,8 +39,8 @@ export class ListUtils extends JavaObject {
 	 *
 	 * @return die Anzahl an Elementen, die in der Liste den Filterkriterien entsprechen.
 	 */
-	public static getCountFiltered<E>(list : List<E>, filter : Predicate<E>) : number {
-		let summe : number = 0;
+	public static getCountFiltered<E>(list: List<E>, filter: Predicate<E>): number {
+		let summe: number = 0;
 		for (const t of list)
 			if (filter.test(t))
 				summe++;
@@ -56,19 +56,19 @@ export class ListUtils extends JavaObject {
 	 *
 	 * @return eine permutierte Kopie des Arrays als Liste.
 	 */
-	public static getCopyAsArrayListPermuted<T>(arrayOfT : Array<T>, random : Random) : List<T> {
-		const list : List<T> = new ArrayList<T>();
-		const perm : Array<number> | null = Array(arrayOfT.length).fill(0);
-		for (let i : number = 0; i < perm.length; i++)
+	public static getCopyAsArrayListPermuted<T>(arrayOfT: Array<T>, random: Random): List<T> {
+		const list: List<T> = new ArrayList<T>();
+		const perm: Array<number> | null = Array(arrayOfT.length).fill(0);
+		for (let i: number = 0; i < perm.length; i++)
 			perm[i] = i;
-		for (let i1 : number = 0; i1 < perm.length; i1++) {
-			const i2 : number = random.nextInt(perm.length);
-			const save1 : number = perm[i1];
-			const save2 : number = perm[i2];
+		for (let i1: number = 0; i1 < perm.length; i1++) {
+			const i2: number = random.nextInt(perm.length);
+			const save1: number = perm[i1];
+			const save2: number = perm[i2];
 			perm[i1] = save2;
 			perm[i2] = save1;
 		}
-		for (let i : number = 0; i < arrayOfT.length; i++)
+		for (let i: number = 0; i < arrayOfT.length; i++)
 			list.add(arrayOfT[perm[i]]);
 		return list;
 	}
@@ -81,8 +81,8 @@ export class ListUtils extends JavaObject {
 	 *
 	 * @return eine flache Liste desselben Inhaltstyps
 	 */
-	public static getFlatted<T>(listOfLists : List<List<T>>) : List<T> {
-		const resultList : List<T> = new ArrayList<T>();
+	public static getFlatted<T>(listOfLists: List<List<T>>): List<T> {
+		const resultList: List<T> = new ArrayList<T>();
 		for (const currentList of listOfLists)
 			resultList.addAll(currentList);
 		return resultList;
@@ -97,20 +97,20 @@ export class ListUtils extends JavaObject {
 	 *
 	 * @return eine permutierte Kopie der Liste.
 	 */
-	public static getCopyPermuted<T>(original : List<T>, random : Random) : List<T> {
-		const n : number = original.size();
-		const perm : Array<number> | null = Array(n).fill(0);
-		for (let i : number = 0; i < n; i++)
+	public static getCopyPermuted<T>(original: List<T>, random: Random): List<T> {
+		const n: number = original.size();
+		const perm: Array<number> | null = Array(n).fill(0);
+		for (let i: number = 0; i < n; i++)
 			perm[i] = i;
-		for (let i1 : number = 0; i1 < n; i1++) {
-			const i2 : number = random.nextInt(perm.length);
-			const save1 : number = perm[i1];
-			const save2 : number = perm[i2];
+		for (let i1: number = 0; i1 < n; i1++) {
+			const i2: number = random.nextInt(perm.length);
+			const save1: number = perm[i1];
+			const save2: number = perm[i2];
 			perm[i1] = save2;
 			perm[i2] = save1;
 		}
-		const list : List<T> = new ArrayList<T>();
-		for (let i : number = 0; i < n; i++)
+		const list: List<T> = new ArrayList<T>();
+		for (let i: number = 0; i < n; i++)
 			list.add(original.get(perm[i]));
 		return list;
 	}
@@ -122,7 +122,7 @@ export class ListUtils extends JavaObject {
 	 * @param list   Die Liste in welche hinzugefügt wird.
 	 * @param e      Das Element, welches ggf. hinzugefügt wird.
 	 */
-	public static addIfNotExists<E>(list : List<E>, e : E) : void {
+	public static addIfNotExists<E>(list: List<E>, e: E): void {
 		if (!list.contains(e))
 			list.add(e);
 	}
@@ -134,7 +134,7 @@ export class ListUtils extends JavaObject {
 	 * @param list       Die Liste in welche hinzugefügt wird.
 	 * @param listToAdd  Die Liste aus welcher kopiert wird.
 	 */
-	public static addAllIfNotExists<E>(list : List<E>, listToAdd : List<E>) : void {
+	public static addAllIfNotExists<E>(list: List<E>, listToAdd: List<E>): void {
 		for (const e of listToAdd)
 			if (!list.contains(e))
 				list.add(e);
@@ -149,8 +149,8 @@ export class ListUtils extends JavaObject {
 	 *
 	 * @return das NON NULL Element an Index i, oder eine Exception.
 	 */
-	public static getNonNullElementAtOrException<E>(list : List<E>, i : number) : E {
-		const element : E | null = list.get(i);
+	public static getNonNullElementAtOrException<E>(list: List<E>, i: number): E {
+		const element: E | null = list.get(i);
 		if (element === null)
 			throw new DeveloperNotificationException("Kein Element bei Index " + i + "!")
 		return element;
@@ -164,8 +164,8 @@ export class ListUtils extends JavaObject {
 	 *
 	 * @return das letzte NON NULL Element der Liste, oder eine Exception.
 	 */
-	public static getNonNullLast<E>(list : List<E>) : E {
-		const element : E | null = list.get(list.size() - 1);
+	public static getNonNullLast<E>(list: List<E>): E {
+		const element: E | null = list.get(list.size() - 1);
 		if (element === null)
 			throw new DeveloperNotificationException("Kein letztes Element in der Liste vorhanden!")
 		return element;
@@ -179,8 +179,8 @@ export class ListUtils extends JavaObject {
 	 *
 	 * @return eine Liste, welche mit einem Element gefüllt wurde.
 	 */
-	public static create1<E>(element : E) : List<E> {
-		const list : ArrayList<E> = new ArrayList<E>();
+	public static create1<E>(element: E): List<E> {
+		const list: ArrayList<E> = new ArrayList<E>();
 		list.add(element);
 		return list;
 	}
@@ -194,8 +194,8 @@ export class ListUtils extends JavaObject {
 	 *
 	 * @return die Schnittmenge der beiden Listen ohne diese zu modifizieren.
 	 */
-	public static getIntersection<E>(list1 : List<E>, list2 : List<E>) : List<E> {
-		const list3 : List<E> = new ArrayList<E>(list1);
+	public static getIntersection<E>(list1: List<E>, list2: List<E>): List<E> {
+		const list3: List<E> = new ArrayList<E>(list1);
 		list3.retainAll(list2);
 		return list3;
 	}
@@ -207,8 +207,8 @@ export class ListUtils extends JavaObject {
 	 *
 	 * @return das erste Element der Liste (und entfernt es). Falls keines existiert wird eine Exception geworfen.
 	 */
-	public static pollNonNullFirst<E>(list : List<E>) : E {
-		const first : E = ListUtils.getNonNullElementAtOrException(list, 0);
+	public static pollNonNullFirst<E>(list: List<E>): E {
+		const first: E = ListUtils.getNonNullElementAtOrException(list, 0);
 		list.removeFirst();
 		return first;
 	}
@@ -217,7 +217,7 @@ export class ListUtils extends JavaObject {
 		return 'de.svws_nrw.core.utils.ListUtils';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.utils.ListUtils'].includes(name);
 	}
 
@@ -225,6 +225,6 @@ export class ListUtils extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_utils_ListUtils(obj : unknown) : ListUtils {
+export function cast_de_svws_nrw_core_utils_ListUtils(obj: unknown): ListUtils {
 	return obj as ListUtils;
 }

@@ -6,72 +6,72 @@ export class SchuelerStammdatenNeu extends JavaObject {
 	/**
 	 * Die ID des Schülerdatensatzes.
 	 */
-	public id : number = 0;
+	public id: number = 0;
 
 	/**
 	 * Der Nachname des Schülerdatensatzes.
 	 */
-	public nachname : string = "";
+	public nachname: string = "";
 
 	/**
 	 * Der Vorname des Schülerdatensatzes.
 	 */
-	public vorname : string = "";
+	public vorname: string = "";
 
 	/**
 	 * Alle Vornamen, sofern es mehrere gibt, des Schülerdatensatzes.
 	 */
-	public alleVornamen : string = "";
+	public alleVornamen: string = "";
 
 	/**
 	 * Die ID des Geschlechtes
 	 */
-	public geschlecht : number = 0;
+	public geschlecht: number = 0;
 
 	/**
 	 * Das Geburtsdatum des Schülerdatensatzes.
 	 */
-	public geburtsdatum : string | null = null;
+	public geburtsdatum: string | null = null;
 
 	/**
 	 * Die ID des Status des Schülerdatensatzes.
 	 */
-	public status : number = 0;
+	public status: number = 0;
 
 	/**
 	 * Das Anmeldedatum des Schülerdatensatzes.
 	 */
-	public anmeldedatum : string | null = null;
+	public anmeldedatum: string | null = null;
 
 	/**
 	 * Das Aufnahmedatum des Schülerdatensatzes.
 	 */
-	public aufnahmedatum : string | null = null;
+	public aufnahmedatum: string | null = null;
 
 	/**
 	 * Der Beginn des Bildungsgangs eines Schülers.
 	 */
-	public beginnBildungsgang : string | null = null;
+	public beginnBildungsgang: string | null = null;
 
 	/**
 	 * Dauer des Bildungsgangs am BK eines Schülers.
 	 */
-	public dauerBildungsgang : number | null = null;
+	public dauerBildungsgang: number | null = null;
 
 	/**
 	 * Die ID des Schuljahresabschnitts, zu welchem diese Lernabschnittdaten gehören.
 	 */
-	public schuljahresabschnitt : number = 0;
+	public schuljahresabschnitt: number = 0;
 
 	/**
 	 * Die ID des Jahrgangs des Schülers oder null, falls kein Jahrgang zugeordnet ist
 	 */
-	public jahrgangID : number | null = null;
+	public jahrgangID: number | null = null;
 
 	/**
 	 * Die ID der Klasse des Schülers oder null, falls keine Klasse zugeordnet ist.
 	 */
-	public klassenID : number | null = null;
+	public klassenID: number | null = null;
 
 
 	/**
@@ -85,13 +85,13 @@ export class SchuelerStammdatenNeu extends JavaObject {
 		return 'de.svws_nrw.asd.data.schueler.SchuelerStammdatenNeu';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.asd.data.schueler.SchuelerStammdatenNeu'].includes(name);
 	}
 
 	public static class = new Class<SchuelerStammdatenNeu>('de.svws_nrw.asd.data.schueler.SchuelerStammdatenNeu');
 
-	public static transpilerFromJSON(json : string): SchuelerStammdatenNeu {
+	public static transpilerFromJSON(json: string): SchuelerStammdatenNeu {
 		const obj = JSON.parse(json) as Partial<SchuelerStammdatenNeu>;
 		const result = new SchuelerStammdatenNeu();
 		if (obj.id === undefined)
@@ -125,7 +125,7 @@ export class SchuelerStammdatenNeu extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : SchuelerStammdatenNeu) : string {
+	public static transpilerToJSON(obj: SchuelerStammdatenNeu): string {
 		let result = '{';
 		result += '"id" : ' + obj.id.toString() + ',';
 		result += '"nachname" : ' + JSON.stringify(obj.nachname) + ',';
@@ -146,7 +146,7 @@ export class SchuelerStammdatenNeu extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<SchuelerStammdatenNeu>) : string {
+	public static transpilerToJSONPatch(obj: Partial<SchuelerStammdatenNeu>): string {
 		let result = '{';
 		if (obj.id !== undefined) {
 			result += '"id" : ' + obj.id.toString() + ',';
@@ -197,6 +197,6 @@ export class SchuelerStammdatenNeu extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_asd_data_schueler_SchuelerStammdatenNeu(obj : unknown) : SchuelerStammdatenNeu {
+export function cast_de_svws_nrw_asd_data_schueler_SchuelerStammdatenNeu(obj: unknown): SchuelerStammdatenNeu {
 	return obj as SchuelerStammdatenNeu;
 }

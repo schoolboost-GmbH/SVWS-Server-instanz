@@ -82,9 +82,9 @@ export class RouteDataFaecherStundenplan extends RouteData<RouteStateFachDataStu
 
 	setGanzerStundenplan = async (value: boolean) => {
 		await api.config.setValue("schule.faecher.stundenplan.ganzerStundenplan", value ? "true" : "false");
-	}
+	};
 
-	public async ladeListe() : Promise<boolean> {
+	public async ladeListe(): Promise<boolean> {
 		const idSchuljahresabschnitt = routeApp.data.aktAbschnitt.value.id;
 		if (idSchuljahresabschnitt === this._state.value.idSchuljahresabschnitt)
 			return false;
@@ -97,8 +97,8 @@ export class RouteDataFaecherStundenplan extends RouteData<RouteStateFachDataStu
 		return true;
 	}
 
-	private getKalenderWoche(manager: StundenplanManager, wochentyp: number, kwjahr: number | undefined, kw: number | undefined) : { wochentyp?: number, kalenderwoche?: StundenplanKalenderwochenzuordnung } {
-		const result : { wochentyp?: number, kalenderwoche?: StundenplanKalenderwochenzuordnung } = {};
+	private getKalenderWoche(manager: StundenplanManager, wochentyp: number, kwjahr: number | undefined, kw: number | undefined): { wochentyp?: number, kalenderwoche?: StundenplanKalenderwochenzuordnung } {
+		const result: { wochentyp?: number, kalenderwoche?: StundenplanKalenderwochenzuordnung } = {};
 		try {
 			result.kalenderwoche = manager.kalenderwochenzuordnungGetByJahrAndKWOrException(kwjahr === undefined ? -1 : kwjahr, kw === undefined ? -1 : kw);
 			result.wochentyp = result.kalenderwoche.wochentyp;
@@ -149,22 +149,22 @@ export class RouteDataFaecherStundenplan extends RouteData<RouteStateFachDataStu
 
 	public gotoStundenplan = async (value: StundenplanListeEintrag) => {
 		await RouteManager.doRoute(routeFaecherStundenplan.getRoute({ idStundenplan: value.id, wochentyp: 0, kw: "" }));
-	}
+	};
 
 	public gotoWochentyp = async (wochentyp: number) => {
 		await RouteManager.doRoute(routeFaecherStundenplan.getRoute({ wochentyp }));
-	}
+	};
 
 	public gotoKalenderwoche = async (value: StundenplanKalenderwochenzuordnung | undefined) => {
 		const kw = (value === undefined) ? "" : value.jahr + "." + value.kw;
 		const wochentyp = (value === undefined) ? "" : value.wochentyp;
 		await RouteManager.doRoute(routeFaecherStundenplan.getRoute({ wochentyp, kw }));
-	}
+	};
 
 	getPDF = api.call(async (reportingParameter: ReportingParameter): Promise<ApiFile> => {
 		if (!this.hatAuswahl)
 			throw new DeveloperNotificationException("Dieser Stundenplan kann nur gedruckt werden, wenn mindestens ein Fach ausgewählt ist.");
 		reportingParameter.idSchuljahresabschnitt = this.idSchuljahresabschnitt;
 		return await api.server.pdfReport(reportingParameter, api.schema);
-	})
+	});
 }

@@ -9,122 +9,122 @@ export class KlassenDaten extends JavaObject {
 	/**
 	 * Die ID der Klasse.
 	 */
-	public id : number = 0;
+	public id: number = 0;
 
 	/**
 	 * Die ID des Schuljahresabschnittes des Kurses.
 	 */
-	public idSchuljahresabschnitt : number = 0;
+	public idSchuljahresabschnitt: number = 0;
 
 	/**
 	 * Das Kürzel der Klasse.
 	 */
-	public kuerzel : string | null = null;
+	public kuerzel: string | null = null;
 
 	/**
 	 * Die ID des zugeordneten Jahrgangs, dem die Klasse zugeordnet ist, null falls es eine Jahrgangsübergreifende Klasse ist
 	 */
-	public idJahrgang : number | null = null;
+	public idJahrgang: number | null = null;
 
 	/**
 	 * Das Kürzel für die Parallelität der Klasse innerhalb des Jahrgangs (A-Z).
 	 */
-	public parallelitaet : string | null = null;
+	public parallelitaet: string | null = null;
 
 	/**
 	 * Die Sortierreihenfolge des Klassenlisten-Eintrags.
 	 */
-	public sortierung : number = 0;
+	public sortierung: number = 0;
 
 	/**
 	 * Die Liste der IDs der Klassenleitungen der Klasse.
 	 */
-	public klassenLeitungen : List<number> = new ArrayList<number>();
+	public klassenLeitungen: List<number> = new ArrayList<number>();
 
 	/**
 	 * Die Schüler der Klasse.
 	 */
-	public schueler : List<Schueler> = new ArrayList<Schueler>();
+	public schueler: List<Schueler> = new ArrayList<Schueler>();
 
 	/**
 	 * Adressmerkmal des Teilstandorts für die Klasse
 	 */
-	public teilstandort : string = "";
+	public teilstandort: string = "";
 
 	/**
 	 * Eine zusätzliche Beschreibung zu der Klasse
 	 */
-	public beschreibung : string = "";
+	public beschreibung: string = "";
 
 	/**
 	 * Die ID der Vorgängerklasse, sofern im vorigen Schuljahresabschnitt definiert - ansonsten null
 	 */
-	public idVorgaengerklasse : number | null = null;
+	public idVorgaengerklasse: number | null = null;
 
 	/**
 	 * Das Kürzel der Vorgängerklasse vor der letzen Versetzung.
 	 */
-	public kuerzelVorgaengerklasse : string | null = null;
+	public kuerzelVorgaengerklasse: string | null = null;
 
 	/**
 	 * Die ID der Folgeklasse, sofern im folgenden Schuljahresabschnitt definiert - ansonsten null
 	 */
-	public idFolgeklasse : number | null = null;
+	public idFolgeklasse: number | null = null;
 
 	/**
 	 * Das Kürzel der Folgeklasse nach der nächsten Versetzung.
 	 */
-	public kuerzelFolgeklasse : string | null = null;
+	public kuerzelFolgeklasse: string | null = null;
 
 	/**
 	 * Die ID für die Organisationsform der Klasse im allgemeinbildenden Bereich
 	 */
-	public idAllgemeinbildendOrganisationsform : number | null = null;
+	public idAllgemeinbildendOrganisationsform: number | null = null;
 
 	/**
 	 * Die ID für die Organisationsform der Klasse im berufsbildenden Bereich
 	 */
-	public idBerufsbildendOrganisationsform : number | null = null;
+	public idBerufsbildendOrganisationsform: number | null = null;
 
 	/**
 	 * Die ID für die Organisationsform der Klasse im Weiterbildungsbereich
 	 */
-	public idWeiterbildungOrganisationsform : number | null = null;
+	public idWeiterbildungOrganisationsform: number | null = null;
 
 	/**
 	 * Die zugewiesene Prüfungsordnung, welche in Schild 3 genutzt wird.
 	 */
-	public pruefungsordnung : string | null = null;
+	public pruefungsordnung: string | null = null;
 
 	/**
 	 * Die ID für die Schulgliederung der Klasse oder -1, wenn der Klasse keine eindeutige Schulgliederung zugeordnet ist.
 	 */
-	public idSchulgliederung : number = -1;
+	public idSchulgliederung: number = -1;
 
 	/**
 	 * Die ID für Klassenart
 	 */
-	public idKlassenart : number = -1;
+	public idKlassenart: number = -1;
 
 	/**
 	 * Gibt an, ob die Noteneingabe gesperrt ist
 	 */
-	public noteneingabeGesperrt : boolean = false;
+	public noteneingabeGesperrt: boolean = false;
 
 	/**
 	 * Gibt an, ob Ankreuzkompetenzen für die Klasse verwendet werden.
 	 */
-	public verwendungAnkreuzkompetenzen : boolean = false;
+	public verwendungAnkreuzkompetenzen: boolean = false;
 
 	/**
 	 * Die ID der Fachklasse, falls es sich um eine Klasse an einem Berufskolleg handelt oder null
 	 */
-	public idFachklasse : number | null = null;
+	public idFachklasse: number | null = null;
 
 	/**
 	 * Gibt am WBK an, ob die Klassen im Sommersemester angefangen hat.
 	 */
-	public beginnSommersemester : boolean = false;
+	public beginnSommersemester: boolean = false;
 
 
 	/**
@@ -138,13 +138,13 @@ export class KlassenDaten extends JavaObject {
 		return 'de.svws_nrw.asd.data.klassen.KlassenDaten';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.asd.data.klassen.KlassenDaten'].includes(name);
 	}
 
 	public static class = new Class<KlassenDaten>('de.svws_nrw.asd.data.klassen.KlassenDaten');
 
-	public static transpilerFromJSON(json : string): KlassenDaten {
+	public static transpilerFromJSON(json: string): KlassenDaten {
 		const obj = JSON.parse(json) as Partial<KlassenDaten>;
 		const result = new KlassenDaten();
 		if (obj.id === undefined)
@@ -202,7 +202,7 @@ export class KlassenDaten extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : KlassenDaten) : string {
+	public static transpilerToJSON(obj: KlassenDaten): string {
 		let result = '{';
 		result += '"id" : ' + obj.id.toString() + ',';
 		result += '"idSchuljahresabschnitt" : ' + obj.idSchuljahresabschnitt.toString() + ',';
@@ -247,7 +247,7 @@ export class KlassenDaten extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<KlassenDaten>) : string {
+	public static transpilerToJSONPatch(obj: Partial<KlassenDaten>): string {
 		let result = '{';
 		if (obj.id !== undefined) {
 			result += '"id" : ' + obj.id.toString() + ',';
@@ -342,6 +342,6 @@ export class KlassenDaten extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_asd_data_klassen_KlassenDaten(obj : unknown) : KlassenDaten {
+export function cast_de_svws_nrw_asd_data_klassen_KlassenDaten(obj: unknown): KlassenDaten {
 	return obj as KlassenDaten;
 }

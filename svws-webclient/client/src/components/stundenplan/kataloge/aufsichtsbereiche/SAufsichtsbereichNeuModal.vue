@@ -30,7 +30,7 @@
 
 	const openModal = () => {
 		show.value = true;
-	}
+	};
 
 	async function importer() {
 		await props.addAufsichtsbereich(item.value);

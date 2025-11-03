@@ -143,14 +143,14 @@ public final class DateUtils {
 			final @NotNull String[] split = datumISO8601.split("-");
 			if (split.length != 3)
 				return false;
-			int jahr = Integer.parseInt(split[0]);
-			int monat = Integer.parseInt(split[1]);
-			int tagImMonat = Integer.parseInt(split[2]);
+			final int jahr = Integer.parseInt(split[0]);
+			final int monat = Integer.parseInt(split[1]);
+			final int tagImMonat = Integer.parseInt(split[2]);
 			if (gibIstJahrUngueltig(jahr) || monat < 1 || monat > 12)
 				return false;
-			int maxTage = daysInMonth(jahr, monat);
+			final int maxTage = daysInMonth(jahr, monat);
 			return tagImMonat >= 1 && tagImMonat <= maxTage;
-		} catch (NumberFormatException e) {
+		} catch (final NumberFormatException e) {
 			return false;
 		}
 	}
@@ -196,15 +196,15 @@ public final class DateUtils {
 	 */
 	public static @NotNull List<PairNN<Wochentag, String>> gibDatenDerWochentageOfJahrAndKalenderwoche(final int kalenderwochenjahr, final int kalenderwoche, final @NotNull Wochentag[] wochentage) {
 		DeveloperNotificationException.ifTrue("kalenderwoche < 1", kalenderwoche < 1);
-	    DeveloperNotificationException.ifTrue("kalenderwoche > gibKalenderwochenOfJahr(kalenderwochenjahr)", kalenderwoche > gibKalenderwochenOfJahr(kalenderwochenjahr));
-	    DeveloperNotificationException.ifTrue("wochentage ist leer", wochentage.length == 0);
+		DeveloperNotificationException.ifTrue("kalenderwoche > gibKalenderwochenOfJahr(kalenderwochenjahr)", kalenderwoche > gibKalenderwochenOfJahr(kalenderwochenjahr));
+		DeveloperNotificationException.ifTrue("wochentage ist leer", wochentage.length == 0);
 
-	    final List<PairNN<Wochentag, String>> daten = new ArrayList<>();
-	    for (Wochentag wochentag : wochentage) {
-    		final @NotNull Wochentag wtag = DeveloperNotificationException.ifNull("wochentage enthält null-Einträge", wochentag);
-	        daten.add(new PairNN<>(wtag, gibDatumDesWochentagsOfJahrAndKalenderwoche(kalenderwochenjahr, kalenderwoche, wtag.id)));
-	    }
-	    return daten;
+		final List<PairNN<Wochentag, String>> daten = new ArrayList<>();
+		for (final Wochentag wochentag : wochentage) {
+			final @NotNull Wochentag wtag = DeveloperNotificationException.ifNull("wochentage enthält null-Einträge", wochentag);
+			daten.add(new PairNN<>(wtag, gibDatumDesWochentagsOfJahrAndKalenderwoche(kalenderwochenjahr, kalenderwoche, wtag.id)));
+		}
+		return daten;
 	}
 
 	/**
@@ -517,15 +517,15 @@ public final class DateUtils {
 		final StringBuilder s = new StringBuilder();
 		final long days = DAYS_FROM_0_TO_1970 + time / 86400000L + 1;
 		final long years400 = days / DAYS_PER_400_YEARS;  // Die Anzahl der 400-Jahres-Zyklen
-		final long daysLeft400 = days - years400 * DAYS_PER_400_YEARS;  // Die Anzahl der Tage im aktuellen 400-Jahres-Zyklus
+		final long daysLeft400 = days - (years400 * DAYS_PER_400_YEARS);  // Die Anzahl der Tage im aktuellen 400-Jahres-Zyklus
 		final long years100 = (daysLeft400 - 1L) / DAYS_PER_100_YEARS;  // Die Anzahl der 100-Jahres-Zyklen im aktuellen 400-Jahres-Zyklus
-		final long daysLeft100 = daysLeft400 - years100 * DAYS_PER_100_YEARS;  // Die Anzahl der Tage im aktuellen 100-Jahres-Zyklus
+		final long daysLeft100 = daysLeft400 - (years100 * DAYS_PER_100_YEARS);  // Die Anzahl der Tage im aktuellen 100-Jahres-Zyklus
 		final long years4 = daysLeft100 / DAYS_PER_4_YEARS;  // Die Anzahl der 4-Jahres-Zyklen im aktuellen 100-Jahres-Zyklus
 		final long years1 = (daysLeft100 - 1L) / DAYS_PER_YEAR % 4; // Dis Anzahl der Jahre im aktuellen 4-Jahres-Zyklus, beachte Jahr 0 des aktuellen 400-Jahres-Zyklus
-		final long year = years400 * 400 + years100 * 100 + years4 * 4 + years1;
+		final long year = (years400 * 400) + (years100 * 100) + (years4 * 4) + years1;
 		final boolean isLeapYear = (years1 == 0) && ((years100 == 0) || (years4 != 0));
 		// Berechne den Monat und den Tag des Monats anhand des Tag des Jahres relativ zum 1. März und hänge Januar und Februar hinten an. Dieser Trick ermöglicht eine schnelle Berechnung...
-		long day = (daysLeft400 - 60) - years100 * DAYS_PER_100_YEARS - years4 * DAYS_PER_4_YEARS - years1 * DAYS_PER_YEAR;
+		long day = (daysLeft400 - 60) - (years100 * DAYS_PER_100_YEARS) - (years4 * DAYS_PER_4_YEARS) - (years1 * DAYS_PER_YEAR);
 		if (day < 0)
 			day += (isLeapYear ? DAYS_PER_LEAP_YEAR : DAYS_PER_YEAR);
 		final long m5 = day / 153;   // Die Anzahl der 5-Monatsgruppen (März bis Juli - 153 Tage, August bis Dezember - 153 Tage, Januar und Februar - die restlichen Tage)
@@ -534,7 +534,7 @@ public final class DateUtils {
 		day -= m2 * 61;  // reduziere die Anzahl der Tage um die 2 Monatsgruppen
 		final long m1 = day / 31;   // Die Anzahl der ggf. noch abgeschlossenen ersten Monate der aktuellen 2-Monatsgruppe
 		day -= m1 * 31;
-		final long month = (((m5 * 5 + m2 * 2 + m1) + 2) % 12) + 1;   // Bestimme den Monat beginnend mit dem März und rotiere dann Januars und Februar nach vorne, um die korrekte Reihenfolge wiederherzustellen
+		final long month = ((((m5 * 5) + (m2 * 2) + m1) + 2) % 12) + 1;   // Bestimme den Monat beginnend mit dem März und rotiere dann Januars und Februar nach vorne, um die korrekte Reihenfolge wiederherzustellen
 		if (year < 1000)
 			s.append("0");
 		if (year < 100)
@@ -630,15 +630,14 @@ public final class DateUtils {
 	public static @NotNull String[] berechneGemeinsameTage(final @NotNull String zeitraumAab, final @NotNull String zeitraumAbis,
 			final @NotNull String zeitraumBab, final @NotNull String zeitraumBbis) {
 		// Bestimme das spätere Startdatum
-		String start = (zeitraumAab.compareTo(zeitraumBab) >= 0) ? zeitraumAab : zeitraumBab;
+		final String start = (zeitraumAab.compareTo(zeitraumBab) >= 0) ? zeitraumAab : zeitraumBab;
 
 		// Bestimme das frühere Enddatum
-		String end = (zeitraumAbis.compareTo(zeitraumBbis) <= 0) ? zeitraumAbis : zeitraumBbis;
+		final String end = (zeitraumAbis.compareTo(zeitraumBbis) <= 0) ? zeitraumAbis : zeitraumBbis;
 
 		// Falls kein gültiger Zeitraum existiert, gib ein leeres Array zurück
-		if (start.compareTo(end) > 0) {
+		if (start.compareTo(end) > 0)
 			return new String[0];
-		}
 
 		// Berechne die Schnittmenge der Tage
 		return gibTageAlsDatumZwischen(start, end);

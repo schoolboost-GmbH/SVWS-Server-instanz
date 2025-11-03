@@ -17,18 +17,18 @@ export class ValidatorLehrerPersonalabschnittsdaten extends Validator {
 	 * @param stammdaten   die Stammdaten des Lehrers
 	 * @param kontext      der Kontext des Validators
 	 */
-	public constructor(daten : LehrerPersonalabschnittsdaten, stammdaten : LehrerStammdaten, kontext : ValidatorKontext) {
+	public constructor(daten: LehrerPersonalabschnittsdaten, stammdaten: LehrerStammdaten, kontext: ValidatorKontext) {
 		super(kontext);
 		this._validatoren.add(new ValidatorLehrerPersonalabschnittsdatenPflichtstundensoll(daten, kontext));
 		try {
-			const geburtsdatum : DateManager = DateManager.from(stammdaten.geburtsdatum);
+			const geburtsdatum: DateManager = DateManager.from(stammdaten.geburtsdatum);
 			this._validatoren.add(new ValidatorLehrerPersonalabschnittsdatenRechtsverhaeltnis(daten, geburtsdatum, kontext));
 		} catch(e : any) {
 			// empty block
 		}
 	}
 
-	protected pruefe() : boolean {
+	protected pruefe(): boolean {
 		return true;
 	}
 
@@ -36,7 +36,7 @@ export class ValidatorLehrerPersonalabschnittsdaten extends Validator {
 		return 'de.svws_nrw.asd.validate.lehrer.ValidatorLehrerPersonalabschnittsdaten';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.asd.validate.lehrer.ValidatorLehrerPersonalabschnittsdaten', 'de.svws_nrw.asd.validate.Validator'].includes(name);
 	}
 
@@ -44,6 +44,6 @@ export class ValidatorLehrerPersonalabschnittsdaten extends Validator {
 
 }
 
-export function cast_de_svws_nrw_asd_validate_lehrer_ValidatorLehrerPersonalabschnittsdaten(obj : unknown) : ValidatorLehrerPersonalabschnittsdaten {
+export function cast_de_svws_nrw_asd_validate_lehrer_ValidatorLehrerPersonalabschnittsdaten(obj: unknown): ValidatorLehrerPersonalabschnittsdaten {
 	return obj as ValidatorLehrerPersonalabschnittsdaten;
 }

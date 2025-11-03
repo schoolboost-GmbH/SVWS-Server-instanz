@@ -7,7 +7,7 @@
 			"id": 1000,
 			"kuerzel": "AG",
 			"schluessel": "AG",
-			"text": "ABENDGYMNASIUM",
+			"text": "Weiterbildungskolleg: Abendgymnasium",
 			"zulaessig": [ {"schulform": "WB", "gliederung": null} ], 
 			"gueltigVon": null,
 			"gueltigBis": null
@@ -19,7 +19,7 @@
 			"id": 2000,
 			"kuerzel": "AR",
 			"schluessel": "AR",
-			"text": "ABENDREALSCHULE",
+			"text": "Weiterbildungskolleg: Abendrealschule",
 			"zulaessig": [ {"schulform": "WB", "gliederung": null} ], 
 			"gueltigVon": null,
 			"gueltigBis": null
@@ -31,7 +31,7 @@
 			"id": 3000,
 			"kuerzel": "KL",
 			"schluessel": "KL",
-			"text": "KOLLEG",
+			"text": "Weiterbildungskolleg: Kolleg",
 			"zulaessig": [ {"schulform": "WB", "gliederung": null} ], 
 			"gueltigVon": null,
 			"gueltigBis": null
@@ -43,8 +43,8 @@
 			"id": 10000,
 			"kuerzel": "BF",
 			"schluessel": "BF",
-			"text": "BERUFSFACHSCHULE",
-			"zulaessig": [ {"schulform": "BK", "gliederung": null} ], 
+			"text": "Berufskolleg: Berufsfachschule",
+			"zulaessig": [ {"schulform": "WB", "gliederung": null} ], 
 			"gueltigVon": null,
 			"gueltigBis": null
 		} ]
@@ -55,8 +55,8 @@
 			"id": 11000,
 			"kuerzel": "BS",
 			"schluessel": "BS",
-			"text": "BERUFSSCHULE",
-			"zulaessig": [ {"schulform": "BK", "gliederung": null} ], 
+			"text": "Berufskolleg: Berufsschule",
+			"zulaessig": [ {"schulform": "WB", "gliederung": null} ], 
 			"gueltigVon": null,
 			"gueltigBis": null
 		} ]
@@ -67,8 +67,8 @@
 			"id": 12000,
 			"kuerzel": "BY",
 			"schluessel": "BY",
-			"text": "BERUFLICHES_GYMNASIUM",
-			"zulaessig": [ {"schulform": "BK", "gliederung": null} ], 
+			"text": "Berufskolleg: Berufliches Gymnasium",
+			"zulaessig": [ {"schulform": "WB", "gliederung": null} ], 
 			"gueltigVon": null,
 			"gueltigBis": null
 		} ]
@@ -79,8 +79,8 @@
 			"id": 13000,
 			"kuerzel": "FO",
 			"schluessel": "FO",
-			"text": "FACHOBERSCHULE",
-			"zulaessig": [ {"schulform": "BK", "gliederung": null} ], 
+			"text": "Berufskolleg: Fachoberschule",
+			"zulaessig": [ {"schulform": "WB", "gliederung": null} ], 
 			"gueltigVon": null,
 			"gueltigBis": null
 		} ]
@@ -91,8 +91,8 @@
 			"id": 14000,
 			"kuerzel": "FS",
 			"schluessel": "FS",
-			"text": "FACHSCHULE",
-			"zulaessig": [ {"schulform": "BK", "gliederung": null} ], 
+			"text": "Berufskolleg: Fachschule",
+			"zulaessig": [ {"schulform": "WB", "gliederung": null} ], 
 			"gueltigVon": null,
 			"gueltigBis": null
 		} ]

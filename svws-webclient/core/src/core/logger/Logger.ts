@@ -11,13 +11,13 @@ export class Logger extends JavaObject {
 	/**
 	 * Die globale Instanz des Loggers
 	 */
-	private static _instance : Logger | null = null;
+	private static _instance: Logger | null = null;
 
-	private readonly consumer : ArrayList<Consumer<LogData>> = new ArrayList<Consumer<LogData>>();
+	private readonly consumer: ArrayList<Consumer<LogData>> = new ArrayList<Consumer<LogData>>();
 
-	private defaultLevel : LogLevel = LogLevel.INFO;
+	private defaultLevel: LogLevel = LogLevel.INFO;
 
-	private indent : number = 0;
+	private indent: number = 0;
 
 
 	/**
@@ -32,7 +32,7 @@ export class Logger extends JavaObject {
 	 *
 	 * @return die globale Logger-Instanz
 	 */
-	public static global() : Logger | null {
+	public static global(): Logger | null {
 		if (Logger._instance === null) {
 			Logger._instance = new Logger();
 			Logger._instance.addConsumer(new LogConsumerConsole(true, true));
@@ -45,7 +45,7 @@ export class Logger extends JavaObject {
 	 *
 	 * @param c   der hinzuzufügende Consumer von Log-Informationen
 	 */
-	public addConsumer(c : Consumer<LogData>) : void {
+	public addConsumer(c: Consumer<LogData>): void {
 		this.consumer.add(c);
 	}
 
@@ -54,7 +54,7 @@ export class Logger extends JavaObject {
 	 *
 	 * @param other   der andere Logger
 	 */
-	public copyConsumer(other : Logger) : void {
+	public copyConsumer(other: Logger): void {
 		this.consumer.addAll(other.consumer);
 	}
 
@@ -63,7 +63,7 @@ export class Logger extends JavaObject {
 	 *
 	 * @param c   der zu entfernende Consumer von Log-Informationen
 	 */
-	public removeConsumer(c : Consumer<LogData>) : void {
+	public removeConsumer(c: Consumer<LogData>): void {
 		this.consumer.remove(c);
 	}
 
@@ -72,7 +72,7 @@ export class Logger extends JavaObject {
 	 *
 	 * @return das aktuelle Default-Log-Level für neue Log-Informationen
 	 */
-	public getDefaultLevel() : LogLevel {
+	public getDefaultLevel(): LogLevel {
 		return this.defaultLevel;
 	}
 
@@ -81,7 +81,7 @@ export class Logger extends JavaObject {
 	 *
 	 * @param defaultLevel   das neue Default-Log-Level für neue Log-Informationen
 	 */
-	public setDefaultLevel(defaultLevel : LogLevel) : void {
+	public setDefaultLevel(defaultLevel: LogLevel): void {
 		this.defaultLevel = defaultLevel;
 	}
 
@@ -91,7 +91,7 @@ export class Logger extends JavaObject {
 	 *
 	 * @return die Anzahl der Leerzeichen
 	 */
-	public getIndent() : number {
+	public getIndent(): number {
 		return this.indent;
 	}
 
@@ -101,7 +101,7 @@ export class Logger extends JavaObject {
 	 *
 	 * @param indent   die Anzahl der Leerzeichen
 	 */
-	public setIndent(indent : number) : void {
+	public setIndent(indent: number): void {
 		this.indent = (indent < 0) ? 0 : indent;
 	}
 
@@ -111,7 +111,7 @@ export class Logger extends JavaObject {
 	 *
 	 * @param indent   die Veränderung bei der Anzahl der Leerzeichen
 	 */
-	public modifyIndent(indent : number) : void {
+	public modifyIndent(indent: number): void {
 		this.indent = ((this.indent + indent) < 0) ? 0 : (this.indent + indent);
 	}
 
@@ -120,7 +120,7 @@ export class Logger extends JavaObject {
 	 *
 	 * @param data   die Log-Informationen
 	 */
-	public log(data : LogData) : void;
+	public log(data: LogData) : void;
 
 	/**
 	 * Loggt den angegebenen Text mit dem angegebenen Log-Level und der angegebenen Einrückung.
@@ -129,7 +129,7 @@ export class Logger extends JavaObject {
 	 * @param indent   die Einrückung, die bei dem Text verwendet werden soll
 	 * @param text     der Text
 	 */
-	public log(level : LogLevel, indent : number, text : string) : void;
+	public log(level: LogLevel, indent: number, text: string) : void;
 
 	/**
 	 * Loggt den angegebenen Text mit dem angegebenen Log-Level und der Standard-Einrückung.
@@ -137,7 +137,7 @@ export class Logger extends JavaObject {
 	 * @param level    das Log-Level des zu loggenden Textes
 	 * @param text     der Text
 	 */
-	public log(level : LogLevel, text : string) : void;
+	public log(level: LogLevel, text: string) : void;
 
 	/**
 	 * Loggt den angegebenen Text mit dem Standard-Log-Level und der angegebenen Einrückung.
@@ -145,38 +145,38 @@ export class Logger extends JavaObject {
 	 * @param indent   die Einrückung, die bei dem Text verwendet werden soll
 	 * @param text     der Text
 	 */
-	public log(indent : number, text : string) : void;
+	public log(indent: number, text: string) : void;
 
 	/**
 	 * Loggt den angegebenen Text mit dem Standard-Log-Level und der Standard-Einrückung.
 	 *
 	 * @param text     der Text
 	 */
-	public log(text : string) : void;
+	public log(text: string) : void;
 
 	/**
 	 * Implementation for method overloads of 'log'
 	 */
-	public log(__param0 : LogData | LogLevel | number | string, __param1? : number | string, __param2? : string) : void {
+	public log(__param0: LogData | LogLevel | number | string, __param1?: number | string, __param2?: string): void {
 		if (((__param0 !== undefined) && ((__param0 instanceof JavaObject) && (__param0.isTranspiledInstanceOf('de.svws_nrw.core.logger.LogData')))) && (__param1 === undefined) && (__param2 === undefined)) {
-			const data : LogData = cast_de_svws_nrw_core_logger_LogData(__param0);
+			const data: LogData = cast_de_svws_nrw_core_logger_LogData(__param0);
 			for (const c of this.consumer)
 				c.accept(data);
 		} else if (((__param0 !== undefined) && ((__param0 instanceof JavaObject) && (__param0.isTranspiledInstanceOf('de.svws_nrw.core.logger.LogLevel')))) && ((__param1 !== undefined) && typeof __param1 === "number") && ((__param2 !== undefined) && (typeof __param2 === "string"))) {
-			const level : LogLevel = cast_de_svws_nrw_core_logger_LogLevel(__param0);
-			const indent : number = __param1 as number;
-			const text : string = __param2;
+			const level: LogLevel = cast_de_svws_nrw_core_logger_LogLevel(__param0);
+			const indent: number = __param1 as number;
+			const text: string = __param2;
 			this.log(new LogData(level, indent, false, text));
 		} else if (((__param0 !== undefined) && ((__param0 instanceof JavaObject) && (__param0.isTranspiledInstanceOf('de.svws_nrw.core.logger.LogLevel')))) && ((__param1 !== undefined) && (typeof __param1 === "string")) && (__param2 === undefined)) {
-			const level : LogLevel = cast_de_svws_nrw_core_logger_LogLevel(__param0);
-			const text : string = __param1;
+			const level: LogLevel = cast_de_svws_nrw_core_logger_LogLevel(__param0);
+			const text: string = __param1;
 			this.log(level, this.indent, text);
 		} else if (((__param0 !== undefined) && typeof __param0 === "number") && ((__param1 !== undefined) && (typeof __param1 === "string")) && (__param2 === undefined)) {
-			const indent : number = __param0 as number;
-			const text : string = __param1;
+			const indent: number = __param0 as number;
+			const text: string = __param1;
 			this.log(this.defaultLevel, indent, text);
 		} else if (((__param0 !== undefined) && (typeof __param0 === "string")) && (__param1 === undefined) && (__param2 === undefined)) {
-			const text : string = __param0;
+			const text: string = __param0;
 			this.log(this.defaultLevel, text);
 		} else throw new Error('invalid method overload');
 	}
@@ -189,7 +189,7 @@ export class Logger extends JavaObject {
 	 * @param indent   die Einrückung, die bei dem Text verwendet werden soll
 	 * @param text     der Text
 	 */
-	public logLn(level : LogLevel, indent : number, text : string) : void;
+	public logLn(level: LogLevel, indent: number, text: string) : void;
 
 	/**
 	 * Loggt den angegebenen Text mit dem angegebenen Log-Level und der Standard-Einrückung
@@ -199,7 +199,7 @@ export class Logger extends JavaObject {
 	 * @param level    das Log-Level des zu loggenden Textes
 	 * @param text     der Text
 	 */
-	public logLn(level : LogLevel, text : string) : void;
+	public logLn(level: LogLevel, text: string) : void;
 
 	/**
 	 * Loggt den angegebenen Text mit dem Standard-Log-Level und der angegebenen Einrückung
@@ -208,7 +208,7 @@ export class Logger extends JavaObject {
 	 * @param indent   die Einrückung, die bei dem Text verwendet werden soll
 	 * @param text     der Text
 	 */
-	public logLn(indent : number, text : string) : void;
+	public logLn(indent: number, text: string) : void;
 
 	/**
 	 * Loggt den angegebenen Text mit dem Standard-Log-Level und der Standard-Einrückung
@@ -216,27 +216,27 @@ export class Logger extends JavaObject {
 	 *
 	 * @param text     der Text
 	 */
-	public logLn(text : string) : void;
+	public logLn(text: string) : void;
 
 	/**
 	 * Implementation for method overloads of 'logLn'
 	 */
-	public logLn(__param0 : LogLevel | number | string, __param1? : number | string, __param2? : string) : void {
+	public logLn(__param0: LogLevel | number | string, __param1?: number | string, __param2?: string): void {
 		if (((__param0 !== undefined) && ((__param0 instanceof JavaObject) && (__param0.isTranspiledInstanceOf('de.svws_nrw.core.logger.LogLevel')))) && ((__param1 !== undefined) && typeof __param1 === "number") && ((__param2 !== undefined) && (typeof __param2 === "string"))) {
-			const level : LogLevel = cast_de_svws_nrw_core_logger_LogLevel(__param0);
-			const indent : number = __param1 as number;
-			const text : string = __param2;
+			const level: LogLevel = cast_de_svws_nrw_core_logger_LogLevel(__param0);
+			const indent: number = __param1 as number;
+			const text: string = __param2;
 			this.log(new LogData(level, indent, true, text));
 		} else if (((__param0 !== undefined) && ((__param0 instanceof JavaObject) && (__param0.isTranspiledInstanceOf('de.svws_nrw.core.logger.LogLevel')))) && ((__param1 !== undefined) && (typeof __param1 === "string")) && (__param2 === undefined)) {
-			const level : LogLevel = cast_de_svws_nrw_core_logger_LogLevel(__param0);
-			const text : string = __param1;
+			const level: LogLevel = cast_de_svws_nrw_core_logger_LogLevel(__param0);
+			const text: string = __param1;
 			this.logLn(level, this.indent, text);
 		} else if (((__param0 !== undefined) && typeof __param0 === "number") && ((__param1 !== undefined) && (typeof __param1 === "string")) && (__param2 === undefined)) {
-			const indent : number = __param0 as number;
-			const text : string = __param1;
+			const indent: number = __param0 as number;
+			const text: string = __param1;
 			this.logLn(this.defaultLevel, indent, text);
 		} else if (((__param0 !== undefined) && (typeof __param0 === "string")) && (__param1 === undefined) && (__param2 === undefined)) {
-			const text : string = __param0;
+			const text: string = __param0;
 			this.logLn(this.defaultLevel, text);
 		} else throw new Error('invalid method overload');
 	}
@@ -245,7 +245,7 @@ export class Logger extends JavaObject {
 		return 'de.svws_nrw.core.logger.Logger';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.logger.Logger'].includes(name);
 	}
 
@@ -253,6 +253,6 @@ export class Logger extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_logger_Logger(obj : unknown) : Logger {
+export function cast_de_svws_nrw_core_logger_Logger(obj: unknown): Logger {
 	return obj as Logger;
 }

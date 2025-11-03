@@ -6,32 +6,32 @@ export class Schild3KatalogEintragDatenart extends JavaObject {
 	/**
 	 * Kürzel der Datenart
 	 */
-	public DatenartKrz : string | null = null;
+	public DatenartKrz: string | null = null;
 
 	/**
 	 * Datenart
 	 */
-	public Datenart : string | null = null;
+	public Datenart: string | null = null;
 
 	/**
 	 * Name der Tabelle
 	 */
-	public Tabellenname : string | null = null;
+	public Tabellenname: string | null = null;
 
 	/**
 	 * Reihenfolge
 	 */
-	public Reihenfolge : number | null = null;
+	public Reihenfolge: number | null = null;
 
 	/**
 	 * Gültig ab Schuljahr
 	 */
-	public gueltigVon : number | null = null;
+	public gueltigVon: number | null = null;
 
 	/**
 	 * Gültig bis Schuljahr
 	 */
-	public gueltigBis : number | null = null;
+	public gueltigBis: number | null = null;
 
 
 	/**
@@ -45,13 +45,13 @@ export class Schild3KatalogEintragDatenart extends JavaObject {
 		return 'de.svws_nrw.core.data.schild3.Schild3KatalogEintragDatenart';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.schild3.Schild3KatalogEintragDatenart'].includes(name);
 	}
 
 	public static class = new Class<Schild3KatalogEintragDatenart>('de.svws_nrw.core.data.schild3.Schild3KatalogEintragDatenart');
 
-	public static transpilerFromJSON(json : string): Schild3KatalogEintragDatenart {
+	public static transpilerFromJSON(json: string): Schild3KatalogEintragDatenart {
 		const obj = JSON.parse(json) as Partial<Schild3KatalogEintragDatenart>;
 		const result = new Schild3KatalogEintragDatenart();
 		result.DatenartKrz = (obj.DatenartKrz === undefined) ? null : obj.DatenartKrz === null ? null : obj.DatenartKrz;
@@ -63,7 +63,7 @@ export class Schild3KatalogEintragDatenart extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : Schild3KatalogEintragDatenart) : string {
+	public static transpilerToJSON(obj: Schild3KatalogEintragDatenart): string {
 		let result = '{';
 		result += '"DatenartKrz" : ' + ((obj.DatenartKrz === null) ? 'null' : JSON.stringify(obj.DatenartKrz)) + ',';
 		result += '"Datenart" : ' + ((obj.Datenart === null) ? 'null' : JSON.stringify(obj.Datenart)) + ',';
@@ -76,7 +76,7 @@ export class Schild3KatalogEintragDatenart extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<Schild3KatalogEintragDatenart>) : string {
+	public static transpilerToJSONPatch(obj: Partial<Schild3KatalogEintragDatenart>): string {
 		let result = '{';
 		if (obj.DatenartKrz !== undefined) {
 			result += '"DatenartKrz" : ' + ((obj.DatenartKrz === null) ? 'null' : JSON.stringify(obj.DatenartKrz)) + ',';
@@ -103,6 +103,6 @@ export class Schild3KatalogEintragDatenart extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_schild3_Schild3KatalogEintragDatenart(obj : unknown) : Schild3KatalogEintragDatenart {
+export function cast_de_svws_nrw_core_data_schild3_Schild3KatalogEintragDatenart(obj: unknown): Schild3KatalogEintragDatenart {
 	return obj as Schild3KatalogEintragDatenart;
 }

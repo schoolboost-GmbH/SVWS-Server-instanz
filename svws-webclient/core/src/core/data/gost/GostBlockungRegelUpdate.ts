@@ -9,12 +9,12 @@ export class GostBlockungRegelUpdate extends JavaObject {
 	/**
 	 * Die zu entfernenden Regeln
 	 */
-	public listEntfernen : List<GostBlockungRegel> = new ArrayList<GostBlockungRegel>();
+	public listEntfernen: List<GostBlockungRegel> = new ArrayList<GostBlockungRegel>();
 
 	/**
 	 * Die hinzuzufügenden Regeln
 	 */
-	public listHinzuzufuegen : List<GostBlockungRegel> = new ArrayList<GostBlockungRegel>();
+	public listHinzuzufuegen: List<GostBlockungRegel> = new ArrayList<GostBlockungRegel>();
 
 
 	/**
@@ -28,13 +28,13 @@ export class GostBlockungRegelUpdate extends JavaObject {
 		return 'de.svws_nrw.core.data.gost.GostBlockungRegelUpdate';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.gost.GostBlockungRegelUpdate'].includes(name);
 	}
 
 	public static class = new Class<GostBlockungRegelUpdate>('de.svws_nrw.core.data.gost.GostBlockungRegelUpdate');
 
-	public static transpilerFromJSON(json : string): GostBlockungRegelUpdate {
+	public static transpilerFromJSON(json: string): GostBlockungRegelUpdate {
 		const obj = JSON.parse(json) as Partial<GostBlockungRegelUpdate>;
 		const result = new GostBlockungRegelUpdate();
 		if (obj.listEntfernen !== undefined) {
@@ -50,7 +50,7 @@ export class GostBlockungRegelUpdate extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : GostBlockungRegelUpdate) : string {
+	public static transpilerToJSON(obj: GostBlockungRegelUpdate): string {
 		let result = '{';
 		result += '"listEntfernen" : [ ';
 		for (let i = 0; i < obj.listEntfernen.size(); i++) {
@@ -73,7 +73,7 @@ export class GostBlockungRegelUpdate extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<GostBlockungRegelUpdate>) : string {
+	public static transpilerToJSONPatch(obj: Partial<GostBlockungRegelUpdate>): string {
 		let result = '{';
 		if (obj.listEntfernen !== undefined) {
 			result += '"listEntfernen" : [ ';
@@ -102,6 +102,6 @@ export class GostBlockungRegelUpdate extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_gost_GostBlockungRegelUpdate(obj : unknown) : GostBlockungRegelUpdate {
+export function cast_de_svws_nrw_core_data_gost_GostBlockungRegelUpdate(obj: unknown): GostBlockungRegelUpdate {
 	return obj as GostBlockungRegelUpdate;
 }

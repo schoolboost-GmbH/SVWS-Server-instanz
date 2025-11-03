@@ -48,7 +48,7 @@
 <script setup lang="ts">
 
 	import { computed, ref, watch } from "vue";
-	import {BenutzerKompetenz, BilingualeSprache, Fach, FachDaten, GostFachbereich, JavaInteger, Schulform} from "@core";
+	import { BenutzerKompetenz, BilingualeSprache, Fach, FachDaten, GostFachbereich, JavaInteger, Schulform } from "@core";
 	import type { FachKatalogEintrag, CoreTypeData } from "@core";
 	import type { FaecherNeuProps } from "./SFaecherNeuProps";
 	import { coreTypeDataFilter } from "~/utils/helfer";
@@ -82,7 +82,7 @@
 	const statistikFachEintraege = computed(() => {
 		const list = Fach.data().getListBySchuljahrAndSchulform(schuljahr.value, props.manager().schulform());
 		return Array.from(list).map(item => Fach.data().getEintragBySchuljahrUndWert(schuljahr.value, item)).filter((eintrag) => eintrag !== null);
-	})
+	});
 
 	const selectedStatistikFach = computed({
 		get: () => {

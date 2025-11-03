@@ -10,7 +10,7 @@ export class JavaCharacter extends JavaObject {
 	 *
 	 * @returns true, falls es in Großschrift ist, und ansonsten false
 	 */
-	public static isUpperCase(ch: string) : boolean {
+	public static isUpperCase(ch: string): boolean {
 		if ((ch.length === 0) || (ch.toLowerCase() === ch.toUpperCase()))
 			return false;
 		return (ch.toUpperCase() === ch);
@@ -24,7 +24,7 @@ export class JavaCharacter extends JavaObject {
 	 *
 	 * @returns true, falls es in Kleinschrift ist, und ansonsten false
 	 */
-	public static isLowerCase(ch: string) : boolean {
+	public static isLowerCase(ch: string): boolean {
 		if ((ch.length === 0) || (ch.toLowerCase() === ch.toUpperCase()))
 			return false;
 		return (ch.toLowerCase() === ch);
@@ -34,15 +34,15 @@ export class JavaCharacter extends JavaObject {
 		return 'java.lang.Character';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return [
 			'java.lang.Character',
-			'java.lang.Object'
+			'java.lang.Object',
 		].includes(name);
 	}
 
 }
 
-export function cast_java_lang_Character(obj : unknown) : JavaCharacter {
+export function cast_java_lang_Character(obj: unknown): JavaCharacter {
 	return obj as JavaCharacter;
 }

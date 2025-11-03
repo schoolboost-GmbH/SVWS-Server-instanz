@@ -8,17 +8,17 @@ export class GostBlockungRegel extends JavaObject {
 	/**
 	 * Die ID der Regel
 	 */
-	public id : number = -1;
+	public id: number = -1;
 
 	/**
 	 * Der Type der Regel - siehe {@link GostKursblockungRegelTyp}
 	 */
-	public typ : number = -1;
+	public typ: number = -1;
 
 	/**
 	 * Eine Liste der Regel-Parameter
 	 */
-	public parameter : List<number> = new ArrayList<number>();
+	public parameter: List<number> = new ArrayList<number>();
 
 
 	/**
@@ -32,13 +32,13 @@ export class GostBlockungRegel extends JavaObject {
 		return 'de.svws_nrw.core.data.gost.GostBlockungRegel';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.gost.GostBlockungRegel'].includes(name);
 	}
 
 	public static class = new Class<GostBlockungRegel>('de.svws_nrw.core.data.gost.GostBlockungRegel');
 
-	public static transpilerFromJSON(json : string): GostBlockungRegel {
+	public static transpilerFromJSON(json: string): GostBlockungRegel {
 		const obj = JSON.parse(json) as Partial<GostBlockungRegel>;
 		const result = new GostBlockungRegel();
 		if (obj.id === undefined)
@@ -55,7 +55,7 @@ export class GostBlockungRegel extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : GostBlockungRegel) : string {
+	public static transpilerToJSON(obj: GostBlockungRegel): string {
 		let result = '{';
 		result += '"id" : ' + obj.id.toString() + ',';
 		result += '"typ" : ' + obj.typ.toString() + ',';
@@ -72,7 +72,7 @@ export class GostBlockungRegel extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<GostBlockungRegel>) : string {
+	public static transpilerToJSONPatch(obj: Partial<GostBlockungRegel>): string {
 		let result = '{';
 		if (obj.id !== undefined) {
 			result += '"id" : ' + obj.id.toString() + ',';
@@ -97,6 +97,6 @@ export class GostBlockungRegel extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_gost_GostBlockungRegel(obj : unknown) : GostBlockungRegel {
+export function cast_de_svws_nrw_core_data_gost_GostBlockungRegel(obj: unknown): GostBlockungRegel {
 	return obj as GostBlockungRegel;
 }

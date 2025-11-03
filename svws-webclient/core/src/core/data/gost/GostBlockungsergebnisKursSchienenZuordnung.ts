@@ -6,12 +6,12 @@ export class GostBlockungsergebnisKursSchienenZuordnung extends JavaObject {
 	/**
 	 * Die ID des Kurses
 	 */
-	public idKurs : number = -1;
+	public idKurs: number = -1;
 
 	/**
 	 * Die ID der Schiene
 	 */
-	public idSchiene : number = -1;
+	public idSchiene: number = -1;
 
 
 	/**
@@ -21,21 +21,21 @@ export class GostBlockungsergebnisKursSchienenZuordnung extends JavaObject {
 		super();
 	}
 
-	public hashCode() : number {
-		let hashCode : number = 1;
+	public hashCode(): number {
+		let hashCode: number = 1;
 		hashCode = (31 * hashCode) + (this.idKurs ^ (this.idKurs >>> 32)) as number;
 		hashCode = (31 * hashCode) + (this.idSchiene ^ (this.idSchiene >>> 32)) as number;
 		return hashCode;
 	}
 
-	public equals(obj : unknown | null) : boolean {
+	public equals(obj: unknown | null): boolean {
 		if (this as unknown === obj as unknown)
 			return true;
 		if (obj === null)
 			return false;
 		if (!(((obj instanceof JavaObject) && (obj.isTranspiledInstanceOf('de.svws_nrw.core.data.gost.GostBlockungsergebnisKursSchienenZuordnung')))))
 			return false;
-		const other : GostBlockungsergebnisKursSchienenZuordnung = cast_de_svws_nrw_core_data_gost_GostBlockungsergebnisKursSchienenZuordnung(obj);
+		const other: GostBlockungsergebnisKursSchienenZuordnung = cast_de_svws_nrw_core_data_gost_GostBlockungsergebnisKursSchienenZuordnung(obj);
 		return (this.idKurs === other.idKurs) && (this.idSchiene === other.idSchiene);
 	}
 
@@ -43,13 +43,13 @@ export class GostBlockungsergebnisKursSchienenZuordnung extends JavaObject {
 		return 'de.svws_nrw.core.data.gost.GostBlockungsergebnisKursSchienenZuordnung';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.gost.GostBlockungsergebnisKursSchienenZuordnung'].includes(name);
 	}
 
 	public static class = new Class<GostBlockungsergebnisKursSchienenZuordnung>('de.svws_nrw.core.data.gost.GostBlockungsergebnisKursSchienenZuordnung');
 
-	public static transpilerFromJSON(json : string): GostBlockungsergebnisKursSchienenZuordnung {
+	public static transpilerFromJSON(json: string): GostBlockungsergebnisKursSchienenZuordnung {
 		const obj = JSON.parse(json) as Partial<GostBlockungsergebnisKursSchienenZuordnung>;
 		const result = new GostBlockungsergebnisKursSchienenZuordnung();
 		if (obj.idKurs === undefined)
@@ -61,7 +61,7 @@ export class GostBlockungsergebnisKursSchienenZuordnung extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : GostBlockungsergebnisKursSchienenZuordnung) : string {
+	public static transpilerToJSON(obj: GostBlockungsergebnisKursSchienenZuordnung): string {
 		let result = '{';
 		result += '"idKurs" : ' + obj.idKurs.toString() + ',';
 		result += '"idSchiene" : ' + obj.idSchiene.toString() + ',';
@@ -70,7 +70,7 @@ export class GostBlockungsergebnisKursSchienenZuordnung extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<GostBlockungsergebnisKursSchienenZuordnung>) : string {
+	public static transpilerToJSONPatch(obj: Partial<GostBlockungsergebnisKursSchienenZuordnung>): string {
 		let result = '{';
 		if (obj.idKurs !== undefined) {
 			result += '"idKurs" : ' + obj.idKurs.toString() + ',';
@@ -85,6 +85,6 @@ export class GostBlockungsergebnisKursSchienenZuordnung extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_gost_GostBlockungsergebnisKursSchienenZuordnung(obj : unknown) : GostBlockungsergebnisKursSchienenZuordnung {
+export function cast_de_svws_nrw_core_data_gost_GostBlockungsergebnisKursSchienenZuordnung(obj: unknown): GostBlockungsergebnisKursSchienenZuordnung {
 	return obj as GostBlockungsergebnisKursSchienenZuordnung;
 }

@@ -6,42 +6,42 @@ export class Schild3KatalogEintragVersetzungsvermerke extends JavaObject {
 	/**
 	 * Nummer des Versetzungsvermerks
 	 */
-	public Nr : string | null = null;
+	public Nr: string | null = null;
 
 	/**
 	 * Klartext des Versetzungsvermerks
 	 */
-	public Klartext : string | null = null;
+	public Klartext: string | null = null;
 
 	/**
 	 * Statistikkürzel des Versetzungsvermerks (DEPRECATED)
 	 */
-	public StatistikKrz : string | null = null;
+	public StatistikKrz: string | null = null;
 
 	/**
 	 * Sortierung des Versetzungsvermerks
 	 */
-	public Sortierung : number | null = null;
+	public Sortierung: number | null = null;
 
 	/**
 	 * Schulform des Versetzungsvermerks
 	 */
-	public Schulform : string | null = null;
+	public Schulform: string | null = null;
 
 	/**
 	 * Neues Statistikkürzel des Versetzungsvermerks
 	 */
-	public StatistikKrzNeu : string | null = null;
+	public StatistikKrzNeu: string | null = null;
 
 	/**
 	 * Gültig ab Schuljahr
 	 */
-	public gueltigVon : number | null = null;
+	public gueltigVon: number | null = null;
 
 	/**
 	 * Gültig bis Schuljahr
 	 */
-	public gueltigBis : number | null = null;
+	public gueltigBis: number | null = null;
 
 
 	/**
@@ -55,13 +55,13 @@ export class Schild3KatalogEintragVersetzungsvermerke extends JavaObject {
 		return 'de.svws_nrw.core.data.schild3.Schild3KatalogEintragVersetzungsvermerke';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.schild3.Schild3KatalogEintragVersetzungsvermerke'].includes(name);
 	}
 
 	public static class = new Class<Schild3KatalogEintragVersetzungsvermerke>('de.svws_nrw.core.data.schild3.Schild3KatalogEintragVersetzungsvermerke');
 
-	public static transpilerFromJSON(json : string): Schild3KatalogEintragVersetzungsvermerke {
+	public static transpilerFromJSON(json: string): Schild3KatalogEintragVersetzungsvermerke {
 		const obj = JSON.parse(json) as Partial<Schild3KatalogEintragVersetzungsvermerke>;
 		const result = new Schild3KatalogEintragVersetzungsvermerke();
 		result.Nr = (obj.Nr === undefined) ? null : obj.Nr === null ? null : obj.Nr;
@@ -75,7 +75,7 @@ export class Schild3KatalogEintragVersetzungsvermerke extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : Schild3KatalogEintragVersetzungsvermerke) : string {
+	public static transpilerToJSON(obj: Schild3KatalogEintragVersetzungsvermerke): string {
 		let result = '{';
 		result += '"Nr" : ' + ((obj.Nr === null) ? 'null' : JSON.stringify(obj.Nr)) + ',';
 		result += '"Klartext" : ' + ((obj.Klartext === null) ? 'null' : JSON.stringify(obj.Klartext)) + ',';
@@ -90,7 +90,7 @@ export class Schild3KatalogEintragVersetzungsvermerke extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<Schild3KatalogEintragVersetzungsvermerke>) : string {
+	public static transpilerToJSONPatch(obj: Partial<Schild3KatalogEintragVersetzungsvermerke>): string {
 		let result = '{';
 		if (obj.Nr !== undefined) {
 			result += '"Nr" : ' + ((obj.Nr === null) ? 'null' : JSON.stringify(obj.Nr)) + ',';
@@ -123,6 +123,6 @@ export class Schild3KatalogEintragVersetzungsvermerke extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_schild3_Schild3KatalogEintragVersetzungsvermerke(obj : unknown) : Schild3KatalogEintragVersetzungsvermerke {
+export function cast_de_svws_nrw_core_data_schild3_Schild3KatalogEintragVersetzungsvermerke(obj: unknown): Schild3KatalogEintragVersetzungsvermerke {
 	return obj as Schild3KatalogEintragVersetzungsvermerke;
 }

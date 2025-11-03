@@ -360,7 +360,7 @@
 	import type { ApiStatus } from "~/components/ApiStatus";
 	import type { DataTableColumn } from "@ui";
 	import type { GostKursplanungSchuelerFilter } from "./GostKursplanungSchuelerFilter";
-	import type { GostBlockungKursLehrer, GostBlockungsdatenManager, GostBlockungsergebnisKurs, GostBlockungsergebnisManager, GostFach, GostFaecherManager, GostHalbjahr, GostStatistikFachwahl, JavaSet, LehrerListeEintrag, List, GostBlockungRegelUpdate, GostBlockungSchiene, GostBlockungRegel} from "@core";
+	import type { GostBlockungKursLehrer, GostBlockungsdatenManager, GostBlockungsergebnisKurs, GostBlockungsergebnisManager, GostFach, GostFaecherManager, GostHalbjahr, GostStatistikFachwahl, JavaSet, LehrerListeEintrag, List, GostBlockungRegelUpdate, GostBlockungSchiene, GostBlockungRegel } from "@core";
 	import { HashMap2D, GostKursart, GostStatistikFachwahlHalbjahr, HashSet, Fach, GostBlockungKurs, GostBlockungsergebnisSchiene, SetUtils, ArrayList, GostKursblockungRegelTyp, DeveloperNotificationException } from "@core";
 	import { lehrer_filter } from "~/utils/helfer";
 
@@ -371,13 +371,13 @@
 		getErgebnismanager: () => GostBlockungsergebnisManager;
 		regelnUpdate: (update: GostBlockungRegelUpdate) => Promise<void>;
 		updateKursSchienenZuordnung: (idKurs: number, idSchieneAlt: number, idSchieneNeu: number) => Promise<boolean>;
-		patchSchiene: (data: Partial<GostBlockungSchiene>, id : number) => Promise<void>;
+		patchSchiene: (data: Partial<GostBlockungSchiene>, id: number) => Promise<void>;
 		addSchiene: () => Promise<GostBlockungSchiene | undefined>;
 		removeSchiene: (s: GostBlockungSchiene) => Promise<GostBlockungSchiene | undefined>;
 		patchKurs: (data: Partial<GostBlockungKurs>, kurs_id: number) => Promise<void>;
-		addKurs: (fach_id : number, kursart_id : number) => Promise<GostBlockungKurs | undefined>;
+		addKurs: (fach_id: number, kursart_id: number) => Promise<GostBlockungKurs | undefined>;
 		removeKurse: (ids: Iterable<number>) => Promise<void>;
-		combineKurs: (kurs1 : GostBlockungKurs, fach2: GostBlockungKurs | GostBlockungsergebnisKurs | undefined | null) => Promise<void>;
+		combineKurs: (kurs1: GostBlockungKurs, fach2: GostBlockungKurs | GostBlockungsergebnisKurs | undefined | null) => Promise<void>;
 		splitKurs: (kurs: GostBlockungKurs) => Promise<void>;
 		addKursLehrer: (kurs_id: number, lehrer_id: number) => Promise<GostBlockungKursLehrer | undefined>;
 		removeKursLehrer: (kurs_id: number, lehrer_id: number) => Promise<void>;
@@ -396,18 +396,18 @@
 		setZeigeSchienenbezeichnungen: (value: boolean) => void;
 		apiStatus: ApiStatus;
 		hatUpdateKompetenz: boolean;
-		setBlockungstabelleHidden: (value: 'nichts'|'alles'|'schienen') => Promise<void>;
+		setBlockungstabelleHidden: (value: 'nichts' | 'alles' | 'schienen') => Promise<void>;
 	}>();
 
 	const schuljahr = computed<number>(() => props.getDatenmanager().faecherManager().getSchuljahr());
 
-	const edit_schienenname = ref<number|undefined>(undefined);
+	const edit_schienenname = ref<number | undefined>(undefined);
 	const fehlermeldungen = computed(() => props.getErgebnismanager().getFehlermeldungen());
 	const fehlerIgnore = ref<boolean>(false);
 
 	const kurse = computed(() => (props.kurssortierung.value === 'fach')
 		? props.getDatenmanager().kursGetListeSortiertNachFachKursartNummer()
-		: props.getDatenmanager().kursGetListeSortiertNachKursartFachNummer())
+		: props.getDatenmanager().kursGetListeSortiertNachKursartFachNummer());
 
 	const schienen = computed<List<GostBlockungSchiene>>(() => props.getDatenmanager().schieneGetListe());
 	const istVorlage = computed<boolean>(() => props.getDatenmanager().ergebnisGetListeSortiertNachBewertung().size() === 1);
@@ -420,12 +420,12 @@
 			cols.push({ key: "actions", label: "", fixedWidth: 1.5, align: 'center' });
 		cols.push({ key: "kurs", label: "Kurs", span: 1.75, fixedWidth: 8 },
 			{ key: "lehrer", label: "Lehrer", span: 1.5, fixedWidth: 6 },
-			{ key: "koop", label: "Koop", align: 'center', fixedWidth: 3.75 })
+			{ key: "koop", label: "Koop", align: 'center', fixedWidth: 3.75 });
 		if (props.blockungstabelleHidden() === 'nichts') {
 			cols.push({ key: "FW", label: "FW", align: 'center', fixedWidth: 3.75 },
 				{ key: "Diff", label: "Diff", align: 'center', fixedWidth: 3.75 });
 			for (let i = 1; i < schienen.value.size(); i++)
-				cols.push({ key: "schiene_" + (i+1), label: "schiene_" + (i+1), fixedWidth: 3.75, align: 'center' });
+				cols.push({ key: "schiene_" + (i + 1), label: "schiene_" + (i + 1), fixedWidth: 3.75, align: 'center' });
 		}
 		cols.push({ key: "schiene_" + (1), label: "SuS", fixedWidth: 3.75, align: 'center' });
 		return cols;
@@ -437,7 +437,7 @@
 		return base + " repeat(" + count + ", 3.75rem)";
 	});
 
-	function getGridTemplateColumnsWithBackgroundColor(fachwahl: {kursart: GostKursart, fachwahlen: GostStatistikFachwahl}) {
+	function getGridTemplateColumnsWithBackgroundColor(fachwahl: { kursart: GostKursart, fachwahlen: GostStatistikFachwahl }) {
 		return "background-color: " + bgColor(fachwahl) + "; " + gridTemplateColumns.value;
 	}
 
@@ -451,8 +451,8 @@
 		return props.hatErgebnis ? props.getErgebnismanager().getOfSchieneAnzahlSchueler(idSchiene) : 0;
 	}
 
-	const fachwahlListe = computed<List<{ kursart : GostKursart, fachwahlen : GostStatistikFachwahl }>>(() => {
-		const result = new ArrayList<{ kursart : GostKursart, fachwahlen : GostStatistikFachwahl }>();
+	const fachwahlListe = computed<List<{ kursart: GostKursart, fachwahlen: GostStatistikFachwahl }>>(() => {
+		const result = new ArrayList<{ kursart: GostKursart, fachwahlen: GostStatistikFachwahl }>();
 		if (props.kurssortierung.value === 'fach')
 			for (const fachwahlen of props.mapFachwahlStatistik().values())
 				for (const kursart of GostKursart.values())
@@ -462,7 +462,7 @@
 				for (const fachwahlen of props.mapFachwahlStatistik().values())
 					if (kursart === GostKursart.GK) {
 						result.add({ kursart, fachwahlen });
-						result.add({ kursart : GostKursart.ZK, fachwahlen });
+						result.add({ kursart: GostKursart.ZK, fachwahlen });
 					} else if (kursart !== GostKursart.ZK)
 						result.add({ kursart, fachwahlen });
 		return result;
@@ -473,16 +473,16 @@
 		for (const fachwahlen of props.mapFachwahlStatistik().values()) {
 			for (const kursart of GostKursart.values()) {
 				let anzahl = 0;
-				const fach_halbjahr : GostStatistikFachwahlHalbjahr = fachwahlen.fachwahlen[props.halbjahr.id] ?? new GostStatistikFachwahlHalbjahr();
-				const gostfach : GostFach | null = props.faecherManager.get(fachwahlen.id);
+				const fach_halbjahr: GostStatistikFachwahlHalbjahr = fachwahlen.fachwahlen[props.halbjahr.id] ?? new GostStatistikFachwahlHalbjahr();
+				const gostfach: GostFach | null = props.faecherManager.get(fachwahlen.id);
 				if (gostfach !== null) {
 					const zulFach = Fach.getBySchluesselOrDefault(gostfach.kuerzel);
 					switch (kursart) {
-						case GostKursart.LK: { anzahl = fach_halbjahr.wahlenLK; break; }
-						case GostKursart.GK: { anzahl = (zulFach === Fach.PX) || (zulFach === Fach.VX) ? 0 : fach_halbjahr.wahlenGK; break; }
-						case GostKursart.ZK: { anzahl = fach_halbjahr.wahlenZK; break; }
-						case GostKursart.PJK: { anzahl = (zulFach === Fach.PX) ? fach_halbjahr.wahlenGK : 0; break; }
-						case GostKursart.VTF: { anzahl = (zulFach === Fach.VX) ? fach_halbjahr.wahlenGK : 0; break; }
+						case GostKursart.LK: { anzahl = fach_halbjahr.wahlenLK; break }
+						case GostKursart.GK: { anzahl = (zulFach === Fach.PX) || (zulFach === Fach.VX) ? 0 : fach_halbjahr.wahlenGK; break }
+						case GostKursart.ZK: { anzahl = fach_halbjahr.wahlenZK; break }
+						case GostKursart.PJK: { anzahl = (zulFach === Fach.PX) ? fach_halbjahr.wahlenGK : 0; break }
+						case GostKursart.VTF: { anzahl = (zulFach === Fach.VX) ? fach_halbjahr.wahlenGK : 0; break }
 					}
 				}
 				result.put(fachwahlen.id, kursart.id, anzahl);
@@ -491,12 +491,12 @@
 		return result;
 	});
 
-	function getAnzahlFachwahlen(fachwahl : { fachwahlen: GostStatistikFachwahl, kursart: GostKursart }) : number {
+	function getAnzahlFachwahlen(fachwahl: { fachwahlen: GostStatistikFachwahl, kursart: GostKursart }): number {
 		const anzahl = fachwahlenAnzahl.value.getOrNull(fachwahl.fachwahlen.id, fachwahl.kursart.id);
 		return (anzahl === null) ? 0 : anzahl;
 	}
 
-	function istFachwahlVorhanden(fachwahlen: GostStatistikFachwahl, kursart: GostKursart) : boolean {
+	function istFachwahlVorhanden(fachwahlen: GostStatistikFachwahl, kursart: GostKursart): boolean {
 		const anzahl = props.getDatenmanager().kursGetListeByFachUndKursart(fachwahlen.id, kursart.id).size();
 		return (anzahl > 0) || (istVorlage.value && props.hatUpdateKompetenz && (getAnzahlFachwahlen({ fachwahlen, kursart }) > 0));
 	}
@@ -549,7 +549,7 @@
 
 	const modalRegelKursartSchienen = ref();
 
-	function istDropZoneSchiene(schiene: GostBlockungSchiene) : boolean {
+	function istDropZoneSchiene(schiene: GostBlockungSchiene): boolean {
 		return (dragSperreSchiene.value !== undefined && (dragSperreSchiene.value.id !== schiene.id));
 	}
 
@@ -574,23 +574,23 @@
 	 *
 	 **/
 
-	const dragKurs = ref<GostBlockungKurs|null>(null);
-	const dragSchiene = ref<GostBlockungSchiene|null>(null);
-	const dragOverKurs = ref<GostBlockungKurs|null>(null);
-	const dragOverSchiene = ref<GostBlockungSchiene|null>(null);
-	const dropKurs = ref<GostBlockungKurs|null>(null);
-	const dropSchiene = ref<GostBlockungSchiene|null>(null);
-	const dropKurs2 = ref<GostBlockungKurs|null>(null);
-	const dropSchiene2 = ref<GostBlockungSchiene|null>(null);
-	const showTooltip = ref<{kursID: number; schieneID: number;}>({kursID: -1, schieneID: -1});
-	const kurseUndSchienenInRechteck = ref<[JavaSet<number>, JavaSet<number>, JavaSet<number>|null] | null>(null);
+	const dragKurs = ref<GostBlockungKurs | null>(null);
+	const dragSchiene = ref<GostBlockungSchiene | null>(null);
+	const dragOverKurs = ref<GostBlockungKurs | null>(null);
+	const dragOverSchiene = ref<GostBlockungSchiene | null>(null);
+	const dropKurs = ref<GostBlockungKurs | null>(null);
+	const dropSchiene = ref<GostBlockungSchiene | null>(null);
+	const dropKurs2 = ref<GostBlockungKurs | null>(null);
+	const dropSchiene2 = ref<GostBlockungSchiene | null>(null);
+	const showTooltip = ref<{ kursID: number; schieneID: number; }>({ kursID: -1, schieneID: -1 });
+	const kurseUndSchienenInRechteck = ref<[JavaSet<number>, JavaSet<number>, JavaSet<number> | null] | null>(null);
 
 	/** ist das Drag-Objekt ein Kurs, der auf der Schiene liegt? */
 	const isKursDragging = computed(() => {
 		if (dragKurs.value === null || dragSchiene.value === null)
 			return false;
 		return props.getErgebnismanager().getOfKursOfSchieneIstZugeordnet(dragKurs.value.id, dragSchiene.value.id);
-	})
+	});
 
 	/** Soll ein Kurs verschoben werden, dann befinden wir uns im gleichen Kurs, aber auf einer anderen Schiene */
 	const highlightKursVerschieben = (kurs: GostBlockungKurs) => computed<boolean>(() => {
@@ -609,7 +609,7 @@
 		if ((dragOverKurs.value.id === dragKurs.value.id) && (dragOverSchiene.value.id !== dragSchiene.value.id) && (kurs.id === dragOverKurs.value.id))
 			return true;
 		return false;
-	})
+	});
 
 	/** Es soll ein Kurs auf einen anderen Kurs gezogen werden, um gemeinsame Sache zu machen */
 	const highlightKursAufAnderenKurs = (kurs: GostBlockungKurs, schieneE: GostBlockungsergebnisSchiene) => computed<boolean>(() => {
@@ -626,7 +626,7 @@
 			return false;
 		// kurs auf anderen kurs ist ok, Kurs mit Kurs Sperren/Fixieren etc
 		return props.getErgebnismanager().getOfKursOfSchieneIstZugeordnet(dragOverKurs.value.id, dragOverSchiene.value.id);
-	})
+	});
 
 	/** Wird ein Rechteck gezogen, so wird ein Feld über mehrere Kurse hinweg bewegt und landet nicht auf einem anderen Kurs */
 	const highlightRechteck = (kurs: GostBlockungKurs, schieneE: GostBlockungsergebnisSchiene) => computed<boolean>(() => {
@@ -643,8 +643,8 @@
 		// ist der aktuelle Kurs nicht Teil des Rechtecks, dann nicht highlighten
 		if (!kurseInRechteckSet.value.contains(kurs.id))
 			return false;
-		return (((schiene.nummer <= dragSchiene.value.nummer) && (schiene.nummer >= dragOverSchiene.value.nummer)) || ((schiene.nummer >= dragSchiene.value.nummer) && (schiene.nummer <= dragOverSchiene.value.nummer)))
-	})
+		return (((schiene.nummer <= dragSchiene.value.nummer) && (schiene.nummer >= dragOverSchiene.value.nummer)) || ((schiene.nummer >= dragSchiene.value.nummer) && (schiene.nummer <= dragOverSchiene.value.nummer)));
+	});
 
 	/** Wird ein Rechteck gezogen, so wird ein Feld über mehrere Kurse hinweg bewegt und landet nicht auf einem anderen Kurs */
 	const highlightRechteckDrop = (kurs: GostBlockungKurs, schieneE: GostBlockungsergebnisSchiene) => computed<boolean>(() => {
@@ -653,7 +653,7 @@
 		const schiene = props.getErgebnismanager().getSchieneG(schieneE.id);
 		const [kurse, schienen] = kurseUndSchienenInRechteck.value;
 		return (kurse.contains(kurs.id)) && (schienen.contains(schiene.nummer));
-	})
+	});
 
 	/** Dieses computed ermittelt ein Set von Kursen, die innerhalb des Rechtecks liegen */
 	const kurseInRechteckSet = computed<JavaSet<number>>(() => {
@@ -678,14 +678,14 @@
 				range.add(k.id);
 		}
 		return range;
-	})
+	});
 
-	const zusammenKursbezeichnung = computed<string|null>(() => {
+	const zusammenKursbezeichnung = computed<string | null>(() => {
 		if (!kurseUndSchienenInRechteck.value?.[2])
 			return null;
 		const [id1, id2] = kurseUndSchienenInRechteck.value[2];
 		return `${props.getDatenmanager().kursGetName(id1)} und ${props.getDatenmanager().kursGetName(id2)}`;
-	})
+	});
 
 	const isDragging = computed<boolean>(() => ((dragSchiene.value !== null) && (dropSchiene.value === null)) && (props.hatUpdateKompetenz || isKursDragging.value));
 
@@ -741,11 +741,11 @@
 		const s1 = props.getErgebnismanager().getSchieneG(dropSchiene.value.id);
 		const s2 = props.getErgebnismanager().getSchieneG(dragSchiene.value.id);
 		const schienenSet = new HashSet<number>();
-		for (let i = Math.min(s1.nummer, s2.nummer); (i < Math.max(s1.nummer, s2.nummer) +1); i++)
+		for (let i = Math.min(s1.nummer, s2.nummer); (i < Math.max(s1.nummer, s2.nummer) + 1); i++)
 			schienenSet.add(i);
 		const kurseZusammen = props.getErgebnismanager().getOfKursOfSchieneIstZugeordnet(dragKurs.value.id, dragSchiene.value.id) && props.getErgebnismanager().getOfKursOfSchieneIstZugeordnet(dropKurs.value.id, dropSchiene.value.id)
 			? SetUtils.create2(dragKurs.value.id, dropKurs.value.id)
-			: null
+			: null;
 		kurseUndSchienenInRechteck.value = [kurseInRechteckSet.value, schienenSet, kurseZusammen];
 	}
 
@@ -762,10 +762,10 @@
 		dropKurs2.value = null;
 		dropSchiene2.value = null;
 		kurseUndSchienenInRechteck.value = null;
-		showTooltip.value = {kursID: -1, schieneID: -1};
+		showTooltip.value = { kursID: -1, schieneID: -1 };
 	}
 
-	async function rechteckActions(action: 'kurse fixieren'| 'kurse lösen' | 'toggle kurse' | 'schienen sperren' | 'schienen entsperren' | 'toggle schienen' | 'schüler fixieren' | 'schüler lösen' | 'toggle schüler' | 'Schüler LK fixieren' | 'Schüler AB3 fixieren' | 'Schüler LK und AB3 fixieren' | 'Schüler AB4 fixieren' | 'Schüler AB fixieren' | 'Schüler schriftlichen fixieren' | 'kurse immer zusammen' | 'kurse nie zusammen') {
+	async function rechteckActions(action: 'kurse fixieren' | 'kurse lösen' | 'toggle kurse' | 'schienen sperren' | 'schienen entsperren' | 'toggle schienen' | 'schüler fixieren' | 'schüler lösen' | 'toggle schüler' | 'Schüler LK fixieren' | 'Schüler AB3 fixieren' | 'Schüler LK und AB3 fixieren' | 'Schüler AB4 fixieren' | 'Schüler AB fixieren' | 'Schüler schriftlichen fixieren' | 'kurse immer zusammen' | 'kurse nie zusammen') {
 		if (kurseUndSchienenInRechteck.value === null)
 			return false;
 		const [kurse, schienen, set] = kurseUndSchienenInRechteck.value;
@@ -822,7 +822,7 @@
 
 	const editKursID = ref<number | undefined>(undefined);
 
-	function listeDerKurse(fachwahl : { fachwahlen: GostStatistikFachwahl, kursart: GostKursart }) : List<GostBlockungKurs> {
+	function listeDerKurse(fachwahl: { fachwahlen: GostStatistikFachwahl, kursart: GostKursart }): List<GostBlockungKurs> {
 		const liste = listenDerKurse.value.getOrNull(fachwahl.fachwahlen.id, fachwahl.kursart.id);
 		return (liste === null) ? new ArrayList() : liste;
 	}
@@ -835,7 +835,7 @@
 		return result;
 	});
 
-	function bgColor(fachwahl: { fachwahlen: GostStatistikFachwahl, kursart: GostKursart }) : string {
+	function bgColor(fachwahl: { fachwahlen: GostStatistikFachwahl, kursart: GostKursart }): string {
 		if (fachwahl.fachwahlen.kuerzelStatistik === null)
 			return 'rgb(220,220,220)';
 		return Fach.getBySchluesselOrDefault(fachwahl.fachwahlen.kuerzelStatistik).getHMTLFarbeRGBA(schuljahr.value, 1.0);
@@ -879,10 +879,10 @@
 			if (!vergeben.has(l.id) && l.istSichtbar)
 				result.push(l);
 		return result;
-	})
+	});
 
 	async function setKurslehrer(kurs: GostBlockungKurs, value: LehrerListeEintrag | undefined) {
-		const lehrer = kurslehrer(kurs).value
+		const lehrer = kurslehrer(kurs).value;
 		if ((value === undefined && lehrer === undefined) || (value !== undefined && props.getDatenmanager().kursGetLehrkraftMitIDExists(kurs.id, value.id)))
 			return;
 		if (value !== undefined) {
@@ -899,7 +899,7 @@
 		if (regeln.isEmpty())
 			return undefined;
 		return regeln.get(0);
-	})
+	});
 
 	async function addLehrerRegel() {
 		if (lehrer_regel.value !== undefined)
@@ -913,8 +913,7 @@
 		if ((filter.fach !== kurs.fach_id) || (filter.kursart?.id !== kurs.kursart)) {
 			filter.kursart = GostKursart.fromID(kurs.kursart);
 			filter.fach = kurs.fach_id;
-		}
-		else
+		} else
 			filter.reset();
 	}
 
@@ -929,7 +928,7 @@
 	const filtered_by_kursart = (kurs: GostBlockungKurs) => computed<List<GostBlockungsergebnisKurs>>(() => {
 		const fachart_id = GostKursart.getFachartID(kurs.fach_id, kurs.kursart);
 		return props.getErgebnismanager().getOfFachartKursmenge(fachart_id);
-	})
+	});
 
 	const setze_kursdifferenz = (kurs: GostBlockungKurs) => computed<boolean>(() => {
 		return filtered_by_kursart(kurs).value.get(0) === kurs_blockungsergebnis(kurs).value;
@@ -937,7 +936,7 @@
 
 	const kursdifferenz = (kurs: GostBlockungKurs) => computed<[number, number, number]>(() => {
 		if (filtered_by_kursart(kurs).value.isEmpty())
-			return [-1,-1, -1];
+			return [-1, -1, -1];
 		const fachart_id = GostKursart.getFachartID(kurs.fach_id, kurs.kursart);
 		const wahlen = props.getDatenmanager().fachwahlGetListeOfFachart(fachart_id).size();
 		const kdiff = props.getErgebnismanager().getOfFachartKursdifferenz(fachart_id);
@@ -946,11 +945,11 @@
 
 	const istZugeordnetKursSchiene = (kurs: GostBlockungKurs, schiene: GostBlockungsergebnisSchiene) => computed<boolean>(() => {
 		return props.getErgebnismanager().getOfKursOfSchieneIstZugeordnet(kurs.id, schiene.id);
-	})
+	});
 
 	const istKursFixiertInSchiene = (kurs: GostBlockungKurs, schiene: GostBlockungsergebnisSchiene) => computed<boolean>(() => {
 		return props.getDatenmanager().kursGetHatFixierungInSchiene(kurs.id, schiene.id);
-	})
+	});
 
 	const istKursAusgewaehlt = (kurs: GostBlockungKurs) => computed<boolean>(() => {
 		const k = props.getErgebnismanager().getKursE(kurs.id);
@@ -958,7 +957,7 @@
 		return (k.id === filter_kurs_id);
 	});
 
-	function toggleKursAusgewaehlt(kurs : GostBlockungKurs) {
+	function toggleKursAusgewaehlt(kurs: GostBlockungKurs) {
 		const filter = props.schuelerFilter();
 		if (filter.kurs?.id !== kurs.id)
 			filter.kurs = kurs;
@@ -968,25 +967,25 @@
 
 	const istKursGesperrtInSchiene = (kurs: GostBlockungKurs, schiene: GostBlockungsergebnisSchiene) => computed<boolean>(() => {
 		return props.getDatenmanager().kursGetHatSperrungInSchiene(kurs.id, schiene.id);
-	})
+	});
 
 	async function toggleRegelSperreKursInSchiene(kurs: GostBlockungKurs, schiene: GostBlockungsergebnisSchiene) {
 		const s = props.getErgebnismanager().getSchieneG(schiene.id);
 		const update = (props.getDatenmanager().kursGetHatSperrungInSchiene(kurs.id, schiene.id))
 			? props.getErgebnismanager().regelupdateRemove_03_KURS_SPERRE_IN_SCHIENE(SetUtils.create1(kurs.id), SetUtils.create1(s.nummer))
-			: props.getErgebnismanager().regelupdateCreate_03_KURS_SPERRE_IN_SCHIENE(SetUtils.create1(kurs.id), SetUtils.create1(s.nummer))
+			: props.getErgebnismanager().regelupdateCreate_03_KURS_SPERRE_IN_SCHIENE(SetUtils.create1(kurs.id), SetUtils.create1(s.nummer));
 		await props.regelnUpdate(update);
 	}
 
 	const istKursVerbotenInSchiene = (kurs: GostBlockungKurs, schiene: GostBlockungsergebnisSchiene) => computed<boolean>(() => {
 		return props.getDatenmanager().kursGetIstVerbotenInSchiene(kurs.id, schiene.id);
-	})
+	});
 
 	async function toggleRegelFixiereKursInSchiene(kurs: GostBlockungKurs, schiene: GostBlockungsergebnisSchiene) {
 		const s = props.getErgebnismanager().getSchieneG(schiene.id);
 		const update = (props.getDatenmanager().kursGetHatFixierungInSchiene(kurs.id, schiene.id))
 			? props.getErgebnismanager().regelupdateRemove_02e_KURS_FIXIERE_IN_EINER_SCHIENE(kurs.id, s.nummer)
-			: props.getErgebnismanager().regelupdateCreate_02e_KURS_FIXIERE_IN_EINER_SCHIENE(kurs.id, s.nummer)
+			: props.getErgebnismanager().regelupdateCreate_02e_KURS_FIXIERE_IN_EINER_SCHIENE(kurs.id, s.nummer);
 		await props.regelnUpdate(update);
 	}
 

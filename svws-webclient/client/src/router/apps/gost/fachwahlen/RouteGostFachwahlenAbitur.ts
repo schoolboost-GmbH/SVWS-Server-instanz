@@ -1,10 +1,10 @@
 import type { RouteLocationNormalized, RouteLocationRaw, RouteParams } from "vue-router";
 
-import type { DeveloperNotificationException} from "@core";
+import type { DeveloperNotificationException } from "@core";
 import { BenutzerKompetenz, ServerMode } from "@core";
 
 import { RouteNode } from "~/router/RouteNode";
-import { routeGost, type RouteGost} from "~/router/apps/gost/RouteGost";
+import { routeGost, type RouteGost } from "~/router/apps/gost/RouteGost";
 
 import { routeGostFachwahlen } from "~/router/apps/gost/fachwahlen/RouteGostFachwahlen";
 
@@ -32,21 +32,21 @@ export class RouteGostFachwahlenAbitur extends RouteNode<any, RouteGost> {
 		super.text = "Fachwahlen - Abitur";
 		this.isHidden = (params?: RouteParams) => {
 			return this.checkHidden(params);
-		}
+		};
 	}
 
 	public checkHidden(params?: RouteParams) {
 		try {
 			const { abiturjahr } = params ? RouteNode.getIntParams(params, ["abiturjahr"]) : { abiturjahr: null };
 			if ((abiturjahr === null) || (abiturjahr === -1))
-				return { name: routeGost.defaultChild!.name, params: { idSchuljahresabschnitt: routeApp.data.idSchuljahresabschnitt, abiturjahr }};
+				return { name: routeGost.defaultChild!.name, params: { idSchuljahresabschnitt: routeApp.data.idSchuljahresabschnitt, abiturjahr } };
 			return false;
 		} catch (e) {
 			return routeError.getSimpleErrorRoute(e as DeveloperNotificationException);
 		}
 	}
 
-	public async update(to: RouteNode<any, any>, to_params: RouteParams) : Promise<void | Error | RouteLocationRaw> {
+	public async update(to: RouteNode<any, any>, to_params: RouteParams): Promise<void | Error | RouteLocationRaw> {
 		// if (to_params.abiturjahr instanceof Array)
 		// 	return new DeveloperNotificationException("Fehler: Die Parameter der Route dürfen keine Arrays sein");
 		// const abiturjahr = to_params.abiturjahr === undefined ? undefined : parseInt(to_params.abiturjahr);

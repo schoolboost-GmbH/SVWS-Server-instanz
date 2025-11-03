@@ -5,7 +5,7 @@ import { BenutzerKompetenz, Schulform, ServerMode } from "@core";
 import { RouteNode } from "~/router/RouteNode";
 import { ViewType } from "@ui";
 import { api } from "~/router/Api";
-import { routeApp} from "~/router/apps/RouteApp";
+import { routeApp } from "~/router/apps/RouteApp";
 import { routeHaltestellen } from "~/router/apps/schule/allgemein/haltestellen/RouteHaltestellen";
 
 const SHaltestellenGruppenprozesse = () => import(
@@ -15,15 +15,15 @@ export class RouteHaltestellenGruppenprozesse extends RouteNode<any, RouteHaltes
 
 	public constructor() {
 		super(Schulform.values(), [BenutzerKompetenz.KATALOG_EINTRAEGE_ANSEHEN, BenutzerKompetenz.KATALOG_EINTRAEGE_AENDERN,
-			BenutzerKompetenz.KATALOG_EINTRAEGE_LOESCHEN], "schule.haltestellen.gruppenprozesse" , "gruppenprozesse", SHaltestellenGruppenprozesse);
+			BenutzerKompetenz.KATALOG_EINTRAEGE_LOESCHEN], "schule.haltestellen.gruppenprozesse", "gruppenprozesse", SHaltestellenGruppenprozesse);
 		super.types = new Set([ViewType.GRUPPENPROZESSE]);
 		super.mode = ServerMode.DEV;
 		super.propHandler = (route) => this.getProps(route);
-		super.text = "Gruppenprozesse"
+		super.text = "Gruppenprozesse";
 	}
 
 	public getRoute(): RouteLocationRaw {
-		return { name: this.name, params: {idSchuljahresabschnitt: routeApp.data.idSchuljahresabschnitt, id: ""}}
+		return { name: this.name, params: { idSchuljahresabschnitt: routeApp.data.idSchuljahresabschnitt, id: "" } };
 	}
 
 	public getProps(to: RouteLocationNormalized): HaltestellenGruppenprozesseProps {
@@ -33,7 +33,7 @@ export class RouteHaltestellenGruppenprozesse extends RouteNode<any, RouteHaltes
 			benutzerKompetenzen: api.benutzerKompetenzen,
 			deleteHaltestellen: routeHaltestellen.data.delete,
 			manager: () => routeHaltestellen.data.manager,
-		}
+		};
 	}
 }
 

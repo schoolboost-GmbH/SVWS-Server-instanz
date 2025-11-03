@@ -18,7 +18,7 @@ test('testet den prop_row_wert auf true', async () => {
 		},
 	});
 
-	//Testen
+	// Testen
 	['flex-row', 'flex-wrap', 'gap-0.5'].forEach((value) => {
 		expect(wrapper.classes()).toContain(value);
 	});

@@ -55,7 +55,7 @@
 		searchText?: string;
 		noItemsText?: string;
 		highlightItem?: Item;
-	}>(),{
+	}>(), {
 		statistics: false,
 		itemText: (item: Item) => "",
 		selectItem: (item: Item) => undefined,
@@ -79,7 +79,7 @@
 		for (const _ of props.filteredList)
 			return false;
 		return true;
-	})
+	});
 
 	defineExpose({ activeItemIndex, floating, itemRefs });
 

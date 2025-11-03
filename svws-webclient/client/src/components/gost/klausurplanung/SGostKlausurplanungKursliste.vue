@@ -82,13 +82,13 @@
 			emit('modal', true);
 		else
 			emit('modal', false);
-	})
+	});
 
 	const terminSelected = ref<GostSchuelerklausurTermin>(new GostSchuelerklausurTermin());
 
 	const createTermin = async (create: boolean) => {
 		if (props.patchKlausur && props.createSchuelerklausurTermin && create) {
-			await props.patchKlausur(terminSelected.value, { bemerkung: terminSelected.value.bemerkung } );
+			await props.patchKlausur(terminSelected.value, { bemerkung: terminSelected.value.bemerkung });
 			const sktNeu = new GostSchuelerklausurTermin();
 			sktNeu.idSchuelerklausur = terminSelected.value.idSchuelerklausur;
 			await props.createSchuelerklausurTermin(sktNeu);

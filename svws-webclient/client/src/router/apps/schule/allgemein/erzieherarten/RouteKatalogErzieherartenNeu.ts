@@ -13,8 +13,8 @@ const SErzieherartenNeu = () => import("~/components/schule/allgemein/erzieherar
 export class RouteKatalogErzieherartenNeu extends RouteNode<any, RouteKatalogErzieherarten> {
 
 	public constructor() {
-		super(Schulform.values(), [ BenutzerKompetenz.KATALOG_EINTRAEGE_AENDERN ], "schule.erzieherarten.neu", "neu", SErzieherartenNeu);
-		super.types = new Set([ ViewType.HINZUFUEGEN ]);
+		super(Schulform.values(), [BenutzerKompetenz.KATALOG_EINTRAEGE_AENDERN], "schule.erzieherarten.neu", "neu", SErzieherartenNeu);
+		super.types = new Set([ViewType.HINZUFUEGEN]);
 		super.mode = ServerMode.DEV;
 		super.propHandler = (route) => this.getProps(route);
 		super.text = "Erzieherarten Neu";

@@ -1,4 +1,4 @@
-import type { BenutzerKompetenzGruppe, List} from "@core";
+import type { BenutzerKompetenzGruppe, List } from "@core";
 import { BenutzerKompetenz, Schulform, ServerMode } from "@core";
 
 import { RouteNode } from "~/router/RouteNode";
@@ -11,7 +11,7 @@ import { AppMenuGroup } from "@ui";
 export class RouteEinstellungen extends RouteNode<any, RouteApp> {
 
 	public constructor() {
-		super(Schulform.values(), [ BenutzerKompetenz.ADMIN ], "einstellungen", "einstellungen");
+		super(Schulform.values(), [BenutzerKompetenz.ADMIN], "einstellungen", "einstellungen");
 		super.mode = ServerMode.STABLE;
 		super.propHandler = (route) => this.getNoProps(route);
 		super.text = "Einstellungen";
@@ -24,12 +24,12 @@ export class RouteEinstellungen extends RouteNode<any, RouteApp> {
 			return routeEinstellungenBenutzer.getRoute();
 	}
 
-	public benutzerKompetenzen = (gruppe : BenutzerKompetenzGruppe) : List<BenutzerKompetenz> => {
+	public benutzerKompetenzen = (gruppe: BenutzerKompetenzGruppe): List<BenutzerKompetenz> => {
 		const schuljahr = routeApp.data.aktAbschnitt.value.schuljahr;
 		const schulformEintrag = api.schulform.daten(schuljahr);
 		const schulform = Schulform.data().getWertByID(schulformEintrag?.id ?? -1);
 		return BenutzerKompetenz.getKompetenzenMitSchulform(schuljahr, gruppe, schulform);
-	}
+	};
 }
 
 export const routeEinstellungen = new RouteEinstellungen();

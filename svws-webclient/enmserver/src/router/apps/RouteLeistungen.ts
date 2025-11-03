@@ -6,13 +6,13 @@ import { ServerMode } from "@core/core/types/ServerMode";
 import { BenutzerKompetenz } from "@core/core/types/benutzer/BenutzerKompetenz";
 import type { EnmLeistungenAuswahlProps } from "@ui/components/enm/EnmLeistungenAuswahlProps";
 
-const EnmLeistungenAuswahl = () => import("@ui/components/enm/EnmLeistungenAuswahl.vue")
-const EnmLeistungen = () => import("@ui/components/enm/EnmLeistungen.vue")
+const EnmLeistungenAuswahl = () => import("@ui/components/enm/EnmLeistungenAuswahl.vue");
+const EnmLeistungen = () => import("@ui/components/enm/EnmLeistungen.vue");
 
 export class RouteLeistungen extends RouteNode<any, RouteApp> {
 
 	public constructor() {
-		super(Schulform.values(), [ BenutzerKompetenz.KEINE ], "leistungen", "leistungen", EnmLeistungen);
+		super(Schulform.values(), [BenutzerKompetenz.KEINE], "leistungen", "leistungen", EnmLeistungen);
 		super.mode = ServerMode.STABLE;
 		super.propHandler = (route) => this.getProps();
 		super.text = "Leistungsdaten";

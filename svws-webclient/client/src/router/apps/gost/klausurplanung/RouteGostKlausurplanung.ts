@@ -66,7 +66,7 @@ export class RouteGostKlausurplanung extends RouteNode<RouteDataGostKlausurplanu
 		]);
 		this.isHidden = (params?: RouteParams) => {
 			return this.checkHidden(params);
-		}
+		};
 	}
 
 	public checkHidden(params?: RouteParams) {
@@ -80,7 +80,7 @@ export class RouteGostKlausurplanung extends RouteNode<RouteDataGostKlausurplanu
 		}
 	}
 
-	public async beforeEach(to: RouteNode<any, any>, to_params: RouteParams, from: RouteNode<any, any> | undefined, from_params: RouteParams) : Promise<boolean | void | Error | RouteLocationRaw> {
+	public async beforeEach(to: RouteNode<any, any>, to_params: RouteParams, from: RouteNode<any, any> | undefined, from_params: RouteParams): Promise<boolean | void | Error | RouteLocationRaw> {
 		try {
 			const { abiturjahr } = RouteNode.getIntParams(to_params, ["abiturjahr"]);
 			if ((abiturjahr === undefined))
@@ -91,9 +91,9 @@ export class RouteGostKlausurplanung extends RouteNode<RouteDataGostKlausurplanu
 		}
 	}
 
-	protected async update(to: RouteNode<any, any>, to_params: RouteParams, from: RouteNode<any, any> | undefined, from_params: RouteParams, isEntering: boolean) : Promise<void | Error | RouteLocationRaw> {
+	protected async update(to: RouteNode<any, any>, to_params: RouteParams, from: RouteNode<any, any> | undefined, from_params: RouteParams, isEntering: boolean): Promise<void | Error | RouteLocationRaw> {
 		try {
-			const { abiturjahr, halbjahr: halbjahrId, idtermin } = RouteNode.getIntParams(to_params, [ "abiturjahr", "halbjahr", "idtermin" ]);
+			const { abiturjahr, halbjahr: halbjahrId, idtermin } = RouteNode.getIntParams(to_params, ["abiturjahr", "halbjahr", "idtermin"]);
 			const { datum } = RouteNode.getStringParams(to_params, ["datum"]);
 			// Prüfe das Abiturjahr
 			if (abiturjahr === undefined)
@@ -107,9 +107,9 @@ export class RouteGostKlausurplanung extends RouteNode<RouteDataGostKlausurplanu
 			if (isEntering) {
 				const temp = this.data.getParams(abiturjahr);
 				if (temp !== undefined) {
-					const { view } = RouteNode.getStringParams(temp, [ "view" ]);
+					const { view } = RouteNode.getStringParams(temp, ["view"]);
 					delete temp.view;
-					const { halbjahr: tempHalbjahr } = RouteNode.getIntParams(temp, [ "halbjahr" ]);
+					const { halbjahr: tempHalbjahr } = RouteNode.getIntParams(temp, ["halbjahr"]);
 					if ((view !== this.data.view.name) || ((view === this._defaultChild!.name) && (tempHalbjahr !== halbjahrId))) {
 						this.data.setView(RouteNode.getNodeByName(view) ?? this._defaultChild!, this.children);
 						return { name: view, params: temp };
@@ -136,22 +136,22 @@ export class RouteGostKlausurplanung extends RouteNode<RouteDataGostKlausurplanu
 					return this.data.view.getRoute({ halbjahr: halbjahr.id, idtermin });
 				if (this.data.view.name === "gost.klausurplanung.kalender")
 					return this.data.view.getRoute({ halbjahr: halbjahr.id, datum, idtermin });
-				return this.data.view.getRoute({ halbjahr: halbjahr.id});
+				return this.data.view.getRoute({ halbjahr: halbjahr.id });
 			}
-		} catch(e) {
+		} catch (e) {
 			this.data.reset();
 			return await routeError.getErrorRoute(e instanceof Error ? e : new DeveloperNotificationException("Unbekannter Fehler beim Laden der Klausurplanungsdaten."));
 		}
 	}
 
 	public async leave(from: RouteNode<any, any>, from_params: RouteParams): Promise<void> {
-		const { abiturjahr } = RouteNode.getIntParams(from_params, [ "abiturjahr" ]);
+		const { abiturjahr } = RouteNode.getIntParams(from_params, ["abiturjahr"]);
 		if (abiturjahr !== undefined)
 			this.data.setParams(abiturjahr, from_params);
 		this.data.reset();
 	}
 
-	public addRouteParamsFromState() : RouteParamsRawGeneric {
+	public addRouteParamsFromState(): RouteParamsRawGeneric {
 		return { halbjahr: this.data.halbjahr.id };
 	}
 
@@ -165,7 +165,7 @@ export class RouteGostKlausurplanung extends RouteNode<RouteDataGostKlausurplanu
 			halbjahr: this.data.halbjahr,
 			tabManager: () => this.createTabManagerByChildren(this.data.view.name, this.setTab),
 			getConfigNumberValue: routeGostKlausurplanung.data.getConfigNumberValue,
-		}
+		};
 	}
 
 	public getAuswahlProps(to: RouteLocationNormalized): GostKlausurplanungAuswahlProps {
@@ -193,7 +193,7 @@ export class RouteGostKlausurplanung extends RouteNode<RouteDataGostKlausurplanu
 			delete nodeRoute.params.idtermin;
 		await RouteManager.doRoute(nodeRoute);
 		this.data.setView(node, this.children);
-	}
+	};
 
 }
 

@@ -6,42 +6,42 @@ export class Schild3KatalogEintragAbiturInfos extends JavaObject {
 	/**
 	 * Hier stehen neben Regeln für die alte u.a. einige Regeln für die FHR-Berechnung an GY und GE drin
 	 */
-	public PrfOrdnung : string | null = null;
+	public PrfOrdnung: string | null = null;
 
 	/**
 	 * Hier stehen neben Regeln für die alte u.a. einige Regeln für die FHR-Berechnung an GY und GE drin
 	 */
-	public AbiFach : string | null = null;
+	public AbiFach: string | null = null;
 
 	/**
 	 * Hier stehen neben Regeln für die alte u.a. einige Regeln für die FHR-Berechnung an GY und GE drin
 	 */
-	public Bedingung : string | null = null;
+	public Bedingung: string | null = null;
 
 	/**
 	 * Hier stehen neben Regeln für die alte u.a. einige Regeln für die FHR-Berechnung an GY und GE drin
 	 */
-	public AbiInfoKrz : string | null = null;
+	public AbiInfoKrz: string | null = null;
 
 	/**
 	 * Hier stehen neben Regeln für die alte u.a. einige Regeln für die FHR-Berechnung an GY und GE drin
 	 */
-	public AbiInfoBeschreibung : string | null = null;
+	public AbiInfoBeschreibung: string | null = null;
 
 	/**
 	 * Hier stehen neben Regeln für die alte u.a. einige Regeln für die FHR-Berechnung an GY und GE drin
 	 */
-	public AbiInfoText : string | null = null;
+	public AbiInfoText: string | null = null;
 
 	/**
 	 * Gültig ab Schuljahr
 	 */
-	public gueltigVon : number | null = null;
+	public gueltigVon: number | null = null;
 
 	/**
 	 * Gültig bis Schuljahr
 	 */
-	public gueltigBis : number | null = null;
+	public gueltigBis: number | null = null;
 
 
 	/**
@@ -55,13 +55,13 @@ export class Schild3KatalogEintragAbiturInfos extends JavaObject {
 		return 'de.svws_nrw.core.data.schild3.Schild3KatalogEintragAbiturInfos';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.schild3.Schild3KatalogEintragAbiturInfos'].includes(name);
 	}
 
 	public static class = new Class<Schild3KatalogEintragAbiturInfos>('de.svws_nrw.core.data.schild3.Schild3KatalogEintragAbiturInfos');
 
-	public static transpilerFromJSON(json : string): Schild3KatalogEintragAbiturInfos {
+	public static transpilerFromJSON(json: string): Schild3KatalogEintragAbiturInfos {
 		const obj = JSON.parse(json) as Partial<Schild3KatalogEintragAbiturInfos>;
 		const result = new Schild3KatalogEintragAbiturInfos();
 		result.PrfOrdnung = (obj.PrfOrdnung === undefined) ? null : obj.PrfOrdnung === null ? null : obj.PrfOrdnung;
@@ -75,7 +75,7 @@ export class Schild3KatalogEintragAbiturInfos extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : Schild3KatalogEintragAbiturInfos) : string {
+	public static transpilerToJSON(obj: Schild3KatalogEintragAbiturInfos): string {
 		let result = '{';
 		result += '"PrfOrdnung" : ' + ((obj.PrfOrdnung === null) ? 'null' : JSON.stringify(obj.PrfOrdnung)) + ',';
 		result += '"AbiFach" : ' + ((obj.AbiFach === null) ? 'null' : JSON.stringify(obj.AbiFach)) + ',';
@@ -90,7 +90,7 @@ export class Schild3KatalogEintragAbiturInfos extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<Schild3KatalogEintragAbiturInfos>) : string {
+	public static transpilerToJSONPatch(obj: Partial<Schild3KatalogEintragAbiturInfos>): string {
 		let result = '{';
 		if (obj.PrfOrdnung !== undefined) {
 			result += '"PrfOrdnung" : ' + ((obj.PrfOrdnung === null) ? 'null' : JSON.stringify(obj.PrfOrdnung)) + ',';
@@ -123,6 +123,6 @@ export class Schild3KatalogEintragAbiturInfos extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_schild3_Schild3KatalogEintragAbiturInfos(obj : unknown) : Schild3KatalogEintragAbiturInfos {
+export function cast_de_svws_nrw_core_data_schild3_Schild3KatalogEintragAbiturInfos(obj: unknown): Schild3KatalogEintragAbiturInfos {
 	return obj as Schild3KatalogEintragAbiturInfos;
 }

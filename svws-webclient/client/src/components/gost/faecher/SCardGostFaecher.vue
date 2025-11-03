@@ -91,7 +91,7 @@
 
 	const schuljahr = computed<number>(() => props.faecherManager().getSchuljahr());
 
-	function bgColor(fach : GostFach) : string {
+	function bgColor(fach: GostFach): string {
 		return Fach.getBySchluesselOrDefault(fach.kuerzel).getHMTLFarbeRGB(schuljahr.value);
 	}
 

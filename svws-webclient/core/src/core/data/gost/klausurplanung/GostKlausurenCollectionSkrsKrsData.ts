@@ -11,17 +11,17 @@ export class GostKlausurenCollectionSkrsKrsData extends JavaObject {
 	/**
 	 * Die enthaltenen Raumdaten werden durch die Veränderung neu erzeugt.
 	 */
-	public raumdata : GostKlausurenCollectionRaumData = new GostKlausurenCollectionRaumData();
+	public raumdata: GostKlausurenCollectionRaumData = new GostKlausurenCollectionRaumData();
 
 	/**
 	 * Ein Array mit den Klausurraumstunden, die durch die Veränderung gelöscht wurden.
 	 */
-	public raumstundenGeloescht : List<GostKlausurraumstunde> = new ArrayList<GostKlausurraumstunde>();
+	public raumstundenGeloescht: List<GostKlausurraumstunde> = new ArrayList<GostKlausurraumstunde>();
 
 	/**
 	 * Ein Array mit den Schülerklausurterminraumstunden, die durch die Veränderung gelöscht wurden.
 	 */
-	public schuelerklausurterminraumstundenGeloescht : List<GostSchuelerklausurterminraumstunde> = new ArrayList<GostSchuelerklausurterminraumstunde>();
+	public schuelerklausurterminraumstundenGeloescht: List<GostSchuelerklausurterminraumstunde> = new ArrayList<GostSchuelerklausurterminraumstunde>();
 
 
 	/**
@@ -35,7 +35,7 @@ export class GostKlausurenCollectionSkrsKrsData extends JavaObject {
 	 * Fügt die Daten der übergebenen Instanz zu den aktuellen Daten hinzu.
 	 * @param data die zu hinzuzufügenden Daten
 	 */
-	public addAll(data : GostKlausurenCollectionSkrsKrsData) : void {
+	public addAll(data: GostKlausurenCollectionSkrsKrsData): void {
 		this.raumdata.addAll(data.raumdata);
 		this.raumstundenGeloescht.addAll(data.raumstundenGeloescht);
 		this.schuelerklausurterminraumstundenGeloescht.addAll(data.schuelerklausurterminraumstundenGeloescht);
@@ -45,13 +45,13 @@ export class GostKlausurenCollectionSkrsKrsData extends JavaObject {
 		return 'de.svws_nrw.core.data.gost.klausurplanung.GostKlausurenCollectionSkrsKrsData';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.gost.klausurplanung.GostKlausurenCollectionSkrsKrsData'].includes(name);
 	}
 
 	public static class = new Class<GostKlausurenCollectionSkrsKrsData>('de.svws_nrw.core.data.gost.klausurplanung.GostKlausurenCollectionSkrsKrsData');
 
-	public static transpilerFromJSON(json : string): GostKlausurenCollectionSkrsKrsData {
+	public static transpilerFromJSON(json: string): GostKlausurenCollectionSkrsKrsData {
 		const obj = JSON.parse(json) as Partial<GostKlausurenCollectionSkrsKrsData>;
 		const result = new GostKlausurenCollectionSkrsKrsData();
 		if (obj.raumdata === undefined)
@@ -70,7 +70,7 @@ export class GostKlausurenCollectionSkrsKrsData extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : GostKlausurenCollectionSkrsKrsData) : string {
+	public static transpilerToJSON(obj: GostKlausurenCollectionSkrsKrsData): string {
 		let result = '{';
 		result += '"raumdata" : ' + GostKlausurenCollectionRaumData.transpilerToJSON(obj.raumdata) + ',';
 		result += '"raumstundenGeloescht" : [ ';
@@ -94,7 +94,7 @@ export class GostKlausurenCollectionSkrsKrsData extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<GostKlausurenCollectionSkrsKrsData>) : string {
+	public static transpilerToJSONPatch(obj: Partial<GostKlausurenCollectionSkrsKrsData>): string {
 		let result = '{';
 		if (obj.raumdata !== undefined) {
 			result += '"raumdata" : ' + GostKlausurenCollectionRaumData.transpilerToJSON(obj.raumdata) + ',';
@@ -126,6 +126,6 @@ export class GostKlausurenCollectionSkrsKrsData extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_gost_klausurplanung_GostKlausurenCollectionSkrsKrsData(obj : unknown) : GostKlausurenCollectionSkrsKrsData {
+export function cast_de_svws_nrw_core_data_gost_klausurplanung_GostKlausurenCollectionSkrsKrsData(obj: unknown): GostKlausurenCollectionSkrsKrsData {
 	return obj as GostKlausurenCollectionSkrsKrsData;
 }

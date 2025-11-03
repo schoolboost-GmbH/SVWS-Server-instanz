@@ -8,32 +8,32 @@ export class GostBlockungsergebnisKurs extends JavaObject {
 	/**
 	 * Die ID des Kurses
 	 */
-	public id : number = -1;
+	public id: number = -1;
 
 	/**
 	 * Die ID des Kurs-Faches
 	 */
-	public fachID : number = -1;
+	public fachID: number = -1;
 
 	/**
 	 * Die Kursart des Kurses
 	 */
-	public kursart : number = -1;
+	public kursart: number = -1;
 
 	/**
 	 * Die Anzahl an Schienen die der Kurs belegen soll. Falls > 1 handelt es sich um einen Multikurs.
 	 */
-	public anzahlSchienen : number = -1;
+	public anzahlSchienen: number = -1;
 
 	/**
 	 * Eine Liste Schüler-IDs, welche diesem Kurs zugeordnet sind.
 	 */
-	public readonly schueler : List<number> = new ArrayList<number>();
+	public readonly schueler: List<number> = new ArrayList<number>();
 
 	/**
 	 * Die Schienen-IDs, denen der Kurs zugeordnet ist.
 	 */
-	public readonly schienen : List<number> = new ArrayList<number>();
+	public readonly schienen: List<number> = new ArrayList<number>();
 
 
 	/**
@@ -43,18 +43,18 @@ export class GostBlockungsergebnisKurs extends JavaObject {
 		super();
 	}
 
-	public hashCode() : number {
+	public hashCode(): number {
 		return 31 + (this.id ^ (this.id >>> 32)) as number;
 	}
 
-	public equals(obj : unknown | null) : boolean {
+	public equals(obj: unknown | null): boolean {
 		if (this as unknown === obj as unknown)
 			return true;
 		if (obj === null)
 			return false;
 		if (!(((obj instanceof JavaObject) && (obj.isTranspiledInstanceOf('de.svws_nrw.core.data.gost.GostBlockungsergebnisKurs')))))
 			return false;
-		const other : GostBlockungsergebnisKurs = cast_de_svws_nrw_core_data_gost_GostBlockungsergebnisKurs(obj);
+		const other: GostBlockungsergebnisKurs = cast_de_svws_nrw_core_data_gost_GostBlockungsergebnisKurs(obj);
 		return (this.id === other.id);
 	}
 
@@ -62,13 +62,13 @@ export class GostBlockungsergebnisKurs extends JavaObject {
 		return 'de.svws_nrw.core.data.gost.GostBlockungsergebnisKurs';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.gost.GostBlockungsergebnisKurs'].includes(name);
 	}
 
 	public static class = new Class<GostBlockungsergebnisKurs>('de.svws_nrw.core.data.gost.GostBlockungsergebnisKurs');
 
-	public static transpilerFromJSON(json : string): GostBlockungsergebnisKurs {
+	public static transpilerFromJSON(json: string): GostBlockungsergebnisKurs {
 		const obj = JSON.parse(json) as Partial<GostBlockungsergebnisKurs>;
 		const result = new GostBlockungsergebnisKurs();
 		if (obj.id === undefined)
@@ -96,7 +96,7 @@ export class GostBlockungsergebnisKurs extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : GostBlockungsergebnisKurs) : string {
+	public static transpilerToJSON(obj: GostBlockungsergebnisKurs): string {
 		let result = '{';
 		result += '"id" : ' + obj.id.toString() + ',';
 		result += '"fachID" : ' + obj.fachID.toString() + ',';
@@ -123,7 +123,7 @@ export class GostBlockungsergebnisKurs extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<GostBlockungsergebnisKurs>) : string {
+	public static transpilerToJSONPatch(obj: Partial<GostBlockungsergebnisKurs>): string {
 		let result = '{';
 		if (obj.id !== undefined) {
 			result += '"id" : ' + obj.id.toString() + ',';
@@ -164,6 +164,6 @@ export class GostBlockungsergebnisKurs extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_gost_GostBlockungsergebnisKurs(obj : unknown) : GostBlockungsergebnisKurs {
+export function cast_de_svws_nrw_core_data_gost_GostBlockungsergebnisKurs(obj: unknown): GostBlockungsergebnisKurs {
 	return obj as GostBlockungsergebnisKurs;
 }

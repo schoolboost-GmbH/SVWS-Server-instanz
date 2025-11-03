@@ -40,11 +40,11 @@
 	}>();
 
 
-	function getSchienen(wochentag: number, stunde: number, wochentyp: number) : List<StundenplanSchiene> {
+	function getSchienen(wochentag: number, stunde: number, wochentyp: number): List<StundenplanSchiene> {
 		return props.manager().schieneGetMengeByKlasseIdAndWochentagAndStundeAndWochentypAndInklusiveOrEmptyList(props.id, wochentag, stunde, wochentyp, false);
 	}
 
-	function getUnterricht(wochentag: number, stunde: number, wochentyp: number, schiene: number | null) : List<StundenplanUnterricht> {
+	function getUnterricht(wochentag: number, stunde: number, wochentyp: number, schiene: number | null): List<StundenplanUnterricht> {
 		if (schiene === null)
 			return props.manager().unterrichtGetMengeByKlasseIdAndWochentagAndStundeAndWochentypAndInklusiveOrEmptyList(props.id, wochentag, stunde, wochentyp, false);
 		return props.manager().unterrichtGetMengeByKlasseIdAndWochentagAndStundeAndWochentypAndSchieneAndInklusiveOrEmptyList(props.id, wochentag, stunde, wochentyp, schiene, false);
@@ -62,11 +62,11 @@
 		return props.manager().pausenzeitHatSchnittMitZeitrasterByWochentagAndKlassenId(wochentag, props.id);
 	}
 
-	function getPausenzeitenWochentag(wochentag: number) : List<StundenplanPausenzeit> {
+	function getPausenzeitenWochentag(wochentag: number): List<StundenplanPausenzeit> {
 		return props.manager().pausenzeitGetMengeByKlasseIdAndWochentagAsList(props.id, wochentag);
 	}
 
-	function getPausenaufsichtenPausenzeit(idPausenzeit: number) : List<StundenplanPausenaufsicht> {
+	function getPausenaufsichtenPausenzeit(idPausenzeit: number): List<StundenplanPausenaufsicht> {
 		return props.manager().pausenaufsichtGetMengeByKlasseIdAndPausenzeitIdAndWochentypAndInklusive(props.id, idPausenzeit, props.wochentyp(), true);
 	}
 

@@ -11,7 +11,7 @@ import { routeSchuleBetriebeDaten } from "./RouteSchuleBetriebeDaten";
 interface RouteStateSchuleBetriebe extends RouteStateInterface {
 	auswahl: BetriebListeEintrag | undefined;
 	daten: BetriebStammdaten | undefined;
-	mapKatalogeintraege: Map<number,BetriebListeEintrag>;
+	mapKatalogeintraege: Map<number, BetriebListeEintrag>;
 	mapAnsprechpartner: Map<number, BetriebAnsprechpartner>;
 	mapBeschaeftigungsarten: Map<number, KatalogEintrag>;
 }
@@ -36,7 +36,7 @@ export class RouteDataSchuleBetriebe extends RouteData<RouteStateSchuleBetriebe>
 		return this._state.value.auswahl;
 	}
 
-	get mapAnsprechpartner(): Map<number, BetriebAnsprechpartner>{
+	get mapAnsprechpartner(): Map<number, BetriebAnsprechpartner> {
 		return this._state.value.mapAnsprechpartner;
 	}
 
@@ -63,52 +63,52 @@ export class RouteDataSchuleBetriebe extends RouteData<RouteStateSchuleBetriebe>
 		const listBeschaeftigungsarten = await api.server.getKatalogBetriebsart(api.schema);
 		const mapBeschaeftigungsarten = new Map();
 		for (const l of listBeschaeftigungsarten)
-			mapBeschaeftigungsarten.set(l.id, l)
+			mapBeschaeftigungsarten.set(l.id, l);
 
 		const mapAnsprechpartner = new Map();
 		if (auswahl !== undefined) {
 			const listAnsprechpartner = await api.server.getBetriebAnsprechpartner(api.schema, auswahl.id);
-			for( const l of listAnsprechpartner)
+			for (const l of listAnsprechpartner)
 				mapAnsprechpartner.set(l.id, l);
 		}
 
-		this.setPatchedDefaultState({ auswahl, mapKatalogeintraege, mapAnsprechpartner, mapBeschaeftigungsarten })
+		this.setPatchedDefaultState({ auswahl, mapKatalogeintraege, mapAnsprechpartner, mapBeschaeftigungsarten });
 	}
 
 	setEintrag = async (auswahl: BetriebListeEintrag) => {
-		const daten = await api.server.getBetriebStammdaten(api.schema, auswahl.id)
+		const daten = await api.server.getBetriebStammdaten(api.schema, auswahl.id);
 		const listAnsprechpartner = await api.server.getBetriebAnsprechpartner(api.schema, auswahl.id);
 		const mapAnsprechpartner = new Map();
-		for( const l of listAnsprechpartner)
+		for (const l of listAnsprechpartner)
 			mapAnsprechpartner.set(l.id, l);
-		this.setPatchedState({ auswahl, daten , mapAnsprechpartner})
-	}
+		this.setPatchedState({ auswahl, daten, mapAnsprechpartner });
+	};
 
 	gotoEintrag = async (eintrag: BetriebListeEintrag | undefined) => {
 		await RouteManager.doRoute(routeSchuleBetriebe.getRoute({ id: eintrag?.id }));
-	}
+	};
 
-	addEintrag =async (eintrag: BetriebStammdaten) => {
+	addEintrag = async (eintrag: BetriebStammdaten) => {
 		const res = await api.server.createBetrieb(eintrag, api.schema);
 		const auswahl = new BetriebListeEintrag();
 		auswahl.name1 = res.name1;
 		auswahl.id = res.id;
 		auswahl.adressArt = res.adressArt;
 		auswahl.branche = res.branche;
-		this.mapKatalogeintraege.set(auswahl.id,auswahl);
+		this.mapKatalogeintraege.set(auswahl.id, auswahl);
 		const mapKatalogeintraege = new Map();
 		this.mapKatalogeintraege.forEach((value) => mapKatalogeintraege.set(value.id, value));
 		const mapAnsprechpartner = new Map();
-		const listAnsprechpartner = await api.server.getBetriebAnsprechpartner(api.schema,auswahl.id);
-		for( const l of listAnsprechpartner)
+		const listAnsprechpartner = await api.server.getBetriebAnsprechpartner(api.schema, auswahl.id);
+		for (const l of listAnsprechpartner)
 			mapAnsprechpartner.set(l.id, l);
 		this.setPatchedState({ mapKatalogeintraege, mapAnsprechpartner, auswahl });
 		await this.gotoEintrag(auswahl);
-	}
+	};
 
-	patch = async (data : Partial<BetriebStammdaten>) => {
-		await api.server.patchBetriebStammdaten(data, api.schema, this.daten.id)
-		const daten = await api.server.getBetriebStammdaten(api.schema, this.daten.id)
+	patch = async (data: Partial<BetriebStammdaten>) => {
+		await api.server.patchBetriebStammdaten(data, api.schema, this.daten.id);
+		const daten = await api.server.getBetriebStammdaten(api.schema, this.daten.id);
 		const auswahl = new BetriebListeEintrag();
 		auswahl.name1 = daten.name1;
 		auswahl.id = daten.id;
@@ -117,57 +117,57 @@ export class RouteDataSchuleBetriebe extends RouteData<RouteStateSchuleBetriebe>
 		this.mapKatalogeintraege.set(auswahl.id, auswahl);
 		const mapKatalogeintraege = new Map();
 		this.mapKatalogeintraege.forEach((value) => mapKatalogeintraege.set(value.id, value));
-		this.setPatchedState({ daten, auswahl, mapKatalogeintraege })
-	}
+		this.setPatchedState({ daten, auswahl, mapKatalogeintraege });
+	};
 
 	deleteEintraege = async (eintraege: BetriebListeEintrag[]) => {
 		const bids = new ArrayList<number>();
-		let istAuswahlMitGeloescht : boolean = false;
-		for ( const betrieb of eintraege)
+		let istAuswahlMitGeloescht: boolean = false;
+		for (const betrieb of eintraege)
 			bids.add(betrieb.id);
 		await api.server.removeBetrieb(bids, api.schema);
 		const mapKatalogeintraege = new Map();
-		for ( const betrieb of eintraege) {
+		for (const betrieb of eintraege) {
 			this.mapKatalogeintraege.delete(betrieb.id);
-			if( this.auswahl)
-				if(this.auswahl.id === betrieb.id)
+			if (this.auswahl)
+				if (this.auswahl.id === betrieb.id)
 					istAuswahlMitGeloescht = true;
 		}
 		const auswahl = istAuswahlMitGeloescht ? this.mapKatalogeintraege.values().next().value : this.auswahl;
 		this.mapKatalogeintraege.forEach((value) => mapKatalogeintraege.set(value.id, value));
 		this.setPatchedState({ mapKatalogeintraege, auswahl });
 		await this.gotoEintrag(auswahl);
-	}
+	};
 
-	patchBetriebAnsprechpartner = async (data : Partial<BetriebAnsprechpartner>, id: number) => {
+	patchBetriebAnsprechpartner = async (data: Partial<BetriebAnsprechpartner>, id: number) => {
 		if (this.auswahl === undefined)
 			throw new DeveloperNotificationException('Kein gültiger Betreib ausgewählt');
-		await api.server.patchBetriebanpsrechpartnerdaten(data,api.schema,id);
-	}
+		await api.server.patchBetriebanpsrechpartnerdaten(data, api.schema, id);
+	};
 
-	addBetriebAnsprechpartner = async (data : BetriebAnsprechpartner) => {
+	addBetriebAnsprechpartner = async (data: BetriebAnsprechpartner) => {
 		const id = this._state.value.auswahl?.id;
 		if (id === undefined)
 			throw new DeveloperNotificationException('Kein gültiger Betrieb ausgewählt');
 		data.betrieb_id = id;
-		const ansprechpartner = await api.server.createBetriebansprechpartner(data,api.schema, id);
+		const ansprechpartner = await api.server.createBetriebansprechpartner(data, api.schema, id);
 		const mapAnsprechpartner = new Map<number, BetriebAnsprechpartner>();
 		this.mapAnsprechpartner.forEach((value) => mapAnsprechpartner.set(value.id, value));
 		mapAnsprechpartner.set(ansprechpartner.id, ansprechpartner);
-		this.setPatchedState({ mapAnsprechpartner })
-	}
+		this.setPatchedState({ mapAnsprechpartner });
+	};
 
-	removeBetriebAnsprechpartner = async (daten : BetriebAnsprechpartner[]) => {
+	removeBetriebAnsprechpartner = async (daten: BetriebAnsprechpartner[]) => {
 		const bids = new ArrayList<number>();
-		for ( const ansprechpartner of daten){
+		for (const ansprechpartner of daten) {
 			bids.add(ansprechpartner.id);
 		}
 		await api.server.removeBetriebansprechpartner(bids, api.schema);
 		const mapAnsprechpartner = new Map<number, BetriebAnsprechpartner>();
-		for ( const ansprechpartner of daten){
+		for (const ansprechpartner of daten) {
 			this.mapAnsprechpartner.delete(ansprechpartner.id);
 		}
 		this.mapAnsprechpartner.forEach((value) => mapAnsprechpartner.set(value.id, value));
-		this.setPatchedState({ mapAnsprechpartner })
-	}
+		this.setPatchedState({ mapAnsprechpartner });
+	};
 }

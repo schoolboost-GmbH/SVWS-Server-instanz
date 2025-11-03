@@ -6,22 +6,22 @@ export class SchuldateiOrganisationseinheitGliederung extends SchuldateiEintrag 
 	/**
 	 * Die Schulnummer.
 	 */
-	public schulnummer : string = "";
+	public schulnummer: string = "";
 
 	/**
 	 * Die ID des Gliederungs-Eintrages.
 	 */
-	public id : number | null = null;
+	public id: number | null = null;
 
 	/**
 	 * Die Gliederung
 	 */
-	public gliederung : string = "";
+	public gliederung: string = "";
 
 	/**
 	 * Der Förderschwerpunkt
 	 */
-	public foerderschwerpunkt : string = "";
+	public foerderschwerpunkt: string = "";
 
 
 	/**
@@ -35,13 +35,13 @@ export class SchuldateiOrganisationseinheitGliederung extends SchuldateiEintrag 
 		return 'de.svws_nrw.schulen.v1.data.SchuldateiOrganisationseinheitGliederung';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.schulen.v1.data.SchuldateiOrganisationseinheitGliederung', 'de.svws_nrw.schulen.v1.data.SchuldateiEintrag'].includes(name);
 	}
 
 	public static class = new Class<SchuldateiOrganisationseinheitGliederung>('de.svws_nrw.schulen.v1.data.SchuldateiOrganisationseinheitGliederung');
 
-	public static transpilerFromJSON(json : string): SchuldateiOrganisationseinheitGliederung {
+	public static transpilerFromJSON(json: string): SchuldateiOrganisationseinheitGliederung {
 		const obj = JSON.parse(json) as Partial<SchuldateiOrganisationseinheitGliederung>;
 		const result = new SchuldateiOrganisationseinheitGliederung();
 		result.gueltigab = (obj.gueltigab === undefined) ? null : obj.gueltigab === null ? null : obj.gueltigab;
@@ -60,7 +60,7 @@ export class SchuldateiOrganisationseinheitGliederung extends SchuldateiEintrag 
 		return result;
 	}
 
-	public static transpilerToJSON(obj : SchuldateiOrganisationseinheitGliederung) : string {
+	public static transpilerToJSON(obj: SchuldateiOrganisationseinheitGliederung): string {
 		let result = '{';
 		result += '"gueltigab" : ' + ((obj.gueltigab === null) ? 'null' : JSON.stringify(obj.gueltigab)) + ',';
 		result += '"gueltigbis" : ' + ((obj.gueltigbis === null) ? 'null' : JSON.stringify(obj.gueltigbis)) + ',';
@@ -74,7 +74,7 @@ export class SchuldateiOrganisationseinheitGliederung extends SchuldateiEintrag 
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<SchuldateiOrganisationseinheitGliederung>) : string {
+	public static transpilerToJSONPatch(obj: Partial<SchuldateiOrganisationseinheitGliederung>): string {
 		let result = '{';
 		if (obj.gueltigab !== undefined) {
 			result += '"gueltigab" : ' + ((obj.gueltigab === null) ? 'null' : JSON.stringify(obj.gueltigab)) + ',';
@@ -104,6 +104,6 @@ export class SchuldateiOrganisationseinheitGliederung extends SchuldateiEintrag 
 
 }
 
-export function cast_de_svws_nrw_schulen_v1_data_SchuldateiOrganisationseinheitGliederung(obj : unknown) : SchuldateiOrganisationseinheitGliederung {
+export function cast_de_svws_nrw_schulen_v1_data_SchuldateiOrganisationseinheitGliederung(obj: unknown): SchuldateiOrganisationseinheitGliederung {
 	return obj as SchuldateiOrganisationseinheitGliederung;
 }

@@ -16,35 +16,35 @@ import de.svws_nrw.db.schema.SchemaTabelleSpalte;
 public class Tabelle_Gost_Klausuren_Raumstunden_Aufsichten extends SchemaTabelle {
 
 	/** Die Definition der Tabellenspalte ID */
-	public SchemaTabelleSpalte col_ID = add("ID", SchemaDatentypen.BIGINT, true)
+	public final SchemaTabelleSpalte col_ID = add("ID", SchemaDatentypen.BIGINT, true)
 			.setNotNull()
 			.setJavaComment("ID der Klausuraufsicht (generiert)");
 
 	/** Die Definition der Tabellenspalte Raumstunde_ID */
-	public SchemaTabelleSpalte col_Raumstunde_ID = add("Raumstunde_ID", SchemaDatentypen.BIGINT, false)
+	public final SchemaTabelleSpalte col_Raumstunde_ID = add("Raumstunde_ID", SchemaDatentypen.BIGINT, false)
 			.setNotNull()
 			.setJavaComment("ID der Klausur-Raumstunde");
 
 	/** Die Definition der Tabellenspalte Lehrer_ID */
-	public SchemaTabelleSpalte col_Lehrer_ID = add("Lehrer_ID", SchemaDatentypen.BIGINT, false)
+	public final SchemaTabelleSpalte col_Lehrer_ID = add("Lehrer_ID", SchemaDatentypen.BIGINT, false)
 			.setJavaComment("ID des Lehrers");
 
 	/** Die Definition der Tabellenspalte Startzeit */
-	public SchemaTabelleSpalte col_Startzeit = add("Startzeit", SchemaDatentypen.TIME, false)
+	public final SchemaTabelleSpalte col_Startzeit = add("Startzeit", SchemaDatentypen.TIME, false)
 			.setConverter(UhrzeitConverter.class)
 			.setJavaComment("Die Startzeit der Aufsicht");
 
 	/** Die Definition der Tabellenspalte Endzeit */
-	public SchemaTabelleSpalte col_Endzeit = add("Endzeit", SchemaDatentypen.TIME, false)
+	public final SchemaTabelleSpalte col_Endzeit = add("Endzeit", SchemaDatentypen.TIME, false)
 			.setConverter(UhrzeitConverter.class)
 			.setJavaComment("Die Endzeit der Aufsicht");
 
 	/** Die Definition der Tabellenspalte Bemerkungen */
-	public SchemaTabelleSpalte col_Bemerkungen = add("Bemerkungen", SchemaDatentypen.TEXT, false)
+	public final SchemaTabelleSpalte col_Bemerkungen = add("Bemerkungen", SchemaDatentypen.TEXT, false)
 			.setJavaComment("Text für Bemerkungen zur Aufsicht");
 
 	/** Die Definition des Fremdschlüssels Gost_Klausuren_Raumstunden_Aufsichten_KlausurRaumStunde_ID_FK */
-	public SchemaTabelleFremdschluessel fk_Gost_Klausuren_Raumstunden_Aufsichten_KlausurRaumStunde_ID_FK = addForeignKey(
+	public final SchemaTabelleFremdschluessel fk_Gost_Klausuren_Raumstunden_Aufsichten_KlausurRaumStunde_ID_FK = addForeignKey(
 			"Gost_Klausuren_Raumstunden_Aufsichten_KlausurRaumStunde_ID_FK",
 			/* OnUpdate: */ SchemaFremdschluesselAktionen.CASCADE,
 			/* OnDelete: */ SchemaFremdschluesselAktionen.CASCADE,
@@ -52,7 +52,7 @@ public class Tabelle_Gost_Klausuren_Raumstunden_Aufsichten extends SchemaTabelle
 	);
 
 	/** Die Definition des Fremdschlüssels Gost_Klausuren_Raumstunden_Aufsichten_Lehrer_ID_FK */
-	public SchemaTabelleFremdschluessel fk_Gost_Klausuren_Raumstunden_Aufsichten_Lehrer_ID_FK = addForeignKey(
+	public final SchemaTabelleFremdschluessel fk_Gost_Klausuren_Raumstunden_Aufsichten_Lehrer_ID_FK = addForeignKey(
 			"Gost_Klausuren_Raumstunden_Aufsichten_Lehrer_ID_FK",
 			/* OnUpdate: */ SchemaFremdschluesselAktionen.CASCADE,
 			/* OnDelete: */ SchemaFremdschluesselAktionen.SET_NULL,

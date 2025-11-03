@@ -2,7 +2,7 @@ import { nextTick, type Slots } from "vue";
 import { StateManager } from "../ui/StateManager";
 
 export interface ColorPreset { label: string, color: string, contrastColor: string };
-export type GridView = 'grid'|'single';
+export type GridView = 'grid' | 'single';
 export interface VariantProps { id: string, title: string, source?: string }
 
 

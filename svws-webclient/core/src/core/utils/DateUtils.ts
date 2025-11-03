@@ -15,59 +15,59 @@ export class DateUtils extends JavaObject {
 	/**
 	 * Die Anzahl der Tage zwischen dem Jahr 0 und dem Jahr 1.1.1970
 	 */
-	public static readonly DAYS_FROM_0_TO_1970 : number = 719528;
+	public static readonly DAYS_FROM_0_TO_1970: number = 719528;
 
 	/**
 	 * Die Anzahl an Tagen in 400 Jahren
 	 */
-	public static readonly DAYS_PER_400_YEARS : number = 146097;
+	public static readonly DAYS_PER_400_YEARS: number = 146097;
 
 	/**
 	 * Die Anzahl an Tagen in 100 Jahren, nicht der Speziallfall, wenn ein Jahrhundert mit einem Schaltjahr beginnt
 	 */
-	public static readonly DAYS_PER_100_YEARS : number = 36524;
+	public static readonly DAYS_PER_100_YEARS: number = 36524;
 
 	/**
 	 * Die Anzahl an Tagen in 4 Jahren
 	 */
-	public static readonly DAYS_PER_4_YEARS : number = 1461;
+	public static readonly DAYS_PER_4_YEARS: number = 1461;
 
 	/**
 	 * Die Anzahl an Tagen in einem Jahr, welches kein Schaltjahr ist
 	 */
-	public static readonly DAYS_PER_YEAR : number = 365;
+	public static readonly DAYS_PER_YEAR: number = 365;
 
 	/**
 	 * Die Anzahl an Tagen in einem Schaltjahr
 	 */
-	public static readonly DAYS_PER_LEAP_YEAR : number = 366;
+	public static readonly DAYS_PER_LEAP_YEAR: number = 366;
 
 	/**
 	 * Das kleinste gültige Jahr für das alle Datumsberechnungen geprüft wurden.
 	 */
-	public static readonly MIN_GUELTIGES_JAHR : number = 1900;
+	public static readonly MIN_GUELTIGES_JAHR: number = 1900;
 
 	/**
 	 * Das größte gültige Jahr für das alle Datumsberechnungen geprüft wurden.
 	 */
-	public static readonly MAX_GUELTIGES_JAHR : number = 2900;
+	public static readonly MAX_GUELTIGES_JAHR: number = 2900;
 
 	/**
 	 * Ein Mapping für den Monat als Zahl zu seiner textuellen Beschreibung.
 	 */
-	private static readonly MONAT_ZU_TEXT : Array<string | null> = ["", "Januar", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember"];
+	private static readonly MONAT_ZU_TEXT: Array<string | null> = ["", "Januar", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember"];
 
 	/**
 	 * Ein Mapping für den Wochentag als Zahl zu seiner textuellen Beschreibung.
 	 */
-	private static readonly WOCHENTAG_ZU_TEXT : Array<string | null> = ["", "Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag", "Sonntag"];
+	private static readonly WOCHENTAG_ZU_TEXT: Array<string | null> = ["", "Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag", "Sonntag"];
 
 	/**
 	 *  Liefert für den jeweiligen Monat im Jahr die Summe der vergangenen Tage.<br>
 	 *  [0][3] bedeutet, dass im März bereits 59 Tage vergangen sind (kein Schaltjahr).<br>
 	 *  [1][3] bedeutet, dass im März bereits 60 Tage vergangen sind (Schaltjahr).
 	 */
-	private static readonly monat_zu_vergangene_tage : Array<Array<number>> = [[0, 0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334], [0, 0, 31, 60, 91, 121, 152, 182, 213, 244, 274, 305, 335]];
+	private static readonly monat_zu_vergangene_tage: Array<Array<number>> = [[0, 0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334], [0, 0, 31, 60, 91, 121, 152, 182, 213, 244, 274, 305, 335]];
 
 
 	private constructor() {
@@ -97,26 +97,26 @@ export class DateUtils extends JavaObject {
 	 * @return ein aus dem Datum extrahiertes int[] mit dem Inhalt [jahr, monat, tagImMonat, tagInWoche, tagImJahr, kalenderwoche, kalenderwochen, kalenderwochenjahr]..
 	 * @see <a href="https://de.wikipedia.org/wiki/Woche#Kalenderwoche">https://de.wikipedia.org/wiki/Woche#Kalenderwoche</a>
 	 */
-	public static extractFromDateISO8601(datumISO8601 : string) : Array<number> {
-		const split : Array<string | null> = datumISO8601.split("-");
+	public static extractFromDateISO8601(datumISO8601: string): Array<number> {
+		const split: Array<string | null> = datumISO8601.split("-");
 		DeveloperNotificationException.ifTrue("Datumsformat von " + datumISO8601 + " ist nicht ISO8601 konform!", split.length !== 3);
-		const jahr : number = DeveloperNotificationException.ifNotInt(split[0]);
+		const jahr: number = DeveloperNotificationException.ifNotInt(split[0]);
 		DeveloperNotificationException.ifTrue("Das Jahr von " + datumISO8601 + " ist ungültig!", DateUtils.gibIstJahrUngueltig(jahr));
-		const monat : number = DeveloperNotificationException.ifNotInt(split[1]);
+		const monat: number = DeveloperNotificationException.ifNotInt(split[1]);
 		DeveloperNotificationException.ifTrue("Der Monat von " + datumISO8601 + " ist ungültig!", (monat < 1) || (monat > 12));
-		const tagImMonat : number = DeveloperNotificationException.ifNotInt(split[2]);
+		const tagImMonat: number = DeveloperNotificationException.ifNotInt(split[2]);
 		DeveloperNotificationException.ifTrue("Der Tag von " + datumISO8601 + " ist ungültig!", (tagImMonat < 1) || (tagImMonat > 31));
-		const schalttage1 : number = ((Math.trunc((jahr - 1) / 4)) - (Math.trunc((jahr - 1) / 100))) + (Math.trunc((jahr - 1) / 400));
-		const schalttage2 : number = ((Math.trunc(jahr / 4)) - (Math.trunc(jahr / 100))) + (Math.trunc(jahr / 400));
-		const schaltjahr : number = schalttage2 - schalttage1;
-		const tagImJahr : number = DateUtils.monat_zu_vergangene_tage[schaltjahr][monat] + tagImMonat;
-		const tagInWoche : number = ((jahr + schalttage1 + tagImJahr + 5) % 7) + 1;
-		const tagImJahrAmJanuar4 : number = 4;
-		const wochentagAmJanuar4 : number = ((jahr + schalttage1 + tagImJahrAmJanuar4 + 5) % 7) + 1;
-		const tagImJahrAmMontagDerKW1 : number = (tagImJahrAmJanuar4 - wochentagAmJanuar4) + 1;
-		const kalenderwochen : number = DateUtils.gibKalenderwochenOfJahr(jahr);
-		let kalenderwochenjahr : number = jahr;
-		let kalenderwoche : number = 1 + (Math.trunc((tagImJahr - tagImJahrAmMontagDerKW1) / 7));
+		const schalttage1: number = ((Math.trunc((jahr - 1) / 4)) - (Math.trunc((jahr - 1) / 100))) + (Math.trunc((jahr - 1) / 400));
+		const schalttage2: number = ((Math.trunc(jahr / 4)) - (Math.trunc(jahr / 100))) + (Math.trunc(jahr / 400));
+		const schaltjahr: number = schalttage2 - schalttage1;
+		const tagImJahr: number = DateUtils.monat_zu_vergangene_tage[schaltjahr][monat] + tagImMonat;
+		const tagInWoche: number = ((jahr + schalttage1 + tagImJahr + 5) % 7) + 1;
+		const tagImJahrAmJanuar4: number = 4;
+		const wochentagAmJanuar4: number = ((jahr + schalttage1 + tagImJahrAmJanuar4 + 5) % 7) + 1;
+		const tagImJahrAmMontagDerKW1: number = (tagImJahrAmJanuar4 - wochentagAmJanuar4) + 1;
+		const kalenderwochen: number = DateUtils.gibKalenderwochenOfJahr(jahr);
+		let kalenderwochenjahr: number = jahr;
+		let kalenderwoche: number = 1 + (Math.trunc((tagImJahr - tagImJahrAmMontagDerKW1) / 7));
 		if (kalenderwoche > kalenderwochen) {
 			kalenderwoche = 1;
 			kalenderwochenjahr++;
@@ -142,19 +142,19 @@ export class DateUtils extends JavaObject {
 	 *     (unter Berücksichtigung von Schaltjahren durch {@code daysInMonth(int jahr, int monat)}).
 	 * - Falls {@code null} übergeben wird, das Format ungültig ist oder nicht-numerische Zeichen enthält, wird {@code false} zurückgegeben.
 	 */
-	public static isValidDate(datumISO8601 : string | null) : boolean {
+	public static isValidDate(datumISO8601: string | null): boolean {
 		if (datumISO8601 === null)
 			return false;
 		try {
-			const split : Array<string | null> = datumISO8601.split("-");
+			const split: Array<string | null> = datumISO8601.split("-");
 			if (split.length !== 3)
 				return false;
-			let jahr : number = JavaInteger.parseInt(split[0]);
-			let monat : number = JavaInteger.parseInt(split[1]);
-			let tagImMonat : number = JavaInteger.parseInt(split[2]);
+			const jahr: number = JavaInteger.parseInt(split[0]);
+			const monat: number = JavaInteger.parseInt(split[1]);
+			const tagImMonat: number = JavaInteger.parseInt(split[2]);
 			if (DateUtils.gibIstJahrUngueltig(jahr) || monat < 1 || monat > 12)
 				return false;
-			let maxTage : number = DateUtils.daysInMonth(jahr, monat);
+			const maxTage: number = DateUtils.daysInMonth(jahr, monat);
 			return tagImMonat >= 1 && tagImMonat <= maxTage;
 		} catch(e : any) {
 			return false;
@@ -168,11 +168,11 @@ export class DateUtils extends JavaObject {
 	 *
 	 * @return die Anzahl an Kalenderwochen des Jahres (52 oder 53) nach ISO8601.
 	 */
-	public static gibKalenderwochenOfJahr(jahr : number) : number {
-		const schalttage1 : number = ((Math.trunc((jahr - 1) / 4)) - (Math.trunc((jahr - 1) / 100))) + (Math.trunc((jahr - 1) / 400));
-		const schalttage2 : number = ((Math.trunc(jahr / 4)) - (Math.trunc(jahr / 100))) + (Math.trunc(jahr / 400));
-		const schaltjahr : number = schalttage2 - schalttage1;
-		const wochentagAmJanuar1 : number = ((jahr + schalttage1 + 1 + 5) % 7) + 1;
+	public static gibKalenderwochenOfJahr(jahr: number): number {
+		const schalttage1: number = ((Math.trunc((jahr - 1) / 4)) - (Math.trunc((jahr - 1) / 100))) + (Math.trunc((jahr - 1) / 400));
+		const schalttage2: number = ((Math.trunc(jahr / 4)) - (Math.trunc(jahr / 100))) + (Math.trunc(jahr / 400));
+		const schaltjahr: number = schalttage2 - schalttage1;
+		const wochentagAmJanuar1: number = ((jahr + schalttage1 + 1 + 5) % 7) + 1;
 		return ((wochentagAmJanuar1 === 4) || ((schaltjahr === 1) && (wochentagAmJanuar1 === 3))) ? 53 : 52;
 	}
 
@@ -183,10 +183,10 @@ export class DateUtils extends JavaObject {
 	 *
 	 * @return die Anzahl an Tagen des Jahres (365 oder 366).
 	 */
-	public static gibTageOfJahr(jahr : number) : number {
-		const schalttage1 : number = ((Math.trunc((jahr - 1) / 4)) - (Math.trunc((jahr - 1) / 100))) + (Math.trunc((jahr - 1) / 400));
-		const schalttage2 : number = ((Math.trunc(jahr / 4)) - (Math.trunc(jahr / 100))) + (Math.trunc(jahr / 400));
-		const schaltjahr : number = schalttage2 - schalttage1;
+	public static gibTageOfJahr(jahr: number): number {
+		const schalttage1: number = ((Math.trunc((jahr - 1) / 4)) - (Math.trunc((jahr - 1) / 100))) + (Math.trunc((jahr - 1) / 400));
+		const schalttage2: number = ((Math.trunc(jahr / 4)) - (Math.trunc(jahr / 100))) + (Math.trunc(jahr / 400));
+		const schaltjahr: number = schalttage2 - schalttage1;
 		return 365 + schaltjahr;
 	}
 
@@ -200,13 +200,13 @@ export class DateUtils extends JavaObject {
 	 *
 	 * @return die Liste von Paaren von Wochentagen und den zugehörigen Daten im ISO8601-Format (uuuu-MM-dd) der der Kalenderwoche des Kalenderwochenjahres.
 	 */
-	public static gibDatenDerWochentageOfJahrAndKalenderwoche(kalenderwochenjahr : number, kalenderwoche : number, wochentage : Array<Wochentag | null>) : List<PairNN<Wochentag, string>> {
+	public static gibDatenDerWochentageOfJahrAndKalenderwoche(kalenderwochenjahr: number, kalenderwoche: number, wochentage: Array<Wochentag | null>): List<PairNN<Wochentag, string>> {
 		DeveloperNotificationException.ifTrue("kalenderwoche < 1", kalenderwoche < 1);
 		DeveloperNotificationException.ifTrue("kalenderwoche > gibKalenderwochenOfJahr(kalenderwochenjahr)", kalenderwoche > DateUtils.gibKalenderwochenOfJahr(kalenderwochenjahr));
 		DeveloperNotificationException.ifTrue("wochentage ist leer", wochentage.length === 0);
-		const daten : List<PairNN<Wochentag, string>> | null = new ArrayList<PairNN<Wochentag, string>>();
-		for (let wochentag of wochentage) {
-			const wtag : Wochentag = DeveloperNotificationException.ifNull("wochentage enthält null-Einträge", wochentag);
+		const daten: List<PairNN<Wochentag, string>> | null = new ArrayList<PairNN<Wochentag, string>>();
+		for (const wochentag of wochentage) {
+			const wtag: Wochentag = DeveloperNotificationException.ifNull("wochentage enthält null-Einträge", wochentag);
 			daten.add(new PairNN<Wochentag, string>(wtag, DateUtils.gibDatumDesWochentagsOfJahrAndKalenderwoche(kalenderwochenjahr, kalenderwoche, wtag.id)));
 		}
 		return daten;
@@ -222,14 +222,14 @@ export class DateUtils extends JavaObject {
 	 *
 	 * @return das Datum im ISO8601-Format (uuuu-MM-dd) des Wochentags (aus dem Intervall 1 bis 7) der Kalenderwoche des Kalenderwochenjahres.
 	 */
-	public static gibDatumDesWochentagsOfJahrAndKalenderwoche(kalenderwochenjahr : number, kalenderwoche : number, wochentag : number) : string {
+	public static gibDatumDesWochentagsOfJahrAndKalenderwoche(kalenderwochenjahr: number, kalenderwoche: number, wochentag: number): string {
 		DeveloperNotificationException.ifTrue("kalenderwoche < 1", kalenderwoche < 1);
 		DeveloperNotificationException.ifTrue("kalenderwoche > gibKalenderwochenOfJahr(jahr)", kalenderwoche > DateUtils.gibKalenderwochenOfJahr(kalenderwochenjahr));
 		DeveloperNotificationException.ifTrue("(wochentag < 1) || (wochentag > 7)", (wochentag < 1) || (wochentag > 7));
-		const schalttage1 : number = ((Math.trunc((kalenderwochenjahr - 1) / 4)) - (Math.trunc((kalenderwochenjahr - 1) / 100))) + (Math.trunc((kalenderwochenjahr - 1) / 400));
-		const tagImJahrAmJanuar4 : number = 4;
-		const wochentagAmJanuar4 : number = ((kalenderwochenjahr + schalttage1 + tagImJahrAmJanuar4 + 5) % 7) + 1;
-		const tagImJahr : number = (((7 * kalenderwoche) - wochentagAmJanuar4) + wochentag) - 3;
+		const schalttage1: number = ((Math.trunc((kalenderwochenjahr - 1) / 4)) - (Math.trunc((kalenderwochenjahr - 1) / 100))) + (Math.trunc((kalenderwochenjahr - 1) / 400));
+		const tagImJahrAmJanuar4: number = 4;
+		const wochentagAmJanuar4: number = ((kalenderwochenjahr + schalttage1 + tagImJahrAmJanuar4 + 5) % 7) + 1;
+		const tagImJahr: number = (((7 * kalenderwoche) - wochentagAmJanuar4) + wochentag) - 3;
 		return DateUtils.gibDatumDesTagesOfJahr(kalenderwochenjahr, tagImJahr);
 	}
 
@@ -245,7 +245,7 @@ export class DateUtils extends JavaObject {
 	 *
 	 * @return das Datum im ISO8601-Format (uuuu-MM-dd) des Montags der Kalenderwoche des Jahres.
 	 */
-	public static gibDatumDesMontagsOfJahrAndKalenderwoche(kalenderwochenjahr : number, kalenderwoche : number) : string {
+	public static gibDatumDesMontagsOfJahrAndKalenderwoche(kalenderwochenjahr: number, kalenderwoche: number): string {
 		return DateUtils.gibDatumDesWochentagsOfJahrAndKalenderwoche(kalenderwochenjahr, kalenderwoche, 1);
 	}
 
@@ -263,7 +263,7 @@ export class DateUtils extends JavaObject {
 	 *
 	 * @return das Datum im ISO8601-Format (uuuu-MM-dd) des Sonntags der Kalenderwoche des Jahres.
 	 */
-	public static gibDatumDesSonntagsOfJahrAndKalenderwoche(kalenderwochenjahr : number, kalenderwoche : number) : string {
+	public static gibDatumDesSonntagsOfJahrAndKalenderwoche(kalenderwochenjahr: number, kalenderwoche: number): string {
 		return DateUtils.gibDatumDesWochentagsOfJahrAndKalenderwoche(kalenderwochenjahr, kalenderwoche, 7);
 	}
 
@@ -276,9 +276,9 @@ export class DateUtils extends JavaObject {
 	 *
 	 * @return das Datum im ISO8601-Format (uuuu-MM-dd) eines Tages im Jahres.
 	 */
-	public static gibDatumDesTagesOfJahr(jahr : number, tagImJahr : number) : string {
-		let j : number = jahr;
-		let t : number = tagImJahr;
+	public static gibDatumDesTagesOfJahr(jahr: number, tagImJahr: number): string {
+		let j: number = jahr;
+		let t: number = tagImJahr;
 		if (t <= 0) {
 			j--;
 			t = t + DateUtils.gibTageOfJahr(j);
@@ -288,16 +288,16 @@ export class DateUtils extends JavaObject {
 			t = t - DateUtils.gibTageOfJahr(j);
 			j++;
 		}
-		const tageDesJahres : number = DateUtils.gibTageOfJahr(j);
+		const tageDesJahres: number = DateUtils.gibTageOfJahr(j);
 		DeveloperNotificationException.ifTrue("Man kann maximal ins Folgejahr springen!", t > tageDesJahres);
-		const vergangeneTage : Array<number> | null = (tageDesJahres === 365) ? DateUtils.monat_zu_vergangene_tage[0] : DateUtils.monat_zu_vergangene_tage[1];
-		let monat : number = 12;
-		for (let i : number = 2; i <= 12; i++)
+		const vergangeneTage: Array<number> | null = (tageDesJahres === 365) ? DateUtils.monat_zu_vergangene_tage[0] : DateUtils.monat_zu_vergangene_tage[1];
+		let monat: number = 12;
+		for (let i: number = 2; i <= 12; i++)
 			if (vergangeneTage[i] >= t) {
 				monat = i - 1;
 				break;
 			}
-		const tagDesMonats : number = t - vergangeneTage[monat];
+		const tagDesMonats: number = t - vergangeneTage[monat];
 		return StringUtils.padZahl(j, 4) + "-" + StringUtils.padZahl(monat, 2) + "-" + StringUtils.padZahl(tagDesMonats, 2);
 	}
 
@@ -308,7 +308,7 @@ export class DateUtils extends JavaObject {
 	 *
 	 * @return TRUE, falls das Jahr ungültig ist.
 	 */
-	public static gibIstJahrUngueltig(jahr : number) : boolean {
+	public static gibIstJahrUngueltig(jahr: number): boolean {
 		return (jahr < DateUtils.MIN_GUELTIGES_JAHR) || (jahr > DateUtils.MAX_GUELTIGES_JAHR);
 	}
 
@@ -319,11 +319,11 @@ export class DateUtils extends JavaObject {
 	 *
 	 * @return das nach "DIN 5008 optional" konvertierte Datumsformat, z.B. 2023-02-28 zu 28.02.2023.
 	 */
-	public static gibDatumGermanFormat(datumISO8601 : string) : string {
-		const info : Array<number> = DateUtils.extractFromDateISO8601(datumISO8601);
-		const jahr : number = info[0];
-		const monat : number = info[1];
-		const tagImMonat : number = info[2];
+	public static gibDatumGermanFormat(datumISO8601: string): string {
+		const info: Array<number> = DateUtils.extractFromDateISO8601(datumISO8601);
+		const jahr: number = info[0];
+		const monat: number = info[1];
+		const tagImMonat: number = info[2];
 		return StringUtils.padZahl(tagImMonat, 2) + "." + StringUtils.padZahl(monat, 2) + "." + StringUtils.padZahl(jahr, 4);
 	}
 
@@ -334,11 +334,11 @@ export class DateUtils extends JavaObject {
 	 *
 	 * @return das vom Format "2006-08-31" ins Format "31. August 2006" konvertierte Datum.
 	 */
-	public static gibDatumGermanFormatAusgeschrieben(datumISO8601 : string) : string {
-		const info : Array<number> = DateUtils.extractFromDateISO8601(datumISO8601);
-		const jahr : number = info[0];
-		const monat : number = info[1];
-		const tagImMonat : number = info[2];
+	public static gibDatumGermanFormatAusgeschrieben(datumISO8601: string): string {
+		const info: Array<number> = DateUtils.extractFromDateISO8601(datumISO8601);
+		const jahr: number = info[0];
+		const monat: number = info[1];
+		const tagImMonat: number = info[2];
 		return tagImMonat + ". " + DateUtils.MONAT_ZU_TEXT[monat] + " " + StringUtils.padZahl(jahr, 4);
 	}
 
@@ -351,17 +351,17 @@ export class DateUtils extends JavaObject {
 	 *
 	 * @return die Minuten einer Zeitangabe im Format hh:mm oder hh.mm.
 	 */
-	public static gibMinutenOfZeitAsString(zeit : string) : number {
-		let sSplit : Array<string> = zeit.split(":");
+	public static gibMinutenOfZeitAsString(zeit: string): number {
+		let sSplit: Array<string> = zeit.split(":");
 		if (sSplit.length !== 2)
 			sSplit = zeit.split(".");
 		DeveloperNotificationException.ifTrue("Zeit muss im Format hh:mm oder hh.mm sein!", sSplit.length !== 2);
-		const sStunden : string = sSplit[0].trim();
-		const sMinuten : string = sSplit[1].trim();
+		const sStunden: string = sSplit[0].trim();
+		const sMinuten: string = sSplit[1].trim();
 		DeveloperNotificationException.ifTrue("Zeit muss im Format hh:mm oder hh.mm sein!", (sStunden.length < 1) || (sStunden.length > 2));
 		DeveloperNotificationException.ifTrue("Zeit muss im Format hh:mm oder hh.mm sein!", (sMinuten.length < 1) || (sMinuten.length > 2));
-		const stunden : number = JavaInteger.parseInt(sStunden);
-		const minuten : number = JavaInteger.parseInt(sMinuten);
+		const stunden: number = JavaInteger.parseInt(sStunden);
+		const minuten: number = JavaInteger.parseInt(sMinuten);
 		DeveloperNotificationException.ifTrue("(stunden < 0) || (stunden > 23)", (stunden < 0) || (stunden > 23));
 		DeveloperNotificationException.ifTrue("(minuten < 0) || (minuten > 59)", (minuten < 0) || (minuten > 59));
 		return (stunden * 60) + minuten;
@@ -375,12 +375,12 @@ export class DateUtils extends JavaObject {
 	 *
 	 * @return den ZeitString im Format hh:mm zu einer vorgegebenen Minutenanzahl.
 	 */
-	public static gibZeitStringOfMinuten(minuten : number) : string {
+	public static gibZeitStringOfMinuten(minuten: number): string {
 		DeveloperNotificationException.ifTrue("(minuten < 0) || (minuten >= 1440)", (minuten < 0) || (minuten >= 1440));
-		const std : number = Math.trunc(minuten / 60);
-		const min : number = minuten - (std * 60);
-		const sStd : string = (std < 10 ? "0" : "") + std;
-		const sMin : string = (min < 10 ? "0" : "") + min;
+		const std: number = Math.trunc(minuten / 60);
+		const min: number = minuten - (std * 60);
+		const sStd: string = (std < 10 ? "0" : "") + std;
+		const sMin: string = (min < 10 ? "0" : "") + min;
 		return sStd + ":" + sMin;
 	}
 
@@ -392,7 +392,7 @@ export class DateUtils extends JavaObject {
 	 *
 	 * @return anhand der Minuten eine String-Repräsentation der Uhrzeit im Format "hh:mm".
 	 */
-	public static getStringOfUhrzeitFromMinuten(minuten : number) : string {
+	public static getStringOfUhrzeitFromMinuten(minuten: number): string {
 		return DateUtils.gibZeitStringOfMinuten(minuten);
 	}
 
@@ -403,7 +403,7 @@ export class DateUtils extends JavaObject {
 	 *
 	 * @return die Kalenderwoche zu einem bestimmten Datum.
 	 */
-	public static gibKwDesDatumsISO8601(datumISO8601 : string) : number {
+	public static gibKwDesDatumsISO8601(datumISO8601: string): number {
 		return DateUtils.extractFromDateISO8601(datumISO8601)[5];
 	}
 
@@ -414,7 +414,7 @@ export class DateUtils extends JavaObject {
 	 *
 	 * @return die Kalenderwochenjahr zu einem bestimmten Datum.
 	 */
-	public static gibKwJahrDesDatumsISO8601(datumISO8601 : string) : number {
+	public static gibKwJahrDesDatumsISO8601(datumISO8601: string): number {
 		return DateUtils.extractFromDateISO8601(datumISO8601)[6];
 	}
 
@@ -425,7 +425,7 @@ export class DateUtils extends JavaObject {
 	 *
 	 * @return den Wochentag (Mo=1...So=7) zu einem bestimmten Datum.
 	 */
-	public static gibWochentagDesDatumsISO8601(datumISO8601 : string) : number {
+	public static gibWochentagDesDatumsISO8601(datumISO8601: string): number {
 		return DateUtils.extractFromDateISO8601(datumISO8601)[3];
 	}
 
@@ -436,7 +436,7 @@ export class DateUtils extends JavaObject {
 	 *
 	 * @return den Wochentag (Montag...Sonntag) zu einem bestimmten Datum.
 	 */
-	public static gibWochentagNameDesDatumsISO8601(datumISO8601 : string) : string | null {
+	public static gibWochentagNameDesDatumsISO8601(datumISO8601: string): string | null {
 		return DateUtils.WOCHENTAG_ZU_TEXT[DateUtils.extractFromDateISO8601(datumISO8601)[3]];
 	}
 
@@ -449,8 +449,8 @@ export class DateUtils extends JavaObject {
 	 *
 	 * @return das Schuljahr
 	 */
-	public static getSchuljahrFromDateISO8601(datumISO8601 : string) : number {
-		const iso8601 : Array<number> | null = DateUtils.extractFromDateISO8601(datumISO8601);
+	public static getSchuljahrFromDateISO8601(datumISO8601: string): number {
+		const iso8601: Array<number> | null = DateUtils.extractFromDateISO8601(datumISO8601);
 		return (iso8601[1] > 7) ? iso8601[0] : (iso8601[0] - 1);
 	}
 
@@ -463,8 +463,8 @@ export class DateUtils extends JavaObject {
 	 *
 	 * @return das Halbjahr anhand des vereinfachten Kriteriums
 	 */
-	public static getHalbjahrFromDateISO8601(datumISO8601 : string) : number {
-		const iso8601 : Array<number> | null = DateUtils.extractFromDateISO8601(datumISO8601);
+	public static getHalbjahrFromDateISO8601(datumISO8601: string): number {
+		const iso8601: Array<number> | null = DateUtils.extractFromDateISO8601(datumISO8601);
 		return ((iso8601[1] > 1) && (iso8601[1] < 8)) ? 2 : 1;
 	}
 
@@ -478,9 +478,9 @@ export class DateUtils extends JavaObject {
 	 *
 	 * @return das Schuljahr (Index 0) und das Halbjahr (Index 1) anhand des vereinfachten Kriteriums
 	 */
-	public static getSchuljahrUndHalbjahrFromDateISO8601(datumISO8601 : string) : Array<number> | null {
-		const iso8601 : Array<number> | null = DateUtils.extractFromDateISO8601(datumISO8601);
-		const result : Array<number> | null = Array(2).fill(0);
+	public static getSchuljahrUndHalbjahrFromDateISO8601(datumISO8601: string): Array<number> | null {
+		const iso8601: Array<number> | null = DateUtils.extractFromDateISO8601(datumISO8601);
+		const result: Array<number> | null = Array(2).fill(0);
 		result[0] = (iso8601[1] > 7) ? iso8601[0] : (iso8601[0] - 1);
 		result[1] = ((iso8601[1] > 1) && (iso8601[1] < 8)) ? 2 : 1;
 		return result;
@@ -494,27 +494,27 @@ export class DateUtils extends JavaObject {
 	 *
 	 * @return der String mit der ISO-8601-Darstellung des Zeitstempels
 	 */
-	public static toISO8601(time : number) : string | null {
-		const s : StringBuilder | null = new StringBuilder();
-		const days : number = DateUtils.DAYS_FROM_0_TO_1970 + Math.trunc(time / 86400000) + 1;
-		const years400 : number = Math.trunc(days / DateUtils.DAYS_PER_400_YEARS);
-		const daysLeft400 : number = days - years400 * DateUtils.DAYS_PER_400_YEARS;
-		const years100 : number = Math.trunc((daysLeft400 - 1) / DateUtils.DAYS_PER_100_YEARS);
-		const daysLeft100 : number = daysLeft400 - years100 * DateUtils.DAYS_PER_100_YEARS;
-		const years4 : number = Math.trunc(daysLeft100 / DateUtils.DAYS_PER_4_YEARS);
-		const years1 : number = Math.trunc((daysLeft100 - 1) / DateUtils.DAYS_PER_YEAR) % 4;
-		const year : number = years400 * 400 + years100 * 100 + years4 * 4 + years1;
-		const isLeapYear : boolean = (years1 === 0) && ((years100 === 0) || (years4 !== 0));
-		let day : number = (daysLeft400 - 60) - years100 * DateUtils.DAYS_PER_100_YEARS - years4 * DateUtils.DAYS_PER_4_YEARS - years1 * DateUtils.DAYS_PER_YEAR;
+	public static toISO8601(time: number): string | null {
+		const s: StringBuilder | null = new StringBuilder();
+		const days: number = DateUtils.DAYS_FROM_0_TO_1970 + Math.trunc(time / 86400000) + 1;
+		const years400: number = Math.trunc(days / DateUtils.DAYS_PER_400_YEARS);
+		const daysLeft400: number = days - (years400 * DateUtils.DAYS_PER_400_YEARS);
+		const years100: number = Math.trunc((daysLeft400 - 1) / DateUtils.DAYS_PER_100_YEARS);
+		const daysLeft100: number = daysLeft400 - (years100 * DateUtils.DAYS_PER_100_YEARS);
+		const years4: number = Math.trunc(daysLeft100 / DateUtils.DAYS_PER_4_YEARS);
+		const years1: number = Math.trunc((daysLeft100 - 1) / DateUtils.DAYS_PER_YEAR) % 4;
+		const year: number = (years400 * 400) + (years100 * 100) + (years4 * 4) + years1;
+		const isLeapYear: boolean = (years1 === 0) && ((years100 === 0) || (years4 !== 0));
+		let day: number = (daysLeft400 - 60) - (years100 * DateUtils.DAYS_PER_100_YEARS) - (years4 * DateUtils.DAYS_PER_4_YEARS) - (years1 * DateUtils.DAYS_PER_YEAR);
 		if (day < 0)
 			day += (isLeapYear ? DateUtils.DAYS_PER_LEAP_YEAR : DateUtils.DAYS_PER_YEAR);
-		const m5 : number = Math.trunc(day / 153);
+		const m5: number = Math.trunc(day / 153);
 		day -= m5 * 153;
-		const m2 : number = Math.trunc(day / 61);
+		const m2: number = Math.trunc(day / 61);
 		day -= m2 * 61;
-		const m1 : number = Math.trunc(day / 31);
+		const m1: number = Math.trunc(day / 31);
 		day -= m1 * 31;
-		const month : number = (((m5 * 5 + m2 * 2 + m1) + 2) % 12) + 1;
+		const month: number = ((((m5 * 5) + (m2 * 2) + m1) + 2) % 12) + 1;
 		if (year < 1000)
 			s.append("0");
 		if (year < 100)
@@ -531,22 +531,22 @@ export class DateUtils extends JavaObject {
 			s.append("0");
 		s.append(day);
 		s.append("T");
-		const hour : number = Math.trunc(time / 3600000) % 24;
+		const hour: number = Math.trunc(time / 3600000) % 24;
 		if (hour < 10)
 			s.append("0");
 		s.append(hour);
 		s.append(":");
-		const min : number = Math.trunc(time / 60000) % 60;
+		const min: number = Math.trunc(time / 60000) % 60;
 		if (min < 10)
 			s.append("0");
 		s.append(min);
 		s.append(":");
-		const sec : number = Math.trunc(time / 1000) % 60;
+		const sec: number = Math.trunc(time / 1000) % 60;
 		if (sec < 10)
 			s.append("0");
 		s.append(sec);
 		s.append(".");
-		const ms : number = time % 1000;
+		const ms: number = time % 1000;
 		if (ms < 100)
 			s.append("0");
 		if (ms < 10)
@@ -563,10 +563,10 @@ export class DateUtils extends JavaObject {
 	 *
 	 * @return die Tage zwischen zwei Datumsangaben als String-Array im ISO8601-Format.
 	 */
-	public static gibTageAlsDatumZwischen(startDate : string, endDate : string) : Array<string | null> {
-		const startDateArray : Array<number> = DateUtils.extractFromDateISO8601(startDate);
-		const endDateArray : Array<number> = DateUtils.extractFromDateISO8601(endDate);
-		const dateList : ArrayList<string> = new ArrayList<string>();
+	public static gibTageAlsDatumZwischen(startDate: string, endDate: string): Array<string | null> {
+		const startDateArray: Array<number> = DateUtils.extractFromDateISO8601(startDate);
+		const endDateArray: Array<number> = DateUtils.extractFromDateISO8601(endDate);
+		const dateList: ArrayList<string> = new ArrayList<string>();
 		while (startDateArray[0] < endDateArray[0] || (startDateArray[0] === endDateArray[0] && (startDateArray[1] < endDateArray[1] || (startDateArray[1] === endDateArray[1] && startDateArray[2] <= endDateArray[2])))) {
 			dateList.add(JavaString.format("%04d-%02d-%02d", startDateArray[0], startDateArray[1], startDateArray[2]));
 			startDateArray[2]++;
@@ -592,16 +592,15 @@ export class DateUtils extends JavaObject {
 	 * @return Ein Array von Strings mit allen Tagen im Format YYYY-MM-DD, die in beiden Intervallen enthalten sind.
 	 *         Falls keine Überlappung besteht, wird ein leeres Array zurückgegeben.
 	 */
-	public static berechneGemeinsameTage(zeitraumAab : string, zeitraumAbis : string, zeitraumBab : string, zeitraumBbis : string) : Array<string | null> {
-		let start : string | null = (JavaString.compareTo(zeitraumAab, zeitraumBab) >= 0) ? zeitraumAab : zeitraumBab;
-		let end : string | null = (JavaString.compareTo(zeitraumAbis, zeitraumBbis) <= 0) ? zeitraumAbis : zeitraumBbis;
-		if (JavaString.compareTo(start, end) > 0) {
+	public static berechneGemeinsameTage(zeitraumAab: string, zeitraumAbis: string, zeitraumBab: string, zeitraumBbis: string): Array<string | null> {
+		const start: string | null = (JavaString.compareTo(zeitraumAab, zeitraumBab) >= 0) ? zeitraumAab : zeitraumBab;
+		const end: string | null = (JavaString.compareTo(zeitraumAbis, zeitraumBbis) <= 0) ? zeitraumAbis : zeitraumBbis;
+		if (JavaString.compareTo(start, end) > 0)
 			return Array(0).fill(null);
-		}
 		return DateUtils.gibTageAlsDatumZwischen(start, end);
 	}
 
-	private static daysInMonth(year : number, month : number) : number {
+	private static daysInMonth(year: number, month: number): number {
 		switch (month) {
 			case 4:
 			case 6:
@@ -620,7 +619,7 @@ export class DateUtils extends JavaObject {
 		}
 	}
 
-	private static istSchaltjahr(year : number) : boolean {
+	private static istSchaltjahr(year: number): boolean {
 		if (year % 4 === 0) {
 			if (year % 100 === 0)
 				return year % 400 === 0;
@@ -635,12 +634,12 @@ export class DateUtils extends JavaObject {
 	 * @param datumISO8601 Ein gültiges Datum im Format "YYYY-MM-DD".
 	 * @return Das Datum des Folgetages im selben Format.
 	 */
-	public static gibDatumFolgetag(datumISO8601 : string) : string {
-		const info : Array<number> | null = DateUtils.extractFromDateISO8601(datumISO8601);
-		const jahr : number = info[0];
-		const monat : number = info[1];
-		const tagImMonat : number = info[2];
-		const tageImMonat : number = DateUtils.daysInMonth(jahr, monat);
+	public static gibDatumFolgetag(datumISO8601: string): string {
+		const info: Array<number> | null = DateUtils.extractFromDateISO8601(datumISO8601);
+		const jahr: number = info[0];
+		const monat: number = info[1];
+		const tagImMonat: number = info[2];
+		const tageImMonat: number = DateUtils.daysInMonth(jahr, monat);
 		if (tagImMonat < tageImMonat) {
 			return JavaString.format("%04d-%02d-%02d", jahr, monat, tagImMonat + 1);
 		} else
@@ -655,7 +654,7 @@ export class DateUtils extends JavaObject {
 		return 'de.svws_nrw.core.utils.DateUtils';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.utils.DateUtils'].includes(name);
 	}
 
@@ -663,6 +662,6 @@ export class DateUtils extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_utils_DateUtils(obj : unknown) : DateUtils {
+export function cast_de_svws_nrw_core_utils_DateUtils(obj: unknown): DateUtils {
 	return obj as DateUtils;
 }

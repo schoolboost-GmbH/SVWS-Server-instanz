@@ -14,13 +14,13 @@ import { routeFaecherGruppenprozesse } from "./RouteFaecherGruppenprozesse";
 import { routeFaecherNeu } from "./RouteFaecherNeu";
 import { RouteAuswahlNode } from "~/router/RouteAuswahlNode";
 
-const SFaecherAuswahl = () => import("~/components/schule/schulbezogen/faecher/SFaecherAuswahl.vue")
-const SFaecherApp = () => import("~/components/schule/schulbezogen/faecher/SFaecherApp.vue")
+const SFaecherAuswahl = () => import("~/components/schule/schulbezogen/faecher/SFaecherAuswahl.vue");
+const SFaecherApp = () => import("~/components/schule/schulbezogen/faecher/SFaecherApp.vue");
 
 export class RouteFaecher extends RouteAuswahlNode<FachListeManager, RouteDataFaecher, RouteApp> {
 
 	public constructor() {
-		super(Schulform.values(), [ BenutzerKompetenz.KATALOG_EINTRAEGE_ANSEHEN, BenutzerKompetenz.KATALOG_EINTRAEGE_AENDERN ], "schule.faecher", "schule/faecher/:id(\\d+)?", SFaecherApp, SFaecherAuswahl, new RouteDataFaecher());
+		super(Schulform.values(), [BenutzerKompetenz.KATALOG_EINTRAEGE_ANSEHEN, BenutzerKompetenz.KATALOG_EINTRAEGE_AENDERN], "schule.faecher", "schule/faecher/:id(\\d+)?", SFaecherApp, SFaecherAuswahl, new RouteDataFaecher());
 		super.mode = ServerMode.STABLE;
 		super.text = "Fächer";
 		super.menugroup = RouteSchuleMenuGroup.SCHULBEZOGEN;
@@ -35,7 +35,7 @@ export class RouteFaecher extends RouteAuswahlNode<FachListeManager, RouteDataFa
 		super.getAuswahlListProps = (props) => (<FaecherAuswahlProps>{
 			...props,
 			setzeDefaultSortierungSekII: this.data.setzeDefaultSortierungSekII,
-		})
+		});
 	}
 
 	protected doUpdateIfTarget = async (to: RouteNode<any, any>, to_params: RouteParams, from: RouteNode<any, any> | undefined) => {

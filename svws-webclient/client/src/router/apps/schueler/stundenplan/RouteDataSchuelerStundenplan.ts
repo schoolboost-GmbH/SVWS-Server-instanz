@@ -78,9 +78,9 @@ export class RouteDataSchuelerStundenplan extends RouteData<RouteStateSchuelerDa
 
 	setGanzerStundenplan = async (value: boolean) => {
 		await api.config.setValue("schueler.stundenplan.ganzerStundenplan", value ? "true" : "false");
-	}
+	};
 
-	public async ladeListe(idSchueler : number) : Promise<boolean> {
+	public async ladeListe(idSchueler: number): Promise<boolean> {
 		const idSchuljahresabschnitt = routeApp.data.aktAbschnitt.value.id;
 		if (idSchuljahresabschnitt === this._state.value.idSchuljahresabschnitt)
 			return false;
@@ -103,8 +103,8 @@ export class RouteDataSchuelerStundenplan extends RouteData<RouteStateSchuelerDa
 		return true;
 	}
 
-	private getKalenderWoche(manager: StundenplanManager, wochentyp: number, kwjahr: number | undefined, kw: number | undefined) : { wochentyp?: number, kalenderwoche?: StundenplanKalenderwochenzuordnung } {
-		const result : { wochentyp?: number, kalenderwoche?: StundenplanKalenderwochenzuordnung } = {};
+	private getKalenderWoche(manager: StundenplanManager, wochentyp: number, kwjahr: number | undefined, kw: number | undefined): { wochentyp?: number, kalenderwoche?: StundenplanKalenderwochenzuordnung } {
+		const result: { wochentyp?: number, kalenderwoche?: StundenplanKalenderwochenzuordnung } = {};
 		try {
 			result.kalenderwoche = manager.kalenderwochenzuordnungGetByJahrAndKWOrException(kwjahr === undefined ? -1 : kwjahr, kw === undefined ? -1 : kw);
 			result.wochentyp = result.kalenderwoche.wochentyp;
@@ -151,17 +151,17 @@ export class RouteDataSchuelerStundenplan extends RouteData<RouteStateSchuelerDa
 
 	public gotoStundenplan = async (value: StundenplanListeEintrag) => {
 		await RouteManager.doRoute(routeSchuelerStundenplan.getRoute({ idStundenplan: value.id, wochentyp: 0, kw: "" }));
-	}
+	};
 
 	public gotoWochentyp = async (wochentyp: number) => {
 		await RouteManager.doRoute(routeSchuelerStundenplan.getRoute({ wochentyp }));
-	}
+	};
 
 	public gotoKalenderwoche = async (value: StundenplanKalenderwochenzuordnung | undefined) => {
 		const kw = (value === undefined) ? "" : value.jahr + "." + value.kw;
 		const wochentyp = (value === undefined) ? "" : value.wochentyp;
 		await RouteManager.doRoute(routeSchuelerStundenplan.getRoute({ wochentyp, kw }));
-	}
+	};
 
 	getPDF = api.call(async (reportingParameter: ReportingParameter, idStundenplan: number): Promise<ApiFile> => {
 		if (!this.hatAuswahl)
@@ -170,7 +170,7 @@ export class RouteDataSchuelerStundenplan extends RouteData<RouteStateSchuelerDa
 		reportingParameter.idsHauptdaten.add(idStundenplan);
 		reportingParameter.idsDetaildaten.add(this.idSchueler);
 		return await api.server.pdfReport(reportingParameter, api.schema);
-	})
+	});
 
 }
 

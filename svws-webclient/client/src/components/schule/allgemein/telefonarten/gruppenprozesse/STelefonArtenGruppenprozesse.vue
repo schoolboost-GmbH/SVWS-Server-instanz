@@ -49,7 +49,7 @@
 		for (const idTelefonart of props.manager().getIdsVerwendeteTelefonarten())
 			logs.add(`Die Telefonart "${props.manager().liste.get(idTelefonart)?.bezeichnung ?? '???'}" kann nicht gelöscht werden, da sie noch Personen zugeordnet ist.`);
 		return logs;
-	})
+	});
 
 	function clearLog() {
 		logs.value = undefined;

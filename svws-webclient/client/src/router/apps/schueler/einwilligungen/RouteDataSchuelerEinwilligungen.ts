@@ -37,7 +37,7 @@ export class RouteDataSchuelerEinwilligungen extends RouteData<RouteStateSchuele
 		return this._state.value.mapEinwilligungsarten;
 	}
 
-	patch = async (data : Partial<SchuelerEinwilligung> | undefined, idEinwilligungsart: number) => {
+	patch = async (data: Partial<SchuelerEinwilligung> | undefined, idEinwilligungsart: number) => {
 		if (data === undefined)
 			throw new DeveloperNotificationException("Beim Aufruf der Patch-Methode sind keine gültigen Daten geladen.");
 		await api.server.patchSchuelerEinwilligung(data, api.schema, this.auswahl.id, idEinwilligungsart);
@@ -45,7 +45,7 @@ export class RouteDataSchuelerEinwilligungen extends RouteData<RouteStateSchuele
 			if (einwilligung.idEinwilligungsart === idEinwilligungsart)
 				Object.assign(einwilligung, data);
 		this.commit();
-	}
+	};
 
 	public async ladeDaten(auswahl: SchuelerListeEintrag | null | undefined) {
 		if ((auswahl === null) || (auswahl === undefined)) {

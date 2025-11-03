@@ -15,13 +15,13 @@ export class OrganisationsformKatalogEintrag extends CoreTypeDataNurSchulformen 
 		return 'de.svws_nrw.asd.data.schule.OrganisationsformKatalogEintrag';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.asd.data.schule.OrganisationsformKatalogEintrag', 'de.svws_nrw.asd.data.CoreTypeData', 'de.svws_nrw.asd.data.CoreTypeDataNurSchulformen'].includes(name);
 	}
 
 	public static class = new Class<OrganisationsformKatalogEintrag>('de.svws_nrw.asd.data.schule.OrganisationsformKatalogEintrag');
 
-	public static transpilerFromJSON(json : string): OrganisationsformKatalogEintrag {
+	public static transpilerFromJSON(json: string): OrganisationsformKatalogEintrag {
 		const obj = JSON.parse(json) as Partial<OrganisationsformKatalogEintrag>;
 		const result = new OrganisationsformKatalogEintrag();
 		if (obj.schulformen !== undefined) {
@@ -46,7 +46,7 @@ export class OrganisationsformKatalogEintrag extends CoreTypeDataNurSchulformen 
 		return result;
 	}
 
-	public static transpilerToJSON(obj : OrganisationsformKatalogEintrag) : string {
+	public static transpilerToJSON(obj: OrganisationsformKatalogEintrag): string {
 		let result = '{';
 		result += '"schulformen" : [ ';
 		for (let i = 0; i < obj.schulformen.size(); i++) {
@@ -67,7 +67,7 @@ export class OrganisationsformKatalogEintrag extends CoreTypeDataNurSchulformen 
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<OrganisationsformKatalogEintrag>) : string {
+	public static transpilerToJSONPatch(obj: Partial<OrganisationsformKatalogEintrag>): string {
 		let result = '{';
 		if (obj.schulformen !== undefined) {
 			result += '"schulformen" : [ ';
@@ -104,6 +104,6 @@ export class OrganisationsformKatalogEintrag extends CoreTypeDataNurSchulformen 
 
 }
 
-export function cast_de_svws_nrw_asd_data_schule_OrganisationsformKatalogEintrag(obj : unknown) : OrganisationsformKatalogEintrag {
+export function cast_de_svws_nrw_asd_data_schule_OrganisationsformKatalogEintrag(obj: unknown): OrganisationsformKatalogEintrag {
 	return obj as OrganisationsformKatalogEintrag;
 }

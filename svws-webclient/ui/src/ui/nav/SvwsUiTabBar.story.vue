@@ -31,7 +31,7 @@
 		{ name: "link2", text: "Link mit einem sehr langen Titel 2" },
 		{ name: "link3", text: "Link mit einem sehr langen Titel 3" },
 	];
-	async function setTab(tab : TabData) {
+	async function setTab(tab: TabData) {
 		selectedRoute.value = tab;
 	}
 	const tabManager = () => new TabManager(tabs, tabs[0], setTab);
@@ -46,7 +46,7 @@
 		{ name: "link2", text: "Link2" },
 		{ name: "link3", text: "Link3" },
 	];
-	async function setTabVertical(tab : TabData) {
+	async function setTabVertical(tab: TabData) {
 		selectedRouteVertical.value = tab;
 	}
 	const tabManagerVertical = () => new TabManager(tabsVertical, tabsVertical[0], setTabVertical);

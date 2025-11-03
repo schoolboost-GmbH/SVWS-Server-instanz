@@ -6,17 +6,17 @@ export class StundenplanblockungStundenelement extends JavaObject {
 	/**
 	 * Die Datenbank-ID des Stundenelementes.
 	 */
-	public id : number = 0;
+	public id: number = 0;
 
 	/**
 	 * Die Anzahl an Stunden (1 = Einzelstunde, 2 = Doppelstunde).
 	 */
-	public stunden : number = -1;
+	public stunden: number = -1;
 
 	/**
 	 * Der Typ. (1 = jede Woche, 2 = gedoppelte Einzelstunde)
 	 */
-	public typ : number = -1;
+	public typ: number = -1;
 
 
 	/**
@@ -30,13 +30,13 @@ export class StundenplanblockungStundenelement extends JavaObject {
 		return 'de.svws_nrw.core.data.stundenplanblockung.StundenplanblockungStundenelement';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.stundenplanblockung.StundenplanblockungStundenelement'].includes(name);
 	}
 
 	public static class = new Class<StundenplanblockungStundenelement>('de.svws_nrw.core.data.stundenplanblockung.StundenplanblockungStundenelement');
 
-	public static transpilerFromJSON(json : string): StundenplanblockungStundenelement {
+	public static transpilerFromJSON(json: string): StundenplanblockungStundenelement {
 		const obj = JSON.parse(json) as Partial<StundenplanblockungStundenelement>;
 		const result = new StundenplanblockungStundenelement();
 		if (obj.id === undefined)
@@ -51,7 +51,7 @@ export class StundenplanblockungStundenelement extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : StundenplanblockungStundenelement) : string {
+	public static transpilerToJSON(obj: StundenplanblockungStundenelement): string {
 		let result = '{';
 		result += '"id" : ' + obj.id.toString() + ',';
 		result += '"stunden" : ' + obj.stunden.toString() + ',';
@@ -61,7 +61,7 @@ export class StundenplanblockungStundenelement extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<StundenplanblockungStundenelement>) : string {
+	public static transpilerToJSONPatch(obj: Partial<StundenplanblockungStundenelement>): string {
 		let result = '{';
 		if (obj.id !== undefined) {
 			result += '"id" : ' + obj.id.toString() + ',';
@@ -79,6 +79,6 @@ export class StundenplanblockungStundenelement extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_stundenplanblockung_StundenplanblockungStundenelement(obj : unknown) : StundenplanblockungStundenelement {
+export function cast_de_svws_nrw_core_data_stundenplanblockung_StundenplanblockungStundenelement(obj: unknown): StundenplanblockungStundenelement {
 	return obj as StundenplanblockungStundenelement;
 }

@@ -2,7 +2,7 @@ import type { RouteLocationRaw, RouteParamsRawGeneric } from "vue-router";
 
 import { BenutzerKompetenz, ServerMode } from "@core";
 
-import type { RouteApp} from "~/router/apps/RouteApp";
+import type { RouteApp } from "~/router/apps/RouteApp";
 
 import { schulformenGymOb } from "~/router/RouteHelper";
 import { RouteDataSchuleDatenaustauschKurs42 } from "./RouteDataSchuleDatenaustauschKurs42";
@@ -27,12 +27,12 @@ export class RouteSchuleDatenaustauschKurs42 extends RouteTabNode<RouteDataSchul
 		super.menugroup = RouteSchuleMenuGroup.DATENAUSTAUSCH;
 		super.children = [
 			routeSchuleDatenaustauschKurs42Blockung,
-			routeSchuleDatenaustauschKurs42Raeume
+			routeSchuleDatenaustauschKurs42Raeume,
 		];
 		this.defaultChild = routeSchuleDatenaustauschKurs42Blockung;
 	}
 
-	public getRouteDefaultChild(params? : RouteParamsRawGeneric): RouteLocationRaw {
+	public getRouteDefaultChild(params?: RouteParamsRawGeneric): RouteLocationRaw {
 		if (routeSchuleDatenaustauschKurs42Blockung.hidden() === false)
 			return routeSchuleDatenaustauschKurs42Blockung.getRoute();
 		else

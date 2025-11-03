@@ -15,7 +15,7 @@ export class KursblockungAlgorithmusPermanentKSchnellW extends KursblockungAlgor
 	 * @param logger  Logger für Benutzerhinweise, Warnungen und Fehler.
 	 * @param input   Die dynamischen Blockungsdaten.
 	 */
-	public constructor(random : Random, logger : Logger, input : GostBlockungsdatenManager) {
+	public constructor(random: Random, logger: Logger, input: GostBlockungsdatenManager) {
 		super(random, logger, input);
 		if (this.dynDaten.gibKurseDieFreiSindAnzahl() === 0)
 			return;
@@ -25,17 +25,17 @@ export class KursblockungAlgorithmusPermanentKSchnellW extends KursblockungAlgor
 		this.dynDaten.aktionZustandSpeichernK();
 	}
 
-	public toString() : string {
+	public toString(): string {
 		return "KursblockungAlgorithmusPermanentKSchnellW";
 	}
 
-	public next(zeitEnde : number) : void {
+	public next(zeitEnde: number): void {
 		do {
 			this.verteileKurseMitMatchingW();
 		} while (System.currentTimeMillis() < zeitEnde);
 	}
 
-	private verteileKurseMitMatchingW() : void {
+	private verteileKurseMitMatchingW(): void {
 		do {
 			this.dynDaten.aktionSchuelerAusAllenKursenEntfernen();
 			this.dynDaten.aktionKursVerteilenEinenZufaelligenFreien();
@@ -48,7 +48,7 @@ export class KursblockungAlgorithmusPermanentKSchnellW extends KursblockungAlgor
 		this.dynDaten.aktionZustandLadenK();
 	}
 
-	public ladeBestMitSchuelerverteilung() : void {
+	public ladeBestMitSchuelerverteilung(): void {
 		this.dynDaten.aktionZustandLadenK();
 	}
 
@@ -56,7 +56,7 @@ export class KursblockungAlgorithmusPermanentKSchnellW extends KursblockungAlgor
 		return 'de.svws_nrw.core.kursblockung.KursblockungAlgorithmusPermanentKSchnellW';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.kursblockung.KursblockungAlgorithmusPermanentK', 'de.svws_nrw.core.kursblockung.KursblockungAlgorithmusPermanentKSchnellW'].includes(name);
 	}
 
@@ -64,6 +64,6 @@ export class KursblockungAlgorithmusPermanentKSchnellW extends KursblockungAlgor
 
 }
 
-export function cast_de_svws_nrw_core_kursblockung_KursblockungAlgorithmusPermanentKSchnellW(obj : unknown) : KursblockungAlgorithmusPermanentKSchnellW {
+export function cast_de_svws_nrw_core_kursblockung_KursblockungAlgorithmusPermanentKSchnellW(obj: unknown): KursblockungAlgorithmusPermanentKSchnellW {
 	return obj as KursblockungAlgorithmusPermanentKSchnellW;
 }

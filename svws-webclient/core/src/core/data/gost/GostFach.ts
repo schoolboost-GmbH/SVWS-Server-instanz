@@ -6,112 +6,112 @@ export class GostFach extends JavaObject {
 	/**
 	 * Die ID des Faches
 	 */
-	public id : number = -1;
+	public id: number = -1;
 
 	/**
 	 * Das Statistik-Kürzel des Faches
 	 */
-	public kuerzel : string = "";
+	public kuerzel: string = "";
 
 	/**
 	 * Das Fach-Kürzel, welches zur Anzeige verwendet wird.
 	 */
-	public kuerzelAnzeige : string | null = null;
+	public kuerzelAnzeige: string | null = null;
 
 	/**
 	 * Die Bezeichnung des Faches
 	 */
-	public bezeichnung : string | null = null;
+	public bezeichnung: string | null = null;
 
 	/**
 	 * Die Nummer, welche die Sortierung der Fächer angibt.
 	 */
-	public sortierung : number = 32000;
+	public sortierung: number = 32000;
 
 	/**
 	 * Gibt an, ob es sich um ein Fach handelt, welches relevant für die Prüfungsordnung ist oder nicht (z.B. bei der Belegprüfung).
 	 */
-	public istPruefungsordnungsRelevant : boolean = true;
+	public istPruefungsordnungsRelevant: boolean = true;
 
 	/**
 	 * Gibt an, ob es sich bei dem Fach um eine Fremdsprache handelt oder nicht
 	 */
-	public istFremdsprache : boolean = false;
+	public istFremdsprache: boolean = false;
 
 	/**
 	 * Gibt an, ob das Fache eine neu einsetzende Fremdsprache ist.
 	 */
-	public istFremdSpracheNeuEinsetzend : boolean = false;
+	public istFremdSpracheNeuEinsetzend: boolean = false;
 
 	/**
 	 * Gibt im Falle eines bilingualen Sachfaches das einstellige Fremdsprachenkürzel an.
 	 */
-	public biliSprache : string | null = null;
+	public biliSprache: string | null = null;
 
 	/**
 	 * Gibt an, ob das Fach als Leistungskurs im Abitur gewählt werden kann.
 	 */
-	public istMoeglichAbiLK : boolean = false;
+	public istMoeglichAbiLK: boolean = false;
 
 	/**
 	 * Gibt an, ob das Fach als Grundkurs im Abitur gewählt werden kann.
 	 */
-	public istMoeglichAbiGK : boolean = false;
+	public istMoeglichAbiGK: boolean = false;
 
 	/**
 	 * Gibt an, ob das Fach in der EF.1 gewählt werden kann.
 	 */
-	public istMoeglichEF1 : boolean = false;
+	public istMoeglichEF1: boolean = false;
 
 	/**
 	 * Gibt an, ob das Fach in der EF.2 gewählt werden kann.
 	 */
-	public istMoeglichEF2 : boolean = false;
+	public istMoeglichEF2: boolean = false;
 
 	/**
 	 * Gibt an, ob das Fach in der Q1.1 gewählt werden kann.
 	 */
-	public istMoeglichQ11 : boolean = false;
+	public istMoeglichQ11: boolean = false;
 
 	/**
 	 * Gibt an, ob das Fach in der Q1.2 gewählt werden kann.
 	 */
-	public istMoeglichQ12 : boolean = false;
+	public istMoeglichQ12: boolean = false;
 
 	/**
 	 * Gibt an, ob das Fach in der Q2.1 gewählt werden kann.
 	 */
-	public istMoeglichQ21 : boolean = false;
+	public istMoeglichQ21: boolean = false;
 
 	/**
 	 * Gibt an, ob das Fach in der Q2.2 gewählt werden kann.
 	 */
-	public istMoeglichQ22 : boolean = false;
+	public istMoeglichQ22: boolean = false;
 
 	/**
 	 * Die Wochenstundenzahl des Faches in der Qualifikationsphase
 	 */
-	public wochenstundenQualifikationsphase : number = 3;
+	public wochenstundenQualifikationsphase: number = 3;
 
 	/**
 	 * Die Fach-ID des Leitfaches eines Projektkurses oder Vertiefungsfaches
 	 */
-	public projektKursLeitfach1ID : number | null = null;
+	public projektKursLeitfach1ID: number | null = null;
 
 	/**
 	 * Das Fach-Kürzel des Leitfaches eines Projektkurses oder Vertiefungsfaches
 	 */
-	public projektKursLeitfach1Kuerzel : string | null = null;
+	public projektKursLeitfach1Kuerzel: string | null = null;
 
 	/**
 	 * Die Fach-ID des zweiten Leitfaches eines Projektkurses
 	 */
-	public projektKursLeitfach2ID : number | null = null;
+	public projektKursLeitfach2ID: number | null = null;
 
 	/**
 	 * Die Fach-Kürzel des zweiten Leitfaches eines Projektkurses
 	 */
-	public projektKursLeitfach2Kuerzel : string | null = null;
+	public projektKursLeitfach2Kuerzel: string | null = null;
 
 
 	/**
@@ -125,13 +125,13 @@ export class GostFach extends JavaObject {
 		return 'de.svws_nrw.core.data.gost.GostFach';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.gost.GostFach'].includes(name);
 	}
 
 	public static class = new Class<GostFach>('de.svws_nrw.core.data.gost.GostFach');
 
-	public static transpilerFromJSON(json : string): GostFach {
+	public static transpilerFromJSON(json: string): GostFach {
 		const obj = JSON.parse(json) as Partial<GostFach>;
 		const result = new GostFach();
 		if (obj.id === undefined)
@@ -189,7 +189,7 @@ export class GostFach extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : GostFach) : string {
+	public static transpilerToJSON(obj: GostFach): string {
 		let result = '{';
 		result += '"id" : ' + obj.id.toString() + ',';
 		result += '"kuerzel" : ' + JSON.stringify(obj.kuerzel) + ',';
@@ -218,7 +218,7 @@ export class GostFach extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<GostFach>) : string {
+	public static transpilerToJSONPatch(obj: Partial<GostFach>): string {
 		let result = '{';
 		if (obj.id !== undefined) {
 			result += '"id" : ' + obj.id.toString() + ',';
@@ -293,6 +293,6 @@ export class GostFach extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_gost_GostFach(obj : unknown) : GostFach {
+export function cast_de_svws_nrw_core_data_gost_GostFach(obj: unknown): GostFach {
 	return obj as GostFach;
 }

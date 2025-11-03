@@ -75,7 +75,7 @@
 <script setup lang="ts">
 
 	import { ref, computed } from "vue";
-	import type { List, StundenplanListeEintrag} from "@core";
+	import type { List, StundenplanListeEintrag } from "@core";
 	import { ArrayList } from "@core";
 	import { BenutzerKompetenz, DateUtils, ReportingParameter, ReportingReportvorlage, ServerMode } from "@core";
 	import type { LehrerGruppenprozesseProps } from "~/components/lehrer/gruppenprozesse/SLehrerGruppenprozesseProps";
@@ -93,8 +93,8 @@
 	const logs = ref<List<string | null> | undefined>();
 	const status = ref<boolean | undefined>();
 
-	const gruppe1 = ref<0|1|2>(0);
-	const gruppe2 = ref<0|1|2>(0);
+	const gruppe1 = ref<0 | 1 | 2>(0);
+	const gruppe2 = ref<0 | 1 | 2>(0);
 
 	const hatKompetenzLoeschen = computed(() => props.benutzerKompetenzen.has(BenutzerKompetenz.LEHRERDATEN_LOESCHEN));
 	const hatKompetenzDrucken = computed(() => props.benutzerKompetenzen.has(BenutzerKompetenz.LEHRERDATEN_ANSEHEN));
@@ -107,15 +107,15 @@
 		if (currentAction.value === 'delete')
 			return props.deleteLehrerCheck();
 		return [true, []];
-	})
+	});
 
 	function setCurrentAction(newAction: Action, open: boolean) {
-		if(newAction === oldAction.value.name && !open)
+		if (newAction === oldAction.value.name && !open)
 			return;
 		oldAction.value.name = currentAction.value;
 		oldAction.value.open = (currentAction.value === "") ? false : true;
-		if(open === true)
-			currentAction.value= newAction;
+		if (open === true)
+			currentAction.value = newAction;
 		else
 			currentAction.value = "";
 	}
@@ -154,7 +154,7 @@
 						vp.wert = (gruppe1.value === 1).toString();
 						break;
 					case "mitPausenzeiten":
-						vp.wert = (gruppe1.value === 2).toString()
+						vp.wert = (gruppe1.value === 2).toString();
 						break;
 					case "mitFachkuerzelStattFachbezeichnung":
 						vp.wert = option8.value.toString();
@@ -170,7 +170,7 @@
 						vp.wert = (gruppe1.value === 1).toString();
 						break;
 					case "mitPausenzeiten":
-						vp.wert = (gruppe1.value === 2).toString()
+						vp.wert = (gruppe1.value === 2).toString();
 						break;
 					case "mitFachkuerzelStattFachbezeichnung":
 						vp.wert = option8.value.toString();
@@ -190,14 +190,14 @@
 		loading.value = false;
 	}
 
-	const wochentag = ['So.', 'Mo.', 'Di.', 'Mi.', 'Do.', 'Fr.', 'Sa.', 'So.' ];
+	const wochentag = ['So.', 'Mo.', 'Di.', 'Mi.', 'Do.', 'Fr.', 'Sa.', 'So.'];
 
-	function toDateStr(iso: string) : string {
+	function toDateStr(iso: string): string {
 		const date = DateUtils.extractFromDateISO8601(iso);
 		return wochentag[date[3] % 7] + " " + date[2] + "." + date[1] + "." + date[0];
 	}
 
-	function toKW(iso: string) : string {
+	function toKW(iso: string): string {
 		const date = DateUtils.extractFromDateISO8601(iso);
 		return "" + date[5];
 	}

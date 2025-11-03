@@ -6,72 +6,72 @@ export class SchuelerLernabschnittListeEintrag extends JavaObject {
 	/**
 	 * Die ID des Lernabschnitts in der Datenbank.
 	 */
-	public id : number = 0;
+	public id: number = 0;
 
 	/**
 	 * Die ID des Schülers, zu dem diese Lernabschnittdaten gehören.
 	 */
-	public schuelerID : number = 0;
+	public schuelerID: number = 0;
 
 	/**
 	 * Die ID des Schuljahresabschnitts, zu welchem diese Lernabschnittdaten gehören.
 	 */
-	public schuljahresabschnitt : number = 0;
+	public schuljahresabschnitt: number = 0;
 
 	/**
 	 * Das Schuljahr, in welchem der Schuljahresabschnitt liegt
 	 */
-	public schuljahr : number = 0;
+	public schuljahr: number = 0;
 
 	/**
 	 * Die Nummer des Abschnitts im Schuljahr
 	 */
-	public abschnitt : number = 0;
+	public abschnitt: number = 0;
 
 	/**
 	 * Eine Nr, zur Unterscheidung von Lernabschnittsdaten, wenn beim Schüler mehrere Lernabschnitt in einem Schuljahresabschnitt vorliegen (z.B. Wechsel einer Klasse, NULL=aktueller Abschnitt, 1=vor dem ersten Wechsel, 2=vor dem zweiten Wechsel, usw.).
 	 */
-	public wechselNr : number = 0;
+	public wechselNr: number = 0;
 
 	/**
 	 * Gibt an, ob es sich um einen gewerteten Abschnitt handelt oder nicht
 	 */
-	public istGewertet : boolean = true;
+	public istGewertet: boolean = true;
 
 	/**
 	 * Gibt an, ob es sich bei dem Abschnitt um einen wiederholten Abschnitt handelt oder nicht
 	 */
-	public istWiederholung : boolean = false;
+	public istWiederholung: boolean = false;
 
 	/**
 	 * Die Prüfungsordnung, die in dem Lernabschnitt bei dem Schüler anzuwenden ist.
 	 */
-	public pruefungsOrdnung : string = "";
+	public pruefungsOrdnung: string = "";
 
 	/**
 	 * Die ID der Klasse des Schülers oder null, falls keine Klasse zugeordnet ist.
 	 */
-	public klassenID : number | null = null;
+	public klassenID: number | null = null;
 
 	/**
 	 * Die Bezeichnung der Klasse des Schülers
 	 */
-	public klasse : string = "";
+	public klasse: string = "";
 
 	/**
 	 * Die Statistik-Bezeichnung der Klasse des Schülers
 	 */
-	public klasseStatistik : string = "";
+	public klasseStatistik: string = "";
 
 	/**
 	 * Die ID des Jahrgangs des Schülers oder null, falls kein Jahrgang zugeordnet ist
 	 */
-	public jahrgangID : number | null = null;
+	public jahrgangID: number | null = null;
 
 	/**
 	 * Die Statistik-Bezeichnung des Jahrgangs des Schülers
 	 */
-	public jahrgang : string = "";
+	public jahrgang: string = "";
 
 
 	/**
@@ -85,13 +85,13 @@ export class SchuelerLernabschnittListeEintrag extends JavaObject {
 		return 'de.svws_nrw.core.data.schueler.SchuelerLernabschnittListeEintrag';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.schueler.SchuelerLernabschnittListeEintrag'].includes(name);
 	}
 
 	public static class = new Class<SchuelerLernabschnittListeEintrag>('de.svws_nrw.core.data.schueler.SchuelerLernabschnittListeEintrag');
 
-	public static transpilerFromJSON(json : string): SchuelerLernabschnittListeEintrag {
+	public static transpilerFromJSON(json: string): SchuelerLernabschnittListeEintrag {
 		const obj = JSON.parse(json) as Partial<SchuelerLernabschnittListeEintrag>;
 		const result = new SchuelerLernabschnittListeEintrag();
 		if (obj.id === undefined)
@@ -135,7 +135,7 @@ export class SchuelerLernabschnittListeEintrag extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : SchuelerLernabschnittListeEintrag) : string {
+	public static transpilerToJSON(obj: SchuelerLernabschnittListeEintrag): string {
 		let result = '{';
 		result += '"id" : ' + obj.id.toString() + ',';
 		result += '"schuelerID" : ' + obj.schuelerID.toString() + ',';
@@ -156,7 +156,7 @@ export class SchuelerLernabschnittListeEintrag extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<SchuelerLernabschnittListeEintrag>) : string {
+	public static transpilerToJSONPatch(obj: Partial<SchuelerLernabschnittListeEintrag>): string {
 		let result = '{';
 		if (obj.id !== undefined) {
 			result += '"id" : ' + obj.id.toString() + ',';
@@ -207,6 +207,6 @@ export class SchuelerLernabschnittListeEintrag extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_schueler_SchuelerLernabschnittListeEintrag(obj : unknown) : SchuelerLernabschnittListeEintrag {
+export function cast_de_svws_nrw_core_data_schueler_SchuelerLernabschnittListeEintrag(obj: unknown): SchuelerLernabschnittListeEintrag {
 	return obj as SchuelerLernabschnittListeEintrag;
 }

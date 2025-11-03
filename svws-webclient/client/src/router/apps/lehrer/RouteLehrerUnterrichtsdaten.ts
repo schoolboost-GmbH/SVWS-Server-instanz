@@ -12,7 +12,7 @@ const SLehrerUnterrichtsdaten = () => import("~/components/lehrer/unterrichtsdat
 export class RouteLehrerUnterrichtsdaten extends RouteNode<any, RouteLehrer> {
 
 	public constructor() {
-		super(Schulform.values(), [ BenutzerKompetenz.LEHRERDATEN_ANSEHEN ], "lehrer.unterrichtsdaten", "unterrichtsdaten", SLehrerUnterrichtsdaten);
+		super(Schulform.values(), [BenutzerKompetenz.LEHRERDATEN_ANSEHEN], "lehrer.unterrichtsdaten", "unterrichtsdaten", SLehrerUnterrichtsdaten);
 		super.mode = ServerMode.DEV;
 		super.propHandler = (route) => this.getProps(route);
 		super.text = "Unterricht";

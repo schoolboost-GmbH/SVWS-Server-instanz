@@ -9,9 +9,9 @@ import type { JavaMap } from '../../../java/util/JavaMap';
 
 export class StundenplanblockungManagerFachMenge extends JavaObject {
 
-	private readonly _menge : List<StundenplanblockungManagerFach>;
+	private readonly _menge: List<StundenplanblockungManagerFach>;
 
-	private readonly _map : JavaMap<number, StundenplanblockungManagerFach>;
+	private readonly _map: JavaMap<number, StundenplanblockungManagerFach>;
 
 
 	/**
@@ -31,10 +31,10 @@ export class StundenplanblockungManagerFachMenge extends JavaObject {
 	 * @param pKuerzel               Das Kürzel des Faches.
 	 * @throws NullPointerException  Falls die Fach-ID bereits existiert.
 	 */
-	public addOrException(pFachID : number, pKuerzel : string) : void {
+	public addOrException(pFachID: number, pKuerzel: string): void {
 		if (this._map.containsKey(pFachID))
 			throw new NullPointerException("Die Fach-ID " + pFachID + " existiert bereits!")
-		const fa : StundenplanblockungManagerFach = new StundenplanblockungManagerFach(pFachID, pKuerzel);
+		const fa: StundenplanblockungManagerFach = new StundenplanblockungManagerFach(pFachID, pKuerzel);
 		this._map.put(pFachID, fa);
 		this._menge.add(fa);
 	}
@@ -47,8 +47,8 @@ export class StundenplanblockungManagerFachMenge extends JavaObject {
 	 * @return                       Das {@link StundenplanblockungFach}-Objekt zur übergebenen ID.
 	 * @throws NullPointerException  Falls die Fach-ID unbekannt ist.
 	 */
-	public getOrException(pFachID : number) : StundenplanblockungManagerFach {
-		const fa : StundenplanblockungManagerFach | null = this._map.get(pFachID);
+	public getOrException(pFachID: number): StundenplanblockungManagerFach {
+		const fa: StundenplanblockungManagerFach | null = this._map.get(pFachID);
 		if (fa === null)
 			throw new NullPointerException("Fach-ID " + pFachID + " unbekannt!")
 		return fa;
@@ -61,8 +61,8 @@ export class StundenplanblockungManagerFachMenge extends JavaObject {
 	 * @param pFachID                Die Datenbank-ID des Faches.
 	 * @throws NullPointerException  Falls die Fach-ID unbekannt ist.
 	 */
-	public removeOrException(pFachID : number) : void {
-		const fa : StundenplanblockungManagerFach = this.getOrException(pFachID);
+	public removeOrException(pFachID: number): void {
+		const fa: StundenplanblockungManagerFach = this.getOrException(pFachID);
 		this._map.remove(pFachID);
 		this._menge.remove(fa);
 	}
@@ -74,7 +74,7 @@ export class StundenplanblockungManagerFachMenge extends JavaObject {
 	 *
 	 * @return TRUE, falls die Fach-ID existiert.
 	 */
-	public exists(pFachID : number) : boolean {
+	public exists(pFachID: number): boolean {
 		return this._map.containsKey(pFachID);
 	}
 
@@ -83,7 +83,7 @@ export class StundenplanblockungManagerFachMenge extends JavaObject {
 	 *
 	 * @return Die Anzahl an Lehrkräften.
 	 */
-	public size() : number {
+	public size(): number {
 		return this._menge.size();
 	}
 
@@ -91,7 +91,7 @@ export class StundenplanblockungManagerFachMenge extends JavaObject {
 		return 'de.svws_nrw.core.utils.stundenplanblockung.StundenplanblockungManagerFachMenge';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.utils.stundenplanblockung.StundenplanblockungManagerFachMenge'].includes(name);
 	}
 
@@ -99,6 +99,6 @@ export class StundenplanblockungManagerFachMenge extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_utils_stundenplanblockung_StundenplanblockungManagerFachMenge(obj : unknown) : StundenplanblockungManagerFachMenge {
+export function cast_de_svws_nrw_core_utils_stundenplanblockung_StundenplanblockungManagerFachMenge(obj: unknown): StundenplanblockungManagerFachMenge {
 	return obj as StundenplanblockungManagerFachMenge;
 }

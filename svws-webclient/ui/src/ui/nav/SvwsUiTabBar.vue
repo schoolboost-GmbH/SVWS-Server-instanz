@@ -44,8 +44,8 @@
 	const props = withDefaults(defineProps<{
 		tabManager: () => TabManager;
 		secondary?: boolean;
-		focusSwitchingEnabled? : boolean;
-		focusHelpVisible? : boolean;
+		focusSwitchingEnabled?: boolean;
+		focusHelpVisible?: boolean;
 	}>(), {
 		secondary: false,
 		focusSwitchingEnabled: false,
@@ -59,7 +59,7 @@
 		scrollFactor: number;
 		maxScrollLeft: number;
 		scrollOffset: number;
-	}
+	};
 
 	let processingKeyboardEvent = false;
 	const tabsListElement = ref();
@@ -77,14 +77,14 @@
 		state.value.scrolledMax = (tabsListElement.value?.scrollLeft ?? 0) >= state.value.maxScrollLeft;
 		tabsListElement.value?.addEventListener("scroll", handleScroll);
 		window.addEventListener("resize", handleScroll);
-		window.addEventListener("keydown", switchTab)
-	})
+		window.addEventListener("keydown", switchTab);
+	});
 
 
 	onUnmounted(() => {
 		tabsListElement.value?.removeEventListener("scroll", handleScroll);
 		window.removeEventListener("resize", handleScroll);
-		window.removeEventListener("keydown", switchTab)
+		window.removeEventListener("keydown", switchTab);
 	});
 
 

@@ -13,15 +13,15 @@ const SLernplattformenGruppenprozesse = () => import("~/components/schule/schulb
 export class RouteKatalogLernplattformenGruppenprozesse extends RouteNode<any, RouteKatalogLernplattformen> {
 
 	public constructor() {
-		super(Schulform.values(), [ BenutzerKompetenz.KATALOG_EINTRAEGE_ANSEHEN, BenutzerKompetenz.KATALOG_EINTRAEGE_AENDERN, BenutzerKompetenz.KATALOG_EINTRAEGE_LOESCHEN ], "schule.lernplattformen.gruppenprozesse", "gruppenprozesse", SLernplattformenGruppenprozesse);
-		super.types = new Set([ ViewType.GRUPPENPROZESSE ]);
+		super(Schulform.values(), [BenutzerKompetenz.KATALOG_EINTRAEGE_ANSEHEN, BenutzerKompetenz.KATALOG_EINTRAEGE_AENDERN, BenutzerKompetenz.KATALOG_EINTRAEGE_LOESCHEN], "schule.lernplattformen.gruppenprozesse", "gruppenprozesse", SLernplattformenGruppenprozesse);
+		super.types = new Set([ViewType.GRUPPENPROZESSE]);
 		super.mode = ServerMode.STABLE;
 		super.propHandler = (route) => this.getProps(route);
 		super.text = "Gruppenprozesse";
 	}
 
-	public getRoute() : RouteLocationRaw {
-		return { name: this.name, params: { idSchuljahresabschnitt: routeApp.data.idSchuljahresabschnitt, id: "" }};
+	public getRoute(): RouteLocationRaw {
+		return { name: this.name, params: { idSchuljahresabschnitt: routeApp.data.idSchuljahresabschnitt, id: "" } };
 	}
 
 	public getProps(to: RouteLocationNormalized): SLernplattformenGruppenprozesseProps {

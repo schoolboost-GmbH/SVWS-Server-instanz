@@ -6,37 +6,37 @@ export class GostBlockungKursLehrer extends JavaObject {
 	/**
 	 * Die ID des Lehrers
 	 */
-	public id : number = -1;
+	public id: number = -1;
 
 	/**
 	 * Das Kürzel des Lehrers.
 	 */
-	public kuerzel : string = "";
+	public kuerzel: string = "";
 
 	/**
 	 * Der Vorname des Lehrers.
 	 */
-	public vorname : string = "";
+	public vorname: string = "";
 
 	/**
 	 * Der Nachname des Lehrers.
 	 */
-	public nachname : string = "";
+	public nachname: string = "";
 
 	/**
 	 * Eine Reihenfolge für die Lehrer, z.B. zur Unterscheidung des eigentlichen Kurslehrer (z.B. 1) und einer Zusatzkraft (z.B. 2)
 	 */
-	public reihenfolge : number = 1;
+	public reihenfolge: number = 1;
 
 	/**
 	 * Die Wochenstunden, welche die Lehrkraft in dem Kurs unterrichtet (Default: Wochenstunden des Kurses)
 	 */
-	public wochenstunden : number = 3;
+	public wochenstunden: number = 3;
 
 	/**
 	 * Gibt an, ob es sich um eine externe Lehrkraft handelt (z.B. bei einem Kooperationskurs an einer anderen Schule)
 	 */
-	public istExtern : boolean = false;
+	public istExtern: boolean = false;
 
 
 	/**
@@ -50,13 +50,13 @@ export class GostBlockungKursLehrer extends JavaObject {
 		return 'de.svws_nrw.core.data.gost.GostBlockungKursLehrer';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.gost.GostBlockungKursLehrer'].includes(name);
 	}
 
 	public static class = new Class<GostBlockungKursLehrer>('de.svws_nrw.core.data.gost.GostBlockungKursLehrer');
 
-	public static transpilerFromJSON(json : string): GostBlockungKursLehrer {
+	public static transpilerFromJSON(json: string): GostBlockungKursLehrer {
 		const obj = JSON.parse(json) as Partial<GostBlockungKursLehrer>;
 		const result = new GostBlockungKursLehrer();
 		if (obj.id === undefined)
@@ -83,7 +83,7 @@ export class GostBlockungKursLehrer extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : GostBlockungKursLehrer) : string {
+	public static transpilerToJSON(obj: GostBlockungKursLehrer): string {
 		let result = '{';
 		result += '"id" : ' + obj.id.toString() + ',';
 		result += '"kuerzel" : ' + JSON.stringify(obj.kuerzel) + ',';
@@ -97,7 +97,7 @@ export class GostBlockungKursLehrer extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<GostBlockungKursLehrer>) : string {
+	public static transpilerToJSONPatch(obj: Partial<GostBlockungKursLehrer>): string {
 		let result = '{';
 		if (obj.id !== undefined) {
 			result += '"id" : ' + obj.id.toString() + ',';
@@ -127,6 +127,6 @@ export class GostBlockungKursLehrer extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_gost_GostBlockungKursLehrer(obj : unknown) : GostBlockungKursLehrer {
+export function cast_de_svws_nrw_core_data_gost_GostBlockungKursLehrer(obj: unknown): GostBlockungKursLehrer {
 	return obj as GostBlockungKursLehrer;
 }

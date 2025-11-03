@@ -129,9 +129,9 @@
 			if (l.istAktiv)
 				result.add(l);
 		return result;
-	})
+	});
 
-	function getLehrerText(lehrer : LehrerListeEintrag) : string {
+	function getLehrerText(lehrer: LehrerListeEintrag): string {
 		return lehrer.kuerzel + ' - ' + lehrer.vorname + ' ' + lehrer.nachname;
 	}
 
@@ -181,7 +181,7 @@
 			if (!changed)
 				changed = (data().schienen.size() !== result.size());
 			if (changed)
-				void props.patch({ schienen : result });
+				void props.patch({ schienen: result });
 		},
 	});
 
@@ -228,10 +228,10 @@
 	// --- Tabelle Kurslehrer ---
 	const weitereLehrer = computed(() => [...props.manager().daten().weitereLehrer]);
 	const columnsKursLehrer: DataTableColumn[] = [
-		{key: "kuerzel", label: "Kürzel", sortable: true},
-		{key: "vorname", label: "Vorname", sortable: true},
-		{key: "nachname", label: "Nachname", sortable: true},
-		{key: "wochenstundenLehrer", label: "Wochenstunden", sortable: true},
+		{ key: "kuerzel", label: "Kürzel", sortable: true },
+		{ key: "vorname", label: "Vorname", sortable: true },
+		{ key: "nachname", label: "Nachname", sortable: true },
+		{ key: "wochenstundenLehrer", label: "Wochenstunden", sortable: true },
 	];
 
 	// --- delete ---
@@ -242,7 +242,7 @@
 		const ids = new ArrayList<number>();
 		for (const k of auswahlKursLehrer.value)
 			ids.add(k.idLehrer);
-		await props.deleteKursLehrer(ids,idKurs.value);
+		await props.deleteKursLehrer(ids, idKurs.value);
 		auswahlKursLehrer.value = [];
 	}
 
@@ -306,7 +306,7 @@
 	}
 
 	// --- Mode ---
-	enum Mode { ADD, PATCH , DEFAULT };
+	enum Mode { ADD, PATCH, DEFAULT };
 	const currentMode = ref<Mode>(Mode.DEFAULT);
 	function setMode(newMode: Mode) {
 		currentMode.value = newMode;

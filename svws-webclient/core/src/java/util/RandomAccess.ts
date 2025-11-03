@@ -1,5 +1,5 @@
-export type RandomAccess = object
+export type RandomAccess = object;
 
-export function cast_java_util_RandomAccess(obj : unknown) : RandomAccess {
+export function cast_java_util_RandomAccess(obj: unknown): RandomAccess {
 	return obj as RandomAccess;
 }

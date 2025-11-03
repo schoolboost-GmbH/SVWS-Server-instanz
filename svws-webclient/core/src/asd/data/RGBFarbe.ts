@@ -6,17 +6,17 @@ export class RGBFarbe extends JavaObject {
 	/**
 	 * Der Rot-Anteil der Farbe (0-255)
 	 */
-	public red : number = 220;
+	public red: number = 220;
 
 	/**
 	 * Der Grün-Anteil der Farbe (0-255)
 	 */
-	public green : number = 220;
+	public green: number = 220;
 
 	/**
 	 * Der Blau-Anteil der Farbe (0-255)
 	 */
-	public blue : number = 220;
+	public blue: number = 220;
 
 
 	/**
@@ -31,31 +31,31 @@ export class RGBFarbe extends JavaObject {
 	 * @param green   die Grün-Komponente (0-225)
 	 * @param blue    die Blau-Komponente (0-225)
 	 */
-	public constructor(red : number, green : number, blue : number);
+	public constructor(red: number, green: number, blue: number);
 
 	/**
 	 * Erstellt eine neue Farbe mit den übergebenenen Komponenten
 	 *
 	 * @param decimal     Die Farbe in Dezimal
 	 */
-	public constructor(decimal : number);
+	public constructor(decimal: number);
 
 	/**
 	 * Implementation for method overloads of 'constructor'
 	 */
-	public constructor(__param0? : number, __param1? : number, __param2? : number) {
+	public constructor(__param0?: number, __param1?: number, __param2?: number) {
 		super();
 		if ((__param0 === undefined) && (__param1 === undefined) && (__param2 === undefined)) {
 			// empty method body
 		} else if (((__param0 !== undefined) && typeof __param0 === "number") && ((__param1 !== undefined) && typeof __param1 === "number") && ((__param2 !== undefined) && typeof __param2 === "number")) {
-			const red : number = __param0 as number;
-			const green : number = __param1 as number;
-			const blue : number = __param2 as number;
+			const red: number = __param0 as number;
+			const green: number = __param1 as number;
+			const blue: number = __param2 as number;
 			this.red = red;
 			this.green = green;
 			this.blue = blue;
 		} else if (((__param0 !== undefined) && typeof __param0 === "number") && (__param1 === undefined) && (__param2 === undefined)) {
-			const decimal : number = __param0 as number;
+			const decimal: number = __param0 as number;
 			this.red = (decimal >> 16) & 255;
 			this.green = (decimal >> 8) & 255;
 			this.blue = decimal & 255;
@@ -67,7 +67,7 @@ export class RGBFarbe extends JavaObject {
 	 *
 	 * @return		Farbwert in Dezimal
 	 */
-	public asDecimal() : number | null {
+	public asDecimal(): number | null {
 		return (this.red << 16) | (this.green << 8) | this.blue;
 	}
 
@@ -76,7 +76,7 @@ export class RGBFarbe extends JavaObject {
 	 *
 	 * @return der String
 	 */
-	public toString() : string | null {
+	public toString(): string | null {
 		return this.red + "," + this.green + "," + this.blue;
 	}
 
@@ -84,13 +84,13 @@ export class RGBFarbe extends JavaObject {
 		return 'de.svws_nrw.asd.data.RGBFarbe';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.asd.data.RGBFarbe'].includes(name);
 	}
 
 	public static class = new Class<RGBFarbe>('de.svws_nrw.asd.data.RGBFarbe');
 
-	public static transpilerFromJSON(json : string): RGBFarbe {
+	public static transpilerFromJSON(json: string): RGBFarbe {
 		const obj = JSON.parse(json) as Partial<RGBFarbe>;
 		const result = new RGBFarbe();
 		if (obj.red === undefined)
@@ -105,7 +105,7 @@ export class RGBFarbe extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : RGBFarbe) : string {
+	public static transpilerToJSON(obj: RGBFarbe): string {
 		let result = '{';
 		result += '"red" : ' + obj.red.toString() + ',';
 		result += '"green" : ' + obj.green.toString() + ',';
@@ -115,7 +115,7 @@ export class RGBFarbe extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<RGBFarbe>) : string {
+	public static transpilerToJSONPatch(obj: Partial<RGBFarbe>): string {
 		let result = '{';
 		if (obj.red !== undefined) {
 			result += '"red" : ' + obj.red.toString() + ',';
@@ -133,6 +133,6 @@ export class RGBFarbe extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_asd_data_RGBFarbe(obj : unknown) : RGBFarbe {
+export function cast_de_svws_nrw_asd_data_RGBFarbe(obj: unknown): RGBFarbe {
 	return obj as RGBFarbe;
 }

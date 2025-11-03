@@ -6,17 +6,17 @@ export class StundenplanblockungFach extends JavaObject {
 	/**
 	 * Die Datenbank-ID des Faches.
 	 */
-	public id : number = 0;
+	public id: number = 0;
 
 	/**
 	 * Das Kürzel des Faches. Beispielsweise 'KU'.
 	 */
-	public kuerzel : string = "";
+	public kuerzel: string = "";
 
 	/**
 	 * Die Nummer, welche die Sortierung der Fächer angibt.
 	 */
-	public sortierung : number = 32000;
+	public sortierung: number = 32000;
 
 
 	/**
@@ -30,13 +30,13 @@ export class StundenplanblockungFach extends JavaObject {
 		return 'de.svws_nrw.core.data.stundenplanblockung.StundenplanblockungFach';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.stundenplanblockung.StundenplanblockungFach'].includes(name);
 	}
 
 	public static class = new Class<StundenplanblockungFach>('de.svws_nrw.core.data.stundenplanblockung.StundenplanblockungFach');
 
-	public static transpilerFromJSON(json : string): StundenplanblockungFach {
+	public static transpilerFromJSON(json: string): StundenplanblockungFach {
 		const obj = JSON.parse(json) as Partial<StundenplanblockungFach>;
 		const result = new StundenplanblockungFach();
 		if (obj.id === undefined)
@@ -51,7 +51,7 @@ export class StundenplanblockungFach extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : StundenplanblockungFach) : string {
+	public static transpilerToJSON(obj: StundenplanblockungFach): string {
 		let result = '{';
 		result += '"id" : ' + obj.id.toString() + ',';
 		result += '"kuerzel" : ' + JSON.stringify(obj.kuerzel) + ',';
@@ -61,7 +61,7 @@ export class StundenplanblockungFach extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<StundenplanblockungFach>) : string {
+	public static transpilerToJSONPatch(obj: Partial<StundenplanblockungFach>): string {
 		let result = '{';
 		if (obj.id !== undefined) {
 			result += '"id" : ' + obj.id.toString() + ',';
@@ -79,6 +79,6 @@ export class StundenplanblockungFach extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_stundenplanblockung_StundenplanblockungFach(obj : unknown) : StundenplanblockungFach {
+export function cast_de_svws_nrw_core_data_stundenplanblockung_StundenplanblockungFach(obj: unknown): StundenplanblockungFach {
 	return obj as StundenplanblockungFach;
 }

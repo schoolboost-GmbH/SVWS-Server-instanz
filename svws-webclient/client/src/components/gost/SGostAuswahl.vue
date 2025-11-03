@@ -53,7 +53,7 @@
 	const items = computed<GostJahrgang[]>(() => {
 		const list = [...props.mapAbiturjahrgaenge().values()];
 		const filtern = props.filterNurAktuelle();
-		return list.filter(a => filtern && !a.istAbgeschlossen).sort((a, b) => (a.bezeichnung ?? "") < (b.bezeichnung ?? "") ? 1 : -1)
+		return list.filter(a => filtern && !a.istAbgeschlossen).sort((a, b) => (a.bezeichnung ?? "") < (b.bezeichnung ?? "") ? 1 : -1);
 	});
 
 	const hatUpdateKompetenz = computed<boolean>(() => props.benutzerKompetenzen.has(BenutzerKompetenz.OBERSTUFE_ABITURJAHRGAENGE_VERWALTEN));
@@ -64,9 +64,9 @@
 			if (j.abiturjahr < 0)
 				set.add(j);
 		return set;
-	})
+	});
 
-	async function setAuswahl(list : GostJahrgang[]) {
+	async function setAuswahl(list: GostJahrgang[]) {
 		props.setSelected(list);
 		if (props.selected().length > 0)
 			await props.gotoGruppenprozess(true);

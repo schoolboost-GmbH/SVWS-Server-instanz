@@ -1,7 +1,7 @@
 import type { RouteParams } from "vue-router";
 import type { RouteApp } from "~/router/apps/RouteApp";
 
-import type {  DeveloperNotificationException} from "@core";
+import type { DeveloperNotificationException } from "@core";
 import { BenutzerKompetenz, Schulform, ServerMode, StundenplanKonfiguration } from "@core";
 
 import { api } from "~/router/Api";
@@ -27,8 +27,8 @@ import { routeStundenplanNeu } from "./RouteStundenplanNeu";
 import { routeStundenplanGruppenprozesse } from "./RouteStundenplanGruppenprozesse";
 import { routeError } from "~/router/error/RouteError";
 
-const SStundenplanAuswahl = () => import("~/components/stundenplan/SStundenplanAuswahl.vue")
-const SStundenplanApp = () => import("~/components/stundenplan/SStundenplanApp.vue")
+const SStundenplanAuswahl = () => import("~/components/stundenplan/SStundenplanAuswahl.vue");
+const SStundenplanApp = () => import("~/components/stundenplan/SStundenplanApp.vue");
 
 export class RouteStundenplan extends RouteAuswahlNode<StundenplanListeManager, RouteDataStundenplan, RouteApp> {
 
@@ -70,11 +70,11 @@ export class RouteStundenplan extends RouteAuswahlNode<StundenplanListeManager, 
 		return this.getRouteSelectedChild();
 	};
 
-	public static katalogeCheckHidden(isKatalog: boolean, node: RouteNode<any, any>, params?: RouteParams ) {
+	public static katalogeCheckHidden(isKatalog: boolean, node: RouteNode<any, any>, params?: RouteParams) {
 		if (params === undefined)
 			return false;
 		try {
-			const { id } = RouteNode.getIntParams(params, ["id"] );
+			const { id } = RouteNode.getIntParams(params, ["id"]);
 			if (isKatalog && id !== -1)
 				return { name: routeStundenplanDaten.name, params };
 			else if (!isKatalog && id === -1)

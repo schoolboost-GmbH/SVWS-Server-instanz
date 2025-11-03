@@ -13,12 +13,12 @@ export class KursManager extends JavaObject {
 	/**
 	 * Die Kurse, die im Manager vorhanden sind
 	 */
-	private readonly _kurse : List<KursDaten> = new ArrayList<KursDaten>();
+	private readonly _kurse: List<KursDaten> = new ArrayList<KursDaten>();
 
 	/**
 	 * Eine HashMap für den schnellen Zugriff auf ein Fach anhand der ID
 	 */
-	private readonly _map : HashMap<number, KursDaten> = new HashMap<number, KursDaten>();
+	private readonly _map: HashMap<number, KursDaten> = new HashMap<number, KursDaten>();
 
 
 	/**
@@ -31,17 +31,17 @@ export class KursManager extends JavaObject {
 	 *
 	 * @param kurse die Liste mit den Kursen
 	 */
-	public constructor(kurse : List<KursDaten>);
+	public constructor(kurse: List<KursDaten>);
 
 	/**
 	 * Implementation for method overloads of 'constructor'
 	 */
-	public constructor(__param0? : List<KursDaten>) {
+	public constructor(__param0?: List<KursDaten>) {
 		super();
 		if ((__param0 === undefined)) {
 			// empty method body
 		} else if (((__param0 !== undefined) && ((__param0 instanceof JavaObject) && (__param0.isTranspiledInstanceOf('java.util.List'))) || (__param0 === null))) {
-			const kurse : List<KursDaten> = cast_java_util_List(__param0);
+			const kurse: List<KursDaten> = cast_java_util_List(__param0);
 			this.addAll(kurse);
 		} else throw new Error('invalid method overload');
 	}
@@ -55,10 +55,10 @@ export class KursManager extends JavaObject {
 	 * @return true, falls der Kurs hinzugefügt wurde
 	 * @throws DeveloperNotificationException Falls die ID des Kurses nagativ ist.
 	 */
-	private addInternal(kurs : KursDaten) : boolean {
+	private addInternal(kurs: KursDaten): boolean {
 		if (kurs.id < 0)
 			throw new DeveloperNotificationException("Die Kurs-ID darf nicht negativ sein!")
-		const old : KursDaten | null = this._map.put(kurs.id, kurs);
+		const old: KursDaten | null = this._map.put(kurs.id, kurs);
 		if (old !== null)
 			return false;
 		return this._kurse.add(kurs);
@@ -67,7 +67,7 @@ export class KursManager extends JavaObject {
 	/**
 	 * Führt eine Sortierung der Kurse anhand des Sortierungsfeldes durch.
 	 */
-	private sort() : void {
+	private sort(): void {
 		// empty block
 	}
 
@@ -79,8 +79,8 @@ export class KursManager extends JavaObject {
 	 *
 	 * @return true, falls der Kurs hinzugefügt wurde
 	 */
-	public add(kurs : KursDaten) : boolean {
-		const result : boolean = this.addInternal(kurs);
+	public add(kurs: KursDaten): boolean {
+		const result: boolean = this.addInternal(kurs);
 		this.sort();
 		return result;
 	}
@@ -92,8 +92,8 @@ export class KursManager extends JavaObject {
 	 *
 	 * @return true, falls <i>alle</i> Kurse eingefügt wurden, sonst false
 	 */
-	public addAll(kurse : Collection<KursDaten>) : boolean {
-		let result : boolean = true;
+	public addAll(kurse: Collection<KursDaten>): boolean {
+		let result: boolean = true;
 		for (const kurs of kurse)
 			if (!this.addInternal(kurs))
 				result = false;
@@ -109,7 +109,7 @@ export class KursManager extends JavaObject {
 	 * @return Der Kurs mit der angegebenen ID oder null, falls es den Kurs nicht
 	 *         gibt.
 	 */
-	public get(id : number) : KursDaten | null {
+	public get(id: number): KursDaten | null {
 		return this._map.get(id);
 	}
 
@@ -121,8 +121,8 @@ export class KursManager extends JavaObject {
 	 * @throws DeveloperNotificationException falls ein Kurs mit der ID nicht
 	 *                                        bekannt ist
 	 */
-	public getOrException(pKursID : number) : KursDaten {
-		const kurs : KursDaten | null = this._map.get(pKursID);
+	public getOrException(pKursID: number): KursDaten {
+		const kurs: KursDaten | null = this._map.get(pKursID);
 		if (kurs === null)
 			throw new DeveloperNotificationException("KursDaten mit id=" + pKursID + " gibt es nicht.")
 		return kurs;
@@ -133,7 +133,7 @@ export class KursManager extends JavaObject {
 	 *
 	 * @return true, wenn die Liste der Kurse leer ist.
 	 */
-	public isEmpty() : boolean {
+	public isEmpty(): boolean {
 		return this._kurse.isEmpty();
 	}
 
@@ -142,7 +142,7 @@ export class KursManager extends JavaObject {
 	 *
 	 * @return die interne Liste der Kurse
 	 */
-	public kurse() : List<KursDaten> {
+	public kurse(): List<KursDaten> {
 		return this._kurse;
 	}
 
@@ -151,7 +151,7 @@ export class KursManager extends JavaObject {
 	 *
 	 * @return ein Array mit den Kursen
 	 */
-	public values() : Array<KursDaten> {
+	public values(): Array<KursDaten> {
 		return this._kurse.toArray(Array(0).fill(null));
 	}
 
@@ -160,8 +160,8 @@ export class KursManager extends JavaObject {
 	 *
 	 * @return ein Vector mit den Kursen
 	 */
-	public toList() : List<KursDaten> {
-		const result : List<KursDaten> = new ArrayList<KursDaten>();
+	public toList(): List<KursDaten> {
+		const result: List<KursDaten> = new ArrayList<KursDaten>();
 		for (const kurs of this._kurse)
 			result.add(kurs);
 		return result;
@@ -171,7 +171,7 @@ export class KursManager extends JavaObject {
 		return 'de.svws_nrw.core.utils.KursManager';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.utils.KursManager'].includes(name);
 	}
 
@@ -179,6 +179,6 @@ export class KursManager extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_utils_KursManager(obj : unknown) : KursManager {
+export function cast_de_svws_nrw_core_utils_KursManager(obj: unknown): KursManager {
 	return obj as KursManager;
 }

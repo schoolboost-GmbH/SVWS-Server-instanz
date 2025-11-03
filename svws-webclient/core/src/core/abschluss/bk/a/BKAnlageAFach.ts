@@ -6,12 +6,12 @@ export class BKAnlageAFach extends JavaObject {
 	/**
 	 * Das Kürzel des Faches.
 	 */
-	public kuerzel : string | null = null;
+	public kuerzel: string | null = null;
 
 	/**
 	 * Die Note in dem Fach.
 	 */
-	public note : number = -1;
+	public note: number = -1;
 
 
 	/**
@@ -25,7 +25,7 @@ export class BKAnlageAFach extends JavaObject {
 		return 'de.svws_nrw.core.abschluss.bk.a.BKAnlageAFach';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.abschluss.bk.a.BKAnlageAFach'].includes(name);
 	}
 
@@ -33,6 +33,6 @@ export class BKAnlageAFach extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_abschluss_bk_a_BKAnlageAFach(obj : unknown) : BKAnlageAFach {
+export function cast_de_svws_nrw_core_abschluss_bk_a_BKAnlageAFach(obj: unknown): BKAnlageAFach {
 	return obj as BKAnlageAFach;
 }

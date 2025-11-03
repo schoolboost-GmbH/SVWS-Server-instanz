@@ -15,27 +15,27 @@ import de.svws_nrw.db.schema.SchemaTabelleSpalte;
 public class Tabelle_Logins extends SchemaTabelle {
 
 	/** Die Definition der Tabellenspalte LI_UserID */
-	public SchemaTabelleSpalte col_LI_UserID = add("LI_UserID", SchemaDatentypen.BIGINT, true)
+	public final SchemaTabelleSpalte col_LI_UserID = add("LI_UserID", SchemaDatentypen.BIGINT, true)
 			.setNotNull()
 			.setJavaComment("UserID des Logins");
 
 	/** Die Definition der Tabellenspalte LI_LoginTime */
-	public SchemaTabelleSpalte col_LI_LoginTime = add("LI_LoginTime", SchemaDatentypen.DATETIME, true)
+	public final SchemaTabelleSpalte col_LI_LoginTime = add("LI_LoginTime", SchemaDatentypen.DATETIME, true)
 			.setJavaComment("Login Zeit");
 
 	/** Die Definition der Tabellenspalte LI_LogoffTime */
-	public SchemaTabelleSpalte col_LI_LogoffTime = add("LI_LogoffTime", SchemaDatentypen.DATETIME, false)
+	public final SchemaTabelleSpalte col_LI_LogoffTime = add("LI_LogoffTime", SchemaDatentypen.DATETIME, false)
 			.setJavaComment("Logoff Zeit");
 
 	/** Die Definition der Tabellenspalte SchulnrEigner */
-	public SchemaTabelleSpalte col_SchulnrEigner = add("SchulnrEigner", SchemaDatentypen.INT, false)
+	public final SchemaTabelleSpalte col_SchulnrEigner = add("SchulnrEigner", SchemaDatentypen.INT, false)
 			.setVeraltet(SchemaRevisionen.REV_1)
 			.setJavaComment("Die Schulnummer zu welcher der Datensatz gehört – wird benötigt, wenn mehrere Schulen in einem Schema der Datenbank"
 					+ " gespeichert werden");
 
 
 	/** Die Definition des Fremdschlüssels Logins_Benutzer_FK */
-	public SchemaTabelleFremdschluessel fk_Logins_Benutzer_FK = addForeignKey(
+	public final SchemaTabelleFremdschluessel fk_Logins_Benutzer_FK = addForeignKey(
 			"Logins_Benutzer_FK",
 			/* OnUpdate: */ SchemaFremdschluesselAktionen.CASCADE,
 			/* OnDelete: */ SchemaFremdschluesselAktionen.CASCADE,

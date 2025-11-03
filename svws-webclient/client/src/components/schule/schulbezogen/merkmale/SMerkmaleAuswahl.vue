@@ -28,7 +28,7 @@
 
 	import type { MerkmaleAuswahlProps } from "~/components/schule/schulbezogen/merkmale/SMerkmaleAuswahlProps";
 	import type { DataTableColumn } from "@ui";
-	import type { Merkmal} from "@core";
+	import type { Merkmal } from "@core";
 	import { BenutzerKompetenz, ServerMode } from "@core";
 	import { useRegionSwitch, ViewType } from "@ui";
 	import { computed } from "vue";
@@ -40,10 +40,10 @@
 		if ((props.activeViewType === ViewType.GRUPPENPROZESSE) || (props.activeViewType === ViewType.HINZUFUEGEN))
 			return null;
 		return (props.manager().hasDaten()) ? props.manager().auswahl() : null;
-	})
+	});
 	const columns: DataTableColumn[] = [
-		{ key: "kuerzel", label: "Kürzel", sortable: true, defaultSort: "asc"},
-		{ key: "bezeichnung", label: "Bezeichnung", sortable: true, defaultSort: "asc", span: 3},
+		{ key: "kuerzel", label: "Kürzel", sortable: true, defaultSort: "asc" },
+		{ key: "bezeichnung", label: "Bezeichnung", sortable: true, defaultSort: "asc", span: 3 },
 	];
 
 	async function setAuswahl(merkmale: Merkmal[]) {
@@ -54,7 +54,7 @@
 		if (props.manager().liste.auswahlExists())
 			await props.gotoGruppenprozessView(true);
 		else
-			await props.gotoDefaultView(props.manager().getVorherigeAuswahl()?.id)
+			await props.gotoDefaultView(props.manager().getVorherigeAuswahl()?.id);
 	}
 
 </script>

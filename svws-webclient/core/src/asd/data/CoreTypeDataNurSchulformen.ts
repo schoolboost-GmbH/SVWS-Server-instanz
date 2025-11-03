@@ -8,7 +8,7 @@ export class CoreTypeDataNurSchulformen extends CoreTypeData {
 	/**
 	 * Die Kürzel der Schulformen, bei welchen der Jahrgang vorkommt.
 	 */
-	public schulformen : List<string> = new ArrayList<string>();
+	public schulformen: List<string> = new ArrayList<string>();
 
 
 	/**
@@ -22,13 +22,13 @@ export class CoreTypeDataNurSchulformen extends CoreTypeData {
 		return 'de.svws_nrw.asd.data.CoreTypeDataNurSchulformen';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.asd.data.CoreTypeData', 'de.svws_nrw.asd.data.CoreTypeDataNurSchulformen'].includes(name);
 	}
 
 	public static class = new Class<CoreTypeDataNurSchulformen>('de.svws_nrw.asd.data.CoreTypeDataNurSchulformen');
 
-	public static transpilerFromJSON(json : string): CoreTypeDataNurSchulformen {
+	public static transpilerFromJSON(json: string): CoreTypeDataNurSchulformen {
 		const obj = JSON.parse(json) as Partial<CoreTypeDataNurSchulformen>;
 		const result = new CoreTypeDataNurSchulformen();
 		if (obj.id === undefined)
@@ -53,7 +53,7 @@ export class CoreTypeDataNurSchulformen extends CoreTypeData {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : CoreTypeDataNurSchulformen) : string {
+	public static transpilerToJSON(obj: CoreTypeDataNurSchulformen): string {
 		let result = '{';
 		result += '"id" : ' + obj.id.toString() + ',';
 		result += '"schluessel" : ' + JSON.stringify(obj.schluessel) + ',';
@@ -74,7 +74,7 @@ export class CoreTypeDataNurSchulformen extends CoreTypeData {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<CoreTypeDataNurSchulformen>) : string {
+	public static transpilerToJSONPatch(obj: Partial<CoreTypeDataNurSchulformen>): string {
 		let result = '{';
 		if (obj.id !== undefined) {
 			result += '"id" : ' + obj.id.toString() + ',';
@@ -111,6 +111,6 @@ export class CoreTypeDataNurSchulformen extends CoreTypeData {
 
 }
 
-export function cast_de_svws_nrw_asd_data_CoreTypeDataNurSchulformen(obj : unknown) : CoreTypeDataNurSchulformen {
+export function cast_de_svws_nrw_asd_data_CoreTypeDataNurSchulformen(obj: unknown): CoreTypeDataNurSchulformen {
 	return obj as CoreTypeDataNurSchulformen;
 }

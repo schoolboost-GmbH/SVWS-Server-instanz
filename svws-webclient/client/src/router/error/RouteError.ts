@@ -1,6 +1,6 @@
 import type { RouteLocationRaw, RouteParams } from "vue-router";
 
-import { DeveloperNotificationException, OpenApiError, ServerMode} from "@core";
+import { DeveloperNotificationException, OpenApiError, ServerMode } from "@core";
 import { BenutzerKompetenz, Schulform } from "@core";
 
 import { RouteNode } from "~/router/RouteNode";
@@ -14,18 +14,18 @@ import { api } from "../Api";
 export class RouteError extends RouteNode<any, any> {
 
 	public constructor() {
-		super(Schulform.values(), [ BenutzerKompetenz.KEINE ], "error", "/error/:errorcode?", SError);
+		super(Schulform.values(), [BenutzerKompetenz.KEINE], "error", "/error/:errorcode?", SError);
 		super.mode = ServerMode.STABLE;
 		super.propHandler = (route) => this.getProps();
 		super.text = "Fehler";
 	}
 
-	protected async update(to: RouteNode<any, any>, to_params: RouteParams, from: RouteNode<any, any> | undefined, from_params: RouteParams, isEntering: boolean) : Promise<void | Error | RouteLocationRaw> {
+	protected async update(to: RouteNode<any, any>, to_params: RouteParams, from: RouteNode<any, any> | undefined, from_params: RouteParams, isEntering: boolean): Promise<void | Error | RouteLocationRaw> {
 		if (to_params.error instanceof Array)
 			throw new DeveloperNotificationException("Fehler: Die Parameter der Route dürfen keine Arrays sein");
 	}
 
-	public async getErrorRoute(error?: Error, errorcode? : number): Promise<RouteLocationRaw> {
+	public async getErrorRoute(error?: Error, errorcode?: number): Promise<RouteLocationRaw> {
 		routerManager.resetErrorState();
 		routerManager.errorcode = errorcode;
 		routerManager.error = error;
@@ -38,7 +38,7 @@ export class RouteError extends RouteNode<any, any> {
 		return { name: this.name, params: params };
 	}
 
-	public getSimpleErrorRoute(error?: Error, errorcode? : number): RouteLocationRaw {
+	public getSimpleErrorRoute(error?: Error, errorcode?: number): RouteLocationRaw {
 		routerManager.resetErrorState();
 		routerManager.errorcode = errorcode;
 		routerManager.error = error;
@@ -54,7 +54,7 @@ export class RouteError extends RouteNode<any, any> {
 			errortext: routerManager.errortext,
 			api: api,
 			benutzerKompetenzen: api.benutzerKompetenzen,
-		}
+		};
 	}
 
 }

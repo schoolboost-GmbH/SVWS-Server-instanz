@@ -41,7 +41,7 @@
 		options: props.lernplattformen,
 		selectionDisplayText: (lernplattform: Lernplattform) => lernplattform.id + " - " + lernplattform.bezeichnung,
 		optionDisplayText: (lernplattform: Lernplattform) => lernplattform.id + " - " + lernplattform.bezeichnung,
-	})
+	});
 	const selectManagerDatenformat = new SelectManager<string>({ options: ['JSON', 'GZIP'] });
 
 	const hatKompetenzExport = computed<boolean>(() => props.benutzerKompetenzen.has(BenutzerKompetenz.IMPORT_EXPORT_LERNPLATTFORM));
@@ -49,7 +49,7 @@
 
 	async function startExport() {
 		if (exportDisabled.value)
-			return
+			return;
 
 		loading.value = true;
 		const blob = await props.export(lernplattform.value!, datenformat.value);

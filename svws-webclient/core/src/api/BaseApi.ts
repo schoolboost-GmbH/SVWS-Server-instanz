@@ -8,19 +8,19 @@ export interface ApiFile {
 export class BaseApi {
 
 	/** Die URL des Servers. Alle Pfadangaben sind relativ zu dieser URL. */
-	protected url : string;
+	protected url: string;
 
 	/** Der Anmeldename beim Server */
-	protected username : string;
+	protected username: string;
 
 	/** Der Default-RequestInit für einen Fetch */
-	protected requestinit : RequestInit = {
-		cache : 'no-cache',
-		credentials : 'same-origin'
-	}
+	protected requestinit: RequestInit = {
+		cache: 'no-cache',
+		credentials: 'same-origin',
+	};
 
 	/** Die Default-Header-Einträge */
-	protected headers : Record<string, string> = {};
+	protected headers: Record<string, string> = {};
 
 	/**
      * Erstellt eine neue API mit der übergebenen Konfiguration.
@@ -29,7 +29,7 @@ export class BaseApi {
      * @param {string} username - der Benutzername für den API-Zugriff
      * @param {string} password - das Kennwort des Benutzers für den API-Zugriff
      */
-	public constructor(url : string, username : string, password : string) {
+	public constructor(url: string, username: string, password: string) {
 		this.url = url;
 		this.username = username;
 		const tmp = (new TextEncoder()).encode(username + ":" + password);
@@ -38,26 +38,26 @@ export class BaseApi {
 	}
 
 
-	protected getURL(path : string) : string {
+	protected getURL(path: string): string {
 		return this.url + path;
 	}
 
 	protected decodeFilename(header: string): string {
 		// prüfe, ob filename vorhanden ist im Header und ermittel `filename`. Ebenso `filenameUTF8`
-		const nameRegex = /(.*filename="(?<filename>.*)")?(.*filename\*=UTF-8''(?<filenameUTF8>.*))?/
+		const nameRegex = /(.*filename="(?<filename>.*)")?(.*filename\*=UTF-8''(?<filenameUTF8>.*))?/;
 		const match = nameRegex.exec(header);
 		if (match !== null) {
 			const { filename, filenameUTF8 } = match.groups as { filename?: string; filenameUTF8?: string };
-			if (filenameUTF8)
+			if (filenameUTF8 !== undefined)
 				return decodeURIComponent(filenameUTF8);
-			if (filename)
+			if (filename !== undefined)
 				return decodeURIComponent(filename);
 		}
 		throw new Error('Failed to extract file name from Header');
 	}
 
-	protected async getBinary(path : string, mimetype : string) : Promise<ApiFile> {
-		const requestInit : RequestInit = { ...this.requestinit };
+	protected async getBinary(path: string, mimetype: string): Promise<ApiFile> {
+		const requestInit: RequestInit = { ...this.requestinit };
 		requestInit.headers = { ...this.headers };
 		requestInit.headers.Accept = mimetype;
 		requestInit.body = null;
@@ -66,7 +66,7 @@ export class BaseApi {
 			const response = await fetch(this.getURL(path), requestInit);
 			if (!response.ok)
 				throw new OpenApiError(response, 'Fetch failed for GET: ' + path);
-			const file : ApiFile = { name: "", data: await response.blob() };
+			const file: ApiFile = { name: "", data: await response.blob() };
 			const header = response.headers.get('content-disposition');
 			if (header !== null)
 				file.name = this.decodeFilename(header);
@@ -79,23 +79,23 @@ export class BaseApi {
 	}
 
 
-	public getPDF(path : string) : Promise<ApiFile> {
+	public getPDF(path: string): Promise<ApiFile> {
 		return this.getBinary(path, 'application/pdf');
 	}
 
 
-	public getSQLite(path : string) : Promise<ApiFile> {
+	public getSQLite(path: string): Promise<ApiFile> {
 		return this.getBinary(path, 'application/vnd.sqlite3');
 	}
 
 
-	public getOctetStream(path : string) : Promise<ApiFile> {
+	public getOctetStream(path: string): Promise<ApiFile> {
 		return this.getBinary(path, 'application/octet-stream');
 	}
 
 
-	protected async postMultipartBased(path : string, body : FormData | null) : Promise<string> {
-		const requestInit : RequestInit = { ...this.requestinit };
+	protected async postMultipartBased(path: string, body: FormData | null): Promise<string> {
+		const requestInit: RequestInit = { ...this.requestinit };
 		requestInit.headers = { ...this.headers };
 		requestInit.body = body;
 		requestInit.method = 'POST';
@@ -112,13 +112,13 @@ export class BaseApi {
 	}
 
 
-	public postMultipart(path : string, body : FormData | null) : Promise<string> {
+	public postMultipart(path: string, body: FormData | null): Promise<string> {
 		return this.postMultipartBased(path, body);
 	}
 
 
-	protected async getTextBased(path : string, mimetype : string) : Promise<string> {
-		const requestInit : RequestInit = { ...this.requestinit };
+	protected async getTextBased(path: string, mimetype: string): Promise<string> {
+		const requestInit: RequestInit = { ...this.requestinit };
 		requestInit.headers = { ...this.headers };
 		requestInit.headers.Accept = mimetype;
 		requestInit.body = null;
@@ -135,17 +135,17 @@ export class BaseApi {
 		}
 	}
 
-	public getText(path : string) : Promise<string> {
+	public getText(path: string): Promise<string> {
 		return this.getTextBased(path, 'text/plain');
 	}
 
-	public getJSON(path : string) : Promise<string> {
+	public getJSON(path: string): Promise<string> {
 		return this.getTextBased(path, 'application/json');
 	}
 
 
-	protected async postTextBased(path : string, mimetype_send : string, mimetype_receive : string, body : string | null) : Promise<string> {
-		const requestInit : RequestInit = { ...this.requestinit };
+	protected async postTextBased(path: string, mimetype_send: string, mimetype_receive: string, body: string | null): Promise<string> {
+		const requestInit: RequestInit = { ...this.requestinit };
 		requestInit.headers = { ...this.headers };
 		requestInit.headers["Content-Type"] = mimetype_send;
 		requestInit.headers.Accept = mimetype_receive;
@@ -163,16 +163,16 @@ export class BaseApi {
 		}
 	}
 
-	public postText(path : string, body : string | null) : Promise<string> {
+	public postText(path: string, body: string | null): Promise<string> {
 		return this.postTextBased(path, 'text/plain', 'text/plain', body);
 	}
 
-	public postJSON(path : string, body : string | null) : Promise<string> {
+	public postJSON(path: string, body: string | null): Promise<string> {
 		return this.postTextBased(path, 'application/json', 'application/json', body);
 	}
 
-	protected async postTextBasedToBinary(path : string, mimetype_send : string, mimetype_receive : string, body : string | null) : Promise<ApiFile> {
-		const requestInit : RequestInit = { ...this.requestinit };
+	protected async postTextBasedToBinary(path: string, mimetype_send: string, mimetype_receive: string, body: string | null): Promise<ApiFile> {
+		const requestInit: RequestInit = { ...this.requestinit };
 		requestInit.headers = { ...this.headers };
 		requestInit.headers["Content-Type"] = mimetype_send;
 		requestInit.headers.Accept = mimetype_receive;
@@ -182,7 +182,7 @@ export class BaseApi {
 			const response = await fetch(this.getURL(path), requestInit);
 			if (!response.ok)
 				throw new OpenApiError(response, 'Fetch failed for GET: ' + path);
-			const file : ApiFile = { name: "", data: await response.blob() };
+			const file: ApiFile = { name: "", data: await response.blob() };
 			const header = response.headers.get('content-disposition');
 			if (header !== null)
 				file.name = this.decodeFilename(header);
@@ -194,20 +194,20 @@ export class BaseApi {
 		}
 	}
 
-	public async postJSONtoOctetStream(path : string, body : string | null) : Promise<ApiFile> {
+	public async postJSONtoOctetStream(path: string, body: string | null): Promise<ApiFile> {
 		return this.postTextBasedToBinary(path, 'application/json', 'application/octet-stream', body);
 	}
 
-	public async postJSONtoPDF(path : string, body : string | null) : Promise<ApiFile> {
+	public async postJSONtoPDF(path: string, body: string | null): Promise<ApiFile> {
 		return this.postTextBasedToBinary(path, 'application/json', 'application/pdf', body);
 	}
 
-	public async postJSONtoZIP(path : string, body : string | null) : Promise<ApiFile> {
+	public async postJSONtoZIP(path: string, body: string | null): Promise<ApiFile> {
 		return this.postTextBasedToBinary(path, 'application/json', 'application/zip', body);
 	}
 
-	protected async patchTextBased(path : string, mimetype : string, body : string) : Promise<void> {
-		const requestInit : RequestInit = { ...this.requestinit };
+	protected async patchTextBased(path: string, mimetype: string, body: string): Promise<void> {
+		const requestInit: RequestInit = { ...this.requestinit };
 		requestInit.headers = { ...this.headers };
 		requestInit.headers["Content-Type"] = mimetype;
 		requestInit.body = body;
@@ -224,17 +224,17 @@ export class BaseApi {
 		}
 	}
 
-	public patchText(path : string, body : string) : Promise<void> {
+	public patchText(path: string, body: string): Promise<void> {
 		return this.patchTextBased(path, 'text/plain', body);
 	}
 
-	public patchJSON(path : string, body : string) : Promise<void> {
+	public patchJSON(path: string, body: string): Promise<void> {
 		return this.patchTextBased(path, 'application/json', body);
 	}
 
 
-	protected async putTextBased(path : string, mimetype : string, body : string) : Promise<void> {
-		const requestInit : RequestInit = { ...this.requestinit };
+	protected async putTextBased(path: string, mimetype: string, body: string): Promise<void> {
+		const requestInit: RequestInit = { ...this.requestinit };
 		requestInit.headers = { ...this.headers };
 		requestInit.headers["Content-Type"] = mimetype;
 		requestInit.body = body;
@@ -251,16 +251,16 @@ export class BaseApi {
 		}
 	}
 
-	public putText(path : string, body : string) : Promise<void> {
+	public putText(path: string, body: string): Promise<void> {
 		return this.putTextBased(path, 'text/plain', body);
 	}
 
-	public putJSON(path : string, body : string) : Promise<void> {
+	public putJSON(path: string, body: string): Promise<void> {
 		return this.putTextBased(path, 'application/json', body);
 	}
 
-	protected async deleteTextBased(path : string, mimetype_send: string | null, mimetype_receive : string, body : string | null) : Promise<string> {
-		const requestInit : RequestInit = { ...this.requestinit };
+	protected async deleteTextBased(path: string, mimetype_send: string | null, mimetype_receive: string, body: string | null): Promise<string> {
+		const requestInit: RequestInit = { ...this.requestinit };
 		requestInit.headers = { ...this.headers };
 		if (mimetype_send !== null)
 			requestInit.headers["Content-Type"] = mimetype_send;
@@ -279,11 +279,11 @@ export class BaseApi {
 		}
 	}
 
-	public deleteText(path : string, body : string | null) : Promise<string> {
+	public deleteText(path: string, body: string | null): Promise<string> {
 		return this.deleteTextBased(path, (body === null) ? null : 'text/plain', 'text/plain', body);
 	}
 
-	public deleteJSON(path : string, body : string | null) : Promise<string> {
+	public deleteJSON(path: string, body: string | null): Promise<string> {
 		return this.deleteTextBased(path, (body === null) ? null : 'application/json', 'application/json', body);
 	}
 

@@ -50,7 +50,7 @@
 		if (auswahlKlassenList.size() > 5)
 			return `${auswahlKlassenList.size()} Klassen ausgewählt`;
 		return [...auswahlKlassenList].map(k => k.kuerzel).join(', ');
-	})
+	});
 
 	const lehrerkuerzel = computed<string>(() => {
 		if (!props.manager().hasDaten())

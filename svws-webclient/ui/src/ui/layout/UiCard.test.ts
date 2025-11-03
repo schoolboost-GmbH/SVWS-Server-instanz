@@ -188,10 +188,10 @@ describe.concurrent("PropHandhabung läuft korrekt", () => {
 		expect(headerClasses).toContain("text-ui");
 		expect(wrapper.find(".ui-card--header--collapse-icon span").classes()).toContain("!icon-ui");
 		expect(wrapper.find(".ui-card--header--icon span").classes()).toContain("!icon-ui");
-		expect( await wrapper.findComponent({ name: "UiCard" }).vm.headerBackgroundColor).toBe("bg-ui-brand-secondary");
-		expect( await wrapper.findComponent({ name: "UiCard" }).vm.borderColor).toBe("border-ui-brand");
-		expect( await wrapper.findComponent({ name: "UiCard" }).vm.headerTextColor).toBe("text-ui");
-		expect( await wrapper.findComponent({ name: "UiCard" }).vm.headerIconColor).toBe("!icon-ui");
+		expect(await wrapper.findComponent({ name: "UiCard" }).vm.headerBackgroundColor).toBe("bg-ui-brand-secondary");
+		expect(await wrapper.findComponent({ name: "UiCard" }).vm.borderColor).toBe("border-ui-brand");
+		expect(await wrapper.findComponent({ name: "UiCard" }).vm.headerTextColor).toBe("text-ui");
+		expect(await wrapper.findComponent({ name: "UiCard" }).vm.headerIconColor).toBe("!icon-ui");
 	});
 
 	test("Mit Prop 'fehler = ValidatorFehlerart.UNGENUTZT' werden die Defaultfarben in der Komponente genutzt (offene Card)", async () => {
@@ -203,10 +203,10 @@ describe.concurrent("PropHandhabung läuft korrekt", () => {
 		expect(headerClasses).toContain("text-ui-onbrand");
 		expect(wrapper.find(".ui-card--header--collapse-icon span").classes()).toContain("!icon-ui-onbrand");
 		expect(wrapper.find(".ui-card--header--icon span").classes()).toContain("!icon-ui-onbrand");
-		expect( await wrapper.findComponent({ name: "UiCard" }).vm.headerBackgroundColor).toBe("bg-ui-brand");
-		expect( await wrapper.findComponent({ name: "UiCard" }).vm.borderColor).toBe("border-ui-brand");
-		expect( await wrapper.findComponent({ name: "UiCard" }).vm.headerTextColor).toBe("text-ui-onbrand");
-		expect( await wrapper.findComponent({ name: "UiCard" }).vm.headerIconColor).toBe("!icon-ui-onbrand");
+		expect(await wrapper.findComponent({ name: "UiCard" }).vm.headerBackgroundColor).toBe("bg-ui-brand");
+		expect(await wrapper.findComponent({ name: "UiCard" }).vm.borderColor).toBe("border-ui-brand");
+		expect(await wrapper.findComponent({ name: "UiCard" }).vm.headerTextColor).toBe("text-ui-onbrand");
+		expect(await wrapper.findComponent({ name: "UiCard" }).vm.headerIconColor).toBe("!icon-ui-onbrand");
 	});
 
 	test("Mit Prop 'fehler = ValidatorFehlerart.HINWEIS' werden die Warningfarben in der Komponente genutzt (geschlossene Card)", async () => {
@@ -217,10 +217,10 @@ describe.concurrent("PropHandhabung läuft korrekt", () => {
 		expect(headerClasses).toContain("text-ui");
 		expect(wrapper.find(".ui-card--header--collapse-icon span").classes()).toContain("!icon-ui");
 		expect(wrapper.find(".ui-card--header--icon span").classes()).toContain("!icon-ui");
-		expect( await wrapper.findComponent({ name: "UiCard" }).vm.headerBackgroundColor).toBe("bg-ui-warning-secondary");
-		expect( await wrapper.findComponent({ name: "UiCard" }).vm.borderColor).toBe("border-ui-warning");
-		expect( await wrapper.findComponent({ name: "UiCard" }).vm.headerTextColor).toBe("text-ui");
-		expect( await wrapper.findComponent({ name: "UiCard" }).vm.headerIconColor).toBe("!icon-ui");
+		expect(await wrapper.findComponent({ name: "UiCard" }).vm.headerBackgroundColor).toBe("bg-ui-warning-secondary");
+		expect(await wrapper.findComponent({ name: "UiCard" }).vm.borderColor).toBe("border-ui-warning");
+		expect(await wrapper.findComponent({ name: "UiCard" }).vm.headerTextColor).toBe("text-ui");
+		expect(await wrapper.findComponent({ name: "UiCard" }).vm.headerIconColor).toBe("!icon-ui");
 	});
 
 	test("Mit Prop 'fehler = ValidatorFehlerart.HINWEIS' werden die Warningfarben in der Komponente genutzt (offene Card)", async () => {
@@ -232,10 +232,10 @@ describe.concurrent("PropHandhabung läuft korrekt", () => {
 		expect(headerClasses).toContain("text-ui-onwarning");
 		expect(wrapper.find(".ui-card--header--collapse-icon span").classes()).toContain("!icon-ui-onwarning");
 		expect(wrapper.find(".ui-card--header--icon span").classes()).toContain("!icon-ui-onwarning");
-		expect( await wrapper.findComponent({ name: "UiCard" }).vm.headerBackgroundColor).toBe("bg-ui-warning");
-		expect( await wrapper.findComponent({ name: "UiCard" }).vm.borderColor).toBe("border-ui-warning");
-		expect( await wrapper.findComponent({ name: "UiCard" }).vm.headerTextColor).toBe("text-ui-onwarning");
-		expect( await wrapper.findComponent({ name: "UiCard" }).vm.headerIconColor).toBe("!icon-ui-onwarning");
+		expect(await wrapper.findComponent({ name: "UiCard" }).vm.headerBackgroundColor).toBe("bg-ui-warning");
+		expect(await wrapper.findComponent({ name: "UiCard" }).vm.borderColor).toBe("border-ui-warning");
+		expect(await wrapper.findComponent({ name: "UiCard" }).vm.headerTextColor).toBe("text-ui-onwarning");
+		expect(await wrapper.findComponent({ name: "UiCard" }).vm.headerIconColor).toBe("!icon-ui-onwarning");
 	});
 
 	test("Mit Prop 'fehler = ValidatorFehlerart.KANN' werden die Cautionfarben in der Komponente genutzt (geschlossene Card)", async () => {
@@ -246,10 +246,10 @@ describe.concurrent("PropHandhabung läuft korrekt", () => {
 		expect(headerClasses).toContain("text-ui");
 		expect(wrapper.find(".ui-card--header--collapse-icon span").classes()).toContain("!icon-ui");
 		expect(wrapper.find(".ui-card--header--icon span").classes()).toContain("!icon-ui");
-		expect( await wrapper.findComponent({ name: "UiCard" }).vm.headerBackgroundColor).toBe("bg-ui-caution-secondary");
-		expect( await wrapper.findComponent({ name: "UiCard" }).vm.borderColor).toBe("border-ui-caution");
-		expect( await wrapper.findComponent({ name: "UiCard" }).vm.headerTextColor).toBe("text-ui");
-		expect( await wrapper.findComponent({ name: "UiCard" }).vm.headerIconColor).toBe("!icon-ui");
+		expect(await wrapper.findComponent({ name: "UiCard" }).vm.headerBackgroundColor).toBe("bg-ui-caution-secondary");
+		expect(await wrapper.findComponent({ name: "UiCard" }).vm.borderColor).toBe("border-ui-caution");
+		expect(await wrapper.findComponent({ name: "UiCard" }).vm.headerTextColor).toBe("text-ui");
+		expect(await wrapper.findComponent({ name: "UiCard" }).vm.headerIconColor).toBe("!icon-ui");
 	});
 
 	test("Mit Prop 'fehler = ValidatorFehlerart.KANN' werden die Cautionfarben in der Komponente genutzt (offene Card)", async () => {
@@ -261,10 +261,10 @@ describe.concurrent("PropHandhabung läuft korrekt", () => {
 		expect(headerClasses).toContain("text-ui-oncaution");
 		expect(wrapper.find(".ui-card--header--collapse-icon span").classes()).toContain("!icon-ui-oncaution");
 		expect(wrapper.find(".ui-card--header--icon span").classes()).toContain("!icon-ui-oncaution");
-		expect( await wrapper.findComponent({ name: "UiCard" }).vm.headerBackgroundColor).toBe("bg-ui-caution");
-		expect( await wrapper.findComponent({ name: "UiCard" }).vm.borderColor).toBe("border-ui-caution");
-		expect( await wrapper.findComponent({ name: "UiCard" }).vm.headerTextColor).toBe("text-ui-oncaution");
-		expect( await wrapper.findComponent({ name: "UiCard" }).vm.headerIconColor).toBe("!icon-ui-oncaution");
+		expect(await wrapper.findComponent({ name: "UiCard" }).vm.headerBackgroundColor).toBe("bg-ui-caution");
+		expect(await wrapper.findComponent({ name: "UiCard" }).vm.borderColor).toBe("border-ui-caution");
+		expect(await wrapper.findComponent({ name: "UiCard" }).vm.headerTextColor).toBe("text-ui-oncaution");
+		expect(await wrapper.findComponent({ name: "UiCard" }).vm.headerIconColor).toBe("!icon-ui-oncaution");
 	});
 
 	test("Mit Prop 'fehler = ValidatorFehlerart.MUSS' werden die Dangerfarben in der Komponente genutzt (geschlossene Card)", async () => {
@@ -275,10 +275,10 @@ describe.concurrent("PropHandhabung läuft korrekt", () => {
 		expect(headerClasses).toContain("text-ui");
 		expect(wrapper.find(".ui-card--header--collapse-icon span").classes()).toContain("!icon-ui");
 		expect(wrapper.find(".ui-card--header--icon span").classes()).toContain("!icon-ui");
-		expect( await wrapper.findComponent({ name: "UiCard" }).vm.headerBackgroundColor).toBe("bg-ui-danger-secondary");
-		expect( await wrapper.findComponent({ name: "UiCard" }).vm.borderColor).toBe("border-ui-danger");
-		expect( await wrapper.findComponent({ name: "UiCard" }).vm.headerTextColor).toBe("text-ui");
-		expect( await wrapper.findComponent({ name: "UiCard" }).vm.headerIconColor).toBe("!icon-ui");
+		expect(await wrapper.findComponent({ name: "UiCard" }).vm.headerBackgroundColor).toBe("bg-ui-danger-secondary");
+		expect(await wrapper.findComponent({ name: "UiCard" }).vm.borderColor).toBe("border-ui-danger");
+		expect(await wrapper.findComponent({ name: "UiCard" }).vm.headerTextColor).toBe("text-ui");
+		expect(await wrapper.findComponent({ name: "UiCard" }).vm.headerIconColor).toBe("!icon-ui");
 	});
 
 	test("Mit Prop 'fehler = ValidatorFehlerart.MUSS' werden die Dangerfarben in der Komponente genutzt (offene Card)", async () => {
@@ -290,10 +290,10 @@ describe.concurrent("PropHandhabung läuft korrekt", () => {
 		expect(headerClasses).toContain("text-ui-ondanger");
 		expect(wrapper.find(".ui-card--header--collapse-icon span").classes()).toContain("!icon-ui-ondanger");
 		expect(wrapper.find(".ui-card--header--icon span").classes()).toContain("!icon-ui-ondanger");
-		expect( await wrapper.findComponent({ name: "UiCard" }).vm.headerBackgroundColor).toBe("bg-ui-danger");
-		expect( await wrapper.findComponent({ name: "UiCard" }).vm.borderColor).toBe("border-ui-danger");
-		expect( await wrapper.findComponent({ name: "UiCard" }).vm.headerTextColor).toBe("text-ui-ondanger");
-		expect( await wrapper.findComponent({ name: "UiCard" }).vm.headerIconColor).toBe("!icon-ui-ondanger");
+		expect(await wrapper.findComponent({ name: "UiCard" }).vm.headerBackgroundColor).toBe("bg-ui-danger");
+		expect(await wrapper.findComponent({ name: "UiCard" }).vm.borderColor).toBe("border-ui-danger");
+		expect(await wrapper.findComponent({ name: "UiCard" }).vm.headerTextColor).toBe("text-ui-ondanger");
+		expect(await wrapper.findComponent({ name: "UiCard" }).vm.headerIconColor).toBe("!icon-ui-ondanger");
 	});
 
 });
@@ -336,8 +336,8 @@ describe("PropHandhabung läuft korrekt für Buttons und Transitions", () => {
 
 	test("Mit Prop 'buttonContainer = content', 'buttonPosition = left' und Funktionen für alle 4 Buttons, werden diese auf der linken Seite des Contentbereichs "
 		+ "angezeigt", () => {
-		const wrapper = mount(UiCard, { props: { buttonContainer: "content", buttonPosition: "left", onEdit : () => {},	onSave : () => {},
-			onCancel : () => {}, onDelete : () => {} }, attachTo: document.body });
+		const wrapper = mount(UiCard, { props: { buttonContainer: "content", buttonPosition: "left", onEdit: () => {},	onSave: () => {},
+			onCancel: () => {}, onDelete: () => {} }, attachTo: document.body });
 		expect(wrapper.find("#ui-card--button-content-left").exists()).toBeTruthy();
 		expect(wrapper.find(".ui-card--buttons").classes()).not.toContain("ml-auto");
 		wrapper.unmount();
@@ -345,8 +345,8 @@ describe("PropHandhabung läuft korrekt für Buttons und Transitions", () => {
 
 	test("Mit Prop 'buttonContainer = content', 'buttonPosition = right' und Funktionen für alle 4 Buttons, werden diese auf der rechten Seite des Contentbereichs "
 		+ "angezeigt", () => {
-		const wrapper = mount(UiCard, { props: { buttonContainer: "content", buttonPosition: "right", onEdit : () => {},	onSave : () => {},
-			onCancel : () => {}, onDelete : () => {} }, attachTo: document.body });
+		const wrapper = mount(UiCard, { props: { buttonContainer: "content", buttonPosition: "right", onEdit: () => {},	onSave: () => {},
+			onCancel: () => {}, onDelete: () => {} }, attachTo: document.body });
 		expect(wrapper.find("#ui-card--button-content-right").exists()).toBeTruthy();
 		expect(wrapper.find(".ui-card--buttons").classes()).toContain("ml-auto");
 		wrapper.unmount();
@@ -354,8 +354,8 @@ describe("PropHandhabung läuft korrekt für Buttons und Transitions", () => {
 
 	test("Mit Prop 'buttonContainer = footer', 'buttonPosition = left' und Funktionen für alle 4 Buttons, werden diese auf der linken Seite des Footers "
 		+ "angezeigt", () => {
-		const wrapper = mount(UiCard, { props: { buttonContainer: "footer", buttonPosition: "left", onEdit : () => {},	onSave : () => {},
-			onCancel : () => {}, onDelete : () => {} }, attachTo: document.body });
+		const wrapper = mount(UiCard, { props: { buttonContainer: "footer", buttonPosition: "left", onEdit: () => {},	onSave: () => {},
+			onCancel: () => {}, onDelete: () => {} }, attachTo: document.body });
 		expect(wrapper.find("#ui-card--button-footer-left").exists()).toBeTruthy();
 		expect(wrapper.find(".ui-card--buttons").classes()).not.toContain("ml-auto");
 		wrapper.unmount();
@@ -363,49 +363,49 @@ describe("PropHandhabung läuft korrekt für Buttons und Transitions", () => {
 
 	test("Mit Prop 'buttonContainer = footer', 'buttonPosition = right' und Funktionen für alle 4 Buttons, werden diese auf der rechten Seite des Footers "
 		+ "angezeigt", () => {
-		const wrapper = mount(UiCard, { props: { buttonContainer: "footer", buttonPosition: "right", onEdit : () => {},	onSave : () => {},
-			onCancel : () => {}, onDelete : () => {} }, attachTo: document.body });
+		const wrapper = mount(UiCard, { props: { buttonContainer: "footer", buttonPosition: "right", onEdit: () => {},	onSave: () => {},
+			onCancel: () => {}, onDelete: () => {} }, attachTo: document.body });
 		expect(wrapper.find("#ui-card--button-footer-right").exists()).toBeTruthy();
 		expect(wrapper.find(".ui-card--buttons").classes()).toContain("ml-auto");
 		wrapper.unmount();
 	});
 
-	test("Mit Prop 'buttonMode = text' und Funktionen für alle 4 Buttons erhält man Textbuttons" , () => {
-		const wrapper = mount(UiCard, { props: { buttonMode: "text", onEdit : () => {},	onSave : () => {}, onCancel : () => {}, onDelete : () => {} }
-			, attachTo: document.body });
+	test("Mit Prop 'buttonMode = text' und Funktionen für alle 4 Buttons erhält man Textbuttons", () => {
+		const wrapper = mount(UiCard, { props: { buttonMode: "text", onEdit: () => {},	onSave: () => {}, onCancel: () => {}, onDelete: () => {} },
+			attachTo: document.body });
 		const buttonLabels = ["Speichern", "Bearbeiten", "Löschen", "Abbrechen"];
 		const buttonWrapper = wrapper.find(".ui-card--buttons");
 		buttonLabels.forEach(label => {
 			expect(buttonWrapper.findAll('span').find(span => span.text() === label)?.exists()).toBeTruthy();
-		})
+		});
 		wrapper.unmount();
 	});
 
-	test("Mit Prop 'buttonMode = icon' und Funktionen für alle 4 Buttons erhält man die Textbuttons Bearbeiten, Speichern, Löschen und Abbrechen" , () => {
-		const wrapper = mount(UiCard, { props: { buttonMode: "icon", onEdit : () => {},	onSave : () => {}, onCancel : () => {}, onDelete : () => {} }
-			, attachTo: document.body });
+	test("Mit Prop 'buttonMode = icon' und Funktionen für alle 4 Buttons erhält man die Textbuttons Bearbeiten, Speichern, Löschen und Abbrechen", () => {
+		const wrapper = mount(UiCard, { props: { buttonMode: "icon", onEdit: () => {},	onSave: () => {}, onCancel: () => {}, onDelete: () => {} },
+			attachTo: document.body });
 		const buttonIcons = ["i-ri-check-line", "i-ri-close-line", "i-ri-edit-2-line", "i-ri-delete-bin-line"];
 		const buttonWrapper = wrapper.find(".ui-card--buttons");
 		buttonIcons.forEach(icon => {
 			expect(buttonWrapper.findAll('span').find(span => span.classes().includes(icon))?.exists()).toBeTruthy();
-		})
+		});
 		buttonWrapper.findAll(".ui-card--button").forEach(button => {
 			expect(button.classes()).toContain('button--icon');
 		});
 		wrapper.unmount();
 	});
 
-	test("Mit Prop 'buttonOrientation = vertical' und Funktionen für alle 4 Buttons erhält vertikal ausgerichtete Buttons" , () => {
-		const wrapper = mount(UiCard, { props: { buttonOrientation: "vertical", onEdit : () => {},	onSave : () => {}, onCancel : () => {}, onDelete : () => {} }
-			, attachTo: document.body });
+	test("Mit Prop 'buttonOrientation = vertical' und Funktionen für alle 4 Buttons erhält vertikal ausgerichtete Buttons", () => {
+		const wrapper = mount(UiCard, { props: { buttonOrientation: "vertical", onEdit: () => {},	onSave: () => {}, onCancel: () => {}, onDelete: () => {} },
+			attachTo: document.body });
 		const buttons = wrapper.find(".ui-card--buttons");
 		expect(buttons.classes()).toContain('flex-col');
 		wrapper.unmount();
 	});
 
-	test("Mit Prop 'buttonOrientation = horizontal' und Funktionen für alle 4 Buttons erhält vertikal ausgerichtete Buttons" , () => {
-		const wrapper = mount(UiCard, { props: { buttonOrientation: "horizontal", onEdit : () => {},	onSave : () => {}, onCancel : () => {}, onDelete : () => {} }
-			, attachTo: document.body });
+	test("Mit Prop 'buttonOrientation = horizontal' und Funktionen für alle 4 Buttons erhält vertikal ausgerichtete Buttons", () => {
+		const wrapper = mount(UiCard, { props: { buttonOrientation: "horizontal", onEdit: () => {},	onSave: () => {}, onCancel: () => {}, onDelete: () => {} },
+			attachTo: document.body });
 		const buttons = wrapper.find(".ui-card--buttons");
 		expect(buttons.classes()).not.toContain('flex-col');
 		wrapper.unmount();
@@ -413,37 +413,37 @@ describe("PropHandhabung läuft korrekt für Buttons und Transitions", () => {
 
 	// Disabled Button Tests
 
-	test("Mit Prop 'editButtonDisabled = true' und 'onEdit = () => {}' wird der Bearbeiten-Button disabled" , () => {
-		const wrapper = mount(UiCard, { props: { editButtonDisabled: true, onEdit : () => {} }, attachTo: document.body });
+	test("Mit Prop 'editButtonDisabled = true' und 'onEdit = () => {}' wird der Bearbeiten-Button disabled", () => {
+		const wrapper = mount(UiCard, { props: { editButtonDisabled: true, onEdit: () => {} }, attachTo: document.body });
 		const button = wrapper.find(".ui-card--buttons").findAll("button").find(button => button.text() === "Bearbeiten");
 		expect(button?.element.hasAttribute("disabled")).toBeTruthy();
 		wrapper.unmount();
 	});
 
-	test("Mit Prop 'saveButtonDisabled = true' und 'onSave = () => {}' wird der Speichern-Button disabled" , () => {
-		const wrapper = mount(UiCard, { props: { saveButtonDisabled: true, onSave : () => {} }, attachTo: document.body });
+	test("Mit Prop 'saveButtonDisabled = true' und 'onSave = () => {}' wird der Speichern-Button disabled", () => {
+		const wrapper = mount(UiCard, { props: { saveButtonDisabled: true, onSave: () => {} }, attachTo: document.body });
 		const button = wrapper.find(".ui-card--buttons").findAll("button").find(button => button.text() === "Speichern");
 		expect(button?.element.hasAttribute("disabled")).toBeTruthy();
 		wrapper.unmount();
 	});
 
-	test("Mit Prop 'deleteButtonDisabled = true' und 'onDelete = () => {}' wird der Löschen-Button disabled" , () => {
-		const wrapper = mount(UiCard, { props: { deleteButtonDisabled: true, onDelete : () => {} }, attachTo: document.body });
+	test("Mit Prop 'deleteButtonDisabled = true' und 'onDelete = () => {}' wird der Löschen-Button disabled", () => {
+		const wrapper = mount(UiCard, { props: { deleteButtonDisabled: true, onDelete: () => {} }, attachTo: document.body });
 		const button = wrapper.find(".ui-card--buttons").findAll("button").find(button => button.text() === "Löschen");
 		expect(button?.element.hasAttribute("disabled")).toBeTruthy();
 		wrapper.unmount();
 	});
 
-	test("Mit Prop 'cancelButtonDisabled = true' und 'onCancel = () => {}' wird der Abbrechen-Button disabled" , () => {
-		const wrapper = mount(UiCard, { props: { cancelButtonDisabled: true, onCancel : () => {} }, attachTo: document.body });
+	test("Mit Prop 'cancelButtonDisabled = true' und 'onCancel = () => {}' wird der Abbrechen-Button disabled", () => {
+		const wrapper = mount(UiCard, { props: { cancelButtonDisabled: true, onCancel: () => {} }, attachTo: document.body });
 		const button = wrapper.find(".ui-card--buttons").findAll("button").find(button => button.text() === "Abbrechen");
 		expect(button?.element.hasAttribute("disabled")).toBeTruthy();
 		wrapper.unmount();
 	});
 
 	test("Mit den Props 'editButtonDisabled = true' und 'onEdit = () => {}' und 'editButtonDisabledReason = Test' wird der Bearbeiten-Button disabled " +
-			"und ein Tooltip mit der Begründung gerendert" , async () => {
-		const wrapper = mount(UiCard, { props: { editButtonDisabled: true, onEdit : () => {}, editButtonDisabledReason: "Test" }, attachTo: document.body });
+			"und ein Tooltip mit der Begründung gerendert", async () => {
+		const wrapper = mount(UiCard, { props: { editButtonDisabled: true, onEdit: () => {}, editButtonDisabledReason: "Test" }, attachTo: document.body });
 		const tooltipTrigger = wrapper.findAll(".tooltip-trigger").find(tooltip => tooltip.find("button").text() === "Bearbeiten");
 		expect(tooltipTrigger?.exists()).toBeTruthy();
 		await tooltipTrigger?.trigger("mouseenter");
@@ -455,8 +455,8 @@ describe("PropHandhabung läuft korrekt für Buttons und Transitions", () => {
 	});
 
 	test("Mit den Props 'saveButtonDisabled = true' und 'onSave = () => {}' und 'saveButtonDisabledReason = Test' wird der Speichern-Button disabled " +
-			"und ein Tooltip mit der Begründung gerendert" , async () => {
-		const wrapper = mount(UiCard, { props: { saveButtonDisabled: true, onSave : () => {}, saveButtonDisabledReason: "Test" }, attachTo: document.body });
+			"und ein Tooltip mit der Begründung gerendert", async () => {
+		const wrapper = mount(UiCard, { props: { saveButtonDisabled: true, onSave: () => {}, saveButtonDisabledReason: "Test" }, attachTo: document.body });
 		const tooltipTrigger = wrapper.findAll(".tooltip-trigger").find(tooltip => tooltip.find("button").text() === "Speichern");
 		expect(tooltipTrigger?.exists()).toBeTruthy();
 		await tooltipTrigger?.trigger("mouseenter");
@@ -468,8 +468,8 @@ describe("PropHandhabung läuft korrekt für Buttons und Transitions", () => {
 	});
 
 	test("Mit den Props 'deleteButtonDisabled = true' und 'onDelete = () => {}' und 'deleteButtonDisabledReason = Test' wird der Löschen-Button disabled " +
-		"und ein Tooltip mit der Begründung gerendert" , async () => {
-		const wrapper = mount(UiCard, { props: { deleteButtonDisabled: true, onDelete : () => {}, deleteButtonDisabledReason: "Test" }, attachTo: document.body });
+		"und ein Tooltip mit der Begründung gerendert", async () => {
+		const wrapper = mount(UiCard, { props: { deleteButtonDisabled: true, onDelete: () => {}, deleteButtonDisabledReason: "Test" }, attachTo: document.body });
 		const tooltipTrigger = wrapper.findAll(".tooltip-trigger").find(tooltip => tooltip.find("button").text() === "Löschen");
 		expect(tooltipTrigger?.exists()).toBeTruthy();
 		await tooltipTrigger?.trigger("mouseenter");
@@ -481,8 +481,8 @@ describe("PropHandhabung läuft korrekt für Buttons und Transitions", () => {
 	});
 
 	test("Mit den Props 'cancelButtonDisabled = true' und 'onCancel = () => {}' und 'cancelButtonDisabledReason = Test' wird der Abbrechen-Button disabled " +
-	"und ein Tooltip mit der Begründung gerendert" , async () => {
-		const wrapper = mount(UiCard, { props: { cancelButtonDisabled: true, onCancel : () => {}, cancelButtonDisabledReason: "Test" }, attachTo: document.body });
+	"und ein Tooltip mit der Begründung gerendert", async () => {
+		const wrapper = mount(UiCard, { props: { cancelButtonDisabled: true, onCancel: () => {}, cancelButtonDisabledReason: "Test" }, attachTo: document.body });
 		await wrapper.findComponent({ name: "UiCard" }).vm.$nextTick();
 		const tooltipTrigger = wrapper.findAll(".tooltip-trigger").find(tooltip => tooltip.find("button").text() === "Abbrechen");
 		expect(tooltipTrigger?.exists()).toBeTruthy();
@@ -497,126 +497,126 @@ describe("PropHandhabung läuft korrekt für Buttons und Transitions", () => {
 	// Button Tooltip Anzeige Tests
 	// Icon Buttons
 	test("Mit den Props 'buttonMode = icon' und  'onEdit = () => {}' wird um den Bearbeiten-Button ein Tooltip gerendert", () => {
-		const wrapper = mount(UiCard, { props: { buttonMode: 'icon', onEdit : () => {} }, attachTo: document.body });
+		const wrapper = mount(UiCard, { props: { buttonMode: 'icon', onEdit: () => {} }, attachTo: document.body });
 		expect(wrapper.findAll(".tooltip-trigger").find(tooltip => tooltip.find("span").classes().includes("i-ri-edit-2-line"))?.exists()).toBeTruthy();
 		wrapper.unmount();
 	});
 
 	test("Mit den Props 'buttonMode = icon' und  'onSave = () => {}' wird um den Speichern-Button ein Tooltip gerendert", () => {
-		const wrapper = mount(UiCard, { props: { buttonMode: 'icon', onSave : () => {} }, attachTo: document.body });
+		const wrapper = mount(UiCard, { props: { buttonMode: 'icon', onSave: () => {} }, attachTo: document.body });
 		expect(wrapper.findAll(".tooltip-trigger").find(tooltip => tooltip.find("span").classes().includes("i-ri-check-line"))?.exists()).toBeTruthy();
 		wrapper.unmount();
 	});
 
 	test("Mit den Props 'buttonMode = icon' und  'onDelete = () => {}' wird um den Löschen-Button ein Tooltip gerendert", () => {
-		const wrapper = mount(UiCard, { props: { buttonMode: 'icon', onDelete : () => {} }, attachTo: document.body });
+		const wrapper = mount(UiCard, { props: { buttonMode: 'icon', onDelete: () => {} }, attachTo: document.body });
 		expect(wrapper.findAll(".tooltip-trigger").find(tooltip => tooltip.find("span").classes().includes("i-ri-delete-bin-line"))?.exists()).toBeTruthy();
 		wrapper.unmount();
 	});
 
 	test("Mit den Props 'buttonMode = icon' und  'onCancel = () => {}' wird um den Abbrechen-Button ein Tooltip gerendert", () => {
-		const wrapper = mount(UiCard, { props: { buttonMode: 'icon', onCancel : () => {} }, attachTo: document.body });
+		const wrapper = mount(UiCard, { props: { buttonMode: 'icon', onCancel: () => {} }, attachTo: document.body });
 		expect(wrapper.findAll(".tooltip-trigger").find(tooltip => tooltip.find("span").classes().includes("i-ri-close-line"))?.exists()).toBeTruthy();
 		wrapper.unmount();
 	});
 
 	test("Mit den Props 'buttonMode = icon' und  'onEdit = () => {}' und 'editButtonDisabled: true' wird um den Bearbeiten-Button ein Tooltip gerendert", () => {
-		const wrapper = mount(UiCard, { props: { buttonMode: 'icon', onEdit : () => {}, editButtonDisabled: true }, attachTo: document.body });
+		const wrapper = mount(UiCard, { props: { buttonMode: 'icon', onEdit: () => {}, editButtonDisabled: true }, attachTo: document.body });
 		expect(wrapper.findAll(".tooltip-trigger").find(tooltip => tooltip.find("span").classes().includes("i-ri-edit-2-line"))?.exists()).toBeTruthy();
 		wrapper.unmount();
 	});
 
 	test("Mit den Props 'buttonMode = icon' und  'onSave = () => {}' und 'saveButtonDisabled: true' wird um den Speichern-Button ein Tooltip gerendert", () => {
-		const wrapper = mount(UiCard, { props: { buttonMode: 'icon', onSave : () => {}, saveButtonDisabled: true }, attachTo: document.body });
+		const wrapper = mount(UiCard, { props: { buttonMode: 'icon', onSave: () => {}, saveButtonDisabled: true }, attachTo: document.body });
 		expect(wrapper.findAll(".tooltip-trigger").find(tooltip => tooltip.find("span").classes().includes("i-ri-check-line"))?.exists()).toBeTruthy();
 		wrapper.unmount();
 	});
 
 	test("Mit den Props 'buttonMode = icon' und  'onDelete = () => {}' und 'deleteButtonDisabled: true' wird um den Löschen-Button ein Tooltip gerendert", () => {
-		const wrapper = mount(UiCard, { props: { buttonMode: 'icon', onDelete : () => {}, deleteButtonDisabled: true }, attachTo: document.body });
+		const wrapper = mount(UiCard, { props: { buttonMode: 'icon', onDelete: () => {}, deleteButtonDisabled: true }, attachTo: document.body });
 		expect(wrapper.findAll(".tooltip-trigger").find(tooltip => tooltip.find("span").classes().includes("i-ri-delete-bin-line"))?.exists()).toBeTruthy();
 		wrapper.unmount();
 	});
 
 	test("Mit den Props 'buttonMode = icon' und  'onCancel = () => {}' und 'cancelButtonDisabled: true' wird um den Abbrechen-Button ein Tooltip gerendert", () => {
-		const wrapper = mount(UiCard, { props: { buttonMode: 'icon', onCancel : () => {}, cancelButtonDisabled: true }, attachTo: document.body });
+		const wrapper = mount(UiCard, { props: { buttonMode: 'icon', onCancel: () => {}, cancelButtonDisabled: true }, attachTo: document.body });
 		expect(wrapper.findAll(".tooltip-trigger").find(tooltip => tooltip.find("span").classes().includes("i-ri-close-line"))?.exists()).toBeTruthy();
 		wrapper.unmount();
 	});
 
 	// Text Buttons
 	test("Mit den Props 'buttonMode = text' und  'onEdit = () => {}' wird um den Bearbeiten-Button kein Tooltip gerendert", () => {
-		const wrapper = mount(UiCard, { props: { buttonMode: 'text', onEdit : () => {} }, attachTo: document.body });
+		const wrapper = mount(UiCard, { props: { buttonMode: 'text', onEdit: () => {} }, attachTo: document.body });
 		expect(wrapper.findAll(".tooltip-trigger").find(tooltip => tooltip.find("button").text() === "Bearbeiten")?.exists()).toBeFalsy();
 		wrapper.unmount();
 	});
 
 	test("Mit den Props 'buttonMode = text' und  'onSave = () => {}' wird um den Speichern-Button kein Tooltip gerendert", () => {
-		const wrapper = mount(UiCard, { props: { buttonMode: 'text', onSave : () => {} }, attachTo: document.body });
+		const wrapper = mount(UiCard, { props: { buttonMode: 'text', onSave: () => {} }, attachTo: document.body });
 		expect(wrapper.findAll(".tooltip-trigger").find(tooltip => tooltip.find("button").text() === "Speichern")?.exists()).toBeFalsy();
 		wrapper.unmount();
 	});
 
 	test("Mit den Props 'buttonMode = text' und  'onDelete = () => {}' wird um den Löschen-Button kein Tooltip gerendert", () => {
-		const wrapper = mount(UiCard, { props: { buttonMode: 'text', onDelete : () => {} }, attachTo: document.body });
+		const wrapper = mount(UiCard, { props: { buttonMode: 'text', onDelete: () => {} }, attachTo: document.body });
 		expect(wrapper.findAll(".tooltip-trigger").find(tooltip => tooltip.find("button").text() === "Löschen")?.exists()).toBeFalsy();
 		wrapper.unmount();
 	});
 
 	test("Mit den Props 'buttonMode = text' und  'onCancel = () => {}' wird um den Abbrechen-Button kein Tooltip gerendert", () => {
-		const wrapper = mount(UiCard, { props: { buttonMode: 'text', onCancel : () => {} }, attachTo: document.body });
+		const wrapper = mount(UiCard, { props: { buttonMode: 'text', onCancel: () => {} }, attachTo: document.body });
 		expect(wrapper.findAll(".tooltip-trigger").find(tooltip => tooltip.find("button").text() === "Abbrechen")?.exists()).toBeFalsy();
 		wrapper.unmount();
 	});
 
 	test("Mit den Props 'buttonMode = text' und  'onEdit = () => {}' und 'editButtonDisabled: true' wird um den Bearbeiten-Button kein Tooltip gerendert", () => {
-		const wrapper = mount(UiCard, { props: { buttonMode: 'text', onEdit : () => {}, editButtonDisabled: true }, attachTo: document.body });
+		const wrapper = mount(UiCard, { props: { buttonMode: 'text', onEdit: () => {}, editButtonDisabled: true }, attachTo: document.body });
 		expect(wrapper.findAll(".tooltip-trigger").find(tooltip => tooltip.find("button").text() === "Bearbeiten")?.exists()).toBeFalsy();
 		wrapper.unmount();
 	});
 
 	test("Mit den Props 'buttonMode = text' und  'onSave = () => {}' und 'saveButtonDisabled: true' wird um den Speichern-Button kein Tooltip gerendert", () => {
-		const wrapper = mount(UiCard, { props: { buttonMode: 'text', onSave : () => {}, saveButtonDisabled: true }, attachTo: document.body });
+		const wrapper = mount(UiCard, { props: { buttonMode: 'text', onSave: () => {}, saveButtonDisabled: true }, attachTo: document.body });
 		expect(wrapper.findAll(".tooltip-trigger").find(tooltip => tooltip.find("button").text() === "Speichern")?.exists()).toBeFalsy();
 		wrapper.unmount();
 	});
 
 	test("Mit den Props 'buttonMode = text' und  'onDelete = () => {}' und 'deleteButtonDisabled: true' wird um den Löschen-Button kein Tooltip gerendert", () => {
-		const wrapper = mount(UiCard, { props: { buttonMode: 'text', onDelete : () => {}, deleteButtonDisabled: true }, attachTo: document.body });
+		const wrapper = mount(UiCard, { props: { buttonMode: 'text', onDelete: () => {}, deleteButtonDisabled: true }, attachTo: document.body });
 		expect(wrapper.findAll(".tooltip-trigger").find(tooltip => tooltip.find("button").text() === "Löschen")?.exists()).toBeFalsy();
 		wrapper.unmount();
 	});
 
 	test("Mit den Props 'buttonMode = text' und  'onCancel = () => {}' und 'cancelButtonDisabled: true' wird um den Abbrechen-Button kein Tooltip gerendert", () => {
-		const wrapper = mount(UiCard, { props: { buttonMode: 'text', onCancel : () => {}, cancelButtonDisabled: true }, attachTo: document.body });
+		const wrapper = mount(UiCard, { props: { buttonMode: 'text', onCancel: () => {}, cancelButtonDisabled: true }, attachTo: document.body });
 		expect(wrapper.findAll(".tooltip-trigger").find(tooltip => tooltip.find("button").text() === "Abbrechen")?.exists()).toBeFalsy();
 		wrapper.unmount();
 	});
 
 	test("Mit den Props 'buttonMode = text' und  'onEdit = () => {}' und 'editButtonDisabled: true' und 'editButtonDisabledReason: Test' wird um den "
 		+ "Bearbeiten-Button ein Tooltip gerendert", () => {
-		const wrapper = mount(UiCard, { props: { buttonMode: 'text', onEdit : () => {}, editButtonDisabled: true, editButtonDisabledReason: 'Test' }, attachTo: document.body });
+		const wrapper = mount(UiCard, { props: { buttonMode: 'text', onEdit: () => {}, editButtonDisabled: true, editButtonDisabledReason: 'Test' }, attachTo: document.body });
 		expect(wrapper.findAll(".tooltip-trigger").find(tooltip => tooltip.find("button").text() === "Bearbeiten")?.exists()).toBeTruthy();
 		wrapper.unmount();
 	});
 
 	test("Mit den Props 'buttonMode = text' und  'onSave = () => {}' und 'saveButtonDisabled: true' und 'saveButtonDisabledReason: Test' wird um den "
 		+ "Speichern-Button ein Tooltip gerendert", () => {
-		const wrapper = mount(UiCard, { props: { buttonMode: 'text', onSave : () => {}, saveButtonDisabled: true, saveButtonDisabledReason: 'Test' }, attachTo: document.body });
+		const wrapper = mount(UiCard, { props: { buttonMode: 'text', onSave: () => {}, saveButtonDisabled: true, saveButtonDisabledReason: 'Test' }, attachTo: document.body });
 		expect(wrapper.findAll(".tooltip-trigger").find(tooltip => tooltip.find("button").text() === "Speichern")?.exists()).toBeTruthy();
 		wrapper.unmount();
 	});
 
 	test("Mit den Props 'buttonMode = text' und  'onDelete = () => {}' und 'deleteButtonDisabled: true' und 'deleteButtonDisabledReason: Test' wird um den "
 		+ "Löschen-Button ein Tooltip gerendert", () => {
-		const wrapper = mount(UiCard, { props: { buttonMode: 'text', onDelete : () => {}, deleteButtonDisabled: true, deleteButtonDisabledReason: 'Test' }, attachTo: document.body });
+		const wrapper = mount(UiCard, { props: { buttonMode: 'text', onDelete: () => {}, deleteButtonDisabled: true, deleteButtonDisabledReason: 'Test' }, attachTo: document.body });
 		expect(wrapper.findAll(".tooltip-trigger").find(tooltip => tooltip.find("button").text() === "Löschen")?.exists()).toBeTruthy();
 		wrapper.unmount();
 	});
 
 	test("Mit den Props 'buttonMode = text' und  'onCancel = () => {}' und 'cancelButtonDisabled: true' und 'cancelButtonDisabledReason: Test' wird um den "
 		+ "Abbrechen-Button ein Tooltip gerendert", () => {
-		const wrapper = mount(UiCard, { props: { buttonMode: 'text', onCancel : () => {}, cancelButtonDisabled: true, cancelButtonDisabledReason: 'Test' }, attachTo: document.body });
+		const wrapper = mount(UiCard, { props: { buttonMode: 'text', onCancel: () => {}, cancelButtonDisabled: true, cancelButtonDisabledReason: 'Test' }, attachTo: document.body });
 		expect(wrapper.findAll(".tooltip-trigger").find(tooltip => tooltip.find("button").text() === "Abbrechen")?.exists()).toBeTruthy();
 		wrapper.unmount();
 	});
@@ -661,25 +661,25 @@ describe("PropHandhabung läuft korrekt für Buttons und Transitions", () => {
 	];
 
 	test.each(simpleButtons)("Mit Button Definitionen für %s, 'buttonMode' = 'text' und 'compact' = true ist die size des Buttons gleich small", () => {
-		const wrapper = mount(UiCard, {	props: { buttonMode: 'text', onEdit: () => {}, compact: true}, attachTo: document.body });
+		const wrapper = mount(UiCard, {	props: { buttonMode: 'text', onEdit: () => {}, compact: true }, attachTo: document.body });
 		const button = wrapper.findComponent(SvwsUiButton);
 		expect(button.props().size).toBe('small');
 	});
 
 	test.each(simpleButtons)("Mit Button Definitionen für %s, 'buttonMode' = 'text' und 'compact' = false ist die size des Buttons gleich normal", () => {
-		const wrapper = mount(UiCard, {	props: { buttonMode: 'text', onEdit: () => {}, compact: false}, attachTo: document.body });
+		const wrapper = mount(UiCard, {	props: { buttonMode: 'text', onEdit: () => {}, compact: false }, attachTo: document.body });
 		const button = wrapper.findComponent(SvwsUiButton);
 		expect(button.props().size).toBe('normal');
 	});
 
 	test.each(simpleButtons)("Mit Button Definitionen für %s, 'buttonMode' = 'icon' und 'compact' = false ist die size des Buttons gleich normal", () => {
-		const wrapper = mount(UiCard, {	props: { buttonMode: 'icon', onEdit: () => {}, compact: false}, attachTo: document.body });
+		const wrapper = mount(UiCard, {	props: { buttonMode: 'icon', onEdit: () => {}, compact: false }, attachTo: document.body });
 		const button = wrapper.findComponent(SvwsUiButton);
 		expect(button.props().size).toBe('normal');
 	});
 
 	test.each(simpleButtons)("Mit Button Definitionen für %s, 'buttonMode' = 'icon' und 'compact' = true ist die size des Buttons gleich normal", () => {
-		const wrapper = mount(UiCard, {	props: { buttonMode: 'icon', onEdit: () => {}, compact: true}, attachTo: document.body });
+		const wrapper = mount(UiCard, {	props: { buttonMode: 'icon', onEdit: () => {}, compact: true }, attachTo: document.body });
 		const button = wrapper.findComponent(SvwsUiButton);
 		expect(button.props().size).toBe('normal');
 	});
@@ -688,9 +688,9 @@ describe("PropHandhabung läuft korrekt für Buttons und Transitions", () => {
 // Tests dürfen aufgrund der Transitions nicht parallel laufen, da sie sich sonst beeinflussen
 describe("Events laufen korrekt", () => {
 	test("Klick auf Header (geschlossene Card) öffnet die Card", async () => {
-		const wrapper = mount(UiCard, { props: { isOpen: false }, global: { stubs: { transition: false} } });
+		const wrapper = mount(UiCard, { props: { isOpen: false }, global: { stubs: { transition: false } } });
 		const header = wrapper.find(".ui-card--header");
-		const body = wrapper.find(".ui-card--body-wrapper")
+		const body = wrapper.find(".ui-card--body-wrapper");
 		expect(header.classes()).not.toContain("svws-active");
 		expect(body.attributes("style")).toContain("display: none");
 		expect((body.element as HTMLElement).style.maxHeight).toBe("0px");
@@ -704,9 +704,9 @@ describe("Events laufen korrekt", () => {
 	});
 
 	test("Klick auf Header (geöffnete Card) schließt die Card", async () => {
-		const wrapper = mount(UiCard, { props: { isOpen: true }, global: { stubs: { transition: false} } });
+		const wrapper = mount(UiCard, { props: { isOpen: true }, global: { stubs: { transition: false } } });
 		const header = wrapper.find(".ui-card--header");
-		const body = wrapper.find(".ui-card--body-wrapper")
+		const body = wrapper.find(".ui-card--body-wrapper");
 		await wrapper.findComponent({ name: "UiCard" }).vm.$nextTick();
 		expect(header.classes()).toContain("ui-card--active");
 		expect(body.attributes("style")).not.toContain("display: none");
@@ -721,10 +721,10 @@ describe("Events laufen korrekt", () => {
 	});
 
 	test("Vor dem Öffnen der Card wird 'isOpen: true' emittet", async () => {
-		const wrapper = mount(UiCard, {	props: { isOpen: false }, global: { stubs: { transition: false} } });
+		const wrapper = mount(UiCard, {	props: { isOpen: false }, global: { stubs: { transition: false } } });
 		let emittedEvents = wrapper.emitted("update:isOpen");
 		expect(emittedEvents).toBeFalsy();
-		await wrapper.setProps({ isOpen: true});
+		await wrapper.setProps({ isOpen: true });
 		emittedEvents = wrapper.emitted("update:isOpen");
 		expect(emittedEvents).toBeTruthy();
 		if ((emittedEvents === undefined) || (emittedEvents[0].length === 0))
@@ -734,7 +734,7 @@ describe("Events laufen korrekt", () => {
 	});
 
 	test("Nach dem Schließen der Card wird 'isOpen: false' emittet", async () => {
-		const wrapper = mount(UiCard, {	props: { isOpen: true }, global: { stubs: { transition: false} } });
+		const wrapper = mount(UiCard, {	props: { isOpen: true }, global: { stubs: { transition: false } } });
 		const body = wrapper.find(".ui-card--body-wrapper").element as HTMLElement;
 		await wrapper.findComponent({ name: "UiCard" }).vm.$nextTick();
 		// update:isOpen = true wird beim Mounten emittet
@@ -745,7 +745,7 @@ describe("Events laufen korrekt", () => {
 		expect(emittedEvents[0][0]).toBe(true);
 
 		// Card schließen
-		await wrapper.setProps({isOpen: false});
+		await wrapper.setProps({ isOpen: false });
 		// Schließt die Transition ab
 		body.dispatchEvent(new Event('transitionend'));
 		emittedEvents = wrapper.emitted("update:isOpen");
@@ -764,22 +764,22 @@ describe.concurrent("Alle computeds berechnen korrekt", () => {
 	// showCollapseIconLeft
 	test("computed->showCollapseIconLeft liefert true, wenn kein collapseLeft-slot gesetzt ist, die Card collapsible ist und das Collapse-icon links ist", async () => {
 		const wrapper = mount(UiCard, { props: { collapsible: true, collapseIconPosition: 'left' } });
-		expect( await wrapper.findComponent({ name: "UiCard" }).vm.showCollapseIconLeft).toBeTruthy();
+		expect(await wrapper.findComponent({ name: "UiCard" }).vm.showCollapseIconLeft).toBeTruthy();
 	});
 
 	test("computed->showCollapseIconLeft liefert false, wenn die Card nicht collapsible ist", async () => {
 		const wrapper = mount(UiCard, { props: { collapsible: false, collapseIconPosition: 'left' } });
-		expect( await wrapper.findComponent({ name: "UiCard" }).vm.showCollapseIconLeft).toBeFalsy();
+		expect(await wrapper.findComponent({ name: "UiCard" }).vm.showCollapseIconLeft).toBeFalsy();
 	});
 
 	test("computed->showCollapseIconLeft liefert false, wenn das Collapse-icon nicht links ist", async () => {
 		const wrapper = mount(UiCard, { props: { collapsible: true, collapseIconPosition: 'right' } });
-		expect( await wrapper.findComponent({ name: "UiCard" }).vm.showCollapseIconLeft).toBeFalsy();
+		expect(await wrapper.findComponent({ name: "UiCard" }).vm.showCollapseIconLeft).toBeFalsy();
 	});
 
 	test("computed->showCollapseIconLeft liefert false, wenn ein collapseLeft-slot gesetzt ist", async () => {
-		const wrapper = mount(UiCard, {props: { collapsible: true }, slots:{ collapseLeft: "Custom Slot Inhalt" }});
-		expect( await wrapper.findComponent({ name: "UiCard" }).vm.showCollapseIconLeft).toBeFalsy();
+		const wrapper = mount(UiCard, { props: { collapsible: true }, slots: { collapseLeft: "Custom Slot Inhalt" } });
+		expect(await wrapper.findComponent({ name: "UiCard" }).vm.showCollapseIconLeft).toBeFalsy();
 	});
 
 	// showCollapseIconRight
@@ -810,7 +810,7 @@ describe.concurrent("Alle computeds berechnen korrekt", () => {
 	});
 
 	test("computed->showIcon liefert false, wenn ein icon-Slot gesetzt ist", async () => {
-		const wrapper = mount(UiCard, { props: { icon: 'some-icon' }, slots: { icon: "Custom Icon Inhalt" }});
+		const wrapper = mount(UiCard, { props: { icon: 'some-icon' }, slots: { icon: "Custom Icon Inhalt" } });
 		expect(await wrapper.findComponent({ name: "UiCard" }).vm.showIcon).toBeFalsy();
 	});
 
@@ -1262,7 +1262,7 @@ describe.concurrent("Funktionen werden korrekt ausgeführt", async () => {
 
 		// Hier wird openCard tatsächlich ausgeführt und geprüft, ob die maxHeight gesetzt wurde
 		await openCard(bodyWrapperHtml);
-		expect(bodyWrapper.attributes("style")).toContain("max-height: "+ bodyWrapperHtml.scrollHeight + "px");
+		expect(bodyWrapper.attributes("style")).toContain("max-height: " + bodyWrapperHtml.scrollHeight + "px");
 	});
 
 	test("function-> openCard (Card schon geöffnet) bricht die Funktion ab und tut nichts", async () => {
@@ -1292,7 +1292,7 @@ describe.concurrent("Funktionen werden korrekt ausgeführt", async () => {
 		expect(bodyWrapper.attributes("style")).toContain("max-height: 300px");
 		afterOpenCard(bodyWrapperHtml);
 		expect(bodyWrapper.attributes("style")).toContain("max-height: fit-content");
-	})
+	});
 
 	test("function-> beforeCloseCard setzt die maxHeight des Bodys auf die scrollHeight", async () => {
 		const wrapper = mount(UiCard);
@@ -1314,7 +1314,7 @@ describe.concurrent("Funktionen werden korrekt ausgeführt", async () => {
 
 		// Hier wird beforeCloseCard tatsächlich ausgeführt und geprüft, ob die maxHeight gesetzt wurde
 		await beforeCloseCard(bodyWrapperHtml);
-		expect(bodyWrapper.attributes("style")).toContain("max-height: "+ bodyWrapperHtml.scrollHeight + "px");
+		expect(bodyWrapper.attributes("style")).toContain("max-height: " + bodyWrapperHtml.scrollHeight + "px");
 	});
 
 	test("function-> closeCard setzt die maxHeight der Card auf 0px", async () => {
@@ -1377,7 +1377,7 @@ describe.concurrent("Funktionen werden korrekt ausgeführt", async () => {
 		const result = tooltipDisabled({
 			type: 'primary', label: 'Speichern', icon: 'i-ri-check-line', iconType: 'icon-ui-brand', disabled: false,
 			disabledReason: undefined, click: () => {},
-		})
+		});
 
 		expect(result).toBe(false);
 	});
@@ -1472,7 +1472,7 @@ describe("Übergebene Button-Funktionen werden korrekt ausgeführt", async () =>
 
 		const wrapper = mount(UiCard, { props: { onEdit: onEditFunction }, attachTo: document.body });
 		const button = wrapper.find(".ui-card--buttons").findAll("button").find(button => button.text() === "Bearbeiten");
-		if(button === undefined)
+		if (button === undefined)
 			fail("Button darf nicht undefined sein");
 		await button.trigger("click");
 
@@ -1484,7 +1484,7 @@ describe("Übergebene Button-Funktionen werden korrekt ausgeführt", async () =>
 
 		const wrapper = mount(UiCard, { props: { onSave: onSaveFunction }, attachTo: document.body });
 		const button = wrapper.find(".ui-card--buttons").findAll("button").find(button => button.text() === "Speichern");
-		if(button === undefined)
+		if (button === undefined)
 			fail("Button darf nicht undefined sein");
 		await button.trigger("click");
 
@@ -1496,7 +1496,7 @@ describe("Übergebene Button-Funktionen werden korrekt ausgeführt", async () =>
 
 		const wrapper = mount(UiCard, { props: { onDelete: onDeleteFunction }, attachTo: document.body });
 		const button = wrapper.find(".ui-card--buttons").findAll("button").find(button => button.text() === "Löschen");
-		if(button === undefined)
+		if (button === undefined)
 			fail("Button darf nicht undefined sein");
 		await button.trigger("click");
 
@@ -1508,7 +1508,7 @@ describe("Übergebene Button-Funktionen werden korrekt ausgeführt", async () =>
 
 		const wrapper = mount(UiCard, { props: { onCancel: onCancelFunction }, attachTo: document.body });
 		const button = wrapper.find(".ui-card--buttons").findAll("button").find(button => button.text() === "Abbrechen");
-		if(button === undefined)
+		if (button === undefined)
 			fail("Button darf nicht undefined sein");
 		await button.trigger("click");
 

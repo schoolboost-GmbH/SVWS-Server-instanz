@@ -36,27 +36,27 @@ class Api {
 	}
 
 	/** Gibt den Hostnamen zurück des SVWS-Servers zurück */
-	get hostname() : string {
+	get hostname(): string {
 		return this.conn.hostname;
 	}
 
 	/** Gibt den Status zurück, ob der Benutzer authentifiziert wurde */
-	get authenticated() : boolean {
+	get authenticated(): boolean {
 		return this.conn.authenticated;
 	}
 
 	/** Gibt den Benutzernamen für die Verbindung zum SVWS-Server zurück **/
-	get username() : string {
+	get username(): string {
 		return this.conn.username;
 	}
 
 	/** Gibt an, ob der Benutzer Root-Privilegien hat */
-	get hasRootPrivileges() : boolean {
+	get hasRootPrivileges(): boolean {
 		return this.conn.hasRootPrivileges;
 	}
 
 	// Gibt zurück, ob der angemeldete Benutzer der in der SVWS-Server-Konfiguration eingetragene Server-Admin ist oder nicht
-	get isServerAdmin() : boolean {
+	get isServerAdmin(): boolean {
 		return this.conn.isServerAdmin;
 	}
 
@@ -77,7 +77,7 @@ class Api {
 	 */
 	setHostname = (hostname: string): void => {
 		return this.conn.setHostname(hostname);
-	}
+	};
 
 	/**
 	 * Versucht eine Verbindung zu der angegebenen Adresse herzustellen.
@@ -88,7 +88,7 @@ class Api {
 	 */
 	connectTo = async (adresse: string): Promise<boolean> => {
 		return await this.conn.connectTo(adresse);
-	}
+	};
 
 	/**
 	 * Authentifiziert den Datenbank-Benutzer mit dem angebenen Benutzernamen und Kennwort
@@ -101,14 +101,14 @@ class Api {
 	 */
 	login = async (username: string, password: string): Promise<boolean> => {
 		return await this.conn.login(username, password);
-	}
+	};
 
 	/**
 	 * Meldet den angemeldeten Benutzer bei der Api ab.
 	 */
 	logout = async (): Promise<void> => {
 		await this.conn.logout();
-	}
+	};
 
 }
 

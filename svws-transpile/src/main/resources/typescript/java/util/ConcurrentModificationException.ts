@@ -6,7 +6,7 @@ export class ConcurrentModificationException extends RuntimeException {
 		return 'java.util.ConcurrentModificationException';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return [
 			'java.util.ConcurrentModificationException',
 			'java.lang.RuntimeException',
@@ -20,6 +20,6 @@ export class ConcurrentModificationException extends RuntimeException {
 }
 
 
-export function cast_java_util_ConcurrentModificationException(obj : unknown) : ConcurrentModificationException {
+export function cast_java_util_ConcurrentModificationException(obj: unknown): ConcurrentModificationException {
 	return obj as ConcurrentModificationException;
 }

@@ -11,7 +11,7 @@ export class ValidatorGesamtLehrerPersonaldatenLehramt extends Validator {
 	/**
 	 * Die Lehrer-Personalabschnittsdaten
 	 */
-	private readonly listPersonaldaten : List<LehrerPersonaldaten>;
+	private readonly listPersonaldaten: List<LehrerPersonaldaten>;
 
 
 	/**
@@ -20,20 +20,20 @@ export class ValidatorGesamtLehrerPersonaldatenLehramt extends Validator {
 	 * @param listPersonaldaten   die Liste der Lehrer-Personaldaten, die geprüft werden sollen
 	 * @param kontext             der Kontext des Validators
 	 */
-	public constructor(listPersonaldaten : List<LehrerPersonaldaten>, kontext : ValidatorKontext) {
+	public constructor(listPersonaldaten: List<LehrerPersonaldaten>, kontext: ValidatorKontext) {
 		super(kontext);
 		this.listPersonaldaten = listPersonaldaten;
 	}
 
-	protected pruefe() : boolean {
-		let success : boolean = true;
-		const schulform : Schulform = this.kontext().getSchulform();
-		const istFW : boolean = JavaObject.equalsTranspiler(Schulform.FW, (schulform));
+	protected pruefe(): boolean {
+		let success: boolean = true;
+		const schulform: Schulform = this.kontext().getSchulform();
+		const istFW: boolean = JavaObject.equalsTranspiler(Schulform.FW, (schulform));
 		for (const lp of this.listPersonaldaten) {
-			const anzahlLehraemter : number = lp.lehraemter.size();
-			if (!istFW && !this.exec(0, { getAsBoolean : () => anzahlLehraemter === 0 }, "Zu Jeder Lehrkraft muss mindest ein Lehramt vorliegen. Lehrer ID: " + lp.id))
+			const anzahlLehraemter: number = lp.lehraemter.size();
+			if (!istFW && !this.exec(0, { getAsBoolean: () => anzahlLehraemter === 0 }, "Zu Jeder Lehrkraft muss mindest ein Lehramt vorliegen. Lehrer ID: " + lp.id))
 				success = false;
-			if (istFW && !this.exec(1, { getAsBoolean : () => anzahlLehraemter > 0 }, "Bei Freien Waldorfschulen darf kein Lehramt erfasst sein. Lehrer ID: " + lp.id))
+			if (istFW && !this.exec(1, { getAsBoolean: () => anzahlLehraemter > 0 }, "Bei Freien Waldorfschulen darf kein Lehramt erfasst sein. Lehrer ID: " + lp.id))
 				success = false;
 		}
 		return success;
@@ -43,7 +43,7 @@ export class ValidatorGesamtLehrerPersonaldatenLehramt extends Validator {
 		return 'de.svws_nrw.asd.validate.gesamt.ValidatorGesamtLehrerPersonaldatenLehramt';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.asd.validate.gesamt.ValidatorGesamtLehrerPersonaldatenLehramt', 'de.svws_nrw.asd.validate.Validator'].includes(name);
 	}
 
@@ -51,6 +51,6 @@ export class ValidatorGesamtLehrerPersonaldatenLehramt extends Validator {
 
 }
 
-export function cast_de_svws_nrw_asd_validate_gesamt_ValidatorGesamtLehrerPersonaldatenLehramt(obj : unknown) : ValidatorGesamtLehrerPersonaldatenLehramt {
+export function cast_de_svws_nrw_asd_validate_gesamt_ValidatorGesamtLehrerPersonaldatenLehramt(obj: unknown): ValidatorGesamtLehrerPersonaldatenLehramt {
 	return obj as ValidatorGesamtLehrerPersonaldatenLehramt;
 }

@@ -27,7 +27,7 @@
 	import { BenutzerKompetenz } from "@core";
 	import { computed } from "vue";
 
-	const props = defineProps<MerkmaleDatenProps>()
+	const props = defineProps<MerkmaleDatenProps>();
 	const hatKompetenzUpdate = computed<boolean>(() => props.benutzerKompetenzen.has(BenutzerKompetenz.KATALOG_EINTRAEGE_AENDERN));
 	const readonly = computed<boolean>(() => !hatKompetenzUpdate.value);
 

@@ -22,102 +22,102 @@ export class CoreTypeDataManager<T extends CoreTypeData, U extends CoreType<T, U
 	/**
 	 * Eine Map mit den Daten der initisierten Core-Types
 	 */
-	private static _data : JavaMap<string, CoreTypeDataManager<CoreTypeData, any>> = new HashMap<string, CoreTypeDataManager<CoreTypeData, any>>();
+	private static _data: JavaMap<string, CoreTypeDataManager<CoreTypeData, any>> = new HashMap<string, CoreTypeDataManager<CoreTypeData, any>>();
 
 	/**
 	 * Der name des Core-Types
 	 */
-	private readonly _name : string;
+	private readonly _name: string;
 
 	/**
 	 * Die Version der Core-Type-Daten, um beim Datenbank Update-Process die Version des Core-Types feststellen zu können.
 	 */
-	private readonly _version : number;
+	private readonly _version: number;
 
 	/**
 	 * Die Liste aller zulässigen Werte des Core-Types, d.h. der Enumeration
 	 */
-	private readonly _listWerte : List<U>;
+	private readonly _listWerte: List<U>;
 
 	/**
 	 * Die Zuordnung der Liste mit den Statistik-IDs zu den Bezeichnern des Core-Types
 	 */
-	private readonly _mapBezeichnerToStatistikID : JavaMap<string, string>;
+	private readonly _mapBezeichnerToStatistikID: JavaMap<string, string>;
 
 	/**
 	 * Die Daten des Core-Types mit der Zuordnung der Liste mit den Historien-Einträgen zu den Bezeichnern des Core-Types
 	 */
-	private readonly _mapBezeichnerToHistorie : JavaMap<string, List<T>>;
+	private readonly _mapBezeichnerToHistorie: JavaMap<string, List<T>>;
 
 	/**
 	 * Eine Map mit der Zuordnung der Enum-Einträge zu den Bezeichnern
 	 */
-	private readonly _mapBezeichnerToEnum : JavaMap<string, U> = new HashMap<string, U>();
+	private readonly _mapBezeichnerToEnum: JavaMap<string, U> = new HashMap<string, U>();
 
 	/**
 	 * Eine Map mit der Zuordnung der Statistik-IDs zu den Enum-Einträgen
 	 */
-	private readonly _mapEnumToStatistikID : JavaMap<U, string> = new HashMap<U, string>();
+	private readonly _mapEnumToStatistikID: JavaMap<U, string> = new HashMap<U, string>();
 
 	/**
 	 * Eine Map mit der Zuordnung der Historieneinträge zu den Enum-Einträgen
 	 */
-	private readonly _mapEnumToHistorie : JavaMap<U, List<T>> = new HashMap<U, List<T>>();
+	private readonly _mapEnumToHistorie: JavaMap<U, List<T>> = new HashMap<U, List<T>>();
 
 	/**
 	 * Eine Map mit der Zuordnung der Historieneinträge zu deren ID
 	 */
-	private readonly _mapIDToEintrag : JavaMap<number, T> = new HashMap<number, T>();
+	private readonly _mapIDToEintrag: JavaMap<number, T> = new HashMap<number, T>();
 
 	/**
 	 * Eine Map mit der Zuordnung des Core-Type-Wertes zu dessen ID
 	 */
-	private readonly _mapIDToEnum : JavaMap<number, U> = new HashMap<number, U>();
+	private readonly _mapIDToEnum: JavaMap<number, U> = new HashMap<number, U>();
 
 	/**
 	 * Eine Map mit der Zuordnung des Core-Type-Wertes zu dessen numerischen Schlüssel
 	 */
-	private readonly _mapSchluesselToEnum : JavaMap<string, U> = new HashMap<string, U>();
+	private readonly _mapSchluesselToEnum: JavaMap<string, U> = new HashMap<string, U>();
 
 	/**
 	 * Eine Map mit der Zuordnung des Core-Type-Wertes zu dessen Kürzel
 	 */
-	private readonly _mapKuerzelToEnum : JavaMap<string, U> = new HashMap<string, U>();
+	private readonly _mapKuerzelToEnum: JavaMap<string, U> = new HashMap<string, U>();
 
 	/**
 	 * Die Map mit der Zuordnung der zulässigen Schulformen zu der ID eines Historieneintrags. Liegt keine Einschränkung vor, so ist die Menge leer.
 	 */
-	private readonly _mapSchulformenByID : HashMap<number, JavaSet<Schulform>> = new HashMap<number, JavaSet<Schulform>>();
+	private readonly _mapSchulformenByID: HashMap<number, JavaSet<Schulform>> = new HashMap<number, JavaSet<Schulform>>();
 
 	/**
 	 * Eine Map mit der Zuordnung der Liste der Werte zu einem Schuljahr
 	 */
-	private readonly _mapSchuljahrToWerte : JavaMap<number, List<U>> = new HashMap<number, List<U>>();
+	private readonly _mapSchuljahrToWerte: JavaMap<number, List<U>> = new HashMap<number, List<U>>();
 
 	/**
 	 * Eine geschachtelte Map mit der Zuordnung eines Historien-Eintrags zu einem Schuljahr und einem Core-Type-Wert
 	 */
-	private readonly _mapWertAndSchuljahrToEintrag : HashMap<number, HashMap<U, T>> = new HashMap<number, HashMap<U, T>>();
+	private readonly _mapWertAndSchuljahrToEintrag: HashMap<number, HashMap<U, T>> = new HashMap<number, HashMap<U, T>>();
 
 	/**
 	 * Eine geschachtelte Map mit der Zuordnung eines Historien-Eintrags zu einem Schuljahr und einem Schlüssel
 	 */
-	private readonly _mapSchluesselAndSchuljahrToEintrag : HashMap<number, HashMap<string, T>> = new HashMap<number, HashMap<string, T>>();
+	private readonly _mapSchluesselAndSchuljahrToEintrag: HashMap<number, HashMap<string, T>> = new HashMap<number, HashMap<string, T>>();
 
 	/**
 	 * Eine geschachtelte Map mit der Zuordnung einer Liste von Core-Type-Werten zu einem Schuljahr und einer Schulform
 	 */
-	private readonly _mapBySchuljahrAndSchulform : JavaMap<number, JavaMap<Schulform, List<U>>> = new HashMap<number, JavaMap<Schulform, List<U>>>();
+	private readonly _mapBySchuljahrAndSchulform: JavaMap<number, JavaMap<Schulform, List<U>>> = new HashMap<number, JavaMap<Schulform, List<U>>>();
 
 	/**
 	 * Eine geschachtelte Map mit der Zuordnung einer von Core-Type-Werten zu einem Schuljahr, einer Schulform und dem Schlüssel
 	 */
-	private readonly _mapBySchuljahrAndSchulformAndSchluessel : JavaMap<number, JavaMap<Schulform, JavaMap<string, U>>> = new HashMap<number, JavaMap<Schulform, JavaMap<string, U>>>();
+	private readonly _mapBySchuljahrAndSchulformAndSchluessel: JavaMap<number, JavaMap<Schulform, JavaMap<string, U>>> = new HashMap<number, JavaMap<Schulform, JavaMap<string, U>>>();
 
 	/**
 	 * Eine Map mit der Zuordnung der Historien-Einträge zu den jeweilgen Schuljahren
 	 */
-	private readonly _mapEintraegeBySchuljahr : HashMap<number, List<T>> = new HashMap<number, List<T>>();
+	private readonly _mapEintraegeBySchuljahr: HashMap<number, List<T>> = new HashMap<number, List<T>>();
 
 
 	/**
@@ -129,7 +129,7 @@ export class CoreTypeDataManager<T extends CoreTypeData, U extends CoreType<T, U
 	 * @param data      die Daten für den Core-Type
 	 * @param idsStatistik   die IDs der Historien zu den einzelnen Bezeichnern
 	 */
-	public constructor(version : number, clazz : Class<U>, values : Array<U>, data : JavaMap<string, List<T>>, idsStatistik : JavaMap<string, string>) {
+	public constructor(version: number, clazz: Class<U>, values: Array<U>, data: JavaMap<string, List<T>>, idsStatistik: JavaMap<string, string>) {
 		super();
 		this._name = clazz.getSimpleName();
 		if (version <= 0)
@@ -140,17 +140,17 @@ export class CoreTypeDataManager<T extends CoreTypeData, U extends CoreType<T, U
 		this._mapBezeichnerToStatistikID = idsStatistik;
 		for (const coreTypeValue of values) {
 			this._mapBezeichnerToEnum.put(coreTypeValue.name(), coreTypeValue);
-			const historie : List<T> | null = this._mapBezeichnerToHistorie.get(coreTypeValue.name());
+			const historie: List<T> | null = this._mapBezeichnerToHistorie.get(coreTypeValue.name());
 			if (historie === null)
 				throw new CoreTypeException(this._name + ": Der Core-Type-Bezeichner " + coreTypeValue.name() + "hat keine Daten zugeordnet. Der Core-Type konnte nicht vollständig initialisiert werden.")
 			this._mapEnumToHistorie.put(coreTypeValue, historie);
-			const idStatistik : string | null = this._mapBezeichnerToStatistikID.get(coreTypeValue.name());
+			const idStatistik: string | null = this._mapBezeichnerToStatistikID.get(coreTypeValue.name());
 			if (idStatistik === null)
 				throw new CoreTypeException(this._name + ": Der Core-Type-Bezeichner " + coreTypeValue.name() + "hat keine Statistik-ID zugeordnet. Der Core-Type konnte nicht vollständig initialisiert werden.")
 			this._mapEnumToStatistikID.put(coreTypeValue, idStatistik);
 		}
 		for (const bezeichner of this._mapBezeichnerToHistorie.keySet()) {
-			const coreTypeValue : U | null = this._mapBezeichnerToEnum.get(bezeichner);
+			const coreTypeValue: U | null = this._mapBezeichnerToEnum.get(bezeichner);
 			if (coreTypeValue === null)
 				throw new CoreTypeException(this._name + ": Der Bezeichner " + bezeichner + " kann keinem Core-Type-Wert zugeordnet werden. Der Core-Type konnte nicht vollständig initialisiert werden.")
 		}
@@ -166,7 +166,7 @@ export class CoreTypeDataManager<T extends CoreTypeData, U extends CoreType<T, U
 	 * @param clazz     die Klassen des Core-Types
 	 * @param manager   der Core-Type-Manager
 	 */
-	public static putManager<T extends CoreTypeData, U extends CoreType<T, U>>(clazz : Class<U>, manager : CoreTypeDataManager<T, U>) : void {
+	public static putManager<T extends CoreTypeData, U extends CoreType<T, U>>(clazz: Class<U>, manager: CoreTypeDataManager<T, U>): void {
 		CoreTypeDataManager._data.put(clazz.getCanonicalName(), manager);
 	}
 
@@ -180,8 +180,8 @@ export class CoreTypeDataManager<T extends CoreTypeData, U extends CoreType<T, U
 	 *
 	 * @return der Core-Type-Manager
 	 */
-	public static getManager<T extends CoreTypeData, U extends CoreType<T, U>>(clazz : Class<U>) : CoreTypeDataManager<T, U> {
-		const manager : CoreTypeDataManager<T, U> | null = cast_de_svws_nrw_asd_utils_CoreTypeDataManager(CoreTypeDataManager._data.get(clazz.getCanonicalName()));
+	public static getManager<T extends CoreTypeData, U extends CoreType<T, U>>(clazz: Class<U>): CoreTypeDataManager<T, U> {
+		const manager: CoreTypeDataManager<T, U> | null = cast_de_svws_nrw_asd_utils_CoreTypeDataManager(CoreTypeDataManager._data.get(clazz.getCanonicalName()));
 		if (manager === null)
 			throw new CoreTypeException("Der Core-Type " + clazz.getSimpleName() + " wurde noch nicht initialisiert.")
 		return manager;
@@ -190,11 +190,11 @@ export class CoreTypeDataManager<T extends CoreTypeData, U extends CoreType<T, U
 	/**
 	 * Prüft alle Historieneinträge bei dem Erstellen eines neuen Managers.
 	 */
-	private initCheckHistorien() : void {
-		const setIDs : JavaSet<number> | null = new HashSet<number>();
+	private initCheckHistorien(): void {
+		const setIDs: JavaSet<number> | null = new HashSet<number>();
 		for (const entry of this._mapEnumToHistorie.entrySet()) {
-			const coreTypeEntry : U = entry.getKey();
-			const historie : List<T> = entry.getValue();
+			const coreTypeEntry: U = entry.getKey();
+			const historie: List<T> = entry.getValue();
 			CoreTypeDataManager.checkHistorie(setIDs, this._name, coreTypeEntry.name(), historie);
 		}
 	}
@@ -202,16 +202,16 @@ export class CoreTypeDataManager<T extends CoreTypeData, U extends CoreType<T, U
 	/**
 	 * Initialisiert die Maps, welches für den schnellen Zugriff als Cache verwendet werden.
 	 */
-	private initMaps() : void {
+	private initMaps(): void {
 		for (const entry of this._mapEnumToHistorie.entrySet()) {
-			const coreTypeEntry : U = entry.getKey();
-			const historie : List<T> = entry.getValue();
+			const coreTypeEntry: U = entry.getKey();
+			const historie: List<T> = entry.getValue();
 			for (const eintrag of historie) {
 				this._mapIDToEintrag.put(eintrag.id, eintrag);
 				this._mapIDToEnum.put(eintrag.id, coreTypeEntry);
 				this._mapSchluesselToEnum.put(eintrag.schluessel, coreTypeEntry);
 				this._mapKuerzelToEnum.put(eintrag.kuerzel, coreTypeEntry);
-				const setSchulformen : JavaSet<Schulform> | null = new HashSet<Schulform>();
+				const setSchulformen: JavaSet<Schulform> | null = new HashSet<Schulform>();
 				if (((eintrag instanceof JavaObject) && (eintrag.isTranspiledInstanceOf('de.svws_nrw.asd.data.CoreTypeDataNurSchulformen'))))
 					setSchulformen.addAll(Schulform.data().getWerteByBezeichnerAsSet((eintrag as unknown as CoreTypeDataNurSchulformen).schulformen));
 				if (((eintrag instanceof JavaObject) && (eintrag.isTranspiledInstanceOf('de.svws_nrw.asd.data.CoreTypeDataNurSchulformenUndSchulgliederungen'))))
@@ -232,8 +232,8 @@ export class CoreTypeDataManager<T extends CoreTypeData, U extends CoreType<T, U
 	 * @param bezeichnerName - Name des Bezeichners
 	 * @param historie - die Liste der Historieneinträge
 	 */
-	public static checkHistorie<T extends CoreTypeData>(setIDs : JavaSet<number>, coreTypeName : string, bezeichnerName : string, historie : List<T>) : void {
-		let schuljahr : number | null = null;
+	public static checkHistorie<T extends CoreTypeData>(setIDs: JavaSet<number>, coreTypeName: string, bezeichnerName: string, historie: List<T>): void {
+		let schuljahr: number | null = null;
 		for (const eintrag of historie) {
 			if ((schuljahr !== null) && ((eintrag.gueltigVon === null) || (eintrag.gueltigVon < 1900) || (JavaInteger.compare(eintrag.gueltigVon, schuljahr) <= 0) || ((eintrag.gueltigBis !== null) && (eintrag.gueltigBis > 3000))))
 				throw new CoreTypeException(coreTypeName + ": Die Historie ist fehlerhaft beim Eintrag für " + bezeichnerName + ". Neuere Historieneinträge müssen weiter unten in der Liste stehen.")
@@ -249,7 +249,7 @@ export class CoreTypeDataManager<T extends CoreTypeData, U extends CoreType<T, U
 	 *
 	 * @return der Name des Core-Types
 	 */
-	public getName() : string {
+	public getName(): string {
 		return this._name;
 	}
 
@@ -259,7 +259,7 @@ export class CoreTypeDataManager<T extends CoreTypeData, U extends CoreType<T, U
 	 *
 	 * @return die Version
 	 */
-	public getVersion() : number {
+	public getVersion(): number {
 		return this._version;
 	}
 
@@ -268,7 +268,7 @@ export class CoreTypeDataManager<T extends CoreTypeData, U extends CoreType<T, U
 	 *
 	 * @return die nicht veränderbare Liste aller Werte
 	 */
-	public getWerte() : List<U> {
+	public getWerte(): List<U> {
 		return new ArrayList<U>(this._listWerte);
 	}
 
@@ -279,8 +279,8 @@ export class CoreTypeDataManager<T extends CoreTypeData, U extends CoreType<T, U
 	 *
 	 * @return die Statistik-ID
 	 */
-	public getStatistikIdByBezeichner(bezeichner : string | null) : string | null {
-		const tmp : string | null = this._mapBezeichnerToStatistikID.get(bezeichner);
+	public getStatistikIdByBezeichner(bezeichner: string | null): string | null {
+		const tmp: string | null = this._mapBezeichnerToStatistikID.get(bezeichner);
 		if (tmp === null)
 			throw new CoreTypeException(this._name + ": Keine Statistik-ID für den Bezeichner " + bezeichner + " gefunden.")
 		return tmp;
@@ -293,8 +293,8 @@ export class CoreTypeDataManager<T extends CoreTypeData, U extends CoreType<T, U
 	 *
 	 * @return die Historie
 	 */
-	public getHistorieByBezeichner(bezeichner : string | null) : List<T> {
-		const tmp : List<T> | null = this._mapBezeichnerToHistorie.get(bezeichner);
+	public getHistorieByBezeichner(bezeichner: string | null): List<T> {
+		const tmp: List<T> | null = this._mapBezeichnerToHistorie.get(bezeichner);
 		if (tmp === null)
 			throw new CoreTypeException(this._name + ": Kein Historien-Eintrag für den Bezeichner " + bezeichner + " gefunden.")
 		return tmp;
@@ -307,8 +307,8 @@ export class CoreTypeDataManager<T extends CoreTypeData, U extends CoreType<T, U
 	 *
 	 * @return der Core-Type-Wert
 	 */
-	public getWertByBezeichner(bezeichner : string) : U {
-		const tmp : U | null = this._mapBezeichnerToEnum.get(bezeichner);
+	public getWertByBezeichner(bezeichner: string): U {
+		const tmp: U | null = this._mapBezeichnerToEnum.get(bezeichner);
 		if (tmp === null)
 			throw new CoreTypeException(this._name + ": Kein Core-Type-Wert für den Bezeichner " + bezeichner + " gefunden.")
 		return tmp;
@@ -321,8 +321,8 @@ export class CoreTypeDataManager<T extends CoreTypeData, U extends CoreType<T, U
 	 *
 	 * @return die Liste der Core-Type-Werte
 	 */
-	public getWerteByBezeichner(bezeichner : List<string>) : List<U> {
-		const result : List<U> = new ArrayList<U>();
+	public getWerteByBezeichner(bezeichner: List<string>): List<U> {
+		const result: List<U> = new ArrayList<U>();
 		for (const b of bezeichner)
 			result.add(this.getWertByBezeichner(b));
 		return result;
@@ -335,8 +335,8 @@ export class CoreTypeDataManager<T extends CoreTypeData, U extends CoreType<T, U
 	 *
 	 * @return das Set der Core-Type-Werte
 	 */
-	public getWerteByBezeichnerAsSet(bezeichner : List<string>) : JavaSet<U> {
-		const result : JavaSet<U> = new HashSet<U>();
+	public getWerteByBezeichnerAsSet(bezeichner: List<string>): JavaSet<U> {
+		const result: JavaSet<U> = new HashSet<U>();
 		for (const b of bezeichner)
 			result.add(this.getWertByBezeichner(b));
 		return result;
@@ -349,10 +349,10 @@ export class CoreTypeDataManager<T extends CoreTypeData, U extends CoreType<T, U
 	 *
 	 * @return das nicht-leeres Set der Core-Type-Werte
 	 */
-	public getWerteByBezeichnerAsNonEmptySet(bezeichner : List<string>) : JavaSet<U> {
+	public getWerteByBezeichnerAsNonEmptySet(bezeichner: List<string>): JavaSet<U> {
 		if (bezeichner.isEmpty())
 			throw new CoreTypeException(this._name + ": Die Liste der Bezeichner ist leer.")
-		const result : JavaSet<U> = new HashSet<U>();
+		const result: JavaSet<U> = new HashSet<U>();
 		for (const b of bezeichner)
 			result.add(this.getWertByBezeichner(b));
 		return result;
@@ -365,10 +365,10 @@ export class CoreTypeDataManager<T extends CoreTypeData, U extends CoreType<T, U
 	 *
 	 * @return die Statistik-ID
 	 */
-	public getStatistikIdByWert(value : U) : string {
+	public getStatistikIdByWert(value: U | null): string {
 		if (value === null)
 			throw new CoreTypeException("Ein Zugriff auf eine Statistik-ID ist mit null nicht möglich.")
-		const tmp : string | null = this._mapEnumToStatistikID.get(value);
+		const tmp: string | null = this._mapEnumToStatistikID.get(value);
 		if (tmp === null)
 			throw new CoreTypeException(this._name + ": Keine Statistik-ID für den Bezeichner " + value.name() + " gefunden.")
 		return tmp;
@@ -381,10 +381,10 @@ export class CoreTypeDataManager<T extends CoreTypeData, U extends CoreType<T, U
 	 *
 	 * @return die Historie
 	 */
-	public getHistorieByWert(value : U) : List<T> {
+	public getHistorieByWert(value: U | null): List<T> {
 		if (value === null)
 			throw new CoreTypeException("Ein Zugriff auf eine Historie ist mit null nicht möglich.")
-		const tmp : List<T> | null = this._mapEnumToHistorie.get(value);
+		const tmp: List<T> | null = this._mapEnumToHistorie.get(value);
 		if (tmp === null)
 			throw new CoreTypeException(this._name + ": Kein Historien-Eintrag für den Bezeichner " + value.name() + " gefunden.")
 		return tmp;
@@ -399,8 +399,8 @@ export class CoreTypeDataManager<T extends CoreTypeData, U extends CoreType<T, U
 	 *
 	 * @throws CoreTypeException   wenn kein Eintrag gefunden wird
 	 */
-	public getEintragByIDOrException(id : number) : T {
-		const tmp : T | null = this._mapIDToEintrag.get(id);
+	public getEintragByIDOrException(id: number): T {
+		const tmp: T | null = this._mapIDToEintrag.get(id);
 		if (tmp === null)
 			throw new CoreTypeException(this._name + ": Kein Historien-Eintrag für die ID " + id + " gefunden.")
 		return tmp;
@@ -413,7 +413,7 @@ export class CoreTypeDataManager<T extends CoreTypeData, U extends CoreType<T, U
 	 *
 	 * @return der Historien-Eintrag oder null, wenn die ID ungültig ist
 	 */
-	public getEintragByID(id : number) : T | null {
+	public getEintragByID(id: number): T | null {
 		return this._mapIDToEintrag.get(id);
 	}
 
@@ -424,8 +424,8 @@ export class CoreTypeDataManager<T extends CoreTypeData, U extends CoreType<T, U
 	 *
 	 * @return der Core-Type-Wert
 	 */
-	public getWertByID(id : number) : U {
-		const tmp : U | null = this._mapIDToEnum.get(id);
+	public getWertByID(id: number): U {
+		const tmp: U | null = this._mapIDToEnum.get(id);
 		if (tmp === null)
 			throw new CoreTypeException(this._name + ": Kein Core-Type-Wert für die ID " + id + " gefunden.")
 		return tmp;
@@ -438,7 +438,7 @@ export class CoreTypeDataManager<T extends CoreTypeData, U extends CoreType<T, U
 	 *
 	 * @return der Core-Type-Wert oder null
 	 */
-	public getWertByIDOrNull(id : number) : U | null {
+	public getWertByIDOrNull(id: number): U | null {
 		return this._mapIDToEnum.get(id);
 	}
 
@@ -449,7 +449,7 @@ export class CoreTypeDataManager<T extends CoreTypeData, U extends CoreType<T, U
 	 *
 	 * @return der Core-Type-Wert
 	 */
-	public getWertBySchluessel(schluessel : string) : U | null {
+	public getWertBySchluessel(schluessel: string): U | null {
 		return this._mapSchluesselToEnum.get(schluessel);
 	}
 
@@ -462,8 +462,8 @@ export class CoreTypeDataManager<T extends CoreTypeData, U extends CoreType<T, U
 	 *
 	 * @throws CoreTypeException   wenn der Schlüssel nicht existiert
 	 */
-	public getWertBySchluesselOrException(schluessel : string) : U {
-		const tmp : U | null = this._mapSchluesselToEnum.get(schluessel);
+	public getWertBySchluesselOrException(schluessel: string): U {
+		const tmp: U | null = this._mapSchluesselToEnum.get(schluessel);
 		if (tmp === null)
 			throw new CoreTypeException(this._name + ": Kein Core-Type-Wert für den Schlüssel \"" + schluessel + "\" gefunden.")
 		return tmp;
@@ -478,7 +478,7 @@ export class CoreTypeDataManager<T extends CoreTypeData, U extends CoreType<T, U
 	 *
 	 * @return der Core-Type-Wert
 	 */
-	public getWertByKuerzel(kuerzel : string) : U | null {
+	public getWertByKuerzel(kuerzel: string): U | null {
 		return this._mapKuerzelToEnum.get(kuerzel);
 	}
 
@@ -493,8 +493,8 @@ export class CoreTypeDataManager<T extends CoreTypeData, U extends CoreType<T, U
 	 *
 	 * @throws CoreTypeException wenn das Kürzel nicht gültig ist
 	 */
-	public getWertByKuerzelOrException(kuerzel : string) : U {
-		const tmp : U | null = this._mapKuerzelToEnum.get(kuerzel);
+	public getWertByKuerzelOrException(kuerzel: string): U {
+		const tmp: U | null = this._mapKuerzelToEnum.get(kuerzel);
 		if (tmp === null)
 			throw new CoreTypeException(this._name + ": Kein Core-Type-Wert für das Kürzel " + kuerzel + " gefunden.")
 		return tmp;
@@ -508,13 +508,13 @@ export class CoreTypeDataManager<T extends CoreTypeData, U extends CoreType<T, U
 	 *
 	 * @return die Daten aus der Historie
 	 */
-	public getEintragBySchuljahrUndWert(schuljahr : number, value : U) : T | null {
-		const cache : HashMap<U, T> | null = this._mapWertAndSchuljahrToEintrag.get(schuljahr);
+	public getEintragBySchuljahrUndWert(schuljahr: number, value: U): T | null {
+		const cache: HashMap<U, T> | null = this._mapWertAndSchuljahrToEintrag.get(schuljahr);
 		if (cache !== null)
 			return cache.get(value);
-		const mapEintraege : HashMap<U, T> = new HashMap<U, T>();
+		const mapEintraege: HashMap<U, T> = new HashMap<U, T>();
 		for (const wert of this._listWerte) {
-			const historie : List<T> = this.getHistorieByWert(wert);
+			const historie: List<T> = this.getHistorieByWert(wert);
 			for (const eintrag of historie) {
 				if (((eintrag.gueltigVon === null) || (eintrag.gueltigVon <= schuljahr)) && ((eintrag.gueltigBis === null) || (schuljahr <= eintrag.gueltigBis))) {
 					mapEintraege.put(wert, eintrag);
@@ -533,13 +533,13 @@ export class CoreTypeDataManager<T extends CoreTypeData, U extends CoreType<T, U
 	 * @param schluessel   das zu prüfender Schlüssel
 	 * @return die Daten aus der Historie
 	 */
-	public getEintragBySchuljahrUndSchluessel(schuljahr : number, schluessel : string) : T | null {
-		const cache : HashMap<string, T> | null = this._mapSchluesselAndSchuljahrToEintrag.get(schuljahr);
+	public getEintragBySchuljahrUndSchluessel(schuljahr: number, schluessel: string): T | null {
+		const cache: HashMap<string, T> | null = this._mapSchluesselAndSchuljahrToEintrag.get(schuljahr);
 		if (cache !== null)
 			return cache.get(schluessel);
-		const mapEintraege : HashMap<string, T> = new HashMap<string, T>();
+		const mapEintraege: HashMap<string, T> = new HashMap<string, T>();
 		for (const wert of this._listWerte) {
-			const historie : List<T> = this.getHistorieByWert(wert);
+			const historie: List<T> = this.getHistorieByWert(wert);
 			for (const eintrag of historie) {
 				if (((eintrag.gueltigVon === null) || (eintrag.gueltigVon <= schuljahr)) && ((eintrag.gueltigBis === null) || (schuljahr <= eintrag.gueltigBis))) {
 					mapEintraege.put(eintrag.schluessel, eintrag);
@@ -558,13 +558,13 @@ export class CoreTypeDataManager<T extends CoreTypeData, U extends CoreType<T, U
 	 *
 	 * @return die Daten aus den Historieneinträgen für das angegebene Schuljahr aus der Menge aller Werte
 	 */
-	public getEintraegeBySchuljahr(schuljahr : number) : List<T> {
-		const cache : List<T> | null = this._mapEintraegeBySchuljahr.get(schuljahr);
+	public getEintraegeBySchuljahr(schuljahr: number): List<T> {
+		const cache: List<T> | null = this._mapEintraegeBySchuljahr.get(schuljahr);
 		if (cache !== null)
 			return cache;
-		const result : List<T> = new ArrayList<T>();
+		const result: List<T> = new ArrayList<T>();
 		for (const wert of this._listWerte) {
-			const historie : List<T> = this.getHistorieByWert(wert);
+			const historie: List<T> = this.getHistorieByWert(wert);
 			for (const eintrag of historie) {
 				if (((eintrag.gueltigVon === null) || (eintrag.gueltigVon <= schuljahr)) && ((eintrag.gueltigBis === null) || (schuljahr <= eintrag.gueltigBis))) {
 					result.add(eintrag);
@@ -583,8 +583,8 @@ export class CoreTypeDataManager<T extends CoreTypeData, U extends CoreType<T, U
 	 *
 	 * @return eine {@link List} mit alle Schulformen
 	 */
-	public getWerteBySchuljahr(schuljahr : number) : List<U> {
-		let result : List<U> | null = this._mapSchuljahrToWerte.get(schuljahr);
+	public getWerteBySchuljahr(schuljahr: number): List<U> {
+		let result: List<U> | null = this._mapSchuljahrToWerte.get(schuljahr);
 		if (result === null) {
 			result = new ArrayList();
 			for (const wert of this._listWerte)
@@ -604,7 +604,7 @@ export class CoreTypeDataManager<T extends CoreTypeData, U extends CoreType<T, U
 	 *
 	 * @return true, falls die Schulform zulässig ist, und ansonsten false
 	 */
-	public hatSchulform(schuljahr : number, sf : Schulform, value : U) : boolean {
+	public hatSchulform(schuljahr: number, sf: Schulform, value: U): boolean {
 		return (this.getBySchulform(schuljahr, sf, value) !== null);
 	}
 
@@ -617,11 +617,11 @@ export class CoreTypeDataManager<T extends CoreTypeData, U extends CoreType<T, U
 	 *
 	 * @return der Katalog-Eintrag oder null, wenn keiner gefunden wird
 	 */
-	public getBySchulform(schuljahr : number, sf : Schulform, value : U) : T | null {
-		const eintrag : T | null = this.getEintragBySchuljahrUndWert(schuljahr, value);
+	public getBySchulform(schuljahr: number, sf: Schulform, value: U): T | null {
+		const eintrag: T | null = this.getEintragBySchuljahrUndWert(schuljahr, value);
 		if (eintrag === null)
 			return null;
-		const result : JavaSet<Schulform> | null = this._mapSchulformenByID.get(eintrag.id);
+		const result: JavaSet<Schulform> | null = this._mapSchulformenByID.get(eintrag.id);
 		if (result === null)
 			throw new CoreTypeException(JavaString.format("Fehler beim prüfen der Schulform. Der Core-Type %s ist nicht korrekt initialisiert.", this.getClass().getSimpleName()))
 		return (result.isEmpty() || result.contains(sf)) ? eintrag : null;
@@ -635,14 +635,14 @@ export class CoreTypeDataManager<T extends CoreTypeData, U extends CoreType<T, U
 	 *
 	 * @return die bei der Schulform in dem angegebenen Schuljahr zulässigen Core-Type-Werte
 	 */
-	public getListBySchuljahrAndSchulform(schuljahr : number, schulform : Schulform) : List<U> {
-		const mapBySchulform : JavaMap<Schulform, List<U>> | null = this._mapBySchuljahrAndSchulform.computeIfAbsent(schuljahr, { apply : (k: number | null) => new HashMap<Schulform, List<U>>() });
+	public getListBySchuljahrAndSchulform(schuljahr: number, schulform: Schulform): List<U> {
+		const mapBySchulform: JavaMap<Schulform, List<U>> | null = this._mapBySchuljahrAndSchulform.computeIfAbsent(schuljahr, { apply: (k: number | null) => new HashMap<Schulform, List<U>>() });
 		if (mapBySchulform === null)
 			throw new NullPointerException("computeIfAbsent darf nicht null liefern")
-		let result : List<U> | null = mapBySchulform.get(schulform);
+		let result: List<U> | null = mapBySchulform.get(schulform);
 		if (result === null) {
 			result = new ArrayList();
-			const werte : List<U> | null = this.getWerteBySchuljahr(schuljahr);
+			const werte: List<U> | null = this.getWerteBySchuljahr(schuljahr);
 			for (const wert of werte)
 				if (this.hatSchulform(schuljahr, schulform, wert))
 					result.add(wert);
@@ -661,18 +661,18 @@ export class CoreTypeDataManager<T extends CoreTypeData, U extends CoreType<T, U
 	 *
 	 * @return der bei der Schulform in dem angegebenen Schuljahr dem Schlüssel zugehörige Core-Type-Wert oder null falls ein solcher nicht existiert
 	 */
-	public getBySchuljahrAndSchulformAndSchluessel(schuljahr : number, schulform : Schulform, schluessel : string) : U | null {
-		const mapBySchulformAndSchluessel : JavaMap<Schulform, JavaMap<string, U>> | null = this._mapBySchuljahrAndSchulformAndSchluessel.computeIfAbsent(schuljahr, { apply : (k: number | null) => new HashMap<Schulform, JavaMap<string, U>>() });
+	public getBySchuljahrAndSchulformAndSchluessel(schuljahr: number, schulform: Schulform, schluessel: string): U | null {
+		const mapBySchulformAndSchluessel: JavaMap<Schulform, JavaMap<string, U>> | null = this._mapBySchuljahrAndSchulformAndSchluessel.computeIfAbsent(schuljahr, { apply: (k: number | null) => new HashMap<Schulform, JavaMap<string, U>>() });
 		if (mapBySchulformAndSchluessel === null)
 			throw new NullPointerException("computeIfAbsent darf nicht null liefern")
-		let mapBySchluessel : JavaMap<string, U> | null = mapBySchulformAndSchluessel.get(schulform);
+		let mapBySchluessel: JavaMap<string, U> | null = mapBySchulformAndSchluessel.get(schulform);
 		if (mapBySchluessel === null) {
 			mapBySchluessel = new HashMap();
-			const werte : List<U> | null = this.getWerteBySchuljahr(schuljahr);
+			const werte: List<U> | null = this.getWerteBySchuljahr(schuljahr);
 			for (const wert of werte) {
 				if (!this.hatSchulform(schuljahr, schulform, wert))
 					continue;
-				const sgke : T | null = this.getEintragBySchuljahrUndWert(schuljahr, wert);
+				const sgke: T | null = this.getEintragBySchuljahrUndWert(schuljahr, wert);
 				if (sgke !== null)
 					mapBySchluessel.put(sgke.schluessel, wert);
 			}
@@ -685,7 +685,7 @@ export class CoreTypeDataManager<T extends CoreTypeData, U extends CoreType<T, U
 		return 'de.svws_nrw.asd.utils.CoreTypeDataManager';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.asd.utils.CoreTypeDataManager'].includes(name);
 	}
 
@@ -693,6 +693,6 @@ export class CoreTypeDataManager<T extends CoreTypeData, U extends CoreType<T, U
 
 }
 
-export function cast_de_svws_nrw_asd_utils_CoreTypeDataManager<T extends CoreTypeData, U extends CoreType<T, U>>(obj : unknown) : CoreTypeDataManager<T, U> {
+export function cast_de_svws_nrw_asd_utils_CoreTypeDataManager<T extends CoreTypeData, U extends CoreType<T, U>>(obj: unknown): CoreTypeDataManager<T, U> {
 	return obj as CoreTypeDataManager<T, U>;
 }

@@ -170,14 +170,14 @@
 		klausurCssClasses?: (klausur: GostKlausurplanungDragData, termin: GostKlausurtermin | undefined) => void;
 		onDrag?: (event: DragEvent, data: GostKlausurplanungDragData) => void;
 		draggable?: (data: GostKlausurplanungDragData, termin: GostKlausurtermin) => boolean;
-		//onDrop?: (zone: GostKlausurplanungDropZone) => void;
+		// onDrop?: (zone: GostKlausurplanungDropZone) => void;
 		compact?: boolean;
 		compactWithDate?: boolean;
-		quartalsauswahl?: {value: number};
+		quartalsauswahl?: { value: number };
 		dragIcon?: boolean;
 		terminSelected?: boolean;
-		showKursschiene? : boolean;
-		showLastKlausurtermin? : boolean;
+		showKursschiene?: boolean;
+		showLastKlausurtermin?: boolean;
 		showSchuelerklausuren?: boolean;
 		showKursklausurenNachschreiber?: boolean;
 		showKlausurenSelbesDatum?: boolean;
@@ -192,7 +192,7 @@
 		klausurCssClasses: undefined,
 		onDrag: undefined,
 		draggable: () => false,
-		//onDrop: undefined,
+		// onDrop: undefined,
 		quartalsauswahl: undefined,
 		showSchuelerklausuren: false,
 		createSchuelerklausurTermin: undefined,
@@ -216,7 +216,7 @@
 		if (vorklausur === null)
 			return "-";
 		const termin = props.kMan().terminOrNullByKursklausur(vorklausur);
-		return termin === null || termin.datum === null ? "-" : DateUtils.gibDatumGermanFormat(termin.datum).substring(0,6);
+		return termin === null || termin.datum === null ? "-" : DateUtils.gibDatumGermanFormat(termin.datum).substring(0, 6);
 	};
 
 	const terminBezeichnung = () => {
@@ -225,9 +225,9 @@
 		if (!props.termin.istHaupttermin)
 			return "Nachschreibtermin";
 		if (kursklausuren().size() > 0)
-			return [...props.kMan().kursklausurGetMengeByTermin(props.termin)].map(k => props.kMan().kursKurzbezeichnungByKursklausur(k)).join(", ")
+			return [...props.kMan().kursklausurGetMengeByTermin(props.termin)].map(k => props.kMan().kursKurzbezeichnungByKursklausur(k)).join(", ");
 		return "Klausurtermin";
-	}
+	};
 
 	const tableRowStyle = computed<string>(() => {
 		let result = "grid-template-columns: 1rem 2rem minmax(5rem, 1.25fr) 4rem minmax(4rem, 0.5fr) minmax(3.25rem, 0.5fr)";

@@ -134,10 +134,10 @@
 	import { computed } from "vue";
 	import type { SGostKlausurplanungKalenderStundenplanAnsichtProps } from "./SGostKlausurplanungKalenderStundenplanAnsichtProps";
 	import type { GostKlausurtermin, Wochentag, StundenplanPausenaufsicht, List, StundenplanPausenzeit } from "@core";
-	import { DateUtils, Fach, GostHalbjahr, BenutzerKompetenz} from "@core";
+	import { DateUtils, Fach, GostHalbjahr, BenutzerKompetenz } from "@core";
 	import { routeApp } from "~/router/apps/RouteApp";
 
-	const wochentage = ['Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag', 'Sonntag' ];
+	const wochentage = ['Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag', 'Sonntag'];
 
 	const props = withDefaults(defineProps<SGostKlausurplanungKalenderStundenplanAnsichtProps>(), {
 		mode: 'schueler',
@@ -156,14 +156,14 @@
 		if (!termin.istHaupttermin)
 			return "Nachschreibtermin";
 		if (props.kMan().kursklausurGetMengeByTermin(termin).size() > 0)
-			return [...props.kMan().kursklausurGetMengeByTermin(termin)].map(k => props.kMan().kursKurzbezeichnungByKursklausur(k)).join(", ")
+			return [...props.kMan().kursklausurGetMengeByTermin(termin)].map(k => props.kMan().kursKurzbezeichnungByKursklausur(k)).join(", ");
 		return "Klausurtermin";
-	}
+	};
 
 	const kursInfos = (idKurs: number) => {
 		return props.kMan().getKursManager().get(idKurs)?.kuerzel;
-		//return test?.kuerzel || '' /* + " " + props.kMan().getKursklausurByTerminKurs(dragTermin.value.id, idKurs)!.schuelerIds.size() + "/??"*/;
-	}
+		// return test?.kuerzel || '' /* + " " + props.kMan().getKursklausurByTerminKurs(dragTermin.value.id, idKurs)!.schuelerIds.size() + "/??"*/;
+	};
 
 	const beginn = computed(() => {
 		if (props.ignoreEmpty)
@@ -217,7 +217,7 @@
 	}
 
 
-	function getPausenzeitenWochentag(wochentag: Wochentag) : List<StundenplanPausenzeit> {
+	function getPausenzeitenWochentag(wochentag: Wochentag): List<StundenplanPausenzeit> {
 		if (props.mode === 'schueler')
 			return props.manager().pausenzeitGetMengeBySchuelerIdAndWochentagAsList(props.id, wochentag.id);
 		if (props.mode === 'lehrer')
@@ -279,7 +279,7 @@
 	}
 
 
-	function isDraggable() : boolean {
+	function isDraggable(): boolean {
 		return props.useDragAndDrop && (props.dragData() === undefined);
 	}
 
@@ -287,8 +287,8 @@
 		if (termin.abijahr !== props.jahrgangsdaten.abiturjahr)
 			return "#f2f4f5";
 
-		const klausuren = [...props.kMan().kursklausurGetMengeByTermin(termin)].map(k => props.kMan().kursKurzbezeichnungByKursklausur(k).split('-')[0])
-		const colors = klausuren.map(kuerzel => Fach.getBySchluesselOrDefault(kuerzel).getHMTLFarbeRGBA(props.jahrgangsdaten.abiturjahr-1, 1.0));
+		const klausuren = [...props.kMan().kursklausurGetMengeByTermin(termin)].map(k => props.kMan().kursKurzbezeichnungByKursklausur(k).split('-')[0]);
+		const colors = klausuren.map(kuerzel => Fach.getBySchluesselOrDefault(kuerzel).getHMTLFarbeRGBA(props.jahrgangsdaten.abiturjahr - 1, 1.0));
 
 		let gradient = '';
 

@@ -99,7 +99,7 @@
 
 
 	async function startCreationMode(): Promise<void> {
-		await props.gotoHinzufuegenView(true)
+		await props.gotoHinzufuegenView(true);
 	}
 
 	async function filterReset() {
@@ -116,7 +116,7 @@
 		return props.manager().hasDaten() ? props.manager().auswahl() : null;
 	});
 
-	async function setAuswahl(items : StundenplanListeEintrag[]) {
+	async function setAuswahl(items: StundenplanListeEintrag[]) {
 		props.manager().liste.auswahlClear();
 		for (const item of items)
 			if (props.manager().liste.hasValue(item))
@@ -133,7 +133,7 @@
 			if (list.isEmpty())
 				return undefined;
 			else {
-				const { a: key, b: order} = list.get(0);
+				const { a: key, b: order } = list.get(0);
 				return { key, order };
 			}
 		},
@@ -143,6 +143,6 @@
 			props.manager().orderUpdate(value.key, value.order);
 			void props.setFilter();
 		},
-	})
+	});
 
 </script>

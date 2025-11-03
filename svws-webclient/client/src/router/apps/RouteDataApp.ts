@@ -55,12 +55,12 @@ export class RouteDataApp extends RouteData<RouteStateApp> {
 		for (const o of ortsteile)
 			mapOrtsteile.set(o.id, o);
 		// Lade den Katalog der Religionen
-		const religionen = await api.server.getReligionen(api.schema)
+		const religionen = await api.server.getReligionen(api.schema);
 		const mapReligionen = new Map();
 		for (const r of religionen)
 			mapReligionen.set(r.id, r);
 		// Lade den Katalog der Fahrschülerarten
-		const fahrschuelerarten = await api.server.getFahrschuelerarten(api.schema)
+		const fahrschuelerarten = await api.server.getFahrschuelerarten(api.schema);
 		const mapFahrschuelerarten = new Map();
 		for (const fa of fahrschuelerarten)
 			mapFahrschuelerarten.set(fa.id, fa);
@@ -70,12 +70,12 @@ export class RouteDataApp extends RouteData<RouteStateApp> {
 		for (const h of haltestellen)
 			mapHaltestellen.set(h.id, h);
 		// Lade den Katalog der Kindergärten
-		const kindergaerten = await api.server.getKindergaerten(api.schema)
+		const kindergaerten = await api.server.getKindergaerten(api.schema);
 		const mapKindergaerten = new Map();
 		for (const k of kindergaerten)
 			mapKindergaerten.set(k.id, k);
 		// Lade den Katalog der Einschulungsarten
-		const einschulungsarten = await api.server.getEinschulungsarten(api.schema)
+		const einschulungsarten = await api.server.getEinschulungsarten(api.schema);
 		const mapEinschulungsarten = new Map();
 		for (const e of einschulungsarten)
 			mapEinschulungsarten.set(e.id, e);
@@ -95,8 +95,8 @@ export class RouteDataApp extends RouteData<RouteStateApp> {
 		for (const schule of schulen) {
 			if (schule.schulnummerStatistik === null)
 				continue;
-			const sfEintrag : SchulformKatalogEintrag | null = schule.idSchulform === null ? null : Schulform.data().getEintragByID(schule.idSchulform);
-			const sf : Schulform | null = sfEintrag === null ? null : Schulform.data().getWertBySchluessel(sfEintrag.schluessel);
+			const sfEintrag: SchulformKatalogEintrag | null = schule.idSchulform === null ? null : Schulform.data().getEintragByID(schule.idSchulform);
+			const sf: Schulform | null = sfEintrag === null ? null : Schulform.data().getWertBySchluessel(sfEintrag.schluessel);
 			if (sf === api.schulform)
 				mapSchulen.set(schule.schulnummerStatistik, schule);
 		}
@@ -113,18 +113,18 @@ export class RouteDataApp extends RouteData<RouteStateApp> {
 	public setAbschnitt = async (abschnitt: Schuljahresabschnitt) => {
 		// TODO was tun, wenn das akt Halbjahr neu gesetzt wurde?
 		const node = routerManager.getRouteNode();
-		const params = { ... routerManager.getRouteParams()};
+		const params = { ... routerManager.getRouteParams() };
 		params.idSchuljahresabschnitt = String(abschnitt.id);
 		const locationRaw: RouteLocationRaw = {};
 		locationRaw.name = node!.name;
 		locationRaw.params = params;
 		await RouteManager.doRoute(locationRaw);
-	}
+	};
 
 	/**
 	 * Getter für die Informationen, welche für eine Schuljahresabschnittsauswahl benötigt werden.
 	 */
-	public getSchuljahresabschnittsauswahl(istAktiv: boolean) : AbschnittAuswahlDaten {
+	public getSchuljahresabschnittsauswahl(istAktiv: boolean): AbschnittAuswahlDaten {
 		return <AbschnittAuswahlDaten>{
 			aktiv: istAktiv, // && api.mode !== ServerMode.STABLE,
 			abschnitte: api.mapAbschnitte.value,

@@ -53,20 +53,20 @@ export class RouteDataNotenmodulLeistungen extends RouteDataAuswahl<EnmLerngrupp
 	}
 
 	protected async doDelete(ids: List<number>): Promise<List<SimpleOperationResponse>> {
-		throw new UnsupportedOperationException("Die Methode ist nicht implementiert.")
+		throw new UnsupportedOperationException("Die Methode ist nicht implementiert.");
 	}
 
 	protected deleteMessage(id: number, eintrag: any): string {
-		throw new UnsupportedOperationException("Die Methode ist nicht implementiert.")
+		throw new UnsupportedOperationException("Die Methode ist nicht implementiert.");
 	}
 
-	get columnsVisible(): Map<string, boolean|null> {
-		return new Map<string, boolean|null>(JSON.parse(api.config.getValue("notenmodul.leistungen.table.columns")));
+	get columnsVisible(): Map<string, boolean | null> {
+		return new Map<string, boolean | null>(JSON.parse(api.config.getValue("notenmodul.leistungen.table.columns")));
 	}
 
-	setColumnsVisible = async (value: Map<string, boolean|null>) => {
+	setColumnsVisible = async (value: Map<string, boolean | null>) => {
 		await api.config.setValue('notenmodul.leistungen.table.columns', JSON.stringify([...value]));
-	}
+	};
 
 	get floskelEditorVisible(): boolean {
 		return (api.config.getValue("notenmodul.leistungen.floskelEditorVisible") === 'true');
@@ -74,6 +74,6 @@ export class RouteDataNotenmodulLeistungen extends RouteDataAuswahl<EnmLerngrupp
 
 	setFloskelEditorVisible = async (value: boolean) => {
 		await api.config.setValue('notenmodul.leistungen.floskelEditorVisible', value ? 'true' : 'false');
-	}
+	};
 
 }

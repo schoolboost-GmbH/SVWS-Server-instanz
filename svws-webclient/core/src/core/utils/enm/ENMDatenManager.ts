@@ -29,57 +29,57 @@ export class ENMDatenManager extends JavaObject {
 	/**
 	 * Die ENM-Daten, die von diesem Daten-Manager verwaltet werden.
 	 */
-	public readonly daten : ENMDaten;
+	public readonly daten: ENMDaten;
 
 	/**
 	 * Temporäre Map für das Befüllen der ENMLehrer-Vektors.
 	 */
-	private readonly mapLehrer : JavaMap<number, ENMLehrer> = new HashMap<number, ENMLehrer>();
+	private readonly mapLehrer: JavaMap<number, ENMLehrer> = new HashMap<number, ENMLehrer>();
 
 	/**
 	 * Temporäre Map für das Befüllen des ENMSchueler-Vektors.
 	 */
-	private readonly mapSchueler : JavaMap<number, ENMSchueler> = new HashMap<number, ENMSchueler>();
+	private readonly mapSchueler: JavaMap<number, ENMSchueler> = new HashMap<number, ENMSchueler>();
 
 	/**
 	 * Temporäre Map für das Befüllen des ENMFach-Vektors.
 	 */
-	private readonly mapFaecher : JavaMap<number, ENMFach> = new HashMap<number, ENMFach>();
+	private readonly mapFaecher: JavaMap<number, ENMFach> = new HashMap<number, ENMFach>();
 
 	/**
 	 * Temporäre Map für das Befüllen des ENMFach-Vektors.
 	 */
-	private readonly mapFaecherByKuerzel : JavaMap<string, ENMFach> = new HashMap<string, ENMFach>();
+	private readonly mapFaecherByKuerzel: JavaMap<string, ENMFach> = new HashMap<string, ENMFach>();
 
 	/**
 	 * Temporäre Map für das Befüllen des ENMJahrgang-Vektors.
 	 */
-	private readonly mapJahrgaenge : JavaMap<number, ENMJahrgang> = new HashMap<number, ENMJahrgang>();
+	private readonly mapJahrgaenge: JavaMap<number, ENMJahrgang> = new HashMap<number, ENMJahrgang>();
 
 	/**
 	 * Temporäre Map für das Befüllen des ENMKlasse-Vektors.
 	 */
-	private readonly mapKlassen : JavaMap<number, ENMKlasse> = new HashMap<number, ENMKlasse>();
+	private readonly mapKlassen: JavaMap<number, ENMKlasse> = new HashMap<number, ENMKlasse>();
 
 	/**
 	 * Temporäre Map für das Befüllen des ENMTeilleistungsarten-Vektors.
 	 */
-	private readonly mapTeilleistungsarten : JavaMap<number, ENMTeilleistungsart> = new HashMap<number, ENMTeilleistungsart>();
+	private readonly mapTeilleistungsarten: JavaMap<number, ENMTeilleistungsart> = new HashMap<number, ENMTeilleistungsart>();
 
 	/**
 	 * Temporäre Map für das Befüllen des ENMAnkreuzkompetenz-Vektors.
 	 */
-	private readonly mapAnkreuzkompetenzen : JavaMap<number, ENMAnkreuzkompetenz> = new HashMap<number, ENMAnkreuzkompetenz>();
+	private readonly mapAnkreuzkompetenzen: JavaMap<number, ENMAnkreuzkompetenz> = new HashMap<number, ENMAnkreuzkompetenz>();
 
 	/**
 	 * Zählt die Id der Lerngruppe hoch.
 	 */
-	private lerngruppenIDZaehler : number = 1;
+	private lerngruppenIDZaehler: number = 1;
 
 	/**
 	 * Temporäre Map für die Lerngruppen.
 	 */
-	private readonly mapLerngruppen : JavaMap<string, ENMLerngruppe> = new HashMap<string, ENMLerngruppe>();
+	private readonly mapLerngruppen: JavaMap<string, ENMLerngruppe> = new HashMap<string, ENMLerngruppe>();
 
 
 	/**
@@ -87,26 +87,26 @@ export class ENMDatenManager extends JavaObject {
 	 *
 	 * @param lehrerID   die ID des Lehrers für welchen die ENM-Daten erzeugt werden oder null für alle Lehrer
 	 */
-	public constructor(lehrerID : number | null);
+	public constructor(lehrerID: number | null);
 
 	/**
 	 * Erzeugt einen neuen ENM-Daten-Manager für die übergebenen Daten.
 	 *
 	 * @param daten   die ENM-Daten
 	 */
-	public constructor(daten : ENMDaten);
+	public constructor(daten: ENMDaten);
 
 	/**
 	 * Implementation for method overloads of 'constructor'
 	 */
-	public constructor(__param0 : ENMDaten | null | number) {
+	public constructor(__param0: ENMDaten | null | number) {
 		super();
 		if (((__param0 !== undefined) && (typeof __param0 === "number") || (__param0 === null))) {
-			const lehrerID : number | null = __param0;
+			const lehrerID: number | null = __param0;
 			this.daten = new ENMDaten();
 			this.daten.lehrerID = lehrerID;
 		} else if (((__param0 !== undefined) && ((__param0 instanceof JavaObject) && (__param0.isTranspiledInstanceOf('de.svws_nrw.core.data.enm.ENMDaten'))))) {
-			const daten : ENMDaten = cast_de_svws_nrw_core_data_enm_ENMDaten(__param0);
+			const daten: ENMDaten = cast_de_svws_nrw_core_data_enm_ENMDaten(__param0);
 			this.daten = daten;
 		} else throw new Error('invalid method overload');
 	}
@@ -130,7 +130,7 @@ export class ENMDatenManager extends JavaObject {
 	 * @param schulform                   das Kürzel der Schulform der Schule
 	 * @param mailadresse                 gibt die Mailadresse an, an welche die verschlüsselte Datei zurückgesendet werden soll (z.B. mail@schule.nrw.de)
 	 */
-	public setSchuldaten(schulnummer : number, schuljahr : number, anzahlAbschnitte : number, abschnitt : number, publicKey : string | null, fehlstundenEingabe : boolean, fehlstundenSIFachbezogen : boolean, fehlstundenSIIFachbezogen : boolean, schulform : string, mailadresse : string | null) : void {
+	public setSchuldaten(schulnummer: number, schuljahr: number, anzahlAbschnitte: number, abschnitt: number, publicKey: string | null, fehlstundenEingabe: boolean, fehlstundenSIFachbezogen: boolean, fehlstundenSIIFachbezogen: boolean, schulform: string, mailadresse: string | null): void {
 		this.daten.schulnummer = schulnummer;
 		this.daten.schuljahr = schuljahr;
 		this.daten.anzahlAbschnitte = anzahlAbschnitte;
@@ -153,7 +153,7 @@ export class ENMDatenManager extends JavaObject {
 	 * @param stufe5     der Text für die Stufe 5
 	 * @param sonstige   der Text für die frei definierbare Zeugnisrubrik "Sonstiges"
 	 */
-	public setAnkreuzkompetenzenStufen(stufe1 : string | null, stufe2 : string | null, stufe3 : string | null, stufe4 : string | null, stufe5 : string | null, sonstige : string | null) : void {
+	public setAnkreuzkompetenzenStufen(stufe1: string | null, stufe2: string | null, stufe3: string | null, stufe4: string | null, stufe5: string | null, sonstige: string | null): void {
 		this.daten.ankreuzkompetenzen.textStufen[0] = stufe1;
 		this.daten.ankreuzkompetenzen.textStufen[1] = stufe2;
 		this.daten.ankreuzkompetenzen.textStufen[2] = stufe3;
@@ -167,15 +167,15 @@ export class ENMDatenManager extends JavaObject {
 	 *
 	 * @param schuljahr   das Schuljahr, für welches die ENM-Datei erzeugt wird
 	 */
-	public addNoten(schuljahr : number) : void {
+	public addNoten(schuljahr: number): void {
 		if (!this.daten.noten.isEmpty())
 			return;
-		const noten : List<Note> = Note.data().getWerteBySchuljahr(schuljahr);
+		const noten: List<Note> = Note.data().getWerteBySchuljahr(schuljahr);
 		for (const note of noten) {
-			const nke : NoteKatalogEintrag | null = note.daten(schuljahr);
+			const nke: NoteKatalogEintrag | null = note.daten(schuljahr);
 			if ((nke === null) || (nke.id < 0))
 				continue;
-			const enmNote : ENMNote = new ENMNote();
+			const enmNote: ENMNote = new ENMNote();
 			enmNote.id = nke.id as number;
 			enmNote.kuerzel = nke.kuerzel;
 			enmNote.notenpunkte = nke.notenpunkte;
@@ -192,15 +192,15 @@ export class ENMDatenManager extends JavaObject {
 	 * @param schulform   die Schulform, für welche die zulässigen Förderschwerpunkte
 	 *                    zurückgegeben werden
 	 */
-	public addFoerderschwerpunkte(schuljahr : number, schulform : Schulform) : void {
+	public addFoerderschwerpunkte(schuljahr: number, schulform: Schulform): void {
 		if (!this.daten.foerderschwerpunkte.isEmpty())
 			return;
-		const foerderschwerpunkte : List<Foerderschwerpunkt> = Foerderschwerpunkt.getBySchuljahrAndSchulform(schuljahr, schulform);
+		const foerderschwerpunkte: List<Foerderschwerpunkt> = Foerderschwerpunkt.getBySchuljahrAndSchulform(schuljahr, schulform);
 		for (const foerderschwerpunkt of foerderschwerpunkte) {
-			const fske : FoerderschwerpunktKatalogEintrag | null = foerderschwerpunkt.daten(schuljahr);
+			const fske: FoerderschwerpunktKatalogEintrag | null = foerderschwerpunkt.daten(schuljahr);
 			if (fske === null)
 				continue;
-			const enmFoerderschwerpunkt : ENMFoerderschwerpunkt | null = new ENMFoerderschwerpunkt();
+			const enmFoerderschwerpunkt: ENMFoerderschwerpunkt | null = new ENMFoerderschwerpunkt();
 			enmFoerderschwerpunkt.id = fske.id;
 			enmFoerderschwerpunkt.kuerzel = fske.kuerzel;
 			enmFoerderschwerpunkt.beschreibung = fske.text;
@@ -222,10 +222,10 @@ export class ENMDatenManager extends JavaObject {
 	 *
 	 * @return true, falls der Lehrer hinzugefügt wurde, ansonsten false
 	 */
-	public addLehrer(id : number, kuerzel : string | null, nachname : string | null, vorname : string | null, geschlecht : Geschlecht, eMailDienstlich : string | null, passwordHash : string, tsPasswordHash : string | null) : boolean {
+	public addLehrer(id: number, kuerzel: string | null, nachname: string | null, vorname: string | null, geschlecht: Geschlecht, eMailDienstlich: string | null, passwordHash: string, tsPasswordHash: string | null): boolean {
 		if (this.mapLehrer.get(id) !== null)
 			return false;
-		const enmLehrer : ENMLehrer = new ENMLehrer();
+		const enmLehrer: ENMLehrer = new ENMLehrer();
 		enmLehrer.id = id;
 		enmLehrer.kuerzel = kuerzel;
 		enmLehrer.nachname = nachname;
@@ -256,10 +256,10 @@ export class ENMDatenManager extends JavaObject {
 	 *
 	 * @return true, falls der Schueler hinzugefügt wurde, ansonsten false
 	 */
-	public addSchueler(id : number, jahrgangID : number, klasseID : number, nachname : string | null, vorname : string | null, geschlecht : Geschlecht, bilingualeSprache : string | null, istZieldifferent : boolean, istDaZFoerderung : boolean) : boolean {
+	public addSchueler(id: number, jahrgangID: number, klasseID: number, nachname: string | null, vorname: string | null, geschlecht: Geschlecht, bilingualeSprache: string | null, istZieldifferent: boolean, istDaZFoerderung: boolean): boolean {
 		if (this.mapSchueler.get(id) !== null)
 			return false;
-		const enmSchueler : ENMSchueler = new ENMSchueler();
+		const enmSchueler: ENMSchueler = new ENMSchueler();
 		enmSchueler.id = id;
 		enmSchueler.jahrgangID = jahrgangID;
 		enmSchueler.klasseID = klasseID;
@@ -285,10 +285,10 @@ export class ENMDatenManager extends JavaObject {
 	 *
 	 * @return true, falls das Fach hinzugefügt wurde, ansonsten false
 	 */
-	public addFach(id : number, kuerzel : string, kuerzelAnzeige : string, sortierung : number, istFremdsprache : boolean) : boolean {
+	public addFach(id: number, kuerzel: string, kuerzelAnzeige: string, sortierung: number, istFremdsprache: boolean): boolean {
 		if (this.mapFaecher.get(id) !== null)
 			return false;
-		const enmFach : ENMFach = new ENMFach();
+		const enmFach: ENMFach = new ENMFach();
 		enmFach.id = id;
 		enmFach.kuerzel = kuerzel;
 		enmFach.kuerzelAnzeige = kuerzelAnzeige;
@@ -312,10 +312,10 @@ export class ENMDatenManager extends JavaObject {
 	 *
 	 * @return true, falls der Jahrgang hinzugefügt wurde, ansonsten false
 	 */
-	public addJahrgang(id : number, kuerzel : string | null, kuerzelAnzeige : string | null, beschreibung : string | null, stufe : string | null, sortierung : number) : boolean {
+	public addJahrgang(id: number, kuerzel: string | null, kuerzelAnzeige: string | null, beschreibung: string | null, stufe: string | null, sortierung: number): boolean {
 		if (this.mapJahrgaenge.get(id) !== null)
 			return false;
-		const enmJahrgang : ENMJahrgang = new ENMJahrgang();
+		const enmJahrgang: ENMJahrgang = new ENMJahrgang();
 		enmJahrgang.id = id;
 		enmJahrgang.kuerzel = kuerzel;
 		enmJahrgang.kuerzelAnzeige = kuerzelAnzeige;
@@ -338,10 +338,10 @@ export class ENMDatenManager extends JavaObject {
 	 *
 	 * @return true, falls die Klasse hinzugefügt wurde, ansonsten false
 	 */
-	public addKlasse(id : number, kuerzel : string | null, kuerzelAnzeige : string | null, idJahrgang : number | null, sortierung : number) : boolean {
+	public addKlasse(id: number, kuerzel: string | null, kuerzelAnzeige: string | null, idJahrgang: number | null, sortierung: number): boolean {
 		if (this.mapKlassen.get(id) !== null)
 			return false;
-		const enmKlasse : ENMKlasse = new ENMKlasse();
+		const enmKlasse: ENMKlasse = new ENMKlasse();
 		enmKlasse.id = id;
 		enmKlasse.kuerzel = kuerzel;
 		enmKlasse.kuerzelAnzeige = kuerzelAnzeige;
@@ -362,10 +362,10 @@ export class ENMDatenManager extends JavaObject {
 	 *
 	 * @return true, falls der Jahrgang hinzugefügt wurde, ansonsten false
 	 */
-	public addTeilleistungsart(id : number, bezeichnung : string | null, sortierung : number, gewichtung : number) : boolean {
+	public addTeilleistungsart(id: number, bezeichnung: string | null, sortierung: number, gewichtung: number): boolean {
 		if (this.mapTeilleistungsarten.get(id) !== null)
 			return false;
-		const enmArt : ENMTeilleistungsart = new ENMTeilleistungsart();
+		const enmArt: ENMTeilleistungsart = new ENMTeilleistungsart();
 		enmArt.id = id;
 		enmArt.bezeichnung = bezeichnung;
 		enmArt.sortierung = sortierung;
@@ -387,10 +387,10 @@ export class ENMDatenManager extends JavaObject {
 	 *
 	 * @return true, falls die Ankreuzkompetenz hinzugefügt wurde, ansonsten false
 	 */
-	public addAnkreuzkompetenz(id : number, istFachkompetenz : boolean, fachID : number | null, jahrgang : string, text : string, sortierung : number) : boolean {
+	public addAnkreuzkompetenz(id: number, istFachkompetenz: boolean, fachID: number | null, jahrgang: string, text: string, sortierung: number): boolean {
 		if (this.mapAnkreuzkompetenzen.get(id) !== null)
 			return false;
-		const kompetenz : ENMAnkreuzkompetenz = new ENMAnkreuzkompetenz();
+		const kompetenz: ENMAnkreuzkompetenz = new ENMAnkreuzkompetenz();
 		kompetenz.id = id;
 		kompetenz.istFachkompetenz = istFachkompetenz;
 		kompetenz.fachID = fachID;
@@ -411,7 +411,7 @@ export class ENMDatenManager extends JavaObject {
 	 *
 	 * @return das ENM-Lehrer-Objekt
 	 */
-	public getLehrer(id : number) : ENMLehrer | null {
+	public getLehrer(id: number): ENMLehrer | null {
 		return this.mapLehrer.get(id);
 	}
 
@@ -424,7 +424,7 @@ export class ENMDatenManager extends JavaObject {
 	 *
 	 * @return das ENM-Schüler-Objekt
 	 */
-	public getSchueler(id : number) : ENMSchueler | null {
+	public getSchueler(id: number): ENMSchueler | null {
 		return this.mapSchueler.get(id);
 	}
 
@@ -437,7 +437,7 @@ export class ENMDatenManager extends JavaObject {
 	 *
 	 * @return das ENM-Fächer-Objekt
 	 */
-	public getFach(id : number) : ENMFach | null {
+	public getFach(id: number): ENMFach | null {
 		return this.mapFaecher.get(id);
 	}
 
@@ -450,7 +450,7 @@ export class ENMDatenManager extends JavaObject {
 	 *
 	 * @return das ENM-Fächer-Objekt
 	 */
-	public getFachByKuerzel(kuerzel : string) : ENMFach | null {
+	public getFachByKuerzel(kuerzel: string): ENMFach | null {
 		return this.mapFaecherByKuerzel.get(kuerzel);
 	}
 
@@ -463,7 +463,7 @@ export class ENMDatenManager extends JavaObject {
 	 *
 	 * @return das ENM-Jahrgänge-Objekt
 	 */
-	public getJahrgang(id : number) : ENMJahrgang | null {
+	public getJahrgang(id: number): ENMJahrgang | null {
 		return this.mapJahrgaenge.get(id);
 	}
 
@@ -476,7 +476,7 @@ export class ENMDatenManager extends JavaObject {
 	 *
 	 * @return das ENM-Klassen-Objekt
 	 */
-	public getKlasse(id : number) : ENMKlasse | null {
+	public getKlasse(id: number): ENMKlasse | null {
 		return this.mapKlassen.get(id);
 	}
 
@@ -488,7 +488,7 @@ export class ENMDatenManager extends JavaObject {
 	 *
 	 * @return das ENM-Teilleistungsart-Objekt
 	 */
-	public getTeilleistungsart(id : number) : ENMTeilleistungsart | null {
+	public getTeilleistungsart(id: number): ENMTeilleistungsart | null {
 		return this.mapTeilleistungsarten.get(id);
 	}
 
@@ -500,7 +500,7 @@ export class ENMDatenManager extends JavaObject {
 	 *
 	 * @return das ENMAnkreuzkompetenz-Objekt
 	 */
-	public getAnkreuzkompetenz(id : number) : ENMAnkreuzkompetenz | null {
+	public getAnkreuzkompetenz(id: number): ENMAnkreuzkompetenz | null {
 		return this.mapAnkreuzkompetenzen.get(id);
 	}
 
@@ -518,10 +518,10 @@ export class ENMDatenManager extends JavaObject {
 	 *                            Lerngruppe handelt. (z.B. F)
 	 * @param wochenstunden       die Anzahl der Wochenstunden, falls es sich um einen Kurs handelt.
 	 */
-	public addLerngruppe(strID : string, kID : number, fachID : number, kursartID : number | null, bezeichnung : string | null, kursartKuerzel : string | null, bilingualeSprache : string | null, wochenstunden : number) : void {
+	public addLerngruppe(strID: string, kID: number, fachID: number, kursartID: number | null, bezeichnung: string | null, kursartKuerzel: string | null, bilingualeSprache: string | null, wochenstunden: number): void {
 		if (this.mapLerngruppen.get(strID) !== null)
 			return;
-		const lerngruppe : ENMLerngruppe = new ENMLerngruppe();
+		const lerngruppe: ENMLerngruppe = new ENMLerngruppe();
 		lerngruppe.id = this.lerngruppenIDZaehler++;
 		lerngruppe.kID = kID;
 		lerngruppe.fachID = fachID;
@@ -541,7 +541,7 @@ export class ENMDatenManager extends JavaObject {
 	 *
 	 * @return die Lerngruppe
 	 */
-	public getLerngruppe(strID : string) : ENMLerngruppe | null {
+	public getLerngruppe(strID: string): ENMLerngruppe | null {
 		return this.mapLerngruppen.get(strID);
 	}
 
@@ -551,7 +551,7 @@ export class ENMDatenManager extends JavaObject {
 	 * @param schueler           der Schüler
 	 * @param klassenlehrerIDs   die IDs der Klassenlehrer
 	 */
-	public addSchuelerKlassenlehrer(schueler : ENMSchueler, ...klassenlehrerIDs : Array<number>) : void {
+	public addSchuelerKlassenlehrer(schueler: ENMSchueler, ...klassenlehrerIDs: Array<number>): void {
 		// empty block
 	}
 
@@ -570,7 +570,7 @@ export class ENMDatenManager extends JavaObject {
 	 * @param referenzniveau         die Bezeichnung des Sprachreferenzniveaus, welches bisher erreicht wurde (z.B. B2/C1)
 	 * @param belegungSekI           die Mindest-Dauer der Belegung in der Sekundarstufe I gemäß den Stufen im Core-Type SprachBelegungSekI (z.B. 0, 2, 4, 6)
 	 */
-	public addSchuelerSprachenfolge(schueler : ENMSchueler, sprache : string | null, fachID : number, fachKuerzel : string | null, reihenfolge : number, belegungVonJahrgang : number, belegungVonAbschnitt : number, belegungBisJahrgang : number | null, belegungBisAbschnitt : number | null, referenzniveau : string | null, belegungSekI : number | null) : void {
+	public addSchuelerSprachenfolge(schueler: ENMSchueler, sprache: string | null, fachID: number, fachKuerzel: string | null, reihenfolge: number, belegungVonJahrgang: number, belegungVonAbschnitt: number, belegungBisJahrgang: number | null, belegungBisAbschnitt: number | null, referenzniveau: string | null, belegungSekI: number | null): void {
 		// empty block
 	}
 
@@ -585,8 +585,8 @@ export class ENMDatenManager extends JavaObject {
 	 *
 	 * @return die neue ENM-Leistung
 	 */
-	public addSchuelerAnkreuzkompetenz(schueler : ENMSchueler, id : number, kompetenzID : number | null, stufen : Array<boolean>, tsStufe : string | null) : ENMSchuelerAnkreuzkompetenz {
-		const kompetenz : ENMSchuelerAnkreuzkompetenz = new ENMSchuelerAnkreuzkompetenz();
+	public addSchuelerAnkreuzkompetenz(schueler: ENMSchueler, id: number, kompetenzID: number | null, stufen: Array<boolean>, tsStufe: string | null): ENMSchuelerAnkreuzkompetenz {
+		const kompetenz: ENMSchuelerAnkreuzkompetenz = new ENMSchuelerAnkreuzkompetenz();
 		kompetenz.id = id;
 		kompetenz.kompetenzID = kompetenzID;
 		kompetenz.stufen = stufen;
@@ -624,8 +624,8 @@ export class ENMDatenManager extends JavaObject {
 	 *
 	 * @return die neue ENM-Leistung
 	 */
-	public addSchuelerLeistungsdaten(schueler : ENMSchueler, leistungID : number, lerngruppenID : number, note : string | null, tsNote : string | null, noteQuartal : string | null, tsNoteQuartal : string | null, istSchriftlich : boolean, abiturfach : number | null, fehlstundenFach : number | null, tsFehlstundenFach : string | null, fehlstundenUnentschuldigtFach : number | null, tsFehlstundenUnentschuldigtFach : string | null, fachbezogeneBemerkungen : string | null, tsFachbezogeneBemerkungen : string | null, neueZuweisungKursart : string | null, istGemahnt : boolean, tsIstGemahnt : string | null, mahndatum : string | null) : ENMLeistung {
-		const enmLeistung : ENMLeistung = new ENMLeistung();
+	public addSchuelerLeistungsdaten(schueler: ENMSchueler, leistungID: number, lerngruppenID: number, note: string | null, tsNote: string | null, noteQuartal: string | null, tsNoteQuartal: string | null, istSchriftlich: boolean, abiturfach: number | null, fehlstundenFach: number | null, tsFehlstundenFach: string | null, fehlstundenUnentschuldigtFach: number | null, tsFehlstundenUnentschuldigtFach: string | null, fachbezogeneBemerkungen: string | null, tsFachbezogeneBemerkungen: string | null, neueZuweisungKursart: string | null, istGemahnt: boolean, tsIstGemahnt: string | null, mahndatum: string | null): ENMLeistung {
+		const enmLeistung: ENMLeistung = new ENMLeistung();
 		enmLeistung.id = leistungID;
 		enmLeistung.lerngruppenID = lerngruppenID;
 		enmLeistung.note = note;
@@ -663,8 +663,8 @@ export class ENMDatenManager extends JavaObject {
 	 * @param note           das Notenkürzel, welches der Teilleistung zuzuordnen ist.
 	 * @param tsNote         der Zeitstempel der letzten Änderung an der Note
 	 */
-	public addSchuelerTeilleistung(leistung : ENMLeistung, id : number, artID : number, tsArtID : string | null, datum : string | null, tsDatum : string | null, bemerkung : string | null, tsBemerkung : string | null, note : string | null, tsNote : string | null) : void {
-		const enmTeilleistung : ENMTeilleistung = new ENMTeilleistung();
+	public addSchuelerTeilleistung(leistung: ENMLeistung, id: number, artID: number, tsArtID: string | null, datum: string | null, tsDatum: string | null, bemerkung: string | null, tsBemerkung: string | null, note: string | null, tsNote: string | null): void {
+		const enmTeilleistung: ENMTeilleistung = new ENMTeilleistung();
 		enmTeilleistung.id = id;
 		enmTeilleistung.artID = artID;
 		enmTeilleistung.tsArtID = tsArtID;
@@ -681,7 +681,7 @@ export class ENMDatenManager extends JavaObject {
 		return 'de.svws_nrw.core.utils.enm.ENMDatenManager';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.utils.enm.ENMDatenManager'].includes(name);
 	}
 
@@ -689,6 +689,6 @@ export class ENMDatenManager extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_utils_enm_ENMDatenManager(obj : unknown) : ENMDatenManager {
+export function cast_de_svws_nrw_core_utils_enm_ENMDatenManager(obj: unknown): ENMDatenManager {
 	return obj as ENMDatenManager;
 }

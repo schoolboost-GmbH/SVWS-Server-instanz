@@ -23,8 +23,8 @@ export class StundenplanListUtils extends JavaObject {
 	 *         ist oder der letzte gültige Plan, falls die Gültigkeit aller Pläne
 	 *         abgelaufen ist.
 	 */
-	public static get(eintraege : List<StundenplanListeEintrag>, datum : string) : StundenplanListeEintrag | null {
-		let last : StundenplanListeEintrag | null = null;
+	public static get(eintraege: List<StundenplanListeEintrag>, datum: string): StundenplanListeEintrag | null {
+		let last: StundenplanListeEintrag | null = null;
 		for (const eintrag of eintraege) {
 			if ((JavaString.compareTo(eintrag.gueltigAb, datum) <= 0) && (JavaString.compareTo(eintrag.gueltigBis, datum) >= 0))
 				return eintrag;
@@ -38,7 +38,7 @@ export class StundenplanListUtils extends JavaObject {
 		return 'de.svws_nrw.core.utils.stundenplan.StundenplanListUtils';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.utils.stundenplan.StundenplanListUtils'].includes(name);
 	}
 
@@ -46,6 +46,6 @@ export class StundenplanListUtils extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_utils_stundenplan_StundenplanListUtils(obj : unknown) : StundenplanListUtils {
+export function cast_de_svws_nrw_core_utils_stundenplan_StundenplanListUtils(obj: unknown): StundenplanListUtils {
 	return obj as StundenplanListUtils;
 }

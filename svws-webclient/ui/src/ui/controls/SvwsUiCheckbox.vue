@@ -59,7 +59,7 @@
 	});
 
 	defineSlots();
-	onMounted(() => doFocus())
+	onMounted(() => doFocus());
 
 	function doFocus() {
 		if (props.autofocus)
@@ -76,7 +76,7 @@
 			if (props.readonly === false)
 				emit("update:modelValue", value);
 		},
-	})
+	});
 
 	const input = ref<null | HTMLInputElement>(null);
 	const content = computed<boolean>(() => checked.value);

@@ -16,43 +16,43 @@ import { KursblockungAlgorithmusPermanentKMatching } from '../../core/kursblocku
 
 export class KursblockungAlgorithmusPermanent extends JavaObject {
 
-	private static readonly MILLIS_START : number = 4000;
+	private static readonly MILLIS_START: number = 4000;
 
-	private static readonly TOP_ERGEBNISSE : number = 3;
+	private static readonly TOP_ERGEBNISSE: number = 3;
 
-	private readonly _random : Random = new Random();
+	private readonly _random: Random = new Random();
 
-	private readonly _logger : Logger = new Logger();
+	private readonly _logger: Logger = new Logger();
 
 	/**
 	 * Die TOP-Ergebnisse werden als {@link KursblockungDynDaten}-Objekt gespeichert, da diese sortierbar sind.
 	 */
-	private readonly _top : ArrayList<KursblockungDynDaten>;
+	private readonly _top: ArrayList<KursblockungDynDaten>;
 
 	/**
 	 * Jeder Algorithmus hat sein eigenes {@link KursblockungDynDaten}-Objekt. Das ist wichtig.
 	 */
-	private readonly algorithmenK : Array<KursblockungAlgorithmusPermanentK>;
+	private readonly algorithmenK: Array<KursblockungAlgorithmusPermanentK>;
 
 	/**
 	 * Die Eingabe-Daten von der GUI.
 	 */
-	private readonly _input : GostBlockungsdatenManager;
+	private readonly _input: GostBlockungsdatenManager;
 
 	/**
 	 * Die Zeitspanne nachdem alle Algorithmen neu erzeugt werden.
 	 */
-	private _zeitMax : number = 0;
+	private _zeitMax: number = 0;
 
 	/**
 	 * Die Zeitspanne reduziert sich schrittweise, da die GUI nur kurze Rechenintervalle dem Algorithmus gibt.
 	 */
-	private _zeitRest : number = 0;
+	private _zeitRest: number = 0;
 
 	/**
 	 * Der Index des aktuellen Algorithmus der als nächstes ausgeführt wird.
 	 */
-	private _currentIndex : number = 0;
+	private _currentIndex: number = 0;
 
 
 	/**
@@ -60,9 +60,9 @@ export class KursblockungAlgorithmusPermanent extends JavaObject {
 	 *
 	 * @param pInput  Das Eingabe-Objekt (der Daten-Manager).
 	 */
-	public constructor(pInput : GostBlockungsdatenManager) {
+	public constructor(pInput: GostBlockungsdatenManager) {
 		super();
-		const seed : number = this._random.nextLong();
+		const seed: number = this._random.nextLong();
 		this._logger.logLn("KursblockungAlgorithmusPermanent: Seed = " + seed);
 		this._input = pInput;
 		this._zeitMax = KursblockungAlgorithmusPermanent.MILLIS_START;
@@ -78,9 +78,9 @@ export class KursblockungAlgorithmusPermanent extends JavaObject {
 	 * @param zeitProAufruf  Die zur Verfügung stehende Zeit (in Millisekunden), um die ehemaligen Ergebnisse zu optimieren.
 	 * @return TRUE, falls die GUI die TOP-Liste aktualisieren soll.
 	 */
-	public next(zeitProAufruf : number) : boolean {
-		const zeitStart : number = System.currentTimeMillis();
-		const zeitEnde : number = zeitStart + zeitProAufruf;
+	public next(zeitProAufruf: number): boolean {
+		const zeitStart: number = System.currentTimeMillis();
+		const zeitEnde: number = zeitStart + zeitProAufruf;
 		this.algorithmenK[this._currentIndex].next(zeitEnde);
 		this._currentIndex = (this._currentIndex + 1) % this.algorithmenK.length;
 		this._zeitRest -= (System.currentTimeMillis() - zeitStart);
@@ -96,12 +96,12 @@ export class KursblockungAlgorithmusPermanent extends JavaObject {
 	 *
 	 * @return TRUE, falls mindestens ein Algorithmus ein besseres Ergebnis gefunden hat.
 	 */
-	private _neustart() : number {
-		let verbesserungen : number = 0;
-		for (let iK : number = 0; iK < this.algorithmenK.length; iK++) {
+	private _neustart(): number {
+		let verbesserungen: number = 0;
+		for (let iK: number = 0; iK < this.algorithmenK.length; iK++) {
 			this.algorithmenK[iK].ladeBestMitSchuelerverteilung();
-			let eingefuegt : boolean = false;
-			for (let i : number = 0; (i < this._top.size()) && (!eingefuegt); i++)
+			let eingefuegt: boolean = false;
+			for (let i: number = 0; (i < this._top.size()) && (!eingefuegt); i++)
 				if (this.algorithmenK[iK].dynDaten.gibIstBesser_NW_KD_FW_Als(this._top.get(i))) {
 					this._top.add(i, this.algorithmenK[iK].dynDaten);
 					eingefuegt = true;
@@ -132,10 +132,10 @@ export class KursblockungAlgorithmusPermanent extends JavaObject {
 	 *
 	 * @return ein zufälliges Element aus der TOP-Liste (oder NULL);
 	 */
-	private _gibTopElementOrNull() : KursblockungDynDaten | null {
+	private _gibTopElementOrNull(): KursblockungDynDaten | null {
 		if (this._top.isEmpty())
 			return null;
-		let index : number = this._random.nextInt(this._top.size());
+		let index: number = this._random.nextInt(this._top.size());
 		return this._top.get(index);
 	}
 
@@ -145,9 +145,9 @@ export class KursblockungAlgorithmusPermanent extends JavaObject {
 	 *
 	 * @return die Liste der aktuellen Top-Blockungsergebnisse.
 	 */
-	public getBlockungsergebnisse() : List<GostBlockungsergebnisManager> {
-		const list : List<GostBlockungsergebnisManager> = new ArrayList<GostBlockungsergebnisManager>();
-		for (let i : number = 0; i < this._top.size(); i++)
+	public getBlockungsergebnisse(): List<GostBlockungsergebnisManager> {
+		const list: List<GostBlockungsergebnisManager> = new ArrayList<GostBlockungsergebnisManager>();
+		for (let i: number = 0; i < this._top.size(); i++)
 			list.add(this._top.get(i).gibErzeugtesKursblockungOutput(this._input, i));
 		return list;
 	}
@@ -156,7 +156,7 @@ export class KursblockungAlgorithmusPermanent extends JavaObject {
 		return 'de.svws_nrw.core.kursblockung.KursblockungAlgorithmusPermanent';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.kursblockung.KursblockungAlgorithmusPermanent'].includes(name);
 	}
 
@@ -164,6 +164,6 @@ export class KursblockungAlgorithmusPermanent extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_kursblockung_KursblockungAlgorithmusPermanent(obj : unknown) : KursblockungAlgorithmusPermanent {
+export function cast_de_svws_nrw_core_kursblockung_KursblockungAlgorithmusPermanent(obj: unknown): KursblockungAlgorithmusPermanent {
 	return obj as KursblockungAlgorithmusPermanent;
 }

@@ -1,4 +1,4 @@
-import { DeveloperNotificationException, StundenplanManager, type ApiFile, type ReportingParameter, type StundenplanKalenderwochenzuordnung, type StundenplanListeEintrag} from "@core";
+import { DeveloperNotificationException, StundenplanManager, type ApiFile, type ReportingParameter, type StundenplanKalenderwochenzuordnung, type StundenplanListeEintrag } from "@core";
 import { api } from "~/router/Api";
 import { RouteData, type RouteStateInterface } from "~/router/RouteData";
 import { RouteManager } from "~/router/RouteManager";
@@ -78,9 +78,9 @@ export class RouteDataLehrerStundenplan extends RouteData<RouteStateLehrerDataSt
 
 	setGanzerStundenplan = async (value: boolean) => {
 		await api.config.setValue("lehrer.stundenplan.ganzerStundenplan", value ? "true" : "false");
-	}
+	};
 
-	public async ladeListe(idLehrer : number): Promise<boolean> {
+	public async ladeListe(idLehrer: number): Promise<boolean> {
 		const idSchuljahresabschnitt = routeApp.data.aktAbschnitt.value.id;
 		if (idSchuljahresabschnitt === this._state.value.idSchuljahresabschnitt)
 			return false;
@@ -103,8 +103,8 @@ export class RouteDataLehrerStundenplan extends RouteData<RouteStateLehrerDataSt
 		return true;
 	}
 
-	private getKalenderWoche(manager: StundenplanManager, wochentyp: number, kwjahr: number | undefined, kw: number | undefined) : { wochentyp?: number, kalenderwoche?: StundenplanKalenderwochenzuordnung } {
-		const result : { wochentyp?: number, kalenderwoche?: StundenplanKalenderwochenzuordnung } = {};
+	private getKalenderWoche(manager: StundenplanManager, wochentyp: number, kwjahr: number | undefined, kw: number | undefined): { wochentyp?: number, kalenderwoche?: StundenplanKalenderwochenzuordnung } {
+		const result: { wochentyp?: number, kalenderwoche?: StundenplanKalenderwochenzuordnung } = {};
 		try {
 			result.kalenderwoche = manager.kalenderwochenzuordnungGetByJahrAndKWOrException(kwjahr === undefined ? -1 : kwjahr, kw === undefined ? -1 : kw);
 			result.wochentyp = result.kalenderwoche.wochentyp;
@@ -151,17 +151,17 @@ export class RouteDataLehrerStundenplan extends RouteData<RouteStateLehrerDataSt
 
 	public gotoStundenplan = async (value: StundenplanListeEintrag) => {
 		await RouteManager.doRoute(routeLehrerStundenplan.getRoute({ idStundenplan: value.id, wochentyp: 0, kw: "" }));
-	}
+	};
 
 	public gotoWochentyp = async (wochentyp: number) => {
 		await RouteManager.doRoute(routeLehrerStundenplan.getRoute({ wochentyp }));
-	}
+	};
 
 	public gotoKalenderwoche = async (value: StundenplanKalenderwochenzuordnung | undefined) => {
 		const kw = (value === undefined) ? "" : value.jahr + "." + value.kw;
 		const wochentyp = (value === undefined) ? "" : value.wochentyp;
 		await RouteManager.doRoute(routeLehrerStundenplan.getRoute({ wochentyp, kw }));
-	}
+	};
 
 	getPDF = api.call(async (reportingParameter: ReportingParameter, idStundenplan: number): Promise<ApiFile> => {
 		if (!this.hasAuswahl)
@@ -170,5 +170,5 @@ export class RouteDataLehrerStundenplan extends RouteData<RouteStateLehrerDataSt
 		reportingParameter.idsHauptdaten.add(idStundenplan);
 		reportingParameter.idsDetaildaten.add(this.idLehrer);
 		return await api.server.pdfReport(reportingParameter, api.schema);
-	})
+	});
 }

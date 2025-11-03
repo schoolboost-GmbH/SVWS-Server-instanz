@@ -1,5 +1,5 @@
-import type { List, SimpleOperationResponse , Lernplattform} from "@core";
-import { ArrayList,  } from "@core";
+import type { List, SimpleOperationResponse, Lernplattform } from "@core";
+import { ArrayList } from "@core";
 
 import { api } from "~/router/Api";
 
@@ -29,7 +29,7 @@ export class RouteDataKatalogLernplattformen extends RouteDataAuswahl<Lernplattf
 		param.id = id;
 	}
 
-	protected async createManager(_ : number) : Promise<Partial<RouteStateAuswahlInterface<LernplattformListeManager>>> {
+	protected async createManager(_: number): Promise<Partial<RouteStateAuswahlInterface<LernplattformListeManager>>> {
 		const lernplattformen = await api.server.getLernplattformen(api.schema);
 		const manager = new LernplattformListeManager(api.abschnitt.id, api.schuleStammdaten.idSchuljahresabschnitt, api.schuleStammdaten.abschnitte, api.schulform, lernplattformen);
 		return { manager };
@@ -43,7 +43,7 @@ export class RouteDataKatalogLernplattformen extends RouteDataAuswahl<Lernplattf
 		return auswahl;
 	}
 
-	protected async doPatch(data : Partial<Lernplattform>, id: number) : Promise<void> {
+	protected async doPatch(data: Partial<Lernplattform>, id: number): Promise<void> {
 		await api.server.patchLernplattform(data, api.schema, id);
 	}
 
@@ -55,9 +55,9 @@ export class RouteDataKatalogLernplattformen extends RouteDataAuswahl<Lernplattf
 		const res = await api.server.addLernplattform(data, api.schema);
 		await this.setSchuljahresabschnitt(this._state.value.idSchuljahresabschnitt, true);
 		await this.gotoDefaultView(res.id);
-	}
+	};
 
-	protected deleteMessage(id: number, lernplattform: Lernplattform | null) : string {
+	protected deleteMessage(id: number, lernplattform: Lernplattform | null): string {
 		return `Lernplattform ${lernplattform?.bezeichnung ?? '???'} (ID: ${id}) wurde erfolgreich gelöscht.`;
 	}
 }

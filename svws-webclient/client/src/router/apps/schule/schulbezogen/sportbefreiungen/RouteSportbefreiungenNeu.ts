@@ -1,6 +1,6 @@
 import type { RouteLocationNormalized } from "vue-router";
 import type { SportbefreiungenNeuProps } from "~/components/schule/schulbezogen/sportbefreiungen/SSportbefreiungenNeuProps";
-import type{ RouteSportbefreiungen } from "~/router/apps/schule/schulbezogen/sportbefreiungen/RouteSportbefreiungen";
+import type { RouteSportbefreiungen } from "~/router/apps/schule/schulbezogen/sportbefreiungen/RouteSportbefreiungen";
 import { BenutzerKompetenz, Schulform, ServerMode } from "@core";
 import { RouteManager } from "~/router/RouteManager";
 import { RouteNode } from "~/router/RouteNode";
@@ -29,7 +29,7 @@ export class RouteSportbefreiungenNeu extends RouteNode<any, RouteSportbefreiung
 			checkpoint: this.checkpoint,
 			benutzerKompetenzen: api.benutzerKompetenzen,
 			continueRoutingAfterCheckpoint: () => RouteManager.continueRoutingAfterCheckpoint(),
-		}
+		};
 	}
 }
 

@@ -9,42 +9,42 @@ export class SchulgliederungKatalogEintrag extends CoreTypeDataNurSchulformen {
 	/**
 	 * Gibt an, ob es sich um einen Bildungsgang am Berufskolleg handelt.
 	 */
-	public istBK : boolean = false;
+	public istBK: boolean = false;
 
 	/**
 	 * Gibt an, ob es sich um eine auslaufende Schulgliederung oder einen auslaufenden Bildungsgang handelt.
 	 */
-	public istAuslaufend : boolean = false;
+	public istAuslaufend: boolean = false;
 
 	/**
 	 * Gibt an, ob es sich um eine ausgelaufene Schulgliederung oder einen ausgelaufenen Bildungsgang handelt.
 	 */
-	public istAusgelaufen : boolean = false;
+	public istAusgelaufen: boolean = false;
 
 	/**
 	 * Die Anlage, wenn es sich um einen Bildungsgang am Berufskolleg handelt.
 	 */
-	public bkAnlage : string | null = null;
+	public bkAnlage: string | null = null;
 
 	/**
 	 * Der Typ der Anlage, wenn es sich um einen Bildungsgang am Berufskolleg handelt.
 	 */
-	public bkTyp : string | null = null;
+	public bkTyp: string | null = null;
 
 	/**
 	 * Der Index für den Zugriff auf die Fachklassen am Berufskolleg. Dieser kann bei unterschiedlichen Gliederungen identisch sein.
 	 */
-	public bkIndex : number | null = null;
+	public bkIndex: number | null = null;
 
 	/**
 	 * Gibt an, ob es sich um einen Bildungsgang in Vollzeit handelt oder nicht
 	 */
-	public istVZ : boolean = false;
+	public istVZ: boolean = false;
 
 	/**
 	 * Gibt eine Liste von Abschlusskombinationen aus beruflichen und allgemeinbildenden Abschluss an, mit Angabe der zulässigen Jahrgänge
 	 */
-	public abschluesse : List<SchulgliederungGueltigerAbschluss> = new ArrayList<SchulgliederungGueltigerAbschluss>();
+	public abschluesse: List<SchulgliederungGueltigerAbschluss> = new ArrayList<SchulgliederungGueltigerAbschluss>();
 
 
 	/**
@@ -58,13 +58,13 @@ export class SchulgliederungKatalogEintrag extends CoreTypeDataNurSchulformen {
 		return 'de.svws_nrw.asd.data.schule.SchulgliederungKatalogEintrag';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.asd.data.CoreTypeData', 'de.svws_nrw.asd.data.schule.SchulgliederungKatalogEintrag', 'de.svws_nrw.asd.data.CoreTypeDataNurSchulformen'].includes(name);
 	}
 
 	public static class = new Class<SchulgliederungKatalogEintrag>('de.svws_nrw.asd.data.schule.SchulgliederungKatalogEintrag');
 
-	public static transpilerFromJSON(json : string): SchulgliederungKatalogEintrag {
+	public static transpilerFromJSON(json: string): SchulgliederungKatalogEintrag {
 		const obj = JSON.parse(json) as Partial<SchulgliederungKatalogEintrag>;
 		const result = new SchulgliederungKatalogEintrag();
 		if (obj.schulformen !== undefined) {
@@ -109,7 +109,7 @@ export class SchulgliederungKatalogEintrag extends CoreTypeDataNurSchulformen {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : SchulgliederungKatalogEintrag) : string {
+	public static transpilerToJSON(obj: SchulgliederungKatalogEintrag): string {
 		let result = '{';
 		result += '"schulformen" : [ ';
 		for (let i = 0; i < obj.schulformen.size(); i++) {
@@ -145,7 +145,7 @@ export class SchulgliederungKatalogEintrag extends CoreTypeDataNurSchulformen {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<SchulgliederungKatalogEintrag>) : string {
+	public static transpilerToJSONPatch(obj: Partial<SchulgliederungKatalogEintrag>): string {
 		let result = '{';
 		if (obj.schulformen !== undefined) {
 			result += '"schulformen" : [ ';
@@ -213,6 +213,6 @@ export class SchulgliederungKatalogEintrag extends CoreTypeDataNurSchulformen {
 
 }
 
-export function cast_de_svws_nrw_asd_data_schule_SchulgliederungKatalogEintrag(obj : unknown) : SchulgliederungKatalogEintrag {
+export function cast_de_svws_nrw_asd_data_schule_SchulgliederungKatalogEintrag(obj: unknown): SchulgliederungKatalogEintrag {
 	return obj as SchulgliederungKatalogEintrag;
 }

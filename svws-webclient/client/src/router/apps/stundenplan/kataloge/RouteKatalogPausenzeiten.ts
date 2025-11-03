@@ -1,6 +1,6 @@
 import type { RouteLocationNormalized, RouteLocationRaw, RouteParams, RouteParamsRawGeneric } from "vue-router";
 
-import type { StundenplanPausenzeit , DeveloperNotificationException} from "@core";
+import type { StundenplanPausenzeit, DeveloperNotificationException } from "@core";
 import { BenutzerKompetenz, Schulform, ServerMode } from "@core";
 
 import { RouteNode } from "~/router/RouteNode";
@@ -20,7 +20,7 @@ const SPausenzeiten = () => import("~/components/stundenplan/kataloge/pausenzeit
 export class RouteKatalogPausenzeiten extends RouteNode<RouteDataKatalogPausenzeiten, RouteStundenplan> {
 
 	public constructor() {
-		super(Schulform.values(), [ BenutzerKompetenz.KEINE ], "stundenplan.kataloge.pausenzeiten", "pausenzeiten/:idPausenzeiten(\\d+)?", SPausenzeiten, new RouteDataKatalogPausenzeiten());
+		super(Schulform.values(), [BenutzerKompetenz.KEINE], "stundenplan.kataloge.pausenzeiten", "pausenzeiten/:idPausenzeiten(\\d+)?", SPausenzeiten, new RouteDataKatalogPausenzeiten());
 		super.mode = ServerMode.STABLE;
 		super.propHandler = (route) => this.getProps(route);
 		super.text = "Pausenzeiten";
@@ -28,7 +28,7 @@ export class RouteKatalogPausenzeiten extends RouteNode<RouteDataKatalogPausenze
 		super.setView("eintraege", SPausenzeitenAuswahl, (route) => this.getAuswahlProps(route));
 	}
 
-	protected async update(to: RouteNode<any, any>, to_params: RouteParams, from: RouteNode<any, any> | undefined, from_params: RouteParams, isEntering: boolean) : Promise<void | Error | RouteLocationRaw> {
+	protected async update(to: RouteNode<any, any>, to_params: RouteParams, from: RouteNode<any, any> | undefined, from_params: RouteParams, isEntering: boolean): Promise<void | Error | RouteLocationRaw> {
 		try {
 			const { idPausenzeiten } = RouteNode.getIntParams(to_params, ["idPausenzeiten"]);
 			if (isEntering)
@@ -50,8 +50,8 @@ export class RouteKatalogPausenzeiten extends RouteNode<RouteDataKatalogPausenze
 		}
 	}
 
-	public addRouteParamsFromState() : RouteParamsRawGeneric {
-		return { idPausenzeiten : this.data.auswahl?.id ?? undefined };
+	public addRouteParamsFromState(): RouteParamsRawGeneric {
+		return { idPausenzeiten: this.data.auswahl?.id ?? undefined };
 	}
 
 	public getAuswahlProps(to: RouteLocationNormalized): PausenzeitenAuswahlProps {
@@ -61,7 +61,7 @@ export class RouteKatalogPausenzeiten extends RouteNode<RouteDataKatalogPausenze
 			gotoEintrag: this.data.gotoEintrag,
 			addPausenzeiten: this.data.addPausenzeiten,
 			deleteEintraege: this.data.deleteEintraege,
-			setKatalogPausenzeitenImportJSON: this.data.setKatalogRaeumeImportJSON,
+			setKatalogPausenzeitenImportJSON: this.data.setKatalogPausenzeitenImportJSON,
 			stundenplanManager: () => this.data.stundenplanManager,
 			setSettingsDefaults: routeStundenplan.data.setSettingsDefaults,
 			benutzerKompetenzen: api.benutzerKompetenzen,

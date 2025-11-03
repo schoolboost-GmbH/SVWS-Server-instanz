@@ -13,16 +13,16 @@ const SAbteilungenDaten = () => import("~/components/schule/schulbezogen/abteilu
 export class RouteAbteilungenDaten extends RouteNode<any, RouteAbteilungen> {
 
 	public constructor() {
-		super(Schulform.values(), [ BenutzerKompetenz.KATALOG_EINTRAEGE_ANSEHEN, BenutzerKompetenz.KATALOG_EINTRAEGE_AENDERN ], "schule.abteilungen.daten",
+		super(Schulform.values(), [BenutzerKompetenz.KATALOG_EINTRAEGE_ANSEHEN, BenutzerKompetenz.KATALOG_EINTRAEGE_AENDERN], "schule.abteilungen.daten",
 			"daten", SAbteilungenDaten);
 		super.mode = ServerMode.DEV;
 		super.propHandler = (route) => this.getProps(route);
 		super.text = "Abteilungen";
 	}
 
-	goToLehrer = async (idLehrer : number) => {
-		await RouteManager.doRoute(routeLehrer.getRoute({id : idLehrer}));
-	}
+	goToLehrer = async (idLehrer: number) => {
+		await RouteManager.doRoute(routeLehrer.getRoute({ id: idLehrer }));
+	};
 
 	public getProps(to: RouteLocationNormalized): AbteilungenDatenProps {
 		return {
@@ -32,7 +32,7 @@ export class RouteAbteilungenDaten extends RouteNode<any, RouteAbteilungen> {
 			patch: routeAbteilungen.data.patch,
 			deleteKlassenzuordnungen: routeAbteilungen.data.deleteKlassenzuordnungen,
 			addKlassenzuordnungen: routeAbteilungen.data.addKlassenzuordnungen,
-		}
+		};
 	}
 }
 

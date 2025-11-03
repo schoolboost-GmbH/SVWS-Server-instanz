@@ -6,7 +6,7 @@ import { RouteData, type RouteStateInterface } from "~/router/RouteData";
 
 interface RouteStateSchuleDatenaustauschWenom extends RouteStateInterface {
 	connected: boolean;
-	connectionInfo : OAuth2ClientConnection | null;
+	connectionInfo: OAuth2ClientConnection | null;
 	enmDaten: ENMDaten | null;
 	mapInitialKennwoerter: JavaMap<number, string>;
 	mapENMServerConfigServer: JavaMap<string, string>;
@@ -36,7 +36,7 @@ export class RouteDataSchuleDatenaustauschWenom extends RouteData<RouteStateSchu
 		return this._state.value.connectionInfo;
 	}
 
-	get enmDaten() : ENMDaten | null {
+	get enmDaten(): ENMDaten | null {
 		return this._state.value.enmDaten;
 	}
 
@@ -64,7 +64,7 @@ export class RouteDataSchuleDatenaustauschWenom extends RouteData<RouteStateSchu
 	}
 
 
-	private async getConnectionInfo() : Promise<OAuth2ClientConnection | null> {
+	private async getConnectionInfo(): Promise<OAuth2ClientConnection | null> {
 		try {
 			return await api.server.getOAuthClientSecret(api.schema, 1);
 		} catch (e) {
@@ -84,7 +84,7 @@ export class RouteDataSchuleDatenaustauschWenom extends RouteData<RouteStateSchu
 		}
 	}
 
-	private async getEnmDaten() : Promise<ENMDaten | null> {
+	private async getEnmDaten(): Promise<ENMDaten | null> {
 		try {
 			const datenGzip = await api.server.getENMDatenGZip(api.schema);
 			const datenBlob = await new Response(datenGzip.data.stream().pipeThrough(new DecompressionStream("gzip"))).blob();
@@ -94,7 +94,7 @@ export class RouteDataSchuleDatenaustauschWenom extends RouteData<RouteStateSchu
 		}
 	}
 
-	private async getEnmLehrerInitialKennwoerter() : Promise<JavaMap<number, string>> {
+	private async getEnmLehrerInitialKennwoerter(): Promise<JavaMap<number, string>> {
 		const result = new HashMap<number, string>();
 		try {
 			const daten = await api.server.getENMLehrerInitialKennwoerter(api.schema);
@@ -123,9 +123,9 @@ export class RouteDataSchuleDatenaustauschWenom extends RouteData<RouteStateSchu
 		const result = await this.wenomCheck();
 		this.setPatchedState({ connectionInfo, connected: result.success });
 		return result;
-	}
+	};
 
-	trustCertificate = async (tlsCertIsTrusted : boolean): Promise<void> => {
+	trustCertificate = async (tlsCertIsTrusted: boolean): Promise<void> => {
 		if (this.connectionInfo === null)
 			return;
 		try {
@@ -136,9 +136,9 @@ export class RouteDataSchuleDatenaustauschWenom extends RouteData<RouteStateSchu
 		} catch (error) {
 			throw new UserNotificationException("Konnte nicht Setzen, dass dem Zertifikat vertraut wird.");
 		}
-	}
+	};
 
-	wenomGetEnmCredentials = async(): Promise<void> => {
+	wenomGetEnmCredentials = async (): Promise<void> => {
 		try {
 			const daten = await api.server.getENMLehrerInitialKennwoerter(api.schema);
 			const mapInitialKennwoerter = new HashMap<number, string>();
@@ -149,7 +149,7 @@ export class RouteDataSchuleDatenaustauschWenom extends RouteData<RouteStateSchu
 		} catch (e) {
 			return;
 		}
-	}
+	};
 
 	wenomSetCredentials = async (url: string, token: string): Promise<boolean> => {
 		if (this.connectionInfo === null)
@@ -166,7 +166,7 @@ export class RouteDataSchuleDatenaustauschWenom extends RouteData<RouteStateSchu
 		}
 		this.setPatchedDefaultState({ connectionInfo: Object.assign(patch, this.connectionInfo) });
 		return true;
-	}
+	};
 
 	wenomPatchCredentialsSecret = async (clientSecret: string): Promise<void> => {
 		const wenom = OAuth2ServerTyp.WENOM;
@@ -175,7 +175,7 @@ export class RouteDataSchuleDatenaustauschWenom extends RouteData<RouteStateSchu
 		} catch (e) {
 			return;
 		}
-	}
+	};
 
 	wenomRemoveCredential = api.call(async () => {
 		await api.server.deleteOAuthSecret(api.schema, 1);
@@ -194,13 +194,13 @@ export class RouteDataSchuleDatenaustauschWenom extends RouteData<RouteStateSchu
 					mapENMServerConfigGlobal.put(element.key, element.value);
 				for (const element of res.config.server)
 					mapENMServerConfigServer.put(element.key, element.value);
-				this.setPatchedState({ mapENMServerConfigGlobal, mapENMServerConfigServer});
+				this.setPatchedState({ mapENMServerConfigGlobal, mapENMServerConfigServer });
 			} else
 				throw new DeveloperNotificationException("Keine Konfiguration geladen");
 		} catch (error) {
 			return;
 		}
-	})
+	});
 
 	wenomSetServerConfigElement = api.call(async (data: ENMServerConfigElement): Promise <SimpleOperationResponse> => {
 		try {
@@ -222,9 +222,9 @@ export class RouteDataSchuleDatenaustauschWenom extends RouteData<RouteStateSchu
 			res.log.add(`Unerwarteter Fehler beim Setzen einer Serverkonfiguration aufgetreten: ${e instanceof Error ? e.message : 'unbekannt'}`);
 			return res;
 		}
-	})
+	});
 
-	wenomSynchronize = api.call(async () : Promise<SimpleOperationResponse> => {
+	wenomSynchronize = api.call(async (): Promise<SimpleOperationResponse> => {
 		try {
 			return await api.server.synchronizeENMDaten(api.schema);
 		} catch (e) {
@@ -241,7 +241,7 @@ export class RouteDataSchuleDatenaustauschWenom extends RouteData<RouteStateSchu
 		}
 	});
 
-	wenomDownload = api.call(async () : Promise<SimpleOperationResponse> => {
+	wenomDownload = api.call(async (): Promise<SimpleOperationResponse> => {
 		try {
 			return await api.server.downloadENMDaten(api.schema);
 		} catch (e) {
@@ -258,7 +258,7 @@ export class RouteDataSchuleDatenaustauschWenom extends RouteData<RouteStateSchu
 		}
 	});
 
-	wenomUpload = api.call(async () : Promise<SimpleOperationResponse> => {
+	wenomUpload = api.call(async (): Promise<SimpleOperationResponse> => {
 		try {
 			return await api.server.uploadENMDaten(api.schema);
 		} catch (e) {
@@ -275,7 +275,7 @@ export class RouteDataSchuleDatenaustauschWenom extends RouteData<RouteStateSchu
 		}
 	});
 
-	wenomTruncate = api.call(async () : Promise<SimpleOperationResponse> => {
+	wenomTruncate = api.call(async (): Promise<SimpleOperationResponse> => {
 		try {
 			return await api.server.truncateENMServer(api.schema);
 		} catch (e) {
@@ -292,7 +292,7 @@ export class RouteDataSchuleDatenaustauschWenom extends RouteData<RouteStateSchu
 		}
 	});
 
-	wenomReset = api.call(async () : Promise<SimpleOperationResponse> => {
+	wenomReset = api.call(async (): Promise<SimpleOperationResponse> => {
 		try {
 			return await api.server.resetENMServer(api.schema);
 		} catch (e) {
@@ -309,7 +309,7 @@ export class RouteDataSchuleDatenaustauschWenom extends RouteData<RouteStateSchu
 		}
 	});
 
-	wenomCheck = api.call(async () : Promise<SimpleOperationResponse> => {
+	wenomCheck = api.call(async (): Promise<SimpleOperationResponse> => {
 		try {
 			return await api.server.checkENMServer(api.schema);
 		} catch (e) {
@@ -326,7 +326,7 @@ export class RouteDataSchuleDatenaustauschWenom extends RouteData<RouteStateSchu
 		}
 	});
 
-	wenomSetup = api.call(async () : Promise<boolean | SimpleOperationResponse> => {
+	wenomSetup = api.call(async (): Promise<boolean | SimpleOperationResponse> => {
 		try {
 			return (await api.server.setupENMServer(api.schema))!;
 		} catch (e) {

@@ -10,22 +10,22 @@ import { de_svws_nrw_asd_types_CoreType_getManager, de_svws_nrw_asd_types_CoreTy
 export class WeiterbildungskollegOrganisationsformen extends JavaEnum<WeiterbildungskollegOrganisationsformen> implements CoreType<OrganisationsformKatalogEintrag, WeiterbildungskollegOrganisationsformen> {
 
 	/** an array containing all values of this enumeration */
-	static readonly all_values_by_ordinal : Array<WeiterbildungskollegOrganisationsformen> = [];
+	static readonly all_values_by_ordinal: Array<WeiterbildungskollegOrganisationsformen> = [];
 
 	/** an array containing all values of this enumeration indexed by their name*/
-	static readonly all_values_by_name : Map<string, WeiterbildungskollegOrganisationsformen> = new Map<string, WeiterbildungskollegOrganisationsformen>();
+	static readonly all_values_by_name: Map<string, WeiterbildungskollegOrganisationsformen> = new Map<string, WeiterbildungskollegOrganisationsformen>();
 
 	/**
 	 * Organisationsform: Teilbeleger
 	 */
-	public static readonly TEILZEIT : WeiterbildungskollegOrganisationsformen = new WeiterbildungskollegOrganisationsformen("TEILZEIT", 0, );
+	public static readonly TEILZEIT: WeiterbildungskollegOrganisationsformen = new WeiterbildungskollegOrganisationsformen("TEILZEIT", 0, );
 
 	/**
 	 * Organisationsform: Vollbeleger
 	 */
-	public static readonly VOLLZEIT : WeiterbildungskollegOrganisationsformen = new WeiterbildungskollegOrganisationsformen("VOLLZEIT", 1, );
+	public static readonly VOLLZEIT: WeiterbildungskollegOrganisationsformen = new WeiterbildungskollegOrganisationsformen("VOLLZEIT", 1, );
 
-	private constructor(name : string, ordinal : number) {
+	private constructor(name: string, ordinal: number) {
 		super(name, ordinal);
 		WeiterbildungskollegOrganisationsformen.all_values_by_ordinal.push(this);
 		WeiterbildungskollegOrganisationsformen.all_values_by_name.set(name, this);
@@ -36,7 +36,7 @@ export class WeiterbildungskollegOrganisationsformen extends JavaEnum<Weiterbild
 	 *
 	 * @param manager   der Manager für die Daten des Core-Types
 	 */
-	public static init(manager : CoreTypeDataManager<OrganisationsformKatalogEintrag, WeiterbildungskollegOrganisationsformen>) : void {
+	public static init(manager: CoreTypeDataManager<OrganisationsformKatalogEintrag, WeiterbildungskollegOrganisationsformen>): void {
 		CoreTypeDataManager.putManager(WeiterbildungskollegOrganisationsformen.class, manager);
 	}
 
@@ -45,7 +45,7 @@ export class WeiterbildungskollegOrganisationsformen extends JavaEnum<Weiterbild
 	 *
 	 * @return der Daten-Manager
 	 */
-	public static data() : CoreTypeDataManager<OrganisationsformKatalogEintrag, WeiterbildungskollegOrganisationsformen> {
+	public static data(): CoreTypeDataManager<OrganisationsformKatalogEintrag, WeiterbildungskollegOrganisationsformen> {
 		return CoreTypeDataManager.getManager(WeiterbildungskollegOrganisationsformen.class);
 	}
 
@@ -57,7 +57,7 @@ export class WeiterbildungskollegOrganisationsformen extends JavaEnum<Weiterbild
 	 *
 	 * @return true, falls die Schulform zulässig ist, und ansonsten false
 	 */
-	public hatSchulform(schuljahr : number, sf : Schulform) : boolean {
+	public hatSchulform(schuljahr: number, sf: Schulform): boolean {
 		return WeiterbildungskollegOrganisationsformen.data().hatSchulform(schuljahr, sf, this);
 	}
 
@@ -66,7 +66,7 @@ export class WeiterbildungskollegOrganisationsformen extends JavaEnum<Weiterbild
 	 *
 	 * @returns the array with enumeration values
 	 */
-	public static values() : Array<WeiterbildungskollegOrganisationsformen> {
+	public static values(): Array<WeiterbildungskollegOrganisationsformen> {
 		return [...this.all_values_by_ordinal];
 	}
 
@@ -77,24 +77,24 @@ export class WeiterbildungskollegOrganisationsformen extends JavaEnum<Weiterbild
 	 *
 	 * @returns the enumeration values or null
 	 */
-	public static valueOf(name : string) : WeiterbildungskollegOrganisationsformen | null {
+	public static valueOf(name: string): WeiterbildungskollegOrganisationsformen | null {
 		const tmp = this.all_values_by_name.get(name);
 		return (!tmp) ? null : tmp;
 	}
 
-	public getManager() : CoreTypeDataManager<OrganisationsformKatalogEintrag, WeiterbildungskollegOrganisationsformen> {
+	public getManager(): CoreTypeDataManager<OrganisationsformKatalogEintrag, WeiterbildungskollegOrganisationsformen> {
 		return de_svws_nrw_asd_types_CoreType_getManager(this);
 	}
 
-	public daten(schuljahr : number) : OrganisationsformKatalogEintrag | null {
+	public daten(schuljahr: number): OrganisationsformKatalogEintrag | null {
 		return de_svws_nrw_asd_types_CoreType_daten(this, schuljahr);
 	}
 
-	public statistikId() : string | null {
+	public statistikId(): string | null {
 		return de_svws_nrw_asd_types_CoreType_statistikId(this);
 	}
 
-	public historie() : List<OrganisationsformKatalogEintrag> {
+	public historie(): List<OrganisationsformKatalogEintrag> {
 		return de_svws_nrw_asd_types_CoreType_historie(this);
 	}
 
@@ -102,7 +102,7 @@ export class WeiterbildungskollegOrganisationsformen extends JavaEnum<Weiterbild
 		return 'de.svws_nrw.asd.types.schule.WeiterbildungskollegOrganisationsformen';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.asd.types.schule.WeiterbildungskollegOrganisationsformen', 'de.svws_nrw.asd.types.CoreType', 'java.lang.Comparable', 'java.lang.Enum', 'java.lang.Comparable'].includes(name);
 	}
 
@@ -110,6 +110,6 @@ export class WeiterbildungskollegOrganisationsformen extends JavaEnum<Weiterbild
 
 }
 
-export function cast_de_svws_nrw_asd_types_schule_WeiterbildungskollegOrganisationsformen(obj : unknown) : WeiterbildungskollegOrganisationsformen {
+export function cast_de_svws_nrw_asd_types_schule_WeiterbildungskollegOrganisationsformen(obj: unknown): WeiterbildungskollegOrganisationsformen {
 	return obj as WeiterbildungskollegOrganisationsformen;
 }

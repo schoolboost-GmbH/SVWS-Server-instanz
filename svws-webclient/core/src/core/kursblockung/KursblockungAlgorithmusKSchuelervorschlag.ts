@@ -10,7 +10,7 @@ export class KursblockungAlgorithmusKSchuelervorschlag extends KursblockungAlgor
 	/**
 	 *  Die Anzahl an Runden ohne Verbesserung, bevor es zum Abbruch kommt.
 	 */
-	private static readonly MAX_RUNDEN_IN_FOLGE_OHNE_VERBESSERUNG : number = 2000;
+	private static readonly MAX_RUNDEN_IN_FOLGE_OHNE_VERBESSERUNG: number = 2000;
 
 
 	/**
@@ -21,11 +21,11 @@ export class KursblockungAlgorithmusKSchuelervorschlag extends KursblockungAlgor
 	 * @param pLogger Logger für Benutzerhinweise, Warnungen und Fehler.
 	 * @param pDynDat Die dynamischen Blockungsdaten.
 	 */
-	public constructor(pRandom : Random, pLogger : Logger, pDynDat : KursblockungDynDaten) {
+	public constructor(pRandom: Random, pLogger: Logger, pDynDat: KursblockungDynDaten) {
 		super(pRandom, pLogger, pDynDat);
 	}
 
-	public toString() : string {
+	public toString(): string {
 		return "Schülervorschlag";
 	}
 
@@ -34,15 +34,15 @@ export class KursblockungAlgorithmusKSchuelervorschlag extends KursblockungAlgor
 	 * Anschließend verändert der Algorithmus die Lage eines zufälligen Kurses. Falls sich die Bewertung verschlechter,
 	 * wird die Veränderung rückgängig gemacht.
 	 */
-	public berechne(pEndzeit : number) : void {
-		const current : number = System.currentTimeMillis();
-		const halbzeit : number = current + (Math.trunc((pEndzeit - current) / 2));
+	public berechne(pEndzeit: number): void {
+		const current: number = System.currentTimeMillis();
+		const halbzeit: number = current + (Math.trunc((pEndzeit - current) / 2));
 		if (this.dynDaten.gibKurseDieFreiSindAnzahl() === 0)
 			return;
 		this.dynDaten.aktionSchuelerAusAllenKursenEntfernen();
 		this.dynDaten.aktionKurseFreieZufaelligVerteilen();
 		this.dynDaten.aktionZustandSpeichernK();
-		let countKeineVerbesserung : number = 0;
+		let countKeineVerbesserung: number = 0;
 		do {
 			countKeineVerbesserung = this.verteileKurseMitSchuelerwunsch() ? 0 : (countKeineVerbesserung + 1);
 		} while ((countKeineVerbesserung < KursblockungAlgorithmusKSchuelervorschlag.MAX_RUNDEN_IN_FOLGE_OHNE_VERBESSERUNG) && (System.currentTimeMillis() < halbzeit));
@@ -58,11 +58,11 @@ export class KursblockungAlgorithmusKSchuelervorschlag extends KursblockungAlgor
 	 *
 	 * @return true, wenn der Zustand angepasst wurde
 	 */
-	private verteileKurseMitSchuelerwunsch() : boolean {
+	private verteileKurseMitSchuelerwunsch(): boolean {
 		this.dynDaten.aktionSchuelerAusAllenKursenEntfernen();
 		this.dynDaten.aktionKurseVerteilenNachSchuelerwunsch();
 		this.dynDaten.aktionSchuelerVerteilenMitGewichtetenBipartitemMatching();
-		const compare : number = this.dynDaten.gibCompareZustandK_NW_KD_FW();
+		const compare: number = this.dynDaten.gibCompareZustandK_NW_KD_FW();
 		if (compare >= 0) {
 			this.dynDaten.aktionZustandSpeichernK();
 			return compare > 0;
@@ -77,12 +77,12 @@ export class KursblockungAlgorithmusKSchuelervorschlag extends KursblockungAlgor
 	 *
 	 * @return true, wenn der Zustand angepasst wurde
 	 */
-	private verteileKurseZufaelligEinWenig() : boolean {
+	private verteileKurseZufaelligEinWenig(): boolean {
 		do {
 			this.dynDaten.aktionSchuelerAusAllenKursenEntfernen();
 			this.dynDaten.aktionKursVerteilenEinenZufaelligenFreien();
 			this.dynDaten.aktionSchuelerVerteilenMitGewichtetenBipartitemMatching();
-			const cmp : number = this.dynDaten.gibCompareZustandK_NW_KD_FW();
+			const cmp: number = this.dynDaten.gibCompareZustandK_NW_KD_FW();
 			if (cmp > 0) {
 				this.dynDaten.aktionZustandSpeichernK();
 				return true;
@@ -96,7 +96,7 @@ export class KursblockungAlgorithmusKSchuelervorschlag extends KursblockungAlgor
 		return 'de.svws_nrw.core.kursblockung.KursblockungAlgorithmusKSchuelervorschlag';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.kursblockung.KursblockungAlgorithmusKSchuelervorschlag', 'de.svws_nrw.core.kursblockung.KursblockungAlgorithmusK'].includes(name);
 	}
 
@@ -104,6 +104,6 @@ export class KursblockungAlgorithmusKSchuelervorschlag extends KursblockungAlgor
 
 }
 
-export function cast_de_svws_nrw_core_kursblockung_KursblockungAlgorithmusKSchuelervorschlag(obj : unknown) : KursblockungAlgorithmusKSchuelervorschlag {
+export function cast_de_svws_nrw_core_kursblockung_KursblockungAlgorithmusKSchuelervorschlag(obj: unknown): KursblockungAlgorithmusKSchuelervorschlag {
 	return obj as KursblockungAlgorithmusKSchuelervorschlag;
 }

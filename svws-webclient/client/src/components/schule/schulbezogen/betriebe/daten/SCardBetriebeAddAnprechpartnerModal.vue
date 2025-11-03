@@ -37,7 +37,7 @@
 
 	const openModal = () => {
 		show.value = true;
-	}
+	};
 
 	async function importer() {
 		await props.addBetriebAnsprechpartner(item.value);

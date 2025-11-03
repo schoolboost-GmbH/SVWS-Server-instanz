@@ -15,22 +15,22 @@ import de.svws_nrw.db.schema.SchemaTabelleSpalte;
 public class Tabelle_UV_Schuelergruppen_Schueler extends SchemaTabelle {
 
 	/** Die Definition der Tabellenspalte Schuelergruppe_ID */
-	public SchemaTabelleSpalte col_Schuelergruppe_ID = add("Schuelergruppe_ID", SchemaDatentypen.BIGINT, true)
+	public final SchemaTabelleSpalte col_Schuelergruppe_ID = add("Schuelergruppe_ID", SchemaDatentypen.BIGINT, true)
 			.setNotNull()
 			.setJavaComment("Die ID der Schülergruppe als Fremdschlüssel auf die Tabelle UV_Schuelergruppen");
 
 	/** Die Definition der Tabellenspalte Schueler_ID */
-	public SchemaTabelleSpalte col_Schueler_ID = add("Schueler_ID", SchemaDatentypen.BIGINT, true)
+	public final SchemaTabelleSpalte col_Schueler_ID = add("Schueler_ID", SchemaDatentypen.BIGINT, true)
 			.setNotNull()
 			.setJavaComment("Die ID des Schülers als Fremdschlüssel auf die Tabelle Schueler");
 
 	/** Die Definition der Tabellenspalte Planungsabschnitt_ID */
-	public SchemaTabelleSpalte col_Planungsabschnitt_ID = add("Planungsabschnitt_ID", SchemaDatentypen.BIGINT, false)
+	public final SchemaTabelleSpalte col_Planungsabschnitt_ID = add("Planungsabschnitt_ID", SchemaDatentypen.BIGINT, false)
 			.setNotNull()
 			.setJavaComment("Die ID des Planungsabschnitts als Fremdschlüssel auf die Tabelle UV_Planungsabschnitte");
 
 	/** Die Definition des Fremdschlüssels auf UV_Schuelergruppen */
-	public SchemaTabelleFremdschluessel fk_UVSchuelergruppenSchueler_UVSchuelergruppe_FK = addForeignKey(
+	public final SchemaTabelleFremdschluessel fk_UVSchuelergruppenSchueler_UVSchuelergruppe_FK = addForeignKey(
 			"UVSchuelergruppenSchueler_UVSchuelergruppe_FK",
 			/* OnUpdate: */ SchemaFremdschluesselAktionen.CASCADE,
 			/* OnDelete: */ SchemaFremdschluesselAktionen.CASCADE,
@@ -39,7 +39,7 @@ public class Tabelle_UV_Schuelergruppen_Schueler extends SchemaTabelle {
 	);
 
 	/** Die Definition des Fremdschlüssels auf Planungsabschnitte_Schueler */
-	public SchemaTabelleFremdschluessel fk_UVSchuelergruppenSchueler_UVSchuelerPlanungsabschnitte_FK = addForeignKey(
+	public final SchemaTabelleFremdschluessel fk_UVSchuelergruppenSchueler_UVSchuelerPlanungsabschnitte_FK = addForeignKey(
 			"UVSchuelergruppenSchueler_UVSchuelerPlanungsabschnitte_FK",
 			/* OnUpdate: */ SchemaFremdschluesselAktionen.CASCADE,
 			/* OnDelete: */ SchemaFremdschluesselAktionen.CASCADE,

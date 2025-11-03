@@ -11,16 +11,16 @@ import jakarta.validation.constraints.NotNull;
  */
 public final class EmailJobRecipient {
 
-	/** Die Empfänger-Email-Adresse */
+	/** Die Empfänger-E-Mail-Adresse */
 	public final @NotNull String email;
 
-	/** Die Liste der Attachements */
+	/** Die Liste der Attachments */
 	public final List<EmailJobAttachment> attachments = new ArrayList<>();
 
 	/**
-	 * Erstellt einen neuen Anhang mit der Adresse des Email-Empfängers
+	 * Erstellt einen neuen Anhang mit der Adresse des E-Mail-Empfängers
 	 *
-	 * @param recipient
+	 * @param recipient die Empfänger-E-Mail-Adresse
 	 */
 	public EmailJobRecipient(final String recipient) {
 		this.email = recipient;

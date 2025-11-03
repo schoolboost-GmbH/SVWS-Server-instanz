@@ -6,18 +6,18 @@ export class SchuelerblockungOutputFachwahlZuKurs extends JavaObject {
 	/**
 	 * Die ID des Faches (des Schülers).
 	 */
-	public fachID : number = 0;
+	public fachID: number = 0;
 
 	/**
 	 * Die ID der Kursart (des Schülers).
 	 */
-	public kursartID : number = 0;
+	public kursartID: number = 0;
 
 	/**
 	 * Die ID des zugeordneten Kurses zur Fachwahl (des Schülers). Ein Wert von {@code -1} bedeutet, dass das Fach
 	 *  nicht zugeordnet werden konnte, was als <b>Nicht-Wahl</b> bezeichnet wird.
 	 */
-	public kursID : number = 0;
+	public kursID: number = 0;
 
 
 	/**
@@ -31,13 +31,13 @@ export class SchuelerblockungOutputFachwahlZuKurs extends JavaObject {
 		return 'de.svws_nrw.core.data.kursblockung.SchuelerblockungOutputFachwahlZuKurs';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.kursblockung.SchuelerblockungOutputFachwahlZuKurs'].includes(name);
 	}
 
 	public static class = new Class<SchuelerblockungOutputFachwahlZuKurs>('de.svws_nrw.core.data.kursblockung.SchuelerblockungOutputFachwahlZuKurs');
 
-	public static transpilerFromJSON(json : string): SchuelerblockungOutputFachwahlZuKurs {
+	public static transpilerFromJSON(json: string): SchuelerblockungOutputFachwahlZuKurs {
 		const obj = JSON.parse(json) as Partial<SchuelerblockungOutputFachwahlZuKurs>;
 		const result = new SchuelerblockungOutputFachwahlZuKurs();
 		if (obj.fachID === undefined)
@@ -52,7 +52,7 @@ export class SchuelerblockungOutputFachwahlZuKurs extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : SchuelerblockungOutputFachwahlZuKurs) : string {
+	public static transpilerToJSON(obj: SchuelerblockungOutputFachwahlZuKurs): string {
 		let result = '{';
 		result += '"fachID" : ' + obj.fachID.toString() + ',';
 		result += '"kursartID" : ' + obj.kursartID.toString() + ',';
@@ -62,7 +62,7 @@ export class SchuelerblockungOutputFachwahlZuKurs extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<SchuelerblockungOutputFachwahlZuKurs>) : string {
+	public static transpilerToJSONPatch(obj: Partial<SchuelerblockungOutputFachwahlZuKurs>): string {
 		let result = '{';
 		if (obj.fachID !== undefined) {
 			result += '"fachID" : ' + obj.fachID.toString() + ',';
@@ -80,6 +80,6 @@ export class SchuelerblockungOutputFachwahlZuKurs extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_kursblockung_SchuelerblockungOutputFachwahlZuKurs(obj : unknown) : SchuelerblockungOutputFachwahlZuKurs {
+export function cast_de_svws_nrw_core_data_kursblockung_SchuelerblockungOutputFachwahlZuKurs(obj: unknown): SchuelerblockungOutputFachwahlZuKurs {
 	return obj as SchuelerblockungOutputFachwahlZuKurs;
 }

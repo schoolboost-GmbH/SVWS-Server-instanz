@@ -34,8 +34,8 @@ export class RouteDataKatalogZeitraster extends RouteData<RouteStateKatalogZeitr
 	}
 
 	public setSelection = (value: Wochentag | number | StundenplanZeitraster | StundenplanPausenzeit | undefined) => {
-		this.setPatchedState({selected: value});
-	}
+		this.setPatchedState({ selected: value });
+	};
 
 	public async ladeListe() {
 		api.status.start();
@@ -63,7 +63,7 @@ export class RouteDataKatalogZeitraster extends RouteData<RouteStateKatalogZeitr
 		await routeStundenplan.data.reloadVorlagen();
 		this.commit();
 		api.status.stop();
-	}
+	};
 
 	removeZeitraster = async (zeitraster: Iterable<StundenplanZeitraster>) => {
 		api.status.start();
@@ -76,9 +76,9 @@ export class RouteDataKatalogZeitraster extends RouteData<RouteStateKatalogZeitr
 		await routeStundenplan.data.reloadVorlagen();
 		this.commit();
 		api.status.stop();
-	}
+	};
 
-	patchZeitraster = async (zeitraster : Iterable<StundenplanZeitraster>) => {
+	patchZeitraster = async (zeitraster: Iterable<StundenplanZeitraster>) => {
 		api.status.start();
 		const list: List<StundenplanZeitraster> = new ArrayList();
 		for (const z of zeitraster)
@@ -88,6 +88,6 @@ export class RouteDataKatalogZeitraster extends RouteData<RouteStateKatalogZeitr
 		await routeStundenplan.data.reloadVorlagen();
 		this.commit();
 		api.status.stop();
-	}
+	};
 }
 

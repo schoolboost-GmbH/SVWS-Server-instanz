@@ -6,32 +6,32 @@ export class ENMJahrgang extends JavaObject {
 	/**
 	 * Die ID des Jahrgangs aus der SVWS-DB (z.B. 16)
 	 */
-	public id : number = 0;
+	public id: number = 0;
 
 	/**
 	 * Das Kürzel des Jahrgangs, wie es im Rahmen der amtlichen Schulstatistik verwendet wird. (z.B. EF)
 	 */
-	public kuerzel : string | null = null;
+	public kuerzel: string | null = null;
 
 	/**
 	 * Das Kürzel des Jahrgangs, wie er im Rahmen der Schule benannt wird und angezeigt werden soll. (z.B. EF)
 	 */
-	public kuerzelAnzeige : string | null = null;
+	public kuerzelAnzeige: string | null = null;
 
 	/**
 	 * Die textuelle Bezeichnung des Jahrgangs. (z.B. Einführungsphase)
 	 */
-	public beschreibung : string | null = null;
+	public beschreibung: string | null = null;
 
 	/**
 	 * Die Stufe des Jahrgangs. (z.B. PR, SI, nur Berufskolleg: SII, Berufskolleg Anlage D und GOSt: SII-1, SII-2, SII-3)
 	 */
-	public stufe : string | null = null;
+	public stufe: string | null = null;
 
 	/**
 	 * Die Reihenfolge des Jahrgangs bei der Sortierung der Jahrgänge. (z.B. 8)
 	 */
-	public sortierung : number = 0;
+	public sortierung: number = 0;
 
 
 	/**
@@ -45,13 +45,13 @@ export class ENMJahrgang extends JavaObject {
 		return 'de.svws_nrw.core.data.enm.ENMJahrgang';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.enm.ENMJahrgang'].includes(name);
 	}
 
 	public static class = new Class<ENMJahrgang>('de.svws_nrw.core.data.enm.ENMJahrgang');
 
-	public static transpilerFromJSON(json : string): ENMJahrgang {
+	public static transpilerFromJSON(json: string): ENMJahrgang {
 		const obj = JSON.parse(json) as Partial<ENMJahrgang>;
 		const result = new ENMJahrgang();
 		if (obj.id === undefined)
@@ -67,7 +67,7 @@ export class ENMJahrgang extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : ENMJahrgang) : string {
+	public static transpilerToJSON(obj: ENMJahrgang): string {
 		let result = '{';
 		result += '"id" : ' + obj.id.toString() + ',';
 		result += '"kuerzel" : ' + ((obj.kuerzel === null) ? 'null' : JSON.stringify(obj.kuerzel)) + ',';
@@ -80,7 +80,7 @@ export class ENMJahrgang extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<ENMJahrgang>) : string {
+	public static transpilerToJSONPatch(obj: Partial<ENMJahrgang>): string {
 		let result = '{';
 		if (obj.id !== undefined) {
 			result += '"id" : ' + obj.id.toString() + ',';
@@ -107,6 +107,6 @@ export class ENMJahrgang extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_enm_ENMJahrgang(obj : unknown) : ENMJahrgang {
+export function cast_de_svws_nrw_core_data_enm_ENMJahrgang(obj: unknown): ENMJahrgang {
 	return obj as ENMJahrgang;
 }

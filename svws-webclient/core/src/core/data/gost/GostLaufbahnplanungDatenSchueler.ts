@@ -10,47 +10,47 @@ export class GostLaufbahnplanungDatenSchueler extends JavaObject {
 	/**
 	 * Die eindeutige ID des Schülers
 	 */
-	public id : number = 0;
+	public id: number = 0;
 
 	/**
 	 * Die ID des Schüler verschlüsselt
 	 */
-	public idEnc : string = "";
+	public idEnc: string = "";
 
 	/**
 	 * Der Vorname des Schülers
 	 */
-	public vorname : string = "";
+	public vorname: string = "";
 
 	/**
 	 * Der Nachname des Schülers
 	 */
-	public nachname : string = "";
+	public nachname: string = "";
 
 	/**
 	 * Das Geschlecht des Schülers
 	 */
-	public geschlecht : string = "";
+	public geschlecht: string = "";
 
 	/**
 	 * Das einstellige Kürzel der Sprache des bilingualen Bildungsganges, falls der Schüler an einem solchen teilnimmt.
 	 */
-	public bilingualeSprache : string | null = null;
+	public bilingualeSprache: string | null = null;
 
 	/**
 	 * Gibt für die einzelnen {@link GostHalbjahr}-Werte an, ob gewertete Leistungsdaten vorhanden sind oder es sich um Werte der Laufbahnplanung handelt.
 	 */
-	public readonly bewertetesHalbjahr : Array<boolean> = Array(6).fill(false);
+	public readonly bewertetesHalbjahr: Array<boolean> = Array(6).fill(false);
 
 	/**
 	 * Ein Array mit den Fachbelegungen in der Oberstufe.
 	 */
-	public readonly fachbelegungen : List<GostLaufbahnplanungDatenFachbelegung> = new ArrayList<GostLaufbahnplanungDatenFachbelegung>();
+	public readonly fachbelegungen: List<GostLaufbahnplanungDatenFachbelegung> = new ArrayList<GostLaufbahnplanungDatenFachbelegung>();
 
 	/**
 	 * Die Sprachendaten des Schülers mit Informationen zu Sprachbelegungen (Sprachenfolge) und zu Sprachprüfungen.
 	 */
-	public sprachendaten : Sprachendaten = new Sprachendaten();
+	public sprachendaten: Sprachendaten = new Sprachendaten();
 
 
 	/**
@@ -64,13 +64,13 @@ export class GostLaufbahnplanungDatenSchueler extends JavaObject {
 		return 'de.svws_nrw.core.data.gost.GostLaufbahnplanungDatenSchueler';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.gost.GostLaufbahnplanungDatenSchueler'].includes(name);
 	}
 
 	public static class = new Class<GostLaufbahnplanungDatenSchueler>('de.svws_nrw.core.data.gost.GostLaufbahnplanungDatenSchueler');
 
-	public static transpilerFromJSON(json : string): GostLaufbahnplanungDatenSchueler {
+	public static transpilerFromJSON(json: string): GostLaufbahnplanungDatenSchueler {
 		const obj = JSON.parse(json) as Partial<GostLaufbahnplanungDatenSchueler>;
 		const result = new GostLaufbahnplanungDatenSchueler();
 		if (obj.id === undefined)
@@ -105,7 +105,7 @@ export class GostLaufbahnplanungDatenSchueler extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : GostLaufbahnplanungDatenSchueler) : string {
+	public static transpilerToJSON(obj: GostLaufbahnplanungDatenSchueler): string {
 		let result = '{';
 		result += '"id" : ' + obj.id.toString() + ',';
 		result += '"idEnc" : ' + JSON.stringify(obj.idEnc) + ',';
@@ -135,7 +135,7 @@ export class GostLaufbahnplanungDatenSchueler extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<GostLaufbahnplanungDatenSchueler>) : string {
+	public static transpilerToJSONPatch(obj: Partial<GostLaufbahnplanungDatenSchueler>): string {
 		let result = '{';
 		if (obj.id !== undefined) {
 			result += '"id" : ' + obj.id.toString() + ',';
@@ -186,6 +186,6 @@ export class GostLaufbahnplanungDatenSchueler extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_gost_GostLaufbahnplanungDatenSchueler(obj : unknown) : GostLaufbahnplanungDatenSchueler {
+export function cast_de_svws_nrw_core_data_gost_GostLaufbahnplanungDatenSchueler(obj: unknown): GostLaufbahnplanungDatenSchueler {
 	return obj as GostLaufbahnplanungDatenSchueler;
 }

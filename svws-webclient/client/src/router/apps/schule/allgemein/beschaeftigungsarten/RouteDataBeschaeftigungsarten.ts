@@ -15,7 +15,7 @@ const defaultState = {
 	view: routeBeschaeftigungsartenDaten,
 	activeViewType: ViewType.DEFAULT,
 	oldView: undefined,
-}
+};
 
 export class RouteDataBeschaeftigungsarten extends RouteDataAuswahl<BeschaeftigungsartenListeManager, RouteStateAuswahlInterface<BeschaeftigungsartenListeManager>> {
 
@@ -50,10 +50,10 @@ export class RouteDataBeschaeftigungsarten extends RouteDataAuswahl<Beschaeftigu
 		return `Beschäftigungsart ${beschaeftigungsart?.bezeichnung ?? '???'} (ID: ${id}) wurde erfolgreich gelöscht.`;
 	}
 
-	addBeschaeftigungsart = async (data: Partial<Beschaeftigungsart>) : Promise<void> => {
+	addBeschaeftigungsart = async (data: Partial<Beschaeftigungsart>): Promise<void> => {
 		const result = await api.server.addBeschaeftigungsart(data, api.schema);
 		this.manager.liste.add(result);
 		this.commit();
 		await this.gotoDefaultView(result.id);
-	}
+	};
 }

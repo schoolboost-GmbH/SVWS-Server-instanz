@@ -6,52 +6,52 @@ export class SchuelerKAoADaten extends JavaObject {
 	/**
 	 * Die ID der KAOA Daten in der Datenbank.
 	 */
-	public id : number = -1;
+	public id: number = -1;
 
 	/**
 	 * Die ID des Schuljahresabschnitts zu dem diese KAOA Daten gehören.
 	 */
-	public idSchuljahresabschnitt : number = -1;
+	public idSchuljahresabschnitt: number = -1;
 
 	/**
 	 * Die ID des Jahrgangs des Schülers, zu dem diese KAOA Daten gehören.
 	 */
-	public idJahrgang : number = -1;
+	public idJahrgang: number = -1;
 
 	/**
 	 * Die ID der Kategorie des Schülers, zu dem diese KAOA Daten gehören.
 	 */
-	public idKategorie : number = -1;
+	public idKategorie: number = -1;
 
 	/**
 	 * Die ID des Merkmals des Schülers, zu dem diese KAOA Daten gehören.
 	 */
-	public idMerkmal : number = -1;
+	public idMerkmal: number = -1;
 
 	/**
 	 * Die ID des Zusatzmerkmals des Schülers, zu dem diese KAOA Daten gehören.
 	 */
-	public idZusatzmerkmal : number = -1;
+	public idZusatzmerkmal: number = -1;
 
 	/**
 	 * Die ID der Anschlussoption des Schülers, zu dem diese KAOA Daten gehören.
 	 */
-	public idAnschlussoption : number | null = null;
+	public idAnschlussoption: number | null = null;
 
 	/**
 	 * Die ID de Berufsfelds des Schülers, zu dem diese KAOA Daten gehören.
 	 */
-	public idBerufsfeld : number | null = null;
+	public idBerufsfeld: number | null = null;
 
 	/**
 	 * Die ID der Ebene4 dieser KAOA Daten
 	 */
-	public idEbene4 : number | null = null;
+	public idEbene4: number | null = null;
 
 	/**
 	 * Die Bemerkung zu diesen KAOA Daten.
 	 */
-	public bemerkung : string | null = null;
+	public bemerkung: string | null = null;
 
 
 	/**
@@ -65,13 +65,13 @@ export class SchuelerKAoADaten extends JavaObject {
 		return 'de.svws_nrw.core.data.schueler.SchuelerKAoADaten';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.schueler.SchuelerKAoADaten'].includes(name);
 	}
 
 	public static class = new Class<SchuelerKAoADaten>('de.svws_nrw.core.data.schueler.SchuelerKAoADaten');
 
-	public static transpilerFromJSON(json : string): SchuelerKAoADaten {
+	public static transpilerFromJSON(json: string): SchuelerKAoADaten {
 		const obj = JSON.parse(json) as Partial<SchuelerKAoADaten>;
 		const result = new SchuelerKAoADaten();
 		if (obj.id === undefined)
@@ -99,7 +99,7 @@ export class SchuelerKAoADaten extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : SchuelerKAoADaten) : string {
+	public static transpilerToJSON(obj: SchuelerKAoADaten): string {
 		let result = '{';
 		result += '"id" : ' + obj.id.toString() + ',';
 		result += '"idSchuljahresabschnitt" : ' + obj.idSchuljahresabschnitt.toString() + ',';
@@ -116,7 +116,7 @@ export class SchuelerKAoADaten extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<SchuelerKAoADaten>) : string {
+	public static transpilerToJSONPatch(obj: Partial<SchuelerKAoADaten>): string {
 		let result = '{';
 		if (obj.id !== undefined) {
 			result += '"id" : ' + obj.id.toString() + ',';
@@ -155,6 +155,6 @@ export class SchuelerKAoADaten extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_schueler_SchuelerKAoADaten(obj : unknown) : SchuelerKAoADaten {
+export function cast_de_svws_nrw_core_data_schueler_SchuelerKAoADaten(obj: unknown): SchuelerKAoADaten {
 	return obj as SchuelerKAoADaten;
 }

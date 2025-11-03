@@ -11,37 +11,37 @@ export class BKBildungsplan extends JavaObject {
 	/**
 	 * Die ID des Katalog-Eintrags.
 	 */
-	public id : number = -1;
+	public id: number = -1;
 
 	/**
 	 * Der zugehörige Bildungsgang.
 	 */
-	public fachklasse : BKFachklassenSchluessel = new BKFachklassenSchluessel();
+	public fachklasse: BKFachklassenSchluessel = new BKFachklassenSchluessel();
 
 	/**
 	 * Die Dauer des Bildungsgangs in Halbjahren.
 	 */
-	public dauer : number = -1;
+	public dauer: number = -1;
 
 	/**
 	 * Die zugehörigen Bündelfächer
 	 */
-	public fbFaecher : List<BKFBFach> = new ArrayList<BKFBFach>();
+	public fbFaecher: List<BKFBFach> = new ArrayList<BKFBFach>();
 
 	/**
 	 * Die zugehörige Liste der Lernfelder.
 	 */
-	public lernfelder : List<BKLernfeld> = new ArrayList<BKLernfeld>();
+	public lernfelder: List<BKLernfeld> = new ArrayList<BKLernfeld>();
 
 	/**
 	 * Gibt an, in welchem Schuljahr der Historien-Eintrag einführt wurde. Ist kein Schuljahr bekannt, so ist null gesetzt.
 	 */
-	public gueltigVon : number | null = null;
+	public gueltigVon: number | null = null;
 
 	/**
 	 * Gibt an, bis zu welchem (Einschulungs-)Schuljahr der Historien-Eintrag gültig ist. Ist kein Schuljahr bekannt, so ist null gesetzt.
 	 */
-	public gueltigBis : number | null = null;
+	public gueltigBis: number | null = null;
 
 
 	/**
@@ -55,13 +55,13 @@ export class BKBildungsplan extends JavaObject {
 		return 'de.svws_nrw.core.data.bk.BKBildungsplan';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.bk.BKBildungsplan'].includes(name);
 	}
 
 	public static class = new Class<BKBildungsplan>('de.svws_nrw.core.data.bk.BKBildungsplan');
 
-	public static transpilerFromJSON(json : string): BKBildungsplan {
+	public static transpilerFromJSON(json: string): BKBildungsplan {
 		const obj = JSON.parse(json) as Partial<BKBildungsplan>;
 		const result = new BKBildungsplan();
 		if (obj.id === undefined)
@@ -88,7 +88,7 @@ export class BKBildungsplan extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : BKBildungsplan) : string {
+	public static transpilerToJSON(obj: BKBildungsplan): string {
 		let result = '{';
 		result += '"id" : ' + obj.id.toString() + ',';
 		result += '"fachklasse" : ' + BKFachklassenSchluessel.transpilerToJSON(obj.fachklasse) + ',';
@@ -116,7 +116,7 @@ export class BKBildungsplan extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<BKBildungsplan>) : string {
+	public static transpilerToJSONPatch(obj: Partial<BKBildungsplan>): string {
 		let result = '{';
 		if (obj.id !== undefined) {
 			result += '"id" : ' + obj.id.toString() + ',';
@@ -160,6 +160,6 @@ export class BKBildungsplan extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_bk_BKBildungsplan(obj : unknown) : BKBildungsplan {
+export function cast_de_svws_nrw_core_data_bk_BKBildungsplan(obj: unknown): BKBildungsplan {
 	return obj as BKBildungsplan;
 }

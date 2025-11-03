@@ -13,8 +13,8 @@ const SFaecherNeu = () => import("~/components/schule/schulbezogen/faecher/SFaec
 export class RouteFaecherNeu extends RouteNode<any, RouteFaecher> {
 
 	public constructor() {
-		super(Schulform.values(), [ BenutzerKompetenz.KATALOG_EINTRAEGE_AENDERN ], "schule.faecher.neu", "neu", SFaecherNeu);
-		super.types = new Set([ ViewType.HINZUFUEGEN ]);
+		super(Schulform.values(), [BenutzerKompetenz.KATALOG_EINTRAEGE_AENDERN], "schule.faecher.neu", "neu", SFaecherNeu);
+		super.types = new Set([ViewType.HINZUFUEGEN]);
 		super.mode = ServerMode.STABLE;
 		super.propHandler = (route) => this.getProps(route);
 		super.text = "Fach Neu";

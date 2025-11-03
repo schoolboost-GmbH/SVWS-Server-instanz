@@ -6,47 +6,47 @@ export class StundenplanKonfiguration extends JavaObject {
 	/**
 	 * Der Default-Wert für den Unterrichtsbeginn.
 	 */
-	public defaultUnterrichtsbeginn : number = 8 * 60;
+	public defaultUnterrichtsbeginn: number = 8 * 60;
 
 	/**
 	 * Der Default-Wert für die Dauer einer Unterrichtsstunde.
 	 */
-	public defaultStundendauer : number = 45;
+	public defaultStundendauer: number = 45;
 
 	/**
 	 * Der Default-Wert für die Zeit zwischen zwei Unterrichtsstunden die für Raumwechsel gilt.
 	 */
-	public defaultPausenzeitFuerRaumwechsel : number = 5;
+	public defaultPausenzeitFuerRaumwechsel: number = 5;
 
 	/**
 	 * Der Default-Wert des Beginns der 1. Vormittagspause.
 	 */
-	public defaultVormittagspause1Nach : number = 2;
+	public defaultVormittagspause1Nach: number = 2;
 
 	/**
 	 * Der Default-Wert der Dauer der 1. Vormittagspause.
 	 */
-	public defaultVormittagspause1Dauer : number = 25;
+	public defaultVormittagspause1Dauer: number = 25;
 
 	/**
 	 * Der Default-Wert des Beginns der 2. Vormittagspause.
 	 */
-	public defaultVormittagspause2Nach : number = 4;
+	public defaultVormittagspause2Nach: number = 4;
 
 	/**
 	 * Der Default-Wert der Dauer der 2. Vormittagspause.
 	 */
-	public defaultVormittagspause2Dauer : number = 25;
+	public defaultVormittagspause2Dauer: number = 25;
 
 	/**
 	 * Der Default-Wert des Beginns der Mittagspause.
 	 */
-	public defaultMittagspauseNach : number = 6;
+	public defaultMittagspauseNach: number = 6;
 
 	/**
 	 * Der Default-Wert der Dauer der Mittagspause.
 	 */
-	public defaultMittagspauseDauer : number = 60;
+	public defaultMittagspauseDauer: number = 60;
 
 
 	/**
@@ -60,13 +60,13 @@ export class StundenplanKonfiguration extends JavaObject {
 		return 'de.svws_nrw.core.data.stundenplan.StundenplanKonfiguration';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.stundenplan.StundenplanKonfiguration'].includes(name);
 	}
 
 	public static class = new Class<StundenplanKonfiguration>('de.svws_nrw.core.data.stundenplan.StundenplanKonfiguration');
 
-	public static transpilerFromJSON(json : string): StundenplanKonfiguration {
+	public static transpilerFromJSON(json: string): StundenplanKonfiguration {
 		const obj = JSON.parse(json) as Partial<StundenplanKonfiguration>;
 		const result = new StundenplanKonfiguration();
 		if (obj.defaultUnterrichtsbeginn === undefined)
@@ -99,7 +99,7 @@ export class StundenplanKonfiguration extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : StundenplanKonfiguration) : string {
+	public static transpilerToJSON(obj: StundenplanKonfiguration): string {
 		let result = '{';
 		result += '"defaultUnterrichtsbeginn" : ' + obj.defaultUnterrichtsbeginn.toString() + ',';
 		result += '"defaultStundendauer" : ' + obj.defaultStundendauer.toString() + ',';
@@ -115,7 +115,7 @@ export class StundenplanKonfiguration extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<StundenplanKonfiguration>) : string {
+	public static transpilerToJSONPatch(obj: Partial<StundenplanKonfiguration>): string {
 		let result = '{';
 		if (obj.defaultUnterrichtsbeginn !== undefined) {
 			result += '"defaultUnterrichtsbeginn" : ' + obj.defaultUnterrichtsbeginn.toString() + ',';
@@ -151,6 +151,6 @@ export class StundenplanKonfiguration extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_stundenplan_StundenplanKonfiguration(obj : unknown) : StundenplanKonfiguration {
+export function cast_de_svws_nrw_core_data_stundenplan_StundenplanKonfiguration(obj: unknown): StundenplanKonfiguration {
 	return obj as StundenplanKonfiguration;
 }

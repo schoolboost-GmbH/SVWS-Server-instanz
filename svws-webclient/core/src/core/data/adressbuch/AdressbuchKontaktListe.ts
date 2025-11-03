@@ -9,7 +9,7 @@ export class AdressbuchKontaktListe extends AdressbuchEintrag {
 	/**
 	 * Die Kategorien dieses Kontakts
 	 */
-	public kontakte : List<AdressbuchKontakt> = new ArrayList<AdressbuchKontakt>();
+	public kontakte: List<AdressbuchKontakt> = new ArrayList<AdressbuchKontakt>();
 
 
 	/**
@@ -23,7 +23,7 @@ export class AdressbuchKontaktListe extends AdressbuchEintrag {
 		return 'de.svws_nrw.core.data.adressbuch.AdressbuchKontaktListe';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.adressbuch.AdressbuchKontaktListe', 'de.svws_nrw.core.data.adressbuch.AdressbuchEintrag'].includes(name);
 	}
 
@@ -31,6 +31,6 @@ export class AdressbuchKontaktListe extends AdressbuchEintrag {
 
 }
 
-export function cast_de_svws_nrw_core_data_adressbuch_AdressbuchKontaktListe(obj : unknown) : AdressbuchKontaktListe {
+export function cast_de_svws_nrw_core_data_adressbuch_AdressbuchKontaktListe(obj: unknown): AdressbuchKontaktListe {
 	return obj as AdressbuchKontaktListe;
 }

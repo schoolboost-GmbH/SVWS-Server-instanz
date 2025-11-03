@@ -6,72 +6,72 @@ export class SchuldateiOrganisationseinheitAdresse extends SchuldateiEintrag {
 	/**
 	 * Die Schulnummer.
 	 */
-	public schulnummer : string = "";
+	public schulnummer: string = "";
 
 	/**
 	 * Die ID des Adress-Eintrags.
 	 */
-	public id : number = 0;
+	public id: number = 0;
 
 	/**
 	 * Die Nummer der Liegenschaft der Organisationseinheit
 	 */
-	public liegenschaft : number = 0;
+	public liegenschaft: number = 0;
 
 	/**
 	 * Straße der Adresse der Organisationseinheit
 	 */
-	public strasse : string = "";
+	public strasse: string = "";
 
 	/**
 	 * Postleitzahl der Schule
 	 */
-	public postleitzahl : string = "";
+	public postleitzahl: string = "";
 
 	/**
 	 * Ort der Schule
 	 */
-	public ort : string = "";
+	public ort: string = "";
 
 	/**
 	 * Regionalschlüssel der Schule
 	 */
-	public regionalschluessel : string = "";
+	public regionalschluessel: string = "";
 
 	/**
 	 * Qualität der Verortung
 	 */
-	public qualitaetverortung : number = 0;
+	public qualitaetverortung: number = 0;
 
 	/**
 	 * Koordinatenrechtswert der Adresse
 	 */
-	public koordinaterechtswert : number = 0;
+	public koordinaterechtswert: number = 0;
 
 	/**
 	 * Koordinatenhochwert der Adresse
 	 */
-	public koordinatehochwert : number = 0;
+	public koordinatehochwert: number = 0;
 
 	/**
 	 * Der Adresstyp
 	 */
-	public adresstypeid : string = "";
+	public adresstypeid: string = "";
 
 	/**
 	 * Das Standortkennzeichen
 	 */
-	public standortkennzeichen : string = "";
+	public standortkennzeichen: string = "";
 
 	/**
 	 * Das Adresskennzeichnen des Teilstandorts (ein Buchstabe)
 	 */
-	public adresskennzeichen : string = "";
+	public adresskennzeichen: string = "";
 
 	/**
 	 * Hauptstandortadresse
 	 */
-	public hauptstandortadresse : string = "";
+	public hauptstandortadresse: string = "";
 
 
 	/**
@@ -85,13 +85,13 @@ export class SchuldateiOrganisationseinheitAdresse extends SchuldateiEintrag {
 		return 'de.svws_nrw.schulen.v1.data.SchuldateiOrganisationseinheitAdresse';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.schulen.v1.data.SchuldateiEintrag', 'de.svws_nrw.schulen.v1.data.SchuldateiOrganisationseinheitAdresse'].includes(name);
 	}
 
 	public static class = new Class<SchuldateiOrganisationseinheitAdresse>('de.svws_nrw.schulen.v1.data.SchuldateiOrganisationseinheitAdresse');
 
-	public static transpilerFromJSON(json : string): SchuldateiOrganisationseinheitAdresse {
+	public static transpilerFromJSON(json: string): SchuldateiOrganisationseinheitAdresse {
 		const obj = JSON.parse(json) as Partial<SchuldateiOrganisationseinheitAdresse>;
 		const result = new SchuldateiOrganisationseinheitAdresse();
 		result.gueltigab = (obj.gueltigab === undefined) ? null : obj.gueltigab === null ? null : obj.gueltigab;
@@ -142,7 +142,7 @@ export class SchuldateiOrganisationseinheitAdresse extends SchuldateiEintrag {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : SchuldateiOrganisationseinheitAdresse) : string {
+	public static transpilerToJSON(obj: SchuldateiOrganisationseinheitAdresse): string {
 		let result = '{';
 		result += '"gueltigab" : ' + ((obj.gueltigab === null) ? 'null' : JSON.stringify(obj.gueltigab)) + ',';
 		result += '"gueltigbis" : ' + ((obj.gueltigbis === null) ? 'null' : JSON.stringify(obj.gueltigbis)) + ',';
@@ -166,7 +166,7 @@ export class SchuldateiOrganisationseinheitAdresse extends SchuldateiEintrag {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<SchuldateiOrganisationseinheitAdresse>) : string {
+	public static transpilerToJSONPatch(obj: Partial<SchuldateiOrganisationseinheitAdresse>): string {
 		let result = '{';
 		if (obj.gueltigab !== undefined) {
 			result += '"gueltigab" : ' + ((obj.gueltigab === null) ? 'null' : JSON.stringify(obj.gueltigab)) + ',';
@@ -226,6 +226,6 @@ export class SchuldateiOrganisationseinheitAdresse extends SchuldateiEintrag {
 
 }
 
-export function cast_de_svws_nrw_schulen_v1_data_SchuldateiOrganisationseinheitAdresse(obj : unknown) : SchuldateiOrganisationseinheitAdresse {
+export function cast_de_svws_nrw_schulen_v1_data_SchuldateiOrganisationseinheitAdresse(obj: unknown): SchuldateiOrganisationseinheitAdresse {
 	return obj as SchuldateiOrganisationseinheitAdresse;
 }

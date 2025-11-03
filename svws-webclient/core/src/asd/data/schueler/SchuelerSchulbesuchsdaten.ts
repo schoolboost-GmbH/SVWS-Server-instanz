@@ -10,147 +10,147 @@ export class SchuelerSchulbesuchsdaten extends JavaObject {
 	/**
 	 * Die ID des Schülerdatensatzes.
 	 */
-	public id : number = 0;
+	public id: number = 0;
 
 	/**
 	 * Die ID der vorher besuchten Schule.
 	 */
-	public idVorherigeSchule : number | null = null;
+	public idVorherigeSchule: number | null = null;
 
 	/**
 	 * Die allgemeine Herkunftsart des Schüler in Bezug auf die schulform der zuvor besuchten Schule.
 	 */
-	public vorigeAllgHerkunft : string | null = null;
+	public vorigeAllgHerkunft: string | null = null;
 
 	/**
 	 * Das Entlassdatum an der zuvor besuchten Schule.
 	 */
-	public vorigeEntlassdatum : string | null = null;
+	public vorigeEntlassdatum: string | null = null;
 
 	/**
 	 * Der Entlassjahrgang an der zuvor besuchten Schule.
 	 */
-	public vorigeEntlassjahrgang : string | null = null;
+	public vorigeEntlassjahrgang: string | null = null;
 
 	/**
 	 * Die ID der Art der letzten Versetzung an der zuvor besuchten Schule.
 	 */
-	public vorigeArtLetzteVersetzung : string | null = null;
+	public vorigeArtLetzteVersetzung: string | null = null;
 
 	/**
 	 * Bemerkungen zu der zuvor besuchten Schule.
 	 */
-	public vorigeBemerkung : string | null = null;
+	public vorigeBemerkung: string | null = null;
 
 	/**
 	 * Die ID des Grundes für die Entlassung von der zuvor besuchten Schule.
 	 */
-	public vorigeEntlassgrundID : number | null = null;
+	public vorigeEntlassgrundID: number | null = null;
 
 	/**
 	 * Die ID des Abschlusses, welcher an der zuvor besuchten Schule erworben wurde.
 	 */
-	public vorigeAbschlussartID : string | null = null;
+	public vorigeAbschlussartID: string | null = null;
 
 	/**
 	 * Das Entlassdatum von dieser Schule.
 	 */
-	public entlassungDatum : string | null = null;
+	public entlassungDatum: string | null = null;
 
 	/**
 	 * Der Jahrgang bei der Entlassung von dieser Schule.
 	 */
-	public entlassungJahrgang : string | null = null;
+	public entlassungJahrgang: string | null = null;
 
 	/**
 	 * Die ID des Grundes für die Entlassung von dieser Schule.
 	 */
-	public entlassungGrundID : number | null = null;
+	public entlassungGrundID: number | null = null;
 
 	/**
 	 * Die ID des Abschlusses, welcher an dieser Schule erworben wurde.
 	 */
-	public entlassungAbschlussartID : string | null = null;
+	public entlassungAbschlussartID: string | null = null;
 
 	/**
 	 * Die ID der aufnehmenden Schule nach einer Entlassung.
 	 */
-	public idAufnehmendeSchule : number | null = null;
+	public idAufnehmendeSchule: number | null = null;
 
 	/**
 	 * Das Datum beim Wechsel zu einer aufnehmenden Schule.
 	 */
-	public aufnehmendWechseldatum : string | null = null;
+	public aufnehmendWechseldatum: string | null = null;
 
 	/**
 	 * Gibt an, ob die aufnehmende Schule den Wechsel bestätigt hat.
 	 */
-	public aufnehmendBestaetigt : boolean | null = null;
+	public aufnehmendBestaetigt: boolean | null = null;
 
 	/**
 	 * Das Jahr der Einschulung in die Grundschule.
 	 */
-	public grundschuleEinschulungsjahr : number | null = null;
+	public grundschuleEinschulungsjahr: number | null = null;
 
 	/**
 	 * Die ID der Einschulungsart in die Grundschule.
 	 */
-	public grundschuleEinschulungsartID : number | null = null;
+	public grundschuleEinschulungsartID: number | null = null;
 
 	/**
 	 * Die ID der Schuleingangsphase der Grundschule.
 	 */
-	public idGrundschuleJahreEingangsphase : number | null = null;
+	public idGrundschuleJahreEingangsphase: number | null = null;
 
 	/**
 	 * Das Kürzel für die Übergangsempfehlung der Grundschule in die Sekundarstufe I
 	 */
-	public kuerzelGrundschuleUebergangsempfehlung : string | null = null;
+	public kuerzelGrundschuleUebergangsempfehlung: string | null = null;
 
 	/**
 	 * Das Jahr des Wechsels in die Sekundarstufe I.
 	 */
-	public sekIWechsel : number | null = null;
+	public sekIWechsel: number | null = null;
 
 	/**
 	 * Das Kürzel der ersten Schulform in der Sekundarstufe I
 	 */
-	public sekIErsteSchulform : string | null = null;
+	public sekIErsteSchulform: string | null = null;
 
 	/**
 	 * Das Jahr des Wechsels in die Sekundarstufe II.
 	 */
-	public sekIIWechsel : number | null = null;
+	public sekIIWechsel: number | null = null;
 
 	/**
 	 * Die ID der Dauer des Kindergartenbesuchs eines Schülers.
 	 */
-	public idDauerKindergartenbesuch : number | null = null;
+	public idDauerKindergartenbesuch: number | null = null;
 
 	/**
 	 * Die ID des Kindergartens.
 	 */
-	public idKindergarten : number | null = null;
+	public idKindergarten: number | null = null;
 
 	/**
 	 * Schüler wurde zu einem Sprachförderkurs verpflichtet (Ja/Nein).
 	 */
-	public verpflichtungSprachfoerderkurs : boolean = false;
+	public verpflichtungSprachfoerderkurs: boolean = false;
 
 	/**
 	 * Teilnahme des Schülers an einem Sprachförderkurs (Ja/Nein).
 	 */
-	public teilnahmeSprachfoerderkurs : boolean = false;
+	public teilnahmeSprachfoerderkurs: boolean = false;
 
 	/**
 	 * Die Informationen zu den besonderen Merkmalen für die Statistik.
 	 */
-	public merkmale : List<SchuelerSchulbesuchMerkmal> = new ArrayList<SchuelerSchulbesuchMerkmal>();
+	public merkmale: List<SchuelerSchulbesuchMerkmal> = new ArrayList<SchuelerSchulbesuchMerkmal>();
 
 	/**
 	 * Die Informationen zu allen bisher besuchten Schulen.
 	 */
-	public alleSchulen : List<SchuelerSchulbesuchSchule> = new ArrayList<SchuelerSchulbesuchSchule>();
+	public alleSchulen: List<SchuelerSchulbesuchSchule> = new ArrayList<SchuelerSchulbesuchSchule>();
 
 
 	/**
@@ -164,13 +164,13 @@ export class SchuelerSchulbesuchsdaten extends JavaObject {
 		return 'de.svws_nrw.asd.data.schueler.SchuelerSchulbesuchsdaten';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.asd.data.schueler.SchuelerSchulbesuchsdaten'].includes(name);
 	}
 
 	public static class = new Class<SchuelerSchulbesuchsdaten>('de.svws_nrw.asd.data.schueler.SchuelerSchulbesuchsdaten');
 
-	public static transpilerFromJSON(json : string): SchuelerSchulbesuchsdaten {
+	public static transpilerFromJSON(json: string): SchuelerSchulbesuchsdaten {
 		const obj = JSON.parse(json) as Partial<SchuelerSchulbesuchsdaten>;
 		const result = new SchuelerSchulbesuchsdaten();
 		if (obj.id === undefined)
@@ -219,7 +219,7 @@ export class SchuelerSchulbesuchsdaten extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : SchuelerSchulbesuchsdaten) : string {
+	public static transpilerToJSON(obj: SchuelerSchulbesuchsdaten): string {
 		let result = '{';
 		result += '"id" : ' + obj.id.toString() + ',';
 		result += '"idVorherigeSchule" : ' + ((obj.idVorherigeSchule === null) ? 'null' : obj.idVorherigeSchule.toString()) + ',';
@@ -269,7 +269,7 @@ export class SchuelerSchulbesuchsdaten extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<SchuelerSchulbesuchsdaten>) : string {
+	public static transpilerToJSONPatch(obj: Partial<SchuelerSchulbesuchsdaten>): string {
 		let result = '{';
 		if (obj.id !== undefined) {
 			result += '"id" : ' + obj.id.toString() + ',';
@@ -379,6 +379,6 @@ export class SchuelerSchulbesuchsdaten extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_asd_data_schueler_SchuelerSchulbesuchsdaten(obj : unknown) : SchuelerSchulbesuchsdaten {
+export function cast_de_svws_nrw_asd_data_schueler_SchuelerSchulbesuchsdaten(obj: unknown): SchuelerSchulbesuchsdaten {
 	return obj as SchuelerSchulbesuchsdaten;
 }

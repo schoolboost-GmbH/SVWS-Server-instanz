@@ -24,8 +24,8 @@ export class AbschlussManagerBerufsbildend extends JavaObject {
 	 *
 	 * @return das Ergebnis der Abschlussberechnung
 	 */
-	public static getErgebnis(hatBSA : boolean, note : number, hatBA : boolean | null, abschlussAllgemeinbildend : SchulabschlussAllgemeinbildend | null) : AbschlussErgebnisBerufsbildend {
-		const ergebnis : AbschlussErgebnisBerufsbildend = new AbschlussErgebnisBerufsbildend();
+	public static getErgebnis(hatBSA: boolean, note: number, hatBA: boolean | null, abschlussAllgemeinbildend: SchulabschlussAllgemeinbildend | null): AbschlussErgebnisBerufsbildend {
+		const ergebnis: AbschlussErgebnisBerufsbildend = new AbschlussErgebnisBerufsbildend();
 		ergebnis.hatBSA = hatBSA;
 		ergebnis.note = note;
 		ergebnis.hatBA = hatBA;
@@ -41,10 +41,10 @@ export class AbschlussManagerBerufsbildend extends JavaObject {
 	 *
 	 * @return der Notendurchschnitt oder NaN im Fehlerfall
 	 */
-	public static getDurchschnitt(abschlussFaecher : BKAnlageAFaecher) : number {
+	public static getDurchschnitt(abschlussFaecher: BKAnlageAFaecher): number {
 		if ((abschlussFaecher.faecher === null) || (abschlussFaecher.faecher.isEmpty()))
 			return NaN;
-		let sum : number = 0;
+		let sum: number = 0;
 		for (const fach of abschlussFaecher.faecher) {
 			sum += fach.note;
 		}
@@ -58,10 +58,10 @@ export class AbschlussManagerBerufsbildend extends JavaObject {
 	 *
 	 * @return die Anzahl der Defizite oder -1 im Fehlerfall
 	 */
-	public static getAnzahlDefizite(abschlussFaecher : BKAnlageAFaecher) : number {
+	public static getAnzahlDefizite(abschlussFaecher: BKAnlageAFaecher): number {
 		if ((abschlussFaecher.faecher === null) || (abschlussFaecher.faecher.isEmpty()))
 			return -1;
-		let sum : number = 0;
+		let sum: number = 0;
 		for (const fach of abschlussFaecher.faecher) {
 			if (fach.note >= 5)
 				sum++;
@@ -76,10 +76,10 @@ export class AbschlussManagerBerufsbildend extends JavaObject {
 	 *
 	 * @return die Anzahl der Note Ungenügend oder -1 im Fehlerfall
 	 */
-	public static getAnzahlUngenuegend(abschlussFaecher : BKAnlageAFaecher) : number {
+	public static getAnzahlUngenuegend(abschlussFaecher: BKAnlageAFaecher): number {
 		if ((abschlussFaecher.faecher === null) || (abschlussFaecher.faecher.isEmpty()))
 			return -1;
-		let sum : number = 0;
+		let sum: number = 0;
 		for (const fach of abschlussFaecher.faecher) {
 			if (fach.note >= 6)
 				sum++;
@@ -91,7 +91,7 @@ export class AbschlussManagerBerufsbildend extends JavaObject {
 		return 'de.svws_nrw.core.abschluss.AbschlussManagerBerufsbildend';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.abschluss.AbschlussManagerBerufsbildend'].includes(name);
 	}
 
@@ -99,6 +99,6 @@ export class AbschlussManagerBerufsbildend extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_abschluss_AbschlussManagerBerufsbildend(obj : unknown) : AbschlussManagerBerufsbildend {
+export function cast_de_svws_nrw_core_abschluss_AbschlussManagerBerufsbildend(obj: unknown): AbschlussManagerBerufsbildend {
 	return obj as AbschlussManagerBerufsbildend;
 }

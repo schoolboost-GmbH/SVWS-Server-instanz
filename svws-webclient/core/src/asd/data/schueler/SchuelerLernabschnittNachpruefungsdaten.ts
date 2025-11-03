@@ -9,12 +9,12 @@ export class SchuelerLernabschnittNachpruefungsdaten extends JavaObject {
 	/**
 	 * Die Kürzel der möglichen Nachprüfungsfächer.
 	 */
-	public moegliche : List<string> = new ArrayList<string>();
+	public moegliche: List<string> = new ArrayList<string>();
 
 	/**
 	 * Die angesetzten bzw. durchgeführten Nachprüfungen
 	 */
-	public pruefungen : List<SchuelerLernabschnittNachpruefung> = new ArrayList<SchuelerLernabschnittNachpruefung>();
+	public pruefungen: List<SchuelerLernabschnittNachpruefung> = new ArrayList<SchuelerLernabschnittNachpruefung>();
 
 
 	/**
@@ -28,13 +28,13 @@ export class SchuelerLernabschnittNachpruefungsdaten extends JavaObject {
 		return 'de.svws_nrw.asd.data.schueler.SchuelerLernabschnittNachpruefungsdaten';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.asd.data.schueler.SchuelerLernabschnittNachpruefungsdaten'].includes(name);
 	}
 
 	public static class = new Class<SchuelerLernabschnittNachpruefungsdaten>('de.svws_nrw.asd.data.schueler.SchuelerLernabschnittNachpruefungsdaten');
 
-	public static transpilerFromJSON(json : string): SchuelerLernabschnittNachpruefungsdaten {
+	public static transpilerFromJSON(json: string): SchuelerLernabschnittNachpruefungsdaten {
 		const obj = JSON.parse(json) as Partial<SchuelerLernabschnittNachpruefungsdaten>;
 		const result = new SchuelerLernabschnittNachpruefungsdaten();
 		if (obj.moegliche !== undefined) {
@@ -50,7 +50,7 @@ export class SchuelerLernabschnittNachpruefungsdaten extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : SchuelerLernabschnittNachpruefungsdaten) : string {
+	public static transpilerToJSON(obj: SchuelerLernabschnittNachpruefungsdaten): string {
 		let result = '{';
 		result += '"moegliche" : [ ';
 		for (let i = 0; i < obj.moegliche.size(); i++) {
@@ -73,7 +73,7 @@ export class SchuelerLernabschnittNachpruefungsdaten extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<SchuelerLernabschnittNachpruefungsdaten>) : string {
+	public static transpilerToJSONPatch(obj: Partial<SchuelerLernabschnittNachpruefungsdaten>): string {
 		let result = '{';
 		if (obj.moegliche !== undefined) {
 			result += '"moegliche" : [ ';
@@ -102,6 +102,6 @@ export class SchuelerLernabschnittNachpruefungsdaten extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_asd_data_schueler_SchuelerLernabschnittNachpruefungsdaten(obj : unknown) : SchuelerLernabschnittNachpruefungsdaten {
+export function cast_de_svws_nrw_asd_data_schueler_SchuelerLernabschnittNachpruefungsdaten(obj: unknown): SchuelerLernabschnittNachpruefungsdaten {
 	return obj as SchuelerLernabschnittNachpruefungsdaten;
 }

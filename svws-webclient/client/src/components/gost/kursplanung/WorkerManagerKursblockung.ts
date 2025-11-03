@@ -31,13 +31,13 @@ export class WorkerManagerKursblockung {
 	protected ergebnisse = shallowRef<List<GostBlockungsergebnis>>(new ArrayList());
 
 	/* Die Referenz auf die Worker-Threads */
-	protected worker : Array<Worker> = new Array(WorkerManagerKursblockung.MAX_WORKER);
+	protected worker: Array<Worker> = new Array(WorkerManagerKursblockung.MAX_WORKER);
 
 	/** Die aktuell besten Ergebnisse der einzelnen Worker-Threads */
-	protected workerErgebnisse : Array<List<GostBlockungsergebnis>> = new Array(WorkerManagerKursblockung.MAX_WORKER).fill(new ArrayList<GostBlockungsergebnis>());
+	protected workerErgebnisse: Array<List<GostBlockungsergebnis>> = new Array(WorkerManagerKursblockung.MAX_WORKER).fill(new ArrayList<GostBlockungsergebnis>());
 
 	/** Gibt an, ob die einzelnen Worker initialisiert sind oder nicht */
-	protected workerInitialized : Array<boolean> = new Array(WorkerManagerKursblockung.MAX_WORKER).fill(false);
+	protected workerInitialized: Array<boolean> = new Array(WorkerManagerKursblockung.MAX_WORKER).fill(false);
 
 	/* Gibt an, ob der Berechnungsalgorithmus bereits mit Daten initialisiert wurde */
 	protected initialized = shallowRef<boolean>(false);
@@ -84,7 +84,7 @@ export class WorkerManagerKursblockung {
 	 * Gibt das Intervall in Millisekunden zurück, bei welchem die Worker-Threads kurzzeitig unterbrochen werden
 	 * und mit dem Manager kommunizieren.
 	 */
-	public get interval() : number {
+	public get interval(): number {
 		return this._interval.value;
 	}
 
@@ -92,7 +92,7 @@ export class WorkerManagerKursblockung {
 	 * Setzt das Intervall in Millisekunden, bei welchem die Worker-Threads kurzzeitig unterbrochen werden
 	 * und mit dem Manager kommunizieren.
 	 */
-	public set interval(value : number) {
+	public set interval(value: number) {
 		if (value < 100)
 			throw new DeveloperNotificationException("Das Intervall sollte mindestens 100 Millisekunden betragen.");
 		if (value > 5000)
@@ -103,14 +103,14 @@ export class WorkerManagerKursblockung {
 	/**
 	 * Gibt die Anzahl der zu nutzenden Worker-Threads zurück.
 	 */
-	public get threads() : number {
+	public get threads(): number {
 		return this.usedWorkerThreads.value;
 	}
 
 	/**
 	 * Setzt die Anzahl der zu nutzenden Worker-Threads.
 	 */
-	public set threads(value : number) {
+	public set threads(value: number) {
 		if (value < 1)
 			throw new DeveloperNotificationException("Die Anzahl der genutzten Worker-Thread darf nicht kleiner als 1 sein.");
 		if (value > WorkerManagerKursblockung.MAX_WORKER)
@@ -137,7 +137,7 @@ export class WorkerManagerKursblockung {
 	 *
 	 * @returns true, sofern der Algorithmus initialisiert wurde und ansonsten false
 	 */
-	public isInitialized() : boolean {
+	public isInitialized(): boolean {
 		return this.initialized.value;
 	}
 
@@ -147,7 +147,7 @@ export class WorkerManagerKursblockung {
 	 *
 	 * @returns true, falls er terminiert wurde und ansonsten false
 	 */
-	public isTerminated() : boolean {
+	public isTerminated(): boolean {
 		return this.terminated.value;
 	}
 
@@ -156,7 +156,7 @@ export class WorkerManagerKursblockung {
 	 *
 	 * @returns true, falls der Worker aktuell am Laufen ist oder nicht.
 	 */
-	public isRunning() : boolean {
+	public isRunning(): boolean {
 		return this.running.value;
 	}
 
@@ -165,7 +165,7 @@ export class WorkerManagerKursblockung {
 	 * @returns Promise<true>, wenn alle Promises aufgelöst sind
 	 */
 	public get waiting(): Promise<unknown>[] {
-		return this.ergebnisWaiting.value
+		return this.ergebnisWaiting.value;
 	}
 
 	/**
@@ -173,7 +173,7 @@ export class WorkerManagerKursblockung {
 	 *
 	 * @param index   der Index des Workers
 	 */
-	protected initWorker(index : number) {
+	protected initWorker(index: number) {
 		this.worker[index] = new Worker(new URL('./WorkerKursblockung.ts', import.meta.url), { type: 'module' });
 		this.worker[index].onmessage = (ev) => this.messageHandler(index, ev);
 		this.requestInit(index, this.faecherListe, this.blockung, this.mapCoreTypeNameJsonData);
@@ -184,7 +184,7 @@ export class WorkerManagerKursblockung {
 	 */
 	public init() {
 		if (this.initialized.value === true)
-			throw new DeveloperNotificationException("Der Worker-Thread für den Kursblockungsalgorithmus wurde bereits initialisiert.")
+			throw new DeveloperNotificationException("Der Worker-Thread für den Kursblockungsalgorithmus wurde bereits initialisiert.");
 		if (this.terminated.value === true)
 			throw new DeveloperNotificationException("Der Worker-Thread für den Kursblockungsalgorithmus wurde bereits terminiert. Dieser kann nicht erneut initialisiert werden.");
 		for (let i = 0; i < this.threads; i++)
@@ -207,7 +207,7 @@ export class WorkerManagerKursblockung {
 	 *
 	 * @returns die Liste der aktuell besten Ergebnisse
 	 */
-	public getErgebnisse() : List<GostBlockungsergebnis> {
+	public getErgebnisse(): List<GostBlockungsergebnis> {
 		return this.ergebnisse.value;
 	}
 
@@ -217,7 +217,7 @@ export class WorkerManagerKursblockung {
 	 *
 	 * @returns die Liste der Ergebnis-Manager zu den aktuell besten Ergebnissen
 	 */
-	public getErgebnisManager() : List<GostBlockungsergebnisManager> {
+	public getErgebnisManager(): List<GostBlockungsergebnisManager> {
 		const result = new ArrayList<GostBlockungsergebnisManager>();
 		for (const ergebnis of this.getErgebnisse())
 			result.add(new GostBlockungsergebnisManager(this.datenManager, ergebnis));
@@ -255,7 +255,7 @@ export class WorkerManagerKursblockung {
 	 *
 	 * @returns true, falls alle genutzten Worker initialisiert wurden, und ansonsten false
 	 */
-	protected checkAllUsedWorkerInitialized() : boolean {
+	protected checkAllUsedWorkerInitialized(): boolean {
 		for (let i = 0; i < this.threads; i++)
 			if (!this.workerInitialized[i])
 				return false;
@@ -270,7 +270,7 @@ export class WorkerManagerKursblockung {
 	 * @param faecherListe   die Liste der Fächer für den Abiturjahrgang der Blockung
 	 * @param blockung       die Daten der Blockung
 	 */
-	protected requestInit(index : number, faecherListe: List<GostFach>, blockung: GostBlockungsdaten, mapCoreTypeNameJsonData: Map<string, string>) {
+	protected requestInit(index: number, faecherListe: List<GostFach>, blockung: GostBlockungsdaten, mapCoreTypeNameJsonData: Map<string, string>) {
 		const faecher = new Array<string>();
 		for (const f of faecherListe)
 			faecher.push(GostFach.transpilerToJSON(f));
@@ -284,7 +284,7 @@ export class WorkerManagerKursblockung {
 	 * @param index   der Index des Workers
 	 * @param data    die Nachricht vom Worker
 	 */
-	protected handleInitReply(index : number, data: WorkerKursblockungReplyInit) {
+	protected handleInitReply(index: number, data: WorkerKursblockungReplyInit) {
 		this.workerInitialized[index] = data.initialized;
 		this.initialized.value = this.checkAllUsedWorkerInitialized();
 		// Starte ggf. den neuen Thread
@@ -298,7 +298,7 @@ export class WorkerManagerKursblockung {
 	 *
 	 * @param index      der Index des Workers
 	 */
-	protected requestNext(index : number) {
+	protected requestNext(index: number) {
 		this.worker[index].postMessage(<WorkerKursblockungRequestNext>{ cmd: 'next', interval: this._interval.value });
 	}
 
@@ -309,7 +309,7 @@ export class WorkerManagerKursblockung {
 	 * @param index    der Index des Workers
 	 * @param data   die Nachricht vom Worker
 	 */
-	protected handleNextReply(index : number, data: WorkerKursblockungReplyNext) {
+	protected handleNextReply(index: number, data: WorkerKursblockungReplyNext) {
 		// Starte das nächste Berechnungsintervall, solange nicht abgebrochen wurde
 		if ((this.workerInitialized[index] === true) && (this.running.value === true) && (index < this.threads))
 			this.requestNext(index);
@@ -323,8 +323,8 @@ export class WorkerManagerKursblockung {
 	 *
 	 * @param index   der Index des Workers
 	 */
-	protected queryErgebnisse(index : number) {
-		this.worker[index].postMessage(<WorkerKursblockungRequestErgebnisse>{cmd: 'getErgebnisse'});
+	protected queryErgebnisse(index: number) {
+		this.worker[index].postMessage(<WorkerKursblockungRequestErgebnisse>{ cmd: 'getErgebnisse' });
 		// erstelle ein leeres Promise mit Resolver und lege sie in den Arrays ab
 		const promise = new Promise((res) => this.ergebnisResolvers[index] = res);
 		this.ergebnisWaiting.value[index] = promise;
@@ -338,7 +338,7 @@ export class WorkerManagerKursblockung {
 	 * @param data   die Nachricht vom Worker mit der Liste der aktuell
 	 *               besten Blockungsergebnisse
 	 */
-	protected handleErgebnisseReply(index : number, data: WorkerKursblockungReplyErgebnisse) {
+	protected handleErgebnisseReply(index: number, data: WorkerKursblockungReplyErgebnisse) {
 		const workerErgebnisse = new ArrayList<GostBlockungsergebnis>();
 		for (const result of data.ergebnisse) {
 			const ergebnis = GostBlockungsergebnis.transpilerFromJSON(result);
@@ -378,7 +378,7 @@ export class WorkerManagerKursblockung {
 	 * @param index    der Index des Workers
 	 * @param e        das Ereignis für die eingehende Nachricht
 	 */
-	protected messageHandler = (index : number, e: MessageEvent) => {
+	protected messageHandler = (index: number, e: MessageEvent) => {
 		const cmd: WorkerKursblockungMessageType = e.data.cmd;
 		switch (cmd) {
 			case 'init': this.handleInitReply(index, e.data); break;
@@ -387,6 +387,6 @@ export class WorkerManagerKursblockung {
 			case 'Error': this.handleErrorMessage(index, e.data); break;
 			default: throw new DeveloperNotificationException(`Mesage type ${e.data.cmd} not yet implemented`);
 		}
-	}
+	};
 
 }

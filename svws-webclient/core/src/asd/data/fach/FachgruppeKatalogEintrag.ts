@@ -7,22 +7,22 @@ export class FachgruppeKatalogEintrag extends CoreTypeDataNurSchulformen {
 	/**
 	 * Die Nummer für den Fachbereich, sofern festgelegt, ansonsten null.
 	 */
-	public nummer : number | null = null;
+	public nummer: number | null = null;
 
 	/**
 	 * Die Farbe, welche der Fachgruppe zugeordnet wurde
 	 */
-	public farbe : RGBFarbe = new RGBFarbe();
+	public farbe: RGBFarbe = new RGBFarbe();
 
 	/**
 	 * Ein Zahlwert, welche eine Sortier-Reihenfolge der Fachgruppen angibt (aus Schild 2.x).
 	 */
-	public sortierung : number = 0;
+	public sortierung: number = 0;
 
 	/**
 	 * Gibt an, ob die Fachgruppe für die Unterteilung auf Zeugnissen genutzt wird oder nicht
 	 */
-	public fuerZeugnis : boolean = false;
+	public fuerZeugnis: boolean = false;
 
 
 	/**
@@ -36,13 +36,13 @@ export class FachgruppeKatalogEintrag extends CoreTypeDataNurSchulformen {
 		return 'de.svws_nrw.asd.data.fach.FachgruppeKatalogEintrag';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.asd.data.CoreTypeData', 'de.svws_nrw.asd.data.fach.FachgruppeKatalogEintrag', 'de.svws_nrw.asd.data.CoreTypeDataNurSchulformen'].includes(name);
 	}
 
 	public static class = new Class<FachgruppeKatalogEintrag>('de.svws_nrw.asd.data.fach.FachgruppeKatalogEintrag');
 
-	public static transpilerFromJSON(json : string): FachgruppeKatalogEintrag {
+	public static transpilerFromJSON(json: string): FachgruppeKatalogEintrag {
 		const obj = JSON.parse(json) as Partial<FachgruppeKatalogEintrag>;
 		const result = new FachgruppeKatalogEintrag();
 		if (obj.schulformen !== undefined) {
@@ -77,7 +77,7 @@ export class FachgruppeKatalogEintrag extends CoreTypeDataNurSchulformen {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : FachgruppeKatalogEintrag) : string {
+	public static transpilerToJSON(obj: FachgruppeKatalogEintrag): string {
 		let result = '{';
 		result += '"schulformen" : [ ';
 		for (let i = 0; i < obj.schulformen.size(); i++) {
@@ -102,7 +102,7 @@ export class FachgruppeKatalogEintrag extends CoreTypeDataNurSchulformen {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<FachgruppeKatalogEintrag>) : string {
+	public static transpilerToJSONPatch(obj: Partial<FachgruppeKatalogEintrag>): string {
 		let result = '{';
 		if (obj.schulformen !== undefined) {
 			result += '"schulformen" : [ ';
@@ -151,6 +151,6 @@ export class FachgruppeKatalogEintrag extends CoreTypeDataNurSchulformen {
 
 }
 
-export function cast_de_svws_nrw_asd_data_fach_FachgruppeKatalogEintrag(obj : unknown) : FachgruppeKatalogEintrag {
+export function cast_de_svws_nrw_asd_data_fach_FachgruppeKatalogEintrag(obj: unknown): FachgruppeKatalogEintrag {
 	return obj as FachgruppeKatalogEintrag;
 }

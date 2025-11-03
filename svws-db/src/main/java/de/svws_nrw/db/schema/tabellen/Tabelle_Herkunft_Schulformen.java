@@ -11,12 +11,12 @@ import de.svws_nrw.db.schema.SchemaTabelleSpalte;
 public class Tabelle_Herkunft_Schulformen extends SchemaTabelle {
 
 	/** Die Definition der Tabellenspalte Herkunft_ID */
-	public SchemaTabelleSpalte col_Herkunft_ID = add("Herkunft_ID", SchemaDatentypen.BIGINT, true)
+	public final SchemaTabelleSpalte col_Herkunft_ID = add("Herkunft_ID", SchemaDatentypen.BIGINT, true)
 			.setNotNull()
 			.setJavaComment("die ID der Herkunft");
 
 	/** Die Definition der Tabellenspalte Schulform_Kuerzel */
-	public SchemaTabelleSpalte col_Schulform_Kuerzel = add("Schulform_Kuerzel", SchemaDatentypen.VARCHAR, true).setDatenlaenge(10)
+	public final SchemaTabelleSpalte col_Schulform_Kuerzel = add("Schulform_Kuerzel", SchemaDatentypen.VARCHAR, true).setDatenlaenge(10)
 			.setNotNull()
 			.setJavaComment("das Kürzel der Schulform");
 

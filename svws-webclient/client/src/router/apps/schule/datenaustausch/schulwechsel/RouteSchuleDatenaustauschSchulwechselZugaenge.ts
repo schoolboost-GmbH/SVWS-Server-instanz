@@ -12,7 +12,7 @@ export class RouteSchuleDatenaustauschSchulwechselZugaenge extends RouteNode<any
 
 	public constructor() {
 		super(Schulform.values(), [
-				BenutzerKompetenz.IMPORT_EXPORT_SCHULBEWERBUNG_DE
+			BenutzerKompetenz.IMPORT_EXPORT_SCHULBEWERBUNG_DE,
 		], "schule.datenaustausch.schulwechsel.zugaenge", "zugaenge", SSchuleDatenaustauschSchulwechselZugaenge);
 		super.mode = ServerMode.DEV;
 		super.propHandler = (route) => this.getProps(route);

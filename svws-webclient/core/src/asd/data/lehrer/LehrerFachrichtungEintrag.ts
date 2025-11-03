@@ -6,22 +6,22 @@ export class LehrerFachrichtungEintrag extends JavaObject {
 	/**
 	 * Die ID des Eintrages.
 	 */
-	public id : number = 0;
+	public id: number = 0;
 
 	/**
 	 * Die ID des Lehramteintrags des Lehrers.
 	 */
-	public idLehramt : number = 0;
+	public idLehramt: number = 0;
 
 	/**
 	 * Die Katalog-ID der Fachrichtung.
 	 */
-	public idFachrichtung : number = 0;
+	public idFachrichtung: number = 0;
 
 	/**
 	 * Die Katalog-ID des Anerkennungsgrund für die Fachrichtung.
 	 */
-	public idAnerkennungsgrund : number | null = null;
+	public idAnerkennungsgrund: number | null = null;
 
 
 	/**
@@ -35,13 +35,13 @@ export class LehrerFachrichtungEintrag extends JavaObject {
 		return 'de.svws_nrw.asd.data.lehrer.LehrerFachrichtungEintrag';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.asd.data.lehrer.LehrerFachrichtungEintrag'].includes(name);
 	}
 
 	public static class = new Class<LehrerFachrichtungEintrag>('de.svws_nrw.asd.data.lehrer.LehrerFachrichtungEintrag');
 
-	public static transpilerFromJSON(json : string): LehrerFachrichtungEintrag {
+	public static transpilerFromJSON(json: string): LehrerFachrichtungEintrag {
 		const obj = JSON.parse(json) as Partial<LehrerFachrichtungEintrag>;
 		const result = new LehrerFachrichtungEintrag();
 		if (obj.id === undefined)
@@ -57,7 +57,7 @@ export class LehrerFachrichtungEintrag extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : LehrerFachrichtungEintrag) : string {
+	public static transpilerToJSON(obj: LehrerFachrichtungEintrag): string {
 		let result = '{';
 		result += '"id" : ' + obj.id.toString() + ',';
 		result += '"idLehramt" : ' + obj.idLehramt.toString() + ',';
@@ -68,7 +68,7 @@ export class LehrerFachrichtungEintrag extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<LehrerFachrichtungEintrag>) : string {
+	public static transpilerToJSONPatch(obj: Partial<LehrerFachrichtungEintrag>): string {
 		let result = '{';
 		if (obj.id !== undefined) {
 			result += '"id" : ' + obj.id.toString() + ',';
@@ -89,6 +89,6 @@ export class LehrerFachrichtungEintrag extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_asd_data_lehrer_LehrerFachrichtungEintrag(obj : unknown) : LehrerFachrichtungEintrag {
+export function cast_de_svws_nrw_asd_data_lehrer_LehrerFachrichtungEintrag(obj: unknown): LehrerFachrichtungEintrag {
 	return obj as LehrerFachrichtungEintrag;
 }

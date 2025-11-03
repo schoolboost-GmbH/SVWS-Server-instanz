@@ -11,9 +11,9 @@ interface RouteStateApp {
 
 export class RouteDataApp {
 
-	private static _defaultState : RouteStateApp = {
+	private static _defaultState: RouteStateApp = {
 		view: routeSchema,
-	}
+	};
 
 	private _state = shallowRef<RouteStateApp>(RouteDataApp._defaultState);
 
@@ -29,14 +29,14 @@ export class RouteDataApp {
 		this._state.value = { ... this._state.value };
 	}
 
-	public async setView(view: RouteNode<any,any>) {
+	public async setView(view: RouteNode<any, any>) {
 		if (routeApp.children.includes(view))
 			this.setPatchedDefaultState({ view: view });
 		else
 			throw new Error("Diese gewählte Ansicht wird nicht unterstützt.");
 	}
 
-	public get view(): RouteNode<any,any> {
+	public get view(): RouteNode<any, any> {
 		return this._state.value.view;
 	}
 

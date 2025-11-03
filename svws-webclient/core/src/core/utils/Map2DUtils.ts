@@ -26,11 +26,11 @@ export class Map2DUtils extends JavaObject {
 	 *
 	 * @return die "ArrayList of V" des Schlüssels. Erstellt eine leere "ArrayList of V", falls eine solche Zuordnung nicht existierte.
 	 */
-	public static getOrCreateArrayList<K1, K2, V>(map2D : HashMap2D<K1, K2, List<V>>, key1 : K1, key2 : K2) : List<V> {
-		const list : List<V> | null = map2D.getOrNull(key1, key2);
+	public static getOrCreateArrayList<K1, K2, V>(map2D: HashMap2D<K1, K2, List<V>>, key1: K1, key2: K2): List<V> {
+		const list: List<V> | null = map2D.getOrNull(key1, key2);
 		if (list !== null)
 			return list;
-		const listNeu : ArrayList<V> = new ArrayList<V>();
+		const listNeu: ArrayList<V> = new ArrayList<V>();
 		map2D.put(key1, key2, listNeu);
 		return listNeu;
 	}
@@ -47,11 +47,11 @@ export class Map2DUtils extends JavaObject {
 	 *
 	 * @return die "HashSet of V" des Schlüssels. Erstellt eine leere "HashSet of V", falls eine solche Zuordnung nicht existierte.
 	 */
-	public static getOrCreateHashSet<K1, K2, V>(map2D : HashMap2D<K1, K2, JavaSet<V>>, key1 : K1, key2 : K2) : JavaSet<V> {
-		const set : JavaSet<V> | null = map2D.getOrNull(key1, key2);
+	public static getOrCreateHashSet<K1, K2, V>(map2D: HashMap2D<K1, K2, JavaSet<V>>, key1: K1, key2: K2): JavaSet<V> {
+		const set: JavaSet<V> | null = map2D.getOrNull(key1, key2);
 		if (set !== null)
 			return set;
-		const setNeu : HashSet<V> = new HashSet<V>();
+		const setNeu: HashSet<V> = new HashSet<V>();
 		map2D.put(key1, key2, setNeu);
 		return setNeu;
 	}
@@ -69,8 +69,8 @@ export class Map2DUtils extends JavaObject {
 	 *
 	 * @return den Wert V des Schlüssels K, falls diese existiert, andernfalls den Default-Wert.
 	 */
-	public static getOrDefault<K1, K2, V>(map2D : HashMap2D<K1, K2, V>, key1 : K1, key2 : K2, defaultValue : V) : V {
-		const value : V | null = map2D.getOrNull(key1, key2);
+	public static getOrDefault<K1, K2, V>(map2D: HashMap2D<K1, K2, V>, key1: K1, key2: K2, defaultValue: V): V {
+		const value: V | null = map2D.getOrNull(key1, key2);
 		if (value === null)
 			return defaultValue;
 		return value;
@@ -88,12 +88,12 @@ export class Map2DUtils extends JavaObject {
 	 * @param key2   Der 2. Schlüssel.
 	 * @param value  Der Wert, welcher der zugeordneten Liste hinzugefügt wird.
 	 */
-	public static addToList<K1, K2, V>(map2D : HashMap2D<K1, K2, List<V>>, key1 : K1, key2 : K2, value : V) : void {
-		const list : List<V> | null = map2D.getOrNull(key1, key2);
+	public static addToList<K1, K2, V>(map2D: HashMap2D<K1, K2, List<V>>, key1: K1, key2: K2, value: V): void {
+		const list: List<V> | null = map2D.getOrNull(key1, key2);
 		if (list !== null) {
 			list.add(value);
 		} else {
-			const listNeu : ArrayList<V> = new ArrayList<V>();
+			const listNeu: ArrayList<V> = new ArrayList<V>();
 			listNeu.add(value);
 			map2D.put(key1, key2, listNeu);
 		}
@@ -111,13 +111,13 @@ export class Map2DUtils extends JavaObject {
 	 * @param key2   Der 2. Schlüssel.
 	 * @param value  Der Wert, welcher der zugeordneten Liste hinzugefügt wird.
 	 */
-	public static addToListIfNotExists<K1, K2, V>(map2D : HashMap2D<K1, K2, List<V>>, key1 : K1, key2 : K2, value : V) : void {
-		const list : List<V> | null = map2D.getOrNull(key1, key2);
+	public static addToListIfNotExists<K1, K2, V>(map2D: HashMap2D<K1, K2, List<V>>, key1: K1, key2: K2, value: V): void {
+		const list: List<V> | null = map2D.getOrNull(key1, key2);
 		if (list !== null) {
 			if (!list.contains(value))
 				list.add(value);
 		} else {
-			const listNeu : ArrayList<V> = new ArrayList<V>();
+			const listNeu: ArrayList<V> = new ArrayList<V>();
 			listNeu.add(value);
 			map2D.put(key1, key2, listNeu);
 		}
@@ -134,8 +134,8 @@ export class Map2DUtils extends JavaObject {
 	 * @param key2   Der 2. Schlüssel.
 	 * @param value  Der Wert, welcher aus der Liste von (K1, K2) entfernt werden soll.
 	 */
-	public static removeFromListAndTrimOrException<K1, K2, V>(map2D : HashMap2D<K1, K2, List<V>>, key1 : K1, key2 : K2, value : V) : void {
-		const list : List<V> | null = map2D.getOrException(key1, key2);
+	public static removeFromListAndTrimOrException<K1, K2, V>(map2D: HashMap2D<K1, K2, List<V>>, key1: K1, key2: K2, value: V): void {
+		const list: List<V> | null = map2D.getOrException(key1, key2);
 		DeveloperNotificationException.ifListRemoveFailes("list", list, value);
 		if (list.isEmpty())
 			map2D.removeOrException(key1, key2);
@@ -145,7 +145,7 @@ export class Map2DUtils extends JavaObject {
 		return 'de.svws_nrw.core.utils.Map2DUtils';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.utils.Map2DUtils'].includes(name);
 	}
 
@@ -153,6 +153,6 @@ export class Map2DUtils extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_utils_Map2DUtils(obj : unknown) : Map2DUtils {
+export function cast_de_svws_nrw_core_utils_Map2DUtils(obj: unknown): Map2DUtils {
 	return obj as Map2DUtils;
 }

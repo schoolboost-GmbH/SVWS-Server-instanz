@@ -32,7 +32,7 @@
 	const props = withDefaults(defineProps<{
 		title?: string;
 		id?: string;
-		layout?: {type?: 'grid'|'iframe'|'single'; width?: string, iframe?: boolean};
+		layout?: { type?: 'grid' | 'iframe' | 'single'; width?: string, iframe?: boolean };
 		icon?: string;
 		source?: string;
 		autoPropsDisabled?: boolean;

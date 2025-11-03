@@ -29,6 +29,6 @@ export interface StundenplanDatenProps {
 	aufsichtsbereicheSyncToVorlage: (aufsichtsbereiche: StundenplanAufsichtsbereich[]) => Promise<void>;
 	aufsichtsbereicheSyncToStundenplan: (aufsichtsbereiche: StundenplanAufsichtsbereich[]) => Promise<void>;
 	listAufsichtsbereiche: () => List<StundenplanAufsichtsbereich>;
-	gotoKatalog: (katalog: 'raeume'|'aufsichtsbereiche'|'pausenzeiten') => Promise<RoutingStatus>;
+	gotoKatalog: (katalog: 'raeume' | 'aufsichtsbereiche' | 'pausenzeiten') => Promise<RoutingStatus>;
 	setSettingsDefaults: (value: StundenplanKonfiguration) => Promise<void>;
 }

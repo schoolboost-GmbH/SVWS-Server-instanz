@@ -18,7 +18,7 @@ export class LehrerAnrechnungsgrund extends CoreTypeSimple<LehrerAnrechnungsgrun
 	 *
 	 * @param manager   der Manager für die Daten des Core-Types
 	 */
-	public static init(manager : CoreTypeDataManager<LehrerAnrechnungsgrundKatalogEintrag, LehrerAnrechnungsgrund>) : void {
+	public static init(manager: CoreTypeDataManager<LehrerAnrechnungsgrundKatalogEintrag, LehrerAnrechnungsgrund>): void {
 		CoreTypeDataManager.putManager(LehrerAnrechnungsgrund.class, manager);
 	}
 
@@ -27,7 +27,7 @@ export class LehrerAnrechnungsgrund extends CoreTypeSimple<LehrerAnrechnungsgrun
 	 *
 	 * @return der Daten-Manager
 	 */
-	public static data() : CoreTypeDataManager<LehrerAnrechnungsgrundKatalogEintrag, LehrerAnrechnungsgrund> {
+	public static data(): CoreTypeDataManager<LehrerAnrechnungsgrundKatalogEintrag, LehrerAnrechnungsgrund> {
 		return CoreTypeDataManager.getManager(LehrerAnrechnungsgrund.class);
 	}
 
@@ -36,14 +36,14 @@ export class LehrerAnrechnungsgrund extends CoreTypeSimple<LehrerAnrechnungsgrun
 	 *
 	 * @return die Werte des Core-Types als Array
 	 */
-	public static values() : Array<LehrerAnrechnungsgrund> {
+	public static values(): Array<LehrerAnrechnungsgrund> {
 		return CoreTypeSimple.valuesByClass(LehrerAnrechnungsgrund.class);
 	}
 
 	/**
 	 * Erzeugt eine Instance dieser Klasse.
 	 */
-	public getInstance() : LehrerAnrechnungsgrund | null {
+	public getInstance(): LehrerAnrechnungsgrund | null {
 		return new LehrerAnrechnungsgrund();
 	}
 
@@ -51,7 +51,7 @@ export class LehrerAnrechnungsgrund extends CoreTypeSimple<LehrerAnrechnungsgrun
 		return 'de.svws_nrw.asd.types.lehrer.LehrerAnrechnungsgrund';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.asd.types.lehrer.LehrerAnrechnungsgrund', 'de.svws_nrw.asd.types.CoreType', 'java.lang.Comparable', 'de.svws_nrw.asd.types.CoreTypeSimple'].includes(name);
 	}
 
@@ -59,6 +59,6 @@ export class LehrerAnrechnungsgrund extends CoreTypeSimple<LehrerAnrechnungsgrun
 
 }
 
-export function cast_de_svws_nrw_asd_types_lehrer_LehrerAnrechnungsgrund(obj : unknown) : LehrerAnrechnungsgrund {
+export function cast_de_svws_nrw_asd_types_lehrer_LehrerAnrechnungsgrund(obj: unknown): LehrerAnrechnungsgrund {
 	return obj as LehrerAnrechnungsgrund;
 }

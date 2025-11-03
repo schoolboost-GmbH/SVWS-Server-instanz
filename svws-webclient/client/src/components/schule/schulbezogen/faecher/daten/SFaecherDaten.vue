@@ -85,7 +85,7 @@
 <script setup lang="ts">
 
 	import { computed } from "vue";
-	import {BilingualeSprache, Fach, Schulform, JavaInteger, BenutzerKompetenz} from "@core";
+	import { BilingualeSprache, Fach, Schulform, JavaInteger, BenutzerKompetenz } from "@core";
 	import type { FaecherDatenProps } from "./SFaecherDatenProps";
 
 	const props = defineProps<FaecherDatenProps>();
@@ -93,8 +93,8 @@
 	const schuljahr = computed<number>(() => props.manager().getSchuljahr());
 	const hatKompetenzUpdate = computed<boolean>(() => props.benutzerKompetenzen.has(BenutzerKompetenz.KATALOG_EINTRAEGE_AENDERN));
 	const readonly = computed(() => !hatKompetenzUpdate.value);
-	function getAufgabenfeld(aufgabenfeld: string | undefined | null) : string {
-		switch(aufgabenfeld) {
+	function getAufgabenfeld(aufgabenfeld: string | undefined | null): string {
+		switch (aufgabenfeld) {
 			case '1': return 'Aufgabenfeld I';
 			case '2': return 'Aufgabenfeld II';
 			case '3': return 'Aufgabenfeld III';

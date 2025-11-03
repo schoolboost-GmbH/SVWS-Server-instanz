@@ -6,17 +6,17 @@ export class GostAbiturMarkierungsalgorithmusMarkierung extends JavaObject {
 	/**
 	 * Die ID des Faches, für welches die Markierung vorgenommen wurde
 	 */
-	public idFach : number = -1;
+	public idFach: number = -1;
 
 	/**
 	 * Das Halbjahr der Qualifikationsphase, für welches die Markierung vorgenommen oder nicht vorgenommen wurde (2=Q1.1, 3=Q1.2, 4=Q2.1, 5=Q2.2)
 	 */
-	public idHalbjahr : number = -1;
+	public idHalbjahr: number = -1;
 
 	/**
 	 * Gibt an, ob der Algorithmus die Belgung markiert hat oder nicht
 	 */
-	public markiert : boolean = false;
+	public markiert: boolean = false;
 
 
 	public constructor() {
@@ -27,13 +27,13 @@ export class GostAbiturMarkierungsalgorithmusMarkierung extends JavaObject {
 		return 'de.svws_nrw.core.abschluss.gost.GostAbiturMarkierungsalgorithmusMarkierung';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.abschluss.gost.GostAbiturMarkierungsalgorithmusMarkierung'].includes(name);
 	}
 
 	public static class = new Class<GostAbiturMarkierungsalgorithmusMarkierung>('de.svws_nrw.core.abschluss.gost.GostAbiturMarkierungsalgorithmusMarkierung');
 
-	public static transpilerFromJSON(json : string): GostAbiturMarkierungsalgorithmusMarkierung {
+	public static transpilerFromJSON(json: string): GostAbiturMarkierungsalgorithmusMarkierung {
 		const obj = JSON.parse(json) as Partial<GostAbiturMarkierungsalgorithmusMarkierung>;
 		const result = new GostAbiturMarkierungsalgorithmusMarkierung();
 		if (obj.idFach === undefined)
@@ -48,7 +48,7 @@ export class GostAbiturMarkierungsalgorithmusMarkierung extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : GostAbiturMarkierungsalgorithmusMarkierung) : string {
+	public static transpilerToJSON(obj: GostAbiturMarkierungsalgorithmusMarkierung): string {
 		let result = '{';
 		result += '"idFach" : ' + obj.idFach.toString() + ',';
 		result += '"idHalbjahr" : ' + obj.idHalbjahr.toString() + ',';
@@ -58,7 +58,7 @@ export class GostAbiturMarkierungsalgorithmusMarkierung extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<GostAbiturMarkierungsalgorithmusMarkierung>) : string {
+	public static transpilerToJSONPatch(obj: Partial<GostAbiturMarkierungsalgorithmusMarkierung>): string {
 		let result = '{';
 		if (obj.idFach !== undefined) {
 			result += '"idFach" : ' + obj.idFach.toString() + ',';
@@ -76,6 +76,6 @@ export class GostAbiturMarkierungsalgorithmusMarkierung extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_abschluss_gost_GostAbiturMarkierungsalgorithmusMarkierung(obj : unknown) : GostAbiturMarkierungsalgorithmusMarkierung {
+export function cast_de_svws_nrw_core_abschluss_gost_GostAbiturMarkierungsalgorithmusMarkierung(obj: unknown): GostAbiturMarkierungsalgorithmusMarkierung {
 	return obj as GostAbiturMarkierungsalgorithmusMarkierung;
 }

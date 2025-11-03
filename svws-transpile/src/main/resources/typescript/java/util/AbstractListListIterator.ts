@@ -9,26 +9,26 @@ import { IllegalStateException } from '../../java/lang/IllegalStateException';
 
 export class AbstractListListIterator<E> extends AbstractListIterator<E> implements ListIterator<E> {
 
-	constructor(list : AbstractList<E>, index : number) {
+	constructor(list: AbstractList<E>, index: number) {
 		super(list);
 		this.current = index;
 	}
 
-	public nextIndex() : number {
+	public nextIndex(): number {
 		return this.current;
 	}
 
 
-	public hasPrevious() : boolean {
+	public hasPrevious(): boolean {
 		return this.current !== 0;
 	}
 
 
-	public previous() : E {
+	public previous(): E {
 		this.checkForComodification();
 		try {
-			const i : number = this.current - 1;
-			const previous : E = this.list.get(i);
+			const i: number = this.current - 1;
+			const previous: E = this.list.get(i);
 			this.lastReturned = this.current = i;
 			return previous;
 		} catch (e) {
@@ -38,12 +38,12 @@ export class AbstractListListIterator<E> extends AbstractListIterator<E> impleme
 	}
 
 
-	public previousIndex() : number {
+	public previousIndex(): number {
 		return this.current - 1;
 	}
 
 
-	public set(e : E) : void {
+	public set(e: E): void {
 		if (this.lastReturned < 0)
 			throw new IllegalStateException();
 		this.checkForComodification();
@@ -56,10 +56,10 @@ export class AbstractListListIterator<E> extends AbstractListIterator<E> impleme
 	}
 
 
-	public add(e : E) : void {
+	public add(e: E): void {
 		this.checkForComodification();
 		try {
-			const i : number = this.current;
+			const i: number = this.current;
 			this.list.add(i, e);
 			this.lastReturned = -1;
 			this.current = i + 1;
@@ -74,19 +74,19 @@ export class AbstractListListIterator<E> extends AbstractListIterator<E> impleme
 		return 'java.util.AbstractListListIterator';
 	}
 
-	public isTranspiledInstanceOf(name : string): boolean {
+	public isTranspiledInstanceOf(name: string): boolean {
 		return [
 			'java.util.AbstractListListIterator',
 			'java.util.AbstractListIterator',
 			'java.util.ListIterator',
 			'java.util.JavaIterator',
-			'java.lang.Object'
+			'java.lang.Object',
 		].includes(name);
 	}
 
 }
 
 
-export function cast_java_util_AbstractListListIterator<E>(obj : unknown) : AbstractListListIterator<E> {
+export function cast_java_util_AbstractListListIterator<E>(obj: unknown): AbstractListListIterator<E> {
 	return obj as AbstractListListIterator<E>;
 }

@@ -9,5 +9,5 @@ export interface SchuelerLernabschnittAllgemeinProps {
 	schule: SchuleStammdaten;
 	schuelerListeManager: () => SchuelerListeManager;
 	manager: () => SchuelerLernabschnittManager;
-	patch: (data : Partial<SchuelerLernabschnittsdaten>) => Promise<void>;
+	patch: (data: Partial<SchuelerLernabschnittsdaten>) => Promise<void>;
 }

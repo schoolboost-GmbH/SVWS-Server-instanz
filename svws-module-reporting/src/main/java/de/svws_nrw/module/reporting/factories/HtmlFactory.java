@@ -1,7 +1,6 @@
 package de.svws_nrw.module.reporting.factories;
 
 import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.io.IOException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
@@ -20,8 +19,9 @@ import de.svws_nrw.core.data.reporting.ReportingParameter;
 import de.svws_nrw.core.logger.LogLevel;
 import de.svws_nrw.core.types.reporting.ReportingReportvorlage;
 import de.svws_nrw.db.utils.ApiOperationException;
+import de.svws_nrw.module.reporting.builders.ReportBuilderHtml;
+import de.svws_nrw.module.reporting.builders.ReportBuilderContextHtml;
 import de.svws_nrw.module.reporting.filterung.ReportingFilterDataType;
-import de.svws_nrw.module.reporting.html.HtmlBuilder;
 import de.svws_nrw.module.reporting.html.HtmlTemplateDefinition;
 import de.svws_nrw.module.reporting.html.contexts.HtmlContext;
 import de.svws_nrw.module.reporting.html.contexts.HtmlContextGostLaufbahnplanungAbiturjahrgangFachwahlstatistiken;
@@ -348,17 +348,17 @@ public class HtmlFactory {
 	/**
 	 * Erzeugt auf Basis des gegebenen HTML-Templates und der übergebenen Daten die HTML-Builder, aus denen die HTML-Inhalte erzeugt werden können.
 	 *
-	 * @return Eine Liste mit htmlBuilder.
+	 * @return Eine Liste mit ReportBuilderHtml-Instanzen.
 	 *
 	 * @throws ApiOperationException	Im Fehlerfall wird eine ApiOperationException ausgelöst und Log-Daten zusammen mit dieser zurückgegeben.
 	 */
-	protected List<HtmlBuilder> createHtmlBuilders() throws ApiOperationException {
+	protected List<ReportBuilderHtml> createHtmlBuilders() throws ApiOperationException {
 		return getHtmlBuilders();
 	}
 
 
 	/**
-	 * Erstellt eine Response in Form einer einzelnen HTML-Datei oder Z eine einzelne ZIP-Datei, die mehrere generierte HTML-Dateien enthält.
+	 * Erstellt eine Response in Form einer einzelnen HTML-Datei oder eine einzelne ZIP-Datei, die mehrere generierte HTML-Dateien enthält.
 	 *
 	 * @return Im Falle eines Success enthält die HTTP-Response das HTML-Dokument oder die ZIP-Datei.
 	 *
@@ -367,68 +367,61 @@ public class HtmlFactory {
 	protected Response createHtmlResponse() throws ApiOperationException {
 		try {
 			reportingRepository.logger().logLn(LogLevel.DEBUG, 0, ">>> Beginn der Erzeugung der Response einer API-Anfrage für eine HTML-Generierung.");
-			final List<HtmlBuilder> htmlBuilders = getHtmlBuilders();
+			final List<ReportBuilderHtml> htmlBuilders = getHtmlBuilders();
 			if (!htmlBuilders.isEmpty()) {
+				final ReportBuilderHtml firstHtmlBuilder = htmlBuilders.getFirst();
 				if (htmlBuilders.size() == 1) {
-					final String encodedFilename = "filename*=UTF-8''" + URLEncoder.encode(htmlBuilders.getFirst().getDateiname(), StandardCharsets.UTF_8);
-
+					final String html = firstHtmlBuilder.generate();
+					final String encodedFilename = "filename*=UTF-8''" + URLEncoder.encode(firstHtmlBuilder.getDateinameMitEndung(), StandardCharsets.UTF_8);
 					reportingRepository.logger().logLn(LogLevel.DEBUG, 0, "<<< Ende der Erzeugung der Response einer API-Anfrage für eine HTML-Generierung.");
-					return Response.ok(htmlBuilders.getFirst().getHtml(), "text/html").header("Content-Disposition", "attachment; " + encodedFilename).build();
-				}
-				if (htmlTemplateDefinition.getDateiname().isEmpty()) {
-					reportingRepository.logger().logLn(LogLevel.ERROR, 4, "FEHLER: Die gewählte Vorlage kann nicht einzelne HTML-Inhalte erstellen.");
-					throw new ApiOperationException(Status.INTERNAL_SERVER_ERROR, "FEHLER: Die gewählte Vorlage kann nicht einzelne HTML-Inhalte erstellen.");
+					return Response.ok(html, firstHtmlBuilder.getContentType()).header("Content-Disposition", "attachment; " + encodedFilename).build();
+				} else {
+					final byte[] data = createZIP(htmlBuilders);
+					final String encodedFilename =
+							"filename*=UTF-8''" + URLEncoder.encode(firstHtmlBuilder.getStatischerDateiname() + ".zip", StandardCharsets.UTF_8);
+					reportingRepository.logger().logLn(LogLevel.DEBUG, 0, "<<< Ende der Erzeugung der Response einer API-Anfrage für eine HTML-Generierung.");
+					return Response.ok(data, "application/zip").header("Content-Disposition", "attachment; " + encodedFilename).build();
 				}
 
-				final byte[] zipData = createZIP(htmlBuilders);
-				final String encodedFilename = "filename*=UTF-8''" + URLEncoder.encode(htmlTemplateDefinition.getDateiname() + ".zip", StandardCharsets.UTF_8);
-
-				reportingRepository.logger().logLn(LogLevel.DEBUG, 0, "<<< Ende der Erzeugung der Response einer API-Anfrage für eine HTML-Generierung.");
-				return Response.ok(zipData, "application/zip").header("Content-Disposition", "attachment; " + encodedFilename).build();
 			}
 			reportingRepository.logger().logLn(LogLevel.ERROR, 0,
 					"### Fehler bei der Erzeugung der Response einer API-Anfrage für eine HTML-Generierung. Es sind keine HTML-Inhalte generiert worden.");
 			throw new ApiOperationException(Status.INTERNAL_SERVER_ERROR,
-					"Fehler bei der Erzeugung der Response einer API-Anfrage für eine HTML-Generierung. Es sind keine HTML-Inhalte generiert worden.");
+					"### Fehler bei der Erzeugung der Response einer API-Anfrage für eine HTML-Generierung. Es sind keine HTML-Inhalte generiert worden.");
 		} catch (final Exception e) {
-			reportingRepository.logger().logLn(LogLevel.ERROR, 0,
-					"### Fehler bei der Erzeugung der Response einer API-Anfrage für eine HTML-Generierung.");
+			reportingRepository.logger().logLn(LogLevel.ERROR, 0, "### Fehler bei der Erzeugung der Response einer API-Anfrage für eine HTML-Generierung.");
 			throw e;
 		}
 	}
 
 
 	/**
-	 * Erzeugt auf Basis der übergebenen HTML-Vorlage und Daten die HTML-Inhalte der Dateien und legt diese Inhalte in einer Map zum Dateinamen ab.
+	 * Erzeugt auf Basis der übergebenen HTML-Vorlage und Daten die HTML-Inhalte der Dateien und legt diese Inhalte in einer Liste ab.
 	 *
-	 * @return Eine Map mit den Dateinamen und HTML-Dateiinhalten.
+	 * @return Eine Liste mit ReportBuilderHtml-Instanzen.
 	 *
-	 * @throws ApiOperationException	Im Fehlerfall wird eine ApiOperationException ausgelöst und Log-Daten zusammen mit dieser zurückgegeben.
+	 * @throws ApiOperationException Im Fehlerfall wird eine ApiOperationException ausgelöst und Log-Daten zusammen mit dieser zurückgegeben.
 	 */
-	private List<HtmlBuilder> getHtmlBuilders() throws ApiOperationException {
+	private List<ReportBuilderHtml> getHtmlBuilders() throws ApiOperationException {
 
 		reportingRepository.logger().logLn(LogLevel.DEBUG, 0, ">>> Beginn der Erzeugung der HTML-Builder.");
-		final List<HtmlBuilder> htmlBuilders = new ArrayList<>();
 
 		// Lade den Inhalt des HTML-Codes aus dem Template.
 		final String htmlTemplateCode = ResourceUtils.text(htmlTemplateDefinition.getRootPfadHtmlTemplate());
-
-		if (!reportingParameter.einzelausgabeHauptdaten && !reportingParameter.einzelausgabeDetaildaten) {
-			// Dateiname der Dateien aus den Daten erzeugen.
-			final String dateiname = getDateiname(mapHtmlContexts);
-
-			// HTML-Builder erstellen und damit das HTML mit Daten für die HTML-Datei erzeugen
-			reportingRepository.logger()
-					.logLn(LogLevel.DEBUG, 4,
-							"Verarbeite Template (%s) und Daten aus den Kontexten zum finalen HTML-Dateiinhalt.".formatted(htmlTemplateDefinition.name()));
-			htmlBuilders.add(new HtmlBuilder(htmlTemplateCode, mapHtmlContexts.values().stream().toList(), dateiname).getBuilderMitIds(getContextsIds()));
-		} else if (reportingParameter.einzelausgabeHauptdaten) {
-			// Die Hauptdatenquelle soll in einzelne Kontexte für Einzeldateien zerlegt werden.
-			erzeugeHauptEinzelContexts(htmlBuilders, htmlTemplateCode);
-		} else {
-			erzeugeDetailEinzelContexts(htmlBuilders, htmlTemplateCode);
+		if (htmlTemplateCode == null) {
+			reportingRepository.logger().logLn(LogLevel.ERROR, 4, "### FEHLER: Die HTML-Template-Datei für die HTML-Erzeugung konnte nicht eingelesen werden.");
+			throw new ApiOperationException(Status.NOT_FOUND, "### FEHLER: Die HTML-Template-Datei für die HTML-Erzeugung konnte nicht eingelesen werden.");
 		}
 
+		final List<ReportBuilderHtml> htmlBuilders = new ArrayList<>();
+
+		if (reportingParameter.einzelausgabeHauptdaten)
+			erzeugeHauptEinzelContexts(htmlBuilders, htmlTemplateCode);
+		else if (reportingParameter.einzelausgabeDetaildaten)
+			erzeugeDetailEinzelContexts(htmlBuilders, htmlTemplateCode);
+		else {
+			htmlBuilders.add(getReportBuilderHtml(htmlTemplateCode));
+		}
 		reportingRepository.logger().logLn(LogLevel.DEBUG, 0, "<<< Ende der Erzeugung der HTML-Builder.");
 		return htmlBuilders;
 	}
@@ -436,67 +429,49 @@ public class HtmlFactory {
 	/**
 	 * Erstellt einzelne Haupt-Kontexte auf Basis der gegebenen Hauptdatenquelle, um separate HTML-Dateien zu generieren.
 	 *
-	 * @param htmlBuilders     Eine Liste von {@code HtmlBuilder}-Objekten, in die die erzeugten HTML-Inhalte gespeichert werden.
+	 * @param htmlBuilders     Eine Liste von {@code ReportBuilderHtml}-Objekten, in die die erzeugten HTML-Inhalte gespeichert werden.
 	 * @param htmlTemplateCode Der HTML-Template-Code, der beim Generieren der HTML-Inhalte verwendet wird.
 	 *
-	 * @throws ApiOperationException Falls ein Fehler bei der Verarbeitung der Kontexte oder bei der Generierung der HTML-Inhalte auftritt.
+	 * @throws ApiOperationException Im Fehlerfall wird eine ApiOperationException ausgelöst und Log-Daten zusammen mit dieser zurückgegeben.
 	 */
-	private void erzeugeHauptEinzelContexts(final List<HtmlBuilder> htmlBuilders, final String htmlTemplateCode) throws ApiOperationException {
+	private void erzeugeHauptEinzelContexts(final List<ReportBuilderHtml> htmlBuilders, final String htmlTemplateCode) throws ApiOperationException {
 		if (htmlTemplateDefinition.name().startsWith("SCHUELER_v_")) {
 			// Zerlege den Gesamt-Schüler-Context in einzelne Contexts mit jeweils einem Schüler
-			reportingRepository.logger().logLn(LogLevel.DEBUG, 4, "Erzeuge einzelne Haupt-Kontexte für jeden Schüler, da einzelne Dateien angefordert "
-					+ "wurden.");
+			reportingRepository.logger().logLn(LogLevel.DEBUG, 4, "Erzeuge einzelne Haupt-Kontexte für jeden Schüler, da einzelne Dateien angefordert wurden.");
 			final List<HtmlContextSchueler> schuelerContexts = ((HtmlContextSchueler) mapHtmlContexts.get("Schueler")).getEinzelContexts();
 
 			reportingRepository.logger().logLn(LogLevel.DEBUG, 4,
-					"Verarbeite Template (%s) und Daten aus den einzelnen Kontexten zu finalen HTML-Dateiinhalten.".formatted(
-							htmlTemplateDefinition.name()));
+					"Verarbeite Template (%s) und Daten aus den einzelnen Kontexten zu finalen HTML-Dateiinhalten."
+							.formatted(htmlTemplateDefinition.name()));
 			for (final HtmlContextSchueler schuelerContext : schuelerContexts) {
 				mapHtmlContexts.put("Schueler", schuelerContext);
-
-				// Dateiname der Dateien aus den Daten erzeugen.
-				final String dateiname = getDateiname(mapHtmlContexts);
-
-				// HTML-Builder erstellen und damit das HTML mit Daten für die HTML-Datei erzeugen
-				htmlBuilders.add(new HtmlBuilder(htmlTemplateCode, mapHtmlContexts.values().stream().toList(), dateiname).getBuilderMitIds(getContextsIds()));
+				htmlBuilders.add(getReportBuilderHtml(htmlTemplateCode));
 			}
 		}
 		if (htmlTemplateDefinition.name().startsWith("KLASSEN_v_")) {
 			// Zerlege den Gesamt-Klassen-Context in einzelne Contexts mit jeweils einer Klasse
-			reportingRepository.logger().logLn(LogLevel.DEBUG, 4, "Erzeuge einzelne Haupt-Kontexte für jede Klasse, da einzelne Dateien angefordert "
-					+ "wurden.");
+			reportingRepository.logger().logLn(LogLevel.DEBUG, 4, "Erzeuge einzelne Haupt-Kontexte für jede Klasse, da einzelne Dateien angefordert wurden.");
 			final List<HtmlContextKlassen> klassenContexts = ((HtmlContextKlassen) mapHtmlContexts.get("Klassen")).getEinzelContexts();
 
 			reportingRepository.logger().logLn(LogLevel.DEBUG, 4,
-					"Verarbeite Template (%s) und Daten aus den einzelnen Kontexten zu finalen HTML-Dateiinhalten.".formatted(
-							htmlTemplateDefinition.name()));
+					"Verarbeite Template (%s) und Daten aus den einzelnen Kontexten zu finalen HTML-Dateiinhalten."
+							.formatted(htmlTemplateDefinition.name()));
 			for (final HtmlContextKlassen klasseContext : klassenContexts) {
 				mapHtmlContexts.put("Klassen", klasseContext);
-
-				// Dateiname der Dateien aus den Daten erzeugen.
-				final String dateiname = getDateiname(mapHtmlContexts);
-
-				// HTML-Builder erstellen und damit das HTML mit Daten für die HTML-Datei erzeugen
-				htmlBuilders.add(new HtmlBuilder(htmlTemplateCode, mapHtmlContexts.values().stream().toList(), dateiname).getBuilderMitIds(getContextsIds()));
+				htmlBuilders.add(getReportBuilderHtml(htmlTemplateCode));
 			}
 		}
 		if (htmlTemplateDefinition.name().startsWith("KURSE_v_")) {
 			// Zerlege den Gesamt-Kurse-Context in einzelne Contexts mit jeweils einem Kurs
-			reportingRepository.logger().logLn(LogLevel.DEBUG, 4, "Erzeuge einzelne Haupt-Kontexte für jeden Kurs, da einzelne Dateien angefordert "
-					+ "wurden.");
+			reportingRepository.logger().logLn(LogLevel.DEBUG, 4, "Erzeuge einzelne Haupt-Kontexte für jeden Kurs, da einzelne Dateien angefordert wurden.");
 			final List<HtmlContextKurse> kurseContexts = ((HtmlContextKurse) mapHtmlContexts.get("Kurse")).getEinzelContexts();
 
 			reportingRepository.logger().logLn(LogLevel.DEBUG, 4,
-					"Verarbeite Template (%s) und Daten aus den einzelnen Kontexten zu finalen HTML-Dateiinhalten.".formatted(
-							htmlTemplateDefinition.name()));
+					"Verarbeite Template (%s) und Daten aus den einzelnen Kontexten zu finalen HTML-Dateiinhalten."
+							.formatted(htmlTemplateDefinition.name()));
 			for (final HtmlContextKurse kursContext : kurseContexts) {
 				mapHtmlContexts.put("Kurse", kursContext);
-
-				// Dateiname der Dateien aus den Daten erzeugen.
-				final String dateiname = getDateiname(mapHtmlContexts);
-
-				// HTML-Builder erstellen und damit das HTML mit Daten für die HTML-Datei erzeugen
-				htmlBuilders.add(new HtmlBuilder(htmlTemplateCode, mapHtmlContexts.values().stream().toList(), dateiname).getBuilderMitIds(getContextsIds()));
+				htmlBuilders.add(getReportBuilderHtml(htmlTemplateCode));
 			}
 		}
 	}
@@ -525,12 +500,12 @@ public class HtmlFactory {
 	 * Erzeugt einzelne Detail-Kontexte basierend auf der definierten Darstellungsvorlage und den verfügbaren Datenquellen. Die Methode verarbeitet
 	 * verschiedene Vorlagentypen und erstellt individuelle HTML-Kontexte entsprechend den Anforderungen des Vorlagentyps.
 	 *
-	 * @param htmlBuilders     Liste der HtmlBuilder, die zur Erstellung der Inhalte verwendet werden
+	 * @param htmlBuilders     Liste der ReportBuilderHtml, die zur Erstellung der Inhalte verwendet werden
 	 * @param htmlTemplateCode Der Code der HTML-Vorlage, der die Art der zu erstellenden Kontexte definiert
 	 *
 	 * @throws ApiOperationException Wird ausgelöst, wenn ein Fehler bei der Verarbeitung der Vorlagentypen oder der verfügbaren Kontexte auftritt.
 	 */
-	private void erzeugeDetailEinzelContexts(final List<HtmlBuilder> htmlBuilders, final String htmlTemplateCode) throws ApiOperationException {
+	private void erzeugeDetailEinzelContexts(final List<ReportBuilderHtml> htmlBuilders, final String htmlTemplateCode) throws ApiOperationException {
 		switch (htmlTemplateDefinition) {
 			case GOST_KLAUSURPLANUNG_v_SCHUELER_MIT_KLAUSUREN -> splitteDetailContexts("GostKlausurplan",
 					((HtmlContextGostKlausurplanungKlausurplan) mapHtmlContexts.get("GostKlausurplan"))::getEinzelContexts,
@@ -569,10 +544,10 @@ public class HtmlFactory {
 	 * @param htmlTemplateCode           Der Template-Code, der für die HTML-Generierung verwendet wird.
 	 * @param logText                    Ein Text, der zur Protokollierung des Prozesses verwendet wird.
 	 *
-	 * @throws ApiOperationException     Wenn während der Verarbeitung Fehler auftreten, wird diese Ausnahme ausgelöst.
+	 * @throws ApiOperationException Im Fehlerfall wird eine ApiOperationException ausgelöst und Log-Daten zusammen mit dieser zurückgegeben.
 	 */
 	private <C extends HtmlContext<?>> void splitteDetailContexts(final String bezeichnungContext, final Supplier<List<C>> functionErmittleEinzelContexts,
-			final List<HtmlBuilder> htmlBuilders, final String htmlTemplateCode, final String logText) throws ApiOperationException {
+			final List<ReportBuilderHtml> htmlBuilders, final String htmlTemplateCode, final String logText) throws ApiOperationException {
 
 		reportingRepository.logger().logLn(LogLevel.DEBUG, 4, logText);
 		final List<C> einzelContexts = functionErmittleEinzelContexts.get();
@@ -582,77 +557,50 @@ public class HtmlFactory {
 
 		for (final C einzelContext : einzelContexts) {
 			mapHtmlContexts.put(bezeichnungContext, einzelContext);
-			final String dateiname = getDateiname(mapHtmlContexts);
-			htmlBuilders.add(new HtmlBuilder(htmlTemplateCode, mapHtmlContexts.values().stream().toList(), dateiname).getBuilderMitIds(getContextsIds()));
+			htmlBuilders.add(getReportBuilderHtml(htmlTemplateCode));
 		}
 	}
 
+
 	/**
-	 * Erstellt den Dateinamen gemäß der in der Template-Definition hinterlegten Vorlage für den Dateinamen. Dabei können die Daten den Contexts entnommen werden.
+	 * Erstellt eine Instanz von ReportBuilderHtml basierend auf dem angegebenen HTML-Template-Code und spezifischen Kontextinformationen.
 	 *
-	 * @param mapHtmlContexts 			Map mit den bereits erzeugten HTML-Datenkontexten, um daraus Daten für den Dateinamen entnehmen zu können.
+	 * @param htmlTemplateCode Der Code des HTML-Templates, das für den Reportbuilder verwendet werden soll.
 	 *
-	 * @return Der fertige Dateiname.
+	 * @return Eine Instanz von ReportBuilderHtml, die auf der Basis des angegebenen HTML-Templates erstellt wurde.
 	 *
-	 * @throws ApiOperationException	Im Fehlerfall wird eine ApiOperationException ausgelöst und Log-Daten zusammen mit dieser zurückgegeben.
+	 * @throws ApiOperationException Eine Ausnahme wird geworfen, wenn ein Fehler beim Erstellen des ReportBuilderHtml auftritt.
 	 */
-	private String getDateiname(final Map<String, HtmlContext<?>> mapHtmlContexts) throws ApiOperationException {
-
-		reportingRepository.logger().logLn(LogLevel.DEBUG, 4, "Erzeuge den Dateinamen zum Template %s.".formatted(htmlTemplateDefinition.name()));
-
-		String dateiname = htmlTemplateDefinition.getDateiname();
-
-		if (!htmlTemplateDefinition.getDateinamensvorlage().isEmpty() && !htmlTemplateDefinition.getDateinamensvorlage().isBlank()) {
-			final HtmlBuilder htmlBuilder =
-					new HtmlBuilder(htmlTemplateDefinition.getDateinamensvorlage(), mapHtmlContexts.values().stream().toList(), dateiname);
-			final String html = htmlBuilder.getHtml();
-
-			if ((html == null) || html.isEmpty() || html.isBlank() || !html.contains("<p>") || !html.contains("</p>")
-					|| ((html.indexOf("<p>") + 3) >= html.indexOf("</p>"))) {
-				reportingRepository.logger().logLn(LogLevel.ERROR, 4,
-						("FEHLER: Erzeugung des Dateinamens zum Template %s. fehlgeschlagen. Der Dateiname konnte nicht gemäß des angegebenen Musters aus den "
-								+ "Daten generiert werden.")
-								.formatted(htmlTemplateDefinition.name()));
-				throw new ApiOperationException(Status.INTERNAL_SERVER_ERROR,
-						("FEHLER: Erzeugung des Dateinamens zum Template %s. fehlgeschlagen. Der Dateiname konnte nicht gemäß des angegebenen Musters aus den "
-								+ "Daten generiert werden.")
-								.formatted(htmlTemplateDefinition.name()));
-			}
-			dateiname = html.substring(html.indexOf("<p>") + 3, html.indexOf("</p>"));
-		}
-
-		try {
-			//noinspection ResultOfMethodCallIgnored
-			(new File(dateiname + ".html")).getCanonicalFile();
-		} catch (@SuppressWarnings("unused") final Exception e) {
-			// Rückgabewert von getCanonicalFile wird ignoriert. Diese Funktion prüft aber den Dateinamen und erzeugt eine Exception, wenn der Name ungültig
-			// ist.
-			reportingRepository.logger().logLn(LogLevel.ERROR, 4, "FEHLER: Der generierte HTML-Dateiname enthält ungültige Zeichen.");
-			throw new ApiOperationException(Status.INTERNAL_SERVER_ERROR, "FEHLER: Der generierte HTML-Dateiname enthält ungültige Zeichen.");
-		}
-
-		return dateiname;
+	private ReportBuilderHtml getReportBuilderHtml(final String htmlTemplateCode) throws ApiOperationException {
+		final ReportBuilderContextHtml reportBuilderContext =
+				new ReportBuilderContextHtml()
+						.withHtmlTemplate(htmlTemplateCode)
+						.addHtmlContexts(mapHtmlContexts.values().stream().toList())
+						.addIds(getContextsIds())
+						.withDateinamensvorlage(htmlTemplateDefinition.getDateinamensvorlage())
+						.withStatischerDateiname(htmlTemplateDefinition.getDateiname())
+						.withRootPfad(htmlTemplateDefinition.getRootPfad())
+						.withLogger(reportingRepository.logger());
+		return new ReportBuilderHtml(reportBuilderContext);
 	}
 
 
 	/**
-	 * Erstellt eine ZIP-Datei, die alle HTML-Dateien aus der übergebenen Map enthält.
+	 * Erstellt eine ZIP-Datei, die alle HTML-Dateien aus der übergebenen Liste enthält.
 	 *
-	 * @param htmlBuilders 				Eine Liste mit den htmlBuilders, die die HTML-Inhalte erzeugen.
+	 * @param htmlBuilders 				Eine Liste mit den ReportBuilderHtml-Instanzen, die die HTML-Inhalte erzeugen.
 	 *
 	 * @return Gibt das ZIP in Form eines ByteArrays zurück.
 	 *
 	 * @throws ApiOperationException	Im Fehlerfall wird eine ApiOperationException ausgelöst und Log-Daten zusammen mit dieser zurückgegeben.
 	 */
-	private byte[] createZIP(final List<HtmlBuilder> htmlBuilders) throws ApiOperationException {
+	private byte[] createZIP(final List<ReportBuilderHtml> htmlBuilders) throws ApiOperationException {
 		final byte[] zipData;
 		try {
 			try (ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream()) {
 				try (ZipOutputStream zos = new ZipOutputStream(byteArrayOutputStream)) {
-					for (final HtmlBuilder htmlBuilder : htmlBuilders) {
-						zos.putNextEntry(new ZipEntry(htmlBuilder.getDateinameMitEndung()));
-						zos.write(htmlBuilder.getHtmlByteArray());
-						zos.closeEntry();
+					for (final ReportBuilderHtml htmlBuilder : htmlBuilders) {
+						addHtmlToZip(htmlBuilder, zos);
 					}
 					byteArrayOutputStream.flush();
 				}
@@ -664,6 +612,27 @@ public class HtmlFactory {
 					"FEHLER: Die erzeugten HTML-Inhalte konnten nicht als ZIP-Datei zusammengestellt werden.");
 		}
 		return zipData;
+	}
+
+	/**
+	 * Fügt eine HTML-Datei in den angegebenen ZipOutputStream ein. Dabei wird der Name und Inhalt der Datei aus dem übergebenen ReportBuilderHtml-Objekt gelesen.
+	 *
+	 * @param htmlBuilder Das Objekt, das die HTML-Daten und den Dateinamen bereitstellt
+	 * @param zos Der ZipOutputStream, in den die HTML-Datei eingefügt wird
+	 *
+	 * @throws ApiOperationException Wird geworfen, wenn ein Fehler beim Generieren der HTML-Datei vorliegt oder ein Laufzeitfehler auftritt
+	 */
+	private void addHtmlToZip(final ReportBuilderHtml htmlBuilder, final ZipOutputStream zos) throws ApiOperationException {
+		try {
+			zos.putNextEntry(new ZipEntry(htmlBuilder.getDateinameMitEndung()));
+			zos.write(htmlBuilder.getByteArray());
+			zos.closeEntry();
+		} catch (final Exception e) {
+			reportingRepository.logger().logLn(LogLevel.ERROR, 4,
+					"FEHLER: HTML-Datei '" + htmlBuilder.getDateiname() + "' konnte mit folgender Fehlermeldung nicht generiert werden: " + e.getMessage());
+			throw new ApiOperationException(Status.INTERNAL_SERVER_ERROR, e,
+					"## FEHLER: HTML-Datei '" + htmlBuilder.getDateiname() + "' konnte mit folgender Fehlermeldung nicht generiert werden: " + e.getMessage());
+		}
 	}
 
 }

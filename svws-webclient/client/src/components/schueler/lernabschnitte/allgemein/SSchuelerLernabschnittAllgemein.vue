@@ -13,9 +13,9 @@
 					statistics required />
 			</div>
 			<svws-ui-input-wrapper :grid="2">
-				<svws-ui-text-input :disabled="!hatUpdateKompetenz" placeholder="Datum von" type="date" statistics required
+				<svws-ui-text-input :disabled="!hatUpdateKompetenz" placeholder="Datum von" type="date" statistics
 					:model-value="manager().lernabschnittGet().datumAnfang || undefined" @change="datumAnfang => patch({datumAnfang})" />
-				<svws-ui-text-input :disabled="!hatUpdateKompetenz" placeholder="Datum bis" type="date" statistics required
+				<svws-ui-text-input :disabled="!hatUpdateKompetenz" placeholder="Datum bis" type="date" statistics
 					:model-value="manager().lernabschnittGet().datumEnde || undefined" @change="datumEnde => patch({datumEnde})" />
 				<svws-ui-spacing />
 				<div>
@@ -70,7 +70,7 @@
 	import type { FoerderschwerpunktEintrag, JahrgangsDaten, KlassenDaten, LehrerListeEintrag, List, OrganisationsformKatalogEintrag, PrimarstufeSchuleingangsphaseBesuchsjahreKatalogEintrag } from "@core";
 	import { BilingualeSprache, AllgemeinbildendOrganisationsformen, BerufskollegOrganisationsformen, Klassenart, Schulform, Schulgliederung, ArrayList,
 		WeiterbildungskollegOrganisationsformen, DeveloperNotificationException, BenutzerKompetenz,
-		PrimarstufeSchuleingangsphaseBesuchsjahre} from "@core";
+		PrimarstufeSchuleingangsphaseBesuchsjahre } from "@core";
 
 	import type { SchuelerLernabschnittAllgemeinProps } from "./SSchuelerLernabschnittAllgemeinProps";
 
@@ -98,7 +98,7 @@
 				&& props.benutzerKompetenzenKlassen.has(props.schuelerListeManager().auswahl().idKlasse));
 	});
 
-	function getLehrerText(lehrer: LehrerListeEintrag) : string {
+	function getLehrerText(lehrer: LehrerListeEintrag): string {
 		return `${lehrer.nachname}, ${lehrer.vorname} (${lehrer.kuerzel})`;
 	}
 
@@ -250,7 +250,7 @@
 				return bili;
 			return null;
 		},
-		set: (value : BilingualeSprache | null) => void props.patch({ bilingualerZweig: value?.daten(schuljahr.value)?.kuerzel ?? null }),
+		set: (value: BilingualeSprache | null) => void props.patch({ bilingualerZweig: value?.daten(schuljahr.value)?.kuerzel ?? null }),
 	});
 
 </script>

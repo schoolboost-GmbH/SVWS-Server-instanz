@@ -49,6 +49,6 @@
 		if (list.size() > 5)
 			return `${list.size()} Telefonart ausgewählt`;
 		return [...list].map(k => k.bezeichnung).join(', ');
-	})
+	});
 
 </script>

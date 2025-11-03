@@ -4,41 +4,41 @@ import { Class } from '../../../java/lang/Class';
 export class ReportingAusgabeformat extends JavaEnum<ReportingAusgabeformat> {
 
 	/** an array containing all values of this enumeration */
-	static readonly all_values_by_ordinal : Array<ReportingAusgabeformat> = [];
+	static readonly all_values_by_ordinal: Array<ReportingAusgabeformat> = [];
 
 	/** an array containing all values of this enumeration indexed by their name*/
-	static readonly all_values_by_name : Map<string, ReportingAusgabeformat> = new Map<string, ReportingAusgabeformat>();
+	static readonly all_values_by_name: Map<string, ReportingAusgabeformat> = new Map<string, ReportingAusgabeformat>();
 
 	/**
 	 * Undefiniert, ein Ausgabeformat wurde nicht angegeben.
 	 */
-	public static readonly UNDEFINED : ReportingAusgabeformat = new ReportingAusgabeformat("UNDEFINED", 0, 0);
+	public static readonly UNDEFINED: ReportingAusgabeformat = new ReportingAusgabeformat("UNDEFINED", 0, 0);
 
 	/**
 	 * Report-Ausgabeformat ist HTML
 	 */
-	public static readonly HTML : ReportingAusgabeformat = new ReportingAusgabeformat("HTML", 1, 1);
+	public static readonly HTML: ReportingAusgabeformat = new ReportingAusgabeformat("HTML", 1, 1);
 
 	/**
 	 * Report-Ausgabeformat ist PDF
 	 */
-	public static readonly PDF : ReportingAusgabeformat = new ReportingAusgabeformat("PDF", 2, 2);
+	public static readonly PDF: ReportingAusgabeformat = new ReportingAusgabeformat("PDF", 2, 2);
 
 	/**
 	 * Report-Ausgabeformat ist E-MAIL (PDF als Anhang)
 	 */
-	public static readonly EMAIL : ReportingAusgabeformat = new ReportingAusgabeformat("EMAIL", 3, 3);
+	public static readonly EMAIL: ReportingAusgabeformat = new ReportingAusgabeformat("EMAIL", 3, 3);
 
 	/**
 	 * Die ID des Report-Ausgabeformats
 	 */
-	private readonly id : number;
+	private readonly id: number;
 
 	/**
 	 * Erstellt ein neues Report-Ausgabeformat
 	 * @param id Die ID des Report-Ausgabeformats
 	 */
-	private constructor(name : string, ordinal : number, id : number) {
+	private constructor(name: string, ordinal: number, id: number) {
 		super(name, ordinal);
 		ReportingAusgabeformat.all_values_by_ordinal.push(this);
 		ReportingAusgabeformat.all_values_by_name.set(name, this);
@@ -49,7 +49,7 @@ export class ReportingAusgabeformat extends JavaEnum<ReportingAusgabeformat> {
 	 * Gibt die ID dieses Report-Ausgabeformats zurück
 	 * @return Die ID dieses Report-Ausgabeformats
 	 */
-	public getId() : number {
+	public getId(): number {
 		return this.id;
 	}
 
@@ -58,7 +58,7 @@ export class ReportingAusgabeformat extends JavaEnum<ReportingAusgabeformat> {
 	 * @param id   	Die ID des gesuchten Report-Ausgabeformats
 	 * @return 		Das Report-Ausgabeformat
 	 */
-	public static getByID(id : number) : ReportingAusgabeformat | null {
+	public static getByID(id: number): ReportingAusgabeformat | null {
 		for (const af of ReportingAusgabeformat.values())
 			if (af.id === id)
 				return af;
@@ -70,7 +70,7 @@ export class ReportingAusgabeformat extends JavaEnum<ReportingAusgabeformat> {
 	 *
 	 * @returns the array with enumeration values
 	 */
-	public static values() : Array<ReportingAusgabeformat> {
+	public static values(): Array<ReportingAusgabeformat> {
 		return [...this.all_values_by_ordinal];
 	}
 
@@ -81,7 +81,7 @@ export class ReportingAusgabeformat extends JavaEnum<ReportingAusgabeformat> {
 	 *
 	 * @returns the enumeration values or null
 	 */
-	public static valueOf(name : string) : ReportingAusgabeformat | null {
+	public static valueOf(name: string): ReportingAusgabeformat | null {
 		const tmp = this.all_values_by_name.get(name);
 		return (!tmp) ? null : tmp;
 	}
@@ -90,7 +90,7 @@ export class ReportingAusgabeformat extends JavaEnum<ReportingAusgabeformat> {
 		return 'de.svws_nrw.core.types.reporting.ReportingAusgabeformat';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.types.reporting.ReportingAusgabeformat', 'java.lang.Enum', 'java.lang.Comparable'].includes(name);
 	}
 
@@ -98,6 +98,6 @@ export class ReportingAusgabeformat extends JavaEnum<ReportingAusgabeformat> {
 
 }
 
-export function cast_de_svws_nrw_core_types_reporting_ReportingAusgabeformat(obj : unknown) : ReportingAusgabeformat {
+export function cast_de_svws_nrw_core_types_reporting_ReportingAusgabeformat(obj: unknown): ReportingAusgabeformat {
 	return obj as ReportingAusgabeformat;
 }

@@ -6,37 +6,37 @@ export class GostJahrgang extends JavaObject {
 	/**
 	 * Das Jahr, in welchem der Jahrgang Abitur machen wird. -1 bei der Vorlage für neue Abiturjahrgänge.
 	 */
-	public abiturjahr : number = -1;
+	public abiturjahr: number = -1;
 
 	/**
 	 * Die aktuelle Jahrgangstufe, welche dem Abiturjahrgang zugeordnet ist.
 	 */
-	public jahrgang : string | null = null;
+	public jahrgang: string | null = null;
 
 	/**
 	 * Das aktuelle Halbjahr, in dem sich der Jahrgang laut Schuljahrsabschnitt der Schule befindet.
 	 */
-	public halbjahr : number = 0;
+	public halbjahr: number = 0;
 
 	/**
 	 * Die textuelle Bezeichnung für den Abiturjahrgang
 	 */
-	public bezeichnung : string | null = "Allgemein / Vorlage";
+	public bezeichnung: string | null = "Allgemein / Vorlage";
 
 	/**
 	 * Gibt an, ob das Abitur für diesen Jahrgang bereits abgeschlossen ist, d.h. die Schule sich bereits in einem späteren Schuljahr befindet.
 	 */
-	public istAbgeschlossen : boolean = false;
+	public istAbgeschlossen: boolean = false;
 
 	/**
 	 * Gibt an, ob für die jeweiligen Halbjahre der Oberstufe bereits eine Blockung in den Leistungsdaten persistiert wurde (0=EF.1, 1=EF.2, ...)
 	 */
-	public istBlockungFestgelegt : Array<boolean> = Array(6).fill(false);
+	public istBlockungFestgelegt: Array<boolean> = Array(6).fill(false);
 
 	/**
 	 * Gibt an, ob für die jeweiligen Halbjahre der Oberstufe bereits (Quartals-)Noten in den Leistungsdaten vorhanden sind (0=EF.1, 1=EF.2, ...)
 	 */
-	public existierenNotenInLeistungsdaten : Array<boolean> = Array(6).fill(false);
+	public existierenNotenInLeistungsdaten: Array<boolean> = Array(6).fill(false);
 
 
 	/**
@@ -50,13 +50,13 @@ export class GostJahrgang extends JavaObject {
 		return 'de.svws_nrw.core.data.gost.GostJahrgang';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.gost.GostJahrgang'].includes(name);
 	}
 
 	public static class = new Class<GostJahrgang>('de.svws_nrw.core.data.gost.GostJahrgang');
 
-	public static transpilerFromJSON(json : string): GostJahrgang {
+	public static transpilerFromJSON(json: string): GostJahrgang {
 		const obj = JSON.parse(json) as Partial<GostJahrgang>;
 		const result = new GostJahrgang();
 		if (obj.abiturjahr === undefined)
@@ -83,7 +83,7 @@ export class GostJahrgang extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : GostJahrgang) : string {
+	public static transpilerToJSON(obj: GostJahrgang): string {
 		let result = '{';
 		result += '"abiturjahr" : ' + obj.abiturjahr.toString() + ',';
 		result += '"jahrgang" : ' + ((obj.jahrgang === null) ? 'null' : JSON.stringify(obj.jahrgang)) + ',';
@@ -111,7 +111,7 @@ export class GostJahrgang extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<GostJahrgang>) : string {
+	public static transpilerToJSONPatch(obj: Partial<GostJahrgang>): string {
 		let result = '{';
 		if (obj.abiturjahr !== undefined) {
 			result += '"abiturjahr" : ' + obj.abiturjahr.toString() + ',';
@@ -157,6 +157,6 @@ export class GostJahrgang extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_gost_GostJahrgang(obj : unknown) : GostJahrgang {
+export function cast_de_svws_nrw_core_data_gost_GostJahrgang(obj: unknown): GostJahrgang {
 	return obj as GostJahrgang;
 }

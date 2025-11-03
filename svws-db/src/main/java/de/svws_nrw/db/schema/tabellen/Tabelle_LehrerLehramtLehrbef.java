@@ -15,31 +15,31 @@ import de.svws_nrw.db.schema.SchemaTabelleSpalte;
 public class Tabelle_LehrerLehramtLehrbef extends SchemaTabelle {
 
 	/** Die Definition der Tabellenspalte Lehrer_ID */
-	public SchemaTabelleSpalte col_Lehrer_ID = add("Lehrer_ID", SchemaDatentypen.BIGINT, true)
+	public final SchemaTabelleSpalte col_Lehrer_ID = add("Lehrer_ID", SchemaDatentypen.BIGINT, true)
 			.setNotNull()
 			.setJavaComment("LehrerID zu der die Lehrbefähigung gehört");
 
 	/** Die Definition der Tabellenspalte LehramtKrz */
-	public SchemaTabelleSpalte col_LehramtKrz = add("LehramtKrz", SchemaDatentypen.VARCHAR, true).setDatenlaenge(10)
+	public final SchemaTabelleSpalte col_LehramtKrz = add("LehramtKrz", SchemaDatentypen.VARCHAR, true).setDatenlaenge(10)
 			.setJavaComment("Lehramtskürzel");
 
 	/** Die Definition der Tabellenspalte LehrbefKrz */
-	public SchemaTabelleSpalte col_LehrbefKrz = add("LehrbefKrz", SchemaDatentypen.VARCHAR, true).setDatenlaenge(10)
+	public final SchemaTabelleSpalte col_LehrbefKrz = add("LehrbefKrz", SchemaDatentypen.VARCHAR, true).setDatenlaenge(10)
 			.setJavaComment("Kürzel der Lehrbefähigung");
 
 	/** Die Definition der Tabellenspalte LehrbefAnerkennungKrz */
-	public SchemaTabelleSpalte col_LehrbefAnerkennungKrz = add("LehrbefAnerkennungKrz", SchemaDatentypen.VARCHAR, false).setDatenlaenge(10)
+	public final SchemaTabelleSpalte col_LehrbefAnerkennungKrz = add("LehrbefAnerkennungKrz", SchemaDatentypen.VARCHAR, false).setDatenlaenge(10)
 			.setJavaComment("Kürzel der LehrbefähigungsAnerkennung");
 
 	/** Die Definition der Tabellenspalte SchulnrEigner */
-	public SchemaTabelleSpalte col_SchulnrEigner = add("SchulnrEigner", SchemaDatentypen.INT, false)
+	public final SchemaTabelleSpalte col_SchulnrEigner = add("SchulnrEigner", SchemaDatentypen.INT, false)
 			.setVeraltet(SchemaRevisionen.REV_1)
 			.setJavaComment("Die Schulnummer zu welcher der Datensatz gehört – wird benötigt, wenn mehrere Schulen in einem Schema der Datenbank"
 					+ " gespeichert werden");
 
 
 	/** Die Definition des Fremdschlüssels LehrerLehramtLehrbef_Lehrer_FK */
-	public SchemaTabelleFremdschluessel fk_LehrerLehramtLehrbef_Lehrer_FK = addForeignKey(
+	public final SchemaTabelleFremdschluessel fk_LehrerLehramtLehrbef_Lehrer_FK = addForeignKey(
 			"LehrerLehramtLehrbef_Lehrer_FK",
 			/* OnUpdate: */ SchemaFremdschluesselAktionen.CASCADE,
 			/* OnDelete: */ SchemaFremdschluesselAktionen.CASCADE,

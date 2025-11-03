@@ -145,7 +145,7 @@
 
 	const data = computed<KlassenDaten>(() => props.manager().daten());
 
-	function textJahrgang(jg : JahrgangsDaten) : string {
+	function textJahrgang(jg: JahrgangsDaten): string {
 		if (jg.kuerzel === null)
 			return 'JU - Jahrgangsübergreifend';
 		if (jg.kuerzel === 'E1')
@@ -160,7 +160,7 @@
 	);
 
 	const letzteKlassenleitungId = computed<number | undefined>(() =>
-		listeKlassenlehrer.value.length > 0 ? listeKlassenlehrer.value[data.value.klassenLeitungen.size()-1].id : undefined
+		listeKlassenlehrer.value.length > 0 ? listeKlassenlehrer.value[data.value.klassenLeitungen.size() - 1].id : undefined
 	);
 
 	const showPfeilHoch = computed<boolean>(() => {
@@ -188,7 +188,7 @@
 		Jahrgaenge.REALSCHULE_SEMESTER_01, Jahrgaenge.REALSCHULE_SEMESTER_02, Jahrgaenge.REALSCHULE_SEMESTER_03, Jahrgaenge.REALSCHULE_SEMESTER_04,
 	]);
 
-	function istSemesterBetrieb() : boolean {
+	function istSemesterBetrieb(): boolean {
 		if (props.schulform === Schulform.WB)
 			return true;
 		const jgdaten = jahrgang.value;
@@ -200,7 +200,7 @@
 		return jgWBK.has(jg);
 	}
 
-	function zeigeVorgaengerklassen() : boolean {
+	function zeigeVorgaengerklassen(): boolean {
 		if (listeVorgaengerklassen.value.isEmpty())
 			return false;
 		if (istSemesterBetrieb())
@@ -211,7 +211,7 @@
 		return (sja.abschnitt === 1);
 	}
 
-	function zeigeFolgeklassen() : boolean {
+	function zeigeFolgeklassen(): boolean {
 		if (listeFolgeklassen.value.isEmpty())
 			return false;
 		if (istSemesterBetrieb())
@@ -222,7 +222,7 @@
 		return (sja.abschnitt === 2);
 	}
 
-	async function removeKlassenleitungHandler(rowData : LehrerListeEintrag) : Promise<void> {
+	async function removeKlassenleitungHandler(rowData: LehrerListeEintrag): Promise<void> {
 		await props.removeKlassenleitung(rowData);
 		if ((klassenleitungClicked.value !== null) && (klassenleitungClicked.value.id === rowData.id))
 			klassenleitungClicked.value = null;
@@ -234,7 +234,7 @@
 		await props.updateReihenfolgeKlassenleitung(klassenleitungClicked.value.id, true);
 	}
 
-	async function reduziereReihenfolge() : Promise<void> {
+	async function reduziereReihenfolge(): Promise<void> {
 		if (!klassenleitungClicked.value)
 			return;
 		await props.updateReihenfolgeKlassenleitung(klassenleitungClicked.value.id, false);
@@ -242,7 +242,7 @@
 
 	const jahrgang = computed<JahrgangsDaten | null>({
 		get: () => (data.value.idJahrgang === null) ? null : props.manager().jahrgaenge.get(data.value.idJahrgang),
-		set: (value) => void props.patch({ idJahrgang: value?.id ?? null })
+		set: (value) => void props.patch({ idJahrgang: value?.id ?? null }),
 	});
 
 	const jahrgaenge = computed<List<JahrgangsDaten>>(() => {
@@ -261,7 +261,7 @@
 			for (const v of value)
 				props.manager().schuelerstatus.auswahlAdd(v);
 			void props.setFilter();
-		}
+		},
 	});
 
 	const listeFolgeklassen = computed<List<KlassenDaten>>(() => {
@@ -277,7 +277,7 @@
 		const tmpJg = (jg.kuerzelStatistik === null) ? null : Jahrgaenge.data().getWertBySchluessel(jg.kuerzelStatistik);
 		if (tmpJg === null)
 			return result;
-		let schulgliederung : Schulgliederung | null = null;
+		let schulgliederung: Schulgliederung | null = null;
 		if (jg.kuerzelSchulgliederung === null) {
 			schulgliederung = Schulgliederung.getDefault(props.manager().schulform());
 		} else {
@@ -311,7 +311,7 @@
 		const tmpJg = (jg.kuerzelStatistik === null) ? null : Jahrgaenge.data().getWertBySchluessel(jg.kuerzelStatistik);
 		if (tmpJg === null)
 			return result;
-		let schulgliederung : Schulgliederung | null = null;
+		let schulgliederung: Schulgliederung | null = null;
 		if (jg.kuerzelSchulgliederung === null) {
 			schulgliederung = Schulgliederung.getDefault(props.manager().schulform());
 		} else {
@@ -333,9 +333,9 @@
 	});
 
 	const listeKlassenlehrer = computed<LehrerListeEintrag[]>(() => {
-		const a : LehrerListeEintrag[] = [];
+		const a: LehrerListeEintrag[] = [];
 		for (const klassenLeitung of props.manager().daten().klassenLeitungen) {
-			const lehrer : LehrerListeEintrag | null = props.manager().lehrer.get(klassenLeitung);
+			const lehrer: LehrerListeEintrag | null = props.manager().lehrer.get(klassenLeitung);
 			if (lehrer !== null)
 				a.push(lehrer);
 		}

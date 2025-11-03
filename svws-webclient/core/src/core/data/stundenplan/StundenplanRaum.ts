@@ -6,22 +6,22 @@ export class StundenplanRaum extends JavaObject {
 	/**
 	 * Die ID des Raumes.
 	 */
-	public id : number = -1;
+	public id: number = -1;
 
 	/**
 	 * Das Raumkürzel. Darf nicht "blank" sein.
 	 */
-	public kuerzel : string = "";
+	public kuerzel: string = "";
 
 	/**
 	 * Die Beschreibung des Raumes.
 	 */
-	public beschreibung : string = "";
+	public beschreibung: string = "";
 
 	/**
 	 * Die Grösse des Raumes an Arbeitsplätzen für Schüler.
 	 */
-	public groesse : number = -1;
+	public groesse: number = -1;
 
 
 	/**
@@ -35,13 +35,13 @@ export class StundenplanRaum extends JavaObject {
 		return 'de.svws_nrw.core.data.stundenplan.StundenplanRaum';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.stundenplan.StundenplanRaum'].includes(name);
 	}
 
 	public static class = new Class<StundenplanRaum>('de.svws_nrw.core.data.stundenplan.StundenplanRaum');
 
-	public static transpilerFromJSON(json : string): StundenplanRaum {
+	public static transpilerFromJSON(json: string): StundenplanRaum {
 		const obj = JSON.parse(json) as Partial<StundenplanRaum>;
 		const result = new StundenplanRaum();
 		if (obj.id === undefined)
@@ -59,7 +59,7 @@ export class StundenplanRaum extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : StundenplanRaum) : string {
+	public static transpilerToJSON(obj: StundenplanRaum): string {
 		let result = '{';
 		result += '"id" : ' + obj.id.toString() + ',';
 		result += '"kuerzel" : ' + JSON.stringify(obj.kuerzel) + ',';
@@ -70,7 +70,7 @@ export class StundenplanRaum extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<StundenplanRaum>) : string {
+	public static transpilerToJSONPatch(obj: Partial<StundenplanRaum>): string {
 		let result = '{';
 		if (obj.id !== undefined) {
 			result += '"id" : ' + obj.id.toString() + ',';
@@ -91,6 +91,6 @@ export class StundenplanRaum extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_stundenplan_StundenplanRaum(obj : unknown) : StundenplanRaum {
+export function cast_de_svws_nrw_core_data_stundenplan_StundenplanRaum(obj: unknown): StundenplanRaum {
 	return obj as StundenplanRaum;
 }

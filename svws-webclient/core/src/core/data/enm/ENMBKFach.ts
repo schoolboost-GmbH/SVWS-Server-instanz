@@ -6,57 +6,57 @@ export class ENMBKFach extends JavaObject {
 	/**
 	 * Die ID des Faches der zentralen Prüfungen.
 	 */
-	public fachID : number = 0;
+	public fachID: number = 0;
 
 	/**
 	 * Die ID des Lehrers, der das Prüfungsfach unterrichtet.
 	 */
-	public lehrerID : number = 0;
+	public lehrerID: number = 0;
 
 	/**
 	 * Gibt an, ob das Fach schriftlich ist.
 	 */
-	public istSchriftlich : boolean = false;
+	public istSchriftlich: boolean = false;
 
 	/**
 	 * Das Notenkürzel der Vornote für dieses Fach.
 	 */
-	public vornote : string | null = null;
+	public vornote: string | null = null;
 
 	/**
 	 * Das Notenkürzel der Note, die bei der schriftlichen Prüfung erreicht wurde.
 	 */
-	public noteSchriftlichePruefung : string | null = null;
+	public noteSchriftlichePruefung: string | null = null;
 
 	/**
 	 * Gibt an, ob eine mündliche Prüfung stattfinden muss.
 	 */
-	public muendlichePruefung : boolean = false;
+	public muendlichePruefung: boolean = false;
 
 	/**
 	 * Gibt an, ob eine freiwillige mündliche Prüfung stattfindet.
 	 */
-	public muendlichePruefungFreiwillig : boolean = false;
+	public muendlichePruefungFreiwillig: boolean = false;
 
 	/**
 	 * Das Notenkürzel der Note, die bei der mündlichen Prüfung erreicht wurde, sofern eine stattfindet.
 	 */
-	public noteMuendlichePruefung : string | null = null;
+	public noteMuendlichePruefung: string | null = null;
 
 	/**
 	 * Gibt an, ob das Fach in Bezug auf den Berufsabschluss schriftlich ist.
 	 */
-	public istSchriftlichBerufsabschluss : boolean = false;
+	public istSchriftlichBerufsabschluss: boolean = false;
 
 	/**
 	 * Die Note in Bezug auf den Berufsabschluss.
 	 */
-	public noteBerufsabschluss : string | null = null;
+	public noteBerufsabschluss: string | null = null;
 
 	/**
 	 * Das Notenkürzel der Abschlussnote nach der Prüfung.
 	 */
-	public abschlussnote : string | null = null;
+	public abschlussnote: string | null = null;
 
 
 	/**
@@ -70,13 +70,13 @@ export class ENMBKFach extends JavaObject {
 		return 'de.svws_nrw.core.data.enm.ENMBKFach';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.enm.ENMBKFach'].includes(name);
 	}
 
 	public static class = new Class<ENMBKFach>('de.svws_nrw.core.data.enm.ENMBKFach');
 
-	public static transpilerFromJSON(json : string): ENMBKFach {
+	public static transpilerFromJSON(json: string): ENMBKFach {
 		const obj = JSON.parse(json) as Partial<ENMBKFach>;
 		const result = new ENMBKFach();
 		if (obj.fachID === undefined)
@@ -105,7 +105,7 @@ export class ENMBKFach extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : ENMBKFach) : string {
+	public static transpilerToJSON(obj: ENMBKFach): string {
 		let result = '{';
 		result += '"fachID" : ' + obj.fachID.toString() + ',';
 		result += '"lehrerID" : ' + obj.lehrerID.toString() + ',';
@@ -123,7 +123,7 @@ export class ENMBKFach extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<ENMBKFach>) : string {
+	public static transpilerToJSONPatch(obj: Partial<ENMBKFach>): string {
 		let result = '{';
 		if (obj.fachID !== undefined) {
 			result += '"fachID" : ' + obj.fachID.toString() + ',';
@@ -165,6 +165,6 @@ export class ENMBKFach extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_enm_ENMBKFach(obj : unknown) : ENMBKFach {
+export function cast_de_svws_nrw_core_data_enm_ENMBKFach(obj: unknown): ENMBKFach {
 	return obj as ENMBKFach;
 }

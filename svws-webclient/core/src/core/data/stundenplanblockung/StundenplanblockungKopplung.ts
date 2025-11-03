@@ -9,17 +9,17 @@ export class StundenplanblockungKopplung extends JavaObject {
 	/**
 	 * Die Datenbank-ID der Kopplung.
 	 */
-	public id : number = 0;
+	public id: number = 0;
 
 	/**
 	 * Das Kürzel der Kopplung. Beispielsweise '5RE'.
 	 */
-	public kuerzel : string = "";
+	public kuerzel: string = "";
 
 	/**
 	 * Alle Stundenelemente, die dieser Kopplung zugeordnet sind.
 	 */
-	public stundenelemente : List<StundenplanblockungStundenelement> = new ArrayList<StundenplanblockungStundenelement>();
+	public stundenelemente: List<StundenplanblockungStundenelement> = new ArrayList<StundenplanblockungStundenelement>();
 
 
 	/**
@@ -33,13 +33,13 @@ export class StundenplanblockungKopplung extends JavaObject {
 		return 'de.svws_nrw.core.data.stundenplanblockung.StundenplanblockungKopplung';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.stundenplanblockung.StundenplanblockungKopplung'].includes(name);
 	}
 
 	public static class = new Class<StundenplanblockungKopplung>('de.svws_nrw.core.data.stundenplanblockung.StundenplanblockungKopplung');
 
-	public static transpilerFromJSON(json : string): StundenplanblockungKopplung {
+	public static transpilerFromJSON(json: string): StundenplanblockungKopplung {
 		const obj = JSON.parse(json) as Partial<StundenplanblockungKopplung>;
 		const result = new StundenplanblockungKopplung();
 		if (obj.id === undefined)
@@ -56,7 +56,7 @@ export class StundenplanblockungKopplung extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : StundenplanblockungKopplung) : string {
+	public static transpilerToJSON(obj: StundenplanblockungKopplung): string {
 		let result = '{';
 		result += '"id" : ' + obj.id.toString() + ',';
 		result += '"kuerzel" : ' + JSON.stringify(obj.kuerzel) + ',';
@@ -73,7 +73,7 @@ export class StundenplanblockungKopplung extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<StundenplanblockungKopplung>) : string {
+	public static transpilerToJSONPatch(obj: Partial<StundenplanblockungKopplung>): string {
 		let result = '{';
 		if (obj.id !== undefined) {
 			result += '"id" : ' + obj.id.toString() + ',';
@@ -98,6 +98,6 @@ export class StundenplanblockungKopplung extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_stundenplanblockung_StundenplanblockungKopplung(obj : unknown) : StundenplanblockungKopplung {
+export function cast_de_svws_nrw_core_data_stundenplanblockung_StundenplanblockungKopplung(obj: unknown): StundenplanblockungKopplung {
 	return obj as StundenplanblockungKopplung;
 }

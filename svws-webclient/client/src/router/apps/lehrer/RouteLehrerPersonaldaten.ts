@@ -1,6 +1,6 @@
 import type { RouteLocationNormalized, RouteLocationRaw, RouteParams } from "vue-router";
 
-import type { DeveloperNotificationException} from "@core";
+import type { DeveloperNotificationException } from "@core";
 import { BenutzerKompetenz, Schulform, ServerMode } from "@core";
 
 import { RouteNode } from "~/router/RouteNode";
@@ -16,13 +16,13 @@ const SLehrerPersonaldaten = () => import("~/components/lehrer/personaldaten/SLe
 export class RouteLehrerPersonaldaten extends RouteNode<any, RouteLehrer> {
 
 	public constructor() {
-		super(Schulform.values(), [ BenutzerKompetenz.LEHRER_PERSONALDATEN_ANSEHEN ], "lehrer.personaldaten", "personaldaten", SLehrerPersonaldaten);
+		super(Schulform.values(), [BenutzerKompetenz.LEHRER_PERSONALDATEN_ANSEHEN], "lehrer.personaldaten", "personaldaten", SLehrerPersonaldaten);
 		super.mode = ServerMode.ALPHA;
 		super.propHandler = (route) => this.getProps(route);
 		super.text = "Personaldaten";
 	}
 
-	public async update(to: RouteNode<any, any>, to_params: RouteParams) : Promise<void | Error | RouteLocationRaw> {
+	public async update(to: RouteNode<any, any>, to_params: RouteParams): Promise<void | Error | RouteLocationRaw> {
 		try {
 			if (!routeLehrer.data.manager.hasDaten())
 				return routeLehrer.getRoute();

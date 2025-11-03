@@ -29,7 +29,7 @@ export interface GostKlausurplanungRaumzeitProps {
 	patchKlausur: (klausur: GostKursklausur, patch: Partial<GostKursklausur>) => Promise<void>;
 	patchKlausurtermin: (id: number, termin: Partial<GostKlausurtermin>) => Promise<void>;
 	quartalsauswahl: WritableComputedRef<0 | 1 | 2>;
-	setRaumTermin : (termin: GostKlausurtermin | null) => void;
+	setRaumTermin: (termin: GostKlausurtermin | null) => void;
 	terminSelected: WritableComputedRef<GostKlausurtermin | undefined>;
 	zeigeAlleJahrgaenge: () => boolean;
 	setZeigeAlleJahrgaenge: (value: boolean) => void;

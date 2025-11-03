@@ -53,7 +53,7 @@
 	import { DateUtils, GostHalbjahr } from "@core";
 	import type { GostKlausurplanManager, GostSchuelerklausurTermin, List, JavaSet, GostKursklausur, GostKlausurenCollectionSkrsKrsData, GostKlausurtermin } from "@core";
 	import type { GostKlausurplanungDragData, GostKlausurplanungDropZone } from "./SGostKlausurplanung";
-	import type {DataTableColumn} from "@ui";
+	import type { DataTableColumn } from "@ui";
 
 	const props = withDefaults(defineProps<{
 		kMan: () => GostKlausurplanManager;
@@ -83,8 +83,8 @@
 		{ key: "stufe", label: "Jg.", span: 2 },
 		{ key: "kurs", label: "Kurs", span: 8 },
 		{ key: "datum", label: "Datum", span: 11 },
-		{ key: "kuerzel", label: "Lehrkraft", span: 4},
-		{ key: "dauer", label: "Dauer", tooltip: "Dauer in Minuten", span: 2, align: "right"},
+		{ key: "kuerzel", label: "Lehrkraft", span: 4 },
+		{ key: "dauer", label: "Dauer", tooltip: "Dauer in Minuten", span: 2, align: "right" },
 	];
 
 </script>

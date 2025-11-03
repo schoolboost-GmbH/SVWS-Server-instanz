@@ -98,7 +98,7 @@
 			if (pair.b !== null)
 				map.set(pair.a, pair.b);
 		return map;
-	})
+	});
 
 	const sortByAndOrder = computed<SortByAndOrder | undefined>({
 		get: () => {
@@ -116,7 +116,7 @@
 			props.manager().orderUpdate(value.key, value.order);
 			void props.setFilter();
 		},
-	})
+	});
 
 	const search = ref<string>("");
 

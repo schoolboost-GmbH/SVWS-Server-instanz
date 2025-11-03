@@ -10,17 +10,17 @@ export class BeruflichesGymnasiumStundentafel extends JavaObject {
 	/**
 	 * Die Variante der Stundentafel bezogen auf einen Bildungsgang
 	 */
-	public variante : number = 0;
+	public variante: number = 0;
 
 	/**
 	 * Die allgemeine Bezeichnung der Abschnitte (z.B. Quartal oder Halbjahr)
 	 */
-	public faecher : List<BeruflichesGymnasiumStundentafelFach> = new ArrayList<BeruflichesGymnasiumStundentafelFach>();
+	public faecher: List<BeruflichesGymnasiumStundentafelFach> = new ArrayList<BeruflichesGymnasiumStundentafelFach>();
 
 	/**
 	 * Die Wahlmöglichkeiten der Abiturfächer dieser Variante inkl. zukünftigem fünften Fach
 	 */
-	public wahlmoeglichkeiten : List<BeruflichesGymnasiumStundentafelAbiturfaecherWahlmoeglichkeit> = new ArrayList<BeruflichesGymnasiumStundentafelAbiturfaecherWahlmoeglichkeit>();
+	public wahlmoeglichkeiten: List<BeruflichesGymnasiumStundentafelAbiturfaecherWahlmoeglichkeit> = new ArrayList<BeruflichesGymnasiumStundentafelAbiturfaecherWahlmoeglichkeit>();
 
 
 	/**
@@ -34,13 +34,13 @@ export class BeruflichesGymnasiumStundentafel extends JavaObject {
 		return 'de.svws_nrw.asd.data.schule.BeruflichesGymnasiumStundentafel';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.asd.data.schule.BeruflichesGymnasiumStundentafel'].includes(name);
 	}
 
 	public static class = new Class<BeruflichesGymnasiumStundentafel>('de.svws_nrw.asd.data.schule.BeruflichesGymnasiumStundentafel');
 
-	public static transpilerFromJSON(json : string): BeruflichesGymnasiumStundentafel {
+	public static transpilerFromJSON(json: string): BeruflichesGymnasiumStundentafel {
 		const obj = JSON.parse(json) as Partial<BeruflichesGymnasiumStundentafel>;
 		const result = new BeruflichesGymnasiumStundentafel();
 		if (obj.variante === undefined)
@@ -59,7 +59,7 @@ export class BeruflichesGymnasiumStundentafel extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : BeruflichesGymnasiumStundentafel) : string {
+	public static transpilerToJSON(obj: BeruflichesGymnasiumStundentafel): string {
 		let result = '{';
 		result += '"variante" : ' + obj.variante.toString() + ',';
 		result += '"faecher" : [ ';
@@ -83,7 +83,7 @@ export class BeruflichesGymnasiumStundentafel extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<BeruflichesGymnasiumStundentafel>) : string {
+	public static transpilerToJSONPatch(obj: Partial<BeruflichesGymnasiumStundentafel>): string {
 		let result = '{';
 		if (obj.variante !== undefined) {
 			result += '"variante" : ' + obj.variante.toString() + ',';
@@ -115,6 +115,6 @@ export class BeruflichesGymnasiumStundentafel extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_asd_data_schule_BeruflichesGymnasiumStundentafel(obj : unknown) : BeruflichesGymnasiumStundentafel {
+export function cast_de_svws_nrw_asd_data_schule_BeruflichesGymnasiumStundentafel(obj: unknown): BeruflichesGymnasiumStundentafel {
 	return obj as BeruflichesGymnasiumStundentafel;
 }

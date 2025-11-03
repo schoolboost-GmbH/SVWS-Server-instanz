@@ -204,7 +204,7 @@
 			{ kuerzel: "Bemerkung", name: "Fachbezogene Bemerkungen", width: "16rem", hideable: true },
 			{ kuerzel: "", name: "", width: "3.25rem", hideable: false },
 		],
-		colsVisible: computed<Map<string, boolean|null>>({
+		colsVisible: computed<Map<string, boolean | null>>({
 			get: () => props.columnsVisible(),
 			set: (value) => void props.setColumnsVisible(value),
 		}),
@@ -214,15 +214,15 @@
 			return;
 		const pair = gridManager.daten.get(input.row);
 		void props.focusFloskelEditor(pair.b, pair.a, input.row, false);
-	}
+	};
 	defineExpose({ gridManager });
 
 	const notenKuerzel = computed(() => Note.values().map(e => e.daten(props.enmManager().schuljahr)?.kuerzel).filter(e => e !== ""));
 
 	function inputNoteQuartal(pair: PairNN<ENMLeistung, ENMSchueler>, col: number, index: number) {
 		const key = 'Quartalsnote_' + pair.a.id + "_" + pair.b.id;
-		const setter = (value : string | null) => void props.patchLeistung(pair.a, { noteQuartal: value });
-		return (element : Element | ComponentPublicInstance<unknown> | null) => {
+		const setter = (value: string | null) => void props.patchLeistung(pair.a, { noteQuartal: value });
+		return (element: Element | ComponentPublicInstance<unknown> | null) => {
 			const input = gridManager.applyInputNote(key, col, index, element, setter, props.enmManager().schuljahr);
 			if (input !== null)
 				gridManager.update(key, pair.a.noteQuartal);
@@ -231,8 +231,8 @@
 
 	function inputNote(pair: PairNN<ENMLeistung, ENMSchueler>, col: number, index: number) {
 		const key = 'Note_' + pair.a.id + "_" + pair.b.id;
-		const setter = (value : string | null) => void props.patchLeistung(pair.a, { note: value });
-		return (element : Element | ComponentPublicInstance<unknown> | null) => {
+		const setter = (value: string | null) => void props.patchLeistung(pair.a, { note: value });
+		return (element: Element | ComponentPublicInstance<unknown> | null) => {
 			const input = gridManager.applyInputNote(key, col, index, element, setter, props.enmManager().schuljahr);
 			if (input !== null)
 				gridManager.update(key, pair.a.note);
@@ -241,8 +241,8 @@
 
 	function inputMahnung(pair: PairNN<ENMLeistung, ENMSchueler>, col: number, index: number) {
 		const key = 'Mahnung_' + pair.a.id + "_" + pair.b.id;
-		const setter = (value : boolean) => void props.patchLeistung(pair.a, { istGemahnt: value });
-		return (element : Element | ComponentPublicInstance<unknown> | null) => {
+		const setter = (value: boolean) => void props.patchLeistung(pair.a, { istGemahnt: value });
+		return (element: Element | ComponentPublicInstance<unknown> | null) => {
 			const input = gridManager.applyInputToggle(key, col, index, element, setter);
 			if (input !== null)
 				watchEffect(() => gridManager.update(key, pair.a.istGemahnt ?? false));
@@ -251,7 +251,7 @@
 
 	function inputFehlstunden(pair: PairNN<ENMLeistung, ENMSchueler>, col: number, index: number) {
 		const key = 'Fehlstunden_' + pair.a.id + "_" + pair.b.id;
-		const setter = (value : number | null) => {
+		const setter = (value: number | null) => {
 			const patch = <Partial<ENMLeistung>>{ fehlstundenFach: value };
 			const inputFSU = gridManager.getInputByKey('FehlstundenUnendschuldigt_' + pair.a.id + "_" + pair.b.id);
 			if (inputFSU !== null) {
@@ -262,7 +262,7 @@
 			}
 			void props.patchLeistung(pair.a, { fehlstundenFach: value });
 		};
-		return (element : Element | ComponentPublicInstance<unknown> | null) => {
+		return (element: Element | ComponentPublicInstance<unknown> | null) => {
 			const input = gridManager.applyInputIntegerDiv(key, col, index, element, 999, setter);
 			if (input !== null)
 				watchEffect(() => gridManager.update(key, pair.a.fehlstundenFach));
@@ -271,8 +271,8 @@
 
 	function inputFehlstundenUnendschuldigt(pair: PairNN<ENMLeistung, ENMSchueler>, col: number, index: number) {
 		const key = 'FehlstundenUnendschuldigt_' + pair.a.id + "_" + pair.b.id;
-		const setter = (value : number | null) => void props.patchLeistung(pair.a, { fehlstundenUnentschuldigtFach: value });
-		return (element : Element | ComponentPublicInstance<unknown> | null) => {
+		const setter = (value: number | null) => void props.patchLeistung(pair.a, { fehlstundenUnentschuldigtFach: value });
+		return (element: Element | ComponentPublicInstance<unknown> | null) => {
 			const input = gridManager.applyInputIntegerDiv(key, col, index, element, pair.a.fehlstundenFach ?? 0, setter);
 			if (input !== null)
 				watchEffect(() => gridManager.update(key, pair.a.fehlstundenUnentschuldigtFach));
@@ -282,8 +282,8 @@
 
 	function inputBemerkung(pair: PairNN<ENMLeistung, ENMSchueler>, col: number, index: number) {
 		const key = 'Bemerkung_' + pair.a.id + "_" + pair.b.id;
-		const setter = (value : boolean) => void props.focusFloskelEditor(pair.b, pair.a, index, true);
-		return (element : Element | ComponentPublicInstance<unknown> | null) => {
+		const setter = (value: boolean) => void props.focusFloskelEditor(pair.b, pair.a, index, true);
+		return (element: Element | ComponentPublicInstance<unknown> | null) => {
 			const input = gridManager.applyInputToggle(key, col, index, element, setter);
 			if (input !== null) {
 				gridManager.update(key, false);

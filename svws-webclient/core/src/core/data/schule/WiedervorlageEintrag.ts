@@ -6,57 +6,57 @@ export class WiedervorlageEintrag extends JavaObject {
 	/**
 	 * Die ID des Eintrags.
 	 */
-	public id : number = -1;
+	public id: number = -1;
 
 	/**
 	 * Die ID des Benutzers, der den Eintrag erstellt hat.
 	 */
-	public idBenutzer : number = -1;
+	public idBenutzer: number = -1;
 
 	/**
 	 * Die ID der Benutzergruppe, welcher der Eintrag zugeordnet ist, oder null, falls keine Zuordnung vorliegt.
 	 */
-	public idBenutzergruppe : number | null = null;
+	public idBenutzergruppe: number | null = null;
 
 	/**
 	 * Die ID des Person-Typs, auf den sich die Wiedervorlage bezieht (1 = Lehrer, 2 = Schueler, 3 = Erzieher oder NULL für keinen)
 	 */
-	public typPerson : number | null = null;
+	public typPerson: number | null = null;
 
 	/**
 	 * Die ID der Person in Abhängigkeit des Person-Typs, auf den sich die Wiedervorlage bezieht (ggf. Lehrer-ID, Schüler-ID oder Erzieher-ID)
 	 */
-	public idPerson : number | null = null;
+	public idPerson: number | null = null;
 
 	/**
 	 * Die Bemerkung der Wiedervorlage, die bem Benutzer angezeigt wird.
 	 */
-	public bemerkung : string = "";
+	public bemerkung: string = "";
 
 	/**
 	 * Gibt den Zeitstempel an, wann der Eintrag angelegt wurde.
 	 */
-	public tsAngelegt : string | null = null;
+	public tsAngelegt: string | null = null;
 
 	/**
 	 * Gibt den Zeitstempel an, wann der Eintrag angelegt wurde.
 	 */
-	public tsWiedervorlage : string | null = null;
+	public tsWiedervorlage: string | null = null;
 
 	/**
 	 * Gibt den Zeitstempel an, wann der Eintrag als erledigt markiert wurde.
 	 */
-	public tsErledigt : string | null = null;
+	public tsErledigt: string | null = null;
 
 	/**
 	 * Die ID des Benutzers, der den Eintrag als erledigt markiert hat, oder null.
 	 */
-	public idBenutzerErledigt : number | null = null;
+	public idBenutzerErledigt: number | null = null;
 
 	/**
 	 * Gibt an, ob der Eintrag automatisch als erledigt markiert werden soll, wenn er einem Benutzer nach dem Wiedervorlage-Zeitpunkt angezeigt wurde.
 	 */
-	public automatischErledigt : boolean = false;
+	public automatischErledigt: boolean = false;
 
 
 	/**
@@ -70,13 +70,13 @@ export class WiedervorlageEintrag extends JavaObject {
 		return 'de.svws_nrw.core.data.schule.WiedervorlageEintrag';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.schule.WiedervorlageEintrag'].includes(name);
 	}
 
 	public static class = new Class<WiedervorlageEintrag>('de.svws_nrw.core.data.schule.WiedervorlageEintrag');
 
-	public static transpilerFromJSON(json : string): WiedervorlageEintrag {
+	public static transpilerFromJSON(json: string): WiedervorlageEintrag {
 		const obj = JSON.parse(json) as Partial<WiedervorlageEintrag>;
 		const result = new WiedervorlageEintrag();
 		if (obj.id === undefined)
@@ -101,7 +101,7 @@ export class WiedervorlageEintrag extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : WiedervorlageEintrag) : string {
+	public static transpilerToJSON(obj: WiedervorlageEintrag): string {
 		let result = '{';
 		result += '"id" : ' + obj.id.toString() + ',';
 		result += '"idBenutzer" : ' + obj.idBenutzer.toString() + ',';
@@ -119,7 +119,7 @@ export class WiedervorlageEintrag extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<WiedervorlageEintrag>) : string {
+	public static transpilerToJSONPatch(obj: Partial<WiedervorlageEintrag>): string {
 		let result = '{';
 		if (obj.id !== undefined) {
 			result += '"id" : ' + obj.id.toString() + ',';
@@ -161,6 +161,6 @@ export class WiedervorlageEintrag extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_schule_WiedervorlageEintrag(obj : unknown) : WiedervorlageEintrag {
+export function cast_de_svws_nrw_core_data_schule_WiedervorlageEintrag(obj: unknown): WiedervorlageEintrag {
 	return obj as WiedervorlageEintrag;
 }

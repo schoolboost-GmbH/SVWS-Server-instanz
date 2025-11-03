@@ -5,7 +5,7 @@ import { BenutzerKompetenz, DeveloperNotificationException, Schulform, ServerMod
 import { RouteManager } from "~/router/RouteManager";
 import { RouteNode } from "~/router/RouteNode";
 import { routeError } from "~/router/error/RouteError";
-import { type RouteSchueler} from "~/router/apps/schueler/RouteSchueler";
+import { type RouteSchueler } from "~/router/apps/schueler/RouteSchueler";
 import { routeSchuelerLernabschnittAllgemein } from "~/router/apps/schueler/lernabschnitte/RouteSchuelerLernabschnittAllgemein";
 import { routeSchuelerLernabschnittLeistungen } from "~/router/apps/schueler/lernabschnitte/RouteSchuelerLernabschnittLeistungen";
 import { routeSchuelerLernabschnittVersetzungAbschluss } from "~/router/apps/schueler/lernabschnitte/RouteSchuelerLernabschnittVersetzungAbschluss";
@@ -24,7 +24,7 @@ const SSchuelerLernabschnitte = () => import("~/components/schueler/lernabschnit
 export class RouteSchuelerLernabschnitte extends RouteNode<RouteDataSchuelerLernabschnitte, RouteSchueler> {
 
 	public constructor() {
-		super(Schulform.values(), [ BenutzerKompetenz.SCHUELER_LEISTUNGSDATEN_ANSEHEN ], "schueler.lernabschnitt", "lernabschnitt/:abschnitt(\\d+)?/:wechselNr(\\d+)?", SSchuelerLernabschnitte, new RouteDataSchuelerLernabschnitte());
+		super(Schulform.values(), [BenutzerKompetenz.SCHUELER_LEISTUNGSDATEN_ANSEHEN], "schueler.lernabschnitt", "lernabschnitt/:abschnitt(\\d+)?/:wechselNr(\\d+)?", SSchuelerLernabschnitte, new RouteDataSchuelerLernabschnitte());
 		super.mode = ServerMode.STABLE;
 		super.propHandler = (route) => this.getProps(route);
 		super.text = "Lernabschnitte";
@@ -40,7 +40,7 @@ export class RouteSchuelerLernabschnitte extends RouteNode<RouteDataSchuelerLern
 		super.defaultChild = routeSchuelerLernabschnittLeistungen;
 	}
 
-	protected async update(to: RouteNode<any, any>, to_params: RouteParams, from: RouteNode<any, any> | undefined, from_params: RouteParams, isEntering: boolean) : Promise<void | Error | RouteLocationRaw> {
+	protected async update(to: RouteNode<any, any>, to_params: RouteParams, from: RouteNode<any, any> | undefined, from_params: RouteParams, isEntering: boolean): Promise<void | Error | RouteLocationRaw> {
 		try {
 			const { id, abschnitt: idSchuljahresabschnitt, wechselNr } = RouteNode.getIntParams(to_params, ["id", "abschnitt", "wechselNr"]);
 			if (id === undefined)
@@ -64,10 +64,10 @@ export class RouteSchuelerLernabschnitte extends RouteNode<RouteDataSchuelerLern
 		this.data.reset();
 	}
 
-	public addRouteParamsFromState() : RouteParamsRawGeneric {
+	public addRouteParamsFromState(): RouteParamsRawGeneric {
 		const abschnitt = this.data.hatAuswahl ? this.data.auswahl.schuljahresabschnitt : undefined;
 		const wechselNr = this.data.hatAuswahl ? this.data.auswahl.wechselNr : undefined;
-		return { abschnitt , wechselNr };
+		return { abschnitt, wechselNr };
 	}
 
 	public getProps(to: RouteLocationNormalized): SchuelerLernabschnitteProps {
@@ -87,7 +87,7 @@ export class RouteSchuelerLernabschnitte extends RouteNode<RouteDataSchuelerLern
 			throw new DeveloperNotificationException("Unbekannte Route");
 		await RouteManager.doRoute(this.getRouteView(node));
 		this.data.setView(node, this.children);
-	}
+	};
 
 }
 

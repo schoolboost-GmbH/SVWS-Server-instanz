@@ -15,13 +15,13 @@ export class ReligionKatalogEintrag extends CoreTypeData {
 		return 'de.svws_nrw.asd.data.schule.ReligionKatalogEintrag';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.asd.data.schule.ReligionKatalogEintrag', 'de.svws_nrw.asd.data.CoreTypeData'].includes(name);
 	}
 
 	public static class = new Class<ReligionKatalogEintrag>('de.svws_nrw.asd.data.schule.ReligionKatalogEintrag');
 
-	public static transpilerFromJSON(json : string): ReligionKatalogEintrag {
+	public static transpilerFromJSON(json: string): ReligionKatalogEintrag {
 		const obj = JSON.parse(json) as Partial<ReligionKatalogEintrag>;
 		const result = new ReligionKatalogEintrag();
 		if (obj.id === undefined)
@@ -41,7 +41,7 @@ export class ReligionKatalogEintrag extends CoreTypeData {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : ReligionKatalogEintrag) : string {
+	public static transpilerToJSON(obj: ReligionKatalogEintrag): string {
 		let result = '{';
 		result += '"id" : ' + obj.id.toString() + ',';
 		result += '"schluessel" : ' + JSON.stringify(obj.schluessel) + ',';
@@ -54,7 +54,7 @@ export class ReligionKatalogEintrag extends CoreTypeData {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<ReligionKatalogEintrag>) : string {
+	public static transpilerToJSONPatch(obj: Partial<ReligionKatalogEintrag>): string {
 		let result = '{';
 		if (obj.id !== undefined) {
 			result += '"id" : ' + obj.id.toString() + ',';
@@ -81,6 +81,6 @@ export class ReligionKatalogEintrag extends CoreTypeData {
 
 }
 
-export function cast_de_svws_nrw_asd_data_schule_ReligionKatalogEintrag(obj : unknown) : ReligionKatalogEintrag {
+export function cast_de_svws_nrw_asd_data_schule_ReligionKatalogEintrag(obj: unknown): ReligionKatalogEintrag {
 	return obj as ReligionKatalogEintrag;
 }

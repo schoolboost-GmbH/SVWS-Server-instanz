@@ -14,14 +14,14 @@ const SSchuleDatenaustauschWenom = () => import("~/components/schule/datenaustau
 export class RouteSchuleDatenaustauschWenom extends RouteNode<RouteDataSchuleDatenaustauschWenom, RouteApp> {
 
 	public constructor() {
-		super(Schulform.values(), [ BenutzerKompetenz.NOTENMODUL_ADMINISTRATION ], "schule.datenaustausch.wenom", "wenom", SSchuleDatenaustauschWenom, new RouteDataSchuleDatenaustauschWenom());
+		super(Schulform.values(), [BenutzerKompetenz.NOTENMODUL_ADMINISTRATION], "schule.datenaustausch.wenom", "wenom", SSchuleDatenaustauschWenom, new RouteDataSchuleDatenaustauschWenom());
 		super.mode = ServerMode.ALPHA;
 		super.propHandler = (route) => this.getProps(route);
 		super.text = "Webnotenmanager";
 		super.menugroup = RouteSchuleMenuGroup.DATENAUSTAUSCH;
 	}
 
-	protected async update(to: RouteNode<any, any>, to_params: RouteParams, from: RouteNode<any, any> | undefined, from_params: RouteParams, isEntering: boolean) : Promise<void | Error | RouteLocationRaw> {
+	protected async update(to: RouteNode<any, any>, to_params: RouteParams, from: RouteNode<any, any> | undefined, from_params: RouteParams, isEntering: boolean): Promise<void | Error | RouteLocationRaw> {
 		if (isEntering)
 			await this.data.init();
 	}

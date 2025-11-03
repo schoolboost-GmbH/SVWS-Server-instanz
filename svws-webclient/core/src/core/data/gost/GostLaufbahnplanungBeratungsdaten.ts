@@ -6,22 +6,22 @@ export class GostLaufbahnplanungBeratungsdaten extends JavaObject {
 	/**
 	 * Die ID des Beratungslehrers, der die letze Beratung durchgeführt hat
 	 */
-	public beratungslehrerID : number | null = null;
+	public beratungslehrerID: number | null = null;
 
 	/**
 	 * Das Beratungsdatum der letzten Beratung im Rahmen der Laufbahnplanung
 	 */
-	public beratungsdatum : string | null = null;
+	public beratungsdatum: string | null = null;
 
 	/**
 	 * Ein Kommentar zur Beratung
 	 */
-	public kommentar : string | null = null;
+	public kommentar: string | null = null;
 
 	/**
 	 * Das Rücklaufdatum des Wahlbogens der letzten Beratung im Rahmen der Laufbahnplanung
 	 */
-	public ruecklaufdatum : string | null = null;
+	public ruecklaufdatum: string | null = null;
 
 
 	/**
@@ -35,13 +35,13 @@ export class GostLaufbahnplanungBeratungsdaten extends JavaObject {
 		return 'de.svws_nrw.core.data.gost.GostLaufbahnplanungBeratungsdaten';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.gost.GostLaufbahnplanungBeratungsdaten'].includes(name);
 	}
 
 	public static class = new Class<GostLaufbahnplanungBeratungsdaten>('de.svws_nrw.core.data.gost.GostLaufbahnplanungBeratungsdaten');
 
-	public static transpilerFromJSON(json : string): GostLaufbahnplanungBeratungsdaten {
+	public static transpilerFromJSON(json: string): GostLaufbahnplanungBeratungsdaten {
 		const obj = JSON.parse(json) as Partial<GostLaufbahnplanungBeratungsdaten>;
 		const result = new GostLaufbahnplanungBeratungsdaten();
 		result.beratungslehrerID = (obj.beratungslehrerID === undefined) ? null : obj.beratungslehrerID === null ? null : obj.beratungslehrerID;
@@ -51,7 +51,7 @@ export class GostLaufbahnplanungBeratungsdaten extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : GostLaufbahnplanungBeratungsdaten) : string {
+	public static transpilerToJSON(obj: GostLaufbahnplanungBeratungsdaten): string {
 		let result = '{';
 		result += '"beratungslehrerID" : ' + ((obj.beratungslehrerID === null) ? 'null' : obj.beratungslehrerID.toString()) + ',';
 		result += '"beratungsdatum" : ' + ((obj.beratungsdatum === null) ? 'null' : JSON.stringify(obj.beratungsdatum)) + ',';
@@ -62,7 +62,7 @@ export class GostLaufbahnplanungBeratungsdaten extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<GostLaufbahnplanungBeratungsdaten>) : string {
+	public static transpilerToJSONPatch(obj: Partial<GostLaufbahnplanungBeratungsdaten>): string {
 		let result = '{';
 		if (obj.beratungslehrerID !== undefined) {
 			result += '"beratungslehrerID" : ' + ((obj.beratungslehrerID === null) ? 'null' : obj.beratungslehrerID.toString()) + ',';
@@ -83,6 +83,6 @@ export class GostLaufbahnplanungBeratungsdaten extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_gost_GostLaufbahnplanungBeratungsdaten(obj : unknown) : GostLaufbahnplanungBeratungsdaten {
+export function cast_de_svws_nrw_core_data_gost_GostLaufbahnplanungBeratungsdaten(obj: unknown): GostLaufbahnplanungBeratungsdaten {
 	return obj as GostLaufbahnplanungBeratungsdaten;
 }

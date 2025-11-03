@@ -6,13 +6,13 @@ import { BenutzerKompetenz } from "@core/core/types/benutzer/BenutzerKompetenz";
 import type { EnmTeilleistungenProps } from "@ui/components/enm/EnmTeilleistungenProps";
 import type { EnmTeilleistungenAuswahlProps } from "@ui/components/enm/EnmTeilleistungenAuswahlProps";
 
-const EnmTeilleistungenAuswahl = () => import("@ui/components/enm/EnmTeilleistungenAuswahl.vue")
-const EnmTeilleistungen = () => import("@ui/components/enm/EnmTeilleistungen.vue")
+const EnmTeilleistungenAuswahl = () => import("@ui/components/enm/EnmTeilleistungenAuswahl.vue");
+const EnmTeilleistungen = () => import("@ui/components/enm/EnmTeilleistungen.vue");
 
 export class RouteTeilleistungen extends RouteNode<any, RouteApp> {
 
 	public constructor() {
-		super(Schulform.values(), [ BenutzerKompetenz.KEINE ], "teilleistungen", "teilleistungen", EnmTeilleistungen);
+		super(Schulform.values(), [BenutzerKompetenz.KEINE], "teilleistungen", "teilleistungen", EnmTeilleistungen);
 		super.mode = ServerMode.STABLE;
 		super.propHandler = (route) => this.getProps();
 		super.text = "Teilleistungen";

@@ -20,12 +20,12 @@ const defaultProps: Partial<{
 
 beforeEach(async () => {
 	wrapper = mount(SvwsUiContentCard);
-	idComponent ="#" + wrapper.findComponent({ name: "SvwsUiContentCard" }).vm.idComponent;
+	idComponent = "#" + wrapper.findComponent({ name: "SvwsUiContentCard" }).vm.idComponent;
 });
 
 afterEach(() => {
 	wrapper.unmount();
-})
+});
 
 test("Rendert HTML korrekt", async () => {
 	expect(wrapper.find(idComponent).exists()).toBeTruthy();
@@ -64,7 +64,7 @@ describe("Tests für die CSS-Props", () => {
 
 	test("Prop largeTitle wird an CSS übergeben", async () => {
 		// Vorbereiten
-		await wrapper.setProps({ largeTitle: true});
+		await wrapper.setProps({ largeTitle: true });
 		await wrapper.setProps({ title: "dummyTitle" });
 
 		// Testen

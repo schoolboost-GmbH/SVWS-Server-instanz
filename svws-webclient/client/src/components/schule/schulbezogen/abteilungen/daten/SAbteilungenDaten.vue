@@ -51,7 +51,7 @@
 <script setup lang="ts">
 
 	import type { AbteilungenDatenProps } from "~/components/schule/schulbezogen/abteilungen/daten/SAbteilungenDatenProps";
-	import type { DataTableColumn} from "@ui";
+	import type { DataTableColumn } from "@ui";
 	import type { KlassenDaten, List } from "@core";
 	import { SelectManager } from "@ui";
 	import { computed, ref } from "vue";
@@ -67,12 +67,12 @@
 		options: lehrer, optionDisplayText: v => v.vorname + ' ' + v.nachname,
 		selectionDisplayText: v => v.vorname + ' ' + v.nachname,
 	});
-	const columns: DataTableColumn[] = [ { key: "kuerzel", label: "Klasse"} ];
+	const columns: DataTableColumn[] = [{ key: "kuerzel", label: "Klasse" }];
 
 	const klassenzuordnungenByIdKlasse = computed(() => {
 		const result = new HashMap<number, AbteilungKlassenzuordnung>();
 		for (const k of props.manager().daten().klassenzuordnungen)
-			result.put(k.idKlasse, k)
+			result.put(k.idKlasse, k);
 		return result;
 	});
 
@@ -80,7 +80,7 @@
 		const allValues = [...props.manager().getKlassen().values()];
 		const alreadyAdded = [...props.manager().getKlassenByAuswahl()];
 		return allValues.filter(v => !alreadyAdded.includes(v));
-	})
+	});
 
 	async function deleteSelectedKlassen() {
 		if (klassenToBeDeleted.value.length === 0)
@@ -90,7 +90,7 @@
 		for (const k of klassenToBeDeleted.value) {
 			const zuordnung = klassenzuordnungenByIdKlasse.value.get(k.id);
 			if (zuordnung !== null)
-				ids.add(zuordnung.id)
+				ids.add(zuordnung.id);
 		}
 		await props.deleteKlassenzuordnungen(ids);
 		klassenToBeDeleted.value = [];
@@ -119,8 +119,8 @@
 			return new ArrayList<AbteilungKlassenzuordnung>();
 
 		const klassenzuordnungen = new ArrayList<AbteilungKlassenzuordnung>();
-		for (const klasse of klassenToBeAdded.value ) {
-			const zuordnung = new AbteilungKlassenzuordnung()
+		for (const klasse of klassenToBeAdded.value) {
+			const zuordnung = new AbteilungKlassenzuordnung();
 			zuordnung.idAbteilung = props.manager().daten().id;
 			zuordnung.idKlasse = klasse.id;
 			const { id, ...partialData } = zuordnung;

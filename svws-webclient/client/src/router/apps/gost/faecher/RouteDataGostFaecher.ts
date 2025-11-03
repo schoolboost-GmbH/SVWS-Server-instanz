@@ -1,4 +1,4 @@
-import { DeveloperNotificationException, type GostJahrgangFachkombination, type GostLaufbahnplanungFachkombinationTyp} from "@core";
+import { DeveloperNotificationException, type GostJahrgangFachkombination, type GostLaufbahnplanungFachkombinationTyp } from "@core";
 import { api } from "~/router/Api";
 import { RouteData, type RouteStateInterface } from "~/router/RouteData";
 
@@ -25,7 +25,7 @@ export class RouteDataGostFaecher extends RouteData<RouteStateDataGostFaecher> {
 		return this._state.value.abiturjahr;
 	}
 
-	public get mapFachkombinationen() : Map<number, GostJahrgangFachkombination> {
+	public get mapFachkombinationen(): Map<number, GostJahrgangFachkombination> {
 		if (this._state.value.mapFachkombinationen === undefined)
 			throw new DeveloperNotificationException("Zugriff auf die Fachkombinationen, bevor diese geladen wurden.");
 		return this._state.value.mapFachkombinationen;
@@ -41,10 +41,10 @@ export class RouteDataGostFaecher extends RouteData<RouteStateDataGostFaecher> {
 			for (const fk of listFachkombinationen)
 				mapFachkombinationen.set(fk.id, fk);
 		}
-		this.setPatchedState({abiturjahr, mapFachkombinationen})
+		this.setPatchedState({ abiturjahr, mapFachkombinationen });
 	}
 
-	patchFachkombination = async (data: Partial<GostJahrgangFachkombination>, id : number) => {
+	patchFachkombination = async (data: Partial<GostJahrgangFachkombination>, id: number) => {
 		const mapFachkombinationen = this.mapFachkombinationen;
 		const kombi = mapFachkombinationen.get(id);
 		if (kombi === undefined)
@@ -52,9 +52,9 @@ export class RouteDataGostFaecher extends RouteData<RouteStateDataGostFaecher> {
 		await api.server.patchGostFachkombination(data, api.schema, id);
 		Object.assign(kombi, data);
 		mapFachkombinationen.set(kombi.id, kombi);
-		this.setPatchedState({mapFachkombinationen});
+		this.setPatchedState({ mapFachkombinationen });
 		return;
-	}
+	};
 
 	addFachkombination = async (typ: GostLaufbahnplanungFachkombinationTyp) => {
 		if (this._state.value.abiturjahr === undefined)
@@ -62,16 +62,16 @@ export class RouteDataGostFaecher extends RouteData<RouteStateDataGostFaecher> {
 		const result = await api.server.addGostAbiturjahrgangFachkombination(api.schema, this.abiturjahr, typ.getValue());
 		const mapFachkombinationen = this.mapFachkombinationen;
 		mapFachkombinationen.set(result.id, result);
-		this.setPatchedState({mapFachkombinationen});
+		this.setPatchedState({ mapFachkombinationen });
 		return result;
-	}
+	};
 
 	removeFachkombination = async (id: number) => {
 		const result = await api.server.deleteGostFachkombination(api.schema, id);
 		const mapFachkombinationen = this.mapFachkombinationen;
 		mapFachkombinationen.delete(id);
-		this.setPatchedState({mapFachkombinationen});
+		this.setPatchedState({ mapFachkombinationen });
 		return result;
-	}
+	};
 
 }

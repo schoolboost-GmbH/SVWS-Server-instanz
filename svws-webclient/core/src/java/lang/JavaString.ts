@@ -4,7 +4,7 @@ import { NullPointerException } from './NullPointerException';
 // eslint-disable-next-line @typescript-eslint/no-extraneous-class
 export abstract class JavaString {
 
-	public static contains(str: string, s: string | null) : boolean {
+	public static contains(str: string, s: string | null): boolean {
 		if (s === null)
 			return false;
 		return str.includes(s);
@@ -22,27 +22,32 @@ export abstract class JavaString {
 		return s.length === 0;
 	}
 
-	public static indexOf(s : string, str : string | null, fromIndex? : number) : number {
+	public static indexOf(s: string, str: string | null, fromIndex?: number): number {
 		if (str === null)
 			return -1;
 		return s.indexOf(str, fromIndex);
 	}
 
-	public static replaceFirst(s : string, regex : string, replacement : string): string {
+	public static matches(s : string, regex : string): boolean {
+		const regexp = new RegExp(regex);
+		return regexp.test(s);
+	}
+
+	public static replaceFirst(s: string, regex: string, replacement: string): string {
 		return s.replace(new RegExp(regex), replacement);
 	}
 
-	public static replaceAll(s : string, regex : string, replacement : string): string {
+	public static replaceAll(s: string, regex: string, replacement: string): string {
 		return s.replace(new RegExp(regex, "g"), replacement);
 	}
 
-	public static replace(s : string, pattern : string, replacement : string): string {
+	public static replace(s: string, pattern: string, replacement: string): string {
 		return s.replaceAll(pattern, replacement);
 	}
 
-	public static format(s : string, ...args: any[]): string {
+	public static format(s: string, ...args: any[]): string {
 		let i = -1;
-		function handleParam(expression: string, ...formatParams: any[]) : string {
+		function handleParam(expression: string, ...formatParams: any[]): string {
 			if (expression === '%%')
 				return '%';
 			// Bestimme den Wert, der für den Parameter eingesetzt wird
@@ -54,13 +59,13 @@ export abstract class JavaString {
 			const paddingSize = parseInt(formatParams[1]);
 			const precision = formatParams[2] === undefined ? undefined : parseInt(formatParams[2].substr(1));
 			const base = formatParams[3] === undefined ? undefined : parseInt(formatParams[3].substr(1));
-			let result : string = "";
+			let result: string = "";
 			switch (formatParams[4]) {
 				case 's':
-					result = typeof(replacement) === 'object' ? JSON.stringify(replacement) : replacement.toString(base);
+					result = typeof (replacement) === 'object' ? JSON.stringify(replacement) : replacement.toString(base);
 					break;
 				case 'c':
-					result = typeof(replacement[0]) === 'object' ? JSON.stringify(replacement[0]) : replacement[0].toString(base);
+					result = typeof (replacement[0]) === 'object' ? JSON.stringify(replacement[0]) : replacement[0].toString(base);
 					break;
 				case 'f':
 					result = parseFloat(replacement).toFixed(precision);
@@ -88,15 +93,15 @@ export abstract class JavaString {
 		return s.replace(regex, handleParam);
 	}
 
-	public static compareToIgnoreCase(a: string, b : string | null) : number {
+	public static compareToIgnoreCase(a: string, b: string | null): number {
 		if (b === null)
 			return -1;
 		return a.localeCompare(b, undefined, { sensitivity: 'accent' });
 		/*
-		const ca : string[] = a.split('');
-		const cb : string[] = b.split('');
+		const ca: string[] = a.split('');
+		const cb: string[] = b.split('');
 		const len = Math.min(ca.length, cb.length);
-		for (let i : number = 0; i < len; i++) {
+		for (let i: number = 0; i < len; i++) {
 			const cmp = ca[i].localeCompare(cb[i], undefined, { sensitivity: 'accent' });
 			if (cmp !== 0) {
 				const cpa = ca[i].toLocaleLowerCase().codePointAt(0);
@@ -112,14 +117,14 @@ export abstract class JavaString {
 		*/
 	}
 
-	public static compareTo(a: string, b : string | null) : number {
+	public static compareTo(a: string, b: string | null): number {
 		if (b === null)
 			return -1;
 		return a.localeCompare(b, undefined, { sensitivity: 'variant' });
-		/*		const ca : string[] = a.split('');
-		const cb : string[] = b.split('');
+		/*		const ca: string[] = a.split('');
+		const cb: string[] = b.split('');
 		const len = Math.min(ca.length, cb.length);
-		for (let i : number = 0; i < len; i++) {
+		for (let i: number = 0; i < len; i++) {
 			const cmp = ca[i].localeCompare(cb[i], undefined, { sensitivity: 'variant' });
 			if (cmp !== 0) {
 				const cpa = ca[i].codePointAt(0);
@@ -135,13 +140,13 @@ export abstract class JavaString {
 	}
 
 
-	public static equalsIgnoreCase(a : string, b : string | null) : boolean {
+	public static equalsIgnoreCase(a: string, b: string | null): boolean {
 		return (b === null) ? false : a.localeCompare(b.valueOf(), undefined, { sensitivity: 'accent' }) === 0;
 	}
 
 }
 
 
-export function cast_java_lang_String(obj : unknown) : string | null {
+export function cast_java_lang_String(obj: unknown): string | null {
 	return obj as string | null;
 }

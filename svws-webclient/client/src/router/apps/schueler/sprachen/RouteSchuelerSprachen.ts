@@ -14,13 +14,13 @@ const SSchuelerSprachen = () => import("~/components/schueler/sprachen/SSchueler
 export class RouteSchuelerSprachen extends RouteNode<RouteDataSchuelerSprachen, RouteSchueler> {
 
 	public constructor() {
-		super(Schulform.values().filter(f => !f.equals(Schulform.G)), [ BenutzerKompetenz.SCHUELER_LEISTUNGSDATEN_ANSEHEN ], "schueler.sprachen", "sprachen", SSchuelerSprachen, new RouteDataSchuelerSprachen());
+		super(Schulform.values().filter(f => !f.equals(Schulform.G)), [BenutzerKompetenz.SCHUELER_LEISTUNGSDATEN_ANSEHEN], "schueler.sprachen", "sprachen", SSchuelerSprachen, new RouteDataSchuelerSprachen());
 		super.mode = ServerMode.STABLE;
 		super.propHandler = (route) => this.getProps(route);
 		super.text = "Sprachen";
 	}
 
-	public async update(to: RouteNode<any, any>, to_params: RouteParams) : Promise<void | Error | RouteLocationRaw> {
+	public async update(to: RouteNode<any, any>, to_params: RouteParams): Promise<void | Error | RouteLocationRaw> {
 		try {
 			const { id } = RouteNode.getIntParams(to_params, ["id"]);
 			if (this.parent === undefined)
@@ -29,7 +29,7 @@ export class RouteSchuelerSprachen extends RouteNode<RouteDataSchuelerSprachen, 
 				return await this.data.auswahlSchueler(null);
 			try {
 				await this.data.auswahlSchueler(routeSchueler.data.manager.liste.get(id));
-			} catch(error) {
+			} catch (error) {
 				return routeSchueler.getRouteDefaultChild({ id });
 			}
 		} catch (e) {

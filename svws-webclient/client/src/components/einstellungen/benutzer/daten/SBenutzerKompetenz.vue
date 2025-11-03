@@ -31,13 +31,13 @@
 		getBenutzerManager: () => BenutzerManager;
 		showInfo: boolean;
 		kompetenz: BenutzerKompetenz;
-		addKompetenz : (kompetenz : BenutzerKompetenz) => Promise<boolean>;
-		removeKompetenz : (kompetenz : BenutzerKompetenz) => Promise<boolean>;
+		addKompetenz: (kompetenz: BenutzerKompetenz) => Promise<boolean>;
+		removeKompetenz: (kompetenz: BenutzerKompetenz) => Promise<boolean>;
 	}>();
 
 	// True wenn Benutzer Admin ist oder die Kompetenz von einer Gruppe geerbt wird.
 	const aktiviert = computed<boolean | undefined>(() => {
-		return props.getBenutzerManager().istAdmin() || (props.getBenutzerManager().getGruppen(props.kompetenz).size() !== 0)
+		return props.getBenutzerManager().istAdmin() || (props.getBenutzerManager().getGruppen(props.kompetenz).size() !== 0);
 	});
 
 	const selected = computed<boolean>({

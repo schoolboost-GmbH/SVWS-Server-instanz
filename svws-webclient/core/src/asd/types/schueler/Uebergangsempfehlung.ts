@@ -9,42 +9,42 @@ import { de_svws_nrw_asd_types_CoreType_getManager, de_svws_nrw_asd_types_CoreTy
 export class Uebergangsempfehlung extends JavaEnum<Uebergangsempfehlung> implements CoreType<UebergangsempfehlungKatalogEintrag, Uebergangsempfehlung> {
 
 	/** an array containing all values of this enumeration */
-	static readonly all_values_by_ordinal : Array<Uebergangsempfehlung> = [];
+	static readonly all_values_by_ordinal: Array<Uebergangsempfehlung> = [];
 
 	/** an array containing all values of this enumeration indexed by their name*/
-	static readonly all_values_by_name : Map<string, Uebergangsempfehlung> = new Map<string, Uebergangsempfehlung>();
+	static readonly all_values_by_name: Map<string, Uebergangsempfehlung> = new Map<string, Uebergangsempfehlung>();
 
 	/**
 	 *  Übergangsempfehlung Hauptschule
 	 */
-	public static readonly HAUPTSCHULE : Uebergangsempfehlung = new Uebergangsempfehlung("HAUPTSCHULE", 0, );
+	public static readonly HAUPTSCHULE: Uebergangsempfehlung = new Uebergangsempfehlung("HAUPTSCHULE", 0, );
 
 	/**
 	 *  Übergangsempfehlung Hauptschule / Realschule (eingeschränkt)
 	 */
-	public static readonly HAUPTSCHULE_REALSCHULE : Uebergangsempfehlung = new Uebergangsempfehlung("HAUPTSCHULE_REALSCHULE", 1, );
+	public static readonly HAUPTSCHULE_REALSCHULE: Uebergangsempfehlung = new Uebergangsempfehlung("HAUPTSCHULE_REALSCHULE", 1, );
 
 	/**
 	 *  Übergangsempfehlung Realschule
 	 */
-	public static readonly REALSCHULE : Uebergangsempfehlung = new Uebergangsempfehlung("REALSCHULE", 2, );
+	public static readonly REALSCHULE: Uebergangsempfehlung = new Uebergangsempfehlung("REALSCHULE", 2, );
 
 	/**
 	 *  Übergangsempfehlung Realschule / Gymnasium (eingeschränkt)
 	 */
-	public static readonly REALSCHULE_GYMNASIUM : Uebergangsempfehlung = new Uebergangsempfehlung("REALSCHULE_GYMNASIUM", 3, );
+	public static readonly REALSCHULE_GYMNASIUM: Uebergangsempfehlung = new Uebergangsempfehlung("REALSCHULE_GYMNASIUM", 3, );
 
 	/**
 	 *  Übergangsempfehlung Gymnasium
 	 */
-	public static readonly GYMNASIUM : Uebergangsempfehlung = new Uebergangsempfehlung("GYMNASIUM", 4, );
+	public static readonly GYMNASIUM: Uebergangsempfehlung = new Uebergangsempfehlung("GYMNASIUM", 4, );
 
 	/**
 	 *  Keine Übergangsempfehlung
 	 */
-	public static readonly KEINE : Uebergangsempfehlung = new Uebergangsempfehlung("KEINE", 5, );
+	public static readonly KEINE: Uebergangsempfehlung = new Uebergangsempfehlung("KEINE", 5, );
 
-	private constructor(name : string, ordinal : number) {
+	private constructor(name: string, ordinal: number) {
 		super(name, ordinal);
 		Uebergangsempfehlung.all_values_by_ordinal.push(this);
 		Uebergangsempfehlung.all_values_by_name.set(name, this);
@@ -55,7 +55,7 @@ export class Uebergangsempfehlung extends JavaEnum<Uebergangsempfehlung> impleme
 	 *
 	 * @param manager   der Manager für die Daten des Core-Types
 	 */
-	public static init(manager : CoreTypeDataManager<UebergangsempfehlungKatalogEintrag, Uebergangsempfehlung>) : void {
+	public static init(manager: CoreTypeDataManager<UebergangsempfehlungKatalogEintrag, Uebergangsempfehlung>): void {
 		CoreTypeDataManager.putManager(Uebergangsempfehlung.class, manager);
 	}
 
@@ -64,7 +64,7 @@ export class Uebergangsempfehlung extends JavaEnum<Uebergangsempfehlung> impleme
 	 *
 	 * @return der Daten-Manager
 	 */
-	public static data() : CoreTypeDataManager<UebergangsempfehlungKatalogEintrag, Uebergangsempfehlung> {
+	public static data(): CoreTypeDataManager<UebergangsempfehlungKatalogEintrag, Uebergangsempfehlung> {
 		return CoreTypeDataManager.getManager(Uebergangsempfehlung.class);
 	}
 
@@ -73,7 +73,7 @@ export class Uebergangsempfehlung extends JavaEnum<Uebergangsempfehlung> impleme
 	 *
 	 * @returns the array with enumeration values
 	 */
-	public static values() : Array<Uebergangsempfehlung> {
+	public static values(): Array<Uebergangsempfehlung> {
 		return [...this.all_values_by_ordinal];
 	}
 
@@ -84,24 +84,24 @@ export class Uebergangsempfehlung extends JavaEnum<Uebergangsempfehlung> impleme
 	 *
 	 * @returns the enumeration values or null
 	 */
-	public static valueOf(name : string) : Uebergangsempfehlung | null {
+	public static valueOf(name: string): Uebergangsempfehlung | null {
 		const tmp = this.all_values_by_name.get(name);
 		return (!tmp) ? null : tmp;
 	}
 
-	public getManager() : CoreTypeDataManager<UebergangsempfehlungKatalogEintrag, Uebergangsempfehlung> {
+	public getManager(): CoreTypeDataManager<UebergangsempfehlungKatalogEintrag, Uebergangsempfehlung> {
 		return de_svws_nrw_asd_types_CoreType_getManager(this);
 	}
 
-	public daten(schuljahr : number) : UebergangsempfehlungKatalogEintrag | null {
+	public daten(schuljahr: number): UebergangsempfehlungKatalogEintrag | null {
 		return de_svws_nrw_asd_types_CoreType_daten(this, schuljahr);
 	}
 
-	public statistikId() : string | null {
+	public statistikId(): string | null {
 		return de_svws_nrw_asd_types_CoreType_statistikId(this);
 	}
 
-	public historie() : List<UebergangsempfehlungKatalogEintrag> {
+	public historie(): List<UebergangsempfehlungKatalogEintrag> {
 		return de_svws_nrw_asd_types_CoreType_historie(this);
 	}
 
@@ -109,7 +109,7 @@ export class Uebergangsempfehlung extends JavaEnum<Uebergangsempfehlung> impleme
 		return 'de.svws_nrw.asd.types.schueler.Uebergangsempfehlung';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.asd.types.schueler.Uebergangsempfehlung', 'de.svws_nrw.asd.types.CoreType', 'java.lang.Comparable', 'java.lang.Enum', 'java.lang.Comparable'].includes(name);
 	}
 
@@ -117,6 +117,6 @@ export class Uebergangsempfehlung extends JavaEnum<Uebergangsempfehlung> impleme
 
 }
 
-export function cast_de_svws_nrw_asd_types_schueler_Uebergangsempfehlung(obj : unknown) : Uebergangsempfehlung {
+export function cast_de_svws_nrw_asd_types_schueler_Uebergangsempfehlung(obj: unknown): Uebergangsempfehlung {
 	return obj as Uebergangsempfehlung;
 }

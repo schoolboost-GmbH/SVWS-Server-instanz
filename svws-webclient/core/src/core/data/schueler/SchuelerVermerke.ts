@@ -6,37 +6,37 @@ export class SchuelerVermerke extends JavaObject {
 	/**
 	 * Die ID des Schülervermerks.
 	 */
-	public id : number = 0;
+	public id: number = 0;
 
 	/**
 	 * Die ID des zugehörigen Schülers.
 	 */
-	public idSchueler : number = 0;
+	public idSchueler: number = 0;
 
 	/**
 	 * Die ID der Vermerkart des Vermerks.
 	 */
-	public idVermerkart : number | null = null;
+	public idVermerkart: number | null = null;
 
 	/**
 	 * Das Datum der Erstellung oder letzten Bearbeitung.
 	 */
-	public datum : string | null = null;
+	public datum: string | null = null;
 
 	/**
 	 * Der Vermerk als Text.
 	 */
-	public bemerkung : string = "";
+	public bemerkung: string = "";
 
 	/**
 	 * Name des Benutzers welcher den Vermerk angelegt hat.
 	 */
-	public angelegtVon : string | null = null;
+	public angelegtVon: string | null = null;
 
 	/**
 	 * Name des Benutzers welcher den Vermerk als letzten bearbeitet hat.
 	 */
-	public geaendertVon : string | null = null;
+	public geaendertVon: string | null = null;
 
 
 	/**
@@ -50,13 +50,13 @@ export class SchuelerVermerke extends JavaObject {
 		return 'de.svws_nrw.core.data.schueler.SchuelerVermerke';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.schueler.SchuelerVermerke'].includes(name);
 	}
 
 	public static class = new Class<SchuelerVermerke>('de.svws_nrw.core.data.schueler.SchuelerVermerke');
 
-	public static transpilerFromJSON(json : string): SchuelerVermerke {
+	public static transpilerFromJSON(json: string): SchuelerVermerke {
 		const obj = JSON.parse(json) as Partial<SchuelerVermerke>;
 		const result = new SchuelerVermerke();
 		if (obj.id === undefined)
@@ -75,7 +75,7 @@ export class SchuelerVermerke extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : SchuelerVermerke) : string {
+	public static transpilerToJSON(obj: SchuelerVermerke): string {
 		let result = '{';
 		result += '"id" : ' + obj.id.toString() + ',';
 		result += '"idSchueler" : ' + obj.idSchueler.toString() + ',';
@@ -89,7 +89,7 @@ export class SchuelerVermerke extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<SchuelerVermerke>) : string {
+	public static transpilerToJSONPatch(obj: Partial<SchuelerVermerke>): string {
 		let result = '{';
 		if (obj.id !== undefined) {
 			result += '"id" : ' + obj.id.toString() + ',';
@@ -119,6 +119,6 @@ export class SchuelerVermerke extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_schueler_SchuelerVermerke(obj : unknown) : SchuelerVermerke {
+export function cast_de_svws_nrw_core_data_schueler_SchuelerVermerke(obj: unknown): SchuelerVermerke {
 	return obj as SchuelerVermerke;
 }

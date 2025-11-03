@@ -6,22 +6,22 @@ export class SchuelerSchulbesuchMerkmal extends JavaObject {
 	/**
 	 * Die ID des besonderen Merkmals für die Statistik.
 	 */
-	public id : number = 0;
+	public id: number = 0;
 
 	/**
 	 * Die ID des Merkmals
 	 */
-	public idMerkmal : number | null = null;
+	public idMerkmal: number | null = null;
 
 	/**
 	 * Das Datum, ab dem das Merkmal vorliegt.
 	 */
-	public datumVon : string | null = null;
+	public datumVon: string | null = null;
 
 	/**
 	 * Das Datum, bis wann das Merkmal vorliegt.
 	 */
-	public datumBis : string | null = null;
+	public datumBis: string | null = null;
 
 
 	/**
@@ -35,13 +35,13 @@ export class SchuelerSchulbesuchMerkmal extends JavaObject {
 		return 'de.svws_nrw.asd.data.schueler.SchuelerSchulbesuchMerkmal';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.asd.data.schueler.SchuelerSchulbesuchMerkmal'].includes(name);
 	}
 
 	public static class = new Class<SchuelerSchulbesuchMerkmal>('de.svws_nrw.asd.data.schueler.SchuelerSchulbesuchMerkmal');
 
-	public static transpilerFromJSON(json : string): SchuelerSchulbesuchMerkmal {
+	public static transpilerFromJSON(json: string): SchuelerSchulbesuchMerkmal {
 		const obj = JSON.parse(json) as Partial<SchuelerSchulbesuchMerkmal>;
 		const result = new SchuelerSchulbesuchMerkmal();
 		if (obj.id === undefined)
@@ -53,7 +53,7 @@ export class SchuelerSchulbesuchMerkmal extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : SchuelerSchulbesuchMerkmal) : string {
+	public static transpilerToJSON(obj: SchuelerSchulbesuchMerkmal): string {
 		let result = '{';
 		result += '"id" : ' + obj.id.toString() + ',';
 		result += '"idMerkmal" : ' + ((obj.idMerkmal === null) ? 'null' : obj.idMerkmal.toString()) + ',';
@@ -64,7 +64,7 @@ export class SchuelerSchulbesuchMerkmal extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<SchuelerSchulbesuchMerkmal>) : string {
+	public static transpilerToJSONPatch(obj: Partial<SchuelerSchulbesuchMerkmal>): string {
 		let result = '{';
 		if (obj.id !== undefined) {
 			result += '"id" : ' + obj.id.toString() + ',';
@@ -85,6 +85,6 @@ export class SchuelerSchulbesuchMerkmal extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_asd_data_schueler_SchuelerSchulbesuchMerkmal(obj : unknown) : SchuelerSchulbesuchMerkmal {
+export function cast_de_svws_nrw_asd_data_schueler_SchuelerSchulbesuchMerkmal(obj: unknown): SchuelerSchulbesuchMerkmal {
 	return obj as SchuelerSchulbesuchMerkmal;
 }

@@ -13,7 +13,7 @@ const SSchuelerLernabschnittAllgmein = () => import("~/components/schueler/lerna
 export class RouteSchuelerLernabschnittVersetzungAbschluss extends RouteNode<any, RouteSchuelerLernabschnitte> {
 
 	public constructor() {
-		super(Schulform.values(), [ BenutzerKompetenz.SCHUELER_LEISTUNGSDATEN_ANSEHEN ], "schueler.lernabschnitt.versetzung", "versetzung", SSchuelerLernabschnittAllgmein);
+		super(Schulform.values(), [BenutzerKompetenz.SCHUELER_LEISTUNGSDATEN_ANSEHEN], "schueler.lernabschnitt.versetzung", "versetzung", SSchuelerLernabschnittAllgmein);
 		super.mode = ServerMode.DEV;
 		super.propHandler = (route) => this.getProps(route);
 		super.text = "Versetzung/Abschluss";
@@ -21,7 +21,7 @@ export class RouteSchuelerLernabschnittVersetzungAbschluss extends RouteNode<any
 		];
 	}
 
-	protected async update(to: RouteNode<any, any>, to_params: RouteParams) : Promise<void | Error | RouteLocationRaw> {
+	protected async update(to: RouteNode<any, any>, to_params: RouteParams): Promise<void | Error | RouteLocationRaw> {
 	}
 
 	public getProps(to: RouteLocationNormalized): SchuelerLernabschnittVersetzungAbschlussProps {
@@ -30,7 +30,7 @@ export class RouteSchuelerLernabschnittVersetzungAbschluss extends RouteNode<any
 			manager: () => routeSchuelerLernabschnitte.data.manager,
 			patch: routeSchuelerLernabschnitte.data.patchLernabschnitt,
 			patchBemerkungen: routeSchuelerLernabschnitte.data.patchBemerkungen,
-			benutzerKompetenzen: api.benutzerKompetenzen
+			benutzerKompetenzen: api.benutzerKompetenzen,
 		};
 	}
 

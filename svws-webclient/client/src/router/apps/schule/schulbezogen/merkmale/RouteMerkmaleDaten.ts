@@ -6,7 +6,7 @@ import { RouteNode } from "~/router/RouteNode";
 import { api } from "~/router/Api";
 import { routeMerkmale } from "~/router/apps/schule/schulbezogen/merkmale/RouteMerkmale";
 
-const SMerkmaleDaten = () => import("~/components/schule/schulbezogen/merkmale/daten/SMerkmaleDaten.vue")
+const SMerkmaleDaten = () => import("~/components/schule/schulbezogen/merkmale/daten/SMerkmaleDaten.vue");
 
 export class RouteMerkmaleDaten extends RouteNode<any, RouteMerkmale> {
 
@@ -15,7 +15,7 @@ export class RouteMerkmaleDaten extends RouteNode<any, RouteMerkmale> {
 			"daten", SMerkmaleDaten);
 		super.mode = ServerMode.DEV;
 		super.propHandler = (route) => this.getProps(route);
-		super.text = "Merkmale"
+		super.text = "Merkmale";
 	}
 
 	public getProps(to: RouteLocationNormalized): MerkmaleDatenProps {
@@ -23,7 +23,7 @@ export class RouteMerkmaleDaten extends RouteNode<any, RouteMerkmale> {
 			manager: () => routeMerkmale.data.manager,
 			benutzerKompetenzen: api.benutzerKompetenzen,
 			patch: routeMerkmale.data.patch,
-		}
+		};
 	}
 }
 

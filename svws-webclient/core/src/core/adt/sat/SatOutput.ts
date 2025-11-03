@@ -6,17 +6,17 @@ export class SatOutput extends JavaObject {
 	/**
 	 * Es existiert eine Lösung.
 	 */
-	public static readonly TYPE_UNKNOWN : number = 0;
+	public static readonly TYPE_UNKNOWN: number = 0;
 
 	/**
 	 * Es existiert (beweisbar) keine Lösung existiert.
 	 */
-	public static readonly TYPE_SATISFIABLE : number = 1;
+	public static readonly TYPE_SATISFIABLE: number = 1;
 
 	/**
 	 * Unbekannt, ob eine Lösung existiert (z. B. bei einem TimeOut).
 	 */
-	public static readonly TYPE_UNSATISFIABLE : number = 2;
+	public static readonly TYPE_UNSATISFIABLE: number = 2;
 
 	/**
 	 *  Eine Lösung einer Formel {@link SatInput}. Das Format muss wie folgt aussehen:
@@ -27,9 +27,9 @@ export class SatOutput extends JavaObject {
 	 *  <br><br>
 	 *  Beispiel solution = {0, -1, 2, -3, -4} bedeutet x1=FALSE, x2=TRUE, x3=FALSE, x4=FALSE
 	 */
-	private readonly solution : Array<number>;
+	private readonly solution: Array<number>;
 
-	private readonly type : number;
+	private readonly type: number;
 
 
 	/**
@@ -38,7 +38,7 @@ export class SatOutput extends JavaObject {
 	 * @param pSolution Das Array der Variablen.
 	 * @param pType     Einer der drei möglichen Typen.
 	 */
-	private constructor(pSolution : Array<number>, pType : number) {
+	private constructor(pSolution: Array<number>, pType: number) {
 		super();
 		this.solution = pSolution;
 		this.type = pType;
@@ -49,7 +49,7 @@ export class SatOutput extends JavaObject {
 	 *
 	 * @return data
 	 */
-	public getSolution() : Array<number> {
+	public getSolution(): Array<number> {
 		return this.solution;
 	}
 
@@ -58,7 +58,7 @@ export class SatOutput extends JavaObject {
 	 *
 	 * @return TRUE, falls eine Lösung existiert.
 	 */
-	public isSatisfiable() : boolean {
+	public isSatisfiable(): boolean {
 		return this.type === SatOutput.TYPE_SATISFIABLE;
 	}
 
@@ -67,7 +67,7 @@ export class SatOutput extends JavaObject {
 	 *
 	 * @return TRUE, falls (beweisbar) keine Lösung existiert.
 	 */
-	public isUnsatisfiable() : boolean {
+	public isUnsatisfiable(): boolean {
 		return this.type === SatOutput.TYPE_UNSATISFIABLE;
 	}
 
@@ -76,7 +76,7 @@ export class SatOutput extends JavaObject {
 	 *
 	 * @return TRUE, falls unbekannt ist, ob eine Lösung existiert (z. B. bei einem TimeOut).
 	 */
-	public isUnknown() : boolean {
+	public isUnknown(): boolean {
 		return this.type === SatOutput.TYPE_UNKNOWN;
 	}
 
@@ -85,7 +85,7 @@ export class SatOutput extends JavaObject {
 	 *
 	 * @return ein Objekt dieser Klasse mit dem Typ TYPE_UNKNOWN  (z. B. bei einem TimeOut).
 	 */
-	public static createUNKNOWN() : SatOutput {
+	public static createUNKNOWN(): SatOutput {
 		return new SatOutput(Array(0).fill(0), SatOutput.TYPE_UNKNOWN);
 	}
 
@@ -94,7 +94,7 @@ export class SatOutput extends JavaObject {
 	 *
 	 * @return ein Objekt dieser Klasse mit dem Typ TYPE_UNSATISFIABLE
 	 */
-	public static createUNSATISFIABLE() : SatOutput {
+	public static createUNSATISFIABLE(): SatOutput {
 		return new SatOutput(Array(0).fill(0), SatOutput.TYPE_UNSATISFIABLE);
 	}
 
@@ -104,7 +104,7 @@ export class SatOutput extends JavaObject {
 	 * @param pSolution Die Lösung der Variablenbelegungen.
 	 * @return ein Objekt dieser Klasse mit dem Typ TYPE_SATISFIABLE.
 	 */
-	public static createSATISFIABLE(pSolution : Array<number>) : SatOutput {
+	public static createSATISFIABLE(pSolution: Array<number>): SatOutput {
 		return new SatOutput(pSolution, SatOutput.TYPE_SATISFIABLE);
 	}
 
@@ -115,7 +115,7 @@ export class SatOutput extends JavaObject {
 	 * @param pSolution Die Lösung der Variablenbelegungen.
 	 * @return eine Kopie, welche aber potentiell eine andere Lösung besitzt.
 	 */
-	public static createCopy(pOutput : SatOutput, pSolution : Array<number>) : SatOutput {
+	public static createCopy(pOutput: SatOutput, pSolution: Array<number>): SatOutput {
 		return new SatOutput(pSolution, pOutput.type);
 	}
 
@@ -123,7 +123,7 @@ export class SatOutput extends JavaObject {
 		return 'de.svws_nrw.core.adt.sat.SatOutput';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.adt.sat.SatOutput'].includes(name);
 	}
 
@@ -131,6 +131,6 @@ export class SatOutput extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_adt_sat_SatOutput(obj : unknown) : SatOutput {
+export function cast_de_svws_nrw_core_adt_sat_SatOutput(obj: unknown): SatOutput {
 	return obj as SatOutput;
 }

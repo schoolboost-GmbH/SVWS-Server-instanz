@@ -6,17 +6,17 @@ export class ENMServerConfigElement extends JavaObject {
 	/**
 	 * Der Schlüssel des Konfigurationselements
 	 */
-	public key : string = "";
+	public key: string = "";
 
 	/**
 	 * Der Wert des Konfigurationselements.
 	 */
-	public value : string = "";
+	public value: string = "";
 
 	/**
 	 * Der Typ des Konfigurationselements.
 	 */
-	public type : string = "";
+	public type: string = "";
 
 
 	/**
@@ -30,13 +30,13 @@ export class ENMServerConfigElement extends JavaObject {
 		return 'de.svws_nrw.core.data.enm.ENMServerConfigElement';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.enm.ENMServerConfigElement'].includes(name);
 	}
 
 	public static class = new Class<ENMServerConfigElement>('de.svws_nrw.core.data.enm.ENMServerConfigElement');
 
-	public static transpilerFromJSON(json : string): ENMServerConfigElement {
+	public static transpilerFromJSON(json: string): ENMServerConfigElement {
 		const obj = JSON.parse(json) as Partial<ENMServerConfigElement>;
 		const result = new ENMServerConfigElement();
 		if (obj.key === undefined)
@@ -51,7 +51,7 @@ export class ENMServerConfigElement extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : ENMServerConfigElement) : string {
+	public static transpilerToJSON(obj: ENMServerConfigElement): string {
 		let result = '{';
 		result += '"key" : ' + JSON.stringify(obj.key) + ',';
 		result += '"value" : ' + JSON.stringify(obj.value) + ',';
@@ -61,7 +61,7 @@ export class ENMServerConfigElement extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<ENMServerConfigElement>) : string {
+	public static transpilerToJSONPatch(obj: Partial<ENMServerConfigElement>): string {
 		let result = '{';
 		if (obj.key !== undefined) {
 			result += '"key" : ' + JSON.stringify(obj.key) + ',';
@@ -79,6 +79,6 @@ export class ENMServerConfigElement extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_enm_ENMServerConfigElement(obj : unknown) : ENMServerConfigElement {
+export function cast_de_svws_nrw_core_data_enm_ENMServerConfigElement(obj: unknown): ENMServerConfigElement {
 	return obj as ENMServerConfigElement;
 }

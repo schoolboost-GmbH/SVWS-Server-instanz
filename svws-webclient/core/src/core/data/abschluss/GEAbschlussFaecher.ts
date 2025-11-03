@@ -9,22 +9,22 @@ export class GEAbschlussFaecher extends JavaObject {
 	/**
 	 * Gibt das Schuljahr an, in welchem die Abschlussberechnung durchgeführt werden soll.
 	 */
-	public schuljahr : number = 0;
+	public schuljahr: number = 0;
 
 	/**
 	 * Gibt den Abschnitt in des Schuljahres an, in welchem die Abschlussberechnung durchgeführt werden soll.
 	 */
-	public abschnitt : number = 0;
+	public abschnitt: number = 0;
 
 	/**
 	 * Gibt den Jahrgang an, für den die Abschlussberechnung durchgeführt werden soll.
 	 */
-	public jahrgang : string | null = null;
+	public jahrgang: string | null = null;
 
 	/**
 	 * Eine Liste der einzelnen Fächer, die für die Abschlussberechnung genutzt werden sollen.
 	 */
-	public faecher : List<GEAbschlussFach> = new ArrayList<GEAbschlussFach>();
+	public faecher: List<GEAbschlussFach> = new ArrayList<GEAbschlussFach>();
 
 
 	/**
@@ -38,13 +38,13 @@ export class GEAbschlussFaecher extends JavaObject {
 		return 'de.svws_nrw.core.data.abschluss.GEAbschlussFaecher';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.abschluss.GEAbschlussFaecher'].includes(name);
 	}
 
 	public static class = new Class<GEAbschlussFaecher>('de.svws_nrw.core.data.abschluss.GEAbschlussFaecher');
 
-	public static transpilerFromJSON(json : string): GEAbschlussFaecher {
+	public static transpilerFromJSON(json: string): GEAbschlussFaecher {
 		const obj = JSON.parse(json) as Partial<GEAbschlussFaecher>;
 		const result = new GEAbschlussFaecher();
 		if (obj.schuljahr === undefined)
@@ -62,7 +62,7 @@ export class GEAbschlussFaecher extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : GEAbschlussFaecher) : string {
+	public static transpilerToJSON(obj: GEAbschlussFaecher): string {
 		let result = '{';
 		result += '"schuljahr" : ' + obj.schuljahr.toString() + ',';
 		result += '"abschnitt" : ' + obj.abschnitt.toString() + ',';
@@ -80,7 +80,7 @@ export class GEAbschlussFaecher extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<GEAbschlussFaecher>) : string {
+	public static transpilerToJSONPatch(obj: Partial<GEAbschlussFaecher>): string {
 		let result = '{';
 		if (obj.schuljahr !== undefined) {
 			result += '"schuljahr" : ' + obj.schuljahr.toString() + ',';
@@ -108,6 +108,6 @@ export class GEAbschlussFaecher extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_abschluss_GEAbschlussFaecher(obj : unknown) : GEAbschlussFaecher {
+export function cast_de_svws_nrw_core_data_abschluss_GEAbschlussFaecher(obj: unknown): GEAbschlussFaecher {
 	return obj as GEAbschlussFaecher;
 }

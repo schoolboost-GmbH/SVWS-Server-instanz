@@ -68,7 +68,7 @@
 	const chooseTermin = async (termin: GostKlausurtermin) => {
 		props.setRaumTermin(termin);
 		await props.gotoTermin(termin.abijahr, GostHalbjahr.fromIDorException(termin.halbjahr), termin.id);
-	}
+	};
 
 	const termine = () => props.kMan().terminMitDatumGetMengeByAbijahrAndHalbjahrAndQuartal(props.jahrgangsdaten.abiturjahr, props.halbjahr, props.quartalsauswahl.value);
 
@@ -77,7 +77,7 @@
 		return {
 			"text-ui-50": props.kMan().isKursklausurAlleSchuelerklausurenVerplant(klausur, termin ? termin : null),
 			"": !props.kMan().isKursklausurAlleSchuelerklausurenVerplant(klausur, termin ? termin : null),
-		}
+		};
 	};
 
 
@@ -87,7 +87,7 @@
 		if (!hatKompetenzUpdate.value)
 			return false;
 		if (object instanceof GostKursklausur) {
-			//if (object.idTermin === props.terminauswahl.value.id)
+			// if (object.idTermin === props.terminauswahl.value.id)
 			return !props.kMan().isKursklausurAlleSchuelerklausurenVerplant(object, termin);
 		} else if (object instanceof GostKlausurtermin && props.terminSelected.value) {
 			return object.id === props.terminSelected.value.id && props.kMan().schuelerklausurOhneRaumGetMengeByTermin(props.terminSelected.value).size() > 0;
@@ -95,7 +95,7 @@
 			return true;
 		}
 		return false;
-	}
+	};
 
 	const onDrag = (event: DragEvent, data: GostKlausurplanungDragData) => dragData.value = data;
 
@@ -129,7 +129,7 @@
 		return numList;
 	}
 
-	function isDropZone() : boolean {
+	function isDropZone(): boolean {
 		if ((dragData.value === undefined))
 			return false;
 		return true;

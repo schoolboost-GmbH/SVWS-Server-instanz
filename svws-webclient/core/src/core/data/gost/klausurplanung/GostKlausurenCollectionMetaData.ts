@@ -12,22 +12,22 @@ export class GostKlausurenCollectionMetaData extends JavaObject {
 	/**
 	 * Ein Array mit den Daten der Fächer.
 	 */
-	public faecher : List<GostFach> = new ArrayList<GostFach>();
+	public faecher: List<GostFach> = new ArrayList<GostFach>();
 
 	/**
 	 * Ein Array mit den Daten der Schüler.
 	 */
-	public schueler : List<SchuelerListeEintrag> = new ArrayList<SchuelerListeEintrag>();
+	public schueler: List<SchuelerListeEintrag> = new ArrayList<SchuelerListeEintrag>();
 
 	/**
 	 * Ein Array mit den Daten der Lehrer.
 	 */
-	public lehrer : List<LehrerListeEintrag> = new ArrayList<LehrerListeEintrag>();
+	public lehrer: List<LehrerListeEintrag> = new ArrayList<LehrerListeEintrag>();
 
 	/**
 	 * Ein Array mit den Daten der Kurse.
 	 */
-	public kurse : List<KursDaten> = new ArrayList<KursDaten>();
+	public kurse: List<KursDaten> = new ArrayList<KursDaten>();
 
 
 	/**
@@ -41,13 +41,13 @@ export class GostKlausurenCollectionMetaData extends JavaObject {
 		return 'de.svws_nrw.core.data.gost.klausurplanung.GostKlausurenCollectionMetaData';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.gost.klausurplanung.GostKlausurenCollectionMetaData'].includes(name);
 	}
 
 	public static class = new Class<GostKlausurenCollectionMetaData>('de.svws_nrw.core.data.gost.klausurplanung.GostKlausurenCollectionMetaData');
 
-	public static transpilerFromJSON(json : string): GostKlausurenCollectionMetaData {
+	public static transpilerFromJSON(json: string): GostKlausurenCollectionMetaData {
 		const obj = JSON.parse(json) as Partial<GostKlausurenCollectionMetaData>;
 		const result = new GostKlausurenCollectionMetaData();
 		if (obj.faecher !== undefined) {
@@ -73,7 +73,7 @@ export class GostKlausurenCollectionMetaData extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : GostKlausurenCollectionMetaData) : string {
+	public static transpilerToJSON(obj: GostKlausurenCollectionMetaData): string {
 		let result = '{';
 		result += '"faecher" : [ ';
 		for (let i = 0; i < obj.faecher.size(); i++) {
@@ -112,7 +112,7 @@ export class GostKlausurenCollectionMetaData extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<GostKlausurenCollectionMetaData>) : string {
+	public static transpilerToJSONPatch(obj: Partial<GostKlausurenCollectionMetaData>): string {
 		let result = '{';
 		if (obj.faecher !== undefined) {
 			result += '"faecher" : [ ';
@@ -161,6 +161,6 @@ export class GostKlausurenCollectionMetaData extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_gost_klausurplanung_GostKlausurenCollectionMetaData(obj : unknown) : GostKlausurenCollectionMetaData {
+export function cast_de_svws_nrw_core_data_gost_klausurplanung_GostKlausurenCollectionMetaData(obj: unknown): GostKlausurenCollectionMetaData {
 	return obj as GostKlausurenCollectionMetaData;
 }

@@ -6,52 +6,52 @@ export class PruefungsordnungKatalogEintrag extends JavaObject {
 	/**
 	 * Die ID des Eintrags.
 	 */
-	public id : number = 0;
+	public id: number = 0;
 
 	/**
 	 * Das Kürzel der Ausbildungs und/oder Prüfungsordnung
 	 */
-	public kuerzel : string = "";
+	public kuerzel: string = "";
 
 	/**
 	 * Das Kürzel der Ausbildungs und/oder Prüfungsordnung, wie es in Schild NRW verwendet wird
 	 */
-	public kuerzelSchild : string | null = "";
+	public kuerzelSchild: string | null = "";
 
 	/**
 	 * Die Bezeichnung der Verordnung.
 	 */
-	public bezeichnung : string = "";
+	public bezeichnung: string = "";
 
 	/**
 	 * Gesetz- und Verordnungsblatt: Das Jahr in dem die Verordnung veröffentlich wurde
 	 */
-	public gvJahr : number | null = null;
+	public gvJahr: number | null = null;
 
 	/**
 	 * Gesetz- und Verordnungsblatt: Die Nummer im Jahr der Veröffentlichung
 	 */
-	public gvNr : string = "";
+	public gvNr: string = "";
 
 	/**
 	 * Gesetz- und Verordnungsblatt: ggf. die Seitenangaben im Jahr der Veröffentlichung
 	 */
-	public gvSeiten : string = "";
+	public gvSeiten: string = "";
 
 	/**
 	 * ggf. ein Link zu einer Version der Verordnung
 	 */
-	public link : string = "";
+	public link: string = "";
 
 	/**
 	 * Gibt an, in welchem Schuljahr die Verordnung einführt wurde. Ist kein Schuljahr bekannt, so ist null gesetzt.
 	 */
-	public gueltigVon : number | null = null;
+	public gueltigVon: number | null = null;
 
 	/**
 	 * Gibt an, bis zu welchem Schuljahr die Verordnung gültig ist. Ist kein Schuljahr bekannt, so ist null gesetzt.
 	 */
-	public gueltigBis : number | null = null;
+	public gueltigBis: number | null = null;
 
 
 	/**
@@ -73,26 +73,26 @@ export class PruefungsordnungKatalogEintrag extends JavaObject {
 	 * @param gueltigVon         das Schuljahr, wann der Eintrag eingeführt wurde oder null, falls es nicht bekannt ist und "schon immer gültig war"
 	 * @param gueltigBis         das Schuljahr, bis zu welchem der Eintrag gültig ist
 	 */
-	public constructor(id : number, kuerzel : string, kuerzelSchild : string | null, bezeichnung : string, gvJahr : number | null, gvNr : string, gvSeiten : string, link : string, gueltigVon : number | null, gueltigBis : number | null);
+	public constructor(id: number, kuerzel: string, kuerzelSchild: string | null, bezeichnung: string, gvJahr: number | null, gvNr: string, gvSeiten: string, link: string, gueltigVon: number | null, gueltigBis: number | null);
 
 	/**
 	 * Implementation for method overloads of 'constructor'
 	 */
-	public constructor(__param0? : number, __param1? : string, __param2? : null | string, __param3? : string, __param4? : null | number, __param5? : string, __param6? : string, __param7? : string, __param8? : null | number, __param9? : null | number) {
+	public constructor(__param0?: number, __param1?: string, __param2?: null | string, __param3?: string, __param4?: null | number, __param5?: string, __param6?: string, __param7?: string, __param8?: null | number, __param9?: null | number) {
 		super();
 		if ((__param0 === undefined) && (__param1 === undefined) && (__param2 === undefined) && (__param3 === undefined) && (__param4 === undefined) && (__param5 === undefined) && (__param6 === undefined) && (__param7 === undefined) && (__param8 === undefined) && (__param9 === undefined)) {
 			// empty method body
 		} else if (((__param0 !== undefined) && typeof __param0 === "number") && ((__param1 !== undefined) && (typeof __param1 === "string")) && ((__param2 !== undefined) && (typeof __param2 === "string") || (__param2 === null)) && ((__param3 !== undefined) && (typeof __param3 === "string")) && ((__param4 !== undefined) && (typeof __param4 === "number") || (__param4 === null)) && ((__param5 !== undefined) && (typeof __param5 === "string")) && ((__param6 !== undefined) && (typeof __param6 === "string")) && ((__param7 !== undefined) && (typeof __param7 === "string")) && ((__param8 !== undefined) && (typeof __param8 === "number") || (__param8 === null)) && ((__param9 !== undefined) && (typeof __param9 === "number") || (__param9 === null))) {
-			const id : number = __param0 as number;
-			const kuerzel : string = __param1;
-			const kuerzelSchild : string | null = __param2;
-			const bezeichnung : string = __param3;
-			const gvJahr : number | null = __param4;
-			const gvNr : string = __param5;
-			const gvSeiten : string = __param6;
-			const link : string = __param7;
-			const gueltigVon : number | null = __param8;
-			const gueltigBis : number | null = __param9;
+			const id: number = __param0 as number;
+			const kuerzel: string = __param1;
+			const kuerzelSchild: string | null = __param2;
+			const bezeichnung: string = __param3;
+			const gvJahr: number | null = __param4;
+			const gvNr: string = __param5;
+			const gvSeiten: string = __param6;
+			const link: string = __param7;
+			const gueltigVon: number | null = __param8;
+			const gueltigBis: number | null = __param9;
 			this.id = id;
 			this.kuerzel = kuerzel;
 			this.kuerzelSchild = kuerzelSchild;
@@ -110,13 +110,13 @@ export class PruefungsordnungKatalogEintrag extends JavaObject {
 		return 'de.svws_nrw.core.data.schule.PruefungsordnungKatalogEintrag';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.schule.PruefungsordnungKatalogEintrag'].includes(name);
 	}
 
 	public static class = new Class<PruefungsordnungKatalogEintrag>('de.svws_nrw.core.data.schule.PruefungsordnungKatalogEintrag');
 
-	public static transpilerFromJSON(json : string): PruefungsordnungKatalogEintrag {
+	public static transpilerFromJSON(json: string): PruefungsordnungKatalogEintrag {
 		const obj = JSON.parse(json) as Partial<PruefungsordnungKatalogEintrag>;
 		const result = new PruefungsordnungKatalogEintrag();
 		if (obj.id === undefined)
@@ -144,7 +144,7 @@ export class PruefungsordnungKatalogEintrag extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : PruefungsordnungKatalogEintrag) : string {
+	public static transpilerToJSON(obj: PruefungsordnungKatalogEintrag): string {
 		let result = '{';
 		result += '"id" : ' + obj.id.toString() + ',';
 		result += '"kuerzel" : ' + JSON.stringify(obj.kuerzel) + ',';
@@ -161,7 +161,7 @@ export class PruefungsordnungKatalogEintrag extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<PruefungsordnungKatalogEintrag>) : string {
+	public static transpilerToJSONPatch(obj: Partial<PruefungsordnungKatalogEintrag>): string {
 		let result = '{';
 		if (obj.id !== undefined) {
 			result += '"id" : ' + obj.id.toString() + ',';
@@ -200,6 +200,6 @@ export class PruefungsordnungKatalogEintrag extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_schule_PruefungsordnungKatalogEintrag(obj : unknown) : PruefungsordnungKatalogEintrag {
+export function cast_de_svws_nrw_core_data_schule_PruefungsordnungKatalogEintrag(obj: unknown): PruefungsordnungKatalogEintrag {
 	return obj as PruefungsordnungKatalogEintrag;
 }

@@ -15,7 +15,7 @@ export class RouteLogin extends RouteNode<any, any> {
 	public routepath = "/";
 
 	public constructor() {
-		super(Schulform.values(), [ BenutzerKompetenz.KEINE ], "login", "/login", SLogin);
+		super(Schulform.values(), [BenutzerKompetenz.KEINE], "login", "/login", SLogin);
 		super.mode = ServerMode.STABLE;
 		super.propHandler = (route) => this.getProps();
 		super.text = "Login";
@@ -25,14 +25,14 @@ export class RouteLogin extends RouteNode<any, any> {
 		const success = await api.login(username, password);
 		if (success)
 			await RouteManager.doRoute(this.routepath);
-	}
+	};
 
 	public logout = async () => {
 		this.routepath = "/";
 		await RouteManager.doRoute(this.getRoute());
 		await api.logout();
 		RouteManager.resetRouteState();
-	}
+	};
 
 	public getProps(): LoginProps {
 		return {
@@ -41,7 +41,7 @@ export class RouteLogin extends RouteNode<any, any> {
 			connectTo: api.connectTo,
 			authenticated: api.authenticated,
 			hostname: api.hostname,
-		}
+		};
 	}
 
 }

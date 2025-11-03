@@ -7,13 +7,13 @@
 
 <script setup lang="ts">
 
-	import type {BenutzergruppenManager} from "@core";
+	import type { BenutzergruppenManager } from "@core";
 	import { computed } from "vue";
 
 	const props = defineProps<{
 		getBenutzergruppenManager: () => BenutzergruppenManager;
-		setBezeichnung : (anzeigename: string | null) => Promise<void>;
-		setIstAdmin : (istAdmin:boolean) => Promise<void>;
+		setBezeichnung: (anzeigename: string | null) => Promise<void>;
+		setIstAdmin: (istAdmin: boolean) => Promise<void>;
 	}>();
 
 	const inputIstAdmin = computed<boolean>({

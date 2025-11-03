@@ -11,8 +11,8 @@ export class KlassenUtils extends JavaObject {
 	/**
 	 * Ein Default-Comparator für den Vergleich von Klassen in Klassenlisten.
 	 */
-	public static readonly comparator : Comparator<KlassenDaten> = { compare : (a: KlassenDaten, b: KlassenDaten) => {
-		let cmp : number = a.sortierung - b.sortierung;
+	public static readonly comparator: Comparator<KlassenDaten> = { compare: (a: KlassenDaten, b: KlassenDaten) => {
+		let cmp: number = a.sortierung - b.sortierung;
 		if (cmp !== 0)
 			return cmp;
 		if ((a.kuerzel === null) || (b.kuerzel === null))
@@ -31,7 +31,7 @@ export class KlassenUtils extends JavaObject {
 		return 'de.svws_nrw.core.utils.klassen.KlassenUtils';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.utils.klassen.KlassenUtils'].includes(name);
 	}
 
@@ -39,6 +39,6 @@ export class KlassenUtils extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_utils_klassen_KlassenUtils(obj : unknown) : KlassenUtils {
+export function cast_de_svws_nrw_core_utils_klassen_KlassenUtils(obj: unknown): KlassenUtils {
 	return obj as KlassenUtils;
 }

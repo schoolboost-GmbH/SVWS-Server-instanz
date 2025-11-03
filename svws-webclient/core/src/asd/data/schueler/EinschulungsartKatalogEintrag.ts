@@ -6,7 +6,7 @@ export class EinschulungsartKatalogEintrag extends CoreTypeData {
 	/**
 	 * Eine zusätzliche längere Beschreibung der Einschulungsart.
 	 */
-	public beschreibung : string = "";
+	public beschreibung: string = "";
 
 
 	/**
@@ -20,13 +20,13 @@ export class EinschulungsartKatalogEintrag extends CoreTypeData {
 		return 'de.svws_nrw.asd.data.schueler.EinschulungsartKatalogEintrag';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.asd.data.CoreTypeData', 'de.svws_nrw.asd.data.schueler.EinschulungsartKatalogEintrag'].includes(name);
 	}
 
 	public static class = new Class<EinschulungsartKatalogEintrag>('de.svws_nrw.asd.data.schueler.EinschulungsartKatalogEintrag');
 
-	public static transpilerFromJSON(json : string): EinschulungsartKatalogEintrag {
+	public static transpilerFromJSON(json: string): EinschulungsartKatalogEintrag {
 		const obj = JSON.parse(json) as Partial<EinschulungsartKatalogEintrag>;
 		const result = new EinschulungsartKatalogEintrag();
 		if (obj.id === undefined)
@@ -49,7 +49,7 @@ export class EinschulungsartKatalogEintrag extends CoreTypeData {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : EinschulungsartKatalogEintrag) : string {
+	public static transpilerToJSON(obj: EinschulungsartKatalogEintrag): string {
 		let result = '{';
 		result += '"id" : ' + obj.id.toString() + ',';
 		result += '"schluessel" : ' + JSON.stringify(obj.schluessel) + ',';
@@ -63,7 +63,7 @@ export class EinschulungsartKatalogEintrag extends CoreTypeData {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<EinschulungsartKatalogEintrag>) : string {
+	public static transpilerToJSONPatch(obj: Partial<EinschulungsartKatalogEintrag>): string {
 		let result = '{';
 		if (obj.id !== undefined) {
 			result += '"id" : ' + obj.id.toString() + ',';
@@ -93,6 +93,6 @@ export class EinschulungsartKatalogEintrag extends CoreTypeData {
 
 }
 
-export function cast_de_svws_nrw_asd_data_schueler_EinschulungsartKatalogEintrag(obj : unknown) : EinschulungsartKatalogEintrag {
+export function cast_de_svws_nrw_asd_data_schueler_EinschulungsartKatalogEintrag(obj: unknown): EinschulungsartKatalogEintrag {
 	return obj as EinschulungsartKatalogEintrag;
 }

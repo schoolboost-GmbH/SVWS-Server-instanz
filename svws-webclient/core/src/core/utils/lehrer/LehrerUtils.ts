@@ -11,8 +11,8 @@ export class LehrerUtils extends JavaObject {
 	/**
 	 * Ein Default-Comparator für den Vergleich von Lehrern in Lehrerlisten.
 	 */
-	public static readonly comparator : Comparator<LehrerListeEintrag> = { compare : (a: LehrerListeEintrag, b: LehrerListeEintrag) => {
-		let cmp : number = JavaString.compareTo(a.nachname, b.nachname);
+	public static readonly comparator: Comparator<LehrerListeEintrag> = { compare: (a: LehrerListeEintrag, b: LehrerListeEintrag) => {
+		let cmp: number = JavaString.compareTo(a.nachname, b.nachname);
 		if (cmp !== 0)
 			return cmp;
 		cmp = JavaString.compareTo(a.vorname, b.vorname);
@@ -25,8 +25,8 @@ export class LehrerUtils extends JavaObject {
 	/**
 	 * Ein Kuerzel-Comparator für den Vergleich von Lehrern in Lehrerlisten.
 	 */
-	public static readonly comparatorKuerzel : Comparator<LehrerListeEintrag> = { compare : (a: LehrerListeEintrag, b: LehrerListeEintrag) => {
-		const cmp : number = JavaString.compareTo(a.kuerzel, b.kuerzel);
+	public static readonly comparatorKuerzel: Comparator<LehrerListeEintrag> = { compare: (a: LehrerListeEintrag, b: LehrerListeEintrag) => {
+		const cmp: number = JavaString.compareTo(a.kuerzel, b.kuerzel);
 		return (cmp === 0) ? JavaLong.compare(a.id, b.id) : cmp;
 	} };
 
@@ -40,7 +40,7 @@ export class LehrerUtils extends JavaObject {
 		return 'de.svws_nrw.core.utils.lehrer.LehrerUtils';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.utils.lehrer.LehrerUtils'].includes(name);
 	}
 
@@ -48,6 +48,6 @@ export class LehrerUtils extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_utils_lehrer_LehrerUtils(obj : unknown) : LehrerUtils {
+export function cast_de_svws_nrw_core_utils_lehrer_LehrerUtils(obj: unknown): LehrerUtils {
 	return obj as LehrerUtils;
 }

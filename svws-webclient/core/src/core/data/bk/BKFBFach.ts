@@ -9,32 +9,32 @@ export class BKFBFach extends JavaObject {
 	/**
 	 * Die ID des Katalog-Eintrags.
 	 */
-	public id : number = -1;
+	public id: number = -1;
 
 	/**
 	 * Das im Alltag verwendete Kuerzel des Fachs.
 	 */
-	public kuerzel : string = "";
+	public kuerzel: string = "";
 
 	/**
 	 * Die Zeugnisbezeichnung des Fachs
 	 */
-	public bezeichnung : string = "";
+	public bezeichnung: string = "";
 
 	/**
 	 * Die Fachklassen, in denen das Fach im Bildungsplan steht
 	 */
-	public fachklassen : List<BKFachklassenSchluessel> = new ArrayList<BKFachklassenSchluessel>();
+	public fachklassen: List<BKFachklassenSchluessel> = new ArrayList<BKFachklassenSchluessel>();
 
 	/**
 	 * Gibt an, in welchem Schuljahr der Historien-Eintrag einführt wurde. Ist kein Schuljahr bekannt, so ist null gesetzt.
 	 */
-	public gueltigVon : number | null = null;
+	public gueltigVon: number | null = null;
 
 	/**
 	 * Gibt an, bis zu welchem Schuljahr der Historien-Eintrag gültig ist. Ist kein Schuljahr bekannt, so ist null gesetzt.
 	 */
-	public gueltigBis : number | null = null;
+	public gueltigBis: number | null = null;
 
 
 	/**
@@ -48,13 +48,13 @@ export class BKFBFach extends JavaObject {
 		return 'de.svws_nrw.core.data.bk.BKFBFach';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.bk.BKFBFach'].includes(name);
 	}
 
 	public static class = new Class<BKFBFach>('de.svws_nrw.core.data.bk.BKFBFach');
 
-	public static transpilerFromJSON(json : string): BKFBFach {
+	public static transpilerFromJSON(json: string): BKFBFach {
 		const obj = JSON.parse(json) as Partial<BKFBFach>;
 		const result = new BKFBFach();
 		if (obj.id === undefined)
@@ -76,7 +76,7 @@ export class BKFBFach extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : BKFBFach) : string {
+	public static transpilerToJSON(obj: BKFBFach): string {
 		let result = '{';
 		result += '"id" : ' + obj.id.toString() + ',';
 		result += '"kuerzel" : ' + JSON.stringify(obj.kuerzel) + ',';
@@ -96,7 +96,7 @@ export class BKFBFach extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<BKFBFach>) : string {
+	public static transpilerToJSONPatch(obj: Partial<BKFBFach>): string {
 		let result = '{';
 		if (obj.id !== undefined) {
 			result += '"id" : ' + obj.id.toString() + ',';
@@ -130,6 +130,6 @@ export class BKFBFach extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_bk_BKFBFach(obj : unknown) : BKFBFach {
+export function cast_de_svws_nrw_core_data_bk_BKFBFach(obj: unknown): BKFBFach {
 	return obj as BKFBFach;
 }

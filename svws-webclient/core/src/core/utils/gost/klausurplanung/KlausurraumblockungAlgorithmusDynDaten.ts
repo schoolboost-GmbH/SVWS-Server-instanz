@@ -16,13 +16,13 @@ import { GostKlausurraumblockungKonfiguration } from '../../../../core/data/gost
 
 export class KlausurraumblockungAlgorithmusDynDaten extends JavaObject {
 
-	private static readonly MALUS_NICHT_VERTEILT : number = 1000000.0;
+	private static readonly MALUS_NICHT_VERTEILT: number = 1000000.0;
 
-	private static readonly MALUS_MOEGLICHST_WENIG_RAEUME : number = 1000.0;
+	private static readonly MALUS_MOEGLICHST_WENIG_RAEUME: number = 1000.0;
 
-	private static readonly MALUS_MOEGLICHST_GLEICHVERTEILT_AUF_RAEUME : number = 1.0;
+	private static readonly MALUS_MOEGLICHST_GLEICHVERTEILT_AUF_RAEUME: number = 1.0;
 
-	private static readonly _compRaeume : Comparator<GostKlausurraumRich> = { compare : (o1: GostKlausurraumRich, o2: GostKlausurraumRich) => {
+	private static readonly _compRaeume: Comparator<GostKlausurraumRich> = { compare: (o1: GostKlausurraumRich, o2: GostKlausurraumRich) => {
 		if (o1.groesse < o2.groesse)
 			return -1;
 		if (o1.groesse > o2.groesse)
@@ -34,13 +34,13 @@ export class KlausurraumblockungAlgorithmusDynDaten extends JavaObject {
 		return 0;
 	} };
 
-	private static readonly _compKlausurGruppen : Comparator<List<GostSchuelerklausurTerminRich>> = { compare : (o1: List<GostSchuelerklausurTerminRich>, o2: List<GostSchuelerklausurTerminRich>) => {
+	private static readonly _compKlausurGruppen: Comparator<List<GostSchuelerklausurTerminRich>> = { compare: (o1: List<GostSchuelerklausurTerminRich>, o2: List<GostSchuelerklausurTerminRich>) => {
 		if (o1.size() < o2.size())
 			return -1;
 		if (o1.size() > o2.size())
 			return +1;
-		const k1 : GostSchuelerklausurTerminRich = ListUtils.getNonNullElementAtOrException(o1, 0);
-		const k2 : GostSchuelerklausurTerminRich = ListUtils.getNonNullElementAtOrException(o2, 0);
+		const k1: GostSchuelerklausurTerminRich = ListUtils.getNonNullElementAtOrException(o1, 0);
+		const k2: GostSchuelerklausurTerminRich = ListUtils.getNonNullElementAtOrException(o2, 0);
 		if (k1.id < k2.id)
 			return -1;
 		if (k1.id > k2.id)
@@ -48,49 +48,49 @@ export class KlausurraumblockungAlgorithmusDynDaten extends JavaObject {
 		return 0;
 	} };
 
-	private readonly _random : Random;
+	private readonly _random: Random;
 
-	private readonly _config : GostKlausurraumblockungKonfiguration;
+	private readonly _config: GostKlausurraumblockungKonfiguration;
 
-	private readonly _regel_optimiere_blocke_in_moeglichst_wenig_raeume : boolean;
+	private readonly _regel_optimiere_blocke_in_moeglichst_wenig_raeume: boolean;
 
-	private readonly _regel_optimiere_blocke_gleichmaessig_verteilt_auf_raeume : boolean;
+	private readonly _regel_optimiere_blocke_gleichmaessig_verteilt_auf_raeume: boolean;
 
-	private readonly _regel_forciere_selbe_kursklausur_im_selben_raum : boolean;
+	private readonly _regel_forciere_selbe_kursklausur_im_selben_raum: boolean;
 
-	private readonly _regel_forciere_selbe_klausurdauer_pro_raum : boolean;
+	private readonly _regel_forciere_selbe_klausurdauer_pro_raum: boolean;
 
-	private readonly _regel_forciere_selben_klausurstart_pro_raum : boolean;
+	private readonly _regel_forciere_selben_klausurstart_pro_raum: boolean;
 
-	private readonly _raumAnzahl : number;
+	private readonly _raumAnzahl: number;
 
-	private readonly _raumAt : Array<GostKlausurraumRich>;
+	private readonly _raumAt: Array<GostKlausurraumRich>;
 
-	private readonly _raumSortiertAufsteigend : Array<number>;
+	private readonly _raumSortiertAufsteigend: Array<number>;
 
-	private readonly _raumSortiertAbsteigend : Array<number>;
+	private readonly _raumSortiertAbsteigend: Array<number>;
 
-	private readonly _raumZuBelegung : Array<number>;
+	private readonly _raumZuBelegung: Array<number>;
 
-	private readonly _raumZuKlausurdauer : Array<number>;
+	private readonly _raumZuKlausurdauer: Array<number>;
 
-	private readonly _raumZuKlausurstart : Array<number>;
+	private readonly _raumZuKlausurstart: Array<number>;
 
-	private readonly _klausurGruppenAnzahl : number;
+	private readonly _klausurGruppenAnzahl: number;
 
-	private readonly _klausurGruppen : List<List<GostSchuelerklausurTerminRich>>;
+	private readonly _klausurGruppen: List<List<GostSchuelerklausurTerminRich>>;
 
-	private readonly _klausurGruppenAufsteigend : Array<number>;
+	private readonly _klausurGruppenAufsteigend: Array<number>;
 
-	private readonly _klausurGruppenAbsteigend : Array<number>;
+	private readonly _klausurGruppenAbsteigend: Array<number>;
 
-	private readonly _klausurGruppeZuKlausurdauer : Array<number>;
+	private readonly _klausurGruppeZuKlausurdauer: Array<number>;
 
-	private readonly _klausurGruppeZuKlausurstart : Array<number>;
+	private readonly _klausurGruppeZuKlausurstart: Array<number>;
 
-	private readonly _klausurGruppeZuRaum : Array<GostKlausurraumRich | null>;
+	private readonly _klausurGruppeZuRaum: Array<GostKlausurraumRich | null>;
 
-	private readonly _klausurGruppeZuRaumSave : Array<GostKlausurraumRich | null>;
+	private readonly _klausurGruppeZuRaumSave: Array<GostKlausurraumRich | null>;
 
 
 	/**
@@ -99,7 +99,7 @@ export class KlausurraumblockungAlgorithmusDynDaten extends JavaObject {
 	 * @param random  Ein {@link Random}-Objekt zur Steuerung des Zufalls über einen Anfangs-Seed.
 	 * @param config  Das {@link GostKlausurraumblockungKonfiguration}-Eingabr-Objekt der GUI.
 	 */
-	constructor(random : Random, config : GostKlausurraumblockungKonfiguration) {
+	constructor(random: Random, config: GostKlausurraumblockungKonfiguration) {
 		super();
 		this._random = random;
 		this._config = config;
@@ -115,7 +115,7 @@ export class KlausurraumblockungAlgorithmusDynDaten extends JavaObject {
 		this._raumZuKlausurstart = Array(this._raumAnzahl).fill(0);
 		this._raumSortiertAufsteigend = Array(this._raumAnzahl).fill(0);
 		this._raumSortiertAbsteigend = Array(this._raumAnzahl).fill(0);
-		for (let i : number = 0; i < this._raumAnzahl; i++) {
+		for (let i: number = 0; i < this._raumAnzahl; i++) {
 			this._raumSortiertAufsteigend[i] = i;
 			this._raumSortiertAbsteigend[i] = this._raumAnzahl - 1 - i;
 		}
@@ -127,7 +127,7 @@ export class KlausurraumblockungAlgorithmusDynDaten extends JavaObject {
 		this._klausurGruppeZuKlausurstart = Array(this._klausurGruppenAnzahl).fill(0);
 		this._klausurGruppenAufsteigend = Array(this._klausurGruppenAnzahl).fill(0);
 		this._klausurGruppenAbsteigend = Array(this._klausurGruppenAnzahl).fill(0);
-		for (let kg : number = 0; kg < this._klausurGruppenAnzahl; kg++) {
+		for (let kg: number = 0; kg < this._klausurGruppenAnzahl; kg++) {
 			this._klausurGruppeZuKlausurdauer[kg] = this._gibErsteKlausurDerGruppe(kg).dauer;
 			this._klausurGruppeZuKlausurstart[kg] = this._gibErsteKlausurDerGruppe(kg).startzeit;
 			this._klausurGruppenAufsteigend[kg] = kg;
@@ -136,24 +136,24 @@ export class KlausurraumblockungAlgorithmusDynDaten extends JavaObject {
 		this.aktionZustandClear();
 	}
 
-	private static _erzeugeRaeumeSortiert(raeume : List<GostKlausurraumRich>) : Array<GostKlausurraumRich> {
-		const list : List<GostKlausurraumRich> = new ArrayList<GostKlausurraumRich>(raeume);
+	private static _erzeugeRaeumeSortiert(raeume: List<GostKlausurraumRich>): Array<GostKlausurraumRich> {
+		const list: List<GostKlausurraumRich> = new ArrayList<GostKlausurraumRich>(raeume);
 		list.sort(KlausurraumblockungAlgorithmusDynDaten._compRaeume);
-		const copy : Array<GostKlausurraumRich> = Array(list.size()).fill(null);
-		for (let i : number = 0; i < copy.length; i++)
+		const copy: Array<GostKlausurraumRich> = Array(list.size()).fill(null);
+		for (let i: number = 0; i < copy.length; i++)
 			copy[i] = list.get(i);
 		return copy;
 	}
 
-	private _gibErsteKlausurDerGruppe(kg : number) : GostSchuelerklausurTerminRich {
-		const list : List<GostSchuelerklausurTerminRich> = ListUtils.getNonNullElementAtOrException(this._klausurGruppen, kg);
+	private _gibErsteKlausurDerGruppe(kg: number): GostSchuelerklausurTerminRich {
+		const list: List<GostSchuelerklausurTerminRich> = ListUtils.getNonNullElementAtOrException(this._klausurGruppen, kg);
 		return ListUtils.getNonNullElementAtOrException(list, 0);
 	}
 
-	private _erzeugeKlausurGruppenSortiert(klausuren : List<GostSchuelerklausurTerminRich>) : List<List<GostSchuelerklausurTerminRich>> {
-		const gruppen : List<List<GostSchuelerklausurTerminRich>> = new ArrayList<List<GostSchuelerklausurTerminRich>>();
+	private _erzeugeKlausurGruppenSortiert(klausuren: List<GostSchuelerklausurTerminRich>): List<List<GostSchuelerklausurTerminRich>> {
+		const gruppen: List<List<GostSchuelerklausurTerminRich>> = new ArrayList<List<GostSchuelerklausurTerminRich>>();
 		if (this._regel_forciere_selbe_kursklausur_im_selben_raum) {
-			const map : HashMap<number, List<GostSchuelerklausurTerminRich>> = new HashMap<number, List<GostSchuelerklausurTerminRich>>();
+			const map: HashMap<number, List<GostSchuelerklausurTerminRich>> = new HashMap<number, List<GostSchuelerklausurTerminRich>>();
 			for (const klausur of klausuren)
 				MapUtils.addToList(map, klausur.idKursklausur, klausur);
 			gruppen.addAll(map.values());
@@ -165,18 +165,18 @@ export class KlausurraumblockungAlgorithmusDynDaten extends JavaObject {
 		return gruppen;
 	}
 
-	private aktionZustandClear() : void {
-		for (let r : number = 0; r < this._raumAnzahl; r++) {
+	private aktionZustandClear(): void {
+		for (let r: number = 0; r < this._raumAnzahl; r++) {
 			this._raumZuBelegung[r] = 0;
 			this._raumZuKlausurdauer[r] = -1;
 			this._raumZuKlausurstart[r] = -1;
 		}
-		for (let k : number = 0; k < this._klausurGruppenAnzahl; k++)
+		for (let k: number = 0; k < this._klausurGruppenAnzahl; k++)
 			this._klausurGruppeZuRaum[k] = null;
 	}
 
-	private aktionSetzeKlausurgruppeInDenRaum(kg : number, r : number) : boolean {
-		const gruppe : List<GostSchuelerklausurTerminRich> = this._klausurGruppen.get(kg);
+	private aktionSetzeKlausurgruppeInDenRaum(kg: number, r: number): boolean {
+		const gruppe: List<GostSchuelerklausurTerminRich> = this._klausurGruppen.get(kg);
 		if ((this._raumZuBelegung[r] + gruppe.size()) > this._raumAt[r].groesse)
 			return false;
 		if ((this._regel_forciere_selben_klausurstart_pro_raum) && (this._raumZuKlausurstart[r] >= 0) && (this._klausurGruppeZuKlausurstart[kg] !== this._raumZuKlausurstart[r]))
@@ -192,31 +192,31 @@ export class KlausurraumblockungAlgorithmusDynDaten extends JavaObject {
 		return true;
 	}
 
-	private gibMalus(klausurGruppeZuRaum : Array<GostKlausurraumRich | null>) : number {
-		let malus : number = 0.0;
+	private gibMalus(klausurGruppeZuRaum: Array<GostKlausurraumRich | null>): number {
+		let malus: number = 0.0;
 		malus += this.gibMalus_nicht_verteiler_klausuren(klausurGruppeZuRaum);
 		malus += this.gibMalus_regel_optimiere_blocke_in_moeglichst_wenig_raeume(klausurGruppeZuRaum);
 		malus += this.gibMalus_regel_optimiere_blocke_gleichmaessig_verteilt_auf_raeume(klausurGruppeZuRaum);
 		return malus;
 	}
 
-	private gibMalus_nicht_verteiler_klausuren(klausurGruppeZuRaum : Array<GostKlausurraumRich | null>) : number {
-		let malus : number = 0.0;
-		for (let i : number = 0; i < klausurGruppeZuRaum.length; i++)
+	private gibMalus_nicht_verteiler_klausuren(klausurGruppeZuRaum: Array<GostKlausurraumRich | null>): number {
+		let malus: number = 0.0;
+		for (let i: number = 0; i < klausurGruppeZuRaum.length; i++)
 			if (klausurGruppeZuRaum[i] === null)
 				malus += this._klausurGruppen.get(i).size() * KlausurraumblockungAlgorithmusDynDaten.MALUS_NICHT_VERTEILT;
 		return malus;
 	}
 
-	private gibMalus_regel_optimiere_blocke_in_moeglichst_wenig_raeume(klausurGruppeZuRaum : Array<GostKlausurraumRich | null>) : number {
+	private gibMalus_regel_optimiere_blocke_in_moeglichst_wenig_raeume(klausurGruppeZuRaum: Array<GostKlausurraumRich | null>): number {
 		if (!this._regel_optimiere_blocke_in_moeglichst_wenig_raeume)
 			return 0.0;
-		let malus : number = 0.0;
-		for (let r : number = 0; r < this._raumAnzahl; r++) {
-			const raum1 : GostKlausurraumRich = this._raumAt[r];
-			let counterGruppen : number = 0;
-			for (let k : number = 0; k < this._klausurGruppenAnzahl; k++) {
-				const raum2 : GostKlausurraumRich | null = klausurGruppeZuRaum[k];
+		let malus: number = 0.0;
+		for (let r: number = 0; r < this._raumAnzahl; r++) {
+			const raum1: GostKlausurraumRich = this._raumAt[r];
+			let counterGruppen: number = 0;
+			for (let k: number = 0; k < this._klausurGruppenAnzahl; k++) {
+				const raum2: GostKlausurraumRich | null = klausurGruppeZuRaum[k];
 				if (raum2 === null)
 					continue;
 				if (raum1.klausurraum.id !== raum2.klausurraum.id)
@@ -229,15 +229,15 @@ export class KlausurraumblockungAlgorithmusDynDaten extends JavaObject {
 		return malus;
 	}
 
-	private gibMalus_regel_optimiere_blocke_gleichmaessig_verteilt_auf_raeume(klausurGruppeZuRaum : Array<GostKlausurraumRich | null>) : number {
+	private gibMalus_regel_optimiere_blocke_gleichmaessig_verteilt_auf_raeume(klausurGruppeZuRaum: Array<GostKlausurraumRich | null>): number {
 		if (!this._regel_optimiere_blocke_gleichmaessig_verteilt_auf_raeume)
 			return 0.0;
-		let maximum : number = 0;
-		for (let r : number = 0; r < this._raumAnzahl; r++) {
-			const raum1 : GostKlausurraumRich = this._raumAt[r];
-			let counterKlausuren : number = 0;
-			for (let k : number = 0; k < this._klausurGruppenAnzahl; k++) {
-				const raum2 : GostKlausurraumRich | null = klausurGruppeZuRaum[k];
+		let maximum: number = 0;
+		for (let r: number = 0; r < this._raumAnzahl; r++) {
+			const raum1: GostKlausurraumRich = this._raumAt[r];
+			let counterKlausuren: number = 0;
+			for (let k: number = 0; k < this._klausurGruppenAnzahl; k++) {
+				const raum2: GostKlausurraumRich | null = klausurGruppeZuRaum[k];
 				if (raum2 === null)
 					continue;
 				if (raum1.klausurraum.id !== raum2.klausurraum.id)
@@ -253,15 +253,15 @@ export class KlausurraumblockungAlgorithmusDynDaten extends JavaObject {
 	 * Speichert die aktuelle Raum-Klausur-Zuordnung sowie die Güte der Bewertung,
 	 * falls er besser ist als der zuvor gespeicherte Zustand.
 	 */
-	private aktionSpeichernFallsBesser() : void {
-		const malusSave : number = this.gibMalus(this._klausurGruppeZuRaumSave);
-		const malus : number = this.gibMalus(this._klausurGruppeZuRaum);
+	private aktionSpeichernFallsBesser(): void {
+		const malusSave: number = this.gibMalus(this._klausurGruppeZuRaumSave);
+		const malus: number = this.gibMalus(this._klausurGruppeZuRaum);
 		if (malus >= malusSave)
 			return;
 		System.arraycopy(this._klausurGruppeZuRaum, 0, this._klausurGruppeZuRaumSave, 0, this._klausurGruppenAnzahl);
 	}
 
-	private aktionKlausurenVerteilenAlgorithmusGeneric(aRaum : Array<number> | null, aKlausurGruppe : Array<number> | null) : void {
+	private aktionKlausurenVerteilenAlgorithmusGeneric(aRaum: Array<number> | null, aKlausurGruppe: Array<number> | null): void {
 		this.aktionZustandClear();
 		for (const kg of ((aKlausurGruppe === null) ? ArrayUtils.getIndexPermutation(this._klausurGruppenAnzahl, this._random) : aKlausurGruppe))
 			for (const r of ((aRaum === null) ? ArrayUtils.getIndexPermutation(this._raumAnzahl, this._random) : aRaum))
@@ -275,7 +275,7 @@ export class KlausurraumblockungAlgorithmusDynDaten extends JavaObject {
 	 * <br>Räume in zufälliger Reihenfolge.
 	 * <br>Klausurgruppen in zufälliger Reihenfolge.
 	 */
-	aktionKlausurenVerteilenAlgorithmus01_raum_zufaellig_gruppe_zufaellig() : void {
+	aktionKlausurenVerteilenAlgorithmus01_raum_zufaellig_gruppe_zufaellig(): void {
 		this.aktionKlausurenVerteilenAlgorithmusGeneric(null, null);
 	}
 
@@ -284,7 +284,7 @@ export class KlausurraumblockungAlgorithmusDynDaten extends JavaObject {
 	 * <br>Räume in aufsteigender Reihenfolge.
 	 * <br>Klausurgruppen in zufälliger Reihenfolge.
 	 */
-	aktionKlausurenVerteilenAlgorithmus02_raum_aufsteigend_gruppe_zufaellig() : void {
+	aktionKlausurenVerteilenAlgorithmus02_raum_aufsteigend_gruppe_zufaellig(): void {
 		this.aktionKlausurenVerteilenAlgorithmusGeneric(this._raumSortiertAufsteigend, null);
 	}
 
@@ -293,7 +293,7 @@ export class KlausurraumblockungAlgorithmusDynDaten extends JavaObject {
 	 * <br>Räume in absteigender Reihenfolge.
 	 * <br>Klausurgruppen in zufälliger Reihenfolge.
 	 */
-	aktionKlausurenVerteilenAlgorithmus03_raum_absteigend_gruppe_zufaellig() : void {
+	aktionKlausurenVerteilenAlgorithmus03_raum_absteigend_gruppe_zufaellig(): void {
 		this.aktionKlausurenVerteilenAlgorithmusGeneric(this._raumSortiertAbsteigend, null);
 	}
 
@@ -302,7 +302,7 @@ export class KlausurraumblockungAlgorithmusDynDaten extends JavaObject {
 	 * <br>Räume in zufälliger Reihenfolge.
 	 * <br>Klausurgruppen in aufsteigender Reihenfolge.
 	 */
-	aktionKlausurenVerteilenAlgorithmus04_raum_zufaellig_gruppe_aufsteigend() : void {
+	aktionKlausurenVerteilenAlgorithmus04_raum_zufaellig_gruppe_aufsteigend(): void {
 		this.aktionKlausurenVerteilenAlgorithmusGeneric(null, this._klausurGruppenAufsteigend);
 	}
 
@@ -311,7 +311,7 @@ export class KlausurraumblockungAlgorithmusDynDaten extends JavaObject {
 	 * <br>Räume in aufsteigender Reihenfolge.
 	 * <br>Klausurgruppen in aufsteigender Reihenfolge.
 	 */
-	aktionKlausurenVerteilenAlgorithmus05_raum_aufsteigend_gruppe_aufsteigend() : void {
+	aktionKlausurenVerteilenAlgorithmus05_raum_aufsteigend_gruppe_aufsteigend(): void {
 		this.aktionKlausurenVerteilenAlgorithmusGeneric(this._raumSortiertAufsteigend, this._klausurGruppenAufsteigend);
 	}
 
@@ -320,7 +320,7 @@ export class KlausurraumblockungAlgorithmusDynDaten extends JavaObject {
 	 * <br>Räume in absteigender Reihenfolge.
 	 * <br>Klausurgruppen in aufsteigender Reihenfolge.
 	 */
-	aktionKlausurenVerteilenAlgorithmus06_raum_absteigend_gruppe_aufsteigend() : void {
+	aktionKlausurenVerteilenAlgorithmus06_raum_absteigend_gruppe_aufsteigend(): void {
 		this.aktionKlausurenVerteilenAlgorithmusGeneric(this._raumSortiertAbsteigend, this._klausurGruppenAufsteigend);
 	}
 
@@ -329,7 +329,7 @@ export class KlausurraumblockungAlgorithmusDynDaten extends JavaObject {
 	 * <br>Räume in zufälliger Reihenfolge.
 	 * <br>Klausurgruppen in absteigender Reihenfolge.
 	 */
-	aktionKlausurenVerteilenAlgorithmus07_raum_zufaellig_gruppe_absteigend() : void {
+	aktionKlausurenVerteilenAlgorithmus07_raum_zufaellig_gruppe_absteigend(): void {
 		this.aktionKlausurenVerteilenAlgorithmusGeneric(null, this._klausurGruppenAbsteigend);
 	}
 
@@ -338,7 +338,7 @@ export class KlausurraumblockungAlgorithmusDynDaten extends JavaObject {
 	 * <br>Räume in aufsteigender Reihenfolge.
 	 * <br>Klausurgruppen in absteigender Reihenfolge.
 	 */
-	aktionKlausurenVerteilenAlgorithmus08_raum_aufsteigend_gruppe_absteigend() : void {
+	aktionKlausurenVerteilenAlgorithmus08_raum_aufsteigend_gruppe_absteigend(): void {
 		this.aktionKlausurenVerteilenAlgorithmusGeneric(this._raumSortiertAufsteigend, this._klausurGruppenAbsteigend);
 	}
 
@@ -347,7 +347,7 @@ export class KlausurraumblockungAlgorithmusDynDaten extends JavaObject {
 	 * <br>Räume in absteigender Reihenfolge.
 	 * <br>Klausurgruppen in absteigender Reihenfolge.
 	 */
-	aktionKlausurenVerteilenAlgorithmus09_raum_absteigend_gruppe_absteigend() : void {
+	aktionKlausurenVerteilenAlgorithmus09_raum_absteigend_gruppe_absteigend(): void {
 		this.aktionKlausurenVerteilenAlgorithmusGeneric(this._raumSortiertAbsteigend, this._klausurGruppenAbsteigend);
 	}
 
@@ -355,12 +355,12 @@ export class KlausurraumblockungAlgorithmusDynDaten extends JavaObject {
 	 * Lädt den gespeicherten Zustand die {@link GostKlausurraumRich#schuelerklausurterminIDs}-Liste.
 	 * Überschreibt {@link GostKlausurraumblockungKonfiguration#schuelerklausurtermine} mit den Klausuren, die nicht verteilt wurden.
 	 */
-	aktionLadeGespeichertenZustandInDieConfig() : void {
-		for (let r : number = 0; r < this._raumAnzahl; r++) {
-			const raum : GostKlausurraumRich = this._raumAt[r];
+	aktionLadeGespeichertenZustandInDieConfig(): void {
+		for (let r: number = 0; r < this._raumAnzahl; r++) {
+			const raum: GostKlausurraumRich = this._raumAt[r];
 			raum.schuelerklausurterminIDs.clear();
-			for (let kg : number = 0; kg < this._klausurGruppenAnzahl; kg++) {
-				const raum2 : GostKlausurraumRich | null = this._klausurGruppeZuRaumSave[kg];
+			for (let kg: number = 0; kg < this._klausurGruppenAnzahl; kg++) {
+				const raum2: GostKlausurraumRich | null = this._klausurGruppeZuRaumSave[kg];
 				if (raum2 === null)
 					continue;
 				if (raum2.klausurraum.id !== raum.klausurraum.id)
@@ -370,7 +370,7 @@ export class KlausurraumblockungAlgorithmusDynDaten extends JavaObject {
 			}
 		}
 		this._config.schuelerklausurtermine.clear();
-		for (let kg : number = 0; kg < this._klausurGruppenAnzahl; kg++)
+		for (let kg: number = 0; kg < this._klausurGruppenAnzahl; kg++)
 			if (this._klausurGruppeZuRaumSave[kg] === null)
 				this._config.schuelerklausurtermine.addAll(this._klausurGruppen.get(kg));
 	}
@@ -379,7 +379,7 @@ export class KlausurraumblockungAlgorithmusDynDaten extends JavaObject {
 		return 'de.svws_nrw.core.utils.gost.klausurplanung.KlausurraumblockungAlgorithmusDynDaten';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.utils.gost.klausurplanung.KlausurraumblockungAlgorithmusDynDaten'].includes(name);
 	}
 
@@ -387,6 +387,6 @@ export class KlausurraumblockungAlgorithmusDynDaten extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_utils_gost_klausurplanung_KlausurraumblockungAlgorithmusDynDaten(obj : unknown) : KlausurraumblockungAlgorithmusDynDaten {
+export function cast_de_svws_nrw_core_utils_gost_klausurplanung_KlausurraumblockungAlgorithmusDynDaten(obj: unknown): KlausurraumblockungAlgorithmusDynDaten {
 	return obj as KlausurraumblockungAlgorithmusDynDaten;
 }

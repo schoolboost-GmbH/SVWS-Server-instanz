@@ -21,7 +21,7 @@ import { Class } from '../../java/lang/Class';
 
 export class KursblockungAlgorithmus extends Service {
 
-	private readonly _random : Random = new Random();
+	private readonly _random: Random = new Random();
 
 
 	/**
@@ -39,21 +39,21 @@ export class KursblockungAlgorithmus extends Service {
 	 *
 	 * @return die Liste mit den Blockungsergebnis-Managern
 	 */
-	public handle(pInput : GostBlockungsdatenManager) : ArrayList<GostBlockungsergebnisManager> {
+	public handle(pInput: GostBlockungsdatenManager): ArrayList<GostBlockungsergebnisManager> {
 		this.logger.modifyIndent(+4);
-		const seed : number = this._random.nextLong();
-		const random : Random = new Random(seed);
+		const seed: number = this._random.nextLong();
+		const random: Random = new Random(seed);
 		this.logger.log(LogLevel.APP, "Erster nextInt() Aufruf liefert " + seed);
-		const dynDaten : KursblockungDynDaten = new KursblockungDynDaten(random, this.logger, pInput);
-		const zeitBedarf : number = dynDaten.gibBlockungszeitMillis();
-		const zeitEndeGesamt : number = System.currentTimeMillis() + zeitBedarf;
-		const kursblockungOutputs : ArrayList<GostBlockungsergebnisManager> = new ArrayList<GostBlockungsergebnisManager>();
-		const algorithmenK : Array<KursblockungAlgorithmusK> = [new KursblockungAlgorithmusKSchnellW(random, this.logger, dynDaten), new KursblockungAlgorithmusKFachwahlmatrix(random, this.logger, dynDaten), new KursblockungAlgorithmusKMatching(random, this.logger, dynDaten), new KursblockungAlgorithmusKSchuelervorschlag(random, this.logger, dynDaten), new KursblockungAlgorithmusKOptimiereBest(random, this.logger, dynDaten)];
-		const algorithmenS : Array<KursblockungAlgorithmusS> = [new KursblockungAlgorithmusSSchnellW(random, this.logger, dynDaten), new KursblockungAlgorithmusSZufaellig(random, this.logger, dynDaten), new KursblockungAlgorithmusSMatching(random, this.logger, dynDaten), new KursblockungAlgorithmusSMatchingW(random, this.logger, dynDaten)];
-		let zeitProK : number = 100;
+		const dynDaten: KursblockungDynDaten = new KursblockungDynDaten(random, this.logger, pInput);
+		const zeitBedarf: number = dynDaten.gibBlockungszeitMillis();
+		const zeitEndeGesamt: number = System.currentTimeMillis() + zeitBedarf;
+		const kursblockungOutputs: ArrayList<GostBlockungsergebnisManager> = new ArrayList<GostBlockungsergebnisManager>();
+		const algorithmenK: Array<KursblockungAlgorithmusK> = [new KursblockungAlgorithmusKSchnellW(random, this.logger, dynDaten), new KursblockungAlgorithmusKFachwahlmatrix(random, this.logger, dynDaten), new KursblockungAlgorithmusKMatching(random, this.logger, dynDaten), new KursblockungAlgorithmusKSchuelervorschlag(random, this.logger, dynDaten), new KursblockungAlgorithmusKOptimiereBest(random, this.logger, dynDaten)];
+		const algorithmenS: Array<KursblockungAlgorithmusS> = [new KursblockungAlgorithmusSSchnellW(random, this.logger, dynDaten), new KursblockungAlgorithmusSZufaellig(random, this.logger, dynDaten), new KursblockungAlgorithmusSMatching(random, this.logger, dynDaten), new KursblockungAlgorithmusSMatchingW(random, this.logger, dynDaten)];
+		let zeitProK: number = 100;
 		do {
 			for (const algorithmus of algorithmenK) {
-				const zeitEndeK : number = System.currentTimeMillis() + zeitProK;
+				const zeitEndeK: number = System.currentTimeMillis() + zeitProK;
 				do {
 					KursblockungAlgorithmus.verwendeAlgorithmusK(algorithmus, zeitEndeK, dynDaten, algorithmenS, kursblockungOutputs, pInput);
 				} while (System.currentTimeMillis() < zeitEndeK);
@@ -66,7 +66,7 @@ export class KursblockungAlgorithmus extends Service {
 		return kursblockungOutputs;
 	}
 
-	private static verwendeAlgorithmusK(kursblockungAlgorithmusK : KursblockungAlgorithmusK, zeitEndeK : number, dynDaten : KursblockungDynDaten, algorithmenS : Array<KursblockungAlgorithmusS>, outputs : ArrayList<GostBlockungsergebnisManager>, pInput : GostBlockungsdatenManager) : void {
+	private static verwendeAlgorithmusK(kursblockungAlgorithmusK: KursblockungAlgorithmusK, zeitEndeK: number, dynDaten: KursblockungDynDaten, algorithmenS: Array<KursblockungAlgorithmusS>, outputs: ArrayList<GostBlockungsergebnisManager>, pInput: GostBlockungsdatenManager): void {
 		kursblockungAlgorithmusK.berechne(zeitEndeK);
 		dynDaten.aktionZustandSpeichernK();
 		for (const algorithmus of algorithmenS) {
@@ -78,7 +78,7 @@ export class KursblockungAlgorithmus extends Service {
 		if (dynDaten.gibCompareZustandG_NW_KD_FW() > 0) {
 			dynDaten.aktionZustandSpeichernG();
 		}
-		const out : GostBlockungsergebnisManager = dynDaten.gibErzeugtesKursblockungOutput(pInput, outputs.size() + 1);
+		const out: GostBlockungsergebnisManager = dynDaten.gibErzeugtesKursblockungOutput(pInput, outputs.size() + 1);
 		outputs.add(out);
 	}
 
@@ -86,7 +86,7 @@ export class KursblockungAlgorithmus extends Service {
 		return 'de.svws_nrw.core.kursblockung.KursblockungAlgorithmus';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.kursblockung.KursblockungAlgorithmus', 'de.svws_nrw.core.Service'].includes(name);
 	}
 
@@ -94,6 +94,6 @@ export class KursblockungAlgorithmus extends Service {
 
 }
 
-export function cast_de_svws_nrw_core_kursblockung_KursblockungAlgorithmus(obj : unknown) : KursblockungAlgorithmus {
+export function cast_de_svws_nrw_core_kursblockung_KursblockungAlgorithmus(obj: unknown): KursblockungAlgorithmus {
 	return obj as KursblockungAlgorithmus;
 }

@@ -8,10 +8,10 @@ import type { Comparable } from './Comparable';
 export abstract class JavaEnum<K extends JavaEnum<K>> extends JavaObject implements Comparable<K> {
 
 	/** the name of the enumeration value */
-	readonly __name : string;
+	readonly __name: string;
 
 	/** the ordinal value for the enumeration value */
-	readonly __ordinal : number;
+	readonly __ordinal: number;
 
 	/**
 	 * Erzeugt eine neuen Enum-Eintrag mit den übergebenen Informationen.
@@ -21,7 +21,7 @@ export abstract class JavaEnum<K extends JavaEnum<K>> extends JavaObject impleme
 	 * @param name       der Bezeichner des Enum-Eintrags
 	 * @param ordinal    die eindeutige Nummer des Enum-Eintrags
 	 */
-	protected constructor(name : string, ordinal : number) {
+	protected constructor(name: string, ordinal: number) {
 		super();
 		this.__name = name;
 		this.__ordinal = ordinal;
@@ -32,7 +32,7 @@ export abstract class JavaEnum<K extends JavaEnum<K>> extends JavaObject impleme
 	 *
 	 * @returns the name
 	 */
-	public name() : string {
+	public name(): string {
 		return this.__name;
 	}
 
@@ -41,7 +41,7 @@ export abstract class JavaEnum<K extends JavaEnum<K>> extends JavaObject impleme
 	 *
 	 * @returns the ordinal value
 	 */
-	public ordinal() : number {
+	public ordinal(): number {
 		return this.__ordinal;
 	}
 
@@ -51,7 +51,7 @@ export abstract class JavaEnum<K extends JavaEnum<K>> extends JavaObject impleme
 	 *
 	 * @returns the name
 	 */
-	public toString() : string {
+	public toString(): string {
 		return this.__name;
 	}
 
@@ -63,7 +63,7 @@ export abstract class JavaEnum<K extends JavaEnum<K>> extends JavaObject impleme
 	 *
 	 * @returns true if they are equal and false otherwise
 	 */
-	public equals(other : JavaObject | null) : boolean {
+	public equals(other: JavaObject | null): boolean {
 		if (other === null)
 			return false;
 		if (!(other instanceof JavaEnum))
@@ -77,7 +77,7 @@ export abstract class JavaEnum<K extends JavaEnum<K>> extends JavaObject impleme
 	 *
 	 * @returns the ordinal value as hashcode
 	 */
-	public hashCode() : number {
+	public hashCode(): number {
 		return this.__ordinal;
 	}
 
@@ -90,8 +90,8 @@ export abstract class JavaEnum<K extends JavaEnum<K>> extends JavaObject impleme
 	 * @returns a negative, zero or postive value as this enumeration value is less than, equal to
 	 *          or greater than the other enumeration value
 	 */
-	public compareTo(other : JavaEnum<K>) : number {
-		const result : number = JavaString.compareTo(this.__name, other.__name);
+	public compareTo(other: JavaEnum<K>): number {
+		const result: number = JavaString.compareTo(this.__name, other.__name);
 		if (result !== 0)
 			return result;
 		return this.__ordinal - other.__ordinal;
@@ -101,7 +101,7 @@ export abstract class JavaEnum<K extends JavaEnum<K>> extends JavaObject impleme
 		return 'java.lang.Enum';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return [
 			'java.lang.Enum',
 			'java.lang.Constable',
@@ -113,6 +113,6 @@ export abstract class JavaEnum<K extends JavaEnum<K>> extends JavaObject impleme
 }
 
 
-export function cast_java_lang_Enum<K extends JavaEnum<K>>(obj : unknown) : JavaEnum<K> {
+export function cast_java_lang_Enum<K extends JavaEnum<K>>(obj: unknown): JavaEnum<K> {
 	return obj as JavaEnum<K>;
 }

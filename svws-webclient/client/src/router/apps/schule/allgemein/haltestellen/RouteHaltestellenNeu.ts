@@ -29,7 +29,7 @@ export class RouteHaltestellenNeu extends RouteNode<any, RouteHaltestellen> {
 			checkpoint: this.checkpoint,
 			benutzerKompetenzen: api.benutzerKompetenzen,
 			continueRoutingAfterCheckpoint: () => RouteManager.continueRoutingAfterCheckpoint(),
-		}
+		};
 	}
 }
 

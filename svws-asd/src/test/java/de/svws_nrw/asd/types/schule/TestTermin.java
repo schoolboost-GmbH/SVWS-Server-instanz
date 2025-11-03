@@ -14,7 +14,7 @@ import de.svws_nrw.asd.validate.DateManager;
  * zur Verfügung.
  */
 @DisplayName("Teste den Core-Type Termin")
-public class TestTermin {
+class TestTermin {
 
 	/**
 	 * Initialisiert die Core-Types, damit die Tests ausgeführt werden können.

@@ -37,7 +37,7 @@ interface RouteStateSchema {
 
 export class RouteDataSchema {
 
-	private static _defaultState : RouteStateSchema = {
+	private static _defaultState: RouteStateSchema = {
 		auswahl: undefined,
 		auswahlGruppe: [],
 		mapSchema: new Map(),
@@ -72,7 +72,7 @@ export class RouteDataSchema {
 		this._state.value = { ... this._state.value };
 	}
 
-	public get migrationQuellinformationen() : Ref<SchemaMigrationQuelle> {
+	public get migrationQuellinformationen(): Ref<SchemaMigrationQuelle> {
 		return this._migrationQuellinformationen;
 	}
 
@@ -86,7 +86,7 @@ export class RouteDataSchema {
 		this._migrationQuellinformationen.value.password = "";
 	}
 
-	public get view(): RouteNode<any,any> {
+	public get view(): RouteNode<any, any> {
 		return this._state.value.view;
 	}
 
@@ -130,7 +130,7 @@ export class RouteDataSchema {
 		return this._state.value.schulen;
 	}
 
-	private getEmpty(name: string) : SchemaListeEintrag {
+	private getEmpty(name: string): SchemaListeEintrag {
 		const entry = new SchemaListeEintrag();
 		entry.name = name;
 		entry.revision = -1;
@@ -141,15 +141,15 @@ export class RouteDataSchema {
 	/**
 	 * Initialisiert die Schema-Liste
 	 */
-	public async init(schemaname : string | undefined, refreshOnly? : boolean) {
+	public async init(schemaname: string | undefined, refreshOnly?: boolean) {
 		api.status.start();
 		const mapSchema = new Map<string, SchemaListeEintrag>();
-		const listSchema : List<SchemaListeEintrag> = await api.privileged.getSchemaListe();
-		listSchema.sort(<Comparator<SchemaListeEintrag>>{ compare(s1 : SchemaListeEintrag, s2 : SchemaListeEintrag) { return JavaString.compareToIgnoreCase(s1.name, s2.name); } });
+		const listSchema: List<SchemaListeEintrag> = await api.privileged.getSchemaListe();
+		listSchema.sort(<Comparator<SchemaListeEintrag>>{ compare(s1: SchemaListeEintrag, s2: SchemaListeEintrag) { return JavaString.compareToIgnoreCase(s1.name, s2.name) } });
 		for (const s of listSchema)
 			mapSchema.set(s.name.toLocaleLowerCase(), s);
 		this._state.value.mapSchema = mapSchema;
-		let currSchema : SchemaListeEintrag | undefined = undefined;
+		let currSchema: SchemaListeEintrag | undefined = undefined;
 		if (mapSchema.size > 0) {
 			currSchema = schemaname === undefined ? listSchema.get(0) : mapSchema.get(schemaname.toLocaleLowerCase());
 			if (currSchema === undefined)
@@ -168,9 +168,9 @@ export class RouteDataSchema {
 	 *
 	 * @param schema   das Schema
 	 */
-	private async getSchemaInformation(schema: SchemaListeEintrag | undefined) : Promise<{ auswahl : SchemaListeEintrag | undefined, schuleInfo : SchuleInfo | undefined, admins : List<BenutzerListeEintrag> }> {
+	private async getSchemaInformation(schema: SchemaListeEintrag | undefined): Promise<{ auswahl: SchemaListeEintrag | undefined, schuleInfo: SchuleInfo | undefined, admins: List<BenutzerListeEintrag> }> {
 		if ((schema === undefined) || (this.mapSchema.size === 0))
-			return { auswahl: undefined, schuleInfo: undefined, admins: new ArrayList()};
+			return { auswahl: undefined, schuleInfo: undefined, admins: new ArrayList() };
 		const auswahl = this.mapSchema.has(schema.name.toLocaleLowerCase()) ? schema : undefined;
 		let schuleInfo = undefined;
 		let admins: List<BenutzerListeEintrag> = new ArrayList();
@@ -180,7 +180,7 @@ export class RouteDataSchema {
 				// ... versuche die Informationen zur Schule zu laden
 				schuleInfo = await api.privileged.getSchuleInfo(auswahl.name);
 			} catch (e) {
-				console.log("Die Information zur Schule konnten für das Schema " + auswahl.name + " nicht gefunden werden.")
+				console.log("Die Information zur Schule konnten für das Schema " + auswahl.name + " nicht gefunden werden.");
 			}
 			// Wenn die Revision des Schemas aktuell ist, dann lade auch die Informationen zu den Admin-Benutzern
 			if (auswahl.revision === this.revision)
@@ -199,7 +199,7 @@ export class RouteDataSchema {
 		this.setPatchedState({ auswahl, schuleInfo, admins });
 	}
 
-	public async setView(view: RouteNode<any,any>) {
+	public async setView(view: RouteNode<any, any>) {
 		if (routeSchema.children.includes(view))
 			this.setPatchedState({ view });
 		else
@@ -213,12 +213,12 @@ export class RouteDataSchema {
 		}
 		const redirect_name: string = (routeSchema.selectedChild === undefined) ? routeSchemaUebersicht.name : routeSchema.selectedChild.name;
 		await RouteManager.doRoute({ name: redirect_name, params: { schema: auswahl.name } });
-		this.setPatchedState({auswahl});
-	}
+		this.setPatchedState({ auswahl });
+	};
 
 	gotoSchemaNeu = async () => {
 		await RouteManager.doRoute('/schemaneu');
-	}
+	};
 
 	setAuswahlGruppe = async (auswahlGruppe: SchemaListeEintrag[]) =>	{
 		this.setPatchedState({ auswahlGruppe });
@@ -226,7 +226,7 @@ export class RouteDataSchema {
 			await RouteManager.doRoute('/schemagruppe');
 		else if ((auswahlGruppe.length === 0) && (routeApp.selectedChild?.name === 'schemagruppe'))
 			await RouteManager.doRoute('schema');
-	}
+	};
 
 	upgradeSchema = async () => {
 		if (this.auswahl === undefined)
@@ -236,7 +236,7 @@ export class RouteDataSchema {
 		api.status.stop();
 		await this.init(this.auswahl.name, true);
 		return result;
-	}
+	};
 
 	removeSchemata = async () => {
 		api.status.start();
@@ -250,7 +250,7 @@ export class RouteDataSchema {
 			await this.gotoSchema(undefined);
 		}
 		await this.setAuswahlGruppe([]);
-	}
+	};
 
 	addSchema = async (data: BenutzerKennwort, schema: string) => {
 		api.status.start();
@@ -258,7 +258,7 @@ export class RouteDataSchema {
 		api.status.stop();
 		await this.init(schema, true);
 		return result;
-	}
+	};
 
 	importSchema = async (data: FormData, schema: string) => {
 		api.status.start();
@@ -269,7 +269,7 @@ export class RouteDataSchema {
 		await this.setSchema(this.auswahl);
 		api.status.stop();
 		return result;
-	}
+	};
 
 	backupSchema = async () => {
 		if (this.auswahl === undefined)
@@ -278,7 +278,7 @@ export class RouteDataSchema {
 		const data = await api.privileged.exportSQLiteFrom(this.auswahl.name);
 		api.status.stop();
 		return data;
-	}
+	};
 
 	restoreSchema = async (data: FormData) => {
 		if (this.auswahl === undefined)
@@ -292,7 +292,7 @@ export class RouteDataSchema {
 				try {
 					const json = await error.response.text();
 					result = SimpleOperationResponse.transpilerFromJSON(json);
-				} catch(e) {
+				} catch (e) {
 					result = new SimpleOperationResponse();
 					result.success = false;
 					result.log.add("Fehler beim Aufruf der API-Methode " + error.response.statusText + " (" + error.response.status + ")");
@@ -310,7 +310,7 @@ export class RouteDataSchema {
 		await this.setSchema(this.auswahl);
 		api.status.stop();
 		return result;
-	}
+	};
 
 	duplicateSchema = async (formData: FormData, duplikat: string) => {
 		if (this.auswahl === undefined)
@@ -322,7 +322,7 @@ export class RouteDataSchema {
 		api.status.stop();
 		await this.init(duplikat, true);
 		return result;
-	}
+	};
 
 	migrateSchema = async (formData: FormData) => {
 		const currSchema = this.auswahl?.name;
@@ -395,13 +395,13 @@ export class RouteDataSchema {
 				default:
 					throw new DeveloperNotificationException("Es ist ein Fehler aufgetreten bei der Migration");
 			}
-		} catch(error) {
+		} catch (error) {
 			schema = currSchema ?? null;
 			if ((error instanceof OpenApiError) && (error.response instanceof Response)) {
 				try {
 					const json = await error.response.text();
 					result = SimpleOperationResponse.transpilerFromJSON(json);
-				} catch(e) {
+				} catch (e) {
 					result = new SimpleOperationResponse();
 					result.success = false;
 					result.log.add("Fehler beim Aufruf der API-Methode " + error.response.statusText + " (" + error.response.status + ")");
@@ -419,7 +419,7 @@ export class RouteDataSchema {
 		await this.setSchema(this.auswahl);
 		api.status.stop();
 		return result;
-	}
+	};
 
 	initSchema = async (schulnummer: number) => {
 		if (this.auswahl === undefined)
@@ -429,7 +429,7 @@ export class RouteDataSchema {
 		api.status.stop();
 		await this.init(this.auswahl.name, true);
 		return result;
-	}
+	};
 
 	createEmptySchema = async () => {
 		if (this.auswahl === undefined)
@@ -439,9 +439,9 @@ export class RouteDataSchema {
 		api.status.stop();
 		await this.init(this.auswahl.name, true);
 		return result;
-	}
+	};
 
-	addExistingSchemaToConfig = async(data: BenutzerKennwort, schema: string) => {
+	addExistingSchemaToConfig = async (data: BenutzerKennwort, schema: string) => {
 		if (schema === "")
 			throw new DeveloperNotificationException("Es soll ein Schema zur Konfiguration hinzugefügt werden, aber es ist kein Schemaname angegeben.");
 		api.status.start();
@@ -451,7 +451,7 @@ export class RouteDataSchema {
 			eintrag.isInConfig = true;
 		api.status.stop();
 		this.commit();
-	}
+	};
 
 	refresh = async () => await this.init(undefined, true);
 

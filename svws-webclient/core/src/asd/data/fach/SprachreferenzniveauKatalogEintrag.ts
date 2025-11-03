@@ -15,13 +15,13 @@ export class SprachreferenzniveauKatalogEintrag extends CoreTypeData {
 		return 'de.svws_nrw.asd.data.fach.SprachreferenzniveauKatalogEintrag';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.asd.data.fach.SprachreferenzniveauKatalogEintrag', 'de.svws_nrw.asd.data.CoreTypeData'].includes(name);
 	}
 
 	public static class = new Class<SprachreferenzniveauKatalogEintrag>('de.svws_nrw.asd.data.fach.SprachreferenzniveauKatalogEintrag');
 
-	public static transpilerFromJSON(json : string): SprachreferenzniveauKatalogEintrag {
+	public static transpilerFromJSON(json: string): SprachreferenzniveauKatalogEintrag {
 		const obj = JSON.parse(json) as Partial<SprachreferenzniveauKatalogEintrag>;
 		const result = new SprachreferenzniveauKatalogEintrag();
 		if (obj.id === undefined)
@@ -41,7 +41,7 @@ export class SprachreferenzniveauKatalogEintrag extends CoreTypeData {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : SprachreferenzniveauKatalogEintrag) : string {
+	public static transpilerToJSON(obj: SprachreferenzniveauKatalogEintrag): string {
 		let result = '{';
 		result += '"id" : ' + obj.id.toString() + ',';
 		result += '"schluessel" : ' + JSON.stringify(obj.schluessel) + ',';
@@ -54,7 +54,7 @@ export class SprachreferenzniveauKatalogEintrag extends CoreTypeData {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<SprachreferenzniveauKatalogEintrag>) : string {
+	public static transpilerToJSONPatch(obj: Partial<SprachreferenzniveauKatalogEintrag>): string {
 		let result = '{';
 		if (obj.id !== undefined) {
 			result += '"id" : ' + obj.id.toString() + ',';
@@ -81,6 +81,6 @@ export class SprachreferenzniveauKatalogEintrag extends CoreTypeData {
 
 }
 
-export function cast_de_svws_nrw_asd_data_fach_SprachreferenzniveauKatalogEintrag(obj : unknown) : SprachreferenzniveauKatalogEintrag {
+export function cast_de_svws_nrw_asd_data_fach_SprachreferenzniveauKatalogEintrag(obj: unknown): SprachreferenzniveauKatalogEintrag {
 	return obj as SprachreferenzniveauKatalogEintrag;
 }

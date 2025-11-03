@@ -12,7 +12,7 @@ const SKlassenDaten = () => import("~/components/klassen/daten/SKlassenDaten.vue
 export class RouteKlassenDaten extends RouteNode<any, RouteKlassen> {
 
 	public constructor() {
-		super(Schulform.values(), [ BenutzerKompetenz.UNTERRICHTSVERTEILUNG_ANSEHEN ], "klassen.daten", "daten", SKlassenDaten);
+		super(Schulform.values(), [BenutzerKompetenz.UNTERRICHTSVERTEILUNG_ANSEHEN], "klassen.daten", "daten", SKlassenDaten);
 		super.mode = ServerMode.STABLE;
 		super.propHandler = (route) => this.getProps(route);
 		super.text = "Klasse";
@@ -33,7 +33,7 @@ export class RouteKlassenDaten extends RouteNode<any, RouteKlassen> {
 			gotoLehrer: routeKlassen.data.gotoLehrer,
 			addKlassenleitung: routeKlassen.data.addKlassenleitung,
 			removeKlassenleitung: routeKlassen.data.removeKlassenleitung,
-			updateReihenfolgeKlassenleitung: routeKlassen.data.updateReihenfolgeKlassenleitung
+			updateReihenfolgeKlassenleitung: routeKlassen.data.updateReihenfolgeKlassenleitung,
 		};
 	}
 

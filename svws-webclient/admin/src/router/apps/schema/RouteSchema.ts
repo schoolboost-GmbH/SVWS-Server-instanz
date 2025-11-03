@@ -15,8 +15,8 @@ import { ServerMode } from "@core/core/types/ServerMode";
 import type { TabData } from "@ui/ui/nav/TabData";
 import { TabManager } from "@ui/ui/nav/TabManager";
 
-const SSchemaAuswahl = () => import("~/components/schema/SSchemaAuswahl.vue")
-const SSchemaApp = () => import("~/components/schema/SSchemaApp.vue")
+const SSchemaAuswahl = () => import("~/components/schema/SSchemaAuswahl.vue");
+const SSchemaApp = () => import("~/components/schema/SSchemaApp.vue");
 
 
 export class RouteSchema extends RouteNode<RouteDataSchema, RouteApp> {
@@ -33,7 +33,7 @@ export class RouteSchema extends RouteNode<RouteDataSchema, RouteApp> {
 		super.defaultChild = routeSchemaUebersicht;
 	}
 
-	protected async update(to: RouteNode<unknown, any>, to_params: RouteParams, from: RouteNode<unknown, any> | undefined, from_params: RouteParams, isEntering: boolean) : Promise<void | Error | RouteLocationRaw> {
+	protected async update(to: RouteNode<unknown, any>, to_params: RouteParams, from: RouteNode<unknown, any> | undefined, from_params: RouteParams, isEntering: boolean): Promise<void | Error | RouteLocationRaw> {
 		if (to_params.schema instanceof Array)
 			return routeError.getRoute(new Error("Fehler: Die Parameter der Route dürfen keine Arrays sein"));
 		// Prüfe, ob bereits ein Schema ausgewählt wurde. Wenn nicht, dann lade die Liste vom Server und wähle ein Default-Schema aus
@@ -60,11 +60,11 @@ export class RouteSchema extends RouteNode<RouteDataSchema, RouteApp> {
 		this.data.resetMigrationQuellinformationen();
 	}
 
-	public getRoute(schema?: string) : RouteLocationRaw {
+	public getRoute(schema?: string): RouteLocationRaw {
 		return { name: this.defaultChild!.name, params: { schema } };
 	}
 
-	public getChildRoute(schema: string) : RouteLocationRaw {
+	public getChildRoute(schema: string): RouteLocationRaw {
 		const redirect_name: string = (routeSchema.selectedChild === undefined) ? routeSchemaUebersicht.name : routeSchema.selectedChild.name;
 		return { name: redirect_name, params: { schema } };
 	}
@@ -116,7 +116,7 @@ export class RouteSchema extends RouteNode<RouteDataSchema, RouteApp> {
 			throw new Error("Unbekannte Route");
 		await RouteManager.doRoute({ name: value.name, params: { schema: this.data.auswahl?.name } });
 		await this.data.setView(node);
-	}
+	};
 
 }
 

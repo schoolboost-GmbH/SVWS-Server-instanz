@@ -18,13 +18,13 @@ const SSchuelerSchulbesuch = () => import("~/components/schueler/schulbesuch/SSc
 export class RouteSchuelerSchulbesuch extends RouteNode<RouteDataSchuelerSchulbesuch, RouteSchueler> {
 
 	public constructor() {
-		super(Schulform.values(), [ BenutzerKompetenz.SCHUELER_INDIVIDUALDATEN_ANSEHEN ], "schueler.schulbesuch", "schulbesuch", SSchuelerSchulbesuch, new RouteDataSchuelerSchulbesuch());
+		super(Schulform.values(), [BenutzerKompetenz.SCHUELER_INDIVIDUALDATEN_ANSEHEN], "schueler.schulbesuch", "schulbesuch", SSchuelerSchulbesuch, new RouteDataSchuelerSchulbesuch());
 		super.mode = ServerMode.DEV;
 		super.propHandler = (route) => this.getProps(route);
 		super.text = "Schulbesuch";
 	}
 
-	public async update(to: RouteNode<any, any>, to_params: RouteParams) : Promise<void | Error | RouteLocationRaw> {
+	public async update(to: RouteNode<any, any>, to_params: RouteParams): Promise<void | Error | RouteLocationRaw> {
 		try {
 			const { id } = RouteNode.getIntParams(to_params, ["id"]);
 			if (id !== undefined)
@@ -34,9 +34,9 @@ export class RouteSchuelerSchulbesuch extends RouteNode<RouteDataSchuelerSchulbe
 		}
 	}
 
-	goToSchule = async (idSchule : number) => {
-		await RouteManager.doRoute(routeKatalogSchulen.getRoute({id : idSchule}));
-	}
+	goToSchule = async (idSchule: number) => {
+		await RouteManager.doRoute(routeKatalogSchulen.getRoute({ id: idSchule }));
+	};
 
 	public getProps(to: RouteLocationNormalized): SchuelerSchulbesuchProps {
 		return {

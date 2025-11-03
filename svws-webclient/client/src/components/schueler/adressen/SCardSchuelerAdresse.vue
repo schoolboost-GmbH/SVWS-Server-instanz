@@ -52,9 +52,9 @@
 	import { orte_filter, orte_sort } from "~/utils/helfer";
 
 	const props = defineProps<{
-		patchBetrieb: (data : Partial<BetriebStammdaten>, id : number) => Promise<void>;
-		patchSchuelerBetriebsdaten: (data : Partial<SchuelerBetriebsdaten>, id : number) => Promise<void>;
-		patchAnsprechpartner: (data : Partial<BetriebAnsprechpartner>, id : number) => Promise<void>;
+		patchBetrieb: (data: Partial<BetriebStammdaten>, id: number) => Promise<void>;
+		patchSchuelerBetriebsdaten: (data: Partial<SchuelerBetriebsdaten>, id: number) => Promise<void>;
+		patchAnsprechpartner: (data: Partial<BetriebAnsprechpartner>, id: number) => Promise<void>;
 		createAnsprechpartner: (data: BetriebAnsprechpartner) => Promise<void>;
 		betrieb: SchuelerBetriebsdaten;
 		betriebsStammdaten: BetriebStammdaten ;
@@ -87,13 +87,13 @@
 		set: (value) => void props.patchSchuelerBetriebsdaten({ allgadranschreiben: value }, props.betrieb.id),
 	});
 
-	function getAnsprechpartnervonBetrieb ( ): Map<number, BetriebAnsprechpartner>{
+	function getAnsprechpartnervonBetrieb(): Map<number, BetriebAnsprechpartner> {
 		const t = new Map<number, BetriebAnsprechpartner>();
 		for (const entry of props.mapAnsprechpartner.entries()) {
 			const mapKey = entry[0];
 			const mapValue = entry[1];
-			if( mapValue.betrieb_id === props.betriebsStammdaten.id)
-				t.set(mapKey,mapValue)
+			if (mapValue.betrieb_id === props.betriebsStammdaten.id)
+				t.set(mapKey, mapValue);
 		}
 		return t;
 	}

@@ -20,7 +20,7 @@ export class GostStatistikFachwahlManager extends JavaObject {
 	 * @param halbjahr   das Halbjahr, zu der die Fachwahl gehört
 	 * @param fachwahl   die Fachwahl
 	 */
-	public static setFachwahlHalbjahr(statfw : GostStatistikFachwahl, halbjahr : GostHalbjahr, fachwahl : string | null) : void {
+	public static setFachwahlHalbjahr(statfw: GostStatistikFachwahl, halbjahr: GostHalbjahr, fachwahl: string | null): void {
 		if (statfw.fachwahlen[halbjahr.id] === null)
 			statfw.fachwahlen[halbjahr.id] = new GostStatistikFachwahlHalbjahr();
 		if ((fachwahl === null) || !(JavaObject.equalsTranspiler("M", (fachwahl)) || JavaObject.equalsTranspiler("S", (fachwahl)) || JavaObject.equalsTranspiler("ZK", (fachwahl)) || JavaObject.equalsTranspiler("LK", (fachwahl))))
@@ -36,7 +36,7 @@ export class GostStatistikFachwahlManager extends JavaObject {
 		return 'de.svws_nrw.core.utils.gost.GostStatistikFachwahlManager';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.utils.gost.GostStatistikFachwahlManager'].includes(name);
 	}
 
@@ -44,6 +44,6 @@ export class GostStatistikFachwahlManager extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_utils_gost_GostStatistikFachwahlManager(obj : unknown) : GostStatistikFachwahlManager {
+export function cast_de_svws_nrw_core_utils_gost_GostStatistikFachwahlManager(obj: unknown): GostStatistikFachwahlManager {
 	return obj as GostStatistikFachwahlManager;
 }

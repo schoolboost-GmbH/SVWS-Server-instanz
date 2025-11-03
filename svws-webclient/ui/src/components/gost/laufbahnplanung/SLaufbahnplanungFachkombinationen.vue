@@ -59,7 +59,7 @@
 		return set;
 	});
 
-	function istRegelErfuellt(kombi: GostJahrgangFachkombination) : boolean {
+	function istRegelErfuellt(kombi: GostJahrgangFachkombination): boolean {
 		const fach1 = props.abiturdatenManager().faecher().get(kombi.fachID1);
 		const fach2 = props.abiturdatenManager().faecher().get(kombi.fachID2);
 		const f1 = (fach1 === null) ? null : props.abiturdatenManager().getFachbelegungByID(fach1.id);

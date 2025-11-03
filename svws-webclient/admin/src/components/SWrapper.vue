@@ -25,7 +25,7 @@
 <script setup lang="ts">
 
 	import { onErrorCaptured, ref } from 'vue';
-	import { api } from '../router/Api'
+	import { api } from '../router/Api';
 	import type { SimpleOperationResponse } from '@core/core/data/SimpleOperationResponse';
 	import { DeveloperNotificationException } from '@core/core/exceptions/DeveloperNotificationException';
 	import { UserNotificationException } from '@core/core/exceptions/UserNotificationException';
@@ -44,7 +44,7 @@
 
 	function copyString(error: CapturedError) {
 		const json = JSON.stringify({ env: { mode: api.mode.text, version: api.version, "Commit": api.githash }, error }, null, 2);
-		return "```json\n"+json+"\n```";
+		return "```json\n" + json + "\n```";
 	}
 
 	function errorHandler(event: ErrorEvent | PromiseRejectionEvent) {
@@ -78,15 +78,15 @@
 		let message = reason.message;
 		let log = null;
 		if (reason instanceof DeveloperNotificationException)
-			name = "Programmierfehler: Bitte melden Sie diesen Fehler."
+			name = "Programmierfehler: Bitte melden Sie diesen Fehler.";
 		else if (reason instanceof UserNotificationException)
 			name = "Nutzungsfehler: Dieser Fehler wurde durch eine nicht vorgesehene Nutzung der verwendeten Funktion hervorgerufen, z.B. durch unmögliche Kombinationen etc.";
 		else if (reason instanceof OpenApiError) {
-			name = "API-Fehler: Dieser Fehler wird durch eine fehlerhafte Kommunikation mit dem Server verursacht. In der Regel bedeutet das, dass die verschickten Daten nicht den Vorgaben entsprechen."
+			name = "API-Fehler: Dieser Fehler wird durch eine fehlerhafte Kommunikation mit dem Server verursacht. In der Regel bedeutet das, dass die verschickten Daten nicht den Vorgaben entsprechen.";
 			if (reason.response instanceof Response) {
 				const text = await reason.response.text();
 				try {
-					const res = JSON.parse(text)
+					const res = JSON.parse(text);
 					if (('log' in res) && ('success' in res))
 						log = res satisfies SimpleOperationResponse;
 				} catch {
@@ -103,7 +103,7 @@
 			message,
 			stack: reason.stack?.split("\n") || '',
 			log,
-		}
+		};
 		errors.value.set(newError.id, newError);
 	}
 

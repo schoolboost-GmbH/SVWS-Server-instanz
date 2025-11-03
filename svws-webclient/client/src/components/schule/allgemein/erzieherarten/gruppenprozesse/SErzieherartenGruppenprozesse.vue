@@ -47,7 +47,7 @@
 		for (const idErzieherart of props.manager().getIdsVerwendeteErzieherarten())
 			logs.add(`Die Erzieherart "${props.manager().liste.get(idErzieherart)?.bezeichnung ?? '???'}" kann nicht gelöscht werden, da sie noch Erziehungsberechtigten zugeordnet ist.`);
 		return logs;
-	})
+	});
 
 	function clearLog() {
 		logs.value = undefined;

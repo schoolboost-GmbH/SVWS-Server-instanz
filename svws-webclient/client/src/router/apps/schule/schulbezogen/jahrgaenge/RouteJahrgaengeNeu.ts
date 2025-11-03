@@ -15,8 +15,8 @@ const SJahrgaengeNeu = () => import("~/components/schule/schulbezogen/jahrgaenge
 export class RouteJahrgaengeNeu extends RouteNode<any, RouteJahrgaenge> {
 
 	public constructor() {
-		super(Schulform.values(), [ BenutzerKompetenz.KATALOG_EINTRAEGE_AENDERN ], "schule.jahrgaenge.neu", "neu", SJahrgaengeNeu);
-		super.types = new Set([ ViewType.HINZUFUEGEN ]);
+		super(Schulform.values(), [BenutzerKompetenz.KATALOG_EINTRAEGE_AENDERN], "schule.jahrgaenge.neu", "neu", SJahrgaengeNeu);
+		super.types = new Set([ViewType.HINZUFUEGEN]);
 		super.mode = ServerMode.DEV;
 		super.propHandler = (route) => this.getProps(route);
 		super.text = "Jahrgang Neu";

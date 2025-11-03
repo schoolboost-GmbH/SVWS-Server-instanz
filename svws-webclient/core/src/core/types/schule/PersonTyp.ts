@@ -4,40 +4,40 @@ import { Class } from '../../../java/lang/Class';
 export class PersonTyp extends JavaEnum<PersonTyp> {
 
 	/** an array containing all values of this enumeration */
-	static readonly all_values_by_ordinal : Array<PersonTyp> = [];
+	static readonly all_values_by_ordinal: Array<PersonTyp> = [];
 
 	/** an array containing all values of this enumeration indexed by their name*/
-	static readonly all_values_by_name : Map<string, PersonTyp> = new Map<string, PersonTyp>();
+	static readonly all_values_by_name: Map<string, PersonTyp> = new Map<string, PersonTyp>();
 
 	/**
 	 * Ein Personentyp für Lehrer und weiteres Personal
 	 */
-	public static readonly LEHRER : PersonTyp = new PersonTyp("LEHRER", 0, 1, "L", "Lehrer/Personal");
+	public static readonly LEHRER: PersonTyp = new PersonTyp("LEHRER", 0, 1, "L", "Lehrer/Personal");
 
 	/**
 	 * Ein Personentyp für Schüler
 	 */
-	public static readonly SCHUELER : PersonTyp = new PersonTyp("SCHUELER", 1, 2, "S", "Schüler");
+	public static readonly SCHUELER: PersonTyp = new PersonTyp("SCHUELER", 1, 2, "S", "Schüler");
 
 	/**
 	 * Ein Personentyp für Erzieher
 	 */
-	public static readonly ERZIEHER : PersonTyp = new PersonTyp("ERZIEHER", 2, 3, "E", "Erzieher");
+	public static readonly ERZIEHER: PersonTyp = new PersonTyp("ERZIEHER", 2, 3, "E", "Erzieher");
 
 	/**
 	 * Die ID des Personentyps
 	 */
-	public readonly id : number;
+	public readonly id: number;
 
 	/**
 	 * Das Kürzel des Personentyps.
 	 */
-	public readonly kuerzel : string;
+	public readonly kuerzel: string;
 
 	/**
 	 * Die textuelle Bezeichnung des Personentyps.
 	 */
-	public readonly bezeichnung : string;
+	public readonly bezeichnung: string;
 
 	/**
 	 * Erzeugt einen neuen Personentyp für die Aufzählung.
@@ -46,7 +46,7 @@ export class PersonTyp extends JavaEnum<PersonTyp> {
 	 * @param kuerzel             das Kürzel des Personentyps
 	 * @param bezeichnung         die Bezeichnung des Personentyps
 	 */
-	private constructor(name : string, ordinal : number, id : number, kuerzel : string, bezeichnung : string) {
+	private constructor(name: string, ordinal: number, id: number, kuerzel: string, bezeichnung: string) {
 		super(name, ordinal);
 		PersonTyp.all_values_by_ordinal.push(this);
 		PersonTyp.all_values_by_name.set(name, this);
@@ -62,7 +62,7 @@ export class PersonTyp extends JavaEnum<PersonTyp> {
 	 *
 	 * @return den Personentyp oder null, falls die ID fehlerhaft ist
 	 */
-	public static getByID(id : number) : PersonTyp | null {
+	public static getByID(id: number): PersonTyp | null {
 		switch (id) {
 			case 1: {
 				return PersonTyp.LEHRER;
@@ -86,7 +86,7 @@ export class PersonTyp extends JavaEnum<PersonTyp> {
 	 *
 	 * @return den Personentyp oder null, falls das Kürzel fehlerhaft ist
 	 */
-	public static getByKuerzel(kuerzel : string | null) : PersonTyp | null {
+	public static getByKuerzel(kuerzel: string | null): PersonTyp | null {
 		switch (kuerzel) {
 			case "L": {
 				return PersonTyp.LEHRER;
@@ -108,7 +108,7 @@ export class PersonTyp extends JavaEnum<PersonTyp> {
 	 *
 	 * @returns the array with enumeration values
 	 */
-	public static values() : Array<PersonTyp> {
+	public static values(): Array<PersonTyp> {
 		return [...this.all_values_by_ordinal];
 	}
 
@@ -119,7 +119,7 @@ export class PersonTyp extends JavaEnum<PersonTyp> {
 	 *
 	 * @returns the enumeration values or null
 	 */
-	public static valueOf(name : string) : PersonTyp | null {
+	public static valueOf(name: string): PersonTyp | null {
 		const tmp = this.all_values_by_name.get(name);
 		return (!tmp) ? null : tmp;
 	}
@@ -128,7 +128,7 @@ export class PersonTyp extends JavaEnum<PersonTyp> {
 		return 'de.svws_nrw.core.types.schule.PersonTyp';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.types.schule.PersonTyp', 'java.lang.Enum', 'java.lang.Comparable'].includes(name);
 	}
 
@@ -136,6 +136,6 @@ export class PersonTyp extends JavaEnum<PersonTyp> {
 
 }
 
-export function cast_de_svws_nrw_core_types_schule_PersonTyp(obj : unknown) : PersonTyp {
+export function cast_de_svws_nrw_core_types_schule_PersonTyp(obj: unknown): PersonTyp {
 	return obj as PersonTyp;
 }

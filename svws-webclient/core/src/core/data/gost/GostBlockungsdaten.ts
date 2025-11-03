@@ -15,57 +15,57 @@ export class GostBlockungsdaten extends JavaObject {
 	/**
 	 * Die ID der Blockung
 	 */
-	public id : number = -1;
+	public id: number = -1;
 
 	/**
 	 * Der Name der Blockung
 	 */
-	public name : string = "Neue Blockung";
+	public name: string = "Neue Blockung";
 
 	/**
 	 * Der Abiturjahrgang, dem die Kursblockung zugeordnet ist
 	 */
-	public abijahrgang : number = -1;
+	public abijahrgang: number = -1;
 
 	/**
 	 * Das Halbjahr, welchem die Kursblockung zugeordnet ist (0=EF.1, 1=EF.2, 2=Q1.1, 3=Q1.2, 4=Q2.1, 5=Q2.2)
 	 */
-	public gostHalbjahr : number = GostHalbjahr.EF1.id;
+	public gostHalbjahr: number = GostHalbjahr.EF1.id;
 
 	/**
 	 * Gibt an, ob diese Blockung als aktiv markiert wurde.
 	 */
-	public istAktiv : boolean = false;
+	public istAktiv: boolean = false;
 
 	/**
 	 * Die Definition der Schienen
 	 */
-	public schienen : List<GostBlockungSchiene> = new ArrayList<GostBlockungSchiene>();
+	public schienen: List<GostBlockungSchiene> = new ArrayList<GostBlockungSchiene>();
 
 	/**
 	 * Die Definition der Regeln
 	 */
-	public regeln : List<GostBlockungRegel> = new ArrayList<GostBlockungRegel>();
+	public regeln: List<GostBlockungRegel> = new ArrayList<GostBlockungRegel>();
 
 	/**
 	 * Die für die Blockung angelegten Kurse
 	 */
-	public kurse : List<GostBlockungKurs> = new ArrayList<GostBlockungKurs>();
+	public kurse: List<GostBlockungKurs> = new ArrayList<GostBlockungKurs>();
 
 	/**
 	 * Die Schüler für die Blockung.
 	 */
-	public schueler : List<Schueler> = new ArrayList<Schueler>();
+	public schueler: List<Schueler> = new ArrayList<Schueler>();
 
 	/**
 	 * Die Fachwahlen für die Blockung
 	 */
-	public fachwahlen : List<GostFachwahl> = new ArrayList<GostFachwahl>();
+	public fachwahlen: List<GostFachwahl> = new ArrayList<GostFachwahl>();
 
 	/**
 	 * Eine Liste der Ergebnisse, die der Blockungsdefinition zugeordnet sind.
 	 */
-	public readonly ergebnisse : List<GostBlockungsergebnis> = new ArrayList<GostBlockungsergebnis>();
+	public readonly ergebnisse: List<GostBlockungsergebnis> = new ArrayList<GostBlockungsergebnis>();
 
 
 	/**
@@ -79,13 +79,13 @@ export class GostBlockungsdaten extends JavaObject {
 		return 'de.svws_nrw.core.data.gost.GostBlockungsdaten';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.gost.GostBlockungsdaten'].includes(name);
 	}
 
 	public static class = new Class<GostBlockungsdaten>('de.svws_nrw.core.data.gost.GostBlockungsdaten');
 
-	public static transpilerFromJSON(json : string): GostBlockungsdaten {
+	public static transpilerFromJSON(json: string): GostBlockungsdaten {
 		const obj = JSON.parse(json) as Partial<GostBlockungsdaten>;
 		const result = new GostBlockungsdaten();
 		if (obj.id === undefined)
@@ -136,7 +136,7 @@ export class GostBlockungsdaten extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : GostBlockungsdaten) : string {
+	public static transpilerToJSON(obj: GostBlockungsdaten): string {
 		let result = '{';
 		result += '"id" : ' + obj.id.toString() + ',';
 		result += '"name" : ' + JSON.stringify(obj.name) + ',';
@@ -196,7 +196,7 @@ export class GostBlockungsdaten extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<GostBlockungsdaten>) : string {
+	public static transpilerToJSONPatch(obj: Partial<GostBlockungsdaten>): string {
 		let result = '{';
 		if (obj.id !== undefined) {
 			result += '"id" : ' + obj.id.toString() + ',';
@@ -280,6 +280,6 @@ export class GostBlockungsdaten extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_gost_GostBlockungsdaten(obj : unknown) : GostBlockungsdaten {
+export function cast_de_svws_nrw_core_data_gost_GostBlockungsdaten(obj: unknown): GostBlockungsdaten {
 	return obj as GostBlockungsdaten;
 }

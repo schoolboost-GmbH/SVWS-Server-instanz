@@ -56,8 +56,8 @@
 	const selectedStundenplan = ref<StundenplanAufsichtsbereich[]>([]);
 
 	const columns = [
-		{key: 'kuerzel', label: 'Kürzel', span: 1},
-		{key: 'beschreibung', label: 'Beschreibung', span: 2},
+		{ key: 'kuerzel', label: 'Kürzel', span: 1 },
+		{ key: 'beschreibung', label: 'Beschreibung', span: 2 },
 	];
 
 	const setVorlage = computed(() => new Set([...props.listAufsichtsbereiche()].map(r => r.kuerzel)));

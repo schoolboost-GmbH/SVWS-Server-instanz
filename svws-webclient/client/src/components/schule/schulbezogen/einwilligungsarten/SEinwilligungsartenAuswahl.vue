@@ -39,18 +39,18 @@
 <script setup lang="ts">
 
 	import { computed } from "vue";
-	import type { Einwilligungsart} from "@core";
+	import type { Einwilligungsart } from "@core";
 	import { BenutzerKompetenz } from "@core";
 	import type { DataTableColumn } from "@ui";
-	import { useRegionSwitch, ViewType} from "@ui";
+	import { useRegionSwitch, ViewType } from "@ui";
 	import type { EinwilligungenAuswahlProps } from "./SEinwilligungsartenAuswahlProps";
 
 	const props = defineProps<EinwilligungenAuswahlProps>();
 	const { focusHelpVisible, focusSwitchingEnabled } = useRegionSwitch();
 
-	const columns : DataTableColumn[] = [
+	const columns: DataTableColumn[] = [
 		{ key: "bezeichnung", label: "Bezeichnung", sortable: true, defaultSort: "asc" },
-		{ key: "anzahlEinwilligungen", label: "Anzahl", sortable: true, defaultSort: "asc", span: 1, align: "right"},
+		{ key: "anzahlEinwilligungen", label: "Anzahl", sortable: true, defaultSort: "asc", span: 1, align: "right" },
 	];
 
 	const hatKompetenzAendern = computed<boolean>(() => props.benutzerKompetenzen.has(BenutzerKompetenz.KATALOG_EINTRAEGE_AENDERN));
@@ -64,7 +64,7 @@
 		},
 	});
 
-	async function setAuswahl(items : Einwilligungsart[]) {
+	async function setAuswahl(items: Einwilligungsart[]) {
 		props.manager().liste.auswahlClear();
 		for (const item of items)
 			if (props.manager().liste.hasValue(item))

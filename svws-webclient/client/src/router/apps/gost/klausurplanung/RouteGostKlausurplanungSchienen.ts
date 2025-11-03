@@ -24,7 +24,7 @@ export class RouteGostKlausurplanungSchienen extends RouteNode<any, RouteGostKla
 		super.propHandler = (route) => this.getProps(route);
 		super.text = "Schienen";
 	}
-	protected async update(to: RouteNode<any, any>, to_params: RouteParams) : Promise<void | Error | RouteLocationRaw> {
+	protected async update(to: RouteNode<any, any>, to_params: RouteParams): Promise<void | Error | RouteLocationRaw> {
 		try {
 			const { abiturjahr, halbjahr: halbjahrId, idtermin } = RouteNode.getIntParams(to_params, ["abiturjahr", "halbjahr", "idtermin"]);
 			const halbjahr = GostHalbjahr.fromID(halbjahrId ?? null);
@@ -37,7 +37,7 @@ export class RouteGostKlausurplanungSchienen extends RouteNode<any, RouteGostKla
 		}
 	}
 
-	public addRouteParamsFromState() : RouteParamsRawGeneric {
+	public addRouteParamsFromState(): RouteParamsRawGeneric {
 		return { idtermin: routeGostKlausurplanung.data.terminSelected.value?.id ?? undefined };
 	}
 
@@ -61,7 +61,7 @@ export class RouteGostKlausurplanungSchienen extends RouteNode<any, RouteGostKla
 			gotoKalenderdatum: routeGostKlausurplanung.data.gotoKalenderdatum,
 			gotoRaumzeitTermin: routeGostKlausurplanung.data.gotoRaumzeitTermin,
 			gotoSchienen: routeGostKlausurplanung.data.gotoSchienen,
-		}
+		};
 	}
 
 }

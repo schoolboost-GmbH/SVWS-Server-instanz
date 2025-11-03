@@ -7,37 +7,37 @@ export class Einwilligungsart extends JavaObject {
 	/**
 	 * Die ID des Katalog-Eintrags.
 	 */
-	public id : number = -1;
+	public id: number = -1;
 
 	/**
 	 * Die Bezeichnung der Einwilligungsart.
 	 */
-	public bezeichnung : string = "";
+	public bezeichnung: string = "";
 
 	/**
 	 * Der Schlüssel der Einwilligungsart.
 	 */
-	public schluessel : string = "";
+	public schluessel: string = "";
 
 	/**
 	 * Gibt die Position in der Sortierreihenfolge für die Katalog-Einträge an.
 	 */
-	public sortierung : number = 1;
+	public sortierung: number = 1;
 
 	/**
 	 * Eine ausführliche Beschreibung der Einwilligungsart.
 	 */
-	public beschreibung : string | null = "";
+	public beschreibung: string | null = "";
 
 	/**
 	 * Gibt an, für welche Personengruppe die Einwilligungsart relevant ist.
 	 */
-	public personTyp : number = PersonTyp.SCHUELER.id;
+	public personTyp: number = PersonTyp.SCHUELER.id;
 
 	/**
 	 * Gibt an, für welche Personengruppe die Einwilligungsart relevant ist.
 	 */
-	public anzahlEinwilligungen : number = 0;
+	public anzahlEinwilligungen: number = 0;
 
 
 	/**
@@ -51,13 +51,13 @@ export class Einwilligungsart extends JavaObject {
 		return 'de.svws_nrw.core.data.schule.Einwilligungsart';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.schule.Einwilligungsart'].includes(name);
 	}
 
 	public static class = new Class<Einwilligungsart>('de.svws_nrw.core.data.schule.Einwilligungsart');
 
-	public static transpilerFromJSON(json : string): Einwilligungsart {
+	public static transpilerFromJSON(json: string): Einwilligungsart {
 		const obj = JSON.parse(json) as Partial<Einwilligungsart>;
 		const result = new Einwilligungsart();
 		if (obj.id === undefined)
@@ -82,7 +82,7 @@ export class Einwilligungsart extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : Einwilligungsart) : string {
+	public static transpilerToJSON(obj: Einwilligungsart): string {
 		let result = '{';
 		result += '"id" : ' + obj.id.toString() + ',';
 		result += '"bezeichnung" : ' + JSON.stringify(obj.bezeichnung) + ',';
@@ -96,7 +96,7 @@ export class Einwilligungsart extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<Einwilligungsart>) : string {
+	public static transpilerToJSONPatch(obj: Partial<Einwilligungsart>): string {
 		let result = '{';
 		if (obj.id !== undefined) {
 			result += '"id" : ' + obj.id.toString() + ',';
@@ -126,6 +126,6 @@ export class Einwilligungsart extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_schule_Einwilligungsart(obj : unknown) : Einwilligungsart {
+export function cast_de_svws_nrw_core_data_schule_Einwilligungsart(obj: unknown): Einwilligungsart {
 	return obj as Einwilligungsart;
 }

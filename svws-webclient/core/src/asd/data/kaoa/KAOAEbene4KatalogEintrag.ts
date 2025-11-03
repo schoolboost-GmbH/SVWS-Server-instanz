@@ -6,7 +6,7 @@ export class KAOAEbene4KatalogEintrag extends CoreTypeData {
 	/**
 	 * Das Zusatzmerkmal, welcher der Eintrag zugeordnet ist.
 	 */
-	public zusatzmerkmal : string = "";
+	public zusatzmerkmal: string = "";
 
 
 	/**
@@ -20,13 +20,13 @@ export class KAOAEbene4KatalogEintrag extends CoreTypeData {
 		return 'de.svws_nrw.asd.data.kaoa.KAOAEbene4KatalogEintrag';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.asd.data.CoreTypeData', 'de.svws_nrw.asd.data.kaoa.KAOAEbene4KatalogEintrag'].includes(name);
 	}
 
 	public static class = new Class<KAOAEbene4KatalogEintrag>('de.svws_nrw.asd.data.kaoa.KAOAEbene4KatalogEintrag');
 
-	public static transpilerFromJSON(json : string): KAOAEbene4KatalogEintrag {
+	public static transpilerFromJSON(json: string): KAOAEbene4KatalogEintrag {
 		const obj = JSON.parse(json) as Partial<KAOAEbene4KatalogEintrag>;
 		const result = new KAOAEbene4KatalogEintrag();
 		if (obj.id === undefined)
@@ -49,7 +49,7 @@ export class KAOAEbene4KatalogEintrag extends CoreTypeData {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : KAOAEbene4KatalogEintrag) : string {
+	public static transpilerToJSON(obj: KAOAEbene4KatalogEintrag): string {
 		let result = '{';
 		result += '"id" : ' + obj.id.toString() + ',';
 		result += '"schluessel" : ' + JSON.stringify(obj.schluessel) + ',';
@@ -63,7 +63,7 @@ export class KAOAEbene4KatalogEintrag extends CoreTypeData {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<KAOAEbene4KatalogEintrag>) : string {
+	public static transpilerToJSONPatch(obj: Partial<KAOAEbene4KatalogEintrag>): string {
 		let result = '{';
 		if (obj.id !== undefined) {
 			result += '"id" : ' + obj.id.toString() + ',';
@@ -93,6 +93,6 @@ export class KAOAEbene4KatalogEintrag extends CoreTypeData {
 
 }
 
-export function cast_de_svws_nrw_asd_data_kaoa_KAOAEbene4KatalogEintrag(obj : unknown) : KAOAEbene4KatalogEintrag {
+export function cast_de_svws_nrw_asd_data_kaoa_KAOAEbene4KatalogEintrag(obj: unknown): KAOAEbene4KatalogEintrag {
 	return obj as KAOAEbene4KatalogEintrag;
 }

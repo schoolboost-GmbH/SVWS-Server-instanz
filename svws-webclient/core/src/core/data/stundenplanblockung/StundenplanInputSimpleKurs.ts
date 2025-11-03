@@ -13,32 +13,32 @@ export class StundenplanInputSimpleKurs extends JavaObject {
 	/**
 	 * 0 bis n Lehrkräfte werden dem Kurs zugeordnet.
 	 */
-	public lehrkraefte : List<StundenplanInputSimpleLehrkraft> = new ArrayList<StundenplanInputSimpleLehrkraft>();
+	public lehrkraefte: List<StundenplanInputSimpleLehrkraft> = new ArrayList<StundenplanInputSimpleLehrkraft>();
 
 	/**
 	 * 0 bis n Klassen werden dem Kurs zugeordnet.
 	 */
-	public klassen : List<StundenplanInputSimpleKlasse> = new ArrayList<StundenplanInputSimpleKlasse>();
+	public klassen: List<StundenplanInputSimpleKlasse> = new ArrayList<StundenplanInputSimpleKlasse>();
 
 	/**
 	 * 0 oder 1 Fach wird dem Kurs zugeordnet.
 	 */
-	public faecher : List<StundenplanInputSimpleFach> = new ArrayList<StundenplanInputSimpleFach>();
+	public faecher: List<StundenplanInputSimpleFach> = new ArrayList<StundenplanInputSimpleFach>();
 
 	/**
 	 * 0 bis n potentielle Räume, von denen 0 oder 1 Raum dem Kurs zugeordnet wird.
 	 */
-	public raeume : List<StundenplanInputSimpleRaum> = new ArrayList<StundenplanInputSimpleRaum>();
+	public raeume: List<StundenplanInputSimpleRaum> = new ArrayList<StundenplanInputSimpleRaum>();
 
 	/**
 	 * 0 oder 1 Kopplung wird dem Kurs zugeordnet.
 	 */
-	public kopplungen : List<StundenplanInputSimpleKopplung> = new ArrayList<StundenplanInputSimpleKopplung>();
+	public kopplungen: List<StundenplanInputSimpleKopplung> = new ArrayList<StundenplanInputSimpleKopplung>();
 
 	/**
 	 * Die Wochenstunden des Kurses. Das Stundenplanprogramm bestimmt, wie diese verteilt werden.
 	 */
-	public wochenstunden : number = -1;
+	public wochenstunden: number = -1;
 
 
 	/**
@@ -52,13 +52,13 @@ export class StundenplanInputSimpleKurs extends JavaObject {
 		return 'de.svws_nrw.core.data.stundenplanblockung.StundenplanInputSimpleKurs';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.stundenplanblockung.StundenplanInputSimpleKurs'].includes(name);
 	}
 
 	public static class = new Class<StundenplanInputSimpleKurs>('de.svws_nrw.core.data.stundenplanblockung.StundenplanInputSimpleKurs');
 
-	public static transpilerFromJSON(json : string): StundenplanInputSimpleKurs {
+	public static transpilerFromJSON(json: string): StundenplanInputSimpleKurs {
 		const obj = JSON.parse(json) as Partial<StundenplanInputSimpleKurs>;
 		const result = new StundenplanInputSimpleKurs();
 		if (obj.lehrkraefte !== undefined) {
@@ -92,7 +92,7 @@ export class StundenplanInputSimpleKurs extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : StundenplanInputSimpleKurs) : string {
+	public static transpilerToJSON(obj: StundenplanInputSimpleKurs): string {
 		let result = '{';
 		result += '"lehrkraefte" : [ ';
 		for (let i = 0; i < obj.lehrkraefte.size(); i++) {
@@ -140,7 +140,7 @@ export class StundenplanInputSimpleKurs extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<StundenplanInputSimpleKurs>) : string {
+	public static transpilerToJSONPatch(obj: Partial<StundenplanInputSimpleKurs>): string {
 		let result = '{';
 		if (obj.lehrkraefte !== undefined) {
 			result += '"lehrkraefte" : [ ';
@@ -202,6 +202,6 @@ export class StundenplanInputSimpleKurs extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_stundenplanblockung_StundenplanInputSimpleKurs(obj : unknown) : StundenplanInputSimpleKurs {
+export function cast_de_svws_nrw_core_data_stundenplanblockung_StundenplanInputSimpleKurs(obj: unknown): StundenplanInputSimpleKurs {
 	return obj as StundenplanInputSimpleKurs;
 }

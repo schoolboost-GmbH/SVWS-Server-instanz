@@ -26,7 +26,7 @@
 <script setup lang="ts">
 
 	import { computed, shallowRef } from 'vue';
-	import type { GostBlockungsergebnisKursSchuelerZuordnungUpdate, GostBlockungsergebnisManager , GostBlockungsergebnisKursSchuelerZuordnung} from '@core';
+	import type { GostBlockungsergebnisKursSchuelerZuordnungUpdate, GostBlockungsergebnisManager, GostBlockungsergebnisKursSchuelerZuordnung } from '@core';
 	import { DTOUtils, HashSet } from '@core';
 
 	const props = defineProps<{
@@ -40,7 +40,7 @@
 			for (const kurs of es.getValue())
 				zuordnungenSet.add(DTOUtils.newGostBlockungsergebnisKursSchuelerZuordnung(kurs.id, es.getKey()));
 		return zuordnungenSet;
-	})
+	});
 
 	const selected = shallowRef<GostBlockungsergebnisKursSchuelerZuordnung[]>(zuordnungen.value.toArray() as GostBlockungsergebnisKursSchuelerZuordnung[]);
 	const show = shallowRef<boolean>(false);
@@ -60,6 +60,6 @@
 	const openModal = () => {
 		selected.value = zuordnungen.value.toArray() as GostBlockungsergebnisKursSchuelerZuordnung[];
 		show.value = true;
-	}
+	};
 
 </script>

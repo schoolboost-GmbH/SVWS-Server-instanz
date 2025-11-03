@@ -6,7 +6,7 @@ export class Exception extends Throwable {
 		return 'java.lang.Exception';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return [
 			'java.lang.Exception',
 			'java.lang.Throwable',
@@ -17,6 +17,6 @@ export class Exception extends Throwable {
 
 }
 
-export function cast_java_lang_Exception(obj : unknown) : Exception {
+export function cast_java_lang_Exception(obj: unknown): Exception {
 	return obj as Exception;
 }

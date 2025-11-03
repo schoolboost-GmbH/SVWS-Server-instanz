@@ -48,8 +48,8 @@
 
 <script setup lang="ts">
 	import type { GostKlausurplanungDragData, GostKlausurplanungDropZone } from "./SGostKlausurplanung";
-	import { BenutzerKompetenz} from "@core";
-	import { type GostKlausurplanManager, GostKursklausur, type GostKlausurtermin, type List, type GostHalbjahr, Arrays, GostSchuelerklausurTermin} from "@core";
+	import { BenutzerKompetenz } from "@core";
+	import { type GostKlausurplanManager, GostKursklausur, type GostKlausurtermin, type List, type GostHalbjahr, Arrays, GostSchuelerklausurTermin } from "@core";
 	import { computed } from 'vue';
 
 	const props = withDefaults(defineProps<{
@@ -91,12 +91,12 @@
 			else
 				return; // TODO Fehlermeldung, Klausuren mit unterschiedlichen Quartale enthalten
 		else if (props.termin().quartal > 0 && props.kMan().schuelerklausurterminGetMengeByTermin(props.termin()).size() > 0)
-			await props.patchKlausurtermin(props.termin().id, {quartal: 0});
+			await props.patchKlausurtermin(props.termin().id, { quartal: 0 });
 		else
-			await props.patchKlausurtermin(props.termin().id, {quartal: (props.termin().quartal + 1) % 3});
+			await props.patchKlausurtermin(props.termin().id, { quartal: (props.termin().quartal + 1) % 3 });
 	}
 
-	function isDropZone() : boolean {
+	function isDropZone(): boolean {
 		if (props.dragData() !== undefined) {
 			if (props.dragData() instanceof GostKursklausur) {
 				if (props.kMan().vorgabeByKursklausur(props.dragData() as GostKursklausur).quartal === props.termin().quartal || props.termin().quartal === 0)
@@ -116,9 +116,9 @@
 	const konflikteTerminDragKlausur = computed(() => {
 		const data = props.dragData();
 		if (data instanceof GostKursklausur)
-			return props.kMan().konflikteAnzahlZuTerminGetByTerminAndKursklausur(props.termin(), data)
+			return props.kMan().konflikteAnzahlZuTerminGetByTerminAndKursklausur(props.termin(), data);
 		else
-			return -1
+			return -1;
 	});
 
 	const konflikteTermin = () => props.kMan().konflikteAnzahlGetByTermin(props.termin());

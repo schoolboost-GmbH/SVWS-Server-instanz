@@ -47,6 +47,6 @@
 		if (auswahlJahrgaengeList.size() > 5)
 			return `${auswahlJahrgaengeList.size()} Jahrgänge ausgewählt`;
 		return [...auswahlJahrgaengeList].map(k => k.kuerzel).join(', ');
-	})
+	});
 
 </script>

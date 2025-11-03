@@ -12,12 +12,12 @@ export class BenutzergruppenManager extends JavaObject {
 	/**
 	 * Die Daten der Benutzergruppe, die im Manager vorhanden sind.
 	 */
-	private readonly _daten : BenutzergruppeDaten;
+	private readonly _daten: BenutzergruppeDaten;
 
 	/**
 	 * Die Menge an Kompetenzen, die dieser Gruppe zugeordnet ist.
 	 */
-	private readonly _setKompetenzen : HashSet<number> = new HashSet<number>();
+	private readonly _setKompetenzen: HashSet<number> = new HashSet<number>();
 
 
 	/**
@@ -26,29 +26,29 @@ export class BenutzergruppenManager extends JavaObject {
 	 * @param id            die ID der Benutzergruppe
 	 * @param bezeichnung   die Bezeichnung der Benutzergruppe
 	 */
-	public constructor(id : number, bezeichnung : string);
+	public constructor(id: number, bezeichnung: string);
 
 	/**
 	 * Erstellt einen neuen Manager mit den Daten einer Benutzergruppe
 	 *
 	 * @param pDaten          die Benutzergruppendaten
 	 */
-	public constructor(pDaten : BenutzergruppeDaten);
+	public constructor(pDaten: BenutzergruppeDaten);
 
 	/**
 	 * Implementation for method overloads of 'constructor'
 	 */
-	public constructor(__param0 : BenutzergruppeDaten | number, __param1? : string) {
+	public constructor(__param0: BenutzergruppeDaten | number, __param1?: string) {
 		super();
 		if (((__param0 !== undefined) && typeof __param0 === "number") && ((__param1 !== undefined) && (typeof __param1 === "string"))) {
-			const id : number = __param0 as number;
-			const bezeichnung : string = __param1;
+			const id: number = __param0 as number;
+			const bezeichnung: string = __param1;
 			this._daten = new BenutzergruppeDaten();
 			this._daten.id = id;
 			this._daten.bezeichnung = bezeichnung;
 			this._daten.istAdmin = false;
 		} else if (((__param0 !== undefined) && ((__param0 instanceof JavaObject) && (__param0.isTranspiledInstanceOf('de.svws_nrw.core.data.benutzer.BenutzergruppeDaten')))) && (__param1 === undefined)) {
-			const pDaten : BenutzergruppeDaten = cast_de_svws_nrw_core_data_benutzer_BenutzergruppeDaten(__param0);
+			const pDaten: BenutzergruppeDaten = cast_de_svws_nrw_core_data_benutzer_BenutzergruppeDaten(__param0);
 			this._daten = pDaten;
 			for (const kID of pDaten.kompetenzen) {
 				if (kID === null)
@@ -65,7 +65,7 @@ export class BenutzergruppenManager extends JavaObject {
 	 *
 	 * @return die Benutzergruppen-Daten (siehe {@link BenutzergruppeDaten})
 	 */
-	public daten() : BenutzergruppeDaten {
+	public daten(): BenutzergruppeDaten {
 		return this._daten;
 	}
 
@@ -74,7 +74,7 @@ export class BenutzergruppenManager extends JavaObject {
 	 *
 	 * @return die ID der Benutzergruppe
 	 */
-	public getID() : number {
+	public getID(): number {
 		return this._daten.id;
 	}
 
@@ -83,7 +83,7 @@ export class BenutzergruppenManager extends JavaObject {
 	 *
 	 * @return die Bezeichnung der Benutzergruppe
 	 */
-	public getBezeichnung() : string {
+	public getBezeichnung(): string {
 		return this._daten.bezeichnung;
 	}
 
@@ -92,7 +92,7 @@ export class BenutzergruppenManager extends JavaObject {
 	 *
 	 * @param bezeichnung  die neue Bezeichnung der Benutzergruppe
 	 */
-	public setBezeichnung(bezeichnung : string) : void {
+	public setBezeichnung(bezeichnung: string): void {
 		if (JavaObject.equalsTranspiler("", (bezeichnung)))
 			throw new IllegalArgumentException("Die Bezeichnung einer Benutzergruppe darf nicht leer sein.")
 		this._daten.bezeichnung = bezeichnung;
@@ -103,7 +103,7 @@ export class BenutzergruppenManager extends JavaObject {
 	 *
 	 * @param istAdmin   true, falls die Gruppe administrativ ist und ansonsten
 	 */
-	public setAdmin(istAdmin : boolean) : void {
+	public setAdmin(istAdmin: boolean): void {
 		this._daten.istAdmin = istAdmin;
 	}
 
@@ -112,7 +112,7 @@ export class BenutzergruppenManager extends JavaObject {
 	 *
 	 * @return true, falls es sich um eine administrative Gruppe handelt und ansonsten false
 	 */
-	public istAdmin() : boolean {
+	public istAdmin(): boolean {
 		return this._daten.istAdmin;
 	}
 
@@ -123,7 +123,7 @@ export class BenutzergruppenManager extends JavaObject {
 	 *
 	 * @return true, falls die Gruppe die Kompetenz besitzt.
 	 */
-	public hatKompetenz(kompetenz : BenutzerKompetenz) : boolean {
+	public hatKompetenz(kompetenz: BenutzerKompetenz): boolean {
 		if (this._daten.istAdmin)
 			return true;
 		return this._setKompetenzen.contains(kompetenz.daten.id);
@@ -136,7 +136,7 @@ export class BenutzergruppenManager extends JavaObject {
 	 *
 	 * @return true, falls die Gruppe die Kompetenzen besitzt.
 	 */
-	public hatKompetenzen(kompetenzen : List<BenutzerKompetenz>) : boolean {
+	public hatKompetenzen(kompetenzen: List<BenutzerKompetenz>): boolean {
 		if (this._daten.istAdmin)
 			return true;
 		for (const kompetenz of kompetenzen)
@@ -152,7 +152,7 @@ export class BenutzergruppenManager extends JavaObject {
 	 *
 	 * @return true, falls die Gruppe mindestens eine der Kompetenzen besitzt.
 	 */
-	public hatKompetenzenMindestensEine(kompetenzen : List<BenutzerKompetenz>) : boolean {
+	public hatKompetenzenMindestensEine(kompetenzen: List<BenutzerKompetenz>): boolean {
 		if (this._daten.istAdmin)
 			return true;
 		for (const kompetenz of kompetenzen)
@@ -168,7 +168,7 @@ export class BenutzergruppenManager extends JavaObject {
 	 *
 	 * @throws IllegalArgumentException   wenn die Gruppe die Kompetenz bereits enthält
 	 */
-	public addKompetenz(kompetenz : BenutzerKompetenz | null) : void {
+	public addKompetenz(kompetenz: BenutzerKompetenz | null): void {
 		if (kompetenz === null)
 			throw new NullPointerException("Die übergenene Kompetenz darf nicht null sein.")
 		if (this._setKompetenzen.contains(kompetenz.daten.id))
@@ -184,7 +184,7 @@ export class BenutzergruppenManager extends JavaObject {
 	 *
 	 * @throws IllegalArgumentException   wenn die Gruppe die Kompetenz nicht enthält
 	 */
-	public removeKompetenz(kompetenz : BenutzerKompetenz) : void {
+	public removeKompetenz(kompetenz: BenutzerKompetenz): void {
 		if (!this._setKompetenzen.contains(kompetenz.daten.id))
 			throw new IllegalArgumentException("Die Kompetenz mit der ID " + kompetenz.daten.id + " ist in der Gruppe nicht vorhanden.")
 		this._daten.kompetenzen.remove(kompetenz.daten.id);
@@ -195,7 +195,7 @@ export class BenutzergruppenManager extends JavaObject {
 		return 'de.svws_nrw.core.utils.benutzer.BenutzergruppenManager';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.utils.benutzer.BenutzergruppenManager'].includes(name);
 	}
 
@@ -203,6 +203,6 @@ export class BenutzergruppenManager extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_utils_benutzer_BenutzergruppenManager(obj : unknown) : BenutzergruppenManager {
+export function cast_de_svws_nrw_core_utils_benutzer_BenutzergruppenManager(obj: unknown): BenutzergruppenManager {
 	return obj as BenutzergruppenManager;
 }

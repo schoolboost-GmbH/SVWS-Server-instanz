@@ -9,37 +9,37 @@ import { de_svws_nrw_asd_types_CoreType_getManager, de_svws_nrw_asd_types_CoreTy
 export class LehrerZugangsgrund extends JavaEnum<LehrerZugangsgrund> implements CoreType<LehrerZugangsgrundKatalogEintrag, LehrerZugangsgrund> {
 
 	/** an array containing all values of this enumeration */
-	static readonly all_values_by_ordinal : Array<LehrerZugangsgrund> = [];
+	static readonly all_values_by_ordinal: Array<LehrerZugangsgrund> = [];
 
 	/** an array containing all values of this enumeration indexed by their name*/
-	static readonly all_values_by_name : Map<string, LehrerZugangsgrund> = new Map<string, LehrerZugangsgrund>();
+	static readonly all_values_by_name: Map<string, LehrerZugangsgrund> = new Map<string, LehrerZugangsgrund>();
 
 	/**
 	 * Grund 'Neueintritt in den Schuldienst mit abgelegter 2. Staatsprüfung oder anderweitig erfüllter Eingangsvoraussetzung' für das Kommen des Lehrers an die Schule
 	 */
-	public static readonly NEU : LehrerZugangsgrund = new LehrerZugangsgrund("NEU", 0, );
+	public static readonly NEU: LehrerZugangsgrund = new LehrerZugangsgrund("NEU", 0, );
 
 	/**
 	 * Grund 'Übertritt aus dem Schuldienst eines anderen Bundeslandes' für das Kommen des Lehrers an die Schule
 	 */
-	public static readonly AndBuLand : LehrerZugangsgrund = new LehrerZugangsgrund("AndBuLand", 1, );
+	public static readonly AndBuLand: LehrerZugangsgrund = new LehrerZugangsgrund("AndBuLand", 1, );
 
 	/**
 	 * Grund 'Wechsel innerhalb des Landes von einer anderen Schule an die berichtende Schule' für das Kommen des Lehrers an die Schule
 	 */
-	public static readonly WECHSEL : LehrerZugangsgrund = new LehrerZugangsgrund("WECHSEL", 2, );
+	public static readonly WECHSEL: LehrerZugangsgrund = new LehrerZugangsgrund("WECHSEL", 2, );
 
 	/**
 	 * Grund 'Wiedereintritt in den Schuldienst' für das Kommen des Lehrers an die Schule
 	 */
-	public static readonly WIEDER : LehrerZugangsgrund = new LehrerZugangsgrund("WIEDER", 3, );
+	public static readonly WIEDER: LehrerZugangsgrund = new LehrerZugangsgrund("WIEDER", 3, );
 
 	/**
 	 * Grund 'Sonstige Zugänge' für das Kommen des Lehrers an die Schule
 	 */
-	public static readonly SONSTIG : LehrerZugangsgrund = new LehrerZugangsgrund("SONSTIG", 4, );
+	public static readonly SONSTIG: LehrerZugangsgrund = new LehrerZugangsgrund("SONSTIG", 4, );
 
-	private constructor(name : string, ordinal : number) {
+	private constructor(name: string, ordinal: number) {
 		super(name, ordinal);
 		LehrerZugangsgrund.all_values_by_ordinal.push(this);
 		LehrerZugangsgrund.all_values_by_name.set(name, this);
@@ -50,7 +50,7 @@ export class LehrerZugangsgrund extends JavaEnum<LehrerZugangsgrund> implements 
 	 *
 	 * @param manager   der Manager für die Daten des Core-Types
 	 */
-	public static init(manager : CoreTypeDataManager<LehrerZugangsgrundKatalogEintrag, LehrerZugangsgrund>) : void {
+	public static init(manager: CoreTypeDataManager<LehrerZugangsgrundKatalogEintrag, LehrerZugangsgrund>): void {
 		CoreTypeDataManager.putManager(LehrerZugangsgrund.class, manager);
 	}
 
@@ -59,7 +59,7 @@ export class LehrerZugangsgrund extends JavaEnum<LehrerZugangsgrund> implements 
 	 *
 	 * @return der Daten-Manager
 	 */
-	public static data() : CoreTypeDataManager<LehrerZugangsgrundKatalogEintrag, LehrerZugangsgrund> {
+	public static data(): CoreTypeDataManager<LehrerZugangsgrundKatalogEintrag, LehrerZugangsgrund> {
 		return CoreTypeDataManager.getManager(LehrerZugangsgrund.class);
 	}
 
@@ -68,7 +68,7 @@ export class LehrerZugangsgrund extends JavaEnum<LehrerZugangsgrund> implements 
 	 *
 	 * @returns the array with enumeration values
 	 */
-	public static values() : Array<LehrerZugangsgrund> {
+	public static values(): Array<LehrerZugangsgrund> {
 		return [...this.all_values_by_ordinal];
 	}
 
@@ -79,24 +79,24 @@ export class LehrerZugangsgrund extends JavaEnum<LehrerZugangsgrund> implements 
 	 *
 	 * @returns the enumeration values or null
 	 */
-	public static valueOf(name : string) : LehrerZugangsgrund | null {
+	public static valueOf(name: string): LehrerZugangsgrund | null {
 		const tmp = this.all_values_by_name.get(name);
 		return (!tmp) ? null : tmp;
 	}
 
-	public getManager() : CoreTypeDataManager<LehrerZugangsgrundKatalogEintrag, LehrerZugangsgrund> {
+	public getManager(): CoreTypeDataManager<LehrerZugangsgrundKatalogEintrag, LehrerZugangsgrund> {
 		return de_svws_nrw_asd_types_CoreType_getManager(this);
 	}
 
-	public daten(schuljahr : number) : LehrerZugangsgrundKatalogEintrag | null {
+	public daten(schuljahr: number): LehrerZugangsgrundKatalogEintrag | null {
 		return de_svws_nrw_asd_types_CoreType_daten(this, schuljahr);
 	}
 
-	public statistikId() : string | null {
+	public statistikId(): string | null {
 		return de_svws_nrw_asd_types_CoreType_statistikId(this);
 	}
 
-	public historie() : List<LehrerZugangsgrundKatalogEintrag> {
+	public historie(): List<LehrerZugangsgrundKatalogEintrag> {
 		return de_svws_nrw_asd_types_CoreType_historie(this);
 	}
 
@@ -104,7 +104,7 @@ export class LehrerZugangsgrund extends JavaEnum<LehrerZugangsgrund> implements 
 		return 'de.svws_nrw.asd.types.lehrer.LehrerZugangsgrund';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.asd.types.CoreType', 'java.lang.Comparable', 'de.svws_nrw.asd.types.lehrer.LehrerZugangsgrund', 'java.lang.Enum', 'java.lang.Comparable'].includes(name);
 	}
 
@@ -112,6 +112,6 @@ export class LehrerZugangsgrund extends JavaEnum<LehrerZugangsgrund> implements 
 
 }
 
-export function cast_de_svws_nrw_asd_types_lehrer_LehrerZugangsgrund(obj : unknown) : LehrerZugangsgrund {
+export function cast_de_svws_nrw_asd_types_lehrer_LehrerZugangsgrund(obj: unknown): LehrerZugangsgrund {
 	return obj as LehrerZugangsgrund;
 }

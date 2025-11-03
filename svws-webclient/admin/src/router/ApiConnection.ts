@@ -30,7 +30,7 @@ export class ApiConnection {
 	protected _api: ApiServer | undefined;
 
 	// Der Modus, in welchem der Server betrieben wird
-	protected _serverMode = shallowRef<ServerMode>(ServerMode.STABLE)
+	protected _serverMode = shallowRef<ServerMode>(ServerMode.STABLE);
 
 	// Gibt an, ob es sich um einen Benutzer mit priviligierten Rechten auf der Datenbank handelt oder nicht
 	protected _hasRootPrivileges: boolean = false;
@@ -42,40 +42,40 @@ export class ApiConnection {
 	// Gibt die Server-API zurück.
 	get api(): ApiServer {
 		if (this._api === undefined)
-			throw new Error("Es wurde kein Api-Objekt angelegt - Verbindungen zum Server können nicht erfolgen")
+			throw new Error("Es wurde kein Api-Objekt angelegt - Verbindungen zum Server können nicht erfolgen");
 		return this._api;
 	}
 
 	// Gibt die API für den priviligierten Schema-Zugriff zurück.
 	get api_privileged(): ApiPrivileged {
 		if (this._schema_api_privileged === undefined)
-			throw new Error("Es wurde kein Api-Objekt angelegt - Verbindungen zum Server können für den priviligierten Schema-Zugriff nicht erfolgen")
+			throw new Error("Es wurde kein Api-Objekt angelegt - Verbindungen zum Server können für den priviligierten Schema-Zugriff nicht erfolgen");
 		return this._schema_api_privileged;
 	}
 
 
 	// Gibt den Hostname zurück
-	get hostname() : string {
+	get hostname(): string {
 		return this._hostname.value;
 	}
 
 	// Gibt den Status zurück, ob der Benutzer authentifiziert wurde
-	get authenticated() : boolean {
+	get authenticated(): boolean {
 		return this._authenticated.value;
 	}
 
 	// Gibt den Benutzernamen zurück
-	get username() : string {
+	get username(): string {
 		return this._username;
 	}
 
 	// Gibt zurück, ob der angemeldete Benutzer root-Privilegien auf der Datenbank besitzt oder nicht
-	get hasRootPrivileges() : boolean {
+	get hasRootPrivileges(): boolean {
 		return this._hasRootPrivileges;
 	}
 
 	// Gibt zurück, ob der angemeldete Benutzer der in der SVWS-Server-Konfiguration eingetragene Server-Admin ist oder nicht
-	get isServerAdmin() : boolean {
+	get isServerAdmin(): boolean {
 		return this._isServerAdmin;
 	}
 
@@ -91,7 +91,7 @@ export class ApiConnection {
 	 */
 	setHostname = (hostname: string): void => {
 		this._hostname.value = hostname;
-	}
+	};
 
 	/**
 	 * Versucht eine Verbindung zu dem SVWS-Server mit dem angegebenen Hostnamen aufzubauen.
@@ -133,7 +133,7 @@ export class ApiConnection {
 			}
 		}
 		return false;
-	}
+	};
 
 
 	/**
@@ -182,7 +182,7 @@ export class ApiConnection {
 			this._isServerAdmin = false;
 			return false;
 		}
-	}
+	};
 
 	/**
 	 * Trennt die Verbindung für den aktuell angemeldeten Benutzer
@@ -194,7 +194,7 @@ export class ApiConnection {
 		this._api = undefined;
 		this._schema_api_privileged = undefined;
 		this._isServerAdmin = false;
-	}
+	};
 
 }
 

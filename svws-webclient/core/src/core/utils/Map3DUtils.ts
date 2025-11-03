@@ -27,11 +27,11 @@ export class Map3DUtils extends JavaObject {
 	 *
 	 * @return die "ArrayList of V" des Schlüssels. Erstellt eine leere "ArrayList of V", falls eine solche Zuordnung nicht existierte.
 	 */
-	public static getOrCreateArrayList<K1, K2, K3, V>(map3D : HashMap3D<K1, K2, K3, List<V>>, key1 : K1, key2 : K2, key3 : K3) : List<V> {
-		const list : List<V> | null = map3D.getOrNull(key1, key2, key3);
+	public static getOrCreateArrayList<K1, K2, K3, V>(map3D: HashMap3D<K1, K2, K3, List<V>>, key1: K1, key2: K2, key3: K3): List<V> {
+		const list: List<V> | null = map3D.getOrNull(key1, key2, key3);
 		if (list !== null)
 			return list;
-		const listNeu : ArrayList<V> = new ArrayList<V>();
+		const listNeu: ArrayList<V> = new ArrayList<V>();
 		map3D.put(key1, key2, key3, listNeu);
 		return listNeu;
 	}
@@ -50,11 +50,11 @@ export class Map3DUtils extends JavaObject {
 	 *
 	 * @return die "Set of V" des Schlüssels. Erstellt ein leeres "Set of V", falls eine solche Zuordnung nicht existierte.
 	 */
-	public static getOrCreateSet<K1, K2, K3, V>(map3D : HashMap3D<K1, K2, K3, JavaSet<V>>, key1 : K1, key2 : K2, key3 : K3) : JavaSet<V> {
-		const set : JavaSet<V> | null = map3D.getOrNull(key1, key2, key3);
+	public static getOrCreateSet<K1, K2, K3, V>(map3D: HashMap3D<K1, K2, K3, JavaSet<V>>, key1: K1, key2: K2, key3: K3): JavaSet<V> {
+		const set: JavaSet<V> | null = map3D.getOrNull(key1, key2, key3);
 		if (set !== null)
 			return set;
-		const setNeu : HashSet<V> = new HashSet<V>();
+		const setNeu: HashSet<V> = new HashSet<V>();
 		map3D.put(key1, key2, key3, setNeu);
 		return setNeu;
 	}
@@ -73,12 +73,12 @@ export class Map3DUtils extends JavaObject {
 	 * @param key3   der 3. Schlüssel.
 	 * @param value  der Wert, welcher der zugeordneten Liste hinzugefügt wird.
 	 */
-	public static addToList<K1, K2, K3, V>(map3D : HashMap3D<K1, K2, K3, List<V>>, key1 : K1, key2 : K2, key3 : K3, value : V) : void {
-		const list : List<V> | null = map3D.getOrNull(key1, key2, key3);
+	public static addToList<K1, K2, K3, V>(map3D: HashMap3D<K1, K2, K3, List<V>>, key1: K1, key2: K2, key3: K3, value: V): void {
+		const list: List<V> | null = map3D.getOrNull(key1, key2, key3);
 		if (list !== null) {
 			list.add(value);
 		} else {
-			const listNeu : ArrayList<V> = new ArrayList<V>();
+			const listNeu: ArrayList<V> = new ArrayList<V>();
 			listNeu.add(value);
 			map3D.put(key1, key2, key3, listNeu);
 		}
@@ -88,7 +88,7 @@ export class Map3DUtils extends JavaObject {
 		return 'de.svws_nrw.core.utils.Map3DUtils';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.utils.Map3DUtils'].includes(name);
 	}
 
@@ -96,6 +96,6 @@ export class Map3DUtils extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_utils_Map3DUtils(obj : unknown) : Map3DUtils {
+export function cast_de_svws_nrw_core_utils_Map3DUtils(obj: unknown): Map3DUtils {
 	return obj as Map3DUtils;
 }

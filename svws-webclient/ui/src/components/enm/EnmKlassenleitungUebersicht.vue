@@ -129,7 +129,7 @@
 
 <script setup lang="ts">
 
-	import type { ComponentPublicInstance} from 'vue';
+	import type { ComponentPublicInstance } from 'vue';
 	import { computed, watchEffect } from 'vue';
 	import type { ENMSchueler } from "../../../../core/src/core/data/enm/ENMSchueler";
 	import type { EnmKlassenleitungUebersichtProps } from './EnmKlassenleitungUebersichtProps';
@@ -169,7 +169,7 @@
 			{ kuerzel: "ZB", name: "Zeugnisbemerkung", width: "16rem", hideable: true },
 			{ kuerzel: "", name: "", width: "3.25rem", hideable: false },
 		],
-		colsVisible: computed<Map<string, boolean|null>>({
+		colsVisible: computed<Map<string, boolean | null>>({
 			get: () => props.columnsVisible(),
 			set: (value) => void props.setColumnsVisible(value),
 		}),
@@ -179,12 +179,12 @@
 			return;
 		const pair = gridManager.daten.get(input.row);
 		void props.focusFloskelEditor(null, pair.b, pair.a, input.row, false);
-	}
+	};
 	defineExpose({ gridManager });
 
 	function inputFehlstunden(pair: PairNN<ENMKlasse, ENMSchueler>, col: number, index: number) {
 		const key = 'Fehlstunden_' + pair.a.id + "_" + pair.b.id;
-		const setter = (value : number | null) => {
+		const setter = (value: number | null) => {
 			const patch = <Partial<ENMLernabschnitt>>{ fehlstundenGesamt: value };
 			const inputFSU = gridManager.getInputByKey('FehlstundenUnendschuldigt_' + pair.a.id + "_" + pair.b.id);
 			if (inputFSU !== null) {
@@ -195,7 +195,7 @@
 			}
 			void props.patchLernabschnitt(pair.b.lernabschnitt, { fehlstundenGesamt: value });
 		};
-		return (element : Element | ComponentPublicInstance<unknown> | null) => {
+		return (element: Element | ComponentPublicInstance<unknown> | null) => {
 			const input = gridManager.applyInputIntegerDiv(key, col, index, element, 999, setter);
 			if (input !== null)
 				watchEffect(() => gridManager.update(key, pair.b.lernabschnitt.fehlstundenGesamt));
@@ -204,8 +204,8 @@
 
 	function inputFehlstundenUnendschuldigt(pair: PairNN<ENMKlasse, ENMSchueler>, col: number, index: number) {
 		const key = 'FehlstundenUnendschuldigt_' + pair.a.id + "_" + pair.b.id;
-		const setter = (value : number | null) => void props.patchLernabschnitt(pair.b.lernabschnitt, { fehlstundenGesamtUnentschuldigt: value });
-		return (element : Element | ComponentPublicInstance<unknown> | null) => {
+		const setter = (value: number | null) => void props.patchLernabschnitt(pair.b.lernabschnitt, { fehlstundenGesamtUnentschuldigt: value });
+		return (element: Element | ComponentPublicInstance<unknown> | null) => {
 			const input = gridManager.applyInputIntegerDiv(key, col, index, element, pair.b.lernabschnitt.fehlstundenGesamt ?? 0, setter);
 			if (input !== null)
 				watchEffect(() => gridManager.update(key, pair.b.lernabschnitt.fehlstundenGesamtUnentschuldigt));
@@ -214,8 +214,8 @@
 
 	function inputASV(pair: PairNN<ENMKlasse, ENMSchueler>, col: number, index: number) {
 		const key = 'ASV_' + pair.a.id + "_" + pair.b.id;
-		const setter = (value : boolean) => void props.focusFloskelEditor('ASV', pair.b, pair.a, index, true);
-		return (element : Element | ComponentPublicInstance<unknown> | null) => {
+		const setter = (value: boolean) => void props.focusFloskelEditor('ASV', pair.b, pair.a, index, true);
+		return (element: Element | ComponentPublicInstance<unknown> | null) => {
 			const input = gridManager.applyInputToggle(key, col, index, element, setter);
 			if (input !== null) {
 				gridManager.update(key, false);
@@ -226,8 +226,8 @@
 
 	function inputAUE(pair: PairNN<ENMKlasse, ENMSchueler>, col: number, index: number) {
 		const key = 'AUE_' + pair.a.id + "_" + pair.b.id;
-		const setter = (value : boolean) => void props.focusFloskelEditor('AUE', pair.b, pair.a, index, true);
-		return (element : Element | ComponentPublicInstance<unknown> | null) => {
+		const setter = (value: boolean) => void props.focusFloskelEditor('AUE', pair.b, pair.a, index, true);
+		return (element: Element | ComponentPublicInstance<unknown> | null) => {
 			const input = gridManager.applyInputToggle(key, col, index, element, setter);
 			if (input !== null) {
 				gridManager.update(key, false);
@@ -238,8 +238,8 @@
 
 	function inputZB(pair: PairNN<ENMKlasse, ENMSchueler>, col: number, index: number) {
 		const key = 'ZB_' + pair.a.id + "_" + pair.b.id;
-		const setter = (value : boolean) => void props.focusFloskelEditor('ZB', pair.b, pair.a, index, true);
-		return (element : Element | ComponentPublicInstance<unknown> | null) => {
+		const setter = (value: boolean) => void props.focusFloskelEditor('ZB', pair.b, pair.a, index, true);
+		return (element: Element | ComponentPublicInstance<unknown> | null) => {
 			const input = gridManager.applyInputToggle(key, col, index, element, setter);
 			if (input !== null) {
 				gridManager.update(key, false);

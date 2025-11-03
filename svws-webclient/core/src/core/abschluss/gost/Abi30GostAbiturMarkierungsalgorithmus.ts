@@ -11,7 +11,7 @@ export class Abi30GostAbiturMarkierungsalgorithmus extends JavaObject {
 	/**
 	 * Das Ergebnis des Algorithmus
 	 */
-	private readonly ergebnis : GostAbiturMarkierungsalgorithmusErgebnis = new GostAbiturMarkierungsalgorithmusErgebnis();
+	private readonly ergebnis: GostAbiturMarkierungsalgorithmusErgebnis = new GostAbiturMarkierungsalgorithmusErgebnis();
 
 
 	/**
@@ -21,7 +21,7 @@ export class Abi30GostAbiturMarkierungsalgorithmus extends JavaObject {
 	 * @param manager            der Abiturdaten-Manager
 	 * @param belegpruefungen    die durchgeführten Belegprüfungen
 	 */
-	private constructor(manager : AbiturdatenManager, belegpruefungen : List<GostBelegpruefung>) {
+	private constructor(manager: AbiturdatenManager, belegpruefungen: List<GostBelegpruefung>) {
 		super();
 		throw new UnsupportedOperationException()
 	}
@@ -36,8 +36,8 @@ export class Abi30GostAbiturMarkierungsalgorithmus extends JavaObject {
 	 *
 	 * @return das Ergebnis der Berechnung
 	 */
-	public static berechne(manager : AbiturdatenManager, belegpruefungen : List<GostBelegpruefung>) : GostAbiturMarkierungsalgorithmusErgebnis {
-		const initialState : Abi30GostAbiturMarkierungsalgorithmus = new Abi30GostAbiturMarkierungsalgorithmus(manager, belegpruefungen);
+	public static berechne(manager: AbiturdatenManager, belegpruefungen: List<GostBelegpruefung>): GostAbiturMarkierungsalgorithmusErgebnis {
+		const initialState: Abi30GostAbiturMarkierungsalgorithmus = new Abi30GostAbiturMarkierungsalgorithmus(manager, belegpruefungen);
 		return initialState.ergebnis;
 	}
 
@@ -45,7 +45,7 @@ export class Abi30GostAbiturMarkierungsalgorithmus extends JavaObject {
 		return 'de.svws_nrw.core.abschluss.gost.Abi30GostAbiturMarkierungsalgorithmus';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.abschluss.gost.Abi30GostAbiturMarkierungsalgorithmus'].includes(name);
 	}
 
@@ -53,6 +53,6 @@ export class Abi30GostAbiturMarkierungsalgorithmus extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_abschluss_gost_Abi30GostAbiturMarkierungsalgorithmus(obj : unknown) : Abi30GostAbiturMarkierungsalgorithmus {
+export function cast_de_svws_nrw_core_abschluss_gost_Abi30GostAbiturMarkierungsalgorithmus(obj: unknown): Abi30GostAbiturMarkierungsalgorithmus {
 	return obj as Abi30GostAbiturMarkierungsalgorithmus;
 }

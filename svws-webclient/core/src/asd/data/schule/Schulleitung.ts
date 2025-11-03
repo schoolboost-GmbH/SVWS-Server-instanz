@@ -6,32 +6,32 @@ export class Schulleitung extends JavaObject {
 	/**
 	 * Die ID des Eintrags für die Schulleitungsfunktion
 	 */
-	public id : number = -1;
+	public id: number = -1;
 
 	/**
 	 * Die ID der Leitungsfunktion des Lehrers.
 	 */
-	public idLeitungsfunktion : number = 0;
+	public idLeitungsfunktion: number = 0;
 
 	/**
 	 * Die Bezeichnung der Leitungsfunktion (max. 255 Zeichen)
 	 */
-	public bezeichnung : string = "";
+	public bezeichnung: string = "";
 
 	/**
 	 * Die ID des Lehrers
 	 */
-	public idLehrer : number = -1;
+	public idLehrer: number = -1;
 
 	/**
 	 * Das Datum, mit welchem die Leitunsfunktion übernommen wurde
 	 */
-	public beginn : string | null = null;
+	public beginn: string | null = null;
 
 	/**
 	 * Das Datum, bis zu welchem die Leitunsfunktion übernommen wurde
 	 */
-	public ende : string | null = null;
+	public ende: string | null = null;
 
 
 	/**
@@ -45,13 +45,13 @@ export class Schulleitung extends JavaObject {
 		return 'de.svws_nrw.asd.data.schule.Schulleitung';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.asd.data.schule.Schulleitung'].includes(name);
 	}
 
 	public static class = new Class<Schulleitung>('de.svws_nrw.asd.data.schule.Schulleitung');
 
-	public static transpilerFromJSON(json : string): Schulleitung {
+	public static transpilerFromJSON(json: string): Schulleitung {
 		const obj = JSON.parse(json) as Partial<Schulleitung>;
 		const result = new Schulleitung();
 		if (obj.id === undefined)
@@ -71,7 +71,7 @@ export class Schulleitung extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : Schulleitung) : string {
+	public static transpilerToJSON(obj: Schulleitung): string {
 		let result = '{';
 		result += '"id" : ' + obj.id.toString() + ',';
 		result += '"idLeitungsfunktion" : ' + obj.idLeitungsfunktion.toString() + ',';
@@ -84,7 +84,7 @@ export class Schulleitung extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<Schulleitung>) : string {
+	public static transpilerToJSONPatch(obj: Partial<Schulleitung>): string {
 		let result = '{';
 		if (obj.id !== undefined) {
 			result += '"id" : ' + obj.id.toString() + ',';
@@ -111,6 +111,6 @@ export class Schulleitung extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_asd_data_schule_Schulleitung(obj : unknown) : Schulleitung {
+export function cast_de_svws_nrw_asd_data_schule_Schulleitung(obj: unknown): Schulleitung {
 	return obj as Schulleitung;
 }

@@ -20,7 +20,7 @@ export class RouteGostKlausurplanungDetailAnsicht extends RouteNode<any, RouteGo
 		super.text = "Detailplan";
 		this.isHidden = (params?: RouteParams) => {
 			return this.checkHidden(params);
-		}
+		};
 	}
 
 	public checkHidden(params?: RouteParams) {
@@ -36,7 +36,7 @@ export class RouteGostKlausurplanungDetailAnsicht extends RouteNode<any, RouteGo
 			abschnitt: routeGostKlausurplanung.data.abschnitt,
 			kMan: () => routeGostKlausurplanung.data.manager,
 			quartalsauswahl: routeGostKlausurplanung.data.quartalsauswahl,
-		}
+		};
 	}
 
 }

@@ -6,17 +6,17 @@ export class AbteilungKlassenzuordnung extends JavaObject {
 	/**
 	 * Die ID der Zuordnung
 	 */
-	public id : number = -1;
+	public id: number = -1;
 
 	/**
 	 * Die ID der Abteilung
 	 */
-	public idAbteilung : number = -1;
+	public idAbteilung: number = -1;
 
 	/**
 	 * Die ID der Klasse
 	 */
-	public idKlasse : number = -1;
+	public idKlasse: number = -1;
 
 
 	/**
@@ -30,13 +30,13 @@ export class AbteilungKlassenzuordnung extends JavaObject {
 		return 'de.svws_nrw.core.data.schule.AbteilungKlassenzuordnung';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.schule.AbteilungKlassenzuordnung'].includes(name);
 	}
 
 	public static class = new Class<AbteilungKlassenzuordnung>('de.svws_nrw.core.data.schule.AbteilungKlassenzuordnung');
 
-	public static transpilerFromJSON(json : string): AbteilungKlassenzuordnung {
+	public static transpilerFromJSON(json: string): AbteilungKlassenzuordnung {
 		const obj = JSON.parse(json) as Partial<AbteilungKlassenzuordnung>;
 		const result = new AbteilungKlassenzuordnung();
 		if (obj.id === undefined)
@@ -51,7 +51,7 @@ export class AbteilungKlassenzuordnung extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : AbteilungKlassenzuordnung) : string {
+	public static transpilerToJSON(obj: AbteilungKlassenzuordnung): string {
 		let result = '{';
 		result += '"id" : ' + obj.id.toString() + ',';
 		result += '"idAbteilung" : ' + obj.idAbteilung.toString() + ',';
@@ -61,7 +61,7 @@ export class AbteilungKlassenzuordnung extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<AbteilungKlassenzuordnung>) : string {
+	public static transpilerToJSONPatch(obj: Partial<AbteilungKlassenzuordnung>): string {
 		let result = '{';
 		if (obj.id !== undefined) {
 			result += '"id" : ' + obj.id.toString() + ',';
@@ -79,6 +79,6 @@ export class AbteilungKlassenzuordnung extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_schule_AbteilungKlassenzuordnung(obj : unknown) : AbteilungKlassenzuordnung {
+export function cast_de_svws_nrw_core_data_schule_AbteilungKlassenzuordnung(obj: unknown): AbteilungKlassenzuordnung {
 	return obj as AbteilungKlassenzuordnung;
 }

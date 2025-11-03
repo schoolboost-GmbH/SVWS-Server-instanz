@@ -86,10 +86,10 @@
 
 	const openModal = () => {
 		show.value = true;
-	}
+	};
 
 	async function importer() {
-		await props.addEintrag(betrieb.value)
+		await props.addEintrag(betrieb.value);
 		betrieb.value = new BetriebStammdaten();
 		show.value = false;
 	}

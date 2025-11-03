@@ -15,23 +15,23 @@ import de.svws_nrw.db.schema.SchemaTabelleSpalte;
 public class Tabelle_UV_Unterrichte_Lerngruppenlehrer extends SchemaTabelle {
 
 	/** Die Definition der Tabellenspalte Unterricht_ID */
-	public SchemaTabelleSpalte col_Unterricht_ID = add("Unterricht_ID", SchemaDatentypen.BIGINT, true)
+	public final SchemaTabelleSpalte col_Unterricht_ID = add("Unterricht_ID", SchemaDatentypen.BIGINT, true)
 			.setNotNull()
 			.setJavaComment("ID des UV_Unterrichts");
 
 	/** Die Definition der Tabellenspalte LerngruppenLehrer_ID */
-	public SchemaTabelleSpalte col_LerngruppenLehrer_ID = add("LerngruppenLehrer_ID", SchemaDatentypen.BIGINT, true)
+	public final SchemaTabelleSpalte col_LerngruppenLehrer_ID = add("LerngruppenLehrer_ID", SchemaDatentypen.BIGINT, true)
 			.setNotNull()
 			.setJavaComment("ID des Lehrers, welcher der Lerngruppe zugeordnet ist");
 
 	/** Die Definition der Tabellenspalte Planungsabschnitt_ID */
-	public SchemaTabelleSpalte col_Planungsabschnitt_ID = add("Planungsabschnitt_ID", SchemaDatentypen.BIGINT, false)
+	public final SchemaTabelleSpalte col_Planungsabschnitt_ID = add("Planungsabschnitt_ID", SchemaDatentypen.BIGINT, false)
 			.setNotNull()
 			.setJavaComment("Die ID des Planungsabschnitts als Fremdschlüssel auf die Tabelle UV_Planungsabschnitte");
 
 
 	/** Die Definition des Fremdschlüssels UV_UnterrichteLerngruppenlehrer_Unterrichte_FK */
-	public SchemaTabelleFremdschluessel fk_UV_UnterrichteLerngruppenlehrer_Unterrichte_FK = addForeignKey(
+	public final SchemaTabelleFremdschluessel fk_UV_UnterrichteLerngruppenlehrer_Unterrichte_FK = addForeignKey(
 			"UV_UnterrichteLerngruppenlehrer_Unterrichte_FK",
 			/* OnUpdate: */ SchemaFremdschluesselAktionen.CASCADE,
 			/* OnDelete: */ SchemaFremdschluesselAktionen.CASCADE,
@@ -40,7 +40,7 @@ public class Tabelle_UV_Unterrichte_Lerngruppenlehrer extends SchemaTabelle {
 	);
 
 	/** Die Definition des Fremdschlüssels UV_UnterrichteLerngruppenlehrer_LerngruppenLehrer_FK */
-	public SchemaTabelleFremdschluessel fk_UV_UnterrichteLerngruppenlehrer_LerngruppenLehrer_FK = addForeignKey(
+	public final SchemaTabelleFremdschluessel fk_UV_UnterrichteLerngruppenlehrer_LerngruppenLehrer_FK = addForeignKey(
 			"UV_UnterrichteLerngruppenlehrer_LerngruppenLehrer_FK",
 			/* OnUpdate: */ SchemaFremdschluesselAktionen.CASCADE,
 			/* OnDelete: */ SchemaFremdschluesselAktionen.CASCADE,

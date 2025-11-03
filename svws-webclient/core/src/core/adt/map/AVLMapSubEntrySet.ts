@@ -12,7 +12,7 @@ export class AVLMapSubEntrySet<K, V> extends JavaObject implements JavaSet<JavaM
 	/**
 	 *  Die {@link AVLMapSubMap} auf der diese Sup-Map operiert.
 	 */
-	private readonly _sub : AVLMapSubMap<K, V>;
+	private readonly _sub: AVLMapSubMap<K, V>;
 
 
 	/**
@@ -20,72 +20,72 @@ export class AVLMapSubEntrySet<K, V> extends JavaObject implements JavaSet<JavaM
 	 *
 	 * @param sub Die {@link AVLMapSubMap} auf der operiert wird.
 	 */
-	constructor(sub : AVLMapSubMap<K, V>) {
+	constructor(sub: AVLMapSubMap<K, V>) {
 		super();
 		this._sub = sub;
 	}
 
-	public toString() : string {
+	public toString(): string {
 		return this._sub.toString();
 	}
 
-	public size() : number {
+	public size(): number {
 		return this._sub.size();
 	}
 
-	public isEmpty() : boolean {
+	public isEmpty(): boolean {
 		return this._sub.isEmpty();
 	}
 
-	public contains(o : unknown) : boolean {
+	public contains(o: unknown): boolean {
 		return this._sub.bcContainsEntry(o);
 	}
 
-	public iterator() : JavaIterator<JavaMapEntry<K, V>> {
+	public iterator(): JavaIterator<JavaMapEntry<K, V>> {
 		return this._sub.bcGetSubEntrySetIterator();
 	}
 
 	public toArray() : Array<unknown | null>;
 
-	public toArray<T>(a : Array<T | null>) : Array<T | null>;
+	public toArray<T>(a: Array<T | null>) : Array<T | null>;
 
 	/**
 	 * Implementation for method overloads of 'toArray'
 	 */
-	public toArray<T>(__param0? : Array<T | null>) : Array<T | null> | Array<unknown | null> {
+	public toArray<T>(__param0?: Array<T | null>): Array<T | null> | Array<unknown | null> {
 		if ((__param0 === undefined)) {
 			return this._sub.bcGetArrayListOfEntries().toArray();
 		} else if (((__param0 !== undefined) && Array.isArray(__param0))) {
-			const a : Array<T | null> = __param0 as unknown as Array<T>;
+			const a: Array<T | null> = __param0 as unknown as Array<T>;
 			return this._sub.bcGetArrayListOfEntries().toArray(a);
 		} else throw new Error('invalid method overload');
 	}
 
-	public add(e : JavaMapEntry<K, V>) : boolean {
+	public add(e: JavaMapEntry<K, V>): boolean {
 		return this._sub.bcAddEntryReturnBool(e);
 	}
 
-	public remove(o : unknown) : boolean {
+	public remove(o: unknown): boolean {
 		return this._sub.bcRemoveEntry(o);
 	}
 
-	public containsAll(c : Collection<any>) : boolean {
+	public containsAll(c: Collection<any>): boolean {
 		return this._sub.bcContainsAllEntries(c);
 	}
 
-	public addAll(c : Collection<JavaMapEntry<K, V>>) : boolean {
+	public addAll(c: Collection<JavaMapEntry<K, V>>): boolean {
 		return this._sub.bcAddAllEntries(c);
 	}
 
-	public retainAll(c : Collection<any>) : boolean {
+	public retainAll(c: Collection<any>): boolean {
 		return this._sub.bcRetainAllEntries(c);
 	}
 
-	public removeAll(c : Collection<any>) : boolean {
+	public removeAll(c: Collection<any>): boolean {
 		return this._sub.bcRemoveAllEntries(c);
 	}
 
-	public clear() : void {
+	public clear(): void {
 		this._sub.clear();
 	}
 
@@ -93,16 +93,16 @@ export class AVLMapSubEntrySet<K, V> extends JavaObject implements JavaSet<JavaM
 		return 'de.svws_nrw.core.adt.map.AVLMapSubEntrySet';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.adt.map.AVLMapSubEntrySet', 'java.util.Collection', 'java.util.Set', 'java.lang.Iterable'].includes(name);
 	}
 
 	public static class = new Class<AVLMapSubEntrySet<any, any>>('de.svws_nrw.core.adt.map.AVLMapSubEntrySet');
 
 	public [Symbol.iterator](): Iterator<JavaMapEntry<any, any>> {
-		const iter : JavaIterator<JavaMapEntry<any, any>> = this.iterator();
-		const result : Iterator<JavaMapEntry<any, any>> = {
-			next() : IteratorResult<JavaMapEntry<any, any>> {
+		const iter: JavaIterator<JavaMapEntry<any, any>> = this.iterator();
+		const result: Iterator<JavaMapEntry<any, any>> = {
+			next(): IteratorResult<JavaMapEntry<any, any>> {
 				if (iter.hasNext())
 					return { value : iter.next(), done : false };
 				return { value : null, done : true };
@@ -113,6 +113,6 @@ export class AVLMapSubEntrySet<K, V> extends JavaObject implements JavaSet<JavaM
 
 }
 
-export function cast_de_svws_nrw_core_adt_map_AVLMapSubEntrySet<K, V>(obj : unknown) : AVLMapSubEntrySet<K, V> {
+export function cast_de_svws_nrw_core_adt_map_AVLMapSubEntrySet<K, V>(obj: unknown): AVLMapSubEntrySet<K, V> {
 	return obj as AVLMapSubEntrySet<K, V>;
 }

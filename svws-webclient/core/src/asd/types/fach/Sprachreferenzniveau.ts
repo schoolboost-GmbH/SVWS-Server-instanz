@@ -9,82 +9,82 @@ import { SprachreferenzniveauKatalogEintrag } from '../../../asd/data/fach/Sprac
 export class Sprachreferenzniveau extends JavaEnum<Sprachreferenzniveau> implements CoreType<SprachreferenzniveauKatalogEintrag, Sprachreferenzniveau> {
 
 	/** an array containing all values of this enumeration */
-	static readonly all_values_by_ordinal : Array<Sprachreferenzniveau> = [];
+	static readonly all_values_by_ordinal: Array<Sprachreferenzniveau> = [];
 
 	/** an array containing all values of this enumeration indexed by their name*/
-	static readonly all_values_by_name : Map<string, Sprachreferenzniveau> = new Map<string, Sprachreferenzniveau>();
+	static readonly all_values_by_name: Map<string, Sprachreferenzniveau> = new Map<string, Sprachreferenzniveau>();
 
 	/**
 	 * Referenzniveau nach GeR Pre-A1.
 	 */
-	public static readonly A1M : Sprachreferenzniveau = new Sprachreferenzniveau("A1M", 0, );
+	public static readonly A1M: Sprachreferenzniveau = new Sprachreferenzniveau("A1M", 0, );
 
 	/**
 	 * Referenzniveau nach GeR A1.
 	 */
-	public static readonly A1 : Sprachreferenzniveau = new Sprachreferenzniveau("A1", 1, );
+	public static readonly A1: Sprachreferenzniveau = new Sprachreferenzniveau("A1", 1, );
 
 	/**
 	 * Referenzniveau nach GeR A1 Plus
 	 */
-	public static readonly A1P : Sprachreferenzniveau = new Sprachreferenzniveau("A1P", 2, );
+	public static readonly A1P: Sprachreferenzniveau = new Sprachreferenzniveau("A1P", 2, );
 
 	/**
 	 * Referenzniveau nach GeR A1A2
 	 */
-	public static readonly A1A2 : Sprachreferenzniveau = new Sprachreferenzniveau("A1A2", 3, );
+	public static readonly A1A2: Sprachreferenzniveau = new Sprachreferenzniveau("A1A2", 3, );
 
 	/**
 	 * Referenzniveau nach GeR A2
 	 */
-	public static readonly A2 : Sprachreferenzniveau = new Sprachreferenzniveau("A2", 4, );
+	public static readonly A2: Sprachreferenzniveau = new Sprachreferenzniveau("A2", 4, );
 
 	/**
 	 * Referenzniveau nach GeR A2 Plus
 	 */
-	public static readonly A2P : Sprachreferenzniveau = new Sprachreferenzniveau("A2P", 5, );
+	public static readonly A2P: Sprachreferenzniveau = new Sprachreferenzniveau("A2P", 5, );
 
 	/**
 	 * Referenzniveau nach GeR A2B1.
 	 */
-	public static readonly A2B1 : Sprachreferenzniveau = new Sprachreferenzniveau("A2B1", 6, );
+	public static readonly A2B1: Sprachreferenzniveau = new Sprachreferenzniveau("A2B1", 6, );
 
 	/**
 	 * Referenzniveau nach GeR B1.
 	 */
-	public static readonly B1 : Sprachreferenzniveau = new Sprachreferenzniveau("B1", 7, );
+	public static readonly B1: Sprachreferenzniveau = new Sprachreferenzniveau("B1", 7, );
 
 	/**
 	 * Referenzniveau nach GeR B1 Plus.
 	 */
-	public static readonly B1P : Sprachreferenzniveau = new Sprachreferenzniveau("B1P", 8, );
+	public static readonly B1P: Sprachreferenzniveau = new Sprachreferenzniveau("B1P", 8, );
 
 	/**
 	 * Referenzniveau nach GeR B1B2.
 	 */
-	public static readonly B1B2 : Sprachreferenzniveau = new Sprachreferenzniveau("B1B2", 9, );
+	public static readonly B1B2: Sprachreferenzniveau = new Sprachreferenzniveau("B1B2", 9, );
 
 	/**
 	 * Referenzniveau nach GeR B2.
 	 */
-	public static readonly B2 : Sprachreferenzniveau = new Sprachreferenzniveau("B2", 10, );
+	public static readonly B2: Sprachreferenzniveau = new Sprachreferenzniveau("B2", 10, );
 
 	/**
 	 * Referenzniveau nach GeR B2C1.
 	 */
-	public static readonly B2C1 : Sprachreferenzniveau = new Sprachreferenzniveau("B2C1", 11, );
+	public static readonly B2C1: Sprachreferenzniveau = new Sprachreferenzniveau("B2C1", 11, );
 
 	/**
 	 * Referenzniveau nach GeR C1.
 	 */
-	public static readonly C1 : Sprachreferenzniveau = new Sprachreferenzniveau("C1", 12, );
+	public static readonly C1: Sprachreferenzniveau = new Sprachreferenzniveau("C1", 12, );
 
 	/**
 	 * Referenzniveau nach GeR C2.
 	 */
-	public static readonly C2 : Sprachreferenzniveau = new Sprachreferenzniveau("C2", 13, );
+	public static readonly C2: Sprachreferenzniveau = new Sprachreferenzniveau("C2", 13, );
 
-	private constructor(name : string, ordinal : number) {
+	private constructor(name: string, ordinal: number) {
 		super(name, ordinal);
 		Sprachreferenzniveau.all_values_by_ordinal.push(this);
 		Sprachreferenzniveau.all_values_by_name.set(name, this);
@@ -95,7 +95,7 @@ export class Sprachreferenzniveau extends JavaEnum<Sprachreferenzniveau> impleme
 	 *
 	 * @param manager   der Manager für die Daten des Core-Types
 	 */
-	public static init(manager : CoreTypeDataManager<SprachreferenzniveauKatalogEintrag, Sprachreferenzniveau>) : void {
+	public static init(manager: CoreTypeDataManager<SprachreferenzniveauKatalogEintrag, Sprachreferenzniveau>): void {
 		CoreTypeDataManager.putManager(Sprachreferenzniveau.class, manager);
 	}
 
@@ -104,7 +104,7 @@ export class Sprachreferenzniveau extends JavaEnum<Sprachreferenzniveau> impleme
 	 *
 	 * @return der Daten-Manager
 	 */
-	public static data() : CoreTypeDataManager<SprachreferenzniveauKatalogEintrag, Sprachreferenzniveau> {
+	public static data(): CoreTypeDataManager<SprachreferenzniveauKatalogEintrag, Sprachreferenzniveau> {
 		return CoreTypeDataManager.getManager(Sprachreferenzniveau.class);
 	}
 
@@ -115,7 +115,7 @@ export class Sprachreferenzniveau extends JavaEnum<Sprachreferenzniveau> impleme
 	 *
 	 * @return -1 (kleiner), 0 (gleich) oder 1 (größer)
 	 */
-	public compare(other : Sprachreferenzniveau | null) : number {
+	public compare(other: Sprachreferenzniveau | null): number {
 		if (other === null)
 			return 1;
 		return this.compareTo(other);
@@ -128,7 +128,7 @@ export class Sprachreferenzniveau extends JavaEnum<Sprachreferenzniveau> impleme
 	 *
 	 * @return -1 (kleiner), 0 (gleich) oder 1 (größer)
 	 */
-	public compareByKuerzel(kuerzel : string | null) : number {
+	public compareByKuerzel(kuerzel: string | null): number {
 		if (kuerzel === null)
 			return 1;
 		return this.compare(Sprachreferenzniveau.data().getWertByKuerzel(kuerzel));
@@ -139,7 +139,7 @@ export class Sprachreferenzniveau extends JavaEnum<Sprachreferenzniveau> impleme
 	 *
 	 * @returns the array with enumeration values
 	 */
-	public static values() : Array<Sprachreferenzniveau> {
+	public static values(): Array<Sprachreferenzniveau> {
 		return [...this.all_values_by_ordinal];
 	}
 
@@ -150,24 +150,24 @@ export class Sprachreferenzniveau extends JavaEnum<Sprachreferenzniveau> impleme
 	 *
 	 * @returns the enumeration values or null
 	 */
-	public static valueOf(name : string) : Sprachreferenzniveau | null {
+	public static valueOf(name: string): Sprachreferenzniveau | null {
 		const tmp = this.all_values_by_name.get(name);
 		return (!tmp) ? null : tmp;
 	}
 
-	public getManager() : CoreTypeDataManager<SprachreferenzniveauKatalogEintrag, Sprachreferenzniveau> {
+	public getManager(): CoreTypeDataManager<SprachreferenzniveauKatalogEintrag, Sprachreferenzniveau> {
 		return de_svws_nrw_asd_types_CoreType_getManager(this);
 	}
 
-	public daten(schuljahr : number) : SprachreferenzniveauKatalogEintrag | null {
+	public daten(schuljahr: number): SprachreferenzniveauKatalogEintrag | null {
 		return de_svws_nrw_asd_types_CoreType_daten(this, schuljahr);
 	}
 
-	public statistikId() : string | null {
+	public statistikId(): string | null {
 		return de_svws_nrw_asd_types_CoreType_statistikId(this);
 	}
 
-	public historie() : List<SprachreferenzniveauKatalogEintrag> {
+	public historie(): List<SprachreferenzniveauKatalogEintrag> {
 		return de_svws_nrw_asd_types_CoreType_historie(this);
 	}
 
@@ -175,7 +175,7 @@ export class Sprachreferenzniveau extends JavaEnum<Sprachreferenzniveau> impleme
 		return 'de.svws_nrw.asd.types.fach.Sprachreferenzniveau';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.asd.types.CoreType', 'java.lang.Comparable', 'de.svws_nrw.asd.types.fach.Sprachreferenzniveau', 'java.lang.Enum', 'java.lang.Comparable'].includes(name);
 	}
 
@@ -183,6 +183,6 @@ export class Sprachreferenzniveau extends JavaEnum<Sprachreferenzniveau> impleme
 
 }
 
-export function cast_de_svws_nrw_asd_types_fach_Sprachreferenzniveau(obj : unknown) : Sprachreferenzniveau {
+export function cast_de_svws_nrw_asd_types_fach_Sprachreferenzniveau(obj: unknown): Sprachreferenzniveau {
 	return obj as Sprachreferenzniveau;
 }

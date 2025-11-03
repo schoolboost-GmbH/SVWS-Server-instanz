@@ -17,19 +17,19 @@ import { GostBelegungsfehler } from '../../../../core/abschluss/gost/GostBelegun
 
 export class GesellschaftswissenschaftenUndReligion extends GostBelegpruefung {
 
-	private gesellschaftswissenschaften : List<AbiturFachbelegung> | null = null;
+	private gesellschaftswissenschaften: List<AbiturFachbelegung> | null = null;
 
-	private geschichte : List<AbiturFachbelegung> | null = null;
+	private geschichte: List<AbiturFachbelegung> | null = null;
 
-	private sozialwissenschaften : List<AbiturFachbelegung> | null = null;
+	private sozialwissenschaften: List<AbiturFachbelegung> | null = null;
 
-	private philosophie : AbiturFachbelegung | null = null;
+	private philosophie: AbiturFachbelegung | null = null;
 
-	private sonstige_gesellschaftswissenschaften : List<AbiturFachbelegung> | null = null;
+	private sonstige_gesellschaftswissenschaften: List<AbiturFachbelegung> | null = null;
 
-	private religion : List<AbiturFachbelegung> | null = null;
+	private religion: List<AbiturFachbelegung> | null = null;
 
-	private zusatzkursFachbelegungen : ArrayList<AbiturFachbelegung> | null = null;
+	private zusatzkursFachbelegungen: ArrayList<AbiturFachbelegung> | null = null;
 
 
 	/**
@@ -38,11 +38,11 @@ export class GesellschaftswissenschaftenUndReligion extends GostBelegpruefung {
 	 * @param manager        der Daten-Manager für die Abiturdaten
 	 * @param pruefungsArt   die Art der durchzuführenden Prüfung (z.B. EF.1 oder GESAMT)
 	 */
-	public constructor(manager : AbiturdatenManager, pruefungsArt : GostBelegpruefungsArt) {
+	public constructor(manager: AbiturdatenManager, pruefungsArt: GostBelegpruefungsArt) {
 		super(manager, pruefungsArt);
 	}
 
-	protected init() : void {
+	protected init(): void {
 		this.gesellschaftswissenschaften = this.manager.getRelevanteFachbelegungen(GostFachbereich.GESELLSCHAFTSWISSENSCHAFTLICH);
 		this.geschichte = this.manager.getRelevanteFachbelegungen(GostFachbereich.GESCHICHTE);
 		this.sozialwissenschaften = this.manager.getRelevanteFachbelegungen(GostFachbereich.SOZIALWISSENSCHAFTEN);
@@ -52,7 +52,7 @@ export class GesellschaftswissenschaftenUndReligion extends GostBelegpruefung {
 		this.zusatzkursFachbelegungen = new ArrayList();
 	}
 
-	protected pruefeEF1() : void {
+	protected pruefeEF1(): void {
 		this.pruefeGesellschaftswissenschaftenEF1();
 		this.pruefeReligionEF1();
 	}
@@ -63,7 +63,7 @@ export class GesellschaftswissenschaftenUndReligion extends GostBelegpruefung {
 	 *    und ob Geschichte belegt wurde
 	 *    und ob Sozialwissenschaften belegt wurde
 	 */
-	private pruefeGesellschaftswissenschaftenEF1() : void {
+	private pruefeGesellschaftswissenschaftenEF1(): void {
 		if (!this.manager.pruefeBelegungDurchgehendBelegbarExistiert(this.gesellschaftswissenschaften, GostSchriftlichkeit.BELIEBIG, GostHalbjahr.EF1))
 			this.addFehler(GostBelegungsfehler.GW_10);
 		if (!this.manager.pruefeBelegungExistiertMitSchriftlichkeitEinzeln(this.gesellschaftswissenschaften, GostSchriftlichkeit.SCHRIFTLICH, GostHalbjahr.EF1))
@@ -79,7 +79,7 @@ export class GesellschaftswissenschaftenUndReligion extends GostBelegpruefung {
 	 * Prüfe, ob Religion in EF.1 belegt wurde oder ob Philosophie und eine weitere durchgehend belegbare Gesellschaftswissenschaft belegt wurde.
 	 * Falls Philosophie als Ersatz für Religion gewählt wurde, zählt es nicht als durchgehend belegte Gesellschaftswissenschaft.
 	 */
-	private pruefeReligionEF1() : void {
+	private pruefeReligionEF1(): void {
 		if (this.manager.pruefeBelegungExistiert(this.religion, GostHalbjahr.EF1))
 			return;
 		if ((!this.manager.pruefeBelegung(this.philosophie, GostHalbjahr.EF1)) || ((!this.manager.pruefeBelegungDurchgehendBelegbarExistiert(this.geschichte, GostSchriftlichkeit.BELIEBIG, GostHalbjahr.EF1)) && (!this.manager.pruefeBelegungDurchgehendBelegbarExistiert(this.sozialwissenschaften, GostSchriftlichkeit.BELIEBIG, GostHalbjahr.EF1)) && (!this.manager.pruefeBelegungDurchgehendBelegbarExistiert(this.sonstige_gesellschaftswissenschaften, GostSchriftlichkeit.BELIEBIG, GostHalbjahr.EF1)))) {
@@ -87,7 +87,7 @@ export class GesellschaftswissenschaftenUndReligion extends GostBelegpruefung {
 		}
 	}
 
-	protected pruefeGesamt() : void {
+	protected pruefeGesamt(): void {
 		this.pruefeSchriftlichkeitEF();
 		this.pruefeDurchgaengigeBelegung();
 		this.pruefeDurchgaengigeBelegungUndSchriftlich();
@@ -104,7 +104,7 @@ export class GesellschaftswissenschaftenUndReligion extends GostBelegpruefung {
 	 * Gesamtprüfung Punkt 39:
 	 * Prüfe, on in EF.1 und EF.2 jeweils ein Fach der Gesellschaftswissenschaften schriftlich belegt wurde
 	 */
-	private pruefeSchriftlichkeitEF() : void {
+	private pruefeSchriftlichkeitEF(): void {
 		if ((!this.manager.pruefeBelegungExistiertMitSchriftlichkeitEinzeln(this.gesellschaftswissenschaften, GostSchriftlichkeit.SCHRIFTLICH, GostHalbjahr.EF1)) || (!this.manager.pruefeBelegungExistiertMitSchriftlichkeitEinzeln(this.gesellschaftswissenschaften, GostSchriftlichkeit.SCHRIFTLICH, GostHalbjahr.EF2)))
 			this.addFehler(GostBelegungsfehler.GW_11);
 	}
@@ -114,7 +114,7 @@ export class GesellschaftswissenschaftenUndReligion extends GostBelegpruefung {
 	 * Prüfe, ob ein Fach der Gesellschaftswissenschaften von EF.1 bis Q2.2 durchgängig belegt wurde
 	 * - Zusatzkurse zählen hier nicht als Belegung
 	 */
-	private pruefeDurchgaengigeBelegung() : void {
+	private pruefeDurchgaengigeBelegung(): void {
 		if (!this.manager.pruefeBelegungExistiert(this.gesellschaftswissenschaften, GostHalbjahr.EF1, GostHalbjahr.EF2, GostHalbjahr.Q11, GostHalbjahr.Q12, GostHalbjahr.Q21, GostHalbjahr.Q22))
 			this.addFehler(GostBelegungsfehler.GW_10);
 	}
@@ -125,7 +125,7 @@ export class GesellschaftswissenschaftenUndReligion extends GostBelegpruefung {
 	 * und von Q1.1 bis Q2.1 schriftlich belegt wurde, damit es als potentielles Abiturfach zur Verfügung steht.
 	 * - Zusatzkurse zählen hier nicht als Belegung
 	 */
-	private pruefeDurchgaengigeBelegungUndSchriftlich() : void {
+	private pruefeDurchgaengigeBelegungUndSchriftlich(): void {
 		if (this.manager.pruefeBelegungExistiertDurchgehendSchriftlich(this.gesellschaftswissenschaften))
 			return;
 		if (this.manager.pruefeBelegungExistiertDurchgehendSchriftlich(this.religion))
@@ -142,30 +142,30 @@ export class GesellschaftswissenschaftenUndReligion extends GostBelegpruefung {
 	 *
 	 * @param fachbelegungen   die Fachbelegung für Geschichte oder Sozialwissenschaften
 	 */
-	private pruefeZusatzkurs(fachbelegungen : List<AbiturFachbelegung> | null) : void {
+	private pruefeZusatzkurs(fachbelegungen: List<AbiturFachbelegung> | null): void {
 		if ((fachbelegungen === null) || (fachbelegungen.isEmpty()))
 			return;
-		const fachbelegungenZK : List<AbiturFachbelegung> | null = this.manager.filterBelegungKursartExistiert(fachbelegungen, GostKursart.ZK);
+		const fachbelegungenZK: List<AbiturFachbelegung> | null = this.manager.filterBelegungKursartExistiert(fachbelegungen, GostKursart.ZK);
 		if (fachbelegungenZK.isEmpty())
 			return;
 		if (fachbelegungenZK.size() > 1)
 			this.addFehler(GostBelegungsfehler.ZK_13);
-		const fachbelegung : AbiturFachbelegung | null = fachbelegungenZK.get(0);
-		const fach : GostFach | null = this.manager.getFach(fachbelegung);
+		const fachbelegung: AbiturFachbelegung | null = fachbelegungenZK.get(0);
+		const fach: GostFach | null = this.manager.getFach(fachbelegung);
 		if (fach === null)
 			throw new NullPointerException()
 		if (GostFachUtils.istBilingual(fach))
 			this.addFehler(GostBelegungsfehler.ZK_13);
-		const zFach : Fach | null = Fach.getBySchluesselOrDefault(fach.kuerzel);
+		const zFach: Fach | null = Fach.getBySchluesselOrDefault(fach.kuerzel);
 		if ((zFach as unknown === Fach.GE as unknown) && (!this.manager.istErlaubtZusatzkursGE()))
 			this.addFehler(GostBelegungsfehler.ZK_14);
 		if ((zFach as unknown === Fach.SW as unknown) && (!this.manager.istErlaubtZusatzkursSW()))
 			this.addFehler(GostBelegungsfehler.ZK_15);
-		const halbjahre : List<GostHalbjahr> = this.manager.getHalbjahreKursart(fachbelegung, GostKursart.ZK);
+		const halbjahre: List<GostHalbjahr> = this.manager.getHalbjahreKursart(fachbelegung, GostKursart.ZK);
 		if (halbjahre.size() === 2) {
-			const belegungQ11 : boolean = this.manager.pruefeBelegungMitKursart(fachbelegung, GostKursart.ZK, GostHalbjahr.Q11, GostHalbjahr.Q12);
-			const belegungQ12 : boolean = this.manager.pruefeBelegungMitKursart(fachbelegung, GostKursart.ZK, GostHalbjahr.Q12, GostHalbjahr.Q21);
-			const belegungQ21 : boolean = this.manager.pruefeBelegungMitKursart(fachbelegung, GostKursart.ZK, GostHalbjahr.Q21, GostHalbjahr.Q22);
+			const belegungQ11: boolean = this.manager.pruefeBelegungMitKursart(fachbelegung, GostKursart.ZK, GostHalbjahr.Q11, GostHalbjahr.Q12);
+			const belegungQ12: boolean = this.manager.pruefeBelegungMitKursart(fachbelegung, GostKursart.ZK, GostHalbjahr.Q12, GostHalbjahr.Q21);
+			const belegungQ21: boolean = this.manager.pruefeBelegungMitKursart(fachbelegung, GostKursart.ZK, GostHalbjahr.Q21, GostHalbjahr.Q22);
 			if ((this.zusatzkursFachbelegungen !== null) && (belegungQ11 || belegungQ12 || belegungQ21))
 				this.zusatzkursFachbelegungen.add(fachbelegung);
 			if ((belegungQ11 && (this.manager.zaehleBelegungInHalbjahren(fachbelegungenZK, GostHalbjahr.Q21, GostHalbjahr.Q22) > 0)) || (belegungQ12 && (this.manager.zaehleBelegungInHalbjahren(fachbelegungenZK, GostHalbjahr.Q22) > 0)))
@@ -175,7 +175,7 @@ export class GesellschaftswissenschaftenUndReligion extends GostBelegpruefung {
 				this.addFehler(GostBelegungsfehler.ZK_12);
 			}
 		if (!halbjahre.isEmpty()) {
-			const prevHalbjahr : GostHalbjahr | null = halbjahre.get(0).previous();
+			const prevHalbjahr: GostHalbjahr | null = halbjahre.get(0).previous();
 			if ((prevHalbjahr !== null) && (this.manager.pruefeBelegung(fachbelegung, prevHalbjahr)))
 				this.addFehler(GostBelegungsfehler.ZK_10);
 		}
@@ -191,7 +191,7 @@ export class GesellschaftswissenschaftenUndReligion extends GostBelegpruefung {
 	 * Gesamtprüfung Punkt 41:
 	 * Prüft, ob Geschichte korrekt belegt wurde (mind. von EF.1 bis Q1.2 oder als Zusatzkurs)
 	 */
-	private pruefeBelegungGeschichte() : void {
+	private pruefeBelegungGeschichte(): void {
 		if ((this.geschichte === null) || (this.geschichte.isEmpty())) {
 			this.addFehler(GostBelegungsfehler.GE_10);
 			return;
@@ -209,7 +209,7 @@ export class GesellschaftswissenschaftenUndReligion extends GostBelegpruefung {
 	 * Gesamtprüfung Punkt 42:
 	 * Prüft, ob Sozialwissenschaften korrekt belegt wurde (mind. von EF.1 bis Q1.2 oder als Zusatzkurs)
 	 */
-	private pruefeBelegungSozialwissenschaften() : void {
+	private pruefeBelegungSozialwissenschaften(): void {
 		if ((this.sozialwissenschaften === null) || (this.sozialwissenschaften.isEmpty())) {
 			this.addFehler(GostBelegungsfehler.SW_10);
 			return;
@@ -228,7 +228,7 @@ export class GesellschaftswissenschaftenUndReligion extends GostBelegpruefung {
 	 * Prüft die Belegung von Religion und Philosophie in der EF. Wird Philosophie als Ersatz belegt, so wird auch geprüft,
 	 * ob eine weitere Gesellschaftswissenschaft belegt wurde.
 	 */
-	private pruefeReligionEF() : void {
+	private pruefeReligionEF(): void {
 		for (const halbjahr of GostHalbjahr.getEinfuehrungsphase()) {
 			if (this.manager.pruefeBelegungExistiertEinzeln(this.religion, halbjahr))
 				continue;
@@ -244,7 +244,7 @@ export class GesellschaftswissenschaftenUndReligion extends GostBelegpruefung {
 	 * Prüft die Belegung von Religion und Philosophie. Wird Philosophie als Ersatz belegt, so wird auch geprüft, ob eine weitere
 	 * Gesellschaftswissenschaft belegt wurde.
 	 */
-	private pruefeReligionQ1() : void {
+	private pruefeReligionQ1(): void {
 		for (const halbjahr of GostHalbjahr.getHalbjahreFromJahrgang("Q1")) {
 			if (this.manager.pruefeBelegungExistiertEinzeln(this.religion, halbjahr))
 				continue;
@@ -270,16 +270,16 @@ export class GesellschaftswissenschaftenUndReligion extends GostBelegpruefung {
 	 * Prüft, ob Fehler bei der Kontinuität bei Philosophie und Religion nur durch die Ersatzfachregelung bei Religion
 	 * zustandekommen und damit zulässig sind.
 	 */
-	private pruefeReligionKontinuitaet() : void {
+	private pruefeReligionKontinuitaet(): void {
 		if (this.philosophie === null)
 			return;
 		for (const belegung of this.philosophie.belegungen) {
 			if (belegung === null)
 				continue;
-			const halbjahr : GostHalbjahr | null = GostHalbjahr.fromKuerzel(belegung.halbjahrKuerzel);
+			const halbjahr: GostHalbjahr | null = GostHalbjahr.fromKuerzel(belegung.halbjahrKuerzel);
 			if (halbjahr === null)
 				continue;
-			const prevHalbjahr : GostHalbjahr | null = halbjahr.previous();
+			const prevHalbjahr: GostHalbjahr | null = halbjahr.previous();
 			if (prevHalbjahr === null)
 				continue;
 			if (this.manager.pruefeBelegung(this.philosophie, prevHalbjahr))
@@ -295,7 +295,7 @@ export class GesellschaftswissenschaftenUndReligion extends GostBelegpruefung {
 		return 'de.svws_nrw.core.abschluss.gost.belegpruefung.GesellschaftswissenschaftenUndReligion';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.abschluss.gost.GostBelegpruefung', 'de.svws_nrw.core.abschluss.gost.belegpruefung.GesellschaftswissenschaftenUndReligion'].includes(name);
 	}
 
@@ -303,6 +303,6 @@ export class GesellschaftswissenschaftenUndReligion extends GostBelegpruefung {
 
 }
 
-export function cast_de_svws_nrw_core_abschluss_gost_belegpruefung_GesellschaftswissenschaftenUndReligion(obj : unknown) : GesellschaftswissenschaftenUndReligion {
+export function cast_de_svws_nrw_core_abschluss_gost_belegpruefung_GesellschaftswissenschaftenUndReligion(obj: unknown): GesellschaftswissenschaftenUndReligion {
 	return obj as GesellschaftswissenschaftenUndReligion;
 }

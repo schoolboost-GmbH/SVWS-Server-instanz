@@ -124,7 +124,7 @@
 			return false;
 
 		return props.valid(data.value);
-	})
+	});
 
 	function updateData(value: number | null) {
 		if (data.value !== value) {

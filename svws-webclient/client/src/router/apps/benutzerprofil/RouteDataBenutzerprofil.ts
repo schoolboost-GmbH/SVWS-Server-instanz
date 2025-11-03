@@ -27,9 +27,9 @@ export class RouteDataBenutzerprofil extends RouteData<RouteStateBenutzerprofil>
 	}
 
 	public patch = async (data: Partial<BenutzerDaten>) => {
-		console.log("TODO: Benutzerdaten patchen")
-		//api.server.patch
-	}
+		console.log("TODO: Benutzerdaten patchen");
+		// api.server.patch
+	};
 
 	public patchPasswort = async (eins: string, zwei: string): Promise<boolean> => {
 		if (eins !== zwei)
@@ -41,7 +41,7 @@ export class RouteDataBenutzerprofil extends RouteData<RouteStateBenutzerprofil>
 		} catch (e) {
 			return false;
 		}
-	}
+	};
 
 	public patchPasswortWenom = async (eins: string, zwei: string): Promise<boolean> => {
 		if ((eins !== zwei) || (api.benutzertyp !== BenutzerTyp.LEHRER))
@@ -53,7 +53,7 @@ export class RouteDataBenutzerprofil extends RouteData<RouteStateBenutzerprofil>
 		} catch (e) {
 			return false;
 		}
-	}
+	};
 
 	public passwordResetWenom = async () => {
 		try {
@@ -64,14 +64,14 @@ export class RouteDataBenutzerprofil extends RouteData<RouteStateBenutzerprofil>
 		} catch (e) {
 			return false;
 		}
-	}
+	};
 
 	public patchBenutzerEMailDaten = async (data: Partial<BenutzerEMailDaten>) => {
 		await api.server.patchBenutzerEmailDaten(data, api.schema);
-	}
+	};
 
 	public async ladeDaten() {
 		const benutzerEMailDaten = await api.server.getBenutzerEmailDaten(api.schema);
-		this.setPatchedState({benutzerEMailDaten});
+		this.setPatchedState({ benutzerEMailDaten });
 	}
 }

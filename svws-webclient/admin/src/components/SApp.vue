@@ -80,7 +80,7 @@
 
 	const pendingSetApp = ref('');
 
-	function isVisible(item: TabData) : boolean {
+	function isVisible(item: TabData): boolean {
 		if ((item.name === 'config') && (!props.isServerAdmin))
 			return false;
 		return true;

@@ -1,9 +1,9 @@
-import type { List, Raum, JahrgangsDaten, LehrerListeEintrag, StundenplanPausenaufsichtBereichUpdate, StundenplanKalenderwochenzuordnung, SimpleOperationResponse, StundenplanListeEintrag, ApiFile, ReportingParameter} from "@core";
-import { Stundenplan} from "@core";
+import type { List, Raum, JahrgangsDaten, LehrerListeEintrag, StundenplanPausenaufsichtBereichUpdate, StundenplanKalenderwochenzuordnung, SimpleOperationResponse, StundenplanListeEintrag, ApiFile, ReportingParameter } from "@core";
+import { Stundenplan } from "@core";
 import { StundenplanUnterrichtListeManager } from "@ui";
 import { StundenplanManager } from "@core";
 import { StundenplanListeManager } from "@ui";
-import { StundenplanKonfiguration} from "@core";
+import { StundenplanKonfiguration } from "@core";
 import { StundenplanPausenaufsicht, Wochentag, StundenplanRaum, StundenplanAufsichtsbereich, StundenplanPausenzeit, StundenplanUnterricht, StundenplanZeitraster, DeveloperNotificationException, ArrayList, StundenplanJahrgang, UserNotificationException } from "@core";
 
 import { api } from "~/router/Api";
@@ -73,7 +73,7 @@ export class RouteDataStundenplan extends RouteDataAuswahl<StundenplanListeManag
 	public async ladeDaten(auswahl: StundenplanListeEintrag | null): Promise<StundenplanManager | null> {
 		if (auswahl === null)
 			return null;
-		else if(auswahl.id < 0) {
+		else if (auswahl.id < 0) {
 			const stundenplan = new Stundenplan();
 			stundenplan.id = -1;
 			stundenplan.raeume = this.listRaeume;
@@ -103,11 +103,11 @@ export class RouteDataStundenplan extends RouteDataAuswahl<StundenplanListeManag
 		this.setPatchedState(katalogDaten);
 	}
 
-	private async ladeVorlagenInternal(): Promise<{listRaeume: List<Raum>;
+	private async ladeVorlagenInternal(): Promise<{ listRaeume: List<Raum>;
 		listPausenzeiten: List<StundenplanPausenzeit>;
 		listAufsichtsbereiche: List<StundenplanAufsichtsbereich>;
 		listJahrgaenge: List<JahrgangsDaten>;
-		listLehrer: List<LehrerListeEintrag>}> {
+		listLehrer: List<LehrerListeEintrag> }> {
 		const listRaeume = await api.server.getRaeume(api.schema);
 		const listPausenzeiten = await api.server.getPausenzeiten(api.schema);
 		const listAufsichtsbereiche = await api.server.getAufsichtsbereiche(api.schema);
@@ -183,17 +183,17 @@ export class RouteDataStundenplan extends RouteDataAuswahl<StundenplanListeManag
 	setSettingsDefaults = async (value: StundenplanKonfiguration) => {
 		const json = StundenplanKonfiguration.transpilerToJSON(value);
 		await api.config.setValue('stundenplan.settings.defaults', json);
-	}
+	};
 
 	public setSelection = (selected: Wochentag | number | StundenplanZeitraster | StundenplanPausenzeit | undefined) => {
-		this.setPatchedState({selected});
-	}
+		this.setPatchedState({ selected });
+	};
 
 	add = async (partial: Partial<Stundenplan>): Promise<void> => {
 		const neu = await api.server.addStundenplan({ ...partial, idSchuljahresabschnitt: routeApp.data.idSchuljahresabschnitt }, api.schema);
 		await this.setSchuljahresabschnitt(this._state.value.idSchuljahresabschnitt, true);
 		await this.gotoDefaultView(neu.id);
-	}
+	};
 
 
 	deleteKalenderwochenzuordnungen = async () => {
@@ -208,7 +208,7 @@ export class RouteDataStundenplan extends RouteDataAuswahl<StundenplanListeManag
 			this.manager.daten().kalenderwochenzuordnungRemoveAll(res);
 		}
 		api.status.stop();
-	}
+	};
 
 	patchKalenderwochenzuordnungen = async (data: List<StundenplanKalenderwochenzuordnung>) => {
 		if (!this.manager.hasDaten())
@@ -233,7 +233,7 @@ export class RouteDataStundenplan extends RouteDataAuswahl<StundenplanListeManag
 		}
 		this.commit();
 		api.status.stop();
-	}
+	};
 
 	addRaum = async (raum: Partial<StundenplanRaum>) => {
 		if (!this.manager.hasDaten())
@@ -246,7 +246,7 @@ export class RouteDataStundenplan extends RouteDataAuswahl<StundenplanListeManag
 		this.manager.daten().raumAdd(_raum);
 		this.commit();
 		api.status.stop();
-	}
+	};
 
 	patchRaum = async (data: Partial<StundenplanRaum>, id: number) => {
 		if (!this.manager.hasDaten())
@@ -263,7 +263,7 @@ export class RouteDataStundenplan extends RouteDataAuswahl<StundenplanListeManag
 		this.manager.daten().raumPatchAttributes(Object.assign(raum, data));
 		this.commit();
 		api.status.stop();
-	}
+	};
 
 	removeRaeume = async (raeume: Iterable<StundenplanRaum>) => {
 		if (!this.manager.hasDaten())
@@ -278,12 +278,12 @@ export class RouteDataStundenplan extends RouteDataAuswahl<StundenplanListeManag
 			this._state.value.selected = undefined;
 		this.commit();
 		api.status.stop();
-	}
+	};
 
 	raeumeSyncToVorlage = async (raeume: Iterable<StundenplanRaum>) => {
 		const neu = new ArrayList<Partial<Raum>>();
 		outer: for (const r of raeume) {
-			const { id, ...partial} = r;
+			const { id, ...partial } = r;
 			for (const kr of this.listRaeume)
 				if (kr.kuerzel === r.kuerzel) {
 					await api.server.patchRaum({ beschreibung: partial.beschreibung, groesse: partial.groesse }, api.schema, kr.id);
@@ -295,7 +295,7 @@ export class RouteDataStundenplan extends RouteDataAuswahl<StundenplanListeManag
 		const liste = await api.server.addRaeume(neu, api.schema);
 		this.listRaeume.addAll(liste);
 		this.commit();
-	}
+	};
 
 	raeumeSyncToStundenplan = async (raeume: Iterable<Raum>) => {
 		const stundenplanId = this.manager.auswahlID();
@@ -303,7 +303,7 @@ export class RouteDataStundenplan extends RouteDataAuswahl<StundenplanListeManag
 			return;
 		const neu = new ArrayList<Partial<Raum>>();
 		for (const r of raeume) {
-			const { id, ...partial} = r;
+			const { id, ...partial } = r;
 			const kr = this.manager.daten().raumGetByKuerzelOrNull(r.kuerzel);
 			if (kr !== null) {
 				await api.server.patchStundenplanRaum({ beschreibung: partial.beschreibung, groesse: partial.groesse }, api.schema, kr.id);
@@ -316,7 +316,7 @@ export class RouteDataStundenplan extends RouteDataAuswahl<StundenplanListeManag
 		const liste = await api.server.addStundenplanRaeume(neu, api.schema, stundenplanId);
 		this.manager.daten().raumAddAll(liste);
 		this.commit();
-	}
+	};
 
 	addPausenzeiten = async (pausenzeiten: Iterable<Partial<StundenplanPausenzeit>>) => {
 		if (!this.manager.hasDaten())
@@ -329,13 +329,13 @@ export class RouteDataStundenplan extends RouteDataAuswahl<StundenplanListeManag
 				list.add(p);
 			}
 		}
-		const _pausenzeiten = await api.server.addStundenplanPausenzeiten(list, api.schema, this.manager.auswahl().id)
+		const _pausenzeiten = await api.server.addStundenplanPausenzeiten(list, api.schema, this.manager.auswahl().id);
 		this.manager.daten().pausenzeitAddAll(_pausenzeiten);
 		this.commit();
 		api.status.stop();
-	}
+	};
 
-	patchPausenzeit = async (pausenzeit : Partial<StundenplanPausenzeit>, id: number) => {
+	patchPausenzeit = async (pausenzeit: Partial<StundenplanPausenzeit>, id: number) => {
 		if (!this.manager.hasDaten())
 			throw new DeveloperNotificationException('Kein gültiger Stundenplan ausgewählt');
 		api.status.start();
@@ -344,7 +344,7 @@ export class RouteDataStundenplan extends RouteDataAuswahl<StundenplanListeManag
 		this.manager.daten().pausenzeitPatchAttributes(Object.assign(_pausenzeit, pausenzeit));
 		this.commit();
 		api.status.stop();
-	}
+	};
 
 	removePausenzeiten = async (pausenzeiten: Iterable<StundenplanPausenzeit>) => {
 		if (!this.manager.hasDaten())
@@ -361,7 +361,7 @@ export class RouteDataStundenplan extends RouteDataAuswahl<StundenplanListeManag
 			this.commit();
 		}
 		api.status.stop();
-	}
+	};
 
 	pausenzeitenSyncToVorlage = async (pausenzeiten: Iterable<StundenplanPausenzeit>) => {
 		const neu = new ArrayList<Partial<StundenplanPausenzeit>>();
@@ -370,19 +370,19 @@ export class RouteDataStundenplan extends RouteDataAuswahl<StundenplanListeManag
 		const liste = await api.server.addPausenzeiten(neu, api.schema);
 		this.listPausenzeiten.addAll(liste);
 		this.commit();
-	}
+	};
 
 	pausenzeitenSyncToStundenplan = async (pausenzeiten: Iterable<StundenplanPausenzeit>) => {
 		const stundenplanId = this.manager.auswahlID();
 		if (stundenplanId === null)
 			return;
 		const neu = new ArrayList<Partial<StundenplanPausenzeit>>();
-		for (const { id, ...partial} of pausenzeiten)
+		for (const { id, ...partial } of pausenzeiten)
 			neu.add(partial);
 		const liste = await api.server.addStundenplanPausenzeiten(neu, api.schema, stundenplanId);
 		this.manager.daten().pausenzeitAddAll(liste);
 		this.commit();
-	}
+	};
 
 	updateAufsichtBereich = async (update: StundenplanPausenaufsichtBereichUpdate, idPausenzeit?: number, idLehrer?: number) => {
 		if (update.listEntfernen.isEmpty() && update.listHinzuzufuegen.isEmpty())
@@ -422,7 +422,7 @@ export class RouteDataStundenplan extends RouteDataAuswahl<StundenplanListeManag
 		await api.server.deleteStundenplanPausenaufsichten(listRemove, api.schema, this.manager.auswahl().id);
 		this.manager.daten().pausenaufsichtRemoveAllById(listRemove);
 		api.status.stop();
-	}
+	};
 
 	addAufsicht = async (data: Partial<StundenplanPausenaufsicht>) => {
 		if (!this.manager.hasDaten())
@@ -432,7 +432,7 @@ export class RouteDataStundenplan extends RouteDataAuswahl<StundenplanListeManag
 		this.manager.daten().pausenaufsichtAdd(pausenaufsicht);
 		this.commit();
 		api.status.stop();
-	}
+	};
 
 	removeAufsicht = async (aufsichtID: number) => {
 		api.status.start();
@@ -440,7 +440,7 @@ export class RouteDataStundenplan extends RouteDataAuswahl<StundenplanListeManag
 		this.manager.daten().pausenaufsichtRemoveById(pausenaufsicht.id);
 		this.commit();
 		api.status.stop();
-	}
+	};
 
 	patchAufsicht = async (aufsicht: Partial<StundenplanPausenaufsicht>, id: number) => {
 		if (!this.manager.hasDaten())
@@ -451,7 +451,7 @@ export class RouteDataStundenplan extends RouteDataAuswahl<StundenplanListeManag
 		this.manager.daten().pausenaufsichtPatchAttributes(Object.assign(_aufsicht, aufsicht));
 		this.commit();
 		api.status.stop();
-	}
+	};
 
 	addAufsichtsbereich = async (aufsichtsbereich: Partial<StundenplanAufsichtsbereich>) => {
 		if (!this.manager.hasDaten())
@@ -460,13 +460,13 @@ export class RouteDataStundenplan extends RouteDataAuswahl<StundenplanListeManag
 			throw new UserNotificationException('Eine Aufsichtsbereich mit diesem Kürzel existiert bereits');
 		api.status.start();
 		delete aufsichtsbereich.id;
-		const _aufsichtsbereich = await api.server.addStundenplanAufsichtsbereich(aufsichtsbereich, api.schema, this.manager.auswahl().id)
+		const _aufsichtsbereich = await api.server.addStundenplanAufsichtsbereich(aufsichtsbereich, api.schema, this.manager.auswahl().id);
 		this.manager.daten().aufsichtsbereichAdd(_aufsichtsbereich);
 		this.commit();
 		api.status.stop();
-	}
+	};
 
-	patchAufsichtsbereich = async (aufsichtsbereich : Partial<StundenplanAufsichtsbereich>, id: number) => {
+	patchAufsichtsbereich = async (aufsichtsbereich: Partial<StundenplanAufsichtsbereich>, id: number) => {
 		if (!this.manager.hasDaten())
 			throw new DeveloperNotificationException('Kein gültiger Stundenplan ausgewählt');
 		api.status.start();
@@ -477,7 +477,7 @@ export class RouteDataStundenplan extends RouteDataAuswahl<StundenplanListeManag
 		this.manager.daten().aufsichtsbereichPatchAttributes(Object.assign(_aufsichtsbereich, aufsichtsbereich));
 		this.commit();
 		api.status.stop();
-	}
+	};
 
 	removeAufsichtsbereiche = async (aufsichtsbereiche: Iterable<StundenplanAufsichtsbereich>) => {
 		if (!this.manager.hasDaten())
@@ -492,12 +492,12 @@ export class RouteDataStundenplan extends RouteDataAuswahl<StundenplanListeManag
 			this._state.value.selected = undefined;
 		this.commit();
 		api.status.stop();
-	}
+	};
 
 	aufsichtsbereicheSyncToVorlage = async (aufsichtsbereiche: Iterable<StundenplanAufsichtsbereich>) => {
 		const neu = new ArrayList<Partial<StundenplanAufsichtsbereich>>();
 		outer: for (const a of aufsichtsbereiche) {
-			const { id, ...partial} = a;
+			const { id, ...partial } = a;
 			for (const ka of this.listAufsichtsbereiche)
 				if (ka.kuerzel === a.kuerzel) {
 					await api.server.patchAufsichtsbereich({ beschreibung: partial.beschreibung }, api.schema, ka.id);
@@ -509,7 +509,7 @@ export class RouteDataStundenplan extends RouteDataAuswahl<StundenplanListeManag
 		const liste = await api.server.addAufsichtsbereiche(neu, api.schema);
 		this.listAufsichtsbereiche.addAll(liste);
 		this.commit();
-	}
+	};
 
 	aufsichtsbereicheSyncToStundenplan = async (aufsichtsbereiche: Iterable<StundenplanAufsichtsbereich>) => {
 		const stundenplanId = this.manager.auswahlID();
@@ -517,7 +517,7 @@ export class RouteDataStundenplan extends RouteDataAuswahl<StundenplanListeManag
 			return;
 		const neu = new ArrayList<Partial<StundenplanAufsichtsbereich>>();
 		for (const a of aufsichtsbereiche) {
-			const { id, ...partial} = a;
+			const { id, ...partial } = a;
 			const ka = this.manager.daten().aufsichtsbereichGetByKuerzelOrNull(a.kuerzel);
 			if (ka !== null) {
 				await api.server.patchStundenplanAufsichtsbereich({ beschreibung: partial.beschreibung }, api.schema, ka.id);
@@ -530,7 +530,7 @@ export class RouteDataStundenplan extends RouteDataAuswahl<StundenplanListeManag
 		const liste = await api.server.addStundenplanAufsichtsbereiche(neu, api.schema, stundenplanId);
 		this.manager.daten().aufsichtsbereichAddAll(liste);
 		this.commit();
-	}
+	};
 
 	addZeitraster = async (zeitraster: Iterable<Partial<StundenplanZeitraster>>) => {
 		if (!this.manager.hasDaten())
@@ -545,9 +545,9 @@ export class RouteDataStundenplan extends RouteDataAuswahl<StundenplanListeManag
 		this.manager.daten().zeitrasterAddAll(res);
 		this.commit();
 		api.status.stop();
-	}
+	};
 
-	patchZeitraster = async (zeitraster : Iterable<StundenplanZeitraster>) => {
+	patchZeitraster = async (zeitraster: Iterable<StundenplanZeitraster>) => {
 		api.status.start();
 		const list: List<StundenplanZeitraster> = new ArrayList();
 		for (const z of zeitraster)
@@ -556,13 +556,13 @@ export class RouteDataStundenplan extends RouteDataAuswahl<StundenplanListeManag
 		this.manager.daten().zeitrasterPatchAttributesAll(list);
 		this.commit();
 		api.status.stop();
-	}
+	};
 
 	removeZeitraster = async (multi: Iterable<StundenplanZeitraster>) => {
 		if (!this.manager.hasDaten())
 			throw new DeveloperNotificationException('Kein gültiger Stundenplan ausgewählt');
 		api.status.start();
-		const listID = new ArrayList<number>()
+		const listID = new ArrayList<number>();
 		for (const zeitraster of multi)
 			listID.add(zeitraster.id);
 		if (!listID.isEmpty()) {
@@ -575,7 +575,7 @@ export class RouteDataStundenplan extends RouteDataAuswahl<StundenplanListeManag
 			this.commit();
 		}
 		api.status.stop();
-	}
+	};
 
 	importZeitraster = async () => {
 		if (!this.manager.hasDaten())
@@ -589,7 +589,7 @@ export class RouteDataStundenplan extends RouteDataAuswahl<StundenplanListeManag
 		this.manager.daten().zeitrasterAddAll(zeitraster);
 		this.commit();
 		api.status.stop();
-	}
+	};
 
 	addUnterrichte = async (data: Iterable<Partial<StundenplanUnterricht>>) => {
 		api.status.start();
@@ -600,7 +600,7 @@ export class RouteDataStundenplan extends RouteDataAuswahl<StundenplanListeManag
 		this.manager.daten().unterrichtAddAll(unterrichte);
 		this.commit();
 		api.status.stop();
-	}
+	};
 
 	patchUnterrichte = async (data: Iterable<StundenplanUnterricht>, zeitraster?: StundenplanZeitraster, wochentyp?: number) => {
 		api.status.start();
@@ -620,7 +620,7 @@ export class RouteDataStundenplan extends RouteDataAuswahl<StundenplanListeManag
 		this.manager.daten().unterrichtPatchAttributesAll(list);
 		this.commit();
 		api.status.stop();
-	}
+	};
 
 	removeUnterrichte = async (unterrichte: Iterable<StundenplanUnterricht>) => {
 		if (!this.manager.hasDaten())
@@ -635,7 +635,7 @@ export class RouteDataStundenplan extends RouteDataAuswahl<StundenplanListeManag
 			this._state.value.selected = undefined;
 		this.commit();
 		api.status.stop();
-	}
+	};
 
 	mergeUnterrichte = async (list: Iterable<List<StundenplanUnterricht>>) => {
 		api.status.start();
@@ -653,7 +653,7 @@ export class RouteDataStundenplan extends RouteDataAuswahl<StundenplanListeManag
 		await this.removeUnterrichte(listRemove);
 		await this.addUnterrichte(listAdd);
 		api.status.stop();
-	}
+	};
 
 	addJahrgang = async (id: number) => {
 		api.status.start();
@@ -666,25 +666,25 @@ export class RouteDataStundenplan extends RouteDataAuswahl<StundenplanListeManag
 		this.manager.daten().jahrgangAdd(jahrgang);
 		this.commit();
 		api.status.stop();
-	}
+	};
 
 	removeJahrgang = async (id: number) => {
 		api.status.start();
 		this.manager.daten().jahrgangRemoveById(id);
 		this.commit();
 		api.status.stop();
-	}
+	};
 
-	gotoKatalog = async (katalog: 'raeume'|'aufsichtsbereiche'|'pausenzeiten') => {
+	gotoKatalog = async (katalog: 'raeume' | 'aufsichtsbereiche' | 'pausenzeiten') => {
 		switch (katalog) {
 			case 'aufsichtsbereiche':
-				return await RouteManager.doRoute(routeKatalogAufsichtsbereiche.getRoute({id: -1}));
+				return await RouteManager.doRoute(routeKatalogAufsichtsbereiche.getRoute({ id: -1 }));
 			case 'pausenzeiten':
-				return await RouteManager.doRoute(routeKatalogPausenzeiten.getRoute({id: -1}));
+				return await RouteManager.doRoute(routeKatalogPausenzeiten.getRoute({ id: -1 }));
 			case 'raeume':
-				return await RouteManager.doRoute(routeKatalogRaeume.getRoute({id: -1}));
+				return await RouteManager.doRoute(routeKatalogRaeume.getRoute({ id: -1 }));
 		}
-	}
+	};
 
 	// setFilter = async () => {
 	// 	this.stundenplanUnterrichtListeManager.filterInvalidateCache();
@@ -697,7 +697,7 @@ export class RouteDataStundenplan extends RouteDataAuswahl<StundenplanListeManag
 
 	setGanzerStundenplanRaum = async (value: boolean) => {
 		await api.config.setValue("stundenplan.raeume.ganzerStundenplan", value ? "true" : "false");
-	}
+	};
 
 	gotoEintrag = async (eintrag?: StundenplanListeEintrag) => await RouteManager.doRoute(routeStundenplan.getRoute({ id: eintrag?.id }));
 
@@ -709,5 +709,5 @@ export class RouteDataStundenplan extends RouteDataAuswahl<StundenplanListeManag
 		reportingParameter.idsHauptdaten.add(id);
 		reportingParameter.idsDetaildaten.add(idRaum);
 		return await api.server.pdfReport(reportingParameter, api.schema);
-	})
+	});
 }

@@ -28,7 +28,7 @@
 
 	const props = defineProps<{
 		faecherManager: () => GostFaecherManager;
-		patchFachkombination: (data: Partial<GostJahrgangFachkombination>, id : number) => Promise<void>;
+		patchFachkombination: (data: Partial<GostJahrgangFachkombination>, id: number) => Promise<void>;
 		addFachkombination: (typ: GostLaufbahnplanungFachkombinationTyp) => Promise<GostJahrgangFachkombination | undefined>;
 		removeFachkombination: (id: number) => Promise<GostJahrgangFachkombination | undefined>;
 		typ: GostLaufbahnplanungFachkombinationTyp;
@@ -37,7 +37,7 @@
 	}>();
 
 	const title = computed<string>(() => {
-		switch(props.typ) {
+		switch (props.typ) {
 			case GostLaufbahnplanungFachkombinationTyp.ERFORDERLICH:
 				return "Geforderte Kombinationen";
 			case GostLaufbahnplanungFachkombinationTyp.VERBOTEN:
@@ -57,8 +57,8 @@
 
 	const columns = computed<DataTableColumn[]>(() => [
 		{ key: "Fach1", label: "Fach 1", span: 1, minWidth: 5 },
-		{ key: "Kursart1", label: "Kursart 1", span: 1, minWidth: 5},
-		{ key: "Empty", label: (props.typ === GostLaufbahnplanungFachkombinationTyp.ERFORDERLICH) ? "\u21d2" : "\u21d4 ", span: 0.25, minWidth: 1},
+		{ key: "Kursart1", label: "Kursart 1", span: 1, minWidth: 5 },
+		{ key: "Empty", label: (props.typ === GostLaufbahnplanungFachkombinationTyp.ERFORDERLICH) ? "\u21d2" : "\u21d4 ", span: 0.25, minWidth: 1 },
 		{ key: "Fach2", label: "Fach 2", span: 1, minWidth: 5 },
 		{ key: "Kursart2", label: "Kursart 2", span: 1, minWidth: 5 },
 		{ key: "EF.1", label: "EF.1", align: 'center', span: 0.5, minWidth: 3 },

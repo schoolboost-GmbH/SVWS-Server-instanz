@@ -29,7 +29,7 @@ export class RouteDataJahrgaenge extends RouteDataAuswahl<JahrgaengeListeManager
 		param.id = id;
 	}
 
-	protected async createManager(_ : number) : Promise<Partial<RouteStateAuswahlInterface<JahrgaengeListeManager>>> {
+	protected async createManager(_: number): Promise<Partial<RouteStateAuswahlInterface<JahrgaengeListeManager>>> {
 		const jahrgaenge = await api.server.getJahrgangsdaten(api.schema);
 		const manager = new JahrgaengeListeManager(api.abschnitt.id, api.schuleStammdaten.idSchuljahresabschnitt, api.schuleStammdaten.abschnitte, api.schulform, jahrgaenge);
 
@@ -40,7 +40,7 @@ export class RouteDataJahrgaenge extends RouteDataAuswahl<JahrgaengeListeManager
 		return auswahl;
 	}
 
-	protected async doPatch(data : Partial<JahrgangsDaten>, id: number) : Promise<void> {
+	protected async doPatch(data: Partial<JahrgangsDaten>, id: number): Promise<void> {
 		await api.server.patchJahrgang(data, api.schema, id);
 	}
 
@@ -53,9 +53,9 @@ export class RouteDataJahrgaenge extends RouteDataAuswahl<JahrgaengeListeManager
 		this.manager.liste.add(result);
 		this.commit();
 		await this.gotoDefaultView(result.id);
-	}
+	};
 
-	protected deleteMessage(id: number, jahrgang: JahrgangsDaten | null) : string {
+	protected deleteMessage(id: number, jahrgang: JahrgangsDaten | null): string {
 		return `Jahrgang ${jahrgang?.kuerzel ?? '???'} (ID: ${id}) wurde erfolgreich gelöscht.`;
 	}
 
@@ -73,7 +73,7 @@ export class RouteDataJahrgaenge extends RouteDataAuswahl<JahrgaengeListeManager
 				errorLog.add(`Der Jahrgang ${jahrgang.bezeichnung} (${jahrgang.kuerzelStatistik}) ist an anderer Stelle referenziert und kann daher nicht gelöscht werden.`);
 		}
 
-		return [ errorLog.isEmpty(), errorLog ];
-	}
+		return [errorLog.isEmpty(), errorLog];
+	};
 
 }

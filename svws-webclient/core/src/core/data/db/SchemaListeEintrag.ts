@@ -6,37 +6,37 @@ export class SchemaListeEintrag extends JavaObject {
 	/**
 	 * Der Name des Schemas.
 	 */
-	public name : string = "";
+	public name: string = "";
 
 	/**
 	 * Der Name des Datenbank-Benutzers für das Schema.
 	 */
-	public username : string = "";
+	public username: string = "";
 
 	/**
 	 * Gibt an, ob das Schema ein SVWS-Schema ist oder nicht.
 	 */
-	public isSVWS : boolean = false;
+	public isSVWS: boolean = false;
 
 	/**
 	 * Die Revisionsnummer des Schemas.
 	 */
-	public revision : number = -1;
+	public revision: number = -1;
 
 	/**
 	 * Gibt an, ob das Schema als "verdorben" markiert wurde und deswegen nicht mehr für den produktiven Einsatz in der Schule genutzt werden sollte.
 	 */
-	public isTainted : boolean = false;
+	public isTainted: boolean = false;
 
 	/**
 	 * Gibt an, ob das Schema in der Konfiguration des aktuellen SVWS-Servers eingetragen ist.
 	 */
-	public isInConfig : boolean = false;
+	public isInConfig: boolean = false;
 
 	/**
 	 * Gibt an, ob das Schema in der Konfiguration des aktuellen SVWS-Servers aufgrund von Fehlern deaktiviert ist.
 	 */
-	public isDeactivated : boolean = false;
+	public isDeactivated: boolean = false;
 
 
 	/**
@@ -50,13 +50,13 @@ export class SchemaListeEintrag extends JavaObject {
 		return 'de.svws_nrw.core.data.db.SchemaListeEintrag';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.db.SchemaListeEintrag'].includes(name);
 	}
 
 	public static class = new Class<SchemaListeEintrag>('de.svws_nrw.core.data.db.SchemaListeEintrag');
 
-	public static transpilerFromJSON(json : string): SchemaListeEintrag {
+	public static transpilerFromJSON(json: string): SchemaListeEintrag {
 		const obj = JSON.parse(json) as Partial<SchemaListeEintrag>;
 		const result = new SchemaListeEintrag();
 		if (obj.name === undefined)
@@ -83,7 +83,7 @@ export class SchemaListeEintrag extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : SchemaListeEintrag) : string {
+	public static transpilerToJSON(obj: SchemaListeEintrag): string {
 		let result = '{';
 		result += '"name" : ' + JSON.stringify(obj.name) + ',';
 		result += '"username" : ' + JSON.stringify(obj.username) + ',';
@@ -97,7 +97,7 @@ export class SchemaListeEintrag extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<SchemaListeEintrag>) : string {
+	public static transpilerToJSONPatch(obj: Partial<SchemaListeEintrag>): string {
 		let result = '{';
 		if (obj.name !== undefined) {
 			result += '"name" : ' + JSON.stringify(obj.name) + ',';
@@ -127,6 +127,6 @@ export class SchemaListeEintrag extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_db_SchemaListeEintrag(obj : unknown) : SchemaListeEintrag {
+export function cast_de_svws_nrw_core_data_db_SchemaListeEintrag(obj: unknown): SchemaListeEintrag {
 	return obj as SchemaListeEintrag;
 }

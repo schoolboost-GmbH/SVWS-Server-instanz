@@ -16,28 +16,28 @@ import de.svws_nrw.db.schema.SchemaTabelleSpalte;
 public class Tabelle_UV_LehrerPflichtstundensoll extends SchemaTabelle {
 
 	/** Die Definition der Tabellenspalte ID */
-	public SchemaTabelleSpalte col_ID = add("ID", SchemaDatentypen.BIGINT, true)
+	public final SchemaTabelleSpalte col_ID = add("ID", SchemaDatentypen.BIGINT, true)
 			.setNotNull()
 			.setJavaComment("ID des Pflichtstundensoll-Eintrags (generiert)");
 
 	/** Die Definition der Tabellenspalte Lehrer_ID */
-	public SchemaTabelleSpalte col_Lehrer_ID = add("Lehrer_ID", SchemaDatentypen.BIGINT, false)
+	public final SchemaTabelleSpalte col_Lehrer_ID = add("Lehrer_ID", SchemaDatentypen.BIGINT, false)
 			.setNotNull()
 			.setJavaComment("Die ID des UV-Lehrers des Planungsabschnitts als Fremdschlüssel auf die Tabelle UV_Lehrer");
 
 	/** Die Definition der Tabellenspalte PflichtstdSoll */
-	public SchemaTabelleSpalte col_PflichtstdSoll = add("PflichtstdSoll", SchemaDatentypen.FLOAT, false)
+	public final SchemaTabelleSpalte col_PflichtstdSoll = add("PflichtstdSoll", SchemaDatentypen.FLOAT, false)
 			.setJavaComment("Pflichtstundensoll des Lehrers im jeweiligen Gültigkeitszeitraum");
 
 	/** Die Definition der Tabellenspalte GueltigAb */
-	public SchemaTabelleSpalte col_GueltigAb = add("GueltigAb", SchemaDatentypen.DATE, false)
+	public final SchemaTabelleSpalte col_GueltigAb = add("GueltigAb", SchemaDatentypen.DATE, false)
 			.setDefault("1899-01-01")
 			.setNotNull()
 			.setConverter(DatumConverter.class)
 			.setJavaComment("Das Datum, ab dem das Pflichtstundensoll gültig ist");
 
 	/** Die Definition der Tabellenspalte GueltigBis */
-	public SchemaTabelleSpalte col_GueltigBis = add("GueltigBis", SchemaDatentypen.DATE, false)
+	public final SchemaTabelleSpalte col_GueltigBis = add("GueltigBis", SchemaDatentypen.DATE, false)
 			.setNotNull()
 			.setConverter(DatumConverter.class)
 			.setJavaComment("Das Datum, bis wann das Pflichtstundensoll gültig ist");
@@ -45,7 +45,7 @@ public class Tabelle_UV_LehrerPflichtstundensoll extends SchemaTabelle {
 
 
 	/** Die Definition des Fremdschlüssels auf UV_Lehrer */
-	public SchemaTabelleFremdschluessel fk_UV_LehrerPflichtstundensoll_UVLehrer_FK = addForeignKey(
+	public final SchemaTabelleFremdschluessel fk_UV_LehrerPflichtstundensoll_UVLehrer_FK = addForeignKey(
 			"UV_LehrerPflichtstundensoll_UVLehrer_FK",
 			/* OnUpdate: */ SchemaFremdschluesselAktionen.CASCADE,
 			/* OnDelete: */ SchemaFremdschluesselAktionen.CASCADE,

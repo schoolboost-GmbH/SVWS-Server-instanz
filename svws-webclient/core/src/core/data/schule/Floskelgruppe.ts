@@ -7,27 +7,27 @@ export class Floskelgruppe extends JavaObject {
 	/**
 	 * Das Kürzel der Floskelgruppe
 	 */
-	public kuerzel : string | null = null;
+	public kuerzel: string | null = null;
 
 	/**
 	 * Die Bezeichnung der Floskelgruppe
 	 */
-	public bezeichnung : string | null = null;
+	public bezeichnung: string | null = null;
 
 	/**
 	 * Die ID der Floskelgruppenart
 	 */
-	public idFloskelgruppenart : number | null = null;
+	public idFloskelgruppenart: number | null = null;
 
 	/**
 	 * Die Farbe
 	 */
-	public farbe : RGBFarbe | null = null;
+	public farbe: RGBFarbe | null = null;
 
 	/**
 	 * Gibt an, ob die Floskelgruppe in anderen Datenbanktabellen referenziert ist.
 	 */
-	public referenziertInAnderenTabellen : boolean | null = null;
+	public referenziertInAnderenTabellen: boolean | null = null;
 
 
 	public constructor() {
@@ -38,13 +38,13 @@ export class Floskelgruppe extends JavaObject {
 		return 'de.svws_nrw.core.data.schule.Floskelgruppe';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.schule.Floskelgruppe'].includes(name);
 	}
 
 	public static class = new Class<Floskelgruppe>('de.svws_nrw.core.data.schule.Floskelgruppe');
 
-	public static transpilerFromJSON(json : string): Floskelgruppe {
+	public static transpilerFromJSON(json: string): Floskelgruppe {
 		const obj = JSON.parse(json) as Partial<Floskelgruppe>;
 		const result = new Floskelgruppe();
 		result.kuerzel = (obj.kuerzel === undefined) ? null : obj.kuerzel === null ? null : obj.kuerzel;
@@ -55,7 +55,7 @@ export class Floskelgruppe extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : Floskelgruppe) : string {
+	public static transpilerToJSON(obj: Floskelgruppe): string {
 		let result = '{';
 		result += '"kuerzel" : ' + ((obj.kuerzel === null) ? 'null' : JSON.stringify(obj.kuerzel)) + ',';
 		result += '"bezeichnung" : ' + ((obj.bezeichnung === null) ? 'null' : JSON.stringify(obj.bezeichnung)) + ',';
@@ -67,7 +67,7 @@ export class Floskelgruppe extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<Floskelgruppe>) : string {
+	public static transpilerToJSONPatch(obj: Partial<Floskelgruppe>): string {
 		let result = '{';
 		if (obj.kuerzel !== undefined) {
 			result += '"kuerzel" : ' + ((obj.kuerzel === null) ? 'null' : JSON.stringify(obj.kuerzel)) + ',';
@@ -91,6 +91,6 @@ export class Floskelgruppe extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_schule_Floskelgruppe(obj : unknown) : Floskelgruppe {
+export function cast_de_svws_nrw_core_data_schule_Floskelgruppe(obj: unknown): Floskelgruppe {
 	return obj as Floskelgruppe;
 }

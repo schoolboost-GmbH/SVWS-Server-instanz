@@ -7,7 +7,7 @@ import type { PendingStateManager } from "@ui";
 export class PendingStateManagerRegistry {
 
 	/** Eine Liste, um Instanzen von {@link PendingStateManager} zu halten */
-	protected pendingStateManagers: List<PendingStateManager<any>> = new ArrayList()
+	protected pendingStateManagers: List<PendingStateManager<any>> = new ArrayList();
 
 	/**
 	 * Prüft, ob es mindestens einen PendingState gibt der Pending Values bzw. ausstehende Änderungen hat
@@ -32,7 +32,7 @@ export class PendingStateManagerRegistry {
 	 * Fügt ein {@link PendingStateManager} Objekt zum Register hinzu.
 	 */
 	public addPendingStateManager(pendingStateManager: PendingStateManager<any>): void {
-		this.pendingStateManagers.add(pendingStateManager)
+		this.pendingStateManagers.add(pendingStateManager);
 	}
 
 }

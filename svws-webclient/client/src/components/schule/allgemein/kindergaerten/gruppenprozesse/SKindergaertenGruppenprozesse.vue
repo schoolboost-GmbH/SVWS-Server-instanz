@@ -1,6 +1,9 @@
 <template>
 	<div class="page page-grid-cards">
-		<div class="flex flex-col gap-4" v-if="ServerMode.DEV.checkServerMode(serverMode)">
+		<div v-if="!hatIrgendwelcheKompetenzen">
+			Für die Nutzung der Gruppenprozesse fehlen Benutzerkompetenzen.
+		</div>
+		<div v-if="ServerMode.DEV.checkServerMode(serverMode)" class="flex flex-col gap-4">
 			<ui-card v-if="hatKompetenzLoeschen" icon="i-ri-delete-bin-line" title="Löschen" subtitle="Ausgewählte Kindergärten werden gelöscht">
 				<template #buttonFooterLeft>
 					<svws-ui-button title="Löschen" @click="entferneKindergaerten" :is-loading class="mt-4">
@@ -22,13 +25,15 @@
 <script setup lang="ts">
 
 	import type { KindergaertenGruppenprozesseProps } from "~/components/schule/allgemein/kindergaerten/gruppenprozesse/SKindergaertenGruppenprozesseProps";
-	import type { List} from "@core";
+	import type { List } from "@core";
 	import { BenutzerKompetenz, ServerMode } from "@core";
 	import { computed, ref } from "vue";
 
 	const props = defineProps<KindergaertenGruppenprozesseProps>();
 
 	const hatKompetenzLoeschen = computed(() => props.benutzerKompetenzen.has(BenutzerKompetenz.KATALOG_EINTRAEGE_LOESCHEN));
+	const hatIrgendwelcheKompetenzen = computed(() => hatKompetenzLoeschen.value);
+
 	const isLoading = ref<boolean>(false);
 	const logs = ref<List<string | null> | undefined>();
 	const status = ref<boolean | undefined>();

@@ -15,24 +15,24 @@ import de.svws_nrw.db.schema.SchemaTabelleSpalte;
 public class Tabelle_UV_PlanungsabschnitteZeitraster_Constraint_Jahrgaenge extends SchemaTabelle {
 
 	/** Die Definition der Tabellenspalte Planungsabschnitt_ID */
-	public SchemaTabelleSpalte col_Planungsabschnitt_ID = add("Planungsabschnitt_ID", SchemaDatentypen.BIGINT, true)
+	public final SchemaTabelleSpalte col_Planungsabschnitt_ID = add("Planungsabschnitt_ID", SchemaDatentypen.BIGINT, true)
 			.setNotNull()
 			.setJavaComment("Die ID des Planungsabschnitts als Fremdschlüssel auf die Tabelle UV_Planungsabschnitte");
 
 	/** Die Definition der Tabellenspalte Zeitraster */
-	public SchemaTabelleSpalte col_Zeitraster_ID = add("Zeitraster_ID", SchemaDatentypen.BIGINT, true)
+	public final SchemaTabelleSpalte col_Zeitraster_ID = add("Zeitraster_ID", SchemaDatentypen.BIGINT, true)
 			.setNotNull()
 			.setJavaComment("ID des Zeitrasters des Planungsabschnitts");
 
 	/** Die Definition der Tabellenspalte Jahrgang_ID */
-	public SchemaTabelleSpalte col_Jahrgang_ID = add("Jahrgang_ID", SchemaDatentypen.BIGINT, true)
+	public final SchemaTabelleSpalte col_Jahrgang_ID = add("Jahrgang_ID", SchemaDatentypen.BIGINT, true)
 			.setNotNull()
 			.setJavaComment("ID des zugeordneten Jahrgangs");
 
 
 
 	/** Die Definition des Fremdschlüssels auf UV_Schuelergruppen */
-	public SchemaTabelleFremdschluessel fk_UVPlanungsabschnitteZeitrJahrg_UVPlanungsabschnitteZeitr_FK = addForeignKey(
+	public final SchemaTabelleFremdschluessel fk_UVPlanungsabschnitteZeitrJahrg_UVPlanungsabschnitteZeitr_FK = addForeignKey(
 			"UVPlanungsabschnitteZeitrJahrg_UVPlanungsabschnitteZeitr_FK",
 			/* OnUpdate: */ SchemaFremdschluesselAktionen.CASCADE,
 			/* OnDelete: */ SchemaFremdschluesselAktionen.CASCADE,
@@ -40,13 +40,13 @@ public class Tabelle_UV_PlanungsabschnitteZeitraster_Constraint_Jahrgaenge exten
 			new Pair<>(col_Zeitraster_ID, Schema.tab_UV_Planungsabschnitte_Zeitraster.col_Zeitraster_ID)
 	);
 
-    /** Fremdschlüssel auf die Tabelle EigeneSchule_Jahrgaenge */
-    public SchemaTabelleFremdschluessel fk_UVPlanungsabschnitteZeitrJahrg_EigeneSchuleJahrgaenge_FK = addForeignKey(
-            "UVPlanungsabschnitteZeitrJahrg_EigeneSchuleJahrgaenge_FK",
-            /* OnUpdate: */ SchemaFremdschluesselAktionen.CASCADE,
-            /* OnDelete: */ SchemaFremdschluesselAktionen.CASCADE,
-            new Pair<>(col_Jahrgang_ID, Schema.tab_EigeneSchule_Jahrgaenge.col_ID)
-    );
+	/** Fremdschlüssel auf die Tabelle EigeneSchule_Jahrgaenge */
+	public final SchemaTabelleFremdschluessel fk_UVPlanungsabschnitteZeitrJahrg_EigeneSchuleJahrgaenge_FK = addForeignKey(
+			"UVPlanungsabschnitteZeitrJahrg_EigeneSchuleJahrgaenge_FK",
+			/* OnUpdate: */ SchemaFremdschluesselAktionen.CASCADE,
+			/* OnDelete: */ SchemaFremdschluesselAktionen.CASCADE,
+			new Pair<>(col_Jahrgang_ID, Schema.tab_EigeneSchule_Jahrgaenge.col_ID)
+	);
 
 
 	/**

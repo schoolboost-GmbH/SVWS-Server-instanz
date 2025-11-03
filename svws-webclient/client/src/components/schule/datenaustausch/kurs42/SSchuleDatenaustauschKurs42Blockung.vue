@@ -49,7 +49,7 @@
 
 	const status = ref<boolean | undefined>(undefined);
 	const loading = ref<boolean>(false);
-	const logs = ref<List<string|null>>();
+	const logs = ref<List<string | null>>();
 
 	async function import_file(event: Event) {
 		const target = event.target as HTMLInputElement;

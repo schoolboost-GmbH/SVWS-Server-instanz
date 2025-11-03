@@ -4,12 +4,12 @@ import { Schuljahresabschnitt } from "../../../../../core/src/asd/data/schule/Sc
 import { KlassenDaten } from "../../../../../core/src/asd/data/klassen/KlassenDaten";
 import { Schulform } from "../../../../../core/src/asd/types/schule/Schulform";
 import { Schulgliederung } from "../../../../../core/src/asd/types/schule/Schulgliederung";
-import { SchuelerListeEintrag } from "../../../../../core/src/core/data/schueler/SchuelerListeEintrag";
+import type { SchuelerListeEintrag } from "../../../../../core/src/core/data/schueler/SchuelerListeEintrag";
 import { Schueler } from "../../../../../core/src/asd/data/schueler/Schueler";
 import { JahrgangsDaten } from "../../../../../core/src/core/data/jahrgang/JahrgangsDaten";
 import { LehrerListeEintrag } from "../../../../../core/src/core/data/lehrer/LehrerListeEintrag";
 import { ArrayList } from "../../../../../core/src/java/util/ArrayList";
-import { List } from "../../../../../core/src/java/util/List";
+import type { List } from "../../../../../core/src/java/util/List";
 import { Pair } from "../../../../../core/src/asd/adt/Pair";
 import { KlassenListeManager } from "./KlassenListeManager";
 

@@ -3,51 +3,52 @@ import type { Collection } from './Collection';
 
 export interface Queue<E> extends Collection<E> {
 
-    size() : number;
+	size(): number;
 
-    isEmpty() : boolean;
+	isEmpty(): boolean;
 
-    contains(o : any) : boolean;
+	contains(o: any): boolean;
 
 	[Symbol.iterator](): Iterator<E>;
 
-    iterator() : JavaIterator<E>;
+	iterator(): JavaIterator<E>;
 
-    toArray() : Array<unknown>;
+	toArray(): Array<unknown>;
 
-    toArray<U>(a: Array<U>) : Array<U>;
+	toArray<U>(a: Array<U>): Array<U>;
 
-    add(e : E | null) : boolean;
+	add(e: E | null): boolean;
 
-    remove(o : any) : boolean;
+	remove(o: any): boolean;
 
-    remove() : E;
+	remove(): E;
 
-    containsAll(c : Collection<any> | null) : boolean;
+	containsAll(c: Collection<any> | null): boolean;
 
-    addAll(c : Collection<E> | null) : boolean;
+	addAll(c: Collection<E> | null): boolean;
 
-    removeAll(c : Collection<any> | null) : boolean;
+	removeAll(c: Collection<any> | null): boolean;
 
-    retainAll(c : Collection<any> | null) : boolean;
+	retainAll(c: Collection<any> | null): boolean;
 
-    clear() : void;
+	clear(): void;
 
-    equals(obj : any) : boolean;
+	equals(obj: any): boolean;
 
-    hashCode() : number;
+	hashCode(): number;
 
 
-    element() : E;
+	element(): E;
 
-    offer(e : E | null) : boolean;
+	offer(e: E | null): boolean;
 
-    peek() : E | null;
+	peek(): E | null;
 
-    poll() : E | null;
+	poll(): E | null;
+
 }
 
 
-export function cast_java_util_Queue<E>(obj : unknown) : Queue<E> {
+export function cast_java_util_Queue<E>(obj: unknown): Queue<E> {
 	return obj as Queue<E>;
 }

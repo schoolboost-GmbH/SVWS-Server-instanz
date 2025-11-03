@@ -6,7 +6,7 @@ import { RouteNode } from "~/router/RouteNode";
 import { api } from "~/router/Api";
 import { routeFoerderschwerpunkte } from "~/router/apps/schule/schulbezogen/foerderschwerpunkte/RouteFoerderschwerpunkte";
 
-const SFoerderschwerpunkteDaten = () => import("~/components/schule/schulbezogen/foerderschwerpunkte/daten/SFoerderschwerpunkteDaten.vue")
+const SFoerderschwerpunkteDaten = () => import("~/components/schule/schulbezogen/foerderschwerpunkte/daten/SFoerderschwerpunkteDaten.vue");
 
 export class RouteFoerderschwerpunkteDaten extends RouteNode<any, RouteFoerderschwerpunkte> {
 
@@ -15,7 +15,7 @@ export class RouteFoerderschwerpunkteDaten extends RouteNode<any, RouteFoerdersc
 			"daten", SFoerderschwerpunkteDaten);
 		super.mode = ServerMode.DEV;
 		super.propHandler = (route) => this.getProps(route);
-		super.text = "Förderschwerpunkte"
+		super.text = "Förderschwerpunkte";
 	}
 
 	public getProps(to: RouteLocationNormalized): FoerderschwerpunkteDatenProps {
@@ -23,7 +23,7 @@ export class RouteFoerderschwerpunkteDaten extends RouteNode<any, RouteFoerdersc
 			manager: () => routeFoerderschwerpunkte.data.manager,
 			benutzerKompetenzen: api.benutzerKompetenzen,
 			patch: routeFoerderschwerpunkte.data.patch,
-		}
+		};
 	}
 }
 

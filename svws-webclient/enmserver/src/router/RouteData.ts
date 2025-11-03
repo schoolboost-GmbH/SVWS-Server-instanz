@@ -24,10 +24,10 @@ export abstract class RouteData<RouteState extends RouteStateInterface> {
 
 
 	/** Der Default-State, welcher über den Konstruktor gesetzt wird */
-	protected _defaultState : RouteState;
+	protected _defaultState: RouteState;
 
 	/** Der aktuelle State */
-	protected _state : ShallowRef<RouteState>;
+	protected _state: ShallowRef<RouteState>;
 
 	/** Parameter zum automatischen Setzen des Fokus nach der Reiterauswahl */
 	protected _autofocus = ref<boolean>(false);
@@ -39,7 +39,7 @@ export abstract class RouteData<RouteState extends RouteStateInterface> {
 	 *
 	 * @param defaultState   der Default-State
 	 */
-	protected constructor(defaultState : RouteState) {
+	protected constructor(defaultState: RouteState) {
 		this._defaultState = defaultState;
 		this._state = shallowRef<RouteState>(this._defaultState);
 	}
@@ -136,7 +136,7 @@ export abstract class RouteData<RouteState extends RouteStateInterface> {
 	/**
 	 * Getter für die aktuelle Ansicht/Child Route.
 	 */
-	public get view(): RouteNode<any,any> {
+	public get view(): RouteNode<any, any> {
 		if (this._state.value.view === undefined)
 			throw new DeveloperNotificationException("Bei dieser Route wurde keine Ansicht im Default-State definiert.");
 		return this._state.value.view;
@@ -145,7 +145,7 @@ export abstract class RouteData<RouteState extends RouteStateInterface> {
 	/**
 	 * Getter für die Default-View
 	 */
-	public get defaultView(): RouteNode<any,any> {
+	public get defaultView(): RouteNode<any, any> {
 		if (this._defaultState.view === undefined)
 			throw new DeveloperNotificationException("Bei dieser Route wurde keine Ansicht im Default-State definiert.");
 		return this._defaultState.view;
@@ -155,7 +155,7 @@ export abstract class RouteData<RouteState extends RouteStateInterface> {
 	 * Gibt die aktuelle Art der View zurück (Default, Hinzufügen oder Gruppenprozess).
 	 * Ist keiner spezifiziert, so wird DEFAULT zurückgegeben.
 	 */
-	get activeViewType() : ViewType {
+	get activeViewType(): ViewType {
 		if (this._state.value.activeViewType === undefined)
 			return ViewType.DEFAULT;
 		return this._state.value.activeViewType;
@@ -166,7 +166,7 @@ export abstract class RouteData<RouteState extends RouteStateInterface> {
 	 *
 	 * @param value   die Art der View
 	 */
-	set activeViewType(value : ViewType) {
+	set activeViewType(value: ViewType) {
 		this._state.value.activeViewType = value;
 	}
 

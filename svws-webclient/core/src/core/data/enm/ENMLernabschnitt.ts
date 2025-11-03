@@ -7,52 +7,52 @@ export class ENMLernabschnitt extends JavaObject {
 	 *  Die ID des Lernabschnittes in der SVWS-DB - kann zum Prüfen verwendet werden, ob der
 	 *  zuvor exportierte Lernabschnitt in der DB noch gültig ist
 	 */
-	public id : number = 0;
+	public id: number = 0;
 
 	/**
 	 * Gibt die Anzahl der gesamten Fehlstunden an, sofern diese abschnittsbezogen ermittelt werden.
 	 */
-	public fehlstundenGesamt : number | null = null;
+	public fehlstundenGesamt: number | null = null;
 
 	/**
 	 * Gibt den Zeitstempel der letzten Änderung für die Anzahl der gesamten Fehlstunden an, sofern diese abschnittsbezogen ermittelt werden.
 	 */
-	public tsFehlstundenGesamt : string | null = null;
+	public tsFehlstundenGesamt: string | null = null;
 
 	/**
 	 * Gibt die Anzahl der unentschuldigten Fehlstunden an, sofern diese abschnittsbezogen ermittelt werden.
 	 */
-	public fehlstundenGesamtUnentschuldigt : number | null = null;
+	public fehlstundenGesamtUnentschuldigt: number | null = null;
 
 	/**
 	 * Gibt den Zeitstempel der letzten Änderung für die Anzahl der unentschuldigten Fehlstunden an, sofern diese abschnittsbezogen ermittelt werden.
 	 */
-	public tsFehlstundenGesamtUnentschuldigt : string | null = null;
+	public tsFehlstundenGesamtUnentschuldigt: string | null = null;
 
 	/**
 	 * Die Prüfungsordnung, die in dem Lernabschnitt verwendet werden muss
 	 */
-	public pruefungsordnung : string | null = null;
+	public pruefungsordnung: string | null = null;
 
 	/**
 	 * Das Kürzel der Note für den Lernbereich 1, die vergeben wurde.
 	 */
-	public lernbereich1note : string | null = null;
+	public lernbereich1note: string | null = null;
 
 	/**
 	 * Das Kürzel der Note für den Lernbereich 2, die vergeben wurde.
 	 */
-	public lernbereich2note : string | null = null;
+	public lernbereich2note: string | null = null;
 
 	/**
 	 * Das Kürzel des Hauptförderschwerpunktes oder null bei keinem Hauptförderschwerpunkt
 	 */
-	public foerderschwerpunkt1 : string | null = null;
+	public foerderschwerpunkt1: string | null = null;
 
 	/**
 	 * Das Kürzel des weiteren Förderschwerpunktes oder null bei keinem weiteren Förderschwerpunkt
 	 */
-	public foerderschwerpunkt2 : string | null = null;
+	public foerderschwerpunkt2: string | null = null;
 
 
 	/**
@@ -66,13 +66,13 @@ export class ENMLernabschnitt extends JavaObject {
 		return 'de.svws_nrw.core.data.enm.ENMLernabschnitt';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.enm.ENMLernabschnitt'].includes(name);
 	}
 
 	public static class = new Class<ENMLernabschnitt>('de.svws_nrw.core.data.enm.ENMLernabschnitt');
 
-	public static transpilerFromJSON(json : string): ENMLernabschnitt {
+	public static transpilerFromJSON(json: string): ENMLernabschnitt {
 		const obj = JSON.parse(json) as Partial<ENMLernabschnitt>;
 		const result = new ENMLernabschnitt();
 		if (obj.id === undefined)
@@ -90,7 +90,7 @@ export class ENMLernabschnitt extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : ENMLernabschnitt) : string {
+	public static transpilerToJSON(obj: ENMLernabschnitt): string {
 		let result = '{';
 		result += '"id" : ' + obj.id.toString() + ',';
 		result += '"fehlstundenGesamt" : ' + ((obj.fehlstundenGesamt === null) ? 'null' : obj.fehlstundenGesamt.toString()) + ',';
@@ -107,7 +107,7 @@ export class ENMLernabschnitt extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<ENMLernabschnitt>) : string {
+	public static transpilerToJSONPatch(obj: Partial<ENMLernabschnitt>): string {
 		let result = '{';
 		if (obj.id !== undefined) {
 			result += '"id" : ' + obj.id.toString() + ',';
@@ -146,6 +146,6 @@ export class ENMLernabschnitt extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_enm_ENMLernabschnitt(obj : unknown) : ENMLernabschnitt {
+export function cast_de_svws_nrw_core_data_enm_ENMLernabschnitt(obj: unknown): ENMLernabschnitt {
 	return obj as ENMLernabschnitt;
 }

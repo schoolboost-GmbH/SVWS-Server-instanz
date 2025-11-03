@@ -70,7 +70,7 @@
 				default:
 					return true;
 			}
-		}
+		};
 	}
 
 	function adresseIsValid() {
@@ -81,13 +81,13 @@
 
 	const adresse = computed({
 		get: () => AdressenUtils.combineStrasse(data.value.strassenname, data.value.hausNr, data.value.hausNrZusatz),
-		set: (adresse : string) => {
+		set: (adresse: string) => {
 			const vals = AdressenUtils.splitStrasse(adresse);
 			data.value.strassenname = vals[0];
 			data.value.hausNr = vals[1];
 			data.value.hausNrZusatz = vals[2];
 		},
-	})
+	});
 
 	const formIsValid = computed(() => {
 		// alle Felder auf validity prüfen
@@ -95,8 +95,8 @@
 			const validateField = fieldIsValid(field as keyof Kindergarten);
 			const fieldValue = data.value[field as keyof Kindergarten] as string | null;
 			return validateField(fieldValue);
-		})
-	})
+		});
+	});
 
 	async function add() {
 		if (isLoading.value)
@@ -114,7 +114,7 @@
 		void props.goToDefaultView(null);
 	}
 
-	watch(() => data.value, async() => {
+	watch(() => data.value, async () => {
 		if (isLoading.value)
 			return;
 

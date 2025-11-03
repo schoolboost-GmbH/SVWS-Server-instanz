@@ -8,27 +8,27 @@ export class LernplattformV1Klasse extends JavaObject {
 	/**
 	 * Die ID der Klasse aus der SVWS-DB (z.B. 12)
 	 */
-	public id : number = 0;
+	public id: number = 0;
 
 	/**
 	 * Das Kürzel der Klasse, wie es im Rahmen der amtlichen Schulstatistik verwendet wird. (z. B. EFA)
 	 */
-	public kuerzel : string | null = null;
+	public kuerzel: string | null = null;
 
 	/**
 	 * Das Kürzel der Klasse, wie es im Rahmen der Schule benannt wird und angezeigt werden soll. (z. B. EF)
 	 */
-	public kuerzelAnzeige : string | null = null;
+	public kuerzelAnzeige: string | null = null;
 
 	/**
 	 * Die ID des Jahrgangs aus der SVWS-DB zu der die Klasse gehört. Bei einer jahrgangsübergreifenden Klasse ist der Wert null.
 	 */
-	public idJahrgang : number | null = null;
+	public idJahrgang: number | null = null;
 
 	/**
 	 * Die IDs der zugeordneten Klassenlehrer.
 	 */
-	public idsKlassenlehrer : List<number> = new ArrayList<number>();
+	public idsKlassenlehrer: List<number> = new ArrayList<number>();
 
 
 	/**
@@ -42,13 +42,13 @@ export class LernplattformV1Klasse extends JavaObject {
 		return 'de.svws_nrw.core.data.lernplattform.v1.LernplattformV1Klasse';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.lernplattform.v1.LernplattformV1Klasse'].includes(name);
 	}
 
 	public static class = new Class<LernplattformV1Klasse>('de.svws_nrw.core.data.lernplattform.v1.LernplattformV1Klasse');
 
-	public static transpilerFromJSON(json : string): LernplattformV1Klasse {
+	public static transpilerFromJSON(json: string): LernplattformV1Klasse {
 		const obj = JSON.parse(json) as Partial<LernplattformV1Klasse>;
 		const result = new LernplattformV1Klasse();
 		if (obj.id === undefined)
@@ -65,7 +65,7 @@ export class LernplattformV1Klasse extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : LernplattformV1Klasse) : string {
+	public static transpilerToJSON(obj: LernplattformV1Klasse): string {
 		let result = '{';
 		result += '"id" : ' + obj.id.toString() + ',';
 		result += '"kuerzel" : ' + ((obj.kuerzel === null) ? 'null' : JSON.stringify(obj.kuerzel)) + ',';
@@ -84,7 +84,7 @@ export class LernplattformV1Klasse extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<LernplattformV1Klasse>) : string {
+	public static transpilerToJSONPatch(obj: Partial<LernplattformV1Klasse>): string {
 		let result = '{';
 		if (obj.id !== undefined) {
 			result += '"id" : ' + obj.id.toString() + ',';
@@ -115,6 +115,6 @@ export class LernplattformV1Klasse extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_lernplattform_v1_LernplattformV1Klasse(obj : unknown) : LernplattformV1Klasse {
+export function cast_de_svws_nrw_core_data_lernplattform_v1_LernplattformV1Klasse(obj: unknown): LernplattformV1Klasse {
 	return obj as LernplattformV1Klasse;
 }

@@ -19,8 +19,8 @@ export class SetUtils extends JavaObject {
 	 *
 	 * @return ein Set, welches mit einem Element gefüllt wurde.
 	 */
-	public static create1<E>(element : E) : JavaSet<E> {
-		const set : HashSet<E> = new HashSet<E>();
+	public static create1<E>(element: E): JavaSet<E> {
+		const set: HashSet<E> = new HashSet<E>();
 		set.add(element);
 		return set;
 	}
@@ -34,8 +34,8 @@ export class SetUtils extends JavaObject {
 	 *
 	 * @return ein Set, welches mit einem Element gefüllt wurde.
 	 */
-	public static create2<E>(element1 : E, element2 : E) : JavaSet<E> {
-		const set : HashSet<E> = new HashSet<E>();
+	public static create2<E>(element1: E, element2: E): JavaSet<E> {
+		const set: HashSet<E> = new HashSet<E>();
 		set.add(element1);
 		set.add(element2);
 		return set;
@@ -49,8 +49,8 @@ export class SetUtils extends JavaObject {
 	 *
 	 * @return ein Set (HashSet), welches mit den Elementen der Liste gefüllt wurde.
 	 */
-	public static createFromList<E>(list : List<E>) : JavaSet<E> {
-		const set : HashSet<E> = new HashSet<E>();
+	public static createFromList<E>(list: List<E>): JavaSet<E> {
+		const set: HashSet<E> = new HashSet<E>();
 		set.addAll(list);
 		return set;
 	}
@@ -59,7 +59,7 @@ export class SetUtils extends JavaObject {
 		return 'de.svws_nrw.core.utils.SetUtils';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.utils.SetUtils'].includes(name);
 	}
 
@@ -67,6 +67,6 @@ export class SetUtils extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_utils_SetUtils(obj : unknown) : SetUtils {
+export function cast_de_svws_nrw_core_utils_SetUtils(obj: unknown): SetUtils {
 	return obj as SetUtils;
 }

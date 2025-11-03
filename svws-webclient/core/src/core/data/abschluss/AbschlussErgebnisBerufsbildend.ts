@@ -8,27 +8,27 @@ export class AbschlussErgebnisBerufsbildend extends JavaObject {
 	/**
 	 * Gibt an, ob der Berufschulabschluss erfolgreich erworben wurde.
 	 */
-	public hatBSA : boolean = false;
+	public hatBSA: boolean = false;
 
 	/**
 	 * Gibt die Note des Berufsschulabschlusses an, selbst wenn dieser nicht erreicht wurde.
 	 */
-	public note : number = 0;
+	public note: number = 0;
 
 	/**
 	 * Gibt an, ob der Berufabschluss insgesamt erfolgreich erworben wurde, falls genügend Informationen vorliegen.
 	 */
-	public hatBA : boolean | null = null;
+	public hatBA: boolean | null = null;
 
 	/**
 	 * Gibt an, welcher allgemeinbildende Abschluss ggf. zusätzlich erreicht wurde, falls er nicht bereits vorher erreicht wurde.
 	 */
-	public abschlussAllgemeinbildend : string | null = null;
+	public abschlussAllgemeinbildend: string | null = null;
 
 	/**
 	 * Der Log der Abschlussberechnung.
 	 */
-	public log : List<string> | null = null;
+	public log: List<string> | null = null;
 
 
 	/**
@@ -42,13 +42,13 @@ export class AbschlussErgebnisBerufsbildend extends JavaObject {
 		return 'de.svws_nrw.core.data.abschluss.AbschlussErgebnisBerufsbildend';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.abschluss.AbschlussErgebnisBerufsbildend'].includes(name);
 	}
 
 	public static class = new Class<AbschlussErgebnisBerufsbildend>('de.svws_nrw.core.data.abschluss.AbschlussErgebnisBerufsbildend');
 
-	public static transpilerFromJSON(json : string): AbschlussErgebnisBerufsbildend {
+	public static transpilerFromJSON(json: string): AbschlussErgebnisBerufsbildend {
 		const obj = JSON.parse(json) as Partial<AbschlussErgebnisBerufsbildend>;
 		const result = new AbschlussErgebnisBerufsbildend();
 		if (obj.hatBSA === undefined)
@@ -70,7 +70,7 @@ export class AbschlussErgebnisBerufsbildend extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : AbschlussErgebnisBerufsbildend) : string {
+	public static transpilerToJSON(obj: AbschlussErgebnisBerufsbildend): string {
 		let result = '{';
 		result += '"hatBSA" : ' + obj.hatBSA.toString() + ',';
 		result += '"note" : ' + obj.note.toString() + ',';
@@ -93,7 +93,7 @@ export class AbschlussErgebnisBerufsbildend extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<AbschlussErgebnisBerufsbildend>) : string {
+	public static transpilerToJSONPatch(obj: Partial<AbschlussErgebnisBerufsbildend>): string {
 		let result = '{';
 		if (obj.hatBSA !== undefined) {
 			result += '"hatBSA" : ' + obj.hatBSA.toString() + ',';
@@ -128,6 +128,6 @@ export class AbschlussErgebnisBerufsbildend extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_abschluss_AbschlussErgebnisBerufsbildend(obj : unknown) : AbschlussErgebnisBerufsbildend {
+export function cast_de_svws_nrw_core_data_abschluss_AbschlussErgebnisBerufsbildend(obj: unknown): AbschlussErgebnisBerufsbildend {
 	return obj as AbschlussErgebnisBerufsbildend;
 }

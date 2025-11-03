@@ -10,13 +10,13 @@ import type { Collection } from "../../../../../core/src/java/util/Collection";
 export class GridInputIntegerDiv<KEY> extends GridInputInnerText<KEY, number | null> {
 
 	// Der Setter zum Schreiben der Daten
-	protected _setter : (value: number | null) => void;
+	protected _setter: (value: number | null) => void;
 
 	// Der zwischengespeicherte Wert des Input-Elements
 	protected _zahl = shallowRef<number | null>(null);
 
 	// Die maximale Zahl, die erlaubt ist
-	protected _max : number | null = null;
+	protected _max: number | null = null;
 
 	/**
 	 * Erzeugt ein neues Grid-Input für ein HTMLElement, welches die Notepunkte im Abitur in dem innerText
@@ -60,7 +60,7 @@ export class GridInputIntegerDiv<KEY> extends GridInputInnerText<KEY, number | n
 	/**
 	 * Schreibt die internen Daten dieses Inputs mithilfe des Setters.
 	 */
-	public commit() : void {
+	public commit(): void {
 		this._setter(this._zahl.value);
 	}
 
@@ -71,7 +71,7 @@ export class GridInputIntegerDiv<KEY> extends GridInputInnerText<KEY, number | n
 	 *
 	 * @returns true, falls das Anhängen der Ziffer zulässig war und sonst false
 	 */
-	public append(ziffer : number): boolean {
+	public append(ziffer: number): boolean {
 		const tmp = (this._zahl.value === null) ? ziffer : ((this._zahl.value * 10) + ziffer);
 		if ((this._max !== null) && (tmp > this._max))
 			return false;
@@ -101,7 +101,7 @@ export class GridInputIntegerDiv<KEY> extends GridInputInnerText<KEY, number | n
 	 *
 	 * @returns true   es hat aufgrund des Tastaturereignisses eine Änderung am Zustand des Inputs stattgefunden
 	 */
-	public onKeyDown(event : KeyboardEvent) : boolean {
+	public onKeyDown(event: KeyboardEvent): boolean {
 		if (super.onKeyDownNavigation(event))
 			return false;
 		// Lösche ggf. den aktuellen Wert

@@ -15,13 +15,13 @@ export class KAOAMerkmaleOptionsartenKatalogEintrag extends CoreTypeData {
 		return 'de.svws_nrw.asd.data.kaoa.KAOAMerkmaleOptionsartenKatalogEintrag';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.asd.data.kaoa.KAOAMerkmaleOptionsartenKatalogEintrag', 'de.svws_nrw.asd.data.CoreTypeData'].includes(name);
 	}
 
 	public static class = new Class<KAOAMerkmaleOptionsartenKatalogEintrag>('de.svws_nrw.asd.data.kaoa.KAOAMerkmaleOptionsartenKatalogEintrag');
 
-	public static transpilerFromJSON(json : string): KAOAMerkmaleOptionsartenKatalogEintrag {
+	public static transpilerFromJSON(json: string): KAOAMerkmaleOptionsartenKatalogEintrag {
 		const obj = JSON.parse(json) as Partial<KAOAMerkmaleOptionsartenKatalogEintrag>;
 		const result = new KAOAMerkmaleOptionsartenKatalogEintrag();
 		if (obj.id === undefined)
@@ -41,7 +41,7 @@ export class KAOAMerkmaleOptionsartenKatalogEintrag extends CoreTypeData {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : KAOAMerkmaleOptionsartenKatalogEintrag) : string {
+	public static transpilerToJSON(obj: KAOAMerkmaleOptionsartenKatalogEintrag): string {
 		let result = '{';
 		result += '"id" : ' + obj.id.toString() + ',';
 		result += '"schluessel" : ' + JSON.stringify(obj.schluessel) + ',';
@@ -54,7 +54,7 @@ export class KAOAMerkmaleOptionsartenKatalogEintrag extends CoreTypeData {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<KAOAMerkmaleOptionsartenKatalogEintrag>) : string {
+	public static transpilerToJSONPatch(obj: Partial<KAOAMerkmaleOptionsartenKatalogEintrag>): string {
 		let result = '{';
 		if (obj.id !== undefined) {
 			result += '"id" : ' + obj.id.toString() + ',';
@@ -81,6 +81,6 @@ export class KAOAMerkmaleOptionsartenKatalogEintrag extends CoreTypeData {
 
 }
 
-export function cast_de_svws_nrw_asd_data_kaoa_KAOAMerkmaleOptionsartenKatalogEintrag(obj : unknown) : KAOAMerkmaleOptionsartenKatalogEintrag {
+export function cast_de_svws_nrw_asd_data_kaoa_KAOAMerkmaleOptionsartenKatalogEintrag(obj: unknown): KAOAMerkmaleOptionsartenKatalogEintrag {
 	return obj as KAOAMerkmaleOptionsartenKatalogEintrag;
 }

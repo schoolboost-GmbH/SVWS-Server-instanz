@@ -10,23 +10,23 @@ import { JavaObject } from '../../java/lang/JavaObject';
 
 export class AbstractListIterator<E> extends JavaObject implements JavaIterator<E> {
 
-	public current : number = 0;
+	public current: number = 0;
 
-	public lastReturned : number = -1;
+	public lastReturned: number = -1;
 
-	protected modCount : number;
+	protected modCount: number;
 
-	protected readonly list : AbstractList<E>;
+	protected readonly list: AbstractList<E>;
 
 
-	constructor(list : AbstractList<E>) {
+	constructor(list: AbstractList<E>) {
 		super();
 		this.modCount = list.modCount;
 		this.list = list;
 	}
 
 
-	public hasNext() : boolean {
+	public hasNext(): boolean {
 		return this.current !== this.list.size();
 	}
 
@@ -36,8 +36,8 @@ export class AbstractListIterator<E> extends JavaObject implements JavaIterator<
 		try {
 			if (!this.hasNext)
 				throw new NoSuchElementException();
-			const i : number = this.current;
-			const next : E = this.list.get(i);
+			const i: number = this.current;
+			const next: E = this.list.get(i);
 			this.lastReturned = i;
 			this.current = i + 1;
 			return next;
@@ -48,7 +48,7 @@ export class AbstractListIterator<E> extends JavaObject implements JavaIterator<
 	}
 
 
-	public remove() : void {
+	public remove(): void {
 		if (this.lastReturned < 0)
 			throw new IllegalStateException();
 		this.checkForComodification();
@@ -64,7 +64,7 @@ export class AbstractListIterator<E> extends JavaObject implements JavaIterator<
 	}
 
 
-	public checkForComodification() : void {
+	public checkForComodification(): void {
 		if (this.list.modCount !== this.modCount)
 			throw new ConcurrentModificationException();
 	}
@@ -80,17 +80,17 @@ export class AbstractListIterator<E> extends JavaObject implements JavaIterator<
 		return 'java.util.AbstractListIterator';
 	}
 
-	public isTranspiledInstanceOf(name : string): boolean {
+	public isTranspiledInstanceOf(name: string): boolean {
 		return [
 			'java.util.AbstractListIterator',
 			'java.util.JavaIterator',
-			'java.lang.Object'
+			'java.lang.Object',
 		].includes(name);
 	}
 
 }
 
 
-export function cast_java_util_AbstractListIterator<E>(obj : unknown) : AbstractListIterator<E> {
+export function cast_java_util_AbstractListIterator<E>(obj: unknown): AbstractListIterator<E> {
 	return obj as AbstractListIterator<E>;
 }

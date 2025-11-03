@@ -10,43 +10,43 @@ export class GostKlausurraumblockungKonfiguration extends JavaObject {
 	/**
 	 * Die maximale Zeit, welche für die Blockung verwendet wird
 	 */
-	public maxTimeMillis : number = 1000;
+	public maxTimeMillis: number = 1000;
 
 	/**
 	 * Die Liste der angereicherten Schülerklausurtermine.
 	 */
-	public schuelerklausurtermine : List<GostSchuelerklausurTerminRich> = new ArrayList<GostSchuelerklausurTerminRich>();
+	public schuelerklausurtermine: List<GostSchuelerklausurTerminRich> = new ArrayList<GostSchuelerklausurTerminRich>();
 
 	/**
 	 * Die Liste der angereicherten Klausurräume.
 	 */
-	public raeume : List<GostKlausurraumRich> = new ArrayList<GostKlausurraumRich>();
+	public raeume: List<GostKlausurraumRich> = new ArrayList<GostKlausurraumRich>();
 
 	/**
 	 * TRUE, dann werden so wenig Räume wie möglich genutzt.
 	 *   Falls {@link #_regel_optimiere_blocke_gleichmaessig_verteilt_auf_raeume} auch TRUE, dann gilt diese Regel primär.
 	 */
-	public _regel_optimiere_blocke_in_moeglichst_wenig_raeume : boolean = true;
+	public _regel_optimiere_blocke_in_moeglichst_wenig_raeume: boolean = true;
 
 	/**
 	 * TRUE, dann werden wird auf die Räume gleichmäßig verteilt.
 	 */
-	public _regel_optimiere_blocke_gleichmaessig_verteilt_auf_raeume : boolean = true;
+	public _regel_optimiere_blocke_gleichmaessig_verteilt_auf_raeume: boolean = true;
 
 	/**
 	 * TRUE, dann müssen die selben Kursklausuren im selben Raum geschrieben werden.
 	 */
-	public _regel_forciere_selbe_kursklausur_im_selben_raum : boolean = true;
+	public _regel_forciere_selbe_kursklausur_im_selben_raum: boolean = true;
 
 	/**
 	 * TRUE, dann dürfen nur die selben Klausurdauern in einen Raum.
 	 */
-	public _regel_forciere_selbe_klausurdauer_pro_raum : boolean = false;
+	public _regel_forciere_selbe_klausurdauer_pro_raum: boolean = false;
 
 	/**
 	 * TRUE, dann dürfen nur die selben Klausurstart-Zeiten in einen Raum.
 	 */
-	public _regel_forciere_selben_klausurstart_pro_raum : boolean = true;
+	public _regel_forciere_selben_klausurstart_pro_raum: boolean = true;
 
 
 	/**
@@ -60,13 +60,13 @@ export class GostKlausurraumblockungKonfiguration extends JavaObject {
 		return 'de.svws_nrw.core.data.gost.klausurplanung.GostKlausurraumblockungKonfiguration';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.gost.klausurplanung.GostKlausurraumblockungKonfiguration'].includes(name);
 	}
 
 	public static class = new Class<GostKlausurraumblockungKonfiguration>('de.svws_nrw.core.data.gost.klausurplanung.GostKlausurraumblockungKonfiguration');
 
-	public static transpilerFromJSON(json : string): GostKlausurraumblockungKonfiguration {
+	public static transpilerFromJSON(json: string): GostKlausurraumblockungKonfiguration {
 		const obj = JSON.parse(json) as Partial<GostKlausurraumblockungKonfiguration>;
 		const result = new GostKlausurraumblockungKonfiguration();
 		if (obj.maxTimeMillis === undefined)
@@ -100,7 +100,7 @@ export class GostKlausurraumblockungKonfiguration extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : GostKlausurraumblockungKonfiguration) : string {
+	public static transpilerToJSON(obj: GostKlausurraumblockungKonfiguration): string {
 		let result = '{';
 		result += '"maxTimeMillis" : ' + obj.maxTimeMillis.toString() + ',';
 		result += '"schuelerklausurtermine" : [ ';
@@ -129,7 +129,7 @@ export class GostKlausurraumblockungKonfiguration extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<GostKlausurraumblockungKonfiguration>) : string {
+	public static transpilerToJSONPatch(obj: Partial<GostKlausurraumblockungKonfiguration>): string {
 		let result = '{';
 		if (obj.maxTimeMillis !== undefined) {
 			result += '"maxTimeMillis" : ' + obj.maxTimeMillis.toString() + ',';
@@ -176,6 +176,6 @@ export class GostKlausurraumblockungKonfiguration extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_gost_klausurplanung_GostKlausurraumblockungKonfiguration(obj : unknown) : GostKlausurraumblockungKonfiguration {
+export function cast_de_svws_nrw_core_data_gost_klausurplanung_GostKlausurraumblockungKonfiguration(obj: unknown): GostKlausurraumblockungKonfiguration {
 	return obj as GostKlausurraumblockungKonfiguration;
 }

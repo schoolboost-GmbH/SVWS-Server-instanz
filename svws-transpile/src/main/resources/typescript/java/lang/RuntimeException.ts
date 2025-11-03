@@ -6,7 +6,7 @@ export class RuntimeException extends Exception {
 		return 'java.lang.RuntimeException';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return [
 			'java.lang.RuntimeException',
 			'java.lang.Exception',
@@ -19,6 +19,6 @@ export class RuntimeException extends Exception {
 }
 
 
-export function cast_java_lang_RuntimeException(obj : unknown) : RuntimeException {
+export function cast_java_lang_RuntimeException(obj: unknown): RuntimeException {
 	return obj as RuntimeException;
 }

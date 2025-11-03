@@ -13,7 +13,7 @@ export class AbschlussFaecherGruppe extends JavaObject {
 	/**
 	 * Eine Liste mit allen Fächern dieser Fachgruppe
 	 */
-	private readonly faecher : ArrayList<GEAbschlussFach> = new ArrayList<GEAbschlussFach>();
+	private readonly faecher: ArrayList<GEAbschlussFach> = new ArrayList<GEAbschlussFach>();
 
 
 	/**
@@ -23,10 +23,10 @@ export class AbschlussFaecherGruppe extends JavaObject {
 	 * @param faecherNutzen     nur die gelisteten Fächer nutzen, null bedeutet grundsätzlich alle benoteten Fächer nutzen (außer den gefilterten)
 	 * @param faecherFiltern    null bedeutet keinen Filter verwenden, ansonsten werden die gelisteten Fächer gefiltert
 	 */
-	public constructor(faecherAlle : List<GEAbschlussFach>, faecherNutzen : List<string> | null, faecherFiltern : List<string> | null) {
+	public constructor(faecherAlle: List<GEAbschlussFach>, faecherNutzen: List<string> | null, faecherFiltern: List<string> | null) {
 		super();
-		for (let i : number = 0; i < faecherAlle.size(); i++) {
-			const fach : GEAbschlussFach = faecherAlle.get(i);
+		for (let i: number = 0; i < faecherAlle.size(); i++) {
+			const fach: GEAbschlussFach = faecherAlle.get(i);
 			if (fach.kuerzel === null)
 				continue;
 			if ((faecherFiltern !== null) && faecherFiltern.contains(fach.kuerzel))
@@ -44,7 +44,7 @@ export class AbschlussFaecherGruppe extends JavaObject {
 	 *
 	 * @return true, falls die angegebenen Fächer und nur diese in der Fächergruppe sind, ansonsten false.
 	 */
-	public istVollstaendig(faecherAbgleich : List<string> | null) : boolean {
+	public istVollstaendig(faecherAbgleich: List<string> | null): boolean {
 		if (faecherAbgleich === null)
 			return true;
 		if (this.isEmpty())
@@ -64,7 +64,7 @@ export class AbschlussFaecherGruppe extends JavaObject {
 	 *
 	 * @return true, falls die Fächergruppe leer ist, ansonsten false
 	 */
-	public isEmpty() : boolean {
+	public isEmpty(): boolean {
 		return this.faecher.isEmpty();
 	}
 
@@ -76,7 +76,7 @@ export class AbschlussFaecherGruppe extends JavaObject {
 	 *
 	 * @return true, falls das Fach vorhanden ist, und ansonsten false
 	 */
-	public contains(kuerzel : string | null) : boolean {
+	public contains(kuerzel: string | null): boolean {
 		if (kuerzel === null)
 			return false;
 		for (const fach of this.faecher) {
@@ -93,10 +93,10 @@ export class AbschlussFaecherGruppe extends JavaObject {
 	 *
 	 * @return die Liste der tatsächlich entfernten Fächer
 	 */
-	public entferneFaecher(filter : Predicate<GEAbschlussFach>) : List<GEAbschlussFach> {
-		const selected : ArrayList<GEAbschlussFach> = new ArrayList<GEAbschlussFach>();
-		for (let i : number = 0; i < this.faecher.size(); i++) {
-			const fach : GEAbschlussFach = this.faecher.get(i);
+	public entferneFaecher(filter: Predicate<GEAbschlussFach>): List<GEAbschlussFach> {
+		const selected: ArrayList<GEAbschlussFach> = new ArrayList<GEAbschlussFach>();
+		for (let i: number = 0; i < this.faecher.size(); i++) {
+			const fach: GEAbschlussFach = this.faecher.get(i);
 			if (filter.test(fach))
 				selected.add(fach);
 		}
@@ -113,7 +113,7 @@ export class AbschlussFaecherGruppe extends JavaObject {
 	 *
 	 * @return das Fach, sofern eines gefunden wurde, ansonsten false
 	 */
-	public getFach(filter : Predicate<GEAbschlussFach>) : GEAbschlussFach | null {
+	public getFach(filter: Predicate<GEAbschlussFach>): GEAbschlussFach | null {
 		for (const fach of this.faecher) {
 			if (filter.test(fach))
 				return fach;
@@ -128,10 +128,10 @@ export class AbschlussFaecherGruppe extends JavaObject {
 	 *
 	 * @return eine Liste der Fächer, die dem Filterkriterium entsprechen
 	 */
-	public getFaecher(filter : Predicate<GEAbschlussFach>) : List<GEAbschlussFach> {
-		const result : ArrayList<GEAbschlussFach> = new ArrayList<GEAbschlussFach>();
-		for (let i : number = 0; i < this.faecher.size(); i++) {
-			const fach : GEAbschlussFach = this.faecher.get(i);
+	public getFaecher(filter: Predicate<GEAbschlussFach>): List<GEAbschlussFach> {
+		const result: ArrayList<GEAbschlussFach> = new ArrayList<GEAbschlussFach>();
+		for (let i: number = 0; i < this.faecher.size(); i++) {
+			const fach: GEAbschlussFach = this.faecher.get(i);
 			if (filter.test(fach))
 				result.add(fach);
 		}
@@ -145,8 +145,8 @@ export class AbschlussFaecherGruppe extends JavaObject {
 	 *
 	 * @return die Anzahl der Fächer
 	 */
-	public getFaecherAnzahl(filter : Predicate<GEAbschlussFach>) : number {
-		let count : number = 0;
+	public getFaecherAnzahl(filter: Predicate<GEAbschlussFach>): number {
+		let count: number = 0;
 		for (const fach of this.faecher) {
 			if (filter.test(fach))
 				count++;
@@ -161,10 +161,10 @@ export class AbschlussFaecherGruppe extends JavaObject {
 	 *
 	 * @return eine Liste der Kürzel der Fächer, die dem Filterkriterium entsprechen
 	 */
-	public getKuerzel(filter : Predicate<GEAbschlussFach>) : List<string> {
-		const result : ArrayList<string> = new ArrayList<string>();
-		for (let i : number = 0; i < this.faecher.size(); i++) {
-			const fach : GEAbschlussFach = this.faecher.get(i);
+	public getKuerzel(filter: Predicate<GEAbschlussFach>): List<string> {
+		const result: ArrayList<string> = new ArrayList<string>();
+		for (let i: number = 0; i < this.faecher.size(); i++) {
+			const fach: GEAbschlussFach = this.faecher.get(i);
 			if (filter.test(fach) && (fach.kuerzel !== null))
 				result.add(fach.kuerzel);
 		}
@@ -179,8 +179,8 @@ export class AbschlussFaecherGruppe extends JavaObject {
 	 *
 	 * @return die Zeichenkette mit einer Komma-separierten Liste der Fächerkürzel
 	 */
-	public getKuerzelListe(filter : Predicate<GEAbschlussFach>) : string {
-		const sb : StringBuilder = new StringBuilder();
+	public getKuerzelListe(filter: Predicate<GEAbschlussFach>): string {
+		const sb: StringBuilder = new StringBuilder();
 		for (const fach of this.faecher) {
 			if (filter.test(fach)) {
 				if (sb.length() > 0)
@@ -195,12 +195,12 @@ export class AbschlussFaecherGruppe extends JavaObject {
 	 * Gibt eine Komma-separierte Liste, der Abschlussfächer aus. Dabei wird
 	 * die toString Methode der Klasse AbschlussFach verwendet.
 	 */
-	public toString() : string {
-		const sb : StringBuilder = new StringBuilder();
+	public toString(): string {
+		const sb: StringBuilder = new StringBuilder();
 		for (const fach of this.faecher) {
 			if (sb.length() > 0)
 				sb.append(", ");
-			let diffkursinfo : string = "";
+			let diffkursinfo: string = "";
 			if ((fach.kursart === null) || (fach.kuerzel === null))
 				continue;
 			if (!GELeistungsdifferenzierteKursart.Sonstige.hat(fach.kursart))
@@ -214,7 +214,7 @@ export class AbschlussFaecherGruppe extends JavaObject {
 		return 'de.svws_nrw.core.abschluss.ge.AbschlussFaecherGruppe';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.abschluss.ge.AbschlussFaecherGruppe'].includes(name);
 	}
 
@@ -222,6 +222,6 @@ export class AbschlussFaecherGruppe extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_abschluss_ge_AbschlussFaecherGruppe(obj : unknown) : AbschlussFaecherGruppe {
+export function cast_de_svws_nrw_core_abschluss_ge_AbschlussFaecherGruppe(obj: unknown): AbschlussFaecherGruppe {
 	return obj as AbschlussFaecherGruppe;
 }

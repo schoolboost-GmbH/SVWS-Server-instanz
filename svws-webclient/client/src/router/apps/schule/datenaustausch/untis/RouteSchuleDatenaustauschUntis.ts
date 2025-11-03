@@ -1,6 +1,6 @@
 import { BenutzerKompetenz, Schulform, ServerMode } from "@core";
 
-import type { RouteApp} from "~/router/apps/RouteApp";
+import type { RouteApp } from "~/router/apps/RouteApp";
 import { RouteDataSchuleDatenaustauschUntis } from "./RouteDataSchuleDatenaustauschUntis";
 import { RouteSchuleMenuGroup } from "../../RouteSchuleMenuGroup";
 import { RouteTabNode } from "~/router/RouteTabNode";

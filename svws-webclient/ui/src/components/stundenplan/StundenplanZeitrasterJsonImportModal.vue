@@ -1,10 +1,15 @@
 <template>
 	<slot :open-modal />
-	<svws-ui-modal v-model:show="show" type="danger" class="hidden">
+	<svws-ui-modal v-model:show="show" type="danger" class="hidden" size="medium">
 		<template #modalTitle>Zeitraster importieren</template>
 		<template #modalContent>
+			<div class="text-left">
+				Beim Import werden alle bisher für den Stundenplan angelegten Zeitraster entfernt und durch die importierten Zeitraster ersetzt.
+				<br>Hierbei wird das JSON-Format verwendet:
+			</div>
+			<code-box :code status :backticks="false" />
+			<div class="mt-2" />
 			<svws-ui-input-wrapper>
-				<div>Beim Import werden alle bisher für den Stundenplan angelegten Zeitraster entfernt und durch die importierten Zeitraster ersetzt.</div>
 				<input type="file" accept=".json" @change="onFileChanged" :disabled="loading" class="w-full">
 			</svws-ui-input-wrapper>
 		</template>
@@ -27,6 +32,20 @@
 		removeZeitraster: (multi: Iterable<StundenplanZeitraster>) => Promise<void>;
 	}>();
 
+	const code = `[
+  {
+    // wird entfernt, daher optional
+    "id": 1,
+    // Der Wochentag beginnend bei 1 mit Montag
+    "wochentag": 1,
+    "unterrichtstunde": 1,
+    // Die Uhrzeit in Minuten, hier 8:00
+    "stundenbeginn": 480,
+    // bis 8:45
+    "stundenende": 525
+  }
+]`;
+
 	const show = ref<boolean>(false);
 
 	const status = ref<boolean | undefined>(undefined);
@@ -35,7 +54,7 @@
 
 	const openModal = () => {
 		show.value = true;
-	}
+	};
 
 	function onFileChanged(event: Event) {
 		const target = event.target as HTMLInputElement;

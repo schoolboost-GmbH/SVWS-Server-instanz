@@ -6,17 +6,17 @@ export class StundenplanJahrgang extends JavaObject {
 	/**
 	 * Die ID des Jahrgangs.
 	 */
-	public id : number = -1;
+	public id: number = -1;
 
 	/**
 	 * Das Kürzel des Jahrgangs.
 	 */
-	public kuerzel : string = "";
+	public kuerzel: string = "";
 
 	/**
 	 * Die Bezeichnung des Jahrgangs.
 	 */
-	public bezeichnung : string = "";
+	public bezeichnung: string = "";
 
 
 	/**
@@ -30,13 +30,13 @@ export class StundenplanJahrgang extends JavaObject {
 		return 'de.svws_nrw.core.data.stundenplan.StundenplanJahrgang';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.stundenplan.StundenplanJahrgang'].includes(name);
 	}
 
 	public static class = new Class<StundenplanJahrgang>('de.svws_nrw.core.data.stundenplan.StundenplanJahrgang');
 
-	public static transpilerFromJSON(json : string): StundenplanJahrgang {
+	public static transpilerFromJSON(json: string): StundenplanJahrgang {
 		const obj = JSON.parse(json) as Partial<StundenplanJahrgang>;
 		const result = new StundenplanJahrgang();
 		if (obj.id === undefined)
@@ -51,7 +51,7 @@ export class StundenplanJahrgang extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : StundenplanJahrgang) : string {
+	public static transpilerToJSON(obj: StundenplanJahrgang): string {
 		let result = '{';
 		result += '"id" : ' + obj.id.toString() + ',';
 		result += '"kuerzel" : ' + JSON.stringify(obj.kuerzel) + ',';
@@ -61,7 +61,7 @@ export class StundenplanJahrgang extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<StundenplanJahrgang>) : string {
+	public static transpilerToJSONPatch(obj: Partial<StundenplanJahrgang>): string {
 		let result = '{';
 		if (obj.id !== undefined) {
 			result += '"id" : ' + obj.id.toString() + ',';
@@ -79,6 +79,6 @@ export class StundenplanJahrgang extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_stundenplan_StundenplanJahrgang(obj : unknown) : StundenplanJahrgang {
+export function cast_de_svws_nrw_core_data_stundenplan_StundenplanJahrgang(obj: unknown): StundenplanJahrgang {
 	return obj as StundenplanJahrgang;
 }

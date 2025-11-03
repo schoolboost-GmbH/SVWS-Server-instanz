@@ -1,4 +1,4 @@
-import { ApiFile, ReportingParameter, Schuljahresabschnitt } from "@core";
+import type { ApiFile, ReportingParameter, Schuljahresabschnitt } from "@core";
 
 export interface SchuleReportingProps {
 	schuljahresabschnitt: () => Schuljahresabschnitt;

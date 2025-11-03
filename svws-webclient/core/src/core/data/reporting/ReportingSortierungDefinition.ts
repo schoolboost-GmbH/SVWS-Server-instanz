@@ -8,17 +8,17 @@ export class ReportingSortierungDefinition extends JavaObject {
 	/**
 	 * Der Typname des zu sortierenden Reporting-Datentyps, z. B. 'ReportingSchueler' oder 'ReportingKlasse'.
 	 */
-	public typ : string = "";
+	public typ: string = "";
 
 	/**
 	 * Die Angabe legt fest, ob die definierte Standardsortierung für diesen Typ verwendet werden soll.
 	 */
-	public verwendeStandardsortierung : boolean | null = true;
+	public verwendeStandardsortierung: boolean | null = true;
 
 	/**
 	 * Liste von Attributnamen für eine benutzerdefinierte Sortierung dieses Typs.
 	 */
-	public attribute : List<string> = new ArrayList<string>();
+	public attribute: List<string> = new ArrayList<string>();
 
 
 	/**
@@ -34,13 +34,13 @@ export class ReportingSortierungDefinition extends JavaObject {
 		return 'de.svws_nrw.core.data.reporting.ReportingSortierungDefinition';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.reporting.ReportingSortierungDefinition'].includes(name);
 	}
 
 	public static class = new Class<ReportingSortierungDefinition>('de.svws_nrw.core.data.reporting.ReportingSortierungDefinition');
 
-	public static transpilerFromJSON(json : string): ReportingSortierungDefinition {
+	public static transpilerFromJSON(json: string): ReportingSortierungDefinition {
 		const obj = JSON.parse(json) as Partial<ReportingSortierungDefinition>;
 		const result = new ReportingSortierungDefinition();
 		if (obj.typ === undefined)
@@ -55,7 +55,7 @@ export class ReportingSortierungDefinition extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : ReportingSortierungDefinition) : string {
+	public static transpilerToJSON(obj: ReportingSortierungDefinition): string {
 		let result = '{';
 		result += '"typ" : ' + JSON.stringify(obj.typ) + ',';
 		result += '"verwendeStandardsortierung" : ' + ((obj.verwendeStandardsortierung === null) ? 'null' : obj.verwendeStandardsortierung.toString()) + ',';
@@ -72,7 +72,7 @@ export class ReportingSortierungDefinition extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<ReportingSortierungDefinition>) : string {
+	public static transpilerToJSONPatch(obj: Partial<ReportingSortierungDefinition>): string {
 		let result = '{';
 		if (obj.typ !== undefined) {
 			result += '"typ" : ' + JSON.stringify(obj.typ) + ',';
@@ -97,6 +97,6 @@ export class ReportingSortierungDefinition extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_reporting_ReportingSortierungDefinition(obj : unknown) : ReportingSortierungDefinition {
+export function cast_de_svws_nrw_core_data_reporting_ReportingSortierungDefinition(obj: unknown): ReportingSortierungDefinition {
 	return obj as ReportingSortierungDefinition;
 }

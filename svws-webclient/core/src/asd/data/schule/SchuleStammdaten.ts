@@ -10,97 +10,97 @@ export class SchuleStammdaten extends JavaObject {
 	/**
 	 * Die eindeutige Schulnummer der Schule
 	 */
-	public schulNr : number = 0;
+	public schulNr: number = 0;
 
 	/**
 	 * Die Schulform der Schule
 	 */
-	public schulform : string = "";
+	public schulform: string = "";
 
 	/**
 	 * Der erste Teil (von dreien) der Bezeichnung der Schule
 	 */
-	public bezeichnung1 : string = "";
+	public bezeichnung1: string = "";
 
 	/**
 	 * Der zweite Teil (von dreien) der Bezeichnung der Schule
 	 */
-	public bezeichnung2 : string | null = null;
+	public bezeichnung2: string | null = null;
 
 	/**
 	 * Der dritte Teil (von dreien) der Bezeichnung der Schule
 	 */
-	public bezeichnung3 : string | null = null;
+	public bezeichnung3: string | null = null;
 
 	/**
 	 * Der Straßenname der Straße in der die Schule liegt.
 	 */
-	public strassenname : string | null = null;
+	public strassenname: string | null = null;
 
 	/**
 	 * Die Hausnummer zur Straße in der die Schule liegt.
 	 */
-	public hausnummer : string | null = null;
+	public hausnummer: string | null = null;
 
 	/**
 	 * Ggf. der Hausnummerzusatz zur Straße in der die Schule liegt.
 	 */
-	public hausnummerZusatz : string | null = null;
+	public hausnummerZusatz: string | null = null;
 
 	/**
 	 * Die Postleitzahl des Gebietes in dem die Schule liegt.
 	 */
-	public plz : string | null = null;
+	public plz: string | null = null;
 
 	/**
 	 * Der Ort in dem die Schule liegt.
 	 */
-	public ort : string | null = null;
+	public ort: string | null = null;
 
 	/**
 	 * Die Telefonnummer der Schule.
 	 */
-	public telefon : string | null = null;
+	public telefon: string | null = null;
 
 	/**
 	 * Die Faxnummer der Schule.
 	 */
-	public fax : string | null = null;
+	public fax: string | null = null;
 
 	/**
 	 * Die Mailadresse der Schule.
 	 */
-	public email : string | null = null;
+	public email: string | null = null;
 
 	/**
 	 * Die Adresse der Homepage der Schule (Domain-Name)
 	 */
-	public webAdresse : string | null = null;
+	public webAdresse: string | null = null;
 
 	/**
 	 * Die ID des Schuljahresabschnittes, in welchem sich die Schule befindet.
 	 */
-	public idSchuljahresabschnitt : number = 0;
+	public idSchuljahresabschnitt: number = 0;
 
 	/**
 	 * Die Anzahl der Abschnitte pro Jahrgangsstufe.
 	 */
-	public anzJGS_Jahr : number = 0;
+	public anzJGS_Jahr: number = 0;
 
 	/**
 	 * Die Informationen zu den Abschnitten pro Jahr. (meist Haljahre (2) oder Quartale (4)
 	 */
-	public schuleAbschnitte : SchuleAbschnitte = new SchuleAbschnitte();
+	public schuleAbschnitte: SchuleAbschnitte = new SchuleAbschnitte();
 
 	/**
 	 * Die Dauer einer Unterrichsteinheit in Minuten.
 	 */
-	public dauerUnterrichtseinheit : number = 0;
+	public dauerUnterrichtseinheit: number = 0;
 
 	/**
 	 * Die Liste der Schuljahresabschnitte, welche an der Schule definiert sind.
 	 */
-	public readonly abschnitte : List<Schuljahresabschnitt> = new ArrayList<Schuljahresabschnitt>();
+	public readonly abschnitte: List<Schuljahresabschnitt> = new ArrayList<Schuljahresabschnitt>();
 
 
 	/**
@@ -114,13 +114,13 @@ export class SchuleStammdaten extends JavaObject {
 		return 'de.svws_nrw.asd.data.schule.SchuleStammdaten';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.asd.data.schule.SchuleStammdaten'].includes(name);
 	}
 
 	public static class = new Class<SchuleStammdaten>('de.svws_nrw.asd.data.schule.SchuleStammdaten');
 
-	public static transpilerFromJSON(json : string): SchuleStammdaten {
+	public static transpilerFromJSON(json: string): SchuleStammdaten {
 		const obj = JSON.parse(json) as Partial<SchuleStammdaten>;
 		const result = new SchuleStammdaten();
 		if (obj.schulNr === undefined)
@@ -163,7 +163,7 @@ export class SchuleStammdaten extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : SchuleStammdaten) : string {
+	public static transpilerToJSON(obj: SchuleStammdaten): string {
 		let result = '{';
 		result += '"schulNr" : ' + obj.schulNr.toString() + ',';
 		result += '"schulform" : ' + JSON.stringify(obj.schulform) + ',';
@@ -196,7 +196,7 @@ export class SchuleStammdaten extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<SchuleStammdaten>) : string {
+	public static transpilerToJSONPatch(obj: Partial<SchuleStammdaten>): string {
 		let result = '{';
 		if (obj.schulNr !== undefined) {
 			result += '"schulNr" : ' + obj.schulNr.toString() + ',';
@@ -269,6 +269,6 @@ export class SchuleStammdaten extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_asd_data_schule_SchuleStammdaten(obj : unknown) : SchuleStammdaten {
+export function cast_de_svws_nrw_asd_data_schule_SchuleStammdaten(obj: unknown): SchuleStammdaten {
 	return obj as SchuleStammdaten;
 }

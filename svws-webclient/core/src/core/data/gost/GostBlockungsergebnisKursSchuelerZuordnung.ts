@@ -6,12 +6,12 @@ export class GostBlockungsergebnisKursSchuelerZuordnung extends JavaObject {
 	/**
 	 * Die ID des Kurses
 	 */
-	public idKurs : number = -1;
+	public idKurs: number = -1;
 
 	/**
 	 * Die ID des Schülers
 	 */
-	public idSchueler : number = -1;
+	public idSchueler: number = -1;
 
 
 	/**
@@ -21,21 +21,21 @@ export class GostBlockungsergebnisKursSchuelerZuordnung extends JavaObject {
 		super();
 	}
 
-	public hashCode() : number {
-		let hashCode : number = 1;
+	public hashCode(): number {
+		let hashCode: number = 1;
 		hashCode = (31 * hashCode) + (this.idKurs ^ (this.idKurs >>> 32)) as number;
 		hashCode = (31 * hashCode) + (this.idSchueler ^ (this.idSchueler >>> 32)) as number;
 		return hashCode;
 	}
 
-	public equals(obj : unknown | null) : boolean {
+	public equals(obj: unknown | null): boolean {
 		if (this as unknown === obj as unknown)
 			return true;
 		if (obj === null)
 			return false;
 		if (!(((obj instanceof JavaObject) && (obj.isTranspiledInstanceOf('de.svws_nrw.core.data.gost.GostBlockungsergebnisKursSchuelerZuordnung')))))
 			return false;
-		const other : GostBlockungsergebnisKursSchuelerZuordnung = cast_de_svws_nrw_core_data_gost_GostBlockungsergebnisKursSchuelerZuordnung(obj);
+		const other: GostBlockungsergebnisKursSchuelerZuordnung = cast_de_svws_nrw_core_data_gost_GostBlockungsergebnisKursSchuelerZuordnung(obj);
 		return (this.idKurs === other.idKurs) && (this.idSchueler === other.idSchueler);
 	}
 
@@ -43,13 +43,13 @@ export class GostBlockungsergebnisKursSchuelerZuordnung extends JavaObject {
 		return 'de.svws_nrw.core.data.gost.GostBlockungsergebnisKursSchuelerZuordnung';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.gost.GostBlockungsergebnisKursSchuelerZuordnung'].includes(name);
 	}
 
 	public static class = new Class<GostBlockungsergebnisKursSchuelerZuordnung>('de.svws_nrw.core.data.gost.GostBlockungsergebnisKursSchuelerZuordnung');
 
-	public static transpilerFromJSON(json : string): GostBlockungsergebnisKursSchuelerZuordnung {
+	public static transpilerFromJSON(json: string): GostBlockungsergebnisKursSchuelerZuordnung {
 		const obj = JSON.parse(json) as Partial<GostBlockungsergebnisKursSchuelerZuordnung>;
 		const result = new GostBlockungsergebnisKursSchuelerZuordnung();
 		if (obj.idKurs === undefined)
@@ -61,7 +61,7 @@ export class GostBlockungsergebnisKursSchuelerZuordnung extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : GostBlockungsergebnisKursSchuelerZuordnung) : string {
+	public static transpilerToJSON(obj: GostBlockungsergebnisKursSchuelerZuordnung): string {
 		let result = '{';
 		result += '"idKurs" : ' + obj.idKurs.toString() + ',';
 		result += '"idSchueler" : ' + obj.idSchueler.toString() + ',';
@@ -70,7 +70,7 @@ export class GostBlockungsergebnisKursSchuelerZuordnung extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<GostBlockungsergebnisKursSchuelerZuordnung>) : string {
+	public static transpilerToJSONPatch(obj: Partial<GostBlockungsergebnisKursSchuelerZuordnung>): string {
 		let result = '{';
 		if (obj.idKurs !== undefined) {
 			result += '"idKurs" : ' + obj.idKurs.toString() + ',';
@@ -85,6 +85,6 @@ export class GostBlockungsergebnisKursSchuelerZuordnung extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_gost_GostBlockungsergebnisKursSchuelerZuordnung(obj : unknown) : GostBlockungsergebnisKursSchuelerZuordnung {
+export function cast_de_svws_nrw_core_data_gost_GostBlockungsergebnisKursSchuelerZuordnung(obj: unknown): GostBlockungsergebnisKursSchuelerZuordnung {
 	return obj as GostBlockungsergebnisKursSchuelerZuordnung;
 }

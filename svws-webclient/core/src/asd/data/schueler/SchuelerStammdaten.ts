@@ -6,237 +6,237 @@ export class SchuelerStammdaten extends JavaObject {
 	/**
 	 * Die ID des Schülerdatensatzes.
 	 */
-	public id : number = 0;
+	public id: number = 0;
 
 	/**
 	 * Das Foto (in Base64 kodiert) des Schülerdatensatzes.
 	 */
-	public foto : string | null = null;
+	public foto: string | null = null;
 
 	/**
 	 * Der Nachname des Schülerdatensatzes.
 	 */
-	public nachname : string = "";
+	public nachname: string = "";
 
 	/**
 	 * Der Vorname des Schülerdatensatzes.
 	 */
-	public vorname : string = "";
+	public vorname: string = "";
 
 	/**
 	 * Alle Vornamen, sofern es mehrere gibt, des Schülerdatensatzes.
 	 */
-	public alleVornamen : string = "";
+	public alleVornamen: string = "";
 
 	/**
 	 * Die ID des Geschlechtes
 	 */
-	public geschlecht : number = 0;
+	public geschlecht: number = 0;
 
 	/**
 	 * Das Geburtsdatum des Schülerdatensatzes.
 	 */
-	public geburtsdatum : string | null = null;
+	public geburtsdatum: string | null = null;
 
 	/**
 	 * Der Geburtsort des Schülerdatensatzes.
 	 */
-	public geburtsort : string | null = null;
+	public geburtsort: string | null = null;
 
 	/**
 	 * Der Geburtsname des Schülerdatensatzes.
 	 */
-	public geburtsname : string | null = null;
+	public geburtsname: string | null = null;
 
 	/**
 	 * Ggf. der Straßenname im Wohnort des Schülers.
 	 */
-	public strassenname : string | null = null;
+	public strassenname: string | null = null;
 
 	/**
 	 * Ggf. die Hausnummer zur Straße im Wohnort des Schülers.
 	 */
-	public hausnummer : string | null = null;
+	public hausnummer: string | null = null;
 
 	/**
 	 * Ggf. der Hausnummerzusatz zur Straße im Wohnort des Schülers.
 	 */
-	public hausnummerZusatz : string | null = null;
+	public hausnummerZusatz: string | null = null;
 
 	/**
 	 * Die ID des Wohnortes des Schülerdatensatzes.
 	 */
-	public wohnortID : number | null = null;
+	public wohnortID: number | null = null;
 
 	/**
 	 * Die ID des Ortsteils des Schülerdatensatzes.
 	 */
-	public ortsteilID : number | null = null;
+	public ortsteilID: number | null = null;
 
 	/**
 	 * Die Telefonnummer des Schülerdatensatzes.
 	 */
-	public telefon : string | null = null;
+	public telefon: string | null = null;
 
 	/**
 	 * Die Mobilnummer des Schülerdatensatzes.
 	 */
-	public telefonMobil : string | null = null;
+	public telefonMobil: string | null = null;
 
 	/**
 	 * Die private Email-Adresse des Schülerdatensatzes.
 	 */
-	public emailPrivat : string | null = null;
+	public emailPrivat: string | null = null;
 
 	/**
 	 * Die schulische Email-Adresse des Schülerdatensatzes.
 	 */
-	public emailSchule : string | null = null;
+	public emailSchule: string | null = null;
 
 	/**
 	 * Die ID der Staatsangehörigkeit des Schülerdatensatzes.
 	 */
-	public staatsangehoerigkeitID : string | null = null;
+	public staatsangehoerigkeitID: string | null = null;
 
 	/**
 	 * Die ID einer zweiten Staatsangehörigkeit des Schülerdatensatzes.
 	 */
-	public staatsangehoerigkeit2ID : string | null = null;
+	public staatsangehoerigkeit2ID: string | null = null;
 
 	/**
 	 * Die ID der Religion des Schülerdatensatzes.
 	 */
-	public religionID : number | null = null;
+	public religionID: number | null = null;
 
 	/**
 	 * Gibt an, ob die Konfession bei dem Schülerdatensatz auf dem Zeugnis erscheinen soll.
 	 */
-	public druckeKonfessionAufZeugnisse : boolean = false;
+	public druckeKonfessionAufZeugnisse: boolean = false;
 
 	/**
 	 * Das Datum der Religionsabmeldung des Schülerdatensatzes.
 	 */
-	public religionabmeldung : string | null = null;
+	public religionabmeldung: string | null = null;
 
 	/**
 	 * Das Datum der Religionsanmeldung des Schülerdatensatzes.
 	 */
-	public religionanmeldung : string | null = null;
+	public religionanmeldung: string | null = null;
 
 	/**
 	 * Gibt an, ob ein Migrationshintergrund bei dems Schülerdatensatz vorhanden ist.
 	 */
-	public hatMigrationshintergrund : boolean = false;
+	public hatMigrationshintergrund: boolean = false;
 
 	/**
 	 * Das Zuzugsjahr des Schülerdatensatzes.
 	 */
-	public zuzugsjahr : number | null = null;
+	public zuzugsjahr: number | null = null;
 
 	/**
 	 * Das Geburtsland des Schülerdatensatzes.
 	 */
-	public geburtsland : string | null = null;
+	public geburtsland: string | null = null;
 
 	/**
 	 * Die Verkehrssprache der Familie des Schülerdatensatzes.
 	 */
-	public verkehrspracheFamilie : string | null = null;
+	public verkehrspracheFamilie: string | null = null;
 
 	/**
 	 * Das Geburtsland des Vaters des Schülerdatensatzes.
 	 */
-	public geburtslandVater : string | null = null;
+	public geburtslandVater: string | null = null;
 
 	/**
 	 * Das Geburtsland der Mutter des Schülerdatensatzes.
 	 */
-	public geburtslandMutter : string | null = null;
+	public geburtslandMutter: string | null = null;
 
 	/**
 	 * Die ID des Status des Schülerdatensatzes.
 	 */
-	public status : number = 0;
+	public status: number = 0;
 
 	/**
 	 * Gibt an, ob es sich bei dem Schülerdatensatz um ein Duplikat handelt oder nicht.
 	 */
-	public istDuplikat : boolean = false;
+	public istDuplikat: boolean = false;
 
 	/**
 	 * Das Schulnummer bei einem externen Schüler oder null, wenn der Schüler kein externer Schüler ist.
 	 */
-	public externeSchulNr : string | null = null;
+	public externeSchulNr: string | null = null;
 
 	/**
 	 * Die Nummer der Schülerausweises, sofern ein Schülerausweis verwendet wird, ansonsten null
 	 */
-	public idSchuelerausweis : string | null = null;
+	public idSchuelerausweis: string | null = null;
 
 	/**
 	 * Die ID der Art des Fahrschülers des Schülerdatensatzes.
 	 */
-	public fahrschuelerArtID : number | null = null;
+	public fahrschuelerArtID: number | null = null;
 
 	/**
 	 * Die ID der Haltestelle, ab der der Schüler das Transportmittel nimmt, des Schülerdatensatzes.
 	 */
-	public haltestelleID : number | null = null;
+	public haltestelleID: number | null = null;
 
 	/**
 	 * Das Anmeldedatum des Schülerdatensatzes.
 	 */
-	public anmeldedatum : string | null = null;
+	public anmeldedatum: string | null = null;
 
 	/**
 	 * Das Aufnahmedatum des Schülerdatensatzes.
 	 */
-	public aufnahmedatum : string | null = null;
+	public aufnahmedatum: string | null = null;
 
 	/**
 	 * Gibt an, ob der Schüler volljährig ist oder nicht.
 	 */
-	public istVolljaehrig : boolean = false;
+	public istVolljaehrig: boolean = false;
 
 	/**
 	 * Gibt an, ob der Schüler die Schulpflicht erfüllt hat oder nicht.
 	 */
-	public istSchulpflichtErfuellt : boolean = false;
+	public istSchulpflichtErfuellt: boolean = false;
 
 	/**
 	 * Gibt an, ob der Schüler die Berufsschulpflicht erfüllt hat oder nicht.
 	 */
-	public istBerufsschulpflichtErfuellt : boolean = false;
+	public istBerufsschulpflichtErfuellt: boolean = false;
 
 	/**
 	 * Gibt an, ob der Schüler einen Nachweis über die Maserimpfpflicht erbracht hat.
 	 */
-	public hatMasernimpfnachweis : boolean = false;
+	public hatMasernimpfnachweis: boolean = false;
 
 	/**
 	 * Gibt an, ob über den Schüler eine Auskunft an dritte erteilt werden darf oder dies unter allen Umständen vermieden werden sollte.
 	 */
-	public keineAuskunftAnDritte : boolean = false;
+	public keineAuskunftAnDritte: boolean = false;
 
 	/**
 	 * Gibt an, ob der Schüler BAFÖG erhält oder nicht.
 	 */
-	public erhaeltSchuelerBAFOEG : boolean = false;
+	public erhaeltSchuelerBAFOEG: boolean = false;
 
 	/**
 	 * Gibt an, ob der Schüler Meister-BAFÖG erhält oder nicht.
 	 */
-	public erhaeltMeisterBAFOEG : boolean = false;
+	public erhaeltMeisterBAFOEG: boolean = false;
 
 	/**
 	 * Der Beginn des Bildungsgangs eines Schülers.
 	 */
-	public beginnBildungsgang : string | null = null;
+	public beginnBildungsgang: string | null = null;
 
 	/**
 	 * Dauer des Bildungsgangs am BK eines Schülers.
 	 */
-	public dauerBildungsgang : number | null = null;
+	public dauerBildungsgang: number | null = null;
 
 
 	/**
@@ -250,13 +250,13 @@ export class SchuelerStammdaten extends JavaObject {
 		return 'de.svws_nrw.asd.data.schueler.SchuelerStammdaten';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.asd.data.schueler.SchuelerStammdaten'].includes(name);
 	}
 
 	public static class = new Class<SchuelerStammdaten>('de.svws_nrw.asd.data.schueler.SchuelerStammdaten');
 
-	public static transpilerFromJSON(json : string): SchuelerStammdaten {
+	public static transpilerFromJSON(json: string): SchuelerStammdaten {
 		const obj = JSON.parse(json) as Partial<SchuelerStammdaten>;
 		const result = new SchuelerStammdaten();
 		if (obj.id === undefined)
@@ -341,7 +341,7 @@ export class SchuelerStammdaten extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : SchuelerStammdaten) : string {
+	public static transpilerToJSON(obj: SchuelerStammdaten): string {
 		let result = '{';
 		result += '"id" : ' + obj.id.toString() + ',';
 		result += '"foto" : ' + ((obj.foto === null) ? 'null' : JSON.stringify(obj.foto)) + ',';
@@ -395,7 +395,7 @@ export class SchuelerStammdaten extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<SchuelerStammdaten>) : string {
+	public static transpilerToJSONPatch(obj: Partial<SchuelerStammdaten>): string {
 		let result = '{';
 		if (obj.id !== undefined) {
 			result += '"id" : ' + obj.id.toString() + ',';
@@ -545,6 +545,6 @@ export class SchuelerStammdaten extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_asd_data_schueler_SchuelerStammdaten(obj : unknown) : SchuelerStammdaten {
+export function cast_de_svws_nrw_asd_data_schueler_SchuelerStammdaten(obj: unknown): SchuelerStammdaten {
 	return obj as SchuelerStammdaten;
 }

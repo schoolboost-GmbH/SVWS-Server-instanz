@@ -17,7 +17,7 @@ export class ApiEnmServer extends BaseApi {
 	 * @param {string} username - der Benutzername für den API-Zugriff
 	 * @param {string} password - das Kennwort des Benutzers für den API-Zugriff
 	 */
-	public constructor(url : string, username : string, password : string) {
+	public constructor(url: string, username: string, password: string) {
 		super(url, username, password);
 	}
 
@@ -35,7 +35,7 @@ export class ApiEnmServer extends BaseApi {
 	 *
 	 * @returns der Server-Mode
 	 */
-	public async getServerMode() : Promise<ServerMode> {
+	public async getServerMode(): Promise<ServerMode> {
 		return ServerMode.getByText(await super.getTextBased("/api/mode", "*/*"));
 	}
 
@@ -53,7 +53,7 @@ export class ApiEnmServer extends BaseApi {
 	 *
 	 * @returns die Schulform oder null, falls der Server ein ungültiges Schulform-Kürzel geliefert hat
 	 */
-	public async getSchulform() : Promise<Schulform | null> {
+	public async getSchulform(): Promise<Schulform | null> {
 		return Schulform.data().getWertByKuerzel(await super.getTextBased("/api/schulform", "*/*"));
 	}
 
@@ -73,7 +73,7 @@ export class ApiEnmServer extends BaseApi {
 	 *
 	 * @returns die GZip-komprimierte ENM-JSON-Datei
 	 */
-	public async getLehrerENMDaten() : Promise<ApiFile> {
+	public async getLehrerENMDaten(): Promise<ApiFile> {
 		return await super.getBinary("/api/daten", "*/*");
 	}
 
@@ -85,7 +85,7 @@ export class ApiEnmServer extends BaseApi {
 	 * Mögliche HTTP-Antworten:
 	 *   Code 204: Der Server wurde gefunden
 	 */
-	public async isAlive() : Promise<void> {
+	public async isAlive(): Promise<void> {
 		await super.postTextBased("/api/alive", 'application/json', '*/*', "");
 		return;
 	}
@@ -190,7 +190,7 @@ export class ApiEnmServer extends BaseApi {
 	 *
 	 * @returns Die Key-Value-Paare der Konfigurationseinträge als Liste
 	 */
-	public async getClientConfig() : Promise<BenutzerConfig> {
+	public async getClientConfig(): Promise<BenutzerConfig> {
 		return BenutzerConfig.transpilerFromJSON(await super.getTextBased("/api/clientconfig", "*/*"));
 	}
 
@@ -205,7 +205,7 @@ export class ApiEnmServer extends BaseApi {
 	 * @param {string | null} data - der Request-Body für die HTTP-Methode
 	 * @param {string} key - der Pfad-Parameter key
 	 */
-	public async setClientConfigUserKey(data : string | null, key : string) : Promise<void> {
+	public async setClientConfigUserKey(data: string | null, key: string): Promise<void> {
 		const body = `{ "key": ${JSON.stringify(key)}, "value": ${JSON.stringify(data)} }`;
 		return super.putJSON("/api/clientconfig", body);
 	}

@@ -16,13 +16,13 @@
 
 <script setup lang="ts">
 
-	import type { BenutzerListeEintrag, List} from "@core";
+	import type { BenutzerListeEintrag, List } from "@core";
 
 	const props = defineProps<{
 		listBenutzerAlle: () => List<BenutzerListeEintrag> ;
 		listBenutzergruppenBenutzer: () => List<BenutzerListeEintrag>;
-		addBenutzerToBenutzergruppe : (benutzer: BenutzerListeEintrag) => Promise<void>;
-		removeBenutzerFromBenutzergruppe : (benutzer: BenutzerListeEintrag) => Promise<void>;
+		addBenutzerToBenutzergruppe: (benutzer: BenutzerListeEintrag) => Promise<void>;
+		removeBenutzerFromBenutzergruppe: (benutzer: BenutzerListeEintrag) => Promise<void>;
 		aktualisiereListeBenutzerGruppenBenutzer: (benutzer: BenutzerListeEintrag) => Promise<void>;
 		gotoBenutzer: (b_id: number) => Promise<void>;
 	}>();

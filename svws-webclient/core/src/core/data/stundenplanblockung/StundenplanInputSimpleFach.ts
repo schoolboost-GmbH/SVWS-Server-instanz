@@ -6,12 +6,12 @@ export class StundenplanInputSimpleFach extends JavaObject {
 	/**
 	 * Die ID des Faches.
 	 */
-	public id : number = 0;
+	public id: number = 0;
 
 	/**
 	 * Das Kürzel des Faches. Beispielsweise 'D' oder 'E5'.
 	 */
-	public kuerzel : string = "";
+	public kuerzel: string = "";
 
 
 	/**
@@ -25,13 +25,13 @@ export class StundenplanInputSimpleFach extends JavaObject {
 		return 'de.svws_nrw.core.data.stundenplanblockung.StundenplanInputSimpleFach';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.stundenplanblockung.StundenplanInputSimpleFach'].includes(name);
 	}
 
 	public static class = new Class<StundenplanInputSimpleFach>('de.svws_nrw.core.data.stundenplanblockung.StundenplanInputSimpleFach');
 
-	public static transpilerFromJSON(json : string): StundenplanInputSimpleFach {
+	public static transpilerFromJSON(json: string): StundenplanInputSimpleFach {
 		const obj = JSON.parse(json) as Partial<StundenplanInputSimpleFach>;
 		const result = new StundenplanInputSimpleFach();
 		if (obj.id === undefined)
@@ -43,7 +43,7 @@ export class StundenplanInputSimpleFach extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : StundenplanInputSimpleFach) : string {
+	public static transpilerToJSON(obj: StundenplanInputSimpleFach): string {
 		let result = '{';
 		result += '"id" : ' + obj.id.toString() + ',';
 		result += '"kuerzel" : ' + JSON.stringify(obj.kuerzel) + ',';
@@ -52,7 +52,7 @@ export class StundenplanInputSimpleFach extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<StundenplanInputSimpleFach>) : string {
+	public static transpilerToJSONPatch(obj: Partial<StundenplanInputSimpleFach>): string {
 		let result = '{';
 		if (obj.id !== undefined) {
 			result += '"id" : ' + obj.id.toString() + ',';
@@ -67,6 +67,6 @@ export class StundenplanInputSimpleFach extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_stundenplanblockung_StundenplanInputSimpleFach(obj : unknown) : StundenplanInputSimpleFach {
+export function cast_de_svws_nrw_core_data_stundenplanblockung_StundenplanInputSimpleFach(obj: unknown): StundenplanInputSimpleFach {
 	return obj as StundenplanInputSimpleFach;
 }

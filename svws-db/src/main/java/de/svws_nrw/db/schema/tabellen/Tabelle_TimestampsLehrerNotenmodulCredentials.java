@@ -17,19 +17,19 @@ import de.svws_nrw.db.schema.SchemaTabelleTrigger;
 public class Tabelle_TimestampsLehrerNotenmodulCredentials extends SchemaTabelle {
 
 	/** Die Definition der Tabellenspalte ID */
-	public SchemaTabelleSpalte col_Lehrer_ID = add("Lehrer_ID", SchemaDatentypen.BIGINT, true)
+	public final SchemaTabelleSpalte col_Lehrer_ID = add("Lehrer_ID", SchemaDatentypen.BIGINT, true)
 			.setNotNull()
 			.setJavaComment("die ID des Lehrers");
 
 	/** Die Definition der Tabellenspalte tsPasswordHash */
-	public SchemaTabelleSpalte col_tsPasswordHash = add("tsPasswordHash", SchemaDatentypen.DATETIME, false)
+	public final SchemaTabelleSpalte col_tsPasswordHash = add("tsPasswordHash", SchemaDatentypen.DATETIME, false)
 			.setDatenlaenge(3)
 			.setNotNull()
 			.setJavaComment("Der Zeitstempel der letzten Änderung an dem Password-Hash der Lehrer-Notenmodul-Credentials.");
 
 
 	/** Die Definition des Fremdschlüssels TimestampsLehrerNotenmodulCredentials_FK */
-	public SchemaTabelleFremdschluessel fk_TimestampsLehrerNotenmodulCredentials_FK = addForeignKey(
+	public final SchemaTabelleFremdschluessel fk_TimestampsLehrerNotenmodulCredentials_FK = addForeignKey(
 			"TimestampsLehrerNotenmodulCredentials_FK",
 			/* OnUpdate: */ SchemaFremdschluesselAktionen.CASCADE,
 			/* OnDelete: */ SchemaFremdschluesselAktionen.CASCADE,
@@ -37,7 +37,7 @@ public class Tabelle_TimestampsLehrerNotenmodulCredentials extends SchemaTabelle
 
 
 	/** Trigger t_INSERT_TimestampsLehrerNotenmodulCredentials */
-	public SchemaTabelleTrigger trigger_MariaDB_INSERT_TimestampsLehrerNotenmodulCredentials = addTrigger(
+	public final SchemaTabelleTrigger trigger_MariaDB_INSERT_TimestampsLehrerNotenmodulCredentials = addTrigger(
 			"t_INSERT_TimestampsLehrerNotenmodulCredentials",
 			DBDriver.MARIA_DB,
 			"""
@@ -46,7 +46,7 @@ public class Tabelle_TimestampsLehrerNotenmodulCredentials extends SchemaTabelle
 			""", Schema.tab_LehrerNotenmodulCredentials, Schema.tab_TimestampsLehrerNotenmodulCredentials);
 
 	/** Trigger t_UPDATE_TimestampsLehrerNotenmodulCredentials */
-	public SchemaTabelleTrigger trigger_MariaDB_UPDATE_TimestampsLehrerNotenmodulCredentials = addTrigger(
+	public final SchemaTabelleTrigger trigger_MariaDB_UPDATE_TimestampsLehrerNotenmodulCredentials = addTrigger(
 			"t_UPDATE_TimestampsLehrerNotenmodulCredentials",
 			DBDriver.MARIA_DB,
 			"""

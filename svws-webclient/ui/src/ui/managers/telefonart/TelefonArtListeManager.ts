@@ -20,22 +20,22 @@ export class TelefonArtListeManager extends AuswahlManager<number, TelefonArt, T
 	/**
 	 * Funktionen zum Mappen von Auswahl- bzw. Daten-Objekten auf deren ID-Typ
 	 */
-	private static readonly _telefonArtenToId : JavaFunction<TelefonArt, number> = { apply : (ta: TelefonArt) => ta.id };
+	private static readonly _telefonArtenToId: JavaFunction<TelefonArt, number> = { apply: (ta: TelefonArt) => ta.id };
 
 	/**
 	 * Sets der Ids der Telefonarten, die von Personen verwendet und daher nicht gelöscht werden können.
 	 */
-	private readonly idsVerwendeteTelefonarten : HashSet<number> = new HashSet<number>();
+	private readonly idsVerwendeteTelefonarten: HashSet<number> = new HashSet<number>();
 
 	/**
 	 * Ein Default-Comparator für den Vergleich von Telefonarten in Telefonartlisten.
 	 */
-	public static readonly comparator : Comparator<TelefonArt> = { compare : (a: TelefonArt, b: TelefonArt) => {
+	public static readonly comparator: Comparator<TelefonArt> = { compare: (a: TelefonArt, b: TelefonArt) => {
 		let cmp: number = JavaString.compareTo(a.bezeichnung, b.bezeichnung);
 		if (cmp === 0)
 			cmp = JavaLong.compare(a.id, b.id);
 		return cmp;
-	}};
+	} };
 
 
 	/**
@@ -58,11 +58,11 @@ export class TelefonArtListeManager extends AuswahlManager<number, TelefonArt, T
 	 *
 	 * @return Das Set der Ids der Telefonarten zurück, die von Personen verwendet und daher nicht gelöscht werden können.
 	 */
-	public getIdsVerwendeteTelefonarten() : JavaSet<number> {
+	public getIdsVerwendeteTelefonarten(): JavaSet<number> {
 		return this.idsVerwendeteTelefonarten;
 	}
 
-	protected onSetDaten(eintrag: TelefonArt, daten: TelefonArt) : boolean {
+	protected onSetDaten(eintrag: TelefonArt, daten: TelefonArt): boolean {
 		if (JavaObject.equalsTranspiler(daten.bezeichnung, (eintrag.bezeichnung)))
 			return false;
 
@@ -70,22 +70,22 @@ export class TelefonArtListeManager extends AuswahlManager<number, TelefonArt, T
 		return true;
 	}
 
-	protected onMehrfachauswahlChanged() : void {
+	protected onMehrfachauswahlChanged(): void {
 		this.idsVerwendeteTelefonarten.clear();
 		for (const t of this.liste.auswahl())
 			if (t.anzahlTelefonnummern !== 0)
 				this.idsVerwendeteTelefonarten.add(t.id);
 	}
 
-	protected compareAuswahl(a : TelefonArt, b : TelefonArt) : number {
+	protected compareAuswahl(a: TelefonArt, b: TelefonArt): number {
 		for (const criteria of this._order) {
-			const field : string | null = criteria.a;
-			const asc : boolean = (criteria.b === null) || criteria.b;
-			let cmp : number = 0;
+			const field: string | null = criteria.a;
+			const asc: boolean = (criteria.b === null) || criteria.b;
+			let cmp: number = 0;
 			if (JavaObject.equalsTranspiler("telefonArt", (field))) {
 				cmp = TelefonArtListeManager.comparator.compare(a, b);
 			} else
-				throw new DeveloperNotificationException("Fehler bei der Sortierung. Das Sortierkriterium wird vom Manager nicht unterstützt.")
+				throw new DeveloperNotificationException("Fehler bei der Sortierung. Das Sortierkriterium wird vom Manager nicht unterstützt.");
 			if (cmp === 0)
 				continue;
 			return asc ? cmp : -cmp;
@@ -93,7 +93,7 @@ export class TelefonArtListeManager extends AuswahlManager<number, TelefonArt, T
 		return JavaLong.compare(a.id, b.id);
 	}
 
-	protected checkFilter() : boolean {
+	protected checkFilter(): boolean {
 		return true;
 	}
 
@@ -101,7 +101,7 @@ export class TelefonArtListeManager extends AuswahlManager<number, TelefonArt, T
 		return 'de.svws_nrw.core.utils.telefonart.TelefonArtListeManager';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.utils.AuswahlManager', 'de.svws_nrw.core.utils.telefonart.TelefonArtListeManager'].includes(name);
 	}
 
@@ -109,6 +109,6 @@ export class TelefonArtListeManager extends AuswahlManager<number, TelefonArt, T
 
 }
 
-export function cast_de_svws_nrw_core_utils_telefonart_TelefonArtListeManager(obj : unknown) : TelefonArtListeManager {
+export function cast_de_svws_nrw_core_utils_telefonart_TelefonArtListeManager(obj: unknown): TelefonArtListeManager {
 	return obj as TelefonArtListeManager;
 }

@@ -21,7 +21,7 @@ export class RouteSchuleDatenaustauschSchulwechselKonfiguration extends RouteNod
 		return {
 			serverMode: ServerMode.DEV,
 			schulform: api.schulform,
-			schuljahresabschnitt: () => routeApp.data.aktAbschnitt.value
+			schuljahresabschnitt: () => routeApp.data.aktAbschnitt.value,
 		};
 	}
 }

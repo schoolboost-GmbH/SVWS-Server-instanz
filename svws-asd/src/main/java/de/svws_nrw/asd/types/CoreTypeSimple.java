@@ -19,7 +19,7 @@ import jakarta.validation.constraints.NotNull;
 public abstract class CoreTypeSimple<T extends CoreTypeData, U extends CoreTypeSimple<T, U>> implements CoreType<T, U> {
 
 	/** Verwaltung der Bezeichner, um die Liste der erstellten CoreType Elemente zurück geben zu können */
-	private static @NotNull HashMap<Class<?>, @NotNull Object@NotNull[]> _values = new HashMap<>();
+	private static @NotNull HashMap<Class<?>, Object@NotNull[]> _values = new HashMap<>();
 
 	/** der Bezeichner des CoreTypeSimple */
 	private @NotNull String _name = "";
@@ -121,7 +121,7 @@ public abstract class CoreTypeSimple<T extends CoreTypeData, U extends CoreTypeS
 	 *     und größer 0, wenn dieser Wert größer ist
 	 */
 	@Override
-	public int compareTo(final @NotNull U other) {
+	public int compareTo(final U other) {
 		if (other == null)
 			throw new NullPointerException();
 		return Integer.compare(this.ordinal(), other.ordinal());

@@ -28,7 +28,7 @@
 	const props = defineProps<{
 		selected: number;
 		stundenplanManager: () => StundenplanManager;
-		patchZeitraster: (zeitraster : Iterable<StundenplanZeitraster>) => Promise<void>;
+		patchZeitraster: (zeitraster: Iterable<StundenplanZeitraster>) => Promise<void>;
 		removeZeitraster: (zeitraster: Iterable<StundenplanZeitraster>) => Promise<void>;
 		addZeitraster: (zeitraster: Iterable<StundenplanZeitraster>) => Promise<void>;
 		setSelection: (value: Wochentag | number | StundenplanZeitraster | StundenplanPausenzeit | undefined) => void;
@@ -40,7 +40,7 @@
 		if (props.stundenplanManager().getListZeitrasterZuStunde(props.selected).isEmpty())
 			return new StundenplanZeitraster();
 		return props.stundenplanManager().getListZeitrasterZuStunde(props.selected).get(0);
-	})
+	});
 
 	const start = ref<string>(DateUtils.getStringOfUhrzeitFromMinuten(first.value.stundenbeginn ?? 0));
 	const ende = ref<string>(DateUtils.getStringOfUhrzeitFromMinuten(first.value.stundenende ?? 0));
@@ -48,7 +48,7 @@
 	watch(() => props.selected, () => {
 		start.value = DateUtils.getStringOfUhrzeitFromMinuten(first.value.stundenbeginn ?? 0);
 		ende.value = DateUtils.getStringOfUhrzeitFromMinuten(first.value.stundenende ?? 0);
-	})
+	});
 
 	const disabled = computed<boolean>(() => (DateUtils.getStringOfUhrzeitFromMinuten(first.value.stundenbeginn ?? 0) === start.value) && (DateUtils.getStringOfUhrzeitFromMinuten(first.value.stundenende ?? 0) === ende.value));
 
@@ -64,7 +64,7 @@
 		}
 		const ignoreList = props.stundenplanManager().getListZeitrasterZuStunde(props.selected);
 		return props.stundenplanManager().zeitrasterGetSchneidenSichListeMitIgnore(list, ignoreList);
-	})
+	});
 
 	async function patchStunde(stunde: number | null) {
 		if ((stunde === null) || (stunde < 0) || (stunde > 14))
@@ -107,6 +107,6 @@
 			if (props.stundenplanManager().zeitrasterGetByWochentagAndStundeOrNull(w.id, props.selected) === null)
 				arr.push(w);
 		return arr;
-	})
+	});
 
 </script>

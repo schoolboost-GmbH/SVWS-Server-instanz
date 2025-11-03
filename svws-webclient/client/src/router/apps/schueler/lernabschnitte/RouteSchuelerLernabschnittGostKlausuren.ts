@@ -19,7 +19,7 @@ export class RouteSchuelerLernabschnittGostKlausuren extends RouteNode<any, Rout
 	public constructor() {
 		super(schulformenGymOb, [
 			BenutzerKompetenz.OBERSTUFE_KLAUSURPLANUNG_ANSEHEN_ALLGEMEIN,
-			BenutzerKompetenz.OBERSTUFE_KLAUSURPLANUNG_ANSEHEN_FUNKTION
+			BenutzerKompetenz.OBERSTUFE_KLAUSURPLANUNG_ANSEHEN_FUNKTION,
 		], "schueler.lernabschnitt.gostklausuren", "gostklausuren", SSchuelerLernabschnittGostKlausuren);
 		super.mode = ServerMode.STABLE;
 		super.propHandler = (route) => this.getProps(route);
@@ -28,12 +28,12 @@ export class RouteSchuelerLernabschnittGostKlausuren extends RouteNode<any, Rout
 		];
 		this.isHidden = (params?: RouteParams) => {
 			return this.checkHidden(params);
-		}
+		};
 	}
 
 	protected checkHidden(to_params?: RouteParams) {
 		try {
-			const { id, abschnitt, wechselNr } = (to_params !== undefined) ? RouteNode.getIntParams(to_params, ["id", "abschnitt", "wechselNr"]) : {id: undefined, abschnitt: undefined, wechselNr: undefined};
+			const { id, abschnitt, wechselNr } = (to_params !== undefined) ? RouteNode.getIntParams(to_params, ["id", "abschnitt", "wechselNr"]) : { id: undefined, abschnitt: undefined, wechselNr: undefined };
 			if ((id === undefined) || (abschnitt === undefined) || (wechselNr === undefined))
 				throw new DeveloperNotificationException("Fehler: Die Parameter der Route sind nicht gültig gesetzt.");
 			if (routeSchueler.data.manager.hasDaten()) {
@@ -51,7 +51,7 @@ export class RouteSchuelerLernabschnittGostKlausuren extends RouteNode<any, Rout
 		}
 	}
 
-	protected async update(to: RouteNode<any, any>, to_params: RouteParams) : Promise<void | Error | RouteLocationRaw> {
+	protected async update(to: RouteNode<any, any>, to_params: RouteParams): Promise<void | Error | RouteLocationRaw> {
 	}
 
 	public getProps(to: RouteLocationNormalized): SchuelerLernabschnittGostKlausurenProps {

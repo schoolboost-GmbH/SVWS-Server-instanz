@@ -6,42 +6,42 @@ export class ENMLehrer extends JavaObject {
 	/**
 	 * Die ID des Lehrers aus der SVWS-DB (z.B. 42)
 	 */
-	public id : number = 0;
+	public id: number = 0;
 
 	/**
 	 * Das Kürzel des Lehrers für die Anzeige im Notenmodel (z.B. Mus)
 	 */
-	public kuerzel : string | null = null;
+	public kuerzel: string | null = null;
 
 	/**
 	 * Der Nachname des Lehrers (z.B. Mustermann)
 	 */
-	public nachname : string | null = null;
+	public nachname: string | null = null;
 
 	/**
 	 * Der Vorname des Lehrers (z.B. Max)
 	 */
-	public vorname : string | null = null;
+	public vorname: string | null = null;
 
 	/**
 	 * Das Geschlecht des Lehrers (m,w,d,x)
 	 */
-	public geschlecht : string | null = null;
+	public geschlecht: string | null = null;
 
 	/**
 	 * Die Dienst-EMail-Adresse des Lehrers
 	 */
-	public eMailDienstlich : string | null = null;
+	public eMailDienstlich: string | null = null;
 
 	/**
 	 * Der BCrypt-Kennwort-Hash des Lehrerkennwortes
 	 */
-	public passwordHash : string = "";
+	public passwordHash: string = "";
 
 	/**
 	 * Der Zeitstempel der letzten Änderung an dem Password-Hash
 	 */
-	public tsPasswordHash : string | null = null;
+	public tsPasswordHash: string | null = null;
 
 
 	/**
@@ -55,13 +55,13 @@ export class ENMLehrer extends JavaObject {
 		return 'de.svws_nrw.core.data.enm.ENMLehrer';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.enm.ENMLehrer'].includes(name);
 	}
 
 	public static class = new Class<ENMLehrer>('de.svws_nrw.core.data.enm.ENMLehrer');
 
-	public static transpilerFromJSON(json : string): ENMLehrer {
+	public static transpilerFromJSON(json: string): ENMLehrer {
 		const obj = JSON.parse(json) as Partial<ENMLehrer>;
 		const result = new ENMLehrer();
 		if (obj.id === undefined)
@@ -79,7 +79,7 @@ export class ENMLehrer extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : ENMLehrer) : string {
+	public static transpilerToJSON(obj: ENMLehrer): string {
 		let result = '{';
 		result += '"id" : ' + obj.id.toString() + ',';
 		result += '"kuerzel" : ' + ((obj.kuerzel === null) ? 'null' : JSON.stringify(obj.kuerzel)) + ',';
@@ -94,7 +94,7 @@ export class ENMLehrer extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<ENMLehrer>) : string {
+	public static transpilerToJSONPatch(obj: Partial<ENMLehrer>): string {
 		let result = '{';
 		if (obj.id !== undefined) {
 			result += '"id" : ' + obj.id.toString() + ',';
@@ -127,6 +127,6 @@ export class ENMLehrer extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_enm_ENMLehrer(obj : unknown) : ENMLehrer {
+export function cast_de_svws_nrw_core_data_enm_ENMLehrer(obj: unknown): ENMLehrer {
 	return obj as ENMLehrer;
 }

@@ -26,9 +26,8 @@
 					:removable="false" required />
 				<ui-select label="Beschäftigungsart" :readonly v-model="beschaeftigungsart" :manager="beschaeftigungsartSelectManager" statistics
 					class="contentFocusField" :removable="false" required />
-				<svws-ui-input-number placeholder="Pflichtstundensoll" :readonly statistics
-					:model-value="personalabschnittsdaten()?.pflichtstundensoll ?? 0.0"
-					@change="pflichtstundensoll => patchAbschnittsdaten({ pflichtstundensoll: pflichtstundensoll }, personalabschnittsdaten()?.id ?? -1)" />
+				<svws-ui-input-number placeholder="Pflichtstundensoll" :readonly statistics :valid="pflichtstundenSollHasAMaximumOf2DecimalPlaces"
+					:model-value="personalabschnittsdaten()?.pflichtstundensoll ?? 0.0" @change="patchPflichtstundenSoll" />
 				<ui-select label="Einsatzstatus" :readonly v-model="einsatzstatus" statistics :manager="einsatzstatusSelectManager"
 					class="contentFocusField" :removable="false" required />
 				<ui-select label="Stammschule" :readonly v-model="stammschulnummer" statistics :manager="stammschuleSelectManager"
@@ -177,11 +176,28 @@
 		const daten = personalabschnittsdaten();
 		if (daten !== null)
 			return new ValidatorLehrerPersonalabschnittsdaten(daten, props.lehrerListeManager().daten(), props.validatorKontext());
-		else throw new DeveloperNotificationException("Keine Personalabschnittsdaten gefunden.");
+		else
+			throw new DeveloperNotificationException("Keine Personalabschnittsdaten gefunden.");
 	});
 
 	function validatePersonalabschnittDaten(validator: Validator): boolean {
 		return validator.run();
 	};
+
+	async function patchPflichtstundenSoll(input: number | null) {
+		if (pflichtstundenSollHasAMaximumOf2DecimalPlaces(input))
+			await props.patchAbschnittsdaten({ pflichtstundensoll: input }, personalabschnittsdaten()?.id ?? -1);
+	}
+
+	function pflichtstundenSollHasAMaximumOf2DecimalPlaces(pflichtstundenSoll: number | null) {
+		if (pflichtstundenSoll === null)
+			return true;
+
+		const pflichtstundenSollParts = String(pflichtstundenSoll).split('.');
+		if ((pflichtstundenSollParts.length === 2) && (pflichtstundenSollParts[1].length > 2))
+			return false;
+
+		return true;
+	}
 
 </script>

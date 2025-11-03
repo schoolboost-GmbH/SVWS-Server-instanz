@@ -24,7 +24,7 @@ export class BKAnlageA01Abschluss extends Service {
 	 *
 	 * @return das Ergebnis der Abschlussprüfung
 	 */
-	public berechne(input : BKAnlageAFaecher) : AbschlussErgebnisBerufsbildend {
+	public berechne(input: BKAnlageAFaecher): AbschlussErgebnisBerufsbildend {
 		this.logger.log(LogLevel.INFO, "Prüfe BSA:");
 		if (AbschlussManagerBerufsbildend.getAnzahlUngenuegend(input) > 0) {
 			this.logger.logLn(LogLevel.INFO, " nicht erreicht (kein ungenügend erlaubt, insgesamt " + AbschlussManagerBerufsbildend.getAnzahlUngenuegend(input) + ").");
@@ -63,7 +63,7 @@ export class BKAnlageA01Abschluss extends Service {
 		return 'de.svws_nrw.core.abschluss.bk.a.BKAnlageA01Abschluss';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.Service', 'de.svws_nrw.core.abschluss.bk.a.BKAnlageA01Abschluss'].includes(name);
 	}
 
@@ -71,6 +71,6 @@ export class BKAnlageA01Abschluss extends Service {
 
 }
 
-export function cast_de_svws_nrw_core_abschluss_bk_a_BKAnlageA01Abschluss(obj : unknown) : BKAnlageA01Abschluss {
+export function cast_de_svws_nrw_core_abschluss_bk_a_BKAnlageA01Abschluss(obj: unknown): BKAnlageA01Abschluss {
 	return obj as BKAnlageA01Abschluss;
 }

@@ -10,32 +10,32 @@ export class ReformpaedagogikKatalogEintrag extends JavaObject {
 	/**
 	 * Die ID des Katalog-Eintrags.
 	 */
-	public id : number = 0;
+	public id: number = 0;
 
 	/**
 	 * Das Kürzel.
 	 */
-	public kuerzel : string = "";
+	public kuerzel: string = "";
 
 	/**
 	 * Die Bezeichnung.
 	 */
-	public bezeichnung : string = "";
+	public bezeichnung: string = "";
 
 	/**
 	 * Die Kürzel der Schulformen, bei welchen der Eintrag vorkommen darf.
 	 */
-	public schulformen : List<string> = new ArrayList<string>();
+	public schulformen: List<string> = new ArrayList<string>();
 
 	/**
 	 * Gibt an, in welchem Schuljahr der Eintrag einführt wurde. Ist kein Schuljahr bekannt, so ist null gesetzt.
 	 */
-	public gueltigVon : number | null = null;
+	public gueltigVon: number | null = null;
 
 	/**
 	 * Gibt an, bis zu welchem Schuljahr der Eintrag gültig ist. Ist kein Schulgliederung bekannt, so ist null gesetzt.
 	 */
-	public gueltigBis : number | null = null;
+	public gueltigBis: number | null = null;
 
 
 	/**
@@ -53,22 +53,22 @@ export class ReformpaedagogikKatalogEintrag extends JavaObject {
 	 * @param gueltigVon      das Schuljahr, wann der Eintrag eingeführt wurde oder null, falls es nicht bekannt ist und "schon immer gültig war"
 	 * @param gueltigBis      das Schuljahr, bis zu welchem der Eintrag gültig ist
 	 */
-	public constructor(id : number, kuerzel : string, bezeichnung : string, schulformen : List<Schulform>, gueltigVon : number | null, gueltigBis : number | null);
+	public constructor(id: number, kuerzel: string, bezeichnung: string, schulformen: List<Schulform>, gueltigVon: number | null, gueltigBis: number | null);
 
 	/**
 	 * Implementation for method overloads of 'constructor'
 	 */
-	public constructor(__param0? : number, __param1? : string, __param2? : string, __param3? : List<Schulform>, __param4? : null | number, __param5? : null | number) {
+	public constructor(__param0?: number, __param1?: string, __param2?: string, __param3?: List<Schulform>, __param4?: null | number, __param5?: null | number) {
 		super();
 		if ((__param0 === undefined) && (__param1 === undefined) && (__param2 === undefined) && (__param3 === undefined) && (__param4 === undefined) && (__param5 === undefined)) {
 			// empty method body
 		} else if (((__param0 !== undefined) && typeof __param0 === "number") && ((__param1 !== undefined) && (typeof __param1 === "string")) && ((__param2 !== undefined) && (typeof __param2 === "string")) && ((__param3 !== undefined) && ((__param3 instanceof JavaObject) && (__param3.isTranspiledInstanceOf('java.util.List'))) || (__param3 === null)) && ((__param4 !== undefined) && (typeof __param4 === "number") || (__param4 === null)) && ((__param5 !== undefined) && (typeof __param5 === "number") || (__param5 === null))) {
-			const id : number = __param0 as number;
-			const kuerzel : string = __param1;
-			const bezeichnung : string = __param2;
-			const schulformen : List<Schulform> = cast_java_util_List(__param3);
-			const gueltigVon : number | null = __param4;
-			const gueltigBis : number | null = __param5;
+			const id: number = __param0 as number;
+			const kuerzel: string = __param1;
+			const bezeichnung: string = __param2;
+			const schulformen: List<Schulform> = cast_java_util_List(__param3);
+			const gueltigVon: number | null = __param4;
+			const gueltigBis: number | null = __param5;
 			this.id = id;
 			this.kuerzel = kuerzel;
 			this.bezeichnung = bezeichnung;
@@ -84,13 +84,13 @@ export class ReformpaedagogikKatalogEintrag extends JavaObject {
 		return 'de.svws_nrw.core.data.schule.ReformpaedagogikKatalogEintrag';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.schule.ReformpaedagogikKatalogEintrag'].includes(name);
 	}
 
 	public static class = new Class<ReformpaedagogikKatalogEintrag>('de.svws_nrw.core.data.schule.ReformpaedagogikKatalogEintrag');
 
-	public static transpilerFromJSON(json : string): ReformpaedagogikKatalogEintrag {
+	public static transpilerFromJSON(json: string): ReformpaedagogikKatalogEintrag {
 		const obj = JSON.parse(json) as Partial<ReformpaedagogikKatalogEintrag>;
 		const result = new ReformpaedagogikKatalogEintrag();
 		if (obj.id === undefined)
@@ -112,7 +112,7 @@ export class ReformpaedagogikKatalogEintrag extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : ReformpaedagogikKatalogEintrag) : string {
+	public static transpilerToJSON(obj: ReformpaedagogikKatalogEintrag): string {
 		let result = '{';
 		result += '"id" : ' + obj.id.toString() + ',';
 		result += '"kuerzel" : ' + JSON.stringify(obj.kuerzel) + ',';
@@ -132,7 +132,7 @@ export class ReformpaedagogikKatalogEintrag extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<ReformpaedagogikKatalogEintrag>) : string {
+	public static transpilerToJSONPatch(obj: Partial<ReformpaedagogikKatalogEintrag>): string {
 		let result = '{';
 		if (obj.id !== undefined) {
 			result += '"id" : ' + obj.id.toString() + ',';
@@ -166,6 +166,6 @@ export class ReformpaedagogikKatalogEintrag extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_schule_ReformpaedagogikKatalogEintrag(obj : unknown) : ReformpaedagogikKatalogEintrag {
+export function cast_de_svws_nrw_core_data_schule_ReformpaedagogikKatalogEintrag(obj: unknown): ReformpaedagogikKatalogEintrag {
 	return obj as ReformpaedagogikKatalogEintrag;
 }

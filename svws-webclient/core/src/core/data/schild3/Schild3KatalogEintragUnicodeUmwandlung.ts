@@ -6,37 +6,37 @@ export class Schild3KatalogEintragUnicodeUmwandlung extends JavaObject {
 	/**
 	 * ID für den Primärschlüssel der Tabelle UnicodeUmwandlung
 	 */
-	public ID : number | null = null;
+	public ID: number | null = null;
 
 	/**
 	 * Unicodezeichen das umgewandelt werden muss
 	 */
-	public Unicodezeichen : string | null = null;
+	public Unicodezeichen: string | null = null;
 
 	/**
 	 * Ersatzzeichen für das Unicodezeichen
 	 */
-	public Ersatzzeichen : string | null = null;
+	public Ersatzzeichen: string | null = null;
 
 	/**
 	 * Unicodezeichen in Dezimaldarstellung
 	 */
-	public DecimalZeichen : string | null = null;
+	public DecimalZeichen: string | null = null;
 
 	/**
 	 * Ersatzzeichen in Dezimaldarstellung (bei zwei Zeichen mit + getrennt)
 	 */
-	public DecimalErsatzzeichen : string | null = null;
+	public DecimalErsatzzeichen: string | null = null;
 
 	/**
 	 * Hexdarstellung des Unicodezeichen das gewandelt werden muss
 	 */
-	public Hexzeichen : string | null = null;
+	public Hexzeichen: string | null = null;
 
 	/**
 	 * Hexdarstellung des Ersatzzeichens das gewandelt werden muss (bei zwei Zeichen mit + getrennt)
 	 */
-	public HexErsatzzeichen : string | null = null;
+	public HexErsatzzeichen: string | null = null;
 
 
 	/**
@@ -50,13 +50,13 @@ export class Schild3KatalogEintragUnicodeUmwandlung extends JavaObject {
 		return 'de.svws_nrw.core.data.schild3.Schild3KatalogEintragUnicodeUmwandlung';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.schild3.Schild3KatalogEintragUnicodeUmwandlung'].includes(name);
 	}
 
 	public static class = new Class<Schild3KatalogEintragUnicodeUmwandlung>('de.svws_nrw.core.data.schild3.Schild3KatalogEintragUnicodeUmwandlung');
 
-	public static transpilerFromJSON(json : string): Schild3KatalogEintragUnicodeUmwandlung {
+	public static transpilerFromJSON(json: string): Schild3KatalogEintragUnicodeUmwandlung {
 		const obj = JSON.parse(json) as Partial<Schild3KatalogEintragUnicodeUmwandlung>;
 		const result = new Schild3KatalogEintragUnicodeUmwandlung();
 		result.ID = (obj.ID === undefined) ? null : obj.ID === null ? null : obj.ID;
@@ -69,7 +69,7 @@ export class Schild3KatalogEintragUnicodeUmwandlung extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : Schild3KatalogEintragUnicodeUmwandlung) : string {
+	public static transpilerToJSON(obj: Schild3KatalogEintragUnicodeUmwandlung): string {
 		let result = '{';
 		result += '"ID" : ' + ((obj.ID === null) ? 'null' : obj.ID.toString()) + ',';
 		result += '"Unicodezeichen" : ' + ((obj.Unicodezeichen === null) ? 'null' : JSON.stringify(obj.Unicodezeichen)) + ',';
@@ -83,7 +83,7 @@ export class Schild3KatalogEintragUnicodeUmwandlung extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<Schild3KatalogEintragUnicodeUmwandlung>) : string {
+	public static transpilerToJSONPatch(obj: Partial<Schild3KatalogEintragUnicodeUmwandlung>): string {
 		let result = '{';
 		if (obj.ID !== undefined) {
 			result += '"ID" : ' + ((obj.ID === null) ? 'null' : obj.ID.toString()) + ',';
@@ -113,6 +113,6 @@ export class Schild3KatalogEintragUnicodeUmwandlung extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_schild3_Schild3KatalogEintragUnicodeUmwandlung(obj : unknown) : Schild3KatalogEintragUnicodeUmwandlung {
+export function cast_de_svws_nrw_core_data_schild3_Schild3KatalogEintragUnicodeUmwandlung(obj: unknown): Schild3KatalogEintragUnicodeUmwandlung {
 	return obj as Schild3KatalogEintragUnicodeUmwandlung;
 }

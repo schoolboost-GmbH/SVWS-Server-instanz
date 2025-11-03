@@ -14,137 +14,137 @@ import { KAOAZusatzmerkmal } from '../../../asd/types/kaoa/KAOAZusatzmerkmal';
 export class KAOAEbene4 extends JavaEnum<KAOAEbene4> implements CoreType<KAOAEbene4KatalogEintrag, KAOAEbene4> {
 
 	/** an array containing all values of this enumeration */
-	static readonly all_values_by_ordinal : Array<KAOAEbene4> = [];
+	static readonly all_values_by_ordinal: Array<KAOAEbene4> = [];
 
 	/** an array containing all values of this enumeration indexed by their name*/
-	static readonly all_values_by_name : Map<string, KAOAEbene4> = new Map<string, KAOAEbene4>();
+	static readonly all_values_by_name: Map<string, KAOAEbene4> = new Map<string, KAOAEbene4>();
 
 	/**
 	 * KAoA-Eintrag der SBO Ebene 4: Langzeitpraktikum 1-tägig
 	 */
-	public static readonly SBO_6_5_1_1 : KAOAEbene4 = new KAOAEbene4("SBO_6_5_1_1", 0, );
+	public static readonly SBO_6_5_1_1: KAOAEbene4 = new KAOAEbene4("SBO_6_5_1_1", 0, );
 
 	/**
 	 * KAoA-Eintrag der SBO Ebene 4: Langzeitpraktikum 2-tägig
 	 */
-	public static readonly SBO_6_5_1_2 : KAOAEbene4 = new KAOAEbene4("SBO_6_5_1_2", 1, );
+	public static readonly SBO_6_5_1_2: KAOAEbene4 = new KAOAEbene4("SBO_6_5_1_2", 1, );
 
 	/**
 	 * KAoA-Eintrag der SBO Ebene 4: An der KAoA-kompakt Potenzialanalyse teilgenommen
 	 */
-	public static readonly SBO_7_1_1_1 : KAOAEbene4 = new KAOAEbene4("SBO_7_1_1_1", 2, );
+	public static readonly SBO_7_1_1_1: KAOAEbene4 = new KAOAEbene4("SBO_7_1_1_1", 2, );
 
 	/**
 	 * KAoA-Eintrag der SBO Ebene 4: Keine Teilnahme an der KAoA-kompakt Potenzialanalyse
 	 */
-	public static readonly SBO_7_1_1_2 : KAOAEbene4 = new KAOAEbene4("SBO_7_1_1_2", 3, );
+	public static readonly SBO_7_1_1_2: KAOAEbene4 = new KAOAEbene4("SBO_7_1_1_2", 3, );
 
 	/**
 	 * KAoA-Eintrag der SBO Ebene 4: An der KAoA-kompakt Berufsfelderkundung teilgenommen - 1. Tag
 	 */
-	public static readonly SBO_7_1_1_3 : KAOAEbene4 = new KAOAEbene4("SBO_7_1_1_3", 4, );
+	public static readonly SBO_7_1_1_3: KAOAEbene4 = new KAOAEbene4("SBO_7_1_1_3", 4, );
 
 	/**
 	 * KAoA-Eintrag der SBO Ebene 4: An der KAoA-kompakt Berufsfelderkundung teilgenommen - 2. Tag
 	 */
-	public static readonly SBO_7_1_1_4 : KAOAEbene4 = new KAOAEbene4("SBO_7_1_1_4", 5, );
+	public static readonly SBO_7_1_1_4: KAOAEbene4 = new KAOAEbene4("SBO_7_1_1_4", 5, );
 
 	/**
 	 * KAoA-Eintrag der SBO Ebene 4: An der KAoA-kompakt Berufsfelderkundung teilgenommen - 3. Tag
 	 */
-	public static readonly SBO_7_1_1_5 : KAOAEbene4 = new KAOAEbene4("SBO_7_1_1_5", 6, );
+	public static readonly SBO_7_1_1_5: KAOAEbene4 = new KAOAEbene4("SBO_7_1_1_5", 6, );
 
 	/**
 	 * KAoA-Eintrag der SBO Ebene 4: Keine Teilnahme an den KAoA-kompakt Berufsfelderkundungen
 	 */
-	public static readonly SBO_7_1_1_6 : KAOAEbene4 = new KAOAEbene4("SBO_7_1_1_6", 7, );
+	public static readonly SBO_7_1_1_6: KAOAEbene4 = new KAOAEbene4("SBO_7_1_1_6", 7, );
 
 	/**
 	 * KAoA-Eintrag der SBO Ebene 4: An KAoA-kompakt Praxiskursen teilgenommen
 	 */
-	public static readonly SBO_7_1_1_7 : KAOAEbene4 = new KAOAEbene4("SBO_7_1_1_7", 8, );
+	public static readonly SBO_7_1_1_7: KAOAEbene4 = new KAOAEbene4("SBO_7_1_1_7", 8, );
 
 	/**
 	 * KAoA-Eintrag der SBO Ebene 4: Keine Teilnahme an den KAoA-kompakt Praxiskursen
 	 */
-	public static readonly SBO_7_1_1_8 : KAOAEbene4 = new KAOAEbene4("SBO_7_1_1_8", 9, );
+	public static readonly SBO_7_1_1_8: KAOAEbene4 = new KAOAEbene4("SBO_7_1_1_8", 9, );
 
 	/**
 	 * KAoA-Eintrag der SBO Ebene 4: Einzeltag
 	 */
-	public static readonly SBO_9_1_1_1 : KAOAEbene4 = new KAOAEbene4("SBO_9_1_1_1", 10, );
+	public static readonly SBO_9_1_1_1: KAOAEbene4 = new KAOAEbene4("SBO_9_1_1_1", 10, );
 
 	/**
 	 * KAoA-Eintrag der SBO Ebene 4: Betriebspraktikum
 	 */
-	public static readonly SBO_9_1_1_2 : KAOAEbene4 = new KAOAEbene4("SBO_9_1_1_2", 11, );
+	public static readonly SBO_9_1_1_2: KAOAEbene4 = new KAOAEbene4("SBO_9_1_1_2", 11, );
 
 	/**
 	 * KAoA-Eintrag der SBO Ebene 4: Auslandspraktikum
 	 */
-	public static readonly SBO_9_1_1_3 : KAOAEbene4 = new KAOAEbene4("SBO_9_1_1_3", 12, );
+	public static readonly SBO_9_1_1_3: KAOAEbene4 = new KAOAEbene4("SBO_9_1_1_3", 12, );
 
 	/**
 	 * KAoA-Eintrag der SBO Ebene 4: Hochschulpraktikum/Schnupperstudium
 	 */
-	public static readonly SBO_9_1_1_4 : KAOAEbene4 = new KAOAEbene4("SBO_9_1_1_4", 13, );
+	public static readonly SBO_9_1_1_4: KAOAEbene4 = new KAOAEbene4("SBO_9_1_1_4", 13, );
 
 	/**
 	 * KAoA-Eintrag der SBO Ebene 4: Duales Orientierungspraktikum
 	 */
-	public static readonly SBO_9_1_1_5 : KAOAEbene4 = new KAOAEbene4("SBO_9_1_1_5", 14, );
+	public static readonly SBO_9_1_1_5: KAOAEbene4 = new KAOAEbene4("SBO_9_1_1_5", 14, );
 
 	/**
 	 * KAoA-Eintrag der SBO Ebene 4: Projektworkshop ( bei einem Bildungsträger)
 	 */
-	public static readonly SBO_9_1_1_6 : KAOAEbene4 = new KAOAEbene4("SBO_9_1_1_6", 15, );
+	public static readonly SBO_9_1_1_6: KAOAEbene4 = new KAOAEbene4("SBO_9_1_1_6", 15, );
 
 	/**
 	 * KAoA-Eintrag der SBO Ebene 4: Veranstaltungen zur allgemeinen Studienorientierung an einer Hochschule
 	 */
-	public static readonly SBO_9_2_1_1 : KAOAEbene4 = new KAOAEbene4("SBO_9_2_1_1", 16, );
+	public static readonly SBO_9_2_1_1: KAOAEbene4 = new KAOAEbene4("SBO_9_2_1_1", 16, );
 
 	/**
 	 * KAoA-Eintrag der SBO Ebene 4: Veranstaltungen zur allgemeinen Studienorientierung in der Schule
 	 */
-	public static readonly SBO_9_2_1_2 : KAOAEbene4 = new KAOAEbene4("SBO_9_2_1_2", 17, );
+	public static readonly SBO_9_2_1_2: KAOAEbene4 = new KAOAEbene4("SBO_9_2_1_2", 17, );
 
 	/**
 	 * KAoA-Eintrag der SBO Ebene 4: Wochen der Studienorientierung
 	 */
-	public static readonly SBO_9_2_1_3 : KAOAEbene4 = new KAOAEbene4("SBO_9_2_1_3", 18, );
+	public static readonly SBO_9_2_1_3: KAOAEbene4 = new KAOAEbene4("SBO_9_2_1_3", 18, );
 
 	/**
 	 * KAoA-Eintrag der SBO Ebene 4: Langer Abend der Studienberatung
 	 */
-	public static readonly SBO_9_2_1_4 : KAOAEbene4 = new KAOAEbene4("SBO_9_2_1_4", 19, );
+	public static readonly SBO_9_2_1_4: KAOAEbene4 = new KAOAEbene4("SBO_9_2_1_4", 19, );
 
 	/**
 	 * KAoA-Eintrag der SBO Ebene 4: Individuelle Einzelberatung durch die Zentralen Studienberatungen der Hochschulen
 	 */
-	public static readonly SBO_9_2_1_5 : KAOAEbene4 = new KAOAEbene4("SBO_9_2_1_5", 20, );
+	public static readonly SBO_9_2_1_5: KAOAEbene4 = new KAOAEbene4("SBO_9_2_1_5", 20, );
 
 	/**
 	 * KAoA-Eintrag der SBO Ebene 4: Workshops für Schülerinnen und Schüler in der Zentralen Studienberatung
 	 */
-	public static readonly SBO_9_2_1_6 : KAOAEbene4 = new KAOAEbene4("SBO_9_2_1_6", 21, );
+	public static readonly SBO_9_2_1_6: KAOAEbene4 = new KAOAEbene4("SBO_9_2_1_6", 21, );
 
 	/**
 	 * KAoA-Eintrag der SBO Ebene 4: Besondere Formate für Schülerinnen und Schüler an der Hochschule (Hochschultag, Hochschulpraktikum i.S. eines „Schnupperstudiums“, allgemeine Boys‘ und Girls‘ Day Angebote)
 	 */
-	public static readonly SBO_9_2_1_7 : KAOAEbene4 = new KAOAEbene4("SBO_9_2_1_7", 22, );
+	public static readonly SBO_9_2_1_7: KAOAEbene4 = new KAOAEbene4("SBO_9_2_1_7", 22, );
 
 	/**
 	 * KAoA-Eintrag der SBO Ebene 4: Fachspezifische Angebote (z. B. Schülerstudium, Praktika bei Hochschullehrer*innen, Schülerlabore, zdi-Zentren, fachspezifische Boys‘ und Girls‘ Day Angebote)
 	 */
-	public static readonly SBO_9_2_1_8 : KAOAEbene4 = new KAOAEbene4("SBO_9_2_1_8", 23, );
+	public static readonly SBO_9_2_1_8: KAOAEbene4 = new KAOAEbene4("SBO_9_2_1_8", 23, );
 
 	/**
 	 * (Integer, Long) -> Schuljahr, idZusatzmerkmal
 	 */
-	private static readonly _mapEintraegeBySchuljahrAndZusatzmerkmal : JavaMap<number, JavaMap<number, List<KAOAEbene4KatalogEintrag>>> = new HashMap<number, JavaMap<number, List<KAOAEbene4KatalogEintrag>>>();
+	private static readonly _mapEintraegeBySchuljahrAndZusatzmerkmal: JavaMap<number, JavaMap<number, List<KAOAEbene4KatalogEintrag>>> = new HashMap<number, JavaMap<number, List<KAOAEbene4KatalogEintrag>>>();
 
-	private constructor(name : string, ordinal : number) {
+	private constructor(name: string, ordinal: number) {
 		super(name, ordinal);
 		KAOAEbene4.all_values_by_ordinal.push(this);
 		KAOAEbene4.all_values_by_name.set(name, this);
@@ -155,7 +155,7 @@ export class KAOAEbene4 extends JavaEnum<KAOAEbene4> implements CoreType<KAOAEbe
 	 *
 	 * @param manager   der Manager für die Daten des Core-Types
 	 */
-	public static init(manager : CoreTypeDataManager<KAOAEbene4KatalogEintrag, KAOAEbene4>) : void {
+	public static init(manager: CoreTypeDataManager<KAOAEbene4KatalogEintrag, KAOAEbene4>): void {
 		CoreTypeDataManager.putManager(KAOAEbene4.class, manager);
 		KAOAEbene4._mapEintraegeBySchuljahrAndZusatzmerkmal.clear();
 	}
@@ -165,7 +165,7 @@ export class KAOAEbene4 extends JavaEnum<KAOAEbene4> implements CoreType<KAOAEbe
 	 *
 	 * @return der Daten-Manager
 	 */
-	public static data() : CoreTypeDataManager<KAOAEbene4KatalogEintrag, KAOAEbene4> {
+	public static data(): CoreTypeDataManager<KAOAEbene4KatalogEintrag, KAOAEbene4> {
 		return CoreTypeDataManager.getManager(KAOAEbene4.class);
 	}
 
@@ -179,15 +179,15 @@ export class KAOAEbene4 extends JavaEnum<KAOAEbene4> implements CoreType<KAOAEbe
 	 *
 	 * @return alle zulässigen KAoA-Ebene4-Historien-Einträge für das angegebene Zusatzmerkmal in dem angegebenen Schuljahr.
 	 */
-	public static getEintraegeBySchuljahrAndIdZusatzmerkmal(schuljahr : number, idZusatzmerkmal : number) : List<KAOAEbene4KatalogEintrag> {
-		let mapEintraegeByZusatzmerkmal : JavaMap<number, List<KAOAEbene4KatalogEintrag>> | null = KAOAEbene4._mapEintraegeBySchuljahrAndZusatzmerkmal.get(schuljahr);
+	public static getEintraegeBySchuljahrAndIdZusatzmerkmal(schuljahr: number, idZusatzmerkmal: number): List<KAOAEbene4KatalogEintrag> {
+		let mapEintraegeByZusatzmerkmal: JavaMap<number, List<KAOAEbene4KatalogEintrag>> | null = KAOAEbene4._mapEintraegeBySchuljahrAndZusatzmerkmal.get(schuljahr);
 		if (mapEintraegeByZusatzmerkmal !== null) {
-			const result : List<KAOAEbene4KatalogEintrag> | null = mapEintraegeByZusatzmerkmal.get(idZusatzmerkmal);
+			const result: List<KAOAEbene4KatalogEintrag> | null = mapEintraegeByZusatzmerkmal.get(idZusatzmerkmal);
 			return (result !== null) ? result : new ArrayList();
 		}
 		mapEintraegeByZusatzmerkmal = KAOAEbene4.cacheEintraegeBySchuljahrAndIdZusatzmerkmal(schuljahr);
 		KAOAEbene4._mapEintraegeBySchuljahrAndZusatzmerkmal.put(schuljahr, mapEintraegeByZusatzmerkmal);
-		const result : List<KAOAEbene4KatalogEintrag> | null = mapEintraegeByZusatzmerkmal.get(idZusatzmerkmal);
+		const result: List<KAOAEbene4KatalogEintrag> | null = mapEintraegeByZusatzmerkmal.get(idZusatzmerkmal);
 		return (result !== null) ? result : new ArrayList();
 	}
 
@@ -197,10 +197,10 @@ export class KAOAEbene4 extends JavaEnum<KAOAEbene4> implements CoreType<KAOAEbe
 	 * @param schuljahr   das Schuljahr
 	 * @return einen Cache der zulässigen KAoA-Ebene4-Historien-Einträge je Zusatzmerkmal in dem angegebenen Schuljahr.
 	 */
-	private static cacheEintraegeBySchuljahrAndIdZusatzmerkmal(schuljahr : number) : JavaMap<number, List<KAOAEbene4KatalogEintrag>> {
-		const cache : JavaMap<number, List<KAOAEbene4KatalogEintrag>> | null = new HashMap<number, List<KAOAEbene4KatalogEintrag>>();
+	private static cacheEintraegeBySchuljahrAndIdZusatzmerkmal(schuljahr: number): JavaMap<number, List<KAOAEbene4KatalogEintrag>> {
+		const cache: JavaMap<number, List<KAOAEbene4KatalogEintrag>> | null = new HashMap<number, List<KAOAEbene4KatalogEintrag>>();
 		for (const zusatzmerkmalHistorienEintrag of KAOAZusatzmerkmal.data().getEintraegeBySchuljahr(schuljahr)) {
-			const result : List<KAOAEbene4KatalogEintrag> | null = new ArrayList<KAOAEbene4KatalogEintrag>();
+			const result: List<KAOAEbene4KatalogEintrag> | null = new ArrayList<KAOAEbene4KatalogEintrag>();
 			for (const ebene4HistorienEintrag of KAOAEbene4.data().getEintraegeBySchuljahr(schuljahr)) {
 				if (JavaObject.equalsTranspiler(ebene4HistorienEintrag.zusatzmerkmal, (KAOAZusatzmerkmal.data().getWertByID(zusatzmerkmalHistorienEintrag.id).name())))
 					result.add(ebene4HistorienEintrag);
@@ -215,7 +215,7 @@ export class KAOAEbene4 extends JavaEnum<KAOAEbene4> implements CoreType<KAOAEbe
 	 *
 	 * @returns the array with enumeration values
 	 */
-	public static values() : Array<KAOAEbene4> {
+	public static values(): Array<KAOAEbene4> {
 		return [...this.all_values_by_ordinal];
 	}
 
@@ -226,24 +226,24 @@ export class KAOAEbene4 extends JavaEnum<KAOAEbene4> implements CoreType<KAOAEbe
 	 *
 	 * @returns the enumeration values or null
 	 */
-	public static valueOf(name : string) : KAOAEbene4 | null {
+	public static valueOf(name: string): KAOAEbene4 | null {
 		const tmp = this.all_values_by_name.get(name);
 		return (!tmp) ? null : tmp;
 	}
 
-	public getManager() : CoreTypeDataManager<KAOAEbene4KatalogEintrag, KAOAEbene4> {
+	public getManager(): CoreTypeDataManager<KAOAEbene4KatalogEintrag, KAOAEbene4> {
 		return de_svws_nrw_asd_types_CoreType_getManager(this);
 	}
 
-	public daten(schuljahr : number) : KAOAEbene4KatalogEintrag | null {
+	public daten(schuljahr: number): KAOAEbene4KatalogEintrag | null {
 		return de_svws_nrw_asd_types_CoreType_daten(this, schuljahr);
 	}
 
-	public statistikId() : string | null {
+	public statistikId(): string | null {
 		return de_svws_nrw_asd_types_CoreType_statistikId(this);
 	}
 
-	public historie() : List<KAOAEbene4KatalogEintrag> {
+	public historie(): List<KAOAEbene4KatalogEintrag> {
 		return de_svws_nrw_asd_types_CoreType_historie(this);
 	}
 
@@ -251,7 +251,7 @@ export class KAOAEbene4 extends JavaEnum<KAOAEbene4> implements CoreType<KAOAEbe
 		return 'de.svws_nrw.asd.types.kaoa.KAOAEbene4';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.asd.types.kaoa.KAOAEbene4', 'de.svws_nrw.asd.types.CoreType', 'java.lang.Comparable', 'java.lang.Enum', 'java.lang.Comparable'].includes(name);
 	}
 
@@ -259,6 +259,6 @@ export class KAOAEbene4 extends JavaEnum<KAOAEbene4> implements CoreType<KAOAEbe
 
 }
 
-export function cast_de_svws_nrw_asd_types_kaoa_KAOAEbene4(obj : unknown) : KAOAEbene4 {
+export function cast_de_svws_nrw_asd_types_kaoa_KAOAEbene4(obj: unknown): KAOAEbene4 {
 	return obj as KAOAEbene4;
 }

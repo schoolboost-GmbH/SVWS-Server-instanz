@@ -1,5 +1,6 @@
 package de.svws_nrw.data.lehrer;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -85,7 +86,7 @@ public final class DataLehrerPersonalabschnittsdaten extends DataManagerRevised<
 	protected void mapAttribute(final DTOLehrerAbschnittsdaten dto, final String name, final Object value, final Map<String, Object> map)
 			throws ApiOperationException {
 		switch (name) {
-			case "pflichtstundensoll" -> dto.PflichtstdSoll = JSONMapper.convertToDouble(value, true);
+			case "pflichtstundensoll" -> updatePflichtstundensoll(dto, value, name);
 			case "rechtsverhaeltnis" -> dto.Rechtsverhaeltnis = validateRechtverhaeltnis(value, dto);
 			case "beschaeftigungsart" -> dto.Beschaeftigungsart = validateBeschaeftigunsart(value, dto);
 			case "einsatzstatus" -> dto.Einsatzstatus = validateEinsatzstatus(value, dto);
@@ -93,6 +94,20 @@ public final class DataLehrerPersonalabschnittsdaten extends DataManagerRevised<
 					JSONMapper.convertToString(value, true, false, Schema.tab_LehrerAbschnittsdaten.col_StammschulNr.datenlaenge(), "stammschulnummer");
 			default -> throw new ApiOperationException(Status.BAD_REQUEST, "Die Daten des Patches enthalten das unbekannte Attribut %s.".formatted(name));
 		}
+	}
+
+	private static void updatePflichtstundensoll(final DTOLehrerAbschnittsdaten dto, final Object value, final String name) throws ApiOperationException {
+		final Double pflichtstundensoll = JSONMapper.convertToDouble(value, true, name);
+		if (pflichtstundensoll == null) {
+			dto.PflichtstdSoll = null;
+			return;
+		}
+
+		final BigDecimal bd = BigDecimal.valueOf(pflichtstundensoll);
+		if (bd.scale() > 2)
+			throw new ApiOperationException(Status.BAD_REQUEST, "Der Wert Pflichtstundensoll darf höchstens zwei Nachkommastellen haben.");
+
+		dto.PflichtstdSoll = pflichtstundensoll;
 	}
 
 

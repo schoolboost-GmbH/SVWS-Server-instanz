@@ -5,35 +5,35 @@ import { Class } from '../../../java/lang/Class';
 export class GostBesondereLernleistung extends JavaEnum<GostBesondereLernleistung> {
 
 	/** an array containing all values of this enumeration */
-	static readonly all_values_by_ordinal : Array<GostBesondereLernleistung> = [];
+	static readonly all_values_by_ordinal: Array<GostBesondereLernleistung> = [];
 
 	/** an array containing all values of this enumeration indexed by their name*/
-	static readonly all_values_by_name : Map<string, GostBesondereLernleistung> = new Map<string, GostBesondereLernleistung>();
+	static readonly all_values_by_name: Map<string, GostBesondereLernleistung> = new Map<string, GostBesondereLernleistung>();
 
 	/**
 	 * keine besondere Lernleistung = K
 	 */
-	public static readonly KEINE : GostBesondereLernleistung = new GostBesondereLernleistung("KEINE", 0, "K", "Keine");
+	public static readonly KEINE: GostBesondereLernleistung = new GostBesondereLernleistung("KEINE", 0, "K", "Keine");
 
 	/**
 	 * Projektkurs ist besondere Lernleistung = P
 	 */
-	public static readonly PROJEKTKURS : GostBesondereLernleistung = new GostBesondereLernleistung("PROJEKTKURS", 1, "P", "Projektkurs ist besondere Lernleistung");
+	public static readonly PROJEKTKURS: GostBesondereLernleistung = new GostBesondereLernleistung("PROJEKTKURS", 1, "P", "Projektkurs ist besondere Lernleistung");
 
 	/**
 	 * externe besondere Lernleistung = E
 	 */
-	public static readonly EXTERNE : GostBesondereLernleistung = new GostBesondereLernleistung("EXTERNE", 2, "E", "externe besondere Lernleistung");
+	public static readonly EXTERNE: GostBesondereLernleistung = new GostBesondereLernleistung("EXTERNE", 2, "E", "externe besondere Lernleistung");
 
 	/**
 	 * Das Kürzel für die Art der Besonderen Lernleistung
 	 */
-	public readonly kuerzel : string;
+	public readonly kuerzel: string;
 
 	/**
 	 * Die textuelle Beschreibung der Art der Besonderen Lernleistung
 	 */
-	public readonly beschreibung : string;
+	public readonly beschreibung: string;
 
 	/**
 	 * Erzeugt ein neues Objekt für die Aufzählung der Arten von Besonderen
@@ -42,7 +42,7 @@ export class GostBesondereLernleistung extends JavaEnum<GostBesondereLernleistun
 	 * @param kuerzel        das Kürzel für die Art der Besonderen Lernleistung
 	 * @param beschreibung   die textuelle Beschreibung der Art der Besonderen Lernleistung
 	 */
-	private constructor(name : string, ordinal : number, kuerzel : string, beschreibung : string) {
+	private constructor(name: string, ordinal: number, kuerzel: string, beschreibung: string) {
 		super(name, ordinal);
 		GostBesondereLernleistung.all_values_by_ordinal.push(this);
 		GostBesondereLernleistung.all_values_by_name.set(name, this);
@@ -57,7 +57,7 @@ export class GostBesondereLernleistung extends JavaEnum<GostBesondereLernleistun
 	 *
 	 * @return die Art der Besonderen Lernleistung
 	 */
-	public static fromKuerzel(kuerzel : string | null) : GostBesondereLernleistung {
+	public static fromKuerzel(kuerzel: string | null): GostBesondereLernleistung {
 		if (kuerzel === null)
 			return GostBesondereLernleistung.KEINE;
 		switch (kuerzel) {
@@ -76,7 +76,7 @@ export class GostBesondereLernleistung extends JavaEnum<GostBesondereLernleistun
 		}
 	}
 
-	public toString() : string {
+	public toString(): string {
 		return this.kuerzel;
 	}
 
@@ -89,7 +89,7 @@ export class GostBesondereLernleistung extends JavaEnum<GostBesondereLernleistun
 	 *
 	 * @return true, falls die Arten übereinstimmen und ansonsten false
 	 */
-	public is(kuerzel : string | null) : boolean {
+	public is(kuerzel: string | null): boolean {
 		return JavaObject.equalsTranspiler(this.kuerzel, (kuerzel));
 	}
 
@@ -98,7 +98,7 @@ export class GostBesondereLernleistung extends JavaEnum<GostBesondereLernleistun
 	 *
 	 * @returns the array with enumeration values
 	 */
-	public static values() : Array<GostBesondereLernleistung> {
+	public static values(): Array<GostBesondereLernleistung> {
 		return [...this.all_values_by_ordinal];
 	}
 
@@ -109,7 +109,7 @@ export class GostBesondereLernleistung extends JavaEnum<GostBesondereLernleistun
 	 *
 	 * @returns the enumeration values or null
 	 */
-	public static valueOf(name : string) : GostBesondereLernleistung | null {
+	public static valueOf(name: string): GostBesondereLernleistung | null {
 		const tmp = this.all_values_by_name.get(name);
 		return (!tmp) ? null : tmp;
 	}
@@ -118,7 +118,7 @@ export class GostBesondereLernleistung extends JavaEnum<GostBesondereLernleistun
 		return 'de.svws_nrw.core.types.gost.GostBesondereLernleistung';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.types.gost.GostBesondereLernleistung', 'java.lang.Enum', 'java.lang.Comparable'].includes(name);
 	}
 
@@ -126,6 +126,6 @@ export class GostBesondereLernleistung extends JavaEnum<GostBesondereLernleistun
 
 }
 
-export function cast_de_svws_nrw_core_types_gost_GostBesondereLernleistung(obj : unknown) : GostBesondereLernleistung {
+export function cast_de_svws_nrw_core_types_gost_GostBesondereLernleistung(obj: unknown): GostBesondereLernleistung {
 	return obj as GostBesondereLernleistung;
 }

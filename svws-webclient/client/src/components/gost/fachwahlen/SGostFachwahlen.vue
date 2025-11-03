@@ -80,7 +80,7 @@
 
 	const schuljahr = computed<number>(() => props.faecherManager.getSchuljahr());
 
-	function getBgColor(fws: GostStatistikFachwahl) : string {
+	function getBgColor(fws: GostStatistikFachwahl): string {
 		if (fws.kuerzelStatistik === null)
 			return 'rgb(220,220,220)';
 		return Fach.getBySchluesselOrDefault(fws.kuerzelStatistik).getHMTLFarbeRGBA(schuljahr.value, 1.0);
@@ -125,7 +125,7 @@
 			// Prüfe, ob die jeweilige Zelle ausgewählt ist
 			return ((selected.idFach === row?.id) && (props.selected().bereich === bereich));
 		}
-	})
+	});
 
 	const isSelectable = (row: GostStatistikFachwahl, bereich: string) => computed<boolean>(() => {
 		if (bereich === "Fach")
@@ -143,7 +143,7 @@
 		if (fw === null)
 			return false;
 		return (fw.wahlenGK !== 0);
-	})
+	});
 
 	function getData(row: GostStatistikFachwahl, bereich: string, item: string): string | number {
 		if ((bereich === "Fach") && (item === "Kürzel"))
@@ -175,18 +175,18 @@
 		return "";
 	}
 
-	const colHeadings: Array<{ text: string, cols: Array<{ text: string, center? : boolean }> }> = [
-		{ text: "Fach", cols: [ { text : "Kürzel" }, { text: "Fach" } ] },
-		{ text: "EF.1", cols: [ { text : "GK", center: true }, { text : "S", center: true } ] },
-		{ text: "EF.2", cols: [ { text : "GK", center: true }, { text : "S", center: true } ] },
-		{ text: "Q1.1", cols: [ { text : "GK", center: true }, { text : "S", center: true } ] },
-		{ text: "Q1.2", cols: [ { text : "GK", center: true }, { text : "S", center: true } ] },
-		{ text: "Q2.1", cols: [ { text : "GK", center: true }, { text : "S", center: true } ] },
-		{ text: "Q2.2", cols: [ { text : "GK", center: true }, { text : "S", center: true } ] },
-		{ text: "ZK", cols: [ { text : "", center: true } ] },
-		{ text: "LK", cols: [ { text : "", center: true } ] },
-		{ text: "Abitur", cols: [ { text : "3", center: true }, { text : "4", center: true } ] },
-	]
+	const colHeadings: Array<{ text: string, cols: Array<{ text: string, center?: boolean }> }> = [
+		{ text: "Fach", cols: [{ text: "Kürzel" }, { text: "Fach" }] },
+		{ text: "EF.1", cols: [{ text: "GK", center: true }, { text: "S", center: true }] },
+		{ text: "EF.2", cols: [{ text: "GK", center: true }, { text: "S", center: true }] },
+		{ text: "Q1.1", cols: [{ text: "GK", center: true }, { text: "S", center: true }] },
+		{ text: "Q1.2", cols: [{ text: "GK", center: true }, { text: "S", center: true }] },
+		{ text: "Q2.1", cols: [{ text: "GK", center: true }, { text: "S", center: true }] },
+		{ text: "Q2.2", cols: [{ text: "GK", center: true }, { text: "S", center: true }] },
+		{ text: "ZK", cols: [{ text: "", center: true }] },
+		{ text: "LK", cols: [{ text: "", center: true }] },
+		{ text: "Abitur", cols: [{ text: "3", center: true }, { text: "4", center: true }] },
+	];
 
 </script>
 

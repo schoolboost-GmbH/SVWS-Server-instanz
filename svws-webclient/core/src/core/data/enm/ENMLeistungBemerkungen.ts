@@ -6,72 +6,72 @@ export class ENMLeistungBemerkungen extends JavaObject {
 	/**
 	 * Informationen zum Arbeits- und Sozialverhalten
 	 */
-	public ASV : string | null = null;
+	public ASV: string | null = null;
 
 	/**
 	 * Der Zeitstempel mit den letzten Änderungen zu Bemerkungen zum Arbeits- und Sozialverhalten
 	 */
-	public tsASV : string | null = null;
+	public tsASV: string | null = null;
 
 	/**
 	 * Informationen zu dem Außerunterrichtlichen Engagement (AUE)
 	 */
-	public AUE : string | null = null;
+	public AUE: string | null = null;
 
 	/**
 	 * Der Zeitstempel mit den letzten Änderungen zu Bemerkungen zum Außerunterrichtlichen Engagement (AUE)
 	 */
-	public tsAUE : string | null = null;
+	public tsAUE: string | null = null;
 
 	/**
 	 * Zeugnisbemerkungen
 	 */
-	public ZB : string | null = null;
+	public ZB: string | null = null;
 
 	/**
 	 * Der Zeitstempel mit den letzten Änderungen zu Zeugnis-Bemerkungen
 	 */
-	public tsZB : string | null = null;
+	public tsZB: string | null = null;
 
 	/**
 	 * Bemerkungen zur Lern und Leistungsentwicklung (LELS) in den Fächern
 	 */
-	public LELS : string | null = null;
+	public LELS: string | null = null;
 
 	/**
 	 * Der Zeitstempel mit den letzten Änderungen zur Lern und Leistungsentwicklung (LELS) in den Fächern
 	 */
-	public tsLELS : string | null = null;
+	public tsLELS: string | null = null;
 
 	/**
 	 * Schulform-Empfehlungen
 	 */
-	public schulformEmpf : string | null = null;
+	public schulformEmpf: string | null = null;
 
 	/**
 	 * Der Zeitstempel mit den letzten Änderungen zu den Schulform-Empfehlungen
 	 */
-	public tsSchulformEmpf : string | null = null;
+	public tsSchulformEmpf: string | null = null;
 
 	/**
 	 * Individuelle Bemerkungen zur Versetzung
 	 */
-	public individuelleVersetzungsbemerkungen : string | null = null;
+	public individuelleVersetzungsbemerkungen: string | null = null;
 
 	/**
 	 * Der Zeitstempel mit den letzten Änderungen zu individuellen Bemerkungen zur Versetzung
 	 */
-	public tsIndividuelleVersetzungsbemerkungen : string | null = null;
+	public tsIndividuelleVersetzungsbemerkungen: string | null = null;
 
 	/**
 	 * Förderbemerkungen
 	 */
-	public foerderbemerkungen : string | null = null;
+	public foerderbemerkungen: string | null = null;
 
 	/**
 	 * Der Zeitstempel mit den letzten Änderungen zu den Förderbemerkungen
 	 */
-	public tsFoerderbemerkungen : string | null = null;
+	public tsFoerderbemerkungen: string | null = null;
 
 
 	/**
@@ -85,13 +85,13 @@ export class ENMLeistungBemerkungen extends JavaObject {
 		return 'de.svws_nrw.core.data.enm.ENMLeistungBemerkungen';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.enm.ENMLeistungBemerkungen'].includes(name);
 	}
 
 	public static class = new Class<ENMLeistungBemerkungen>('de.svws_nrw.core.data.enm.ENMLeistungBemerkungen');
 
-	public static transpilerFromJSON(json : string): ENMLeistungBemerkungen {
+	public static transpilerFromJSON(json: string): ENMLeistungBemerkungen {
 		const obj = JSON.parse(json) as Partial<ENMLeistungBemerkungen>;
 		const result = new ENMLeistungBemerkungen();
 		result.ASV = (obj.ASV === undefined) ? null : obj.ASV === null ? null : obj.ASV;
@@ -111,7 +111,7 @@ export class ENMLeistungBemerkungen extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : ENMLeistungBemerkungen) : string {
+	public static transpilerToJSON(obj: ENMLeistungBemerkungen): string {
 		let result = '{';
 		result += '"ASV" : ' + ((obj.ASV === null) ? 'null' : JSON.stringify(obj.ASV)) + ',';
 		result += '"tsASV" : ' + ((obj.tsASV === null) ? 'null' : JSON.stringify(obj.tsASV)) + ',';
@@ -132,7 +132,7 @@ export class ENMLeistungBemerkungen extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<ENMLeistungBemerkungen>) : string {
+	public static transpilerToJSONPatch(obj: Partial<ENMLeistungBemerkungen>): string {
 		let result = '{';
 		if (obj.ASV !== undefined) {
 			result += '"ASV" : ' + ((obj.ASV === null) ? 'null' : JSON.stringify(obj.ASV)) + ',';
@@ -183,6 +183,6 @@ export class ENMLeistungBemerkungen extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_enm_ENMLeistungBemerkungen(obj : unknown) : ENMLeistungBemerkungen {
+export function cast_de_svws_nrw_core_data_enm_ENMLeistungBemerkungen(obj: unknown): ENMLeistungBemerkungen {
 	return obj as ENMLeistungBemerkungen;
 }

@@ -9,52 +9,52 @@ import { BerufskollegAnlageKatalogEintrag } from '../../../asd/data/schule/Beruf
 export class BerufskollegAnlage extends JavaEnum<BerufskollegAnlage> implements CoreType<BerufskollegAnlageKatalogEintrag, BerufskollegAnlage> {
 
 	/** an array containing all values of this enumeration */
-	static readonly all_values_by_ordinal : Array<BerufskollegAnlage> = [];
+	static readonly all_values_by_ordinal: Array<BerufskollegAnlage> = [];
 
 	/** an array containing all values of this enumeration indexed by their name*/
-	static readonly all_values_by_name : Map<string, BerufskollegAnlage> = new Map<string, BerufskollegAnlage>();
+	static readonly all_values_by_name: Map<string, BerufskollegAnlage> = new Map<string, BerufskollegAnlage>();
 
 	/**
 	 * Anlage A: Fachklassen duales System und Ausbildungsvorbereitung
 	 */
-	public static readonly A : BerufskollegAnlage = new BerufskollegAnlage("A", 0, );
+	public static readonly A: BerufskollegAnlage = new BerufskollegAnlage("A", 0, );
 
 	/**
 	 * Anlage B: Berufsfachschule
 	 */
-	public static readonly B : BerufskollegAnlage = new BerufskollegAnlage("B", 1, );
+	public static readonly B: BerufskollegAnlage = new BerufskollegAnlage("B", 1, );
 
 	/**
 	 * Anlage C: Berufsfachschule und Fachoberschule
 	 */
-	public static readonly C : BerufskollegAnlage = new BerufskollegAnlage("C", 2, );
+	public static readonly C: BerufskollegAnlage = new BerufskollegAnlage("C", 2, );
 
 	/**
 	 * Anlage D: Berufliches Gymnasium und Fachoberschule
 	 */
-	public static readonly D : BerufskollegAnlage = new BerufskollegAnlage("D", 3, );
+	public static readonly D: BerufskollegAnlage = new BerufskollegAnlage("D", 3, );
 
 	/**
 	 * Anlage E: Fachschule
 	 */
-	public static readonly E : BerufskollegAnlage = new BerufskollegAnlage("E", 4, );
+	public static readonly E: BerufskollegAnlage = new BerufskollegAnlage("E", 4, );
 
 	/**
 	 * Anlage H: Berufsgrundbildung und Berufsausbildung an einer freien Waldorfschule / Hiberniakolleg
 	 */
-	public static readonly H : BerufskollegAnlage = new BerufskollegAnlage("H", 5, );
+	public static readonly H: BerufskollegAnlage = new BerufskollegAnlage("H", 5, );
 
 	/**
 	 * Anlage X: Ehemalige Kollegschule
 	 */
-	public static readonly X : BerufskollegAnlage = new BerufskollegAnlage("X", 6, );
+	public static readonly X: BerufskollegAnlage = new BerufskollegAnlage("X", 6, );
 
 	/**
 	 * Anlage Z: TODO
 	 */
-	public static readonly Z : BerufskollegAnlage = new BerufskollegAnlage("Z", 7, );
+	public static readonly Z: BerufskollegAnlage = new BerufskollegAnlage("Z", 7, );
 
-	private constructor(name : string, ordinal : number) {
+	private constructor(name: string, ordinal: number) {
 		super(name, ordinal);
 		BerufskollegAnlage.all_values_by_ordinal.push(this);
 		BerufskollegAnlage.all_values_by_name.set(name, this);
@@ -65,7 +65,7 @@ export class BerufskollegAnlage extends JavaEnum<BerufskollegAnlage> implements 
 	 *
 	 * @param manager   der Manager für die Daten des Core-Types
 	 */
-	public static init(manager : CoreTypeDataManager<BerufskollegAnlageKatalogEintrag, BerufskollegAnlage>) : void {
+	public static init(manager: CoreTypeDataManager<BerufskollegAnlageKatalogEintrag, BerufskollegAnlage>): void {
 		CoreTypeDataManager.putManager(BerufskollegAnlage.class, manager);
 	}
 
@@ -74,7 +74,7 @@ export class BerufskollegAnlage extends JavaEnum<BerufskollegAnlage> implements 
 	 *
 	 * @return der Daten-Manager
 	 */
-	public static data() : CoreTypeDataManager<BerufskollegAnlageKatalogEintrag, BerufskollegAnlage> {
+	public static data(): CoreTypeDataManager<BerufskollegAnlageKatalogEintrag, BerufskollegAnlage> {
 		return CoreTypeDataManager.getManager(BerufskollegAnlage.class);
 	}
 
@@ -83,7 +83,7 @@ export class BerufskollegAnlage extends JavaEnum<BerufskollegAnlage> implements 
 	 *
 	 * @returns the array with enumeration values
 	 */
-	public static values() : Array<BerufskollegAnlage> {
+	public static values(): Array<BerufskollegAnlage> {
 		return [...this.all_values_by_ordinal];
 	}
 
@@ -94,24 +94,24 @@ export class BerufskollegAnlage extends JavaEnum<BerufskollegAnlage> implements 
 	 *
 	 * @returns the enumeration values or null
 	 */
-	public static valueOf(name : string) : BerufskollegAnlage | null {
+	public static valueOf(name: string): BerufskollegAnlage | null {
 		const tmp = this.all_values_by_name.get(name);
 		return (!tmp) ? null : tmp;
 	}
 
-	public getManager() : CoreTypeDataManager<BerufskollegAnlageKatalogEintrag, BerufskollegAnlage> {
+	public getManager(): CoreTypeDataManager<BerufskollegAnlageKatalogEintrag, BerufskollegAnlage> {
 		return de_svws_nrw_asd_types_CoreType_getManager(this);
 	}
 
-	public daten(schuljahr : number) : BerufskollegAnlageKatalogEintrag | null {
+	public daten(schuljahr: number): BerufskollegAnlageKatalogEintrag | null {
 		return de_svws_nrw_asd_types_CoreType_daten(this, schuljahr);
 	}
 
-	public statistikId() : string | null {
+	public statistikId(): string | null {
 		return de_svws_nrw_asd_types_CoreType_statistikId(this);
 	}
 
-	public historie() : List<BerufskollegAnlageKatalogEintrag> {
+	public historie(): List<BerufskollegAnlageKatalogEintrag> {
 		return de_svws_nrw_asd_types_CoreType_historie(this);
 	}
 
@@ -119,7 +119,7 @@ export class BerufskollegAnlage extends JavaEnum<BerufskollegAnlage> implements 
 		return 'de.svws_nrw.asd.types.schule.BerufskollegAnlage';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.asd.types.schule.BerufskollegAnlage', 'de.svws_nrw.asd.types.CoreType', 'java.lang.Comparable', 'java.lang.Enum', 'java.lang.Comparable'].includes(name);
 	}
 
@@ -127,6 +127,6 @@ export class BerufskollegAnlage extends JavaEnum<BerufskollegAnlage> implements 
 
 }
 
-export function cast_de_svws_nrw_asd_types_schule_BerufskollegAnlage(obj : unknown) : BerufskollegAnlage {
+export function cast_de_svws_nrw_asd_types_schule_BerufskollegAnlage(obj: unknown): BerufskollegAnlage {
 	return obj as BerufskollegAnlage;
 }

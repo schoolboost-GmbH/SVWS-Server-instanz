@@ -10,62 +10,62 @@ export class LehrerPersonaldaten extends JavaObject {
 	/**
 	 * Die ID des Lehrers.
 	 */
-	public id : number = 0;
+	public id: number = 0;
 
 	/**
 	 * Der vordere Teil der NRW-weit eindeutigen Ident-Nummer - setzt sich normalerweise aus Geburtsdatum und Geschlecht (3/4) zusammen, kann in Einzelfällen aber von diesem Schema abweichen.
 	 */
-	public identNrTeil1 : string | null = null;
+	public identNrTeil1: string | null = null;
 
 	/**
 	 * Der hintere Teil der Ident-Nummer – wird üblicherweise NRW-weit fortlaufend vergeben.
 	 */
-	public identNrTeil2SerNr : string | null = null;
+	public identNrTeil2SerNr: string | null = null;
 
 	/**
 	 * Die Personalaktennummer des Lehrers für den Export zu GPC.
 	 */
-	public personalaktennummer : string | null = null;
+	public personalaktennummer: string | null = null;
 
 	/**
 	 * Die Personalnummer des LBV.
 	 */
-	public lbvPersonalnummer : string | null = null;
+	public lbvPersonalnummer: string | null = null;
 
 	/**
 	 * Der zur Personalnummer gehörige Vergütungsschlüssel.
 	 */
-	public lbvVerguetungsschluessel : string | null = null;
+	public lbvVerguetungsschluessel: string | null = null;
 
 	/**
 	 * Das Datum, wann der Lehrer an die Schule gekommen ist.
 	 */
-	public zugangsdatum : string | null = null;
+	public zugangsdatum: string | null = null;
 
 	/**
 	 * Der Grund für den Zugang des Lehrers - siehe Statistik-Katalog.
 	 */
-	public zugangsgrund : string | null = null;
+	public zugangsgrund: string | null = null;
 
 	/**
 	 * Das Datum, wann der Lehrer an die Schule verlassen hat.
 	 */
-	public abgangsdatum : string | null = null;
+	public abgangsdatum: string | null = null;
 
 	/**
 	 * Der Grund für den Abgang des Lehrers - siehe Statistik-Katalog.
 	 */
-	public abgangsgrund : string | null = null;
+	public abgangsgrund: string | null = null;
 
 	/**
 	 * Die Abschnittsdaten des Lehrers.
 	 */
-	public readonly abschnittsdaten : List<LehrerPersonalabschnittsdaten> = new ArrayList<LehrerPersonalabschnittsdaten>();
+	public readonly abschnittsdaten: List<LehrerPersonalabschnittsdaten> = new ArrayList<LehrerPersonalabschnittsdaten>();
 
 	/**
 	 * Die Lehrämter des Lehrers.
 	 */
-	public readonly lehraemter : List<LehrerLehramtEintrag> = new ArrayList<LehrerLehramtEintrag>();
+	public readonly lehraemter: List<LehrerLehramtEintrag> = new ArrayList<LehrerLehramtEintrag>();
 
 
 	/**
@@ -79,13 +79,13 @@ export class LehrerPersonaldaten extends JavaObject {
 		return 'de.svws_nrw.asd.data.lehrer.LehrerPersonaldaten';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.asd.data.lehrer.LehrerPersonaldaten'].includes(name);
 	}
 
 	public static class = new Class<LehrerPersonaldaten>('de.svws_nrw.asd.data.lehrer.LehrerPersonaldaten');
 
-	public static transpilerFromJSON(json : string): LehrerPersonaldaten {
+	public static transpilerFromJSON(json: string): LehrerPersonaldaten {
 		const obj = JSON.parse(json) as Partial<LehrerPersonaldaten>;
 		const result = new LehrerPersonaldaten();
 		if (obj.id === undefined)
@@ -113,7 +113,7 @@ export class LehrerPersonaldaten extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : LehrerPersonaldaten) : string {
+	public static transpilerToJSON(obj: LehrerPersonaldaten): string {
 		let result = '{';
 		result += '"id" : ' + obj.id.toString() + ',';
 		result += '"identNrTeil1" : ' + ((obj.identNrTeil1 === null) ? 'null' : JSON.stringify(obj.identNrTeil1)) + ',';
@@ -146,7 +146,7 @@ export class LehrerPersonaldaten extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<LehrerPersonaldaten>) : string {
+	public static transpilerToJSONPatch(obj: Partial<LehrerPersonaldaten>): string {
 		let result = '{';
 		if (obj.id !== undefined) {
 			result += '"id" : ' + obj.id.toString() + ',';
@@ -205,6 +205,6 @@ export class LehrerPersonaldaten extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_asd_data_lehrer_LehrerPersonaldaten(obj : unknown) : LehrerPersonaldaten {
+export function cast_de_svws_nrw_asd_data_lehrer_LehrerPersonaldaten(obj: unknown): LehrerPersonaldaten {
 	return obj as LehrerPersonaldaten;
 }

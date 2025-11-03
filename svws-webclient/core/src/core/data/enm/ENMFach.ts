@@ -6,27 +6,27 @@ export class ENMFach extends JavaObject {
 	/**
 	 * Die ID des Faches in der SVWS-DB.
 	 */
-	public id : number = 0;
+	public id: number = 0;
 
 	/**
 	 * Das Kürzel des Faches, wie es im Rahmen der amtlichen Schulstatistik verwendet wird. (z.B. D)
 	 */
-	public kuerzel : string = "";
+	public kuerzel: string = "";
 
 	/**
 	 * Das Kürzel des Faches, wie es im Rahmen der Schule benannt wird und angezeigt werden soll. (z.B. D)
 	 */
-	public kuerzelAnzeige : string = "";
+	public kuerzelAnzeige: string = "";
 
 	/**
 	 * Die Reihenfolge des Faches bei der Sortierung der Fächer. (z.B. 37)
 	 */
-	public sortierung : number = 0;
+	public sortierung: number = 0;
 
 	/**
 	 * Gibt an, ob es sich bei dem Fach um eine Fremdsprache handelt oder nicht.
 	 */
-	public istFremdsprache : boolean = false;
+	public istFremdsprache: boolean = false;
 
 
 	/**
@@ -40,13 +40,13 @@ export class ENMFach extends JavaObject {
 		return 'de.svws_nrw.core.data.enm.ENMFach';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.enm.ENMFach'].includes(name);
 	}
 
 	public static class = new Class<ENMFach>('de.svws_nrw.core.data.enm.ENMFach');
 
-	public static transpilerFromJSON(json : string): ENMFach {
+	public static transpilerFromJSON(json: string): ENMFach {
 		const obj = JSON.parse(json) as Partial<ENMFach>;
 		const result = new ENMFach();
 		if (obj.id === undefined)
@@ -67,7 +67,7 @@ export class ENMFach extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : ENMFach) : string {
+	public static transpilerToJSON(obj: ENMFach): string {
 		let result = '{';
 		result += '"id" : ' + obj.id.toString() + ',';
 		result += '"kuerzel" : ' + JSON.stringify(obj.kuerzel) + ',';
@@ -79,7 +79,7 @@ export class ENMFach extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<ENMFach>) : string {
+	public static transpilerToJSONPatch(obj: Partial<ENMFach>): string {
 		let result = '{';
 		if (obj.id !== undefined) {
 			result += '"id" : ' + obj.id.toString() + ',';
@@ -103,6 +103,6 @@ export class ENMFach extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_enm_ENMFach(obj : unknown) : ENMFach {
+export function cast_de_svws_nrw_core_data_enm_ENMFach(obj: unknown): ENMFach {
 	return obj as ENMFach;
 }

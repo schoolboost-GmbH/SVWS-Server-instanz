@@ -17,6 +17,7 @@ import com.sun.source.tree.ClassTree;
 import com.sun.source.tree.ExpressionTree;
 import com.sun.source.tree.IdentifierTree;
 import com.sun.source.tree.LiteralTree;
+import com.sun.source.tree.MemberReferenceTree;
 import com.sun.source.tree.MemberSelectTree;
 import com.sun.source.tree.NewArrayTree;
 import com.sun.source.tree.ParameterizedTypeTree;
@@ -305,6 +306,8 @@ public abstract class ExpressionType implements Tree {
 			if (resultType != null)
 				return resultType;
 		}
+		if (type instanceof final MemberReferenceTree mrt)
+			return getExpressionType(transpiler, transpiler.getTypeMirror(mrt));
 		throw new TranspilerException("Transpiler Error: Unexpected expression type " + type.toString() + " of kind " + type.getKind() + ".");
 	}
 

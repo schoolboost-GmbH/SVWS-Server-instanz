@@ -6,18 +6,18 @@ export class StundenplanInputSimpleKopplung extends JavaObject {
 	/**
 	 * Die ID der Kopplung.
 	 */
-	public id : number = 0;
+	public id: number = 0;
 
 	/**
 	 * Das Kürzel des Kopplung. Beispielsweise '5RE' oder 'Q1LK1'.
 	 */
-	public kuerzel : string = "";
+	public kuerzel: string = "";
 
 	/**
 	 * Die Anzahl der Stunden der Kopplung. Muss mindestens so groß sein, wie der Kurs mit den meisten Stunden in
 	 *  dieser Kopplung.
 	 */
-	public stunden : number = -1;
+	public stunden: number = -1;
 
 
 	/**
@@ -31,13 +31,13 @@ export class StundenplanInputSimpleKopplung extends JavaObject {
 		return 'de.svws_nrw.core.data.stundenplanblockung.StundenplanInputSimpleKopplung';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.stundenplanblockung.StundenplanInputSimpleKopplung'].includes(name);
 	}
 
 	public static class = new Class<StundenplanInputSimpleKopplung>('de.svws_nrw.core.data.stundenplanblockung.StundenplanInputSimpleKopplung');
 
-	public static transpilerFromJSON(json : string): StundenplanInputSimpleKopplung {
+	public static transpilerFromJSON(json: string): StundenplanInputSimpleKopplung {
 		const obj = JSON.parse(json) as Partial<StundenplanInputSimpleKopplung>;
 		const result = new StundenplanInputSimpleKopplung();
 		if (obj.id === undefined)
@@ -52,7 +52,7 @@ export class StundenplanInputSimpleKopplung extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : StundenplanInputSimpleKopplung) : string {
+	public static transpilerToJSON(obj: StundenplanInputSimpleKopplung): string {
 		let result = '{';
 		result += '"id" : ' + obj.id.toString() + ',';
 		result += '"kuerzel" : ' + JSON.stringify(obj.kuerzel) + ',';
@@ -62,7 +62,7 @@ export class StundenplanInputSimpleKopplung extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<StundenplanInputSimpleKopplung>) : string {
+	public static transpilerToJSONPatch(obj: Partial<StundenplanInputSimpleKopplung>): string {
 		let result = '{';
 		if (obj.id !== undefined) {
 			result += '"id" : ' + obj.id.toString() + ',';
@@ -80,6 +80,6 @@ export class StundenplanInputSimpleKopplung extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_stundenplanblockung_StundenplanInputSimpleKopplung(obj : unknown) : StundenplanInputSimpleKopplung {
+export function cast_de_svws_nrw_core_data_stundenplanblockung_StundenplanInputSimpleKopplung(obj: unknown): StundenplanInputSimpleKopplung {
 	return obj as StundenplanInputSimpleKopplung;
 }

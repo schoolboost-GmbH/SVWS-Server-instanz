@@ -11,27 +11,27 @@ export class BenutzerKompetenzKatalogEintrag extends JavaObject {
 	/**
 	 * Die ID der Benutzerkompetenz.
 	 */
-	public id : number = -1;
+	public id: number = -1;
 
 	/**
 	 * Die ID der zugehörigen Benutzerkompetenzgruppe.
 	 */
-	public gruppe_id : number = -1;
+	public gruppe_id: number = -1;
 
 	/**
 	 * Die Bezeichnung der Benutzerkompetenz.
 	 */
-	public bezeichnung : string = "";
+	public bezeichnung: string = "";
 
 	/**
 	 * Eine kurze Erläuterung zu der Kompetenz, die im Tooltip angezeigt werden kann.
 	 */
-	public tooltip : string = "";
+	public tooltip: string = "";
 
 	/**
 	 * Die Schulformen.
 	 */
-	public nurSchulformen : List<string> | null = null;
+	public nurSchulformen: List<string> | null = null;
 
 
 	/**
@@ -48,21 +48,21 @@ export class BenutzerKompetenzKatalogEintrag extends JavaObject {
 	 * @param schulformen    die Schulformen, bei denen die Kompetenz zulässig ist.
 	 * @param tooltip        der Tooltip
 	 */
-	public constructor(id : number, gruppe : BenutzerKompetenzGruppe, bezeichnung : string, schulformen : List<Schulform> | null, tooltip : string);
+	public constructor(id: number, gruppe: BenutzerKompetenzGruppe, bezeichnung: string, schulformen: List<Schulform> | null, tooltip: string);
 
 	/**
 	 * Implementation for method overloads of 'constructor'
 	 */
-	public constructor(__param0? : number, __param1? : BenutzerKompetenzGruppe, __param2? : string, __param3? : List<Schulform> | null, __param4? : string) {
+	public constructor(__param0?: number, __param1?: BenutzerKompetenzGruppe, __param2?: string, __param3?: List<Schulform> | null, __param4?: string) {
 		super();
 		if ((__param0 === undefined) && (__param1 === undefined) && (__param2 === undefined) && (__param3 === undefined) && (__param4 === undefined)) {
 			// empty method body
 		} else if (((__param0 !== undefined) && typeof __param0 === "number") && ((__param1 !== undefined) && ((__param1 instanceof JavaObject) && (__param1.isTranspiledInstanceOf('de.svws_nrw.core.types.benutzer.BenutzerKompetenzGruppe')))) && ((__param2 !== undefined) && (typeof __param2 === "string")) && ((__param3 !== undefined) && ((__param3 instanceof JavaObject) && (__param3.isTranspiledInstanceOf('java.util.List'))) || (__param3 === null)) && ((__param4 !== undefined) && (typeof __param4 === "string"))) {
-			const id : number = __param0 as number;
-			const gruppe : BenutzerKompetenzGruppe = cast_de_svws_nrw_core_types_benutzer_BenutzerKompetenzGruppe(__param1);
-			const bezeichnung : string = __param2;
-			const schulformen : List<Schulform> | null = cast_java_util_List(__param3);
-			const tooltip : string = __param4;
+			const id: number = __param0 as number;
+			const gruppe: BenutzerKompetenzGruppe = cast_de_svws_nrw_core_types_benutzer_BenutzerKompetenzGruppe(__param1);
+			const bezeichnung: string = __param2;
+			const schulformen: List<Schulform> | null = cast_java_util_List(__param3);
+			const tooltip: string = __param4;
 			this.id = id;
 			this.bezeichnung = bezeichnung;
 			this.tooltip = tooltip;
@@ -79,13 +79,13 @@ export class BenutzerKompetenzKatalogEintrag extends JavaObject {
 		return 'de.svws_nrw.core.data.benutzer.BenutzerKompetenzKatalogEintrag';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.benutzer.BenutzerKompetenzKatalogEintrag'].includes(name);
 	}
 
 	public static class = new Class<BenutzerKompetenzKatalogEintrag>('de.svws_nrw.core.data.benutzer.BenutzerKompetenzKatalogEintrag');
 
-	public static transpilerFromJSON(json : string): BenutzerKompetenzKatalogEintrag {
+	public static transpilerFromJSON(json: string): BenutzerKompetenzKatalogEintrag {
 		const obj = JSON.parse(json) as Partial<BenutzerKompetenzKatalogEintrag>;
 		const result = new BenutzerKompetenzKatalogEintrag();
 		if (obj.id === undefined)
@@ -111,7 +111,7 @@ export class BenutzerKompetenzKatalogEintrag extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : BenutzerKompetenzKatalogEintrag) : string {
+	public static transpilerToJSON(obj: BenutzerKompetenzKatalogEintrag): string {
 		let result = '{';
 		result += '"id" : ' + obj.id.toString() + ',';
 		result += '"gruppe_id" : ' + obj.gruppe_id.toString() + ',';
@@ -134,7 +134,7 @@ export class BenutzerKompetenzKatalogEintrag extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<BenutzerKompetenzKatalogEintrag>) : string {
+	public static transpilerToJSONPatch(obj: Partial<BenutzerKompetenzKatalogEintrag>): string {
 		let result = '{';
 		if (obj.id !== undefined) {
 			result += '"id" : ' + obj.id.toString() + ',';
@@ -169,6 +169,6 @@ export class BenutzerKompetenzKatalogEintrag extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_benutzer_BenutzerKompetenzKatalogEintrag(obj : unknown) : BenutzerKompetenzKatalogEintrag {
+export function cast_de_svws_nrw_core_data_benutzer_BenutzerKompetenzKatalogEintrag(obj: unknown): BenutzerKompetenzKatalogEintrag {
 	return obj as BenutzerKompetenzKatalogEintrag;
 }

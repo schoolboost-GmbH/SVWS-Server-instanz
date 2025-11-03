@@ -13,15 +13,15 @@ export class KlausurblockungSchienenAlgorithmusGreedy4 extends KlausurblockungSc
 	 * @param pRandom   Ein {@link Random}-Objekt zur Steuerung des Zufalls über einen Anfangs-Seed.
 	 * @param pDynDaten Die aktuellen Blockungsdaten.
 	 */
-	public constructor(pRandom : Random, pDynDaten : KlausurblockungSchienenDynDaten) {
+	public constructor(pRandom: Random, pDynDaten: KlausurblockungSchienenDynDaten) {
 		super(pRandom, pDynDaten);
 	}
 
-	public toString() : string {
+	public toString(): string {
 		return "DSatur";
 	}
 
-	public berechne(pZeitEnde : number) : void {
+	public berechne(pZeitEnde: number): void {
 		this._dynDaten.aktion_EntferneAlles_KlausurenMitDenMeistenNachbarsfarben_SchienenZufaellig();
 		this._dynDaten.aktionZustand1Speichern();
 		while (System.currentTimeMillis() < pZeitEnde) {
@@ -39,7 +39,7 @@ export class KlausurblockungSchienenAlgorithmusGreedy4 extends KlausurblockungSc
 		return 'de.svws_nrw.core.utils.gost.klausurplanung.KlausurblockungSchienenAlgorithmusGreedy4';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.utils.gost.klausurplanung.KlausurblockungSchienenAlgorithmusGreedy4', 'de.svws_nrw.core.utils.gost.klausurplanung.KlausurblockungSchienenAlgorithmusAbstract'].includes(name);
 	}
 
@@ -47,6 +47,6 @@ export class KlausurblockungSchienenAlgorithmusGreedy4 extends KlausurblockungSc
 
 }
 
-export function cast_de_svws_nrw_core_utils_gost_klausurplanung_KlausurblockungSchienenAlgorithmusGreedy4(obj : unknown) : KlausurblockungSchienenAlgorithmusGreedy4 {
+export function cast_de_svws_nrw_core_utils_gost_klausurplanung_KlausurblockungSchienenAlgorithmusGreedy4(obj: unknown): KlausurblockungSchienenAlgorithmusGreedy4 {
 	return obj as KlausurblockungSchienenAlgorithmusGreedy4;
 }

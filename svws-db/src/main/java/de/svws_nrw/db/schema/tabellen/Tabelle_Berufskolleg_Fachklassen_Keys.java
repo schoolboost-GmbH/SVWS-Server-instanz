@@ -16,17 +16,17 @@ import de.svws_nrw.json.JsonDaten;
 public class Tabelle_Berufskolleg_Fachklassen_Keys extends SchemaTabelle {
 
 	/** Die Definition der Tabellenspalte FachklassenIndex */
-	public SchemaTabelleSpalte col_FachklassenIndex = add("FachklassenIndex", SchemaDatentypen.INT, true)
+	public final SchemaTabelleSpalte col_FachklassenIndex = add("FachklassenIndex", SchemaDatentypen.INT, true)
 			.setNotNull()
 			.setJavaComment("Der Index, welcher der Fachklasse für die Zuordnung zum Bildungsgang zugeordnet ist");
 
 	/** Die Definition der Tabellenspalte Schluessel */
-	public SchemaTabelleSpalte col_Schluessel = add("Schluessel", SchemaDatentypen.VARCHAR, true).setDatenlaenge(3)
+	public final SchemaTabelleSpalte col_Schluessel = add("Schluessel", SchemaDatentypen.VARCHAR, true).setDatenlaenge(3)
 			.setNotNull()
 			.setJavaComment("Der erste Teil des Fachklassenschlüssels (FKS, dreistellig) ");
 
 	/** Die Definition der Tabellenspalte Schluessel2 */
-	public SchemaTabelleSpalte col_Schluessel2 = add("Schluessel2", SchemaDatentypen.VARCHAR, true).setDatenlaenge(2)
+	public final SchemaTabelleSpalte col_Schluessel2 = add("Schluessel2", SchemaDatentypen.VARCHAR, true).setDatenlaenge(2)
 			.setNotNull()
 			.setJavaComment("Der zweite Teil des Fachklassenschlüssels (AP, zweistellig)");
 

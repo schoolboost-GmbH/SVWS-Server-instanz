@@ -6,42 +6,42 @@ export class SchuldateiOrganisationseinheitMerkmal extends SchuldateiEintrag {
 	/**
 	 * Die Schulnummer.
 	 */
-	public schulnummer : string = "";
+	public schulnummer: string = "";
 
 	/**
 	 * Die ID des Merkmal-Eintrags.
 	 */
-	public id : number | null = null;
+	public id: number | null = null;
 
 	/**
 	 * Die Nummer der Liegenschaft der Organisationseinheit
 	 */
-	public liegenschaft : number = 0;
+	public liegenschaft: number = 0;
 
 	/**
 	 * Das Merkmal
 	 */
-	public merkmal : number = 0;
+	public merkmal: number = 0;
 
 	/**
 	 * Die Merkmalsgruppe (hat zur Zeit 25.07.24 keine Bedeutung)
 	 */
-	public merkmalgruppe : number = 0;
+	public merkmalgruppe: number = 0;
 
 	/**
 	 * Das Attribut
 	 */
-	public attribut : number = 0;
+	public attribut: number = 0;
 
 	/**
 	 * Die Attributsgruppe (hat zur Zeit 25.07.24 keine Bedeutung)
 	 */
-	public attributgruppe : number = 0;
+	public attributgruppe: number = 0;
 
 	/**
 	 * Der Wert
 	 */
-	public wert : string = "";
+	public wert: string = "";
 
 
 	/**
@@ -55,13 +55,13 @@ export class SchuldateiOrganisationseinheitMerkmal extends SchuldateiEintrag {
 		return 'de.svws_nrw.schulen.v1.data.SchuldateiOrganisationseinheitMerkmal';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.schulen.v1.data.SchuldateiOrganisationseinheitMerkmal', 'de.svws_nrw.schulen.v1.data.SchuldateiEintrag'].includes(name);
 	}
 
 	public static class = new Class<SchuldateiOrganisationseinheitMerkmal>('de.svws_nrw.schulen.v1.data.SchuldateiOrganisationseinheitMerkmal');
 
-	public static transpilerFromJSON(json : string): SchuldateiOrganisationseinheitMerkmal {
+	public static transpilerFromJSON(json: string): SchuldateiOrganisationseinheitMerkmal {
 		const obj = JSON.parse(json) as Partial<SchuldateiOrganisationseinheitMerkmal>;
 		const result = new SchuldateiOrganisationseinheitMerkmal();
 		result.gueltigab = (obj.gueltigab === undefined) ? null : obj.gueltigab === null ? null : obj.gueltigab;
@@ -92,7 +92,7 @@ export class SchuldateiOrganisationseinheitMerkmal extends SchuldateiEintrag {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : SchuldateiOrganisationseinheitMerkmal) : string {
+	public static transpilerToJSON(obj: SchuldateiOrganisationseinheitMerkmal): string {
 		let result = '{';
 		result += '"gueltigab" : ' + ((obj.gueltigab === null) ? 'null' : JSON.stringify(obj.gueltigab)) + ',';
 		result += '"gueltigbis" : ' + ((obj.gueltigbis === null) ? 'null' : JSON.stringify(obj.gueltigbis)) + ',';
@@ -110,7 +110,7 @@ export class SchuldateiOrganisationseinheitMerkmal extends SchuldateiEintrag {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<SchuldateiOrganisationseinheitMerkmal>) : string {
+	public static transpilerToJSONPatch(obj: Partial<SchuldateiOrganisationseinheitMerkmal>): string {
 		let result = '{';
 		if (obj.gueltigab !== undefined) {
 			result += '"gueltigab" : ' + ((obj.gueltigab === null) ? 'null' : JSON.stringify(obj.gueltigab)) + ',';
@@ -152,6 +152,6 @@ export class SchuldateiOrganisationseinheitMerkmal extends SchuldateiEintrag {
 
 }
 
-export function cast_de_svws_nrw_schulen_v1_data_SchuldateiOrganisationseinheitMerkmal(obj : unknown) : SchuldateiOrganisationseinheitMerkmal {
+export function cast_de_svws_nrw_schulen_v1_data_SchuldateiOrganisationseinheitMerkmal(obj: unknown): SchuldateiOrganisationseinheitMerkmal {
 	return obj as SchuldateiOrganisationseinheitMerkmal;
 }

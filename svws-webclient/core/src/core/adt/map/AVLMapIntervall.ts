@@ -6,32 +6,32 @@ export class AVLMapIntervall<K> extends JavaObject {
 	/**
 	 *  Ein Dummy-Element für den Schlüsselwert "-Unendlich".
 	 */
-	static readonly _INFINITY_MINUS : unknown | null = new Object();
+	static readonly _INFINITY_MINUS: unknown | null = new Object();
 
 	/**
 	 *  Ein Dummy-Element für den Schlüsselwert "+Unendlich".
 	 */
-	static readonly _INFINITY_PLUS : unknown | null = new Object();
+	static readonly _INFINITY_PLUS: unknown | null = new Object();
 
 	/**
 	 *  Der Anfang des Intervalls.
 	 */
-	readonly from : K;
+	readonly from: K;
 
 	/**
 	 *  Gibt an, ob der Intervall-Anfang inklusive ist.
 	 */
-	readonly fromInc : boolean;
+	readonly fromInc: boolean;
 
 	/**
 	 *  Das Ende des Intervalls.
 	 */
-	readonly to : K;
+	readonly to: K;
 
 	/**
 	 *  Gibt an, ob das Intervall-Ende inklusive ist.
 	 */
-	readonly toInc : boolean;
+	readonly toInc: boolean;
 
 
 	/**
@@ -40,7 +40,7 @@ export class AVLMapIntervall<K> extends JavaObject {
 	 * @param pTo      Das Ende des Intervalls.
 	 * @param pToInc   Gibt an, ob das Intervall-Ende inklusive ist.
 	 */
-	constructor(pFrom : K, pFromInc : boolean, pTo : K, pToInc : boolean) {
+	constructor(pFrom: K, pFromInc: boolean, pTo: K, pToInc: boolean) {
 		super();
 		this.from = pFrom;
 		this.fromInc = pFromInc;
@@ -48,9 +48,9 @@ export class AVLMapIntervall<K> extends JavaObject {
 		this.toInc = pToInc;
 	}
 
-	public toString() : string {
-		const sFrom : string = (this.from === AVLMapIntervall._INFINITY_MINUS) ? "-INF" : ("" + this.from);
-		const sTo : string = (this.to === AVLMapIntervall._INFINITY_PLUS) ? "+INF" : ("" + this.to);
+	public toString(): string {
+		const sFrom: string = (this.from === AVLMapIntervall._INFINITY_MINUS) ? "-INF" : ("" + this.from);
+		const sTo: string = (this.to === AVLMapIntervall._INFINITY_PLUS) ? "+INF" : ("" + this.to);
 		return "[" + sFrom + ", " + this.fromInc + ", " + sTo + ", " + this.toInc + "]";
 	}
 
@@ -58,7 +58,7 @@ export class AVLMapIntervall<K> extends JavaObject {
 		return 'de.svws_nrw.core.adt.map.AVLMapIntervall';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.adt.map.AVLMapIntervall'].includes(name);
 	}
 
@@ -66,6 +66,6 @@ export class AVLMapIntervall<K> extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_adt_map_AVLMapIntervall<K>(obj : unknown) : AVLMapIntervall<K> {
+export function cast_de_svws_nrw_core_adt_map_AVLMapIntervall<K>(obj: unknown): AVLMapIntervall<K> {
 	return obj as AVLMapIntervall<K>;
 }

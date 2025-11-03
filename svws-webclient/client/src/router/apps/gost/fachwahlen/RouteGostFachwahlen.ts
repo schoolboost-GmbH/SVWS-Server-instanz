@@ -1,10 +1,10 @@
 import type { RouteLocationNormalized, RouteLocationRaw, RouteParams } from "vue-router";
 
-import type { DeveloperNotificationException} from "@core";
+import type { DeveloperNotificationException } from "@core";
 import { BenutzerKompetenz, ServerMode } from "@core";
 
 import { RouteNode } from "~/router/RouteNode";
-import { routeGost, type RouteGost} from "~/router/apps/gost/RouteGost";
+import { routeGost, type RouteGost } from "~/router/apps/gost/RouteGost";
 
 import { RouteDataGostFachwahlen } from "~/router/apps/gost/fachwahlen/RouteDataGostFachwahlen";
 
@@ -45,7 +45,7 @@ export class RouteGostFachwahlen extends RouteNode<RouteDataGostFachwahlen, Rout
 		super.text = "Fachwahlen";
 		this.isHidden = (params?: RouteParams) => {
 			return this.checkHidden(params);
-		}
+		};
 		super.children = [
 			routeGostFachwahlenAllgemein,
 			routeGostFachwahlenAbitur,
@@ -65,19 +65,19 @@ export class RouteGostFachwahlen extends RouteNode<RouteDataGostFachwahlen, Rout
 		try {
 			const { abiturjahr } = params !== undefined ? RouteNode.getIntParams(params, ["abiturjahr"]) : { abiturjahr: undefined };
 			if ((abiturjahr === undefined) || (abiturjahr === -1))
-				return { name: routeGost.defaultChild!.name, params: { idSchuljahresabschnitt: routeApp.data.idSchuljahresabschnitt, abiturjahr }};
+				return { name: routeGost.defaultChild!.name, params: { idSchuljahresabschnitt: routeApp.data.idSchuljahresabschnitt, abiturjahr } };
 			return false;
-		} catch(e) {
+		} catch (e) {
 			return routeError.getSimpleErrorRoute(e as DeveloperNotificationException);
 		}
 	}
 
-	public async update(to: RouteNode<any, any>, to_params: RouteParams) : Promise<void | Error | RouteLocationRaw> {
+	public async update(to: RouteNode<any, any>, to_params: RouteParams): Promise<void | Error | RouteLocationRaw> {
 		try {
 			const { abiturjahr } = RouteNode.getIntParams(to_params, ["abiturjahr"]);
 			if (abiturjahr === undefined || abiturjahr === -1) {
-				const [ jahrgang ] = routeGost.data.mapAbiturjahrgaenge.values();
-				return { name: routeGost.defaultChild!.name, params: { idSchuljahresabschnitt: routeApp.data.idSchuljahresabschnitt, abiturjahr: jahrgang.abiturjahr }};
+				const [jahrgang] = routeGost.data.mapAbiturjahrgaenge.values();
+				return { name: routeGost.defaultChild!.name, params: { idSchuljahresabschnitt: routeApp.data.idSchuljahresabschnitt, abiturjahr: jahrgang.abiturjahr } };
 			}
 			await this.data.setEintrag(abiturjahr);
 			if (to.name === this.name)
@@ -93,7 +93,7 @@ export class RouteGostFachwahlen extends RouteNode<RouteDataGostFachwahlen, Rout
 
 	gotoLaufbahnplanung = async (idSchueler: number) => {
 		await RouteManager.doRoute(routeSchuelerLaufbahnplanung.getRoute({ id: idSchueler }));
-	}
+	};
 
 	public getProps(to: RouteLocationNormalized): GostFachwahlenProps {
 		return {

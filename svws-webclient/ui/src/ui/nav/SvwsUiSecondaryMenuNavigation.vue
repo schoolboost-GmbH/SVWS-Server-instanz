@@ -48,13 +48,13 @@
 		}
 	}
 
-	function isCurrent(tab: TabData) : boolean {
+	function isCurrent(tab: TabData): boolean {
 		return (tab.name === props.tabManager().tab.name);
 	}
 
 	async function setTab(tab: TabData) {
 		if (!isCurrent(tab))
-			await props.tabManager().setTab(tab)
+			await props.tabManager().setTab(tab);
 	}
 
 </script>

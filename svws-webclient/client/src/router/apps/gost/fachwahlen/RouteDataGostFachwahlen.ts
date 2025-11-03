@@ -62,7 +62,7 @@ export class RouteDataGostFachwahlen extends RouteData<RouteStateDataGostFachwah
 	}
 
 	public set auswahl(auswahl: { idFach?: number, bereich: string }) {
-		this.setPatchedState({auswahl});
+		this.setPatchedState({ auswahl });
 	}
 
 	public async setEintrag(abiturjahr: number, idFach?: number) {
@@ -86,11 +86,11 @@ export class RouteDataGostFachwahlen extends RouteData<RouteStateDataGostFachwah
 		this.setPatchedDefaultState({ abiturjahr, fachwahlstatistik, fachwahlenManager, mapSchueler, auswahl });
 	}
 
-	doSelect = async (idFach: number | undefined, bereich: string | undefined, halbjahr?: GostHalbjahr) : Promise<void> => {
+	doSelect = async (idFach: number | undefined, bereich: string | undefined, halbjahr?: GostHalbjahr): Promise<void> => {
 		// Setze die Auswahl
 		this.auswahl = { idFach, bereich: bereich ?? 'Fach' };
 		// Ermittle die Route, die aufgrund der Auswahl genutzt werden soll
-		let route : RouteLocationRaw | undefined;
+		let route: RouteLocationRaw | undefined;
 		if (idFach === undefined) {
 			if (bereich === undefined)
 				route = routeGostFachwahlenAllgemein.getRoute();
@@ -119,6 +119,6 @@ export class RouteDataGostFachwahlen extends RouteData<RouteStateDataGostFachwah
 			route = route = routeGostFachwahlenAllgemein.getRoute();
 		// Führe das Routing durch
 		await RouteManager.doRoute(route);
-	}
+	};
 }
 

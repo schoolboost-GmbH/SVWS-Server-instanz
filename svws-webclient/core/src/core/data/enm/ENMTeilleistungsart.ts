@@ -6,22 +6,22 @@ export class ENMTeilleistungsart extends JavaObject {
 	/**
 	 * Die ID der Teilleistungsart (z.B. 42)
 	 */
-	public id : number = 0;
+	public id: number = 0;
 
 	/**
 	 * Die Bezeichnung der Teilleistungsart (z.B. Somi-1)
 	 */
-	public bezeichnung : string | null = null;
+	public bezeichnung: string | null = null;
 
 	/**
 	 * Sortierung der Teilleistungsarten (z.B. 12)
 	 */
-	public sortierung : number | null = null;
+	public sortierung: number | null = null;
 
 	/**
 	 * Die Gewichtung der Teilleistungsart in Bezug auf die Leistungsdaten (z.B. 0,25)
 	 */
-	public gewichtung : number | null = null;
+	public gewichtung: number | null = null;
 
 
 	/**
@@ -35,13 +35,13 @@ export class ENMTeilleistungsart extends JavaObject {
 		return 'de.svws_nrw.core.data.enm.ENMTeilleistungsart';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.enm.ENMTeilleistungsart'].includes(name);
 	}
 
 	public static class = new Class<ENMTeilleistungsart>('de.svws_nrw.core.data.enm.ENMTeilleistungsart');
 
-	public static transpilerFromJSON(json : string): ENMTeilleistungsart {
+	public static transpilerFromJSON(json: string): ENMTeilleistungsart {
 		const obj = JSON.parse(json) as Partial<ENMTeilleistungsart>;
 		const result = new ENMTeilleistungsart();
 		if (obj.id === undefined)
@@ -53,7 +53,7 @@ export class ENMTeilleistungsart extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : ENMTeilleistungsart) : string {
+	public static transpilerToJSON(obj: ENMTeilleistungsart): string {
 		let result = '{';
 		result += '"id" : ' + obj.id.toString() + ',';
 		result += '"bezeichnung" : ' + ((obj.bezeichnung === null) ? 'null' : JSON.stringify(obj.bezeichnung)) + ',';
@@ -64,7 +64,7 @@ export class ENMTeilleistungsart extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<ENMTeilleistungsart>) : string {
+	public static transpilerToJSONPatch(obj: Partial<ENMTeilleistungsart>): string {
 		let result = '{';
 		if (obj.id !== undefined) {
 			result += '"id" : ' + obj.id.toString() + ',';
@@ -85,6 +85,6 @@ export class ENMTeilleistungsart extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_enm_ENMTeilleistungsart(obj : unknown) : ENMTeilleistungsart {
+export function cast_de_svws_nrw_core_data_enm_ENMTeilleistungsart(obj: unknown): ENMTeilleistungsart {
 	return obj as ENMTeilleistungsart;
 }

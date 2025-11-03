@@ -7,22 +7,22 @@ import { RouteNode } from "~/router/RouteNode";
 import { ViewType } from "@ui";
 import { routeKurse, type RouteKurse } from "./RouteKurse";
 import type { KurseGruppenprozesseProps } from "~/components/kurse/gruppenprozesse/SKurseGruppenprozesseProps";
-import {routeKlassen} from "~/router/apps/klassen/RouteKlassen";
+import { routeKlassen } from "~/router/apps/klassen/RouteKlassen";
 
 const SKurseGruppenprozesse = () => import("~/components/kurse/gruppenprozesse/SKurseGruppenprozesse.vue");
 
 export class RouteKurseGruppenprozesse extends RouteNode<any, RouteKurse> {
 
 	public constructor() {
-		super(Schulform.values(), [ BenutzerKompetenz.UNTERRICHTSVERTEILUNG_ANSEHEN ], "kurse.gruppenprozesse", "gruppenprozesse", SKurseGruppenprozesse);
-		super.types = new Set([ ViewType.GRUPPENPROZESSE ]);
+		super(Schulform.values(), [BenutzerKompetenz.UNTERRICHTSVERTEILUNG_ANSEHEN], "kurse.gruppenprozesse", "gruppenprozesse", SKurseGruppenprozesse);
+		super.types = new Set([ViewType.GRUPPENPROZESSE]);
 		super.mode = ServerMode.STABLE;
 		super.propHandler = (route) => this.getProps(route);
 		super.text = "Gruppenprozesse";
 	}
 
-	public addRouteParamsFromState() : RouteParamsRawGeneric {
-		return { id : "" };
+	public addRouteParamsFromState(): RouteParamsRawGeneric {
+		return { id: "" };
 	}
 
 	public getProps(to: RouteLocationNormalized): KurseGruppenprozesseProps {

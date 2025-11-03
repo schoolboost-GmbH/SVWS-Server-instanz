@@ -185,7 +185,7 @@
 		return props.abiturdatenManager().istBewertet(halbjahr);
 	}
 
-	function getTooltipHalbjahr(halbjahr: GostHalbjahr) : string {
+	function getTooltipHalbjahr(halbjahr: GostHalbjahr): string {
 		if (istBewertet(halbjahr)) {
 			const note = props.manager.getNote(props.fach, halbjahr);
 			if (note === null)
@@ -202,7 +202,7 @@
 		if ((fachbelegung === null) || (fachbelegung.abiturFach === null))
 			return "";
 		return fachbelegung.abiturFach.toString();
-	})
+	});
 
 	const wahlen = computed<string[]>(() => {
 		const fachbelegung = props.abiturdatenManager().getFachbelegungByID(props.fach.id);
@@ -233,8 +233,8 @@
 		const fach1 = props.abiturdatenManager().faecher().get(kombi.fachID1);
 		if (fach1 === null)
 			return false;
-		const f1 = props.abiturdatenManager().getFachbelegungByID(fach1.id)
-		const f2 = props.abiturdatenManager().getFachbelegungByID(fachid)
+		const f1 = props.abiturdatenManager().getFachbelegungByID(fach1.id);
+		const f2 = props.abiturdatenManager().getFachbelegungByID(fachid);
 		const kursart1 = GostKursart.fromKuerzel(kombi.kursart1);
 		const kursart2 = GostKursart.fromKuerzel(kombi.kursart2);
 		const bel1 = kursart1
@@ -248,7 +248,7 @@
 		return bel1 !== bel2;
 	}
 
-	function istFachkombiErforderlichHalbjahr(hj: GostHalbjahr) : boolean {
+	function istFachkombiErforderlichHalbjahr(hj: GostHalbjahr): boolean {
 		for (const kombi of props.abiturdatenManager().faecher().getFachkombinationenErforderlich())
 			if (pruefeKombinationErforderlich(props.fach.id, kombi, hj))
 				return true;
@@ -269,8 +269,8 @@
 		const fachID2 = (fachid === kombi.fachID2) ? fachid : kombi.fachID2;
 		const kursart1 = (fachid === kombi.fachID2) ? GostKursart.fromKuerzel(kombi.kursart1) : GostKursart.fromKuerzel(kombi.kursart2);
 		const kursart2 = (fachid === kombi.fachID2) ? GostKursart.fromKuerzel(kombi.kursart2) : GostKursart.fromKuerzel(kombi.kursart1);
-		const fach1 = props.abiturdatenManager().faecher().get(fachID1)
-		const fach2 = props.abiturdatenManager().faecher().get(fachID2)
+		const fach1 = props.abiturdatenManager().faecher().get(fachID1);
+		const fach2 = props.abiturdatenManager().faecher().get(fachID2);
 		if ((fach1 === null) || (fach2 === null))
 			return false;
 		const f1 = props.abiturdatenManager().getFachbelegungByID(fach1.id);
@@ -284,7 +284,7 @@
 		return bel1 && bel2;
 	}
 
-	function istFachkombiVerbotenHalbjahr(hj: GostHalbjahr) : boolean {
+	function istFachkombiVerbotenHalbjahr(hj: GostHalbjahr): boolean {
 		const fachkombis = props.abiturdatenManager().faecher().getFachkombinationenVerboten();
 		for (const kombi of fachkombis)
 			if (pruefeKombinationVerboten(props.fach.id, kombi, hj))

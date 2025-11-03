@@ -15,7 +15,7 @@ export class KursblockungAlgorithmusPermanentKSchuelervorschlagSingle extends Ku
 	 * @param logger  Logger für Benutzerhinweise, Warnungen und Fehler.
 	 * @param input   Die dynamischen Blockungsdaten.
 	 */
-	public constructor(random : Random, logger : Logger, input : GostBlockungsdatenManager) {
+	public constructor(random: Random, logger: Logger, input: GostBlockungsdatenManager) {
 		super(random, logger, input);
 		if (this.dynDaten.gibKurseDieFreiSindAnzahl() === 0)
 			return;
@@ -25,11 +25,11 @@ export class KursblockungAlgorithmusPermanentKSchuelervorschlagSingle extends Ku
 		this.dynDaten.aktionZustandSpeichernK();
 	}
 
-	public toString() : string {
+	public toString(): string {
 		return "KursblockungAlgorithmusPermanentKSchuelervorschlagSingle";
 	}
 
-	public next(zeitEnde : number) : void {
+	public next(zeitEnde: number): void {
 		do {
 			this.verteileKurse();
 		} while (System.currentTimeMillis() < zeitEnde);
@@ -38,10 +38,10 @@ export class KursblockungAlgorithmusPermanentKSchuelervorschlagSingle extends Ku
 	/**
 	 * Ein bestimmer Schüler entscheidet, wie die Kurse neuverteilt werden.
 	 */
-	private verteileKurse() : void {
+	private verteileKurse(): void {
 		do {
 			this.dynDaten.aktionSchuelerAusAllenKursenEntfernen();
-			let kurslagenveraenderung : boolean = this.dynDaten.aktionKurseVerteilenNachSchuelerwunschSingle();
+			let kurslagenveraenderung: boolean = this.dynDaten.aktionKurseVerteilenNachSchuelerwunschSingle();
 			if (!kurslagenveraenderung)
 				this.dynDaten.aktionKursVerteilenEinenZufaelligenFreien();
 			this.dynDaten.aktionSchuelerVerteilenMitGewichtetenBipartitemMatching();
@@ -59,7 +59,7 @@ export class KursblockungAlgorithmusPermanentKSchuelervorschlagSingle extends Ku
 		this.dynDaten.aktionZustandLadenK();
 	}
 
-	public ladeBestMitSchuelerverteilung() : void {
+	public ladeBestMitSchuelerverteilung(): void {
 		this.dynDaten.aktionZustandLadenK();
 	}
 
@@ -67,7 +67,7 @@ export class KursblockungAlgorithmusPermanentKSchuelervorschlagSingle extends Ku
 		return 'de.svws_nrw.core.kursblockung.KursblockungAlgorithmusPermanentKSchuelervorschlagSingle';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.kursblockung.KursblockungAlgorithmusPermanentK', 'de.svws_nrw.core.kursblockung.KursblockungAlgorithmusPermanentKSchuelervorschlagSingle'].includes(name);
 	}
 
@@ -75,6 +75,6 @@ export class KursblockungAlgorithmusPermanentKSchuelervorschlagSingle extends Ku
 
 }
 
-export function cast_de_svws_nrw_core_kursblockung_KursblockungAlgorithmusPermanentKSchuelervorschlagSingle(obj : unknown) : KursblockungAlgorithmusPermanentKSchuelervorschlagSingle {
+export function cast_de_svws_nrw_core_kursblockung_KursblockungAlgorithmusPermanentKSchuelervorschlagSingle(obj: unknown): KursblockungAlgorithmusPermanentKSchuelervorschlagSingle {
 	return obj as KursblockungAlgorithmusPermanentKSchuelervorschlagSingle;
 }

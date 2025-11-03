@@ -15,82 +15,82 @@ export class Stundenplan extends JavaObject {
 	/**
 	 * Die ID des Stundenplans.
 	 */
-	public id : number = -1;
+	public id: number = -1;
 
 	/**
 	 * Die ID des Schuljahresabschnitts des Stundenplans.
 	 */
-	public idSchuljahresabschnitt : number = -1;
+	public idSchuljahresabschnitt: number = -1;
 
 	/**
 	 * Das Schuljahr, in dem der Stundenplan gültig ist.
 	 */
-	public schuljahr : number = -1;
+	public schuljahr: number = -1;
 
 	/**
 	 * Der Abschnitt, in dem der Stundenplan gültig ist.
 	 */
-	public abschnitt : number = -1;
+	public abschnitt: number = -1;
 
 	/**
 	 * Das Datum, ab dem der Stundenplan gültig ist.
 	 */
-	public gueltigAb : string = "";
+	public gueltigAb: string = "";
 
 	/**
 	 * Das Datum, bis wann der Stundenplan gültig ist.
 	 */
-	public gueltigBis : string = "";
+	public gueltigBis: string = "";
 
 	/**
 	 * Gibt an, ob der Stundenplan aktiv ist. An einem Datum kann immer nur ein Stundenplan aktiv sein.
 	 */
-	public aktiv : boolean = false;
+	public aktiv: boolean = false;
 
 	/**
 	 * Die textuelle Beschreibung des Stundenplans.
 	 */
-	public bezeichnungStundenplan : string = "";
+	public bezeichnungStundenplan: string = "";
 
 	/**
 	 * Das Modell für die Wochen des Stundenplans, d.h. ob es sich um einen Stundenplan für jede Woche handelt (0) oder ob es sich um einen unterschiedliche Stundenpläne in Abhängigkeit des Wochentyps handelt - z.B. A-/B-Wochen (2) handelt. Hier wird dann die maximale Anzahl der unterschiedlichen Wochentypen festgelegt. Der Wert 1 ist ungültig!
 	 */
-	public wochenTypModell : number = 0;
+	public wochenTypModell: number = 0;
 
 	/**
 	 * Das Zeitraster des Stundenplans.
 	 */
-	public zeitraster : List<StundenplanZeitraster> = new ArrayList<StundenplanZeitraster>();
+	public zeitraster: List<StundenplanZeitraster> = new ArrayList<StundenplanZeitraster>();
 
 	/**
 	 * Die Liste der Räume, die für den Stundenplan zur Verfügung stehen.
 	 */
-	public raeume : List<StundenplanRaum> = new ArrayList<StundenplanRaum>();
+	public raeume: List<StundenplanRaum> = new ArrayList<StundenplanRaum>();
 
 	/**
 	 * Die Liste der Schienen, die für den Stundenplan angelegt sind.
 	 */
-	public schienen : List<StundenplanSchiene> = new ArrayList<StundenplanSchiene>();
+	public schienen: List<StundenplanSchiene> = new ArrayList<StundenplanSchiene>();
 
 	/**
 	 * Die Liste der Pausenzeiten, bei welchen Aufsichten eingeteilt werden müssen.
 	 */
-	public pausenzeiten : List<StundenplanPausenzeit> = new ArrayList<StundenplanPausenzeit>();
+	public pausenzeiten: List<StundenplanPausenzeit> = new ArrayList<StundenplanPausenzeit>();
 
 	/**
 	 * Die Liste der Aufsichtsbereiche in Pausen, für welche Aufsichten eingeteilt werden müssen.
 	 */
-	public aufsichtsbereiche : List<StundenplanAufsichtsbereich> = new ArrayList<StundenplanAufsichtsbereich>();
+	public aufsichtsbereiche: List<StundenplanAufsichtsbereich> = new ArrayList<StundenplanAufsichtsbereich>();
 
 	/**
 	 * Die Liste der Kalenderwochen-Zuordnungen, sofern unterschiedliche Wochentypen in einer Woche genutzt werden.
 	 */
-	public kalenderwochenZuordnung : List<StundenplanKalenderwochenzuordnung> = new ArrayList<StundenplanKalenderwochenzuordnung>();
+	public kalenderwochenZuordnung: List<StundenplanKalenderwochenzuordnung> = new ArrayList<StundenplanKalenderwochenzuordnung>();
 
 	/**
 	 * Die Liste der Jahrgänge, die für den Stundenplan zur Verfügung stehen.
 	 */
-	public jahrgaenge : List<StundenplanJahrgang> = new ArrayList<StundenplanJahrgang>();
+	public jahrgaenge: List<StundenplanJahrgang> = new ArrayList<StundenplanJahrgang>();
 
 
 	/**
@@ -104,13 +104,13 @@ export class Stundenplan extends JavaObject {
 		return 'de.svws_nrw.core.data.stundenplan.Stundenplan';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.stundenplan.Stundenplan'].includes(name);
 	}
 
 	public static class = new Class<Stundenplan>('de.svws_nrw.core.data.stundenplan.Stundenplan');
 
-	public static transpilerFromJSON(json : string): Stundenplan {
+	public static transpilerFromJSON(json: string): Stundenplan {
 		const obj = JSON.parse(json) as Partial<Stundenplan>;
 		const result = new Stundenplan();
 		if (obj.id === undefined)
@@ -178,7 +178,7 @@ export class Stundenplan extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : Stundenplan) : string {
+	public static transpilerToJSON(obj: Stundenplan): string {
 		let result = '{';
 		result += '"id" : ' + obj.id.toString() + ',';
 		result += '"idSchuljahresabschnitt" : ' + obj.idSchuljahresabschnitt.toString() + ',';
@@ -250,7 +250,7 @@ export class Stundenplan extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<Stundenplan>) : string {
+	public static transpilerToJSONPatch(obj: Partial<Stundenplan>): string {
 		let result = '{';
 		if (obj.id !== undefined) {
 			result += '"id" : ' + obj.id.toString() + ',';
@@ -356,6 +356,6 @@ export class Stundenplan extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_stundenplan_Stundenplan(obj : unknown) : Stundenplan {
+export function cast_de_svws_nrw_core_data_stundenplan_Stundenplan(obj: unknown): Stundenplan {
 	return obj as Stundenplan;
 }

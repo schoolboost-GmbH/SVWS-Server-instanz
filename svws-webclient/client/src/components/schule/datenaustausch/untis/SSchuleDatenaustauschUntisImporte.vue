@@ -206,7 +206,7 @@
 
 	const tmpGPU001 = shallowRef<UntisGPU001Csv | null>(null);
 	const tmpGPU002 = shallowRef<UntisGPU002Csv | null>(null);
-	const wochentypen = ref<string[]>([ '', '', '', '' ]);
+	const wochentypen = ref<string[]>(['', '', '', '']);
 
 	const tmpGPP002 = shallowRef<UntisGPP002Csv | null>(null);
 	const tmpGPU014 = shallowRef<UntisGPU014Csv | null>(null);
@@ -218,12 +218,12 @@
 	function getGueltigAb(ab: Schuljahresabschnitt) {
 		const a = ab.abschnitt;
 		const s = ab.schuljahr;
-		return (a === 1) ? `${s}-08-01` : `${s+1}-02-01`
+		return (a === 1) ? `${s}-08-01` : `${s + 1}-02-01`;
 	}
 
 	function initStundenplanParameter() {
 		gueltigAb.value = getGueltigAb(props.schuljahresabschnitt());
-		bezeichnung.value = `Import ${new Date().toLocaleDateString('de', {day: '2-digit', month: '2-digit', year: 'numeric', timeZone: 'Europe/Berlin', hour: 'numeric', minute: 'numeric'})}`;
+		bezeichnung.value = `Import ${new Date().toLocaleDateString('de', { day: '2-digit', month: '2-digit', year: 'numeric', timeZone: 'Europe/Berlin', hour: 'numeric', minute: 'numeric' })}`;
 		tmpGPU001.value = null;
 		tmpGPU002.value = null;
 		tmpGPP002.value = null;
@@ -235,11 +235,11 @@
 		resultGPU001.value = null;
 	}
 
-	function onSelect(value : GPU): void {
+	function onSelect(value: GPU): void {
 		if ((aktuell.value === value) && (!((aktuell.value === 'stundenplanGPU001') && (bezeichnung.value === ''))))
 			return;
 		aktuell.value = value;
-		if ([ 'stundenplanGPU001', 'stundenplanGPU001002', 'stundenplanGPP002GPU014' ].includes(aktuell.value))
+		if (['stundenplanGPU001', 'stundenplanGPU001002', 'stundenplanGPP002GPU014'].includes(aktuell.value))
 			initStundenplanParameter();
 		status.value = null;
 	}
@@ -269,7 +269,7 @@
 	async function setWochentypBezeichner(wt: number, value: string | null) {
 		if (value === null)
 			return;
-		wochentypen.value[wt-1] = value;
+		wochentypen.value[wt - 1] = value;
 		await updateStundenplanGPU001002();
 	}
 

@@ -256,7 +256,7 @@
 
 	import { computed, ref } from 'vue';
 	import type { ApiStatus } from '~/components/ApiStatus';
-	import type { GostBlockungsdatenManager, GostBlockungsergebnisManager, List , Schueler, GostFach} from "@core";
+	import type { GostBlockungsdatenManager, GostBlockungsergebnisManager, List, Schueler, GostFach } from "@core";
 	import { ArrayList, GostBlockungKurs, GostBlockungRegel, GostBlockungSchiene, GostKursblockungRegelTyp, GostKursart, SetUtils, GostBlockungRegelUpdate, DeveloperNotificationException } from "@core";
 
 	const props = defineProps<{
@@ -478,7 +478,7 @@
 	const hatRegel = computed<boolean>({
 		get: () => !props.getDatenmanager().regelGetListeOfTyp(GostKursblockungRegelTyp.LEHRKRAEFTE_BEACHTEN).isEmpty(),
 		set: (erstellen) => void props.regelnUpdate(props.getErgebnismanager().regelupdateCreate_10_LEHRKRAEFTE_BEACHTEN(erstellen)),
-	})
+	});
 
 	async function regelEntfernen(r: GostBlockungRegel) {
 		if (props.apiStatus.pending)
@@ -564,7 +564,8 @@
 					return props.getErgebnismanager().regelupdateCreate_18_FACH_KURSART_MAXIMALE_ANZAHL_PRO_SCHIENE(p.get(0), p.get(1), p.get(2));
 				default:
 					throw new DeveloperNotificationException('Es kann keine leere Regel erstellt werden');
-			}})();
+			}
+		})();
 		await props.regelnUpdate(update);
 		regel.value = undefined;
 	}
@@ -575,7 +576,7 @@
 		const kuerzel = fach.kuerzelAnzeige ?? "??";
 		const kursart = (kurs.kursart > 0) ? GostKursart.fromID(kurs.kursart).kuerzel : 'kursart-fehlt';
 		const suffix = (kurs.suffix.length > 0) ? "-" + kurs.suffix : "";
-		return `${kuerzel}-${kursart}${kurs.nummer.toString()}${suffix}`
+		return `${kuerzel}-${kursart}${kurs.nummer.toString()}${suffix}`;
 	}
 
 	function getKursFromId(kurse: Iterable<GostBlockungKurs>, kursId: number): GostBlockungKurs {
@@ -599,9 +600,9 @@
 		},
 		set: (value) => {
 			if (regel.value !== undefined)
-				regel.value.parameter.set(1, value)
+				regel.value.parameter.set(1, value);
 		},
-	})
+	});
 
 	const regelParameterMaxAnzahlProSchiene = computed<number>({
 		get: () => {
@@ -611,7 +612,7 @@
 		},
 		set: (value) => {
 			if (regel.value !== undefined)
-				regel.value.parameter.set(2, value)
+				regel.value.parameter.set(2, value);
 		},
 	});
 
@@ -628,21 +629,21 @@
 			return new GostBlockungSchiene();
 		},
 		set: (value) => regel.parameter.set(parameter, value.nummer),
-	})
+	});
 
 	const regelParameterKurs = (regel: GostBlockungRegel, parameter: number) => computed<GostBlockungKurs>({
 		get: () => props.getDatenmanager().kursGet(regel.parameter.get(parameter)),
 		set: (value) => regel.parameter.set(parameter, value.id),
-	})
+	});
 
 	const regelParameterSchueler = (regel: GostBlockungRegel, parameter: number) => computed<Schueler>({
 		get: () => props.getDatenmanager().schuelerGet(regel.parameter.get(parameter)),
 		set: (value) => regel.parameter.set(parameter, value.id),
-	})
+	});
 
 	const regelParameterFach = (regel: GostBlockungRegel, parameter: number) => computed<GostFach>({
 		get: () => props.getDatenmanager().faecherManager().getOrException(regel.parameter.get(parameter)),
 		set: (value) => regel.parameter.set(parameter, value.id),
-	})
+	});
 
 </script>

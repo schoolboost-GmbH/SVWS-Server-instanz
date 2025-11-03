@@ -54,7 +54,7 @@
 						</template>
 					</svws-ui-tooltip>
 					<svws-ui-tooltip position="bottom" v-if="ServerMode.DEV.checkServerMode(serverMode) && hatKompetenzAendern">
-						<svws-ui-button :disabled="activeViewType === ViewType.HINZUFUEGEN" type="icon" @click="startCreationMode"
+						<svws-ui-button :disabled="((activeViewType === ViewType.HINZUFUEGEN) || (activeViewType === ViewType.NEU))" type="icon" @click="startCreationMode"
 							:has-focus="rowsFiltered.length === 0">
 							<span class="icon i-ri-add-line" />
 						</svws-ui-button>
@@ -89,7 +89,7 @@
 
 <script setup lang="ts">
 
-	import { computed, ref, shallowRef, watch } from "vue";
+	import { computed, ref, shallowRef } from "vue";
 	import type { JahrgangsDaten, KlassenDaten, KursDaten, SchuelerListeEintrag, Schulgliederung } from "@core";
 	import { BenutzerKompetenz, SchuelerStatus, ServerMode } from "@core";
 	import type { SortByAndOrder } from "@ui";
@@ -137,7 +137,7 @@
 			if (pair.b !== null)
 				map.set(pair.a === "klassen" ? "idKlasse" : pair.a, pair.b);
 		return map;
-	})
+	});
 
 	const sortByAndOrder = computed<SortByAndOrder | undefined>({
 		get: () => {
@@ -156,7 +156,7 @@
 			props.manager().orderUpdate(key, value.order);
 			void props.setFilter();
 		},
-	})
+	});
 
 	const cols = computed(() => {
 		const arr = [{ key: "idKlasse", label: "Klasse", sortable: true, span: 1 },
@@ -166,12 +166,7 @@
 		// if (primarstufe.value)
 		// 	arr.push({ key: "epJahre", label: "Jg", sortable: false, span: 1 });
 		return arr;
-	})
-
-	watch(() => props.manager().filtered(), async (neu) => {
-		if (props.manager().hasDaten() && !neu.contains(props.manager().auswahl()))
-			await props.gotoDefaultView(neu.isEmpty() ? null : neu.get(0).id);
-	})
+	});
 
 	const rowsFiltered = computed<SchuelerListeEintrag[]>(() => {
 		const arr = [];
@@ -261,7 +256,7 @@
 			return true;
 		return (!(props.manager().schuelerstatus.auswahlSize() === 2
 			&& props.manager().schuelerstatus.auswahlHas(SchuelerStatus.AKTIV)
-			&& props.manager().schuelerstatus.auswahlHas(SchuelerStatus.EXTERN)))
+			&& props.manager().schuelerstatus.auswahlHas(SchuelerStatus.EXTERN)));
 	}
 
 	function textKurs(kurs: KursDaten): string {

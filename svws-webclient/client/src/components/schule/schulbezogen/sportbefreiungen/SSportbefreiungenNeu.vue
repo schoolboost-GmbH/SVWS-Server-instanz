@@ -33,13 +33,13 @@
 	import { isUniqueInList, mandatoryInputIsValid } from "~/util/validation/Validation";
 
 	const props = defineProps<SportbefreiungenNeuProps>();
-	const data = ref<Sportbefreiung>(Object.assign(new Sportbefreiung(), { istSichtbar: true, sortierung: 1 }))
+	const data = ref<Sportbefreiung>(Object.assign(new Sportbefreiung(), { istSichtbar: true, sortierung: 1 }));
 	const isLoading = ref<boolean>(false);
 	const hatKompetenzAdd = computed<boolean>(() => props.benutzerKompetenzen.has(BenutzerKompetenz.KATALOG_EINTRAEGE_AENDERN));
 	const disabled = computed(() => !hatKompetenzAdd.value);
 	const bezeichnungIsTooLong = computed(() => (data.value.bezeichnung?.length ?? 0) > 50);
 
-	function fieldIsValid(field: keyof Sportbefreiung | null) : (v: string | null) => boolean {
+	function fieldIsValid(field: keyof Sportbefreiung | null): (v: string | null) => boolean {
 		return (v: string | null) => {
 			switch (field) {
 				case 'bezeichnung':
@@ -47,7 +47,7 @@
 				default:
 					return true;
 			}
-		}
+		};
 	}
 
 	const formIsValid = computed(() => {
@@ -56,8 +56,8 @@
 			const validateField = fieldIsValid(field as keyof Sportbefreiung);
 			const fieldValue = data.value[field as keyof Sportbefreiung] as string | null;
 			return validateField(fieldValue);
-		})
-	})
+		});
+	});
 
 	function bezeichnungIsValid(value: string | null) {
 		if (!mandatoryInputIsValid(value, 50))
@@ -82,11 +82,11 @@
 		await props.goToDefaultView(null);
 	}
 
-	watch(() => data.value, async() => {
+	watch(() => data.value, async () => {
 		if (isLoading.value)
 			return;
 
 		props.checkpoint.active = true;
-	}, {immediate: false, deep: true});
+	}, { immediate: false, deep: true });
 
 </script>

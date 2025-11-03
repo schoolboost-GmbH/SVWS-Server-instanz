@@ -5,7 +5,7 @@ export interface StundenplanZeitrasterPausenzeitProps {
 	stundenplanManager: () => StundenplanManager;
 	patchPausenzeit: (daten: Partial<StundenplanPausenzeit>, id: number) => Promise<void>;
 	removePausenzeiten: (pausenzeiten: Iterable<StundenplanPausenzeit>) => Promise<void>;
-	patchZeitraster: (zeitraster : Iterable<StundenplanZeitraster>) => Promise<void>;
+	patchZeitraster: (zeitraster: Iterable<StundenplanZeitraster>) => Promise<void>;
 	addZeitraster: (zeitraster: Iterable<StundenplanZeitraster>) => Promise<void>;
 	removeZeitraster: (zeitraster: Iterable<StundenplanZeitraster>) => Promise<void>;
 	importZeitraster: undefined | (() => Promise<void>);

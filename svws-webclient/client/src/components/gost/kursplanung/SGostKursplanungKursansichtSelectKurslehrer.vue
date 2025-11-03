@@ -44,7 +44,7 @@
 				result.add(lehrer);
 		}
 		return result;
-	})
+	});
 
 	const lehrer_liste = computed<LehrerListeEintrag[]>(() => {
 		const vergeben = new Set();
@@ -55,7 +55,7 @@
 			if ((!vergeben.has(l.id)) && (l.istSichtbar))
 				result.push(l);
 		return result;
-	})
+	});
 
 	async function update_kurslehrer(lehrer: unknown, lehrer_alt?: LehrerListeEintrag) {
 		if ((lehrer === undefined) && lehrer_alt) {

@@ -10,52 +10,52 @@ export class GostLeistungen extends JavaObject {
 	/**
 	 * Die ID des Schülers, dessen Leistungen in diesem Objekt gespeichert sind.
 	 */
-	public id : number = 0;
+	public id: number = 0;
 
 	/**
 	 * Das aktuelle Schuljahr, welches dem Schüler zugeordnet ist.
 	 */
-	public aktuellesSchuljahr : number | null = null;
+	public aktuellesSchuljahr: number | null = null;
 
 	/**
 	 * Der Jahrgang, in dem sich der Schüler in dem aktuellen Schuljahr befindet.
 	 */
-	public aktuellerJahrgang : string | null = null;
+	public aktuellerJahrgang: string | null = null;
 
 	/**
 	 * Die Sprachbelegungen (Sprachenfolge) und die Sprachprüfungen des Schülers
 	 */
-	public sprachendaten : Sprachendaten | null = null;
+	public sprachendaten: Sprachendaten | null = null;
 
 	/**
 	 * Das einstellige Kürzel der bilingualen Sprache, sofern der Schüler einem bilingualen Bildungsgang angehört.
 	 */
-	public bilingualeSprache : string | null = null;
+	public bilingualeSprache: string | null = null;
 
 	/**
 	 * Das Thema des Projektkurses, sofern der Schüler einen Projektkurs belegt hatte.
 	 */
-	public projektkursThema : string | null = null;
+	public projektkursThema: string | null = null;
 
 	/**
 	 * Das Kürzel des ersten Leitfaches des Projektkurses, sofern der Schüler einen Projektkurs belegt hatte.
 	 */
-	public projektkursLeitfach1Kuerzel : string | null = null;
+	public projektkursLeitfach1Kuerzel: string | null = null;
 
 	/**
 	 * Das Kürzel eines zweiten Leitfaches des Projektkurses, sofern der Schüler einen Projektkurs belegt hatte und der Projektkurs ein zweites Leitfach hat.
 	 */
-	public projektkursLeitfach2Kuerzel : string | null = null;
+	public projektkursLeitfach2Kuerzel: string | null = null;
 
 	/**
 	 * Gibt für die einzelnen {@link GostHalbjahr}-Werte an, ob gewertete Leistungsdaten vorhanden sind.
 	 */
-	public readonly bewertetesHalbjahr : Array<boolean> = Array(6).fill(false);
+	public readonly bewertetesHalbjahr: Array<boolean> = Array(6).fill(false);
 
 	/**
 	 * Die einzelnen Fachwahlen des Schülers.
 	 */
-	public readonly faecher : List<GostLeistungenFachwahl> = new ArrayList<GostLeistungenFachwahl>();
+	public readonly faecher: List<GostLeistungenFachwahl> = new ArrayList<GostLeistungenFachwahl>();
 
 
 	/**
@@ -69,13 +69,13 @@ export class GostLeistungen extends JavaObject {
 		return 'de.svws_nrw.core.data.gost.GostLeistungen';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.gost.GostLeistungen'].includes(name);
 	}
 
 	public static class = new Class<GostLeistungen>('de.svws_nrw.core.data.gost.GostLeistungen');
 
-	public static transpilerFromJSON(json : string): GostLeistungen {
+	public static transpilerFromJSON(json: string): GostLeistungen {
 		const obj = JSON.parse(json) as Partial<GostLeistungen>;
 		const result = new GostLeistungen();
 		if (obj.id === undefined)
@@ -101,7 +101,7 @@ export class GostLeistungen extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : GostLeistungen) : string {
+	public static transpilerToJSON(obj: GostLeistungen): string {
 		let result = '{';
 		result += '"id" : ' + obj.id.toString() + ',';
 		result += '"aktuellesSchuljahr" : ' + ((obj.aktuellesSchuljahr === null) ? 'null' : obj.aktuellesSchuljahr.toString()) + ',';
@@ -132,7 +132,7 @@ export class GostLeistungen extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<GostLeistungen>) : string {
+	public static transpilerToJSONPatch(obj: Partial<GostLeistungen>): string {
 		let result = '{';
 		if (obj.id !== undefined) {
 			result += '"id" : ' + obj.id.toString() + ',';
@@ -186,6 +186,6 @@ export class GostLeistungen extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_gost_GostLeistungen(obj : unknown) : GostLeistungen {
+export function cast_de_svws_nrw_core_data_gost_GostLeistungen(obj: unknown): GostLeistungen {
 	return obj as GostLeistungen;
 }

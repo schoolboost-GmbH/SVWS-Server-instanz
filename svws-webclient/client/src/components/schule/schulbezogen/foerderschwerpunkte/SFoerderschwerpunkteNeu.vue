@@ -36,13 +36,13 @@
 
 <script setup lang="ts">
 
-	import { computed, ref, watch} from "vue";
+	import { computed, ref, watch } from "vue";
 	import type { FoerderschwerpunkteNeuProps } from "~/components/schule/schulbezogen/foerderschwerpunkte/SFoerderschwerpunkteNeuProps";
 	import { BenutzerKompetenz, Foerderschwerpunkt, FoerderschwerpunktEintrag, JavaString } from "@core";
 	import { isUniqueInList, mandatoryInputIsValid } from "~/util/validation/Validation";
 
 	const props = defineProps<FoerderschwerpunkteNeuProps>();
-	const data = ref<FoerderschwerpunktEintrag>(Object.assign( new FoerderschwerpunktEintrag(), { istSichtbar: true }));
+	const data = ref<FoerderschwerpunktEintrag>(Object.assign(new FoerderschwerpunktEintrag(), { istSichtbar: true }));
 	const isLoading = ref<boolean>(false);
 	const hatKompetenzAdd = computed<boolean>(() => props.benutzerKompetenzen.has(BenutzerKompetenz.KATALOG_EINTRAEGE_AENDERN));
 	const disabled = computed(() => !hatKompetenzAdd.value);
@@ -50,9 +50,9 @@
 	const selectedFoerderschwerpunkt = computed({
 		get: () => Foerderschwerpunkt.data().getWertBySchluessel(data.value.kuerzelStatistik),
 		set: (v: Foerderschwerpunkt | null) => data.value.kuerzelStatistik = v?.daten(props.manager().getSchuljahr())?.schluessel ?? "",
-	})
+	});
 
-	function fieldIsValid(field: keyof FoerderschwerpunktEintrag | null) : (v: string | null) => boolean {
+	function fieldIsValid(field: keyof FoerderschwerpunktEintrag | null): (v: string | null) => boolean {
 		return (v: string | null) => {
 			switch (field) {
 				case 'kuerzelStatistik':
@@ -62,7 +62,7 @@
 				default:
 					return true;
 			}
-		}
+		};
 	}
 
 	function foerderschwerpunktIsValid() {
@@ -73,7 +73,7 @@
 		if (!mandatoryInputIsValid(value, 50))
 			return false;
 
-		return isUniqueInList(value ,props.manager().liste.list(), "kuerzel");
+		return isUniqueInList(value, props.manager().liste.list(), "kuerzel");
 	}
 
 
@@ -83,8 +83,8 @@
 			const validateField = fieldIsValid(field as keyof FoerderschwerpunktEintrag);
 			const fieldValue = data.value[field as keyof FoerderschwerpunktEintrag] as string | null;
 			return validateField(fieldValue);
-		})
-	})
+		});
+	});
 
 	async function add() {
 		if (isLoading.value)
@@ -102,11 +102,11 @@
 		await props.goToDefaultView(null);
 	}
 
-	watch(() => data.value, async() => {
+	watch(() => data.value, async () => {
 		if (isLoading.value)
 			return;
 
 		props.checkpoint.active = true;
-	}, {immediate: false, deep: true});
+	}, { immediate: false, deep: true });
 
 </script>

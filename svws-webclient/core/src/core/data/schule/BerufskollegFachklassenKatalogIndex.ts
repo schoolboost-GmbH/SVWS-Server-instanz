@@ -9,17 +9,17 @@ export class BerufskollegFachklassenKatalogIndex extends JavaObject {
 	/**
 	 * Der Index für die Verknüpfung von einem Bildungsgang des Berufskollegs mit Fachklassen
 	 */
-	public index : number = 0;
+	public index: number = 0;
 
 	/**
 	 * Die Version des Teilkatalogs. Diese wird bei Änderungen am Katalog erhöht.
 	 */
-	public version : number = -1;
+	public version: number = -1;
 
 	/**
 	 * Die Einträge des Katalogs.
 	 */
-	public fachklassen : List<BerufskollegFachklassenKatalogEintrag> = new ArrayList<BerufskollegFachklassenKatalogEintrag>();
+	public fachklassen: List<BerufskollegFachklassenKatalogEintrag> = new ArrayList<BerufskollegFachklassenKatalogEintrag>();
 
 
 	/**
@@ -33,13 +33,13 @@ export class BerufskollegFachklassenKatalogIndex extends JavaObject {
 		return 'de.svws_nrw.core.data.schule.BerufskollegFachklassenKatalogIndex';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.schule.BerufskollegFachklassenKatalogIndex'].includes(name);
 	}
 
 	public static class = new Class<BerufskollegFachklassenKatalogIndex>('de.svws_nrw.core.data.schule.BerufskollegFachklassenKatalogIndex');
 
-	public static transpilerFromJSON(json : string): BerufskollegFachklassenKatalogIndex {
+	public static transpilerFromJSON(json: string): BerufskollegFachklassenKatalogIndex {
 		const obj = JSON.parse(json) as Partial<BerufskollegFachklassenKatalogIndex>;
 		const result = new BerufskollegFachklassenKatalogIndex();
 		if (obj.index === undefined)
@@ -56,7 +56,7 @@ export class BerufskollegFachklassenKatalogIndex extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : BerufskollegFachklassenKatalogIndex) : string {
+	public static transpilerToJSON(obj: BerufskollegFachklassenKatalogIndex): string {
 		let result = '{';
 		result += '"index" : ' + obj.index.toString() + ',';
 		result += '"version" : ' + obj.version.toString() + ',';
@@ -73,7 +73,7 @@ export class BerufskollegFachklassenKatalogIndex extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<BerufskollegFachklassenKatalogIndex>) : string {
+	public static transpilerToJSONPatch(obj: Partial<BerufskollegFachklassenKatalogIndex>): string {
 		let result = '{';
 		if (obj.index !== undefined) {
 			result += '"index" : ' + obj.index.toString() + ',';
@@ -98,6 +98,6 @@ export class BerufskollegFachklassenKatalogIndex extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_schule_BerufskollegFachklassenKatalogIndex(obj : unknown) : BerufskollegFachklassenKatalogIndex {
+export function cast_de_svws_nrw_core_data_schule_BerufskollegFachklassenKatalogIndex(obj: unknown): BerufskollegFachklassenKatalogIndex {
 	return obj as BerufskollegFachklassenKatalogIndex;
 }

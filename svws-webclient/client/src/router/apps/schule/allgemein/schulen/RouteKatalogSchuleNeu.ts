@@ -14,8 +14,8 @@ const SKatalogSchuleNeu = () => import("~/components/schule/allgemein/schulen/SK
 export class RouteKatalogSchuleNeu extends RouteNode<any, RouteKatalogSchulen> {
 
 	public constructor() {
-		super(Schulform.values(), [ BenutzerKompetenz.KATALOG_EINTRAEGE_AENDERN ], "schule.schulen.neu", "neu", SKatalogSchuleNeu);
-		super.types = new Set([ ViewType.HINZUFUEGEN ]);
+		super(Schulform.values(), [BenutzerKompetenz.KATALOG_EINTRAEGE_AENDERN], "schule.schulen.neu", "neu", SKatalogSchuleNeu);
+		super.types = new Set([ViewType.HINZUFUEGEN]);
 		super.mode = ServerMode.DEV;
 		super.propHandler = (route) => this.getProps(route);
 		super.text = "Schule Neu";

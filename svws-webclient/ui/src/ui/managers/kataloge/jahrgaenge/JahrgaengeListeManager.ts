@@ -21,17 +21,17 @@ export class JahrgaengeListeManager extends AuswahlManager<number, JahrgangsDate
 	/**
 	 * Funktionen zum Mappen von Auswahl- bzw. Daten-Objekten auf deren ID-Typ
 	 */
-	private static readonly _jahrgangToId : JavaFunction<JahrgangsDaten, number> = { apply : (j: JahrgangsDaten) => j.id };
+	private static readonly _jahrgangToId: JavaFunction<JahrgangsDaten, number> = { apply: (j: JahrgangsDaten) => j.id };
 
 	/**
 	 * Set der IDs von Jahrgängen, die in anderen Datenbanktabellen referenziert werden.
 	 */
-	private readonly idsReferencedJahrgaenge : HashSet<number> = new HashSet<number>();
+	private readonly idsReferencedJahrgaenge: HashSet<number> = new HashSet<number>();
 	/**
 	 * Ein Default-Comparator für den Vergleich von Jahrgängen in Jahrgangslisten.
 	 */
-	public static readonly comparator : Comparator<JahrgangsDaten> = { compare : (a: JahrgangsDaten, b: JahrgangsDaten) => {
-		let cmp : number = a.sortierung - b.sortierung;
+	public static readonly comparator: Comparator<JahrgangsDaten> = { compare: (a: JahrgangsDaten, b: JahrgangsDaten) => {
+		let cmp: number = a.sortierung - b.sortierung;
 		if (cmp !== 0)
 			return cmp;
 		if ((a.kuerzel !== null) && (b.kuerzel !== null)) {
@@ -52,7 +52,7 @@ export class JahrgaengeListeManager extends AuswahlManager<number, JahrgangsDate
 	 * @param schulform     die Schulform der Schule
 	 * @param jahrgaenge       die Liste der Jahrgänge
 	 */
-	public constructor(schuljahresabschnitt : number, schuljahresabschnittSchule : number, schuljahresabschnitte : List<Schuljahresabschnitt>, schulform : Schulform | null, jahrgaenge : List<JahrgangsDaten>) {
+	public constructor(schuljahresabschnitt: number, schuljahresabschnittSchule: number, schuljahresabschnitte: List<Schuljahresabschnitt>, schulform: Schulform | null, jahrgaenge: List<JahrgangsDaten>) {
 		super(schuljahresabschnitt, schuljahresabschnittSchule, schuljahresabschnitte, schulform, jahrgaenge, JahrgaengeListeManager.comparator, JahrgaengeListeManager._jahrgangToId, JahrgaengeListeManager._jahrgangToId, Arrays.asList());
 	}
 
@@ -62,8 +62,8 @@ export class JahrgaengeListeManager extends AuswahlManager<number, JahrgangsDate
 	 * @param eintrag   der Auswahl-Eintrag
 	 * @param daten     das neue Daten-Objekt zu der Auswahl
 	 */
-	protected onSetDaten(eintrag : JahrgangsDaten, daten : JahrgangsDaten) : boolean {
-		let updateEintrag : boolean = false;
+	protected onSetDaten(eintrag: JahrgangsDaten, daten: JahrgangsDaten): boolean {
+		let updateEintrag: boolean = false;
 		if (!JavaObject.equalsTranspiler(daten.kuerzel, (eintrag.kuerzel))) {
 			eintrag.kuerzel = daten.kuerzel;
 			updateEintrag = true;
@@ -87,11 +87,11 @@ export class JahrgaengeListeManager extends AuswahlManager<number, JahrgangsDate
 	 *
 	 * @return das Ergebnis des Vergleichs (-1 kleine, 0 gleich und 1 größer)
 	 */
-	protected compareAuswahl(a : JahrgangsDaten, b : JahrgangsDaten) : number {
+	protected compareAuswahl(a: JahrgangsDaten, b: JahrgangsDaten): number {
 		for (const criteria of this._order) {
-			const field : string | null = criteria.a;
-			const asc : boolean = (criteria.b === null) || criteria.b;
-			let cmp : number = 0;
+			const field: string | null = criteria.a;
+			const asc: boolean = (criteria.b === null) || criteria.b;
+			let cmp: number = 0;
 			if (JavaObject.equalsTranspiler("kuerzel", (field))) {
 				if ((a.kuerzel === null) && (b.kuerzel !== null)) {
 					cmp = -1;
@@ -106,7 +106,7 @@ export class JahrgaengeListeManager extends AuswahlManager<number, JahrgangsDate
 				if (JavaObject.equalsTranspiler("bezeichnung", (field))) {
 					cmp = JavaString.compareTo(a.bezeichnung, b.bezeichnung);
 				} else
-					throw new DeveloperNotificationException("Fehler bei der Sortierung. Das Sortierkriterium wird vom Manager nicht unterstützt.")
+					throw new DeveloperNotificationException("Fehler bei der Sortierung. Das Sortierkriterium wird vom Manager nicht unterstützt.");
 			if (cmp === 0)
 				continue;
 			return asc ? cmp : -cmp;
@@ -118,18 +118,18 @@ export class JahrgaengeListeManager extends AuswahlManager<number, JahrgangsDate
 	 *
 	 * @return Das Set mit IDs von Jahrgängen, die in anderen Datenbanktabellen referenziert werden
 	 */
-	public getIdsReferencedJahrgaenge() : JavaSet<number> {
+	public getIdsReferencedJahrgaenge(): JavaSet<number> {
 		return this.idsReferencedJahrgaenge;
 	}
 
-	protected onMehrfachauswahlChanged() : void {
+	protected onMehrfachauswahlChanged(): void {
 		this.idsReferencedJahrgaenge.clear();
 		for (const l of this.liste.auswahl())
 			if ((l.referenziertInAnderenTabellen !== null) && l.referenziertInAnderenTabellen)
 				this.idsReferencedJahrgaenge.add(l.id);
 	}
 
-	protected checkFilter(eintrag : JahrgangsDaten) : boolean {
+	protected checkFilter(eintrag: JahrgangsDaten): boolean {
 		return true;
 	}
 
@@ -137,7 +137,7 @@ export class JahrgaengeListeManager extends AuswahlManager<number, JahrgangsDate
 		return 'de.svws_nrw.core.utils.kataloge.jahrgaenge.JahrgaengeListeManager';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.utils.AuswahlManager', 'de.svws_nrw.core.utils.kataloge.jahrgaenge.JahrgaengeListeManager'].includes(name);
 	}
 
@@ -145,6 +145,6 @@ export class JahrgaengeListeManager extends AuswahlManager<number, JahrgangsDate
 
 }
 
-export function cast_de_svws_nrw_core_utils_kataloge_jahrgaenge_JahrgaengeListeManager(obj : unknown) : JahrgaengeListeManager {
+export function cast_de_svws_nrw_core_utils_kataloge_jahrgaenge_JahrgaengeListeManager(obj: unknown): JahrgaengeListeManager {
 	return obj as JahrgaengeListeManager;
 }

@@ -1,9 +1,9 @@
 import { defineConfig } from "vite";
 import Vue from "@vitejs/plugin-vue";
 import Components from "unplugin-vue-components/vite";
-import Markdown from 'unplugin-vue-markdown/vite'
+import Markdown from 'unplugin-vue-markdown/vite';
 import { resolve } from "node:path";
-import tailwindcss from '@tailwindcss/vite'
+import tailwindcss from '@tailwindcss/vite';
 
 export default defineConfig({
 	server: {

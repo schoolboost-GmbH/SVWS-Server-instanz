@@ -47,7 +47,7 @@
 						<svws-ui-radio-option value="large" v-model="fontSize" name="fontSize" label="Größer" @click="updateFontSize('large')" />
 					</svws-ui-radio-group>
 				</div>
-				<ui-color-mode v-if="mode !== ServerMode.STABLE" mode="radio" auto />
+				<ui-color-mode mode="radio" auto />
 			</div>
 		</svws-ui-content-card>
 	</div>
@@ -74,8 +74,8 @@
 
 	const smtpPassword = computed<string>({
 		get: () => _smtpPassword.value,
-		set: (passwordSMTP) => void props.patchBenutzerEMailDaten({passwordSMTP}),
-	})
+		set: (passwordSMTP) => void props.patchBenutzerEMailDaten({ passwordSMTP }),
+	});
 
 	watch(() => props.benutzerEMailDaten(), async () => await decryptSMTPPassword());
 
@@ -106,7 +106,7 @@
 			}
 			const encoded = await props.aes.decryptBase64(password);
 			_smtpPassword.value = new TextDecoder().decode(encoded);
-		} catch(e) {
+		} catch (e) {
 			_smtpPassword.value = "";
 		}
 	}

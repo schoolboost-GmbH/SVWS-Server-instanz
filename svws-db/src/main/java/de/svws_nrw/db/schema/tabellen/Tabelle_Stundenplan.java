@@ -16,42 +16,42 @@ import de.svws_nrw.db.schema.SchemaTabelleSpalte;
 public class Tabelle_Stundenplan extends SchemaTabelle {
 
 	/** Die Definition der Tabellenspalte ID */
-	public SchemaTabelleSpalte col_ID = add("ID", SchemaDatentypen.BIGINT, true)
+	public final SchemaTabelleSpalte col_ID = add("ID", SchemaDatentypen.BIGINT, true)
 			.setNotNull()
 			.setJavaComment("Die ID des Stundenplans");
 
 	/** Die Definition der Tabellenspalte Schuljahresabschnitts_ID */
-	public SchemaTabelleSpalte col_Schuljahresabschnitts_ID = add("Schuljahresabschnitts_ID", SchemaDatentypen.BIGINT, false)
+	public final SchemaTabelleSpalte col_Schuljahresabschnitts_ID = add("Schuljahresabschnitts_ID", SchemaDatentypen.BIGINT, false)
 			.setNotNull()
 			.setJavaComment("Die ID des Schuljahresabschnittes des Stundenplans als Fremdschlüssel auf die Tabelle Schuljahresabschnitte");
 
 	/** Die Definition der Tabellenspalte Beginn */
-	public SchemaTabelleSpalte col_Beginn = add("Beginn", SchemaDatentypen.DATE, false)
+	public final SchemaTabelleSpalte col_Beginn = add("Beginn", SchemaDatentypen.DATE, false)
 			.setDefault("1899-01-01")
 			.setNotNull()
 			.setConverter(DatumConverter.class)
 			.setJavaComment("Das Datum, ab dem der Stundenplan gültig ist");
 
 	/** Die Definition der Tabellenspalte Ende */
-	public SchemaTabelleSpalte col_Ende = add("Ende", SchemaDatentypen.DATE, false)
+	public final SchemaTabelleSpalte col_Ende = add("Ende", SchemaDatentypen.DATE, false)
 			.setConverter(DatumConverter.class)
 			.setJavaComment("Das Datum, bis wann der Stundenplan gültig ist - null, wenn kein Ende innerhalb des Abschnitts festgelegt wurde"
 					+ " (letzter Stundenplan im Abschnitt)");
 
 	/** Die Definition der Tabellenspalte Aktiv */
-	public SchemaTabelleSpalte col_Aktiv = add("Aktiv", SchemaDatentypen.BOOLEAN, false)
+	public final SchemaTabelleSpalte col_Aktiv = add("Aktiv", SchemaDatentypen.BOOLEAN, false)
 			.setDefault("0")
 			.setNotNull()
 			.setJavaComment("Der Aktiv-Status des Stundenplans - an einem Datum darf nur ein Stundenplan aktiv sein")
 			.setRevision(SchemaRevisionen.REV_38);
 
 	/** Die Definition der Tabellenspalte Beschreibung */
-	public SchemaTabelleSpalte col_Beschreibung = add("Beschreibung", SchemaDatentypen.VARCHAR, false).setDatenlaenge(1000)
+	public final SchemaTabelleSpalte col_Beschreibung = add("Beschreibung", SchemaDatentypen.VARCHAR, false).setDatenlaenge(1000)
 			.setNotNull()
 			.setJavaComment("Eine Beschreibung / Kommentar zu diesem Stundenplan");
 
 	/** Die Definition der Tabellenspalte WochentypModell */
-	public SchemaTabelleSpalte col_WochentypModell = add("WochentypModell", SchemaDatentypen.INT, false)
+	public final SchemaTabelleSpalte col_WochentypModell = add("WochentypModell", SchemaDatentypen.INT, false)
 			.setDefault("0")
 			.setNotNull()
 			.setJavaComment("Gibt das Modell für die Wochen an, d.h. ob es sich um einen Stundenplan für jede Woche handelt (0) oder ob es sich um einen"
@@ -59,7 +59,7 @@ public class Tabelle_Stundenplan extends SchemaTabelle {
 
 
 	/** Die Definition des Fremdschlüssels Stundenplan_Schuljahreabschnitt_FK */
-	public SchemaTabelleFremdschluessel fk_Stundenplan_Schuljahreabschnitt_FK = addForeignKey(
+	public final SchemaTabelleFremdschluessel fk_Stundenplan_Schuljahreabschnitt_FK = addForeignKey(
 			"Stundenplan_Schuljahreabschnitt_FK",
 			/* OnUpdate: */ SchemaFremdschluesselAktionen.CASCADE,
 			/* OnDelete: */ SchemaFremdschluesselAktionen.CASCADE,

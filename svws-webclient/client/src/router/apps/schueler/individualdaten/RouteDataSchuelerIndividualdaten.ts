@@ -1,5 +1,5 @@
 import { Schulform } from "@core";
-import type { FoerderschwerpunktEintrag, ReligionEintrag, Fahrschuelerart, SchulEintrag, SchulformKatalogEintrag, TelefonArt ,Haltestelle } from "@core";
+import type { FoerderschwerpunktEintrag, ReligionEintrag, Fahrschuelerart, SchulEintrag, SchulformKatalogEintrag, TelefonArt, Haltestelle } from "@core";
 import { api } from "~/router/Api";
 import { RouteData, type RouteStateInterface } from "~/router/RouteData";
 import { routeSchueler } from "~/router/apps/schueler/RouteSchueler";
@@ -66,7 +66,7 @@ export class RouteDataSchuelerIndividualdaten extends RouteData<RouteStateDataSc
 
 	public async ladeListe() {
 		// Lade den Katalog der Fahrschülerarten
-		const fahrschuelerarten = await api.server.getFahrschuelerarten(api.schema)
+		const fahrschuelerarten = await api.server.getFahrschuelerarten(api.schema);
 		const mapFahrschuelerarten = new Map();
 		for (const fa of fahrschuelerarten)
 			mapFahrschuelerarten.set(fa.id, fa);
@@ -81,7 +81,7 @@ export class RouteDataSchuelerIndividualdaten extends RouteData<RouteStateDataSc
 		for (const h of haltestellen)
 			mapHaltestellen.set(h.id, h);
 		// Lade den Katalog der Religionen
-		const religionen = await api.server.getReligionen(api.schema)
+		const religionen = await api.server.getReligionen(api.schema);
 		const mapReligionen = new Map();
 		for (const r of religionen)
 			mapReligionen.set(r.id, r);
@@ -101,7 +101,7 @@ export class RouteDataSchuelerIndividualdaten extends RouteData<RouteStateDataSc
 			if (sf === api.schulform)
 				mapSchulen.set(schule.schulnummerStatistik, schule);
 		}
-		this.setPatchedDefaultState({ mapFahrschuelerarten, mapFoerderschwerpunkte, mapHaltestellen, mapReligionen, mapSchulen, mapTelefonArten })
+		this.setPatchedDefaultState({ mapFahrschuelerarten, mapFoerderschwerpunkte, mapHaltestellen, mapReligionen, mapSchulen, mapTelefonArten });
 	}
 
 }

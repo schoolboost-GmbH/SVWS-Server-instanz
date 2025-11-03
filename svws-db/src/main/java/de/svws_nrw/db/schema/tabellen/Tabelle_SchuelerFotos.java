@@ -15,28 +15,28 @@ import de.svws_nrw.db.schema.SchemaTabelleSpalte;
 public class Tabelle_SchuelerFotos extends SchemaTabelle {
 
 	/** Die Definition der Tabellenspalte Schueler_ID */
-	public SchemaTabelleSpalte col_Schueler_ID = add("Schueler_ID", SchemaDatentypen.BIGINT, true)
+	public final SchemaTabelleSpalte col_Schueler_ID = add("Schueler_ID", SchemaDatentypen.BIGINT, true)
 			.setNotNull()
 			.setJavaComment("SchülerID zum Foto");
 
 	/** Die Definition der Tabellenspalte Foto */
-	public SchemaTabelleSpalte col_Foto = add("Foto", SchemaDatentypen.LONGBLOB, false)
+	public final SchemaTabelleSpalte col_Foto = add("Foto", SchemaDatentypen.LONGBLOB, false)
 			.setVeraltet(SchemaRevisionen.REV_1)
 			.setJavaComment("Schülerfoto im binär-Format");
 
 	/** Die Definition der Tabellenspalte FotoBase64 */
-	public SchemaTabelleSpalte col_FotoBase64 = add("FotoBase64", SchemaDatentypen.TEXT, false)
+	public final SchemaTabelleSpalte col_FotoBase64 = add("FotoBase64", SchemaDatentypen.TEXT, false)
 			.setJavaComment("Schülerfoto im Base64-Format");
 
 	/** Die Definition der Tabellenspalte SchulnrEigner */
-	public SchemaTabelleSpalte col_SchulnrEigner = add("SchulnrEigner", SchemaDatentypen.INT, false)
+	public final SchemaTabelleSpalte col_SchulnrEigner = add("SchulnrEigner", SchemaDatentypen.INT, false)
 			.setVeraltet(SchemaRevisionen.REV_1)
 			.setJavaComment("Die Schulnummer zu welcher der Datensatz gehört – wird benötigt, wenn mehrere Schulen in einem Schema der Datenbank"
 					+ " gespeichert werden");
 
 
 	/** Die Definition des Fremdschlüssels SchuelerFotos_Schueler_FK */
-	public SchemaTabelleFremdschluessel fk_SchuelerFotos_Schueler_FK = addForeignKey(
+	public final SchemaTabelleFremdschluessel fk_SchuelerFotos_Schueler_FK = addForeignKey(
 			"SchuelerFotos_Schueler_FK",
 			/* OnUpdate: */ SchemaFremdschluesselAktionen.CASCADE,
 			/* OnDelete: */ SchemaFremdschluesselAktionen.CASCADE,

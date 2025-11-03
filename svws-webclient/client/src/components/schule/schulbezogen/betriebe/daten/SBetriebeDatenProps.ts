@@ -1,8 +1,8 @@
-import type {BenutzerKompetenz, BetriebAnsprechpartner, BetriebStammdaten, KatalogEintrag, OrtKatalogEintrag} from "@core";
+import type { BenutzerKompetenz, BetriebAnsprechpartner, BetriebStammdaten, KatalogEintrag, OrtKatalogEintrag } from "@core";
 
 export interface BetriebeDatenProps {
-	patch: (data : Partial<BetriebStammdaten>) => Promise<void>;
-	patchBetriebAnpsrechpartner: (data : Partial<BetriebAnsprechpartner>, id: number) => Promise<void>;
+	patch: (data: Partial<BetriebStammdaten>) => Promise<void>;
+	patchBetriebAnpsrechpartner: (data: Partial<BetriebAnsprechpartner>, id: number) => Promise<void>;
 	addBetriebAnsprechpartner: (data: BetriebAnsprechpartner) => Promise<void>;
 	removeBetriebAnsprechpartner: (data: BetriebAnsprechpartner[]) => Promise<void>;
 	daten: BetriebStammdaten;

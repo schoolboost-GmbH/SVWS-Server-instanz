@@ -25,7 +25,7 @@
 	import type { ButtonType } from '../../types';
 	import { onMounted, ref } from "vue";
 
-	const addButton = ref<HTMLButtonElement|null>(null);
+	const addButton = ref<HTMLButtonElement | null>(null);
 
 	const props = withDefaults(defineProps<{
 		type?: ButtonType;
@@ -33,7 +33,7 @@
 		size?: 'small' | 'normal' | 'big';
 		autofocus?: boolean;
 		filterButton?: boolean;
-	}>(),{
+	}>(), {
 		type: 'primary',
 		disabled: false,
 		size: 'normal',
@@ -45,7 +45,7 @@
 	onMounted(() => setAutofocus());
 
 	function setAutofocus() {
-		if(props.autofocus && (addButton.value !== null))
+		if (props.autofocus && (addButton.value !== null))
 			addButton.value.focus();
 	}
 

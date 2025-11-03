@@ -58,8 +58,8 @@
 	import { isUniqueInList, mandatoryInputIsValid, optionalInputIsValid } from "~/util/validation/Validation";
 
 	const props = defineProps<SchuleJahrgangNeuProps>();
-	const data = ref<JahrgangsDaten>(Object.assign(new JahrgangsDaten(), { istSichtbar: true, sortierung: 1, anzahlRestabschnitte: 0 }))
-	const folgejahrgaenge = computed<JahrgangsDaten[]>(() => [...props.manager().liste.list()].filter((j : JahrgangsDaten) => j.kuerzelStatistik !== data.value.kuerzelStatistik));
+	const data = ref<JahrgangsDaten>(Object.assign(new JahrgangsDaten(), { istSichtbar: true, sortierung: 1, anzahlRestabschnitte: 0 }));
+	const folgejahrgaenge = computed<JahrgangsDaten[]>(() => [...props.manager().liste.list()].filter((j: JahrgangsDaten) => j.kuerzelStatistik !== data.value.kuerzelStatistik));
 	const isLoading = ref<boolean>(false);
 	const hatKompetenzAdd = computed<boolean>(() => props.benutzerKompetenzen.has(BenutzerKompetenz.KATALOG_EINTRAEGE_AENDERN));
 	const disabled = computed(() => !hatKompetenzAdd.value);
@@ -69,7 +69,7 @@
 			return false;
 
 		return data.value.kuerzel.length > 20;
-	})
+	});
 
 	const schulgliederung = computed<Schulgliederung | null>({
 		get: () => {
@@ -84,7 +84,7 @@
 			if (kuerzel !== undefined)
 				data.value.kuerzelSchulgliederung = kuerzel;
 		},
-	})
+	});
 
 	const statistikJahrgang = computed<Jahrgaenge | null>({
 		get: () => {
@@ -94,7 +94,7 @@
 		set: (value: Jahrgaenge | null) => {
 			data.value.kuerzelStatistik = value?.daten(props.schuljahr)?.kuerzel ?? null;
 		},
-	})
+	});
 
 	const folgejahrgang = computed<JahrgangsDaten | null>({
 		get: () => {
@@ -103,10 +103,10 @@
 		set: (value: JahrgangsDaten | null) => {
 			data.value.idFolgejahrgang = value?.id ?? null;
 		},
-	})
+	});
 
 	// --- Validierung ---
-	function fieldIsValid(field: keyof JahrgangsDaten | null) : (v: string | number | null) => boolean {
+	function fieldIsValid(field: keyof JahrgangsDaten | null): (v: string | number | null) => boolean {
 		return (v: string | number | null) => {
 			switch (field) {
 				case 'kuerzel':
@@ -128,10 +128,10 @@
 				default:
 					return true;
 			}
-		}
+		};
 	}
 
-	function kuerzelIsValid (kuerzel: string | null): boolean {
+	function kuerzelIsValid(kuerzel: string | null): boolean {
 		if (!mandatoryInputIsValid(kuerzel, 20))
 			return false;
 
@@ -183,8 +183,8 @@
 			const validateField = fieldIsValid(field as keyof JahrgangsDaten);
 			const fieldValue = data.value[field as keyof JahrgangsDaten] as string | null;
 			return validateField(fieldValue);
-		})
-	})
+		});
+	});
 
 	// --- Bezeichnungen ---
 	function textSchulgliederung(schulgliederung: Schulgliederung): string {
@@ -208,7 +208,7 @@
 		if (jahrgang.kuerzel === null)
 			return jahrgang.bezeichnung;
 		return jahrgang.kuerzel + ' : ' + jahrgang.bezeichnung;
-	}
+	};
 
 	// --- util ---
 	async function add() {
@@ -229,9 +229,9 @@
 
 	watch(() => data.value.kuerzelStatistik, () => {
 		data.value.idFolgejahrgang = null;
-	})
+	});
 
-	watch(() => data.value, async() => {
+	watch(() => data.value, async () => {
 		if (isLoading.value)
 			return;
 

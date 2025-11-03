@@ -118,14 +118,83 @@ public enum KAOAAnschlussoptionen implements CoreType<KAOAAnschlussoptionenKatal
 	/** KAoA-Anschlussoption: Verbleib unbekannt - andere Gründe */
 	UNBE,
 
-	/** KAoA-Anschlussoption: Noch kein Anschluss */
+	/** KAoA-Anschlussoption: Kontakt besteht - noch kein Anschluss (Grund bitte unter Anmerkungen angeben) */
 	NOKEAN,
 
 	/** KAoA-Anschlussoption: Duales Studium (inkl. Beamtenausbildung im gehobenen Dienst) */
 	DUASTUD,
 
 	/** KAoA-Anschlussoption: Hochschulstudium */
-	STUD;
+	STUD,
+
+	/** KAoA-Anschlussoption: Wiederholung oder Verbleib an der Schule im zieldifferenten Bildungsgang des Gemeinsamen Lernens */
+	WIED,
+
+	/** KAoA-Anschlussoption: Berufspraxisstufe einer Förderschule */
+	BEF,
+
+	/** KAoA-Anschlussoption: Berufskolleg - Einjährige Ausbildungsvorbereitung in Vollzeit (AV-VZ) - Anlage A */
+	AVVZ,
+
+	/** KAoA-Anschlussoption: Berufskolleg - Einjährige Berufsfachschule 1 (BFS1) - Anlage B */
+	BFSIB,
+
+	/** KAoA-Anschlussoption: Berufskolleg - Einjährige Berufsfachschule 2 (BFS2) - Anlage B */
+	BFSIIB,
+
+	/** KAoA-Anschlussoption: Duale Berufsausbildung im Betrieb und an der Berufsschule am Berufskolleg */
+	DUALBB,
+
+	/** KAoA-Anschlussoption: Fachpraktikerausbildung/Werkerausbildung  Betriebliche Ausbildung in gesondert geregelten Berufen für Jugendliche mit Behinderung */
+	FACHWERK,
+
+	/** KAoA-Anschlussoption: Beamtenlaufbahn einfacher Dienst */
+	BAED,
+
+	/** KAoA-Anschlussoption: Beamtenlaufbahn mittlerer Dienst */
+	BAMD,
+
+	/** KAoA-Anschlussoption: Beamtenlaufbahn gehobener Dienst */
+	BAGD,
+
+	/** KAoA-Anschlussoption: Schulische Ausbildung in Pflegeberufen und Gesundheitsberufen */
+	SCHUPGA,
+
+	/** KAoA-Anschlussoption: Berufskolleg - 2-jährige vollzeitschulische Ausbildung (Sozialassistenz, Kinderpflege, Assistenz für Ernährung und Versorgung) an der Berufsfachschule Anlage B */
+	BKAUSZW,
+
+	/** KAoA-Anschlussoption: Berufskolleg  Assistentenausbildung 3-jährig vollzeitschulisch (verkürzt 2-jährig) an der Berufsfachschule Anlage C oder am Beruflichen Gymnasium */
+	BKAUSDR,
+
+	/** KAoA-Anschlussoption: Einstiegsqualifizierung (EQ */
+	EINQUA,
+
+	/** KAoA-Anschlussoption: Berufsvorbereitende Bildungsmaßnahme (BvB), auch rehaspezifisch */
+	BVBR,
+
+	/** KAoA-Anschlussoption: Werkstattjahr (Berufsvorbereitende Bildungsmaßnahmen mit produktionsorientiertem Ansatz und Aktivierungshilfen für Jüngere mit produktionsorientiertem Ansatz */
+	WSJ,
+
+	/** KAoA-Anschlussoption: Abendrealschule oder Weiterbildungsträger wie z. B. VHS zum Nachholen des Schulabschlusses */
+	ABEND,
+
+	/** KAoA-Anschlussoption: Freiwilligendienste, Freiwilliger Wehrdienst/Laufbahn Bundeswehr und ähnliche Anschlussoptionen (siehe Glossar) */
+	FREIBUND,
+
+	/** KAoA-Anschlussoption: Selbstständige/r Unternehmer/in */
+	SU,
+
+	/** KAoA-Anschlussoption: Sonstige Ausbildung bzw. berufliche Qualifizierung, die nicht den aufgeführten Anschlüssen zuzuordnen ist  (Ausbildung bitte unter Anmerkungen angeben) */
+	AUSSON,
+
+	/** KAoA-Anschlussoption: Elternzeit */
+	ELTERN,
+
+	/** KAoA-Anschlussoption: Verbleib zu Hause - Elternentscheidung nach Vollzeitschulpflicht bei einer Mehrfach- oder Schwerstmehrfachbehinderung */
+	HAUS,
+
+	/** KAoA-Anschlussoption: Verbleib unbekannt - andere Gründe (bitte unter Anmerkungen angeben */
+	VERUN;
 
 	/* ----- Die nachfolgenden Attribute werden nicht initialisiert und werden als Cache verwendet, um z.B. den Schuljahres-bezogenen Zugriff zu cachen ----- */
 

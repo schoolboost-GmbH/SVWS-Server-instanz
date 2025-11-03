@@ -6,47 +6,47 @@ export class Schild3KatalogEintragExportCSV extends JavaObject {
 	/**
 	 * Die Datenart
 	 */
-	public DatenartKrz : string | null = null;
+	public DatenartKrz: string | null = null;
 
 	/**
 	 * Der Name des Feldes mit der ID
 	 */
-	public Feldname : string | null = null;
+	public Feldname: string | null = null;
 
 	/**
 	 * Der Text für die Anzeige
 	 */
-	public AnzeigeText : string | null = null;
+	public AnzeigeText: string | null = null;
 
 	/**
 	 * Der Feldtyp
 	 */
-	public Feldtyp : string | null = null;
+	public Feldtyp: string | null = null;
 
 	/**
 	 * Feldwerte
 	 */
-	public Feldwerte : string | null = null;
+	public Feldwerte: string | null = null;
 
 	/**
 	 * Ergebniswerte
 	 */
-	public ErgebnisWerte : string | null = null;
+	public ErgebnisWerte: string | null = null;
 
 	/**
 	 * Der Name des Lookup-Feldes
 	 */
-	public LookupFeldname : string | null = null;
+	public LookupFeldname: string | null = null;
 
 	/**
 	 * Der SQL-Befehl zum Bestimmen des Loopup-Feldwertes
 	 */
-	public LookupSQLText : string | null = null;
+	public LookupSQLText: string | null = null;
 
 	/**
 	 * Die unterstützen Datenbank-Formate
 	 */
-	public DBFormat : string | null = null;
+	public DBFormat: string | null = null;
 
 
 	/**
@@ -60,13 +60,13 @@ export class Schild3KatalogEintragExportCSV extends JavaObject {
 		return 'de.svws_nrw.core.data.schild3.Schild3KatalogEintragExportCSV';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.schild3.Schild3KatalogEintragExportCSV'].includes(name);
 	}
 
 	public static class = new Class<Schild3KatalogEintragExportCSV>('de.svws_nrw.core.data.schild3.Schild3KatalogEintragExportCSV');
 
-	public static transpilerFromJSON(json : string): Schild3KatalogEintragExportCSV {
+	public static transpilerFromJSON(json: string): Schild3KatalogEintragExportCSV {
 		const obj = JSON.parse(json) as Partial<Schild3KatalogEintragExportCSV>;
 		const result = new Schild3KatalogEintragExportCSV();
 		result.DatenartKrz = (obj.DatenartKrz === undefined) ? null : obj.DatenartKrz === null ? null : obj.DatenartKrz;
@@ -81,7 +81,7 @@ export class Schild3KatalogEintragExportCSV extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : Schild3KatalogEintragExportCSV) : string {
+	public static transpilerToJSON(obj: Schild3KatalogEintragExportCSV): string {
 		let result = '{';
 		result += '"DatenartKrz" : ' + ((obj.DatenartKrz === null) ? 'null' : JSON.stringify(obj.DatenartKrz)) + ',';
 		result += '"Feldname" : ' + ((obj.Feldname === null) ? 'null' : JSON.stringify(obj.Feldname)) + ',';
@@ -97,7 +97,7 @@ export class Schild3KatalogEintragExportCSV extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<Schild3KatalogEintragExportCSV>) : string {
+	public static transpilerToJSONPatch(obj: Partial<Schild3KatalogEintragExportCSV>): string {
 		let result = '{';
 		if (obj.DatenartKrz !== undefined) {
 			result += '"DatenartKrz" : ' + ((obj.DatenartKrz === null) ? 'null' : JSON.stringify(obj.DatenartKrz)) + ',';
@@ -133,6 +133,6 @@ export class Schild3KatalogEintragExportCSV extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_schild3_Schild3KatalogEintragExportCSV(obj : unknown) : Schild3KatalogEintragExportCSV {
+export function cast_de_svws_nrw_core_data_schild3_Schild3KatalogEintragExportCSV(obj: unknown): Schild3KatalogEintragExportCSV {
 	return obj as Schild3KatalogEintragExportCSV;
 }

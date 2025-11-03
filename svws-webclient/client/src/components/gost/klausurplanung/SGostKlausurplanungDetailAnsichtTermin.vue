@@ -90,6 +90,6 @@
 		colspan += props.kMan().getGemeinsameKursklausurdauerByKlausurraum(raum) !== null ? 0 : 1;
 		colspan += props.kMan().getGemeinsamerKursklausurstartByKlausurraum(raum) !== null ? 0 : 1;
 		return colspan;
-	}
+	};
 
 </script>

@@ -10,27 +10,27 @@ export class GostNachschreibterminblockungKonfiguration extends JavaObject {
 	/**
 	 * Die maximale Zeit, welche für die Blockung verwendet wird
 	 */
-	public maxTimeMillis : number = 1000;
+	public maxTimeMillis: number = 1000;
 
 	/**
 	 * Ein Array mit den zu blockenden Schülerklausurterminen.
 	 */
-	public schuelerklausurtermine : List<GostSchuelerklausurTermin> = new ArrayList<GostSchuelerklausurTermin>();
+	public schuelerklausurtermine: List<GostSchuelerklausurTermin> = new ArrayList<GostSchuelerklausurTermin>();
 
 	/**
 	 * Ein Array mit den GostKlausurterminen, in die geblockt werden soll.
 	 */
-	public termine : List<GostKlausurtermin> = new ArrayList<GostKlausurtermin>();
+	public termine: List<GostKlausurtermin> = new ArrayList<GostKlausurtermin>();
 
 	/**
 	 * True, falls NachschreiberInnen der selben Klausur auf den selben Termin geblockt werden sollen.
 	 */
-	public _regel_nachschreiber_der_selben_klausur_auf_selbe_termine_verteilen : boolean = false;
+	public _regel_nachschreiber_der_selben_klausur_auf_selbe_termine_verteilen: boolean = false;
 
 	/**
 	 * True, falls NachschreiberInnen mit der selben Fachart (Fach + Kursart) auf den selben Termin geblockt werden sollen.
 	 */
-	public _regel_gleiche_fachart_auf_selbe_termine_verteilen : boolean = false;
+	public _regel_gleiche_fachart_auf_selbe_termine_verteilen: boolean = false;
 
 
 	/**
@@ -44,13 +44,13 @@ export class GostNachschreibterminblockungKonfiguration extends JavaObject {
 		return 'de.svws_nrw.core.data.gost.klausurplanung.GostNachschreibterminblockungKonfiguration';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.gost.klausurplanung.GostNachschreibterminblockungKonfiguration'].includes(name);
 	}
 
 	public static class = new Class<GostNachschreibterminblockungKonfiguration>('de.svws_nrw.core.data.gost.klausurplanung.GostNachschreibterminblockungKonfiguration');
 
-	public static transpilerFromJSON(json : string): GostNachschreibterminblockungKonfiguration {
+	public static transpilerFromJSON(json: string): GostNachschreibterminblockungKonfiguration {
 		const obj = JSON.parse(json) as Partial<GostNachschreibterminblockungKonfiguration>;
 		const result = new GostNachschreibterminblockungKonfiguration();
 		if (obj.maxTimeMillis === undefined)
@@ -75,7 +75,7 @@ export class GostNachschreibterminblockungKonfiguration extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : GostNachschreibterminblockungKonfiguration) : string {
+	public static transpilerToJSON(obj: GostNachschreibterminblockungKonfiguration): string {
 		let result = '{';
 		result += '"maxTimeMillis" : ' + obj.maxTimeMillis.toString() + ',';
 		result += '"schuelerklausurtermine" : [ ';
@@ -101,7 +101,7 @@ export class GostNachschreibterminblockungKonfiguration extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<GostNachschreibterminblockungKonfiguration>) : string {
+	public static transpilerToJSONPatch(obj: Partial<GostNachschreibterminblockungKonfiguration>): string {
 		let result = '{';
 		if (obj.maxTimeMillis !== undefined) {
 			result += '"maxTimeMillis" : ' + obj.maxTimeMillis.toString() + ',';
@@ -139,6 +139,6 @@ export class GostNachschreibterminblockungKonfiguration extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_gost_klausurplanung_GostNachschreibterminblockungKonfiguration(obj : unknown) : GostNachschreibterminblockungKonfiguration {
+export function cast_de_svws_nrw_core_data_gost_klausurplanung_GostNachschreibterminblockungKonfiguration(obj: unknown): GostNachschreibterminblockungKonfiguration {
 	return obj as GostNachschreibterminblockungKonfiguration;
 }

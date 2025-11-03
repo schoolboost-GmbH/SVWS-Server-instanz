@@ -10,17 +10,17 @@ export class GostBlockungsergebnisKursSchienenZuordnungUpdate extends JavaObject
 	/**
 	 * Die zu entfernenden Zuordnungen
 	 */
-	public listEntfernen : List<GostBlockungsergebnisKursSchienenZuordnung> = new ArrayList<GostBlockungsergebnisKursSchienenZuordnung>();
+	public listEntfernen: List<GostBlockungsergebnisKursSchienenZuordnung> = new ArrayList<GostBlockungsergebnisKursSchienenZuordnung>();
 
 	/**
 	 * Die hinzuzufügenden Zuordnungen
 	 */
-	public listHinzuzufuegen : List<GostBlockungsergebnisKursSchienenZuordnung> = new ArrayList<GostBlockungsergebnisKursSchienenZuordnung>();
+	public listHinzuzufuegen: List<GostBlockungsergebnisKursSchienenZuordnung> = new ArrayList<GostBlockungsergebnisKursSchienenZuordnung>();
 
 	/**
 	 * Die Blockungs-Regeln, die dabei angepasst werden sollen. Das ist nur zulässig, wenn nur ein Blockungsergebnis für die Blockung vorhanden ist.
 	 */
-	public regelUpdates : GostBlockungRegelUpdate = new GostBlockungRegelUpdate();
+	public regelUpdates: GostBlockungRegelUpdate = new GostBlockungRegelUpdate();
 
 
 	/**
@@ -34,13 +34,13 @@ export class GostBlockungsergebnisKursSchienenZuordnungUpdate extends JavaObject
 		return 'de.svws_nrw.core.data.gost.GostBlockungsergebnisKursSchienenZuordnungUpdate';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.gost.GostBlockungsergebnisKursSchienenZuordnungUpdate'].includes(name);
 	}
 
 	public static class = new Class<GostBlockungsergebnisKursSchienenZuordnungUpdate>('de.svws_nrw.core.data.gost.GostBlockungsergebnisKursSchienenZuordnungUpdate');
 
-	public static transpilerFromJSON(json : string): GostBlockungsergebnisKursSchienenZuordnungUpdate {
+	public static transpilerFromJSON(json: string): GostBlockungsergebnisKursSchienenZuordnungUpdate {
 		const obj = JSON.parse(json) as Partial<GostBlockungsergebnisKursSchienenZuordnungUpdate>;
 		const result = new GostBlockungsergebnisKursSchienenZuordnungUpdate();
 		if (obj.listEntfernen !== undefined) {
@@ -59,7 +59,7 @@ export class GostBlockungsergebnisKursSchienenZuordnungUpdate extends JavaObject
 		return result;
 	}
 
-	public static transpilerToJSON(obj : GostBlockungsergebnisKursSchienenZuordnungUpdate) : string {
+	public static transpilerToJSON(obj: GostBlockungsergebnisKursSchienenZuordnungUpdate): string {
 		let result = '{';
 		result += '"listEntfernen" : [ ';
 		for (let i = 0; i < obj.listEntfernen.size(); i++) {
@@ -83,7 +83,7 @@ export class GostBlockungsergebnisKursSchienenZuordnungUpdate extends JavaObject
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<GostBlockungsergebnisKursSchienenZuordnungUpdate>) : string {
+	public static transpilerToJSONPatch(obj: Partial<GostBlockungsergebnisKursSchienenZuordnungUpdate>): string {
 		let result = '{';
 		if (obj.listEntfernen !== undefined) {
 			result += '"listEntfernen" : [ ';
@@ -115,6 +115,6 @@ export class GostBlockungsergebnisKursSchienenZuordnungUpdate extends JavaObject
 
 }
 
-export function cast_de_svws_nrw_core_data_gost_GostBlockungsergebnisKursSchienenZuordnungUpdate(obj : unknown) : GostBlockungsergebnisKursSchienenZuordnungUpdate {
+export function cast_de_svws_nrw_core_data_gost_GostBlockungsergebnisKursSchienenZuordnungUpdate(obj: unknown): GostBlockungsergebnisKursSchienenZuordnungUpdate {
 	return obj as GostBlockungsergebnisKursSchienenZuordnungUpdate;
 }

@@ -6,67 +6,67 @@ export class Sprachpruefung extends JavaObject {
 	/**
 	 * Das einstellige Sprachkürzel des geprüften Faches
 	 */
-	public sprache : string = "";
+	public sprache: string = "";
 
 	/**
 	 * Gibt an, in welchem ASD-Jahrgang die Prüfung abgelegt wurde
 	 */
-	public jahrgang : string | null = null;
+	public jahrgang: string | null = null;
 
 	/**
 	 * ID der Bezeichnung des am Schulabschluss orientierten Anspruchsniveau der Sprachprüfung
 	 */
-	public anspruchsniveauId : number | null = null;
+	public anspruchsniveauId: number | null = null;
 
 	/**
 	 * Gibt das Datum an, an dem die Prüfung abgelegt wurde
 	 */
-	public pruefungsdatum : string | null = null;
+	public pruefungsdatum: string | null = null;
 
 	/**
 	 * Sprache, die durch die Prüfung ersetzt wird
 	 */
-	public ersetzteSprache : string | null = null;
+	public ersetzteSprache: string | null = null;
 
 	/**
 	 * Prüfung ist eine Prüfung im herkunftssprachlichen Unterricht
 	 */
-	public istHSUPruefung : boolean = false;
+	public istHSUPruefung: boolean = false;
 
 	/**
 	 * Prüfung ist eine Sprachfeststellungsprüfung
 	 */
-	public istFeststellungspruefung : boolean = false;
+	public istFeststellungspruefung: boolean = false;
 
 	/**
 	 * Durch die Prüfung kann die erste Pflichtfremdsprache ersetzt werden
 	 */
-	public kannErstePflichtfremdspracheErsetzen : boolean = false;
+	public kannErstePflichtfremdspracheErsetzen: boolean = false;
 
 	/**
 	 * Durch die Prüfung kann die zweite Pflichtfremdsprache ersetzt werden
 	 */
-	public kannZweitePflichtfremdspracheErsetzen : boolean = false;
+	public kannZweitePflichtfremdspracheErsetzen: boolean = false;
 
 	/**
 	 * Durch die Prüfung kann die Wahlpflichtfremdsprache ersetzt werden
 	 */
-	public kannWahlpflichtfremdspracheErsetzen : boolean = false;
+	public kannWahlpflichtfremdspracheErsetzen: boolean = false;
 
 	/**
 	 * Durch die Prüfung kann die Sprache als fortgeführte Fremdsprache in der GOSt belegt werden
 	 */
-	public kannBelegungAlsFortgefuehrteSpracheErlauben : boolean = false;
+	public kannBelegungAlsFortgefuehrteSpracheErlauben: boolean = false;
 
 	/**
 	 * Das Kürzel des GeR-Referenzniveaus, welches durch die Prüfung erreicht wurde
 	 */
-	public referenzniveau : string | null = null;
+	public referenzniveau: string | null = null;
 
 	/**
 	 * Die Note, die in der Sprachprüfung erreicht wurde (1,2,3,4,5,6 oder null, wenn keine Note angegeben ist)
 	 */
-	public note : number | null = null;
+	public note: number | null = null;
 
 
 	/**
@@ -80,13 +80,13 @@ export class Sprachpruefung extends JavaObject {
 		return 'de.svws_nrw.asd.data.schueler.Sprachpruefung';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.asd.data.schueler.Sprachpruefung'].includes(name);
 	}
 
 	public static class = new Class<Sprachpruefung>('de.svws_nrw.asd.data.schueler.Sprachpruefung');
 
-	public static transpilerFromJSON(json : string): Sprachpruefung {
+	public static transpilerFromJSON(json: string): Sprachpruefung {
 		const obj = JSON.parse(json) as Partial<Sprachpruefung>;
 		const result = new Sprachpruefung();
 		if (obj.sprache === undefined)
@@ -119,7 +119,7 @@ export class Sprachpruefung extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : Sprachpruefung) : string {
+	public static transpilerToJSON(obj: Sprachpruefung): string {
 		let result = '{';
 		result += '"sprache" : ' + JSON.stringify(obj.sprache) + ',';
 		result += '"jahrgang" : ' + ((obj.jahrgang === null) ? 'null' : JSON.stringify(obj.jahrgang)) + ',';
@@ -139,7 +139,7 @@ export class Sprachpruefung extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<Sprachpruefung>) : string {
+	public static transpilerToJSONPatch(obj: Partial<Sprachpruefung>): string {
 		let result = '{';
 		if (obj.sprache !== undefined) {
 			result += '"sprache" : ' + JSON.stringify(obj.sprache) + ',';
@@ -187,6 +187,6 @@ export class Sprachpruefung extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_asd_data_schueler_Sprachpruefung(obj : unknown) : Sprachpruefung {
+export function cast_de_svws_nrw_asd_data_schueler_Sprachpruefung(obj: unknown): Sprachpruefung {
 	return obj as Sprachpruefung;
 }

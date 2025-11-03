@@ -1,10 +1,10 @@
 import type { RouteLocationNormalized, RouteLocationRaw, RouteParams, RouteParamsRawGeneric } from "vue-router";
 
-import type { DeveloperNotificationException} from "@core";
+import type { DeveloperNotificationException } from "@core";
 import { BenutzerKompetenz, ServerMode } from "@core";
 
 import { RouteNode } from "~/router/RouteNode";
-import { routeGost, type RouteGost} from "~/router/apps/gost/RouteGost";
+import { routeGost, type RouteGost } from "~/router/apps/gost/RouteGost";
 
 import { routeGostFachwahlen } from "~/router/apps/gost/fachwahlen/RouteGostFachwahlen";
 
@@ -35,21 +35,21 @@ export class RouteGostFachwahlenZKFach extends RouteNode<any, RouteGost> {
 		super.text = "Zusatzkurse - Fachspezifisch";
 		this.isHidden = (params?: RouteParams) => {
 			return this.checkHidden(params);
-		}
+		};
 	}
 
 	public checkHidden(params?: RouteParams) {
 		try {
 			const { abiturjahr } = params ? RouteNode.getIntParams(params, ["abiturjahr"]) : { abiturjahr: null };
 			if ((abiturjahr === null) || (abiturjahr === -1))
-				return { name: routeGost.defaultChild!.name, params: { idSchuljahresabschnitt: routeApp.data.idSchuljahresabschnitt, abiturjahr }};
+				return { name: routeGost.defaultChild!.name, params: { idSchuljahresabschnitt: routeApp.data.idSchuljahresabschnitt, abiturjahr } };
 			return false;
 		} catch (e) {
 			return routeError.getSimpleErrorRoute(e as DeveloperNotificationException);
 		}
 	}
 
-	public async update(to: RouteNode<any, any>, to_params: RouteParams) : Promise<void | Error | RouteLocationRaw> {
+	public async update(to: RouteNode<any, any>, to_params: RouteParams): Promise<void | Error | RouteLocationRaw> {
 		try {
 			const { idFach } = RouteNode.getIntParams(to_params, ["idFach"]);
 			this._idFach.value = idFach ?? -1;
@@ -59,7 +59,7 @@ export class RouteGostFachwahlenZKFach extends RouteNode<any, RouteGost> {
 		}
 	}
 
-	public addRouteParamsFromState() : RouteParamsRawGeneric {
+	public addRouteParamsFromState(): RouteParamsRawGeneric {
 		const idFach = this._idFach.value;
 		return { idFach };
 	}

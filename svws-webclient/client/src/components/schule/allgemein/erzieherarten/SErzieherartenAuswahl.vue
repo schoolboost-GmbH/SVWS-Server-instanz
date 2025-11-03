@@ -48,15 +48,15 @@
 	const props = defineProps<ErzieherartenAuswahlProps>();
 	const { focusHelpVisible, focusSwitchingEnabled } = useRegionSwitch();
 
-	const columns : DataTableColumn[] = [
+	const columns: DataTableColumn[] = [
 		{ key: "bezeichnung", label: "Bezeichnung", sortable: true, defaultSort: "asc" },
-		{ key: "anzahlErziehungsberechtigte", label: "Anzahl", sortable: true, defaultSort: "asc", span: 1, align: "right"},
+		{ key: "anzahlErziehungsberechtigte", label: "Anzahl", sortable: true, defaultSort: "asc", span: 1, align: "right" },
 	];
 
 	const hatKompetenzAendern = computed<boolean>(() => props.benutzerKompetenzen.has(BenutzerKompetenz.KATALOG_EINTRAEGE_AENDERN));
 	const hatKompetenzLoeschen = computed<boolean>(() => props.benutzerKompetenzen.has(BenutzerKompetenz.KATALOG_EINTRAEGE_LOESCHEN));
 
-	async function setAuswahl(items : Erzieherart[]) {
+	async function setAuswahl(items: Erzieherart[]) {
 		props.manager().liste.auswahlClear();
 		for (const item of items)
 			if (props.manager().liste.hasValue(item))

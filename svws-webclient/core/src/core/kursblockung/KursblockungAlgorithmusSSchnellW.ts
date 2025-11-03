@@ -11,12 +11,12 @@ export class KursblockungAlgorithmusSSchnellW extends KursblockungAlgorithmusS {
 	/**
 	 *  Array der SuS, deren Kurse verteilt werden sollen.
 	 */
-	private readonly schuelerArr : Array<KursblockungDynSchueler>;
+	private readonly schuelerArr: Array<KursblockungDynSchueler>;
 
 	/**
 	 *  Zur Speicherung einer zufälligen Permutation der Indizes der Schüler.
 	 */
-	private readonly perm : Array<number>;
+	private readonly perm: Array<number>;
 
 
 	/**
@@ -27,7 +27,7 @@ export class KursblockungAlgorithmusSSchnellW extends KursblockungAlgorithmusS {
 	 * @param pLogger Logger zum Protokollieren von Warnungen und Fehlern.
 	 * @param pDynDat Die dynamischen Blockungsdaten.
 	 */
-	public constructor(pRandom : Random, pLogger : Logger, pDynDat : KursblockungDynDaten) {
+	public constructor(pRandom: Random, pLogger: Logger, pDynDat: KursblockungDynDaten) {
 		super(pRandom, pLogger, pDynDat);
 		this.schuelerArr = pDynDat.gibSchuelerArrayAlle();
 		this.perm = KursblockungStatic.gibPermutation(this._random, this.schuelerArr.length);
@@ -37,9 +37,9 @@ export class KursblockungAlgorithmusSSchnellW extends KursblockungAlgorithmusS {
 	 * Der Algorithmus verteilt die SuS auf ihre Kurse zufällig. Kommt es während des Verteilens zur Kollision, so wird
 	 * der Kurs nicht gewählt.
 	 */
-	public berechne() : void {
+	public berechne(): void {
 		this.dynDaten.gibStatistik().aktionBewertungSpeichernS();
-		for (let i : number = 0; i < 10; i++)
+		for (let i: number = 0; i < 10; i++)
 			this.verteileSchuelerAlle();
 	}
 
@@ -49,24 +49,24 @@ export class KursblockungAlgorithmusSSchnellW extends KursblockungAlgorithmusS {
 	 *
 	 * @return TRUE, falls der Zustand sich verbessert hat.
 	 */
-	private verteileSchuelerAlle() : boolean {
-		let verbesserung : boolean = false;
+	private verteileSchuelerAlle(): boolean {
+		let verbesserung: boolean = false;
 		KursblockungStatic.aktionPermutiere(this._random, this.perm);
-		for (let p : number = 0; p < this.schuelerArr.length; p++) {
-			const i : number = this.perm[p];
+		for (let p: number = 0; p < this.schuelerArr.length; p++) {
+			const i: number = this.perm[p];
 			verbesserung = verbesserung || this.verteileSchuelerEiner(this.schuelerArr[i]);
 		}
 		return verbesserung;
 	}
 
-	private verteileSchuelerEiner(schueler : KursblockungDynSchueler) : boolean {
+	private verteileSchuelerEiner(schueler: KursblockungDynSchueler): boolean {
 		this.dynDaten.gibStatistik().aktionBewertungSpeichernS();
 		schueler.aktionZustandSpeichernS();
 		schueler.aktionKurseAlleEntfernen();
 		schueler.aktionKurseVerteilenNurFachartenMitEinemErlaubtenKurs();
 		schueler.aktionKurseVerteilenNurMultikurseZufaellig();
 		schueler.aktionKurseVerteilenMitBipartiteMatchingGewichtetem();
-		const cmp : number = this.dynDaten.gibStatistik().gibBewertungZustandS_NW_KD();
+		const cmp: number = this.dynDaten.gibStatistik().gibBewertungZustandS_NW_KD();
 		if (cmp < 0)
 			schueler.aktionZustandLadenS();
 		return cmp > 0;
@@ -76,7 +76,7 @@ export class KursblockungAlgorithmusSSchnellW extends KursblockungAlgorithmusS {
 		return 'de.svws_nrw.core.kursblockung.KursblockungAlgorithmusSSchnellW';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.kursblockung.KursblockungAlgorithmusSSchnellW', 'de.svws_nrw.core.kursblockung.KursblockungAlgorithmusS'].includes(name);
 	}
 
@@ -84,6 +84,6 @@ export class KursblockungAlgorithmusSSchnellW extends KursblockungAlgorithmusS {
 
 }
 
-export function cast_de_svws_nrw_core_kursblockung_KursblockungAlgorithmusSSchnellW(obj : unknown) : KursblockungAlgorithmusSSchnellW {
+export function cast_de_svws_nrw_core_kursblockung_KursblockungAlgorithmusSSchnellW(obj: unknown): KursblockungAlgorithmusSSchnellW {
 	return obj as KursblockungAlgorithmusSSchnellW;
 }

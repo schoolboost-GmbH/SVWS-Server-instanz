@@ -105,9 +105,9 @@
 
 <script setup lang="ts">
 
-	import type { ComponentPublicInstance} from "vue";
+	import type { ComponentPublicInstance } from "vue";
 	import { computed, watchEffect } from "vue";
-	import type { AbiturFachbelegung, AbiturFachbelegungHalbjahr, Fachgruppe, GostFach, List} from "@core";
+	import type { AbiturFachbelegung, AbiturFachbelegungHalbjahr, Fachgruppe, GostFach, List } from "@core";
 	import { Fach, RGBFarbe } from "@core";
 	import { ArrayList, GostHalbjahr } from "@core";
 	import { GridManager } from "@ui";
@@ -124,7 +124,7 @@
 				if (fb === null)
 					continue;
 				for (const halbjahr of GostHalbjahr.getQualifikationsphase()) {
-					const fbh : AbiturFachbelegungHalbjahr | null = fb.belegungen[halbjahr.id];
+					const fbh: AbiturFachbelegungHalbjahr | null = fb.belegungen[halbjahr.id];
 					if ((fbh !== null)) {
 						result.add(fach);
 						break;
@@ -175,14 +175,14 @@
 		return belegung.letzteKursart;
 	}
 
-	function hatBelegung(fach: GostFach, hj: GostHalbjahr) : boolean {
+	function hatBelegung(fach: GostFach, hj: GostHalbjahr): boolean {
 		const belegung = props.manager().getFachbelegungByID(fach.id);
 		if (belegung === null)
 			return false;
-		return (belegung.belegungen[hj.id] !== null)
+		return (belegung.belegungen[hj.id] !== null);
 	}
 
-	function istSchriftlich(fach: GostFach, hj: GostHalbjahr) : boolean {
+	function istSchriftlich(fach: GostFach, hj: GostHalbjahr): boolean {
 		const belegung = props.manager().getFachbelegungByID(fach.id);
 		if (belegung === null)
 			return false;
@@ -190,7 +190,7 @@
 		return (belegungHalbjahr !== null) && (belegungHalbjahr.schriftlich);
 	}
 
-	function getNotenpunkteString(fach: GostFach, hj: GostHalbjahr) : string {
+	function getNotenpunkteString(fach: GostFach, hj: GostHalbjahr): string {
 		const np = props.manager().getNotenpunkteByFachIDAndHalbjahr(fach.id, hj);
 		if (np === null)
 			return "";
@@ -207,7 +207,7 @@
 
 	function getFachfarbe(fach: GostFach): string {
 		const gruppe = getFachgruppe(fach);
-		const farbe : RGBFarbe = (gruppe === null) ? new RGBFarbe() : gruppe.getFarbe(schuljahr.value);
+		const farbe: RGBFarbe = (gruppe === null) ? new RGBFarbe() : gruppe.getFarbe(schuljahr.value);
 		return "rgb(" + farbe.red + "," + farbe.green + "," + farbe.blue + ")";
 	}
 
@@ -248,7 +248,7 @@
 		return new Array<number>();
 	}
 
-	function istDefizit(fach: GostFach, hj: GostHalbjahr) : boolean {
+	function istDefizit(fach: GostFach, hj: GostHalbjahr): boolean {
 		const np = props.manager().getNotenpunkteByFachIDAndHalbjahr(fach.id, hj);
 		return (np !== null) && (np < 5);
 	}
@@ -276,7 +276,7 @@
 		return formatNotenpunkteDurchschnitt(avg);
 	}
 
-	function updateMarkierung(fach: GostFach, hj: GostHalbjahr, value: boolean) : void {
+	function updateMarkierung(fach: GostFach, hj: GostHalbjahr, value: boolean): void {
 		const fachbelegung = props.manager().getFachbelegungByID(fach.id);
 		if (fachbelegung === null)
 			return;
@@ -293,9 +293,9 @@
 
 	function inputMarkierungToggle(fach: GostFach, index: number, hj: GostHalbjahr) {
 		const key = 'Markierung_' + fach.id + '_' + index + '_' + hj.id;
-		const setter = (value : boolean) => updateMarkierung(fach, hj, value);
+		const setter = (value: boolean) => updateMarkierung(fach, hj, value);
 		const belegungHalbjahr = props.manager().getFachbelegungByID(fach.id)?.belegungen[hj.id] ?? null;
-		return (element : Element | ComponentPublicInstance<unknown> | null) => {
+		return (element: Element | ComponentPublicInstance<unknown> | null) => {
 			const input = gridManager.applyInputToggle(key, hj.id, index, element, setter);
 			if (input !== null)
 				watchEffect(() => gridManager.update(key, belegungHalbjahr?.block1gewertet ?? false));

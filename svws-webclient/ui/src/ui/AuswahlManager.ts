@@ -1,7 +1,6 @@
 import { JavaObject } from '../../../core/src/java/lang/JavaObject';
-import { AttributMitAuswahl } from '../../../core/src/core/utils/AttributMitAuswahl';
 import { HashMap } from '../../../core/src/java/util/HashMap';
-import { Schulform } from '../../../core/src/asd/types/schule/Schulform';
+import type { Schulform } from '../../../core/src/asd/types/schule/Schulform';
 import { ArrayList } from '../../../core/src/java/util/ArrayList';
 import { SchuljahresabschnittsUtils } from '../../../core/src/core/utils/schule/SchuljahresabschnittsUtils';
 import { DeveloperNotificationException } from '../../../core/src/core/exceptions/DeveloperNotificationException';
@@ -11,63 +10,72 @@ import type { Runnable } from '../../../core/src/java/lang/Runnable';
 import type { Collection } from '../../../core/src/java/util/Collection';
 import type { List } from '../../../core/src/java/util/List';
 import { Class } from '../../../core/src/java/lang/Class';
-import { Schuljahresabschnitt } from '../../../core/src/asd/data/schule/Schuljahresabschnitt';
+import type { Schuljahresabschnitt } from '../../../core/src/asd/data/schule/Schuljahresabschnitt';
 import type { JavaMap } from '../../../core/src/java/util/JavaMap';
 import { Pair } from '../../../core/src/asd/adt/Pair';
 
+import { AttributMitAuswahl } from './AttributMitAuswahl';
+
+/**
+ * Ein abstrakter Auswahl-Manager, welcher für die Auswahllisten im Client verwendet wird
+ *
+ * @param <TID>        der Typ der ID des Auswahl-Elemente
+ * @param <TAuswahl>   der Typ der Auswahl-Einträge
+ * @param <TDaten>     der Typ der mit der aktuellen Auswahl verknüpften Daten
+ */
 export abstract class AuswahlManager<TID, TAuswahl, TDaten> extends JavaObject {
 
 	/**
 	 * Ein Auswahl-Attribut für die Auswahliste. Dieses wird nicht für eine Filterung verwendet, sondern für eine Mehrfachauswahl
 	 */
-	public readonly liste : AttributMitAuswahl<TID, TAuswahl>;
+	public readonly liste: AttributMitAuswahl<TID, TAuswahl>;
 
 	/**
 	 * Ein Lambda-Ausdruck für das Mapping von einem Auswahl-Objekt auf dessen ID
 	 */
-	private readonly _listeToId : JavaFunction<TAuswahl, TID>;
+	private readonly _listeToId: JavaFunction<TAuswahl, TID>;
 
 	/**
 	 * Ein Lambda-Ausdruck für das Mapping von einem Daten-Objekt auf dessen ID
 	 */
-	private readonly _datenToId : JavaFunction<TDaten, TID>;
+	private readonly _datenToId: JavaFunction<TDaten, TID>;
 
 	/**
 	 * Die Schulform der Schule
 	 */
-	protected readonly _schulform : Schulform | null;
+	protected readonly _schulform: Schulform | null;
 
 	/**
 	 * Der Schuljahresabschnitt, welcher für die Auswahl genutzt wird
 	 */
-	protected readonly _schuljahresabschnitt : number;
+	protected readonly _schuljahresabschnitt: number;
 
 	/**
 	 * Der Schuljahresabschnitt, in dem sich die Schule befindet
 	 */
-	protected readonly _schuljahresabschnittSchule : number;
+	protected readonly _schuljahresabschnittSchule: number;
 
 	/**
 	 * Das Filter-Attribut für die Schuljahresabschnitte - die Filterfunktion wird zur Zeit noch nicht genutzt
 	 */
-	public readonly schuljahresabschnitte : AttributMitAuswahl<number, Schuljahresabschnitt>;
+	public readonly schuljahresabschnitte: AttributMitAuswahl<number, Schuljahresabschnitt>;
 
-	private static readonly _schuljahresabschnittToId : JavaFunction<Schuljahresabschnitt, number> = { apply : (sja: Schuljahresabschnitt) => sja.id };
+	private static readonly _schuljahresabschnittToId: JavaFunction<Schuljahresabschnitt, number> = { apply: (sja: Schuljahresabschnitt) => sja.id };
 
 	/**
 	 * Die gefilterte Liste, sofern sie schon berechnet wurde
 	 */
-	protected _filtered : List<TAuswahl> | null = null;
+	protected _filtered: List<TAuswahl> | null = null;
 
 	/**
 	 * Die Daten, sofern eine Auswahl vorhanden ist.
 	 */
-	protected _daten : TDaten | null = null;
+	protected _daten: TDaten | null = null;
 
 	/**
 	 * Ein Handler für das Ereignis, dass der Filter angepasst wurde
 	 */
-	protected readonly _eventHandlerFilterChanged : Runnable = { run : () => {
+	protected readonly _eventHandlerFilterChanged: Runnable = { run: () => {
 		this.onFilterChanged();
 		this._filtered = null;
 	} };
@@ -75,32 +83,32 @@ export abstract class AuswahlManager<TID, TAuswahl, TDaten> extends JavaObject {
 	/**
 	 * Ein Handler für das Ereignis, dass die Mehrfachauswahl angepasst wurde
 	 */
-	private readonly _eventHandlerMehrfachauswahlChanged : Runnable = { run : () => this.onMehrfachauswahlChanged() };
+	private readonly _eventHandlerMehrfachauswahlChanged: Runnable = { run: () => this.onMehrfachauswahlChanged() };
 
 	/**
 	 * Ein Handler für das Ereignis, dass die Liste mit der Mehrfachauswahl angepasst wurde
 	 */
-	private readonly _eventHandlerListeChanged : Runnable = { run : () => this.onListeChangedInternal() };
+	private readonly _eventHandlerListeChanged: Runnable = { run: () => this.onListeChangedInternal() };
 
 	/**
 	 * Die Sortier-Ordnung, welche vom Comparator verwendet wird.
 	 */
-	protected _order : List<Pair<string, boolean>>;
+	protected _order: List<Pair<string, boolean>>;
 
 	/**
 	 * Gibt an, ob die aktuelle Einzel-Auswahl auch bei dem Filter erlaubt wird oder nicht.
 	 */
-	protected _filterPermitAuswahl : boolean = false;
+	protected _filterPermitAuswahl: boolean = false;
 
 	/**
 	 * Die Daten aus der vorherigen Auswahl.
 	 */
-	protected _vorherigeAuswahl : TDaten | null = null;
+	protected _vorherigeAuswahl: TDaten | null = null;
 
 	/**
 	 * Map mit allen selektierten Gruppenprozess CoreDto Objekten
 	 */
-	protected _listeDaten : JavaMap<TID, TDaten> = new HashMap<TID, TDaten>();
+	protected _listeDaten: JavaMap<TID, TDaten> = new HashMap<TID, TDaten>();
 
 
 	/**
@@ -116,7 +124,7 @@ export abstract class AuswahlManager<TID, TAuswahl, TDaten> extends JavaObject {
 	 * @param datenToId                    eine Funktion für das Mappen eines Daten-Objektes auf seine ID
 	 * @param order                        die Default-Sortierung für die Auswahl-Liste
 	 */
-	protected constructor(schuljahresabschnitt : number, schuljahresabschnittSchule : number, schuljahresabschnitte : List<Schuljahresabschnitt>, schulform : Schulform | null, values : Collection<TAuswahl>, listComparator : Comparator<TAuswahl>, listeToId : JavaFunction<TAuswahl, TID>, datenToId : JavaFunction<TDaten, TID>, order : List<Pair<string, boolean>>) {
+	protected constructor(schuljahresabschnitt: number, schuljahresabschnittSchule: number, schuljahresabschnitte: List<Schuljahresabschnitt>, schulform: Schulform | null, values: Collection<TAuswahl>, listComparator: Comparator<TAuswahl>, listeToId: JavaFunction<TAuswahl, TID>, datenToId: JavaFunction<TDaten, TID>, order: List<Pair<string, boolean>>) {
 		super();
 		this._schuljahresabschnitt = schuljahresabschnitt;
 		this._schuljahresabschnittSchule = schuljahresabschnittSchule;
@@ -136,15 +144,15 @@ export abstract class AuswahlManager<TID, TAuswahl, TDaten> extends JavaObject {
 	 *
 	 * @return die gefilterte Liste
 	 */
-	public filtered() : List<TAuswahl> {
+	public filtered(): List<TAuswahl> {
 		if (this._filtered !== null)
 			return this._filtered;
 		this._filtered = new ArrayList();
-		const aktAuswahl : TAuswahl | null = (this._daten === null) ? null : this.auswahl();
+		const aktAuswahl: TAuswahl | null = (this._daten === null) ? null : this.auswahl();
 		for (const eintrag of this.liste.list())
 			if ((this._filterPermitAuswahl && (aktAuswahl !== null) && (this.compareAuswahl(aktAuswahl, eintrag) === 0)) || this.checkFilter(eintrag))
 				this._filtered.add(eintrag);
-		const comparator : Comparator<TAuswahl> = { compare : (a: TAuswahl, b: TAuswahl) => this.compareAuswahl(a, b) };
+		const comparator: Comparator<TAuswahl> = { compare: (a: TAuswahl, b: TAuswahl) => this.compareAuswahl(a, b) };
 		this._filtered.sort(comparator);
 		return this._filtered;
 	}
@@ -152,7 +160,7 @@ export abstract class AuswahlManager<TID, TAuswahl, TDaten> extends JavaObject {
 	/**
 	 * Entfernt den aktuelle Cache für die gefilterte Liste und forciert so eine Neu-Berechnung der gecachten Liste
 	 */
-	public filterInvalidateCache() : void {
+	public filterInvalidateCache(): void {
 		this._filtered = null;
 	}
 
@@ -163,7 +171,7 @@ export abstract class AuswahlManager<TID, TAuswahl, TDaten> extends JavaObject {
 	 *
 	 * @return true, wenn der Eintrag den Filter passiert, und ansonsten false
 	 */
-	protected abstract checkFilter(eintrag : TAuswahl) : boolean;
+	protected abstract checkFilter(eintrag: TAuswahl): boolean;
 
 	/**
 	 * Vergleicht zwei Einträge der Auswahl miteinander.
@@ -174,14 +182,14 @@ export abstract class AuswahlManager<TID, TAuswahl, TDaten> extends JavaObject {
 	 * @return ein negativer Wert, 0 oder ein positiver Werte, wenn der erste Eintrag
 	 *         kleiner, gleich oder größer ist als der zweite Eintrag
 	 */
-	protected abstract compareAuswahl(a : TAuswahl, b : TAuswahl) : number;
+	protected abstract compareAuswahl(a: TAuswahl, b: TAuswahl): number;
 
 	/**
 	 * Diese Methode kann überschrieben werden.
 	 * Sie wird aufgerufen, wenn eine Änderung an einem Filter stattgefunden hat. Das
 	 * Ereignis tritt auf bevor die alte gefilterte Liste ungültig wird.
 	 */
-	protected onFilterChanged() : void {
+	protected onFilterChanged(): void {
 		// empty block
 	}
 
@@ -189,8 +197,8 @@ export abstract class AuswahlManager<TID, TAuswahl, TDaten> extends JavaObject {
 	 * Die Methode wird aufgerufen, wenn eine Änderung an der Liste mit den verfügbaren Daten
 	 * eine Änderung vorgenommen wird.
 	 */
-	private onListeChangedInternal() : void {
-		const idAuswahl : TID | null = this.auswahlID();
+	private onListeChangedInternal(): void {
+		const idAuswahl: TID | null = this.auswahlID();
 		if (idAuswahl !== null) {
 			if (this.liste.get(idAuswahl) === null)
 				this.setDaten(null);
@@ -205,7 +213,7 @@ export abstract class AuswahlManager<TID, TAuswahl, TDaten> extends JavaObject {
 	 * Sie wird aufgerufen, wenn eine Änderung an der Liste der für die Mehrfachauswahl
 	 * zulässigen Werte stattgefunden hat.
 	 */
-	protected onListeChanged() : void {
+	protected onListeChanged(): void {
 		// empty block
 	}
 
@@ -213,7 +221,7 @@ export abstract class AuswahlManager<TID, TAuswahl, TDaten> extends JavaObject {
 	 * Diese Methode kann überschrieben werden.
 	 * Sie wird aufgerufen, wenn eine Änderung an der Mehrfachauswahl stattgefunden hat.
 	 */
-	protected onMehrfachauswahlChanged() : void {
+	protected onMehrfachauswahlChanged(): void {
 		// empty block
 	}
 
@@ -224,7 +232,7 @@ export abstract class AuswahlManager<TID, TAuswahl, TDaten> extends JavaObject {
 	 *
 	 * @param order   die Sortier-Ordnung
 	 */
-	public orderSet(order : List<Pair<string, boolean>>) : void {
+	public orderSet(order: List<Pair<string, boolean>>): void {
 		this._order = order;
 		this._filtered = null;
 	}
@@ -236,7 +244,7 @@ export abstract class AuswahlManager<TID, TAuswahl, TDaten> extends JavaObject {
 	 *
 	 * @return die Sortier-Ordnung
 	 */
-	public orderGet() : List<Pair<string, boolean>> {
+	public orderGet(): List<Pair<string, boolean>> {
 		return new ArrayList<Pair<string, boolean>>(this._order);
 	}
 
@@ -248,10 +256,10 @@ export abstract class AuswahlManager<TID, TAuswahl, TDaten> extends JavaObject {
 	 * @param field   das Feld
 	 * @param order   die Reihenfolge für dieses Feld (ascending: true, descending: false, deaktivieren: null)
 	 */
-	public orderUpdate(field : string, order : boolean | null) : void {
+	public orderUpdate(field: string, order: boolean | null): void {
 		if (order === null) {
-			for (let i : number = 0; i < this._order.size(); i++) {
-				const eintrag : Pair<string, boolean> = this._order.get(i);
+			for (let i: number = 0; i < this._order.size(); i++) {
+				const eintrag: Pair<string, boolean> = this._order.get(i);
 				if (JavaObject.equalsTranspiler(eintrag.a, (field))) {
 					this._order.remove(eintrag);
 					this._filtered = null;
@@ -260,8 +268,8 @@ export abstract class AuswahlManager<TID, TAuswahl, TDaten> extends JavaObject {
 			}
 			return;
 		}
-		for (let i : number = 0; i < this._order.size(); i++) {
-			const eintrag : Pair<string, boolean> = this._order.get(i);
+		for (let i: number = 0; i < this._order.size(); i++) {
+			const eintrag: Pair<string, boolean> = this._order.get(i);
 			if (JavaObject.equalsTranspiler(eintrag.a, (field))) {
 				if (JavaObject.equalsTranspiler(eintrag.b, (order)))
 					return;
@@ -272,7 +280,7 @@ export abstract class AuswahlManager<TID, TAuswahl, TDaten> extends JavaObject {
 				return;
 			}
 		}
-		const eintrag : Pair<string, boolean> = new Pair<string, boolean>(field, order);
+		const eintrag: Pair<string, boolean> = new Pair<string, boolean>(field, order);
 		this._order.add(0, eintrag);
 		this._filtered = null;
 	}
@@ -282,9 +290,9 @@ export abstract class AuswahlManager<TID, TAuswahl, TDaten> extends JavaObject {
 	 *
 	 * @return die Schulform der Schule
 	 */
-	public schulform() : Schulform {
+	public schulform(): Schulform {
 		if (this._schulform === null)
-			throw new DeveloperNotificationException("Der Auswahl-Manager sollte nur mit einer korrekt gesetzten Schulform verwendet werden.")
+			throw new DeveloperNotificationException("Der Auswahl-Manager sollte nur mit einer korrekt gesetzten Schulform verwendet werden.");
 		return this._schulform;
 	}
 
@@ -293,7 +301,7 @@ export abstract class AuswahlManager<TID, TAuswahl, TDaten> extends JavaObject {
 	 *
 	 * @return true, wenn eine Auswahl und Daten vorliegen, und ansonsten false
 	 */
-	public hasDaten() : boolean {
+	public hasDaten(): boolean {
 		return this._daten !== null;
 	}
 
@@ -302,9 +310,9 @@ export abstract class AuswahlManager<TID, TAuswahl, TDaten> extends JavaObject {
 	 *
 	 * @return die Daten
 	 */
-	public daten() : TDaten {
+	public daten(): TDaten {
 		if (this._daten === null)
-			throw new DeveloperNotificationException("Es exitsiert derzeit keine Auswahl und damit auch keine Daten")
+			throw new DeveloperNotificationException("Es exitsiert derzeit keine Auswahl und damit auch keine Daten");
 		return this._daten;
 	}
 
@@ -315,13 +323,13 @@ export abstract class AuswahlManager<TID, TAuswahl, TDaten> extends JavaObject {
 	 *
 	 * @throws DeveloperNotificationException   falls die Daten nicht in der Auswahlliste vorhanden ist
 	 */
-	public setDaten(daten : TDaten | null) : void {
+	public setDaten(daten: TDaten | null): void {
 		this._vorherigeAuswahl = this._daten;
 		if (daten === null) {
 			this._daten = null;
 		} else {
-			const eintrag : TAuswahl = this.liste.getOrException(this._datenToId.apply(daten));
-			const updateEintrag : boolean = this.onSetDaten(eintrag, daten);
+			const eintrag: TAuswahl = this.liste.getOrException(this._datenToId.apply(daten));
+			const updateEintrag: boolean = this.onSetDaten(eintrag, daten);
 			this._daten = daten;
 			if (updateEintrag)
 				this.orderSet(this.orderGet());
@@ -340,7 +348,7 @@ export abstract class AuswahlManager<TID, TAuswahl, TDaten> extends JavaObject {
 	 *
 	 * @return gibt an, ob Anpassungen an der Auswahlliste vorgenommen wurden.
 	 */
-	protected onSetDaten(eintrag : TAuswahl, daten : TDaten) : boolean {
+	protected onSetDaten(eintrag: TAuswahl, daten: TDaten): boolean {
 		return false;
 	}
 
@@ -349,7 +357,7 @@ export abstract class AuswahlManager<TID, TAuswahl, TDaten> extends JavaObject {
 	 *
 	 * @return die ID oder null
 	 */
-	public auswahlID() : TID | null {
+	public auswahlID(): TID | null {
 		return (this._daten === null) ? null : this._datenToId.apply(this._daten);
 	}
 
@@ -361,9 +369,9 @@ export abstract class AuswahlManager<TID, TAuswahl, TDaten> extends JavaObject {
 	 *
 	 * @throws DeveloperNotificationException wenn keine gültige Auswahl vorliegt
 	 */
-	public auswahl() : TAuswahl {
+	public auswahl(): TAuswahl {
 		if (this._daten === null)
-			throw new DeveloperNotificationException("Für den Aufruf dieser Methode muss zuvor eine Auswahl vorliegen.")
+			throw new DeveloperNotificationException("Für den Aufruf dieser Methode muss zuvor eine Auswahl vorliegen.");
 		return this.liste.getOrException(this._datenToId.apply(this._daten));
 	}
 
@@ -372,7 +380,7 @@ export abstract class AuswahlManager<TID, TAuswahl, TDaten> extends JavaObject {
 	 *
 	 * @return true, falls die aktuelle Auswahl beim Filtern erlaubt bleibt oder nicht.
 	 */
-	public isFilterAuswahlPermitted() : boolean {
+	public isFilterAuswahlPermitted(): boolean {
 		return this._filterPermitAuswahl;
 	}
 
@@ -381,7 +389,7 @@ export abstract class AuswahlManager<TID, TAuswahl, TDaten> extends JavaObject {
 	 *
 	 * @param value   der neue boolean-Wert
 	 */
-	public setFilterAuswahlPermitted(value : boolean) : void {
+	public setFilterAuswahlPermitted(value: boolean): void {
 		this._filterPermitAuswahl = value;
 	}
 
@@ -390,7 +398,7 @@ export abstract class AuswahlManager<TID, TAuswahl, TDaten> extends JavaObject {
 	 *
 	 * @return der Schuljahresabschnitt der Auswahl
 	 */
-	public getSchuljahresabschnittAuswahl() : Schuljahresabschnitt | null {
+	public getSchuljahresabschnittAuswahl(): Schuljahresabschnitt | null {
 		return this.schuljahresabschnitte.get(this._schuljahresabschnitt);
 	}
 
@@ -399,10 +407,10 @@ export abstract class AuswahlManager<TID, TAuswahl, TDaten> extends JavaObject {
 	 *
 	 * @return der Schuljahresabschnitt der Schule
 	 */
-	public getSchuljahresabschnittSchule() : Schuljahresabschnitt {
-		const result : Schuljahresabschnitt | null = this.schuljahresabschnitte.get(this._schuljahresabschnittSchule);
+	public getSchuljahresabschnittSchule(): Schuljahresabschnitt {
+		const result: Schuljahresabschnitt | null = this.schuljahresabschnitte.get(this._schuljahresabschnittSchule);
 		if (result === null)
-			throw new DeveloperNotificationException("Der Schuljahresabschnitt der Schule ist nicht verfügbar.")
+			throw new DeveloperNotificationException("Der Schuljahresabschnitt der Schule ist nicht verfügbar.");
 		return result;
 	}
 
@@ -411,7 +419,7 @@ export abstract class AuswahlManager<TID, TAuswahl, TDaten> extends JavaObject {
 	 *
 	 * @return das Schuljahr
 	 */
-	public getSchuljahr() : number {
+	public getSchuljahr(): number {
 		return this.getSchuljahresabschnittSchule().schuljahr;
 	}
 
@@ -421,9 +429,9 @@ export abstract class AuswahlManager<TID, TAuswahl, TDaten> extends JavaObject {
 	 *
 	 * @return true, wenn die Schuljahresabschnitte übereinstimmen
 	 */
-	public istSchuljahresabschnittAktuell() : boolean {
-		const abschnittAuswahl : Schuljahresabschnitt | null = this.getSchuljahresabschnittAuswahl();
-		const abschnittSchule : Schuljahresabschnitt | null = this.getSchuljahresabschnittSchule();
+	public istSchuljahresabschnittAktuell(): boolean {
+		const abschnittAuswahl: Schuljahresabschnitt | null = this.getSchuljahresabschnittAuswahl();
+		const abschnittSchule: Schuljahresabschnitt | null = this.getSchuljahresabschnittSchule();
 		if (abschnittAuswahl === null)
 			return false;
 		return (abschnittAuswahl.schuljahr === abschnittSchule.schuljahr) && (abschnittAuswahl.abschnitt === abschnittSchule.abschnitt);
@@ -436,9 +444,9 @@ export abstract class AuswahlManager<TID, TAuswahl, TDaten> extends JavaObject {
 	 *
 	 * @return true, wenn der Schuljahresabschnitt der Auswahl ein Planungsabschnitt ist
 	 */
-	public istSchuljahresabschnittPlanung() : boolean {
-		const abschnittAuswahl : Schuljahresabschnitt | null = this.getSchuljahresabschnittAuswahl();
-		const abschnittSchule : Schuljahresabschnitt | null = this.getSchuljahresabschnittSchule();
+	public istSchuljahresabschnittPlanung(): boolean {
+		const abschnittAuswahl: Schuljahresabschnitt | null = this.getSchuljahresabschnittAuswahl();
+		const abschnittSchule: Schuljahresabschnitt | null = this.getSchuljahresabschnittSchule();
 		if (abschnittAuswahl === null)
 			return false;
 		return (abschnittAuswahl.schuljahr > abschnittSchule.schuljahr) || ((abschnittAuswahl.schuljahr === abschnittSchule.schuljahr) && (abschnittAuswahl.abschnitt > abschnittSchule.abschnitt));
@@ -451,9 +459,9 @@ export abstract class AuswahlManager<TID, TAuswahl, TDaten> extends JavaObject {
 	 *
 	 * @return true, wenn der Schuljahresabschnitt der Auswahl ein vergangener Abschnitt ist
 	 */
-	public istSchuljahresabschnittVergangenheit() : boolean {
-		const abschnittAuswahl : Schuljahresabschnitt | null = this.getSchuljahresabschnittAuswahl();
-		const abschnittSchule : Schuljahresabschnitt | null = this.getSchuljahresabschnittSchule();
+	public istSchuljahresabschnittVergangenheit(): boolean {
+		const abschnittAuswahl: Schuljahresabschnitt | null = this.getSchuljahresabschnittAuswahl();
+		const abschnittSchule: Schuljahresabschnitt | null = this.getSchuljahresabschnittSchule();
 		if (abschnittAuswahl === null)
 			return false;
 		return (abschnittAuswahl.schuljahr < abschnittSchule.schuljahr) || ((abschnittAuswahl.schuljahr === abschnittSchule.schuljahr) && (abschnittAuswahl.abschnitt < abschnittSchule.abschnitt));
@@ -464,7 +472,7 @@ export abstract class AuswahlManager<TID, TAuswahl, TDaten> extends JavaObject {
 	 *
 	 * @return vorherige Auswahl
 	 */
-	public getVorherigeAuswahl() : TDaten | null {
+	public getVorherigeAuswahl(): TDaten | null {
 		return this._vorherigeAuswahl;
 	}
 
@@ -475,7 +483,7 @@ export abstract class AuswahlManager<TID, TAuswahl, TDaten> extends JavaObject {
 	 *
 	 * @return die zugehörige ID
 	 */
-	public getIdByEintrag(eintrag : TAuswahl) : TID {
+	public getIdByEintrag(eintrag: TAuswahl): TID {
 		return this._listeToId.apply(eintrag);
 	}
 
@@ -486,7 +494,7 @@ export abstract class AuswahlManager<TID, TAuswahl, TDaten> extends JavaObject {
 	 *
 	 * @return die zugehörige ID
 	 */
-	public getIdByDaten(daten : TDaten) : TID {
+	public getIdByDaten(daten: TDaten): TID {
 		return this._datenToId.apply(daten);
 	}
 
@@ -495,7 +503,7 @@ export abstract class AuswahlManager<TID, TAuswahl, TDaten> extends JavaObject {
 	 *
 	 * @param listeDaten selektierte Daten
 	 */
-	public setListeDaten(listeDaten : JavaMap<TID, TDaten>) : void {
+	public setListeDaten(listeDaten: JavaMap<TID, TDaten>): void {
 		this._listeDaten = listeDaten;
 	}
 
@@ -504,7 +512,7 @@ export abstract class AuswahlManager<TID, TAuswahl, TDaten> extends JavaObject {
 	 *
 	 * @return selektierte Daten
 	 */
-	public getListeDaten() : JavaMap<TID, TDaten> {
+	public getListeDaten(): JavaMap<TID, TDaten> {
 		return this._listeDaten;
 	}
 
@@ -512,7 +520,7 @@ export abstract class AuswahlManager<TID, TAuswahl, TDaten> extends JavaObject {
 		return 'de.svws_nrw.core.utils.AuswahlManager';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.utils.AuswahlManager'].includes(name);
 	}
 
@@ -520,6 +528,6 @@ export abstract class AuswahlManager<TID, TAuswahl, TDaten> extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_utils_AuswahlManager<TID, TAuswahl, TDaten>(obj : unknown) : AuswahlManager<TID, TAuswahl, TDaten> {
+export function cast_de_svws_nrw_core_utils_AuswahlManager<TID, TAuswahl, TDaten>(obj: unknown): AuswahlManager<TID, TAuswahl, TDaten> {
 	return obj as AuswahlManager<TID, TAuswahl, TDaten>;
 }

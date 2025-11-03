@@ -32,13 +32,13 @@ export class RouteLogin extends RouteNode<unknown, any> {
 		await api.login(username, password);
 		if (api.authenticated)
 			await RouteManager.doRoute(this.routepath);
-	}
+	};
 
 	public logout = async () => {
 		this.routepath = "/";
 		await RouteManager.doRoute({ name: this.name });
 		await api.logout();
-	}
+	};
 
 	public getProps(): LoginProps {
 		return {
@@ -48,7 +48,7 @@ export class RouteLogin extends RouteNode<unknown, any> {
 			authenticated: api.authenticated,
 			hostname: api.hostname,
 			schemaPrevious: this.schema.value,
-		}
+		};
 	}
 
 }

@@ -28,7 +28,7 @@
 						<schueler-abitur-zulassung-tabelle :server-mode :schule :manager="() => managerLaufbahnplanungMap().get(schueler.id)!" :update-abiturpruefungsdaten="null" />
 					</div>
 
-					<div class="w-64">
+					<div class="w-64" v-if="managerLaufbahnplanungMap().get(schueler.id)?.istBewertetQualifikationsPhase() ?? false">
 						<svws-ui-button @click="copyAbiturdatenAusLeistungsdaten(managerLaufbahnplanungMap().get(schueler.id)!.daten().schuelerID)">
 							Übertrage in Abiturbereich
 						</svws-ui-button>

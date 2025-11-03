@@ -16,7 +16,7 @@ export function orte_filter(items: OrtKatalogEintrag[], search: string): OrtKata
 	// Teilmatch PLZ
 	const plzmatch = /\d+/.exec(search);
 	const plz = plzmatch ? plzmatch[0] : "";
-	//Teilmatch Ort
+	// Teilmatch Ort
 	const ortsname = search.replace(/\d+\s*/, "").trim();
 	if ((plz.length === 0) && (ortsname.length === 0))
 		return items;
@@ -154,8 +154,8 @@ export function lehrer_filter(items: Iterable<LehrerListeEintrag>, search: strin
 }
 
 /** Der Filter für SchulenKatalogEinträge */
-export function filterSchulenKatalogEintraege(items: SchulenKatalogEintrag[], search: string) : SchulenKatalogEintrag[] {
-	const searchLower = search.toLocaleLowerCase()
+export function filterSchulenKatalogEintraege(items: SchulenKatalogEintrag[], search: string): SchulenKatalogEintrag[] {
+	const searchLower = search.toLocaleLowerCase();
 	const list = [];
 	for (const i of items)
 		if ((i.SchulNr.includes(searchLower))
@@ -167,13 +167,13 @@ export function filterSchulenKatalogEintraege(items: SchulenKatalogEintrag[], se
 }
 
 /** Die Filter-Methode der Schuleeinträge */
-export function filterSchulenEintraege(items: SchulEintrag[], search: string) : SchulEintrag[] {
-	const searchLower = search.toLowerCase()
+export function filterSchulenEintraege(items: SchulEintrag[], search: string): SchulEintrag[] {
+	const searchLower = search.toLowerCase();
 	const list = [];
 	for (const i of items) {
 		const schulform = Schulform.data().getEintragByID(i.idSchulform ?? -1);
 		if (((schulform !== null) && schulform.text.toLowerCase().includes(searchLower))
-				||((i.schulnummerStatistik !== null) && i.schulnummerStatistik.includes(searchLower))
+				|| ((i.schulnummerStatistik !== null) && i.schulnummerStatistik.includes(searchLower))
 				|| ((i.schulnummerStatistik !== null) && i.schulnummerStatistik.includes(searchLower))
 				|| ((i.kurzbezeichnung !== null) && i.kurzbezeichnung.toLowerCase().includes(searchLower))
 				|| i.name.toLowerCase().includes(searchLower) || ((i.ort !== null) && i.ort.toLowerCase().includes(searchLower))

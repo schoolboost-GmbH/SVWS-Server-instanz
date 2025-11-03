@@ -27,14 +27,14 @@ import { routeSchuelerIndividualdatenGruppenprozesse } from "~/router/apps/schue
 import { routeSchuelerAbitur } from "./abitur/RouteSchuelerAbitur";
 import { routeSchuelerNeuSchnelleingabe } from "~/router/apps/schueler/RouteSchuelerNeuSchnelleingabe";
 
-const SSchuelerAuswahl = () => import("~/components/schueler/SSchuelerAuswahl.vue")
-const SSchuelerApp = () => import("~/components/schueler/SSchuelerApp.vue")
+const SSchuelerAuswahl = () => import("~/components/schueler/SSchuelerAuswahl.vue");
+const SSchuelerApp = () => import("~/components/schueler/SSchuelerApp.vue");
 
 
 export class RouteSchueler extends RouteAuswahlNode<SchuelerListeManager, RouteDataSchueler, RouteApp> {
 
 	public constructor() {
-		super(Schulform.values(), [ BenutzerKompetenz.KEINE ], "schueler", "schueler/:id(\\d+)?", SSchuelerApp, SSchuelerAuswahl, new RouteDataSchueler());
+		super(Schulform.values(), [BenutzerKompetenz.KEINE], "schueler", "schueler/:id(\\d+)?", SSchuelerApp, SSchuelerAuswahl, new RouteDataSchueler());
 		super.mode = ServerMode.STABLE;
 		super.text = "Schüler";
 		super.getAuswahlListProps = (props) => (<SchuelerAuswahlProps>{

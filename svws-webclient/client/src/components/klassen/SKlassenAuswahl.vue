@@ -22,7 +22,7 @@
 				<template #cell(klassenLeitungen)="{value}">
 					{{ lehrerkuerzel(value) }}
 				</template>
-				<template #actions>
+				<template #actions v-if="hatKompetenzAendern">
 					<div class="flex gap-5">
 						<template v-if="manager().liste.size() > 0">
 							<s-klassen-auswahl-sortierung-modal v-slot="{ openModal }" :setze-default-sortierung>
@@ -36,7 +36,7 @@
 								</svws-ui-tooltip>
 							</s-klassen-auswahl-sortierung-modal>
 						</template>
-						<svws-ui-tooltip v-if="hatKompetenzAendern" position="bottom">
+						<svws-ui-tooltip position="bottom">
 							<svws-ui-button :disabled="activeViewType === ViewType.HINZUFUEGEN" type="icon" @click="gotoHinzufuegenView(true)" :has-focus="rowsFiltered.length === 0">
 								<span class="icon i-ri-add-line" />
 							</svws-ui-button>
@@ -55,7 +55,7 @@
 
 	import { computed, ref } from "vue";
 	import type { KlassenAuswahlProps } from "./SKlassenAuswahlProps";
-	import type{ JahrgangsDaten, KlassenDaten, LehrerListeEintrag, Schulgliederung } from "@core";
+	import type { JahrgangsDaten, KlassenDaten, LehrerListeEintrag, Schulgliederung } from "@core";
 	import { BenutzerKompetenz } from "@core";
 	import { useRegionSwitch, ViewType } from "@ui";
 
@@ -148,7 +148,7 @@
 		return props.manager().hasDaten() ? props.manager().auswahl() : null;
 	});
 
-	async function setAuswahl(items : KlassenDaten[]) {
+	async function setAuswahl(items: KlassenDaten[]) {
 		props.manager().liste.auswahlClear();
 		for (const item of items)
 			if (props.manager().liste.hasValue(item))
@@ -167,7 +167,8 @@
 				if (lehrer !== null)
 					if (s.length > 0)
 						s += `, ${lehrer.kuerzel}`;
-					else s = lehrer.kuerzel;
+					else
+						s = lehrer.kuerzel;
 			}
 		return s;
 	}

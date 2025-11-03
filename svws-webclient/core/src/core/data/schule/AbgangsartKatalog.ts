@@ -9,12 +9,12 @@ export class AbgangsartKatalog extends JavaObject {
 	/**
 	 * Die Version des Katalog. Diese wird bei Änderungen am Katalog um 1 erhöht.
 	 */
-	public version : number = -1;
+	public version: number = -1;
 
 	/**
 	 * Die Einträge des Katalogs.
 	 */
-	public eintraege : List<AbgangsartKatalogEintrag> = new ArrayList<AbgangsartKatalogEintrag>();
+	public eintraege: List<AbgangsartKatalogEintrag> = new ArrayList<AbgangsartKatalogEintrag>();
 
 
 	/**
@@ -28,13 +28,13 @@ export class AbgangsartKatalog extends JavaObject {
 		return 'de.svws_nrw.core.data.schule.AbgangsartKatalog';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.schule.AbgangsartKatalog'].includes(name);
 	}
 
 	public static class = new Class<AbgangsartKatalog>('de.svws_nrw.core.data.schule.AbgangsartKatalog');
 
-	public static transpilerFromJSON(json : string): AbgangsartKatalog {
+	public static transpilerFromJSON(json: string): AbgangsartKatalog {
 		const obj = JSON.parse(json) as Partial<AbgangsartKatalog>;
 		const result = new AbgangsartKatalog();
 		if (obj.version === undefined)
@@ -48,7 +48,7 @@ export class AbgangsartKatalog extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : AbgangsartKatalog) : string {
+	public static transpilerToJSON(obj: AbgangsartKatalog): string {
 		let result = '{';
 		result += '"version" : ' + obj.version.toString() + ',';
 		result += '"eintraege" : [ ';
@@ -64,7 +64,7 @@ export class AbgangsartKatalog extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<AbgangsartKatalog>) : string {
+	public static transpilerToJSONPatch(obj: Partial<AbgangsartKatalog>): string {
 		let result = '{';
 		if (obj.version !== undefined) {
 			result += '"version" : ' + obj.version.toString() + ',';
@@ -86,6 +86,6 @@ export class AbgangsartKatalog extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_schule_AbgangsartKatalog(obj : unknown) : AbgangsartKatalog {
+export function cast_de_svws_nrw_core_data_schule_AbgangsartKatalog(obj: unknown): AbgangsartKatalog {
 	return obj as AbgangsartKatalog;
 }

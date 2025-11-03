@@ -1,7 +1,7 @@
 import { JavaObject } from '../../../../../core/src/java/lang/JavaObject';
-import { Raum } from '../../../../../core/src/core/data/schule/Raum';
+import type { Raum } from '../../../../../core/src/core/data/schule/Raum';
 import { HashMap } from '../../../../../core/src/java/util/HashMap';
-import { Schulform } from '../../../../../core/src/asd/types/schule/Schulform';
+import type { Schulform } from '../../../../../core/src/asd/types/schule/Schulform';
 import { JavaString } from '../../../../../core/src/java/lang/JavaString';
 import { DeveloperNotificationException } from '../../../../../core/src/core/exceptions/DeveloperNotificationException';
 import { AuswahlManager } from '../../AuswahlManager';
@@ -11,19 +11,19 @@ import { JavaLong } from '../../../../../core/src/java/lang/JavaLong';
 import type { List } from '../../../../../core/src/java/util/List';
 import { Class } from '../../../../../core/src/java/lang/Class';
 import { Arrays } from '../../../../../core/src/java/util/Arrays';
-import { Schuljahresabschnitt } from '../../../../../core/src/asd/data/schule/Schuljahresabschnitt';
+import type { Schuljahresabschnitt } from '../../../../../core/src/asd/data/schule/Schuljahresabschnitt';
 
 export class RaumListeManager extends AuswahlManager<number, Raum, Raum> {
 
 	/**
 	 * Funktionen zum Mappen von Auswahl- bzw. Daten-Objekten auf deren ID-Typ
 	 */
-	private static readonly _raumToId : JavaFunction<Raum, number> = { apply : (f: Raum) => f.id };
+	private static readonly _raumToId: JavaFunction<Raum, number> = { apply: (f: Raum) => f.id };
 
 	/**
 	 * Zusätzliche Maps, welche zum schnellen Zugriff auf Teilmengen der Liste verwendet werden können
 	 */
-	private readonly _mapRaumByKuerzel : HashMap<string, Raum> = new HashMap<string, Raum>();
+	private readonly _mapRaumByKuerzel: HashMap<string, Raum> = new HashMap<string, Raum>();
 
 
 	/**
@@ -35,12 +35,12 @@ export class RaumListeManager extends AuswahlManager<number, Raum, Raum> {
 	 * @param schulform						die Schulform der Schule
 	 * @param raeume						die Liste der Raum
 	 */
-	public constructor(schuljahresabschnitt : number, schuljahresabschnittSchule : number, schuljahresabschnitte : List<Schuljahresabschnitt>, schulform : Schulform | null, raeume : List<Raum>) {
+	public constructor(schuljahresabschnitt: number, schuljahresabschnittSchule: number, schuljahresabschnitte: List<Schuljahresabschnitt>, schulform: Schulform | null, raeume: List<Raum>) {
 		super(schuljahresabschnitt, schuljahresabschnittSchule, schuljahresabschnitte, schulform, raeume, RaumUtils.comparator, RaumListeManager._raumToId, RaumListeManager._raumToId, Arrays.asList());
 		this.onMehrfachauswahlChanged();
 	}
 
-	protected onMehrfachauswahlChanged() : void {
+	protected onMehrfachauswahlChanged(): void {
 		this._mapRaumByKuerzel.clear();
 		for (const f of this.liste.list()) {
 			if (f.kuerzel !== null)
@@ -54,8 +54,8 @@ export class RaumListeManager extends AuswahlManager<number, Raum, Raum> {
 	 * @param eintrag   der Auswahl-Eintrag
 	 * @param daten     das neue Daten-Objekt zu der Auswahl
 	 */
-	protected onSetDaten(eintrag : Raum, daten : Raum) : boolean {
-		let updateEintrag : boolean = false;
+	protected onSetDaten(eintrag: Raum, daten: Raum): boolean {
+		let updateEintrag: boolean = false;
 		if (!JavaObject.equalsTranspiler(daten.kuerzel, (eintrag.kuerzel))) {
 			eintrag.kuerzel = daten.kuerzel;
 			updateEintrag = true;
@@ -75,11 +75,11 @@ export class RaumListeManager extends AuswahlManager<number, Raum, Raum> {
 	 *
 	 * @return das Ergebnis des Vergleichs (-1 kleine, 0 gleich und 1 größer)
 	 */
-	protected compareAuswahl(a : Raum, b : Raum) : number {
+	protected compareAuswahl(a: Raum, b: Raum): number {
 		for (const criteria of this._order) {
-			const field : string | null = criteria.a;
-			const asc : boolean = (criteria.b === null) || criteria.b;
-			let cmp : number = 0;
+			const field: string | null = criteria.a;
+			const asc: boolean = (criteria.b === null) || criteria.b;
+			let cmp: number = 0;
 			if (JavaObject.equalsTranspiler("kuerzel", (field))) {
 				cmp = JavaString.compareTo(a.kuerzel, b.kuerzel);
 			} else
@@ -89,7 +89,7 @@ export class RaumListeManager extends AuswahlManager<number, Raum, Raum> {
 					if (JavaObject.equalsTranspiler("groesse", (field))) {
 						cmp = JavaLong.compare(a.groesse, b.groesse);
 					} else
-						throw new DeveloperNotificationException("Fehler bei der Sortierung. Das Sortierkriterium wird vom Manager nicht unterstützt.")
+						throw new DeveloperNotificationException("Fehler bei der Sortierung. Das Sortierkriterium wird vom Manager nicht unterstützt.");
 			if (cmp === 0)
 				continue;
 			return asc ? cmp : -cmp;
@@ -97,7 +97,7 @@ export class RaumListeManager extends AuswahlManager<number, Raum, Raum> {
 		return RaumUtils.comparator.compare(a, b);
 	}
 
-	protected checkFilter(eintrag : Raum) : boolean {
+	protected checkFilter(eintrag: Raum): boolean {
 		return true;
 	}
 
@@ -109,7 +109,7 @@ export class RaumListeManager extends AuswahlManager<number, Raum, Raum> {
 	 *
 	 * @return die Raum oder null
 	 */
-	public getByKuerzelOrNull(kuerzel : string) : Raum | null {
+	public getByKuerzelOrNull(kuerzel: string): Raum | null {
 		return this._mapRaumByKuerzel.get(kuerzel);
 	}
 
@@ -117,7 +117,7 @@ export class RaumListeManager extends AuswahlManager<number, Raum, Raum> {
 		return 'de.svws_nrw.core.utils.raum.RaumListeManager';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.utils.AuswahlManager', 'de.svws_nrw.core.utils.raum.RaumListeManager'].includes(name);
 	}
 
@@ -125,6 +125,6 @@ export class RaumListeManager extends AuswahlManager<number, Raum, Raum> {
 
 }
 
-export function cast_de_svws_nrw_core_utils_raum_RaumListeManager(obj : unknown) : RaumListeManager {
+export function cast_de_svws_nrw_core_utils_raum_RaumListeManager(obj: unknown): RaumListeManager {
 	return obj as RaumListeManager;
 }

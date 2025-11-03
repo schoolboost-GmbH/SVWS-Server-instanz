@@ -16,13 +16,13 @@ import type { BenutzergruppeAppProps } from "~/components/einstellungen/benutzer
 import { RouteEinstellungenMenuGroup } from "../RouteEinstellungenMenuGroup";
 import { routeError } from "~/router/error/RouteError";
 
-const SBenutzergruppeAuswahl = () => import("~/components/einstellungen/benutzergruppen/SBenutzergruppeAuswahl.vue")
-const SBenutzergruppeApp = () => import("~/components/einstellungen/benutzergruppen/SBenutzergruppeApp.vue")
+const SBenutzergruppeAuswahl = () => import("~/components/einstellungen/benutzergruppen/SBenutzergruppeAuswahl.vue");
+const SBenutzergruppeApp = () => import("~/components/einstellungen/benutzergruppen/SBenutzergruppeApp.vue");
 
 export class RouteEinstellungenBenutzergruppe extends RouteNode<RouteDataEinstellungenBenutzergruppe, RouteApp> {
 
 	public constructor() {
-		super(Schulform.values(), [ BenutzerKompetenz.ADMIN ], "einstellungen.benutzergruppen", "einstellungen/benutzergruppe/:id(\\d+)?", SBenutzergruppeApp, new RouteDataEinstellungenBenutzergruppe());
+		super(Schulform.values(), [BenutzerKompetenz.ADMIN], "einstellungen.benutzergruppen", "einstellungen/benutzergruppe/:id(\\d+)?", SBenutzergruppeApp, new RouteDataEinstellungenBenutzergruppe());
 		super.mode = ServerMode.STABLE;
 		super.propHandler = (route) => this.getProps(route);
 		super.text = "Benutzergruppen";
@@ -34,18 +34,18 @@ export class RouteEinstellungenBenutzergruppe extends RouteNode<RouteDataEinstel
 		super.defaultChild = routeEinstellungenBenutzergruppeDaten;
 	}
 
-	public async beforeEach(to: RouteNode<any, any>, to_params: RouteParams, from: RouteNode<any, any> | undefined, from_params: RouteParams) : Promise<boolean | void | Error | RouteLocationRaw> {
+	public async beforeEach(to: RouteNode<any, any>, to_params: RouteParams, from: RouteNode<any, any> | undefined, from_params: RouteParams): Promise<boolean | void | Error | RouteLocationRaw> {
 		try {
 			const { id } = RouteNode.getIntParams(to_params, ["id"]);
 			if (id !== undefined)
 				return routeEinstellungenBenutzergruppeDaten.getRoute({ id });
 			return true;
-		} catch(e) {
+		} catch (e) {
 			return await routeError.getErrorRoute(e as DeveloperNotificationException);
 		}
 	}
 
-	protected async update(to: RouteNode<any, any>, to_params: RouteParams, from: RouteNode<any, any> | undefined, from_params: RouteParams, isEntering: boolean) : Promise<void | Error | RouteLocationRaw> {
+	protected async update(to: RouteNode<any, any>, to_params: RouteParams, from: RouteNode<any, any> | undefined, from_params: RouteParams, isEntering: boolean): Promise<void | Error | RouteLocationRaw> {
 		try {
 			if (isEntering)
 				await this.data.ladeListe();
@@ -57,16 +57,16 @@ export class RouteEinstellungenBenutzergruppe extends RouteNode<RouteDataEinstel
 				return this.getRouteDefaultChild({ id: this.data.mapBenutzergruppe.values().next().value?.id });
 			}
 			// Weiterleitung an das erste Objekt in der Liste, wenn id nicht vorhanden ist.
-			if(id !== undefined && !this.data.mapBenutzergruppe.has(id))
+			if (id !== undefined && !this.data.mapBenutzergruppe.has(id))
 				return this.getRouteDefaultChild({ id: this.data.mapBenutzergruppe.values().next().value?.id });
 			const eintrag = (id !== undefined) ? this.data.mapBenutzergruppe.get(id) : undefined;
 			await this.data.setBenutzergruppe(eintrag);
-		} catch(e) {
+		} catch (e) {
 			return await routeError.getErrorRoute(e as DeveloperNotificationException);
 		}
 	}
 
-	public addRouteParamsFromState() : RouteParamsRawGeneric {
+	public addRouteParamsFromState(): RouteParamsRawGeneric {
 		const id = (this.data.auswahl !== undefined) ? this.data.auswahl.id : undefined;
 		return { id };
 	}
@@ -77,8 +77,8 @@ export class RouteEinstellungenBenutzergruppe extends RouteNode<RouteDataEinstel
 			auswahl: () => this.data.auswahl,
 			mapBenutzergruppe: this.data.mapBenutzergruppe,
 			gotoBenutzergruppe: this.data.gotoBenutzergruppe,
-			createBenutzergruppe : this.data.create,
-			deleteBenutzergruppen : this.data.deleteBenutzergruppen,
+			createBenutzergruppe: this.data.create,
+			deleteBenutzergruppen: this.data.deleteBenutzergruppen,
 		};
 	}
 

@@ -6,7 +6,7 @@ export class IOException extends Exception {
 		return 'java.io.IOException';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return [
 			'java.io.IOException',
 			'java.lang.Exception',
@@ -19,6 +19,6 @@ export class IOException extends Exception {
 }
 
 
-export function cast_java_io_IOException(obj : unknown) : IOException {
+export function cast_java_io_IOException(obj: unknown): IOException {
 	return obj as IOException;
 }

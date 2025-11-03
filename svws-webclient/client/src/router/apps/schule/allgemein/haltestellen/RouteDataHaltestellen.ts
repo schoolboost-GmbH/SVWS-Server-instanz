@@ -15,7 +15,7 @@ const defaultState = {
 	view: routeHaltestellenDaten,
 	activeViewType: ViewType.DEFAULT,
 	oldView: undefined,
-}
+};
 
 export class RouteDataHaltestellen extends RouteDataAuswahl<HaltestellenListeManager, RouteStateAuswahlInterface<HaltestellenListeManager>> {
 
@@ -27,7 +27,7 @@ export class RouteDataHaltestellen extends RouteDataAuswahl<HaltestellenListeMan
 		const haltestellen = await api.server.getHaltestellen(api.schema);
 		const manager = new HaltestellenListeManager(api.abschnitt.id, api.schuleStammdaten.idSchuljahresabschnitt, api.schuleStammdaten.abschnitte,
 			api.schulform, haltestellen);
-		return { manager }
+		return { manager };
 	}
 
 	public addID(param: RouteParamsRawGeneric, id: number): void {
@@ -50,11 +50,11 @@ export class RouteDataHaltestellen extends RouteDataAuswahl<HaltestellenListeMan
 		return `Haltestelle ${haltestelle?.bezeichnung ?? '???'} (ID: ${id}) wurde erfolgreich gelöscht.`;
 	}
 
-	addHaltestelle = async (data: Partial<Haltestelle>) : Promise<void> => {
+	addHaltestelle = async (data: Partial<Haltestelle>): Promise<void> => {
 		const result = await api.server.addHaltestelle(data, api.schema);
 		this.manager.liste.add(result);
 		this.commit();
 		await this.gotoDefaultView(result.id);
-	}
+	};
 }
 

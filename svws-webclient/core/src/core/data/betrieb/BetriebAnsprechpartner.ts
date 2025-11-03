@@ -6,52 +6,52 @@ export class BetriebAnsprechpartner extends JavaObject {
 	/**
 	 * ID des Ansprechpartners
 	 */
-	public id : number = 0;
+	public id: number = 0;
 
 	/**
 	 * ID des Betriebs, dem der Ansprechpartner zugeordnet ist
 	 */
-	public betrieb_id : number = 0;
+	public betrieb_id: number = 0;
 
 	/**
 	 * Name des Ansprechpartners im Betrieb
 	 */
-	public name : string | null = null;
+	public name: string | null = null;
 
 	/**
 	 * Vorname des Ansprechpartners im Betrieb
 	 */
-	public vorname : string | null = null;
+	public vorname: string | null = null;
 
 	/**
 	 * Anrede des Ansprechpartners im Betrieb
 	 */
-	public anrede : string | null = null;
+	public anrede: string | null = null;
 
 	/**
 	 * Telefonnummer des Ansprechpartners im Betrieb
 	 */
-	public telefon : string | null = null;
+	public telefon: string | null = null;
 
 	/**
 	 * Email-Adresse des Ansprechpartners im Betrieb
 	 */
-	public email : string | null = null;
+	public email: string | null = null;
 
 	/**
 	 * ggf Abteilung des Ansprechpartners im Betrieb
 	 */
-	public abteilung : string | null = null;
+	public abteilung: string | null = null;
 
 	/**
 	 * Titel des Ansprechpartners im Betrieb
 	 */
-	public titel : string | null = null;
+	public titel: string | null = null;
 
 	/**
 	 * GU_ID des Ansprechpartners im Betrieb
 	 */
-	public GU_ID : string | null = null;
+	public GU_ID: string | null = null;
 
 
 	/**
@@ -65,13 +65,13 @@ export class BetriebAnsprechpartner extends JavaObject {
 		return 'de.svws_nrw.core.data.betrieb.BetriebAnsprechpartner';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.betrieb.BetriebAnsprechpartner'].includes(name);
 	}
 
 	public static class = new Class<BetriebAnsprechpartner>('de.svws_nrw.core.data.betrieb.BetriebAnsprechpartner');
 
-	public static transpilerFromJSON(json : string): BetriebAnsprechpartner {
+	public static transpilerFromJSON(json: string): BetriebAnsprechpartner {
 		const obj = JSON.parse(json) as Partial<BetriebAnsprechpartner>;
 		const result = new BetriebAnsprechpartner();
 		if (obj.id === undefined)
@@ -91,7 +91,7 @@ export class BetriebAnsprechpartner extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : BetriebAnsprechpartner) : string {
+	public static transpilerToJSON(obj: BetriebAnsprechpartner): string {
 		let result = '{';
 		result += '"id" : ' + obj.id.toString() + ',';
 		result += '"betrieb_id" : ' + obj.betrieb_id.toString() + ',';
@@ -108,7 +108,7 @@ export class BetriebAnsprechpartner extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<BetriebAnsprechpartner>) : string {
+	public static transpilerToJSONPatch(obj: Partial<BetriebAnsprechpartner>): string {
 		let result = '{';
 		if (obj.id !== undefined) {
 			result += '"id" : ' + obj.id.toString() + ',';
@@ -147,6 +147,6 @@ export class BetriebAnsprechpartner extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_betrieb_BetriebAnsprechpartner(obj : unknown) : BetriebAnsprechpartner {
+export function cast_de_svws_nrw_core_data_betrieb_BetriebAnsprechpartner(obj: unknown): BetriebAnsprechpartner {
 	return obj as BetriebAnsprechpartner;
 }

@@ -22,6 +22,6 @@ export type DataTableColumn = {
 	toggle?: boolean;
 	toggleInvisible?: boolean;
 	statistic?: boolean;
-}
+};
 
 export type SortByAndOrder = { key: string | null; order: boolean | null; };

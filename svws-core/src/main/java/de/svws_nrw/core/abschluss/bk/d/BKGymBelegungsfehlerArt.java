@@ -1,5 +1,6 @@
 package de.svws_nrw.core.abschluss.bk.d;
 
+import de.svws_nrw.core.exceptions.DeveloperNotificationException;
 import jakarta.validation.constraints.NotNull;
 
 /**
@@ -41,21 +42,14 @@ public enum BKGymBelegungsfehlerArt {
 	 *
 	 * @return die Belegungsfehler-Art
 	 */
-	public static BKGymBelegungsfehlerArt fromKuerzel(final String kuerzel) {
-		if (kuerzel == null)
-			return null;
-		switch (kuerzel) {
-			case "BELEGUNG":
-				return BELEGUNG;
-			case "SCHRIFTLICHKEIT":
-				return SCHRIFTLICHKEIT;
-			case "SCHULSPEZIFISCH":
-				return SCHULSPEZIFISCH;
-			case "HINWEIS":
-				return HINWEIS;
-			default:
-				return null;
-		}
+	public static @NotNull BKGymBelegungsfehlerArt fromKuerzel(final @NotNull String kuerzel) {
+		return switch (kuerzel) {
+			case "BELEGUNG" -> BELEGUNG;
+			case "SCHRIFTLICHKEIT" -> SCHRIFTLICHKEIT;
+			case "SCHULSPEZIFISCH" -> SCHULSPEZIFISCH;
+			case "HINWEIS" -> HINWEIS;
+			default -> throw new DeveloperNotificationException("Die Belegungsfehlerart " + kuerzel + " gibt es nicht.");
+		};
 	}
 
 

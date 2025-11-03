@@ -52,22 +52,22 @@
 			return;
 		const reason = (typeof error === 'string') ? new Error(error) : error;
 		createCapturedError(reason).then(() => show.value = true).catch((e: unknown) => e);
-	}
+	};
 
 	async function createCapturedError(reason: Error) {
 		let name = "Unbekannter Fehler";
 		let message = reason.message;
 		let log = null;
 		if (reason instanceof DeveloperNotificationException)
-			name = "Programmierfehler: Bitte melden Sie diesen Fehler."
+			name = "Programmierfehler: Bitte melden Sie diesen Fehler.";
 		else if (reason instanceof UserNotificationException)
 			name = "Nutzungsfehler: Dieser Fehler wurde durch eine nicht vorgesehene Nutzung der verwendeten Funktion hervorgerufen, z.B. durch unmögliche Kombinationen etc.";
 		else if (reason instanceof OpenApiError) {
-			name = "API-Fehler: Dieser Fehler wird durch eine fehlerhafte Kommunikation mit dem Server verursacht. In der Regel bedeutet das, dass die verschickten Daten nicht den Vorgaben entsprechen."
+			name = "API-Fehler: Dieser Fehler wird durch eine fehlerhafte Kommunikation mit dem Server verursacht. In der Regel bedeutet das, dass die verschickten Daten nicht den Vorgaben entsprechen.";
 			if (reason.response instanceof Response) {
 				const text = await reason.response.text();
 				try {
-					const res = JSON.parse(text)
+					const res = JSON.parse(text);
 					if (('log' in res) && ('success' in res))
 						log = res satisfies SimpleOperationResponse;
 				} catch {
@@ -84,9 +84,9 @@
 			message,
 			stack: reason.stack ?? '',
 			log,
-		}
+		};
 		error.value = newError;
 	}
-	defineExpose<{ openModal: (error?: string | Error) => void }>({openModal})
+	defineExpose<{ openModal: (error?: string | Error) => void }>({ openModal });
 
 </script>

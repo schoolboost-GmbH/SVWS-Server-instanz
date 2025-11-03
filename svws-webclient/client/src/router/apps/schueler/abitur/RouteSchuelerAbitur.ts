@@ -30,7 +30,7 @@ export class RouteSchuelerAbitur extends RouteNode<RouteDataSchuelerAbitur, Rout
 		super.text = "Abitur";
 		this.isHidden = (params?: RouteParams) => {
 			return this.checkHidden(params);
-		}
+		};
 		super.children = [
 			routeSchuelerAbiturZulassung,
 			routeSchuelerAbiturPruefungsuebersicht,
@@ -40,7 +40,7 @@ export class RouteSchuelerAbitur extends RouteNode<RouteDataSchuelerAbitur, Rout
 
 	protected checkHidden(params?: RouteParams) {
 		try {
-			const { id } = (params !== undefined) ? RouteNode.getIntParams(params, ["id"]) : {id: undefined};
+			const { id } = (params !== undefined) ? RouteNode.getIntParams(params, ["id"]) : { id: undefined };
 			if (!routeSchueler.data.manager.hasDaten())
 				return false;
 			const auswahl = routeSchueler.data.manager.auswahl();
@@ -55,9 +55,9 @@ export class RouteSchuelerAbitur extends RouteNode<RouteDataSchuelerAbitur, Rout
 		}
 	}
 
-	protected async update(to: RouteNode<any, any>, to_params: RouteParams, from: RouteNode<any, any> | undefined, from_params: RouteParams, isEntering: boolean) : Promise<void | Error | RouteLocationRaw> {
+	protected async update(to: RouteNode<any, any>, to_params: RouteParams, from: RouteNode<any, any> | undefined, from_params: RouteParams, isEntering: boolean): Promise<void | Error | RouteLocationRaw> {
 		try {
-			const { id } = RouteNode.getIntParams(to_params, [ "id" ]);
+			const { id } = RouteNode.getIntParams(to_params, ["id"]);
 			if (id === undefined)
 				throw new DeveloperNotificationException("Fehler: Keine Schüler-ID in der URL angegeben.");
 			const schueler = routeSchueler.data.manager.liste.get(id);
@@ -65,7 +65,7 @@ export class RouteSchuelerAbitur extends RouteNode<RouteDataSchuelerAbitur, Rout
 				return routeSchueler.getRoute({ id });
 			try {
 				await this.data.setSchueler(schueler, isEntering);
-			} catch(error) {
+			} catch (error) {
 				return routeSchueler.getRoute({ id });
 			}
 			if (to === this)
@@ -97,7 +97,7 @@ export class RouteSchuelerAbitur extends RouteNode<RouteDataSchuelerAbitur, Rout
 			throw new DeveloperNotificationException("Unbekannte Route");
 		await RouteManager.doRoute(this.getRouteView(node));
 		this.data.setView(node, this.children);
-	}
+	};
 
 }
 

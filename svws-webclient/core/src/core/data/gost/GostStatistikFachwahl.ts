@@ -7,42 +7,42 @@ export class GostStatistikFachwahl extends JavaObject {
 	/**
 	 * Das Jahr, in welchem der Jahrgang Abitur machen wird.
 	 */
-	public abiturjahr : number = 0;
+	public abiturjahr: number = 0;
 
 	/**
 	 * Die ID des Faches, für welches die Fachwahldaten ermittelt wurden.
 	 */
-	public id : number = 0;
+	public id: number = 0;
 
 	/**
 	 * Das eindeutige Kürzel des Faches
 	 */
-	public kuerzel : string | null = null;
+	public kuerzel: string | null = null;
 
 	/**
 	 * Die Bezeichnung des Faches
 	 */
-	public bezeichnung : string | null = null;
+	public bezeichnung: string | null = null;
 
 	/**
 	 * Das Statistik-Kürzel des Faches
 	 */
-	public kuerzelStatistik : string | null = null;
+	public kuerzelStatistik: string | null = null;
 
 	/**
 	 * Die Anzahl der Wahlen als drittes Abiturfach.
 	 */
-	public wahlenAB3 : number = 0;
+	public wahlenAB3: number = 0;
 
 	/**
 	 * Die Anzahl der Wahlen als viertes Abiturfach.
 	 */
-	public wahlenAB4 : number = 0;
+	public wahlenAB4: number = 0;
 
 	/**
 	 * Ein Array mit den Fachwahlen der 6 Halbjahre der gymnasialen Oberstufe
 	 */
-	public fachwahlen : Array<GostStatistikFachwahlHalbjahr> = Array(6).fill(null);
+	public fachwahlen: Array<GostStatistikFachwahlHalbjahr> = Array(6).fill(null);
 
 
 	/**
@@ -56,13 +56,13 @@ export class GostStatistikFachwahl extends JavaObject {
 		return 'de.svws_nrw.core.data.gost.GostStatistikFachwahl';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.gost.GostStatistikFachwahl'].includes(name);
 	}
 
 	public static class = new Class<GostStatistikFachwahl>('de.svws_nrw.core.data.gost.GostStatistikFachwahl');
 
-	public static transpilerFromJSON(json : string): GostStatistikFachwahl {
+	public static transpilerFromJSON(json: string): GostStatistikFachwahl {
 		const obj = JSON.parse(json) as Partial<GostStatistikFachwahl>;
 		const result = new GostStatistikFachwahl();
 		if (obj.abiturjahr === undefined)
@@ -88,7 +88,7 @@ export class GostStatistikFachwahl extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : GostStatistikFachwahl) : string {
+	public static transpilerToJSON(obj: GostStatistikFachwahl): string {
 		let result = '{';
 		result += '"abiturjahr" : ' + obj.abiturjahr.toString() + ',';
 		result += '"id" : ' + obj.id.toString() + ',';
@@ -110,7 +110,7 @@ export class GostStatistikFachwahl extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<GostStatistikFachwahl>) : string {
+	public static transpilerToJSONPatch(obj: Partial<GostStatistikFachwahl>): string {
 		let result = '{';
 		if (obj.abiturjahr !== undefined) {
 			result += '"abiturjahr" : ' + obj.abiturjahr.toString() + ',';
@@ -151,6 +151,6 @@ export class GostStatistikFachwahl extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_gost_GostStatistikFachwahl(obj : unknown) : GostStatistikFachwahl {
+export function cast_de_svws_nrw_core_data_gost_GostStatistikFachwahl(obj: unknown): GostStatistikFachwahl {
 	return obj as GostStatistikFachwahl;
 }

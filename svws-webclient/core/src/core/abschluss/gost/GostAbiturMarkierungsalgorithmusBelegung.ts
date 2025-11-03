@@ -9,22 +9,22 @@ export class GostAbiturMarkierungsalgorithmusBelegung extends JavaObject {
 	/**
 	 * Die Fachbelegegung
 	 */
-	public readonly belegung : AbiturFachbelegung;
+	public readonly belegung: AbiturFachbelegung;
 
 	/**
 	 * Die Halbjahresbelegung
 	 */
-	public readonly belegungHalbjahr : AbiturFachbelegungHalbjahr;
+	public readonly belegungHalbjahr: AbiturFachbelegungHalbjahr;
 
 	/**
 	 * Das Halbjahr der Halbjahrebelegung
 	 */
-	public readonly halbjahr : GostHalbjahr;
+	public readonly halbjahr: GostHalbjahr;
 
 	/**
 	 * Die Notenpunkte der Halbjahresbelegung
 	 */
-	public readonly notenpunkte : number;
+	public readonly notenpunkte: number;
 
 
 	/**
@@ -34,11 +34,11 @@ export class GostAbiturMarkierungsalgorithmusBelegung extends JavaObject {
 	 * @param belegungHalbjahr
 	 * @param notenpunkte
 	 */
-	constructor(belegung : AbiturFachbelegung, belegungHalbjahr : AbiturFachbelegungHalbjahr, notenpunkte : number) {
+	constructor(belegung: AbiturFachbelegung, belegungHalbjahr: AbiturFachbelegungHalbjahr, notenpunkte: number) {
 		super();
 		this.belegung = belegung;
 		this.belegungHalbjahr = belegungHalbjahr;
-		const tmpHalbjahr : GostHalbjahr | null = GostHalbjahr.fromKuerzel(belegungHalbjahr.halbjahrKuerzel);
+		const tmpHalbjahr: GostHalbjahr | null = GostHalbjahr.fromKuerzel(belegungHalbjahr.halbjahrKuerzel);
 		this.halbjahr = (tmpHalbjahr === null) ? GostHalbjahr.EF1 : tmpHalbjahr;
 		this.notenpunkte = notenpunkte;
 	}
@@ -47,7 +47,7 @@ export class GostAbiturMarkierungsalgorithmusBelegung extends JavaObject {
 		return 'de.svws_nrw.core.abschluss.gost.GostAbiturMarkierungsalgorithmusBelegung';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.abschluss.gost.GostAbiturMarkierungsalgorithmusBelegung'].includes(name);
 	}
 
@@ -55,6 +55,6 @@ export class GostAbiturMarkierungsalgorithmusBelegung extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_abschluss_gost_GostAbiturMarkierungsalgorithmusBelegung(obj : unknown) : GostAbiturMarkierungsalgorithmusBelegung {
+export function cast_de_svws_nrw_core_abschluss_gost_GostAbiturMarkierungsalgorithmusBelegung(obj: unknown): GostAbiturMarkierungsalgorithmusBelegung {
 	return obj as GostAbiturMarkierungsalgorithmusBelegung;
 }

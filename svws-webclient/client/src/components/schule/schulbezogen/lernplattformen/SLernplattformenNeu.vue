@@ -26,7 +26,7 @@
 	import { computed, ref, watch } from "vue";
 	import { BenutzerKompetenz, Lernplattform } from "@core";
 	import type { SLernplattformenNeuProps } from "~/components/schule/schulbezogen/lernplattformen/SLernplattformenNeuProps";
-	import {isUniqueInList, mandatoryInputIsValid} from "~/util/validation/Validation";
+	import { isUniqueInList, mandatoryInputIsValid } from "~/util/validation/Validation";
 
 	const props = defineProps<SLernplattformenNeuProps>();
 	const hatKompetenzUpdate = computed<boolean>(() => props.benutzerKompetenzen.has(BenutzerKompetenz.KATALOG_EINTRAEGE_AENDERN));
@@ -35,7 +35,7 @@
 	const data = ref(new Lernplattform());
 	const isLoading = ref<boolean>(false);
 
-	function fieldIsValid(field: keyof Lernplattform | null) : (v: string | null) => boolean {
+	function fieldIsValid(field: keyof Lernplattform | null): (v: string | null) => boolean {
 		return (v: string | null) => {
 			switch (field) {
 				case 'bezeichnung':
@@ -43,7 +43,7 @@
 				default:
 					return true;
 			}
-		}
+		};
 	}
 
 	function bezeichnungIsValid(value: string | null) {
@@ -59,8 +59,8 @@
 			const validateField = fieldIsValid(field as keyof Lernplattform);
 			const fieldValue = data.value[field as keyof Lernplattform] as string | null;
 			return validateField(fieldValue);
-		})
-	})
+		});
+	});
 
 	async function addEinwilligungsart() {
 		if (isLoading.value === true)
@@ -78,11 +78,11 @@
 		await props.gotoDefaultView(null);
 	}
 
-	watch(() => data.value, async() => {
+	watch(() => data.value, async () => {
 		if (isLoading.value)
 			return;
 
 		props.checkpoint.active = true;
-	}, {immediate: false, deep: true});
+	}, { immediate: false, deep: true });
 
 </script>

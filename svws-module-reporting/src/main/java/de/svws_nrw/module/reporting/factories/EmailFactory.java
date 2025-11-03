@@ -14,7 +14,7 @@ import de.svws_nrw.core.types.reporting.ReportingEMailEmpfaengerTyp;
 import de.svws_nrw.data.benutzer.DataBenutzerEMailDaten;
 import de.svws_nrw.data.email.DataEmailJobs;
 import de.svws_nrw.db.utils.ApiOperationException;
-import de.svws_nrw.module.reporting.pdf.PdfBuilder;
+import de.svws_nrw.module.reporting.builders.ReportBuilderPdf;
 import de.svws_nrw.module.reporting.repositories.ReportingRepository;
 import de.svws_nrw.module.reporting.types.gost.kursplanung.ReportingGostKursplanungKurs;
 import de.svws_nrw.module.reporting.types.klasse.ReportingKlasse;
@@ -32,7 +32,9 @@ import jakarta.ws.rs.core.Response.Status;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * Versendet Report-Ergebnisse in Form von PDF-Dateien per E-Mail an die zugehörigen Personen.
@@ -44,7 +46,7 @@ public final class EmailFactory {
 	 * Die Domains smail.de und lmail.de sind real existierende Domains, die vom Anonymisierung-Tool für SchILD-NRW verwendet wurden und damit in vielen
 	 * Beispieldatenbanken vorhanden sind.
 	 */
-	private static final List<String> BLOCKED_EMAIL_DOMAINS = new ArrayList<>(List.of("smail.de", "lmail.de"));
+	private static final Set<String> BLOCKED_EMAIL_DOMAINS = Set.of("smail.de", "lmail.de");
 
 	/** Repository mit Parametern, Logger und Daten-Cache zur Report-Generierung. */
 	private final ReportingRepository reportingRepository;
@@ -88,7 +90,7 @@ public final class EmailFactory {
 			final ReportingEMailEmpfaengerTyp empfaengerTyp = ermittleEmpfaengerTyp();
 			reportingRepository.logger().logLn(LogLevel.DEBUG, 4, "Empfänger-Typ der E-Mail ermittelt.");
 
-			final Map<Long, List<PdfBuilder>> mapGruppiertePdfs = pdfFactory.getPdfBuildersById();
+			final Map<Long, List<ReportBuilderPdf>> mapGruppiertePdfs = pdfFactory.getPdfBuildersById();
 			reportingRepository.logger().logLn(LogLevel.DEBUG, 4, "PDF-Builder in gruppierter Form erhalten.");
 
 			final List<String> listUebersprungen = new ArrayList<>();
@@ -162,7 +164,7 @@ public final class EmailFactory {
 		} catch (@SuppressWarnings("unused") final Exception ignore) {
 			emailAdresse = "";
 		}
-		emailAdresse = validateEmail(emailAdresse);
+		emailAdresse = validatedEmailOrEmpty(emailAdresse);
 
 		if (emailAdresse.isBlank()) {
 			reportingRepository.logger().logLn(LogLevel.ERROR, 4,
@@ -209,15 +211,15 @@ public final class EmailFactory {
 	 * @throws ApiOperationException Wenn beim Prozessieren der Daten ein Fehler auftritt, wird diese Exception geworfen.
 	 */
 	private List<EmailJobRecipient> sammleEmpfaengerUndAnhaenge(final ReportingParameter parameter,
-			final ReportingEMailEmpfaengerTyp empfaengerTyp, final Map<Long, List<PdfBuilder>> mapGruppiertePdfs, final List<String> listUebersprungen)
+			final ReportingEMailEmpfaengerTyp empfaengerTyp, final Map<Long, List<ReportBuilderPdf>> mapGruppiertePdfs, final List<String> listUebersprungen)
 			throws ApiOperationException {
 
-		final List<EmailJobRecipient> result = new ArrayList<>();
 		final Map<String, EmailJobRecipient> mapEmpfaengerEmailAnhaenge = new HashMap<>();
-		for (final Map.Entry<Long, List<PdfBuilder>> entry : mapGruppiertePdfs.entrySet()) {
+
+		for (final Map.Entry<Long, List<ReportBuilderPdf>> entry : mapGruppiertePdfs.entrySet()) {
 
 			final Long id = entry.getKey();
-			final List<PdfBuilder> pdfBuilders = entry.getValue();
+			final List<ReportBuilderPdf> pdfBuilders = entry.getValue();
 
 			if (id == null)
 				continue;
@@ -238,35 +240,46 @@ public final class EmailFactory {
 				continue;
 			}
 
-			final List<EmailJobAttachment> attachments = pdfBuilders.stream()
-					.map(pdfBuilder -> new EmailJobAttachment(pdfBuilder.getDateinameMitEndung(), pdfBuilder.getPdfByteArray(), "application/pdf"))
-					.toList();
+			final List<EmailJobAttachment> attachments = new ArrayList<>();
+
+			for (final ReportBuilderPdf pdfBuilder : pdfBuilders) {
+				try {
+					attachments.add(new EmailJobAttachment(pdfBuilder.getDateinameMitEndung(), pdfBuilder.generate(), "application/pdf"));
+				} catch (final RuntimeException runtimeException) {
+					reportingRepository.logger().logLn(LogLevel.ERROR, 4,
+							"### FEHLER: PDF-Datei '" + pdfBuilder.getDateiname() + "' für ID " + id + " konnte nicht generiert werden: "
+									+ runtimeException.getMessage());
+					throw new ApiOperationException(Status.INTERNAL_SERVER_ERROR, runtimeException,
+							"### FEHLER: PDF-Datei '" + pdfBuilder.getDateiname() + "' für ID " + id + " konnte nicht generiert werden: "
+									+ runtimeException.getMessage());
+				}
+			}
 
 			sammleEmpfaengerUndAnhaengeFuerAttachments(id, empfaengerPersonen, parameter.eMailDaten.istPrivateEmailAlternative, attachments,
 					mapEmpfaengerEmailAnhaenge, listUebersprungen);
 		}
-		result.addAll(mapEmpfaengerEmailAnhaenge.values());
-		return result;
+
+		return new ArrayList<>(mapEmpfaengerEmailAnhaenge.values());
 	}
 
 
 	/**
-	 * Hilfsmethode zu sammleEmpfaengerUndAnhaenge, welche für die Anhänge eines PDF-Builders die Email-Empfänger bestimmt und diesen zuordnet.
+	 * Hilfsmethode zu sammleEmpfaengerUndAnhaenge, welche für die Anhänge eines PDF-Builders die E-Mail-Empfänger bestimmt und diesen zuordnet.
 	 * Die Zuordnung erfolgt über die in dem Parameter mapEmpfaengerEmailAnhaenge übergebene Map, welche im Allgemeinen schon durch vorige
-	 * Aufrufe Zuordnung von anderen Anhängen beinhaltet.
+	 * Aufrufe Zuordnungen von anderen Anhängen beinhaltet.
 	 *
 	 * @param id                            die ID
-	 * @param empfaengerPersonen            die Personen-Onjekte für den Empfänger
-	 * @param nutzeAlternativPrivateEmail   gibt an, ob von der Person auch die private Email-Adresse genutzt werden kann
+	 * @param empfaengerPersonen            die Personen-Objekte für den Empfänger
+	 * @param nutzeAlternativPrivateEmail   gibt an, ob von der Person auch die private E-Mail-Adresse genutzt werden kann
 	 * @param attachments                   die Anhänge, die den Empfänger-Personen zugeordnet werden können
-	 * @param mapEmpfaengerEmailAnhaenge    die Map, welche mit dieser Methode schrittweise aufgebaut wird und die die Zuordnung der Anhänge beinhaltet
+	 * @param mapEmpfaengerEmailAnhaenge    die Map, welche mit dieser Methode schrittweise aufgebaut wird und die Zuordnung der Anhänge beinhaltet
 	 * @param listUebersprungen             die Liste, in der Informationen über übersprungene Datensätze gesammelt werden
 	 */
 	private static void sammleEmpfaengerUndAnhaengeFuerAttachments(final long id, final List<ReportingPerson> empfaengerPersonen,
 			final boolean nutzeAlternativPrivateEmail, final List<EmailJobAttachment> attachments,
 			final Map<String, EmailJobRecipient> mapEmpfaengerEmailAnhaenge, final List<String> listUebersprungen) {
 		for (final ReportingPerson empfaengerPerson : empfaengerPersonen) {
-			final String empfaengerEmail = ermittleEmpfaengerEmail(empfaengerPerson, nutzeAlternativPrivateEmail);
+			final String empfaengerEmail = ermittleEMailAdresseZurPerson(empfaengerPerson, nutzeAlternativPrivateEmail);
 
 			if (empfaengerEmail.isBlank()) {
 				listUebersprungen.add("- Für die ID " + id + " konnte keine gültige E-Mail-Adresse des Empfängers ermittelt werden. Sie wird beim "
@@ -274,50 +287,22 @@ public final class EmailFactory {
 				continue;
 			}
 
-			if (BLOCKED_EMAIL_DOMAINS.contains(empfaengerEmail.toLowerCase().substring(empfaengerEmail.indexOf('@') + 1))) {
-				listUebersprungen.add("- Die E-Mail an " + empfaengerEmail + " konnte nicht versendet werden, da die Domain als unzulässig markiert "
-						+ "wurde.");
+			// Überprüfung der E-Mail-Domain.
+			final int atIndex = empfaengerEmail.lastIndexOf('@');
+			if ((atIndex <= 0) || (atIndex == (empfaengerEmail.length() - 1))) {
+				listUebersprungen.add("- Die E-Mail-Adresse '" + empfaengerEmail + "' für ID " + id + " ist ungültig (fehlende oder fehlerhafte Domain).");
+				continue;
+			}
+			final String domain = empfaengerEmail.substring(atIndex + 1).toLowerCase(Locale.ROOT);
+			if (BLOCKED_EMAIL_DOMAINS.contains(domain)) {
+				listUebersprungen.add("- Die E-Mail an " + empfaengerEmail + " konnte nicht versendet werden, da die Domain als unzulässig markiert wurde.");
 				continue;
 			}
 
 			final EmailJobRecipient empfaengerEmailAnhaenge =
-					mapEmpfaengerEmailAnhaenge.computeIfAbsent(empfaengerEmail, k -> new EmailJobRecipient(normalisierteEmail(empfaengerPerson)));
+					mapEmpfaengerEmailAnhaenge.computeIfAbsent(empfaengerEmail, k -> new EmailJobRecipient(empfaengerEmail));
 			empfaengerEmailAnhaenge.attachments.addAll(attachments);
 		}
-	}
-
-
-	/**
-	 * Ermittelt die E-Mail-Adresse eines Empfängers basierend auf den bereitgestellten Daten. Standardmäßig wird die schulische E-Mail-Adresse verwendet.
-	 * Ist diese nicht verfügbar und ist die Verwendung der privaten E-Mail-Adresse zulässig, wird alternativ die private Adresse verwendet.
-	 *
-	 * @param reportingPerson Die Person, deren E-Mail-Adresse ermittelt werden soll. Kann nicht null sein.
-	 * @param istPrivateEmailAlternative Ein Indikator, ob die private E-Mail-Adresse genutzt werden darf, falls die schulische Adresse nicht verfügbar ist.
-	 *
-	 * @return Die gültige E-Mail-Adresse des Empfängers als String. Falls keine Adresse verfügbar ist, wird ein leerer String zurückgegeben.
-	 */
-	private static String ermittleEmpfaengerEmail(final ReportingPerson reportingPerson, final boolean istPrivateEmailAlternative) {
-		if (reportingPerson == null)
-			return "";
-
-		// Im Regelfall wird die schulische E-Mail-Adresse verwendet.
-		String emailAdresse = reportingPerson.emailSchule();
-		if ((emailAdresse != null) && !emailAdresse.isBlank())
-			emailAdresse = validateEmail(emailAdresse);
-		else
-			emailAdresse = "";
-
-		// Ist keine schulische E-Mail-Adresse vorhanden und wurde die private E-Mail-Adresse als Empfänger erlaubt, dann wird die private E-Mail-Adresse
-		// verwendet.
-		if ((emailAdresse.isBlank()) && istPrivateEmailAlternative) {
-			emailAdresse = reportingPerson.emailPrivat();
-			if ((emailAdresse != null) && !emailAdresse.isBlank())
-				emailAdresse = validateEmail(emailAdresse);
-			else
-				emailAdresse = "";
-		}
-
-		return emailAdresse;
 	}
 
 	/**
@@ -379,6 +364,13 @@ public final class EmailFactory {
 	public Response cancelEmailJob(final long idJob) {
 		final var manager =
 				EmailJobManagerFactory.getInstance().getManagerByUser(reportingRepository.conn().getDBSchema(), reportingRepository.conn().getUser().getId());
+		if (manager == null) {
+			final SimpleOperationResponse notFound = new SimpleOperationResponse();
+			notFound.success = false;
+			notFound.log.add("E-Mail-Job-Manager nicht gefunden für: " + reportingRepository.conn().getUser().getId() + " ("
+					+ reportingRepository.conn().getDBSchema() + ")");
+			return Response.status(Status.NOT_FOUND).type(MediaType.APPLICATION_JSON).entity(notFound).build();
+		}
 		final EmailJob job = manager.getJob(idJob);
 		if (job == null) {
 			final SimpleOperationResponse notFound = new SimpleOperationResponse();
@@ -405,6 +397,45 @@ public final class EmailFactory {
 	// ##### Hilfsmethoden #####
 
 	/**
+	 * Liefert die E-Mail-Adresse einer angegebenen Person. Falls die Schul-E-Mail-Adresse nicht vorhanden oder ungültig ist, wird die private E-Mail-Adresse
+	 * verwendet, sofern diese als Alternative erlaubt ist. Gibt einen leeren String zurück, wenn keine gültige E-Mail-Adresse gefunden wurde.
+	 *
+	 * @param reportingPerson Die Person, von der die E-Mail-Adresse abgerufen werden soll.
+	 * @param istPrivateEmailAlternative Gibt an, ob auch die private E-Mail-Adresse der Peron berücksichtigt werden soll.
+	 *
+	 * @return Die gültige E-Mail-Adresse der Person oder ein leerer String, wenn keine gültige E-Mail-Adresse gefunden wurde.
+	 */
+	private static String ermittleEMailAdresseZurPerson(final ReportingPerson reportingPerson, final boolean istPrivateEmailAlternative) {
+		if (reportingPerson == null)
+			return "";
+
+		String eMailAddress = validatedEmailOrEmpty(reportingPerson.emailSchule());
+
+		if (eMailAddress.isBlank() && istPrivateEmailAlternative)
+			eMailAddress = validatedEmailOrEmpty(reportingPerson.emailPrivat());
+
+		return eMailAddress;
+	}
+
+	/**
+	 * Validiert die angegebene E-Mail-Adresse und gibt sie in bereinigter Form zurück, wenn sie gültig ist. Andernfalls wird ein leerer String zurückgegeben.
+	 *
+	 * @param emailAddress Die zu validierende E-Mail-Adresse.
+	 *
+	 * @return Die bereinigte und validierte E-Mail-Adresse in Kleinbuchstaben, oder ein leerer String, wenn die Eingabe ungültig ist.
+	 */
+	private static String validatedEmailOrEmpty(final String emailAddress) {
+		if ((emailAddress == null) || emailAddress.isBlank())
+			return "";
+		// E-Mail-Adresse bearbeiten ...
+		final String resultEmailAddress = emailAddress.trim().toLowerCase(Locale.ROOT);
+		// ... und dann validieren.
+		if (isValidEmail(resultEmailAddress))
+			return resultEmailAddress;
+		return "";
+	}
+
+	/**
 	 * Überprüft, ob die angegebene E-Mail-Adresse gültig ist.
 	 *
 	 * @param emailAddress   die E-Mail-Adresse, die überprüft werden soll.
@@ -421,25 +452,6 @@ public final class EmailFactory {
 		} catch (@SuppressWarnings("unused") final AddressException addressException) {
 			return false;
 		}
-	}
-
-	/**
-	 * Validiert eine gegebene E-Mail-Adresse. Falls die E-Mail-Adresse gültig ist,
-	 * wird sie zurückgegeben, andernfalls wird ein leerer String zurückgegeben.
-	 *
-	 * @param emailAddress   die E-Mail-Adresse, die validiert werden soll. Kann {@code null} oder leer sein.
-	 *
-	 * @return die validierte E-Mail-Adresse, wenn sie gültig ist, ansonsten ein leerer String.
-	 */
-	private static String validateEmail(final String emailAddress) {
-		if ((emailAddress == null) || emailAddress.isBlank())
-			return "";
-		// E-Mail-Adresse bearbeiten ...
-		final String resultEmailAddress = emailAddress.trim().toLowerCase();
-		// ... und dann validieren.
-		if (isValidEmail(resultEmailAddress))
-			return resultEmailAddress;
-		return "";
 	}
 
 	/**
@@ -580,30 +592,6 @@ public final class EmailFactory {
 			}
 		}
 		return stringBuilder.toString();
-	}
-
-
-	/**
-	 * Normalisiert die E-Mail-Adresse eines ReportingPerson-Objekts. Dabei wird versucht, zuerst die schulische E-Mail-Adresse zu verwenden. Ist diese
-	 * nicht vorhanden oder leer, wird stattdessen die private E-Mail-Adresse verwendet. Die gefundene E-Mail-Adresse wird getrimmt, in Kleinbuchstaben
-	 * umgewandelt und zurückgegeben. Falls keine gültige E-Mail-Adresse verfügbar ist, wird ein leerer String zurückgegeben.
-	 *
-	 * @param reportingPerson Das ReportingPerson-Objekt, dessen E-Mail-Adresse normalisiert werden soll.
-	 *          Wenn null übergeben wird, wird ein leerer String zurückgegeben.
-	 *
-	 * @return Die normalisierte E-Mail-Adresse als String. Wenn weder eine schulische noch eine private
-	 *         E-Mail-Adresse verfügbar ist, wird ein leerer String zurückgegeben.
-	 */
-	private static String normalisierteEmail(final ReportingPerson reportingPerson) {
-		if (reportingPerson == null)
-			return "";
-		final String schulMail = reportingPerson.emailSchule();
-		if ((schulMail != null) && !schulMail.isBlank())
-			return schulMail.trim().toLowerCase();
-		final String privatMail = reportingPerson.emailPrivat();
-		if ((privatMail != null) && !privatMail.isBlank())
-			return privatMail.trim().toLowerCase();
-		return "";
 	}
 
 }

@@ -12,6 +12,6 @@ export type StundenplanAnsichtPlanungProps = {
 	importZeitraster: undefined | (() => Promise<void>);
 	schulform?: Schulform;
 	setSelection: (value: Wochentag | number | StundenplanZeitraster | StundenplanPausenzeit | undefined) => void;
-	selected: Wochentag|number|StundenplanZeitraster|StundenplanPausenzeit|undefined;
+	selected: Wochentag | number | StundenplanZeitraster | StundenplanPausenzeit | undefined;
 	setSettingsDefaults?: (value: StundenplanKonfiguration) => Promise<void>;
-}
+};

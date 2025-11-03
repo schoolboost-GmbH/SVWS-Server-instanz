@@ -148,7 +148,7 @@
 
 	import { reactive } from 'vue';
 	import { ValidatorFehlerart } from '../../../../core/src/asd/validate/ValidatorFehlerart';
-	import Docs from './UiCard.story.md'
+	import Docs from './UiCard.story.md';
 
 	const onEdit = () => alert("Bearbeiten");
 	const onSave = () => alert("Speichern");
@@ -184,6 +184,6 @@
 		disabledCancel: false,
 		disabledSave: false,
 		disabledReason: 'Sie benötigen Adminrechte, um diese Aktion ausführen zu können',
-	})
+	});
 
 </script>

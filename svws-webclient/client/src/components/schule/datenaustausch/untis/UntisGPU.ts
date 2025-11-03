@@ -43,7 +43,7 @@ export class UntisGPUCsv<GPUTYPE> {
 	public constructor(schema: Array<UntisGPUColumns<GPUTYPE>>, input: string | Array<GPUTYPE>, seperator: string = ";") {
 		this._schema = schema;
 		this._valid = true;
-		if (typeof input ==='string') {
+		if (typeof input === 'string') {
 			this._csv = input;
 			this._data = new Array<GPUTYPE>();
 			const rows = this._csv.replaceAll("\r\n", "\n").split("\n");
@@ -56,7 +56,7 @@ export class UntisGPUCsv<GPUTYPE> {
 					if (tmp.at(0) === '"') {
 						const result = /"([^"]|(\\"))*"/.exec(tmp);
 						const str = result?.[0] ?? null;
-						this.getData(obj, str === null ? null : str.substring(1, str.length-1), this._schema.at(index));
+						this.getData(obj, str === null ? null : str.substring(1, str.length - 1), this._schema.at(index));
 						tmp = tmp.substring((str?.length ?? 0) + 1); // Entferne den String und das Semikolon danach
 					} else {
 						const len = tmp.indexOf(seperator);
@@ -90,7 +90,7 @@ export class UntisGPUCsv<GPUTYPE> {
 	 * @param csv   der bisherige CSV-String, an den der Wert angehangen werden soll
 	 * @param col   die Schema-Definition der Spalte
 	 */
-	private setData(obj: any, csv: string, col: UntisGPUColumns<GPUTYPE> | undefined) : string {
+	private setData(obj: any, csv: string, col: UntisGPUColumns<GPUTYPE> | undefined): string {
 		if (col === undefined)
 			return csv;
 		if ((obj[col.name] === undefined) || (obj[col.name] === null)) {
@@ -108,7 +108,7 @@ export class UntisGPUCsv<GPUTYPE> {
 	 * @param value   der hinzuzufügende Wert
 	 * @param col     die Schema-Definition der Spalte
 	 */
-	private getData(obj: any, value: string | null, col: UntisGPUColumns<GPUTYPE> | undefined) : void {
+	private getData(obj: any, value: string | null, col: UntisGPUColumns<GPUTYPE> | undefined): void {
 		if (col === undefined)
 			return;
 		if ((value === null) && (col.required))
@@ -120,22 +120,22 @@ export class UntisGPUCsv<GPUTYPE> {
 	}
 
 	/** Gibt an, on die eingelesenen Daten gültig sind oder nicht */
-	public get valid() : boolean {
+	public get valid(): boolean {
 		return this._valid;
 	}
 
 	/** Die eingelesenen Daten als Array des GPU-Datentyps */
-	public get data() : Array<GPUTYPE> {
+	public get data(): Array<GPUTYPE> {
 		return this._data;
 	}
 
 	/**
 	 * Die Daten der GPU-Datei als CSV-String
 	 */
-	public get asString() : string {
+	public get asString(): string {
 		if (!this.valid)
 			return '';
-		let result : string = '';
+		let result: string = '';
 		for (const row of this.data) {
 			for (let index = 0; index < this._schema.length; index++) {
 				if (index !== 0)
@@ -193,7 +193,7 @@ export interface UntisGPU001 {
 export class UntisGPU001Csv extends UntisGPUCsv<UntisGPU001> {
 
 	/** Die Map mit den Unterrichts-Einträgen anhand ihrer ID - wird bei Bedarf über den Getter initialisiert */
-	private _mapByUnterrichtsID : Map<number, UntisGPU001> | null = null;
+	private _mapByUnterrichtsID: Map<number, UntisGPU001> | null = null;
 
 	/**
 	 * Erzeugt einen neuen Reader mit den übergebenen CSV-Daten als UTF-8-String
@@ -227,7 +227,7 @@ export class UntisGPU001Csv extends UntisGPUCsv<UntisGPU001> {
 	 *
 	 * @returns die Map mit den Einträgen anhand der Unterrichts-ID
 	 */
-	public get mapByUnterrichtsID() : Map<number, UntisGPU001> {
+	public get mapByUnterrichtsID(): Map<number, UntisGPU001> {
 		if (this._mapByUnterrichtsID === null) {
 			this._mapByUnterrichtsID = new Map<number, UntisGPU001>();
 			if (this.valid)
@@ -246,142 +246,142 @@ export class UntisGPU001Csv extends UntisGPUCsv<UntisGPU001> {
 export interface UntisGPU002 {
 
 	/** Eine numerische ID, welche den Unterricht eindeutig identifiziert (z.B. 42) */
-	idUnterricht : number;
+	idUnterricht: number;
 
 	/** Die Wochenstunden des Unterrichtes */
-	wochenstunden : number;
+	wochenstunden: number;
 
 	/** Die Wochenstunden für die Klasse */
-	wochenstundenKlasse : number;
+	wochenstundenKlasse: number;
 
 	/** Die Wochenstunden des Lehrers */
-	wochenstundenLehrer : number;
+	wochenstundenLehrer: number;
 
 	/** Das Kürzel der Klasse (z.B. "05A") */
-	klasseKuerzel : string;
+	klasseKuerzel: string;
 
 	/** Das Kürzel des Lehrers (z.B. "BACH") */
-	lehrerKuerzel : string | null;
+	lehrerKuerzel: string | null;
 
 	/** Das Kürzel des Fachen (z.B. "D") */
-	fachKuerzel : string;
+	fachKuerzel: string;
 
 	/** Das Kürzel des Raumes (z.B. "") */
-	raumKuerzel : string | null;
+	raumKuerzel: string | null;
 
 	/** Statistik 1 Unt */
-	statistik1Unt : number | null;
+	statistik1Unt: number | null;
 
 	/** Studentenzahl */
-	studentenZahl : number | null;
+	studentenZahl: number | null;
 
 	/** Wochenwert */
-	wochenwert : number | null;
+	wochenwert: number | null;
 
 	/** Die Gruppe, welche den Wochentyp bei AB-, ABC-, ABCD-Wochentypmodellen angibt */
-	wochenTyp : string | null;
+	wochenTyp: string | null;
 
 	/** Zeilentext 1 */
-	zeilenText1 : string | null;
+	zeilenText1: string | null;
 
 	/** Zeilenwert in Tausendstel */
-	zeilenWert : string | null;
+	zeilenWert: string | null;
 
 	/** Datum von */
-	datumVon : string | null;
+	datumVon: string | null;
 
 	/** Datum bis */
-	datumBis : string | null;
+	datumBis: string | null;
 
 	/** Jahreswert */
-	jahreswert : number | null;
+	jahreswert: number | null;
 
 	/** Text */
-	text : string | null;
+	text: string | null;
 
 	/** Teilungsnummer */
-	teilungsnummer : string | null;
+	teilungsnummer: string | null;
 
 	/** Kürzel des Stammraums */
-	stammraumKuerzel : string | null;
+	stammraumKuerzel: string | null;
 
 	/** Beschreibung */
-	beschreibung : string | null;
+	beschreibung: string | null;
 
 	/** Farbe Vordergrund */
-	farbeVordergrund : string | null;
+	farbeVordergrund: string | null;
 
 	/** Farbe Hintergrund */
-	farbeHintergrund : string | null;
+	farbeHintergrund: string | null;
 
 	/** Kennzeichen */
-	kennzeichen : string | null;
+	kennzeichen: string | null;
 
 	/** Fachfolge Klassen */
-	fachfolgeKlassen : string | null;
+	fachfolgeKlassen: string | null;
 
 	/** Fachfolge Lehrer */
-	fachfolgeLehrer : string | null;
+	fachfolgeLehrer: string | null;
 
 	/** Klassen-Kollisions-Kennz. */
-	klassenKollKennz : string | null;
+	klassenKollKennz: string | null;
 
 	/** Doppelstd. min. */
-	doppelStdMin : number | null;
+	doppelStdMin: number | null;
 
 	/** Doppelstd. max. */
-	doppelStdMax : number | null;
+	doppelStdMax: number | null;
 
 	/** Blockgröße */
-	blockgroesse : number | null;
+	blockgroesse: number | null;
 
 	/** Stunden im Raum */
-	stundenImRaum : number | null;
+	stundenImRaum: number | null;
 
 	/** Priorität */
-	prioritaet : string | null;
+	prioritaet: string | null;
 
 	/** Statistik 1 Lehrer */
-	statistik1Lehrer : string | null;
+	statistik1Lehrer: string | null;
 
 	/** Studenten männlich */
-	studentenMaennlich : number | null;
+	studentenMaennlich: number | null;
 
 	/** Studenten weiblich */
-	studentenWeiblich : number | null;
+	studentenWeiblich: number | null;
 
 	/** Wert bzw. Faktor */
-	wert : string | null;
+	wert: string | null;
 
 	/** 2. Block */
-	block2 : string | null;
+	block2: string | null;
 
 	/** 3. Block */
-	block3 : string | null;
+	block3: string | null;
 
 	/** Zeilentext 2 */
-	zeilenText2 : string | null;
+	zeilenText2: string | null;
 
 	/** Eigenwert */
-	eigenwert : string | null;
+	eigenwert: string | null;
 
 	/** Eigenwert in hundertausendstel */
-	eigenwertHunderttausendstel : string | null;
+	eigenwertHunderttausendstel: string | null;
 
 	/** Schülergruppe */
-	schuelergruppe : string | null;
+	schuelergruppe: string | null;
 
 	/** Wochenstunden in Jahres-Perioden-Planung */
-	wochenstundenJahresperioden : string | null;
+	wochenstundenJahresperioden: string | null;
 
 	/** Jahresstunden */
-	jahresstunden : string | null;
+	jahresstunden: string | null;
 
 	/** Zeilen-Unterrichtsgruppe */
-	zeilenUnterrichtsgruppe : string | null;
+	zeilenUnterrichtsgruppe: string | null;
 
 	/** Ignorieren - Dummy für das Einlesen der Daten */
-	dummy : string | null;
+	dummy: string | null;
 
 }
 
@@ -392,10 +392,10 @@ export interface UntisGPU002 {
 export class UntisGPU002Csv extends UntisGPUCsv<UntisGPU002> {
 
 	/** Die Map mit den Unterrichts-Einträgen anhand ihrer ID - wird bei Bedarf über den Getter initialisiert */
-	private _mapByUnterrichtsID : Map<number, UntisGPU002> | null = null;
+	private _mapByUnterrichtsID: Map<number, UntisGPU002> | null = null;
 
 	/** Eine Map mit der Zuordnung von speziellen Wochentypen zu den jeweiligen Unterrichtsnummern */
-	private _mapWochentypByUnterrichtsID : Map<number, number> | null = null;
+	private _mapWochentypByUnterrichtsID: Map<number, number> | null = null;
 
 	/**
 	 * Erzeugt einen neuen Reader mit den übergebenen CSV-Daten als UTF-8-String
@@ -458,7 +458,7 @@ export class UntisGPU002Csv extends UntisGPUCsv<UntisGPU002> {
 	 *
 	 * @returns die Map mit den Einträgen anhand der Unterrichts-ID
 	 */
-	public get mapByUnterrichtsID() : Map<number, UntisGPU002> {
+	public get mapByUnterrichtsID(): Map<number, UntisGPU002> {
 		if (this._mapByUnterrichtsID === null) {
 			this._mapByUnterrichtsID = new Map<number, UntisGPU002>();
 			if (this.valid)
@@ -473,7 +473,7 @@ export class UntisGPU002Csv extends UntisGPUCsv<UntisGPU002> {
 	 *
 	 * @returns die Map mit der Zuordnung von speziellen Wochentypen zu den jeweiligen Unterrichtsnummern
 	 */
-	public getMapWochentypByUnterrichtsID(wochentypbezeichner: string[]) : Map<number, number> {
+	public getMapWochentypByUnterrichtsID(wochentypbezeichner: string[]): Map<number, number> {
 		const mapBezeichner = new Map<string, number>();
 		for (let i = 0; i < wochentypbezeichner.length; i++)
 			if (wochentypbezeichner[i].trim() !== '')
@@ -503,46 +503,46 @@ export class UntisGPU002Csv extends UntisGPUCsv<UntisGPU002> {
 export interface UntisGPP002 {
 
 	/** Das Kürzel des Lehrers (z.B. "BACH") */
-	lehrerKuerzel : string | null;
+	lehrerKuerzel: string | null;
 
 	/** Das Jahr in dem der Unterricht stattfindet */
-	jahr : number;
+	jahr: number;
 
 	/** Der Monat in dem der Unterricht stattfindet */
-	monat : number;
+	monat: number;
 
 	/** Der Tag in dem der Unterricht stattfindet */
-	tag : number;
+	tag: number;
 
 	/** Die Stunde im Zeitraster des Wochentags in dem der Unterricht stattfindet, im Minutenmodus 0 */
 	stunde: number;
 
 	/** Das Kürzel des Fachen (z.B. "D") */
-	fachKuerzel : string;
+	fachKuerzel: string;
 
 	/** Das Kürzel der Klasse (z.B. "05A") oder der Klassen (z.B. "05A~05B") */
-	klasseKuerzel : string;
+	klasseKuerzel: string;
 
 	/** Das Kürzel des Raumes (z.B. "") */
-	raumKuerzel : string | null;
+	raumKuerzel: string | null;
 
 	/** Die Bezahlung der Vertretung (0 - unbezahlt, 1 - bezahlt) */
-	bezahlt : string | null;
+	bezahlt: string | null;
 
 	/** Ein leeres Feld */
-	empty : string | null;
+	empty: string | null;
 
 	/** Eine numerische ID, welche den Unterricht eindeutig identifiziert (z.B. 42) */
-	idUnterricht : number;
+	idUnterricht: number;
 
 	/** Beginn (hhmm) */
-	beginn : string | null;
+	beginn: string | null;
 
 	/** Dauer in Minuten */
-	dauer : number | null;
+	dauer: number | null;
 
 	/** Fachgruppe */
-	fachgruppe : string | null;
+	fachgruppe: string | null;
 
 }
 
@@ -576,7 +576,7 @@ export class UntisGPP002Csv extends UntisGPUCsv<UntisGPP002> {
 		], csv, ",");
 	}
 
-	public getGPU001(gpu014 : UntisGPU014Csv) : Array<UntisGPU001> {
+	public getGPU001(gpu014: UntisGPU014Csv): Array<UntisGPU001> {
 		if ((!this.valid) || (!gpu014.valid))
 			return new Array<UntisGPU001>();
 		// Ermittle zunächst alle Datumseinträge aus den beiden Listen
@@ -586,9 +586,9 @@ export class UntisGPP002Csv extends UntisGPUCsv<UntisGPP002> {
 		const dates = [...dateStrings].sort();
 		// Bestimme die Wochentypen zu den einzelnen Datumseinträgen
 		const mapDateToWochentyp = new Map<string, number>();
-		let anfang : number | null = null;
-		let ende : number | null = null;
-		let letzterTag : number | null = null;
+		let anfang: number | null = null;
+		let ende: number | null = null;
+		let letzterTag: number | null = null;
 		let maxWochentyp = 1;
 		for (const dateStr of dates) {
 			const date = new Date(dateStr);
@@ -700,9 +700,9 @@ export class UntisGPP002Csv extends UntisGPUCsv<UntisGPP002> {
 				return tmp;
 			return ((a.wochentyp.length === 0) ? 0 : Number(a.wochentyp)) - ((b.wochentyp.length === 0) ? 0 : Number(b.wochentyp));
 		});
-		//... Duplikate entfernen und zusammenfassen
+		// ... Duplikate entfernen und zusammenfassen
 		const result = new Array<UntisGPU001>();
-		let last : UntisGPU001 | null = null;
+		let last: UntisGPU001 | null = null;
 		const wochentypen = new Set<number>();
 		for (const obj of tmpResult) {
 			const curWt = (obj.wochentyp === "") ? 0 : Number(obj.wochentyp);
@@ -754,7 +754,7 @@ export class UntisGPP002Csv extends UntisGPUCsv<UntisGPP002> {
 export interface UntisGPU014 {
 
 	/** Eine numerische ID, welche die Vertretung eindeutig identifiziert (z.B. 42) */
-	idVertretung : number;
+	idVertretung: number;
 
 	/** Das Datum im Format "YYYYMMDD" */
 	datum: string;
@@ -763,58 +763,58 @@ export interface UntisGPU014 {
 	stunde: number;
 
 	/** Eine numerische ID, welche die Absenz eindeutig identifiziert (z.B. 42) */
-	idAbsenz : number | null;
+	idAbsenz: number | null;
 
 	/** Eine numerische ID, welche den Unterricht eindeutig identifiziert (z.B. 42) */
-	idUnterricht : number;
+	idUnterricht: number;
 
 	/** Das Kürzel des Lehrers (z.B. "BACH") */
-	lehrerKuerzelAbsent : string | null;
+	lehrerKuerzelAbsent: string | null;
 
 	/** Das Kürzel des Lehrers (z.B. "BACH") */
-	lehrerKuerzelVertretung : string | null;
+	lehrerKuerzelVertretung: string | null;
 
 	/** Das Kürzel des Faches (z.B. "D") */
-	fachKuerzel : string;
+	fachKuerzel: string;
 
 	/** Das Kürzel des Statistik-Faches (z.B. "D") */
-	fachStatistikKuerzel : string | null;
+	fachStatistikKuerzel: string | null;
 
 	/** Das Kürzel des Faches (z.B. "D") */
-	fachVertretungKuerzel : string | null;
+	fachVertretungKuerzel: string | null;
 
 	/** Das Kürzel des Statistik-Faches (z.B. "D") */
-	fachVertretungStatistikKuerzel : string | null;
+	fachVertretungStatistikKuerzel: string | null;
 
 	/** Das Kürzel des Raumes (z.B. "") */
-	raumKuerzel : string | null;
+	raumKuerzel: string | null;
 
 	/** Das Kürzel des Raumes (z.B. "") */
-	raumKuerzelVertretung : string | null;
+	raumKuerzelVertretung: string | null;
 
 	/** Statistik-Kennzeichen */
-	statistik : string | null;
+	statistik: string | null;
 
 	/** Das Kürzel der Klasse (z.B. "05A") bzw. der Klassen (z.B. "05A~05B") */
-	klasseKuerzel : string;
+	klasseKuerzel: string;
 
 	/** Der Grund für die Absenz */
-	grundAbsenz : string | null;
+	grundAbsenz: string | null;
 
 	/** Ein Text für die Vertretung */
-	text : string | null;
+	text: string | null;
 
 	/** Die Art der Vertretung (Bit-Feld: Bit 0 -> Entfall, Bit 1 -> Betreuung, Bit 2 -> Sondereinsatz, Bit 3 -> Wegverlegung, Bit 4 -> Freisetzung,
 	 *      Bit 5 -> Plus als Vertreter, Bit 6 -> Teilvertretung, Bit 7 -> Hinverlegung, Bit 16 -> Raumvertretung, Bit 17 -> Pausenaufsichtsvertretung,
 	 *      Bit 18 -> Stunde ist unterrichtsfrei, Bit 20 -> Kennzeichen nicht drucken, Bit 21 -> Kennzeichen neu */
-	art : number;
+	art: number;
 
 	/** Das Kürzel der Vertretungs-Klasse (z.B. "05A") bzw. der Vertretungs-Klassen (z.B. "05A~05B") */
-	klasseVertretungKuerzel : string | null;
+	klasseVertretungKuerzel: string | null;
 
 	/** Die Art der Vertretung (T - verlegt, F - verlegt von, W - Tausch, S - Betreuung, A - Sondereinsatz, C - Entfall, L - Freisetzung, P - Teil-Vertretung,
 	 *    R - Raumvertretung, B - Pausenaufsichtsvertretung, ~ - Lehrertausch, E - Klausur) */
-	vertretungsart : string;
+	vertretungsart: string;
 
 	/** Der Zeitpunkt der letzten Änderung (YYYYMMDDHHmm) */
 	timestamp: string | null;

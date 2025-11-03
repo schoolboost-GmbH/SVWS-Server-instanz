@@ -6,62 +6,62 @@ export class Kindergarten extends JavaObject {
 	/**
 	 * Die ID des Kindergartens.
 	 */
-	public id : number = -1;
+	public id: number = -1;
 
 	/**
 	 * Die Bezeichnung des Kindergartens.
 	 */
-	public bezeichnung : string = "";
+	public bezeichnung: string = "";
 
 	/**
 	 * Die PLZ des Kindergartens.
 	 */
-	public plz : string | null = "";
+	public plz: string | null = "";
 
 	/**
 	 * Der Ort des Kindergartens.
 	 */
-	public ort : string | null = "";
+	public ort: string | null = "";
 
 	/**
 	 * Der Strassenname des Kindergartens.
 	 */
-	public strassenname : string | null = "";
+	public strassenname: string | null = "";
 
 	/**
 	 * Die Hausnummer des Kindergartens.
 	 */
-	public hausNr : string | null = "";
+	public hausNr: string | null = "";
 
 	/**
 	 * der Hausnummerzusatz des Kindergartens.
 	 */
-	public hausNrZusatz : string | null = "";
+	public hausNrZusatz: string | null = "";
 
 	/**
 	 * Die Telefonnummer des Kindergartens.
 	 */
-	public tel : string | null = "";
+	public tel: string | null = "";
 
 	/**
 	 * Die E-Mail des Kindergartens.
 	 */
-	public email : string | null = "";
+	public email: string | null = "";
 
 	/**
 	 * Bemerkung zum Kindergartens.
 	 */
-	public bemerkung : string | null = "";
+	public bemerkung: string | null = "";
 
 	/**
 	 * Gibt an, ob der Eintrag in der Anwendung sichtbar sein soll oder nicht.
 	 */
-	public istSichtbar : boolean = true;
+	public istSichtbar: boolean = true;
 
 	/**
 	 * Gibt die Position in der Sortierreihenfolge für die Katalog-Einträge an.
 	 */
-	public sortierung : number = 1;
+	public sortierung: number = 1;
 
 
 	public constructor() {
@@ -72,13 +72,13 @@ export class Kindergarten extends JavaObject {
 		return 'de.svws_nrw.core.data.schule.Kindergarten';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.schule.Kindergarten'].includes(name);
 	}
 
 	public static class = new Class<Kindergarten>('de.svws_nrw.core.data.schule.Kindergarten');
 
-	public static transpilerFromJSON(json : string): Kindergarten {
+	public static transpilerFromJSON(json: string): Kindergarten {
 		const obj = JSON.parse(json) as Partial<Kindergarten>;
 		const result = new Kindergarten();
 		if (obj.id === undefined)
@@ -104,7 +104,7 @@ export class Kindergarten extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : Kindergarten) : string {
+	public static transpilerToJSON(obj: Kindergarten): string {
 		let result = '{';
 		result += '"id" : ' + obj.id.toString() + ',';
 		result += '"bezeichnung" : ' + JSON.stringify(obj.bezeichnung) + ',';
@@ -123,7 +123,7 @@ export class Kindergarten extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<Kindergarten>) : string {
+	public static transpilerToJSONPatch(obj: Partial<Kindergarten>): string {
 		let result = '{';
 		if (obj.id !== undefined) {
 			result += '"id" : ' + obj.id.toString() + ',';
@@ -168,6 +168,6 @@ export class Kindergarten extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_schule_Kindergarten(obj : unknown) : Kindergarten {
+export function cast_de_svws_nrw_core_data_schule_Kindergarten(obj: unknown): Kindergarten {
 	return obj as Kindergarten;
 }

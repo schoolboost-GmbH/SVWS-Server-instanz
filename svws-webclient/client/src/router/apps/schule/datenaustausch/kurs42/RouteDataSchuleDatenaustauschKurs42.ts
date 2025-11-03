@@ -6,10 +6,10 @@ import { routeSchuleDatenaustauschKurs42Blockung } from "./RouteSchuleDatenausta
 import { OpenApiError, SimpleOperationResponse } from "@core";
 
 
-type RouteStateDatenaustauschKurs42 = RouteStateInterface
+type RouteStateDatenaustauschKurs42 = RouteStateInterface;
 
 const defaultState = <RouteStateDatenaustauschKurs42> {
-	view: routeSchuleDatenaustauschKurs42Blockung
+	view: routeSchuleDatenaustauschKurs42Blockung,
 };
 
 
@@ -19,12 +19,12 @@ export class RouteDataSchuleDatenaustauschKurs42 extends RouteData<RouteStateDat
 		super(defaultState);
 	}
 
-	setGostKurs42ImportZip = async (formData: FormData) : Promise<SimpleOperationResponse> => {
+	setGostKurs42ImportZip = async (formData: FormData): Promise<SimpleOperationResponse> => {
 		try {
 			return await api.server.importKurs42Blockung(formData, api.schema);
-		} catch(e) {
+		} catch (e) {
 			if ((e instanceof OpenApiError) && (e.response !== null) && ((e.response.status === 400) || (e.response.status === 404) || (e.response.status === 409) || (e.response.status === 500))) {
-				const json : string = await e.response.text();
+				const json: string = await e.response.text();
 				return SimpleOperationResponse.transpilerFromJSON(json);
 			}
 			const result = new SimpleOperationResponse();
@@ -33,14 +33,14 @@ export class RouteDataSchuleDatenaustauschKurs42 extends RouteData<RouteStateDat
 				result.log.add("  " + e.message);
 			return result;
 		}
-	}
+	};
 
-	setGostKurs42RaeumeTxt = async (formData: FormData) : Promise<SimpleOperationResponse> => {
+	setGostKurs42RaeumeTxt = async (formData: FormData): Promise<SimpleOperationResponse> => {
 		try {
 			return await api.server.importKurs42Raeume(formData, api.schema);
-		} catch(e) {
+		} catch (e) {
 			if ((e instanceof OpenApiError) && (e.response !== null) && ((e.response.status === 400) || (e.response.status === 404) || (e.response.status === 409) || (e.response.status === 500))) {
-				const json : string = await e.response.text();
+				const json: string = await e.response.text();
 				return SimpleOperationResponse.transpilerFromJSON(json);
 			}
 			const result = new SimpleOperationResponse();
@@ -49,7 +49,7 @@ export class RouteDataSchuleDatenaustauschKurs42 extends RouteData<RouteStateDat
 				result.log.add("  " + e.message);
 			return result;
 		}
-	}
+	};
 
 }
 

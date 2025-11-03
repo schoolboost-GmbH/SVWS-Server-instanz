@@ -6,27 +6,27 @@ export class VermerkartEintrag extends JavaObject {
 	/**
 	 * Die ID des Katalog-Eintrags.
 	 */
-	public id : number = -1;
+	public id: number = -1;
 
 	/**
 	 * Die Bezeichnung der Vermerkart.
 	 */
-	public bezeichnung : string = "";
+	public bezeichnung: string = "";
 
 	/**
 	 * Gibt die Position in der Sortierreihenfolge für die Katalog-Einträge an.
 	 */
-	public sortierung : number = 1;
+	public sortierung: number = 1;
 
 	/**
 	 * Gibt an, ob der Eintrag in der Anwendung sichtbar sein soll oder nicht.
 	 */
-	public istSichtbar : boolean = true;
+	public istSichtbar: boolean = true;
 
 	/**
 	 * Gibt an wie viele Vermerke dem entsprechenden Vermerkart-Eintrag zugeordnet sind (berechneter Wert).
 	 */
-	public anzahlVermerke : number = 0;
+	public anzahlVermerke: number = 0;
 
 
 	/**
@@ -40,13 +40,13 @@ export class VermerkartEintrag extends JavaObject {
 		return 'de.svws_nrw.core.data.schule.VermerkartEintrag';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.schule.VermerkartEintrag'].includes(name);
 	}
 
 	public static class = new Class<VermerkartEintrag>('de.svws_nrw.core.data.schule.VermerkartEintrag');
 
-	public static transpilerFromJSON(json : string): VermerkartEintrag {
+	public static transpilerFromJSON(json: string): VermerkartEintrag {
 		const obj = JSON.parse(json) as Partial<VermerkartEintrag>;
 		const result = new VermerkartEintrag();
 		if (obj.id === undefined)
@@ -67,7 +67,7 @@ export class VermerkartEintrag extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : VermerkartEintrag) : string {
+	public static transpilerToJSON(obj: VermerkartEintrag): string {
 		let result = '{';
 		result += '"id" : ' + obj.id.toString() + ',';
 		result += '"bezeichnung" : ' + JSON.stringify(obj.bezeichnung) + ',';
@@ -79,7 +79,7 @@ export class VermerkartEintrag extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<VermerkartEintrag>) : string {
+	public static transpilerToJSONPatch(obj: Partial<VermerkartEintrag>): string {
 		let result = '{';
 		if (obj.id !== undefined) {
 			result += '"id" : ' + obj.id.toString() + ',';
@@ -103,6 +103,6 @@ export class VermerkartEintrag extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_schule_VermerkartEintrag(obj : unknown) : VermerkartEintrag {
+export function cast_de_svws_nrw_core_data_schule_VermerkartEintrag(obj: unknown): VermerkartEintrag {
 	return obj as VermerkartEintrag;
 }

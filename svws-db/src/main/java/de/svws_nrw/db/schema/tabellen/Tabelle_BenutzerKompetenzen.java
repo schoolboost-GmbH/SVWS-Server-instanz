@@ -15,18 +15,18 @@ import de.svws_nrw.db.schema.SchemaTabelleSpalte;
 public class Tabelle_BenutzerKompetenzen extends SchemaTabelle {
 
 	/** Die Definition der Tabellenspalte Benutzer_ID */
-	public SchemaTabelleSpalte col_Benutzer_ID = add("Benutzer_ID", SchemaDatentypen.BIGINT, true)
+	public final SchemaTabelleSpalte col_Benutzer_ID = add("Benutzer_ID", SchemaDatentypen.BIGINT, true)
 			.setNotNull()
 			.setJavaComment("Die ID des Benutzers");
 
 	/** Die Definition der Tabellenspalte Kompetenz_ID */
-	public SchemaTabelleSpalte col_Kompetenz_ID = add("Kompetenz_ID", SchemaDatentypen.BIGINT, true)
+	public final SchemaTabelleSpalte col_Kompetenz_ID = add("Kompetenz_ID", SchemaDatentypen.BIGINT, true)
 			.setNotNull()
 			.setJavaComment("Die ID der zugeordneten Kompetenz");
 
 
 	/** Die Definition des Fremdschlüssels BenutzerKompetenzen_Benutzer_FK */
-	public SchemaTabelleFremdschluessel fk_BenutzerKompetenzen_Benutzer_FK = addForeignKey(
+	public final SchemaTabelleFremdschluessel fk_BenutzerKompetenzen_Benutzer_FK = addForeignKey(
 			"BenutzerKompetenzen_Benutzer_FK",
 			/* OnUpdate: */ SchemaFremdschluesselAktionen.CASCADE,
 			/* OnDelete: */ SchemaFremdschluesselAktionen.CASCADE,
@@ -34,7 +34,7 @@ public class Tabelle_BenutzerKompetenzen extends SchemaTabelle {
 			.setRevision(SchemaRevisionen.REV_2);
 
 	/** Die Definition des Fremdschlüssels BenutzerKompetenzen_Kompetenzen_FK */
-	public SchemaTabelleFremdschluessel fk_BenutzerKompetenzen_Kompetenzen_FK = addForeignKey(
+	public final SchemaTabelleFremdschluessel fk_BenutzerKompetenzen_Kompetenzen_FK = addForeignKey(
 			"BenutzerKompetenzen_Kompetenzen_FK",
 			/* OnUpdate: */ SchemaFremdschluesselAktionen.CASCADE,
 			/* OnDelete: */ SchemaFremdschluesselAktionen.CASCADE,

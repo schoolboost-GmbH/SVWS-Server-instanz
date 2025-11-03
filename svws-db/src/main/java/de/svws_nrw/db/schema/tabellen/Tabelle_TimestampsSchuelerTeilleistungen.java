@@ -17,43 +17,43 @@ import de.svws_nrw.db.schema.SchemaTabelleTrigger;
 public class Tabelle_TimestampsSchuelerTeilleistungen extends SchemaTabelle {
 
 	/** Die Definition der Tabellenspalte ID */
-	public SchemaTabelleSpalte col_ID = add("ID", SchemaDatentypen.BIGINT, true)
+	public final SchemaTabelleSpalte col_ID = add("ID", SchemaDatentypen.BIGINT, true)
 			.setNotNull()
 			.setJavaComment("ID der Teilleistungen");
 
 	/** Die Definition der Tabellenspalte tsDatum */
-	public SchemaTabelleSpalte col_tsDatum = add("tsDatum", SchemaDatentypen.DATETIME, false)
+	public final SchemaTabelleSpalte col_tsDatum = add("tsDatum", SchemaDatentypen.DATETIME, false)
 			.setDatenlaenge(3)
 			.setNotNull()
 			.setJavaComment("Der Zeitstempel der letzten Änderung an dem Datum der Teilleistung, wann diese erbracht wurde.");
 
 	/** Die Definition der Tabellenspalte tsLehrer_ID */
-	public SchemaTabelleSpalte col_tsLehrer_ID = add("tsLehrer_ID", SchemaDatentypen.DATETIME, false)
+	public final SchemaTabelleSpalte col_tsLehrer_ID = add("tsLehrer_ID", SchemaDatentypen.DATETIME, false)
 			.setDatenlaenge(3)
 			.setNotNull()
 			.setJavaComment("Der Zeitstempel der letzten Änderung an der Lehrer-ID.");
 
 	/** Die Definition der Tabellenspalte tsArt_ID */
-	public SchemaTabelleSpalte col_tsArt_ID = add("tsArt_ID", SchemaDatentypen.DATETIME, false)
+	public final SchemaTabelleSpalte col_tsArt_ID = add("tsArt_ID", SchemaDatentypen.DATETIME, false)
 			.setDatenlaenge(3)
 			.setNotNull()
 			.setJavaComment("Der Zeitstempel der letzten Änderung der Teilleistungsart.");
 
 	/** Die Definition der Tabellenspalte tsBemerkung */
-	public SchemaTabelleSpalte col_tsBemerkung = add("tsBemerkung", SchemaDatentypen.DATETIME, false)
+	public final SchemaTabelleSpalte col_tsBemerkung = add("tsBemerkung", SchemaDatentypen.DATETIME, false)
 			.setDatenlaenge(3)
 			.setNotNull()
 			.setJavaComment("Der Zeitstempel der letzten Änderung an der Bemerkung.");
 
 	/** Die Definition der Tabellenspalte tsNotenKrz */
-	public SchemaTabelleSpalte col_tsNotenKrz = add("tsNotenKrz", SchemaDatentypen.DATETIME, false)
+	public final SchemaTabelleSpalte col_tsNotenKrz = add("tsNotenKrz", SchemaDatentypen.DATETIME, false)
 			.setDatenlaenge(3)
 			.setNotNull()
 			.setJavaComment("Der Zeitstempel der letzten Änderung an der Note.");
 
 
 	/** Die Definition des Fremdschlüssels TimestampsSchuelerTeilleistungen_FK */
-	public SchemaTabelleFremdschluessel fk_TimestampsSchuelerTeilleistungen_FK = addForeignKey(
+	public final SchemaTabelleFremdschluessel fk_TimestampsSchuelerTeilleistungen_FK = addForeignKey(
 			"TimestampsSchuelerTeilleistungen_FK",
 			/* OnUpdate: */ SchemaFremdschluesselAktionen.CASCADE,
 			/* OnDelete: */ SchemaFremdschluesselAktionen.CASCADE,
@@ -61,7 +61,7 @@ public class Tabelle_TimestampsSchuelerTeilleistungen extends SchemaTabelle {
 
 
 	/** Trigger t_INSERT_TimestampsSchuelerTeilleistungen */
-	public SchemaTabelleTrigger trigger_MariaDB_INSERT_TimestampsSchuelerTeilleistungen = addTrigger(
+	public final SchemaTabelleTrigger trigger_MariaDB_INSERT_TimestampsSchuelerTeilleistungen = addTrigger(
 			"t_INSERT_TimestampsSchuelerTeilleistungen",
 			DBDriver.MARIA_DB,
 			"""
@@ -70,7 +70,7 @@ public class Tabelle_TimestampsSchuelerTeilleistungen extends SchemaTabelle {
 			""", Schema.tab_SchuelerEinzelleistungen, Schema.tab_TimestampsSchuelerTeilleistungen);
 
 	/** Trigger t_UPDATE_TimestampsSchuelerTeilleistungen */
-	public SchemaTabelleTrigger trigger_MariaDB_UPDATE_TimestampsSchuelerTeilleistungen = addTrigger(
+	public final SchemaTabelleTrigger trigger_MariaDB_UPDATE_TimestampsSchuelerTeilleistungen = addTrigger(
 			"t_UPDATE_TimestampsSchuelerTeilleistungen",
 			DBDriver.MARIA_DB,
 			"""

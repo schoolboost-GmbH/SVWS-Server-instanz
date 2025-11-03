@@ -8,47 +8,47 @@ export class LernplattformV1Lerngruppe extends JavaObject {
 	/**
 	 * Die generierte eindeutige ID der Lerngruppe.
 	 */
-	public id : number = 0;
+	public id: number = 0;
 
 	/**
 	 * Die ID der Lerngruppe in der SVWS-DB (Die ID des Kurses oder die ID der Klasse in der Versetzungstabelle, siehe kursartID).
 	 */
-	public idIntern : number = 0;
+	public idIntern: number = 0;
 
 	/**
 	 * Die ID des Faches der Lerngruppe.
 	 */
-	public idFach : number = 0;
+	public idFach: number = 0;
 
 	/**
 	 * Gibt die ID der Kursart an. Ist dieser Wert null, so handelt es sich um Klassenunterricht.
 	 */
-	public idKursart : number | null = null;
+	public idKursart: number | null = null;
 
 	/**
 	 * Die Bezeichnung der Lerngruppe (z.B. D-GK4)
 	 */
-	public bezeichnung : string | null = null;
+	public bezeichnung: string | null = null;
 
 	/**
 	 * Das Kürzel der (allgemeinen) Kursart (z.B. GK)
 	 */
-	public kursartKuerzel : string | null = null;
+	public kursartKuerzel: string | null = null;
 
 	/**
 	 * Das einstellige Kürzel der bilingualen Sprache, sofern es sich um eine bilinguale Lerngruppe handelt. (z.B. F)
 	 */
-	public bilingualeSprache : string | null = null;
+	public bilingualeSprache: string | null = null;
 
 	/**
 	 * Die IDs der Lehrer, die der Lerngruppe zugeordnet sind.
 	 */
-	public idsLehrer : List<number> = new ArrayList<number>();
+	public idsLehrer: List<number> = new ArrayList<number>();
 
 	/**
 	 * Die Anzahl der Wochenstunden, falls es sich um einen Kurs handelt.
 	 */
-	public wochenstunden : number | null = null;
+	public wochenstunden: number | null = null;
 
 
 	/**
@@ -62,13 +62,13 @@ export class LernplattformV1Lerngruppe extends JavaObject {
 		return 'de.svws_nrw.core.data.lernplattform.v1.LernplattformV1Lerngruppe';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.lernplattform.v1.LernplattformV1Lerngruppe'].includes(name);
 	}
 
 	public static class = new Class<LernplattformV1Lerngruppe>('de.svws_nrw.core.data.lernplattform.v1.LernplattformV1Lerngruppe');
 
-	public static transpilerFromJSON(json : string): LernplattformV1Lerngruppe {
+	public static transpilerFromJSON(json: string): LernplattformV1Lerngruppe {
 		const obj = JSON.parse(json) as Partial<LernplattformV1Lerngruppe>;
 		const result = new LernplattformV1Lerngruppe();
 		if (obj.id === undefined)
@@ -93,7 +93,7 @@ export class LernplattformV1Lerngruppe extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : LernplattformV1Lerngruppe) : string {
+	public static transpilerToJSON(obj: LernplattformV1Lerngruppe): string {
 		let result = '{';
 		result += '"id" : ' + obj.id.toString() + ',';
 		result += '"idIntern" : ' + obj.idIntern.toString() + ',';
@@ -116,7 +116,7 @@ export class LernplattformV1Lerngruppe extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<LernplattformV1Lerngruppe>) : string {
+	public static transpilerToJSONPatch(obj: Partial<LernplattformV1Lerngruppe>): string {
 		let result = '{';
 		if (obj.id !== undefined) {
 			result += '"id" : ' + obj.id.toString() + ',';
@@ -159,6 +159,6 @@ export class LernplattformV1Lerngruppe extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_lernplattform_v1_LernplattformV1Lerngruppe(obj : unknown) : LernplattformV1Lerngruppe {
+export function cast_de_svws_nrw_core_data_lernplattform_v1_LernplattformV1Lerngruppe(obj: unknown): LernplattformV1Lerngruppe {
 	return obj as LernplattformV1Lerngruppe;
 }

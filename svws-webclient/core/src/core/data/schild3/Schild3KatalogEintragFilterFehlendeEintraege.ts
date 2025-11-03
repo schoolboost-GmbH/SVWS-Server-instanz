@@ -6,37 +6,37 @@ export class Schild3KatalogEintragFilterFehlendeEintraege extends JavaObject {
 	/**
 	 * ID des Eintrags die bei der Prüfung auf fehlende Einträge genutzt werden
 	 */
-	public ID : number | null = null;
+	public ID: number | null = null;
 
 	/**
 	 * Beschreibung des Eintrags die bei der Prüfung auf fehlende Einträge genutzt werden
 	 */
-	public Beschreibung : string | null = null;
+	public Beschreibung: string | null = null;
 
 	/**
 	 * Feldname des zu prüfenden Feldes
 	 */
-	public Feldname : string | null = null;
+	public Feldname: string | null = null;
 
 	/**
 	 * Tabellenname des zu prüfenden Feldes
 	 */
-	public Tabellen : string | null = null;
+	public Tabellen: string | null = null;
 
 	/**
 	 * Abfrage die zur Prüfung des Feldes führt.
 	 */
-	public SQLText : string | null = null;
+	public SQLText: string | null = null;
 
 	/**
 	 * ggf. Schulform für bestimmte Schulformen
 	 */
-	public Schulform : string | null = null;
+	public Schulform: string | null = null;
 
 	/**
 	 * Feldtyp des zu prüfenden Feldes
 	 */
-	public Feldtyp : string | null = null;
+	public Feldtyp: string | null = null;
 
 
 	/**
@@ -50,13 +50,13 @@ export class Schild3KatalogEintragFilterFehlendeEintraege extends JavaObject {
 		return 'de.svws_nrw.core.data.schild3.Schild3KatalogEintragFilterFehlendeEintraege';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.schild3.Schild3KatalogEintragFilterFehlendeEintraege'].includes(name);
 	}
 
 	public static class = new Class<Schild3KatalogEintragFilterFehlendeEintraege>('de.svws_nrw.core.data.schild3.Schild3KatalogEintragFilterFehlendeEintraege');
 
-	public static transpilerFromJSON(json : string): Schild3KatalogEintragFilterFehlendeEintraege {
+	public static transpilerFromJSON(json: string): Schild3KatalogEintragFilterFehlendeEintraege {
 		const obj = JSON.parse(json) as Partial<Schild3KatalogEintragFilterFehlendeEintraege>;
 		const result = new Schild3KatalogEintragFilterFehlendeEintraege();
 		result.ID = (obj.ID === undefined) ? null : obj.ID === null ? null : obj.ID;
@@ -69,7 +69,7 @@ export class Schild3KatalogEintragFilterFehlendeEintraege extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : Schild3KatalogEintragFilterFehlendeEintraege) : string {
+	public static transpilerToJSON(obj: Schild3KatalogEintragFilterFehlendeEintraege): string {
 		let result = '{';
 		result += '"ID" : ' + ((obj.ID === null) ? 'null' : obj.ID.toString()) + ',';
 		result += '"Beschreibung" : ' + ((obj.Beschreibung === null) ? 'null' : JSON.stringify(obj.Beschreibung)) + ',';
@@ -83,7 +83,7 @@ export class Schild3KatalogEintragFilterFehlendeEintraege extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<Schild3KatalogEintragFilterFehlendeEintraege>) : string {
+	public static transpilerToJSONPatch(obj: Partial<Schild3KatalogEintragFilterFehlendeEintraege>): string {
 		let result = '{';
 		if (obj.ID !== undefined) {
 			result += '"ID" : ' + ((obj.ID === null) ? 'null' : obj.ID.toString()) + ',';
@@ -113,6 +113,6 @@ export class Schild3KatalogEintragFilterFehlendeEintraege extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_schild3_Schild3KatalogEintragFilterFehlendeEintraege(obj : unknown) : Schild3KatalogEintragFilterFehlendeEintraege {
+export function cast_de_svws_nrw_core_data_schild3_Schild3KatalogEintragFilterFehlendeEintraege(obj: unknown): Schild3KatalogEintragFilterFehlendeEintraege {
 	return obj as Schild3KatalogEintragFilterFehlendeEintraege;
 }

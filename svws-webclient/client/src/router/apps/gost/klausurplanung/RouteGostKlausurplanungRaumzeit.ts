@@ -24,7 +24,7 @@ export class RouteGostKlausurplanungRaumzeit extends RouteNode<any, RouteGostKla
 		super.text = "Räume und Startzeiten";
 		this.isHidden = (params?: RouteParams) => {
 			return this.checkHidden(params);
-		}
+		};
 	}
 
 	public checkHidden(params?: RouteParams) {
@@ -33,7 +33,7 @@ export class RouteGostKlausurplanungRaumzeit extends RouteNode<any, RouteGostKla
 		return false;
 	}
 
-	protected async update(to: RouteNode<any, any>, to_params: RouteParams) : Promise<void | Error | RouteLocationRaw> {
+	protected async update(to: RouteNode<any, any>, to_params: RouteParams): Promise<void | Error | RouteLocationRaw> {
 		try {
 			const { abiturjahr, halbjahr: halbjahrId, idtermin } = RouteNode.getIntParams(to_params, ["abiturjahr", "halbjahr", "idtermin"]);
 			const halbjahr = GostHalbjahr.fromID(halbjahrId ?? null);
@@ -75,7 +75,7 @@ export class RouteGostKlausurplanungRaumzeit extends RouteNode<any, RouteGostKla
 			setConfigValue: routeGostKlausurplanung.data.setConfigValue,
 			getConfigValue: routeGostKlausurplanung.data.getConfigValue,
 			gotoKalenderdatum: routeGostKlausurplanung.data.gotoKalenderdatum,
-		}
+		};
 	}
 
 }

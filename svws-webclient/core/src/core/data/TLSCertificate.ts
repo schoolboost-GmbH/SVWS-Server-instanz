@@ -6,72 +6,72 @@ export class TLSCertificate extends JavaObject {
 	/**
 	 * Die Version der Zertifikats (0 -> V1, 1 -> V2, 2 -> V3).
 	 */
-	public version : number = 0;
+	public version: number = 0;
 
 	/**
 	 * Der Typ des Zertifikats
 	 */
-	public type : string = "";
+	public type: string = "";
 
 	/**
 	 * Die Informationen zum Inhaber des Zertifikats
 	 */
-	public subject : string | null = null;
+	public subject: string | null = null;
 
 	/**
 	 * Die Informationen zum Aussteller des Zertifikats
 	 */
-	public issuer : string | null = null;
+	public issuer: string | null = null;
 
 	/**
 	 * Die Seriennummer des Zertifikats
 	 */
-	public serialNumber : string | null = null;
+	public serialNumber: string | null = null;
 
 	/**
 	 * Der Signaturalgorithmus
 	 */
-	public signatureAlgorithm : string | null = null;
+	public signatureAlgorithm: string | null = null;
 
 	/**
 	 * Die OID des Signaturalgorithmus
 	 */
-	public signatureAlgorithmOID : string | null = null;
+	public signatureAlgorithmOID: string | null = null;
 
 	/**
 	 * Ggf. weitere Parameter für den Signaturalgorithmus
 	 */
-	public params : string | null = null;
+	public params: string | null = null;
 
 	/**
 	 * Die Signatur (Base64-kodiert)
 	 */
-	public signature : string = "";
+	public signature: string = "";
 
 	/**
 	 * Der Algorithmus, der für den öffentlichen Schlüssel verwendet wurde
 	 */
-	public keyAlgorithm : string | null = null;
+	public keyAlgorithm: string | null = null;
 
 	/**
 	 * Das Format, in welchem der öffentliche Schlüssel vorliegt
 	 */
-	public keyFormat : string | null = null;
+	public keyFormat: string | null = null;
 
 	/**
 	 * Der öffentliche Schlüssel (Base64-kodiert)
 	 */
-	public key : string = "";
+	public key: string = "";
 
 	/**
 	 * Das Datum, ab dem das Zertifkat gültig ist (ISO 8601 format).
 	 */
-	public validSince : string | null = null;
+	public validSince: string | null = null;
 
 	/**
 	 * Das Datum, bis zu welchem Tag das Zertifkat gültig ist (ISO 8601 format).
 	 */
-	public validUntil : string | null = null;
+	public validUntil: string | null = null;
 
 
 	public constructor() {
@@ -82,13 +82,13 @@ export class TLSCertificate extends JavaObject {
 		return 'de.svws_nrw.core.data.TLSCertificate';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.TLSCertificate'].includes(name);
 	}
 
 	public static class = new Class<TLSCertificate>('de.svws_nrw.core.data.TLSCertificate');
 
-	public static transpilerFromJSON(json : string): TLSCertificate {
+	public static transpilerFromJSON(json: string): TLSCertificate {
 		const obj = JSON.parse(json) as Partial<TLSCertificate>;
 		const result = new TLSCertificate();
 		if (obj.version === undefined)
@@ -116,7 +116,7 @@ export class TLSCertificate extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : TLSCertificate) : string {
+	public static transpilerToJSON(obj: TLSCertificate): string {
 		let result = '{';
 		result += '"version" : ' + obj.version.toString() + ',';
 		result += '"type" : ' + JSON.stringify(obj.type) + ',';
@@ -137,7 +137,7 @@ export class TLSCertificate extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<TLSCertificate>) : string {
+	public static transpilerToJSONPatch(obj: Partial<TLSCertificate>): string {
 		let result = '{';
 		if (obj.version !== undefined) {
 			result += '"version" : ' + obj.version.toString() + ',';
@@ -188,6 +188,6 @@ export class TLSCertificate extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_TLSCertificate(obj : unknown) : TLSCertificate {
+export function cast_de_svws_nrw_core_data_TLSCertificate(obj: unknown): TLSCertificate {
 	return obj as TLSCertificate;
 }

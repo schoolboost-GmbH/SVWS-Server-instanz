@@ -45,15 +45,15 @@
 	const props = defineProps<LernplattformenAuswahlProps>();
 	const { focusHelpVisible, focusSwitchingEnabled } = useRegionSwitch();
 
-	const columns : DataTableColumn[] = [
+	const columns: DataTableColumn[] = [
 		{ key: "bezeichnung", label: "Bezeichnung", sortable: true, defaultSort: "asc" },
-		{ key: "anzahlEinwilligungen", label: "Anzahl", sortable: true, defaultSort: "asc", span: 1, align: "right"},
+		{ key: "anzahlEinwilligungen", label: "Anzahl", sortable: true, defaultSort: "asc", span: 1, align: "right" },
 	];
 
 	const hatKompetenzAendern = computed<boolean>(() => props.benutzerKompetenzen.has(BenutzerKompetenz.KATALOG_EINTRAEGE_AENDERN));
 	const hatKompetenzLoeschen = computed<boolean>(() => props.benutzerKompetenzen.has(BenutzerKompetenz.KATALOG_EINTRAEGE_LOESCHEN));
 
-	async function setAuswahl(items : Lernplattform[]) {
+	async function setAuswahl(items: Lernplattform[]) {
 		props.manager().liste.auswahlClear();
 		for (const item of items)
 			if (props.manager().liste.hasValue(item))

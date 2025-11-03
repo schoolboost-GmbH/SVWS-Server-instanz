@@ -39,7 +39,7 @@ interface RouteState {
 	schuleStammdaten: SchuleStammdaten;
 	auswahl: SchuelerListeEintrag | undefined;
 	schuelerIDEncrypted: string;
-	beratungslehrer : List<GostBeratungslehrer>;
+	beratungslehrer: List<GostBeratungslehrer>;
 	abiturdaten: Abiturdaten | undefined;
 	abiturdatenManager: AbiturdatenManager | undefined;
 	faecherManager: GostFaecherManager | undefined;
@@ -55,7 +55,7 @@ interface RouteState {
 
 export class RouteData {
 
-	private static _defaultState : RouteState = {
+	private static _defaultState: RouteState = {
 		serverMode: ServerMode.STABLE,
 		schuleStammdaten: new SchuleStammdaten(),
 		auswahl: undefined,
@@ -72,7 +72,7 @@ export class RouteData {
 		zwischenspeicher: undefined,
 		dirty: false,
 		view: routeLadeDaten,
-	}
+	};
 
 	private _state = shallowRef<RouteState>(RouteData._defaultState);
 	private reader = new JsonCoreTypeReaderStatic();
@@ -106,14 +106,14 @@ export class RouteData {
 		return this._state.value.dirty;
 	}
 
-	public async setView(view: RouteNode<any,any>) {
+	public async setView(view: RouteNode<any, any>) {
 		if (routeApp.children.includes(view))
 			this.setPatchedState({ view: view });
 		else
 			throw new Error("Diese gewählte Ansicht wird nicht unterstützt.");
 	}
 
-	public get view(): RouteNode<any,any> {
+	public get view(): RouteNode<any, any> {
 		return this._state.value.view;
 	}
 
@@ -219,10 +219,10 @@ export class RouteData {
 			abiturdaten,
 			abiturdatenManager: abiturdatenManager,
 			gostBelegpruefungErgebnis,
-		})
+		});
 	}
 
-	public async schreibeDaten() : Promise<GostLaufbahnplanungDaten> {
+	public async schreibeDaten(): Promise<GostLaufbahnplanungDaten> {
 		if ((this._state.value.faecherManager === undefined) || (this._state.value.abiturdaten === undefined) || (this._state.value.auswahl === undefined))
 			throw new UserNotificationException("Es müssen Abiturdaten geladen sein.");
 		const daten = new GostLaufbahnplanungDaten();
@@ -299,7 +299,7 @@ export class RouteData {
 	}
 
 	set faecherManager(faecherManager: GostFaecherManager | undefined) {
-		this.setPatchedState({ faecherManager })
+		this.setPatchedState({ faecherManager });
 	}
 
 	get abiturdatenManager(): AbiturdatenManager {
@@ -311,7 +311,7 @@ export class RouteData {
 	setGostBelegpruefungsArt = async (gostBelegpruefungsArt: 'ef1' | 'gesamt' | 'auto') => {
 		this.setPatchedState({ gostBelegpruefungsArt });
 		await this.setGostBelegpruefungErgebnis();
-	}
+	};
 
 	setGostBelegpruefungErgebnis = async () => {
 		const abiturdatenManager = this.createAbiturdatenmanager();
@@ -319,7 +319,7 @@ export class RouteData {
 			return;
 		const gostBelegpruefungErgebnis = abiturdatenManager.getBelegpruefungErgebnis();
 		this.setPatchedState({ abiturdatenManager, gostBelegpruefungErgebnis });
-	}
+	};
 
 	protected fachbelegungErstellen(fachID: number, wahl: GostSchuelerFachwahl): void {
 		const faecherManager = this.abiturdatenManager.faecher();
@@ -391,19 +391,19 @@ export class RouteData {
 		}
 		await this.setGostBelegpruefungErgebnis();
 		this.setPatchedState({ dirty: true });
-	}
+	};
 
 	exportLaufbahnplanung = async (): Promise<ApiFile> => {
 		const json = GostLaufbahnplanungDaten.transpilerToJSON(await this.schreibeDaten());
 		const rawData = new Response(json).body;
 		if (rawData === null)
 			throw new UserNotificationException("Unerwarteter Fehler beim Erstellen der Export-Daten aufgetreten.");
-		const compressedStream = rawData.pipeThrough(new CompressionStream('gzip'))
+		const compressedStream = rawData.pipeThrough(new CompressionStream('gzip'));
 		const data = await new Response(compressedStream).blob();
 		const name = `Laufbahnplanung_${this.gostJahrgangsdaten.abiturjahr}_${this.gostJahrgangsdaten.jahrgang}_${this.auswahl.nachname}_${this.auswahl.vorname}_${this.auswahl.id}.lp`;
 		this.setPatchedState({ dirty: false });
 		return { data, name };
-	}
+	};
 
 	importLaufbahnplanung = async (formData: FormData): Promise<void> => {
 		this.reader.readAll();
@@ -418,7 +418,7 @@ export class RouteData {
 			throw new UserNotificationException("Die Revision der Laufbahnplanungsdatei (" + laufbahnplanungsdaten.lpRevision + ") entspricht nicht der unterstützen Revision " + revRequired);
 		await this.ladeDaten(laufbahnplanungsdaten);
 		await RouteManager.doRoute(routeLaufbahnplanung.name);
-	}
+	};
 
 	get zwischenspeicher(): Abiturdaten | undefined {
 		return this._state.value.zwischenspeicher;
@@ -429,7 +429,7 @@ export class RouteData {
 			return;
 		const zwischenspeicher = Abiturdaten.transpilerFromJSON(Abiturdaten.transpilerToJSON(this._state.value.abiturdaten));
 		this.setPatchedState({ zwischenspeicher });
-	}
+	};
 
 	restoreLaufbahnplanung = async (): Promise<void> => {
 		if (this._state.value.zwischenspeicher === undefined)
@@ -440,7 +440,7 @@ export class RouteData {
 			return;
 		const gostBelegpruefungErgebnis = abiturdatenManager.getBelegpruefungErgebnis();
 		this.setPatchedState({ zwischenspeicher: undefined, abiturdaten, abiturdatenManager, gostBelegpruefungErgebnis, dirty: true });
-	}
+	};
 
 	resetFachwahlen = async (forceDelete: boolean) => {
 		const abiturdaten = this._state.value.abiturdaten;
@@ -460,14 +460,14 @@ export class RouteData {
 			return;
 		const gostBelegpruefungErgebnis = abiturdatenManager.getBelegpruefungErgebnis();
 		this.setPatchedState({ abiturdaten, abiturdatenManager, gostBelegpruefungErgebnis });
-	}
+	};
 
 	reset = () => {
 		this.setPatchedDefaultState({});
-	}
+	};
 
 	exitLaufbahnplanung = async () => {
 		await RouteManager.doRoute(routeApp.getRoute());
-	}
+	};
 
 }

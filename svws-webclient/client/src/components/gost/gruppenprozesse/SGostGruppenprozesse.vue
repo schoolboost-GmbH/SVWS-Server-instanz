@@ -47,15 +47,15 @@
 		if (currentAction.value === 'delete')
 			return props.removeAbiturjahrgaengeCheck();
 		return [false, []];
-	})
+	});
 
 	function setCurrentAction(newAction: "delete", open: boolean) {
-		if(newAction === oldAction.value.name && !open)
+		if (newAction === oldAction.value.name && !open)
 			return;
 		oldAction.value.name = currentAction.value;
 		oldAction.value.open = (currentAction.value === "") ? false : true;
-		if(open === true)
-			currentAction.value= newAction;
+		if (open === true)
+			currentAction.value = newAction;
 		else
 			currentAction.value = "";
 	}

@@ -15,22 +15,22 @@ export abstract class Validator extends JavaObject {
 	/**
 	 * Der vom Validator genutzte Kontext
 	 */
-	private readonly _kontext : ValidatorKontext;
+	private readonly _kontext: ValidatorKontext;
 
 	/**
 	 * Eine Liste von Validatoren, die bei diesem Validator mitgeprüft werden.
 	 */
-	protected readonly _validatoren : List<Validator> = new ArrayList<Validator>();
+	protected readonly _validatoren: List<Validator> = new ArrayList<Validator>();
 
 	/**
 	 * Eine Liste mit Fehlern bei der Validierung
 	 */
-	private readonly _fehler : List<ValidatorFehler> = new ArrayList<ValidatorFehler>();
+	private readonly _fehler: List<ValidatorFehler> = new ArrayList<ValidatorFehler>();
 
 	/**
 	 * Die stärkste Fehlerart die bei einem Lauf des Validators vorgekommen ist.
 	 */
-	private _fehlerart : ValidatorFehlerart = ValidatorFehlerart.UNGENUTZT;
+	private _fehlerart: ValidatorFehlerart = ValidatorFehlerart.UNGENUTZT;
 
 
 	/**
@@ -38,7 +38,7 @@ export abstract class Validator extends JavaObject {
 	 *
 	 * @param kontext   der Kontext, in dem der Validator ausgeführt wird
 	 */
-	protected constructor(kontext : ValidatorKontext) {
+	protected constructor(kontext: ValidatorKontext) {
 		super();
 		this._kontext = kontext;
 	}
@@ -48,7 +48,7 @@ export abstract class Validator extends JavaObject {
 	 *
 	 * @return der Kontext des Validators
 	 */
-	public kontext() : ValidatorKontext {
+	public kontext(): ValidatorKontext {
 		return this._kontext;
 	}
 
@@ -57,7 +57,7 @@ export abstract class Validator extends JavaObject {
 	 *
 	 * @return der ValidatorManager
 	 */
-	public getValidatorManager() : ValidatorManager {
+	public getValidatorManager(): ValidatorManager {
 		return this._kontext.getValidatorManager();
 	}
 
@@ -67,8 +67,8 @@ export abstract class Validator extends JavaObject {
 	 *
 	 * @return true, falls alle Prüfroutinen erfolgreich waren, und ansonsten false
 	 */
-	public run() : boolean {
-		let success : boolean = true;
+	public run(): boolean {
+		let success: boolean = true;
 		this._fehler.clear();
 		if (this._kontext.getValidatorManager().isValidatorActiveInSchuljahr(this._kontext.getSchuljahr(), this.getClass().getCanonicalName())) {
 			for (const validator of this._validatoren) {
@@ -97,13 +97,13 @@ export abstract class Validator extends JavaObject {
 	 *
 	 * @return true, wenn der Prüfschritt erfolgreich ausgeführt wurde oder nicht aktiv ist und false, wenn ein Fehler beim Prüfschritt auftritt
 	 */
-	protected exec(schrittNummer : number, fehlerbedingung : BooleanSupplier, error : string) : boolean {
+	protected exec(schrittNummer: number, fehlerbedingung: BooleanSupplier, error: string): boolean {
 		if (schrittNummer < 0)
 			throw new ValidatorException("Ein negativer Wert als Nummer für einen Validator-Prüfschritt ist nicht zulässig. Die -1 wird in Fehlercodes nur für interne Fehler verwendet.")
-		const isActive : boolean = this._kontext.getValidatorManager().isPruefschrittActiveInSchuljahr(this._kontext.getSchuljahr(), this.getClass().getCanonicalName(), schrittNummer);
+		const isActive: boolean = this._kontext.getValidatorManager().isPruefschrittActiveInSchuljahr(this._kontext.getSchuljahr(), this.getClass().getCanonicalName(), schrittNummer);
 		if (!isActive)
 			return true;
-		const result : boolean = fehlerbedingung.getAsBoolean();
+		const result: boolean = fehlerbedingung.getAsBoolean();
 		if (result) {
 			this.addFehler(schrittNummer, error);
 			return false;
@@ -118,7 +118,7 @@ export abstract class Validator extends JavaObject {
 	 *
 	 * @param art   die Fehlerart, die für die Überprüfung genutzt wird, oder null
 	 */
-	private updateFehlerart(art : ValidatorFehlerart) : void {
+	private updateFehlerart(art: ValidatorFehlerart): void {
 		if (this._fehlerart.ordinal() > art.ordinal())
 			this._fehlerart = art;
 	}
@@ -129,7 +129,7 @@ export abstract class Validator extends JavaObject {
 	 * @param pruefschritt    die Nummer des Prüfschrittes, bei welchem der Fehler aufgetreten ist
 	 * @param fehlermeldung   die Fehlermeldung
 	 */
-	private addFehler(pruefschritt : number, fehlermeldung : string) : void {
+	private addFehler(pruefschritt: number, fehlermeldung: string): void {
 		this._fehler.add(new ValidatorFehler(this, pruefschritt, fehlermeldung));
 		this.updateFehlerart(this.getValidatorFehlerart(pruefschritt));
 	}
@@ -139,7 +139,7 @@ export abstract class Validator extends JavaObject {
 	 *
 	 * @return die Liste der Fehler als unmodifiable List
 	 */
-	public getFehler() : List<ValidatorFehler> {
+	public getFehler(): List<ValidatorFehler> {
 		return new ArrayList<ValidatorFehler>(this._fehler);
 	}
 
@@ -150,7 +150,7 @@ export abstract class Validator extends JavaObject {
 	 *
 	 * @return die Fehlerart
 	 */
-	public getValidatorFehlerart(pruefschritt : number) : ValidatorFehlerart {
+	public getValidatorFehlerart(pruefschritt: number): ValidatorFehlerart {
 		return this._kontext.getValidatorManager().getFehlerartBySchuljahrAndValidatorClassAndPruefschritt(this._kontext.getSchuljahr(), this.getClass(), pruefschritt);
 	}
 
@@ -159,7 +159,7 @@ export abstract class Validator extends JavaObject {
 	 *
 	 * @return das Fehlercode-Präfix
 	 */
-	public getFehlercodePraefix() : string {
+	public getFehlercodePraefix(): string {
 		return this._kontext.getValidatorManager().getFehlercodePraefixBySchuljahrAndValidatorClass(this._kontext.getSchuljahr(), this.getClass());
 	}
 
@@ -170,7 +170,7 @@ export abstract class Validator extends JavaObject {
 	 *
 	 * @return die Fehlerart
 	 */
-	public getFehlerart() : ValidatorFehlerart {
+	public getFehlerart(): ValidatorFehlerart {
 		return this._fehlerart;
 	}
 
@@ -180,13 +180,13 @@ export abstract class Validator extends JavaObject {
 	 *
 	 * @return true, falls die Prüfung erfolgreich war, und ansonsten false
 	 */
-	protected abstract pruefe() : boolean;
+	protected abstract pruefe(): boolean;
 
 	transpilerCanonicalName(): string {
 		return 'de.svws_nrw.asd.validate.Validator';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.asd.validate.Validator'].includes(name);
 	}
 
@@ -194,6 +194,6 @@ export abstract class Validator extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_asd_validate_Validator(obj : unknown) : Validator {
+export function cast_de_svws_nrw_asd_validate_Validator(obj: unknown): Validator {
 	return obj as Validator;
 }

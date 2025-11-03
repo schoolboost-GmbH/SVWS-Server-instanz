@@ -15,7 +15,8 @@ export type { StundenplanSchuelerProps } from "./components/stundenplan/Stundenp
 export { default as AbschnittAuswahl } from "./components/abschnittauswahl/AbschnittAuswahl.vue";
 export { default as DatenschutzModal } from "./components/modals/DatenschutzModal.vue";
 export { default as FehlermeldungModal } from "./components/modals/FehlermeldungModal.vue";
-export { default as LogBox } from "./components/logbox/LogBox.vue";
+export { default as LogBox } from "./components/boxes/LogBox.vue";
+export { default as CodeBox } from "./components/boxes/CodeBox.vue";
 export { default as SLaufbahnplanungCardBeratung } from "./components/gost/laufbahnplanung/SLaufbahnplanungCardBeratung.vue";
 export { default as SLaufbahnplanungCardPlanung } from "./components/gost/laufbahnplanung/SLaufbahnplanungCardPlanung.vue";
 export { default as SLaufbahnplanungCardStatus } from "./components/gost/laufbahnplanung/SLaufbahnplanungCardStatus.vue";
@@ -131,7 +132,7 @@ export { StundenplanUnterrichtListeManager } from "./ui/managers/stundenplan/Stu
 export { KatalogSchuleListeManager } from "./ui/managers/schule/KatalogSchuleListeManager";
 export { SchuelerListeManager } from "./ui/managers/schueler/SchuelerListeManager";
 export { SchuelerKAoAManager } from "./ui/managers/schueler/SchuelerKAoAManager";
-export { ReligionenListeManager } from "./ui/managers/kataloge/religionen/ReligionenListeManager";
+export { KonfessionenListeManager } from "./ui/managers/kataloge/konfessionen/KonfessionenListeManager";
 export { RaumListeManager } from "./ui/managers/raum/RaumListeManager";
 export { LernplattformListeManager } from "./ui/managers/lernplattform/LernplattformListeManager";
 export { LehrerListeManager } from "./ui/managers/lehrer/LehrerListeManager";

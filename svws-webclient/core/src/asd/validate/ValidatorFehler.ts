@@ -9,17 +9,17 @@ export class ValidatorFehler extends JavaObject {
 	/**
 	 * Der Validator bei dem die Validierung fehlgeschlagen ist.
 	 */
-	private readonly _validator : Validator;
+	private readonly _validator: Validator;
 
 	/**
 	 * Die Nummer des Prüfschrittes, bei welchem der Fehler aufgetreten ist
 	 */
-	private readonly _pruefschritt : number;
+	private readonly _pruefschritt: number;
 
 	/**
 	 * Die Fehlermeldung, welche vom Validator gemeldet wurde
 	 */
-	private readonly _fehlermeldung : string;
+	private readonly _fehlermeldung: string;
 
 
 	/**
@@ -29,7 +29,7 @@ export class ValidatorFehler extends JavaObject {
 	 * @param pruefschritt    die Nummer des Prüfschrittes, bei welchem der Fehler aufgetreten ist
 	 * @param fehlermeldung   die Fehlermeldung, welche vom Validator gemeldet wurde
 	 */
-	public constructor(validator : Validator, pruefschritt : number, fehlermeldung : string) {
+	public constructor(validator: Validator, pruefschritt: number, fehlermeldung: string) {
 		super();
 		this._validator = validator;
 		this._fehlermeldung = fehlermeldung;
@@ -41,7 +41,7 @@ export class ValidatorFehler extends JavaObject {
 	 *
 	 * @return die Schulnummer
 	 */
-	public getSchulnummer() : number {
+	public getSchulnummer(): number {
 		return this._validator.kontext().getSchulnummer();
 	}
 
@@ -50,7 +50,7 @@ export class ValidatorFehler extends JavaObject {
 	 *
 	 * @return der Kontext
 	 */
-	public getKontext() : ValidatorKontext {
+	public getKontext(): ValidatorKontext {
 		return this._validator.kontext();
 	}
 
@@ -59,7 +59,7 @@ export class ValidatorFehler extends JavaObject {
 	 *
 	 * @return der Validator
 	 */
-	public getValidator() : Validator | null {
+	public getValidator(): Validator | null {
 		return this._validator;
 	}
 
@@ -68,7 +68,7 @@ export class ValidatorFehler extends JavaObject {
 	 *
 	 * @return der Name der Validator-Klasse
 	 */
-	public getValidatorClassname() : string {
+	public getValidatorClassname(): string {
 		return this._validator.getClass().getCanonicalName();
 	}
 
@@ -77,7 +77,7 @@ export class ValidatorFehler extends JavaObject {
 	 *
 	 * @return die Validator-Klasse
 	 */
-	public getValidatorClass() : Class<Validator> | null {
+	public getValidatorClass(): Class<Validator> | null {
 		return this._validator.getClass();
 	}
 
@@ -86,7 +86,7 @@ export class ValidatorFehler extends JavaObject {
 	 *
 	 * @return die Nummer des Prüfschrittes
 	 */
-	public getPruefschritt() : number {
+	public getPruefschritt(): number {
 		return this._pruefschritt;
 	}
 
@@ -95,7 +95,7 @@ export class ValidatorFehler extends JavaObject {
 	 *
 	 * @return der ASD-Fehlercode
 	 */
-	public getFehlercode() : string {
+	public getFehlercode(): string {
 		return this._validator.getFehlercodePraefix() + this._pruefschritt;
 	}
 
@@ -104,7 +104,7 @@ export class ValidatorFehler extends JavaObject {
 	 *
 	 * @return die Fehlermeldung
 	 */
-	public getFehlermeldung() : string | null {
+	public getFehlermeldung(): string | null {
 		return this._fehlermeldung;
 	}
 
@@ -113,7 +113,7 @@ export class ValidatorFehler extends JavaObject {
 	 *
 	 * @return die Fehlerart
 	 */
-	public getFehlerart() : ValidatorFehlerart {
+	public getFehlerart(): ValidatorFehlerart {
 		return this._validator.getValidatorFehlerart(this._pruefschritt);
 	}
 
@@ -121,7 +121,7 @@ export class ValidatorFehler extends JavaObject {
 		return 'de.svws_nrw.asd.validate.ValidatorFehler';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.asd.validate.ValidatorFehler'].includes(name);
 	}
 
@@ -129,6 +129,6 @@ export class ValidatorFehler extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_asd_validate_ValidatorFehler(obj : unknown) : ValidatorFehler {
+export function cast_de_svws_nrw_asd_validate_ValidatorFehler(obj: unknown): ValidatorFehler {
 	return obj as ValidatorFehler;
 }

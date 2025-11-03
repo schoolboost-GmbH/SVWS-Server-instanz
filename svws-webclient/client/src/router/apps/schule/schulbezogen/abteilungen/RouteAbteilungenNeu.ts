@@ -14,17 +14,17 @@ const SAbteilungenNeu = () => import("~/components/schule/schulbezogen/abteilung
 export class RouteAbteilungenNeu extends RouteNode<any, RouteAbteilungen> {
 
 	public constructor() {
-		super(Schulform.values(), [ BenutzerKompetenz.LEHRERDATEN_AENDERN ], "schule.abteilungen.neu", "neu", SAbteilungenNeu);
-		super.types = new Set([ ViewType.HINZUFUEGEN ]);
+		super(Schulform.values(), [BenutzerKompetenz.LEHRERDATEN_AENDERN], "schule.abteilungen.neu", "neu", SAbteilungenNeu);
+		super.types = new Set([ViewType.HINZUFUEGEN]);
 		super.mode = ServerMode.DEV;
 		super.propHandler = (route) => this.getProps(route);
 		super.text = "abteilungen";
 		super.setCheckpoint = true;
 	}
 
-	goToLehrer = async (idLehrer : number) => {
-		await RouteManager.doRoute(routeLehrer.getRoute({id : idLehrer}));
-	}
+	goToLehrer = async (idLehrer: number) => {
+		await RouteManager.doRoute(routeLehrer.getRoute({ id: idLehrer }));
+	};
 
 	public getProps(to: RouteLocationNormalized): AbteilungenNeuProps {
 		return {
@@ -36,7 +36,7 @@ export class RouteAbteilungenNeu extends RouteNode<any, RouteAbteilungen> {
 			checkpoint: this.checkpoint,
 			continueRoutingAfterCheckpoint: () => RouteManager.continueRoutingAfterCheckpoint(),
 			benutzerKompetenzen: api.benutzerKompetenzen,
-		}
+		};
 	}
 }
 

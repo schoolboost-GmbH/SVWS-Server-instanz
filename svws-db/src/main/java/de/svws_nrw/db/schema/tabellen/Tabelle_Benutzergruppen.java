@@ -12,17 +12,17 @@ import de.svws_nrw.db.schema.SchemaTabelleSpalte;
 public class Tabelle_Benutzergruppen extends SchemaTabelle {
 
 	/** Die Definition der Tabellenspalte ID */
-	public SchemaTabelleSpalte col_ID = add("ID", SchemaDatentypen.BIGINT, true)
+	public final SchemaTabelleSpalte col_ID = add("ID", SchemaDatentypen.BIGINT, true)
 			.setNotNull()
 			.setJavaComment("Die ID der Benutzergruppe");
 
 	/** Die Definition der Tabellenspalte Bezeichnung */
-	public SchemaTabelleSpalte col_Bezeichnung = add("Bezeichnung", SchemaDatentypen.VARCHAR, false).setDatenlaenge(255)
+	public final SchemaTabelleSpalte col_Bezeichnung = add("Bezeichnung", SchemaDatentypen.VARCHAR, false).setDatenlaenge(255)
 			.setNotNull()
 			.setJavaComment("Die Bezeichnung der Benutzergruppe");
 
 	/** Die Definition der Tabellenspalte IstAdmin */
-	public SchemaTabelleSpalte col_IstAdmin = add("IstAdmin", SchemaDatentypen.INT, false)
+	public final SchemaTabelleSpalte col_IstAdmin = add("IstAdmin", SchemaDatentypen.INT, false)
 			.setDefault("0")
 			.setNotNull()
 			.setConverter(Boolean01Converter.class)

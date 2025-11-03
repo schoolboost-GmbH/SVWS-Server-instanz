@@ -8,17 +8,17 @@ export class SimpleOperationResponse extends JavaObject {
 	/**
 	 * ID des zugehörigen Objektes.
 	 */
-	public id : number | null = null;
+	public id: number | null = null;
 
 	/**
 	 * Gibt an, ob die Operation erfolgreich war.
 	 */
-	public success : boolean = false;
+	public success: boolean = false;
 
 	/**
 	 * Das Log der Operation.
 	 */
-	public log : List<string> = new ArrayList<string>();
+	public log: List<string> = new ArrayList<string>();
 
 
 	/**
@@ -32,13 +32,13 @@ export class SimpleOperationResponse extends JavaObject {
 		return 'de.svws_nrw.core.data.SimpleOperationResponse';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.SimpleOperationResponse'].includes(name);
 	}
 
 	public static class = new Class<SimpleOperationResponse>('de.svws_nrw.core.data.SimpleOperationResponse');
 
-	public static transpilerFromJSON(json : string): SimpleOperationResponse {
+	public static transpilerFromJSON(json: string): SimpleOperationResponse {
 		const obj = JSON.parse(json) as Partial<SimpleOperationResponse>;
 		const result = new SimpleOperationResponse();
 		result.id = (obj.id === undefined) ? null : obj.id === null ? null : obj.id;
@@ -53,7 +53,7 @@ export class SimpleOperationResponse extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : SimpleOperationResponse) : string {
+	public static transpilerToJSON(obj: SimpleOperationResponse): string {
 		let result = '{';
 		result += '"id" : ' + ((obj.id === null) ? 'null' : obj.id.toString()) + ',';
 		result += '"success" : ' + obj.success.toString() + ',';
@@ -70,7 +70,7 @@ export class SimpleOperationResponse extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<SimpleOperationResponse>) : string {
+	public static transpilerToJSONPatch(obj: Partial<SimpleOperationResponse>): string {
 		let result = '{';
 		if (obj.id !== undefined) {
 			result += '"id" : ' + ((obj.id === null) ? 'null' : obj.id.toString()) + ',';
@@ -95,6 +95,6 @@ export class SimpleOperationResponse extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_SimpleOperationResponse(obj : unknown) : SimpleOperationResponse {
+export function cast_de_svws_nrw_core_data_SimpleOperationResponse(obj: unknown): SimpleOperationResponse {
 	return obj as SimpleOperationResponse;
 }

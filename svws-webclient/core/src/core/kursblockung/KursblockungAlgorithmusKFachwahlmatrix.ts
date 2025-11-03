@@ -10,7 +10,7 @@ export class KursblockungAlgorithmusKFachwahlmatrix extends KursblockungAlgorith
 	/**
 	 *  Die Anzahl an Runden ohne Verbesserung, bevor es zum Abbruch kommt.
 	 */
-	private static readonly MAX_RUNDEN_IN_FOLGE_OHNE_VERBESSERUNG : number = 5000;
+	private static readonly MAX_RUNDEN_IN_FOLGE_OHNE_VERBESSERUNG: number = 5000;
 
 
 	/**
@@ -21,24 +21,24 @@ export class KursblockungAlgorithmusKFachwahlmatrix extends KursblockungAlgorith
 	 * @param pLogger Logger für Benutzerhinweise, Warnungen und Fehler.
 	 * @param pDynDat Die dynamischen Blockungsdaten.
 	 */
-	public constructor(pRandom : Random, pLogger : Logger, pDynDat : KursblockungDynDaten) {
+	public constructor(pRandom: Random, pLogger: Logger, pDynDat: KursblockungDynDaten) {
 		super(pRandom, pLogger, pDynDat);
 	}
 
-	public toString() : string {
+	public toString(): string {
 		return "Fachwahlmatrix";
 	}
 
 	/**
 	 * Der Algorithmus entfernt zunächst alle SuS aus ihren Kursen. Anschließend werden die Kurse zufällig verteilt.
 	 */
-	public berechne(pEndzeit : number) : void {
+	public berechne(pEndzeit: number): void {
 		if (this.dynDaten.gibKurseDieFreiSindAnzahl() === 0)
 			return;
 		this.dynDaten.aktionSchuelerAusAllenKursenEntfernen();
 		this.dynDaten.aktionKurseFreieZufaelligVerteilen();
 		this.dynDaten.aktionZustandSpeichernK();
-		let countKeineVerbesserung : number = 0;
+		let countKeineVerbesserung: number = 0;
 		do {
 			countKeineVerbesserung = this.verteileKurse() ? 0 : (countKeineVerbesserung + 1);
 		} while ((countKeineVerbesserung < KursblockungAlgorithmusKFachwahlmatrix.MAX_RUNDEN_IN_FOLGE_OHNE_VERBESSERUNG) && (System.currentTimeMillis() < pEndzeit));
@@ -50,7 +50,7 @@ export class KursblockungAlgorithmusKFachwahlmatrix extends KursblockungAlgorith
 	 *
 	 * @return TRUE, falls sich die Bewertung verbessert hat.
 	 */
-	private verteileKurse() : boolean {
+	private verteileKurse(): boolean {
 		do {
 			this.dynDaten.aktionKursVerteilenEinenZufaelligenFreien();
 			if (this.dynDaten.gibCompareZustandK_NW_KD_FW() > 0) {
@@ -66,7 +66,7 @@ export class KursblockungAlgorithmusKFachwahlmatrix extends KursblockungAlgorith
 		return 'de.svws_nrw.core.kursblockung.KursblockungAlgorithmusKFachwahlmatrix';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.kursblockung.KursblockungAlgorithmusKFachwahlmatrix', 'de.svws_nrw.core.kursblockung.KursblockungAlgorithmusK'].includes(name);
 	}
 
@@ -74,6 +74,6 @@ export class KursblockungAlgorithmusKFachwahlmatrix extends KursblockungAlgorith
 
 }
 
-export function cast_de_svws_nrw_core_kursblockung_KursblockungAlgorithmusKFachwahlmatrix(obj : unknown) : KursblockungAlgorithmusKFachwahlmatrix {
+export function cast_de_svws_nrw_core_kursblockung_KursblockungAlgorithmusKFachwahlmatrix(obj: unknown): KursblockungAlgorithmusKFachwahlmatrix {
 	return obj as KursblockungAlgorithmusKFachwahlmatrix;
 }

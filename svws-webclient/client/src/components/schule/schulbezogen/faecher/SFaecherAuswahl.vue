@@ -48,7 +48,7 @@
 
 	const readonly = computed<boolean>(() => !props.benutzerKompetenzen.has(BenutzerKompetenz.KATALOG_EINTRAEGE_AENDERN));
 
-	const schuljahr = computed(() => props.schuljahresabschnittsauswahl().aktuell.schuljahr)
+	const schuljahr = computed(() => props.schuljahresabschnittsauswahl().aktuell.schuljahr);
 
 	const columns = [
 		{ key: "kuerzel", label: "Kürzel", sortable: true, defaultSort: 'asc' },
@@ -69,7 +69,7 @@
 		return props.manager().hasDaten() ? props.manager().auswahl() : null;
 	});
 
-	async function setAuswahl(items : FachDaten[]) {
+	async function setAuswahl(items: FachDaten[]) {
 		props.manager().liste.auswahlClear();
 		for (const item of items)
 			if (props.manager().liste.hasValue(item))

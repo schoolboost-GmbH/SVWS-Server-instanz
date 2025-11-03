@@ -12,182 +12,182 @@ import { de_svws_nrw_asd_types_CoreType_getManager, de_svws_nrw_asd_types_CoreTy
 export class Jahrgaenge extends JavaEnum<Jahrgaenge> implements CoreType<JahrgaengeKatalogEintrag, Jahrgaenge> {
 
 	/** an array containing all values of this enumeration */
-	static readonly all_values_by_ordinal : Array<Jahrgaenge> = [];
+	static readonly all_values_by_ordinal: Array<Jahrgaenge> = [];
 
 	/** an array containing all values of this enumeration indexed by their name*/
-	static readonly all_values_by_name : Map<string, Jahrgaenge> = new Map<string, Jahrgaenge>();
+	static readonly all_values_by_name: Map<string, Jahrgaenge> = new Map<string, Jahrgaenge>();
 
 	/**
 	 * Jahrgang 90: Hausfrüherziehung für Hör- bzw. Sehgeschädigte
 	 */
-	public static readonly HAUSFRUEHERZIEHUNG : Jahrgaenge = new Jahrgaenge("HAUSFRUEHERZIEHUNG", 0, );
+	public static readonly HAUSFRUEHERZIEHUNG: Jahrgaenge = new Jahrgaenge("HAUSFRUEHERZIEHUNG", 0, );
 
 	/**
 	 * Jahrgang 00: Frühkindliche Förderung, Förderschulkindergarten
 	 */
-	public static readonly JAHRGANG_00 : Jahrgaenge = new Jahrgaenge("JAHRGANG_00", 1, );
+	public static readonly JAHRGANG_00: Jahrgaenge = new Jahrgaenge("JAHRGANG_00", 1, );
 
 	/**
 	 * 1. Jahrgang
 	 */
-	public static readonly JAHRGANG_01 : Jahrgaenge = new Jahrgaenge("JAHRGANG_01", 2, );
+	public static readonly JAHRGANG_01: Jahrgaenge = new Jahrgaenge("JAHRGANG_01", 2, );
 
 	/**
 	 * 2. Jahrgang
 	 */
-	public static readonly JAHRGANG_02 : Jahrgaenge = new Jahrgaenge("JAHRGANG_02", 3, );
+	public static readonly JAHRGANG_02: Jahrgaenge = new Jahrgaenge("JAHRGANG_02", 3, );
 
 	/**
 	 * 3. Jahrgang
 	 */
-	public static readonly JAHRGANG_03 : Jahrgaenge = new Jahrgaenge("JAHRGANG_03", 4, );
+	public static readonly JAHRGANG_03: Jahrgaenge = new Jahrgaenge("JAHRGANG_03", 4, );
 
 	/**
 	 * 4. Jahrgang
 	 */
-	public static readonly JAHRGANG_04 : Jahrgaenge = new Jahrgaenge("JAHRGANG_04", 5, );
+	public static readonly JAHRGANG_04: Jahrgaenge = new Jahrgaenge("JAHRGANG_04", 5, );
 
 	/**
 	 * 5. Jahrgang
 	 */
-	public static readonly JAHRGANG_05 : Jahrgaenge = new Jahrgaenge("JAHRGANG_05", 6, );
+	public static readonly JAHRGANG_05: Jahrgaenge = new Jahrgaenge("JAHRGANG_05", 6, );
 
 	/**
 	 * 6. Jahrgang
 	 */
-	public static readonly JAHRGANG_06 : Jahrgaenge = new Jahrgaenge("JAHRGANG_06", 7, );
+	public static readonly JAHRGANG_06: Jahrgaenge = new Jahrgaenge("JAHRGANG_06", 7, );
 
 	/**
 	 * 7. Jahrgang
 	 */
-	public static readonly JAHRGANG_07 : Jahrgaenge = new Jahrgaenge("JAHRGANG_07", 8, );
+	public static readonly JAHRGANG_07: Jahrgaenge = new Jahrgaenge("JAHRGANG_07", 8, );
 
 	/**
 	 * 8. Jahrgang
 	 */
-	public static readonly JAHRGANG_08 : Jahrgaenge = new Jahrgaenge("JAHRGANG_08", 9, );
+	public static readonly JAHRGANG_08: Jahrgaenge = new Jahrgaenge("JAHRGANG_08", 9, );
 
 	/**
 	 * 9. Jahrgang
 	 */
-	public static readonly JAHRGANG_09 : Jahrgaenge = new Jahrgaenge("JAHRGANG_09", 10, );
+	public static readonly JAHRGANG_09: Jahrgaenge = new Jahrgaenge("JAHRGANG_09", 10, );
 
 	/**
 	 * 10. Jahrgang
 	 */
-	public static readonly JAHRGANG_10 : Jahrgaenge = new Jahrgaenge("JAHRGANG_10", 11, );
+	public static readonly JAHRGANG_10: Jahrgaenge = new Jahrgaenge("JAHRGANG_10", 11, );
 
 	/**
 	 * 11. Jahrgang
 	 */
-	public static readonly JAHRGANG_11 : Jahrgaenge = new Jahrgaenge("JAHRGANG_11", 12, );
+	public static readonly JAHRGANG_11: Jahrgaenge = new Jahrgaenge("JAHRGANG_11", 12, );
 
 	/**
 	 * 12. Jahrgang
 	 */
-	public static readonly JAHRGANG_12 : Jahrgaenge = new Jahrgaenge("JAHRGANG_12", 13, );
+	public static readonly JAHRGANG_12: Jahrgaenge = new Jahrgaenge("JAHRGANG_12", 13, );
 
 	/**
 	 * 13. Jahrgang
 	 */
-	public static readonly JAHRGANG_13 : Jahrgaenge = new Jahrgaenge("JAHRGANG_13", 14, );
+	public static readonly JAHRGANG_13: Jahrgaenge = new Jahrgaenge("JAHRGANG_13", 14, );
 
 	/**
 	 * Jahrgang EF: Gymnasiale Oberstufe - Einführungsphase
 	 */
-	public static readonly EF : Jahrgaenge = new Jahrgaenge("EF", 15, );
+	public static readonly EF: Jahrgaenge = new Jahrgaenge("EF", 15, );
 
 	/**
 	 * Jahrgang Q1: Gymnasiale Oberstufe - Qualifikationsphase 1. Jahr
 	 */
-	public static readonly Q1 : Jahrgaenge = new Jahrgaenge("Q1", 16, );
+	public static readonly Q1: Jahrgaenge = new Jahrgaenge("Q1", 16, );
 
 	/**
 	 * Jahrgang Q2: Gymnasiale Oberstufe - Qualifikationsphase 2. Jahr
 	 */
-	public static readonly Q2 : Jahrgaenge = new Jahrgaenge("Q2", 17, );
+	public static readonly Q2: Jahrgaenge = new Jahrgaenge("Q2", 17, );
 
 	/**
 	 * Jahrgang Berufspraxisstufe in Vollzeit laut AO-SF für den Förderschwerpunkt Geistige Entwicklung (je nach Organisationsform in Teilzeit (86) und Vollzeit (85) möglich)
 	 */
-	public static readonly BERUFSPRAXISSTUFE_VOLLZEIT : Jahrgaenge = new Jahrgaenge("BERUFSPRAXISSTUFE_VOLLZEIT", 18, );
+	public static readonly BERUFSPRAXISSTUFE_VOLLZEIT: Jahrgaenge = new Jahrgaenge("BERUFSPRAXISSTUFE_VOLLZEIT", 18, );
 
 	/**
 	 * Jahrgang Berufspraxisstufe in Teilzeit laut AO-SF für den Förderschwerpunkt Geistige Entwicklung (je nach Organisationsform in Teilzeit (86) und Vollzeit (85) möglich)
 	 */
-	public static readonly BERUFSPRAXISSTUFE_TEILZEIT : Jahrgaenge = new Jahrgaenge("BERUFSPRAXISSTUFE_TEILZEIT", 19, );
+	public static readonly BERUFSPRAXISSTUFE_TEILZEIT: Jahrgaenge = new Jahrgaenge("BERUFSPRAXISSTUFE_TEILZEIT", 19, );
 
 	/**
 	 * 91: Abendrealschule Vorkurs, 1. Semester
 	 */
-	public static readonly REALSCHULE_VORKURS_SEMESTER_1 : Jahrgaenge = new Jahrgaenge("REALSCHULE_VORKURS_SEMESTER_1", 20, );
+	public static readonly REALSCHULE_VORKURS_SEMESTER_1: Jahrgaenge = new Jahrgaenge("REALSCHULE_VORKURS_SEMESTER_1", 20, );
 
 	/**
 	 * 92: Abendrealschule Vorkurs, 2. Semester
 	 */
-	public static readonly REALSCHULE_VORKURS_SEMESTER_2 : Jahrgaenge = new Jahrgaenge("REALSCHULE_VORKURS_SEMESTER_2", 21, );
+	public static readonly REALSCHULE_VORKURS_SEMESTER_2: Jahrgaenge = new Jahrgaenge("REALSCHULE_VORKURS_SEMESTER_2", 21, );
 
 	/**
 	 * Abendrealschule 1. Semester
 	 */
-	public static readonly REALSCHULE_SEMESTER_01 : Jahrgaenge = new Jahrgaenge("REALSCHULE_SEMESTER_01", 22, );
+	public static readonly REALSCHULE_SEMESTER_01: Jahrgaenge = new Jahrgaenge("REALSCHULE_SEMESTER_01", 22, );
 
 	/**
 	 * Abendrealschule 2. Semester
 	 */
-	public static readonly REALSCHULE_SEMESTER_02 : Jahrgaenge = new Jahrgaenge("REALSCHULE_SEMESTER_02", 23, );
+	public static readonly REALSCHULE_SEMESTER_02: Jahrgaenge = new Jahrgaenge("REALSCHULE_SEMESTER_02", 23, );
 
 	/**
 	 * Abendrealschule 3. Semester
 	 */
-	public static readonly REALSCHULE_SEMESTER_03 : Jahrgaenge = new Jahrgaenge("REALSCHULE_SEMESTER_03", 24, );
+	public static readonly REALSCHULE_SEMESTER_03: Jahrgaenge = new Jahrgaenge("REALSCHULE_SEMESTER_03", 24, );
 
 	/**
 	 * Abendrealschule 4. Semester
 	 */
-	public static readonly REALSCHULE_SEMESTER_04 : Jahrgaenge = new Jahrgaenge("REALSCHULE_SEMESTER_04", 25, );
+	public static readonly REALSCHULE_SEMESTER_04: Jahrgaenge = new Jahrgaenge("REALSCHULE_SEMESTER_04", 25, );
 
 	/**
 	 * Abendgymnasium/Kolleg: Vorkurs, 1. Semester
 	 */
-	public static readonly VORKURS_SEMESTER_1 : Jahrgaenge = new Jahrgaenge("VORKURS_SEMESTER_1", 26, );
+	public static readonly VORKURS_SEMESTER_1: Jahrgaenge = new Jahrgaenge("VORKURS_SEMESTER_1", 26, );
 
 	/**
 	 * Abendgymnasium/Kolleg: Vorkurs, 2. Semester
 	 */
-	public static readonly VORKURS_SEMESTER_2 : Jahrgaenge = new Jahrgaenge("VORKURS_SEMESTER_2", 27, );
+	public static readonly VORKURS_SEMESTER_2: Jahrgaenge = new Jahrgaenge("VORKURS_SEMESTER_2", 27, );
 
 	/**
 	 * Abendgymnasium/Kolleg: 1. Semester (EF.1)
 	 */
-	public static readonly SEMESTER_01 : Jahrgaenge = new Jahrgaenge("SEMESTER_01", 28, );
+	public static readonly SEMESTER_01: Jahrgaenge = new Jahrgaenge("SEMESTER_01", 28, );
 
 	/**
 	 * Abendgymnasium/Kolleg: 2. Semester (EF.2)
 	 */
-	public static readonly SEMESTER_02 : Jahrgaenge = new Jahrgaenge("SEMESTER_02", 29, );
+	public static readonly SEMESTER_02: Jahrgaenge = new Jahrgaenge("SEMESTER_02", 29, );
 
 	/**
 	 * Abendgymnasium/Kolleg: 3. Semester (Q1.1)
 	 */
-	public static readonly SEMESTER_03 : Jahrgaenge = new Jahrgaenge("SEMESTER_03", 30, );
+	public static readonly SEMESTER_03: Jahrgaenge = new Jahrgaenge("SEMESTER_03", 30, );
 
 	/**
 	 * Abendgymnasium/Kolleg: 4. Semester (Q1.2)
 	 */
-	public static readonly SEMESTER_04 : Jahrgaenge = new Jahrgaenge("SEMESTER_04", 31, );
+	public static readonly SEMESTER_04: Jahrgaenge = new Jahrgaenge("SEMESTER_04", 31, );
 
 	/**
 	 * Abendgymnasium/Kolleg: 5. Semester (Q2.1)
 	 */
-	public static readonly SEMESTER_05 : Jahrgaenge = new Jahrgaenge("SEMESTER_05", 32, );
+	public static readonly SEMESTER_05: Jahrgaenge = new Jahrgaenge("SEMESTER_05", 32, );
 
 	/**
 	 * Abendgymnasium/Kolleg: 6. Semester (Q2.2)
 	 */
-	public static readonly SEMESTER_06 : Jahrgaenge = new Jahrgaenge("SEMESTER_06", 33, );
+	public static readonly SEMESTER_06: Jahrgaenge = new Jahrgaenge("SEMESTER_06", 33, );
 
-	private constructor(name : string, ordinal : number) {
+	private constructor(name: string, ordinal: number) {
 		super(name, ordinal);
 		Jahrgaenge.all_values_by_ordinal.push(this);
 		Jahrgaenge.all_values_by_name.set(name, this);
@@ -198,7 +198,7 @@ export class Jahrgaenge extends JavaEnum<Jahrgaenge> implements CoreType<Jahrgae
 	 *
 	 * @param manager   der Manager für die Daten des Core-Types
 	 */
-	public static init(manager : CoreTypeDataManager<JahrgaengeKatalogEintrag, Jahrgaenge>) : void {
+	public static init(manager: CoreTypeDataManager<JahrgaengeKatalogEintrag, Jahrgaenge>): void {
 		CoreTypeDataManager.putManager(Jahrgaenge.class, manager);
 	}
 
@@ -207,7 +207,7 @@ export class Jahrgaenge extends JavaEnum<Jahrgaenge> implements CoreType<Jahrgae
 	 *
 	 * @return der Daten-Manager
 	 */
-	public static data() : CoreTypeDataManager<JahrgaengeKatalogEintrag, Jahrgaenge> {
+	public static data(): CoreTypeDataManager<JahrgaengeKatalogEintrag, Jahrgaenge> {
 		return CoreTypeDataManager.getManager(Jahrgaenge.class);
 	}
 
@@ -219,7 +219,7 @@ export class Jahrgaenge extends JavaEnum<Jahrgaenge> implements CoreType<Jahrgae
 	 *
 	 * @return true, falls die Schulform zulässig ist, und ansonsten false
 	 */
-	public hatSchulform(schuljahr : number, sf : Schulform) : boolean {
+	public hatSchulform(schuljahr: number, sf: Schulform): boolean {
 		return Jahrgaenge.data().hatSchulform(schuljahr, sf, this);
 	}
 
@@ -231,7 +231,7 @@ export class Jahrgaenge extends JavaEnum<Jahrgaenge> implements CoreType<Jahrgae
 	 *
 	 * @return der Katalog-Eintrag oder null, wenn keiner gefunden wird
 	 */
-	public getBySchulform(schuljahr : number, sf : Schulform) : JahrgaengeKatalogEintrag | null {
+	public getBySchulform(schuljahr: number, sf: Schulform): JahrgaengeKatalogEintrag | null {
 		return Jahrgaenge.data().getBySchulform(schuljahr, sf, this);
 	}
 
@@ -241,7 +241,7 @@ export class Jahrgaenge extends JavaEnum<Jahrgaenge> implements CoreType<Jahrgae
 	 *
 	 * @return true, wenn dieser ein Jahrgang der gymnasialen Oberstufe ist, und ansonsten false
 	 */
-	public istGymOb() : boolean {
+	public istGymOb(): boolean {
 		let _sevar_627718607 : any;
 		const _seexpr_627718607 = (this);
 		if (_seexpr_627718607 === Jahrgaenge.EF) {
@@ -273,12 +273,12 @@ export class Jahrgaenge extends JavaEnum<Jahrgaenge> implements CoreType<Jahrgae
 	 *
 	 * @return true, falls jgVorher ein gültiger Vorgänger-Jahrgang dieses Jahrgangs ist.
 	 */
-	public isNachfolgerVon(schuljahr : number, vergleichsjahrgang : Jahrgaenge | null, schulform : Schulform | null, gliederung : Schulgliederung | null) : boolean {
+	public isNachfolgerVon(schuljahr: number, vergleichsjahrgang: Jahrgaenge | null, schulform: Schulform | null, gliederung: Schulgliederung | null): boolean {
 		if (schulform === null)
 			return false;
 		if (!this.hatSchulform(schuljahr, schulform) || ((vergleichsjahrgang !== null) && (!vergleichsjahrgang.hatSchulform(schuljahr, schulform))))
 			return false;
-		const gl : Schulgliederung | null = (gliederung === null) ? Schulgliederung.getDefault(schulform) : gliederung;
+		const gl: Schulgliederung | null = (gliederung === null) ? Schulgliederung.getDefault(schulform) : gliederung;
 		let _sevar_515668459 : any;
 		const _seexpr_515668459 = (this);
 		if (_seexpr_515668459 === Jahrgaenge.HAUSFRUEHERZIEHUNG) {
@@ -366,15 +366,15 @@ export class Jahrgaenge extends JavaEnum<Jahrgaenge> implements CoreType<Jahrgae
 	 *
 	 * @return true, falls jgNachher ein gültiger Nachfolger-Jahrgang dieses Jahrgangs ist.
 	 */
-	public isVorgaengerVon(schuljahr : number, vergleichsjahrgang : Jahrgaenge | null, schulform : Schulform | null, gliederung : Schulgliederung | null) : boolean {
+	public isVorgaengerVon(schuljahr: number, vergleichsjahrgang: Jahrgaenge | null, schulform: Schulform | null, gliederung: Schulgliederung | null): boolean {
 		if (schulform === null)
 			return false;
 		if (!this.hatSchulform(schuljahr, schulform) || ((vergleichsjahrgang !== null) && (!vergleichsjahrgang.hatSchulform(schuljahr, schulform))))
 			return false;
-		const ske : SchulformKatalogEintrag | null = schulform.daten(schuljahr);
+		const ske: SchulformKatalogEintrag | null = schulform.daten(schuljahr);
 		if (ske === null)
 			return false;
-		const gl : Schulgliederung | null = (gliederung === null) ? Schulgliederung.getDefault(schulform) : gliederung;
+		const gl: Schulgliederung | null = (gliederung === null) ? Schulgliederung.getDefault(schulform) : gliederung;
 		let _sevar_285007581 : any;
 		const _seexpr_285007581 = (this);
 		if (_seexpr_285007581 === Jahrgaenge.HAUSFRUEHERZIEHUNG) {
@@ -462,7 +462,7 @@ export class Jahrgaenge extends JavaEnum<Jahrgaenge> implements CoreType<Jahrgae
 	 *
 	 * @return true, falls dieser Jahrgang ein möglicher Vorgänger des übergebenen Vergleichsjahrgangs ist.
 	 */
-	public isMoeglicherNachfolgerVon(vergleichsjahrgang : Jahrgaenge | null) : boolean {
+	public isMoeglicherNachfolgerVon(vergleichsjahrgang: Jahrgaenge | null): boolean {
 		let _sevar_24040579 : any;
 		const _seexpr_24040579 = (this);
 		if (_seexpr_24040579 === Jahrgaenge.HAUSFRUEHERZIEHUNG) {
@@ -550,7 +550,7 @@ export class Jahrgaenge extends JavaEnum<Jahrgaenge> implements CoreType<Jahrgae
 	 *
 	 * @return true, falls dieser Jahrgang ein möglicher Vorgänger des übergebenen Vergleichsjahrgangs ist.
 	 */
-	public isMoeglicherVorgaengerVon(vergleichsjahrgang : Jahrgaenge | null) : boolean {
+	public isMoeglicherVorgaengerVon(vergleichsjahrgang: Jahrgaenge | null): boolean {
 		let _sevar_305222773 : any;
 		const _seexpr_305222773 = (this);
 		if (_seexpr_305222773 === Jahrgaenge.HAUSFRUEHERZIEHUNG) {
@@ -637,7 +637,7 @@ export class Jahrgaenge extends JavaEnum<Jahrgaenge> implements CoreType<Jahrgae
 	 *
 	 * @return true, falls eine Lernbereichsnote vorhanden ist.
 	 */
-	public hatLernbereichsnote1(schulform : Schulform, schulgliederung : Schulgliederung | null, schuljahr : number) : boolean {
+	public hatLernbereichsnote1(schulform: Schulform, schulgliederung: Schulgliederung | null, schuljahr: number): boolean {
 		let _sevar_434506116 : any;
 		const _seexpr_434506116 = (schulform);
 		if (_seexpr_434506116 === Schulform.R) {
@@ -692,7 +692,7 @@ export class Jahrgaenge extends JavaEnum<Jahrgaenge> implements CoreType<Jahrgae
 	 *
 	 * @return die Bezeichnung der Lernbereichsnote, falls eine vorhanden ist und ansonsten null.
 	 */
-	public getLernbereichsnote1Bezeichnung(schulform : Schulform, schulgliederung : Schulgliederung | null, schuljahr : number) : string | null {
+	public getLernbereichsnote1Bezeichnung(schulform: Schulform, schulgliederung: Schulgliederung | null, schuljahr: number): string | null {
 		if (!this.hatLernbereichsnote1(schulform, schulgliederung, schuljahr))
 			return null;
 		let _sevar_825399400 : any;
@@ -723,7 +723,7 @@ export class Jahrgaenge extends JavaEnum<Jahrgaenge> implements CoreType<Jahrgae
 	 *
 	 * @return true, falls eine Lernbereichsnote vorhanden ist.
 	 */
-	public hatLernbereichsnote2(schulform : Schulform, schulgliederung : Schulgliederung | null, schuljahr : number) : boolean {
+	public hatLernbereichsnote2(schulform: Schulform, schulgliederung: Schulgliederung | null, schuljahr: number): boolean {
 		let _sevar_1863460395 : any;
 		const _seexpr_1863460395 = (schulform);
 		if (_seexpr_1863460395 === Schulform.R) {
@@ -778,7 +778,7 @@ export class Jahrgaenge extends JavaEnum<Jahrgaenge> implements CoreType<Jahrgae
 	 *
 	 * @return die Bezeichnung der Lernbereichsnote, falls eine vorhanden ist und ansonsten null.
 	 */
-	public getLernbereichsnote2Bezeichnung(schulform : Schulform, schulgliederung : Schulgliederung | null, schuljahr : number) : string | null {
+	public getLernbereichsnote2Bezeichnung(schulform: Schulform, schulgliederung: Schulgliederung | null, schuljahr: number): string | null {
 		if (!this.hatLernbereichsnote2(schulform, schulgliederung, schuljahr))
 			return null;
 		return "Naturwissenschaft";
@@ -792,7 +792,7 @@ export class Jahrgaenge extends JavaEnum<Jahrgaenge> implements CoreType<Jahrgae
 	 *
 	 * @return die bei der Schulform in dem angegebenen Schuljahr zulässigen Jahrgänge
 	 */
-	public static getListBySchuljahrAndSchulform(schuljahr : number, schulform : Schulform) : List<Jahrgaenge> {
+	public static getListBySchuljahrAndSchulform(schuljahr: number, schulform: Schulform): List<Jahrgaenge> {
 		return Jahrgaenge.data().getListBySchuljahrAndSchulform(schuljahr, schulform);
 	}
 
@@ -801,7 +801,7 @@ export class Jahrgaenge extends JavaEnum<Jahrgaenge> implements CoreType<Jahrgae
 	 *
 	 * @returns the array with enumeration values
 	 */
-	public static values() : Array<Jahrgaenge> {
+	public static values(): Array<Jahrgaenge> {
 		return [...this.all_values_by_ordinal];
 	}
 
@@ -812,24 +812,24 @@ export class Jahrgaenge extends JavaEnum<Jahrgaenge> implements CoreType<Jahrgae
 	 *
 	 * @returns the enumeration values or null
 	 */
-	public static valueOf(name : string) : Jahrgaenge | null {
+	public static valueOf(name: string): Jahrgaenge | null {
 		const tmp = this.all_values_by_name.get(name);
 		return (!tmp) ? null : tmp;
 	}
 
-	public getManager() : CoreTypeDataManager<JahrgaengeKatalogEintrag, Jahrgaenge> {
+	public getManager(): CoreTypeDataManager<JahrgaengeKatalogEintrag, Jahrgaenge> {
 		return de_svws_nrw_asd_types_CoreType_getManager(this);
 	}
 
-	public daten(schuljahr : number) : JahrgaengeKatalogEintrag | null {
+	public daten(schuljahr: number): JahrgaengeKatalogEintrag | null {
 		return de_svws_nrw_asd_types_CoreType_daten(this, schuljahr);
 	}
 
-	public statistikId() : string | null {
+	public statistikId(): string | null {
 		return de_svws_nrw_asd_types_CoreType_statistikId(this);
 	}
 
-	public historie() : List<JahrgaengeKatalogEintrag> {
+	public historie(): List<JahrgaengeKatalogEintrag> {
 		return de_svws_nrw_asd_types_CoreType_historie(this);
 	}
 
@@ -837,7 +837,7 @@ export class Jahrgaenge extends JavaEnum<Jahrgaenge> implements CoreType<Jahrgae
 		return 'de.svws_nrw.asd.types.jahrgang.Jahrgaenge';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.asd.types.jahrgang.Jahrgaenge', 'de.svws_nrw.asd.types.CoreType', 'java.lang.Comparable', 'java.lang.Enum', 'java.lang.Comparable'].includes(name);
 	}
 
@@ -845,6 +845,6 @@ export class Jahrgaenge extends JavaEnum<Jahrgaenge> implements CoreType<Jahrgae
 
 }
 
-export function cast_de_svws_nrw_asd_types_jahrgang_Jahrgaenge(obj : unknown) : Jahrgaenge {
+export function cast_de_svws_nrw_asd_types_jahrgang_Jahrgaenge(obj: unknown): Jahrgaenge {
 	return obj as Jahrgaenge;
 }

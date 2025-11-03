@@ -6,17 +6,17 @@ export class DBSchemaListeEintrag extends JavaObject {
 	/**
 	 * Der Name des Datenbank-Schemas.
 	 */
-	public name : string | null = null;
+	public name: string | null = null;
 
 	/**
 	 * Gibt an, ob es sich um das Default-Schema in der Konfiguration handelt.
 	 */
-	public isDefault : boolean = false;
+	public isDefault: boolean = false;
 
 	/**
 	 * Gibt an, ob es sich um ein deaktiviertes Schema in der Konfiguration handelt.
 	 */
-	public isDeactivated : boolean = false;
+	public isDeactivated: boolean = false;
 
 
 	/**
@@ -30,13 +30,13 @@ export class DBSchemaListeEintrag extends JavaObject {
 		return 'de.svws_nrw.core.data.db.DBSchemaListeEintrag';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.db.DBSchemaListeEintrag'].includes(name);
 	}
 
 	public static class = new Class<DBSchemaListeEintrag>('de.svws_nrw.core.data.db.DBSchemaListeEintrag');
 
-	public static transpilerFromJSON(json : string): DBSchemaListeEintrag {
+	public static transpilerFromJSON(json: string): DBSchemaListeEintrag {
 		const obj = JSON.parse(json) as Partial<DBSchemaListeEintrag>;
 		const result = new DBSchemaListeEintrag();
 		result.name = (obj.name === undefined) ? null : obj.name === null ? null : obj.name;
@@ -49,7 +49,7 @@ export class DBSchemaListeEintrag extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : DBSchemaListeEintrag) : string {
+	public static transpilerToJSON(obj: DBSchemaListeEintrag): string {
 		let result = '{';
 		result += '"name" : ' + ((obj.name === null) ? 'null' : JSON.stringify(obj.name)) + ',';
 		result += '"isDefault" : ' + obj.isDefault.toString() + ',';
@@ -59,7 +59,7 @@ export class DBSchemaListeEintrag extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<DBSchemaListeEintrag>) : string {
+	public static transpilerToJSONPatch(obj: Partial<DBSchemaListeEintrag>): string {
 		let result = '{';
 		if (obj.name !== undefined) {
 			result += '"name" : ' + ((obj.name === null) ? 'null' : JSON.stringify(obj.name)) + ',';
@@ -77,6 +77,6 @@ export class DBSchemaListeEintrag extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_db_DBSchemaListeEintrag(obj : unknown) : DBSchemaListeEintrag {
+export function cast_de_svws_nrw_core_data_db_DBSchemaListeEintrag(obj: unknown): DBSchemaListeEintrag {
 	return obj as DBSchemaListeEintrag;
 }

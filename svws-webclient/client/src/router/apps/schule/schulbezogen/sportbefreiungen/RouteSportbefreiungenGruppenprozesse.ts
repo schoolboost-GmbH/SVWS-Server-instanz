@@ -15,7 +15,7 @@ export class RouteSportbefreiungenGruppenprozesse extends RouteNode<any, RouteSp
 
 	public constructor() {
 		super(Schulform.values(), [BenutzerKompetenz.KATALOG_EINTRAEGE_ANSEHEN, BenutzerKompetenz.KATALOG_EINTRAEGE_AENDERN,
-			BenutzerKompetenz.KATALOG_EINTRAEGE_LOESCHEN], "schule.sportbefreiungen.gruppenprozesse" , "gruppenprozesse", SSportbefreiungenGruppenprozesse);
+			BenutzerKompetenz.KATALOG_EINTRAEGE_LOESCHEN], "schule.sportbefreiungen.gruppenprozesse", "gruppenprozesse", SSportbefreiungenGruppenprozesse);
 		super.types = new Set([ViewType.GRUPPENPROZESSE]);
 		super.mode = ServerMode.DEV;
 		super.propHandler = (route) => this.getProps(route);
@@ -23,7 +23,7 @@ export class RouteSportbefreiungenGruppenprozesse extends RouteNode<any, RouteSp
 	}
 
 	public getRoute(): RouteLocationRaw {
-		return { name: this.name, params: {idSchuljahresabschnitt: routeApp.data.idSchuljahresabschnitt, id: ""}};
+		return { name: this.name, params: { idSchuljahresabschnitt: routeApp.data.idSchuljahresabschnitt, id: "" } };
 	}
 
 	public getProps(to: RouteLocationNormalized): SportbefreiungenGruppenprozesseProps {
@@ -33,7 +33,7 @@ export class RouteSportbefreiungenGruppenprozesse extends RouteNode<any, RouteSp
 			benutzerKompetenzen: api.benutzerKompetenzen,
 			deleteSportbefreiungen: routeSportbefreiungen.data.delete,
 			manager: () => routeSportbefreiungen.data.manager,
-		}
+		};
 	}
 }
 

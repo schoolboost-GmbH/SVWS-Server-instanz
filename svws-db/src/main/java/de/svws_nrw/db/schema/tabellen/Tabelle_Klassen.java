@@ -19,105 +19,105 @@ import de.svws_nrw.db.schema.SchemaTabelleUniqueIndex;
 public class Tabelle_Klassen extends SchemaTabelle {
 
 	/** Die Definition der Tabellenspalte ID */
-	public SchemaTabelleSpalte col_ID = add("ID", SchemaDatentypen.BIGINT, true)
+	public final SchemaTabelleSpalte col_ID = add("ID", SchemaDatentypen.BIGINT, true)
 			.setNotNull()
 			.setJavaComment("ID der Klasse in der Klassen- Versetzuungstabelle");
 
 	/** Die Definition der Tabellenspalte Schuljahresabschnitts_ID */
-	public SchemaTabelleSpalte col_Schuljahresabschnitts_ID = add("Schuljahresabschnitts_ID", SchemaDatentypen.BIGINT, false)
+	public final SchemaTabelleSpalte col_Schuljahresabschnitts_ID = add("Schuljahresabschnitts_ID", SchemaDatentypen.BIGINT, false)
 			.setNotNull()
 			.setJavaComment("ID des Schuljahresabschnittes aus der Tabelle Schuljahresabschnitte");
 
 	/** Die Definition der Tabellenspalte Bezeichnung */
-	public SchemaTabelleSpalte col_Bezeichnung = add("Bezeichnung", SchemaDatentypen.VARCHAR, false).setDatenlaenge(150)
+	public final SchemaTabelleSpalte col_Bezeichnung = add("Bezeichnung", SchemaDatentypen.VARCHAR, false).setDatenlaenge(150)
 			.setJavaComment("Bezeichnender Text für die Klasse");
 
 	/** Die Definition der Tabellenspalte ASDKlasse */
-	public SchemaTabelleSpalte col_ASDKlasse = add("ASDKlasse", SchemaDatentypen.VARCHAR, false).setDatenlaenge(6)
+	public final SchemaTabelleSpalte col_ASDKlasse = add("ASDKlasse", SchemaDatentypen.VARCHAR, false).setDatenlaenge(6)
 			.setJavaComment("ASD-Jahrgang der Klasse");
 
 	/** Die Definition der Tabellenspalte Klasse */
-	public SchemaTabelleSpalte col_Klasse = add("Klasse", SchemaDatentypen.VARCHAR, false).setDatenlaenge(15)
+	public final SchemaTabelleSpalte col_Klasse = add("Klasse", SchemaDatentypen.VARCHAR, false).setDatenlaenge(15)
 			.setNotNull()
 			.setJavaComment("Kürzel der Klasse");
 
 	/** Die Definition der Tabellenspalte Jahrgang_ID */
-	public SchemaTabelleSpalte col_Jahrgang_ID = add("Jahrgang_ID", SchemaDatentypen.BIGINT, false)
+	public final SchemaTabelleSpalte col_Jahrgang_ID = add("Jahrgang_ID", SchemaDatentypen.BIGINT, false)
 			.setJavaComment("ID des ASD-Jahrgangs");
 
 	/** Die Definition der Tabellenspalte FKlasse */
-	public SchemaTabelleSpalte col_FKlasse = add("FKlasse", SchemaDatentypen.VARCHAR, false).setDatenlaenge(15)
+	public final SchemaTabelleSpalte col_FKlasse = add("FKlasse", SchemaDatentypen.VARCHAR, false).setDatenlaenge(15)
 			.setJavaComment("Folgeklasse");
 
 	/** Die Definition der Tabellenspalte VKlasse */
-	public SchemaTabelleSpalte col_VKlasse = add("VKlasse", SchemaDatentypen.VARCHAR, false).setDatenlaenge(15)
+	public final SchemaTabelleSpalte col_VKlasse = add("VKlasse", SchemaDatentypen.VARCHAR, false).setDatenlaenge(15)
 			.setJavaComment("Vorgängerklasse");
 
 	/** Die Definition der Tabellenspalte OrgFormKrz */
-	public SchemaTabelleSpalte col_OrgFormKrz = add("OrgFormKrz", SchemaDatentypen.VARCHAR, false).setDatenlaenge(1)
+	public final SchemaTabelleSpalte col_OrgFormKrz = add("OrgFormKrz", SchemaDatentypen.VARCHAR, false).setDatenlaenge(1)
 			.setJavaComment("Organisationsform der Klasse Kürzel IT.NRW");
 
 	/** Die Definition der Tabellenspalte ASDSchulformNr */
-	public SchemaTabelleSpalte col_ASDSchulformNr = add("ASDSchulformNr", SchemaDatentypen.VARCHAR, false).setDatenlaenge(3)
+	public final SchemaTabelleSpalte col_ASDSchulformNr = add("ASDSchulformNr", SchemaDatentypen.VARCHAR, false).setDatenlaenge(3)
 			.setJavaComment("Schulgliederung in der Klasse");
 
 	/** Die Definition der Tabellenspalte Fachklasse_ID */
-	public SchemaTabelleSpalte col_Fachklasse_ID = add("Fachklasse_ID", SchemaDatentypen.BIGINT, false)
+	public final SchemaTabelleSpalte col_Fachklasse_ID = add("Fachklasse_ID", SchemaDatentypen.BIGINT, false)
 			.setJavaComment("FID des Fachklasse nur BK SBK");
 
 	/** Die Definition der Tabellenspalte PruefOrdnung */
-	public SchemaTabelleSpalte col_PruefOrdnung = add("PruefOrdnung", SchemaDatentypen.VARCHAR, false).setDatenlaenge(20)
+	public final SchemaTabelleSpalte col_PruefOrdnung = add("PruefOrdnung", SchemaDatentypen.VARCHAR, false).setDatenlaenge(20)
 			.setJavaComment("Prüfungsordnung für die Klasse");
 
 	/** Die Definition der Tabellenspalte Sichtbar */
-	public SchemaTabelleSpalte col_Sichtbar = add("Sichtbar", SchemaDatentypen.VARCHAR, false).setDatenlaenge(1)
+	public final SchemaTabelleSpalte col_Sichtbar = add("Sichtbar", SchemaDatentypen.VARCHAR, false).setDatenlaenge(1)
 			.setDefault("+")
 			.setConverter(BooleanPlusMinusDefaultPlusConverter.class)
 			.setJavaComment("DEPRECATED: Gibt an ob eine Klasse sichtbar ist")
 			.setVeraltet(SchemaRevisionen.REV_39);
 
 	/** Die Definition der Tabellenspalte Sortierung */
-	public SchemaTabelleSpalte col_Sortierung = add("Sortierung", SchemaDatentypen.INT, false)
+	public final SchemaTabelleSpalte col_Sortierung = add("Sortierung", SchemaDatentypen.INT, false)
 			.setDefault("32000")
 			.setJavaComment("Sortierungnummer der Klasse");
 
 	/** Die Definition der Tabellenspalte Klassenart */
-	public SchemaTabelleSpalte col_Klassenart = add("Klassenart", SchemaDatentypen.VARCHAR, false).setDatenlaenge(2)
+	public final SchemaTabelleSpalte col_Klassenart = add("Klassenart", SchemaDatentypen.VARCHAR, false).setDatenlaenge(2)
 			.setJavaComment("Klassenart");
 
 	/** Die Definition der Tabellenspalte SommerSem */
-	public SchemaTabelleSpalte col_SommerSem = add("SommerSem", SchemaDatentypen.VARCHAR, false).setDatenlaenge(1)
+	public final SchemaTabelleSpalte col_SommerSem = add("SommerSem", SchemaDatentypen.VARCHAR, false).setDatenlaenge(1)
 			.setDefault("-")
 			.setConverter(BooleanPlusMinusDefaultMinusConverter.class)
 			.setJavaComment("Beginn im Sommersemester nur WBK");
 
 	/** Die Definition der Tabellenspalte NotenGesperrt */
-	public SchemaTabelleSpalte col_NotenGesperrt = add("NotenGesperrt", SchemaDatentypen.VARCHAR, false).setDatenlaenge(1)
+	public final SchemaTabelleSpalte col_NotenGesperrt = add("NotenGesperrt", SchemaDatentypen.VARCHAR, false).setDatenlaenge(1)
 			.setDefault("-")
 			.setConverter(BooleanPlusMinusDefaultMinusConverter.class)
 			.setJavaComment("Noteneingabe für die Klasse gesperrt");
 
 	/** Die Definition der Tabellenspalte AdrMerkmal */
-	public SchemaTabelleSpalte col_AdrMerkmal = add("AdrMerkmal", SchemaDatentypen.VARCHAR, false).setDatenlaenge(1)
+	public final SchemaTabelleSpalte col_AdrMerkmal = add("AdrMerkmal", SchemaDatentypen.VARCHAR, false).setDatenlaenge(1)
 			.setDefault("A")
 			.setJavaComment("Adressmerkmal des Teilstandorts für die Klasse");
 
 	/** Die Definition der Tabellenspalte KoopKlasse */
-	public SchemaTabelleSpalte col_KoopKlasse = add("KoopKlasse", SchemaDatentypen.VARCHAR, false).setDatenlaenge(1)
+	public final SchemaTabelleSpalte col_KoopKlasse = add("KoopKlasse", SchemaDatentypen.VARCHAR, false).setDatenlaenge(1)
 			.setDefault("-")
 			.setConverter(BooleanPlusMinusDefaultMinusConverter.class)
 			.setJavaComment("Gibt an ob die Klasse eine KOOP-Klasse ist")
 			.setVeraltet(SchemaRevisionen.REV_1);
 
 	/** Die Definition der Tabellenspalte Ankreuzzeugnisse */
-	public SchemaTabelleSpalte col_Ankreuzzeugnisse = add("Ankreuzzeugnisse", SchemaDatentypen.VARCHAR, false).setDatenlaenge(1)
+	public final SchemaTabelleSpalte col_Ankreuzzeugnisse = add("Ankreuzzeugnisse", SchemaDatentypen.VARCHAR, false).setDatenlaenge(1)
 			.setDefault("-")
 			.setConverter(BooleanPlusMinusDefaultMinusConverter.class)
 			.setJavaComment("Gibt an ob in der Klasse Ankreuzeugnisse (GS) oder Kompentenzschreiben (andere) verwendet werden");
 
 
 	/** Die Definition des Fremdschlüssels Klassen_Schuljahresabschnitt_FK */
-	public SchemaTabelleFremdschluessel fk_Klassen_Schuljahresabschnitt_FK = addForeignKey(
+	public final SchemaTabelleFremdschluessel fk_Klassen_Schuljahresabschnitt_FK = addForeignKey(
 			"Klassen_Schuljahresabschnitt_FK",
 			/* OnUpdate: */ SchemaFremdschluesselAktionen.CASCADE,
 			/* OnDelete: */ SchemaFremdschluesselAktionen.CASCADE,
@@ -125,7 +125,7 @@ public class Tabelle_Klassen extends SchemaTabelle {
 	);
 
 	/** Die Definition des Fremdschlüssels Klassen_Fachklasse_FK */
-	public SchemaTabelleFremdschluessel fk_Klassen_Fachklasse_FK = addForeignKey(
+	public final SchemaTabelleFremdschluessel fk_Klassen_Fachklasse_FK = addForeignKey(
 			"Klassen_Fachklasse_FK",
 			/* OnUpdate: */ SchemaFremdschluesselAktionen.CASCADE,
 			/* OnDelete: */ SchemaFremdschluesselAktionen.SET_NULL,
@@ -134,7 +134,7 @@ public class Tabelle_Klassen extends SchemaTabelle {
 			.setRevision(SchemaRevisionen.REV_2);
 
 	/** Die Definition des Fremdschlüssels Klassen_Jahrgang_FK */
-	public SchemaTabelleFremdschluessel fk_Klassen_Jahrgang_FK = addForeignKey(
+	public final SchemaTabelleFremdschluessel fk_Klassen_Jahrgang_FK = addForeignKey(
 			"Klassen_Jahrgang_FK",
 			/* OnUpdate: */ SchemaFremdschluesselAktionen.CASCADE,
 			/* OnDelete: */ SchemaFremdschluesselAktionen.SET_NULL,
@@ -144,13 +144,13 @@ public class Tabelle_Klassen extends SchemaTabelle {
 
 
 	/** Die Definition des Unique-Index Klassen_UC1 */
-	public SchemaTabelleUniqueIndex unique_Klassen_UC1 = addUniqueIndex("Klassen_UC1",
+	public final SchemaTabelleUniqueIndex unique_Klassen_UC1 = addUniqueIndex("Klassen_UC1",
 			col_Schuljahresabschnitts_ID,
 			col_Klasse
 	);
 
 	/** Die Definition des Non-Unique-Index Klassen_IDX_Schuljahresabschnitts_ID */
-	public SchemaTabelleIndex index_Klassen_IDX_Schuljahresabschnitts_ID = addIndex("Klassen_IDX_Schuljahresabschnitts_ID",
+	public final SchemaTabelleIndex index_Klassen_IDX_Schuljahresabschnitts_ID = addIndex("Klassen_IDX_Schuljahresabschnitts_ID",
 			col_Schuljahresabschnitts_ID
 	).setRevision(SchemaRevisionen.REV_12);
 

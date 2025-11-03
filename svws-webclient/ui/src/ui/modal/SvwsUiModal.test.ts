@@ -12,7 +12,7 @@ let idComponent: string;
 let idTC_overlay: string;
 let idTC_div: string;
 
-const defaultProps : Partial<{
+const defaultProps: Partial<{
 	show: boolean;
 	size?: Extract<Size, 'small' | 'medium' | 'big'> | 'help';
 	type?: 'default' | 'danger';
@@ -28,15 +28,15 @@ const defaultProps : Partial<{
 };
 
 beforeEach(async () => {
-	wrapper = mount(SvwsUiModal,{
+	wrapper = mount(SvwsUiModal, {
 		props: {
 			show: true,
 		},
 		attachTo: document.body,
 	});
-	idComponent =wrapper.vm.idComponent;
-	idTC_overlay =wrapper.vm.idTC_overlay;
-	idTC_div =wrapper.vm.idTC_div;
+	idComponent = wrapper.vm.idComponent;
+	idTC_overlay = wrapper.vm.idTC_overlay;
+	idTC_div = wrapper.vm.idTC_div;
 });
 
 afterEach(() => {
@@ -48,13 +48,13 @@ test("Testen der Teleportierung", async () => {
 	/* Die Kommentare <!--teleport start--><!--teleport end--> zeigen an, dass der Dialog-Inhalt an
 	eine andere Stelle teleportiert wurde, was zu erwarten ist.
 	*/
-	await wrapper.vm.$nextTick()
+	await wrapper.vm.$nextTick();
 	expect(wrapper.html()).toContain('<!--teleport start-->');
 	expect(wrapper.html()).toContain('<!--teleport end-->');
 });
 
 test("Teste die default-Werte der props", () => {
-	for (const [prop, expectedValue] of Object.entries(defaultProps)){
+	for (const [prop, expectedValue] of Object.entries(defaultProps)) {
 		expect(wrapper.props()[prop as keyof typeof defaultProps]).toBe(expectedValue);
 	}
 });
@@ -114,7 +114,7 @@ describe("Tests für die CSS-Props", () => {
 		await wrapper.vm.$nextTick();
 		idTC_overlay = wrapper.vm.idTC_overlay;
 		const modal = document.getElementById(idTC_div);
-		expect(modal?.classList.contains('modal--danger')).toBeFalsy()
+		expect(modal?.classList.contains('modal--danger')).toBeFalsy();
 	});
 
 	test("wendet die Klasse modal--content-noscroll an, wenn noScroll true ist.", async () => {
@@ -136,7 +136,7 @@ describe("Tests für die CSS-Props", () => {
 	test("wendet die Klasse modal--content-noscroll nicht an, wenn noScroll false ist.", async () => {
 		document.body.innerHTML = '';
 		const wrapper: VueWrapper<any> = mount(SvwsUiModal, {
-			props: { show: true},
+			props: { show: true },
 			slots: { modalTitle: 'Test-Titel', modalContent: 'Test Content', modalActions: '<button>test</button>' },
 			attachTo: document.body,
 		});

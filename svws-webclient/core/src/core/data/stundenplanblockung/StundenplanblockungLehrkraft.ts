@@ -6,12 +6,12 @@ export class StundenplanblockungLehrkraft extends JavaObject {
 	/**
 	 * Die Datenbank-ID der Lehrkraft.
 	 */
-	public id : number = 0;
+	public id: number = 0;
 
 	/**
 	 * Das Kürzel der Lehrkraft. Beispielsweise 'BAR'.
 	 */
-	public kuerzel : string = "";
+	public kuerzel: string = "";
 
 
 	/**
@@ -25,13 +25,13 @@ export class StundenplanblockungLehrkraft extends JavaObject {
 		return 'de.svws_nrw.core.data.stundenplanblockung.StundenplanblockungLehrkraft';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.stundenplanblockung.StundenplanblockungLehrkraft'].includes(name);
 	}
 
 	public static class = new Class<StundenplanblockungLehrkraft>('de.svws_nrw.core.data.stundenplanblockung.StundenplanblockungLehrkraft');
 
-	public static transpilerFromJSON(json : string): StundenplanblockungLehrkraft {
+	public static transpilerFromJSON(json: string): StundenplanblockungLehrkraft {
 		const obj = JSON.parse(json) as Partial<StundenplanblockungLehrkraft>;
 		const result = new StundenplanblockungLehrkraft();
 		if (obj.id === undefined)
@@ -43,7 +43,7 @@ export class StundenplanblockungLehrkraft extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : StundenplanblockungLehrkraft) : string {
+	public static transpilerToJSON(obj: StundenplanblockungLehrkraft): string {
 		let result = '{';
 		result += '"id" : ' + obj.id.toString() + ',';
 		result += '"kuerzel" : ' + JSON.stringify(obj.kuerzel) + ',';
@@ -52,7 +52,7 @@ export class StundenplanblockungLehrkraft extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<StundenplanblockungLehrkraft>) : string {
+	public static transpilerToJSONPatch(obj: Partial<StundenplanblockungLehrkraft>): string {
 		let result = '{';
 		if (obj.id !== undefined) {
 			result += '"id" : ' + obj.id.toString() + ',';
@@ -67,6 +67,6 @@ export class StundenplanblockungLehrkraft extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_stundenplanblockung_StundenplanblockungLehrkraft(obj : unknown) : StundenplanblockungLehrkraft {
+export function cast_de_svws_nrw_core_data_stundenplanblockung_StundenplanblockungLehrkraft(obj: unknown): StundenplanblockungLehrkraft {
 	return obj as StundenplanblockungLehrkraft;
 }

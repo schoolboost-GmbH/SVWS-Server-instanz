@@ -16,7 +16,7 @@ export class StundenplanblockungManagerStatistik extends JavaObject {
 		return 'de.svws_nrw.core.utils.stundenplanblockung.StundenplanblockungManagerStatistik';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.utils.stundenplanblockung.StundenplanblockungManagerStatistik'].includes(name);
 	}
 
@@ -24,6 +24,6 @@ export class StundenplanblockungManagerStatistik extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_utils_stundenplanblockung_StundenplanblockungManagerStatistik(obj : unknown) : StundenplanblockungManagerStatistik {
+export function cast_de_svws_nrw_core_utils_stundenplanblockung_StundenplanblockungManagerStatistik(obj: unknown): StundenplanblockungManagerStatistik {
 	return obj as StundenplanblockungManagerStatistik;
 }

@@ -22,7 +22,7 @@
 <script setup lang="ts">
 
 	import { computed, ref } from "vue";
-	import type { BenutzerListeEintrag} from "@core";
+	import type { BenutzerListeEintrag } from "@core";
 	import type { BenutzerAuswahlProps } from "./SBenutzerAuswahlProps";
 	import { useRegionSwitch, type DataTableColumn } from "@ui";
 

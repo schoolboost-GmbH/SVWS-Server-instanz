@@ -7,22 +7,22 @@ export class StundenplanblockungManagerLerngruppeStunde extends JavaObject {
 	/**
 	 * Die Datenbank-ID des Stundenelementes.
 	 */
-	_id : number = 0;
+	_id: number = 0;
 
 	/**
 	 * Die Anzahl an Stunden in der Lerngruppe.
 	 */
-	wochenstunden : number = 1;
+	wochenstunden: number = 1;
 
 	/**
 	 * Die Anzahl an Stunden im Stundenplan.
 	 */
-	typ : number = 1;
+	typ: number = 1;
 
 	/**
 	 * Das Eltern-Objekt.
 	 */
-	readonly _gr : StundenplanblockungManagerLerngruppe;
+	readonly _gr: StundenplanblockungManagerLerngruppe;
 
 
 	/**
@@ -31,7 +31,7 @@ export class StundenplanblockungManagerLerngruppeStunde extends JavaObject {
 	 * @param pID     Die Datenbank-ID der Lerngruppe.
 	 * @param pParent Das Eltern-Objekt.
 	 */
-	public constructor(pID : number, pParent : StundenplanblockungManagerLerngruppe) {
+	public constructor(pID: number, pParent: StundenplanblockungManagerLerngruppe) {
 		super();
 		this._id = pID;
 		this._gr = pParent;
@@ -42,7 +42,7 @@ export class StundenplanblockungManagerLerngruppeStunde extends JavaObject {
 	 *
 	 * @return Die Datenbank-ID des Objektes.
 	 */
-	public getID() : number {
+	public getID(): number {
 		return this._id;
 	}
 
@@ -50,7 +50,7 @@ export class StundenplanblockungManagerLerngruppeStunde extends JavaObject {
 		return 'de.svws_nrw.core.utils.stundenplanblockung.StundenplanblockungManagerLerngruppeStunde';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.utils.stundenplanblockung.StundenplanblockungManagerLerngruppeStunde'].includes(name);
 	}
 
@@ -58,6 +58,6 @@ export class StundenplanblockungManagerLerngruppeStunde extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_utils_stundenplanblockung_StundenplanblockungManagerLerngruppeStunde(obj : unknown) : StundenplanblockungManagerLerngruppeStunde {
+export function cast_de_svws_nrw_core_utils_stundenplanblockung_StundenplanblockungManagerLerngruppeStunde(obj: unknown): StundenplanblockungManagerLerngruppeStunde {
 	return obj as StundenplanblockungManagerLerngruppeStunde;
 }

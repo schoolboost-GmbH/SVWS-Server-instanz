@@ -12,7 +12,7 @@ import { ValidatorLehrerStammdaten } from '../../asd/validate/lehrer/ValidatorLe
 
 export class ValidatorGesamt extends Validator {
 
-	private readonly daten : SchuleStatistikdatenGesamt;
+	private readonly daten: SchuleStatistikdatenGesamt;
 
 
 	/**
@@ -21,17 +21,17 @@ export class ValidatorGesamt extends Validator {
 	 * @param daten     die Daten des Validators
 	 * @param kontext   der Kontext des Validators
 	 */
-	public constructor(daten : SchuleStatistikdatenGesamt, kontext : ValidatorKontext) {
+	public constructor(daten: SchuleStatistikdatenGesamt, kontext: ValidatorKontext) {
 		super(kontext);
 		this.daten = daten;
 		this._validatoren.add(new ValidatorSchuleStammdaten(kontext));
-		const mapStammdaten : HashMap<number, LehrerStammdaten> | null = new HashMap<number, LehrerStammdaten>();
+		const mapStammdaten: HashMap<number, LehrerStammdaten> | null = new HashMap<number, LehrerStammdaten>();
 		for (const lehrerStammdaten of daten.lehrerStammdaten) {
 			this._validatoren.add(new ValidatorLehrerStammdaten(lehrerStammdaten, kontext));
 			mapStammdaten.put(lehrerStammdaten.id, lehrerStammdaten);
 		}
 		for (const lehrerPersonaldaten of daten.lehrerPersonaldaten) {
-			const stammdaten : LehrerStammdaten | null = mapStammdaten.get(lehrerPersonaldaten.id);
+			const stammdaten: LehrerStammdaten | null = mapStammdaten.get(lehrerPersonaldaten.id);
 			if (stammdaten === null)
 				continue;
 			this._validatoren.add(new ValidatorLehrerPersonaldaten(lehrerPersonaldaten, stammdaten, kontext));
@@ -39,7 +39,7 @@ export class ValidatorGesamt extends Validator {
 		this._validatoren.add(new ValidatorGesamtLehrerdaten(daten.lehrerStammdaten, daten.lehrerPersonaldaten, kontext));
 	}
 
-	protected pruefe() : boolean {
+	protected pruefe(): boolean {
 		return true;
 	}
 
@@ -47,7 +47,7 @@ export class ValidatorGesamt extends Validator {
 		return 'de.svws_nrw.asd.validate.ValidatorGesamt';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.asd.validate.ValidatorGesamt', 'de.svws_nrw.asd.validate.Validator'].includes(name);
 	}
 
@@ -55,6 +55,6 @@ export class ValidatorGesamt extends Validator {
 
 }
 
-export function cast_de_svws_nrw_asd_validate_ValidatorGesamt(obj : unknown) : ValidatorGesamt {
+export function cast_de_svws_nrw_asd_validate_ValidatorGesamt(obj: unknown): ValidatorGesamt {
 	return obj as ValidatorGesamt;
 }

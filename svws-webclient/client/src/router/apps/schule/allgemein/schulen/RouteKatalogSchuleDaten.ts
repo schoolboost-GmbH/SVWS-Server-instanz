@@ -11,7 +11,7 @@ const SSchuleDaten = () => import("~/components/schule/allgemein/schulen/daten/S
 export class RouteKatalogSchuleDaten extends RouteNode<any, RouteKatalogSchulen> {
 
 	public constructor() {
-		super(Schulform.values(), [ BenutzerKompetenz.KATALOG_EINTRAEGE_ANSEHEN, BenutzerKompetenz.KATALOG_EINTRAEGE_AENDERN ], "schule.schulen.daten", "daten", SSchuleDaten);
+		super(Schulform.values(), [BenutzerKompetenz.KATALOG_EINTRAEGE_ANSEHEN, BenutzerKompetenz.KATALOG_EINTRAEGE_AENDERN], "schule.schulen.daten", "daten", SSchuleDaten);
 		super.mode = ServerMode.DEV;
 		super.propHandler = (route) => this.getProps(route);
 		super.text = "Schule";

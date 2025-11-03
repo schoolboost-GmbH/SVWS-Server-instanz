@@ -9,32 +9,32 @@ import { de_svws_nrw_asd_types_CoreType_getManager, de_svws_nrw_asd_types_CoreTy
 export class LehrerLehrbefaehigungAnerkennung extends JavaEnum<LehrerLehrbefaehigungAnerkennung> implements CoreType<LehrerLehrbefaehigungAnerkennungKatalogEintrag, LehrerLehrbefaehigungAnerkennung> {
 
 	/** an array containing all values of this enumeration */
-	static readonly all_values_by_ordinal : Array<LehrerLehrbefaehigungAnerkennung> = [];
+	static readonly all_values_by_ordinal: Array<LehrerLehrbefaehigungAnerkennung> = [];
 
 	/** an array containing all values of this enumeration indexed by their name*/
-	static readonly all_values_by_name : Map<string, LehrerLehrbefaehigungAnerkennung> = new Map<string, LehrerLehrbefaehigungAnerkennung>();
+	static readonly all_values_by_name: Map<string, LehrerLehrbefaehigungAnerkennung> = new Map<string, LehrerLehrbefaehigungAnerkennung>();
 
 	/**
 	 * Anerkennung der Lehrbefähigung 'erworben durch LABG/OVP bzw. Laufbahnverordnung'
 	 */
-	public static readonly ID_1 : LehrerLehrbefaehigungAnerkennung = new LehrerLehrbefaehigungAnerkennung("ID_1", 0, );
+	public static readonly ID_1: LehrerLehrbefaehigungAnerkennung = new LehrerLehrbefaehigungAnerkennung("ID_1", 0, );
 
 	/**
 	 * Anerkennung der Lehrbefähigung 'Unterrichtserlaubnis (z. B. Zertifikatskurs)'
 	 */
-	public static readonly ID_2 : LehrerLehrbefaehigungAnerkennung = new LehrerLehrbefaehigungAnerkennung("ID_2", 1, );
+	public static readonly ID_2: LehrerLehrbefaehigungAnerkennung = new LehrerLehrbefaehigungAnerkennung("ID_2", 1, );
 
 	/**
 	 * Anerkennung der Lehrbefähigung 'mehrjähriger Unterricht ohne Lehramtsprüfung oder Unterrichtserlaubnis'
 	 */
-	public static readonly ID_3 : LehrerLehrbefaehigungAnerkennung = new LehrerLehrbefaehigungAnerkennung("ID_3", 2, );
+	public static readonly ID_3: LehrerLehrbefaehigungAnerkennung = new LehrerLehrbefaehigungAnerkennung("ID_3", 2, );
 
 	/**
 	 * Anerkennung der Lehrbefähigung 'sonstige'
 	 */
-	public static readonly ID_9 : LehrerLehrbefaehigungAnerkennung = new LehrerLehrbefaehigungAnerkennung("ID_9", 3, );
+	public static readonly ID_9: LehrerLehrbefaehigungAnerkennung = new LehrerLehrbefaehigungAnerkennung("ID_9", 3, );
 
-	private constructor(name : string, ordinal : number) {
+	private constructor(name: string, ordinal: number) {
 		super(name, ordinal);
 		LehrerLehrbefaehigungAnerkennung.all_values_by_ordinal.push(this);
 		LehrerLehrbefaehigungAnerkennung.all_values_by_name.set(name, this);
@@ -45,7 +45,7 @@ export class LehrerLehrbefaehigungAnerkennung extends JavaEnum<LehrerLehrbefaehi
 	 *
 	 * @param manager   der Manager für die Daten des Core-Types
 	 */
-	public static init(manager : CoreTypeDataManager<LehrerLehrbefaehigungAnerkennungKatalogEintrag, LehrerLehrbefaehigungAnerkennung>) : void {
+	public static init(manager: CoreTypeDataManager<LehrerLehrbefaehigungAnerkennungKatalogEintrag, LehrerLehrbefaehigungAnerkennung>): void {
 		CoreTypeDataManager.putManager(LehrerLehrbefaehigungAnerkennung.class, manager);
 	}
 
@@ -54,7 +54,7 @@ export class LehrerLehrbefaehigungAnerkennung extends JavaEnum<LehrerLehrbefaehi
 	 *
 	 * @return der Daten-Manager
 	 */
-	public static data() : CoreTypeDataManager<LehrerLehrbefaehigungAnerkennungKatalogEintrag, LehrerLehrbefaehigungAnerkennung> {
+	public static data(): CoreTypeDataManager<LehrerLehrbefaehigungAnerkennungKatalogEintrag, LehrerLehrbefaehigungAnerkennung> {
 		return CoreTypeDataManager.getManager(LehrerLehrbefaehigungAnerkennung.class);
 	}
 
@@ -63,7 +63,7 @@ export class LehrerLehrbefaehigungAnerkennung extends JavaEnum<LehrerLehrbefaehi
 	 *
 	 * @returns the array with enumeration values
 	 */
-	public static values() : Array<LehrerLehrbefaehigungAnerkennung> {
+	public static values(): Array<LehrerLehrbefaehigungAnerkennung> {
 		return [...this.all_values_by_ordinal];
 	}
 
@@ -74,24 +74,24 @@ export class LehrerLehrbefaehigungAnerkennung extends JavaEnum<LehrerLehrbefaehi
 	 *
 	 * @returns the enumeration values or null
 	 */
-	public static valueOf(name : string) : LehrerLehrbefaehigungAnerkennung | null {
+	public static valueOf(name: string): LehrerLehrbefaehigungAnerkennung | null {
 		const tmp = this.all_values_by_name.get(name);
 		return (!tmp) ? null : tmp;
 	}
 
-	public getManager() : CoreTypeDataManager<LehrerLehrbefaehigungAnerkennungKatalogEintrag, LehrerLehrbefaehigungAnerkennung> {
+	public getManager(): CoreTypeDataManager<LehrerLehrbefaehigungAnerkennungKatalogEintrag, LehrerLehrbefaehigungAnerkennung> {
 		return de_svws_nrw_asd_types_CoreType_getManager(this);
 	}
 
-	public daten(schuljahr : number) : LehrerLehrbefaehigungAnerkennungKatalogEintrag | null {
+	public daten(schuljahr: number): LehrerLehrbefaehigungAnerkennungKatalogEintrag | null {
 		return de_svws_nrw_asd_types_CoreType_daten(this, schuljahr);
 	}
 
-	public statistikId() : string | null {
+	public statistikId(): string | null {
 		return de_svws_nrw_asd_types_CoreType_statistikId(this);
 	}
 
-	public historie() : List<LehrerLehrbefaehigungAnerkennungKatalogEintrag> {
+	public historie(): List<LehrerLehrbefaehigungAnerkennungKatalogEintrag> {
 		return de_svws_nrw_asd_types_CoreType_historie(this);
 	}
 
@@ -99,7 +99,7 @@ export class LehrerLehrbefaehigungAnerkennung extends JavaEnum<LehrerLehrbefaehi
 		return 'de.svws_nrw.asd.types.lehrer.LehrerLehrbefaehigungAnerkennung';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.asd.types.lehrer.LehrerLehrbefaehigungAnerkennung', 'de.svws_nrw.asd.types.CoreType', 'java.lang.Comparable', 'java.lang.Enum', 'java.lang.Comparable'].includes(name);
 	}
 
@@ -107,6 +107,6 @@ export class LehrerLehrbefaehigungAnerkennung extends JavaEnum<LehrerLehrbefaehi
 
 }
 
-export function cast_de_svws_nrw_asd_types_lehrer_LehrerLehrbefaehigungAnerkennung(obj : unknown) : LehrerLehrbefaehigungAnerkennung {
+export function cast_de_svws_nrw_asd_types_lehrer_LehrerLehrbefaehigungAnerkennung(obj: unknown): LehrerLehrbefaehigungAnerkennung {
 	return obj as LehrerLehrbefaehigungAnerkennung;
 }

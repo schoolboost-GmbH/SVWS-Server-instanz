@@ -29,7 +29,7 @@ export class RouteManager {
 	protected active = false;
 
 	/** Die Routing-Node, welche zuletzt erfolgreich ausgewählt wurde (siehe auch Methode afterEach) */
-	protected _node : RouteNode<any, any> | undefined = undefined;
+	protected _node: RouteNode<any, any> | undefined = undefined;
 
 	/** Die Route-Location, welche zuletzt erfolgreich ausgewählt wurde (siehe auch Methode afterEach) */
 	protected _routeLocation: RouteLocationNormalized | undefined = undefined;
@@ -62,7 +62,7 @@ export class RouteManager {
 		return this._errorstate.code;
 	}
 
-	public set errorcode(value : number | undefined) {
+	public set errorcode(value: number | undefined) {
 		this._errorstate.code = value;
 	}
 
@@ -70,7 +70,7 @@ export class RouteManager {
 		return this._errorstate.error;
 	}
 
-	public set error(value : Error | undefined) {
+	public set error(value: Error | undefined) {
 		this._errorstate.error = value;
 	}
 
@@ -78,7 +78,7 @@ export class RouteManager {
 		return this._errorstate.text;
 	}
 
-	public set errortext(value : string | undefined) {
+	public set errortext(value: string | undefined) {
 		this._errorstate.text = value;
 	}
 
@@ -134,7 +134,7 @@ export class RouteManager {
 		return RouteManager.doRoute(destinationRoute);
 	}
 
-	public static getInstanceOrException() : RouteManager {
+	public static getInstanceOrException(): RouteManager {
 		const manager = RouteManager._instance;
 		if (manager === undefined)
 			throw new DeveloperNotificationException("Unzulässiger Zugriff auf den RouteManager, bevor eine Instanz erzeugt wurde.");
@@ -161,7 +161,7 @@ export class RouteManager {
 	 *
 	 * @returns true, falls das Routing aktiv ist und ansonsten false
 	 */
-	public static isActive() : boolean {
+	public static isActive(): boolean {
 		const manager = RouteManager._instance;
 		if (manager === undefined)
 			return false;
@@ -184,7 +184,7 @@ export class RouteManager {
 	 *
 	 * @returns false im Fehlerfall, void/true bei Erfolg oder ein Redirect
 	 */
-	protected async beforeEach(to: RouteLocationNormalized, from: RouteLocationNormalized) : Promise<boolean | void | Error | RouteLocationRaw> {
+	protected async beforeEach(to: RouteLocationNormalized, from: RouteLocationNormalized): Promise<boolean | void | Error | RouteLocationRaw> {
 		// Prüfe, ob bereits ein Routing-Vorgang durchgeführt wird. Ist dies der Fall, so wird der neue Vorgang ignoriert
 		if ((this.active) && (to.redirectedFrom === undefined))
 			return false;
@@ -206,9 +206,9 @@ export class RouteManager {
 			}
 		}
 		// Bestimme die Knoten, für die Quelle und das Ziel der Route
-		const to_node : RouteNode<any, any> | undefined = RouteNode.getNodeByName(to.name?.toString());
-		const from_node : RouteNode<any, any> | undefined = RouteNode.getNodeByName(from.name?.toString());
-		const nodeRedirected : RouteNode<any, any> | undefined = RouteNode.getNodeByName(to.redirectedFrom?.name?.toString());
+		const to_node: RouteNode<any, any> | undefined = RouteNode.getNodeByName(to.name?.toString());
+		const from_node: RouteNode<any, any> | undefined = RouteNode.getNodeByName(from.name?.toString());
+		const nodeRedirected: RouteNode<any, any> | undefined = RouteNode.getNodeByName(to.redirectedFrom?.name?.toString());
 		if (to_node === undefined)
 			return false;
 		if ((from_node === undefined) && (from.fullPath !== "/"))
@@ -321,10 +321,10 @@ export class RouteManager {
 	 */
 	protected async afterEach(to: RouteLocationNormalized, from: RouteLocationNormalized, failure?: NavigationFailure | void): Promise<any> {
 		try {
-			const to_node : RouteNode<any, any> | undefined = RouteNode.getNodeByName(to.name?.toString());
+			const to_node: RouteNode<any, any> | undefined = RouteNode.getNodeByName(to.name?.toString());
 			this._node = to_node;
 			this._routeLocation = to;
-			const from_node : RouteNode<any, any> | undefined = RouteNode.getNodeByName(from.name?.toString());
+			const from_node: RouteNode<any, any> | undefined = RouteNode.getNodeByName(from.name?.toString());
 			if (failure === undefined) {
 				if (api.mode !== ServerMode.STABLE)
 					console.log("Completed routing '" + from.fullPath + "' --> '" + to.fullPath + "'"); // + "': " + from_node?.name + " " + JSON.stringify(from.params) +  " --> " + to_node?.name + " " + JSON.stringify(to.params)
@@ -356,7 +356,7 @@ export class RouteManager {
 				if (api.mode !== ServerMode.STABLE)
 					console.log("Failed Routing '" + from.fullPath + "' --> '" + to.fullPath + "'"); //  + "': " + from_node?.name + " " + JSON.stringify(from.params) +  " --> " + to_node?.name + " " + JSON.stringify(to.params)
 			}
-		} catch(e) {
+		} catch (e) {
 			console.log("Unexpected routing error:", e);
 		} finally {
 			api.status.stop();
@@ -370,7 +370,7 @@ export class RouteManager {
 	 *
 	 * @returns die RouteNode zur aktuellen Route
 	 */
-	public getRouteNode() : RouteNode<any, any> | undefined {
+	public getRouteNode(): RouteNode<any, any> | undefined {
 		return this._node;
 	}
 
@@ -380,7 +380,7 @@ export class RouteManager {
 	 *
 	 * @returns die Parameter zur aktuellen Route
 	 */
-	public getRouteParams() : RouteParams | undefined {
+	public getRouteParams(): RouteParams | undefined {
 		if (this._routeLocation === undefined)
 			return undefined;
 		return this._routeLocation.params;
@@ -391,7 +391,7 @@ export class RouteManager {
 	 * aus, außer beim Login-Knoten. Dies dient dazu den internen Client-State
 	 * bei einem Logout aufzuräumen.
 	 */
-	public static resetRouteState() : void {
+	public static resetRouteState(): void {
 		routeError.resetDataRecursive();
 		routeInit.resetDataRecursive();
 		routeApp.resetDataRecursive();
@@ -402,7 +402,7 @@ export class RouteManager {
 // Initialisiere den Router
 export const router = createRouter({
 	history: createWebHashHistory(import.meta.env.BASE_URL),
-	routes: [ ],
+	routes: [],
 });
 
 export const routerManager = RouteManager.create(router);

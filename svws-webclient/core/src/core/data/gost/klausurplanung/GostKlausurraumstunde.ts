@@ -7,17 +7,17 @@ export class GostKlausurraumstunde extends JavaObject {
 	/**
 	 * Die ID der Klausurraumstunde.
 	 */
-	public id : number = -1;
+	public id: number = -1;
 
 	/**
 	 * Die ID des Klausurraums.
 	 */
-	public idRaum : number = -1;
+	public idRaum: number = -1;
 
 	/**
 	 * Die ID des Zeitrasters.
 	 */
-	public idZeitraster : number | null = null;
+	public idZeitraster: number | null = null;
 
 
 	/**
@@ -33,7 +33,7 @@ export class GostKlausurraumstunde extends JavaObject {
 	 * @param another     das zu vergleichende Objekt
 	 * @return true, falls die Objekte indentisch sind, sonst false
 	 */
-	public equals(another : unknown | null) : boolean {
+	public equals(another: unknown | null): boolean {
 		return (another !== null) && (((another instanceof JavaObject) && (another.isTranspiledInstanceOf('de.svws_nrw.core.data.gost.klausurplanung.GostKlausurraumstunde')))) && (this.id === (another as unknown as GostKlausurraumstunde).id);
 	}
 
@@ -42,7 +42,7 @@ export class GostKlausurraumstunde extends JavaObject {
 	 *
 	 * @return den HashCode
 	 */
-	public hashCode() : number {
+	public hashCode(): number {
 		return JavaLong.hashCode((this.id));
 	}
 
@@ -50,13 +50,13 @@ export class GostKlausurraumstunde extends JavaObject {
 		return 'de.svws_nrw.core.data.gost.klausurplanung.GostKlausurraumstunde';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.gost.klausurplanung.GostKlausurraumstunde'].includes(name);
 	}
 
 	public static class = new Class<GostKlausurraumstunde>('de.svws_nrw.core.data.gost.klausurplanung.GostKlausurraumstunde');
 
-	public static transpilerFromJSON(json : string): GostKlausurraumstunde {
+	public static transpilerFromJSON(json: string): GostKlausurraumstunde {
 		const obj = JSON.parse(json) as Partial<GostKlausurraumstunde>;
 		const result = new GostKlausurraumstunde();
 		if (obj.id === undefined)
@@ -69,7 +69,7 @@ export class GostKlausurraumstunde extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : GostKlausurraumstunde) : string {
+	public static transpilerToJSON(obj: GostKlausurraumstunde): string {
 		let result = '{';
 		result += '"id" : ' + obj.id.toString() + ',';
 		result += '"idRaum" : ' + obj.idRaum.toString() + ',';
@@ -79,7 +79,7 @@ export class GostKlausurraumstunde extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<GostKlausurraumstunde>) : string {
+	public static transpilerToJSONPatch(obj: Partial<GostKlausurraumstunde>): string {
 		let result = '{';
 		if (obj.id !== undefined) {
 			result += '"id" : ' + obj.id.toString() + ',';
@@ -97,6 +97,6 @@ export class GostKlausurraumstunde extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_gost_klausurplanung_GostKlausurraumstunde(obj : unknown) : GostKlausurraumstunde {
+export function cast_de_svws_nrw_core_data_gost_klausurplanung_GostKlausurraumstunde(obj: unknown): GostKlausurraumstunde {
 	return obj as GostKlausurraumstunde;
 }

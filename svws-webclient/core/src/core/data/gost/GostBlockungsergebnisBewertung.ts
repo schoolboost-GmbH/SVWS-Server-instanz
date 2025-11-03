@@ -8,27 +8,27 @@ export class GostBlockungsergebnisBewertung extends JavaObject {
 	/**
 	 * Bewertungskriterium 1a: Array mit den Regel-IDs der {@link GostBlockungRegel} die nicht erfüllt werden konnten.
 	 */
-	public regelVerletzungen : List<number> = new ArrayList<number>();
+	public regelVerletzungen: List<number> = new ArrayList<number>();
 
 	/**
 	 * Bewertungskriterium 1b: Anzahl aller Kurse, die nicht auf Schienen verteilt wurden.
 	 */
-	public anzahlKurseNichtZugeordnet : number = 0;
+	public anzahlKurseNichtZugeordnet: number = 0;
 
 	/**
 	 * Bewertungskriterium 2a: Anzahl aller Fachwahlen der SuS, die nicht zugeordnet wurden.
 	 */
-	public anzahlSchuelerNichtZugeordnet : number = 0;
+	public anzahlSchuelerNichtZugeordnet: number = 0;
 
 	/**
 	 * Bewertungskriterium 2b: Anzahl der Kollisionen bei der Zuordnung von Schülern zu den Kurses in den Schienen.
 	 */
-	public anzahlSchuelerKollisionen : number = 0;
+	public anzahlSchuelerKollisionen: number = 0;
 
 	/**
 	 * Bewertungskriterium 3a: Die größte Kursdifferenz in der Blockung.
 	 */
-	public kursdifferenzMax : number = 0;
+	public kursdifferenzMax: number = 0;
 
 	/**
 	 * Bewertungskriterium 3b: Array mit dem Histogramm der Kursdifferenzen. <br>
@@ -38,12 +38,12 @@ export class GostBlockungsergebnisBewertung extends JavaObject {
 	 *  Die Kursdifferenz 2 gibt es 2 Mal <br>
 	 *  Die Kursdifferenz 3 gibt es 1 Mal <br>
 	 */
-	public kursdifferenzHistogramm : Array<number> = Array(0).fill(0);
+	public kursdifferenzHistogramm: Array<number> = Array(0).fill(0);
 
 	/**
 	 * Bewertungskriterium 4: Anzahl aller Kurse mit gleicher Fachart in einer Schiene.
 	 */
-	public anzahlKurseMitGleicherFachartProSchiene : number = 0;
+	public anzahlKurseMitGleicherFachartProSchiene: number = 0;
 
 
 	/**
@@ -57,13 +57,13 @@ export class GostBlockungsergebnisBewertung extends JavaObject {
 		return 'de.svws_nrw.core.data.gost.GostBlockungsergebnisBewertung';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.gost.GostBlockungsergebnisBewertung'].includes(name);
 	}
 
 	public static class = new Class<GostBlockungsergebnisBewertung>('de.svws_nrw.core.data.gost.GostBlockungsergebnisBewertung');
 
-	public static transpilerFromJSON(json : string): GostBlockungsergebnisBewertung {
+	public static transpilerFromJSON(json: string): GostBlockungsergebnisBewertung {
 		const obj = JSON.parse(json) as Partial<GostBlockungsergebnisBewertung>;
 		const result = new GostBlockungsergebnisBewertung();
 		if (obj.regelVerletzungen !== undefined) {
@@ -94,7 +94,7 @@ export class GostBlockungsergebnisBewertung extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : GostBlockungsergebnisBewertung) : string {
+	public static transpilerToJSON(obj: GostBlockungsergebnisBewertung): string {
 		let result = '{';
 		result += '"regelVerletzungen" : [ ';
 		for (let i = 0; i < obj.regelVerletzungen.size(); i++) {
@@ -122,7 +122,7 @@ export class GostBlockungsergebnisBewertung extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<GostBlockungsergebnisBewertung>) : string {
+	public static transpilerToJSONPatch(obj: Partial<GostBlockungsergebnisBewertung>): string {
 		let result = '{';
 		if (obj.regelVerletzungen !== undefined) {
 			result += '"regelVerletzungen" : [ ';
@@ -167,6 +167,6 @@ export class GostBlockungsergebnisBewertung extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_gost_GostBlockungsergebnisBewertung(obj : unknown) : GostBlockungsergebnisBewertung {
+export function cast_de_svws_nrw_core_data_gost_GostBlockungsergebnisBewertung(obj: unknown): GostBlockungsergebnisBewertung {
 	return obj as GostBlockungsergebnisBewertung;
 }

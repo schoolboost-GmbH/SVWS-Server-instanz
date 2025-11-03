@@ -113,6 +113,10 @@ import { LehrerPflichtstundensollVollzeit } from "../types/lehrer/LehrerPflichts
 import { LehrerPflichtstundensollVollzeitKatalogEintrag } from "../data/lehrer/LehrerPflichtstundensollVollzeitKatalogEintrag";
 import { TerminKatalogEintrag } from "../data/schule/TerminKatalogEintrag";
 import { Termin } from "../types/schule/Termin";
+import { BetreuungsartKatalogEintrag } from "../data/schueler/BetreuungsartKatalogEintrag";
+import { Betreuungsart } from "../types/schueler/Betreuungsart";
+import { FormOffenerGanztag } from "../types/schule/FormOffenerGanztag";
+import { FormOffenerGanztagKatalogEintrag } from "../data/schule/FormOffenerGanztagKatalogEintrag";
 import { Floskelgruppenart } from "../types/schule/Floskelgruppenart";
 import { FloskelgruppenartKatalogEintrag } from "../data/schule/FloskelgruppenartKatalogEintrag";
 
@@ -156,7 +160,7 @@ export class JsonCoreTypeReader {
 		"LehrerAbgangsgrund", "LehrerBeschaeftigungsart", "LehrerEinsatzstatus", "LehrerFachrichtung", "LehrerLehrbefaehigung", "LehrerFachrichtungAnerkennung", "LehrerLehramt",
 		"LehrerLehramtAnerkennung", "LehrerLehrbefaehigungAnerkennung", "LehrerLeitungsfunktion", "LehrerRechtsverhaeltnis", "LehrerZugangsgrund", "BilingualeSprache", "KAOABerufsfeld",
 		"KAOAMerkmaleOptionsarten", "KAOAZusatzmerkmaleOptionsarten", "KAOAEbene4", "KAOAZusatzmerkmal", "KAOAAnschlussoptionen", "KAOAKategorie", "KAOAMerkmal", "Klassenart", "Uebergangsempfehlung",
-		"ZulaessigeKursart", "Foerderschwerpunkt", "Termin", "LehrerAnrechnungsgrund", "LehrerMehrleistungsarten", "LehrerMinderleistungsarten", "LehrerPflichtstundensollVollzeit", "Nationalitaeten", "ValidatorenFehlerartKontext",
+		"ZulaessigeKursart", "Foerderschwerpunkt", "Termin", "Betreuungsart", "FormOffenerGanztag", "LehrerAnrechnungsgrund", "LehrerMehrleistungsarten", "LehrerMinderleistungsarten", "LehrerPflichtstundensollVollzeit", "Nationalitaeten", "ValidatorenFehlerartKontext",
 		"Floskelgruppenart",
 	] as const;
 
@@ -500,6 +504,18 @@ export class JsonCoreTypeReader {
 		Termin.init(manager);
 	}
 
+	public readBetreuungsart() {
+		const data = this.read('Betreuungsart', (json) => BetreuungsartKatalogEintrag.transpilerFromJSON(json));
+		const manager = new CoreTypeDataManager<BetreuungsartKatalogEintrag, Betreuungsart>(data.version, Betreuungsart.class, Betreuungsart.values(), data.mapData, data.mapStatistikIDs);
+		Betreuungsart.init(manager);
+	}
+	
+	public readFormOffenerGanztag() {
+			const data = this.read('FormOffenerGanztag', (json) => FormOffenerGanztagKatalogEintrag.transpilerFromJSON(json));
+			const manager = new CoreTypeDataManager<FormOffenerGanztagKatalogEintrag, FormOffenerGanztag>(data.version, FormOffenerGanztag.class, FormOffenerGanztag.values(), data.mapData, data.mapStatistikIDs);
+			FormOffenerGanztag.init(manager);
+		}
+
 	public readLehrerAnrechnungsgrund() {
 		const data = this.read('LehrerAnrechnungsgrund', (json) => LehrerAnrechnungsgrundKatalogEintrag.transpilerFromJSON(json));
 		CoreTypeSimple.initValues(new LehrerAnrechnungsgrund(), LehrerAnrechnungsgrund.class, data.mapData);
@@ -567,7 +583,7 @@ export class JsonCoreTypeReader {
 		ValidatorManager.init(data.version, mapData);
 	}
 
-	public async loadAll() : Promise<Map<string, string>> {
+	public async loadAll(): Promise<Map<string, string>> {
 		const arr = [];
 		for (const key of this.keys)
 			arr.push(this.loadJson(key));
@@ -626,6 +642,8 @@ export class JsonCoreTypeReader {
 			this.readZulaessigeKursart();
 			this.readFoerderschwerpunkt();
 			this.readTermin();
+			this.readBetreuungsart();
+			this.readFormOffenerGanztag();
 			this.readLehrerAnrechnungsgrund();
 			this.readLehrerMehrleistungsarten();
 			this.readLehrerMinderleistungsarten();
@@ -634,7 +652,7 @@ export class JsonCoreTypeReader {
 			this.readValidatorenFehlerartKontext();
 			this.readFloskelgruppenart();
 		} catch (e) {
-			console.log(e)
+			console.log(e);
 		}
 	}
 }

@@ -12,21 +12,21 @@ export interface CoreType<T extends CoreTypeData, U extends CoreType<T, U>> exte
 	 *
 	 * @return der Bezeichner
 	 */
-	name() : string;
+	name(): string;
 
 	/**
 	 * Gibt einen Ordinal-Wert für den CoreType-Wert ähnlich wie bei Enum-Konstanten zurück.
 	 *
 	 * @return der Ordinal-Wert
 	 */
-	ordinal() : number;
+	ordinal(): number;
 
 	/**
 	 * Gibt den Bezeichner des CoreType-Wertes zurück.
 	 *
 	 * @return der Bezeichner
 	 */
-	compareTo(other : U) : number;
+	compareTo(other: U): number;
 
 }
 
@@ -35,7 +35,7 @@ export interface CoreType<T extends CoreTypeData, U extends CoreType<T, U>> exte
  *
  * @return der Manager
  */
-export function de_svws_nrw_asd_types_CoreType_getManager<T extends CoreTypeData, U extends CoreType<T, U>>(transpiledThis : any) : CoreTypeDataManager<T, U> {
+export function de_svws_nrw_asd_types_CoreType_getManager<T extends CoreTypeData, U extends CoreType<T, U>>(transpiledThis: any): CoreTypeDataManager<T, U> {
 	return CoreTypeDataManager.getManager(cast_java_lang_Class(transpiledThis.getClass()));
 }
 
@@ -46,7 +46,7 @@ export function de_svws_nrw_asd_types_CoreType_getManager<T extends CoreTypeData
  *
  * @return die Daten aus der Historie
  */
-export function de_svws_nrw_asd_types_CoreType_daten<T extends CoreTypeData, U extends CoreType<T, U>>(transpiledThis : any, schuljahr : number) : T | null {
+export function de_svws_nrw_asd_types_CoreType_daten<T extends CoreTypeData, U extends CoreType<T, U>>(transpiledThis: any, schuljahr: number): T | null {
 	return transpiledThis.getManager().getEintragBySchuljahrUndWert(schuljahr, transpiledThis as unknown as U);
 }
 
@@ -55,7 +55,7 @@ export function de_svws_nrw_asd_types_CoreType_daten<T extends CoreTypeData, U e
  *
  * @return die Statistik ID
  */
-export function de_svws_nrw_asd_types_CoreType_statistikId<T extends CoreTypeData, U extends CoreType<T, U>>(transpiledThis : any) : string | null {
+export function de_svws_nrw_asd_types_CoreType_statistikId<T extends CoreTypeData, U extends CoreType<T, U>>(transpiledThis: any): string | null {
 	return transpiledThis.getManager().getStatistikIdByWert(transpiledThis as unknown as U);
 }
 
@@ -64,11 +64,11 @@ export function de_svws_nrw_asd_types_CoreType_statistikId<T extends CoreTypeDat
  *
  * @return die Historie
  */
-export function de_svws_nrw_asd_types_CoreType_historie<T extends CoreTypeData, U extends CoreType<T, U>>(transpiledThis : any) : List<T> {
+export function de_svws_nrw_asd_types_CoreType_historie<T extends CoreTypeData, U extends CoreType<T, U>>(transpiledThis: any): List<T> {
 	return transpiledThis.getManager().getHistorieByWert(transpiledThis as unknown as U);
 }
 
 
-export function cast_de_svws_nrw_asd_types_CoreType<T extends CoreTypeData, U extends CoreType<T, U>>(obj : unknown) : CoreType<T, U> {
+export function cast_de_svws_nrw_asd_types_CoreType<T extends CoreTypeData, U extends CoreType<T, U>>(obj: unknown): CoreType<T, U> {
 	return obj as CoreType<T, U>;
 }

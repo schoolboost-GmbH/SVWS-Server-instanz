@@ -9,82 +9,82 @@ import { de_svws_nrw_asd_types_CoreType_getManager, de_svws_nrw_asd_types_CoreTy
 export class LehrerBeschaeftigungsart extends JavaEnum<LehrerBeschaeftigungsart> implements CoreType<LehrerBeschaeftigungsartKatalogEintrag, LehrerBeschaeftigungsart> {
 
 	/** an array containing all values of this enumeration */
-	static readonly all_values_by_ordinal : Array<LehrerBeschaeftigungsart> = [];
+	static readonly all_values_by_ordinal: Array<LehrerBeschaeftigungsart> = [];
 
 	/** an array containing all values of this enumeration indexed by their name*/
-	static readonly all_values_by_name : Map<string, LehrerBeschaeftigungsart> = new Map<string, LehrerBeschaeftigungsart>();
+	static readonly all_values_by_name: Map<string, LehrerBeschaeftigungsart> = new Map<string, LehrerBeschaeftigungsart>();
 
 	/**
 	 * Beschaeftigungsart 'Vollzeit' eines Lehrers
 	 */
-	public static readonly V : LehrerBeschaeftigungsart = new LehrerBeschaeftigungsart("V", 0, );
+	public static readonly V: LehrerBeschaeftigungsart = new LehrerBeschaeftigungsart("V", 0, );
 
 	/**
 	 * Beschaeftigungsart 'Teilzeit' eines Lehrers
 	 */
-	public static readonly T : LehrerBeschaeftigungsart = new LehrerBeschaeftigungsart("T", 1, );
+	public static readonly T: LehrerBeschaeftigungsart = new LehrerBeschaeftigungsart("T", 1, );
 
 	/**
 	 * Beschaeftigungsart 'Altersteilzeit (Beschäftigungsphase)' eines Lehrers
 	 */
-	public static readonly AT : LehrerBeschaeftigungsart = new LehrerBeschaeftigungsart("AT", 2, );
+	public static readonly AT: LehrerBeschaeftigungsart = new LehrerBeschaeftigungsart("AT", 2, );
 
 	/**
 	 * Beschaeftigungsart 'Altersteilzeit, vorm. teilzeitbeschäftigt (Verzichtsphase Altersermäßigung)' eines Lehrers
 	 */
-	public static readonly TA : LehrerBeschaeftigungsart = new LehrerBeschaeftigungsart("TA", 3, );
+	public static readonly TA: LehrerBeschaeftigungsart = new LehrerBeschaeftigungsart("TA", 3, );
 
 	/**
 	 * Beschaeftigungsart 'Altersteilzeit, vorm. vollzeitbeschäftigt (Verzichtsphase Altersermäßigung)' eines Lehrers
 	 */
-	public static readonly VA : LehrerBeschaeftigungsart = new LehrerBeschaeftigungsart("VA", 4, );
+	public static readonly VA: LehrerBeschaeftigungsart = new LehrerBeschaeftigungsart("VA", 4, );
 
 	/**
 	 * Beschaeftigungsart 'Sabbatjahr' eines Lehrers
 	 */
-	public static readonly TS : LehrerBeschaeftigungsart = new LehrerBeschaeftigungsart("TS", 5, );
+	public static readonly TS: LehrerBeschaeftigungsart = new LehrerBeschaeftigungsart("TS", 5, );
 
 	/**
 	 * Beschaeftigungsart 'Nebenberufliche Beschäftigung' eines Lehrers
 	 */
-	public static readonly SB : LehrerBeschaeftigungsart = new LehrerBeschaeftigungsart("SB", 6, );
+	public static readonly SB: LehrerBeschaeftigungsart = new LehrerBeschaeftigungsart("SB", 6, );
 
 	/**
 	 * Beschaeftigungsart 'Geringfügige Beschäftigung' eines Lehrers
 	 */
-	public static readonly GB : LehrerBeschaeftigungsart = new LehrerBeschaeftigungsart("GB", 7, );
+	public static readonly GB: LehrerBeschaeftigungsart = new LehrerBeschaeftigungsart("GB", 7, );
 
 	/**
 	 * Beschaeftigungsart 'Studierende' eines Lehrers
 	 */
-	public static readonly ST : LehrerBeschaeftigungsart = new LehrerBeschaeftigungsart("ST", 8, );
+	public static readonly ST: LehrerBeschaeftigungsart = new LehrerBeschaeftigungsart("ST", 8, );
 
 	/**
 	 * Beschaeftigungsart 'Beamter, nebenamtlich (nicht hauptamtlich im Schuldienst)' eines Lehrers
 	 */
-	public static readonly NA : LehrerBeschaeftigungsart = new LehrerBeschaeftigungsart("NA", 9, );
+	public static readonly NA: LehrerBeschaeftigungsart = new LehrerBeschaeftigungsart("NA", 9, );
 
 	/**
 	 * Beschaeftigungsart 'Gestellungsvertrag' eines Lehrers
 	 */
-	public static readonly G : LehrerBeschaeftigungsart = new LehrerBeschaeftigungsart("G", 10, );
+	public static readonly G: LehrerBeschaeftigungsart = new LehrerBeschaeftigungsart("G", 10, );
 
 	/**
 	 * Beschaeftigungsart 'Unentgeltlich Beschäftigte' eines Lehrers
 	 */
-	public static readonly X : LehrerBeschaeftigungsart = new LehrerBeschaeftigungsart("X", 11, );
+	public static readonly X: LehrerBeschaeftigungsart = new LehrerBeschaeftigungsart("X", 11, );
 
 	/**
 	 * Beschaeftigungsart 'Beamte auf Widerruf (LAA) in Teilzeit' eines Lehrers
 	 */
-	public static readonly WT : LehrerBeschaeftigungsart = new LehrerBeschaeftigungsart("WT", 12, );
+	public static readonly WT: LehrerBeschaeftigungsart = new LehrerBeschaeftigungsart("WT", 12, );
 
 	/**
 	 * Beschaeftigungsart 'Beamte auf Widerruf (LAA) in Vollzeit' eines Lehrers
 	 */
-	public static readonly WV : LehrerBeschaeftigungsart = new LehrerBeschaeftigungsart("WV", 13, );
+	public static readonly WV: LehrerBeschaeftigungsart = new LehrerBeschaeftigungsart("WV", 13, );
 
-	private constructor(name : string, ordinal : number) {
+	private constructor(name: string, ordinal: number) {
 		super(name, ordinal);
 		LehrerBeschaeftigungsart.all_values_by_ordinal.push(this);
 		LehrerBeschaeftigungsart.all_values_by_name.set(name, this);
@@ -95,7 +95,7 @@ export class LehrerBeschaeftigungsart extends JavaEnum<LehrerBeschaeftigungsart>
 	 *
 	 * @param manager   der Manager für die Daten des Core-Types
 	 */
-	public static init(manager : CoreTypeDataManager<LehrerBeschaeftigungsartKatalogEintrag, LehrerBeschaeftigungsart>) : void {
+	public static init(manager: CoreTypeDataManager<LehrerBeschaeftigungsartKatalogEintrag, LehrerBeschaeftigungsart>): void {
 		CoreTypeDataManager.putManager(LehrerBeschaeftigungsart.class, manager);
 	}
 
@@ -104,7 +104,7 @@ export class LehrerBeschaeftigungsart extends JavaEnum<LehrerBeschaeftigungsart>
 	 *
 	 * @return der Daten-Manager
 	 */
-	public static data() : CoreTypeDataManager<LehrerBeschaeftigungsartKatalogEintrag, LehrerBeschaeftigungsart> {
+	public static data(): CoreTypeDataManager<LehrerBeschaeftigungsartKatalogEintrag, LehrerBeschaeftigungsart> {
 		return CoreTypeDataManager.getManager(LehrerBeschaeftigungsart.class);
 	}
 
@@ -113,7 +113,7 @@ export class LehrerBeschaeftigungsart extends JavaEnum<LehrerBeschaeftigungsart>
 	 *
 	 * @returns the array with enumeration values
 	 */
-	public static values() : Array<LehrerBeschaeftigungsart> {
+	public static values(): Array<LehrerBeschaeftigungsart> {
 		return [...this.all_values_by_ordinal];
 	}
 
@@ -124,24 +124,24 @@ export class LehrerBeschaeftigungsart extends JavaEnum<LehrerBeschaeftigungsart>
 	 *
 	 * @returns the enumeration values or null
 	 */
-	public static valueOf(name : string) : LehrerBeschaeftigungsart | null {
+	public static valueOf(name: string): LehrerBeschaeftigungsart | null {
 		const tmp = this.all_values_by_name.get(name);
 		return (!tmp) ? null : tmp;
 	}
 
-	public getManager() : CoreTypeDataManager<LehrerBeschaeftigungsartKatalogEintrag, LehrerBeschaeftigungsart> {
+	public getManager(): CoreTypeDataManager<LehrerBeschaeftigungsartKatalogEintrag, LehrerBeschaeftigungsart> {
 		return de_svws_nrw_asd_types_CoreType_getManager(this);
 	}
 
-	public daten(schuljahr : number) : LehrerBeschaeftigungsartKatalogEintrag | null {
+	public daten(schuljahr: number): LehrerBeschaeftigungsartKatalogEintrag | null {
 		return de_svws_nrw_asd_types_CoreType_daten(this, schuljahr);
 	}
 
-	public statistikId() : string | null {
+	public statistikId(): string | null {
 		return de_svws_nrw_asd_types_CoreType_statistikId(this);
 	}
 
-	public historie() : List<LehrerBeschaeftigungsartKatalogEintrag> {
+	public historie(): List<LehrerBeschaeftigungsartKatalogEintrag> {
 		return de_svws_nrw_asd_types_CoreType_historie(this);
 	}
 
@@ -149,7 +149,7 @@ export class LehrerBeschaeftigungsart extends JavaEnum<LehrerBeschaeftigungsart>
 		return 'de.svws_nrw.asd.types.lehrer.LehrerBeschaeftigungsart';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.asd.types.lehrer.LehrerBeschaeftigungsart', 'de.svws_nrw.asd.types.CoreType', 'java.lang.Comparable', 'java.lang.Enum', 'java.lang.Comparable'].includes(name);
 	}
 
@@ -157,6 +157,6 @@ export class LehrerBeschaeftigungsart extends JavaEnum<LehrerBeschaeftigungsart>
 
 }
 
-export function cast_de_svws_nrw_asd_types_lehrer_LehrerBeschaeftigungsart(obj : unknown) : LehrerBeschaeftigungsart {
+export function cast_de_svws_nrw_asd_types_lehrer_LehrerBeschaeftigungsart(obj: unknown): LehrerBeschaeftigungsart {
 	return obj as LehrerBeschaeftigungsart;
 }

@@ -40,7 +40,7 @@ export interface EnmLerngruppenAuswahlEintrag {
 /**
  * Der Type für die Zuordnung von Floskelgruppen
  */
-export type BemerkungenHauptgruppe = 'ASV'|'AUE'|'FACH'|'FÖRD'|'FSP'|'VERM'|'VERS'|'ZB';
+export type BemerkungenHauptgruppe = 'ASV' | 'AUE' | 'FACH' | 'FÖRD' | 'FSP' | 'VERM' | 'VERS' | 'ZB';
 
 
 /**
@@ -243,7 +243,7 @@ export class EnmManager {
 	 *
 	 * @returns der Wert für den Vergleich (< 0, 0 oder >0)
 	 */
-	protected compareLerngruppen = (a : ENMLerngruppe, b : ENMLerngruppe) : number => {
+	protected compareLerngruppen = (a: ENMLerngruppe, b: ENMLerngruppe): number => {
 		// Vergleiche zuerst anhand der Jahrgänge, sofern diese angegeben sind ...
 		const aJgs = this.mapLerngruppeJahrgaenge.get(a.id);
 		const bJgs = this.mapLerngruppeJahrgaenge.get(b.id);
@@ -295,7 +295,7 @@ export class EnmManager {
 			return 1;
 		// ... und ansonsten anhand der ID der Lerngruppe
 		return a.id - b.id;
-	}
+	};
 
 	/** Definition des Comparators für zwei Lerngruppen */
 	public comparatorLerngruppen = <Comparator<ENMLerngruppe>>{ compare: this.compareLerngruppen };
@@ -308,7 +308,7 @@ export class EnmManager {
 	 *
 	 * @returns der Wert für den Vergleich (< 0, 0 oder >0)
 	 */
-	protected compareJahrgaenge = (a : ENMJahrgang, b : ENMJahrgang) : number => {
+	protected compareJahrgaenge = (a: ENMJahrgang, b: ENMJahrgang): number => {
 		// Vergleiche zuerst anhand der gesetzten Sortierung des Jahrgangs...
 		const tmp = a.sortierung - b.sortierung;
 		if (tmp !== 0)
@@ -321,7 +321,7 @@ export class EnmManager {
 		if (b.kuerzelAnzeige === null)
 			return 1;
 		return 0;
-	}
+	};
 
 	/** Definition des Comparators für zwei Jahrgänge */
 	public comparatorJahrgaenge = <Comparator<ENMJahrgang>>{ compare: this.compareJahrgaenge };
@@ -334,7 +334,7 @@ export class EnmManager {
 	 *
 	 * @returns der Wert für den Vergleich (< 0, 0 oder >0)
 	 */
-	protected compareKlassen = (a : ENMKlasse, b : ENMKlasse) : number => {
+	protected compareKlassen = (a: ENMKlasse, b: ENMKlasse): number => {
 		// Vergleiche zuerst anhand der gesetzten Sortierung der Klasse...
 		const tmp = a.sortierung - b.sortierung;
 		if (tmp !== 0)
@@ -347,7 +347,7 @@ export class EnmManager {
 		if (b.kuerzelAnzeige === null)
 			return 1;
 		return 0;
-	}
+	};
 
 	/** Definition des Comparators für zwei Klassen */
 	public comparatorKlassen = <Comparator<ENMKlasse>>{ compare: this.compareKlassen };
@@ -360,7 +360,7 @@ export class EnmManager {
 	 *
 	 * @returns der Wert für den Vergleich (< 0, 0 oder >0)
 	 */
-	protected compareSchueler = (a : ENMSchueler, b : ENMSchueler) : number => {
+	protected compareSchueler = (a: ENMSchueler, b: ENMSchueler): number => {
 		const aKlasse = this.mapKlassen.get(a.klasseID);
 		const bKlasse = this.mapKlassen.get(b.klasseID);
 		if ((aKlasse === null) && (bKlasse !== null))
@@ -389,7 +389,7 @@ export class EnmManager {
 		if ((a.nachname === null) && (b.nachname === null))
 			return a.id - b.id;
 		return (a.nachname === null) ? -1 : 1;
-	}
+	};
 
 	/** Definition des Comparators für zwei Schüler */
 	public comparatorSchueler = <Comparator<ENMSchueler>>{ compare: this.compareSchueler };
@@ -402,7 +402,7 @@ export class EnmManager {
 	 *
 	 * @returns der Wert für den Vergleich (< 0, 0 oder >0)
 	 */
-	protected compareTeilleistungsarten = (a : ENMTeilleistungsart | null, b : ENMTeilleistungsart | null) : number => {
+	protected compareTeilleistungsarten = (a: ENMTeilleistungsart | null, b: ENMTeilleistungsart | null): number => {
 		if ((a === null) && (b === null))
 			return 0;
 		if ((a === null) || (a.sortierung === null))
@@ -410,7 +410,7 @@ export class EnmManager {
 		if ((b === null) || (b.sortierung === null))
 			return 1;
 		return a.sortierung - b.sortierung;
-	}
+	};
 
 	/** Definition des Comparators für zwei Teilleistungsarten */
 	public comparatorTeilleistungsarten = <Comparator<ENMTeilleistungsart>>{ compare: this.compareTeilleistungsarten };
@@ -423,7 +423,7 @@ export class EnmManager {
 	 *
 	 * @returns der Wert für den Vergleich (< 0, 0 oder >0)
 	 */
-	protected compareTeilleistungen = (a : ENMTeilleistung, b : ENMTeilleistung) : number => {
+	protected compareTeilleistungen = (a: ENMTeilleistung, b: ENMTeilleistung): number => {
 		// Vergleiche zuerst anhand der gesetzten Sortierung der Teilleistungsarten...
 		const aArt = this.mapTeilleistungsarten.get(a.artID);
 		const bArt = this.mapTeilleistungsarten.get(b.artID);
@@ -431,10 +431,10 @@ export class EnmManager {
 		if (tmp !== 0)
 			return tmp;
 		return a.id - b.id;
-	}
+	};
 
 	/** Vergleicht zwei Auswahlelemente. Sie sind verschieden, wenn die Schüler- oder Leistungsindizes oder die Leistungs-Id verschieden sind.  */
-	public compareAuswahlLeistung(a: PairNN<ENMLeistung, ENMSchueler>|null, b: PairNN<ENMLeistung, ENMSchueler>|null): boolean {
+	public compareAuswahlLeistung(a: PairNN<ENMLeistung, ENMSchueler> | null, b: PairNN<ENMLeistung, ENMSchueler> | null): boolean {
 		return (a === b);
 	}
 
@@ -450,7 +450,7 @@ export class EnmManager {
 	 * @returns die Lerngruppe
 	 * @throws DeveloperNotificationException wenn die Lerngruppe nicht in den ENM-Daten existiert
 	 */
-	public lerngruppeByIDOrException(id: number) : ENMLerngruppe {
+	public lerngruppeByIDOrException(id: number): ENMLerngruppe {
 		const lerngruppe = this.mapLerngruppen.get(id);
 		if (lerngruppe === null)
 			throw new DeveloperNotificationException("Fehler bei der Bestimmung der Bezeichnung der Lerngruppe.");
@@ -465,7 +465,7 @@ export class EnmManager {
 	 * @returns die Bezeichnung der Lerngruppe
 	 * @throws DeveloperNotificationException wenn die Lerngruppe nicht in den ENM-Daten existiert oder die Bezeichnung leer ist
 	 */
-	public lerngruppeGetBezeichnung(id: number) : string {
+	public lerngruppeGetBezeichnung(id: number): string {
 		const lerngruppe = this.lerngruppeByIDOrException(id);
 		if (lerngruppe.bezeichnung === null)
 			throw new DeveloperNotificationException("Fehler bei der Bestimmung der Bezeichnung der Lerngruppe, die Bezeichnung in den ENM-Daten ist nicht gesetzt.");
@@ -479,7 +479,7 @@ export class EnmManager {
 	 *
 	 * @returns die Bezeichnung der Lerngruppe
 	 */
-	public lerngruppeGetKlassenAsString(id: number) : string {
+	public lerngruppeGetKlassenAsString(id: number): string {
 		const klassen = this.mapLerngruppeKlassen.get(id);
 		if (klassen === null)
 			throw new DeveloperNotificationException("Fehler bei der Bestimmung der zugeordneten Klassen für die Lerngruppe.");
@@ -495,7 +495,7 @@ export class EnmManager {
 	 *
 	 * @returns true, falls er Fachlehrer ist, und ansonsten false
 	 */
-	public lerngruppeIstFachlehrer(id: number) : boolean {
+	public lerngruppeIstFachlehrer(id: number): boolean {
 		return this.setLerngruppenLehrer.contains(id);
 	}
 
@@ -506,7 +506,7 @@ export class EnmManager {
 	 *
 	 * @returns die Lehrer-Objekte
 	 */
-	public lerngruppeGetFachlehrer(id: number) : List<ENMLehrer> {
+	public lerngruppeGetFachlehrer(id: number): List<ENMLehrer> {
 		const result = new ArrayList<ENMLehrer>();
 		const lerngruppe = this.mapLerngruppen.get(id);
 		if (lerngruppe === null)
@@ -526,7 +526,7 @@ export class EnmManager {
 	 *
 	 * @returns der String mit den Kürzeln der Fachlehrer
 	 */
-	public lerngruppeGetFachlehrerOrNull(id: number) : string {
+	public lerngruppeGetFachlehrerOrNull(id: number): string {
 		const list = this.lerngruppeGetFachlehrer(id);
 		return [...list].map(l => l.kuerzel).join(",");
 	}
@@ -538,7 +538,7 @@ export class EnmManager {
 	 *
 	 * @returns die Kursart als String
 	 */
-	public leistungGetKursartAsString(leistung: ENMLeistung) : string {
+	public leistungGetKursartAsString(leistung: ENMLeistung): string {
 		// Bestimme die Lerngruppe zu der Leistung
 		const lerngruppe = this.mapLerngruppen.get(leistung.lerngruppenID);
 		if ((lerngruppe === null) || (lerngruppe.kursartID === null) || (lerngruppe.kursartKuerzel === null))
@@ -569,7 +569,7 @@ export class EnmManager {
 	 *
 	 * @returns die Kurs-Bezeichnung
 	 */
-	public lerngruppeGetKursbezeichnung(id: number) : string {
+	public lerngruppeGetKursbezeichnung(id: number): string {
 		const lerngruppe = this.mapLerngruppen.get(id);
 		if ((lerngruppe === null) || (lerngruppe.kursartID === null))
 			return "";
@@ -583,7 +583,7 @@ export class EnmManager {
 	 *
 	 * @returns das Fachkürzel
 	 */
-	public lerngruppeGetFachkuerzel(id: number) : string {
+	public lerngruppeGetFachkuerzel(id: number): string {
 		const lerngruppe = this.mapLerngruppen.get(id);
 		if (lerngruppe === null)
 			return "";
@@ -600,7 +600,7 @@ export class EnmManager {
 	 *
 	 * @returns die Klasse des Schülers
 	 */
-	public schuelerGetKlasse(id: number) : ENMKlasse {
+	public schuelerGetKlasse(id: number): ENMKlasse {
 		const schueler = this.mapSchueler.get(id);
 		if (schueler === null)
 			throw new DeveloperNotificationException("Der Schüler mit der ID " + id + " exististiert nicht.");
@@ -615,7 +615,7 @@ export class EnmManager {
 	 *
 	 * @param schueler   der Schüler
 	 */
-	public fehlstundenFachbezogen(schueler: ENMSchueler) : boolean {
+	public fehlstundenFachbezogen(schueler: ENMSchueler): boolean {
 		return true;
 		// TODO zukünftig anhand der Konfiguration entscheiden...
 		// if (!this._daten.value.fehlstundenEingabe)

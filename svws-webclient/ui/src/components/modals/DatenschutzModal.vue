@@ -32,6 +32,6 @@
 
 	const openModal = () => {
 		show.value = true;
-	}
+	};
 
 </script>

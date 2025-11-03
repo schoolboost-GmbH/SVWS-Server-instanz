@@ -324,7 +324,7 @@
 		'lg': '1.5rem',
 		'xl': '2rem',
 		'xxl': '4rem',
-	}
+	};
 
 	const iconColors = ['ui', 'ui-brand', 'ui-statistic', 'ui-danger', 'ui-success', 'ui-warning', 'ui-caution'];
 

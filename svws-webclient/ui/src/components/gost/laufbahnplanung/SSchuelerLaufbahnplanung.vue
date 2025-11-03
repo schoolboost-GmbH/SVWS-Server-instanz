@@ -56,7 +56,7 @@
 	const show = ref<boolean>(false);
 
 	const updated = ref<boolean>(false);
-	const curId = ref<number | undefined>()
+	const curId = ref<number | undefined>();
 
 	watch(() => [props.schueler, props.gostBelegpruefungErgebnis()], ([neu, neu2], [alt, alt2]) => {
 		if (alt !== neu) {
@@ -67,7 +67,7 @@
 			updated.value = true;
 		else
 			curId.value = props.schueler.id;
-	})
+	});
 
 	async function doPatchBeratungsdaten(data: Partial<GostLaufbahnplanungBeratungsdaten>) {
 		await props.patchBeratungsdaten(data);
@@ -77,7 +77,7 @@
 	const dropdownList = [
 		{ text: "Laufbahnwahlbogen", action: () => downloadPDF("Laufbahnwahlbogen"), default: true },
 		{ text: "Laufbahnwahlbogen (nur Belegung)", action: () => downloadPDF("Laufbahnwahlbogen (nur Belegung)") },
-	]
+	];
 
 	async function downloadPDF(title: string) {
 		const { data, name } = await props.getPdfWahlbogen(title);

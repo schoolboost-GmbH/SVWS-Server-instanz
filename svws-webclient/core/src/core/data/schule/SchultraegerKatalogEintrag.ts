@@ -6,132 +6,132 @@ export class SchultraegerKatalogEintrag extends JavaObject {
 	/**
 	 * Schulträgernummer des Schulträgers.
 	 */
-	public SchulNr : string = "";
+	public SchulNr: string = "";
 
 	/**
 	 * Regionalschlüssel des Schulträgers
 	 */
-	public RegSchl : string | null = null;
+	public RegSchl: string | null = null;
 
 	/**
 	 * KoRe
 	 */
-	public KoRe : string | null = null;
+	public KoRe: string | null = null;
 
 	/**
 	 * KoHo
 	 */
-	public KoHo : string | null = null;
+	public KoHo: string | null = null;
 
 	/**
 	 * Bezeichnung 1 des Schulträgers
 	 */
-	public ABez1 : string | null = null;
+	public ABez1: string | null = null;
 
 	/**
 	 * Bezeichnung 2 des Schulträgers
 	 */
-	public ABez2 : string | null = null;
+	public ABez2: string | null = null;
 
 	/**
 	 * Bezeichnung 3 des Schulträgers
 	 */
-	public ABez3 : string | null = null;
+	public ABez3: string | null = null;
 
 	/**
 	 * PLZ des Schulträgers
 	 */
-	public PLZ : string | null = null;
+	public PLZ: string | null = null;
 
 	/**
 	 * Ort des Schulträgers
 	 */
-	public Ort : string | null = null;
+	public Ort: string | null = null;
 
 	/**
 	 * Straße des Schulträgers
 	 */
-	public Strasse : string | null = null;
+	public Strasse: string | null = null;
 
 	/**
 	 * Vorwahl des Schulträgers
 	 */
-	public TelVorw : string | null = null;
+	public TelVorw: string | null = null;
 
 	/**
 	 * Telefonnummer des Schulträgers
 	 */
-	public Telefon : string | null = null;
+	public Telefon: string | null = null;
 
 	/**
 	 * Ist immer 00 ???
 	 */
-	public SF : string | null = null;
+	public SF: string | null = null;
 
 	/**
 	 * Öffentlicher oder privater Schulträger
 	 */
-	public OeffPri : string | null = null;
+	public OeffPri: string | null = null;
 
 	/**
 	 * Kurzbezeichnung des Schulträgers
 	 */
-	public KurzBez : string | null = null;
+	public KurzBez: string | null = null;
 
 	/**
 	 * Schulbetriebsschlüssel des Schulträgers
 	 */
-	public SchBetrSchl : number | null = null;
+	public SchBetrSchl: number | null = null;
 
 	/**
 	 * Datum des Schulbetriebsschlüssels
 	 */
-	public SchBetrSchlDatum : string | null = null;
+	public SchBetrSchlDatum: string | null = null;
 
 	/**
 	 * Schülerzahl laut ASD
 	 */
-	public SchuelerZahlASD : number | null = null;
+	public SchuelerZahlASD: number | null = null;
 
 	/**
 	 * Schülerzahl laut VS
 	 */
-	public SchuelerZahlVS : number | null = null;
+	public SchuelerZahlVS: number | null = null;
 
 	/**
 	 * Art der Trägerschaft des Schulträgers
 	 */
-	public ArtDerTraegerschaft : string | null = null;
+	public ArtDerTraegerschaft: string | null = null;
 
 	/**
 	 * leer siehe SchulNr
 	 */
-	public SchultraegerNr : string | null = null;
+	public SchultraegerNr: string | null = null;
 
 	/**
 	 * leer Gliederung
 	 */
-	public Schulgliederung : string | null = null;
+	public Schulgliederung: string | null = null;
 
 	/**
 	 * Leer Ganztagsbetrieb
 	 */
-	public Ganztagsbetrieb : string | null = null;
+	public Ganztagsbetrieb: string | null = null;
 
 	/**
 	 * Aktiv ja nein des Schulträgers
 	 */
-	public Aktiv : number | null = null;
+	public Aktiv: number | null = null;
 
 	/**
 	 * Gibt die Gültigkeit ab welchem Schuljahr an
 	 */
-	public gueltigVon : number | null = null;
+	public gueltigVon: number | null = null;
 
 	/**
 	 * Gibt die Gültigkeit bis zu welchem Schuljahr an
 	 */
-	public gueltigBis : number | null = null;
+	public gueltigBis: number | null = null;
 
 
 	/**
@@ -145,13 +145,13 @@ export class SchultraegerKatalogEintrag extends JavaObject {
 		return 'de.svws_nrw.core.data.schule.SchultraegerKatalogEintrag';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.schule.SchultraegerKatalogEintrag'].includes(name);
 	}
 
 	public static class = new Class<SchultraegerKatalogEintrag>('de.svws_nrw.core.data.schule.SchultraegerKatalogEintrag');
 
-	public static transpilerFromJSON(json : string): SchultraegerKatalogEintrag {
+	public static transpilerFromJSON(json: string): SchultraegerKatalogEintrag {
 		const obj = JSON.parse(json) as Partial<SchultraegerKatalogEintrag>;
 		const result = new SchultraegerKatalogEintrag();
 		if (obj.SchulNr === undefined)
@@ -185,7 +185,7 @@ export class SchultraegerKatalogEintrag extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : SchultraegerKatalogEintrag) : string {
+	public static transpilerToJSON(obj: SchultraegerKatalogEintrag): string {
 		let result = '{';
 		result += '"SchulNr" : ' + JSON.stringify(obj.SchulNr) + ',';
 		result += '"RegSchl" : ' + ((obj.RegSchl === null) ? 'null' : JSON.stringify(obj.RegSchl)) + ',';
@@ -218,7 +218,7 @@ export class SchultraegerKatalogEintrag extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<SchultraegerKatalogEintrag>) : string {
+	public static transpilerToJSONPatch(obj: Partial<SchultraegerKatalogEintrag>): string {
 		let result = '{';
 		if (obj.SchulNr !== undefined) {
 			result += '"SchulNr" : ' + JSON.stringify(obj.SchulNr) + ',';
@@ -305,6 +305,6 @@ export class SchultraegerKatalogEintrag extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_schule_SchultraegerKatalogEintrag(obj : unknown) : SchultraegerKatalogEintrag {
+export function cast_de_svws_nrw_core_data_schule_SchultraegerKatalogEintrag(obj: unknown): SchultraegerKatalogEintrag {
 	return obj as SchultraegerKatalogEintrag;
 }

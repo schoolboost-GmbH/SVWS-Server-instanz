@@ -11,21 +11,21 @@ import { StundenplanblockungManagerKlasseMenge } from '../../../core/utils/stund
 
 export class StundenplanblockungManager extends JavaObject {
 
-	private readonly _manager_sc : StundenplanblockungManagerSchule;
+	private readonly _manager_sc: StundenplanblockungManagerSchule;
 
-	private readonly _manager_fa : StundenplanblockungManagerFachMenge;
+	private readonly _manager_fa: StundenplanblockungManagerFachMenge;
 
-	private readonly _manager_kl : StundenplanblockungManagerKlasseMenge;
+	private readonly _manager_kl: StundenplanblockungManagerKlasseMenge;
 
-	private readonly _manager_ko : StundenplanblockungManagerKopplungMenge;
+	private readonly _manager_ko: StundenplanblockungManagerKopplungMenge;
 
-	private readonly _manager_le : StundenplanblockungManagerLehrkraftMenge;
+	private readonly _manager_le: StundenplanblockungManagerLehrkraftMenge;
 
-	private readonly _manager_gr : StundenplanblockungManagerLerngruppeMenge;
+	private readonly _manager_gr: StundenplanblockungManagerLerngruppeMenge;
 
-	private readonly _manager_ra : StundenplanblockungManagerRaumMenge;
+	private readonly _manager_ra: StundenplanblockungManagerRaumMenge;
 
-	private readonly _manager_st : StundenplanblockungManagerStatistik;
+	private readonly _manager_st: StundenplanblockungManagerStatistik;
 
 
 	/**
@@ -48,7 +48,7 @@ export class StundenplanblockungManager extends JavaObject {
 	 *
 	 * @return Den Manager zur Verwaltung der globalen Schulkonfiguration.
 	 */
-	public getSchule() : StundenplanblockungManagerSchule {
+	public getSchule(): StundenplanblockungManagerSchule {
 		return this._manager_sc;
 	}
 
@@ -57,7 +57,7 @@ export class StundenplanblockungManager extends JavaObject {
 	 *
 	 * @return Den Manager zur Verwaltung der Lehrkräfte.
 	 */
-	public getLehrkraefte() : StundenplanblockungManagerLehrkraftMenge {
+	public getLehrkraefte(): StundenplanblockungManagerLehrkraftMenge {
 		return this._manager_le;
 	}
 
@@ -66,7 +66,7 @@ export class StundenplanblockungManager extends JavaObject {
 	 *
 	 * @return Den Manager zur Verwaltung der Lerngruppen.
 	 */
-	public getLerngruppen() : StundenplanblockungManagerLerngruppeMenge {
+	public getLerngruppen(): StundenplanblockungManagerLerngruppeMenge {
 		return this._manager_gr;
 	}
 
@@ -75,7 +75,7 @@ export class StundenplanblockungManager extends JavaObject {
 	 *
 	 * @return Den Manager zur Verwaltung der Klassen.
 	 */
-	public getKlassen() : StundenplanblockungManagerKlasseMenge {
+	public getKlassen(): StundenplanblockungManagerKlasseMenge {
 		return this._manager_kl;
 	}
 
@@ -84,7 +84,7 @@ export class StundenplanblockungManager extends JavaObject {
 	 *
 	 * @return Den Manager zur Verwaltung der Fächer.
 	 */
-	public getFaecher() : StundenplanblockungManagerFachMenge {
+	public getFaecher(): StundenplanblockungManagerFachMenge {
 		return this._manager_fa;
 	}
 
@@ -93,7 +93,7 @@ export class StundenplanblockungManager extends JavaObject {
 	 *
 	 * @return Den Manager zur Verwaltung der Räume.
 	 */
-	public getRaeume() : StundenplanblockungManagerRaumMenge {
+	public getRaeume(): StundenplanblockungManagerRaumMenge {
 		return this._manager_ra;
 	}
 
@@ -102,7 +102,7 @@ export class StundenplanblockungManager extends JavaObject {
 	 *
 	 * @return Den Manager zur Verwaltung der Kopplungen.
 	 */
-	public getKopplungen() : StundenplanblockungManagerKopplungMenge {
+	public getKopplungen(): StundenplanblockungManagerKopplungMenge {
 		return this._manager_ko;
 	}
 
@@ -110,7 +110,7 @@ export class StundenplanblockungManager extends JavaObject {
 	 * Überprüft alle Daten auf ihre Konsistenz. <br>
 	 * Wirft eine Exception, falls die Daten nicht konsistent sind.
 	 */
-	public miscCheckConsistencyOrException() : void {
+	public miscCheckConsistencyOrException(): void {
 		// empty block
 	}
 
@@ -118,7 +118,7 @@ export class StundenplanblockungManager extends JavaObject {
 		return 'de.svws_nrw.core.utils.stundenplanblockung.StundenplanblockungManager';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.utils.stundenplanblockung.StundenplanblockungManager'].includes(name);
 	}
 
@@ -126,6 +126,6 @@ export class StundenplanblockungManager extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_utils_stundenplanblockung_StundenplanblockungManager(obj : unknown) : StundenplanblockungManager {
+export function cast_de_svws_nrw_core_utils_stundenplanblockung_StundenplanblockungManager(obj: unknown): StundenplanblockungManager {
 	return obj as StundenplanblockungManager;
 }

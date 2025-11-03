@@ -22,8 +22,8 @@
 <script setup lang="ts">
 	import { ref } from 'vue';
 	import type { ApiStatus } from '~/components/ApiStatus';
-	import type {ApiFile, StundenplanManager, StundenplanRaum} from '@core';
-	import { ArrayList} from '@core';
+	import type { ApiFile, StundenplanManager, StundenplanRaum } from '@core';
+	import { ArrayList } from '@core';
 	import { ReportingParameter, ReportingReportvorlage } from '@core';
 
 	const props = defineProps<{

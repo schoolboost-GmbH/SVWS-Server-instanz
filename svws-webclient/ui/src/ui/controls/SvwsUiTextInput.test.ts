@@ -14,16 +14,16 @@ describe("Komponente kann gemounted werden", () => {
 
 describe.concurrent("PropHandhabung läuft korrekt", () => {
 	test.each([
-		[ "text", 'type="text"', "Type Prop as text"],
-		[ "date", 'type="date"', "Type Prop as date"],
-		[ "email", 'type="email"', "Type Prop as email"],
-		[ "search", 'type="search"', "Type Prop as search"],
-		[ "tel", 'type="tel"', "Type Prop as tel"],
-		[ "password", 'type="password"', "Type Prop as password"],
-		[ "text", 'type="text"', "Type Prop as number"],
-		[ "search", "search-icon", "Typ Prop als Suche rendert Icons"],
-		[ "search", '<span class="icon', "Typ Prop als Suche rendert Icons Klasse"],
-		[ "date", '<span class="svws-icon icon i-ri-calendar-2-line">', "Typ Prop als Datum zeigt das Datumssymbol an"],
+		["text", 'type="text"', "Type Prop as text"],
+		["date", 'type="date"', "Type Prop as date"],
+		["email", 'type="email"', "Type Prop as email"],
+		["search", 'type="search"', "Type Prop as search"],
+		["tel", 'type="tel"', "Type Prop as tel"],
+		["password", 'type="password"', "Type Prop as password"],
+		["text", 'type="text"', "Type Prop as number"],
+		["search", "search-icon", "Typ Prop als Suche rendert Icons"],
+		["search", '<span class="icon', "Typ Prop als Suche rendert Icons Klasse"],
+		["date", '<span class="svws-icon icon i-ri-calendar-2-line">', "Typ Prop als Datum zeigt das Datumssymbol an"],
 	])('Mit Props type="%s" HTML enthält "%s" | %s ', async (x, y, _) => {
 		const props = { type: x as "text" | "date" | "email" | "search" | "tel" | "password" };
 
@@ -33,7 +33,7 @@ describe.concurrent("PropHandhabung läuft korrekt", () => {
 		await wrapper.findComponent({ name: "SvwsUiTextInput" }).vm.$nextTick();
 
 		expect(wrapper.html()).includes(y);
-	})
+	});
 
 	test('Mit Prop disabled ist der input disabled', () => {
 		const wrapper = mount(SvwsUiTextInput, { props: { disabled: true } });
@@ -115,7 +115,7 @@ describe.concurrent("PropHandhabung läuft korrekt", () => {
 		['full', 'innerspan="full"'],
 		['2', 'innerspan="2"'],
 	])('Prop span="%s" wird ab CSS übergeben', (span, className) => {
-		const innerSpan : spanType = span as spanType;
+		const innerSpan: spanType = span as spanType;
 		const wrapper = mount(SvwsUiTextInput, { props: { innerSpan } });
 		expect(wrapper.html()).includes(className);
 	});
@@ -194,8 +194,8 @@ describe.concurrent("Modelvalue (prop), two-way-binding und Aktualisierungs- und
 
 		const emittedEvents = wrapper.emitted("update:modelValue");
 		expect(emittedEvents).toBeUndefined();
-	})
-})
+	});
+});
 
 describe.concurrent("Unit Tests für validatorEmail()", async () => {
 	const wrapper = mount(SvwsUiTextInput);
@@ -207,27 +207,27 @@ describe.concurrent("Unit Tests für validatorEmail()", async () => {
 
 	// [Input Parameter, Erwartungswert, Beschreibung]
 	test.each([
-		[ "fake@sadsdd.de", true, "Korrekte Email" ],
-		[ "asdasdsadsdd.de", true, "Kein @ ist erlaubt und bezieht sich auf \"diese\" Domain" ],
-		[ "test.email+alex@leetcode.com", true, "+ wird für tags und ähnliches verwendet" ],
-		[ "asdasds@ad@sdd.de", false, "Zwei @ wird nicht akzeptiert" ],
-		[ "asdasd sdd.de", false, "Leerzeichen erzeugen Fehler" ],
-		[ "asdasd@asdasd", false, "Fehlerhafte URL wird nicht akzeptiert" ],
-		[ "asdasd@asdasd.d", false, "Zu kurze URL wird nicht akzeptiert" ],
-		[ null, true, "null wird akzeptiert" ],
-		[ " test@test.de", false, "Leerzeichen am Anfang wird nicht akzeptiert" ],
+		["fake@sadsdd.de", true, "Korrekte Email"],
+		["asdasdsadsdd.de", true, "Kein @ ist erlaubt und bezieht sich auf \"diese\" Domain"],
+		["test.email+alex@leetcode.com", true, "+ wird für tags und ähnliches verwendet"],
+		["asdasds@ad@sdd.de", false, "Zwei @ wird nicht akzeptiert"],
+		["asdasd sdd.de", false, "Leerzeichen erzeugen Fehler"],
+		["asdasd@asdasd", false, "Fehlerhafte URL wird nicht akzeptiert"],
+		["asdasd@asdasd.d", false, "Zu kurze URL wird nicht akzeptiert"],
+		[null, true, "null wird akzeptiert"],
+		[" test@test.de", false, "Leerzeichen am Anfang wird nicht akzeptiert"],
 	])('validatorEmail(%s) => %s | %s ', (x, y, _) => {
-		expect(validatorEmail(x)).toBe(y)
-	})
+		expect(validatorEmail(x)).toBe(y);
+	});
 });
 
 describe.concurrent("Unit Tests für computed value maxLenValid", async () => {
 	test.each([
-		[ 10, "test", true, "Kürzeres Wort als MaxLen wird akzeptiert" ],
-		[ 1, "test", false, "Längeres Wort als MaxLen wird nicht akzeptiert" ],
-		[ undefined, "test", true, "Falls MaxLen undefined ist wird jede Länge akzeptiert" ],
-		[ 4, null, true, "Null als Wort ist nicht zu lang" ],
-		[ 10, "", true, "Leerstring wird akzeptiert" ],
+		[10, "test", true, "Kürzeres Wort als MaxLen wird akzeptiert"],
+		[1, "test", false, "Längeres Wort als MaxLen wird nicht akzeptiert"],
+		[undefined, "test", true, "Falls MaxLen undefined ist wird jede Länge akzeptiert"],
+		[4, null, true, "Null als Wort ist nicht zu lang"],
+		[10, "", true, "Leerstring wird akzeptiert"],
 	])('maxLenValid {maxLen: %s, modelValue: %s} => %s | %s ', (x1, x2, y, _) => {
 		const props = { maxLen: x1, modelValue: x2 };
 		const wrapper = mount(SvwsUiTextInput, { props: props });
@@ -235,18 +235,18 @@ describe.concurrent("Unit Tests für computed value maxLenValid", async () => {
 			name: "SvwsUiTextInput",
 		}).vm.maxLenValid;
 		expect(maxLenValid).toEqual(y);
-	})
-})
+	});
+});
 
 describe.concurrent("Unit Tests für computed value minLenValid", async () => {
 	test.each([
-		[ 1, "test", true, "Längeres Wort als MinLen wird akzeptiert" ],
-		[ 10, "test", false, "Kürzeres Wort als MinLen wird nicht akzeptiert" ],
-		[ undefined, "test", true, "Falls MinLen undefined ist wird jede Länge akzeptiert" ],
-		[ 4, null, false, "Wert null wird nicht akzeptiert, wenn MinLen > 0 gesetzt ist" ],
-		[ 4, "", false, "Leerstring wird nicht akzeptiert, wenn MinLen > 0 gesetzt ist" ],
-		[ 0, null, true, "Leerstring wird akzeptiert, wenn MinLen == 0 gesetzt ist" ],
-		[ 0, "", true, "Leerstring wird akzeptiert, wenn MinLen == 0 gesetzt ist" ],
+		[1, "test", true, "Längeres Wort als MinLen wird akzeptiert"],
+		[10, "test", false, "Kürzeres Wort als MinLen wird nicht akzeptiert"],
+		[undefined, "test", true, "Falls MinLen undefined ist wird jede Länge akzeptiert"],
+		[4, null, false, "Wert null wird nicht akzeptiert, wenn MinLen > 0 gesetzt ist"],
+		[4, "", false, "Leerstring wird nicht akzeptiert, wenn MinLen > 0 gesetzt ist"],
+		[0, null, true, "Leerstring wird akzeptiert, wenn MinLen == 0 gesetzt ist"],
+		[0, "", true, "Leerstring wird akzeptiert, wenn MinLen == 0 gesetzt ist"],
 	])('minLenValid {minLen: %s, modelValue: %s} => %s | %s ', (x1, x2, y, _) => {
 		const props = { minLen: x1, modelValue: x2 };
 		const wrapper = mount(SvwsUiTextInput, { props: props });
@@ -254,8 +254,8 @@ describe.concurrent("Unit Tests für computed value minLenValid", async () => {
 			name: "SvwsUiTextInput",
 		}).vm.minLenValid;
 		expect(minLenValid).toEqual(y);
-	})
-})
+	});
+});
 
 describe.concurrent("Unit Test für computed isValid", () => {
 	test("Erforderliches Feld mit null-Wert wird nicht akzeptiert", async () => {
@@ -333,4 +333,4 @@ describe.concurrent("Unit Test für computed isValid", () => {
 		const isValid = wrapper.findComponent({ name: "SvwsUiTextInput" }).vm.isValid;
 		expect(isValid).toEqual(true);
 	});
-})
+});

@@ -6,32 +6,32 @@ export class OrtsteilKatalogEintrag extends JavaObject {
 	/**
 	 * Die ID des Katalog-Eintrags.
 	 */
-	public id : number = 0;
+	public id: number = 0;
 
 	/**
 	 * Die ID des zugehörigen Ortes.
 	 */
-	public ort_id : number | null = null;
+	public ort_id: number | null = null;
 
 	/**
 	 * Der Name des Ortsteils.
 	 */
-	public ortsteil : string | null = null;
+	public ortsteil: string | null = null;
 
 	/**
 	 * Gibt die Position in der Sortierreihenfolge für die Katalog-Einträge an.
 	 */
-	public sortierung : number = 0;
+	public sortierung: number = 0;
 
 	/**
 	 * Gibt an, ob der Eintrag in der Anwendung sichtbar sein soll oder nicht.
 	 */
-	public istSichtbar : boolean = false;
+	public istSichtbar: boolean = false;
 
 	/**
 	 * Gibt an, ob der Eintrag in der Anwendung änderbar sein soll oder nicht.
 	 */
-	public istAenderbar : boolean = false;
+	public istAenderbar: boolean = false;
 
 
 	/**
@@ -45,13 +45,13 @@ export class OrtsteilKatalogEintrag extends JavaObject {
 		return 'de.svws_nrw.core.data.kataloge.OrtsteilKatalogEintrag';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.kataloge.OrtsteilKatalogEintrag'].includes(name);
 	}
 
 	public static class = new Class<OrtsteilKatalogEintrag>('de.svws_nrw.core.data.kataloge.OrtsteilKatalogEintrag');
 
-	public static transpilerFromJSON(json : string): OrtsteilKatalogEintrag {
+	public static transpilerFromJSON(json: string): OrtsteilKatalogEintrag {
 		const obj = JSON.parse(json) as Partial<OrtsteilKatalogEintrag>;
 		const result = new OrtsteilKatalogEintrag();
 		if (obj.id === undefined)
@@ -71,7 +71,7 @@ export class OrtsteilKatalogEintrag extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : OrtsteilKatalogEintrag) : string {
+	public static transpilerToJSON(obj: OrtsteilKatalogEintrag): string {
 		let result = '{';
 		result += '"id" : ' + obj.id.toString() + ',';
 		result += '"ort_id" : ' + ((obj.ort_id === null) ? 'null' : obj.ort_id.toString()) + ',';
@@ -84,7 +84,7 @@ export class OrtsteilKatalogEintrag extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<OrtsteilKatalogEintrag>) : string {
+	public static transpilerToJSONPatch(obj: Partial<OrtsteilKatalogEintrag>): string {
 		let result = '{';
 		if (obj.id !== undefined) {
 			result += '"id" : ' + obj.id.toString() + ',';
@@ -111,6 +111,6 @@ export class OrtsteilKatalogEintrag extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_kataloge_OrtsteilKatalogEintrag(obj : unknown) : OrtsteilKatalogEintrag {
+export function cast_de_svws_nrw_core_data_kataloge_OrtsteilKatalogEintrag(obj: unknown): OrtsteilKatalogEintrag {
 	return obj as OrtsteilKatalogEintrag;
 }

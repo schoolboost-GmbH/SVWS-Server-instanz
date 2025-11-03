@@ -9,12 +9,12 @@ export class ArrayMapEntry<K, V> extends JavaObject implements JavaMapEntry<K, V
 	/**
 	 * Der Schlüsselwert.
 	 */
-	readonly _key : K;
+	readonly _key: K;
 
 	/**
 	 * Der zugeordnete Wert.
 	 */
-	readonly _val : V;
+	readonly _val: V;
 
 
 	/**
@@ -23,38 +23,38 @@ export class ArrayMapEntry<K, V> extends JavaObject implements JavaMapEntry<K, V
 	 * @param key   Der Schlüsselwert. Dieser darf nicht NULL sein.
 	 * @param val   Der zugeordnete Wert. Dieser darf nicht NULL sein.
 	 */
-	constructor(key : K, val : V) {
+	constructor(key: K, val: V) {
 		super();
 		this._key = key;
 		this._val = val;
 	}
 
-	public toString() : string {
+	public toString(): string {
 		return "(" + this._key + ", " + this._val + ")";
 	}
 
-	public equals(o : unknown | null) : boolean {
+	public equals(o: unknown | null): boolean {
 		if (o === null)
 			return false;
 		if (!(((o instanceof JavaObject) && (o.isTranspiledInstanceOf('java.util.Map.Entry')))))
 			return false;
-		const e : JavaMapEntry<any, any> | null = cast_java_util_Map_Entry(o);
+		const e: JavaMapEntry<any, any> | null = cast_java_util_Map_Entry(o);
 		return JavaObject.equalsTranspiler(this._key, (e.getKey())) && (JavaObject.equalsTranspiler(this._val, (e.getValue())));
 	}
 
-	public hashCode() : number {
+	public hashCode(): number {
 		return JavaObject.getTranspilerHashCode(this._key) ^ JavaObject.getTranspilerHashCode(this._val);
 	}
 
-	public getKey() : K {
+	public getKey(): K {
 		return this._key;
 	}
 
-	public getValue() : V {
+	public getValue(): V {
 		return this._val;
 	}
 
-	public setValue(value : V) : V {
+	public setValue(value: V): V {
 		throw new UnsupportedOperationException()
 	}
 
@@ -62,7 +62,7 @@ export class ArrayMapEntry<K, V> extends JavaObject implements JavaMapEntry<K, V
 		return 'de.svws_nrw.core.adt.map.ArrayMapEntry';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.adt.map.ArrayMapEntry', 'java.util.Map.Entry'].includes(name);
 	}
 
@@ -70,6 +70,6 @@ export class ArrayMapEntry<K, V> extends JavaObject implements JavaMapEntry<K, V
 
 }
 
-export function cast_de_svws_nrw_core_adt_map_ArrayMapEntry<K, V>(obj : unknown) : ArrayMapEntry<K, V> {
+export function cast_de_svws_nrw_core_adt_map_ArrayMapEntry<K, V>(obj: unknown): ArrayMapEntry<K, V> {
 	return obj as ArrayMapEntry<K, V>;
 }

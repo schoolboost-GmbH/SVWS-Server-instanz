@@ -42,6 +42,7 @@ import de.svws_nrw.asd.data.lehrer.LehrerMinderleistungsartKatalogEintrag;
 import de.svws_nrw.asd.data.lehrer.LehrerPflichtstundensollVollzeitKatalogEintrag;
 import de.svws_nrw.asd.data.lehrer.LehrerRechtsverhaeltnisKatalogEintrag;
 import de.svws_nrw.asd.data.lehrer.LehrerZugangsgrundKatalogEintrag;
+import de.svws_nrw.asd.data.schueler.BetreuungsartKatalogEintrag;
 import de.svws_nrw.asd.data.schueler.EinschulungsartKatalogEintrag;
 import de.svws_nrw.asd.data.schueler.HerkunftBildungsgangKatalogEintrag;
 import de.svws_nrw.asd.data.schueler.HerkunftBildungsgangTypKatalogEintrag;
@@ -52,6 +53,7 @@ import de.svws_nrw.asd.data.schule.BerufskollegAnlageKatalogEintrag;
 import de.svws_nrw.asd.data.schule.BildungsgangTypKatalogEintrag;
 import de.svws_nrw.asd.data.schule.FloskelgruppenartKatalogEintrag;
 import de.svws_nrw.asd.data.schule.FoerderschwerpunktKatalogEintrag;
+import de.svws_nrw.asd.data.schule.FormOffenerGanztagKatalogEintrag;
 import de.svws_nrw.asd.data.schule.KindergartenbesuchKatalogEintrag;
 import de.svws_nrw.asd.data.schule.NationalitaetenKatalogEintrag;
 import de.svws_nrw.asd.data.schule.OrganisationsformKatalogEintrag;
@@ -97,6 +99,7 @@ import de.svws_nrw.asd.types.lehrer.LehrerMinderleistungsarten;
 import de.svws_nrw.asd.types.lehrer.LehrerPflichtstundensollVollzeit;
 import de.svws_nrw.asd.types.lehrer.LehrerRechtsverhaeltnis;
 import de.svws_nrw.asd.types.lehrer.LehrerZugangsgrund;
+import de.svws_nrw.asd.types.schueler.Betreuungsart;
 import de.svws_nrw.asd.types.schueler.Einschulungsart;
 import de.svws_nrw.asd.types.schueler.HerkunftBildungsgang;
 import de.svws_nrw.asd.types.schueler.HerkunftBildungsgangTyp;
@@ -109,6 +112,7 @@ import de.svws_nrw.asd.types.schule.BerufskollegBildungsgangTyp;
 import de.svws_nrw.asd.types.schule.BerufskollegOrganisationsformen;
 import de.svws_nrw.asd.types.schule.Floskelgruppenart;
 import de.svws_nrw.asd.types.schule.Foerderschwerpunkt;
+import de.svws_nrw.asd.types.schule.FormOffenerGanztag;
 import de.svws_nrw.asd.types.schule.Kindergartenbesuch;
 import de.svws_nrw.asd.types.schule.Nationalitaeten;
 import de.svws_nrw.asd.types.schule.Religion;
@@ -205,11 +209,14 @@ public final class CoreTypeRessource<T extends CoreTypeData, U extends CoreType<
 	 * @param typeClass   die Klasse des Core-Types
 	 *
 	 * @return die Informationen zu der Ressource
+	 *
+	 * @throws CoreTypeRessourceException wenn der Core-Type noch nicht initialisiert wurde
 	 */
-	public static <T extends CoreTypeData, U extends CoreType<T, U>> @NotNull JsonCoreTypeData<T> getData(final Class<U> typeClass) {
+	public static <T extends CoreTypeData, U extends CoreType<T, U>> @NotNull JsonCoreTypeData<T> getData(final Class<U> typeClass)
+			throws CoreTypeRessourceException {
 		final var res = get(typeClass);
 		if (res == null)
-			throw new RuntimeException("Der Core Type %s wurde noch nicht initialisiert.".formatted(typeClass.getName()));
+			throw new CoreTypeRessourceException("Der Core Type %s wurde noch nicht initialisiert.".formatted(typeClass.getName()), null);
 		return res.getData();
 	}
 
@@ -233,14 +240,16 @@ public final class CoreTypeRessource<T extends CoreTypeData, U extends CoreType<
 
 	/**
 	 * Initialisiert den Core-Type. Die Daten müssen zuvor geladen sein (siehe initAll)
+	 *
+	 * @throws CoreTypeRessourceException wenn beim Aufruf der Init-Methode des Core-Types ein Fehler auftritt (z.B. diese nicht vorhanden ist)
 	 */
-	private void init() {
+	private void init() throws CoreTypeRessourceException {
 		dataManager = new CoreTypeDataManager<>(data.getVersion(), typeClass, values, data.getData(), data.getStatistikIDs());
 		try {
 			final Method method = typeClass.getMethod("init", CoreTypeDataManager.class);
 			method.invoke(null, dataManager);
 		} catch (final NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
-			throw new RuntimeException("Fehler beim Aufruf der Init-Methode des CoreTypes %s".formatted(typeClass.getName()), e);
+			throw new CoreTypeRessourceException("Fehler beim Aufruf der Init-Methode des CoreTypes %s".formatted(typeClass.getName()), e);
 		}
 	}
 
@@ -260,17 +269,19 @@ public final class CoreTypeRessource<T extends CoreTypeData, U extends CoreType<
 	/**
 	 * Reinitialisieren der Values eines CoreTypeSimple.
 	 *
-	 * @param <S>
-	 * @param jsonCoreTypeData
+	 * @param <S>                der Typ des Core-Types
+	 * @param jsonCoreTypeData   die Daten für die erneute Initilialisierung
+	 *
+	 * @throws CoreTypeRessourceException wenn bei der Initialisierung eines Simple-Core-Types ein Fehler auftritt
 	 */
 	@SuppressWarnings("unchecked")
-	private <S extends CoreTypeSimple<T, S>> void reinitSimple(final JsonCoreTypeData<T> jsonCoreTypeData) {
+	private <S extends CoreTypeSimple<T, S>> void reinitSimple(final JsonCoreTypeData<T> jsonCoreTypeData) throws CoreTypeRessourceException {
 		final Class<S> typeClassSimple = (Class<S>) typeClass;
 		try {
 			CoreTypeSimple.initValues(typeClassSimple.getConstructor().newInstance(), typeClassSimple, jsonCoreTypeData.getData());
 		} catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException
 				| SecurityException e) {
-			throw new RuntimeException("Fehler beim Initialisieren des CoreTypeSimple %s".formatted(typeClass.getName()), e);
+			throw new CoreTypeRessourceException("Fehler beim Initialisieren des CoreTypeSimple %s".formatted(typeClass.getName()), e);
 		}
 		values = (U[]) CoreTypeSimple.valuesByClass(typeClassSimple);
 	}
@@ -299,7 +310,7 @@ public final class CoreTypeRessource<T extends CoreTypeData, U extends CoreType<
 	 * @param map
 	 */
 	@SuppressWarnings("unchecked")
-	public static <V extends CoreTypeData, U extends CoreType<V, U>> void reinitAll(@NotNull final Map<Class<U>, JsonCoreTypeData<V>> map) {
+	public static <V extends CoreTypeData, U extends CoreType<V, U>> void reinitAll(final Map<Class<U>, JsonCoreTypeData<V>> map) {
 		if ((map == null) || map.isEmpty())
 			throw new CoreTypeException("Liste darf nicht leer sein.");
 		// Prüfen auf unbekannte Kataloge
@@ -343,16 +354,18 @@ public final class CoreTypeRessource<T extends CoreTypeData, U extends CoreType<
 	 * @param path        der Pfad zu der Ressource
 	 *
 	 * @return die neue Ressource
+	 *
+	 * @throws CoreTypeRessourceException wenn bei der Initialisierung eines Simple-Core-Types ein Fehler auftritt
 	 */
 	private static <T extends CoreTypeData, U extends CoreTypeSimple<T, U>> CoreTypeRessource<T, U> addSimple(final Class<U> typeClass,
-			final Class<T> dataClass, final String path) {
+			final Class<T> dataClass, final String path) throws CoreTypeRessourceException {
 		final CoreTypeRessource<T, U> res = add(typeClass, dataClass, null, path);
 		// Lazy Loading bei SimpleCoreType
 		try {
 			CoreTypeSimple.initValues(typeClass.getConstructor().newInstance(), typeClass, res.data.getData());
 		} catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException
 				| SecurityException e) {
-			throw new RuntimeException("Fehler beim Initialisieren des CoreTypeSimple %s".formatted(typeClass.getName()), e);
+			throw new CoreTypeRessourceException("Fehler beim Initialisieren des CoreTypeSimple %s".formatted(typeClass.getName()), e);
 		}
 		res.values = CoreTypeSimple.valuesByClass(typeClass);
 		return res;
@@ -367,7 +380,8 @@ public final class CoreTypeRessource<T extends CoreTypeData, U extends CoreType<
 				"de/svws_nrw/asd/types/schule/Schulform.json");
 		add(BerufskollegAnlage.class, BerufskollegAnlageKatalogEintrag.class, BerufskollegAnlage.values(),
 				"de/svws_nrw/asd/types/schule/BerufskollegAnlage.json");
-		add(BeruflichesGymnasiumPruefungsordnungAnlage.class, BeruflichesGymnasiumPruefungsordnungAnlageKatalogEintrag.class, BeruflichesGymnasiumPruefungsordnungAnlage.values(),
+		add(BeruflichesGymnasiumPruefungsordnungAnlage.class, BeruflichesGymnasiumPruefungsordnungAnlageKatalogEintrag.class,
+				BeruflichesGymnasiumPruefungsordnungAnlage.values(),
 				"de/svws_nrw/asd/types/schule/BeruflichesGymnasiumPruefungsordnungAnlage.json");
 		add(AllgemeinbildendOrganisationsformen.class, OrganisationsformKatalogEintrag.class, AllgemeinbildendOrganisationsformen.values(),
 				"de/svws_nrw/asd/types/schule/AllgemeinbildendOrganisationsformen.json");
@@ -460,6 +474,10 @@ public final class CoreTypeRessource<T extends CoreTypeData, U extends CoreType<
 				"de/svws_nrw/asd/types/schule/Foerderschwerpunkt.json");
 		add(Termin.class, TerminKatalogEintrag.class, Termin.values(),
 				"de/svws_nrw/asd/types/schule/Termin.json");
+		add(Betreuungsart.class, BetreuungsartKatalogEintrag.class, Betreuungsart.values(),
+				"de/svws_nrw/asd/types/schueler/Betreuungsart.json");
+		add(FormOffenerGanztag.class, FormOffenerGanztagKatalogEintrag.class, FormOffenerGanztag.values(),
+				"de/svws_nrw/asd/types/schule/FormOffenerGanztag.json");
 		addSimple(Einschulungsart.class, EinschulungsartKatalogEintrag.class,
 				"de/svws_nrw/asd/types/schueler/Einschulungsart.json");
 		addSimple(LehrerAnrechnungsgrund.class, LehrerAnrechnungsgrundKatalogEintrag.class,

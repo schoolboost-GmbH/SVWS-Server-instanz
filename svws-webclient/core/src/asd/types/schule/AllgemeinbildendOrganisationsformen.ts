@@ -10,37 +10,37 @@ import { de_svws_nrw_asd_types_CoreType_getManager, de_svws_nrw_asd_types_CoreTy
 export class AllgemeinbildendOrganisationsformen extends JavaEnum<AllgemeinbildendOrganisationsformen> implements CoreType<OrganisationsformKatalogEintrag, AllgemeinbildendOrganisationsformen> {
 
 	/** an array containing all values of this enumeration */
-	static readonly all_values_by_ordinal : Array<AllgemeinbildendOrganisationsformen> = [];
+	static readonly all_values_by_ordinal: Array<AllgemeinbildendOrganisationsformen> = [];
 
 	/** an array containing all values of this enumeration indexed by their name*/
-	static readonly all_values_by_name : Map<string, AllgemeinbildendOrganisationsformen> = new Map<string, AllgemeinbildendOrganisationsformen>();
+	static readonly all_values_by_name: Map<string, AllgemeinbildendOrganisationsformen> = new Map<string, AllgemeinbildendOrganisationsformen>();
 
 	/**
 	 * Organisationsform: Nicht zuordenbar (Früherziehung für Hör- und Sehgeschädigte, Ambulante Maßnahmen)
 	 */
-	public static readonly NICHT_ZUGEORDNET : AllgemeinbildendOrganisationsformen = new AllgemeinbildendOrganisationsformen("NICHT_ZUGEORDNET", 0, );
+	public static readonly NICHT_ZUGEORDNET: AllgemeinbildendOrganisationsformen = new AllgemeinbildendOrganisationsformen("NICHT_ZUGEORDNET", 0, );
 
 	/**
 	 * Organisationsform: Halbtagsunterricht
 	 */
-	public static readonly HALBTAG : AllgemeinbildendOrganisationsformen = new AllgemeinbildendOrganisationsformen("HALBTAG", 1, );
+	public static readonly HALBTAG: AllgemeinbildendOrganisationsformen = new AllgemeinbildendOrganisationsformen("HALBTAG", 1, );
 
 	/**
 	 * Organisationsform: Teilnahme am gebundenen Ganztag
 	 */
-	public static readonly GANZTAG : AllgemeinbildendOrganisationsformen = new AllgemeinbildendOrganisationsformen("GANZTAG", 2, );
+	public static readonly GANZTAG: AllgemeinbildendOrganisationsformen = new AllgemeinbildendOrganisationsformen("GANZTAG", 2, );
 
 	/**
 	 * Organisationsform: Teilnahme am erweiterten Ganztag
 	 */
-	public static readonly GANZTAG_ERWEITERT : AllgemeinbildendOrganisationsformen = new AllgemeinbildendOrganisationsformen("GANZTAG_ERWEITERT", 3, );
+	public static readonly GANZTAG_ERWEITERT: AllgemeinbildendOrganisationsformen = new AllgemeinbildendOrganisationsformen("GANZTAG_ERWEITERT", 3, );
 
 	/**
 	 * Organisationsform: Teilnahme am offenen Ganztag
 	 */
-	public static readonly GANZTAG_OFFEN : AllgemeinbildendOrganisationsformen = new AllgemeinbildendOrganisationsformen("GANZTAG_OFFEN", 4, );
+	public static readonly GANZTAG_OFFEN: AllgemeinbildendOrganisationsformen = new AllgemeinbildendOrganisationsformen("GANZTAG_OFFEN", 4, );
 
-	private constructor(name : string, ordinal : number) {
+	private constructor(name: string, ordinal: number) {
 		super(name, ordinal);
 		AllgemeinbildendOrganisationsformen.all_values_by_ordinal.push(this);
 		AllgemeinbildendOrganisationsformen.all_values_by_name.set(name, this);
@@ -51,7 +51,7 @@ export class AllgemeinbildendOrganisationsformen extends JavaEnum<Allgemeinbilde
 	 *
 	 * @param manager   der Manager für die Daten des Core-Types
 	 */
-	public static init(manager : CoreTypeDataManager<OrganisationsformKatalogEintrag, AllgemeinbildendOrganisationsformen>) : void {
+	public static init(manager: CoreTypeDataManager<OrganisationsformKatalogEintrag, AllgemeinbildendOrganisationsformen>): void {
 		CoreTypeDataManager.putManager(AllgemeinbildendOrganisationsformen.class, manager);
 	}
 
@@ -60,7 +60,7 @@ export class AllgemeinbildendOrganisationsformen extends JavaEnum<Allgemeinbilde
 	 *
 	 * @return der Daten-Manager
 	 */
-	public static data() : CoreTypeDataManager<OrganisationsformKatalogEintrag, AllgemeinbildendOrganisationsformen> {
+	public static data(): CoreTypeDataManager<OrganisationsformKatalogEintrag, AllgemeinbildendOrganisationsformen> {
 		return CoreTypeDataManager.getManager(AllgemeinbildendOrganisationsformen.class);
 	}
 
@@ -72,7 +72,7 @@ export class AllgemeinbildendOrganisationsformen extends JavaEnum<Allgemeinbilde
 	 *
 	 * @return true, falls die Schulform zulässig ist, und ansonsten false
 	 */
-	public hatSchulform(schuljahr : number, sf : Schulform) : boolean {
+	public hatSchulform(schuljahr: number, sf: Schulform): boolean {
 		return AllgemeinbildendOrganisationsformen.data().hatSchulform(schuljahr, sf, this);
 	}
 
@@ -81,7 +81,7 @@ export class AllgemeinbildendOrganisationsformen extends JavaEnum<Allgemeinbilde
 	 *
 	 * @returns the array with enumeration values
 	 */
-	public static values() : Array<AllgemeinbildendOrganisationsformen> {
+	public static values(): Array<AllgemeinbildendOrganisationsformen> {
 		return [...this.all_values_by_ordinal];
 	}
 
@@ -92,24 +92,24 @@ export class AllgemeinbildendOrganisationsformen extends JavaEnum<Allgemeinbilde
 	 *
 	 * @returns the enumeration values or null
 	 */
-	public static valueOf(name : string) : AllgemeinbildendOrganisationsformen | null {
+	public static valueOf(name: string): AllgemeinbildendOrganisationsformen | null {
 		const tmp = this.all_values_by_name.get(name);
 		return (!tmp) ? null : tmp;
 	}
 
-	public getManager() : CoreTypeDataManager<OrganisationsformKatalogEintrag, AllgemeinbildendOrganisationsformen> {
+	public getManager(): CoreTypeDataManager<OrganisationsformKatalogEintrag, AllgemeinbildendOrganisationsformen> {
 		return de_svws_nrw_asd_types_CoreType_getManager(this);
 	}
 
-	public daten(schuljahr : number) : OrganisationsformKatalogEintrag | null {
+	public daten(schuljahr: number): OrganisationsformKatalogEintrag | null {
 		return de_svws_nrw_asd_types_CoreType_daten(this, schuljahr);
 	}
 
-	public statistikId() : string | null {
+	public statistikId(): string | null {
 		return de_svws_nrw_asd_types_CoreType_statistikId(this);
 	}
 
-	public historie() : List<OrganisationsformKatalogEintrag> {
+	public historie(): List<OrganisationsformKatalogEintrag> {
 		return de_svws_nrw_asd_types_CoreType_historie(this);
 	}
 
@@ -117,7 +117,7 @@ export class AllgemeinbildendOrganisationsformen extends JavaEnum<Allgemeinbilde
 		return 'de.svws_nrw.asd.types.schule.AllgemeinbildendOrganisationsformen';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.asd.types.schule.AllgemeinbildendOrganisationsformen', 'de.svws_nrw.asd.types.CoreType', 'java.lang.Comparable', 'java.lang.Enum', 'java.lang.Comparable'].includes(name);
 	}
 
@@ -125,6 +125,6 @@ export class AllgemeinbildendOrganisationsformen extends JavaEnum<Allgemeinbilde
 
 }
 
-export function cast_de_svws_nrw_asd_types_schule_AllgemeinbildendOrganisationsformen(obj : unknown) : AllgemeinbildendOrganisationsformen {
+export function cast_de_svws_nrw_asd_types_schule_AllgemeinbildendOrganisationsformen(obj: unknown): AllgemeinbildendOrganisationsformen {
 	return obj as AllgemeinbildendOrganisationsformen;
 }

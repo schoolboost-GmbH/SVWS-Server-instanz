@@ -14,7 +14,7 @@
 
 <script setup lang="ts">
 	import { ref } from "vue";
-	import type { StundenplanManager} from "@core";
+	import type { StundenplanManager } from "@core";
 	import type { StundenplanZeitraster } from "@core";
 
 	const props = defineProps<{
@@ -27,7 +27,7 @@
 
 	const openModal = () => {
 		show.value = true;
-	}
+	};
 
 	async function importer() {
 		const list = props.stundenplanManager().getListZeitraster();

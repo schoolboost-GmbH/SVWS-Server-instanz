@@ -6,22 +6,22 @@ export class Raum extends JavaObject {
 	/**
 	 * Die ID des Raumes.
 	 */
-	public id : number = -1;
+	public id: number = -1;
 
 	/**
 	 * Das Raumkürzel.
 	 */
-	public kuerzel : string = "";
+	public kuerzel: string = "";
 
 	/**
 	 * Die Beschreibung des Raumes.
 	 */
-	public beschreibung : string = "";
+	public beschreibung: string = "";
 
 	/**
 	 * Die Grösse des Raumes an Arbeitsplätzen für Schüler.
 	 */
-	public groesse : number = -1;
+	public groesse: number = -1;
 
 
 	/**
@@ -35,13 +35,13 @@ export class Raum extends JavaObject {
 		return 'de.svws_nrw.core.data.schule.Raum';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.schule.Raum'].includes(name);
 	}
 
 	public static class = new Class<Raum>('de.svws_nrw.core.data.schule.Raum');
 
-	public static transpilerFromJSON(json : string): Raum {
+	public static transpilerFromJSON(json: string): Raum {
 		const obj = JSON.parse(json) as Partial<Raum>;
 		const result = new Raum();
 		if (obj.id === undefined)
@@ -59,7 +59,7 @@ export class Raum extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : Raum) : string {
+	public static transpilerToJSON(obj: Raum): string {
 		let result = '{';
 		result += '"id" : ' + obj.id.toString() + ',';
 		result += '"kuerzel" : ' + JSON.stringify(obj.kuerzel) + ',';
@@ -70,7 +70,7 @@ export class Raum extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<Raum>) : string {
+	public static transpilerToJSONPatch(obj: Partial<Raum>): string {
 		let result = '{';
 		if (obj.id !== undefined) {
 			result += '"id" : ' + obj.id.toString() + ',';
@@ -91,6 +91,6 @@ export class Raum extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_schule_Raum(obj : unknown) : Raum {
+export function cast_de_svws_nrw_core_data_schule_Raum(obj: unknown): Raum {
 	return obj as Raum;
 }

@@ -87,20 +87,20 @@
 	import { BenutzerKompetenzGruppe, BenutzerTyp } from '@core';
 
 	const props = defineProps<BenutzerProps>();
-	const readonly = computed<boolean>(() => (props.getBenutzerManager().daten().id === props.benutzerdaten.id ));
+	const readonly = computed<boolean>(() => (props.getBenutzerManager().daten().id === props.benutzerdaten.id));
 
 	const columns = [
-		{key: 'bezeichnung', label: 'Bezeichnung'},
-		{key: 'istAdmin', label: 'ist Admin'},
-	]
+		{ key: 'bezeichnung', label: 'Bezeichnung' },
+		{ key: 'istAdmin', label: 'ist Admin' },
+	];
 	const kennwort1 = ref();
 	const kennwort2 = ref();
 
-	function setPwd(){
+	function setPwd() {
 		if (kennwort1.value === kennwort2.value)
-			void props.setPassword(kennwort1.value)
+			void props.setPassword(kennwort1.value);
 		else
-			alert("Kennwörter stimmen nicht überein")
+			alert("Kennwörter stimmen nicht überein");
 	}
 
 	const kompetenzgruppen = computed<BenutzerKompetenzGruppe[]>(() => BenutzerKompetenzGruppe.values().filter(gr => gr.daten.id >= 0));

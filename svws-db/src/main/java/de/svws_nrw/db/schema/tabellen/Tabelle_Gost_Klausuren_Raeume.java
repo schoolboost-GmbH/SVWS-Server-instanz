@@ -17,31 +17,31 @@ import de.svws_nrw.db.schema.SchemaTabelleUniqueIndex;
 public class Tabelle_Gost_Klausuren_Raeume extends SchemaTabelle {
 
 	/** Die Definition der Tabellenspalte ID */
-	public SchemaTabelleSpalte col_ID = add("ID", SchemaDatentypen.BIGINT, true)
+	public final SchemaTabelleSpalte col_ID = add("ID", SchemaDatentypen.BIGINT, true)
 			.setNotNull()
 			.setJavaComment("ID des Klausurraums (generiert)");
 
 	/** Die Definition der Tabellenspalte Termin_ID */
-	public SchemaTabelleSpalte col_Termin_ID = add("Termin_ID", SchemaDatentypen.BIGINT, false)
+	public final SchemaTabelleSpalte col_Termin_ID = add("Termin_ID", SchemaDatentypen.BIGINT, false)
 			.setNotNull()
 			.setJavaComment("ID des Termins");
 
 	/** Die Definition der Tabellenspalte Stundenplan_Raum_ID */
-	public SchemaTabelleSpalte col_Stundenplan_Raum_ID = add("Stundenplan_Raum_ID", SchemaDatentypen.BIGINT, false)
+	public final SchemaTabelleSpalte col_Stundenplan_Raum_ID = add("Stundenplan_Raum_ID", SchemaDatentypen.BIGINT, false)
 			.setJavaComment("ID des Raums aus der Tabelle Stundenplan_Raeume");
 
 	/** Die Definition der Tabellenspalte Stundenplan_Raum_Kuerzel */
-	public SchemaTabelleSpalte col_Stundenplan_Raum_Kuerzel = add("Stundenplan_Raum_Kuerzel", SchemaDatentypen.VARCHAR, false).setDatenlaenge(20)
+	public final SchemaTabelleSpalte col_Stundenplan_Raum_Kuerzel = add("Stundenplan_Raum_Kuerzel", SchemaDatentypen.VARCHAR, false).setDatenlaenge(20)
 			.setJavaComment("Das Kürzel des Stundenplan_Raums, falls keine Stundenplan_Raum_ID gesetzt ist")
 			.setRevision(SchemaRevisionen.REV_40);
 
 
 	/** Die Definition der Tabellenspalte Bemerkungen */
-	public SchemaTabelleSpalte col_Bemerkungen = add("Bemerkungen", SchemaDatentypen.TEXT, false)
+	public final SchemaTabelleSpalte col_Bemerkungen = add("Bemerkungen", SchemaDatentypen.TEXT, false)
 			.setJavaComment("Text für Bemerkungen zum Klausurraum");
 
 	/** Die Definition des Fremdschlüssels Gost_Klausuren_Raeume_Stundenplan_Raume_ID_FK */
-	public SchemaTabelleFremdschluessel fk_Gost_Klausuren_Raeume_Stundenplan_Raume_ID_FK = addForeignKey(
+	public final SchemaTabelleFremdschluessel fk_Gost_Klausuren_Raeume_Stundenplan_Raume_ID_FK = addForeignKey(
 			"Gost_Klausuren_Raeume_Stundenplan_Raum_ID_FK",
 			/* OnUpdate: */ SchemaFremdschluesselAktionen.CASCADE,
 			/* OnDelete: */ SchemaFremdschluesselAktionen.SET_NULL,
@@ -49,7 +49,7 @@ public class Tabelle_Gost_Klausuren_Raeume extends SchemaTabelle {
 	);
 
 	/** Die Definition des Fremdschlüssels Gost_Klausuren_Raeume_Termin_ID_FK */
-	public SchemaTabelleFremdschluessel fk_Gost_Klausuren_Raeume_Termin_ID_FK = addForeignKey(
+	public final SchemaTabelleFremdschluessel fk_Gost_Klausuren_Raeume_Termin_ID_FK = addForeignKey(
 			"Gost_Klausuren_Raeume_Termin_ID_FK",
 			/* OnUpdate: */ SchemaFremdschluesselAktionen.CASCADE,
 			/* OnDelete: */ SchemaFremdschluesselAktionen.CASCADE,
@@ -57,17 +57,17 @@ public class Tabelle_Gost_Klausuren_Raeume extends SchemaTabelle {
 	);
 
 	/** Die Definition des Unique-Index Gost_Klausuren_Raume_UC1 */
-	public SchemaTabelleUniqueIndex unique_Gost_Klausuren_Raume_UC1 = addUniqueIndex("Gost_Klausuren_Raume_UC1",
+	public final SchemaTabelleUniqueIndex unique_Gost_Klausuren_Raume_UC1 = addUniqueIndex("Gost_Klausuren_Raume_UC1",
 			col_Termin_ID, col_Stundenplan_Raum_ID
 	);
 
 	/** Die Definition des Unique-Index Gost_Klausuren_Raume_UC2 */
-	public SchemaTabelleUniqueIndex unique_Gost_Klausuren_Raume_UC2 = addUniqueIndex("Gost_Klausuren_Raume_UC2",
+	public final SchemaTabelleUniqueIndex unique_Gost_Klausuren_Raume_UC2 = addUniqueIndex("Gost_Klausuren_Raume_UC2",
 			col_Termin_ID, col_Stundenplan_Raum_Kuerzel
 	).setRevision(SchemaRevisionen.REV_40);
 
 	/** Die Definition des Non-Unique-Index Gost_Klausuren_Raume_IDX_Termin_ID */
-	public SchemaTabelleIndex index_Gost_Klausuren_Raume_IDX_Termin_ID = addIndex("Gost_Klausuren_Raume_IDX_Termin_ID",
+	public final SchemaTabelleIndex index_Gost_Klausuren_Raume_IDX_Termin_ID = addIndex("Gost_Klausuren_Raume_IDX_Termin_ID",
 			col_Termin_ID
 	);
 

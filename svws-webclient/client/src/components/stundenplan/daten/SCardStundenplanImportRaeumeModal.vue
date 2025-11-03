@@ -54,9 +54,9 @@
 	const selectedStundenplan = ref<Raum[]>([]);
 
 	const columns = [
-		{key: 'kuerzel', label: 'Kürzel', span: 1},
-		{key: 'beschreibung', label: 'Beschreibung', span: 2},
-		{key: 'groesse', label: 'Größe', span: 1},
+		{ key: 'kuerzel', label: 'Kürzel', span: 1 },
+		{ key: 'beschreibung', label: 'Beschreibung', span: 2 },
+		{ key: 'groesse', label: 'Größe', span: 1 },
 	];
 
 	const setVorlage = computed(() => new Set([...props.listRaeume()].map(r => r.kuerzel)));

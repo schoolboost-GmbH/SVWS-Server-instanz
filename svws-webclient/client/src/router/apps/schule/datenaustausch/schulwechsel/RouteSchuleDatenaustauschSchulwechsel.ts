@@ -13,7 +13,7 @@ export class RouteSchuleDatenaustauschSchulwechsel extends RouteTabNode<RouteDat
 
 	public constructor() {
 		super(Schulform.values(), [BenutzerKompetenz.IMPORT_EXPORT_SCHULBEWERBUNG_DE], "schule.datenaustausch.schulbewerbung",
-				"schulbewerbung", SSchuleDatenaustauschSchulbewerbung, new RouteDataSchuleDatenaustauschSchulwechsel());
+			"schulbewerbung", SSchuleDatenaustauschSchulbewerbung, new RouteDataSchuleDatenaustauschSchulwechsel());
 		super.mode = ServerMode.DEV;
 		super.text = "Schulwechsel";
 		super.menugroup = RouteSchuleMenuGroup.DATENAUSTAUSCH;

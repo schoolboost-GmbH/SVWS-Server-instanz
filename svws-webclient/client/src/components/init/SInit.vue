@@ -99,15 +99,15 @@
 	import { filterSchulenKatalogEintraege } from "~/utils/helfer";
 
 	const props = defineProps<InitProps>();
-	const schule = ref<SchulenKatalogEintrag>()
+	const schule = ref<SchulenKatalogEintrag>();
 
-	const logs = ref<List<string|null> | undefined>(undefined);
+	const logs = ref<List<string | null> | undefined>(undefined);
 	const status = ref<boolean | undefined>(undefined);
 	const isLoading = ref<boolean>(false);
 
 	const file = ref<File | null>(null);
 
-	const db = ref<'mysql'|'mariadb'|'mssql'|'mdb'|undefined>(undefined);
+	const db = ref<'mysql' | 'mariadb' | 'mssql' | 'mdb' | undefined>(undefined);
 
 	const currentAction = ref<string>('');
 	const oldAction = ref({
@@ -116,12 +116,12 @@
 	});
 
 	function setCurrentAction(newAction: string, open: boolean) {
-		if(newAction === oldAction.value.name && !open)
+		if (newAction === oldAction.value.name && !open)
 			return;
 		oldAction.value.name = currentAction.value;
 		oldAction.value.open = (currentAction.value === "") ? false : true;
-		if(open === true)
-			currentAction.value= newAction;
+		if (open === true)
+			currentAction.value = newAction;
 		else
 			currentAction.value = "";
 	}
@@ -150,7 +150,7 @@
 	}
 
 	// Migrate
-	const items = new Map<'mysql'|'mariadb'|'mssql'|'mdb'|undefined, string>();
+	const items = new Map<'mysql' | 'mariadb' | 'mssql' | 'mdb' | undefined, string>();
 	items.set('mysql', 'MySQL');
 	items.set('mariadb', 'MariaDB');
 	items.set('mssql', 'MSSQL');
@@ -166,7 +166,7 @@
 	async function set(item: string | null | undefined) {
 		if (item === null || item === undefined)
 			return;
-		for (const [k,v] of items.entries()) {
+		for (const [k, v] of items.entries()) {
 			if ((v === item) && (k !== undefined)) {
 				db.value = k;
 				break;
@@ -174,7 +174,7 @@
 		}
 	}
 
-	async function migrate() : Promise<void> {
+	async function migrate(): Promise<void> {
 		isLoading.value = true;
 		const formData = new FormData();
 		if (file.value)

@@ -16,17 +16,17 @@ export class ValidatorKontext extends JavaObject {
 	/**
 	 * Die Stammdaten der Schule
 	 */
-	private readonly _schuleStammdaten : SchuleStammdaten;
+	private readonly _schuleStammdaten: SchuleStammdaten;
 
 	/**
 	 * Die Laufeigenschaften der Validatoren
 	 */
-	private readonly _validatorManager : ValidatorManager;
+	private readonly _validatorManager: ValidatorManager;
 
 	/**
 	 * Die Schuljahresabschnitte der Schule, welche ihrer ID zugeordnet werden
 	 */
-	private readonly _mapSchuljahresabschnitte : JavaMap<number, Schuljahresabschnitt> = new HashMap<number, Schuljahresabschnitt>();
+	private readonly _mapSchuljahresabschnitte: JavaMap<number, Schuljahresabschnitt> = new HashMap<number, Schuljahresabschnitt>();
 
 
 	/**
@@ -36,12 +36,12 @@ export class ValidatorKontext extends JavaObject {
 	 * @param schuleStammdaten   die Stammdaten der Schule für den Kontext
 	 * @param zebras             die Umgebung, in der gerade validiert wird: true: ZeBrAS, false: SVWS
 	 */
-	public constructor(schuleStammdaten : SchuleStammdaten, zebras : boolean) {
+	public constructor(schuleStammdaten: SchuleStammdaten, zebras: boolean) {
 		super();
 		this._schuleStammdaten = schuleStammdaten;
 		for (const entry of schuleStammdaten.abschnitte)
 			this._mapSchuljahresabschnitte.put(entry.id, entry);
-		const schulform : Schulform | null = CoreTypeDataManager.getManager(Schulform.class).getWertByBezeichner(schuleStammdaten.schulform);
+		const schulform: Schulform | null = CoreTypeDataManager.getManager(Schulform.class).getWertByBezeichner(schuleStammdaten.schulform);
 		this._validatorManager = ValidatorManager.getManager(schulform, zebras);
 	}
 
@@ -50,7 +50,7 @@ export class ValidatorKontext extends JavaObject {
 	 *
 	 * @return die Stammdaten der Schule
 	 */
-	public getSchuleStammdaten() : SchuleStammdaten {
+	public getSchuleStammdaten(): SchuleStammdaten {
 		return this._schuleStammdaten;
 	}
 
@@ -59,7 +59,7 @@ export class ValidatorKontext extends JavaObject {
 	 *
 	 * @return die Schulnummer der Schule
 	 */
-	public getSchulnummer() : number {
+	public getSchulnummer(): number {
 		return this._schuleStammdaten.schulNr;
 	}
 
@@ -69,8 +69,8 @@ export class ValidatorKontext extends JavaObject {
 	 *
 	 * @return die Schulform als Core-Type
 	 */
-	public getSchulform() : Schulform {
-		const schulform : Schulform | null = Schulform.data().getWertByKuerzel(this._schuleStammdaten.schulform);
+	public getSchulform(): Schulform {
+		const schulform: Schulform | null = Schulform.data().getWertByKuerzel(this._schuleStammdaten.schulform);
 		if (schulform !== null)
 			return schulform;
 		throw new CoreTypeException("Die Schulform " + this._schuleStammdaten.schulform + " existiert nicht in 'Schulform.json'.")
@@ -81,8 +81,8 @@ export class ValidatorKontext extends JavaObject {
 	 *
 	 * @return das aktuelle Schuljahr
 	 */
-	public getSchuljahr() : number {
-		const abschnitt : Schuljahresabschnitt | null = this.getSchuljahresabschnitt();
+	public getSchuljahr(): number {
+		const abschnitt: Schuljahresabschnitt | null = this.getSchuljahresabschnitt();
 		if (abschnitt !== null)
 			return abschnitt.schuljahr;
 		throw new ValidatorException("Es ist kein gültiger Schuljahresabschnitt in den SchuleStammdaten gesetzt")
@@ -93,7 +93,7 @@ export class ValidatorKontext extends JavaObject {
 	 *
 	 * @return der Datums-Manager für den Beginn des aktuellen Schuljahres
 	 */
-	public getSchuljahresbeginn() : DateManager {
+	public getSchuljahresbeginn(): DateManager {
 		try {
 			return DateManager.fromValues(this.getSchuljahr(), 8, 1);
 		} catch(e : any) {
@@ -106,7 +106,7 @@ export class ValidatorKontext extends JavaObject {
 	 *
 	 * @return der Datums-Manager für das Ende des aktuellen Schuljahres
 	 */
-	public getSchuljahresende() : DateManager {
+	public getSchuljahresende(): DateManager {
 		try {
 			return DateManager.fromValues(this.getSchuljahr() + 1, 7, 31);
 		} catch(e : any) {
@@ -119,7 +119,7 @@ export class ValidatorKontext extends JavaObject {
 	 *
 	 * @return der Schuljahresabschnitt oder null, wenn dieser nicht korrekt gesetzt ist
 	 */
-	public getSchuljahresabschnitt() : Schuljahresabschnitt | null {
+	public getSchuljahresabschnitt(): Schuljahresabschnitt | null {
 		return this._mapSchuljahresabschnitte.get(this._schuleStammdaten.idSchuljahresabschnitt);
 	}
 
@@ -130,7 +130,7 @@ export class ValidatorKontext extends JavaObject {
 	 *
 	 * @return der Schuljahresabschnitt oder null, falls die id ungültig ist
 	 */
-	public getSchuljahresabschnittByID(id : number) : Schuljahresabschnitt | null {
+	public getSchuljahresabschnittByID(id: number): Schuljahresabschnitt | null {
 		return this._mapSchuljahresabschnitte.get(id);
 	}
 
@@ -139,7 +139,7 @@ export class ValidatorKontext extends JavaObject {
 	 *
 	 * @return der ValidatorManager
 	 */
-	public getValidatorManager() : ValidatorManager {
+	public getValidatorManager(): ValidatorManager {
 		return this._validatorManager;
 	}
 
@@ -147,7 +147,7 @@ export class ValidatorKontext extends JavaObject {
 		return 'de.svws_nrw.asd.validate.ValidatorKontext';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.asd.validate.ValidatorKontext'].includes(name);
 	}
 
@@ -155,6 +155,6 @@ export class ValidatorKontext extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_asd_validate_ValidatorKontext(obj : unknown) : ValidatorKontext {
+export function cast_de_svws_nrw_asd_validate_ValidatorKontext(obj: unknown): ValidatorKontext {
 	return obj as ValidatorKontext;
 }

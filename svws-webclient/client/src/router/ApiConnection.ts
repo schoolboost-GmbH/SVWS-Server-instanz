@@ -58,13 +58,13 @@ export class ApiConnection {
 	protected _config = ref<Config | undefined>(undefined);
 
 	// Die aktuelle temporäre, nicht in der DB festgehaltene Konfiguration der Schule
-	protected _nonPersistentConfig = ref<Config>(new Config(async (_,__) => {}, async (_,__) => { }));
+	protected _nonPersistentConfig = ref<Config>(new Config(async (_, __) => {}, async (_, __) => { }));
 
 	// Die Stammdaten der Schule, sofern ein Login stattgefunden hat
-	protected _stammdaten = shallowRef<{ stammdaten: SchuleStammdaten | undefined, kontext: ValidatorKontext | undefined }>({ stammdaten : undefined, kontext : undefined });
+	protected _stammdaten = shallowRef<{ stammdaten: SchuleStammdaten | undefined, kontext: ValidatorKontext | undefined }>({ stammdaten: undefined, kontext: undefined });
 
 	// Der Modus, in welchem der Server betrieben wird
-	protected _serverMode = shallowRef<ServerMode>(ServerMode.STABLE)
+	protected _serverMode = shallowRef<ServerMode>(ServerMode.STABLE);
 
 	// Die Map mit den CoreTypeDaten
 	protected _mapCoreTypeNameJsonData = ref<Map<string, string> | undefined>(undefined);
@@ -80,36 +80,36 @@ export class ApiConnection {
 	// Gibt die Server-API zurück.
 	get api(): ApiServer {
 		if (this._api === undefined)
-			throw new DeveloperNotificationException("Es wurde kein Api-Objekt angelegt - Verbindungen zum Server können nicht erfolgen")
+			throw new DeveloperNotificationException("Es wurde kein Api-Objekt angelegt - Verbindungen zum Server können nicht erfolgen");
 		return this._api;
 	}
 
 	// Gibt die External-API zurück.
 	get apiExternal(): ApiExternal {
 		if (this._apiExternal === undefined)
-			throw new DeveloperNotificationException("Es wurde kein Api-Objekt angelegt - Verbindungen zum Server können nicht erfolgen")
+			throw new DeveloperNotificationException("Es wurde kein Api-Objekt angelegt - Verbindungen zum Server können nicht erfolgen");
 		return this._apiExternal;
 	}
 
 	// Gibt das Datenbank-Schema zurück.
 	get schema(): string {
 		if (this._schema === undefined)
-			throw new DeveloperNotificationException("Es liegt kein DB-Schema für die Api vor")
+			throw new DeveloperNotificationException("Es liegt kein DB-Schema für die Api vor");
 		return this._schema;
 	}
 
 	// Gibt den Hostname zurück
-	get hostname() : string {
+	get hostname(): string {
 		return this._hostname.value;
 	}
 
 	// Gibt den Status zurück, ob der Benutzer authentifiziert wurde
-	get authenticated() : boolean {
+	get authenticated(): boolean {
 		return this._authenticated.value;
 	}
 
 	// Gibt den Benutzernamen zurück
-	get username() : string {
+	get username(): string {
 		return this._username;
 	}
 
@@ -169,7 +169,7 @@ export class ApiConnection {
 	get aes(): AES {
 		const aes = this._aes.value;
 		if (aes === undefined)
-			throw new DeveloperNotificationException("Das AES-Objekt ist nicht definiert")
+			throw new DeveloperNotificationException("Das AES-Objekt ist nicht definiert");
 		return aes;
 	}
 
@@ -180,7 +180,7 @@ export class ApiConnection {
 		return this._mapCoreTypeNameJsonData.value;
 	}
 
-	//** Setzt die Map mit den CoreTypeDaten */
+	//* * Setzt die Map mit den CoreTypeDaten */
 	set mapCoreTypeNameJsonData(map: Map<string, string>) {
 		this._mapCoreTypeNameJsonData.value = map;
 	}
@@ -193,7 +193,7 @@ export class ApiConnection {
 	 */
 	protected setConfigUser = async (key: string, value: string): Promise<void> => {
 		await this.api.setClientConfigUserKey(value, this.schema, 'SVWS-Client', key);
-	}
+	};
 
 	/**
 	 * Setzt den globalen Konfigurationseintrag
@@ -203,7 +203,7 @@ export class ApiConnection {
 	 */
 	protected setConfigGlobal = async (key: string, value: string): Promise<void> => {
 		await this.api.setClientConfigGlobalKey(value, this.schema, 'SVWS-Client', key);
-	}
+	};
 
 	/**
 	 * Gibt die Stammdaten der Schule zurück, sofern bereits ein Login stattgefunden hat.
@@ -234,7 +234,7 @@ export class ApiConnection {
 	 *
 	 * @returns die Liste der Schemata, welche über die Verbindung zur Verfügung stehen.
 	 */
-	protected async connect(hostname : string): Promise<List<DBSchemaListeEintrag>> {
+	protected async connect(hostname: string): Promise<List<DBSchemaListeEintrag>> {
 		const url = `https://${hostname}`;
 		const api = new ApiServer(url, "", "");
 		const schemata = await api.getConfigDBSchemata();
@@ -250,7 +250,7 @@ export class ApiConnection {
 	 */
 	setHostname = (hostname: string): void => {
 		this._hostname.value = hostname;
-	}
+	};
 
 	/**
 	 * Versucht eine Verbindung zu dem SVWS-Server mit dem angegebenen Hostnamen aufzubauen.
@@ -275,7 +275,7 @@ export class ApiConnection {
 		if (host !== hostname) {
 			console.log(`Verbinde zum SVWS-Server unter https://${hostname}...`);
 			try {
-				return await this.connect(hostname)
+				return await this.connect(hostname);
 			} catch (error) {
 				console.log(`Verbindung zum SVWS-Server unter https://${hostname} fehlgeschlagen.`);
 			}
@@ -290,7 +290,7 @@ export class ApiConnection {
 			}
 		}
 		throw new UserNotificationException('Es konnte keine Verbindung hergestellt werden.');
-	}
+	};
 
 	/**
 	 * Ermittelt, ob der Benutzer mit den angebenen Daten ein administrativer
@@ -391,11 +391,11 @@ export class ApiConnection {
 				this._stammdaten.value = { stammdaten, kontext };
 			}
 			return true;
-		} catch(error) {
+		} catch (error) {
 			this._stammdaten.value = { stammdaten: undefined, kontext: undefined };
 		}
 		return false;
-	}
+	};
 
 
 	/**
@@ -475,7 +475,7 @@ export class ApiConnection {
 			this._serverMode.value = ServerMode.STABLE;
 			this._aes.value = undefined;
 		}
-	}
+	};
 
 
 	/**
@@ -499,14 +499,14 @@ export class ApiConnection {
 		this.config.mapUser = new Map();
 		this.nonPersistentConfig.mapGlobal = new Map();
 		this.nonPersistentConfig.mapUser = new Map();
-	}
+	};
 
 	/**
 	 * Informiert die Api-Verbindung, dass ihre Daten, z.B. die Stammdaten der Schule angepasst wurden
 	 */
 	updatedApiData = () => {
 		this._stammdaten.value = { ... this._stammdaten.value };
-	}
+	};
 
 }
 

@@ -17,21 +17,22 @@ import { NullPointerException } from '../lang/NullPointerException';
 
 export class ArrayList<E> extends AbstractList<E> implements List<E>, RandomAccess, Cloneable {
 
-	protected elementData : E[];
+	protected elementData: E[];
 
 
-	public constructor(param1? : number | Collection<E>, param2? : number) {
+	public constructor(param1?: number | Collection<E>, param2?: number) {
 		super();
 		if ((param2 === undefined) && (param1 !== undefined) && (typeof param1 !== "number")) {
-			const c : Collection<E> = param1
-			const a : E[] = c.toArray() as E[];
+			const c: Collection<E> = param1;
+			const a: E[] = c.toArray() as E[];
 			this.elementData = a;
 		} else if (((param1 === undefined) && (param2 === undefined)) ||
 					((typeof param1 === "number") && (param2 === undefined)) ||
 					((typeof param1 === "number") && (typeof param2 === "number"))) {
 			// do nothing special here since the typescript implementation does not need the capacity internally - so the parameters are not relevant
 			this.elementData = new Array<E>();
-		} else throw new Error('invalid method overload');
+		} else
+			throw new Error('invalid method overload');
 	}
 
 
@@ -39,22 +40,22 @@ export class ArrayList<E> extends AbstractList<E> implements List<E>, RandomAcce
 	 * @param {E[]} anArray
 	 * @returns {void}
 	 */
-	public copyInto(anArray : E[]) : void {
+	public copyInto(anArray: E[]): void {
 		anArray.splice(0, this.elementData.length, ...this.elementData);
 	}
 
 
-	public trimToSize() : void {
+	public trimToSize(): void {
 		// do nothing here since the typescript implementation does not need the capacity internally
 	}
 
 
-	public ensureCapacity(minCapacity : number) : void {
+	public ensureCapacity(minCapacity: number): void {
 		// do nothing here since the typescript implementation does not need the capacity internally
 	}
 
 
-	public setSize(newSize : number) : void {
+	public setSize(newSize: number): void {
 		if (newSize < 0)
 			throw new ArrayIndexOutOfBoundsException(newSize);
 		this.elementData.length = newSize;
@@ -65,7 +66,7 @@ export class ArrayList<E> extends AbstractList<E> implements List<E>, RandomAcce
 	 *
 	 * @returns {number}
 	 */
-	public capacity() : number {
+	public capacity(): number {
 		return this.elementData.length;
 	}
 
@@ -75,7 +76,7 @@ export class ArrayList<E> extends AbstractList<E> implements List<E>, RandomAcce
 	 *
 	 * @returns {number}
 	 */
-	public size() : number {
+	public size(): number {
 		return this.elementData.length;
 	}
 
@@ -84,7 +85,7 @@ export class ArrayList<E> extends AbstractList<E> implements List<E>, RandomAcce
 	 *
 	 * @returns {boolean}
 	 */
-	public isEmpty() : boolean {
+	public isEmpty(): boolean {
 		return this.elementData.length === 0;
 	}
 
@@ -93,7 +94,7 @@ export class ArrayList<E> extends AbstractList<E> implements List<E>, RandomAcce
 	 *
 	 * @returns {ArrayListEnumerator<E>}
 	 */
-	public elements() : Enumeration<E> {
+	public elements(): Enumeration<E> {
 		return new ArrayListEnumerator<E>(this);
 	}
 
@@ -104,7 +105,7 @@ export class ArrayList<E> extends AbstractList<E> implements List<E>, RandomAcce
 	 *
 	 * @returns {boolean}
 	 */
-	public contains(e : E) : boolean {
+	public contains(e: E): boolean {
 		return this.indexOf(e, 0) >= 0;
 	}
 
@@ -117,7 +118,7 @@ export class ArrayList<E> extends AbstractList<E> implements List<E>, RandomAcce
 	 *
 	 * @returns true if the elements are equal and false otherwise
 	 */
-	protected equalElements(e1 : E, e2 : E) : boolean {
+	protected equalElements(e1: E, e2: E): boolean {
 		if ((e1 === null) && (e2 === null))
 			return true;
 		if ((e1 === null) || (e2 === null))
@@ -142,14 +143,12 @@ export class ArrayList<E> extends AbstractList<E> implements List<E>, RandomAcce
 	 *
 	 * compare to {@link ArrayList#lastIndexOf}
 	 */
-	public indexOf(e : E) : number;
-	public indexOf(e : E, index : number) : number;
-	public indexOf(e : E, index? : number) : number {
+	public indexOf(e: E, index?: number): number {
 		if (index === undefined)
 			return this.indexOf(e, 0);
 		if (index < 0)
 			throw new IndexOutOfBoundsException(`Invalid index: ${index}`);
-		for (let i : number = index ; i < this.elementData.length ; i++)
+		for (let i: number = index ; i < this.elementData.length ; i++)
 			if (this.equalElements(e, this.elementData[i]))
 				return i;
 		return -1;
@@ -165,14 +164,12 @@ export class ArrayList<E> extends AbstractList<E> implements List<E>, RandomAcce
 	 *
 	 * compare to {@link ArrayList#indexOf}
 	 */
-	public lastIndexOf(e : E) : number;
-	public lastIndexOf(e : E, index : number) : number;
-	public lastIndexOf(e : E, index? : number) : number {
+	public lastIndexOf(e: E, index?: number): number {
 		if (index === undefined)
 			return this.lastIndexOf(e, this.elementData.length - 1);
 		if (index >= this.elementData.length)
 			throw new IndexOutOfBoundsException(`Invalid index: ${index} is greater than the number of elements.`);
-		for (let i : number = index; i >= 0; i--)
+		for (let i: number = index; i >= 0; i--)
 			if (this.equalElements(e, this.elementData[i]))
 				return i;
 		return -1;
@@ -185,7 +182,7 @@ export class ArrayList<E> extends AbstractList<E> implements List<E>, RandomAcce
 	 *
 	 * @returns {E}
 	 */
-	public elementAt(index : number) : E {
+	public elementAt(index: number): E {
 		if ((index < 0) || (index >= this.elementData.length))
 			throw new ArrayIndexOutOfBoundsException("Invalid index: " + index + " (valid: 0 - " + (this.elementData.length - 1) + ")");
 		return this.elementData[index];
@@ -196,7 +193,7 @@ export class ArrayList<E> extends AbstractList<E> implements List<E>, RandomAcce
 	 *
 	 * @returns {E}
 	 */
-	public firstElement() : E {
+	public firstElement(): E {
 		if (this.elementData.length === 0)
 			throw new NoSuchElementException();
 		return this.elementData[0];
@@ -207,10 +204,13 @@ export class ArrayList<E> extends AbstractList<E> implements List<E>, RandomAcce
 	 *
 	 * @returns {E}
 	 */
-	public lastElement() : E {
+	public lastElement(): E {
 		if (this.elementData.length === 0)
 			throw new NoSuchElementException();
-		return this.elementData[this.elementData.length - 1];
+		const elem = this.elementData.at(-1);
+		if (elem === undefined)
+			throw new NoSuchElementException();
+		return elem;
 	}
 
 	/**
@@ -221,7 +221,7 @@ export class ArrayList<E> extends AbstractList<E> implements List<E>, RandomAcce
 	 *
 	 * @returns {void}
 	 */
-	public setElementAt(e : E, index : number) : void {
+	public setElementAt(e: E, index: number): void {
 		if ((index < 0) || (index >= this.elementData.length))
 			throw new ArrayIndexOutOfBoundsException(`Invalid index: ${index} (valid: 0 - ${this.elementData.length - 1})`);
 		this.elementData[index] = e;
@@ -234,15 +234,15 @@ export class ArrayList<E> extends AbstractList<E> implements List<E>, RandomAcce
 	 *
 	 * @returns {void}
 	 */
-	public removeElementAt(index : number) : void {
+	public removeElementAt(index: number): void {
 		if ((index < 0) || (index >= this.elementData.length))
 			throw new ArrayIndexOutOfBoundsException(`Invalid index: ${index} (valid: 0 - ${this.elementData.length - 1})`);
-		const j : number = this.elementData.length - index;
+		const j: number = this.elementData.length - index;
 		if (j > 0)
-			for (let i : number = 0; i < j; i++)
+			for (let i: number = 0; i < j; i++)
 				this.elementData[index + i] = this.elementData[index + i + 1];
 		this.modCount++;
-		this.elementData.length = this.elementData.length -1;
+		this.elementData.length = this.elementData.length - 1;
 	}
 
 	/**
@@ -253,11 +253,11 @@ export class ArrayList<E> extends AbstractList<E> implements List<E>, RandomAcce
 	 *
 	 * @returns {void}
 	 */
-	public insertElementAt(e : E, index : number) : void {
+	public insertElementAt(e: E, index: number): void {
 		if ((index < 0) || (index > this.elementData.length))
 			throw new ArrayIndexOutOfBoundsException(`Invalid index: ${index} (valid: 0 - ${this.elementData.length})`);
 		this.modCount++;
-		for (let i : number = 0; i < this.elementData.length - index; i++)
+		for (let i: number = 0; i < this.elementData.length - index; i++)
 			this.elementData[this.elementData.length - i] = this.elementData[this.elementData.length - i - 1];
 		this.elementData[index] = e;
 	}
@@ -269,7 +269,7 @@ export class ArrayList<E> extends AbstractList<E> implements List<E>, RandomAcce
 	 *
 	 * @returns {void}
 	 */
-	public addElement(e : E) : void {
+	public addElement(e: E): void {
 		this.modCount++;
 		this.elementData.push(e);
 	}
@@ -281,9 +281,9 @@ export class ArrayList<E> extends AbstractList<E> implements List<E>, RandomAcce
 	 *
 	 * @returns {boolean} true if element is removed
 	 */
-	public removeElement(e : E) : boolean {
+	public removeElement(e: E): boolean {
 		this.modCount++;
-		const i : number = this.indexOf(e);
+		const i: number = this.indexOf(e);
 		if (i >= 0) {
 			this.removeElementAt(i);
 			return true;
@@ -296,7 +296,7 @@ export class ArrayList<E> extends AbstractList<E> implements List<E>, RandomAcce
 	 *
 	 * @returns {void}
 	 */
-	public removeAllElements() : void {
+	public removeAllElements(): void {
 		this.elementData.length = 0;
 		this.modCount++;
 	}
@@ -306,7 +306,7 @@ export class ArrayList<E> extends AbstractList<E> implements List<E>, RandomAcce
 	 *
 	 * @returns {ArrayList<E>}
 	 */
-	public clone() : ArrayList<E> {
+	public clone(): ArrayList<E> {
 		return new ArrayList<E>(this);
 	}
 
@@ -317,21 +317,21 @@ export class ArrayList<E> extends AbstractList<E> implements List<E>, RandomAcce
 	 *
 	 * @returns {Array<E>}
 	 */
-	public toArray() : Array<unknown>;
-	public toArray<T>(a : Array<T>) : Array<T>;
-	public toArray<T>(__param0? : Array<T>) : Array<T> | Array<unknown> {
-		if ((__param0 === undefined) || (__param0 === null) || (__param0.length < this.size())) {
+	public toArray(): Array<unknown>;
+	public toArray<T>(aarray: Array<T> | null): Array<T>;
+	public toArray<T>(array?: Array<T> | null): Array<T> | Array<unknown> {
+		if ((array === undefined) || (array === null) || (array.length < this.size())) {
 			return [...this.elementData];
-		} else if (Array.isArray(__param0)) {
-			const a : Array<T> = __param0;
-			if (__param0.length >= this.elementData.length) {
+		} else if (Array.isArray(array)) {
+			const a: Array<T> = array;
+			if (array.length >= this.elementData.length) {
 				for (let i = 0; i < this.elementData.length; i++)
 					a[i] = this.elementData[i] as unknown as T;
 				return a;
 			}
 			return [...this.elementData];
-		} else throw new Error('invalid method overload');
-
+		} else
+			throw new Error('invalid method overload');
 	}
 
 	/**
@@ -342,7 +342,7 @@ export class ArrayList<E> extends AbstractList<E> implements List<E>, RandomAcce
 	 *
 	 * @returns {E}
 	 */
-	public get(index : number) : E {
+	public get(index: number): E {
 		if ((index < 0) || (index >= this.elementData.length))
 			throw new ArrayIndexOutOfBoundsException(`Invalid index: ${index} (valid: 0 - ${this.elementData.length - 1})`);
 		return this.elementData[index];
@@ -357,10 +357,10 @@ export class ArrayList<E> extends AbstractList<E> implements List<E>, RandomAcce
 	 *
 	 * @returns {E}
 	 */
-	public set(index : number, e : E) : E {
+	public set(index: number, e: E): E {
 		if ((index < 0) || (index >= this.elementData.length))
 			throw new ArrayIndexOutOfBoundsException(`Invalid index: ${index} (valid: 0 - ${this.elementData.length - 1})`);
-		const old : E = this.elementData[index];
+		const old: E = this.elementData[index];
 		this.elementData[index] = e;
 		return old;
 	}
@@ -372,19 +372,20 @@ export class ArrayList<E> extends AbstractList<E> implements List<E>, RandomAcce
 	 *
 	 * @returns {boolean | E}
 	 */
-	public add(e : E | null) : boolean;
-	public add(index : number, e : E | null) : void;
-	public add(param1 : E | null | number, param2? : E | null) : boolean | void {
+	public add(e: E | null): boolean;
+	public add(index: number, e: E | null): void;
+	public add(param1: E | null | number, param2?: E | null): boolean | void {
 		if ((param1 === null) || (param2 === null))
 			throw new NullPointerException();
 		if ((typeof param1 === "number") && (param2 !== undefined)) {
 			this.insertElementAt(param2, param1);
 		} else if ((typeof param1 === "number") && (param2 === undefined)) {
-			this.addElement(Number(param1) as unknown as E);
+			this.addElement(param1 as unknown as E);
 		} else if ((typeof param1 !== "number") && (param2 === undefined)) {
 			this.addElement(param1);
 			return true;
-		} else throw new Error("invalid method overload");
+		} else
+			throw new Error("invalid method overload");
 	}
 
 	/**
@@ -395,9 +396,9 @@ export class ArrayList<E> extends AbstractList<E> implements List<E>, RandomAcce
 	 *
 	 * @returns {E | boolean}
 	 */
-	public remove(e : E) : boolean;
-	public remove(index : number) : E;
-	public remove(param : E | number) : boolean | E {
+	public remove(e: E): boolean;
+	public remove(index: number): E;
+	public remove(param: E | number): boolean | E {
 		// WARNING: Removing the element via index is not available since the ArrayList may contain number values...
 		return this.removeElement(param as E);
 	}
@@ -407,7 +408,7 @@ export class ArrayList<E> extends AbstractList<E> implements List<E>, RandomAcce
 	 *
 	 * @returns {void}
 	 */
-	public clear() : void {
+	public clear(): void {
 		this.removeAllElements();
 	}
 
@@ -418,7 +419,7 @@ export class ArrayList<E> extends AbstractList<E> implements List<E>, RandomAcce
 	 *
 	 * @returns {boolean}
 	 */
-	public containsAll(c : Collection<E>) : boolean {
+	public containsAll(c: Collection<E>): boolean {
 		return super.containsAll(c);
 	}
 
@@ -426,7 +427,7 @@ export class ArrayList<E> extends AbstractList<E> implements List<E>, RandomAcce
 	 * @param {Collection<E>} c
 	 * @returns {boolean}
 	 */
-	public addAll(c : Collection<E>) : boolean;
+	public addAll(c: Collection<E>): boolean;
 
 	/**
 	 * Add a collection of elements to the ArrayList at a given position
@@ -436,9 +437,9 @@ export class ArrayList<E> extends AbstractList<E> implements List<E>, RandomAcce
 	 *
 	 * @returns {boolean}
 	 */
-	public addAll(index : number, c : Collection<E>) : boolean;
+	public addAll(index: number, c: Collection<E>): boolean;
 
-	public addAll(param1 : number | Collection<E>, param2? : Collection<E>) : boolean {
+	public addAll(param1: number | Collection<E>, param2?: Collection<E>): boolean {
 		if (!((typeof param1 === "number") && (param2 !== undefined)) &&
 			!((typeof param1 !== "number") && (param2 === undefined)))
 			throw new Error("invalid method overload");
@@ -447,31 +448,31 @@ export class ArrayList<E> extends AbstractList<E> implements List<E>, RandomAcce
 			throw new ArrayIndexOutOfBoundsException(`Invalid index: ${index} (valid: 0 - ${this.elementData.length})`);
 		const c = (typeof param1 === "number") ? param2 : param1;
 		if (!c)
-			return false
-		const e : E[] = c.toArray() as E[];
+			return false;
+		const e: E[] = c.toArray() as E[];
 		if (e.length === 0)
 			return false;
 		this.modCount++;
-		const nMove : number = this.elementData.length - index;
-		for (let i : number = nMove-1; i >= 0; i--)
+		const nMove: number = this.elementData.length - index;
+		for (let i: number = nMove - 1; i >= 0; i--)
 			this.elementData[index + i + e.length] = this.elementData[index + i];
-		for (let i : number = 0; i < e.length; i++)
+		for (let i: number = 0; i < e.length; i++)
 			this.elementData[index + i] = e[i];
 		return true;
 	}
 
 
-	// TODO public removeIf(filter : Predicate<E>) : boolean;
+	// TODO public removeIf(filter: Predicate<E>): boolean;
 
 
-	protected removeRange(fromIndex : number, toIndex : number) : void {
+	protected removeRange(fromIndex: number, toIndex: number): void {
 		this.modCount++;
-		const nRemove : number = toIndex - fromIndex;
-		const nMove : number = this.elementData.length - toIndex;
-		for (let i : number = nMove - 1; i >= 0; i--)
+		const nRemove: number = toIndex - fromIndex;
+		const nMove: number = this.elementData.length - toIndex;
+		for (let i: number = nMove - 1; i >= 0; i--)
 			this.elementData[fromIndex + i] = this.elementData[toIndex + i];
-		for (let i : number = 0; i < nRemove; i++)
-			delete this.elementData[this.elementData.length - 1];
+		for (let i: number = 0; i < nRemove; i++)
+			this.elementData.pop();
 	}
 
 
@@ -480,10 +481,10 @@ export class ArrayList<E> extends AbstractList<E> implements List<E>, RandomAcce
 	 *
 	 * @param {Consumer<E>} action
 	 */
-	public forEach(action : Consumer<E>) : void {
+	public forEach(action: Consumer<E> | null): void {
 		if (action === null)
 			throw new NullPointerException();
-		const expectedModCount : number = this.modCount;
+		const expectedModCount: number = this.modCount;
 		for (const data of this.elementData) {
 			action.accept(data);
 			if (this.modCount !== expectedModCount)
@@ -497,7 +498,7 @@ export class ArrayList<E> extends AbstractList<E> implements List<E>, RandomAcce
 	 *
 	 * @return die neue Liste
 	 */
-	public static of<T>(...elements: T[]) : List<T> {
+	public static of<T>(...elements: T[]): List<T> {
 		const result = new ArrayList<T>();
 		for (const elem of elements)
 			result.add(elem);
@@ -515,7 +516,7 @@ export class ArrayList<E> extends AbstractList<E> implements List<E>, RandomAcce
 	 *
 	 * @returns {boolean}
 	 */
-	public isTranspiledInstanceOf(name : string): boolean {
+	public isTranspiledInstanceOf(name: string): boolean {
 		return [
 			'java.util.ArrayList',
 			'java.util.AbstractCollection',
@@ -526,7 +527,7 @@ export class ArrayList<E> extends AbstractList<E> implements List<E>, RandomAcce
 			'java.lang.Cloneable',
 			'java.lang.Iterable',
 			'java.lang.Object',
-			'java.io.Serializable'
+			'java.io.Serializable',
 		].includes(name);
 	}
 
@@ -534,6 +535,6 @@ export class ArrayList<E> extends AbstractList<E> implements List<E>, RandomAcce
 
 
 
-export function cast_java_util_ArrayList<E>(obj : unknown) : ArrayList<E> {
+export function cast_java_util_ArrayList<E>(obj: unknown): ArrayList<E> {
 	return obj as ArrayList<E>;
 }

@@ -1,6 +1,9 @@
 <template>
 	<div class="page page-grid-cards">
-		<div class="flex flex-col gap-4" v-if="ServerMode.DEV.checkServerMode(serverMode)">
+		<div v-if="!hatIrgendwelcheKompetenzen">
+			Für die Nutzung der Gruppenprozesse fehlen Benutzerkompetenzen.
+		</div>
+		<div v-if="ServerMode.DEV.checkServerMode(serverMode)" class="flex flex-col gap-4">
 			<ui-card v-if="hatKompetenzLoeschen" icon="i-ri-delete-bin-line" title="Löschen" subtitle="Ausgewählte Fahrschülerarten werden gelöscht">
 				<template #buttonFooterLeft>
 					<svws-ui-button title="Löschen" @click="entferneFahrschuelerarten" :is-loading class="mt-4">
@@ -29,6 +32,9 @@
 	const props = defineProps<FahrschuelerartenGruppenprozesseProps>();
 
 	const hatKompetenzLoeschen = computed(() => props.benutzerKompetenzen.has(BenutzerKompetenz.KATALOG_EINTRAEGE_LOESCHEN));
+
+	const hatIrgendwelcheKompetenzen = computed(() => hatKompetenzLoeschen.value);
+
 	const isLoading = ref<boolean>(false);
 	const logs = ref<List<string | null> | undefined>();
 	const status = ref<boolean | undefined>();

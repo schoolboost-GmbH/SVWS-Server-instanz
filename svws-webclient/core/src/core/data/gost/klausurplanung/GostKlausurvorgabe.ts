@@ -7,62 +7,62 @@ export class GostKlausurvorgabe extends JavaObject {
 	/**
 	 * Die ID der Klausurvorgabe.
 	 */
-	public id : number = -1;
+	public id: number = -1;
 
 	/**
 	 * Das Jahr, in welchem der Jahrgang Abitur machen wird, -1 für die Vorlage.
 	 */
-	public abiJahrgang : number = -1;
+	public abiJahrgang: number = -1;
 
 	/**
 	 * Das Gost-Halbjahr, in dem die Klausurg geschrieben wird.
 	 */
-	public halbjahr : number = -1;
+	public halbjahr: number = -1;
 
 	/**
 	 * Das Quartal, in welchem die Klausur gechrieben wird.
 	 */
-	public quartal : number = -1;
+	public quartal: number = -1;
 
 	/**
 	 * Die ID des Faches.
 	 */
-	public idFach : number = -1;
+	public idFach: number = -1;
 
 	/**
 	 * Das Kürzel einer verallgemeinerten Kursart.
 	 */
-	public kursart : string = "";
+	public kursart: string = "";
 
 	/**
 	 * Die Dauer der Klausur in Minuten.
 	 */
-	public dauer : number = 0;
+	public dauer: number = 0;
 
 	/**
 	 * Die Auswahlzeit in Minuten, sofern vorhanden.
 	 */
-	public auswahlzeit : number = 0;
+	public auswahlzeit: number = 0;
 
 	/**
 	 * Die Information, ob es sich um eine mündliche Prüfung handelt.
 	 */
-	public istMdlPruefung : boolean = false;
+	public istMdlPruefung: boolean = false;
 
 	/**
 	 * Die Information, ob Audioequipment nötig ist, z.B. für Klasuren mit Hörverstehensanteilen.
 	 */
-	public istAudioNotwendig : boolean = false;
+	public istAudioNotwendig: boolean = false;
 
 	/**
 	 * Die Information, ob Videoequipment nötig ist, z.B. für Klasuren mit Videoanalyse.
 	 */
-	public istVideoNotwendig : boolean = false;
+	public istVideoNotwendig: boolean = false;
 
 	/**
 	 * Die textuelle Bemerkung zur Klausurvorgabe, sofern vorhanden.
 	 */
-	public bemerkungVorgabe : string | null = null;
+	public bemerkungVorgabe: string | null = null;
 
 
 	/**
@@ -78,7 +78,7 @@ export class GostKlausurvorgabe extends JavaObject {
 	 * @param another     das zu vergleichende Objekt
 	 * @return true, falls die Objekte indentisch sind, sonst false
 	 */
-	public equals(another : unknown | null) : boolean {
+	public equals(another: unknown | null): boolean {
 		return (another !== null) && (((another instanceof JavaObject) && (another.isTranspiledInstanceOf('de.svws_nrw.core.data.gost.klausurplanung.GostKlausurvorgabe')))) && (this.id === (another as unknown as GostKlausurvorgabe).id);
 	}
 
@@ -87,7 +87,7 @@ export class GostKlausurvorgabe extends JavaObject {
 	 *
 	 * @return den HashCode
 	 */
-	public hashCode() : number {
+	public hashCode(): number {
 		return JavaLong.hashCode((this.id));
 	}
 
@@ -95,13 +95,13 @@ export class GostKlausurvorgabe extends JavaObject {
 		return 'de.svws_nrw.core.data.gost.klausurplanung.GostKlausurvorgabe';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.gost.klausurplanung.GostKlausurvorgabe'].includes(name);
 	}
 
 	public static class = new Class<GostKlausurvorgabe>('de.svws_nrw.core.data.gost.klausurplanung.GostKlausurvorgabe');
 
-	public static transpilerFromJSON(json : string): GostKlausurvorgabe {
+	public static transpilerFromJSON(json: string): GostKlausurvorgabe {
 		const obj = JSON.parse(json) as Partial<GostKlausurvorgabe>;
 		const result = new GostKlausurvorgabe();
 		if (obj.id === undefined)
@@ -141,7 +141,7 @@ export class GostKlausurvorgabe extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : GostKlausurvorgabe) : string {
+	public static transpilerToJSON(obj: GostKlausurvorgabe): string {
 		let result = '{';
 		result += '"id" : ' + obj.id.toString() + ',';
 		result += '"abiJahrgang" : ' + obj.abiJahrgang.toString() + ',';
@@ -160,7 +160,7 @@ export class GostKlausurvorgabe extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<GostKlausurvorgabe>) : string {
+	public static transpilerToJSONPatch(obj: Partial<GostKlausurvorgabe>): string {
 		let result = '{';
 		if (obj.id !== undefined) {
 			result += '"id" : ' + obj.id.toString() + ',';
@@ -205,6 +205,6 @@ export class GostKlausurvorgabe extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_gost_klausurplanung_GostKlausurvorgabe(obj : unknown) : GostKlausurvorgabe {
+export function cast_de_svws_nrw_core_data_gost_klausurplanung_GostKlausurvorgabe(obj: unknown): GostKlausurvorgabe {
 	return obj as GostKlausurvorgabe;
 }

@@ -68,7 +68,7 @@ public final class DataSchuelerLernabschnittsdaten extends DataManagerRevised<Lo
 		dto.AOSF = false;
 		dto.Autist = false;
 		dto.ZieldifferentesLernen = false;
-		dto.SemesterWertung = false;
+		dto.SemesterWertung = true;
 		dto.Wiederholung = false;
 		dto.FachPraktAnteilAusr = true;
 		dto.WechselNr = 0;
@@ -155,9 +155,11 @@ public final class DataSchuelerLernabschnittsdaten extends DataManagerRevised<Lo
 		// TODO Validierung der Schulgliederung überprüfen...
 		final Schulgliederung sgl = (dto.Schulgliederung == null) ? null : Schulgliederung.data().getWertByKuerzel(dto.Schulgliederung);
 		SchulgliederungKatalogEintrag sglke = (sgl == null) ? null : sgl.daten(abschnitt.schuljahr);
-		if (sglke == null)
-			sglke = Schulgliederung.getDefault(conn.getUser().schuleGetSchulform()).daten(abschnitt.schuljahr);
-		daten.schulgliederung = sglke.kuerzel;
+		if (sglke == null) {
+			final Schulgliederung defSgl = Schulgliederung.getDefault(conn.getUser().schuleGetSchulform());
+			sglke = (defSgl != null) ? defSgl.daten(abschnitt.schuljahr) : null;
+		}
+		daten.schulgliederung = (sglke == null) ? null : sglke.kuerzel;
 		daten.jahrgangID = dto.Jahrgang_ID;
 		daten.fachklasseID = dto.Fachklasse_ID;
 		daten.schwerpunktID = dto.Schwerpunkt_ID;
@@ -450,9 +452,11 @@ public final class DataSchuelerLernabschnittsdaten extends DataManagerRevised<Lo
 	}
 
 	private void validateJahrgangID(final DTOSchuelerLernabschnittsdaten dto, final Long idJahrgang) throws ApiOperationException {
-		if ((idJahrgang != null) && (conn.queryByKey(DTOJahrgang.class, idJahrgang) == null))
+		final DTOJahrgang jahrgang = conn.queryByKey(DTOJahrgang.class, idJahrgang);
+		if ((idJahrgang != null) && (jahrgang == null))
 			throw new ApiOperationException(Status.CONFLICT, "Der angegebene Jahrgang existiert nicht.");
 		dto.Jahrgang_ID = idJahrgang;
+		dto.ASDJahrgang = jahrgang.ASDJahrgang;
 
 		if ((dto.Klassen_ID == null) && (idJahrgang != null)) {
 			final List<DTOKlassen> matches = conn.queryList(

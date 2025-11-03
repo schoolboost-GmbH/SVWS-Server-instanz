@@ -16,7 +16,7 @@ export class RouteGostKlausurplanungVorgaben extends RouteNode<any, RouteGostKla
 		super(schulformenGymOb, [
 			BenutzerKompetenz.OBERSTUFE_KLAUSURPLANUNG_ANSEHEN_ALLGEMEIN,
 			BenutzerKompetenz.OBERSTUFE_KLAUSURPLANUNG_ANSEHEN_FUNKTION,
-			BenutzerKompetenz.OBERSTUFE_KLAUSURPLANUNG_AENDERN
+			BenutzerKompetenz.OBERSTUFE_KLAUSURPLANUNG_AENDERN,
 		], "gost.klausurplanung.vorgaben", "vorgaben", SGostKlausurplanungVorgaben);
 		super.mode = ServerMode.STABLE;
 		super.propHandler = (route) => this.getProps(route);
@@ -31,11 +31,11 @@ export class RouteGostKlausurplanungVorgaben extends RouteNode<any, RouteGostKla
 			kMan: () => routeGostKlausurplanung.data.manager,
 			erzeugeKlausurvorgabe: routeGostKlausurplanung.data.erzeugeKlausurvorgabe,
 			patchKlausurvorgabe: routeGostKlausurplanung.data.patchKlausurvorgabe,
-			loescheKlausurvorgabe: routeGostKlausurplanung.data.loescheKlausurvorgabe,
+			loescheKlausurvorgaben: routeGostKlausurplanung.data.loescheKlausurvorgaben,
 			erzeugeVorgabenAusVorlage: routeGostKlausurplanung.data.erzeugeVorgabenAusVorlage,
 			erzeugeDefaultKlausurvorgaben: routeGostKlausurplanung.data.erzeugeDefaultKlausurvorgaben,
 			quartalsauswahl: routeGostKlausurplanung.data.quartalsauswahl,
-		}
+		};
 	}
 
 }

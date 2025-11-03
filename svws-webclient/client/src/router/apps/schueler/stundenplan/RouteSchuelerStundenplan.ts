@@ -14,7 +14,7 @@ const SSchuelerStundenplan = () => import("~/components/schueler/stundenplan/SSc
 export class RouteSchuelerStundenplan extends RouteNode<RouteDataSchuelerStundenplan, RouteSchueler> {
 
 	public constructor() {
-		super(Schulform.values(), [ BenutzerKompetenz.STUNDENPLAN_ALLGEMEIN_ANSEHEN ], "schueler.stundenplan", "stundenplan/:idStundenplan(\\d+)?/:wochentyp(\\d+)?/:kw(\\d+\\.\\d+)?", SSchuelerStundenplan, new RouteDataSchuelerStundenplan());
+		super(Schulform.values(), [BenutzerKompetenz.STUNDENPLAN_ALLGEMEIN_ANSEHEN], "schueler.stundenplan", "stundenplan/:idStundenplan(\\d+)?/:wochentyp(\\d+)?/:kw(\\d+\\.\\d+)?", SSchuelerStundenplan, new RouteDataSchuelerStundenplan());
 		super.mode = ServerMode.STABLE;
 		super.propHandler = (route) => this.getProps(route);
 		super.text = "Stundenplan";
@@ -24,7 +24,7 @@ export class RouteSchuelerStundenplan extends RouteNode<RouteDataSchuelerStunden
 		]);
 	}
 
-	protected async update(to: RouteNode<any, any>, to_params: RouteParams, from: RouteNode<any, any> | undefined, from_params: RouteParams, isEntering: boolean) : Promise<void | Error | RouteLocationRaw> {
+	protected async update(to: RouteNode<any, any>, to_params: RouteParams, from: RouteNode<any, any> | undefined, from_params: RouteParams, isEntering: boolean): Promise<void | Error | RouteLocationRaw> {
 		try {
 			const { idSchuljahresabschnitt, id: idSchueler, idStundenplan, wochentyp } = RouteNode.getIntParams(to_params, ["idSchuljahresabschnitt", "id", "idStundenplan", "wochentyp"]);
 			const { kw: kwString } = RouteNode.getStringParams(to_params, ["kw"]);
@@ -57,7 +57,7 @@ export class RouteSchuelerStundenplan extends RouteNode<RouteDataSchuelerStunden
 		this.data.reset();
 	}
 
-	public addRouteParamsFromState() : RouteParamsRawGeneric {
+	public addRouteParamsFromState(): RouteParamsRawGeneric {
 		return {
 			idStundenplan: (this.data.hatAuswahl === true) ? this.data.auswahl.id : undefined,
 			wochentyp: this.data.wochentyp,

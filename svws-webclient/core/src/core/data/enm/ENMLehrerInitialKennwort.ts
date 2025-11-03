@@ -6,12 +6,12 @@ export class ENMLehrerInitialKennwort extends JavaObject {
 	/**
 	 * Die ID des Lehrers aus der SVWS-DB (z.B. 42)
 	 */
-	public id : number = -1;
+	public id: number = -1;
 
 	/**
 	 * Das Initialkennwort für die Dienst-EMail-Adresse des Lehrers
 	 */
-	public initialKennwort : string | null = null;
+	public initialKennwort: string | null = null;
 
 
 	public constructor() {
@@ -22,13 +22,13 @@ export class ENMLehrerInitialKennwort extends JavaObject {
 		return 'de.svws_nrw.core.data.enm.ENMLehrerInitialKennwort';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.enm.ENMLehrerInitialKennwort'].includes(name);
 	}
 
 	public static class = new Class<ENMLehrerInitialKennwort>('de.svws_nrw.core.data.enm.ENMLehrerInitialKennwort');
 
-	public static transpilerFromJSON(json : string): ENMLehrerInitialKennwort {
+	public static transpilerFromJSON(json: string): ENMLehrerInitialKennwort {
 		const obj = JSON.parse(json) as Partial<ENMLehrerInitialKennwort>;
 		const result = new ENMLehrerInitialKennwort();
 		if (obj.id === undefined)
@@ -38,7 +38,7 @@ export class ENMLehrerInitialKennwort extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : ENMLehrerInitialKennwort) : string {
+	public static transpilerToJSON(obj: ENMLehrerInitialKennwort): string {
 		let result = '{';
 		result += '"id" : ' + obj.id.toString() + ',';
 		result += '"initialKennwort" : ' + ((obj.initialKennwort === null) ? 'null' : JSON.stringify(obj.initialKennwort)) + ',';
@@ -47,7 +47,7 @@ export class ENMLehrerInitialKennwort extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<ENMLehrerInitialKennwort>) : string {
+	public static transpilerToJSONPatch(obj: Partial<ENMLehrerInitialKennwort>): string {
 		let result = '{';
 		if (obj.id !== undefined) {
 			result += '"id" : ' + obj.id.toString() + ',';
@@ -62,6 +62,6 @@ export class ENMLehrerInitialKennwort extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_enm_ENMLehrerInitialKennwort(obj : unknown) : ENMLehrerInitialKennwort {
+export function cast_de_svws_nrw_core_data_enm_ENMLehrerInitialKennwort(obj: unknown): ENMLehrerInitialKennwort {
 	return obj as ENMLehrerInitialKennwort;
 }

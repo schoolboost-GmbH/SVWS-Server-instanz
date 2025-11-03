@@ -6,17 +6,17 @@ export class BenutzerLehrerCredentials extends JavaObject {
 	/**
 	 * Benutzername des Account-Credentials
 	 */
-	public idLehrer : number = -1;
+	public idLehrer: number = -1;
 
 	/**
 	 * Benutzername des Account-Credentials
 	 */
-	public benutzername : string = "";
+	public benutzername: string = "";
 
 	/**
 	 * Passwort des Account-Credentials
 	 */
-	public password : string = "";
+	public password: string = "";
 
 
 	/**
@@ -30,13 +30,13 @@ export class BenutzerLehrerCredentials extends JavaObject {
 		return 'de.svws_nrw.core.data.benutzer.BenutzerLehrerCredentials';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.benutzer.BenutzerLehrerCredentials'].includes(name);
 	}
 
 	public static class = new Class<BenutzerLehrerCredentials>('de.svws_nrw.core.data.benutzer.BenutzerLehrerCredentials');
 
-	public static transpilerFromJSON(json : string): BenutzerLehrerCredentials {
+	public static transpilerFromJSON(json: string): BenutzerLehrerCredentials {
 		const obj = JSON.parse(json) as Partial<BenutzerLehrerCredentials>;
 		const result = new BenutzerLehrerCredentials();
 		if (obj.idLehrer === undefined)
@@ -51,7 +51,7 @@ export class BenutzerLehrerCredentials extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : BenutzerLehrerCredentials) : string {
+	public static transpilerToJSON(obj: BenutzerLehrerCredentials): string {
 		let result = '{';
 		result += '"idLehrer" : ' + obj.idLehrer.toString() + ',';
 		result += '"benutzername" : ' + JSON.stringify(obj.benutzername) + ',';
@@ -61,7 +61,7 @@ export class BenutzerLehrerCredentials extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<BenutzerLehrerCredentials>) : string {
+	public static transpilerToJSONPatch(obj: Partial<BenutzerLehrerCredentials>): string {
 		let result = '{';
 		if (obj.idLehrer !== undefined) {
 			result += '"idLehrer" : ' + obj.idLehrer.toString() + ',';
@@ -79,6 +79,6 @@ export class BenutzerLehrerCredentials extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_benutzer_BenutzerLehrerCredentials(obj : unknown) : BenutzerLehrerCredentials {
+export function cast_de_svws_nrw_core_data_benutzer_BenutzerLehrerCredentials(obj: unknown): BenutzerLehrerCredentials {
 	return obj as BenutzerLehrerCredentials;
 }

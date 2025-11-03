@@ -6,27 +6,27 @@ export class SchuelerVermerkartZusammenfassung extends JavaObject {
 	/**
 	 * Die ID des Schülerdatensatzes.
 	 */
-	public id : number = 0;
+	public id: number = 0;
 
 	/**
 	 * Der Nachname des Schülerdatensatzes.
 	 */
-	public nachname : string = "";
+	public nachname: string = "";
 
 	/**
 	 * Der Vorname des Schülerdatensatzes.
 	 */
-	public vorname : string = "";
+	public vorname: string = "";
 
 	/**
 	 * Die ID der entsprechenden Vermerkart
 	 */
-	public vermerkart : number = 0;
+	public vermerkart: number = 0;
 
 	/**
 	 * Die Anzahl der Vermerke der entsprechenden Vermerkart
 	 */
-	public anzahlVermerke : number = 0;
+	public anzahlVermerke: number = 0;
 
 
 	/**
@@ -40,13 +40,13 @@ export class SchuelerVermerkartZusammenfassung extends JavaObject {
 		return 'de.svws_nrw.core.data.schueler.SchuelerVermerkartZusammenfassung';
 	}
 
-	isTranspiledInstanceOf(name : string): boolean {
+	isTranspiledInstanceOf(name: string): boolean {
 		return ['de.svws_nrw.core.data.schueler.SchuelerVermerkartZusammenfassung'].includes(name);
 	}
 
 	public static class = new Class<SchuelerVermerkartZusammenfassung>('de.svws_nrw.core.data.schueler.SchuelerVermerkartZusammenfassung');
 
-	public static transpilerFromJSON(json : string): SchuelerVermerkartZusammenfassung {
+	public static transpilerFromJSON(json: string): SchuelerVermerkartZusammenfassung {
 		const obj = JSON.parse(json) as Partial<SchuelerVermerkartZusammenfassung>;
 		const result = new SchuelerVermerkartZusammenfassung();
 		if (obj.id === undefined)
@@ -67,7 +67,7 @@ export class SchuelerVermerkartZusammenfassung extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSON(obj : SchuelerVermerkartZusammenfassung) : string {
+	public static transpilerToJSON(obj: SchuelerVermerkartZusammenfassung): string {
 		let result = '{';
 		result += '"id" : ' + obj.id.toString() + ',';
 		result += '"nachname" : ' + JSON.stringify(obj.nachname) + ',';
@@ -79,7 +79,7 @@ export class SchuelerVermerkartZusammenfassung extends JavaObject {
 		return result;
 	}
 
-	public static transpilerToJSONPatch(obj : Partial<SchuelerVermerkartZusammenfassung>) : string {
+	public static transpilerToJSONPatch(obj: Partial<SchuelerVermerkartZusammenfassung>): string {
 		let result = '{';
 		if (obj.id !== undefined) {
 			result += '"id" : ' + obj.id.toString() + ',';
@@ -103,6 +103,6 @@ export class SchuelerVermerkartZusammenfassung extends JavaObject {
 
 }
 
-export function cast_de_svws_nrw_core_data_schueler_SchuelerVermerkartZusammenfassung(obj : unknown) : SchuelerVermerkartZusammenfassung {
+export function cast_de_svws_nrw_core_data_schueler_SchuelerVermerkartZusammenfassung(obj: unknown): SchuelerVermerkartZusammenfassung {
 	return obj as SchuelerVermerkartZusammenfassung;
 }

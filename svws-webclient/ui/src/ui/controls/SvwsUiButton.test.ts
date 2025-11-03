@@ -23,7 +23,7 @@ describe.concurrent("SvwsUiButton", () => {
 	])(
 		'Mit Props type="%s" HTML enthält "%s" | %s"',
 		async (_type, expectedClass, _) => {
-			const type = _type as ButtonType
+			const type = _type as ButtonType;
 			const wrapper = mount(SvwsUiButton, { props: { type } });
 			expect(wrapper.find("button").classes()).toContain(expectedClass);
 		}
@@ -37,7 +37,7 @@ describe.concurrent("SvwsUiButton", () => {
 	])(
 		'rendert die korrekte Klasse für size="%s"',
 		async (_size, expectedClass, _) => {
-			const size = _size as "normal" | "small" | "big" | undefined
+			const size = _size as "normal" | "small" | "big" | undefined;
 			const wrapper = mount(SvwsUiButton, { props: { size } });
 			if (expectedClass.length > 0) {
 				expect(wrapper.find("button").classes()).toContain(

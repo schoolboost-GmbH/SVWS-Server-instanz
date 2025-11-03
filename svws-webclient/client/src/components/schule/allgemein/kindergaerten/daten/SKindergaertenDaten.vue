@@ -35,21 +35,21 @@
 	import { computed } from "vue";
 	import { emailIsValid } from "~/util/validation/Validation";
 
-	const props = defineProps<KindergaertenDatenProps>()
+	const props = defineProps<KindergaertenDatenProps>();
 	const hatKompetenzUpdate = computed<boolean>(() => props.benutzerKompetenzen.has(BenutzerKompetenz.KATALOG_EINTRAEGE_AENDERN));
 	const readonly = computed<boolean>(() => !hatKompetenzUpdate.value);
 
 	const adresse = computed(() => AdressenUtils.combineStrasse(
-		props.manager().daten().strassenname?.trim() ?? "", props.manager().daten().hausNr?.trim() ?? "", props.manager().daten().hausNrZusatz?.trim() ?? ""))
+		props.manager().daten().strassenname?.trim() ?? "", props.manager().daten().hausNr?.trim() ?? "", props.manager().daten().hausNrZusatz?.trim() ?? ""));
 
 	const patchStrasse = (value: string | null) => {
 		const vals = AdressenUtils.splitStrasse(value);
 		void props.patch({ strassenname: vals[0], hausNr: vals[1], hausNrZusatz: vals[2] });
-	}
+	};
 
 	const patchEmail = (value: string | null) => {
 		if (emailIsValid(value, 40))
 			void props.patch({ email: value?.trim() });
-	}
+	};
 
 </script>
