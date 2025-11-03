@@ -2,7 +2,7 @@
     "version": 1,
     "daten": [
         {
-            "bezeichner": "KEINE_TEILNAHME",
+            "bezeichner": "KEINE",
             "idStatistik": "1",
             "historie": [
                 {
@@ -33,7 +33,7 @@
             ]
         },
         {
-            "bezeichner": "ÜBERMITTAGBETREUUNG_PRIMARSTUFE",
+            "bezeichner": "UEBERMITTAG_PRIMARSTUFE",
             "idStatistik": "2",
             "historie": [
                 {
@@ -57,7 +57,7 @@
             ]
         },
         {
-            "bezeichner": "ÜBERMITTAGBETREUUNG_SEKUNDARSTUFE",
+            "bezeichner": "UEBERMITTAG_SEKUNDARSTUFE",
             "idStatistik": "3",
             "historie": [
                 {
@@ -87,7 +87,7 @@
             ]
         },
         {
-            "bezeichner": "ÜBERMITTAGBETREUUNG_UND_GANZTAGSANGEBOT",
+            "bezeichner": "UEBERMITTAG_UND_GANZTAG",
             "idStatistik": "4",
             "historie": [
                 {
