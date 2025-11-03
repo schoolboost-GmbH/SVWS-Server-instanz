@@ -1,3 +1,6 @@
+import { JavaObject } from '../../../java/lang/JavaObject';
+import type { JavaSet } from '../../../java/util/JavaSet';
+import { java_util_Set_of } from '../../../java/util/JavaSet';
 import { LehrerPersonalabschnittsdaten } from '../../../asd/data/lehrer/LehrerPersonalabschnittsdaten';
 import { Class } from '../../../java/lang/Class';
 import { LehrerEinsatzstatus } from '../../../asd/types/lehrer/LehrerEinsatzstatus';
@@ -26,12 +29,17 @@ export class ValidatorLehrerPersonalabschnittsdatenPflichtstundensoll extends Va
 	protected pruefe(): boolean {
 		let success: boolean = true;
 		const pflichtstundensoll: number | null = this.daten.pflichtstundensoll;
+		const einsatzstatus: LehrerEinsatzstatus | null = LehrerEinsatzstatus.getBySchluessel(this.daten.einsatzstatus);
 		success = this.exec(0, { getAsBoolean: () => pflichtstundensoll === null }, "Kein Wert im Feld 'pflichtstundensoll'.");
 		if (!success)
 			return false;
 		success = this.exec(1, { getAsBoolean: () => (pflichtstundensoll === null || pflichtstundensoll < 0.0) || (pflichtstundensoll > 41.0) }, "Unzulässiger Wert im Feld 'pflichtstundensoll'. Zulässig sind im Stundenmodell Werte im Bereich von 0,00 bis 41,00 Wochenstunden. Im Minutenmodell zwischen 0,00 und 1845,00 Minuten.");
-		const einsatzstatus: LehrerEinsatzstatus | null = LehrerEinsatzstatus.getBySchluessel(this.daten.einsatzstatus);
 		if (!this.exec(2, { getAsBoolean: () => (einsatzstatus as unknown === LehrerEinsatzstatus.B as unknown) && (pflichtstundensoll === 0.0) }, "Bei Lehrkräften, die von einer anderen Schule abgeordnet wurden (Einsatzstatus = 'B'), darf das Pflichtstundensoll nicht 0,00 betragen."))
+			success = false;
+		const beschaeftigungsart: string | null = this.daten.beschaeftigungsart;
+		const setBeschaeftigungsart: JavaSet<string> = java_util_Set_of("WV", "WT");
+		const fehlertext3: string | null = "Ist bei einer Lehrkraft im Feld 'Pflichtstundensoll' der Wert = 0.00 eingetragen, so muss das Feld 'Einsatzstatus' den Schlüssel 'Stammschule, ganz oder teilweise auch an anderen Schulen tätig' oder die 'Beschäftigungsart' den Schlüssel 'Beamte auf Widerruf (LAA) in Vollzeit' bzw. 'Beamte auf Widerruf (LAA) in Teilzeit' aufweisen.";
+		if (!this.exec(3, { getAsBoolean: () => (pflichtstundensoll === 0) && (!JavaObject.equalsTranspiler(LehrerEinsatzstatus.A, (einsatzstatus)) && !setBeschaeftigungsart.contains(beschaeftigungsart)) }, fehlertext3))
 			success = false;
 		return success;
 	}

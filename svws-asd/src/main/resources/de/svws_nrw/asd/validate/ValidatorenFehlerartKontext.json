@@ -161,6 +161,11 @@
 				"muss": [],
 				"kann": ["G", "H", "V", "S", "KS", "R", "PS", "SK", "GE", "FW", "HI", "WF", "GY", "WB", "BK", "SR", "SG", "SB"],
 				"hinweis": []
+			}, {
+				"nummer": 3,
+				"muss": ["G", "H", "V", "S", "KS", "R", "PS", "SK", "GE", "FW", "HI", "WF", "GY", "WB", "BK", "SR", "SG", "SB"],
+				"kann": [],
+				"hinweis": []
 			} ],
 			"gueltigVon": null,
 			"gueltigBis": null
