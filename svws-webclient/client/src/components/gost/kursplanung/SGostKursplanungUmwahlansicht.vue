@@ -18,7 +18,7 @@
 						<!-- Die Liste mit den Fachwahlen -->
 						<svws-ui-table :items="[]" :no-data="false" :disable-header="true" type="navigation" has-background class="mt-1">
 							<template #body>
-								<div v-for="fach in fachbelegungen" :key="fach.fachID" role="row" class="svws-ui-tr !w-full"
+								<div v-for="fach in fachbelegungen" :key="fach.fachID" role="row" class="svws-ui-tr w-full!"
 									:class="{ 'font-medium': (fachwahlKurszuordnungen.get(fach.fachID) === undefined) }">
 									<div role="cell"
 										:draggable="hatUpdateKompetenz && (fachwahlKurszuordnungen.get(fach.fachID) === undefined)"
@@ -27,7 +27,7 @@
 										class="select-none svws-ui-td svws-no-padding group rounded-sm text-uistatic"
 										:class="hatUpdateKompetenz && (fachwahlKurszuordnungen.get(fach.fachID) === undefined) ? 'cursor-grab' : 'opacity-50'"
 										:style="{ 'background-color': bgColorFachwahl(fach.fachID) }">
-										<div class="rounded-sm border border-ui-10 font-medium text-ui-100 inline-flex w-auto grow !h-full items-center self-center"
+										<div class="rounded-sm border border-ui-10 font-medium text-ui-100 inline-flex w-auto grow h-full! items-center self-center"
 											style="padding: 0.05rem 0.25rem; margin: -0.125rem auto -0.125rem -0.125rem;">
 											<div class="flex flex-row grow">
 												<template v-if="(fachwahlKurszuordnungen.get(fach.fachID) === undefined) && hatUpdateKompetenz">
@@ -95,11 +95,13 @@
 								@dragstart="drag_started(kurs.id, kurs.fachID, kurs.kursart)"
 								@dragend="drag_ended()">
 								<div class="w-full h-full flex flex-col justify-center items-center rounded-sm border border-black/10 py-1 px-0.5"
+									:title="kursIstUngueltig(kurs) ? 'Diese Kurszuordnung ist ungültig, z.B. weil die Fachwahl geändert wurde':''"
 									:style="{ 'background-color': hatSchieneKollisionen(schiene.id).value && getErgebnismanager().getOfSchuelerOfKursIstZugeordnet(schueler.id, kurs.id) ? 'var(--color-bg-ui-danger)' : bgColor(kurs.id) }"
 									:class="{
 										'text-ui-ondanger' : hatSchieneKollisionen(schiene.id).value && getErgebnismanager().getOfSchuelerOfKursIstZugeordnet(schueler.id, kurs.id),
 										'bg-ui-brand/10 opacity-75 border-ui-brand rounded-sm ring-3 ring-ui-brand': is_drop_zone(kurs).value,
 										'text-uistatic': getErgebnismanager().getOfSchuelerOfKursIstZugeordnet(schueler.id, kurs.id) && !hatSchieneKollisionen(schiene.id).value,
+										'bg-ui-danger!': kursIstUngueltig(kurs),
 									}"
 									@dragover="onDragOver($event, kurs)" @drop="drop_aendere_kurszuordnung(kurs)">
 									<span class="icon-sm i-ri-draggable mt-1 ml-1 opacity-50 group-hover:opacity-100 rounded-xs absolute top-0 left-0" v-if="is_draggable(kurs.id).value" :class="[hatSchieneKollisionen(schiene.id).value && is_draggable(kurs.id).value ? 'group-hover:opacity-25 icon-ui-0' : 'group-hover:opacity-50 icon-ui-100']" />
@@ -185,8 +187,8 @@
 		return props.getDatenmanager().schuelerGetListeOfFachwahlen(idSchueler.value);
 	});
 
-	function routeLaufbahnplanung() {
-		void props.gotoLaufbahnplanung(idSchueler.value);
+	async function routeLaufbahnplanung() {
+		await props.gotoLaufbahnplanung(idSchueler.value);
 	}
 
 	const cols = computed(() => {
@@ -290,20 +292,20 @@
 	async function fixieren_regel_toggle(idKurs: number) {
 		let update = new GostBlockungRegelUpdate();
 		const regel = fixier_regel(idKurs);
-		if (regel !== null)
-			update.listEntfernen.add(regel);
-		else
+		if (regel === null)
 			update = props.getErgebnismanager().regelupdateCreate_04_SCHUELER_FIXIEREN_IN_KURS(SetUtils.create1(idSchueler.value), SetUtils.create1(idKurs));
+		else
+			update.listEntfernen.add(regel);
 		await props.regelnUpdate(update);
 	}
 
 	async function verbieten_regel_toggle(idKurs: number) {
 		let update = new GostBlockungRegelUpdate();
 		const regel = verbieten_regel(idKurs);
-		if (regel !== null)
-			update.listEntfernen.add(regel);
-		else
+		if (regel === null)
 			update = props.getErgebnismanager().regelupdateCreate_05_SCHUELER_VERBIETEN_IN_KURS(SetUtils.create1(idSchueler.value), SetUtils.create1(idKurs));
+		else
+			update.listEntfernen.add(regel);
 		await props.regelnUpdate(update);
 	}
 
@@ -346,6 +348,15 @@
 			return `${f.kuerzelAnzeige ?? '??'}-${fwKursart?.kuerzel ?? '??'}`;
 		}
 		return props.getErgebnismanager().getOfKursName(fw.id);
+	}
+
+	function kursIstUngueltig(kurs: GostBlockungsergebnisKurs) {
+		if (props.schueler === undefined)
+			return true;
+		const kurse = props.getErgebnismanager().getOfSchuelerMapIDzuUngueltigeKurse().get(props.schueler.id);
+		if (kurse === null || kurse.isEmpty())
+			return false;
+		return kurse.contains(kurs);
 	}
 
 </script>
