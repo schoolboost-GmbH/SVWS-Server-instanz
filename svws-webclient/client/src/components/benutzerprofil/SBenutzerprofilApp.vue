@@ -10,8 +10,10 @@
 	<div class="page page-grid-cards">
 		<svws-ui-content-card title="Passwort ändern">
 			<svws-ui-input-wrapper :grid="2">
-				<svws-ui-text-input class="contentFocusField" placeholder="Erste Eingabe neues Passwort" v-model.trim="erstesPasswort" type="password" />
+				<svws-ui-text-input class="contentFocusField" placeholder="Erste Eingabe neues Passwort" v-model.trim="erstesPasswort" :type="passwortAnzeigen ? 'text' : 'password'" />
 				<svws-ui-text-input placeholder="Zweite Eingabe neues Passwort" v-model.trim="zweitesPasswort" type="password" />
+				<svws-ui-checkbox v-model="passwortAnzeigen">Passwort anzeigen</svws-ui-checkbox>
+				<div />
 				<svws-ui-button :type="ok === null ? 'secondary': ok === true ? 'primary' : 'danger'" @click="password" :disabled="erstesPasswort !== zweitesPasswort"> Passwort ändern </svws-ui-button>
 				{{ ok === true ? "Das Passwort wurde geändert, bitte melden Sie sich neu an" : ok === false ? 'Es gab einen Fehler bei der Passwortänderung' : '' }}
 			</svws-ui-input-wrapper>
@@ -27,8 +29,9 @@
 		</svws-ui-content-card>
 		<svws-ui-content-card v-if="benutzertyp === BenutzerTyp.LEHRER" title="Webnotenmanager-Passwort ändern">
 			<svws-ui-input-wrapper :grid="2">
-				<svws-ui-text-input class="contentFocusField" placeholder="Erste Eingabe neues Passwort" v-model.trim="erstesPasswortWenom" type="password" :min-len="6" />
+				<svws-ui-text-input class="contentFocusField" placeholder="Erste Eingabe neues Passwort" v-model.trim="erstesPasswortWenom" :type="passwortAnzeigenWenom ? 'text' : 'password'" :min-len="6" />
 				<svws-ui-text-input placeholder="Zweite Eingabe neues Passwort" v-model.trim="zweitesPasswortWenom" type="password" :min-len="6" />
+				<svws-ui-checkbox v-model="passwortAnzeigenWenom">Passwort anzeigen</svws-ui-checkbox>
 			</svws-ui-input-wrapper>
 			<div class="flex gap-4">
 				<svws-ui-button :type="okWenom === null ? 'secondary': ok === true ? 'primary' : 'danger'" @click="passwordWenom" :disabled="(erstesPasswortWenom !== zweitesPasswortWenom) || (erstesPasswortWenom.length < 6)"> Passwort ändern </svws-ui-button>
@@ -57,16 +60,19 @@
 
 	import { computed, ref, watch } from "vue";
 	import type { BenutzerprofilAppProps } from "./SBenutzerprofilAppProps";
-	import { BenutzerTyp, ServerMode } from "@core";
+	import { BenutzerTyp } from "@core";
 
 	const props = defineProps<BenutzerprofilAppProps>();
 
 	const erstesPasswort = ref('');
 	const zweitesPasswort = ref('');
+	const passwortAnzeigen = ref(false);
+
 	const ok = ref<boolean | null>(null);
 
 	const erstesPasswortWenom = ref('');
 	const zweitesPasswortWenom = ref('');
+	const passwortAnzeigenWenom = ref(false);
 	const okWenom = ref<boolean | null>(null);
 	const okResetWenom = ref<boolean | null>(null);
 
@@ -106,7 +112,7 @@
 			}
 			const encoded = await props.aes.decryptBase64(password);
 			_smtpPassword.value = new TextDecoder().decode(encoded);
-		} catch (e) {
+		} catch {
 			_smtpPassword.value = "";
 		}
 	}
