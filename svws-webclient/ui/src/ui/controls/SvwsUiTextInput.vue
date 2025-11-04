@@ -100,10 +100,10 @@
 </template>
 
 
-<script setup lang="ts" generic="V extends Validator">
+<script setup lang="ts" generic="V extends BasicValidator">
 
 	import { ref, computed, watch, onBeforeMount, onMounted, onBeforeUnmount, useId } from "vue";
-	import type { Validator } from "../../../../core/src/asd/validate/Validator";
+	import type { BasicValidator } from "../../../../core/src/asd/validate/BasicValidator";
 	import { ValidatorFehlerart } from "../../../../core/src/asd/validate/ValidatorFehlerart";
 
 	defineOptions({

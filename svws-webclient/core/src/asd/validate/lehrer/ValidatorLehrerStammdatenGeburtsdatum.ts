@@ -46,7 +46,7 @@ export class ValidatorLehrerStammdatenGeburtsdatum extends Validator {
 	}
 
 	isTranspiledInstanceOf(name: string): boolean {
-		return ['de.svws_nrw.asd.validate.lehrer.ValidatorLehrerStammdatenGeburtsdatum', 'de.svws_nrw.asd.validate.Validator'].includes(name);
+		return ['de.svws_nrw.asd.validate.BasicValidator', 'de.svws_nrw.asd.validate.lehrer.ValidatorLehrerStammdatenGeburtsdatum', 'de.svws_nrw.asd.validate.Validator'].includes(name);
 	}
 
 	public static class = new Class<ValidatorLehrerStammdatenGeburtsdatum>('de.svws_nrw.asd.validate.lehrer.ValidatorLehrerStammdatenGeburtsdatum');
