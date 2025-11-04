@@ -24,7 +24,7 @@
 	import { BenutzerKompetenz, Raum } from "@core";
 
 	const props = defineProps<RaeumeAuswahlProps>();
-	const readonly = computed<boolean>(() => !(props.benutzerKompetenzen.has(BenutzerKompetenz.STUNDENPLAN_AENDERN)));
+	const readonly = computed<boolean>(() => !(props.benutzerKompetenzen.has(BenutzerKompetenz.KATALOG_EINTRAEGE_AENDERN)));
 	const selected = ref<Raum[]>([]);
 
 	const columns = [
