@@ -14,8 +14,8 @@
 	<jxb:bindings schemaLocation="http://xbildung.de/def/xbildung/1.1/xsd/xbildung-baukasten.xsd">
 		<jxb:schemaBindings>
 			<jxb:nameXmlTransform>
-				<jxb:typeName prefix="XSchule" />
-				<jxb:elementName prefix="XSchule" />
+				<jxb:typeName prefix="XBildung" />
+				<jxb:elementName prefix="XBildung" />
 			</jxb:nameXmlTransform>
 		</jxb:schemaBindings>
 	</jxb:bindings>

@@ -6,13 +6,17 @@ repositories {
 	mavenCentral()
 }
 
+dependencies {
+	implementation project(':svws-asd')
+	implementation project(':svws-db-dto')
+}
+
 configurations {
 	codeGen.extendsFrom(jaxbRuntime, xjc)
 	implementation.extendsFrom(jaxbRuntime)
 }
 
-def genDir = layout.projectDirectory.dir('src/gen')
-def jaxbOutputDir = layout.projectDirectory.dir('src/gen/java')
+def jaxbOutputDir = layout.buildDirectory.dir('generated/sources/java')
 def schemaFileXSchule = layout.projectDirectory.file('src/main/resources/xschule/xschule.xsd')
 def prefixBindingFile = layout.projectDirectory.file('src/main/resources/xschule/bindings/prefixes.xjb')
 
@@ -27,22 +31,12 @@ tasks.register('generateSourcesXSchule', JavaExec) {
 
 	doFirst {
 		args = [
-				'-d', jaxbOutputDir,
+				'-d', jaxbOutputDir.get().asFile.absolutePath,
 				'-b', prefixBindingFile.getAsFile().absolutePath,
 				schemaFileXSchule.getAsFile().absolutePath
 		]
 		println "Generiere Java-Klassen für XSchule-Kontext aus Schema ${schemaFileXSchule.getAsFile().name}"
 		println "Ausgabe-Verzeichnis: ${jaxbOutputDir}"
-	}
-}
-
-tasks.register('cleanSourcesXSchule', Delete) {
-	group = 'build'
-	description = 'Entfernt die für den XSchule-Kontext generierten Java-Klassen'
-	delete genDir
-
-	doFirst {
-		logger.lifecycle("Entferne Verzeichnis mit generierten XSchule-Dateien aus ${genDir.getAsFile()}")
 	}
 }
 
@@ -54,7 +48,7 @@ sourceSets {
 	}
 }
 
-def filteredJavaTree = fileTree('src/gen/java') {
+def filteredJavaTree = fileTree(jaxbOutputDir) {
 	exclude '**/*.java'
 }
 
@@ -65,3 +59,6 @@ tasks.named('checkstyleMain').configure {
 tasks.named('javadoc').configure {
 	source = filteredJavaTree
 }
+
+compileJava.dependsOn(generateSourcesXSchule)
+sourcesJar.dependsOn(generateSourcesXSchule)
