@@ -279,11 +279,13 @@ public final class ApiMethod {
 				return "Promise<List<" + datatype + ">>";
 			}
 			datatype = switch (datatype) {
-				case "Byte", "Short", "Integer", "Long", "Float", "Double" -> "number | null";
-				case "Character", "String" -> "string | null";
-				case "Boolean" -> "boolean | null";
+				case "Byte", "Short", "Integer", "Long", "Float", "Double" -> "number";
+				case "Character", "String" -> "string";
+				case "Boolean" -> "boolean";
 				default -> datatype;
 			};
+			if (!returnResponse.content.isNotNull)
+				datatype += " | null";
 			return "Promise<" + datatype + ">";
 		}
 		return "Promise<void>";

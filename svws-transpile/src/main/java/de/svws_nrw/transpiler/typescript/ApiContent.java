@@ -25,6 +25,9 @@ public class ApiContent {
 	/** Der Typescript-Datentyp */
 	public final String datatype;
 
+	/** Gibt an, ob der Datentyp auch null sein kann oder nicht. */
+	public boolean isNotNull = true;
+
 	/** Gibt an, ob der Inhalt ein JSON-Array-basierter Datentyp ist */
 	public final boolean isArrayType;
 
@@ -93,6 +96,8 @@ public class ApiContent {
 					throw new TranspilerException("Transpiler Exception: Unhandled annotation type used in Content annotation.");
 				final Map<String, ExpressionTree> schemaArgs = Transpiler.getArguments(att);
 				ExpressionTree expr = schemaArgs.get("implementation");
+				ExpressionTree exprNullable = schemaArgs.get("nullable");
+				this.isNotNull = (exprNullable == null) || ("false".equals(exprNullable.toString()));
 				if (expr instanceof final MemberSelectTree mst) {
 					if (!"class".equals(mst.getIdentifier().toString()))
 						throw new TranspilerException("Transpiler Exception: Unhandled member select for implementation argument of Schema annotation.");

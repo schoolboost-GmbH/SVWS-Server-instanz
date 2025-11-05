@@ -249,7 +249,7 @@ export class ApiServer extends BaseApi {
 	 *
 	 * @returns Das Zertifikat des Servers
 	 */
-	public async getConfigCertificate() : Promise<string | null> {
+	public async getConfigCertificate() : Promise<string> {
 		const path = "/config/certificate";
 		const text : string = await super.getText(path);
 		return text;
@@ -332,7 +332,7 @@ export class ApiServer extends BaseApi {
 	 *
 	 * @returns Der Base-64-kodierte, öffentliche Schlüssel des Servers
 	 */
-	public async getConfigPublicKeyBase64() : Promise<string | null> {
+	public async getConfigPublicKeyBase64() : Promise<string> {
 		const path = "/config/publickey_base64";
 		const text : string = await super.getText(path);
 		return text;
@@ -1932,7 +1932,7 @@ export class ApiServer extends BaseApi {
 	 *
 	 * @returns Der Wert des Konfigurationseintrags
 	 */
-	public async getClientConfigUserKey(schema : string, app : string, key : string) : Promise<string | null> {
+	public async getClientConfigUserKey(schema : string, app : string, key : string) : Promise<string> {
 		const path = "/db/{schema}/client/config/{app}/user/{key}"
 			.replace(/{schema\s*(:[^{}]+({[^{}]+})*)?}/g, schema)
 			.replace(/{app\s*(:[^{}]+({[^{}]+})*)?}/g, app)
@@ -3058,7 +3058,7 @@ export class ApiServer extends BaseApi {
 	 *
 	 * @returns Der Stand des Setups, true, wurde initialisiert, false ist bereits initialisiert
 	 */
-	public async setupENMServer(schema : string) : Promise<boolean | null> {
+	public async setupENMServer(schema : string) : Promise<boolean> {
 		const path = "/db/{schema}/enm/setup"
 			.replace(/{schema\s*(:[^{}]+({[^{}]+})*)?}/g, schema);
 		const result : string = await super.getJSON(path);
@@ -4905,7 +4905,7 @@ export class ApiServer extends BaseApi {
 	 *
 	 * @returns Der Abiturjahrgang wurde erfolgreich angelegt.
 	 */
-	public async createGostAbiturjahrgang(schema : string, schuljahresabschnittsid : number, jahrgangid : number) : Promise<number | null> {
+	public async createGostAbiturjahrgang(schema : string, schuljahresabschnittsid : number, jahrgangid : number) : Promise<number> {
 		const path = "/db/{schema}/gost/abiturjahrgang/new/{schuljahresabschnittsid}/{jahrgangid}"
 			.replace(/{schema\s*(:[^{}]+({[^{}]+})*)?}/g, schema)
 			.replace(/{schuljahresabschnittsid\s*(:[^{}]+({[^{}]+})*)?}/g, schuljahresabschnittsid.toString())
@@ -4988,7 +4988,7 @@ export class ApiServer extends BaseApi {
 	 *
 	 * @returns Die Blockungsdaten der gymnasialen Oberstfue für die angegebene ID wurden erfolgreich gelöscht.
 	 */
-	public async deleteGostBlockung(schema : string, blockungsid : number) : Promise<number | null> {
+	public async deleteGostBlockung(schema : string, blockungsid : number) : Promise<number> {
 		const path = "/db/{schema}/gost/blockungen/{blockungsid : \\d+}"
 			.replace(/{schema\s*(:[^{}]+({[^{}]+})*)?}/g, schema)
 			.replace(/{blockungsid\s*(:[^{}]+({[^{}]+})*)?}/g, blockungsid.toString());
@@ -5906,7 +5906,7 @@ export class ApiServer extends BaseApi {
 	 *
 	 * @returns Das Zwischenergebnis einer Blockung der gymnasialen Oberstufe für die angegebene ID wurde erfolgreich gelöscht.
 	 */
-	public async deleteGostBlockungsergebnis(schema : string, ergebnisid : number) : Promise<number | null> {
+	public async deleteGostBlockungsergebnis(schema : string, ergebnisid : number) : Promise<number> {
 		const path = "/db/{schema}/gost/blockungen/zwischenergebnisse/{ergebnisid : \\d+}"
 			.replace(/{schema\s*(:[^{}]+({[^{}]+})*)?}/g, schema)
 			.replace(/{ergebnisid\s*(:[^{}]+({[^{}]+})*)?}/g, ergebnisid.toString());
@@ -6284,7 +6284,7 @@ export class ApiServer extends BaseApi {
 	 *
 	 * @returns Die Zwischenergebnisse einer Blockung der gymnasialen Oberstufe für die angegebene ID wurden erfolgreich gelöscht.
 	 */
-	public async deleteGostBlockungsergebnisse(data : List<number>, schema : string) : Promise<number | null> {
+	public async deleteGostBlockungsergebnisse(data : List<number>, schema : string) : Promise<number> {
 		const path = "/db/{schema}/gost/blockungen/zwischenergebnisse/multiple"
 			.replace(/{schema\s*(:[^{}]+({[^{}]+})*)?}/g, schema);
 		const body : string = "[" + (data.toArray() as Array<number>).map(d => JSON.stringify(d)).join() + "]";
@@ -6658,7 +6658,7 @@ export class ApiServer extends BaseApi {
 	 *
 	 * @returns Der Klausurraum für die angegebene ID wurden erfolgreich gelöscht.
 	 */
-	public async deleteGostKlausurenRaum(schema : string, id : number) : Promise<boolean | null> {
+	public async deleteGostKlausurenRaum(schema : string, id : number) : Promise<boolean> {
 		const path = "/db/{schema}/gost/klausuren/raeume/delete/{id : \\d+}"
 			.replace(/{schema\s*(:[^{}]+({[^{}]+})*)?}/g, schema)
 			.replace(/{id\s*(:[^{}]+({[^{}]+})*)?}/g, id.toString());
@@ -6800,7 +6800,7 @@ export class ApiServer extends BaseApi {
 	 *
 	 * @returns GostSchuelerklausurTermin wurde erfolgreich gelöscht.
 	 */
-	public async deleteGostKlausurenSchuelerklausurtermin(schema : string, id : number) : Promise<boolean | null> {
+	public async deleteGostKlausurenSchuelerklausurtermin(schema : string, id : number) : Promise<boolean> {
 		const path = "/db/{schema}/gost/klausuren/schuelerklausuren/termine/{id : \\d+}"
 			.replace(/{schema\s*(:[^{}]+({[^{}]+})*)?}/g, schema)
 			.replace(/{id\s*(:[^{}]+({[^{}]+})*)?}/g, id.toString());
@@ -15452,7 +15452,7 @@ export class ApiServer extends BaseApi {
 	 *
 	 * @returns Das Logo der Schule
 	 */
-	public async getSchullogo(schema : string) : Promise<string | null> {
+	public async getSchullogo(schema : string) : Promise<string> {
 		const path = "/db/{schema}/schule/logo"
 			.replace(/{schema\s*(:[^{}]+({[^{}]+})*)?}/g, schema);
 		const result : string = await super.getJSON(path);
@@ -15498,7 +15498,7 @@ export class ApiServer extends BaseApi {
 	 *
 	 * @returns Die Schulnummer
 	 */
-	public async getSchuleNummer(schema : string) : Promise<number | null> {
+	public async getSchuleNummer(schema : string) : Promise<number> {
 		const path = "/db/{schema}/schule/nummer"
 			.replace(/{schema\s*(:[^{}]+({[^{}]+})*)?}/g, schema);
 		const result : string = await super.getJSON(path);
@@ -19062,7 +19062,7 @@ export class ApiServer extends BaseApi {
 	 *
 	 * @returns Der Server ist erreichbar!
 	 */
-	public async isAlive() : Promise<string | null> {
+	public async isAlive() : Promise<string> {
 		const path = "/status/alive";
 		const text : string = await super.getText(path);
 		return text;
@@ -19081,7 +19081,7 @@ export class ApiServer extends BaseApi {
 	 *
 	 * @returns Der Server ist über die Privileged API erreichbar!
 	 */
-	public async isAlivePrivileged() : Promise<boolean | null> {
+	public async isAlivePrivileged() : Promise<boolean> {
 		const path = "/status/alive/privileged";
 		const result : string = await super.getJSON(path);
 		const text = result;
@@ -19101,7 +19101,7 @@ export class ApiServer extends BaseApi {
 	 *
 	 * @returns Die Datenbank-Revision
 	 */
-	public async getServerDBRevision() : Promise<number | null> {
+	public async getServerDBRevision() : Promise<number> {
 		const path = "/status/db/revision";
 		const result : string = await super.getJSON(path);
 		const text = result;
@@ -19121,7 +19121,7 @@ export class ApiServer extends BaseApi {
 	 *
 	 * @returns Der Betriebsmodus (stable, alpha, beta oder dev)
 	 */
-	public async getServerModus() : Promise<string | null> {
+	public async getServerModus() : Promise<string> {
 		const path = "/status/mode";
 		const result : string = await super.getJSON(path);
 		const text = result;
@@ -19141,7 +19141,7 @@ export class ApiServer extends BaseApi {
 	 *
 	 * @returns Die erste kompatible Schild-Version
 	 */
-	public async getSchildMinVersion() : Promise<string | null> {
+	public async getSchildMinVersion() : Promise<string> {
 		const path = "/status/schild/minversion";
 		const result : string = await super.getJSON(path);
 		const text = result;
@@ -19161,7 +19161,7 @@ export class ApiServer extends BaseApi {
 	 *
 	 * @returns Die SVWS-Server-Version
 	 */
-	public async getServerVersion() : Promise<string | null> {
+	public async getServerVersion() : Promise<string> {
 		const path = "/status/version";
 		const result : string = await super.getJSON(path);
 		const text = result;

@@ -118,7 +118,7 @@ export class ApiPrivileged extends BaseApi {
 	 *
 	 * @returns true, wenn der Benutzer die Rechte hat
 	 */
-	public async isPrivilegedUser() : Promise<boolean | null> {
+	public async isPrivilegedUser() : Promise<boolean> {
 		const path = "/api/privileged/user/isprivileged";
 		const result : string = await super.getJSON(path);
 		const text = result;
@@ -691,7 +691,7 @@ export class ApiPrivileged extends BaseApi {
 	 *
 	 * @returns true, wenn das Schema existiert
 	 */
-	public async existsSchema(schema : string) : Promise<boolean | null> {
+	public async existsSchema(schema : string) : Promise<boolean> {
 		const path = "/api/schema/root/exists/{schema}"
 			.replace(/{schema\s*(:[^{}]+({[^{}]+})*)?}/g, schema);
 		const result : string = await super.getJSON(path);
@@ -996,7 +996,7 @@ export class ApiPrivileged extends BaseApi {
 	 *
 	 * @returns true, wenn der Benutzer existiert
 	 */
-	public async existsUser(user : string) : Promise<boolean | null> {
+	public async existsUser(user : string) : Promise<boolean> {
 		const path = "/api/schema/root/user/{user}/exists"
 			.replace(/{user\s*(:[^{}]+({[^{}]+})*)?}/g, user);
 		const result : string = await super.getJSON(path);
@@ -1020,7 +1020,7 @@ export class ApiPrivileged extends BaseApi {
 	 *
 	 * @returns true, wenn das Kennwort und der Benutzername korrekt sind und den priviligierten Zugriff auf die Datenbankschema erlauben.
 	 */
-	public async checkDBPassword(data : BenutzerKennwort) : Promise<boolean | null> {
+	public async checkDBPassword(data : BenutzerKennwort) : Promise<boolean> {
 		const path = "/api/schema/root/user/checkpwd";
 		const body : string = BenutzerKennwort.transpilerToJSON(data);
 		const result : string = await super.postJSON(path, body);
