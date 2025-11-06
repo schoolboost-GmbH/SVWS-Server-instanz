@@ -6,7 +6,7 @@
 					<template v-if="activeViewType === ViewType.DEFAULT">
 						<h2 class="svws-headline">
 							<span>
-								{{ manager().auswahl().text }}
+								{{ manager().auswahl().kuerzel }}
 							</span>
 							<svws-ui-badge type="light" title="ID" class="font-mono" size="small">
 								ID: {{ manager().daten().id }}
@@ -35,7 +35,7 @@
 
 <script setup lang="ts">
 
-	import type { FoerderschwerpunkteAppProps } from "~/components/schule/schulbezogen/foerderschwerpunkte/SFoerderschwerpunkteAppProps";
+	import type { FoerderschwerpunkteAppProps } from "~/components/schule/schulbezogen/foerderschwerpunkte/FoerderschwerpunkteAppProps";
 	import { useRegionSwitch, ViewType } from "@ui";
 	import { computed } from "vue";
 
@@ -43,11 +43,11 @@
 
 	const { focusHelpVisible, focusSwitchingEnabled } = useRegionSwitch();
 
-	const foerderschwerpunkteSubline = computed(() => {
+	const foerderschwerpunkteSubline = computed<string>(() => {
 		const list = props.manager().liste.auswahlSorted();
 		if (list.size() > 5)
 			return `${list.size()} Förderschwerpunkte ausgewählt`;
-		return [...list].map(k => k.text).join(', ');
+		return [...list].map(k => k.kuerzel).join(', ');
 	});
 
 </script>

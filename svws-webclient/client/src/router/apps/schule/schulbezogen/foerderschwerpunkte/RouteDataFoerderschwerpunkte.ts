@@ -1,8 +1,8 @@
 import type { RouteStateAuswahlInterface } from "~/router/RouteDataAuswahl";
 import type { RouteParamsRawGeneric } from "vue-router";
 import type { List, SimpleOperationResponse, FoerderschwerpunktEintrag } from "@core";
+import { BenutzerKompetenz, ArrayList } from "@core";
 import { RouteDataAuswahl } from "~/router/RouteDataAuswahl";
-import { ArrayList } from "@core";
 import { ViewType, FoerderschwerpunkteListeManager } from "@ui";
 import { api } from "~/router/Api";
 import { routeFoerderschwerpunkteDaten } from "~/router/apps/schule/schulbezogen/foerderschwerpunkte/RouteFoerderschwerpunkteDaten";
@@ -47,7 +47,7 @@ export class RouteDataFoerderschwerpunkte extends RouteDataAuswahl<Foerderschwer
 	}
 
 	protected deleteMessage(id: number, foerderschwerpunkt: FoerderschwerpunktEintrag | null): string {
-		return `Förderschwerpunkt ${foerderschwerpunkt?.text ?? '???'} (ID: ${id}) wurde erfolgreich gelöscht.`;
+		return `Förderschwerpunkt ${foerderschwerpunkt?.kuerzel ?? '???'} (ID: ${id}) wurde erfolgreich gelöscht.`;
 	}
 
 	addFoerderschwerpunkt = async (data: Partial<FoerderschwerpunktEintrag>): Promise<void> => {
@@ -56,5 +56,30 @@ export class RouteDataFoerderschwerpunkte extends RouteDataAuswahl<Foerderschwer
 		this.commit();
 		await this.gotoDefaultView(result.id);
 	};
+
+	deleteCheck = (): [boolean, List<string>] => {
+		const errorLog = new ArrayList<string>();
+
+		if (!api.benutzerKompetenzen.has(BenutzerKompetenz.KATALOG_EINTRAEGE_LOESCHEN))
+			errorLog.add('Es liegt keine Berechtigung zum Löschen von Förderschwerpunkten vor.');
+
+		if (!this.manager.liste.auswahlExists())
+			errorLog.add('Es wurde kein Förderschwerpunkt zum Löschen ausgewählt.');
+
+		if (!this.manager.getIdsReferencedFoerderschwerpunkte().isEmpty())
+			errorLog.add(this.getErrorMessageForReferencedFoerderschwerpunkte());
+
+		return [errorLog.isEmpty(), errorLog];
+	};
+
+	private getErrorMessageForReferencedFoerderschwerpunkte(): string {
+		let errorMessage = 'Die folgenden Förderschwerpunkte sind an anderer Stelle referenziert und können daher nicht gelöscht werden:\n\n';
+		for (const id of this.manager.getIdsReferencedFoerderschwerpunkte()) {
+			const foerderschwerpunkt = this.manager.liste.get(id);
+			if (foerderschwerpunkt)
+				errorMessage += `- ${foerderschwerpunkt.kuerzelStatistik}: ${foerderschwerpunkt.kuerzel} \n`;
+		}
+		return errorMessage;
+	}
 
 }

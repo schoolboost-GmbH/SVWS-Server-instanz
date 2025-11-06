@@ -51,9 +51,9 @@
 				<svws-ui-spacing />
 				<svws-ui-input-wrapper :grid="2">
 					<svws-ui-select :disabled="!hatUpdateKompetenz" title="Förderschwerpunkt" :items="manager().foerderschwerpunktGetMenge()"
-						:item-text="i => i.text" autocomplete removable statistics v-model="foerderschwerpunkt" />
+						:item-text="textFoerderschwerpunkt" autocomplete removable statistics v-model="foerderschwerpunkt" />
 					<svws-ui-select :disabled="!hatUpdateKompetenz" title="Weiterer Förderschwerpunkt" :items="manager().foerderschwerpunktGetMenge()"
-						:item-text="i => i.text" autocomplete removable statistics v-model="foerderschwerpunkt2" />
+						:item-text="textFoerderschwerpunkt" autocomplete removable statistics v-model="foerderschwerpunkt2" />
 					<svws-ui-checkbox :disabled="!hatUpdateKompetenz" v-model="schwerbehinderung" statistics span="full">Schwerstbehinderung</svws-ui-checkbox>
 					<svws-ui-checkbox :disabled="!hatUpdateKompetenz" v-model="autismus" span="full"> Autismus </svws-ui-checkbox>
 					<svws-ui-checkbox :disabled="!hatUpdateKompetenz" v-model="aosf" span="full"> AOSF </svws-ui-checkbox>
@@ -67,8 +67,9 @@
 <script setup lang="ts">
 
 	import { computed } from 'vue';
-	import type { FoerderschwerpunktEintrag, JahrgangsDaten, KlassenDaten, LehrerListeEintrag, List, OrganisationsformKatalogEintrag, PrimarstufeSchuleingangsphaseBesuchsjahreKatalogEintrag } from "@core";
-	import { BilingualeSprache, AllgemeinbildendOrganisationsformen, BerufskollegOrganisationsformen, Klassenart, Schulform, Schulgliederung, ArrayList,
+	import type { FoerderschwerpunktEintrag, JahrgangsDaten, KlassenDaten, LehrerListeEintrag, List, OrganisationsformKatalogEintrag,
+		PrimarstufeSchuleingangsphaseBesuchsjahreKatalogEintrag } from "@core";
+	import { Foerderschwerpunkt, BilingualeSprache, AllgemeinbildendOrganisationsformen, BerufskollegOrganisationsformen, Klassenart, Schulform, Schulgliederung, ArrayList,
 		WeiterbildungskollegOrganisationsformen, DeveloperNotificationException, BenutzerKompetenz,
 		PrimarstufeSchuleingangsphaseBesuchsjahre } from "@core";
 
@@ -159,6 +160,14 @@
 		},
 		set: (value) => void props.patch({ foerderschwerpunkt2ID: value?.id ?? null }),
 	});
+
+	function textFoerderschwerpunkt(value: FoerderschwerpunktEintrag | null): string {
+		if (!value)
+			return "";
+		const wert = Foerderschwerpunkt.data().getWertBySchluessel(value.kuerzelStatistik);
+		return wert?.daten(schuljahr.value)?.text ?? "";
+
+	}
 
 	const aosf = computed<boolean>({
 		get: () => props.manager().lernabschnittGet().hatAOSF,

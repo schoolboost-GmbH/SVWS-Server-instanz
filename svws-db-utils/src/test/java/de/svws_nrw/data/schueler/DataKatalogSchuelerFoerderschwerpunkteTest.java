@@ -1,17 +1,18 @@
 package de.svws_nrw.data.schueler;
 
-import java.io.InputStream;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import de.svws_nrw.asd.types.schule.Foerderschwerpunkt;
 import de.svws_nrw.asd.utils.ASDCoreTypeUtils;
+import de.svws_nrw.core.data.SimpleOperationResponse;
 import de.svws_nrw.core.data.schule.FoerderschwerpunktEintrag;
-import de.svws_nrw.data.JSONMapper;
-import de.svws_nrw.db.Benutzer;
 import de.svws_nrw.db.DBEntityManager;
 import de.svws_nrw.db.dto.current.schild.schueler.DTOFoerderschwerpunkt;
 import de.svws_nrw.db.utils.ApiOperationException;
+import jakarta.persistence.TypedQuery;
 import jakarta.ws.rs.core.Response;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
@@ -19,14 +20,18 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.catchThrowable;
+import static org.assertj.core.api.Assertions.assertThatException;
+import static org.assertj.core.api.Assertions.assertThatNoException;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @DisplayName("Diese Klasse testet die Klasse DataKatalogSchuelerFoerderschwerpunkte")
@@ -45,60 +50,46 @@ class DataKatalogSchuelerFoerderschwerpunkteTest {
 	}
 
 	@Test
-	@DisplayName("setAttributesNotPatchable : id")
-	void setAttributesNotPatchableTest_id() {
-		final var dto = new DTOFoerderschwerpunkt(1L, "");
-		when(this.conn.queryByKey(DTOFoerderschwerpunkt.class, 1L)).thenReturn(dto);
-
-		try (var mapperMock = Mockito.mockStatic(JSONMapper.class)) {
-			mapperMock.when(() -> JSONMapper.toMap(any(InputStream.class))).thenReturn(Map.of("id", 99L));
-
-			final var throwable = catchThrowable(() -> this.data.patchAsResponse(1L, mock(InputStream.class)));
-
-			assertThat(throwable)
-					.isInstanceOf(ApiOperationException.class)
-					.hasMessage("Folgende Attribute werden für ein Patch nicht zugelassen: id.");
-		}
+	@DisplayName("setAttributesRequiredOnCreation: kuerzel")
+	void setAttributesRequiredOnCreationTest() {
+		assertThatException()
+				.isThrownBy(() -> this.data.add(Map.of("kuerzel", "test")))
+				.isInstanceOf(ApiOperationException.class)
+				.withMessage("Es werden weitere Attribute (kuerzelStatistik) benötigt, damit die Entität erstellt werden kann.")
+				.hasFieldOrPropertyWithValue("status", Response.Status.BAD_REQUEST);
 	}
 
 	@Test
-	@DisplayName("setAttributesNotPatchable : text")
-	void setAttributesNotPatchableTest_text() {
-		final var dto = new DTOFoerderschwerpunkt(1L, "");
-		when(this.conn.queryByKey(DTOFoerderschwerpunkt.class, 1L)).thenReturn(dto);
+	@DisplayName("setAttributesNotPatchable: id")
+	void setAttributesNotPatchableId() {
+		when(this.conn.queryByKey(DTOFoerderschwerpunkt.class, 1L)).thenReturn(mock(DTOFoerderschwerpunkt.class));
 
-		try (var mapperMock = Mockito.mockStatic(JSONMapper.class)) {
-			mapperMock.when(() -> JSONMapper.toMap(any(InputStream.class))).thenReturn(Map.of("text", 99L));
-
-			final var throwable = catchThrowable(() -> this.data.patchAsResponse(1L, mock(InputStream.class)));
-
-			assertThat(throwable)
-					.isInstanceOf(ApiOperationException.class)
-					.hasMessage("Folgende Attribute werden für ein Patch nicht zugelassen: text.");
-		}
+		assertThatException()
+				.isThrownBy(() -> this.data.patch(1L, Map.of("id", "test")))
+				.isInstanceOf(ApiOperationException.class)
+				.withMessage("Folgende Attribute werden für ein Patch nicht zugelassen: id.")
+				.hasFieldOrPropertyWithValue("status", Response.Status.BAD_REQUEST);
 	}
 
 	@Test
-	@DisplayName("setAttributesNotPatchable : kuerzelStatistik")
-	void setAttributesNotPatchableTest_kuerzelStatistik() {
-		final var dto = new DTOFoerderschwerpunkt(1L, "");
-		when(this.conn.queryByKey(DTOFoerderschwerpunkt.class, 1L)).thenReturn(dto);
+	@DisplayName("setAttributesNotPatchable: text")
+	void setAttributesNotPatchableText() {
+		when(this.conn.queryByKey(DTOFoerderschwerpunkt.class, 1L)).thenReturn(mock(DTOFoerderschwerpunkt.class));
 
-		try (var mapperMock = Mockito.mockStatic(JSONMapper.class)) {
-			mapperMock.when(() -> JSONMapper.toMap(any(InputStream.class))).thenReturn(Map.of("kuerzelStatistik", 99L));
-
-			final var throwable = catchThrowable(() -> this.data.patchAsResponse(1L, mock(InputStream.class)));
-
-			assertThat(throwable)
-					.isInstanceOf(ApiOperationException.class)
-					.hasMessage("Folgende Attribute werden für ein Patch nicht zugelassen: kuerzelStatistik.");
-		}
+		assertThatException()
+				.isThrownBy(() -> this.data.patch(1L, Map.of("text", "test")))
+				.isInstanceOf(ApiOperationException.class)
+				.withMessage("Folgende Attribute werden für ein Patch nicht zugelassen: text.")
+				.hasFieldOrPropertyWithValue("status", Response.Status.BAD_REQUEST);
 	}
+
 
 	@Test
 	@DisplayName("initDTO | Erfolg")
-	void initDTOTest() {
+	void initDTO() {
 		final var dto = new DTOFoerderschwerpunkt(1L, "");
+		dto.Sortierung = null;
+		dto.Sichtbar = null;
 
 		this.data.initDTO(dto, 2L, null);
 
@@ -110,7 +101,7 @@ class DataKatalogSchuelerFoerderschwerpunkteTest {
 
 	@Test
 	@DisplayName("getLongId | Erfolg")
-	void getLongIdTest() {
+	void getLongId() {
 		final var dto = new DTOFoerderschwerpunkt(1L, "");
 
 		assertThat(this.data.getLongId(dto)).isEqualTo(1L);
@@ -118,10 +109,10 @@ class DataKatalogSchuelerFoerderschwerpunkteTest {
 
 	@Test
 	@DisplayName("getById | Erfolg")
-	void getByIdTest() throws ApiOperationException {
+	void getById() throws ApiOperationException {
 		final var dto = new DTOFoerderschwerpunkt(1L, "");
 		when(this.conn.queryByKey(DTOFoerderschwerpunkt.class, 1L)).thenReturn(dto);
-		mockSchuljahr();
+
 		assertThat(this.data.getById(1L))
 				.isInstanceOf(FoerderschwerpunktEintrag.class)
 				.hasFieldOrPropertyWithValue("id", dto.ID);
@@ -129,59 +120,73 @@ class DataKatalogSchuelerFoerderschwerpunkteTest {
 
 	@Test
 	@DisplayName("getByID | ID can't be null")
-	void getByIdTest_IdNull() {
-		final var throwable = catchThrowable(() -> this.data.getById(null));
-
-		assertThat(throwable)
+	void getByIdNull() {
+		assertThatException()
+				.isThrownBy(() -> this.data.getById(null))
 				.isInstanceOf(ApiOperationException.class)
-				.hasMessage("Die ID des Förderschwerpunktes darf nicht null sein.")
+				.withMessage("Die ID des Förderschwerpunktes darf nicht null sein.")
 				.hasFieldOrPropertyWithValue("status", Response.Status.BAD_REQUEST);
 	}
 
 	@Test
 	@DisplayName("getByID | id not found")
-	void getByIdTest_IdNotFound() {
-		final var throwable = catchThrowable(() -> this.data.getById(99L));
+	void getByIdNotFound() {
+		when(this.conn.queryByKey(DTOFoerderschwerpunkt.class, 99L)).thenReturn(null);
 
-		assertThat(throwable)
+		assertThatException()
+				.isThrownBy(() -> this.data.getById(99L))
 				.isInstanceOf(ApiOperationException.class)
-				.hasMessage("Es wurde kein Förderschwerpunkt mit der ID 99 gefunden.")
+				.withMessage("Es wurde kein Förderschwerpunkt mit der ID 99 gefunden.")
 				.hasFieldOrPropertyWithValue("status", Response.Status.NOT_FOUND);
 	}
 
 	@Test
 	@DisplayName("getAll | Erfolg")
-	void getAllTest() {
-		final var dto1 = new DTOFoerderschwerpunkt(1L, "");
-		final var dto2 = new DTOFoerderschwerpunkt(2L, "");
+	void getAll() {
+		final var dto1 = new DTOFoerderschwerpunkt(1L, "kuerzel1");
+		final var dto2 = new DTOFoerderschwerpunkt(2L, "kuerzel2");
 		when(this.conn.queryAll(DTOFoerderschwerpunkt.class)).thenReturn(List.of(dto1, dto2));
-		mockSchuljahr();
+		final TypedQuery<Long> queryMock = mock(TypedQuery.class);
+		when(queryMock.setParameter(eq("ids"), any())).thenReturn(queryMock);
+		when(queryMock.getResultList()).thenReturn(List.of(1L));
+		when(conn.query(anyString(), eq(Long.class))).thenReturn(queryMock);
 
 		assertThat(this.data.getAll())
-				.isInstanceOf(List.class)
-				.isNotNull()
-				.isNotEmpty()
 				.hasSize(2)
-				.allSatisfy(item -> assertThat(item)
-						.isInstanceOf(FoerderschwerpunktEintrag.class)
-						.hasFieldOrProperty("id"));
+				.satisfiesExactly(
+						f1 -> assertThat(f1)
+								.isInstanceOf(FoerderschwerpunktEintrag.class)
+								.hasFieldOrPropertyWithValue("id", 1L)
+								.hasFieldOrPropertyWithValue("kuerzel", "kuerzel1")
+								.hasFieldOrPropertyWithValue("referenziertInAnderenTabellen", true),
+						f2 -> assertThat(f2)
+								.isInstanceOf(FoerderschwerpunktEintrag.class)
+								.hasFieldOrPropertyWithValue("id", 2L)
+								.hasFieldOrPropertyWithValue("kuerzel", "kuerzel2")
+								.hasFieldOrPropertyWithValue("referenziertInAnderenTabellen", false)
+				);
 	}
 
 	@Test
 	@DisplayName("getAll | Database empty")
-	void getAllTest_Empty() {
-		assertThat(this.data.getAll()).isNotNull().isEmpty();
+	void getAllEmpty() {
+		when(this.conn.queryAll(DTOFoerderschwerpunkt.class)).thenReturn(Collections.emptyList());
+		final TypedQuery<Long> queryMock = mock(TypedQuery.class);
+		when(queryMock.setParameter(eq("ids"), any())).thenReturn(queryMock);
+		when(queryMock.getResultList()).thenReturn(List.of(1L));
+		when(conn.query(anyString(), eq(Long.class))).thenReturn(queryMock);
+
+		assertThat(this.data.getAll()).isEmpty();
 	}
 
 	@Test
 	@DisplayName("map | Erfolg")
-	void mapTest() {
+	void map() {
 		final var dto = new DTOFoerderschwerpunkt(1L, "bezeichnung");
-		dto.Sichtbar = true;
-		dto.Sortierung = 123;
 		final var fs = Foerderschwerpunkt.BL.historie().getLast();
 		dto.StatistikKrz = fs.schluessel;
-		mockSchuljahr();
+		dto.Sichtbar = true;
+		dto.Sortierung = 123;
 
 		assertThat(this.data.map(dto))
 				.isInstanceOf(FoerderschwerpunktEintrag.class)
@@ -189,223 +194,380 @@ class DataKatalogSchuelerFoerderschwerpunkteTest {
 				.hasFieldOrPropertyWithValue("kuerzel", "bezeichnung")
 				.hasFieldOrPropertyWithValue("kuerzelStatistik", fs.schluessel)
 				.hasFieldOrPropertyWithValue("istSichtbar", true)
-				.hasFieldOrPropertyWithValue("sortierung", dto.Sortierung)
-				.hasFieldOrPropertyWithValue("text", fs.text);
+				.hasFieldOrPropertyWithValue("sortierung", dto.Sortierung);
 	}
 
-	private void mockSchuljahr() {
-		final var userMock = mock(Benutzer.class);
-		when(userMock.schuleGetSchuljahr()).thenReturn(2015);
-		when(this.conn.getUser()).thenReturn(userMock);
+	@Test
+	@DisplayName("map | bezeichnung null")
+	void mapBezeichnungISNull() {
+		final var dto = new DTOFoerderschwerpunkt(1L, "bezeichnung");
+		dto.Bezeichnung = null;
+
+		assertThat(this.data.map(dto))
+				.isInstanceOf(FoerderschwerpunktEintrag.class)
+				.hasFieldOrPropertyWithValue("kuerzel", "");
+	}
+
+	@Test
+	@DisplayName("map | kuerzelStatistik null")
+	void mapKuerzelStatistikIsNull() {
+		final var dto = new DTOFoerderschwerpunkt(1L, "bezeichnung");
+		dto.StatistikKrz = null;
+
+		assertThat(this.data.map(dto))
+				.isInstanceOf(FoerderschwerpunktEintrag.class)
+				.hasFieldOrPropertyWithValue("kuerzelStatistik", "");
+	}
+
+	@Test
+	@DisplayName("map | sichtbar null")
+	void mapSichtbarIsNull() {
+		final var dto = new DTOFoerderschwerpunkt(1L, "bezeichnung");
+		dto.Sichtbar = null;
+
+		assertThat(this.data.map(dto))
+				.isInstanceOf(FoerderschwerpunktEintrag.class)
+				.hasFieldOrPropertyWithValue("istSichtbar", false);
+	}
+
+	@Test
+	@DisplayName("map | sortierung null")
+	void mapSortierungIsNull() {
+		final var dto = new DTOFoerderschwerpunkt(1L, "bezeichnung");
+		dto.Sortierung = null;
+
+		assertThat(this.data.map(dto))
+				.isInstanceOf(FoerderschwerpunktEintrag.class)
+				.hasFieldOrPropertyWithValue("sortierung", 32000);
 	}
 
 	@Test
 	@DisplayName("mapAttribute | idWrong")
-	void mapAttributeTest_idWrong() {
-		final var dto  = new DTOFoerderschwerpunkt(1L, "bezeichnung");
-
-		final var throwable = catchThrowable(() -> this.data.mapAttribute(dto, "id", 2L, null));
-
-		assertThat(throwable)
+	void mapAttributeIdIsWrong() {
+		assertThatException()
+				.isThrownBy(() -> this.data.mapAttribute(mock(DTOFoerderschwerpunkt.class), "id", 2L, null))
 				.isInstanceOf(ApiOperationException.class)
-				.hasMessage("Die ID 2 des Patches ist null oder stimmt nicht mit der ID 1 in der Datenbank überein.")
+				.withMessage("Die ID 2 des Patches ist null oder stimmt nicht mit der ID 0 in der Datenbank überein.")
 				.hasFieldOrPropertyWithValue("status", Response.Status.BAD_REQUEST);
 	}
 
 	@Test
 	@DisplayName("mapAttribute | id")
-	void mapAttributeTest_id() {
+	void mapAttributeId() {
 		final var dto  = new DTOFoerderschwerpunkt(1L, "bezeichnung");
 
 		assertDoesNotThrow(() -> this.data.mapAttribute(dto, "id", 1L, null));
 	}
 
 	@Test
-	@DisplayName("mapAttribute | kuerzel")
-	void mapAttributeTest_kuerzel() throws ApiOperationException {
+	@DisplayName("patch | kuerzel")
+	void patchKuerzel() throws ApiOperationException {
 		final var dto = new DTOFoerderschwerpunkt(1L, "bezeichnung");
+		when(this.conn.queryByKey(DTOFoerderschwerpunkt.class, 1L)).thenReturn(dto);
+		when(this.conn.transactionPersist(any())).thenReturn(true);
 
-		this.data.mapAttribute(dto, "kuerzel", "test", null);
+		this.data.patch(1L, Map.of("kuerzel", "neu"));
 
-		assertThat(dto.Bezeichnung).isEqualTo("test");
+		assertThat(dto.Bezeichnung).isEqualTo("neu");
 	}
 
 	@Test
-	@DisplayName("mapAttribute | kuerzel > 50 Zeichen")
-	void mapAttributeTest_kuerzelTooLong() {
+	@DisplayName("patch | kuerzel > 50 Zeichen")
+	void patchKuerzelIsTooLong() {
 		final var dto = new DTOFoerderschwerpunkt(1L, "bezeichnung");
+		when(this.conn.queryByKey(DTOFoerderschwerpunkt.class, 1L)).thenReturn(dto);
 
-		final var throwable = catchThrowable(() -> this.data.mapAttribute(
-				dto, "kuerzel", "Dieser Text ist viel zu lang, Dieser Text ist viel zu lang, Dieser Text ist viel zu lang", null));
-
-		assertThat(throwable)
+		assertThatException()
+				.isThrownBy(() -> this.data.patch(1L, Map.of("kuerzel", "Dieser Text ist viel zu lang, Dieser Text ist viel zu lang, Dieser Text ist viel zu lang")))
 				.isInstanceOf(ApiOperationException.class)
-				.hasMessage("Attribut kuerzel: Die Länge des Strings ist auf 50 Zeichen limitiert.")
+				.withMessage("Attribut kuerzel: Die Länge des Strings ist auf 50 Zeichen limitiert.")
 				.hasFieldOrPropertyWithValue("status", Response.Status.BAD_REQUEST);
 	}
 
 	@Test
-	@DisplayName("mapAttribute | kuerzel Null")
-	void mapAttributeTest_kuerzelNull() {
-		final var dto = new DTOFoerderschwerpunkt(1L, "bezeichnung");
-		dto.Bezeichnung = "abc";
+	@DisplayName("patch | kuerzel Null")
+	void patchKuerzelIsNull() {
+		when(this.conn.queryByKey(DTOFoerderschwerpunkt.class, 1L)).thenReturn(mock(DTOFoerderschwerpunkt.class));
+		final var map = new HashMap<String, Object>();
+		map.put("kuerzel", null);
 
-		final var throwable = catchThrowable(() -> this.data.mapAttribute(dto, "kuerzel", null, null));
-
-		assertThat(throwable)
+		assertThatException()
+				.isThrownBy(() -> this.data.patch(1L, map))
 				.isInstanceOf(ApiOperationException.class)
-				.hasMessage("Attribut kuerzel: Der Wert null ist nicht erlaubt.")
+				.withMessage("Attribut kuerzel: Der Wert null ist nicht erlaubt.")
 				.hasFieldOrPropertyWithValue("status", Response.Status.BAD_REQUEST);
 	}
 
 	@Test
-	@DisplayName("mapAttribute | kuerzel doppelt vergeben")
-	void mapAttribute_kuerzelDoppelt() {
-		final var expectedDTO = new DTOFoerderschwerpunkt(1L, "abc");
+	@DisplayName("patch | kuerzel empty")
+	void patchKuerzelIsEmpty() {
+		when(this.conn.queryByKey(DTOFoerderschwerpunkt.class, 1L)).thenReturn(mock(DTOFoerderschwerpunkt.class));
+
+		assertThatException()
+				.isThrownBy(() -> this.data.patch(1L, Map.of("kuerzel", "")))
+				.isInstanceOf(ApiOperationException.class)
+				.withMessage("Attribut kuerzel: Ein leerer String ist hier nicht erlaubt.")
+				.hasFieldOrPropertyWithValue("status", Response.Status.BAD_REQUEST);
+	}
+
+	@Test
+	@DisplayName("patch | kuerzel is blank")
+	void patchKuerzelIsBlank() throws ApiOperationException {
+		final var dto = new DTOFoerderschwerpunkt(1L, "bezeichnung");
+		when(this.conn.queryByKey(DTOFoerderschwerpunkt.class, 1L)).thenReturn(dto);
+		when(this.conn.transactionPersist(any())).thenReturn(true);
+
+		this.data.patch(1L, Map.of("kuerzel", "    "));
+
+		verify(this.conn, never()).queryAll(DTOFoerderschwerpunkt.class);
+		assertThat(dto.Bezeichnung).isEqualTo("bezeichnung");
+	}
+
+	@Test
+	@DisplayName("patch | kuerzel doesn't change")
+	void patchKuerzelDoesNotChange() throws ApiOperationException {
+		final var dto = new DTOFoerderschwerpunkt(1L, "bezeichnung");
+		when(this.conn.queryByKey(DTOFoerderschwerpunkt.class, 1L)).thenReturn(dto);
+		when(this.conn.transactionPersist(any())).thenReturn(true);
+
+		this.data.patch(1L, Map.of("kuerzel", "bezeichnung"));
+
+		verify(this.conn, never()).queryAll(DTOFoerderschwerpunkt.class);
+		assertThat(dto.Bezeichnung).isEqualTo("bezeichnung");
+	}
+
+	@Test
+	@DisplayName("patch | kuerzel already used")
+	void patchKuerzelAlreadyUsed() {
+		when(this.conn.queryByKey(DTOFoerderschwerpunkt.class, 1L)).thenReturn(mock(DTOFoerderschwerpunkt.class));
 		when(this.conn.queryAll(DTOFoerderschwerpunkt.class)).thenReturn(List.of(new DTOFoerderschwerpunkt(2L, "test")));
 
-		final var throwable = catchThrowable(() -> this.data.mapAttribute(expectedDTO, "kuerzel", "TEST", null));
-
-		assertThat(throwable)
+		assertThatException()
+				.isThrownBy(() -> this.data.patch(1L, Map.of("kuerzel", "test")))
 				.isInstanceOf(ApiOperationException.class)
-				.hasMessage("Das Kürzel TEST darf nicht doppelt vergeben werden")
+				.withMessage("Das Kürzel test darf nicht doppelt vergeben werden")
 				.hasFieldOrPropertyWithValue("status", Response.Status.BAD_REQUEST);
 	}
 
 	@Test
-	@DisplayName("mapAttribute | bezeichnung case aendern im gleichen Objekt")
-	void mapAttributeTest_changeCaseOfBezeichnung() throws ApiOperationException {
-		final var expectedDTO = new DTOFoerderschwerpunkt(1L, "test");
-		when(this.conn.queryAll(DTOFoerderschwerpunkt.class)).thenReturn(List.of(expectedDTO));
+	@DisplayName("patch | kuerzel already used different case")
+	void patchKuerzelAlreadyUsedWithDifferentCase() {
+		when(this.conn.queryByKey(DTOFoerderschwerpunkt.class, 1L)).thenReturn(mock(DTOFoerderschwerpunkt.class));
+		when(this.conn.queryAll(DTOFoerderschwerpunkt.class)).thenReturn(List.of(new DTOFoerderschwerpunkt(2L, "TEST")));
 
-		this.data.mapAttribute(expectedDTO, "kuerzel", "TEST", null);
-
-		assertThat(expectedDTO.Bezeichnung).isEqualTo("TEST");
+		assertThatException()
+				.isThrownBy(() -> this.data.patch(1L, Map.of("kuerzel", "test")))
+				.isInstanceOf(ApiOperationException.class)
+				.withMessage("Das Kürzel test darf nicht doppelt vergeben werden")
+				.hasFieldOrPropertyWithValue("status", Response.Status.BAD_REQUEST);
 	}
 
 	@Test
-	@DisplayName("mapAttribute | bezeichnung dto is null")
-	void mapAttributeTest_bezeichnungDtoISNull() throws ApiOperationException {
+	@DisplayName("patch | kuerzel change case in same object")
+	void patchKuerzelChangeCase() throws ApiOperationException {
+		final var dto = new DTOFoerderschwerpunkt(1L, "test");
+		when(conn.queryAll(DTOFoerderschwerpunkt.class)).thenReturn(List.of(dto));
+		final var newDto = new DTOFoerderschwerpunkt(2L, "abc");
+		when(this.conn.queryByKey(DTOFoerderschwerpunkt.class, 2L)).thenReturn(newDto);
+		when(this.conn.transactionPersist(any())).thenReturn(true);
+
+		this.data.patch(2L, Map.of("kuerzel", "ABC"));
+
+		assertThat(newDto.Bezeichnung).isEqualTo("ABC");
+	}
+
+	@Test
+	@DisplayName("patch | bezeichnung dto is null | make sure no Nullpointer is thrown in equalsIgnoreCase check")
+	void patchKuerzelInDtoISNull() {
 		final var dto = new DTOFoerderschwerpunkt(1L, "123");
 		dto.Bezeichnung = null;
-		final var newDto = new DTOFoerderschwerpunkt(1L, "abc");
 		when(conn.queryAll(DTOFoerderschwerpunkt.class)).thenReturn(List.of(dto));
+		final var newDto = new DTOFoerderschwerpunkt(2L, "abc");
+		when(this.conn.queryByKey(DTOFoerderschwerpunkt.class, 2L)).thenReturn(newDto);
+		when(this.conn.transactionPersist(any())).thenReturn(true);
 
-		this.data.mapAttribute(newDto, "kuerzel", "test", null);
-
-		assertThat(newDto.Bezeichnung).isEqualTo("test");
+		assertThatNoException()
+				.isThrownBy(() -> this.data.patch(2L, Map.of("kuerzel", "test")));
 	}
 
 	@Test
-	@DisplayName("mapAttribute | istSichtbar")
-	void mapAttributeTest_istSichtbar() throws ApiOperationException {
+	@DisplayName("patch | istSichtbar")
+	void patchIstSichtbar() throws ApiOperationException {
 		final var dto = new DTOFoerderschwerpunkt(1L, "bezeichnung");
 		dto.Sichtbar = false;
+		when(this.conn.queryByKey(DTOFoerderschwerpunkt.class, 1L)).thenReturn(dto);
+		when(this.conn.transactionPersist(any())).thenReturn(true);
 
-		this.data.mapAttribute(dto, "istSichtbar", true, null);
+		this.data.patch(1L, Map.of("istSichtbar", true));
 
 		assertThat(dto.Sichtbar).isTrue();
 	}
 
 	@Test
-	@DisplayName("mapAttribute | istSichtbarNull")
-	void mapAttributeTest_istSichtbarNull() {
-		final var dto = new DTOFoerderschwerpunkt(1L, "bezeichnung");
+	@DisplayName("patch | istSichtbar is null")
+	void patchIstSichtbarIsNull() {
+		when(this.conn.queryByKey(DTOFoerderschwerpunkt.class, 1L)).thenReturn(mock(DTOFoerderschwerpunkt.class));
+		final var map = new HashMap<String, Object>();
+		map.put("istSichtbar", null);
 
-		final var throwable = catchThrowable(() -> this.data.mapAttribute(dto, "istSichtbar", null, null));
-
-		assertThat(throwable)
+		assertThatException()
+				.isThrownBy(() -> this.data.patch(1L, map))
 				.isInstanceOf(ApiOperationException.class)
-				.hasMessage("Attribut istSichtbar: Der Wert null ist nicht erlaubt")
+				.withMessage("Attribut istSichtbar: Der Wert null ist nicht erlaubt")
 				.hasFieldOrPropertyWithValue("status", Response.Status.BAD_REQUEST);
 	}
 
 	@Test
-	@DisplayName("mapAttribute | Sortierung")
-	void mapAttributeTest_Sortierung() throws ApiOperationException {
+	@DisplayName("patch | Sortierung")
+	void patchSortierung() throws ApiOperationException {
 		final var dto = new DTOFoerderschwerpunkt(1L, "bezeichnung");
 		dto.Sortierung = 123;
+		when(this.conn.queryByKey(DTOFoerderschwerpunkt.class, 1L)).thenReturn(dto);
+		when(this.conn.transactionPersist(any())).thenReturn(true);
 
-		this.data.mapAttribute(dto, "sortierung", 345, null);
+		this.data.patch(1L, Map.of("sortierung", 345));
 
 		assertThat(dto.Sortierung).isEqualTo(345);
-
 	}
 
 	@Test
-	@DisplayName("mapAttribute | SortierungNull")
-	void mapAttributeTest_SortierungNull() {
-		final var dto = new DTOFoerderschwerpunkt(1L, "bezeichnung");
+	@DisplayName("patch | sortierung is null")
+	void patchSortierungIsNull() {
+		when(this.conn.queryByKey(DTOFoerderschwerpunkt.class, 1L)).thenReturn(mock(DTOFoerderschwerpunkt.class));
+		final var map = new HashMap<String, Object>();
+		map.put("sortierung", null);
 
-		final var throwable = catchThrowable(() -> this.data.mapAttribute(dto, "sortierung", null, null));
-
-		assertThat(throwable)
+		assertThatException()
+				.isThrownBy(() -> this.data.patch(1L, map))
 				.isInstanceOf(ApiOperationException.class)
-				.hasMessage("Attribut sortierung: Der Wert null ist nicht erlaubt")
+				.withMessage("Attribut sortierung: Der Wert null ist nicht erlaubt")
 				.hasFieldOrPropertyWithValue("status", Response.Status.BAD_REQUEST);
-
 	}
 
 	@Test
 	@DisplayName("mapAttribute | kuerzelStatistik")
-	void mapAttributeTest_kuerzelStatistik() throws ApiOperationException {
+	void mapAttributeKuerzelStatistik() throws ApiOperationException {
+		final var dto = new DTOFoerderschwerpunkt(1L, "bezeichnung");
+		dto.StatistikKrz = "xy";
+		final var fs = Foerderschwerpunkt.BL.historie().getLast();
+
+		this.data.mapAttribute(dto, "kuerzelStatistik", fs.kuerzel, null);
+
+		assertThat(dto.StatistikKrz).isEqualTo(fs.kuerzel);
+	}
+
+	@Test
+	@DisplayName("mapAttribute | kuerzelStatistik Zu lang")
+	void mapAttributeKuerzelStatistikIsTooLong() {
+		assertThatException()
+				.isThrownBy(() -> this.data.mapAttribute(mock(DTOFoerderschwerpunkt.class), "kuerzelStatistik", "Zu viele Zeichen", null))
+				.isInstanceOf(ApiOperationException.class)
+				.withMessage("Attribut kuerzelStatistik: Die Länge des Strings ist auf 2 Zeichen limitiert.")
+				.hasFieldOrPropertyWithValue("status", Response.Status.BAD_REQUEST);
+	}
+
+	@Test
+	@DisplayName("mapAttribute | kuerzelStatistik is wrong")
+	void mapAttributeKuerzelStatistikIsWrong() {
+		assertThatException()
+				.isThrownBy(() -> this.data.mapAttribute(mock(DTOFoerderschwerpunkt.class), "kuerzelStatistik", "-1", null))
+				.isInstanceOf(ApiOperationException.class)
+				.withMessage("Zum angegebenen Kürzel -1 wurde kein passender Förderschwerpunkt gefunden.")
+				.hasFieldOrPropertyWithValue("status", Response.Status.BAD_REQUEST);
+	}
+
+	@Test
+	@DisplayName("mapAttribute | kuerzelStatistik is null")
+	void mapAttributeKuerzelStatistikIsNull() {
+		assertThatException()
+				.isThrownBy(() -> this.data.mapAttribute(mock(DTOFoerderschwerpunkt.class), "kuerzelStatistik", null, null))
+				.isInstanceOf(ApiOperationException.class)
+				.withMessage("Attribut kuerzelStatistik: Der Wert null ist nicht erlaubt.")
+				.hasFieldOrPropertyWithValue("status", Response.Status.BAD_REQUEST);
+	}
+
+	@Test
+	@DisplayName("mapAttribute | kuerzelStatistik is empty")
+	void mapAttributeKuerzelStatistikIsEmpty() {
+		assertThatException()
+				.isThrownBy(() -> this.data.mapAttribute(mock(DTOFoerderschwerpunkt.class), "kuerzelStatistik", "", null))
+				.isInstanceOf(ApiOperationException.class)
+				.withMessage("Attribut kuerzelStatistik: Ein leerer String ist hier nicht erlaubt.")
+				.hasFieldOrPropertyWithValue("status", Response.Status.BAD_REQUEST);
+	}
+
+	@Test
+	@DisplayName("patch | kuerzelStatistik is blank")
+	void patchKuerzelStatistikIsBlank() throws ApiOperationException {
+		final var dto = new DTOFoerderschwerpunkt(1L, "bezeichnung");
+		dto.StatistikKrz = "ab";
+
+		this.data.mapAttribute(dto, "kuerzelStatistik", "  ", null);
+
+		verify(this.conn, never()).queryAll(DTOFoerderschwerpunkt.class);
+		assertThat(dto.StatistikKrz).isEqualTo("ab");
+	}
+
+	@Test
+	@DisplayName("patch | kuerzelStatistik doesn't change")
+	void patchKuerzelStatistikDoesNotChange() throws ApiOperationException {
 		final var dto = new DTOFoerderschwerpunkt(1L, "bezeichnung");
 		dto.StatistikKrz = "ab";
 
 		this.data.mapAttribute(dto, "kuerzelStatistik", "ab", null);
 
+		verify(this.conn, never()).queryAll(DTOFoerderschwerpunkt.class);
 		assertThat(dto.StatistikKrz).isEqualTo("ab");
-	}
-
-	@Test
-	@DisplayName("mapAttribute | kuerzelStatistik Zu lang")
-	void mapAttributeTest_kuerzelStatistikTooLong() {
-		final var dto = new DTOFoerderschwerpunkt(1L, "bezeichnung");
-
-		final var throwable = catchThrowable(() -> this.data.mapAttribute(dto, "kuerzelStatistik", "Zu viele Zeichen", null));
-
-		assertThat(throwable)
-				.isInstanceOf(ApiOperationException.class)
-				.hasMessage("Attribut kuerzelStatistik: Die Länge des Strings ist auf 2 Zeichen limitiert.")
-				.hasFieldOrPropertyWithValue("status", Response.Status.BAD_REQUEST);
-	}
-
-	@Test
-	@DisplayName("mapAttribute | kuerzelStatistik | falsches Kürzel")
-	void mapAttribute_kuerzelStatistik_wrong() {
-		final var dto = new DTOFoerderschwerpunkt(1L, "bezeichnung");
-
-		final var throwable = catchThrowable(() -> this.data.mapAttribute(dto, "kuerzelStatistik", "ßß", null));
-
-		assertThat(throwable)
-				.isInstanceOf(ApiOperationException.class)
-				.hasMessage("Zum angegebenen Kürzel ßß wurde kein passender Förderschwerpunkt gefunden.")
-				.hasFieldOrPropertyWithValue("status", Response.Status.BAD_REQUEST);
-	}
-
-	@Test
-	@DisplayName("mapAttribute | kuerzelStatistik")
-	void mapAttribute_kuerzelStatistik() throws ApiOperationException {
-		final var dto = new DTOFoerderschwerpunkt(1L, "bezeichnung");
-		dto.StatistikKrz = "ab";
-		final var key = Foerderschwerpunkt.BL.historie().getLast().schluessel;
-
-		this.data.mapAttribute(dto, "kuerzelStatistik", key, null);
-
-		assertThat(dto.StatistikKrz).isEqualTo(key);
 	}
 
 	@Test
 	@DisplayName("mapAttribute | unknown argument")
 	void mapAttribute_unknownArgument() {
-		final var dto = new DTOFoerderschwerpunkt(1L, "bezeichnung");
-
-		final var throwable = catchThrowable(() -> this.data.mapAttribute(dto, "unknown", null, null));
-
-		assertThat(throwable)
+		assertThatException()
+				.isThrownBy(() -> this.data.mapAttribute(mock(DTOFoerderschwerpunkt.class), "unknown", null, null))
 				.isInstanceOf(ApiOperationException.class)
-				.hasMessage("Die Daten des Patches enthalten das unbekannte Attribut unknown.")
+				.withMessage("Die Daten des Patches enthalten das unbekannte Attribut unknown.")
 				.hasFieldOrPropertyWithValue("status", Response.Status.BAD_REQUEST);
+	}
+
+	@Test
+	@DisplayName("checkBeforeDeletionWithSimpleOperationResponse")
+	void checkBeforeDeletionWithSimpleOperationResponse() {
+		final TypedQuery<Long> queryMock = mock(TypedQuery.class);
+		when(queryMock.setParameter(eq("ids"), any())).thenReturn(queryMock);
+		when(queryMock.getResultList()).thenReturn(List.of(1L));
+		when(conn.query(anyString(), eq(Long.class))).thenReturn(queryMock);
+		final var response = new SimpleOperationResponse();
+		response.id = 1L;
+		response.success = true;
+		final var responses = Map.of(response.id, response);
+		final var dto = new DTOFoerderschwerpunkt(1L, "abc");
+
+		this.data.checkBeforeDeletionWithSimpleOperationResponse(List.of(dto), responses);
+
+		assertThat(responses.get(1L))
+				.hasFieldOrPropertyWithValue("success", false)
+				.extracting(r -> r.log.getFirst())
+				.isEqualTo("Der Förderschwerpunkt mit dem Kürzel abc ist in der Datenbank referenziert und kann daher nicht gelöscht werden.");
+	}
+
+	@Test
+	@DisplayName("checkBeforeDeletionWithSimpleOperationResponseTest | foerderschwerpunkt not referenced")
+	void checkBeforeDeletionWithSimpleOperationResponseFoerderschwerpunktNotReferenced() {
+		final TypedQuery<Long> queryMock = mock(TypedQuery.class);
+		when(queryMock.setParameter(eq("ids"), any())).thenReturn(queryMock);
+		when(queryMock.getResultList()).thenReturn(List.of(2L));
+		when(conn.query(anyString(), eq(Long.class))).thenReturn(queryMock);
+		final var response = new SimpleOperationResponse();
+		response.id = 1L;
+		response.success = true;
+		final var responses = Map.of(response.id, response);
+		final var dto = new DTOFoerderschwerpunkt(1L, "abc");
+
+		this.data.checkBeforeDeletionWithSimpleOperationResponse(List.of(dto), responses);
+
+		assertThat(response).hasFieldOrPropertyWithValue("success", true);
+		assertThat(response.log).isEmpty();
 	}
 
 }

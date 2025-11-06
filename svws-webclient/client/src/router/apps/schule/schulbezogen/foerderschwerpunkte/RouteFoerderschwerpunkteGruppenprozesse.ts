@@ -1,7 +1,7 @@
 import type { RouteLocationNormalized, RouteLocationRaw } from "vue-router";
 import type { RouteFoerderschwerpunkte } from "~/router/apps/schule/schulbezogen/foerderschwerpunkte/RouteFoerderschwerpunkte";
 import type { FoerderschwerpunkteGruppenprozesseProps }
-	from "~/components/schule/schulbezogen/foerderschwerpunkte/gruppenprozesse/SFoerderschwerpunkteGruppenprozesseProps";
+	from "~/components/schule/schulbezogen/foerderschwerpunkte/gruppenprozesse/FoerderschwerpunkteGruppenprozesseProps";
 import { BenutzerKompetenz, Schulform, ServerMode } from "@core";
 import { RouteNode } from "~/router/RouteNode";
 import { ViewType } from "@ui";
@@ -10,7 +10,7 @@ import { routeApp } from "~/router/apps/RouteApp";
 import { routeFoerderschwerpunkte } from "~/router/apps/schule/schulbezogen/foerderschwerpunkte/RouteFoerderschwerpunkte";
 
 const SFoerderschwerpunkteGruppenprozesse = () => import(
-	"~/components/schule/schulbezogen/foerderschwerpunkte/gruppenprozesse/SFoerderschwerpunkteGruppenprozesse.vue");
+	"~/components/schule/schulbezogen/foerderschwerpunkte/gruppenprozesse/FoerderschwerpunkteGruppenprozesse.vue");
 
 export class RouteFoerderschwerpunkteGruppenprozesse extends RouteNode<any, RouteFoerderschwerpunkte> {
 
@@ -32,7 +32,8 @@ export class RouteFoerderschwerpunkteGruppenprozesse extends RouteNode<any, Rout
 			serverMode: api.mode,
 			schulform: api.schulform,
 			benutzerKompetenzen: api.benutzerKompetenzen,
-			deleteFoerderschwerpunkte: routeFoerderschwerpunkte.data.delete,
+			delete: routeFoerderschwerpunkte.data.delete,
+			deleteCheck: routeFoerderschwerpunkte.data.deleteCheck,
 			manager: () => routeFoerderschwerpunkte.data.manager,
 		};
 	}
