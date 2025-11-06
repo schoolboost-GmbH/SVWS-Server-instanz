@@ -2,6 +2,7 @@ package de.svws_nrw.data.stundenplan;
 
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -395,6 +396,20 @@ public final class DataStundenplanUnterricht extends DataManager<Long> {
 			if (dto.Stundenplan_ID != this.idStundenplan)
 				throw new ApiOperationException(Status.BAD_REQUEST, "Der Zeitraster-Eintrag eines Unterrichtes gehört nicht zu dem angegebenen Stundenplan.");
 		return super.deleteBasicMultiple(ids, DTOStundenplanUnterricht.class, dtoMapper);
+	}
+
+	/**
+	 * Gibt die Unterrichte zu den Zeitrastern zurück.
+	 *
+	 * @param conn            die Datenbankverbindung
+	 * @param idsZeitraster   die IDs der Pausenzeiten
+	 *
+	 * @return die Liste der Unterrichte
+	 *
+	 */
+	public static List<DTOStundenplanUnterricht> getDTOsByZeitrasterIds(final DBEntityManager conn, final Collection<Long> idsZeitraster) {
+		return conn.queryList(DTOStundenplanUnterricht.QUERY_LIST_BY_ZEITRASTER_ID,
+				DTOStundenplanUnterricht.class, idsZeitraster);
 	}
 
 }

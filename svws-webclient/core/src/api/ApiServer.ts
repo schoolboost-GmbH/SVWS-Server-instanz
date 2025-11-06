@@ -18060,6 +18060,36 @@ export class ApiServer extends BaseApi {
 
 
 	/**
+	 * Implementierung der POST-Methode addStundenplanAsCopy für den Zugriff auf die URL https://{hostname}/db/{schema}/stundenplan/create/from/{copyof : \d+}
+	 *
+	 * Erstellt einen neuen Stundenplan und gibt die zugehörigen Daten zurück. Dabei wird geprüft, ob der SVWS-Benutzer die notwendige Berechtigung zum Erstellen eines Stundenplans besitzt.
+	 *
+	 * Mögliche HTTP-Antworten:
+	 *   Code 201: Der Stundenplan wurde erfolgreich erstellt.
+	 *     - Mime-Type: application/json
+	 *     - Rückgabe-Typ: Stundenplan
+	 *   Code 403: Der SVWS-Benutzer hat keine Rechte, um einen Stundenplan anzulegen.
+	 *   Code 404: Benötigte Daten wurden nicht gefunden
+	 *   Code 500: Unspezifizierter Fehler (z.B. beim Datenbankzugriff)
+	 *
+	 * @param {Partial<Stundenplan>} data - der Request-Body für die HTTP-Methode
+	 * @param {string} schema - der Pfad-Parameter schema
+	 * @param {number} copyof - der Pfad-Parameter copyof
+	 *
+	 * @returns Der Stundenplan wurde erfolgreich erstellt.
+	 */
+	public async addStundenplanAsCopy(data : Partial<Stundenplan>, schema : string, copyof : number) : Promise<Stundenplan> {
+		const path = "/db/{schema}/stundenplan/create/from/{copyof : \\d+}"
+			.replace(/{schema\s*(:[^{}]+({[^{}]+})*)?}/g, schema)
+			.replace(/{copyof\s*(:[^{}]+({[^{}]+})*)?}/g, copyof.toString());
+		const body : string = Stundenplan.transpilerToJSONPatch(data);
+		const result : string = await super.postJSON(path, body);
+		const text = result;
+		return Stundenplan.transpilerFromJSON(text);
+	}
+
+
+	/**
 	 * Implementierung der DELETE-Methode deleteStundenplaene für den Zugriff auf die URL https://{hostname}/db/{schema}/stundenplan/delete/multiple
 	 *
 	 * Entfernt mehrere Stundenpläne. Dabei wird geprüft, ob alle Vorbedingungen zum Entfernender Stundenpläne erfüllt sind und der SVWS-Benutzer die notwendige Berechtigung hat.

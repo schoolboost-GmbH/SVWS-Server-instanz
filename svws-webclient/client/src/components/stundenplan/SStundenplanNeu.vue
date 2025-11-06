@@ -5,6 +5,12 @@
 				<svws-ui-input-wrapper>
 					<div class="flex gap-1"><svws-ui-checkbox type="toggle" v-model="data.aktiv" :disabled="(data.aktiv === false && !manager().istKonfliktfreiZuAktivenStundenplaenen(data.gueltigAb, data.gueltigBis))" />Stundenplan aktiv</div>
 					<svws-ui-text-input class="contentFocusField" :disabled="!hatUpdateKompetenz" placeholder="Bezeichnung" :required="true" :max-len="150" :valid="StundenplanListeManager.validateBezeichnung" v-model="data.bezeichnungStundenplan" type="text" />
+					<svws-ui-select
+							title="Datenübernahme aus Stundenplan"
+							:items="alleStundenplaene"
+							:item-text="i => i.id === manager().getStundenplanVorlage().id ? 'Keine Datenübernahme' : (i.bezeichnung + ' (' + (i.aktiv ? 'aktiv, ' : '') + DateUtils.gibDatumGermanFormat(i.gueltigAb) + '–' + DateUtils.gibDatumGermanFormat(i.gueltigBis) + ')')"
+							v-model="copyOf"
+							ref="select" />
 					<svws-ui-input-wrapper :grid="2">
 						<svws-ui-select title="Wochentypmodell" :items="[0,2,3,4,5]" :item-text="i=> wochenTypModell[i] || ''" v-model="data.wochenTypModell" ref="select" />
 						<svws-ui-input-number v-if="data.wochenTypModell! > 4" placeholder="Wochentypmodell" :model-value="data.wochenTypModell! < 5 ? 5 : data.wochenTypModell!" @change="modell => { if (modell !== null) data.wochenTypModell = modell }" :min="5" :max="100" />
@@ -27,7 +33,7 @@
 
 <script setup lang="ts">
 
-	import { DateUtils, type Stundenplan, DeveloperNotificationException, ValidatorFehlerart } from "@core";
+	import { DateUtils, type Stundenplan, DeveloperNotificationException, ValidatorFehlerart, StundenplanListeEintrag } from "@core";
 	import { StundenplanListeManager } from "@ui";
 
 	import { ref, onMounted, watch, computed } from "vue";
@@ -39,13 +45,16 @@
 
 	type PartialExcept<T, K extends keyof T> = Partial<T> & Required<Pick<T, K>>;
 
+	const copyOf = ref<StundenplanListeEintrag>(props.manager().getStundenplanVorlage());
+	const alleStundenplaene = ref<StundenplanListeEintrag[]>([]);
+
 	const data = ref<PartialExcept<Stundenplan, 'gueltigAb' | 'gueltigBis' | 'wochenTypModell' | 'aktiv' | 'bezeichnungStundenplan'>>({ gueltigAb: "",	gueltigBis: "", bezeichnungStundenplan: "Neuer Stundenplan", wochenTypModell: 0, aktiv: false });
 
 	const hatUpdateKompetenz = true;
 
 	const wochenTypModell = ['keins', null, 'AB-Wochen', 'ABC-Wochen', 'ABCD-Wochen', 'weitere'];
 
-	onMounted(() => {
+	onMounted(async () => {
 		const lastValidStundenplan = props.manager().getLastAktivStundenplan();
 		const abschnitt = props.manager().getSchuljahresabschnittAuswahl();
 
@@ -67,6 +76,19 @@
 			bezeichnungStundenplan: "Neuer Stundenplan",
 		};
 
+		alleStundenplaene.value = [
+			props.manager().getStundenplanVorlage(),
+			...Array.from(await props.getStundenplanListeEintragVorgaengerabschnitt()),
+			...Array.from(props.manager().alle()),
+		].sort((a, b) => {
+			if (a.id === -1) return -1;
+			if (b.id === -1) return 1;
+			if (a.gueltigAb !== b.gueltigAb)
+				return a.gueltigAb > b.gueltigAb ? -1 : 1;
+			if (a.aktiv && !b.aktiv) return -1;
+			if (!a.aktiv && b.aktiv) return 1;
+			return 0;
+		});
 	});
 
 	const validateAll = computed(() =>
@@ -88,7 +110,7 @@
 
 		isLoading.value = true;
 		props.checkpoint.active = false;
-		await props.add(data.value);
+		await props.addAsCopy(data.value, copyOf.value.id === props.manager().getStundenplanVorlage().id ? undefined : copyOf.value.id);
 		isLoading.value = false;
 	}
 

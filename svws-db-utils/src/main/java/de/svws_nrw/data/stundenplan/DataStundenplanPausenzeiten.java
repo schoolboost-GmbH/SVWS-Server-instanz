@@ -17,6 +17,7 @@ import de.svws_nrw.db.dto.current.schild.stundenplan.DTOStundenplan;
 import de.svws_nrw.db.dto.current.schild.stundenplan.DTOStundenplanPausenzeit;
 import de.svws_nrw.db.dto.current.schild.stundenplan.DTOStundenplanPausenzeitKlassenzuordnung;
 import de.svws_nrw.db.utils.ApiOperationException;
+import jakarta.validation.constraints.NotNull;
 import jakarta.ws.rs.core.Response.Status;
 
 /**
@@ -172,6 +173,20 @@ public final class DataStundenplanPausenzeiten extends DataManagerRevised<Long, 
 		for (final DTOStundenplanPausenzeit dto : dtos)
 			if (dto.Stundenplan_ID != this.stundenplanID)
 				throw new ApiOperationException(Status.BAD_REQUEST, "Der Pausenzeit-Eintrag gehört nicht zu dem angegebenen Stundenplan.");
+	}
+
+	/**
+	 * Gibt die Pausenzeiten des Stundenplans zurück.
+	 *
+	 * @param conn            die Datenbankverbindung
+	 * @param idStundenplan   die ID des Stundenplans
+	 *
+	 * @return die Liste der Pausenzeiten
+	 *
+	 */
+	public static List<DTOStundenplanPausenzeit> getDTOsByStundenplanid(final @NotNull DBEntityManager conn, final long idStundenplan) {
+		return conn.queryList(DTOStundenplanPausenzeit.QUERY_BY_STUNDENPLAN_ID,
+				DTOStundenplanPausenzeit.class, idStundenplan);
 	}
 
 }

@@ -115,7 +115,7 @@ public final class DataStundenplanKalenderwochenzuordnung
 
 
 	/**
-	 * Prüft vor dem Löschen von Pausenzeiten, ob diese alle zu dem Stundenplan gehören.
+	 * Prüft vor dem Löschen von Kalenderwochenzuordnungen, ob diese alle zu dem Stundenplan gehören.
 	 *
 	 * @param dtos    die zu löschenden DTOs
 	 *
@@ -126,6 +126,20 @@ public final class DataStundenplanKalenderwochenzuordnung
 		for (final DTOStundenplanKalenderwochenZuordnung dto : dtos)
 			if (dto.Stundenplan_ID != this.stundenplanID)
 				throw new ApiOperationException(Status.BAD_REQUEST, "Mindestens eine Kalenderwochenzuordnung gehört nicht zu dem angegebenen Stundenplan.");
+	}
+
+	/**
+	 * Gibt die Kalenderwochenzuordnungen des Stundenplans zurück.
+	 *
+	 * @param conn            die Datenbankverbindung
+	 * @param idStundenplan   die ID des Stundenplans
+	 *
+	 * @return die Liste der Kalenderwochenzuordnungen
+	 *
+	 */
+	public static List<DTOStundenplanKalenderwochenZuordnung> getDTOsByStundenplanid(final DBEntityManager conn, final long idStundenplan) {
+		return conn.queryList(DTOStundenplanKalenderwochenZuordnung.QUERY_BY_STUNDENPLAN_ID,
+				DTOStundenplanKalenderwochenZuordnung.class, idStundenplan);
 	}
 
 }

@@ -15,7 +15,6 @@ import de.svws_nrw.data.JSONMapper;
 import de.svws_nrw.db.DBEntityManager;
 import de.svws_nrw.db.dto.current.schild.stundenplan.DTOStundenplanAufsichtsbereich;
 import de.svws_nrw.db.utils.ApiOperationException;
-import jakarta.validation.constraints.NotNull;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.Response.Status;
@@ -67,14 +66,26 @@ public final class DataStundenplanAufsichtsbereiche extends DataManager<Long> {
 	 *
 	 * @throws ApiOperationException   im Fehlerfall
 	 */
-	public static List<StundenplanAufsichtsbereich> getAufsichtsbereiche(final @NotNull DBEntityManager conn, final long idStundenplan)
+	public static List<StundenplanAufsichtsbereich> getAufsichtsbereiche(final DBEntityManager conn, final long idStundenplan)
 			throws ApiOperationException {
-		final List<DTOStundenplanAufsichtsbereich> aufsichtsbereiche = conn.queryList(DTOStundenplanAufsichtsbereich.QUERY_BY_STUNDENPLAN_ID,
-				DTOStundenplanAufsichtsbereich.class, idStundenplan);
 		final ArrayList<StundenplanAufsichtsbereich> daten = new ArrayList<>();
-		for (final DTOStundenplanAufsichtsbereich a : aufsichtsbereiche)
+		for (final DTOStundenplanAufsichtsbereich a : getDTOsByStundenplanid(conn, idStundenplan))
 			daten.add(dtoMapper.apply(a));
 		return daten;
+	}
+
+	/**
+	 * Gibt die Aufsichtsbereiche des Stundenplans zurück.
+	 *
+	 * @param conn            die Datenbankverbindung
+	 * @param idStundenplan   die ID des Stundenplans
+	 *
+	 * @return die Liste der Aufsichtsbereiche
+	 *
+	 */
+	public static List<DTOStundenplanAufsichtsbereich> getDTOsByStundenplanid(final DBEntityManager conn, final long idStundenplan) {
+		return conn.queryList(DTOStundenplanAufsichtsbereich.QUERY_BY_STUNDENPLAN_ID,
+				DTOStundenplanAufsichtsbereich.class, idStundenplan);
 	}
 
 	@Override
