@@ -1,0 +1,15 @@
+{
+	"version": 1,
+	"daten": [ {
+		"bezeichner": "FOTO",
+		"idStatistik": "0",
+		"historie": [ {
+			"id": 0,
+			"kuerzel": "FOTO",
+			"text": "FOTO",
+			"schluessel": "FOTO",
+			"gueltigVon": null,
+			"gueltigBis": null
+		} ]
+	}]
+}

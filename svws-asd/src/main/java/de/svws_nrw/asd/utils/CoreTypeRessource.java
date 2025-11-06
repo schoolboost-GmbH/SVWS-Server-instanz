@@ -51,6 +51,7 @@ import de.svws_nrw.asd.data.schueler.UebergangsempfehlungKatalogEintrag;
 import de.svws_nrw.asd.data.schule.BeruflichesGymnasiumPruefungsordnungAnlageKatalogEintrag;
 import de.svws_nrw.asd.data.schule.BerufskollegAnlageKatalogEintrag;
 import de.svws_nrw.asd.data.schule.BildungsgangTypKatalogEintrag;
+import de.svws_nrw.asd.data.schule.EinwilligungsschluesselKatalogEintrag;
 import de.svws_nrw.asd.data.schule.FloskelgruppenartKatalogEintrag;
 import de.svws_nrw.asd.data.schule.FoerderschwerpunktKatalogEintrag;
 import de.svws_nrw.asd.data.schule.FormOffenerGanztagKatalogEintrag;
@@ -110,6 +111,7 @@ import de.svws_nrw.asd.types.schule.BeruflichesGymnasiumPruefungsordnungAnlage;
 import de.svws_nrw.asd.types.schule.BerufskollegAnlage;
 import de.svws_nrw.asd.types.schule.BerufskollegBildungsgangTyp;
 import de.svws_nrw.asd.types.schule.BerufskollegOrganisationsformen;
+import de.svws_nrw.asd.types.schule.Einwilligungsschluessel;
 import de.svws_nrw.asd.types.schule.Floskelgruppenart;
 import de.svws_nrw.asd.types.schule.Foerderschwerpunkt;
 import de.svws_nrw.asd.types.schule.FormOffenerGanztag;
@@ -494,6 +496,8 @@ public final class CoreTypeRessource<T extends CoreTypeData, U extends CoreType<
 				"de/svws_nrw/asd/types/schule/Verkehrssprache.json");
 		addSimple(Floskelgruppenart.class, FloskelgruppenartKatalogEintrag.class,
 				"de/svws_nrw/asd/types/schule/Floskelgruppenart.json");
+		addSimple(Einwilligungsschluessel.class, EinwilligungsschluesselKatalogEintrag.class,
+				"de/svws_nrw/asd/types/schule/Einwilligungsschluessel.json");
 	}
 
 }

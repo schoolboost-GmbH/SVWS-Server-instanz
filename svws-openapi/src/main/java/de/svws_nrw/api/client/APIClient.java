@@ -505,6 +505,7 @@ public class APIClient {
 				case "Nationalitaeten" -> JsonReader.fromResource("de/svws_nrw/asd/types/schule/Nationalitaeten.json");
 				case "ValidatorenFehlerartKontext" -> JsonReader.fromResource("de/svws_nrw/asd/validate/ValidatorenFehlerartKontext.json");
 				case "Floskelgruppenart" -> JsonReader.fromResource("de/svws_nrw/asd/types/schule/Floskelgruppenart.json");
+				case "Einwilligungsschluessel" -> JsonReader.fromResource("de/svws_nrw/asd/types/schule/Einwilligungsschluessel.json");
 				default -> null;
 			};
 			if (json == null)

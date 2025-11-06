@@ -185,6 +185,7 @@ export { BeruflichesGymnasiumStundentafelAbiturfaecherWahlmoeglichkeit } from '.
 export { BeruflichesGymnasiumStundentafelFach } from './asd/data/schule/BeruflichesGymnasiumStundentafelFach';
 export { BerufskollegAnlageKatalogEintrag } from './asd/data/schule/BerufskollegAnlageKatalogEintrag';
 export { BildungsgangTypKatalogEintrag } from './asd/data/schule/BildungsgangTypKatalogEintrag';
+export { EinwilligungsschluesselKatalogEintrag } from './asd/data/schule/EinwilligungsschluesselKatalogEintrag';
 export { FloskelgruppenartKatalogEintrag } from './asd/data/schule/FloskelgruppenartKatalogEintrag';
 export { FoerderschwerpunktKatalogEintrag } from './asd/data/schule/FoerderschwerpunktKatalogEintrag';
 export { FormOffenerGanztagKatalogEintrag } from './asd/data/schule/FormOffenerGanztagKatalogEintrag';
@@ -252,6 +253,7 @@ export { BeruflichesGymnasiumPruefungsordnungAnlage } from './asd/types/schule/B
 export { BerufskollegAnlage } from './asd/types/schule/BerufskollegAnlage';
 export { BerufskollegBildungsgangTyp } from './asd/types/schule/BerufskollegBildungsgangTyp';
 export { BerufskollegOrganisationsformen } from './asd/types/schule/BerufskollegOrganisationsformen';
+export { Einwilligungsschluessel } from './asd/types/schule/Einwilligungsschluessel';
 export { Floskelgruppenart } from './asd/types/schule/Floskelgruppenart';
 export { Foerderschwerpunkt } from './asd/types/schule/Foerderschwerpunkt';
 export { FormOffenerGanztag } from './asd/types/schule/FormOffenerGanztag';
