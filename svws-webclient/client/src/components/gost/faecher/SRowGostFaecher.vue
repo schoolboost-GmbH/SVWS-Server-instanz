@@ -11,8 +11,8 @@
 		<!-- TODO Dieses Input ist immer disabled? -->
 		<input :disabled="!hatUpdateKompetenz || true" type="checkbox" class="svws-ui-checkbox svws-headless" v-model="fach.istFremdSpracheNeuEinsetzend">
 	</div>
-	<div role="cell" class="svws-ui-td svws-align-center svws-divider svws-no-padding" :class="{ 'cursor-pointer': istProjektkurs && hatUpdateKompetenz }" @click="set_pjk_stunden">
-		<div v-if="istProjektkurs && hatUpdateKompetenz" class="flex items-center gap-0.5 border border-ui-25 hover:border-ui-50 border-dashed hover:border-solid hover:bg-ui-100 my-auto p-[0.1rem] rounded" @keydown.enter="set_pjk_stunden" tabindex="0">
+	<div role="cell" class="svws-ui-td svws-align-center svws-divider svws-no-padding" :class="{ 'cursor-pointer': wahlProjektkursStunden && hatUpdateKompetenz }" @click="set_pjk_stunden">
+		<div v-if="wahlProjektkursStunden && hatUpdateKompetenz" class="flex items-center gap-0.5 border border-ui-25 hover:border-ui-50 border-dashed hover:border-solid hover:bg-ui-100 my-auto p-[0.1rem] rounded" @keydown.enter="set_pjk_stunden" tabindex="0">
 			<span :class="{ 'opacity-100 font-bold': fach.wochenstundenQualifikationsphase === 2, 'opacity-25 hover:opacity-100 font-medium': fach.wochenstundenQualifikationsphase === 3}">2</span>
 			<span class="opacity-50">/</span>
 			<span :class="{ 'opacity-100 font-bold': fach.wochenstundenQualifikationsphase === 3, 'opacity-25 hover:opacity-100 font-medium': fach.wochenstundenQualifikationsphase === 2}">3</span>
@@ -33,11 +33,11 @@
 	<div role="cell" class="svws-ui-td svws-align-center svws-divider" :class="{'svws-disabled': !ef_moeglich}">
 		<input v-if="ef_moeglich" :disabled="!hatUpdateKompetenz" type="checkbox" class="svws-ui-checkbox svws-headless" v-model="ef2">
 	</div>
-	<div role="cell" class="svws-ui-td svws-align-center">
-		<input type="checkbox" :disabled="!hatUpdateKompetenz" class="svws-ui-checkbox svws-headless" v-model="q11">
+	<div role="cell" class="svws-ui-td svws-align-center" :class="{'svws-disabled': !q1_moeglich}">
+		<input v-if="q1_moeglich" type="checkbox" :disabled="!hatUpdateKompetenz" class="svws-ui-checkbox svws-headless" v-model="q11">
 	</div>
-	<div role="cell" class="svws-ui-td svws-align-center svws-divider">
-		<input type="checkbox" :disabled="!hatUpdateKompetenz" class="svws-ui-checkbox svws-headless" v-model="q12">
+	<div role="cell" class="svws-ui-td svws-align-center svws-divider" :class="{'svws-disabled': !q1_moeglich}">
+		<input v-if="q1_moeglich" type="checkbox" :disabled="!hatUpdateKompetenz" class="svws-ui-checkbox svws-headless" v-model="q12">
 	</div>
 	<div role="cell" class="svws-ui-td svws-align-center">
 		<input type="checkbox" :disabled="!hatUpdateKompetenz" class="svws-ui-checkbox svws-headless" v-model="q21">
@@ -142,6 +142,12 @@
 
 	const istProjektkurs: ComputedRef<boolean> = computed(() => istPJK(fach.value));
 
+	const wahlProjektkursStunden: ComputedRef<boolean> = computed(() => {
+		if (AbiturdatenManager.nutzeExperimentellenCode(props.serverMode, props.abiturjahr)) // experimenteller Code
+			return false;
+		return istPJK(fach.value);
+	});
+
 	const hatLeitfach1: ComputedRef<boolean> = computed(() => {
 		const fg = Fach.getBySchluesselOrDefault(fach.value.kuerzel).getFachgruppe(schuljahr.value);
 		return (fg === Fachgruppe.FG_VX) || (fg === Fachgruppe.FG_PX);
@@ -150,6 +156,13 @@
 	const ef_moeglich: ComputedRef<boolean> = computed(() => {
 		const fg = Fach.getBySchluesselOrDefault(fach.value.kuerzel).getFachgruppe(schuljahr.value);
 		return !((fg === Fachgruppe.FG_ME) || (fg === Fachgruppe.FG_PX));
+	});
+
+	const q1_moeglich: ComputedRef<boolean> = computed(() => {
+		const fg = Fach.getBySchluesselOrDefault(fach.value.kuerzel).getFachgruppe(schuljahr.value);
+		if (AbiturdatenManager.nutzeExperimentellenCode(props.serverMode, props.abiturjahr)) // experimenteller Code
+			return (fg !== Fachgruppe.FG_PX);
+		return true;
 	});
 
 	const abi_gk_moeglich: ComputedRef<boolean> = computed(() => {
