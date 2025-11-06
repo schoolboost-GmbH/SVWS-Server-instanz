@@ -8,14 +8,20 @@ import de.svws_nrw.db.schema.SchemaRevisionen;
 import de.svws_nrw.db.schema.SchemaTabelle;
 import de.svws_nrw.db.schema.SchemaTabelleFremdschluessel;
 import de.svws_nrw.db.schema.SchemaTabelleSpalte;
+import de.svws_nrw.db.schema.SchemaTabelleUniqueIndex;
 
 /**
  * Diese Klasse beinhaltet die Schema-Definition für die Tabelle UV_Stundentafeln_Faecher.
  */
 public class Tabelle_UV_Stundentafeln_Faecher extends SchemaTabelle {
 
+	/** Die Definition der Tabellenspalte ID */
+	public final SchemaTabelleSpalte col_ID = add("ID", SchemaDatentypen.BIGINT, true)
+			.setNotNull()
+			.setJavaComment("ID des Stundentafel-Fachs (generiert)");
+
 	/** Die Definition der Tabellenspalte Stundentafel_ID */
-	public final SchemaTabelleSpalte col_Stundentafel_ID = add("Stundentafel_ID", SchemaDatentypen.BIGINT, true)
+	public final SchemaTabelleSpalte col_Stundentafel_ID = add("Stundentafel_ID", SchemaDatentypen.BIGINT, false)
 			.setNotNull()
 			.setJavaComment("Fremdschlüssel auf die Stundentafel (Tabelle UV_Stundentafeln)");
 
@@ -25,7 +31,7 @@ public class Tabelle_UV_Stundentafeln_Faecher extends SchemaTabelle {
 			.setJavaComment("Abschnitt des Schuljahres");
 
 	/** Die Definition der Tabellenspalte Fach_ID */
-	public final SchemaTabelleSpalte col_Fach_ID = add("Fach_ID", SchemaDatentypen.BIGINT, true)
+	public final SchemaTabelleSpalte col_Fach_ID = add("Fach_ID", SchemaDatentypen.BIGINT, false)
 			.setNotNull()
 			.setJavaComment("Fremdschlüssel auf das Fach der UV (Tabelle UV_Faecher)");
 
@@ -40,7 +46,6 @@ public class Tabelle_UV_Stundentafeln_Faecher extends SchemaTabelle {
 			.setDefault("0")
 			.setNotNull()
 			.setJavaComment("Die Anzahl der Ergänzungsstunden für das Fach (in Wochenstunden enthalten)");
-
 
 
 	/** Die Definition des Fremdschlüssels auf UV_Stundentafeln */
@@ -59,14 +64,22 @@ public class Tabelle_UV_Stundentafeln_Faecher extends SchemaTabelle {
 			new Pair<>(col_Fach_ID, Schema.tab_UV_Faecher.col_ID)
 	);
 
+	/** Die Definition des Unique-Index UVStundentafelnFaecher_UC1 */
+	public final SchemaTabelleUniqueIndex unique_UVStundentafelnFaecher_UC1 = addUniqueIndex("UVStundentafelnFaecher_UC1",
+			col_Stundentafel_ID,
+			col_Abschnitt,
+			col_Fach_ID
+	);
+
 
 	/**
 	 * Erstellt die Schema-Definition für die Tabelle UV_Stundentafeln_Faecher.
 	 */
 	public Tabelle_UV_Stundentafeln_Faecher() {
-		super("UV_Stundentafeln_Faecher", SchemaRevisionen.REV_48);
+		super("UV_Stundentafeln_Faecher", SchemaRevisionen.REV_50);
 		setMigrate(false);
 		setImportExport(true);
+		setPKAutoIncrement();
 		setJavaSubPackage("uv");
 		setJavaClassName("DTOUvStundentafelFach");
 		setJavaComment("Tabelle für die Zuordnung von Fächern zu Stundentafeln der Unterrichtsverteilung (UV)");

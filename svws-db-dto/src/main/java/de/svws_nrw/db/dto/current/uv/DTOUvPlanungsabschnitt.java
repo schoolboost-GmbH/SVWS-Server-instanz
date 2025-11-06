@@ -26,7 +26,7 @@ import de.svws_nrw.csv.converter.current.DatumConverterDeserializer;
 @Entity
 @Cacheable(DBEntityManager.use_db_caching)
 @Table(name = "UV_Planungsabschnitte")
-@JsonPropertyOrder({"ID", "Schuljahr", "Aktiv", "GueltigAb", "GueltigBis", "Beschreibung"})
+@JsonPropertyOrder({"ID", "Schuljahr", "Aktiv", "GueltigVon", "GueltigBis", "Beschreibung"})
 public final class DTOUvPlanungsabschnitt {
 
 	/** Die Datenbankabfrage für alle DTOs */
@@ -59,11 +59,11 @@ public final class DTOUvPlanungsabschnitt {
 	/** Die Datenbankabfrage für DTOs anhand einer Liste von Werten des Attributes Aktiv */
 	public static final String QUERY_LIST_BY_AKTIV = "SELECT e FROM DTOUvPlanungsabschnitt e WHERE e.Aktiv IN ?1";
 
-	/** Die Datenbankabfrage für DTOs anhand des Attributes GueltigAb */
-	public static final String QUERY_BY_GUELTIGAB = "SELECT e FROM DTOUvPlanungsabschnitt e WHERE e.GueltigAb = ?1";
+	/** Die Datenbankabfrage für DTOs anhand des Attributes GueltigVon */
+	public static final String QUERY_BY_GUELTIGVON = "SELECT e FROM DTOUvPlanungsabschnitt e WHERE e.GueltigVon = ?1";
 
-	/** Die Datenbankabfrage für DTOs anhand einer Liste von Werten des Attributes GueltigAb */
-	public static final String QUERY_LIST_BY_GUELTIGAB = "SELECT e FROM DTOUvPlanungsabschnitt e WHERE e.GueltigAb IN ?1";
+	/** Die Datenbankabfrage für DTOs anhand einer Liste von Werten des Attributes GueltigVon */
+	public static final String QUERY_LIST_BY_GUELTIGVON = "SELECT e FROM DTOUvPlanungsabschnitt e WHERE e.GueltigVon IN ?1";
 
 	/** Die Datenbankabfrage für DTOs anhand des Attributes GueltigBis */
 	public static final String QUERY_BY_GUELTIGBIS = "SELECT e FROM DTOUvPlanungsabschnitt e WHERE e.GueltigBis = ?1";
@@ -93,13 +93,13 @@ public final class DTOUvPlanungsabschnitt {
 	@JsonProperty
 	public boolean Aktiv;
 
-	/** Datum, ab dem der Planungsabschnitt gültig ist */
-	@Column(name = "GueltigAb")
+	/** Das Datum, ab dem der Raum gültig ist */
+	@Column(name = "GueltigVon")
 	@JsonProperty
 	@Convert(converter = DatumConverter.class)
 	@JsonSerialize(using = DatumConverterSerializer.class)
 	@JsonDeserialize(using = DatumConverterDeserializer.class)
-	public String GueltigAb;
+	public String GueltigVon;
 
 	/** Datum, bis zu dem der Planungsabschnitt gültig ist. Wenn null gesetzt ist, gilt der Planungsabschnitt unbegrenzt weiter */
 	@Column(name = "GueltigBis")
@@ -126,16 +126,16 @@ public final class DTOUvPlanungsabschnitt {
 	 * @param ID   der Wert für das Attribut ID
 	 * @param Schuljahr   der Wert für das Attribut Schuljahr
 	 * @param Aktiv   der Wert für das Attribut Aktiv
-	 * @param GueltigAb   der Wert für das Attribut GueltigAb
+	 * @param GueltigVon   der Wert für das Attribut GueltigVon
 	 */
-	public DTOUvPlanungsabschnitt(final long ID, final int Schuljahr, final boolean Aktiv, final String GueltigAb) {
+	public DTOUvPlanungsabschnitt(final long ID, final int Schuljahr, final boolean Aktiv, final String GueltigVon) {
 		this.ID = ID;
 		this.Schuljahr = Schuljahr;
 		this.Aktiv = Aktiv;
-		if (GueltigAb == null) {
-			throw new NullPointerException("GueltigAb must not be null");
+		if (GueltigVon == null) {
+			throw new NullPointerException("GueltigVon must not be null");
 		}
-		this.GueltigAb = GueltigAb;
+		this.GueltigVon = GueltigVon;
 	}
 
 
@@ -167,7 +167,7 @@ public final class DTOUvPlanungsabschnitt {
 	 */
 	@Override
 	public String toString() {
-		return "DTOUvPlanungsabschnitt(ID=" + this.ID + ", Schuljahr=" + this.Schuljahr + ", Aktiv=" + this.Aktiv + ", GueltigAb=" + this.GueltigAb + ", GueltigBis=" + this.GueltigBis + ", Beschreibung=" + this.Beschreibung + ")";
+		return "DTOUvPlanungsabschnitt(ID=" + this.ID + ", Schuljahr=" + this.Schuljahr + ", Aktiv=" + this.Aktiv + ", GueltigVon=" + this.GueltigVon + ", GueltigBis=" + this.GueltigBis + ", Beschreibung=" + this.Beschreibung + ")";
 	}
 
 }

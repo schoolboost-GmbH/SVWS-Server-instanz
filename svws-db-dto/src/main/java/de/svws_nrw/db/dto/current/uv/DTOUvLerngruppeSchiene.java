@@ -60,7 +60,7 @@ public final class DTOUvLerngruppeSchiene {
 	@Id
 	@Column(name = "Schiene_ID")
 	@JsonProperty
-	public Long Schiene_ID;
+	public long Schiene_ID;
 
 	/** Die ID des Planungsabschnitts als Fremdschlüssel auf die Tabelle UV_Planungsabschnitte */
 	@Column(name = "Planungsabschnitt_ID")
@@ -77,10 +77,12 @@ public final class DTOUvLerngruppeSchiene {
 	/**
 	 * Erstellt ein neues Objekt der Klasse DTOUvLerngruppeSchiene ohne eine Initialisierung der Attribute.
 	 * @param Lerngruppe_ID   der Wert für das Attribut Lerngruppe_ID
+	 * @param Schiene_ID   der Wert für das Attribut Schiene_ID
 	 * @param Planungsabschnitt_ID   der Wert für das Attribut Planungsabschnitt_ID
 	 */
-	public DTOUvLerngruppeSchiene(final long Lerngruppe_ID, final long Planungsabschnitt_ID) {
+	public DTOUvLerngruppeSchiene(final long Lerngruppe_ID, final long Schiene_ID, final long Planungsabschnitt_ID) {
 		this.Lerngruppe_ID = Lerngruppe_ID;
+		this.Schiene_ID = Schiene_ID;
 		this.Planungsabschnitt_ID = Planungsabschnitt_ID;
 	}
 
@@ -96,12 +98,7 @@ public final class DTOUvLerngruppeSchiene {
 		DTOUvLerngruppeSchiene other = (DTOUvLerngruppeSchiene) obj;
 		if (Lerngruppe_ID != other.Lerngruppe_ID)
 			return false;
-		if (Schiene_ID == null) {
-			if (other.Schiene_ID != null)
-				return false;
-		} else if (!Schiene_ID.equals(other.Schiene_ID))
-			return false;
-		return true;
+		return Schiene_ID == other.Schiene_ID;
 	}
 
 	@Override
@@ -110,7 +107,7 @@ public final class DTOUvLerngruppeSchiene {
 		int result = 1;
 		result = prime * result + Long.hashCode(Lerngruppe_ID);
 
-		result = prime * result + ((Schiene_ID == null) ? 0 : Schiene_ID.hashCode());
+		result = prime * result + Long.hashCode(Schiene_ID);
 		return result;
 	}
 

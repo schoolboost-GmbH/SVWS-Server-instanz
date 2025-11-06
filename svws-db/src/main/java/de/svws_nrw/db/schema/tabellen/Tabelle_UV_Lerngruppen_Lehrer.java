@@ -53,6 +53,15 @@ public class Tabelle_UV_Lerngruppen_Lehrer extends SchemaTabelle {
 
 
 
+	/** Die Definition des Fremdschlüssels UV_Lerngruppen_Lehrer_Lerngruppe_FK DEPRECATED wegen Bug bei Erstellung des FKs (Spaltenreihenfolge #4a702e6e) */
+	public final SchemaTabelleFremdschluessel fk_UV_Lerngruppen_Lehrer_Lerngruppe_FK_Deprecated_Revision_49 = addForeignKey(
+			"UV_Lerngruppen_Lehrer_Lerngruppe_FK",
+			/* OnUpdate: */ SchemaFremdschluesselAktionen.CASCADE,
+			/* OnDelete: */ SchemaFremdschluesselAktionen.CASCADE,
+			new Pair<>(col_Lerngruppe_ID, Schema.tab_UV_Lerngruppen.col_ID),
+			new Pair<>(col_Planungsabschnitt_ID, Schema.tab_UV_Lerngruppen.col_Planungsabschnitt_ID)
+	).setVeraltet(SchemaRevisionen.REV_49);
+
 	/** Die Definition des Fremdschlüssels UV_Lerngruppen_Lehrer_Lerngruppe_FK */
 	public final SchemaTabelleFremdschluessel fk_UV_Lerngruppen_Lehrer_Lerngruppe_FK = addForeignKey(
 			"UV_Lerngruppen_Lehrer_Lerngruppe_FK",
@@ -60,7 +69,7 @@ public class Tabelle_UV_Lerngruppen_Lehrer extends SchemaTabelle {
 			/* OnDelete: */ SchemaFremdschluesselAktionen.CASCADE,
 			new Pair<>(col_Lerngruppe_ID, Schema.tab_UV_Lerngruppen.col_ID),
 			new Pair<>(col_Planungsabschnitt_ID, Schema.tab_UV_Lerngruppen.col_Planungsabschnitt_ID)
-	);
+	).setRevision(SchemaRevisionen.REV_50);
 
 	/** Die Definition des Fremdschlüssels UV_LerngruppenLehrer_PlanungsabschnitteLehrer_FK */
 	public final SchemaTabelleFremdschluessel fk_UVLerngruppenLehrer_UVPlanungsabschnitteLehrer_FK = addForeignKey(

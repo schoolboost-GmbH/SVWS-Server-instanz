@@ -77,13 +77,21 @@ public class Tabelle_UV_Lerngruppen extends SchemaTabelle {
 			new Pair<>(col_Planungsabschnitt_ID, Schema.tab_UV_Klassen.col_Planungsabschnitt_ID)
 	);
 
-	/** Fremdschlüssel auf die Tabelle UV_Faecher */
-	public final SchemaTabelleFremdschluessel fk_UVLerngruppen_UVFaecher_FK = addForeignKey(
+	/** Fremdschlüssel auf die Tabelle UV_Faecher DEPRECATED wegen Bug bei Erstellung des FKs (Spaltenreihenfolge #4a702e6e) */
+	public final SchemaTabelleFremdschluessel fk_UVLerngruppen_UVFaecher_FK_Deprecated_Revision_49 = addForeignKey(
 			"UVLerngruppen_UVFaecher_FK",
 			/* OnUpdate: */ SchemaFremdschluesselAktionen.CASCADE,
 			/* OnDelete: */ SchemaFremdschluesselAktionen.RESTRICT,
 			new Pair<>(col_Fach_ID, Schema.tab_UV_Faecher.col_ID)
-	);
+	).setVeraltet(SchemaRevisionen.REV_49);
+
+	/** Fremdschlüssel auf die Tabelle UV_Faecher */
+	public final SchemaTabelleFremdschluessel fk_UVLerngruppen_UVStundentafelnFaecher_FK = addForeignKey(
+			"UVLerngruppen_UVFaecher_FK",
+			/* OnUpdate: */ SchemaFremdschluesselAktionen.CASCADE,
+			/* OnDelete: */ SchemaFremdschluesselAktionen.RESTRICT,
+			new Pair<>(col_Fach_ID, Schema.tab_UV_Stundentafeln_Faecher.col_ID)
+	).setRevision(SchemaRevisionen.REV_50);
 
 	/** Fremdschlüssel auf die Tabelle UV_Kurse */
 	public final SchemaTabelleFremdschluessel fk_UVLerngruppen_UVKurse_FK = addForeignKey(

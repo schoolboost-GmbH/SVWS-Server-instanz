@@ -19,9 +19,10 @@ public class Tabelle_UV_Unterrichte_Raeume extends SchemaTabelle {
 			.setNotNull()
 			.setJavaComment("ID des UV_Unterrichts");
 
-	/** Fremdschlüssel auf den Raum (Tabelle UV_Raeume) */
-	public final SchemaTabelleSpalte col_Raum_ID = add("Raum_ID", SchemaDatentypen.BIGINT, false)
-			.setJavaComment("Fremdschlüssel auf den Raum (Tabelle UV_Raeume)");
+  /** Fremdschlüssel auf den Raum (Tabelle UV_Raeume) */
+  public final SchemaTabelleSpalte col_Raum_ID = add("Raum_ID", SchemaDatentypen.BIGINT, true)
+		  .setNotNull()
+          .setJavaComment("Fremdschlüssel auf den Raum (Tabelle UV_Raeume)");
 
 	/** Die Definition der Tabellenspalte Planungsabschnitt_ID */
 	public final SchemaTabelleSpalte col_Planungsabschnitt_ID = add("Planungsabschnitt_ID", SchemaDatentypen.BIGINT, false)
@@ -51,7 +52,7 @@ public class Tabelle_UV_Unterrichte_Raeume extends SchemaTabelle {
 	 * Erstellt die Schema-Defintion für die Tabelle UV_Unterrichte_Raeume.
 	 */
 	public Tabelle_UV_Unterrichte_Raeume() {
-		super("UV_Unterrichte_Raeume", SchemaRevisionen.REV_48);
+		super("UV_Unterrichte_Raeume", SchemaRevisionen.REV_50);
 		setMigrate(false);
 		setImportExport(true);
 		setJavaSubPackage("uv");

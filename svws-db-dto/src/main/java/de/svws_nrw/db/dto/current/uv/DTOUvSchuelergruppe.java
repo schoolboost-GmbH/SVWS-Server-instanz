@@ -62,7 +62,7 @@ public final class DTOUvSchuelergruppe {
 	@JsonProperty
 	public long Planungsabschnitt_ID;
 
-	/** Eine Beschreibung / Kommentar zu dieser Schülergruppe */
+	/** Die Bezeichnung der Schülergruppe */
 	@Column(name = "Bezeichnung")
 	@JsonProperty
 	public String Bezeichnung;

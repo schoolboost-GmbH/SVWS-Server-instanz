@@ -264,9 +264,11 @@ import de.svws_nrw.db.schema.tabellen.Tabelle_UV_StundenplanRegeln;
 import de.svws_nrw.db.schema.tabellen.Tabelle_UV_StundenplanRegelparameter;
 import de.svws_nrw.db.schema.tabellen.Tabelle_UV_Stundentafeln;
 import de.svws_nrw.db.schema.tabellen.Tabelle_UV_Stundentafeln_Faecher;
+import de.svws_nrw.db.schema.tabellen.Tabelle_UV_Stundentafeln_Faecher_Deprecated_Revision_49;
 import de.svws_nrw.db.schema.tabellen.Tabelle_UV_Unterrichte;
 import de.svws_nrw.db.schema.tabellen.Tabelle_UV_Unterrichte_Lerngruppenlehrer;
 import de.svws_nrw.db.schema.tabellen.Tabelle_UV_Unterrichte_Raeume;
+import de.svws_nrw.db.schema.tabellen.Tabelle_UV_Unterrichte_Raeume_Deprecated_Revision_49;
 import de.svws_nrw.db.schema.tabellen.Tabelle_UV_Zeitraster;
 import de.svws_nrw.db.schema.tabellen.Tabelle_UV_ZeitrasterEintraege;
 import de.svws_nrw.db.schema.tabellen.Tabelle_Usergroups;
@@ -288,10 +290,10 @@ public final class Schema {
 	/** Das übergeordnete Java-Paket, welches die Klassen für die SVWS-Datenbank beinhaltet */
 	public static final String javaPackage = "de.svws_nrw.db";
 
-	/** Das Java-Unterpaket, welches die Klassen für die generierten DTOs für den Dantebankzugriff beinhaltet */
+	/** Das Java-Unterpaket, welches die Klassen für die generierten DTOs für den Datenbankzugriff beinhaltet */
 	public static final String javaDTOPackage = "dto";
 
-	/** Eine Liste der einzelnen Tabellen. */
+	/** Eine Map von dem Namen der Tabelle auf die einzelnen Tabellen. */
 	private static final List<SchemaTabelle> _tabellen = new ArrayList<>();
 
 	/** Die Liste mit allen Tabellen aus allen Schema-Revisionen */
@@ -955,8 +957,8 @@ public final class Schema {
 	/** Tabelle UV_LehrerAnrechnungsstunden */
 	public static final Tabelle_UV_LehrerAnrechnungsstunden tab_UV_LehrerAnrechnungsstunden = add(new Tabelle_UV_LehrerAnrechnungsstunden());
 
-	/** Tabelle UV_LehrerPflichstundensoll */
-	public static final Tabelle_UV_LehrerPflichtstundensoll tab_UV_LehrerPflichstundensoll = add(new Tabelle_UV_LehrerPflichtstundensoll());
+	/** Tabelle UV_LehrerPflichtstundensoll */
+	public static final Tabelle_UV_LehrerPflichtstundensoll tab_UV_LehrerPflichtstundensoll = add(new Tabelle_UV_LehrerPflichtstundensoll());
 
 	/** Tabelle UV_Planungsabschnitte_Schueler */
 	public static final Tabelle_UV_Planungsabschnitte_Lehrer tab_UV_Planungsabschnitte_Lehrer = add(new Tabelle_UV_Planungsabschnitte_Lehrer());
@@ -994,6 +996,10 @@ public final class Schema {
 	/** Tabelle UV_Faecher */
 	public static final Tabelle_UV_Faecher tab_UV_Faecher = add(new Tabelle_UV_Faecher());
 
+	/** Tabelle UV_Stundentafeln_Faecher DEPRECATED Revision 49*/
+	public static final Tabelle_UV_Stundentafeln_Faecher_Deprecated_Revision_49 tab_UV_Stundentafeln_Faecher_alt =
+			add(new Tabelle_UV_Stundentafeln_Faecher_Deprecated_Revision_49());
+
 	/** Tabelle UV_Stundentafeln_Faecher */
 	public static final Tabelle_UV_Stundentafeln_Faecher tab_UV_Stundentafeln_Faecher = add(new Tabelle_UV_Stundentafeln_Faecher());
 
@@ -1020,6 +1026,9 @@ public final class Schema {
 
 	/** Tabelle Tabelle_UV_Unterrichte */
 	public static final Tabelle_UV_Unterrichte tab_UV_Unterrichte = add(new Tabelle_UV_Unterrichte());
+
+	/** Tabelle Tabelle_UV_Unterrichte_Raeume_Deprecated_Revision_49 */
+	public static final Tabelle_UV_Unterrichte_Raeume_Deprecated_Revision_49 tab_UV_Unterrichte_Raeume_Deprecated_Revision_49 = add(new Tabelle_UV_Unterrichte_Raeume_Deprecated_Revision_49());
 
 	/** Tabelle Tabelle_UV_Unterrichte_Raeume */
 	public static final Tabelle_UV_Unterrichte_Raeume tab_UV_Unterrichte_Raeume = add(new Tabelle_UV_Unterrichte_Raeume());

@@ -31,13 +31,13 @@ import de.svws_nrw.db.schema.revisionen.Revision35Updates;
 import de.svws_nrw.db.schema.revisionen.Revision36Updates;
 import de.svws_nrw.db.schema.revisionen.Revision37Updates;
 import de.svws_nrw.db.schema.revisionen.Revision38Updates;
+import de.svws_nrw.db.schema.revisionen.Revision3Updates;
 import de.svws_nrw.db.schema.revisionen.Revision40Updates;
 import de.svws_nrw.db.schema.revisionen.Revision41Updates;
 import de.svws_nrw.db.schema.revisionen.Revision42Updates;
 import de.svws_nrw.db.schema.revisionen.Revision43Updates;
 import de.svws_nrw.db.schema.revisionen.Revision45Updates;
 import de.svws_nrw.db.schema.revisionen.Revision46Updates;
-import de.svws_nrw.db.schema.revisionen.Revision3Updates;
 import de.svws_nrw.db.schema.revisionen.Revision4Updates;
 import de.svws_nrw.db.schema.revisionen.Revision6Updates;
 import de.svws_nrw.db.schema.revisionen.RevisionNoUpdates;
@@ -264,7 +264,13 @@ public enum SchemaRevisionen {
 	REV_47(47, "2025-08-21"),
 
 	/** Uvd */
-	REV_48(48, "2025-09-01");
+	REV_48(48, "2025-09-01"),
+
+	/** Uvd Anpassungen DROP */
+	REV_49(49, "2025-11-01"),
+
+	/** Uvd Anpassungen CREATE*/
+	REV_50(50, "2025-11-01");
 
 
 	/**
@@ -272,14 +278,14 @@ public enum SchemaRevisionen {
 	 * bis zu welcher alle Schema-Revision als stabil gelten und ab Version 1.0 des SVWS-Servers
 	 * nicht mehr verändert werden.
 	 */
-	public static final SchemaRevisionen maxRevision = REV_48;
+	public static final SchemaRevisionen maxRevision = REV_50;
 
 	/**
 	 * Gibt die größte Revisions-Nummer an, welche in diese Enumeration definiert wurde.
 	 * Dies dient dazu Revisionen als Entwickler-Revisionen zu kennzeichnen, die noch nicht
 	 * stabil sind. Dieser Wert ist also größer oder gleich {@link SchemaRevisionen#maxRevision}.
 	 */
-	public static final SchemaRevisionen maxDeveloperRevision = REV_48;
+	public static final SchemaRevisionen maxDeveloperRevision = REV_50;
 
 	/** Eine Map, welche von der Revisionsnummer auf das Objekt der Aufzählung abbildet. */
 	private static Map<Long, SchemaRevisionen> _mapByNumber = null;

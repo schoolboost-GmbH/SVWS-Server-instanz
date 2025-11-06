@@ -26,7 +26,7 @@ import de.svws_nrw.csv.converter.current.DatumConverterDeserializer;
 @Entity
 @Cacheable(DBEntityManager.use_db_caching)
 @Table(name = "UV_Stundentafeln")
-@JsonPropertyOrder({"ID", "Jahrgang_ID", "GueltigAb", "GueltigBis", "Beschreibung"})
+@JsonPropertyOrder({"ID", "Jahrgang_ID", "Bezeichnung", "GueltigVon", "GueltigBis", "Beschreibung"})
 public final class DTOUvStundentafel {
 
 	/** Die Datenbankabfrage für alle DTOs */
@@ -53,11 +53,17 @@ public final class DTOUvStundentafel {
 	/** Die Datenbankabfrage für DTOs anhand einer Liste von Werten des Attributes Jahrgang_ID */
 	public static final String QUERY_LIST_BY_JAHRGANG_ID = "SELECT e FROM DTOUvStundentafel e WHERE e.Jahrgang_ID IN ?1";
 
-	/** Die Datenbankabfrage für DTOs anhand des Attributes GueltigAb */
-	public static final String QUERY_BY_GUELTIGAB = "SELECT e FROM DTOUvStundentafel e WHERE e.GueltigAb = ?1";
+	/** Die Datenbankabfrage für DTOs anhand des Attributes Bezeichnung */
+	public static final String QUERY_BY_BEZEICHNUNG = "SELECT e FROM DTOUvStundentafel e WHERE e.Bezeichnung = ?1";
 
-	/** Die Datenbankabfrage für DTOs anhand einer Liste von Werten des Attributes GueltigAb */
-	public static final String QUERY_LIST_BY_GUELTIGAB = "SELECT e FROM DTOUvStundentafel e WHERE e.GueltigAb IN ?1";
+	/** Die Datenbankabfrage für DTOs anhand einer Liste von Werten des Attributes Bezeichnung */
+	public static final String QUERY_LIST_BY_BEZEICHNUNG = "SELECT e FROM DTOUvStundentafel e WHERE e.Bezeichnung IN ?1";
+
+	/** Die Datenbankabfrage für DTOs anhand des Attributes GueltigVon */
+	public static final String QUERY_BY_GUELTIGVON = "SELECT e FROM DTOUvStundentafel e WHERE e.GueltigVon = ?1";
+
+	/** Die Datenbankabfrage für DTOs anhand einer Liste von Werten des Attributes GueltigVon */
+	public static final String QUERY_LIST_BY_GUELTIGVON = "SELECT e FROM DTOUvStundentafel e WHERE e.GueltigVon IN ?1";
 
 	/** Die Datenbankabfrage für DTOs anhand des Attributes GueltigBis */
 	public static final String QUERY_BY_GUELTIGBIS = "SELECT e FROM DTOUvStundentafel e WHERE e.GueltigBis = ?1";
@@ -82,13 +88,18 @@ public final class DTOUvStundentafel {
 	@JsonProperty
 	public long Jahrgang_ID;
 
-	/** Das Datum, ab dem die Stundentafel gültig ist */
-	@Column(name = "GueltigAb")
+	/** Bezeichnung der Stundentafel */
+	@Column(name = "Bezeichnung")
+	@JsonProperty
+	public String Bezeichnung;
+
+	/** Das Datum, ab dem der Raum gültig ist */
+	@Column(name = "GueltigVon")
 	@JsonProperty
 	@Convert(converter = DatumConverter.class)
 	@JsonSerialize(using = DatumConverterSerializer.class)
 	@JsonDeserialize(using = DatumConverterDeserializer.class)
-	public String GueltigAb;
+	public String GueltigVon;
 
 	/** Das Datum, bis wann die Stundentafel gültig ist. Ist kein Datum gesetzt, gilt die Stundentafel unbegrenzt weiter */
 	@Column(name = "GueltigBis")
@@ -114,20 +125,20 @@ public final class DTOUvStundentafel {
 	 * Erstellt ein neues Objekt der Klasse DTOUvStundentafel ohne eine Initialisierung der Attribute.
 	 * @param ID   der Wert für das Attribut ID
 	 * @param Jahrgang_ID   der Wert für das Attribut Jahrgang_ID
-	 * @param GueltigAb   der Wert für das Attribut GueltigAb
-	 * @param Beschreibung   der Wert für das Attribut Beschreibung
+	 * @param Bezeichnung   der Wert für das Attribut Bezeichnung
+	 * @param GueltigVon   der Wert für das Attribut GueltigVon
 	 */
-	public DTOUvStundentafel(final long ID, final long Jahrgang_ID, final String GueltigAb, final String Beschreibung) {
+	public DTOUvStundentafel(final long ID, final long Jahrgang_ID, final String Bezeichnung, final String GueltigVon) {
 		this.ID = ID;
 		this.Jahrgang_ID = Jahrgang_ID;
-		if (GueltigAb == null) {
-			throw new NullPointerException("GueltigAb must not be null");
+		if (Bezeichnung == null) {
+			throw new NullPointerException("Bezeichnung must not be null");
 		}
-		this.GueltigAb = GueltigAb;
-		if (Beschreibung == null) {
-			throw new NullPointerException("Beschreibung must not be null");
+		this.Bezeichnung = Bezeichnung;
+		if (GueltigVon == null) {
+			throw new NullPointerException("GueltigVon must not be null");
 		}
-		this.Beschreibung = Beschreibung;
+		this.GueltigVon = GueltigVon;
 	}
 
 
@@ -159,7 +170,7 @@ public final class DTOUvStundentafel {
 	 */
 	@Override
 	public String toString() {
-		return "DTOUvStundentafel(ID=" + this.ID + ", Jahrgang_ID=" + this.Jahrgang_ID + ", GueltigAb=" + this.GueltigAb + ", GueltigBis=" + this.GueltigBis + ", Beschreibung=" + this.Beschreibung + ")";
+		return "DTOUvStundentafel(ID=" + this.ID + ", Jahrgang_ID=" + this.Jahrgang_ID + ", Bezeichnung=" + this.Bezeichnung + ", GueltigVon=" + this.GueltigVon + ", GueltigBis=" + this.GueltigBis + ", Beschreibung=" + this.Beschreibung + ")";
 	}
 
 }

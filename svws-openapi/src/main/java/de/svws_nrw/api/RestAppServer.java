@@ -35,6 +35,7 @@ import de.svws_nrw.api.server.APISchild;
 import de.svws_nrw.api.server.APISchueler;
 import de.svws_nrw.api.server.APISchule;
 import de.svws_nrw.api.server.APIStundenplan;
+import de.svws_nrw.api.server.APIUnterrichtsverteilung;
 import de.svws_nrw.api.server.APIWiedervorlage;
 import jakarta.ws.rs.core.Application;
 
@@ -76,6 +77,7 @@ public final class RestAppServer extends Application {
 			APISchema.class,
 			APIDatabase.class,
 			APIStundenplan.class,
+			APIUnterrichtsverteilung.class,
 			APISchild.class,
 			APIKAOA.class,
 			APIENM.class,

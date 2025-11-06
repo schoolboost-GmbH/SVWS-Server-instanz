@@ -28,7 +28,7 @@ public class Tabelle_UV_Schuelergruppen extends SchemaTabelle {
 	/** Die Definition der Tabellenspalte Bezeichnung */
 	public final SchemaTabelleSpalte col_Bezeichnung = add("Bezeichnung", SchemaDatentypen.VARCHAR, false).setDatenlaenge(50)
 			.setNotNull()
-			.setJavaComment("Eine Beschreibung / Kommentar zu dieser Schülergruppe");
+			.setJavaComment("Die Bezeichnung der Schülergruppe");
 
 
 	/** Die Definition des Fremdschlüssels auf UV_Planungsabschnitte */

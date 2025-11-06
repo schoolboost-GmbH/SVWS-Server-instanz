@@ -16,7 +16,7 @@ public final class DTOUvLerngruppeSchienePK implements Serializable {
 	public long Lerngruppe_ID;
 
 	/** Fremdschlüssel auf die Schiene (Tabelle UV_Schienen) */
-	public Long Schiene_ID;
+	public long Schiene_ID;
 
 	/**
 	 * Erstellt ein neues Objekt der Klasse DTOUvLerngruppeSchienePK ohne eine Initialisierung der Attribute.
@@ -30,11 +30,8 @@ public final class DTOUvLerngruppeSchienePK implements Serializable {
 	 * @param Lerngruppe_ID   der Wert für das Attribut Lerngruppe_ID
 	 * @param Schiene_ID   der Wert für das Attribut Schiene_ID
 	 */
-	public DTOUvLerngruppeSchienePK(final long Lerngruppe_ID, final Long Schiene_ID) {
+	public DTOUvLerngruppeSchienePK(final long Lerngruppe_ID, final long Schiene_ID) {
 		this.Lerngruppe_ID = Lerngruppe_ID;
-		if (Schiene_ID == null) {
-			throw new NullPointerException("Schiene_ID must not be null");
-		}
 		this.Schiene_ID = Schiene_ID;
 	}
 
@@ -50,12 +47,7 @@ public final class DTOUvLerngruppeSchienePK implements Serializable {
 		DTOUvLerngruppeSchienePK other = (DTOUvLerngruppeSchienePK) obj;
 		if (Lerngruppe_ID != other.Lerngruppe_ID)
 			return false;
-		if (Schiene_ID == null) {
-			if (other.Schiene_ID != null)
-				return false;
-		} else if (!Schiene_ID.equals(other.Schiene_ID))
-			return false;
-		return true;
+		return Schiene_ID == other.Schiene_ID;
 	}
 
 	@Override
@@ -64,7 +56,7 @@ public final class DTOUvLerngruppeSchienePK implements Serializable {
 		int result = 1;
 		result = prime * result + Long.hashCode(Lerngruppe_ID);
 
-		result = prime * result + ((Schiene_ID == null) ? 0 : Schiene_ID.hashCode());
+		result = prime * result + Long.hashCode(Schiene_ID);
 		return result;
 	}
 }

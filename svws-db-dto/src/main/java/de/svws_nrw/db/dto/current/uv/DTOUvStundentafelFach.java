@@ -6,7 +6,6 @@ import jakarta.persistence.Cacheable;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
-import jakarta.persistence.IdClass;
 import jakarta.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -17,20 +16,28 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
  * da sie aufgrund von Änderungen am DB-Schema ggf. neu generiert und überschrieben wird.
  */
 @Entity
-@IdClass(DTOUvStundentafelFachPK.class)
 @Cacheable(DBEntityManager.use_db_caching)
 @Table(name = "UV_Stundentafeln_Faecher")
-@JsonPropertyOrder({"Stundentafel_ID", "Abschnitt", "Fach_ID", "Wochenstunden", "DavonErgaenzungsstunden"})
+@JsonPropertyOrder({"ID", "Stundentafel_ID", "Abschnitt", "Fach_ID", "Wochenstunden", "DavonErgaenzungsstunden"})
 public final class DTOUvStundentafelFach {
 
 	/** Die Datenbankabfrage für alle DTOs */
 	public static final String QUERY_ALL = "SELECT e FROM DTOUvStundentafelFach e";
 
 	/** Die Datenbankabfrage für DTOs anhand der Primärschlüsselattribute */
-	public static final String QUERY_PK = "SELECT e FROM DTOUvStundentafelFach e WHERE e.Stundentafel_ID = ?1 AND e.Fach_ID = ?2";
+	public static final String QUERY_PK = "SELECT e FROM DTOUvStundentafelFach e WHERE e.ID = ?1";
+
+	/** Die Datenbankabfrage für DTOs anhand einer Liste von Primärschlüsselattributwerten */
+	public static final String QUERY_LIST_PK = "SELECT e FROM DTOUvStundentafelFach e WHERE e.ID IN ?1";
 
 	/** Die Datenbankabfrage für alle DTOs im Rahmen der Migration, wobei die Einträge entfernt werden, die nicht der Primärschlüssel-Constraint entsprechen */
-	public static final String QUERY_MIGRATION_ALL = "SELECT e FROM DTOUvStundentafelFach e WHERE e.Stundentafel_ID IS NOT NULL AND e.Fach_ID IS NOT NULL";
+	public static final String QUERY_MIGRATION_ALL = "SELECT e FROM DTOUvStundentafelFach e WHERE e.ID IS NOT NULL";
+
+	/** Die Datenbankabfrage für DTOs anhand des Attributes ID */
+	public static final String QUERY_BY_ID = "SELECT e FROM DTOUvStundentafelFach e WHERE e.ID = ?1";
+
+	/** Die Datenbankabfrage für DTOs anhand einer Liste von Werten des Attributes ID */
+	public static final String QUERY_LIST_BY_ID = "SELECT e FROM DTOUvStundentafelFach e WHERE e.ID IN ?1";
 
 	/** Die Datenbankabfrage für DTOs anhand des Attributes Stundentafel_ID */
 	public static final String QUERY_BY_STUNDENTAFEL_ID = "SELECT e FROM DTOUvStundentafelFach e WHERE e.Stundentafel_ID = ?1";
@@ -62,8 +69,13 @@ public final class DTOUvStundentafelFach {
 	/** Die Datenbankabfrage für DTOs anhand einer Liste von Werten des Attributes DavonErgaenzungsstunden */
 	public static final String QUERY_LIST_BY_DAVONERGAENZUNGSSTUNDEN = "SELECT e FROM DTOUvStundentafelFach e WHERE e.DavonErgaenzungsstunden IN ?1";
 
-	/** Fremdschlüssel auf die Stundentafel (Tabelle UV_Stundentafeln) */
+	/** ID des Stundentafel-Fachs (generiert) */
 	@Id
+	@Column(name = "ID")
+	@JsonProperty
+	public long ID;
+
+	/** Fremdschlüssel auf die Stundentafel (Tabelle UV_Stundentafeln) */
 	@Column(name = "Stundentafel_ID")
 	@JsonProperty
 	public long Stundentafel_ID;
@@ -74,7 +86,6 @@ public final class DTOUvStundentafelFach {
 	public int Abschnitt;
 
 	/** Fremdschlüssel auf das Fach der UV (Tabelle UV_Faecher) */
-	@Id
 	@Column(name = "Fach_ID")
 	@JsonProperty
 	public long Fach_ID;
@@ -98,13 +109,15 @@ public final class DTOUvStundentafelFach {
 
 	/**
 	 * Erstellt ein neues Objekt der Klasse DTOUvStundentafelFach ohne eine Initialisierung der Attribute.
+	 * @param ID   der Wert für das Attribut ID
 	 * @param Stundentafel_ID   der Wert für das Attribut Stundentafel_ID
 	 * @param Abschnitt   der Wert für das Attribut Abschnitt
 	 * @param Fach_ID   der Wert für das Attribut Fach_ID
 	 * @param Wochenstunden   der Wert für das Attribut Wochenstunden
 	 * @param DavonErgaenzungsstunden   der Wert für das Attribut DavonErgaenzungsstunden
 	 */
-	public DTOUvStundentafelFach(final long Stundentafel_ID, final int Abschnitt, final long Fach_ID, final double Wochenstunden, final double DavonErgaenzungsstunden) {
+	public DTOUvStundentafelFach(final long ID, final long Stundentafel_ID, final int Abschnitt, final long Fach_ID, final double Wochenstunden, final double DavonErgaenzungsstunden) {
+		this.ID = ID;
 		this.Stundentafel_ID = Stundentafel_ID;
 		this.Abschnitt = Abschnitt;
 		this.Fach_ID = Fach_ID;
@@ -122,18 +135,14 @@ public final class DTOUvStundentafelFach {
 		if (getClass() != obj.getClass())
 			return false;
 		DTOUvStundentafelFach other = (DTOUvStundentafelFach) obj;
-		if (Stundentafel_ID != other.Stundentafel_ID)
-			return false;
-		return Fach_ID == other.Fach_ID;
+		return ID == other.ID;
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + Long.hashCode(Stundentafel_ID);
-
-		result = prime * result + Long.hashCode(Fach_ID);
+		result = prime * result + Long.hashCode(ID);
 		return result;
 	}
 
@@ -145,7 +154,7 @@ public final class DTOUvStundentafelFach {
 	 */
 	@Override
 	public String toString() {
-		return "DTOUvStundentafelFach(Stundentafel_ID=" + this.Stundentafel_ID + ", Abschnitt=" + this.Abschnitt + ", Fach_ID=" + this.Fach_ID + ", Wochenstunden=" + this.Wochenstunden + ", DavonErgaenzungsstunden=" + this.DavonErgaenzungsstunden + ")";
+		return "DTOUvStundentafelFach(ID=" + this.ID + ", Stundentafel_ID=" + this.Stundentafel_ID + ", Abschnitt=" + this.Abschnitt + ", Fach_ID=" + this.Fach_ID + ", Wochenstunden=" + this.Wochenstunden + ", DavonErgaenzungsstunden=" + this.DavonErgaenzungsstunden + ")";
 	}
 
 }

@@ -49,6 +49,11 @@ public class Tabelle_UV_Schienen extends SchemaTabelle {
 			col_ID, col_Planungsabschnitt_ID
 	);
 
+	/** Unique-Index für die Kombination ID und Planungsabschnitt_ID, benötigt durch 2-teiligen FK */
+	public final SchemaTabelleUniqueIndex unique_UVSchienen_UC2 = addUniqueIndex("UVSchienen_UC2",
+			col_Planungsabschnitt_ID, col_Nummer
+	).setRevision(SchemaRevisionen.REV_49);
+
 	/**
 	 * Erstellt die Schema-Defintion für die Tabelle UV_Schienen.
 	 */
