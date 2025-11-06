@@ -1137,7 +1137,7 @@
 			$update = "";
 			if (property_exists($patch, 'note') && $this->diffStringNullable($patch->note, $daten->note) && ($ts > $daten->tsNote)) {
 				$istNote = array_key_exists($patch->note, $mapNoten);
-				if (!$istNote)
+				if (!$istNote && ($patch->note !== null))
 					Http::exit400BadRequest("Der Patch-Methode wurde eine ungültige Note übergeben.");
 				$update .= "tsNote='$ts',";
 				$daten->note = $patch->note;
@@ -1145,7 +1145,7 @@
 			}
 			if (property_exists($patch, 'noteQuartal') && $this->diffStringNullable($patch->noteQuartal, $daten->noteQuartal) && ($ts > $daten->tsNoteQuartal)) {
 				$istNote = array_key_exists($patch->noteQuartal, $mapNoten);
-				if (!$istNote)
+				if (!$istNote && ($patch->noteQuartal !== null))
 					Http::exit400BadRequest("Der Patch-Methode wurde eine ungültige Quartals-Note übergeben.");
 				$update .= "tsNoteQuartal='$ts',";
 				$daten->noteQuartal = $patch->noteQuartal;
@@ -1338,7 +1338,7 @@
 			}
 			if (property_exists($patch, 'note') && $this->diffStringNullable($patch->note, $daten->note) && ($ts > $daten->tsNote)) {
 				$istNote = array_key_exists($patch->note, $mapNoten);
-				if (!$istNote)
+				if (!$istNote && ($patch->note !== null))
 					Http::exit400BadRequest("Der Patch-Methode wurde eine ungültige Note übergeben.");
 				$update .= "tsNote='$ts',";
 				$daten->note = $patch->note;
