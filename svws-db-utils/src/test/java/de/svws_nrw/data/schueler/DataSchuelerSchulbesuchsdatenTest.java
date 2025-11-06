@@ -15,6 +15,7 @@ import de.svws_nrw.db.dto.current.schild.grundschule.DTOKindergarten;
 import de.svws_nrw.db.dto.current.schild.katalog.DTOSchuleNRW;
 import de.svws_nrw.db.dto.current.schild.schueler.DTOEntlassarten;
 import de.svws_nrw.db.dto.current.schild.schueler.DTOSchueler;
+import de.svws_nrw.db.dto.current.schild.schule.DTOJahrgang;
 import de.svws_nrw.db.dto.current.schild.schule.DTOMerkmale;
 import de.svws_nrw.db.utils.ApiOperationException;
 import jakarta.ws.rs.core.Response;
@@ -36,6 +37,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatException;
 import static org.assertj.core.api.Assertions.catchThrowable;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
@@ -609,36 +611,43 @@ class DataSchuelerSchulbesuchsdatenTest {
 	}
 
 	@Test
-	@DisplayName("mapAttribute | entlassungJahrgang | Erfolg")
-	void mapAttributeTest_entlassungJahrgang() throws ApiOperationException {
+	@DisplayName("mapAttribute | idEntlassjahrgang | Erfolg")
+	void mapAttributeTest_idEntlassjahrgang() throws ApiOperationException {
+		final var jahrgang = new DTOJahrgang(1L);
+		jahrgang.ASDJahrgang = "ASD";
+		when(this.conn.queryByKey(DTOJahrgang.class, 1L)).thenReturn(jahrgang);
 		final var dtoSchueler = new DTOSchueler(1L, "1", true);
-		final var kuerzel = Jahrgaenge.EF.daten(2025).kuerzel;
-		this.schulbesuchsdaten.mapAttribute(dtoSchueler, "entlassungJahrgang", kuerzel, null);
 
-		assertThat(dtoSchueler.Entlassjahrgang).isEqualTo(kuerzel);
+		this.schulbesuchsdaten.mapAttribute(dtoSchueler, "idEntlassjahrgang", 1L, null);
+
+		assertThat(dtoSchueler)
+				.hasFieldOrPropertyWithValue("Entlassjahrgang_ID", jahrgang.ID)
+				.hasFieldOrPropertyWithValue("Entlassjahrgang", jahrgang.ASDJahrgang);
 	}
 
 	@Test
-	@DisplayName("mapAttribute | entlassungJahrgang | value is null")
-	void mapAttributeTest_entlassungJahrgang_null() throws ApiOperationException {
+	@DisplayName("mapAttribute | idEntlassjahrgang | value is null")
+	void mapAttributeTest_idEntlassjahrgang_null() throws ApiOperationException {
 		final var dtoSchueler = new DTOSchueler(1L, "1", true);
 		dtoSchueler.Entlassjahrgang = "soll mit null ueberschrieben werden";
+		dtoSchueler.Entlassjahrgang_ID = 42L;
 
-		this.schulbesuchsdaten.mapAttribute(dtoSchueler, "entlassungJahrgang", null, null);
+		this.schulbesuchsdaten.mapAttribute(dtoSchueler, "idEntlassjahrgang", null, null);
 
-		assertThat(dtoSchueler.Entlassjahrgang).isNull();
+		assertThat(dtoSchueler)
+				.hasFieldOrPropertyWithValue("Entlassjahrgang_ID", null)
+				.hasFieldOrPropertyWithValue("Entlassjahrgang", null);
 	}
 
 	@Test
-	@DisplayName("mapAttribute | entlassungJahrgang | value nicht im Katalog")
-	void mapAttributeTest_entlassungJahrgang_exception() {
-		final var dtoSchueler = new DTOSchueler(1L, "1", true);
+	@DisplayName("mapAttribute | idEntlassjahrgang | Jahrgang not found")
+	void mapAttributeTest_idEntlassjahrgang_jahrgangNotFound() {
+		when(this.conn.queryByKey(DTOJahrgang.class, 42L)).thenReturn(null);
 
-		final var throwable = catchThrowable(() -> this.schulbesuchsdaten.mapAttribute(dtoSchueler, "entlassungJahrgang", "XX", null));
-
-		assertThat(throwable)
+		assertThatException()
+				.isThrownBy(() -> this.schulbesuchsdaten.mapAttribute(mock(DTOSchueler.class), "idEntlassjahrgang", 42L, null))
 				.isInstanceOf(ApiOperationException.class)
-				.hasMessage("Kein Jahrgang für das Kürzel XX gefunden.")
+				.withMessage("Kein Jahrgang für die ID 42 gefunden.")
 				.hasFieldOrPropertyWithValue(STATUS, Response.Status.NOT_FOUND);
 	}
 

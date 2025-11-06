@@ -116,7 +116,9 @@ export class RouteDataSchuelerNeuSchnelleingabe extends RouteData<RouteStateData
 		const schulen = new ArrayList<SchulEintrag>();
 		const merkmale = new ArrayList<Merkmal>();
 		const entlassgruende = new ArrayList<KatalogEntlassgrund>();
-		return new SchuelerSchulbesuchManager(schuelerSchulbesuchsdaten, auswahl, api.schuleStammdaten.abschnitte, schulen, merkmale, entlassgruende, kindergaerten, routeSchuelerSchulbesuch.data.patch);
+		const jahrgaenge = await api.server.getJahrgangsdaten(api.schema);
+		return new SchuelerSchulbesuchManager(schuelerSchulbesuchsdaten, auswahl, api.schuleStammdaten.abschnitte, schulen, merkmale, entlassgruende,
+			kindergaerten, jahrgaenge, routeSchuelerSchulbesuch.data.patch);
 	}
 
 	private selectBevorzugtenAbschnitt(listAbschnitte: List<SchuelerLernabschnittListeEintrag>): SchuelerLernabschnittListeEintrag | null {
