@@ -169,6 +169,7 @@ import { Schild3KatalogEintragVersetzungsvermerke } from '../core/data/schild3/S
 import { SchuelerBetriebsdaten } from '../asd/data/schueler/SchuelerBetriebsdaten';
 import { SchuelerEinwilligung } from '../core/data/schueler/SchuelerEinwilligung';
 import { SchuelerEinwilligungsartenZusammenfassung } from '../core/data/schueler/SchuelerEinwilligungsartenZusammenfassung';
+import { SchuelerFoerderempfehlung } from '../asd/data/schueler/SchuelerFoerderempfehlung';
 import { SchuelerKAoADaten } from '../core/data/schueler/SchuelerKAoADaten';
 import { SchuelerLeistungsdaten } from '../asd/data/schueler/SchuelerLeistungsdaten';
 import { SchuelerLernabschnittBemerkungen } from '../asd/data/schueler/SchuelerLernabschnittBemerkungen';
@@ -12852,6 +12853,88 @@ export class ApiServer extends BaseApi {
 
 
 	/**
+	 * Implementierung der GET-Methode getFoerderempfehlungById für den Zugriff auf die URL https://{hostname}/db/{schema}/schueler/foerderempfehlung/{guid}
+	 *
+	 * Liest die Förderempfehlung mit der angegebenen GUID aus der Datenbank und liefert diese zurück. Dabei wird geprüft, ob der SVWS-Benutzer die notwendige Berechtigung zum Ansehen von Schülerdaten besitzt.
+	 *
+	 * Mögliche HTTP-Antworten:
+	 *   Code 200: Die Förderempfehlung
+	 *     - Mime-Type: application/json
+	 *     - Rückgabe-Typ: SchuelerFoerderempfehlung
+	 *   Code 403: Der SVWS-Benutzer hat keine Rechte, um Schülerdaten anzusehen.
+	 *   Code 404: Keine Förderempfehlung mit der angegebenen GU_ID gefunden
+	 *
+	 * @param {string} schema - der Pfad-Parameter schema
+	 * @param {string} guid - der Pfad-Parameter guid
+	 *
+	 * @returns Die Förderempfehlung
+	 */
+	public async getFoerderempfehlungById(schema : string, guid : string) : Promise<SchuelerFoerderempfehlung> {
+		const path = "/db/{schema}/schueler/foerderempfehlung/{guid}"
+			.replace(/{schema\s*(:[^{}]+({[^{}]+})*)?}/g, schema)
+			.replace(/{guid\s*(:[^{}]+({[^{}]+})*)?}/g, guid);
+		const result : string = await super.getJSON(path);
+		const text = result;
+		return SchuelerFoerderempfehlung.transpilerFromJSON(text);
+	}
+
+
+	/**
+	 * Implementierung der PATCH-Methode patchFoerderempfehlung für den Zugriff auf die URL https://{hostname}/db/{schema}/schueler/foerderempfehlung/{guid}
+	 *
+	 * Passt die Förderempfehlung mit der angegebenen GUID an. Dabei wird geprüft, ob der SVWS-Benutzer die notwendige Berechtigung zum Ändern von Förderempfehlungen besitzt.
+	 *
+	 * Mögliche HTTP-Antworten:
+	 *   Code 204: Der Patch wurde erfolgreich integriert.
+	 *   Code 400: Der Patch ist fehlerhaft aufgebaut.
+	 *   Code 403: Der SVWS-Benutzer hat keine Rechte, um Förderempfehlungen zu ändern.
+	 *   Code 404: Keine Förderempfehlung mit der angegebenen GUID gefunden
+	 *   Code 409: Der Patch ist fehlerhaft, da zumindest eine Rahmenbedingung für einen Wert nicht erfüllt wurde (z.B. eine negative ID)
+	 *   Code 500: Unspezifizierter Fehler (z.B. beim Datenbankzugriff)
+	 *
+	 * @param {Partial<SchuelerFoerderempfehlung>} data - der Request-Body für die HTTP-Methode
+	 * @param {string} schema - der Pfad-Parameter schema
+	 * @param {string} guid - der Pfad-Parameter guid
+	 */
+	public async patchFoerderempfehlung(data : Partial<SchuelerFoerderempfehlung>, schema : string, guid : string) : Promise<void> {
+		const path = "/db/{schema}/schueler/foerderempfehlung/{guid}"
+			.replace(/{schema\s*(:[^{}]+({[^{}]+})*)?}/g, schema)
+			.replace(/{guid\s*(:[^{}]+({[^{}]+})*)?}/g, guid);
+		const body : string = SchuelerFoerderempfehlung.transpilerToJSONPatch(data);
+		return super.patchJSON(path, body);
+	}
+
+
+	/**
+	 * Implementierung der DELETE-Methode deleteFoerderempfehlung für den Zugriff auf die URL https://{hostname}/db/{schema}/schueler/foerderempfehlung/{guid}
+	 *
+	 * Entfernt eine Förderempfehlung. Dabei wird geprüft, ob der SVWS-Benutzer die notwendige Berechtigung zum Entfernen von Förderempfehlungen hat.
+	 *
+	 * Mögliche HTTP-Antworten:
+	 *   Code 200: Die Förderempfehlung wurde erfolgreich entfernt.
+	 *     - Mime-Type: application/json
+	 *     - Rückgabe-Typ: SchuelerFoerderempfehlung
+	 *   Code 403: Der SVWS-Benutzer hat keine Rechte, um Förderempfehlungen zu entfernen.
+	 *   Code 404: Die Förderempfehlung ist nicht vorhanden
+	 *   Code 409: Die übergebenen Daten sind fehlerhaft
+	 *   Code 500: Unspezifizierter Fehler (z.B. beim Datenbankzugriff)
+	 *
+	 * @param {string} schema - der Pfad-Parameter schema
+	 * @param {string} guid - der Pfad-Parameter guid
+	 *
+	 * @returns Die Förderempfehlung wurde erfolgreich entfernt.
+	 */
+	public async deleteFoerderempfehlung(schema : string, guid : string) : Promise<SchuelerFoerderempfehlung> {
+		const path = "/db/{schema}/schueler/foerderempfehlung/{guid}"
+			.replace(/{schema\s*(:[^{}]+({[^{}]+})*)?}/g, schema)
+			.replace(/{guid\s*(:[^{}]+({[^{}]+})*)?}/g, guid);
+		const result : string = await super.deleteJSON(path, null);
+		const text = result;
+		return SchuelerFoerderempfehlung.transpilerFromJSON(text);
+	}
+
+
+	/**
 	 * Implementierung der GET-Methode getSchuelerLeistungsdatenByID für den Zugriff auf die URL https://{hostname}/db/{schema}/schueler/leistungsdaten/{id : \d+}
 	 *
 	 * Liest die Schülerleistungsdaten zu der angegebenen ID aus der Datenbank und liefert diese zurück. Dabei wird geprüft, ob der SVWS-Benutzer die notwendige Berechtigung zum Ansehen von Schülerleistungsdaten besitzt.
@@ -13098,6 +13181,63 @@ export class ApiServer extends BaseApi {
 			.replace(/{abschnitt\s*(:[^{}]+({[^{}]+})*)?}/g, abschnitt.toString());
 		const body : string = SchuelerLernabschnittBemerkungen.transpilerToJSONPatch(data);
 		return super.patchJSON(path, body);
+	}
+
+
+	/**
+	 * Implementierung der GET-Methode getFoerderempfehlungenByLernabschnittsdatenID für den Zugriff auf die URL https://{hostname}/db/{schema}/schueler/lernabschnittsdaten/{abschnitt : \d+}/foerderempfehlungen
+	 *
+	 * Liest die Förderempfehlung des Schüler-Lernabschnitts zu der angegebenen ID aus der Datenbank und liefert diese zurück. Dabei wird geprüft, ob der SVWS-Benutzer die notwendige Berechtigung zum Ansehen von Schülerdaten besitzt.
+	 *
+	 * Mögliche HTTP-Antworten:
+	 *   Code 200: Die Förderempfehlung des Schüler-Lernabschnitts
+	 *     - Mime-Type: application/json
+	 *     - Rückgabe-Typ: List<SchuelerFoerderempfehlung>
+	 *   Code 403: Der SVWS-Benutzer hat keine Rechte, um Schülerdaten anzusehen.
+	 *   Code 404: Keine Förderempfehlung für den Schüler-Lernabschnitts mit der angegebenen ID gefunden
+	 *
+	 * @param {string} schema - der Pfad-Parameter schema
+	 * @param {number} abschnitt - der Pfad-Parameter abschnitt
+	 *
+	 * @returns Die Förderempfehlung des Schüler-Lernabschnitts
+	 */
+	public async getFoerderempfehlungenByLernabschnittsdatenID(schema : string, abschnitt : number) : Promise<List<SchuelerFoerderempfehlung>> {
+		const path = "/db/{schema}/schueler/lernabschnittsdaten/{abschnitt : \\d+}/foerderempfehlungen"
+			.replace(/{schema\s*(:[^{}]+({[^{}]+})*)?}/g, schema)
+			.replace(/{abschnitt\s*(:[^{}]+({[^{}]+})*)?}/g, abschnitt.toString());
+		const result : string = await super.getJSON(path);
+		const obj = JSON.parse(result);
+		const ret = new ArrayList<SchuelerFoerderempfehlung>();
+		obj.forEach((elem: any) => { const text : string = JSON.stringify(elem); ret.add(SchuelerFoerderempfehlung.transpilerFromJSON(text)); });
+		return ret;
+	}
+
+
+	/**
+	 * Implementierung der POST-Methode addFoerderempfehlung für den Zugriff auf die URL https://{hostname}/db/{schema}/schueler/lernabschnittsdaten/foerderempfehlung/create
+	 *
+	 * Erstellt eine neue Förderempfehlung für einen Schüler-Lernabschnitts und gibt das erstellte Objekt zurück. Dabei wird geprüft, ob der SVWS-Benutzer die notwendige Berechtigung zum Erstellen neuer Förderempfehlungen besitzt.
+	 *
+	 * Mögliche HTTP-Antworten:
+	 *   Code 201: Die Förderempfehlung wurde erfolgreich hinzugefügt.
+	 *     - Mime-Type: application/json
+	 *     - Rückgabe-Typ: SchuelerFoerderempfehlung
+	 *   Code 400: Der Patch ist fehlerhaft aufgebaut.
+	 *   Code 403: Der SVWS-Benutzer hat keine Rechte, um Förderempfehlungen anzulegen.
+	 *   Code 500: Unspezifizierter Fehler (z.B. beim Datenbankzugriff)
+	 *
+	 * @param {Partial<SchuelerFoerderempfehlung>} data - der Request-Body für die HTTP-Methode
+	 * @param {string} schema - der Pfad-Parameter schema
+	 *
+	 * @returns Die Förderempfehlung wurde erfolgreich hinzugefügt.
+	 */
+	public async addFoerderempfehlung(data : Partial<SchuelerFoerderempfehlung>, schema : string) : Promise<SchuelerFoerderempfehlung> {
+		const path = "/db/{schema}/schueler/lernabschnittsdaten/foerderempfehlung/create"
+			.replace(/{schema\s*(:[^{}]+({[^{}]+})*)?}/g, schema);
+		const body : string = SchuelerFoerderempfehlung.transpilerToJSONPatch(data);
+		const result : string = await super.postJSON(path, body);
+		const text = result;
+		return SchuelerFoerderempfehlung.transpilerFromJSON(text);
 	}
 
 

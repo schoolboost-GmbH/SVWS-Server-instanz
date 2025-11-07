@@ -13,6 +13,7 @@ import de.svws_nrw.asd.data.schueler.SchuelerSchulbesuchMerkmal;
 import de.svws_nrw.asd.data.schueler.SchuelerSchulbesuchSchule;
 import de.svws_nrw.asd.data.schueler.SchuelerSchulbesuchsdaten;
 import de.svws_nrw.asd.data.schueler.SchuelerStammdaten;
+import de.svws_nrw.asd.data.schueler.SchuelerFoerderempfehlung;
 import de.svws_nrw.asd.data.schueler.Sprachbelegung;
 import de.svws_nrw.asd.data.schueler.Sprachpruefung;
 import de.svws_nrw.asd.data.schueler.UebergangsempfehlungKatalogEintrag;
@@ -53,6 +54,7 @@ import de.svws_nrw.data.schueler.DataSchuelerStammdaten;
 import de.svws_nrw.data.schueler.DataSchuelerTelefon;
 import de.svws_nrw.data.schueler.DataSchuelerVermerke;
 import de.svws_nrw.data.schueler.DataSchuelerliste;
+import de.svws_nrw.data.schueler.DataSchuelerFoerderempfehlung;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -222,8 +224,8 @@ public class APISchueler {
 	@ApiResponse(responseCode = "403", description = "Der SVWS-Benutzer hat keine Rechte, um Schülerdaten anzusehen.")
 	@ApiResponse(responseCode = "404", description = "Kein Schüler-Eintrag mit der angegebenen ID gefunden")
 	public Response getSchuelerStammdatenMultiple(@PathParam("schema") final String schema, @RequestBody(description = "Die IDs der Schüler", required = true,
-			content = @Content(mediaType = MediaType.APPLICATION_JSON,
-					array = @ArraySchema(schema = @Schema(implementation = Long.class)))) final InputStream is,
+					content = @Content(mediaType = MediaType.APPLICATION_JSON,
+							array = @ArraySchema(schema = @Schema(implementation = Long.class)))) final InputStream is,
 			@Context final HttpServletRequest request) {
 		return DBBenutzerUtils.runWithTransaction(conn -> new DataSchuelerStammdaten(conn).getListByIdsAsResponse(JSONMapper.toListOfLong(is)),
 				request, ServerMode.STABLE, BenutzerKompetenz.KEINE);
@@ -335,8 +337,8 @@ public class APISchueler {
 	@ApiResponse(responseCode = "403", description = "Der SVWS-Benutzer hat keine Rechte, um Schüler zu entfernen.")
 	@ApiResponse(responseCode = "500", description = "Unspezifizierter Fehler (z.B. beim Datenbankzugriff)")
 	public Response deleteSchueler(@PathParam("schema") final String schema, @RequestBody(description = "Die IDs der zu löschenden Schüler", required = true,
-			content = @Content(mediaType = MediaType.APPLICATION_JSON,
-					array = @ArraySchema(schema = @Schema(implementation = Long.class)))) final InputStream is,
+					content = @Content(mediaType = MediaType.APPLICATION_JSON,
+							array = @ArraySchema(schema = @Schema(implementation = Long.class)))) final InputStream is,
 			@Context final HttpServletRequest request) {
 		return DBBenutzerUtils.runWithTransactionOnErrorSimpleResponse(
 				conn -> new DataSchuelerStammdaten(conn).deleteMultipleAsSimpleResponseList(JSONMapper.toListOfLong(is)),
@@ -425,14 +427,14 @@ public class APISchueler {
 	}
 
 	/**
-	* Die OpenAPI-Methode für das Entfernen von bisher besuchten Schulen.
-	*
-	* @param schema       das Datenbankschema
-	* @param ids          die IDs der bisher besuchten Schulen
-	* @param request      die Informationen zur HTTP-Anfrage
-	*
-	* @return die HTTP-Antwort mit dem Status und ggf. der gelöschten bisherigen Schule
-	*/
+	 * Die OpenAPI-Methode für das Entfernen von bisher besuchten Schulen.
+	 *
+	 * @param schema       das Datenbankschema
+	 * @param ids          die IDs der bisher besuchten Schulen
+	 * @param request      die Informationen zur HTTP-Anfrage
+	 *
+	 * @return die HTTP-Antwort mit dem Status und ggf. der gelöschten bisherigen Schule
+	 */
 	@DELETE
 	@Path("/bisherigeSchule/multiple")
 	@Operation(summary = "Entfernt bisher besuchte Schulen.",
@@ -553,7 +555,7 @@ public class APISchueler {
 	@ApiResponse(responseCode = "409", description = "Die übergebenen Daten sind fehlerhaft")
 	@ApiResponse(responseCode = "500", description = "Unspezifizierter Fehler (z.B. beim Datenbankzugriff)")
 	public Response deleteSchuelerMerkmale(@PathParam("schema") final String schema, @RequestBody(description = "Die IDs der zu löschenden Merkmale",
-			required = true, content = @Content(mediaType = MediaType.APPLICATION_JSON,
+					required = true, content = @Content(mediaType = MediaType.APPLICATION_JSON,
 					array = @ArraySchema(schema = @Schema(implementation = Long.class)))) final InputStream ids,
 			@Context final HttpServletRequest request) {
 		return DBBenutzerUtils.runWithTransaction(conn -> new DataSchuelerMerkmale(conn).deleteMultipleAsResponse(JSONMapper.toListOfLong(ids)),
@@ -1992,7 +1994,7 @@ public class APISchueler {
 	@ApiResponse(responseCode = "409", description = "Die übergebenen Daten sind fehlerhaft")
 	@ApiResponse(responseCode = "500", description = "Unspezifizierter Fehler (z.B. beim Datenbankzugriff)")
 	public Response deleteSchuelerTelefone(@PathParam("schema") final String schema, @RequestBody(description = "Die IDs der zu löschenden Telefoneinträge",
-			required = true, content = @Content(mediaType = MediaType.APPLICATION_JSON,
+					required = true, content = @Content(mediaType = MediaType.APPLICATION_JSON,
 					array = @ArraySchema(schema = @Schema(implementation = Long.class)))) final InputStream ids,
 			@Context final HttpServletRequest request) {
 		return DBBenutzerUtils.runWithTransaction(conn -> new DataSchuelerTelefon(conn).deleteMultipleAsResponse(JSONMapper.toListOfLong(ids)),
@@ -2104,4 +2106,136 @@ public class APISchueler {
 		return DBBenutzerUtils.runWithTransaction(conn -> new DataKatalogFahrschuelerarten(conn).deleteMultipleAsSimpleResponseList(
 				JSONMapper.toListOfLong(is)), request, ServerMode.STABLE, BenutzerKompetenz.KATALOG_EINTRAEGE_AENDERN);
 	}
+	/**
+	 * Die OpenAPI-Methode für die Abfrage der Förderempfehlungen eines Schüler-Lernabschnitts.
+	 *
+	 * @param schema     das Datenbankschema, auf welches die Abfrage ausgeführt werden soll
+	 * @param abschnitt  die ID des Schüler-Lernabschnitts
+	 * @param request    die Informationen zur HTTP-Anfrage
+	 *
+	 * @return die Förderempfehlungen des Schüler-Lernabschnitts
+	 */
+	@GET
+	@Path("/lernabschnittsdaten/{abschnitt : \\d+}/foerderempfehlungen")
+	@Operation(summary = "Liefert zu der ID des Schüler-Lernabschnitts die zugehörige Förderempfehlung.",
+			description = "Liest die Förderempfehlung des Schüler-Lernabschnitts zu der angegebenen ID aus der Datenbank und liefert diese zurück. "
+					+ "Dabei wird geprüft, ob der SVWS-Benutzer die notwendige Berechtigung zum Ansehen von Schülerdaten besitzt.")
+	@ApiResponse(responseCode = "200", description = "Die Förderempfehlung des Schüler-Lernabschnitts",
+			content = @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = SchuelerFoerderempfehlung.class))))
+	@ApiResponse(responseCode = "403", description = "Der SVWS-Benutzer hat keine Rechte, um Schülerdaten anzusehen.")
+	@ApiResponse(responseCode = "404", description = "Keine Förderempfehlung für den Schüler-Lernabschnitts mit der angegebenen ID gefunden")
+	public Response getFoerderempfehlungenByLernabschnittsdatenID(@PathParam("schema") final String schema, @PathParam("abschnitt") final long abschnitt,
+			@Context final HttpServletRequest request) {
+		return DBBenutzerUtils.runWithTransaction(conn -> new DataSchuelerFoerderempfehlung(conn).getListByLernabschnittsdatenIdAsResponse(conn, abschnitt),
+				request, ServerMode.STABLE, BenutzerKompetenz.SCHUELER_INDIVIDUALDATEN_ANSEHEN);
+	}
+
+	/**
+	 * Die OpenAPI-Methode für das Hinzufügen einer Förderempfehlung für einen Schüler-Lernabschnitts.
+	 *
+	 * @param schema     das Datenbankschema
+	 * @param is         der Input-Stream mit den Daten der Förderempfehlung
+	 * @param request    die Informationen zur HTTP-Anfrage
+	 *
+	 * @return die HTTP-Antwort mit der erstellten Förderempfehlung
+	 */
+	@POST
+	@Path("/lernabschnittsdaten/foerderempfehlung/create")
+	@Operation(summary = "Erstellt eine neue Förderempfehlung für einen Schüler-Lernabschnitts und gibt das erstellte Objekt zurück.",
+			description = "Erstellt eine neue Förderempfehlung für einen Schüler-Lernabschnitts und gibt das erstellte Objekt zurück. "
+					+ "Dabei wird geprüft, ob der SVWS-Benutzer die notwendige Berechtigung zum Erstellen neuer Förderempfehlungen besitzt.")
+	@ApiResponse(responseCode = "201", description = "Die Förderempfehlung wurde erfolgreich hinzugefügt.",
+			content = @Content(mediaType = MediaType.APPLICATION_JSON, schema = @Schema(implementation = SchuelerFoerderempfehlung.class)))
+	@ApiResponse(responseCode = "400", description = "Der Patch ist fehlerhaft aufgebaut.")
+	@ApiResponse(responseCode = "403", description = "Der SVWS-Benutzer hat keine Rechte, um Förderempfehlungen anzulegen.")
+	@ApiResponse(responseCode = "500", description = "Unspezifizierter Fehler (z.B. beim Datenbankzugriff)")
+	public Response addFoerderempfehlung(@PathParam("schema") final String schema,
+			@RequestBody(description = "Die Daten der zu erstellenden Förderempfehlung ohne GU_ID, da diese automatisch generiert wird", required = true,
+					content = @Content(mediaType = MediaType.APPLICATION_JSON,
+							schema = @Schema(implementation = SchuelerFoerderempfehlung.class))) final InputStream is,
+			@Context final HttpServletRequest request) {
+		return DBBenutzerUtils.runWithTransaction(
+				conn -> new DataSchuelerFoerderempfehlung(conn).addAsResponse(is), request, ServerMode.STABLE,
+				BenutzerKompetenz.SCHUELER_INDIVIDUALDATEN_AENDERN);
+	}
+
+	/**
+	 * Die OpenAPI-Methode für die Abfrage einer Förderempfehlung mit der angegebenen GUID.
+	 *
+	 * @param schema    das Datenbankschema, auf welches die Abfrage ausgeführt werden soll
+	 * @param guid      die GUID zur Identifikation der Förderempfehlung
+	 * @param request   die Informationen zur HTTP-Anfrage
+	 *
+	 * @return die Förderempfehlung mit der angegebenen GUID
+	 */
+	@GET
+	@Path("/foerderempfehlung/{guid}")
+	@Operation(summary = "Liefert die Förderempfehlung mit der angegebenen GUID.",
+			description = "Liest die Förderempfehlung mit der angegebenen GUID aus der Datenbank und liefert diese zurück. "
+					+ "Dabei wird geprüft, ob der SVWS-Benutzer die notwendige Berechtigung zum Ansehen von Schülerdaten besitzt.")
+	@ApiResponse(responseCode = "200", description = "Die Förderempfehlung",
+			content = @Content(mediaType = "application/json", schema = @Schema(implementation = SchuelerFoerderempfehlung.class)))
+	@ApiResponse(responseCode = "403", description = "Der SVWS-Benutzer hat keine Rechte, um Schülerdaten anzusehen.")
+	@ApiResponse(responseCode = "404", description = "Keine Förderempfehlung mit der angegebenen GU_ID gefunden")
+	public Response getFoerderempfehlungById(@PathParam("schema") final String schema, @PathParam("guid") final String guid,
+			@Context final HttpServletRequest request) {
+		return DBBenutzerUtils.runWithTransaction(conn -> new DataSchuelerFoerderempfehlung(conn).getByIdAsResponse(guid),
+				request, ServerMode.STABLE, BenutzerKompetenz.SCHUELER_INDIVIDUALDATEN_ANSEHEN);
+	}
+
+	/**
+	 * Die OpenAPI-Methode für das Patchen einer Förderempfehlung.
+	 *
+	 * @param schema    das Datenbankschema, auf welches der Patch ausgeführt werden soll
+	 * @param guid      die GUID zur Identifikation der Förderempfehlung
+	 * @param is        der InputStream, mit dem JSON-Patch-Objekt nach RFC 7386
+	 * @param request   die Informationen zur HTTP-Anfrage
+	 *
+	 * @return das Ergebnis der Patch-Operation
+	 */
+	@PATCH
+	@Path("/foerderempfehlung/{guid}")
+	@Operation(summary = "Passt die Förderempfehlung mit der angegebenen GUID an.",
+			description = "Passt die Förderempfehlung mit der angegebenen GUID an. "
+					+ "Dabei wird geprüft, ob der SVWS-Benutzer die notwendige Berechtigung zum Ändern von Förderempfehlungen besitzt.")
+	@ApiResponse(responseCode = "204", description = "Der Patch wurde erfolgreich integriert.")
+	@ApiResponse(responseCode = "400", description = "Der Patch ist fehlerhaft aufgebaut.")
+	@ApiResponse(responseCode = "403", description = "Der SVWS-Benutzer hat keine Rechte, um Förderempfehlungen zu ändern.")
+	@ApiResponse(responseCode = "404", description = "Keine Förderempfehlung mit der angegebenen GUID gefunden")
+	@ApiResponse(responseCode = "409", description = "Der Patch ist fehlerhaft, da zumindest eine Rahmenbedingung für einen Wert nicht erfüllt wurde"
+			+ " (z.B. eine negative ID)")
+	@ApiResponse(responseCode = "500", description = "Unspezifizierter Fehler (z.B. beim Datenbankzugriff)")
+	public Response patchFoerderempfehlung(@PathParam("schema") final String schema, @PathParam("guid") final String guid,
+			@RequestBody(description = "Der Patch für die Förderempfehlung", required = true, content = @Content(mediaType = MediaType.APPLICATION_JSON,
+					schema = @Schema(implementation = SchuelerFoerderempfehlung.class))) final InputStream is,
+			@Context final HttpServletRequest request) {
+		return DBBenutzerUtils.runWithTransaction(conn -> new DataSchuelerFoerderempfehlung(conn).patchAsResponse(guid, is),
+				request, ServerMode.STABLE, BenutzerKompetenz.SCHUELER_INDIVIDUALDATEN_AENDERN);
+	}
+
+	/**
+	 * Die OpenAPI-Methode für das Entfernen einer Förderempfehlung.
+	 *
+	 * @param schema    das Datenbankschema
+	 * @param guid      die GUID der Förderempfehlung
+	 * @param request   die Informationen zur HTTP-Anfrage
+	 *
+	 * @return die HTTP-Antwort mit dem Status der Lösch-Operation
+	 */
+	@DELETE
+	@Path("/foerderempfehlung/{guid}")
+	@Operation(summary = "Entfernt eine Förderempfehlung.",
+			description = "Entfernt eine Förderempfehlung. Dabei wird geprüft, ob der SVWS-Benutzer die notwendige Berechtigung zum Entfernen von Förderempfehlungen hat.")
+	@ApiResponse(responseCode = "200", description = "Die Förderempfehlung wurde erfolgreich entfernt.",
+			content = @Content(mediaType = "application/json", schema = @Schema(implementation = SchuelerFoerderempfehlung.class)))
+	@ApiResponse(responseCode = "403", description = "Der SVWS-Benutzer hat keine Rechte, um Förderempfehlungen zu entfernen.")
+	@ApiResponse(responseCode = "404", description = "Die Förderempfehlung ist nicht vorhanden")
+	@ApiResponse(responseCode = "409", description = "Die übergebenen Daten sind fehlerhaft")
+	@ApiResponse(responseCode = "500", description = "Unspezifizierter Fehler (z.B. beim Datenbankzugriff)")
+	public Response deleteFoerderempfehlung(@PathParam("schema") final String schema, @PathParam("guid") final String guid,
+			@Context final HttpServletRequest request) {
+		return DBBenutzerUtils.runWithTransaction(conn -> new DataSchuelerFoerderempfehlung(conn).deleteAsResponse(guid),
+				request, ServerMode.STABLE, BenutzerKompetenz.SCHUELER_INDIVIDUALDATEN_AENDERN);
+	}
 }
+
