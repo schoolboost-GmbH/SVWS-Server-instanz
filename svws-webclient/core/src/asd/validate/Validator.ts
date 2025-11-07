@@ -62,6 +62,13 @@ export abstract class Validator extends BasicValidator {
 		let success: boolean = true;
 		this._fehler.clear();
 		if (this._kontext.getValidatorManager().isValidatorActiveInSchuljahr(this._kontext.getSchuljahr(), this.getClass().getCanonicalName())) {
+			try {
+				if (!this.pruefe())
+					return false;
+			} catch(e : any) {
+				this.addFehler(-1, "Unerwarteter Fehler bei der Validierung: " + e.getMessage());
+				return false;
+			}
 			for (const validator of this._validatoren) {
 				if (!validator.run())
 					success = false;
@@ -69,13 +76,24 @@ export abstract class Validator extends BasicValidator {
 				this.updateFehlerart(validator.getFehlerart());
 			}
 			try {
-				if (!this.pruefe())
+				if (!this.pruefeAbschluss())
 					success = false;
 			} catch(e : any) {
 				this.addFehler(-1, "Unerwarteter Fehler bei der Validierung: " + e.getMessage());
 			}
 		}
 		return success;
+	}
+
+	/**
+	 * Führt ggf. eine Prüfung der Daten nach der Überprüfung der Subvalidatoren als Abschluss
+	 * der Prüfung aus. Dabei wird die Fehlerliste, falls es zu Fehlern kommt.
+	 * Diese Methode ist bei Bedarf in dem konkreten Fall zu überschreiben.
+	 *
+	 * @return true, falls die Prüfung erfolgreich war, und ansonsten false
+	 */
+	protected pruefeAbschluss(): boolean {
+		return true;
 	}
 
 	/**
