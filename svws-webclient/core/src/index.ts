@@ -285,6 +285,7 @@ export { ValidatorManager } from './asd/validate/ValidatorManager';
 export { ValidatorGesamtLehrerPersonaldatenLehramt } from './asd/validate/gesamt/ValidatorGesamtLehrerPersonaldatenLehramt';
 export { ValidatorGesamtLehrerdaten } from './asd/validate/gesamt/ValidatorGesamtLehrerdaten';
 export { ValidatorGesamtLehrerdatenDuplikate } from './asd/validate/gesamt/ValidatorGesamtLehrerdatenDuplikate';
+export { ValidatorLabbLehrerPersonalabschnittsdatenBeschaeftigungsartBlockmodell } from './asd/validate/lehrer/ValidatorLabbLehrerPersonalabschnittsdatenBeschaeftigungsartBlockmodell';
 export { ValidatorLehrerPersonalabschnittsdaten } from './asd/validate/lehrer/ValidatorLehrerPersonalabschnittsdaten';
 export { ValidatorLehrerPersonalabschnittsdatenPflichtstundensoll } from './asd/validate/lehrer/ValidatorLehrerPersonalabschnittsdatenPflichtstundensoll';
 export { ValidatorLehrerPersonalabschnittsdatenRechtsverhaeltnis } from './asd/validate/lehrer/ValidatorLehrerPersonalabschnittsdatenRechtsverhaeltnis';

@@ -255,6 +255,26 @@
 			"gueltigVon": null,
 			"gueltigBis": null
 		} ]
+	},	{
+		"validator": "de.svws_nrw.asd.validate.lehrer.ValidatorLabbLehrerPersonalabschnittsdatenBeschaeftigungsartBlockmodell",
+		"historie": [ {
+			"zebras": true,
+			"svws": true,
+			"praefix": "LABB",
+			"pruefschritte" : [ {
+				"nummer": -1,
+				"muss": [],
+				"kann": ["G","H","V","S","KS","R","PS","SK","GE","FW","HI","GY","WB","BK","SR","SG","SB"],
+				"hinweis": []
+			}, {
+				"nummer": 1,
+				"muss": [],
+				"kann": ["G","H","V","S","KS","R","PS","SK","GE","FW","HI","GY","WB","BK","SR","SG","SB"],
+				"hinweis": []
+			} ],
+			"gueltigVon": null,
+			"gueltigBis": null
+		} ]
 	}, {
 		"validator": "de.svws_nrw.asd.validate.gesamt.ValidatorGesamtLehrerdatenDuplikate",
 		"historie": [ {
