@@ -58,6 +58,9 @@ import Nationalitaeten from "@json/schule/Nationalitaeten.json";
 import ValidatorenFehlerartKontext from "@json/../validate/ValidatorenFehlerartKontext.json";
 import Floskelgruppenart from "@json/schule/Floskelgruppenart.json";
 import Einwilligungsschluessel from "@json/schule/Einwilligungsschluessel.json";
+import Herkunftsarten from "@json/schueler/Herkunftsarten.json";
+import HerkunftSonstige from "@json/schueler/HerkunftSonstige.json";
+import HerkunftSchulform from "@json/schueler/HerkunftSchulform.json";
 
 export class JsonCoreTypeReaderStatic extends JsonCoreTypeReader {
 
@@ -124,6 +127,9 @@ export class JsonCoreTypeReaderStatic extends JsonCoreTypeReader {
 		this.mapCoreTypeNameJsonDataImport.set("ValidatorenFehlerartKontext", ValidatorenFehlerartKontext);
 		this.mapCoreTypeNameJsonDataImport.set("Floskelgruppenart", Floskelgruppenart);
 		this.mapCoreTypeNameJsonDataImport.set("Einwilligungsschluessel", Einwilligungsschluessel);
+		this.mapCoreTypeNameJsonDataImport.set("Herkunftsarten", Herkunftsarten);
+		this.mapCoreTypeNameJsonDataImport.set("HerkunftSonstige", HerkunftSonstige);
+		this.mapCoreTypeNameJsonDataImport.set("HerkunftSchulform", HerkunftSchulform);
 		for (const [k, v] of this.mapCoreTypeNameJsonDataImport.entries())
 			this.mapCoreTypeNameJsonData.set(k, JSON.stringify(v));
 	}

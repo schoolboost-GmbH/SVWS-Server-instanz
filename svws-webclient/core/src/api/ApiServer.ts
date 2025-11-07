@@ -92,7 +92,7 @@ import { GostSchuelerklausurTermin } from '../core/data/gost/klausurplanung/Gost
 import { GostStatistikFachwahl } from '../core/data/gost/GostStatistikFachwahl';
 import { Haltestelle } from '../core/data/schule/Haltestelle';
 import { HerkunftKatalogEintrag } from '../core/data/schule/HerkunftKatalogEintrag';
-import { HerkunftsartKatalogEintrag } from '../core/data/schule/HerkunftsartKatalogEintrag';
+import { HerkunftsartenKatalogEintrag } from '../asd/data/schueler/HerkunftsartenKatalogEintrag';
 import { HerkunftsschulnummerKatalogEintrag } from '../core/data/schule/HerkunftsschulnummerKatalogEintrag';
 import { JahrgaengeKatalogEintrag } from '../asd/data/jahrgang/JahrgaengeKatalogEintrag';
 import { JahrgangsDaten } from '../core/data/jahrgang/JahrgangsDaten';
@@ -12548,7 +12548,7 @@ export class ApiServer extends BaseApi {
 	 * Mögliche HTTP-Antworten:
 	 *   Code 200: Eine Liste von Katalog-Einträgen
 	 *     - Mime-Type: application/json
-	 *     - Rückgabe-Typ: List<HerkunftsartKatalogEintrag>
+	 *     - Rückgabe-Typ: List<HerkunftsartenKatalogEintrag>
 	 *   Code 403: Der SVWS-Benutzer hat keine Rechte, um Katalog-Einträge anzusehen.
 	 *   Code 404: Keine Katalog-Einträge gefunden
 	 *
@@ -12556,13 +12556,13 @@ export class ApiServer extends BaseApi {
 	 *
 	 * @returns Eine Liste von Katalog-Einträgen
 	 */
-	public async getKatalogHerkunftsarten(schema : string) : Promise<List<HerkunftsartKatalogEintrag>> {
+	public async getKatalogHerkunftsarten(schema : string) : Promise<List<HerkunftsartenKatalogEintrag>> {
 		const path = "/db/{schema}/schueler/allgemein/herkunftsarten"
 			.replace(/{schema\s*(:[^{}]+({[^{}]+})*)?}/g, schema);
 		const result : string = await super.getJSON(path);
 		const obj = JSON.parse(result);
-		const ret = new ArrayList<HerkunftsartKatalogEintrag>();
-		obj.forEach((elem: any) => { const text : string = JSON.stringify(elem); ret.add(HerkunftsartKatalogEintrag.transpilerFromJSON(text)); });
+		const ret = new ArrayList<HerkunftsartenKatalogEintrag>();
+		obj.forEach((elem: any) => { const text : string = JSON.stringify(elem); ret.add(HerkunftsartenKatalogEintrag.transpilerFromJSON(text)); });
 		return ret;
 	}
 

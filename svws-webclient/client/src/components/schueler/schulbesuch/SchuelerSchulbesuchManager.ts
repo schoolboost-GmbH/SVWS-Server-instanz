@@ -147,7 +147,7 @@ export class SchuelerSchulbesuchManager extends StateManager<ManagerStateDataSch
 		if (this.daten.vorigeArtLetzteVersetzung === null)
 			return undefined;
 		const artID = Number(this.daten.vorigeArtLetzteVersetzung);
-		return Herkunftsarten.getByID(artID) || undefined;
+		return Herkunftsarten.data().getWertByIDOrNull(artID) || undefined;
 	}
 
 
@@ -168,9 +168,8 @@ export class SchuelerSchulbesuchManager extends StateManager<ManagerStateDataSch
 	}
 
 	/** Gibt die Herkunftsarten der vorherigen Schulform des ausgewählten Schülers zurück */
-	public getHerkunftsarten(): Herkunftsarten[] {
-		return Herkunftsarten.values().filter(
-			h => h.getBezeichnung(this._schuljahr, this.getVorigeSchulform() || Schulform.G) !== null);
+	public getHerkunftsarten(): List<Herkunftsarten> {
+		return Herkunftsarten.data().getListBySchuljahrAndSchulform(this._schuljahr, this.getVorigeSchulform() ?? Schulform.G);
 	}
 
 	/** Gibt die vorherige Schulform des ausgewählten Schülers zurück */
@@ -238,7 +237,7 @@ export class SchuelerSchulbesuchManager extends StateManager<ManagerStateDataSch
 
 	/** Die spezielle Patch-Methode der vorigeArtLetzteVersetzung */
 	public patchVorigeArtLetzteVersetzung(value: Herkunftsarten | undefined | null) {
-		void this.doPatch({ vorigeArtLetzteVersetzung: ((value === null) || (value === undefined)) ? null : value.daten.id.toString() });
+		void this.doPatch({ vorigeArtLetzteVersetzung: value?.daten(this.schuljahr)?.id.toString() ?? null });
 	}
 
 	/** Die spezielle Patch-Methode der Schuleinträge */

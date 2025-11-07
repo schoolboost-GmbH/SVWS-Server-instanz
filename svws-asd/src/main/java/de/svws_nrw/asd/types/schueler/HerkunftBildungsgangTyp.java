@@ -18,7 +18,7 @@ public enum HerkunftBildungsgangTyp implements CoreType<HerkunftBildungsgangTypK
 	/** Weiterbildungskolleg: Abendrealschule */
 	AR,
 
-	/** Weiterbildungskolleg: Abendrealschule */
+	/** Weiterbildungskolleg: Kolleg */
 	KL,
 
 	/** Berufskolleg: Berufsfachschule */

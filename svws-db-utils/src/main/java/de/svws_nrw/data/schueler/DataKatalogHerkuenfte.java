@@ -9,10 +9,10 @@ import de.svws_nrw.asd.data.schule.SchulformSchulgliederung;
 import de.svws_nrw.asd.types.schueler.HerkunftBildungsgang;
 import de.svws_nrw.asd.types.schueler.HerkunftBildungsgangTyp;
 import de.svws_nrw.core.data.schule.HerkunftKatalogEintrag;
-import de.svws_nrw.core.data.schule.HerkunftSchulformKatalogEintrag;
-import de.svws_nrw.core.data.schule.HerkunftSonstigeKatalogEintrag;
-import de.svws_nrw.core.types.schueler.HerkunftSchulform;
-import de.svws_nrw.core.types.schueler.HerkunftSonstige;
+import de.svws_nrw.asd.data.schueler.HerkunftSchulformKatalogEintrag;
+import de.svws_nrw.asd.data.schueler.HerkunftSonstigeKatalogEintrag;
+import de.svws_nrw.asd.types.schueler.HerkunftSchulform;
+import de.svws_nrw.asd.types.schueler.HerkunftSonstige;
 import de.svws_nrw.data.DataManager;
 import jakarta.validation.constraints.NotNull;
 import jakarta.ws.rs.core.MediaType;
@@ -36,13 +36,13 @@ public final class DataKatalogHerkuenfte extends DataManager<Long> {
 	public Response getAll() {
 		final ArrayList<HerkunftKatalogEintrag> daten = new ArrayList<>();
 		for (final HerkunftSonstige eintrag : HerkunftSonstige.values()) {
-			for (final HerkunftSonstigeKatalogEintrag ke : eintrag.historie) {
+			for (final HerkunftSonstigeKatalogEintrag ke : eintrag.historie()) {
 				final HerkunftKatalogEintrag hke = new HerkunftKatalogEintrag();
 				hke.id = ke.id + 1000000000L;
 				hke.kuerzel = ke.kuerzel;
 				hke.schluessel = ke.kuerzel;
 				hke.schulformen = ke.schulformen;
-				hke.beschreibung = ke.beschreibung;
+				hke.beschreibung = ke.text;
 				hke.gueltigVon = ke.gueltigVon;
 				hke.gueltigBis = ke.gueltigBis;
 				daten.add(hke);
@@ -79,13 +79,13 @@ public final class DataKatalogHerkuenfte extends DataManager<Long> {
 			}
 		}
 		for (final HerkunftSchulform eintrag : HerkunftSchulform.values()) {
-			for (final HerkunftSchulformKatalogEintrag ke : eintrag.historie) {
+			for (final HerkunftSchulformKatalogEintrag ke : eintrag.historie()) {
 				final HerkunftKatalogEintrag hke = new HerkunftKatalogEintrag();
 				hke.id = ke.id + 4000000000L;
 				hke.kuerzel = ke.kuerzel;
-				hke.schluessel = ke.kuerzelStatistik;
+				hke.schluessel = ke.schluessel;
 				hke.schulformen = ke.schulformen;
-				hke.beschreibung = ke.beschreibung;
+				hke.beschreibung = ke.text;
 				hke.gueltigVon = ke.gueltigVon;
 				hke.gueltigBis = ke.gueltigBis;
 				daten.add(hke);

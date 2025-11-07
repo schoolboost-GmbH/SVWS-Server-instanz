@@ -8,7 +8,7 @@ import de.svws_nrw.asd.types.schueler.Uebergangsempfehlung;
 import de.svws_nrw.asd.types.schule.Kindergartenbesuch;
 import de.svws_nrw.asd.types.schule.Schulform;
 import de.svws_nrw.asd.utils.ASDCoreTypeUtils;
-import de.svws_nrw.core.types.schueler.Herkunftsarten;
+import de.svws_nrw.asd.types.schueler.Herkunftsarten;
 import de.svws_nrw.data.JSONMapper;
 import de.svws_nrw.db.DBEntityManager;
 import de.svws_nrw.db.dto.current.schild.grundschule.DTOKindergarten;
@@ -655,7 +655,7 @@ class DataSchuelerSchulbesuchsdatenTest {
 	@DisplayName("mapAttribute | vorigeArtLetzteVersetzung | Erfolg")
 	void mapAttributeTest_vorigeArtLetzteVersetzung() throws ApiOperationException {
 		final var dtoSchueler = new DTOSchueler(1L, "1", true);
-		final var id = String.valueOf(Herkunftsarten.AHR.daten.id);
+		final var id = String.valueOf(Herkunftsarten.data().getWertByBezeichner("AHR").daten(2025).id);
 
 		this.schulbesuchsdaten.mapAttribute(dtoSchueler, "vorigeArtLetzteVersetzung", id, null);
 

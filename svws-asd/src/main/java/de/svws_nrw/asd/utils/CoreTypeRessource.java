@@ -43,6 +43,9 @@ import de.svws_nrw.asd.data.lehrer.LehrerPflichtstundensollVollzeitKatalogEintra
 import de.svws_nrw.asd.data.lehrer.LehrerRechtsverhaeltnisKatalogEintrag;
 import de.svws_nrw.asd.data.lehrer.LehrerZugangsgrundKatalogEintrag;
 import de.svws_nrw.asd.data.schueler.BetreuungsartKatalogEintrag;
+import de.svws_nrw.asd.data.schueler.HerkunftsartenKatalogEintrag;
+import de.svws_nrw.asd.data.schueler.HerkunftSchulformKatalogEintrag;
+import de.svws_nrw.asd.data.schueler.HerkunftSonstigeKatalogEintrag;
 import de.svws_nrw.asd.data.schueler.EinschulungsartKatalogEintrag;
 import de.svws_nrw.asd.data.schueler.HerkunftBildungsgangKatalogEintrag;
 import de.svws_nrw.asd.data.schueler.HerkunftBildungsgangTypKatalogEintrag;
@@ -101,6 +104,9 @@ import de.svws_nrw.asd.types.lehrer.LehrerPflichtstundensollVollzeit;
 import de.svws_nrw.asd.types.lehrer.LehrerRechtsverhaeltnis;
 import de.svws_nrw.asd.types.lehrer.LehrerZugangsgrund;
 import de.svws_nrw.asd.types.schueler.Betreuungsart;
+import de.svws_nrw.asd.types.schueler.Herkunftsarten;
+import de.svws_nrw.asd.types.schueler.HerkunftSchulform;
+import de.svws_nrw.asd.types.schueler.HerkunftSonstige;
 import de.svws_nrw.asd.types.schueler.Einschulungsart;
 import de.svws_nrw.asd.types.schueler.HerkunftBildungsgang;
 import de.svws_nrw.asd.types.schueler.HerkunftBildungsgangTyp;
@@ -498,6 +504,12 @@ public final class CoreTypeRessource<T extends CoreTypeData, U extends CoreType<
 				"de/svws_nrw/asd/types/schule/Floskelgruppenart.json");
 		addSimple(Einwilligungsschluessel.class, EinwilligungsschluesselKatalogEintrag.class,
 				"de/svws_nrw/asd/types/schule/Einwilligungsschluessel.json");
+		addSimple(Herkunftsarten.class, HerkunftsartenKatalogEintrag.class,
+				"de/svws_nrw/asd/types/schueler/Herkunftsarten.json");
+		addSimple(HerkunftSchulform.class, HerkunftSchulformKatalogEintrag.class,
+				"de/svws_nrw/asd/types/schueler/HerkunftSchulform.json");
+		addSimple(HerkunftSonstige.class, HerkunftSonstigeKatalogEintrag.class,
+				"de/svws_nrw/asd/types/schueler/HerkunftSonstige.json");
 	}
 
 }

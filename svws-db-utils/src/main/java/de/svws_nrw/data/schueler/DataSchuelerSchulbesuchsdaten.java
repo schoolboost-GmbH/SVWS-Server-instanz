@@ -9,7 +9,7 @@ import de.svws_nrw.asd.types.schueler.Einschulungsart;
 import de.svws_nrw.asd.types.schueler.Uebergangsempfehlung;
 import de.svws_nrw.asd.types.schule.Kindergartenbesuch;
 import de.svws_nrw.asd.types.schule.Schulform;
-import de.svws_nrw.core.types.schueler.Herkunftsarten;
+import de.svws_nrw.asd.types.schueler.Herkunftsarten;
 import de.svws_nrw.db.dto.current.schild.grundschule.DTOKindergarten;
 import de.svws_nrw.db.dto.current.schild.katalog.DTOSchuleNRW;
 import de.svws_nrw.db.dto.current.schild.schule.DTOJahrgang;
@@ -388,7 +388,7 @@ public final class DataSchuelerSchulbesuchsdaten extends DataManagerRevised<Long
 		}
 
 		final Long idAsLong = JSONMapper.convertToLong(id, true, "id");
-		if (Herkunftsarten.getByID(idAsLong) == null)
+		if (Herkunftsarten.data().getWertByIDOrNull(idAsLong) == null)
 			throw new ApiOperationException(Status.NOT_FOUND, "Keine Herkunftsart für die ID: %s gefunden.".formatted(id));
 
 		dtoSchueler.LSVersetzung = id;

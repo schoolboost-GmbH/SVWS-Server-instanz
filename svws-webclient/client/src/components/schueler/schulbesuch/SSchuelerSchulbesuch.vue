@@ -436,13 +436,13 @@
 	const schuljahrNewEntryBisherigeSchuleDatumVon = computed<number>(() => {
 		if (newEntryBisherigeSchule.value.datumVon === null)
 			return -1;
-		return Number(newEntryBisherigeSchule.value.datumVon.toString().substring(0, 4));
+		return Number(newEntryBisherigeSchule.value.datumVon.substring(0, 4));
 	});
 
 	const schuljahrNewEntryBisherigeSchuleDatumBis = computed<number>(() => {
 		if (newEntryBisherigeSchule.value.datumBis === null)
 			return -1;
-		return Number(newEntryBisherigeSchule.value.datumBis.toString().substring(0, 4));
+		return Number(newEntryBisherigeSchule.value.datumBis.substring(0, 4));
 	});
 
 	const jahrgangVonManager = new CoreTypeSelectManager({ clazz: Jahrgaenge.class, schuljahr: schuljahrNewEntryBisherigeSchuleDatumVon,
@@ -523,7 +523,8 @@
 	}
 
 	function textHerkunftsarten(h: Herkunftsarten) {
-		return h.getBezeichnung(props.manager().schuljahr, props.manager().getVorigeSchulform() || Schulform.G) + ' (' + h.daten.kuerzel + ')';
+		const eintrag = h.daten(props.manager().schuljahr);
+		return (eintrag?.text ?? "???") + ' (' + (eintrag?.kuerzel ?? "???") + ')';
 	}
 
 	function textSchule(s: SchulEintrag) {

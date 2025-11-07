@@ -27,7 +27,7 @@ import de.svws_nrw.core.data.schueler.SchuelerTelefon;
 import de.svws_nrw.core.data.schueler.SchuelerVermerke;
 import de.svws_nrw.core.data.schueler.SchuelerEinwilligung;
 import de.svws_nrw.core.data.schule.HerkunftKatalogEintrag;
-import de.svws_nrw.core.data.schule.HerkunftsartKatalogEintrag;
+import de.svws_nrw.asd.data.schueler.HerkunftsartenKatalogEintrag;
 import de.svws_nrw.core.types.ServerMode;
 import de.svws_nrw.core.types.benutzer.BenutzerKompetenz;
 import de.svws_nrw.data.JSONMapper;
@@ -1125,7 +1125,7 @@ public class APISchueler {
 			description = "Erstellt eine Liste aller in dem Katalog vorhandenen Herkunftsarten bei Schülern. "
 					+ "Dabei wird geprüft, ob der SVWS-Benutzer die notwendige Berechtigung zum Ansehen von Katalogen besitzt.")
 	@ApiResponse(responseCode = "200", description = "Eine Liste von Katalog-Einträgen",
-			content = @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = HerkunftsartKatalogEintrag.class))))
+			content = @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = HerkunftsartenKatalogEintrag.class))))
 	@ApiResponse(responseCode = "403", description = "Der SVWS-Benutzer hat keine Rechte, um Katalog-Einträge anzusehen.")
 	@ApiResponse(responseCode = "404", description = "Keine Katalog-Einträge gefunden")
 	public Response getKatalogHerkunftsarten(@PathParam("schema") final String schema, @Context final HttpServletRequest request) {
