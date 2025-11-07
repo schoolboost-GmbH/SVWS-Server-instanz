@@ -63,6 +63,7 @@ public class Tabelle_K_Sportbefreiung extends SchemaTabelle {
 		setJavaSubPackage("schild.schueler");
 		setJavaClassName("DTOSportbefreiung");
 		setJavaComment("Liste der Sportbefreiungen kann frei definiert werden ");
+		setVeraltet(SchemaRevisionen.REV_51);
 	}
 
 }

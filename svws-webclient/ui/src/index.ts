@@ -147,7 +147,6 @@ export { HaltestellenListeManager } from './ui/managers/kataloge/haltestellen/Ha
 export { JahrgaengeListeManager } from './ui/managers/kataloge/jahrgaenge/JahrgaengeListeManager';
 export { KindergaertenListeManager } from './ui/managers/kataloge/kindergaerten/KindergaertenListeManager';
 export { MerkmaleListeManager } from './ui/managers/kataloge/merkmale/MerkmaleListeManager';
-export { SportbefreiungenListeManager } from './ui/managers/kataloge/sportbefreiungen/SportbefreiungenListeManager';
 export { VermerkartenListeManager } from './ui/managers/kataloge/vermerkart/VermerkartenListeManager';
 export { FachListeManager } from './ui/managers/fach/FachListeManager';
 export { ErzieherartListeManager } from './ui/managers/erzieherart/ErzieherartListeManager';

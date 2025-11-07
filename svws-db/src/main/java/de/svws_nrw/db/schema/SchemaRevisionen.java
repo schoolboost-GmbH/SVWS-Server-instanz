@@ -39,6 +39,7 @@ import de.svws_nrw.db.schema.revisionen.Revision43Updates;
 import de.svws_nrw.db.schema.revisionen.Revision45Updates;
 import de.svws_nrw.db.schema.revisionen.Revision46Updates;
 import de.svws_nrw.db.schema.revisionen.Revision4Updates;
+import de.svws_nrw.db.schema.revisionen.Revision51Updates;
 import de.svws_nrw.db.schema.revisionen.Revision6Updates;
 import de.svws_nrw.db.schema.revisionen.RevisionNoUpdates;
 
@@ -263,14 +264,17 @@ public enum SchemaRevisionen {
 	/** Tabelle Schuljahresabschnitte: Einführen einer Unique-Constraint auf Jahr und Abschnitt */
 	REV_47(47, "2025-08-21"),
 
-	/** Uvd */
+	/** Anlegen der Tabellen zur Unterrichtsverteilung */
 	REV_48(48, "2025-09-01"),
 
-	/** Uvd Anpassungen DROP */
-	REV_49(49, "2025-11-01"),
+	/** Anpassung der Tabellen zur Unterrichtsverteilung (Primär- und Fremdschlüssel) Teil 1 DROP von 2 Tabellen */
+	REV_49(49, "2025-11-06"),
 
-	/** Uvd Anpassungen CREATE*/
-	REV_50(50, "2025-11-01");
+	/** Anpassung der Tabellen zur Unterrichtsverteilung (Primär- und Fremdschlüssel) Teil 2 CREATE von 2 Tabellen */
+	REV_50(50, "2025-11-06"),
+
+	/** Tabelle K_Sportbefreiung überführt in SchuelerVermerke */
+	REV_51(51, "2025-11-06");
 
 
 	/**
@@ -278,14 +282,14 @@ public enum SchemaRevisionen {
 	 * bis zu welcher alle Schema-Revision als stabil gelten und ab Version 1.0 des SVWS-Servers
 	 * nicht mehr verändert werden.
 	 */
-	public static final SchemaRevisionen maxRevision = REV_50;
+	public static final SchemaRevisionen maxRevision = REV_51;
 
 	/**
 	 * Gibt die größte Revisions-Nummer an, welche in diese Enumeration definiert wurde.
 	 * Dies dient dazu Revisionen als Entwickler-Revisionen zu kennzeichnen, die noch nicht
 	 * stabil sind. Dieser Wert ist also größer oder gleich {@link SchemaRevisionen#maxRevision}.
 	 */
-	public static final SchemaRevisionen maxDeveloperRevision = REV_50;
+	public static final SchemaRevisionen maxDeveloperRevision = REV_51;
 
 	/** Eine Map, welche von der Revisionsnummer auf das Objekt der Aufzählung abbildet. */
 	private static Map<Long, SchemaRevisionen> _mapByNumber = null;
@@ -381,6 +385,7 @@ public enum SchemaRevisionen {
 				case REV_43 -> new Revision43Updates();
 				case REV_45 -> new Revision45Updates();
 				case REV_46 -> new Revision46Updates();
+				case REV_51 -> new Revision51Updates();
 				default -> new RevisionNoUpdates(this);
 			};
 		}

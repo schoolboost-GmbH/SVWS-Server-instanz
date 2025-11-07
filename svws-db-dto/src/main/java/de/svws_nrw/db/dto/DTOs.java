@@ -148,7 +148,6 @@ import de.svws_nrw.db.dto.current.schild.schueler.DTOSchuelerSprachpruefungen;
 import de.svws_nrw.db.dto.current.schild.schueler.DTOSchuelerTeilleistung;
 import de.svws_nrw.db.dto.current.schild.schueler.DTOSchuelerVermerke;
 import de.svws_nrw.db.dto.current.schild.schueler.DTOSchuelerZP10;
-import de.svws_nrw.db.dto.current.schild.schueler.DTOSportbefreiung;
 import de.svws_nrw.db.dto.current.schild.schueler.DTOTeilleistungsarten;
 import de.svws_nrw.db.dto.current.schild.schueler.abitur.DTOSchuelerAbitur;
 import de.svws_nrw.db.dto.current.schild.schueler.abitur.DTOSchuelerAbiturFach;
@@ -442,7 +441,6 @@ public final class DTOs {
              mapDTOName2DTOClass.put(DTOSchuelerTeilleistung.class.getSimpleName(), DTOSchuelerTeilleistung.class);
              mapDTOName2DTOClass.put(DTOSchuelerVermerke.class.getSimpleName(), DTOSchuelerVermerke.class);
              mapDTOName2DTOClass.put(DTOSchuelerZP10.class.getSimpleName(), DTOSchuelerZP10.class);
-             mapDTOName2DTOClass.put(DTOSportbefreiung.class.getSimpleName(), DTOSportbefreiung.class);
              mapDTOName2DTOClass.put(DTOTeilleistungsarten.class.getSimpleName(), DTOTeilleistungsarten.class);
              mapDTOName2DTOClass.put(DTOSchuelerAbitur.class.getSimpleName(), DTOSchuelerAbitur.class);
              mapDTOName2DTOClass.put(DTOSchuelerAbiturFach.class.getSimpleName(), DTOSchuelerAbiturFach.class);
@@ -731,7 +729,6 @@ public final class DTOs {
              mapTablename2DTOClass.put("SchuelerEinzelleistungen", DTOSchuelerTeilleistung.class);
              mapTablename2DTOClass.put("SchuelerVermerke", DTOSchuelerVermerke.class);
              mapTablename2DTOClass.put("SchuelerZP10", DTOSchuelerZP10.class);
-             mapTablename2DTOClass.put("K_Sportbefreiung", DTOSportbefreiung.class);
              mapTablename2DTOClass.put("K_Einzelleistungen", DTOTeilleistungsarten.class);
              mapTablename2DTOClass.put("SchuelerAbitur", DTOSchuelerAbitur.class);
              mapTablename2DTOClass.put("SchuelerAbiFaecher", DTOSchuelerAbiturFach.class);

@@ -1,21 +1,29 @@
 package de.svws_nrw.data.schule;
 
+import java.io.InputStream;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+
 import de.svws_nrw.asd.data.fach.FachgruppeKatalogEintrag;
 import de.svws_nrw.asd.data.schule.ReligionKatalogEintrag;
 import de.svws_nrw.asd.data.schule.SchuleStammdaten;
 import de.svws_nrw.asd.data.schule.SchulformKatalogEintrag;
-import de.svws_nrw.base.CsvReader;
-import de.svws_nrw.core.data.kataloge.KatalogEintragOrte;
-import de.svws_nrw.core.data.schule.SchulenKatalogEintrag;
-import de.svws_nrw.asd.types.fach.Fachgruppe;
 import de.svws_nrw.asd.types.fach.Fach;
+import de.svws_nrw.asd.types.fach.Fachgruppe;
 import de.svws_nrw.asd.types.jahrgang.Jahrgaenge;
 import de.svws_nrw.asd.types.kurse.ZulaessigeKursart;
-import de.svws_nrw.core.types.schule.Herkunftsschulnummern;
-import de.svws_nrw.core.types.schule.PersonTyp;
 import de.svws_nrw.asd.types.schule.Religion;
 import de.svws_nrw.asd.types.schule.Schulform;
 import de.svws_nrw.asd.types.schule.Schulgliederung;
+import de.svws_nrw.base.CsvReader;
+import de.svws_nrw.core.data.kataloge.KatalogEintragOrte;
+import de.svws_nrw.core.data.schule.SchulenKatalogEintrag;
+import de.svws_nrw.core.types.schule.Herkunftsschulnummern;
+import de.svws_nrw.core.types.schule.PersonTyp;
 import de.svws_nrw.core.utils.AdressenUtils;
 import de.svws_nrw.data.DataManager;
 import de.svws_nrw.data.JSONMapper;
@@ -33,7 +41,6 @@ import de.svws_nrw.db.dto.current.schild.katalog.DTOSchuleNRW;
 import de.svws_nrw.db.dto.current.schild.katalog.DTOSchwerpunkt;
 import de.svws_nrw.db.dto.current.schild.schueler.DTOEinschulungsart;
 import de.svws_nrw.db.dto.current.schild.schueler.DTOEntlassarten;
-import de.svws_nrw.db.dto.current.schild.schueler.DTOSportbefreiung;
 import de.svws_nrw.db.dto.current.schild.schule.DTOEigeneSchule;
 import de.svws_nrw.db.dto.current.schild.schule.DTOEigeneSchuleLogo;
 import de.svws_nrw.db.dto.current.schild.schule.DTOJahrgang;
@@ -45,14 +52,6 @@ import de.svws_nrw.db.utils.ApiOperationException;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.Response.Status;
-
-import java.io.InputStream;
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
 
 
 /**
@@ -656,12 +655,6 @@ public final class DataSchuleStammdaten extends DataManager<Long> {
 		for (i = 0; i < schwerpunkte.size(); i++)
 			schwerpunkte.get(i).Sortierung = i + 1;
 		conn.transactionPersistAll(schwerpunkte);
-		conn.transactionFlush();
-
-		//K_Sportbefreiung mit einem Beispiel befüllen
-		final DTOSportbefreiung sportbefreiung = new DTOSportbefreiung(1L, "temporär - Schwimmen");
-		sportbefreiung.Sortierung = 1;
-		conn.transactionPersist(sportbefreiung);
 		conn.transactionFlush();
 
 		// K_Telefonart mit den Schild-NRW-Vorgaben befüllen

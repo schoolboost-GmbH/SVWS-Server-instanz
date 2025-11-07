@@ -359,7 +359,6 @@
         <class>de.svws_nrw.db.dto.current.schild.schueler.DTOSchuelerTeilleistung</class>
         <class>de.svws_nrw.db.dto.current.schild.schueler.DTOSchuelerVermerke</class>
         <class>de.svws_nrw.db.dto.current.schild.schueler.DTOSchuelerZP10</class>
-        <class>de.svws_nrw.db.dto.current.schild.schueler.DTOSportbefreiung</class>
         <class>de.svws_nrw.db.dto.current.schild.schueler.DTOTeilleistungsarten</class>
         <class>de.svws_nrw.db.dto.current.schild.schueler.abitur.DTOSchuelerAbitur</class>
         <class>de.svws_nrw.db.dto.current.schild.schueler.abitur.DTOSchuelerAbiturFach</class>
