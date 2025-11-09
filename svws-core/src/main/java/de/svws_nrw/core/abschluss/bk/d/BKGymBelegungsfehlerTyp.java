@@ -36,10 +36,13 @@ public enum BKGymBelegungsfehlerTyp {
 	ST_3("ST_3", BKGymBelegungsfehlerArt.BELEGUNG, 5, "Das Fach %s der Stundentafel wurde nicht im nötigen Stundenumfang belegt."),
 
 	/** BelegungsfehlerArt ST_4 | Parameter: Fachbezeichnung */
-	ST_4("ST_4", BKGymBelegungsfehlerArt.BELEGUNG, 10, "Das Fach %s der Stundentafel wurde nicht belegt."),
+	ST_4("ST_4", BKGymBelegungsfehlerArt.BELEGUNG, 10, "Das Fach %s der Stundentafel wurde überhaupt nicht belegt."),
 
 	/** BelegungsfehlerArt ST_5_INFO | Parameter: Fachbezeichnung */
 	ST_5_INFO("ST_5_INFO", BKGymBelegungsfehlerArt.HINWEIS, 0, "Der Stundenumfang des Fachs %s ist in der Summe erfüllt, aber nicht in allen Halbjahren."),
+
+	/** BelegungsfehlerArt ST_6 | Parameter: Fachbezeichnung, Halbjahr */
+	ST_6("ST_6", BKGymBelegungsfehlerArt.BELEGUNG, 5, "Das Fach %s der Stundentafel wurde im Halbjahr %s nicht belegt."),
 
 	/** BelegungsfehlerArt KL_1 Klausur | Parameter: Fachbezeichnung, Halbjahr */
 	KL_1("KL_1", BKGymBelegungsfehlerArt.SCHRIFTLICHKEIT, 2, "Im Fach %s fehlt die Klausurbelegung im Halbjahr %s."),

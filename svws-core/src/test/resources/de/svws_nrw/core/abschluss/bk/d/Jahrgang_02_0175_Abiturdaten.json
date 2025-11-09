@@ -634,7 +634,7 @@
           "wochenstunden": 2,
           "fehlstundenGesamt": 0,
           "fehlstundenUnentschuldigt": 0,
-          "notenkuerzel": "",
+          "notenkuerzel": "3-",
           "block1gewertet": null,
           "block1kursAufZeugnis": null
         },
@@ -648,7 +648,7 @@
           "wochenstunden": 2,
           "fehlstundenGesamt": 0,
           "fehlstundenUnentschuldigt": 0,
-          "notenkuerzel": "",
+          "notenkuerzel": "4",
           "block1gewertet": null,
           "block1kursAufZeugnis": null
         },
