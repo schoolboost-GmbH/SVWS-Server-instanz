@@ -66,6 +66,7 @@ public class Tabelle_Floskeln extends SchemaTabelle {
 		setJavaSubPackage("schild.katalog");
 		setJavaClassName("DTOFloskeln");
 		setJavaComment("Textbausteine, die in den Editoren angezeigt und ausgewählt werden können");
+		setVeraltet(SchemaRevisionen.REV_52);
 	}
 
 }

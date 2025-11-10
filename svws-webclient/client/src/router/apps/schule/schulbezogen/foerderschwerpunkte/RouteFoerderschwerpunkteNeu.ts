@@ -1,5 +1,5 @@
 import type { RouteLocationNormalized } from "vue-router";
-import type { FoerderschwerpunkteNeuProps } from "~/components/schule/schulbezogen/foerderschwerpunkte/SFoerderschwerpunkteNeuProps";
+import type { FoerderschwerpunkteNeuProps } from "~/components/schule/schulbezogen/foerderschwerpunkte/FoerderschwerpunkteNeuProps";
 import type { RouteFoerderschwerpunkte } from "~/router/apps/schule/schulbezogen/foerderschwerpunkte/RouteFoerderschwerpunkte";
 import { BenutzerKompetenz, Schulform, ServerMode } from "@core";
 import { RouteManager } from "~/router/RouteManager";
@@ -8,7 +8,7 @@ import { ViewType } from "@ui";
 import { api } from "~/router/Api";
 import { routeFoerderschwerpunkte } from "~/router/apps/schule/schulbezogen/foerderschwerpunkte/RouteFoerderschwerpunkte";
 
-const SFoerderschwerpunkteNeu = () => import("~/components/schule/schulbezogen/foerderschwerpunkte/SFoerderschwerpunkteNeu.vue");
+const SFoerderschwerpunkteNeu = () => import("~/components/schule/schulbezogen/foerderschwerpunkte/FoerderschwerpunkteNeu.vue");
 
 export class RouteFoerderschwerpunkteNeu extends RouteNode<any, RouteFoerderschwerpunkte> {
 
@@ -24,7 +24,9 @@ export class RouteFoerderschwerpunkteNeu extends RouteNode<any, RouteFoerderschw
 	public getProps(to: RouteLocationNormalized): FoerderschwerpunkteNeuProps {
 		return {
 			manager: () => routeFoerderschwerpunkte.data.manager,
-			addFoerderschwerpunkt: routeFoerderschwerpunkte.data.addFoerderschwerpunkt,
+			add: routeFoerderschwerpunkte.data.addFoerderschwerpunkt,
+			schulform: api.schulform,
+			schuljahr: api.abschnitt.schuljahr,
 			goToDefaultView: routeFoerderschwerpunkte.data.gotoDefaultView,
 			checkpoint: this.checkpoint,
 			benutzerKompetenzen: api.benutzerKompetenzen,

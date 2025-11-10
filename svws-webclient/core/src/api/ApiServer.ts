@@ -92,7 +92,7 @@ import { GostSchuelerklausurTermin } from '../core/data/gost/klausurplanung/Gost
 import { GostStatistikFachwahl } from '../core/data/gost/GostStatistikFachwahl';
 import { Haltestelle } from '../core/data/schule/Haltestelle';
 import { HerkunftKatalogEintrag } from '../core/data/schule/HerkunftKatalogEintrag';
-import { HerkunftsartKatalogEintrag } from '../core/data/schule/HerkunftsartKatalogEintrag';
+import { HerkunftsartenKatalogEintrag } from '../asd/data/schueler/HerkunftsartenKatalogEintrag';
 import { HerkunftsschulnummerKatalogEintrag } from '../core/data/schule/HerkunftsschulnummerKatalogEintrag';
 import { JahrgaengeKatalogEintrag } from '../asd/data/jahrgang/JahrgaengeKatalogEintrag';
 import { JahrgangsDaten } from '../core/data/jahrgang/JahrgangsDaten';
@@ -142,6 +142,7 @@ import { LehrerZugangsgrundKatalogEintrag } from '../asd/data/lehrer/LehrerZugan
 import { Lernplattform } from '../core/data/schule/Lernplattform';
 import { List } from '../java/util/List';
 import { LongAndStringLists } from '../core/data/LongAndStringLists';
+import { LongPair } from '../core/data/uv/LongPair';
 import { Merkmal } from '../core/data/schule/Merkmal';
 import { NationalitaetenKatalogEintrag } from '../asd/data/schule/NationalitaetenKatalogEintrag';
 import { NoteKatalogEintrag } from '../asd/data/NoteKatalogEintrag';
@@ -168,6 +169,7 @@ import { Schild3KatalogEintragVersetzungsvermerke } from '../core/data/schild3/S
 import { SchuelerBetriebsdaten } from '../asd/data/schueler/SchuelerBetriebsdaten';
 import { SchuelerEinwilligung } from '../core/data/schueler/SchuelerEinwilligung';
 import { SchuelerEinwilligungsartenZusammenfassung } from '../core/data/schueler/SchuelerEinwilligungsartenZusammenfassung';
+import { SchuelerFoerderempfehlung } from '../asd/data/schueler/SchuelerFoerderempfehlung';
 import { SchuelerKAoADaten } from '../core/data/schueler/SchuelerKAoADaten';
 import { SchuelerLeistungsdaten } from '../asd/data/schueler/SchuelerLeistungsdaten';
 import { SchuelerLernabschnittBemerkungen } from '../asd/data/schueler/SchuelerLernabschnittBemerkungen';
@@ -195,7 +197,6 @@ import { Schulleitung } from '../asd/data/schule/Schulleitung';
 import { SchultraegerKatalogEintrag } from '../core/data/schule/SchultraegerKatalogEintrag';
 import { SimpleOperationResponse } from '../core/data/SimpleOperationResponse';
 import { SMTPServerKonfiguration } from '../core/data/email/SMTPServerKonfiguration';
-import { Sportbefreiung } from '../core/data/schule/Sportbefreiung';
 import { Sprachbelegung } from '../asd/data/schueler/Sprachbelegung';
 import { Sprachpruefung } from '../asd/data/schueler/Sprachpruefung';
 import { SprachpruefungsniveauKatalogEintrag } from '../core/data/fach/SprachpruefungsniveauKatalogEintrag';
@@ -217,6 +218,24 @@ import { StundenplanUnterrichtsverteilung } from '../core/data/stundenplan/Stund
 import { StundenplanZeitraster } from '../core/data/stundenplan/StundenplanZeitraster';
 import { TelefonArt } from '../core/data/schule/TelefonArt';
 import { UebergangsempfehlungKatalogEintrag } from '../asd/data/schueler/UebergangsempfehlungKatalogEintrag';
+import { UvFach } from '../core/data/uv/UvFach';
+import { UvKlasse } from '../core/data/uv/UvKlasse';
+import { UvKurs } from '../core/data/uv/UvKurs';
+import { UvLehrer } from '../core/data/uv/UvLehrer';
+import { UvLehrerAnrechnungsstunden } from '../core/data/uv/UvLehrerAnrechnungsstunden';
+import { UvLehrerPflichtstundensoll } from '../core/data/uv/UvLehrerPflichtstundensoll';
+import { UvLerngruppe } from '../core/data/uv/UvLerngruppe';
+import { UvLerngruppenLehrer } from '../core/data/uv/UvLerngruppenLehrer';
+import { UvPlanungsabschnitt } from '../core/data/uv/UvPlanungsabschnitt';
+import { UvRaum } from '../core/data/uv/UvRaum';
+import { UvSchiene } from '../core/data/uv/UvSchiene';
+import { UvSchueler } from '../core/data/uv/UvSchueler';
+import { UvSchuelergruppe } from '../core/data/uv/UvSchuelergruppe';
+import { UvStundentafel } from '../core/data/uv/UvStundentafel';
+import { UvStundentafelFach } from '../core/data/uv/UvStundentafelFach';
+import { UvUnterricht } from '../core/data/uv/UvUnterricht';
+import { UvZeitraster } from '../core/data/uv/UvZeitraster';
+import { UvZeitrasterEintrag } from '../core/data/uv/UvZeitrasterEintrag';
 import { VerkehrsspracheKatalogEintrag } from '../asd/data/schule/VerkehrsspracheKatalogEintrag';
 import { VermerkartEintrag } from '../core/data/schule/VermerkartEintrag';
 import { WiedervorlageEintrag } from '../core/data/schule/WiedervorlageEintrag';
@@ -249,7 +268,7 @@ export class ApiServer extends BaseApi {
 	 *
 	 * @returns Das Zertifikat des Servers
 	 */
-	public async getConfigCertificate() : Promise<string | null> {
+	public async getConfigCertificate() : Promise<string> {
 		const path = "/config/certificate";
 		const text : string = await super.getText(path);
 		return text;
@@ -332,7 +351,7 @@ export class ApiServer extends BaseApi {
 	 *
 	 * @returns Der Base-64-kodierte, öffentliche Schlüssel des Servers
 	 */
-	public async getConfigPublicKeyBase64() : Promise<string | null> {
+	public async getConfigPublicKeyBase64() : Promise<string> {
 		const path = "/config/publickey_base64";
 		const text : string = await super.getText(path);
 		return text;
@@ -1932,7 +1951,7 @@ export class ApiServer extends BaseApi {
 	 *
 	 * @returns Der Wert des Konfigurationseintrags
 	 */
-	public async getClientConfigUserKey(schema : string, app : string, key : string) : Promise<string | null> {
+	public async getClientConfigUserKey(schema : string, app : string, key : string) : Promise<string> {
 		const path = "/db/{schema}/client/config/{app}/user/{key}"
 			.replace(/{schema\s*(:[^{}]+({[^{}]+})*)?}/g, schema)
 			.replace(/{app\s*(:[^{}]+({[^{}]+})*)?}/g, app)
@@ -3058,7 +3077,7 @@ export class ApiServer extends BaseApi {
 	 *
 	 * @returns Der Stand des Setups, true, wurde initialisiert, false ist bereits initialisiert
 	 */
-	public async setupENMServer(schema : string) : Promise<boolean | null> {
+	public async setupENMServer(schema : string) : Promise<boolean> {
 		const path = "/db/{schema}/enm/setup"
 			.replace(/{schema\s*(:[^{}]+({[^{}]+})*)?}/g, schema);
 		const result : string = await super.getJSON(path);
@@ -4905,7 +4924,7 @@ export class ApiServer extends BaseApi {
 	 *
 	 * @returns Der Abiturjahrgang wurde erfolgreich angelegt.
 	 */
-	public async createGostAbiturjahrgang(schema : string, schuljahresabschnittsid : number, jahrgangid : number) : Promise<number | null> {
+	public async createGostAbiturjahrgang(schema : string, schuljahresabschnittsid : number, jahrgangid : number) : Promise<number> {
 		const path = "/db/{schema}/gost/abiturjahrgang/new/{schuljahresabschnittsid}/{jahrgangid}"
 			.replace(/{schema\s*(:[^{}]+({[^{}]+})*)?}/g, schema)
 			.replace(/{schuljahresabschnittsid\s*(:[^{}]+({[^{}]+})*)?}/g, schuljahresabschnittsid.toString())
@@ -4988,7 +5007,7 @@ export class ApiServer extends BaseApi {
 	 *
 	 * @returns Die Blockungsdaten der gymnasialen Oberstfue für die angegebene ID wurden erfolgreich gelöscht.
 	 */
-	public async deleteGostBlockung(schema : string, blockungsid : number) : Promise<number | null> {
+	public async deleteGostBlockung(schema : string, blockungsid : number) : Promise<number> {
 		const path = "/db/{schema}/gost/blockungen/{blockungsid : \\d+}"
 			.replace(/{schema\s*(:[^{}]+({[^{}]+})*)?}/g, schema)
 			.replace(/{blockungsid\s*(:[^{}]+({[^{}]+})*)?}/g, blockungsid.toString());
@@ -5906,7 +5925,7 @@ export class ApiServer extends BaseApi {
 	 *
 	 * @returns Das Zwischenergebnis einer Blockung der gymnasialen Oberstufe für die angegebene ID wurde erfolgreich gelöscht.
 	 */
-	public async deleteGostBlockungsergebnis(schema : string, ergebnisid : number) : Promise<number | null> {
+	public async deleteGostBlockungsergebnis(schema : string, ergebnisid : number) : Promise<number> {
 		const path = "/db/{schema}/gost/blockungen/zwischenergebnisse/{ergebnisid : \\d+}"
 			.replace(/{schema\s*(:[^{}]+({[^{}]+})*)?}/g, schema)
 			.replace(/{ergebnisid\s*(:[^{}]+({[^{}]+})*)?}/g, ergebnisid.toString());
@@ -6284,7 +6303,7 @@ export class ApiServer extends BaseApi {
 	 *
 	 * @returns Die Zwischenergebnisse einer Blockung der gymnasialen Oberstufe für die angegebene ID wurden erfolgreich gelöscht.
 	 */
-	public async deleteGostBlockungsergebnisse(data : List<number>, schema : string) : Promise<number | null> {
+	public async deleteGostBlockungsergebnisse(data : List<number>, schema : string) : Promise<number> {
 		const path = "/db/{schema}/gost/blockungen/zwischenergebnisse/multiple"
 			.replace(/{schema\s*(:[^{}]+({[^{}]+})*)?}/g, schema);
 		const body : string = "[" + (data.toArray() as Array<number>).map(d => JSON.stringify(d)).join() + "]";
@@ -6658,7 +6677,7 @@ export class ApiServer extends BaseApi {
 	 *
 	 * @returns Der Klausurraum für die angegebene ID wurden erfolgreich gelöscht.
 	 */
-	public async deleteGostKlausurenRaum(schema : string, id : number) : Promise<boolean | null> {
+	public async deleteGostKlausurenRaum(schema : string, id : number) : Promise<boolean> {
 		const path = "/db/{schema}/gost/klausuren/raeume/delete/{id : \\d+}"
 			.replace(/{schema\s*(:[^{}]+({[^{}]+})*)?}/g, schema)
 			.replace(/{id\s*(:[^{}]+({[^{}]+})*)?}/g, id.toString());
@@ -6800,7 +6819,7 @@ export class ApiServer extends BaseApi {
 	 *
 	 * @returns GostSchuelerklausurTermin wurde erfolgreich gelöscht.
 	 */
-	public async deleteGostKlausurenSchuelerklausurtermin(schema : string, id : number) : Promise<boolean | null> {
+	public async deleteGostKlausurenSchuelerklausurtermin(schema : string, id : number) : Promise<boolean> {
 		const path = "/db/{schema}/gost/klausuren/schuelerklausuren/termine/{id : \\d+}"
 			.replace(/{schema\s*(:[^{}]+({[^{}]+})*)?}/g, schema)
 			.replace(/{id\s*(:[^{}]+({[^{}]+})*)?}/g, id.toString());
@@ -12530,7 +12549,7 @@ export class ApiServer extends BaseApi {
 	 * Mögliche HTTP-Antworten:
 	 *   Code 200: Eine Liste von Katalog-Einträgen
 	 *     - Mime-Type: application/json
-	 *     - Rückgabe-Typ: List<HerkunftsartKatalogEintrag>
+	 *     - Rückgabe-Typ: List<HerkunftsartenKatalogEintrag>
 	 *   Code 403: Der SVWS-Benutzer hat keine Rechte, um Katalog-Einträge anzusehen.
 	 *   Code 404: Keine Katalog-Einträge gefunden
 	 *
@@ -12538,13 +12557,13 @@ export class ApiServer extends BaseApi {
 	 *
 	 * @returns Eine Liste von Katalog-Einträgen
 	 */
-	public async getKatalogHerkunftsarten(schema : string) : Promise<List<HerkunftsartKatalogEintrag>> {
+	public async getKatalogHerkunftsarten(schema : string) : Promise<List<HerkunftsartenKatalogEintrag>> {
 		const path = "/db/{schema}/schueler/allgemein/herkunftsarten"
 			.replace(/{schema\s*(:[^{}]+({[^{}]+})*)?}/g, schema);
 		const result : string = await super.getJSON(path);
 		const obj = JSON.parse(result);
-		const ret = new ArrayList<HerkunftsartKatalogEintrag>();
-		obj.forEach((elem: any) => { const text : string = JSON.stringify(elem); ret.add(HerkunftsartKatalogEintrag.transpilerFromJSON(text)); });
+		const ret = new ArrayList<HerkunftsartenKatalogEintrag>();
+		obj.forEach((elem: any) => { const text : string = JSON.stringify(elem); ret.add(HerkunftsartenKatalogEintrag.transpilerFromJSON(text)); });
 		return ret;
 	}
 
@@ -12834,6 +12853,88 @@ export class ApiServer extends BaseApi {
 
 
 	/**
+	 * Implementierung der GET-Methode getFoerderempfehlungById für den Zugriff auf die URL https://{hostname}/db/{schema}/schueler/foerderempfehlung/{guid}
+	 *
+	 * Liest die Förderempfehlung mit der angegebenen GUID aus der Datenbank und liefert diese zurück. Dabei wird geprüft, ob der SVWS-Benutzer die notwendige Berechtigung zum Ansehen von Schülerdaten besitzt.
+	 *
+	 * Mögliche HTTP-Antworten:
+	 *   Code 200: Die Förderempfehlung
+	 *     - Mime-Type: application/json
+	 *     - Rückgabe-Typ: SchuelerFoerderempfehlung
+	 *   Code 403: Der SVWS-Benutzer hat keine Rechte, um Schülerdaten anzusehen.
+	 *   Code 404: Keine Förderempfehlung mit der angegebenen GU_ID gefunden
+	 *
+	 * @param {string} schema - der Pfad-Parameter schema
+	 * @param {string} guid - der Pfad-Parameter guid
+	 *
+	 * @returns Die Förderempfehlung
+	 */
+	public async getFoerderempfehlungById(schema : string, guid : string) : Promise<SchuelerFoerderempfehlung> {
+		const path = "/db/{schema}/schueler/foerderempfehlung/{guid}"
+			.replace(/{schema\s*(:[^{}]+({[^{}]+})*)?}/g, schema)
+			.replace(/{guid\s*(:[^{}]+({[^{}]+})*)?}/g, guid);
+		const result : string = await super.getJSON(path);
+		const text = result;
+		return SchuelerFoerderempfehlung.transpilerFromJSON(text);
+	}
+
+
+	/**
+	 * Implementierung der PATCH-Methode patchFoerderempfehlung für den Zugriff auf die URL https://{hostname}/db/{schema}/schueler/foerderempfehlung/{guid}
+	 *
+	 * Passt die Förderempfehlung mit der angegebenen GUID an. Dabei wird geprüft, ob der SVWS-Benutzer die notwendige Berechtigung zum Ändern von Förderempfehlungen besitzt.
+	 *
+	 * Mögliche HTTP-Antworten:
+	 *   Code 204: Der Patch wurde erfolgreich integriert.
+	 *   Code 400: Der Patch ist fehlerhaft aufgebaut.
+	 *   Code 403: Der SVWS-Benutzer hat keine Rechte, um Förderempfehlungen zu ändern.
+	 *   Code 404: Keine Förderempfehlung mit der angegebenen GUID gefunden
+	 *   Code 409: Der Patch ist fehlerhaft, da zumindest eine Rahmenbedingung für einen Wert nicht erfüllt wurde (z.B. eine negative ID)
+	 *   Code 500: Unspezifizierter Fehler (z.B. beim Datenbankzugriff)
+	 *
+	 * @param {Partial<SchuelerFoerderempfehlung>} data - der Request-Body für die HTTP-Methode
+	 * @param {string} schema - der Pfad-Parameter schema
+	 * @param {string} guid - der Pfad-Parameter guid
+	 */
+	public async patchFoerderempfehlung(data : Partial<SchuelerFoerderempfehlung>, schema : string, guid : string) : Promise<void> {
+		const path = "/db/{schema}/schueler/foerderempfehlung/{guid}"
+			.replace(/{schema\s*(:[^{}]+({[^{}]+})*)?}/g, schema)
+			.replace(/{guid\s*(:[^{}]+({[^{}]+})*)?}/g, guid);
+		const body : string = SchuelerFoerderempfehlung.transpilerToJSONPatch(data);
+		return super.patchJSON(path, body);
+	}
+
+
+	/**
+	 * Implementierung der DELETE-Methode deleteFoerderempfehlung für den Zugriff auf die URL https://{hostname}/db/{schema}/schueler/foerderempfehlung/{guid}
+	 *
+	 * Entfernt eine Förderempfehlung. Dabei wird geprüft, ob der SVWS-Benutzer die notwendige Berechtigung zum Entfernen von Förderempfehlungen hat.
+	 *
+	 * Mögliche HTTP-Antworten:
+	 *   Code 200: Die Förderempfehlung wurde erfolgreich entfernt.
+	 *     - Mime-Type: application/json
+	 *     - Rückgabe-Typ: SchuelerFoerderempfehlung
+	 *   Code 403: Der SVWS-Benutzer hat keine Rechte, um Förderempfehlungen zu entfernen.
+	 *   Code 404: Die Förderempfehlung ist nicht vorhanden
+	 *   Code 409: Die übergebenen Daten sind fehlerhaft
+	 *   Code 500: Unspezifizierter Fehler (z.B. beim Datenbankzugriff)
+	 *
+	 * @param {string} schema - der Pfad-Parameter schema
+	 * @param {string} guid - der Pfad-Parameter guid
+	 *
+	 * @returns Die Förderempfehlung wurde erfolgreich entfernt.
+	 */
+	public async deleteFoerderempfehlung(schema : string, guid : string) : Promise<SchuelerFoerderempfehlung> {
+		const path = "/db/{schema}/schueler/foerderempfehlung/{guid}"
+			.replace(/{schema\s*(:[^{}]+({[^{}]+})*)?}/g, schema)
+			.replace(/{guid\s*(:[^{}]+({[^{}]+})*)?}/g, guid);
+		const result : string = await super.deleteJSON(path, null);
+		const text = result;
+		return SchuelerFoerderempfehlung.transpilerFromJSON(text);
+	}
+
+
+	/**
 	 * Implementierung der GET-Methode getSchuelerLeistungsdatenByID für den Zugriff auf die URL https://{hostname}/db/{schema}/schueler/leistungsdaten/{id : \d+}
 	 *
 	 * Liest die Schülerleistungsdaten zu der angegebenen ID aus der Datenbank und liefert diese zurück. Dabei wird geprüft, ob der SVWS-Benutzer die notwendige Berechtigung zum Ansehen von Schülerleistungsdaten besitzt.
@@ -13080,6 +13181,63 @@ export class ApiServer extends BaseApi {
 			.replace(/{abschnitt\s*(:[^{}]+({[^{}]+})*)?}/g, abschnitt.toString());
 		const body : string = SchuelerLernabschnittBemerkungen.transpilerToJSONPatch(data);
 		return super.patchJSON(path, body);
+	}
+
+
+	/**
+	 * Implementierung der GET-Methode getFoerderempfehlungenByLernabschnittsdatenID für den Zugriff auf die URL https://{hostname}/db/{schema}/schueler/lernabschnittsdaten/{abschnitt : \d+}/foerderempfehlungen
+	 *
+	 * Liest die Förderempfehlung des Schüler-Lernabschnitts zu der angegebenen ID aus der Datenbank und liefert diese zurück. Dabei wird geprüft, ob der SVWS-Benutzer die notwendige Berechtigung zum Ansehen von Schülerdaten besitzt.
+	 *
+	 * Mögliche HTTP-Antworten:
+	 *   Code 200: Die Förderempfehlung des Schüler-Lernabschnitts
+	 *     - Mime-Type: application/json
+	 *     - Rückgabe-Typ: List<SchuelerFoerderempfehlung>
+	 *   Code 403: Der SVWS-Benutzer hat keine Rechte, um Schülerdaten anzusehen.
+	 *   Code 404: Keine Förderempfehlung für den Schüler-Lernabschnitts mit der angegebenen ID gefunden
+	 *
+	 * @param {string} schema - der Pfad-Parameter schema
+	 * @param {number} abschnitt - der Pfad-Parameter abschnitt
+	 *
+	 * @returns Die Förderempfehlung des Schüler-Lernabschnitts
+	 */
+	public async getFoerderempfehlungenByLernabschnittsdatenID(schema : string, abschnitt : number) : Promise<List<SchuelerFoerderempfehlung>> {
+		const path = "/db/{schema}/schueler/lernabschnittsdaten/{abschnitt : \\d+}/foerderempfehlungen"
+			.replace(/{schema\s*(:[^{}]+({[^{}]+})*)?}/g, schema)
+			.replace(/{abschnitt\s*(:[^{}]+({[^{}]+})*)?}/g, abschnitt.toString());
+		const result : string = await super.getJSON(path);
+		const obj = JSON.parse(result);
+		const ret = new ArrayList<SchuelerFoerderempfehlung>();
+		obj.forEach((elem: any) => { const text : string = JSON.stringify(elem); ret.add(SchuelerFoerderempfehlung.transpilerFromJSON(text)); });
+		return ret;
+	}
+
+
+	/**
+	 * Implementierung der POST-Methode addFoerderempfehlung für den Zugriff auf die URL https://{hostname}/db/{schema}/schueler/lernabschnittsdaten/foerderempfehlung/create
+	 *
+	 * Erstellt eine neue Förderempfehlung für einen Schüler-Lernabschnitts und gibt das erstellte Objekt zurück. Dabei wird geprüft, ob der SVWS-Benutzer die notwendige Berechtigung zum Erstellen neuer Förderempfehlungen besitzt.
+	 *
+	 * Mögliche HTTP-Antworten:
+	 *   Code 201: Die Förderempfehlung wurde erfolgreich hinzugefügt.
+	 *     - Mime-Type: application/json
+	 *     - Rückgabe-Typ: SchuelerFoerderempfehlung
+	 *   Code 400: Der Patch ist fehlerhaft aufgebaut.
+	 *   Code 403: Der SVWS-Benutzer hat keine Rechte, um Förderempfehlungen anzulegen.
+	 *   Code 500: Unspezifizierter Fehler (z.B. beim Datenbankzugriff)
+	 *
+	 * @param {Partial<SchuelerFoerderempfehlung>} data - der Request-Body für die HTTP-Methode
+	 * @param {string} schema - der Pfad-Parameter schema
+	 *
+	 * @returns Die Förderempfehlung wurde erfolgreich hinzugefügt.
+	 */
+	public async addFoerderempfehlung(data : Partial<SchuelerFoerderempfehlung>, schema : string) : Promise<SchuelerFoerderempfehlung> {
+		const path = "/db/{schema}/schueler/lernabschnittsdaten/foerderempfehlung/create"
+			.replace(/{schema\s*(:[^{}]+({[^{}]+})*)?}/g, schema);
+		const body : string = SchuelerFoerderempfehlung.transpilerToJSONPatch(data);
+		const result : string = await super.postJSON(path, body);
+		const text = result;
+		return SchuelerFoerderempfehlung.transpilerFromJSON(text);
 	}
 
 
@@ -14851,26 +15009,26 @@ export class ApiServer extends BaseApi {
 
 
 	/**
-	 * Implementierung der PATCH-Methode patchFloskelgruppe für den Zugriff auf die URL https://{hostname}/db/{schema}/schule/floskelgruppen/{kuerzel : \S+}
+	 * Implementierung der PATCH-Methode patchFloskelgruppe für den Zugriff auf die URL https://{hostname}/db/{schema}/schule/floskelgruppen/{id : \d+}
 	 *
-	 * Patched die Floskelgruppe mit dem angegebenen Kürzel, insofern die notwendigen Berechtigungen vorliegen.
+	 * Patched die Floskelgruppe mit der angegebenen ID, insofern die notwendigen Berechtigungen vorliegen.
 	 *
 	 * Mögliche HTTP-Antworten:
 	 *   Code 204: Der Patch wurde erfolgreich integriert.
 	 *   Code 400: Der Patch ist fehlerhaft aufgebaut.
 	 *   Code 403: Der SVWS-Benutzer hat keine Rechte, um die Daten zu ändern.
-	 *   Code 404: Kein Eintrag mit dem angegebenen Kürzel gefunden
+	 *   Code 404: Kein Eintrag mit der angegebenen ID gefunden
 	 *   Code 409: Der Patch ist fehlerhaft, da zumindest eine Rahmenbedingung für einen Wert nicht erfüllt wurde (z.B. eine negative ID)
 	 *   Code 500: Unspezifizierter Fehler (z. B. beim Datenbankzugriff)
 	 *
 	 * @param {Partial<Floskelgruppe>} data - der Request-Body für die HTTP-Methode
 	 * @param {string} schema - der Pfad-Parameter schema
-	 * @param {string} kuerzel - der Pfad-Parameter kuerzel
+	 * @param {number} id - der Pfad-Parameter id
 	 */
-	public async patchFloskelgruppe(data : Partial<Floskelgruppe>, schema : string, kuerzel : string) : Promise<void> {
-		const path = "/db/{schema}/schule/floskelgruppen/{kuerzel : \\S+}"
+	public async patchFloskelgruppe(data : Partial<Floskelgruppe>, schema : string, id : number) : Promise<void> {
+		const path = "/db/{schema}/schule/floskelgruppen/{id : \\d+}"
 			.replace(/{schema\s*(:[^{}]+({[^{}]+})*)?}/g, schema)
-			.replace(/{kuerzel\s*(:[^{}]+({[^{}]+})*)?}/g, kuerzel);
+			.replace(/{id\s*(:[^{}]+({[^{}]+})*)?}/g, id.toString());
 		const body : string = Floskelgruppe.transpilerToJSONPatch(data);
 		return super.patchJSON(path, body);
 	}
@@ -14916,15 +15074,15 @@ export class ApiServer extends BaseApi {
 	 *   Code 404: Floskelgruppen nicht vorhanden
 	 *   Code 500: Unspezifizierter Fehler (z.B. beim Datenbankzugriff)
 	 *
-	 * @param {List<string>} data - der Request-Body für die HTTP-Methode
+	 * @param {List<number>} data - der Request-Body für die HTTP-Methode
 	 * @param {string} schema - der Pfad-Parameter schema
 	 *
 	 * @returns Die Lösch-Operationen wurden ausgeführt.
 	 */
-	public async deleteFloskelgruppen(data : List<string>, schema : string) : Promise<List<SimpleOperationResponse>> {
+	public async deleteFloskelgruppen(data : List<number>, schema : string) : Promise<List<SimpleOperationResponse>> {
 		const path = "/db/{schema}/schule/floskelgruppen/delete/multiple"
 			.replace(/{schema\s*(:[^{}]+({[^{}]+})*)?}/g, schema);
-		const body : string = "[" + (data.toArray() as Array<string>).map(d => JSON.stringify(d)).join() + "]";
+		const body : string = "[" + (data.toArray() as Array<number>).map(d => JSON.stringify(d)).join() + "]";
 		const result : string = await super.deleteJSON(path, body);
 		const obj = JSON.parse(result);
 		const ret = new ArrayList<SimpleOperationResponse>();
@@ -14961,26 +15119,26 @@ export class ApiServer extends BaseApi {
 
 
 	/**
-	 * Implementierung der PATCH-Methode patchFloskeln für den Zugriff auf die URL https://{hostname}/db/{schema}/schule/floskeln/{kuerzel : \S+}
+	 * Implementierung der PATCH-Methode patchFloskeln für den Zugriff auf die URL https://{hostname}/db/{schema}/schule/floskeln/{id : \d+}
 	 *
-	 * Patched die Floskeln mit dem angegebenen Kürzel, insofern die notwendigen Berechtigungen vorliegen.
+	 * Patched die Floskeln mit der angegebenen ID, insofern die notwendigen Berechtigungen vorliegen.
 	 *
 	 * Mögliche HTTP-Antworten:
 	 *   Code 204: Der Patch wurde erfolgreich integriert.
 	 *   Code 400: Der Patch ist fehlerhaft aufgebaut.
 	 *   Code 403: Der SVWS-Benutzer hat keine Rechte, um die Daten zu ändern.
-	 *   Code 404: Kein Eintrag mit dem angegebenen Kürzel gefunden
+	 *   Code 404: Kein Eintrag mit der angegebenen ID gefunden
 	 *   Code 409: Der Patch ist fehlerhaft, da zumindest eine Rahmenbedingung für einen Wert nicht erfüllt wurde (z.B. eine negative ID)
 	 *   Code 500: Unspezifizierter Fehler (z. B. beim Datenbankzugriff)
 	 *
 	 * @param {Partial<Floskel>} data - der Request-Body für die HTTP-Methode
 	 * @param {string} schema - der Pfad-Parameter schema
-	 * @param {string} kuerzel - der Pfad-Parameter kuerzel
+	 * @param {number} id - der Pfad-Parameter id
 	 */
-	public async patchFloskeln(data : Partial<Floskel>, schema : string, kuerzel : string) : Promise<void> {
-		const path = "/db/{schema}/schule/floskeln/{kuerzel : \\S+}"
+	public async patchFloskeln(data : Partial<Floskel>, schema : string, id : number) : Promise<void> {
+		const path = "/db/{schema}/schule/floskeln/{id : \\d+}"
 			.replace(/{schema\s*(:[^{}]+({[^{}]+})*)?}/g, schema)
-			.replace(/{kuerzel\s*(:[^{}]+({[^{}]+})*)?}/g, kuerzel);
+			.replace(/{id\s*(:[^{}]+({[^{}]+})*)?}/g, id.toString());
 		const body : string = Floskel.transpilerToJSONPatch(data);
 		return super.patchJSON(path, body);
 	}
@@ -15026,15 +15184,15 @@ export class ApiServer extends BaseApi {
 	 *   Code 404: Floskeln nicht vorhanden
 	 *   Code 500: Unspezifizierter Fehler (z.B. beim Datenbankzugriff)
 	 *
-	 * @param {List<string>} data - der Request-Body für die HTTP-Methode
+	 * @param {List<number>} data - der Request-Body für die HTTP-Methode
 	 * @param {string} schema - der Pfad-Parameter schema
 	 *
 	 * @returns Die Lösch-Operationen wurden ausgeführt.
 	 */
-	public async deleteFloskeln(data : List<string>, schema : string) : Promise<List<SimpleOperationResponse>> {
+	public async deleteFloskeln(data : List<number>, schema : string) : Promise<List<SimpleOperationResponse>> {
 		const path = "/db/{schema}/schule/floskeln/delete/multiple"
 			.replace(/{schema\s*(:[^{}]+({[^{}]+})*)?}/g, schema);
-		const body : string = "[" + (data.toArray() as Array<string>).map(d => JSON.stringify(d)).join() + "]";
+		const body : string = "[" + (data.toArray() as Array<number>).map(d => JSON.stringify(d)).join() + "]";
 		const result : string = await super.deleteJSON(path, body);
 		const obj = JSON.parse(result);
 		const ret = new ArrayList<SimpleOperationResponse>();
@@ -15452,7 +15610,7 @@ export class ApiServer extends BaseApi {
 	 *
 	 * @returns Das Logo der Schule
 	 */
-	public async getSchullogo(schema : string) : Promise<string | null> {
+	public async getSchullogo(schema : string) : Promise<string> {
 		const path = "/db/{schema}/schule/logo"
 			.replace(/{schema\s*(:[^{}]+({[^{}]+})*)?}/g, schema);
 		const result : string = await super.getJSON(path);
@@ -15498,7 +15656,7 @@ export class ApiServer extends BaseApi {
 	 *
 	 * @returns Die Schulnummer
 	 */
-	public async getSchuleNummer(schema : string) : Promise<number | null> {
+	public async getSchuleNummer(schema : string) : Promise<number> {
 		const path = "/db/{schema}/schule/nummer"
 			.replace(/{schema\s*(:[^{}]+({[^{}]+})*)?}/g, schema);
 		const result : string = await super.getJSON(path);
@@ -16903,116 +17061,6 @@ export class ApiServer extends BaseApi {
 
 
 	/**
-	 * Implementierung der GET-Methode getSportbefreiungen für den Zugriff auf die URL https://{hostname}/db/{schema}/sportbefreiungen
-	 *
-	 * Gibt die Sportbefreiungen zurück, insofern der SVWS-Benutzer die erforderliche Berechtigung besitzt.
-	 *
-	 * Mögliche HTTP-Antworten:
-	 *   Code 200: Eine Liste der Sportbefreiungen.
-	 *     - Mime-Type: application/json
-	 *     - Rückgabe-Typ: List<Sportbefreiung>
-	 *   Code 403: Der SVWS-Benutzer hat keine Rechte, um Katalog-Einträge anzusehen.
-	 *   Code 404: Keine Katalog-Einträge gefunden
-	 *
-	 * @param {string} schema - der Pfad-Parameter schema
-	 *
-	 * @returns Eine Liste der Sportbefreiungen.
-	 */
-	public async getSportbefreiungen(schema : string) : Promise<List<Sportbefreiung>> {
-		const path = "/db/{schema}/sportbefreiungen"
-			.replace(/{schema\s*(:[^{}]+({[^{}]+})*)?}/g, schema);
-		const result : string = await super.getJSON(path);
-		const obj = JSON.parse(result);
-		const ret = new ArrayList<Sportbefreiung>();
-		obj.forEach((elem: any) => { const text : string = JSON.stringify(elem); ret.add(Sportbefreiung.transpilerFromJSON(text)); });
-		return ret;
-	}
-
-
-	/**
-	 * Implementierung der PATCH-Methode patchSportbefreiung für den Zugriff auf die URL https://{hostname}/db/{schema}/sportbefreiungen/{id : \d+}
-	 *
-	 * Patched die Sportbefreiung mit der angegebenen ID, insofern die notwendigen Berechtigungen vorliegen.
-	 *
-	 * Mögliche HTTP-Antworten:
-	 *   Code 200: Der Patch wurde erfolgreich integriert.
-	 *   Code 400: Der Patch ist fehlerhaft aufgebaut.
-	 *   Code 403: Der SVWS-Benutzer hat keine Rechte, um die Daten zu ändern.
-	 *   Code 404: Kein Eintrag mit der angegebenen ID gefunden
-	 *   Code 409: Der Patch ist fehlerhaft, da zumindest eine Rahmenbedingung für einen Wert nicht erfüllt wurde (z.B. eine negative ID)
-	 *   Code 500: Unspezifizierter Fehler (z. B. beim Datenbankzugriff)
-	 *
-	 * @param {Partial<Sportbefreiung>} data - der Request-Body für die HTTP-Methode
-	 * @param {string} schema - der Pfad-Parameter schema
-	 * @param {number} id - der Pfad-Parameter id
-	 */
-	public async patchSportbefreiung(data : Partial<Sportbefreiung>, schema : string, id : number) : Promise<void> {
-		const path = "/db/{schema}/sportbefreiungen/{id : \\d+}"
-			.replace(/{schema\s*(:[^{}]+({[^{}]+})*)?}/g, schema)
-			.replace(/{id\s*(:[^{}]+({[^{}]+})*)?}/g, id.toString());
-		const body : string = Sportbefreiung.transpilerToJSONPatch(data);
-		return super.patchJSON(path, body);
-	}
-
-
-	/**
-	 * Implementierung der POST-Methode addSportbefreiung für den Zugriff auf die URL https://{hostname}/db/{schema}/sportbefreiungen/create
-	 *
-	 * Erstellt eine neue Sportbefreiung, insofern die notwendigen Berechtigungen vorliegen
-	 *
-	 * Mögliche HTTP-Antworten:
-	 *   Code 201: Die Sportbefreiung wurde erfolgreich hinzugefügt.
-	 *     - Mime-Type: application/json
-	 *     - Rückgabe-Typ: Sportbefreiung
-	 *   Code 403: Der SVWS-Benutzer hat keine Rechte, um Sportbefreiung anzulegen.
-	 *   Code 500: Unspezifizierter Fehler (z.B. beim Datenbankzugriff)
-	 *
-	 * @param {Partial<Sportbefreiung>} data - der Request-Body für die HTTP-Methode
-	 * @param {string} schema - der Pfad-Parameter schema
-	 *
-	 * @returns Die Sportbefreiung wurde erfolgreich hinzugefügt.
-	 */
-	public async addSportbefreiung(data : Partial<Sportbefreiung>, schema : string) : Promise<Sportbefreiung> {
-		const path = "/db/{schema}/sportbefreiungen/create"
-			.replace(/{schema\s*(:[^{}]+({[^{}]+})*)?}/g, schema);
-		const body : string = Sportbefreiung.transpilerToJSONPatch(data);
-		const result : string = await super.postJSON(path, body);
-		const text = result;
-		return Sportbefreiung.transpilerFromJSON(text);
-	}
-
-
-	/**
-	 * Implementierung der DELETE-Methode deleteSportbefreiungen für den Zugriff auf die URL https://{hostname}/db/{schema}/sportbefreiungen/delete/multiple
-	 *
-	 * Entfernt mehrere Sportbefreiungen, insofern die notwendigen Berechtigungen vorhanden sind.
-	 *
-	 * Mögliche HTTP-Antworten:
-	 *   Code 200: Die Lösch-Operationen wurden ausgeführt.
-	 *     - Mime-Type: application/json
-	 *     - Rückgabe-Typ: List<SimpleOperationResponse>
-	 *   Code 403: Der SVWS-Benutzer hat keine Rechte, um Sportbefreiungen zu entfernen.
-	 *   Code 404: Sportbefreiungen nicht vorhanden
-	 *   Code 500: Unspezifizierter Fehler (z.B. beim Datenbankzugriff)
-	 *
-	 * @param {List<number>} data - der Request-Body für die HTTP-Methode
-	 * @param {string} schema - der Pfad-Parameter schema
-	 *
-	 * @returns Die Lösch-Operationen wurden ausgeführt.
-	 */
-	public async deleteSportbefreiungen(data : List<number>, schema : string) : Promise<List<SimpleOperationResponse>> {
-		const path = "/db/{schema}/sportbefreiungen/delete/multiple"
-			.replace(/{schema\s*(:[^{}]+({[^{}]+})*)?}/g, schema);
-		const body : string = "[" + (data.toArray() as Array<number>).map(d => JSON.stringify(d)).join() + "]";
-		const result : string = await super.deleteJSON(path, body);
-		const obj = JSON.parse(result);
-		const ret = new ArrayList<SimpleOperationResponse>();
-		obj.forEach((elem: any) => { const text : string = JSON.stringify(elem); ret.add(SimpleOperationResponse.transpilerFromJSON(text)); });
-		return ret;
-	}
-
-
-	/**
 	 * Implementierung der GET-Methode getStundenplan für den Zugriff auf die URL https://{hostname}/db/{schema}/stundenplan/{id : \d+}
 	 *
 	 * Gibt die grundlegenden Daten des Stundeplans mit der angegebenen ID zurück. Dabei wird geprüft, ob der SVWS-Benutzer die notwendige Berechtigung zum Ansehen von Stundenplandaten besitzt.
@@ -18060,6 +18108,36 @@ export class ApiServer extends BaseApi {
 
 
 	/**
+	 * Implementierung der POST-Methode addStundenplanAsCopy für den Zugriff auf die URL https://{hostname}/db/{schema}/stundenplan/create/from/{copyof : \d+}
+	 *
+	 * Erstellt einen neuen Stundenplan und gibt die zugehörigen Daten zurück. Dabei wird geprüft, ob der SVWS-Benutzer die notwendige Berechtigung zum Erstellen eines Stundenplans besitzt.
+	 *
+	 * Mögliche HTTP-Antworten:
+	 *   Code 201: Der Stundenplan wurde erfolgreich erstellt.
+	 *     - Mime-Type: application/json
+	 *     - Rückgabe-Typ: Stundenplan
+	 *   Code 403: Der SVWS-Benutzer hat keine Rechte, um einen Stundenplan anzulegen.
+	 *   Code 404: Benötigte Daten wurden nicht gefunden
+	 *   Code 500: Unspezifizierter Fehler (z.B. beim Datenbankzugriff)
+	 *
+	 * @param {Partial<Stundenplan>} data - der Request-Body für die HTTP-Methode
+	 * @param {string} schema - der Pfad-Parameter schema
+	 * @param {number} copyof - der Pfad-Parameter copyof
+	 *
+	 * @returns Der Stundenplan wurde erfolgreich erstellt.
+	 */
+	public async addStundenplanAsCopy(data : Partial<Stundenplan>, schema : string, copyof : number) : Promise<Stundenplan> {
+		const path = "/db/{schema}/stundenplan/create/from/{copyof : \\d+}"
+			.replace(/{schema\s*(:[^{}]+({[^{}]+})*)?}/g, schema)
+			.replace(/{copyof\s*(:[^{}]+({[^{}]+})*)?}/g, copyof.toString());
+		const body : string = Stundenplan.transpilerToJSONPatch(data);
+		const result : string = await super.postJSON(path, body);
+		const text = result;
+		return Stundenplan.transpilerFromJSON(text);
+	}
+
+
+	/**
 	 * Implementierung der DELETE-Methode deleteStundenplaene für den Zugriff auf die URL https://{hostname}/db/{schema}/stundenplan/delete/multiple
 	 *
 	 * Entfernt mehrere Stundenpläne. Dabei wird geprüft, ob alle Vorbedingungen zum Entfernender Stundenpläne erfüllt sind und der SVWS-Benutzer die notwendige Berechtigung hat.
@@ -18859,6 +18937,2253 @@ export class ApiServer extends BaseApi {
 
 
 	/**
+	 * Implementierung der PATCH-Methode patchUvFach für den Zugriff auf die URL https://{hostname}/db/{schema}/unterrichtsverteilung/faecher/{id : \d+}
+	 *
+	 * Patcht ein bestehendes UvFach anhand der ID.
+	 *
+	 * Mögliche HTTP-Antworten:
+	 *   Code 200: Patch erfolgreich.
+	 *   Code 400: Fehlerhafte Daten.
+	 *   Code 403: Keine Rechte.
+	 *   Code 404: Nicht gefunden.
+	 *
+	 * @param {Partial<UvFach>} data - der Request-Body für die HTTP-Methode
+	 * @param {string} schema - der Pfad-Parameter schema
+	 * @param {number} id - der Pfad-Parameter id
+	 */
+	public async patchUvFach(data : Partial<UvFach>, schema : string, id : number) : Promise<void> {
+		const path = "/db/{schema}/unterrichtsverteilung/faecher/{id : \\d+}"
+			.replace(/{schema\s*(:[^{}]+({[^{}]+})*)?}/g, schema)
+			.replace(/{id\s*(:[^{}]+({[^{}]+})*)?}/g, id.toString());
+		const body : string = UvFach.transpilerToJSONPatch(data);
+		return super.patchJSON(path, body);
+	}
+
+
+	/**
+	 * Implementierung der DELETE-Methode deleteUvFach für den Zugriff auf die URL https://{hostname}/db/{schema}/unterrichtsverteilung/faecher/{id : \d+}
+	 *
+	 * Löscht ein bestehendes UvFach anhand der ID.
+	 *
+	 * Mögliche HTTP-Antworten:
+	 *   Code 204: Löschung erfolgreich.
+	 *   Code 403: Keine Rechte.
+	 *   Code 404: Nicht gefunden.
+	 *
+	 * @param {string} schema - der Pfad-Parameter schema
+	 * @param {number} id - der Pfad-Parameter id
+	 */
+	public async deleteUvFach(schema : string, id : number) : Promise<void> {
+		const path = "/db/{schema}/unterrichtsverteilung/faecher/{id : \\d+}"
+			.replace(/{schema\s*(:[^{}]+({[^{}]+})*)?}/g, schema)
+			.replace(/{id\s*(:[^{}]+({[^{}]+})*)?}/g, id.toString());
+		await super.deleteJSON(path, null);
+		return;
+	}
+
+
+	/**
+	 * Implementierung der POST-Methode createUvFach für den Zugriff auf die URL https://{hostname}/db/{schema}/unterrichtsverteilung/faecher/create
+	 *
+	 * Erstellt ein neues UvFach und gibt es zurück. Dabei wird geprüft, ob der SVWS-Benutzer die notwendige Berechtigung besitzt.
+	 *
+	 * Mögliche HTTP-Antworten:
+	 *   Code 201: UvFach wurde erfolgreich angelegt.
+	 *     - Mime-Type: application/json
+	 *     - Rückgabe-Typ: UvFach
+	 *   Code 403: Der SVWS-Benutzer hat keine Rechte, um ein UvFach anzulegen.
+	 *   Code 409: Das UvFach ist schon in der Datenbank enthalten.
+	 *
+	 * @param {Partial<UvFach>} data - der Request-Body für die HTTP-Methode
+	 * @param {string} schema - der Pfad-Parameter schema
+	 *
+	 * @returns UvFach wurde erfolgreich angelegt.
+	 */
+	public async createUvFach(data : Partial<UvFach>, schema : string) : Promise<UvFach> {
+		const path = "/db/{schema}/unterrichtsverteilung/faecher/create"
+			.replace(/{schema\s*(:[^{}]+({[^{}]+})*)?}/g, schema);
+		const body : string = UvFach.transpilerToJSONPatch(data);
+		const result : string = await super.postJSON(path, body);
+		const text = result;
+		return UvFach.transpilerFromJSON(text);
+	}
+
+
+	/**
+	 * Implementierung der DELETE-Methode deleteUvFaecherMultiple für den Zugriff auf die URL https://{hostname}/db/{schema}/unterrichtsverteilung/faecher/delete/multiple
+	 *
+	 * Löscht mehrere bestehende UV-Fächer anhand ihrer IDs.
+	 *
+	 * Mögliche HTTP-Antworten:
+	 *   Code 200: Die UV-Fächer für die angegebenen IDs wurden erfolgreich gelöscht.
+	 *     - Mime-Type: application/json
+	 *     - Rückgabe-Typ: List<Long>
+	 *   Code 403: Der SVWS-Benutzer hat keine Rechte, um UV-Fächer zu löschen.
+	 *   Code 500: Unspezifizierter Fehler (z.B. beim Datenbankzugriff).
+	 *
+	 * @param {List<number>} data - der Request-Body für die HTTP-Methode
+	 * @param {string} schema - der Pfad-Parameter schema
+	 *
+	 * @returns Die UV-Fächer für die angegebenen IDs wurden erfolgreich gelöscht.
+	 */
+	public async deleteUvFaecherMultiple(data : List<number>, schema : string) : Promise<List<number>> {
+		const path = "/db/{schema}/unterrichtsverteilung/faecher/delete/multiple"
+			.replace(/{schema\s*(:[^{}]+({[^{}]+})*)?}/g, schema);
+		const body : string = "[" + (data.toArray() as Array<number>).map(d => JSON.stringify(d)).join() + "]";
+		const result : string = await super.deleteJSON(path, body);
+		const obj = JSON.parse(result);
+		const ret = new ArrayList<number>();
+		obj.forEach((elem: any) => { const text : string = JSON.stringify(elem); ret.add(parseFloat(JSON.parse(text))); });
+		return ret;
+	}
+
+
+	/**
+	 * Implementierung der PATCH-Methode patchUvFaecherMultiple für den Zugriff auf die URL https://{hostname}/db/{schema}/unterrichtsverteilung/faecher/patch/multiple
+	 *
+	 * Patcht mehrere bestehende UvFach-Einträge. Die IDs müssen vorhanden sein, damit die entsprechenden Datensätze gefunden werden können.
+	 *
+	 * Mögliche HTTP-Antworten:
+	 *   Code 200: Patch erfolgreich.
+	 *   Code 400: Fehlerhafte Daten.
+	 *   Code 403: Keine Rechte.
+	 *   Code 404: Nicht gefunden.
+	 *
+	 * @param {List<Partial<UvFach>>} data - der Request-Body für die HTTP-Methode
+	 * @param {string} schema - der Pfad-Parameter schema
+	 */
+	public async patchUvFaecherMultiple(data : List<Partial<UvFach>>, schema : string) : Promise<void> {
+		const path = "/db/{schema}/unterrichtsverteilung/faecher/patch/multiple"
+			.replace(/{schema\s*(:[^{}]+({[^{}]+})*)?}/g, schema);
+		const body : string = "[" + (data.toArray() as Array<UvFach>).map(d => UvFach.transpilerToJSONPatch(d)).join() + "]";
+		return super.patchJSON(path, body);
+	}
+
+
+	/**
+	 * Implementierung der PATCH-Methode patchUvKlasse für den Zugriff auf die URL https://{hostname}/db/{schema}/unterrichtsverteilung/klassen/{id : \d+}
+	 *
+	 * Patcht eine bestehende UvKlasse anhand der ID.
+	 *
+	 * Mögliche HTTP-Antworten:
+	 *   Code 200: Patch erfolgreich.
+	 *   Code 400: Fehlerhafte Daten.
+	 *   Code 403: Keine Rechte.
+	 *   Code 404: Nicht gefunden.
+	 *
+	 * @param {Partial<UvKlasse>} data - der Request-Body für die HTTP-Methode
+	 * @param {string} schema - der Pfad-Parameter schema
+	 * @param {number} id - der Pfad-Parameter id
+	 */
+	public async patchUvKlasse(data : Partial<UvKlasse>, schema : string, id : number) : Promise<void> {
+		const path = "/db/{schema}/unterrichtsverteilung/klassen/{id : \\d+}"
+			.replace(/{schema\s*(:[^{}]+({[^{}]+})*)?}/g, schema)
+			.replace(/{id\s*(:[^{}]+({[^{}]+})*)?}/g, id.toString());
+		const body : string = UvKlasse.transpilerToJSONPatch(data);
+		return super.patchJSON(path, body);
+	}
+
+
+	/**
+	 * Implementierung der DELETE-Methode deleteUvKlasse für den Zugriff auf die URL https://{hostname}/db/{schema}/unterrichtsverteilung/klassen/{id : \d+}
+	 *
+	 * Löscht eine bestehende UvKlasse anhand der ID.
+	 *
+	 * Mögliche HTTP-Antworten:
+	 *   Code 204: Löschung erfolgreich.
+	 *   Code 403: Keine Rechte.
+	 *   Code 404: Nicht gefunden.
+	 *
+	 * @param {string} schema - der Pfad-Parameter schema
+	 * @param {number} id - der Pfad-Parameter id
+	 */
+	public async deleteUvKlasse(schema : string, id : number) : Promise<void> {
+		const path = "/db/{schema}/unterrichtsverteilung/klassen/{id : \\d+}"
+			.replace(/{schema\s*(:[^{}]+({[^{}]+})*)?}/g, schema)
+			.replace(/{id\s*(:[^{}]+({[^{}]+})*)?}/g, id.toString());
+		await super.deleteJSON(path, null);
+		return;
+	}
+
+
+	/**
+	 * Implementierung der POST-Methode createUvKlasse für den Zugriff auf die URL https://{hostname}/db/{schema}/unterrichtsverteilung/klassen/create
+	 *
+	 * Erstellt eine neue UvKlasse und gibt sie zurück. Dabei wird geprüft, ob der SVWS-Benutzer die notwendige Berechtigung besitzt.
+	 *
+	 * Mögliche HTTP-Antworten:
+	 *   Code 201: UvKlasse wurde erfolgreich angelegt.
+	 *     - Mime-Type: application/json
+	 *     - Rückgabe-Typ: UvKlasse
+	 *   Code 403: Der SVWS-Benutzer hat keine Rechte, um eine UvKlasse anzulegen.
+	 *   Code 409: Die UvKlasse ist schon in der Datenbank enthalten.
+	 *
+	 * @param {Partial<UvKlasse>} data - der Request-Body für die HTTP-Methode
+	 * @param {string} schema - der Pfad-Parameter schema
+	 *
+	 * @returns UvKlasse wurde erfolgreich angelegt.
+	 */
+	public async createUvKlasse(data : Partial<UvKlasse>, schema : string) : Promise<UvKlasse> {
+		const path = "/db/{schema}/unterrichtsverteilung/klassen/create"
+			.replace(/{schema\s*(:[^{}]+({[^{}]+})*)?}/g, schema);
+		const body : string = UvKlasse.transpilerToJSONPatch(data);
+		const result : string = await super.postJSON(path, body);
+		const text = result;
+		return UvKlasse.transpilerFromJSON(text);
+	}
+
+
+	/**
+	 * Implementierung der DELETE-Methode deleteUvKlassenMultiple für den Zugriff auf die URL https://{hostname}/db/{schema}/unterrichtsverteilung/klassen/multiple
+	 *
+	 * Löscht mehrere bestehende UvKlassen anhand ihrer IDs.
+	 *
+	 * Mögliche HTTP-Antworten:
+	 *   Code 200: Die UvKlassen für die angegebenen IDs wurden erfolgreich gelöscht.
+	 *     - Mime-Type: application/json
+	 *     - Rückgabe-Typ: List<Long>
+	 *   Code 403: Der SVWS-Benutzer hat keine Rechte, um UvKlassen zu löschen.
+	 *   Code 500: Unspezifizierter Fehler (z.B. beim Datenbankzugriff)
+	 *
+	 * @param {List<number>} data - der Request-Body für die HTTP-Methode
+	 * @param {string} schema - der Pfad-Parameter schema
+	 *
+	 * @returns Die UvKlassen für die angegebenen IDs wurden erfolgreich gelöscht.
+	 */
+	public async deleteUvKlassenMultiple(data : List<number>, schema : string) : Promise<List<number>> {
+		const path = "/db/{schema}/unterrichtsverteilung/klassen/multiple"
+			.replace(/{schema\s*(:[^{}]+({[^{}]+})*)?}/g, schema);
+		const body : string = "[" + (data.toArray() as Array<number>).map(d => JSON.stringify(d)).join() + "]";
+		const result : string = await super.deleteJSON(path, body);
+		const obj = JSON.parse(result);
+		const ret = new ArrayList<number>();
+		obj.forEach((elem: any) => { const text : string = JSON.stringify(elem); ret.add(parseFloat(JSON.parse(text))); });
+		return ret;
+	}
+
+
+	/**
+	 * Implementierung der PATCH-Methode patchUvKlassenMultiple für den Zugriff auf die URL https://{hostname}/db/{schema}/unterrichtsverteilung/klassen/patch/multiple
+	 *
+	 * Patcht einen bestehenden UvKlasse.
+	 *
+	 * Mögliche HTTP-Antworten:
+	 *   Code 200: Patch erfolgreich.
+	 *   Code 400: Fehlerhafte Daten.
+	 *   Code 403: Keine Rechte.
+	 *   Code 404: Nicht gefunden.
+	 *
+	 * @param {List<Partial<UvKlasse>>} data - der Request-Body für die HTTP-Methode
+	 * @param {string} schema - der Pfad-Parameter schema
+	 */
+	public async patchUvKlassenMultiple(data : List<Partial<UvKlasse>>, schema : string) : Promise<void> {
+		const path = "/db/{schema}/unterrichtsverteilung/klassen/patch/multiple"
+			.replace(/{schema\s*(:[^{}]+({[^{}]+})*)?}/g, schema);
+		const body : string = "[" + (data.toArray() as Array<UvKlasse>).map(d => UvKlasse.transpilerToJSONPatch(d)).join() + "]";
+		return super.patchJSON(path, body);
+	}
+
+
+	/**
+	 * Implementierung der PATCH-Methode patchUvKurs für den Zugriff auf die URL https://{hostname}/db/{schema}/unterrichtsverteilung/kurse/{id : \d+}
+	 *
+	 * Patcht einen bestehenden UvKurs anhand der ID.
+	 *
+	 * Mögliche HTTP-Antworten:
+	 *   Code 200: Patch erfolgreich.
+	 *   Code 400: Fehlerhafte Daten.
+	 *   Code 403: Keine Rechte.
+	 *   Code 404: Nicht gefunden.
+	 *
+	 * @param {Partial<UvKurs>} data - der Request-Body für die HTTP-Methode
+	 * @param {string} schema - der Pfad-Parameter schema
+	 * @param {number} id - der Pfad-Parameter id
+	 */
+	public async patchUvKurs(data : Partial<UvKurs>, schema : string, id : number) : Promise<void> {
+		const path = "/db/{schema}/unterrichtsverteilung/kurse/{id : \\d+}"
+			.replace(/{schema\s*(:[^{}]+({[^{}]+})*)?}/g, schema)
+			.replace(/{id\s*(:[^{}]+({[^{}]+})*)?}/g, id.toString());
+		const body : string = UvKurs.transpilerToJSONPatch(data);
+		return super.patchJSON(path, body);
+	}
+
+
+	/**
+	 * Implementierung der DELETE-Methode deleteUvKurs für den Zugriff auf die URL https://{hostname}/db/{schema}/unterrichtsverteilung/kurse/{id : \d+}
+	 *
+	 * Löscht einen bestehenden UvKurs anhand der ID.
+	 *
+	 * Mögliche HTTP-Antworten:
+	 *   Code 204: Löschung erfolgreich.
+	 *   Code 403: Keine Rechte.
+	 *   Code 404: Nicht gefunden.
+	 *
+	 * @param {string} schema - der Pfad-Parameter schema
+	 * @param {number} id - der Pfad-Parameter id
+	 */
+	public async deleteUvKurs(schema : string, id : number) : Promise<void> {
+		const path = "/db/{schema}/unterrichtsverteilung/kurse/{id : \\d+}"
+			.replace(/{schema\s*(:[^{}]+({[^{}]+})*)?}/g, schema)
+			.replace(/{id\s*(:[^{}]+({[^{}]+})*)?}/g, id.toString());
+		await super.deleteJSON(path, null);
+		return;
+	}
+
+
+	/**
+	 * Implementierung der POST-Methode createUvKurs für den Zugriff auf die URL https://{hostname}/db/{schema}/unterrichtsverteilung/kurse/create
+	 *
+	 * Erstellt einen neuen UvKurs und gibt ihn zurück. Dabei wird geprüft, ob der SVWS-Benutzer die notwendige Berechtigung besitzt.
+	 *
+	 * Mögliche HTTP-Antworten:
+	 *   Code 201: UvKurs wurde erfolgreich angelegt.
+	 *     - Mime-Type: application/json
+	 *     - Rückgabe-Typ: UvKurs
+	 *   Code 403: Der SVWS-Benutzer hat keine Rechte, um einen UvKurs anzulegen.
+	 *   Code 409: Der UvKurs ist schon in der Datenbank enthalten.
+	 *
+	 * @param {Partial<UvKurs>} data - der Request-Body für die HTTP-Methode
+	 * @param {string} schema - der Pfad-Parameter schema
+	 *
+	 * @returns UvKurs wurde erfolgreich angelegt.
+	 */
+	public async createUvKurs(data : Partial<UvKurs>, schema : string) : Promise<UvKurs> {
+		const path = "/db/{schema}/unterrichtsverteilung/kurse/create"
+			.replace(/{schema\s*(:[^{}]+({[^{}]+})*)?}/g, schema);
+		const body : string = UvKurs.transpilerToJSONPatch(data);
+		const result : string = await super.postJSON(path, body);
+		const text = result;
+		return UvKurs.transpilerFromJSON(text);
+	}
+
+
+	/**
+	 * Implementierung der DELETE-Methode deleteUvKurseMultiple für den Zugriff auf die URL https://{hostname}/db/{schema}/unterrichtsverteilung/kurse/multiple
+	 *
+	 * Löscht mehrere bestehende UV-Kurse anhand der ID.
+	 *
+	 * Mögliche HTTP-Antworten:
+	 *   Code 200: Die UV-Kurse für die angegebenen IDs wurden erfolgreich gelöscht.
+	 *     - Mime-Type: application/json
+	 *     - Rückgabe-Typ: List<Long>
+	 *   Code 403: Der SVWS-Benutzer hat keine Rechte, um einen UV-Kurs zu löschen.
+	 *   Code 500: Unspezifizierter Fehler (z.B. beim Datenbankzugriff)
+	 *
+	 * @param {List<number>} data - der Request-Body für die HTTP-Methode
+	 * @param {string} schema - der Pfad-Parameter schema
+	 *
+	 * @returns Die UV-Kurse für die angegebenen IDs wurden erfolgreich gelöscht.
+	 */
+	public async deleteUvKurseMultiple(data : List<number>, schema : string) : Promise<List<number>> {
+		const path = "/db/{schema}/unterrichtsverteilung/kurse/multiple"
+			.replace(/{schema\s*(:[^{}]+({[^{}]+})*)?}/g, schema);
+		const body : string = "[" + (data.toArray() as Array<number>).map(d => JSON.stringify(d)).join() + "]";
+		const result : string = await super.deleteJSON(path, body);
+		const obj = JSON.parse(result);
+		const ret = new ArrayList<number>();
+		obj.forEach((elem: any) => { const text : string = JSON.stringify(elem); ret.add(parseFloat(JSON.parse(text))); });
+		return ret;
+	}
+
+
+	/**
+	 * Implementierung der PATCH-Methode patchUvKurseMultiple für den Zugriff auf die URL https://{hostname}/db/{schema}/unterrichtsverteilung/kurse/patch/multiple
+	 *
+	 * Patcht einen bestehenden UvKurs.
+	 *
+	 * Mögliche HTTP-Antworten:
+	 *   Code 200: Patch erfolgreich.
+	 *   Code 400: Fehlerhafte Daten.
+	 *   Code 403: Keine Rechte.
+	 *   Code 404: Nicht gefunden.
+	 *
+	 * @param {List<Partial<UvKurs>>} data - der Request-Body für die HTTP-Methode
+	 * @param {string} schema - der Pfad-Parameter schema
+	 */
+	public async patchUvKurseMultiple(data : List<Partial<UvKurs>>, schema : string) : Promise<void> {
+		const path = "/db/{schema}/unterrichtsverteilung/kurse/patch/multiple"
+			.replace(/{schema\s*(:[^{}]+({[^{}]+})*)?}/g, schema);
+		const body : string = "[" + (data.toArray() as Array<UvKurs>).map(d => UvKurs.transpilerToJSONPatch(d)).join() + "]";
+		return super.patchJSON(path, body);
+	}
+
+
+	/**
+	 * Implementierung der PATCH-Methode patchUvLehrer für den Zugriff auf die URL https://{hostname}/db/{schema}/unterrichtsverteilung/lehrer/{id : \d+}
+	 *
+	 * Patcht einen bestehenden UvLehrer anhand der ID.
+	 *
+	 * Mögliche HTTP-Antworten:
+	 *   Code 200: Patch erfolgreich.
+	 *   Code 400: Fehlerhafte Daten.
+	 *   Code 403: Keine Rechte.
+	 *   Code 404: Nicht gefunden.
+	 *
+	 * @param {Partial<UvLehrer>} data - der Request-Body für die HTTP-Methode
+	 * @param {string} schema - der Pfad-Parameter schema
+	 * @param {number} id - der Pfad-Parameter id
+	 */
+	public async patchUvLehrer(data : Partial<UvLehrer>, schema : string, id : number) : Promise<void> {
+		const path = "/db/{schema}/unterrichtsverteilung/lehrer/{id : \\d+}"
+			.replace(/{schema\s*(:[^{}]+({[^{}]+})*)?}/g, schema)
+			.replace(/{id\s*(:[^{}]+({[^{}]+})*)?}/g, id.toString());
+		const body : string = UvLehrer.transpilerToJSONPatch(data);
+		return super.patchJSON(path, body);
+	}
+
+
+	/**
+	 * Implementierung der DELETE-Methode deleteUvLehrer für den Zugriff auf die URL https://{hostname}/db/{schema}/unterrichtsverteilung/lehrer/{id : \d+}
+	 *
+	 * Löscht einen bestehenden UvLehrer anhand der ID.
+	 *
+	 * Mögliche HTTP-Antworten:
+	 *   Code 204: Löschung erfolgreich.
+	 *   Code 403: Keine Rechte.
+	 *   Code 404: Nicht gefunden.
+	 *
+	 * @param {string} schema - der Pfad-Parameter schema
+	 * @param {number} id - der Pfad-Parameter id
+	 */
+	public async deleteUvLehrer(schema : string, id : number) : Promise<void> {
+		const path = "/db/{schema}/unterrichtsverteilung/lehrer/{id : \\d+}"
+			.replace(/{schema\s*(:[^{}]+({[^{}]+})*)?}/g, schema)
+			.replace(/{id\s*(:[^{}]+({[^{}]+})*)?}/g, id.toString());
+		await super.deleteJSON(path, null);
+		return;
+	}
+
+
+	/**
+	 * Implementierung der PATCH-Methode patchUvLehrerAnrechnungsstunde für den Zugriff auf die URL https://{hostname}/db/{schema}/unterrichtsverteilung/lehrer/anrechnungsstunden/{id : \d+}
+	 *
+	 * Patcht eine bestehende UvLehrerAnrechnungsstunden-Zuordnung anhand der ID.
+	 *
+	 * Mögliche HTTP-Antworten:
+	 *   Code 200: Patch erfolgreich.
+	 *   Code 400: Fehlerhafte Daten.
+	 *   Code 403: Keine Rechte.
+	 *   Code 404: Nicht gefunden.
+	 *
+	 * @param {Partial<UvLehrerAnrechnungsstunden>} data - der Request-Body für die HTTP-Methode
+	 * @param {string} schema - der Pfad-Parameter schema
+	 * @param {number} id - der Pfad-Parameter id
+	 */
+	public async patchUvLehrerAnrechnungsstunde(data : Partial<UvLehrerAnrechnungsstunden>, schema : string, id : number) : Promise<void> {
+		const path = "/db/{schema}/unterrichtsverteilung/lehrer/anrechnungsstunden/{id : \\d+}"
+			.replace(/{schema\s*(:[^{}]+({[^{}]+})*)?}/g, schema)
+			.replace(/{id\s*(:[^{}]+({[^{}]+})*)?}/g, id.toString());
+		const body : string = UvLehrerAnrechnungsstunden.transpilerToJSONPatch(data);
+		return super.patchJSON(path, body);
+	}
+
+
+	/**
+	 * Implementierung der DELETE-Methode deleteUvLehrerAnrechnungsstunde für den Zugriff auf die URL https://{hostname}/db/{schema}/unterrichtsverteilung/lehrer/anrechnungsstunden/{id : \d+}
+	 *
+	 * Löscht eine bestehende UvLehrerAnrechnungsstunden-Zuordnung anhand der ID.
+	 *
+	 * Mögliche HTTP-Antworten:
+	 *   Code 204: Löschung erfolgreich.
+	 *   Code 403: Keine Rechte.
+	 *   Code 404: Nicht gefunden.
+	 *
+	 * @param {string} schema - der Pfad-Parameter schema
+	 * @param {number} id - der Pfad-Parameter id
+	 */
+	public async deleteUvLehrerAnrechnungsstunde(schema : string, id : number) : Promise<void> {
+		const path = "/db/{schema}/unterrichtsverteilung/lehrer/anrechnungsstunden/{id : \\d+}"
+			.replace(/{schema\s*(:[^{}]+({[^{}]+})*)?}/g, schema)
+			.replace(/{id\s*(:[^{}]+({[^{}]+})*)?}/g, id.toString());
+		await super.deleteJSON(path, null);
+		return;
+	}
+
+
+	/**
+	 * Implementierung der POST-Methode createUvLehrerAnrechnungsstunde für den Zugriff auf die URL https://{hostname}/db/{schema}/unterrichtsverteilung/lehrer/anrechnungsstunden/create
+	 *
+	 * Erstellt eine neue UvLehrerAnrechnungsstunden-Zuordnung und gibt sie zurück. Dabei wird geprüft, ob der SVWS-Benutzer die notwendige Berechtigung besitzt.
+	 *
+	 * Mögliche HTTP-Antworten:
+	 *   Code 201: UvLehrerAnrechnungsstunden-Zuordnung wurde erfolgreich angelegt.
+	 *     - Mime-Type: application/json
+	 *     - Rückgabe-Typ: UvLehrerAnrechnungsstunden
+	 *   Code 403: Keine Rechte, um eine Zuordnung anzulegen.
+	 *   Code 409: Die Zuordnung ist bereits vorhanden.
+	 *
+	 * @param {Partial<UvLehrerAnrechnungsstunden>} data - der Request-Body für die HTTP-Methode
+	 * @param {string} schema - der Pfad-Parameter schema
+	 *
+	 * @returns UvLehrerAnrechnungsstunden-Zuordnung wurde erfolgreich angelegt.
+	 */
+	public async createUvLehrerAnrechnungsstunde(data : Partial<UvLehrerAnrechnungsstunden>, schema : string) : Promise<UvLehrerAnrechnungsstunden> {
+		const path = "/db/{schema}/unterrichtsverteilung/lehrer/anrechnungsstunden/create"
+			.replace(/{schema\s*(:[^{}]+({[^{}]+})*)?}/g, schema);
+		const body : string = UvLehrerAnrechnungsstunden.transpilerToJSONPatch(data);
+		const result : string = await super.postJSON(path, body);
+		const text = result;
+		return UvLehrerAnrechnungsstunden.transpilerFromJSON(text);
+	}
+
+
+	/**
+	 * Implementierung der DELETE-Methode deleteUvLehrerAnrechnungsstundenMultiple für den Zugriff auf die URL https://{hostname}/db/{schema}/unterrichtsverteilung/lehrer/anrechnungsstunden/delete/multiple
+	 *
+	 * Löscht mehrere bestehende UvLehrerAnrechnungsstunden-Zuordnungen anhand der IDs.
+	 *
+	 * Mögliche HTTP-Antworten:
+	 *   Code 200: Die Zuordnungen wurden erfolgreich gelöscht.
+	 *     - Mime-Type: application/json
+	 *     - Rückgabe-Typ: List<Long>
+	 *   Code 403: Keine Rechte.
+	 *   Code 500: Unspezifizierter Fehler (z. B. beim Datenbankzugriff).
+	 *
+	 * @param {List<number>} data - der Request-Body für die HTTP-Methode
+	 * @param {string} schema - der Pfad-Parameter schema
+	 *
+	 * @returns Die Zuordnungen wurden erfolgreich gelöscht.
+	 */
+	public async deleteUvLehrerAnrechnungsstundenMultiple(data : List<number>, schema : string) : Promise<List<number>> {
+		const path = "/db/{schema}/unterrichtsverteilung/lehrer/anrechnungsstunden/delete/multiple"
+			.replace(/{schema\s*(:[^{}]+({[^{}]+})*)?}/g, schema);
+		const body : string = "[" + (data.toArray() as Array<number>).map(d => JSON.stringify(d)).join() + "]";
+		const result : string = await super.deleteJSON(path, body);
+		const obj = JSON.parse(result);
+		const ret = new ArrayList<number>();
+		obj.forEach((elem: any) => { const text : string = JSON.stringify(elem); ret.add(parseFloat(JSON.parse(text))); });
+		return ret;
+	}
+
+
+	/**
+	 * Implementierung der PATCH-Methode patchUvLehrerAnrechnungsstundenMultiple für den Zugriff auf die URL https://{hostname}/db/{schema}/unterrichtsverteilung/lehrer/anrechnungsstunden/patch/multiple
+	 *
+	 * Patcht mehrere bestehende UvLehrerAnrechnungsstunden-Zuordnungen anhand der IDs.
+	 *
+	 * Mögliche HTTP-Antworten:
+	 *   Code 200: Patch erfolgreich.
+	 *   Code 400: Fehlerhafte Daten.
+	 *   Code 403: Keine Rechte.
+	 *   Code 404: Nicht gefunden.
+	 *
+	 * @param {List<Partial<UvLehrerAnrechnungsstunden>>} data - der Request-Body für die HTTP-Methode
+	 * @param {string} schema - der Pfad-Parameter schema
+	 */
+	public async patchUvLehrerAnrechnungsstundenMultiple(data : List<Partial<UvLehrerAnrechnungsstunden>>, schema : string) : Promise<void> {
+		const path = "/db/{schema}/unterrichtsverteilung/lehrer/anrechnungsstunden/patch/multiple"
+			.replace(/{schema\s*(:[^{}]+({[^{}]+})*)?}/g, schema);
+		const body : string = "[" + (data.toArray() as Array<UvLehrerAnrechnungsstunden>).map(d => UvLehrerAnrechnungsstunden.transpilerToJSONPatch(d)).join() + "]";
+		return super.patchJSON(path, body);
+	}
+
+
+	/**
+	 * Implementierung der POST-Methode createUvLehrer für den Zugriff auf die URL https://{hostname}/db/{schema}/unterrichtsverteilung/lehrer/create
+	 *
+	 * Erstellt einen neuen UvLehrer und gibt ihn zurück. Dabei wird geprüft, ob der SVWS-Benutzer die notwendige Berechtigung besitzt.
+	 *
+	 * Mögliche HTTP-Antworten:
+	 *   Code 201: UvLehrer wurde erfolgreich angelegt.
+	 *     - Mime-Type: application/json
+	 *     - Rückgabe-Typ: UvLehrer
+	 *   Code 403: Der SVWS-Benutzer hat keine Rechte, um einen UvLehrer anzulegen.
+	 *   Code 409: Der UvLehrer ist schon in der Datenbank enthalten.
+	 *
+	 * @param {Partial<UvLehrer>} data - der Request-Body für die HTTP-Methode
+	 * @param {string} schema - der Pfad-Parameter schema
+	 *
+	 * @returns UvLehrer wurde erfolgreich angelegt.
+	 */
+	public async createUvLehrer(data : Partial<UvLehrer>, schema : string) : Promise<UvLehrer> {
+		const path = "/db/{schema}/unterrichtsverteilung/lehrer/create"
+			.replace(/{schema\s*(:[^{}]+({[^{}]+})*)?}/g, schema);
+		const body : string = UvLehrer.transpilerToJSONPatch(data);
+		const result : string = await super.postJSON(path, body);
+		const text = result;
+		return UvLehrer.transpilerFromJSON(text);
+	}
+
+
+	/**
+	 * Implementierung der DELETE-Methode deleteUvLehrerMultiple für den Zugriff auf die URL https://{hostname}/db/{schema}/unterrichtsverteilung/lehrer/delete/multiple
+	 *
+	 * Löscht mehrere bestehende UvLehrer anhand der IDs.
+	 *
+	 * Mögliche HTTP-Antworten:
+	 *   Code 200: Die UvLehrer wurden erfolgreich gelöscht.
+	 *     - Mime-Type: application/json
+	 *     - Rückgabe-Typ: List<Long>
+	 *   Code 403: Keine Rechte.
+	 *   Code 500: Unspezifizierter Fehler (z. B. beim Datenbankzugriff)
+	 *
+	 * @param {List<number>} data - der Request-Body für die HTTP-Methode
+	 * @param {string} schema - der Pfad-Parameter schema
+	 *
+	 * @returns Die UvLehrer wurden erfolgreich gelöscht.
+	 */
+	public async deleteUvLehrerMultiple(data : List<number>, schema : string) : Promise<List<number>> {
+		const path = "/db/{schema}/unterrichtsverteilung/lehrer/delete/multiple"
+			.replace(/{schema\s*(:[^{}]+({[^{}]+})*)?}/g, schema);
+		const body : string = "[" + (data.toArray() as Array<number>).map(d => JSON.stringify(d)).join() + "]";
+		const result : string = await super.deleteJSON(path, body);
+		const obj = JSON.parse(result);
+		const ret = new ArrayList<number>();
+		obj.forEach((elem: any) => { const text : string = JSON.stringify(elem); ret.add(parseFloat(JSON.parse(text))); });
+		return ret;
+	}
+
+
+	/**
+	 * Implementierung der PATCH-Methode patchUvLehrerMultiple für den Zugriff auf die URL https://{hostname}/db/{schema}/unterrichtsverteilung/lehrer/patch/multiple
+	 *
+	 * Patcht mehrere bestehende UvLehrer anhand der IDs.
+	 *
+	 * Mögliche HTTP-Antworten:
+	 *   Code 200: Patch erfolgreich.
+	 *   Code 400: Fehlerhafte Daten.
+	 *   Code 403: Keine Rechte.
+	 *   Code 404: Nicht gefunden.
+	 *
+	 * @param {List<Partial<UvLehrer>>} data - der Request-Body für die HTTP-Methode
+	 * @param {string} schema - der Pfad-Parameter schema
+	 */
+	public async patchUvLehrerMultiple(data : List<Partial<UvLehrer>>, schema : string) : Promise<void> {
+		const path = "/db/{schema}/unterrichtsverteilung/lehrer/patch/multiple"
+			.replace(/{schema\s*(:[^{}]+({[^{}]+})*)?}/g, schema);
+		const body : string = "[" + (data.toArray() as Array<UvLehrer>).map(d => UvLehrer.transpilerToJSONPatch(d)).join() + "]";
+		return super.patchJSON(path, body);
+	}
+
+
+	/**
+	 * Implementierung der PATCH-Methode patchUvLehrerPflichtstundensoll für den Zugriff auf die URL https://{hostname}/db/{schema}/unterrichtsverteilung/lehrer/pflichtstundensoll/{id : \d+}
+	 *
+	 * Patcht einen bestehenden UvLehrerPflichtstundensoll-Eintrag anhand der ID.
+	 *
+	 * Mögliche HTTP-Antworten:
+	 *   Code 200: Patch erfolgreich.
+	 *   Code 400: Fehlerhafte Daten.
+	 *   Code 403: Keine Rechte.
+	 *   Code 404: Nicht gefunden.
+	 *
+	 * @param {Partial<UvLehrerPflichtstundensoll>} data - der Request-Body für die HTTP-Methode
+	 * @param {string} schema - der Pfad-Parameter schema
+	 * @param {number} id - der Pfad-Parameter id
+	 */
+	public async patchUvLehrerPflichtstundensoll(data : Partial<UvLehrerPflichtstundensoll>, schema : string, id : number) : Promise<void> {
+		const path = "/db/{schema}/unterrichtsverteilung/lehrer/pflichtstundensoll/{id : \\d+}"
+			.replace(/{schema\s*(:[^{}]+({[^{}]+})*)?}/g, schema)
+			.replace(/{id\s*(:[^{}]+({[^{}]+})*)?}/g, id.toString());
+		const body : string = UvLehrerPflichtstundensoll.transpilerToJSONPatch(data);
+		return super.patchJSON(path, body);
+	}
+
+
+	/**
+	 * Implementierung der DELETE-Methode deleteUvLehrerPflichtstundensoll für den Zugriff auf die URL https://{hostname}/db/{schema}/unterrichtsverteilung/lehrer/pflichtstundensoll/{id : \d+}
+	 *
+	 * Löscht einen bestehenden UvLehrerPflichtstundensoll-Eintrag anhand der ID.
+	 *
+	 * Mögliche HTTP-Antworten:
+	 *   Code 204: Löschung erfolgreich.
+	 *   Code 403: Keine Rechte.
+	 *   Code 404: Nicht gefunden.
+	 *
+	 * @param {string} schema - der Pfad-Parameter schema
+	 * @param {number} id - der Pfad-Parameter id
+	 */
+	public async deleteUvLehrerPflichtstundensoll(schema : string, id : number) : Promise<void> {
+		const path = "/db/{schema}/unterrichtsverteilung/lehrer/pflichtstundensoll/{id : \\d+}"
+			.replace(/{schema\s*(:[^{}]+({[^{}]+})*)?}/g, schema)
+			.replace(/{id\s*(:[^{}]+({[^{}]+})*)?}/g, id.toString());
+		await super.deleteJSON(path, null);
+		return;
+	}
+
+
+	/**
+	 * Implementierung der POST-Methode createUvLehrerPflichtstundensoll für den Zugriff auf die URL https://{hostname}/db/{schema}/unterrichtsverteilung/lehrer/pflichtstundensoll/create
+	 *
+	 * Erstellt einen neuen UvLehrerPflichtstundensoll-Eintrag und gibt ihn zurück. Dabei wird geprüft, ob der SVWS-Benutzer die notwendige Berechtigung besitzt.
+	 *
+	 * Mögliche HTTP-Antworten:
+	 *   Code 201: UvLehrerPflichtstundensoll wurde erfolgreich angelegt.
+	 *     - Mime-Type: application/json
+	 *     - Rückgabe-Typ: UvLehrerPflichtstundensoll
+	 *   Code 403: Keine Rechte, um den Eintrag anzulegen.
+	 *   Code 409: Der Eintrag ist bereits vorhanden.
+	 *
+	 * @param {Partial<UvLehrerPflichtstundensoll>} data - der Request-Body für die HTTP-Methode
+	 * @param {string} schema - der Pfad-Parameter schema
+	 *
+	 * @returns UvLehrerPflichtstundensoll wurde erfolgreich angelegt.
+	 */
+	public async createUvLehrerPflichtstundensoll(data : Partial<UvLehrerPflichtstundensoll>, schema : string) : Promise<UvLehrerPflichtstundensoll> {
+		const path = "/db/{schema}/unterrichtsverteilung/lehrer/pflichtstundensoll/create"
+			.replace(/{schema\s*(:[^{}]+({[^{}]+})*)?}/g, schema);
+		const body : string = UvLehrerPflichtstundensoll.transpilerToJSONPatch(data);
+		const result : string = await super.postJSON(path, body);
+		const text = result;
+		return UvLehrerPflichtstundensoll.transpilerFromJSON(text);
+	}
+
+
+	/**
+	 * Implementierung der DELETE-Methode deleteUvLehrerPflichtstundensollMultiple für den Zugriff auf die URL https://{hostname}/db/{schema}/unterrichtsverteilung/lehrer/pflichtstundensoll/delete/multiple
+	 *
+	 * Löscht mehrere bestehende UvLehrerPflichtstundensoll-Einträge anhand der IDs.
+	 *
+	 * Mögliche HTTP-Antworten:
+	 *   Code 200: Die Einträge wurden erfolgreich gelöscht.
+	 *     - Mime-Type: application/json
+	 *     - Rückgabe-Typ: List<Long>
+	 *   Code 403: Keine Rechte.
+	 *   Code 500: Unspezifizierter Fehler (z. B. beim Datenbankzugriff).
+	 *
+	 * @param {List<number>} data - der Request-Body für die HTTP-Methode
+	 * @param {string} schema - der Pfad-Parameter schema
+	 *
+	 * @returns Die Einträge wurden erfolgreich gelöscht.
+	 */
+	public async deleteUvLehrerPflichtstundensollMultiple(data : List<number>, schema : string) : Promise<List<number>> {
+		const path = "/db/{schema}/unterrichtsverteilung/lehrer/pflichtstundensoll/delete/multiple"
+			.replace(/{schema\s*(:[^{}]+({[^{}]+})*)?}/g, schema);
+		const body : string = "[" + (data.toArray() as Array<number>).map(d => JSON.stringify(d)).join() + "]";
+		const result : string = await super.deleteJSON(path, body);
+		const obj = JSON.parse(result);
+		const ret = new ArrayList<number>();
+		obj.forEach((elem: any) => { const text : string = JSON.stringify(elem); ret.add(parseFloat(JSON.parse(text))); });
+		return ret;
+	}
+
+
+	/**
+	 * Implementierung der PATCH-Methode patchUvLehrerPflichtstundensollMultiple für den Zugriff auf die URL https://{hostname}/db/{schema}/unterrichtsverteilung/lehrer/pflichtstundensoll/patch/multiple
+	 *
+	 * Patcht mehrere bestehende UvLehrerPflichtstundensoll-Einträge anhand der IDs.
+	 *
+	 * Mögliche HTTP-Antworten:
+	 *   Code 200: Patch erfolgreich.
+	 *   Code 400: Fehlerhafte Daten.
+	 *   Code 403: Keine Rechte.
+	 *   Code 404: Nicht gefunden.
+	 *
+	 * @param {List<Partial<UvLehrerPflichtstundensoll>>} data - der Request-Body für die HTTP-Methode
+	 * @param {string} schema - der Pfad-Parameter schema
+	 */
+	public async patchUvLehrerPflichtstundensollMultiple(data : List<Partial<UvLehrerPflichtstundensoll>>, schema : string) : Promise<void> {
+		const path = "/db/{schema}/unterrichtsverteilung/lehrer/pflichtstundensoll/patch/multiple"
+			.replace(/{schema\s*(:[^{}]+({[^{}]+})*)?}/g, schema);
+		const body : string = "[" + (data.toArray() as Array<UvLehrerPflichtstundensoll>).map(d => UvLehrerPflichtstundensoll.transpilerToJSONPatch(d)).join() + "]";
+		return super.patchJSON(path, body);
+	}
+
+
+	/**
+	 * Implementierung der PATCH-Methode patchUvLerngruppe für den Zugriff auf die URL https://{hostname}/db/{schema}/unterrichtsverteilung/lerngruppen/{id : \d+}
+	 *
+	 * Patcht eine bestehende UvLerngruppe anhand der ID.
+	 *
+	 * Mögliche HTTP-Antworten:
+	 *   Code 200: Patch erfolgreich.
+	 *   Code 400: Fehlerhafte Daten.
+	 *   Code 403: Keine Rechte.
+	 *   Code 404: Nicht gefunden.
+	 *
+	 * @param {Partial<UvLerngruppe>} data - der Request-Body für die HTTP-Methode
+	 * @param {string} schema - der Pfad-Parameter schema
+	 * @param {number} id - der Pfad-Parameter id
+	 */
+	public async patchUvLerngruppe(data : Partial<UvLerngruppe>, schema : string, id : number) : Promise<void> {
+		const path = "/db/{schema}/unterrichtsverteilung/lerngruppen/{id : \\d+}"
+			.replace(/{schema\s*(:[^{}]+({[^{}]+})*)?}/g, schema)
+			.replace(/{id\s*(:[^{}]+({[^{}]+})*)?}/g, id.toString());
+		const body : string = UvLerngruppe.transpilerToJSONPatch(data);
+		return super.patchJSON(path, body);
+	}
+
+
+	/**
+	 * Implementierung der DELETE-Methode deleteUvLerngruppe für den Zugriff auf die URL https://{hostname}/db/{schema}/unterrichtsverteilung/lerngruppen/{id : \d+}
+	 *
+	 * Löscht eine bestehende UvLerngruppe anhand der ID.
+	 *
+	 * Mögliche HTTP-Antworten:
+	 *   Code 204: Löschung erfolgreich.
+	 *   Code 403: Keine Rechte.
+	 *   Code 404: Nicht gefunden.
+	 *
+	 * @param {string} schema - der Pfad-Parameter schema
+	 * @param {number} id - der Pfad-Parameter id
+	 */
+	public async deleteUvLerngruppe(schema : string, id : number) : Promise<void> {
+		const path = "/db/{schema}/unterrichtsverteilung/lerngruppen/{id : \\d+}"
+			.replace(/{schema\s*(:[^{}]+({[^{}]+})*)?}/g, schema)
+			.replace(/{id\s*(:[^{}]+({[^{}]+})*)?}/g, id.toString());
+		await super.deleteJSON(path, null);
+		return;
+	}
+
+
+	/**
+	 * Implementierung der POST-Methode createUvLerngruppe für den Zugriff auf die URL https://{hostname}/db/{schema}/unterrichtsverteilung/lerngruppen/create
+	 *
+	 * Erstellt eine neue UvLerngruppe und gibt sie zurück. Dabei wird geprüft, ob der SVWS-Benutzer die notwendige Berechtigung besitzt.
+	 *
+	 * Mögliche HTTP-Antworten:
+	 *   Code 201: UvLerngruppe wurde erfolgreich angelegt.
+	 *     - Mime-Type: application/json
+	 *     - Rückgabe-Typ: UvLerngruppe
+	 *   Code 403: Der SVWS-Benutzer hat keine Rechte, um eine UvLerngruppe anzulegen.
+	 *   Code 409: Die UvLerngruppe ist schon in der Datenbank enthalten.
+	 *
+	 * @param {Partial<UvLerngruppe>} data - der Request-Body für die HTTP-Methode
+	 * @param {string} schema - der Pfad-Parameter schema
+	 *
+	 * @returns UvLerngruppe wurde erfolgreich angelegt.
+	 */
+	public async createUvLerngruppe(data : Partial<UvLerngruppe>, schema : string) : Promise<UvLerngruppe> {
+		const path = "/db/{schema}/unterrichtsverteilung/lerngruppen/create"
+			.replace(/{schema\s*(:[^{}]+({[^{}]+})*)?}/g, schema);
+		const body : string = UvLerngruppe.transpilerToJSONPatch(data);
+		const result : string = await super.postJSON(path, body);
+		const text = result;
+		return UvLerngruppe.transpilerFromJSON(text);
+	}
+
+
+	/**
+	 * Implementierung der DELETE-Methode deleteUvLerngruppenMultiple für den Zugriff auf die URL https://{hostname}/db/{schema}/unterrichtsverteilung/lerngruppen/delete/multiple
+	 *
+	 * Löscht mehrere bestehende UvLerngruppen anhand der IDs.
+	 *
+	 * Mögliche HTTP-Antworten:
+	 *   Code 200: Die UvLerngruppen wurden erfolgreich gelöscht.
+	 *     - Mime-Type: application/json
+	 *     - Rückgabe-Typ: List<Long>
+	 *   Code 403: Keine Rechte.
+	 *   Code 500: Unspezifizierter Fehler (z. B. beim Datenbankzugriff)
+	 *
+	 * @param {List<number>} data - der Request-Body für die HTTP-Methode
+	 * @param {string} schema - der Pfad-Parameter schema
+	 *
+	 * @returns Die UvLerngruppen wurden erfolgreich gelöscht.
+	 */
+	public async deleteUvLerngruppenMultiple(data : List<number>, schema : string) : Promise<List<number>> {
+		const path = "/db/{schema}/unterrichtsverteilung/lerngruppen/delete/multiple"
+			.replace(/{schema\s*(:[^{}]+({[^{}]+})*)?}/g, schema);
+		const body : string = "[" + (data.toArray() as Array<number>).map(d => JSON.stringify(d)).join() + "]";
+		const result : string = await super.deleteJSON(path, body);
+		const obj = JSON.parse(result);
+		const ret = new ArrayList<number>();
+		obj.forEach((elem: any) => { const text : string = JSON.stringify(elem); ret.add(parseFloat(JSON.parse(text))); });
+		return ret;
+	}
+
+
+	/**
+	 * Implementierung der PATCH-Methode patchUvLerngruppenLehrer für den Zugriff auf die URL https://{hostname}/db/{schema}/unterrichtsverteilung/lerngruppen/lehrer/{id : \d+}
+	 *
+	 * Patcht eine bestehende UvLerngruppenLehrer-Zuordnung anhand der ID.
+	 *
+	 * Mögliche HTTP-Antworten:
+	 *   Code 200: Patch erfolgreich.
+	 *   Code 400: Fehlerhafte Daten.
+	 *   Code 403: Keine Rechte.
+	 *   Code 404: Nicht gefunden.
+	 *
+	 * @param {Partial<UvLerngruppenLehrer>} data - der Request-Body für die HTTP-Methode
+	 * @param {string} schema - der Pfad-Parameter schema
+	 * @param {number} id - der Pfad-Parameter id
+	 */
+	public async patchUvLerngruppenLehrer(data : Partial<UvLerngruppenLehrer>, schema : string, id : number) : Promise<void> {
+		const path = "/db/{schema}/unterrichtsverteilung/lerngruppen/lehrer/{id : \\d+}"
+			.replace(/{schema\s*(:[^{}]+({[^{}]+})*)?}/g, schema)
+			.replace(/{id\s*(:[^{}]+({[^{}]+})*)?}/g, id.toString());
+		const body : string = UvLerngruppenLehrer.transpilerToJSONPatch(data);
+		return super.patchJSON(path, body);
+	}
+
+
+	/**
+	 * Implementierung der DELETE-Methode deleteUvLerngruppenLehrer für den Zugriff auf die URL https://{hostname}/db/{schema}/unterrichtsverteilung/lerngruppen/lehrer/{id : \d+}
+	 *
+	 * Löscht eine bestehende UvLerngruppenLehrer-Zuordnung anhand der ID.
+	 *
+	 * Mögliche HTTP-Antworten:
+	 *   Code 204: Löschung erfolgreich.
+	 *   Code 403: Keine Rechte.
+	 *   Code 404: Nicht gefunden.
+	 *
+	 * @param {string} schema - der Pfad-Parameter schema
+	 * @param {number} id - der Pfad-Parameter id
+	 */
+	public async deleteUvLerngruppenLehrer(schema : string, id : number) : Promise<void> {
+		const path = "/db/{schema}/unterrichtsverteilung/lerngruppen/lehrer/{id : \\d+}"
+			.replace(/{schema\s*(:[^{}]+({[^{}]+})*)?}/g, schema)
+			.replace(/{id\s*(:[^{}]+({[^{}]+})*)?}/g, id.toString());
+		await super.deleteJSON(path, null);
+		return;
+	}
+
+
+	/**
+	 * Implementierung der POST-Methode createUvLerngruppenLehrer für den Zugriff auf die URL https://{hostname}/db/{schema}/unterrichtsverteilung/lerngruppen/lehrer/create
+	 *
+	 * Erstellt eine neue UvLerngruppenLehrer-Zuordnung und gibt sie zurück. Dabei wird geprüft, ob der SVWS-Benutzer die notwendige Berechtigung besitzt.
+	 *
+	 * Mögliche HTTP-Antworten:
+	 *   Code 201: UvLerngruppenLehrer-Zuordnung wurde erfolgreich angelegt.
+	 *     - Mime-Type: application/json
+	 *     - Rückgabe-Typ: UvLerngruppenLehrer
+	 *   Code 403: Keine Rechte, um eine Zuordnung anzulegen.
+	 *   Code 409: Die Zuordnung ist bereits vorhanden.
+	 *
+	 * @param {Partial<UvLerngruppenLehrer>} data - der Request-Body für die HTTP-Methode
+	 * @param {string} schema - der Pfad-Parameter schema
+	 *
+	 * @returns UvLerngruppenLehrer-Zuordnung wurde erfolgreich angelegt.
+	 */
+	public async createUvLerngruppenLehrer(data : Partial<UvLerngruppenLehrer>, schema : string) : Promise<UvLerngruppenLehrer> {
+		const path = "/db/{schema}/unterrichtsverteilung/lerngruppen/lehrer/create"
+			.replace(/{schema\s*(:[^{}]+({[^{}]+})*)?}/g, schema);
+		const body : string = UvLerngruppenLehrer.transpilerToJSONPatch(data);
+		const result : string = await super.postJSON(path, body);
+		const text = result;
+		return UvLerngruppenLehrer.transpilerFromJSON(text);
+	}
+
+
+	/**
+	 * Implementierung der DELETE-Methode deleteUvLerngruppenLehrerMultiple für den Zugriff auf die URL https://{hostname}/db/{schema}/unterrichtsverteilung/lerngruppen/lehrer/delete/multiple
+	 *
+	 * Löscht mehrere bestehende UvLerngruppenLehrer-Zuordnungen anhand der IDs.
+	 *
+	 * Mögliche HTTP-Antworten:
+	 *   Code 200: Die Zuordnungen wurden erfolgreich gelöscht.
+	 *     - Mime-Type: application/json
+	 *     - Rückgabe-Typ: List<Long>
+	 *   Code 403: Keine Rechte.
+	 *   Code 500: Unspezifizierter Fehler (z. B. beim Datenbankzugriff).
+	 *
+	 * @param {List<number>} data - der Request-Body für die HTTP-Methode
+	 * @param {string} schema - der Pfad-Parameter schema
+	 *
+	 * @returns Die Zuordnungen wurden erfolgreich gelöscht.
+	 */
+	public async deleteUvLerngruppenLehrerMultiple(data : List<number>, schema : string) : Promise<List<number>> {
+		const path = "/db/{schema}/unterrichtsverteilung/lerngruppen/lehrer/delete/multiple"
+			.replace(/{schema\s*(:[^{}]+({[^{}]+})*)?}/g, schema);
+		const body : string = "[" + (data.toArray() as Array<number>).map(d => JSON.stringify(d)).join() + "]";
+		const result : string = await super.deleteJSON(path, body);
+		const obj = JSON.parse(result);
+		const ret = new ArrayList<number>();
+		obj.forEach((elem: any) => { const text : string = JSON.stringify(elem); ret.add(parseFloat(JSON.parse(text))); });
+		return ret;
+	}
+
+
+	/**
+	 * Implementierung der PATCH-Methode patchUvLerngruppenLehrerMultiple für den Zugriff auf die URL https://{hostname}/db/{schema}/unterrichtsverteilung/lerngruppen/lehrer/patch/multiple
+	 *
+	 * Patcht mehrere bestehende UvLerngruppenLehrer-Zuordnungen anhand der IDs.
+	 *
+	 * Mögliche HTTP-Antworten:
+	 *   Code 200: Patch erfolgreich.
+	 *   Code 400: Fehlerhafte Daten.
+	 *   Code 403: Keine Rechte.
+	 *   Code 404: Nicht gefunden.
+	 *
+	 * @param {List<Partial<UvLerngruppenLehrer>>} data - der Request-Body für die HTTP-Methode
+	 * @param {string} schema - der Pfad-Parameter schema
+	 */
+	public async patchUvLerngruppenLehrerMultiple(data : List<Partial<UvLerngruppenLehrer>>, schema : string) : Promise<void> {
+		const path = "/db/{schema}/unterrichtsverteilung/lerngruppen/lehrer/patch/multiple"
+			.replace(/{schema\s*(:[^{}]+({[^{}]+})*)?}/g, schema);
+		const body : string = "[" + (data.toArray() as Array<UvLerngruppenLehrer>).map(d => UvLerngruppenLehrer.transpilerToJSONPatch(d)).join() + "]";
+		return super.patchJSON(path, body);
+	}
+
+
+	/**
+	 * Implementierung der PATCH-Methode patchUvLerngruppenMultiple für den Zugriff auf die URL https://{hostname}/db/{schema}/unterrichtsverteilung/lerngruppen/patch/multiple
+	 *
+	 * Patcht mehrere bestehende UvLerngruppen anhand der IDs.
+	 *
+	 * Mögliche HTTP-Antworten:
+	 *   Code 200: Patch erfolgreich.
+	 *   Code 400: Fehlerhafte Daten.
+	 *   Code 403: Keine Rechte.
+	 *   Code 404: Nicht gefunden.
+	 *
+	 * @param {List<Partial<UvLerngruppe>>} data - der Request-Body für die HTTP-Methode
+	 * @param {string} schema - der Pfad-Parameter schema
+	 */
+	public async patchUvLerngruppenMultiple(data : List<Partial<UvLerngruppe>>, schema : string) : Promise<void> {
+		const path = "/db/{schema}/unterrichtsverteilung/lerngruppen/patch/multiple"
+			.replace(/{schema\s*(:[^{}]+({[^{}]+})*)?}/g, schema);
+		const body : string = "[" + (data.toArray() as Array<UvLerngruppe>).map(d => UvLerngruppe.transpilerToJSONPatch(d)).join() + "]";
+		return super.patchJSON(path, body);
+	}
+
+
+	/**
+	 * Implementierung der PATCH-Methode patchUvPlanungsabschnitt für den Zugriff auf die URL https://{hostname}/db/{schema}/unterrichtsverteilung/planungsabschnitte/{id : \d+}
+	 *
+	 * Patcht einen bestehenden UvPlanungsabschnitt.
+	 *
+	 * Mögliche HTTP-Antworten:
+	 *   Code 200: Patch erfolgreich.
+	 *   Code 400: Fehlerhafte Daten.
+	 *   Code 403: Keine Rechte.
+	 *   Code 404: Nicht gefunden.
+	 *
+	 * @param {Partial<UvPlanungsabschnitt>} data - der Request-Body für die HTTP-Methode
+	 * @param {string} schema - der Pfad-Parameter schema
+	 * @param {number} id - der Pfad-Parameter id
+	 */
+	public async patchUvPlanungsabschnitt(data : Partial<UvPlanungsabschnitt>, schema : string, id : number) : Promise<void> {
+		const path = "/db/{schema}/unterrichtsverteilung/planungsabschnitte/{id : \\d+}"
+			.replace(/{schema\s*(:[^{}]+({[^{}]+})*)?}/g, schema)
+			.replace(/{id\s*(:[^{}]+({[^{}]+})*)?}/g, id.toString());
+		const body : string = UvPlanungsabschnitt.transpilerToJSONPatch(data);
+		return super.patchJSON(path, body);
+	}
+
+
+	/**
+	 * Implementierung der DELETE-Methode deleteUvPlanungsabschnitt für den Zugriff auf die URL https://{hostname}/db/{schema}/unterrichtsverteilung/planungsabschnitte/{id : \d+}
+	 *
+	 * Löscht einen bestehenden UvPlanungsabschnitt.
+	 *
+	 * Mögliche HTTP-Antworten:
+	 *   Code 204: Löschung erfolgreich.
+	 *   Code 403: Keine Rechte.
+	 *   Code 404: Nicht gefunden.
+	 *
+	 * @param {string} schema - der Pfad-Parameter schema
+	 * @param {number} id - der Pfad-Parameter id
+	 */
+	public async deleteUvPlanungsabschnitt(schema : string, id : number) : Promise<void> {
+		const path = "/db/{schema}/unterrichtsverteilung/planungsabschnitte/{id : \\d+}"
+			.replace(/{schema\s*(:[^{}]+({[^{}]+})*)?}/g, schema)
+			.replace(/{id\s*(:[^{}]+({[^{}]+})*)?}/g, id.toString());
+		await super.deleteJSON(path, null);
+		return;
+	}
+
+
+	/**
+	 * Implementierung der POST-Methode createUvPlanungsabschnitt für den Zugriff auf die URL https://{hostname}/db/{schema}/unterrichtsverteilung/planungsabschnitte/create
+	 *
+	 * Erstellt einen neuen UvPlanungsabschnitt und gibt ihn zurück.Dabei wird geprüft, ob der SVWS-Benutzer die notwendige Berechtigung zum Erstellen eines UvPlanungsabschnitts besitzt.
+	 *
+	 * Mögliche HTTP-Antworten:
+	 *   Code 201: UvPlanungsabschnitt wurde erfolgreich angelegt.
+	 *     - Mime-Type: application/json
+	 *     - Rückgabe-Typ: UvPlanungsabschnitt
+	 *   Code 400: Die Daten sind fehlerhaft aufgebaut.
+	 *   Code 403: Der SVWS-Benutzer hat keine Rechte, um einen GUvPlanungsabschnitt anzulegen.
+	 *   Code 409: Der UvPlanungsabschnitt ist schon in der Datenbank enthalten.
+	 *   Code 500: Unspezifizierter Fehler (z.B. beim Datenbankzugriff)
+	 *
+	 * @param {Partial<UvPlanungsabschnitt>} data - der Request-Body für die HTTP-Methode
+	 * @param {string} schema - der Pfad-Parameter schema
+	 *
+	 * @returns UvPlanungsabschnitt wurde erfolgreich angelegt.
+	 */
+	public async createUvPlanungsabschnitt(data : Partial<UvPlanungsabschnitt>, schema : string) : Promise<UvPlanungsabschnitt> {
+		const path = "/db/{schema}/unterrichtsverteilung/planungsabschnitte/create"
+			.replace(/{schema\s*(:[^{}]+({[^{}]+})*)?}/g, schema);
+		const body : string = UvPlanungsabschnitt.transpilerToJSONPatch(data);
+		const result : string = await super.postJSON(path, body);
+		const text = result;
+		return UvPlanungsabschnitt.transpilerFromJSON(text);
+	}
+
+
+	/**
+	 * Implementierung der DELETE-Methode deleteUvPlanungsabschnitteMultiple für den Zugriff auf die URL https://{hostname}/db/{schema}/unterrichtsverteilung/planungsabschnitte/multiple
+	 *
+	 * Löscht mehrere bestehende UvPlanungsabschnitte anhand ihrer IDs.
+	 *
+	 * Mögliche HTTP-Antworten:
+	 *   Code 200: Die UvPlanungsabschnitte für die angegebenen IDs wurden erfolgreich gelöscht.
+	 *     - Mime-Type: application/json
+	 *     - Rückgabe-Typ: List<Long>
+	 *   Code 403: Der SVWS-Benutzer hat keine Rechte, um UvPlanungsabschnitte zu löschen.
+	 *   Code 500: Unspezifizierter Fehler (z.B. beim Datenbankzugriff)
+	 *
+	 * @param {List<number>} data - der Request-Body für die HTTP-Methode
+	 * @param {string} schema - der Pfad-Parameter schema
+	 *
+	 * @returns Die UvPlanungsabschnitte für die angegebenen IDs wurden erfolgreich gelöscht.
+	 */
+	public async deleteUvPlanungsabschnitteMultiple(data : List<number>, schema : string) : Promise<List<number>> {
+		const path = "/db/{schema}/unterrichtsverteilung/planungsabschnitte/multiple"
+			.replace(/{schema\s*(:[^{}]+({[^{}]+})*)?}/g, schema);
+		const body : string = "[" + (data.toArray() as Array<number>).map(d => JSON.stringify(d)).join() + "]";
+		const result : string = await super.deleteJSON(path, body);
+		const obj = JSON.parse(result);
+		const ret = new ArrayList<number>();
+		obj.forEach((elem: any) => { const text : string = JSON.stringify(elem); ret.add(parseFloat(JSON.parse(text))); });
+		return ret;
+	}
+
+
+	/**
+	 * Implementierung der PATCH-Methode patchUvPlanungsabschnitteMultiple für den Zugriff auf die URL https://{hostname}/db/{schema}/unterrichtsverteilung/planungsabschnitte/patch/multiple
+	 *
+	 * Patcht einen bestehenden UvPlanungsabschnitt.
+	 *
+	 * Mögliche HTTP-Antworten:
+	 *   Code 200: Patch erfolgreich.
+	 *   Code 400: Fehlerhafte Daten.
+	 *   Code 403: Keine Rechte.
+	 *   Code 404: Nicht gefunden.
+	 *
+	 * @param {List<Partial<UvPlanungsabschnitt>>} data - der Request-Body für die HTTP-Methode
+	 * @param {string} schema - der Pfad-Parameter schema
+	 */
+	public async patchUvPlanungsabschnitteMultiple(data : List<Partial<UvPlanungsabschnitt>>, schema : string) : Promise<void> {
+		const path = "/db/{schema}/unterrichtsverteilung/planungsabschnitte/patch/multiple"
+			.replace(/{schema\s*(:[^{}]+({[^{}]+})*)?}/g, schema);
+		const body : string = "[" + (data.toArray() as Array<UvPlanungsabschnitt>).map(d => UvPlanungsabschnitt.transpilerToJSONPatch(d)).join() + "]";
+		return super.patchJSON(path, body);
+	}
+
+
+	/**
+	 * Implementierung der GET-Methode getUvPlanungsabschnitte für den Zugriff auf die URL https://{hostname}/db/{schema}/unterrichtsverteilung/planungsabschnitte/schuljahr/{schuljahr : \d+}
+	 *
+	 * Erstellt eine Liste der Stundenpläne des angegebenen Schuljahresabschnitts. Die Stundenpläne sind anhand der Gültigkeit sortiert.Es wird geprüft, ob der SVWS-Benutzer die notwendige Berechtigung zum Ansehen von Stundenplanlisten besitzt.
+	 *
+	 * Mögliche HTTP-Antworten:
+	 *   Code 200: Eine Liste der Stundenpläne
+	 *     - Mime-Type: application/json
+	 *     - Rückgabe-Typ: List<UvPlanungsabschnitt>
+	 *   Code 403: Der SVWS-Benutzer hat keine Rechte, um Stundenplanlisten anzusehen.
+	 *   Code 404: Keine Stundenpläne gefunden
+	 *
+	 * @param {string} schema - der Pfad-Parameter schema
+	 * @param {number} schuljahr - der Pfad-Parameter schuljahr
+	 *
+	 * @returns Eine Liste der Stundenpläne
+	 */
+	public async getUvPlanungsabschnitte(schema : string, schuljahr : number) : Promise<List<UvPlanungsabschnitt>> {
+		const path = "/db/{schema}/unterrichtsverteilung/planungsabschnitte/schuljahr/{schuljahr : \\d+}"
+			.replace(/{schema\s*(:[^{}]+({[^{}]+})*)?}/g, schema)
+			.replace(/{schuljahr\s*(:[^{}]+({[^{}]+})*)?}/g, schuljahr.toString());
+		const result : string = await super.getJSON(path);
+		const obj = JSON.parse(result);
+		const ret = new ArrayList<UvPlanungsabschnitt>();
+		obj.forEach((elem: any) => { const text : string = JSON.stringify(elem); ret.add(UvPlanungsabschnitt.transpilerFromJSON(text)); });
+		return ret;
+	}
+
+
+	/**
+	 * Implementierung der PATCH-Methode patchUvRaum für den Zugriff auf die URL https://{hostname}/db/{schema}/unterrichtsverteilung/raeume/{id : \d+}
+	 *
+	 * Patcht einen bestehenden UvRaum anhand der ID.
+	 *
+	 * Mögliche HTTP-Antworten:
+	 *   Code 200: Patch erfolgreich.
+	 *   Code 400: Fehlerhafte Daten.
+	 *   Code 403: Keine Rechte.
+	 *   Code 404: Nicht gefunden.
+	 *
+	 * @param {Partial<UvRaum>} data - der Request-Body für die HTTP-Methode
+	 * @param {string} schema - der Pfad-Parameter schema
+	 * @param {number} id - der Pfad-Parameter id
+	 */
+	public async patchUvRaum(data : Partial<UvRaum>, schema : string, id : number) : Promise<void> {
+		const path = "/db/{schema}/unterrichtsverteilung/raeume/{id : \\d+}"
+			.replace(/{schema\s*(:[^{}]+({[^{}]+})*)?}/g, schema)
+			.replace(/{id\s*(:[^{}]+({[^{}]+})*)?}/g, id.toString());
+		const body : string = UvRaum.transpilerToJSONPatch(data);
+		return super.patchJSON(path, body);
+	}
+
+
+	/**
+	 * Implementierung der DELETE-Methode deleteUvRaum für den Zugriff auf die URL https://{hostname}/db/{schema}/unterrichtsverteilung/raeume/{id : \d+}
+	 *
+	 * Löscht einen bestehenden UvRaum anhand der ID.
+	 *
+	 * Mögliche HTTP-Antworten:
+	 *   Code 204: Löschung erfolgreich.
+	 *   Code 403: Keine Rechte.
+	 *   Code 404: Nicht gefunden.
+	 *
+	 * @param {string} schema - der Pfad-Parameter schema
+	 * @param {number} id - der Pfad-Parameter id
+	 */
+	public async deleteUvRaum(schema : string, id : number) : Promise<void> {
+		const path = "/db/{schema}/unterrichtsverteilung/raeume/{id : \\d+}"
+			.replace(/{schema\s*(:[^{}]+({[^{}]+})*)?}/g, schema)
+			.replace(/{id\s*(:[^{}]+({[^{}]+})*)?}/g, id.toString());
+		await super.deleteJSON(path, null);
+		return;
+	}
+
+
+	/**
+	 * Implementierung der POST-Methode createUvRaum für den Zugriff auf die URL https://{hostname}/db/{schema}/unterrichtsverteilung/raeume/create
+	 *
+	 * Erstellt einen neuen UvRaum und gibt ihn zurück. Dabei wird geprüft, ob der SVWS-Benutzer die notwendige Berechtigung besitzt.
+	 *
+	 * Mögliche HTTP-Antworten:
+	 *   Code 201: UvRaum wurde erfolgreich angelegt.
+	 *     - Mime-Type: application/json
+	 *     - Rückgabe-Typ: UvRaum
+	 *   Code 403: Der SVWS-Benutzer hat keine Rechte, um einen UvRaum anzulegen.
+	 *   Code 409: Der UvRaum ist schon in der Datenbank enthalten.
+	 *
+	 * @param {Partial<UvRaum>} data - der Request-Body für die HTTP-Methode
+	 * @param {string} schema - der Pfad-Parameter schema
+	 *
+	 * @returns UvRaum wurde erfolgreich angelegt.
+	 */
+	public async createUvRaum(data : Partial<UvRaum>, schema : string) : Promise<UvRaum> {
+		const path = "/db/{schema}/unterrichtsverteilung/raeume/create"
+			.replace(/{schema\s*(:[^{}]+({[^{}]+})*)?}/g, schema);
+		const body : string = UvRaum.transpilerToJSONPatch(data);
+		const result : string = await super.postJSON(path, body);
+		const text = result;
+		return UvRaum.transpilerFromJSON(text);
+	}
+
+
+	/**
+	 * Implementierung der DELETE-Methode deleteUvRaeumeMultiple für den Zugriff auf die URL https://{hostname}/db/{schema}/unterrichtsverteilung/raeume/delete/multiple
+	 *
+	 * Löscht mehrere bestehende UvRaeume anhand der IDs.
+	 *
+	 * Mögliche HTTP-Antworten:
+	 *   Code 200: Die UvRaeume wurden erfolgreich gelöscht.
+	 *     - Mime-Type: application/json
+	 *     - Rückgabe-Typ: List<Long>
+	 *   Code 403: Keine Rechte.
+	 *   Code 500: Unspezifizierter Fehler (z. B. beim Datenbankzugriff)
+	 *
+	 * @param {List<number>} data - der Request-Body für die HTTP-Methode
+	 * @param {string} schema - der Pfad-Parameter schema
+	 *
+	 * @returns Die UvRaeume wurden erfolgreich gelöscht.
+	 */
+	public async deleteUvRaeumeMultiple(data : List<number>, schema : string) : Promise<List<number>> {
+		const path = "/db/{schema}/unterrichtsverteilung/raeume/delete/multiple"
+			.replace(/{schema\s*(:[^{}]+({[^{}]+})*)?}/g, schema);
+		const body : string = "[" + (data.toArray() as Array<number>).map(d => JSON.stringify(d)).join() + "]";
+		const result : string = await super.deleteJSON(path, body);
+		const obj = JSON.parse(result);
+		const ret = new ArrayList<number>();
+		obj.forEach((elem: any) => { const text : string = JSON.stringify(elem); ret.add(parseFloat(JSON.parse(text))); });
+		return ret;
+	}
+
+
+	/**
+	 * Implementierung der PATCH-Methode patchUvRaeumeMultiple für den Zugriff auf die URL https://{hostname}/db/{schema}/unterrichtsverteilung/raeume/patch/multiple
+	 *
+	 * Patcht mehrere bestehende UvRaeume anhand der IDs.
+	 *
+	 * Mögliche HTTP-Antworten:
+	 *   Code 200: Patch erfolgreich.
+	 *   Code 400: Fehlerhafte Daten.
+	 *   Code 403: Keine Rechte.
+	 *   Code 404: Nicht gefunden.
+	 *
+	 * @param {List<Partial<UvRaum>>} data - der Request-Body für die HTTP-Methode
+	 * @param {string} schema - der Pfad-Parameter schema
+	 */
+	public async patchUvRaeumeMultiple(data : List<Partial<UvRaum>>, schema : string) : Promise<void> {
+		const path = "/db/{schema}/unterrichtsverteilung/raeume/patch/multiple"
+			.replace(/{schema\s*(:[^{}]+({[^{}]+})*)?}/g, schema);
+		const body : string = "[" + (data.toArray() as Array<UvRaum>).map(d => UvRaum.transpilerToJSONPatch(d)).join() + "]";
+		return super.patchJSON(path, body);
+	}
+
+
+	/**
+	 * Implementierung der PATCH-Methode patchUvSchiene für den Zugriff auf die URL https://{hostname}/db/{schema}/unterrichtsverteilung/schienen/{id : \d+}
+	 *
+	 * Patcht eine bestehende UvSchiene anhand der ID.
+	 *
+	 * Mögliche HTTP-Antworten:
+	 *   Code 200: Patch erfolgreich.
+	 *   Code 400: Fehlerhafte Daten.
+	 *   Code 403: Keine Rechte.
+	 *   Code 404: Nicht gefunden.
+	 *
+	 * @param {Partial<UvSchiene>} data - der Request-Body für die HTTP-Methode
+	 * @param {string} schema - der Pfad-Parameter schema
+	 * @param {number} id - der Pfad-Parameter id
+	 */
+	public async patchUvSchiene(data : Partial<UvSchiene>, schema : string, id : number) : Promise<void> {
+		const path = "/db/{schema}/unterrichtsverteilung/schienen/{id : \\d+}"
+			.replace(/{schema\s*(:[^{}]+({[^{}]+})*)?}/g, schema)
+			.replace(/{id\s*(:[^{}]+({[^{}]+})*)?}/g, id.toString());
+		const body : string = UvSchiene.transpilerToJSONPatch(data);
+		return super.patchJSON(path, body);
+	}
+
+
+	/**
+	 * Implementierung der DELETE-Methode deleteUvSchiene für den Zugriff auf die URL https://{hostname}/db/{schema}/unterrichtsverteilung/schienen/{id : \d+}
+	 *
+	 * Löscht eine bestehende UvSchiene anhand der ID.
+	 *
+	 * Mögliche HTTP-Antworten:
+	 *   Code 204: Löschung erfolgreich.
+	 *   Code 403: Keine Rechte.
+	 *   Code 404: Nicht gefunden.
+	 *
+	 * @param {string} schema - der Pfad-Parameter schema
+	 * @param {number} id - der Pfad-Parameter id
+	 */
+	public async deleteUvSchiene(schema : string, id : number) : Promise<void> {
+		const path = "/db/{schema}/unterrichtsverteilung/schienen/{id : \\d+}"
+			.replace(/{schema\s*(:[^{}]+({[^{}]+})*)?}/g, schema)
+			.replace(/{id\s*(:[^{}]+({[^{}]+})*)?}/g, id.toString());
+		await super.deleteJSON(path, null);
+		return;
+	}
+
+
+	/**
+	 * Implementierung der POST-Methode createUvSchiene für den Zugriff auf die URL https://{hostname}/db/{schema}/unterrichtsverteilung/schienen/create
+	 *
+	 * Erstellt eine neue UvSchiene und gibt sie zurück. Dabei wird geprüft, ob der SVWS-Benutzer die notwendige Berechtigung besitzt.
+	 *
+	 * Mögliche HTTP-Antworten:
+	 *   Code 201: UvSchiene wurde erfolgreich angelegt.
+	 *     - Mime-Type: application/json
+	 *     - Rückgabe-Typ: UvSchiene
+	 *   Code 403: Der SVWS-Benutzer hat keine Rechte, um eine UvSchiene anzulegen.
+	 *   Code 409: Die UvSchiene ist schon in der Datenbank enthalten.
+	 *
+	 * @param {Partial<UvSchiene>} data - der Request-Body für die HTTP-Methode
+	 * @param {string} schema - der Pfad-Parameter schema
+	 *
+	 * @returns UvSchiene wurde erfolgreich angelegt.
+	 */
+	public async createUvSchiene(data : Partial<UvSchiene>, schema : string) : Promise<UvSchiene> {
+		const path = "/db/{schema}/unterrichtsverteilung/schienen/create"
+			.replace(/{schema\s*(:[^{}]+({[^{}]+})*)?}/g, schema);
+		const body : string = UvSchiene.transpilerToJSONPatch(data);
+		const result : string = await super.postJSON(path, body);
+		const text = result;
+		return UvSchiene.transpilerFromJSON(text);
+	}
+
+
+	/**
+	 * Implementierung der DELETE-Methode deleteUvSchienenMultiple für den Zugriff auf die URL https://{hostname}/db/{schema}/unterrichtsverteilung/schienen/delete/multiple
+	 *
+	 * Löscht mehrere bestehende UvSchienen anhand der IDs.
+	 *
+	 * Mögliche HTTP-Antworten:
+	 *   Code 200: Die UvSchienen wurden erfolgreich gelöscht.
+	 *     - Mime-Type: application/json
+	 *     - Rückgabe-Typ: List<Long>
+	 *   Code 403: Keine Rechte.
+	 *   Code 500: Unspezifizierter Fehler (z. B. beim Datenbankzugriff)
+	 *
+	 * @param {List<number>} data - der Request-Body für die HTTP-Methode
+	 * @param {string} schema - der Pfad-Parameter schema
+	 *
+	 * @returns Die UvSchienen wurden erfolgreich gelöscht.
+	 */
+	public async deleteUvSchienenMultiple(data : List<number>, schema : string) : Promise<List<number>> {
+		const path = "/db/{schema}/unterrichtsverteilung/schienen/delete/multiple"
+			.replace(/{schema\s*(:[^{}]+({[^{}]+})*)?}/g, schema);
+		const body : string = "[" + (data.toArray() as Array<number>).map(d => JSON.stringify(d)).join() + "]";
+		const result : string = await super.deleteJSON(path, body);
+		const obj = JSON.parse(result);
+		const ret = new ArrayList<number>();
+		obj.forEach((elem: any) => { const text : string = JSON.stringify(elem); ret.add(parseFloat(JSON.parse(text))); });
+		return ret;
+	}
+
+
+	/**
+	 * Implementierung der PATCH-Methode patchUvSchienenMultiple für den Zugriff auf die URL https://{hostname}/db/{schema}/unterrichtsverteilung/schienen/patch/multiple
+	 *
+	 * Patcht mehrere bestehende UvSchienen anhand der IDs.
+	 *
+	 * Mögliche HTTP-Antworten:
+	 *   Code 200: Patch erfolgreich.
+	 *   Code 400: Fehlerhafte Daten.
+	 *   Code 403: Keine Rechte.
+	 *   Code 404: Nicht gefunden.
+	 *
+	 * @param {List<Partial<UvSchiene>>} data - der Request-Body für die HTTP-Methode
+	 * @param {string} schema - der Pfad-Parameter schema
+	 */
+	public async patchUvSchienenMultiple(data : List<Partial<UvSchiene>>, schema : string) : Promise<void> {
+		const path = "/db/{schema}/unterrichtsverteilung/schienen/patch/multiple"
+			.replace(/{schema\s*(:[^{}]+({[^{}]+})*)?}/g, schema);
+		const body : string = "[" + (data.toArray() as Array<UvSchiene>).map(d => UvSchiene.transpilerToJSONPatch(d)).join() + "]";
+		return super.patchJSON(path, body);
+	}
+
+
+	/**
+	 * Implementierung der PATCH-Methode patchUvSchueler für den Zugriff auf die URL https://{hostname}/db/{schema}/unterrichtsverteilung/schueler/{idPlanungsabschnitt : \d+}/{idSchueler : \d+}
+	 *
+	 * Patcht einen bestehenden UvSchueler.
+	 *
+	 * Mögliche HTTP-Antworten:
+	 *   Code 200: Patch erfolgreich.
+	 *   Code 400: Fehlerhafte Daten.
+	 *   Code 403: Keine Rechte.
+	 *   Code 404: Nicht gefunden.
+	 *
+	 * @param {Partial<UvSchueler>} data - der Request-Body für die HTTP-Methode
+	 * @param {string} schema - der Pfad-Parameter schema
+	 * @param {number} idPlanungsabschnitt - der Pfad-Parameter idPlanungsabschnitt
+	 * @param {number} idSchueler - der Pfad-Parameter idSchueler
+	 */
+	public async patchUvSchueler(data : Partial<UvSchueler>, schema : string, idPlanungsabschnitt : number, idSchueler : number) : Promise<void> {
+		const path = "/db/{schema}/unterrichtsverteilung/schueler/{idPlanungsabschnitt : \\d+}/{idSchueler : \\d+}"
+			.replace(/{schema\s*(:[^{}]+({[^{}]+})*)?}/g, schema)
+			.replace(/{idPlanungsabschnitt\s*(:[^{}]+({[^{}]+})*)?}/g, idPlanungsabschnitt.toString())
+			.replace(/{idSchueler\s*(:[^{}]+({[^{}]+})*)?}/g, idSchueler.toString());
+		const body : string = UvSchueler.transpilerToJSONPatch(data);
+		return super.patchJSON(path, body);
+	}
+
+
+	/**
+	 * Implementierung der DELETE-Methode deleteUvSchueler für den Zugriff auf die URL https://{hostname}/db/{schema}/unterrichtsverteilung/schueler/{idPlanungsabschnitt : \d+}/{idSchueler : \d+}
+	 *
+	 * Löscht einen bestehenden UvSchueler.
+	 *
+	 * Mögliche HTTP-Antworten:
+	 *   Code 204: Löschung erfolgreich.
+	 *   Code 403: Keine Rechte.
+	 *   Code 404: Nicht gefunden.
+	 *
+	 * @param {string} schema - der Pfad-Parameter schema
+	 * @param {number} idPlanungsabschnitt - der Pfad-Parameter idPlanungsabschnitt
+	 * @param {number} idSchueler - der Pfad-Parameter idSchueler
+	 */
+	public async deleteUvSchueler(schema : string, idPlanungsabschnitt : number, idSchueler : number) : Promise<void> {
+		const path = "/db/{schema}/unterrichtsverteilung/schueler/{idPlanungsabschnitt : \\d+}/{idSchueler : \\d+}"
+			.replace(/{schema\s*(:[^{}]+({[^{}]+})*)?}/g, schema)
+			.replace(/{idPlanungsabschnitt\s*(:[^{}]+({[^{}]+})*)?}/g, idPlanungsabschnitt.toString())
+			.replace(/{idSchueler\s*(:[^{}]+({[^{}]+})*)?}/g, idSchueler.toString());
+		await super.deleteJSON(path, null);
+		return;
+	}
+
+
+	/**
+	 * Implementierung der POST-Methode createUvSchueler für den Zugriff auf die URL https://{hostname}/db/{schema}/unterrichtsverteilung/schueler/create
+	 *
+	 * Erstellt einen neuen UvSchueler und gibt ihn zurück. Dabei wird geprüft, ob der SVWS-Benutzer die notwendige Berechtigung zum Erstellen besitzt.
+	 *
+	 * Mögliche HTTP-Antworten:
+	 *   Code 201: UvSchueler wurde erfolgreich angelegt.
+	 *     - Mime-Type: application/json
+	 *     - Rückgabe-Typ: UvSchueler
+	 *   Code 403: Der SVWS-Benutzer hat keine Rechte, um einen UvSchueler anzulegen.
+	 *   Code 409: Der UvSchueler ist schon in der Datenbank enthalten.
+	 *
+	 * @param {Partial<UvSchueler>} data - der Request-Body für die HTTP-Methode
+	 * @param {string} schema - der Pfad-Parameter schema
+	 *
+	 * @returns UvSchueler wurde erfolgreich angelegt.
+	 */
+	public async createUvSchueler(data : Partial<UvSchueler>, schema : string) : Promise<UvSchueler> {
+		const path = "/db/{schema}/unterrichtsverteilung/schueler/create"
+			.replace(/{schema\s*(:[^{}]+({[^{}]+})*)?}/g, schema);
+		const body : string = UvSchueler.transpilerToJSONPatch(data);
+		const result : string = await super.postJSON(path, body);
+		const text = result;
+		return UvSchueler.transpilerFromJSON(text);
+	}
+
+
+	/**
+	 * Implementierung der PATCH-Methode patchUvSchuelergruppe für den Zugriff auf die URL https://{hostname}/db/{schema}/unterrichtsverteilung/schueler/gruppen/{id : \d+}
+	 *
+	 * Patcht eine bestehende UvSchuelergruppe.
+	 *
+	 * Mögliche HTTP-Antworten:
+	 *   Code 200: Patch erfolgreich.
+	 *   Code 400: Fehlerhafte Daten.
+	 *   Code 403: Keine Rechte.
+	 *   Code 404: Nicht gefunden.
+	 *
+	 * @param {Partial<UvSchuelergruppe>} data - der Request-Body für die HTTP-Methode
+	 * @param {string} schema - der Pfad-Parameter schema
+	 * @param {number} id - der Pfad-Parameter id
+	 */
+	public async patchUvSchuelergruppe(data : Partial<UvSchuelergruppe>, schema : string, id : number) : Promise<void> {
+		const path = "/db/{schema}/unterrichtsverteilung/schueler/gruppen/{id : \\d+}"
+			.replace(/{schema\s*(:[^{}]+({[^{}]+})*)?}/g, schema)
+			.replace(/{id\s*(:[^{}]+({[^{}]+})*)?}/g, id.toString());
+		const body : string = UvSchuelergruppe.transpilerToJSONPatch(data);
+		return super.patchJSON(path, body);
+	}
+
+
+	/**
+	 * Implementierung der DELETE-Methode deleteUvSchuelergruppe für den Zugriff auf die URL https://{hostname}/db/{schema}/unterrichtsverteilung/schueler/gruppen/{id : \d+}
+	 *
+	 * Löscht eine bestehende UvSchuelergruppe.
+	 *
+	 * Mögliche HTTP-Antworten:
+	 *   Code 204: Löschung erfolgreich.
+	 *   Code 403: Keine Rechte.
+	 *   Code 404: Nicht gefunden.
+	 *
+	 * @param {string} schema - der Pfad-Parameter schema
+	 * @param {number} id - der Pfad-Parameter id
+	 */
+	public async deleteUvSchuelergruppe(schema : string, id : number) : Promise<void> {
+		const path = "/db/{schema}/unterrichtsverteilung/schueler/gruppen/{id : \\d+}"
+			.replace(/{schema\s*(:[^{}]+({[^{}]+})*)?}/g, schema)
+			.replace(/{id\s*(:[^{}]+({[^{}]+})*)?}/g, id.toString());
+		await super.deleteJSON(path, null);
+		return;
+	}
+
+
+	/**
+	 * Implementierung der POST-Methode createUvSchuelergruppe für den Zugriff auf die URL https://{hostname}/db/{schema}/unterrichtsverteilung/schueler/gruppen/create
+	 *
+	 * Erstellt eine neue UvSchuelergruppe und gibt sie zurück. Dabei wird geprüft, ob der SVWS-Benutzer die notwendige Berechtigung zum Erstellen besitzt.
+	 *
+	 * Mögliche HTTP-Antworten:
+	 *   Code 201: UvSchuelergruppe wurde erfolgreich angelegt.
+	 *     - Mime-Type: application/json
+	 *     - Rückgabe-Typ: UvSchuelergruppe
+	 *   Code 403: Der SVWS-Benutzer hat keine Rechte, um eine UvSchuelergruppe anzulegen.
+	 *   Code 409: Die UvSchuelergruppe ist schon in der Datenbank enthalten.
+	 *
+	 * @param {Partial<UvSchuelergruppe>} data - der Request-Body für die HTTP-Methode
+	 * @param {string} schema - der Pfad-Parameter schema
+	 *
+	 * @returns UvSchuelergruppe wurde erfolgreich angelegt.
+	 */
+	public async createUvSchuelergruppe(data : Partial<UvSchuelergruppe>, schema : string) : Promise<UvSchuelergruppe> {
+		const path = "/db/{schema}/unterrichtsverteilung/schueler/gruppen/create"
+			.replace(/{schema\s*(:[^{}]+({[^{}]+})*)?}/g, schema);
+		const body : string = UvSchuelergruppe.transpilerToJSONPatch(data);
+		const result : string = await super.postJSON(path, body);
+		const text = result;
+		return UvSchuelergruppe.transpilerFromJSON(text);
+	}
+
+
+	/**
+	 * Implementierung der DELETE-Methode deleteUvSchuelergruppenMultiple für den Zugriff auf die URL https://{hostname}/db/{schema}/unterrichtsverteilung/schueler/gruppen/multiple
+	 *
+	 * Löscht mehrere bestehende UvSchuelergruppen anhand ihrer IDs.
+	 *
+	 * Mögliche HTTP-Antworten:
+	 *   Code 200: Die UvSchuelergruppen für die angegebenen IDs wurden erfolgreich gelöscht.
+	 *     - Mime-Type: application/json
+	 *     - Rückgabe-Typ: List<Long>
+	 *   Code 403: Der SVWS-Benutzer hat keine Rechte, um UvSchuelergruppen zu löschen.
+	 *   Code 500: Unspezifizierter Fehler (z.B. beim Datenbankzugriff)
+	 *
+	 * @param {List<number>} data - der Request-Body für die HTTP-Methode
+	 * @param {string} schema - der Pfad-Parameter schema
+	 *
+	 * @returns Die UvSchuelergruppen für die angegebenen IDs wurden erfolgreich gelöscht.
+	 */
+	public async deleteUvSchuelergruppenMultiple(data : List<number>, schema : string) : Promise<List<number>> {
+		const path = "/db/{schema}/unterrichtsverteilung/schueler/gruppen/multiple"
+			.replace(/{schema\s*(:[^{}]+({[^{}]+})*)?}/g, schema);
+		const body : string = "[" + (data.toArray() as Array<number>).map(d => JSON.stringify(d)).join() + "]";
+		const result : string = await super.deleteJSON(path, body);
+		const obj = JSON.parse(result);
+		const ret = new ArrayList<number>();
+		obj.forEach((elem: any) => { const text : string = JSON.stringify(elem); ret.add(parseFloat(JSON.parse(text))); });
+		return ret;
+	}
+
+
+	/**
+	 * Implementierung der PATCH-Methode patchUvSchuelergruppenMultiple für den Zugriff auf die URL https://{hostname}/db/{schema}/unterrichtsverteilung/schueler/gruppen/patch/multiple
+	 *
+	 * Patcht einen bestehenden UvSchuelergruppe.
+	 *
+	 * Mögliche HTTP-Antworten:
+	 *   Code 200: Patch erfolgreich.
+	 *   Code 400: Fehlerhafte Daten.
+	 *   Code 403: Keine Rechte.
+	 *   Code 404: Nicht gefunden.
+	 *
+	 * @param {List<Partial<UvSchuelergruppe>>} data - der Request-Body für die HTTP-Methode
+	 * @param {string} schema - der Pfad-Parameter schema
+	 */
+	public async patchUvSchuelergruppenMultiple(data : List<Partial<UvSchuelergruppe>>, schema : string) : Promise<void> {
+		const path = "/db/{schema}/unterrichtsverteilung/schueler/gruppen/patch/multiple"
+			.replace(/{schema\s*(:[^{}]+({[^{}]+})*)?}/g, schema);
+		const body : string = "[" + (data.toArray() as Array<UvSchuelergruppe>).map(d => UvSchuelergruppe.transpilerToJSONPatch(d)).join() + "]";
+		return super.patchJSON(path, body);
+	}
+
+
+	/**
+	 * Implementierung der DELETE-Methode deleteUvSchuelerMultiple für den Zugriff auf die URL https://{hostname}/db/{schema}/unterrichtsverteilung/schueler/multiple
+	 *
+	 * Löscht mehrere bestehende UvSchueler anhand ihrer IDs.
+	 *
+	 * Mögliche HTTP-Antworten:
+	 *   Code 200: Die UvSchueler für die angegebenen IDs wurden erfolgreich gelöscht.
+	 *     - Mime-Type: application/json
+	 *     - Rückgabe-Typ: List<Long>
+	 *   Code 403: Der SVWS-Benutzer hat keine Rechte, um UvSchueler zu löschen.
+	 *   Code 500: Unspezifizierter Fehler (z.B. beim Datenbankzugriff)
+	 *
+	 * @param {List<LongPair>} data - der Request-Body für die HTTP-Methode
+	 * @param {string} schema - der Pfad-Parameter schema
+	 *
+	 * @returns Die UvSchueler für die angegebenen IDs wurden erfolgreich gelöscht.
+	 */
+	public async deleteUvSchuelerMultiple(data : List<LongPair>, schema : string) : Promise<List<number>> {
+		const path = "/db/{schema}/unterrichtsverteilung/schueler/multiple"
+			.replace(/{schema\s*(:[^{}]+({[^{}]+})*)?}/g, schema);
+		const body : string = "[" + (data.toArray() as Array<LongPair>).map(d => LongPair.transpilerToJSON(d)).join() + "]";
+		const result : string = await super.deleteJSON(path, body);
+		const obj = JSON.parse(result);
+		const ret = new ArrayList<number>();
+		obj.forEach((elem: any) => { const text : string = JSON.stringify(elem); ret.add(parseFloat(JSON.parse(text))); });
+		return ret;
+	}
+
+
+	/**
+	 * Implementierung der PATCH-Methode patchUvSchuelerMultiple für den Zugriff auf die URL https://{hostname}/db/{schema}/unterrichtsverteilung/schueler/patch/multiple
+	 *
+	 * Patcht einen bestehenden UvSchueler.
+	 *
+	 * Mögliche HTTP-Antworten:
+	 *   Code 200: Patch erfolgreich.
+	 *   Code 400: Fehlerhafte Daten.
+	 *   Code 403: Keine Rechte.
+	 *   Code 404: Nicht gefunden.
+	 *
+	 * @param {List<Partial<UvSchueler>>} data - der Request-Body für die HTTP-Methode
+	 * @param {string} schema - der Pfad-Parameter schema
+	 */
+	public async patchUvSchuelerMultiple(data : List<Partial<UvSchueler>>, schema : string) : Promise<void> {
+		const path = "/db/{schema}/unterrichtsverteilung/schueler/patch/multiple"
+			.replace(/{schema\s*(:[^{}]+({[^{}]+})*)?}/g, schema);
+		const body : string = "[" + (data.toArray() as Array<UvSchueler>).map(d => UvSchueler.transpilerToJSONPatch(d)).join() + "]";
+		return super.patchJSON(path, body);
+	}
+
+
+	/**
+	 * Implementierung der PATCH-Methode patchUvStundentafel für den Zugriff auf die URL https://{hostname}/db/{schema}/unterrichtsverteilung/stundentafeln/{id : \d+}
+	 *
+	 * Patcht eine bestehende UvStundentafel.
+	 *
+	 * Mögliche HTTP-Antworten:
+	 *   Code 200: Patch erfolgreich.
+	 *   Code 400: Fehlerhafte Daten.
+	 *   Code 403: Keine Rechte.
+	 *   Code 404: Nicht gefunden.
+	 *
+	 * @param {Partial<UvStundentafel>} data - der Request-Body für die HTTP-Methode
+	 * @param {string} schema - der Pfad-Parameter schema
+	 * @param {number} id - der Pfad-Parameter id
+	 */
+	public async patchUvStundentafel(data : Partial<UvStundentafel>, schema : string, id : number) : Promise<void> {
+		const path = "/db/{schema}/unterrichtsverteilung/stundentafeln/{id : \\d+}"
+			.replace(/{schema\s*(:[^{}]+({[^{}]+})*)?}/g, schema)
+			.replace(/{id\s*(:[^{}]+({[^{}]+})*)?}/g, id.toString());
+		const body : string = UvStundentafel.transpilerToJSONPatch(data);
+		return super.patchJSON(path, body);
+	}
+
+
+	/**
+	 * Implementierung der DELETE-Methode deleteUvStundentafel für den Zugriff auf die URL https://{hostname}/db/{schema}/unterrichtsverteilung/stundentafeln/{id : \d+}
+	 *
+	 * Löscht eine bestehende UvStundentafel.
+	 *
+	 * Mögliche HTTP-Antworten:
+	 *   Code 204: Löschung erfolgreich.
+	 *   Code 403: Keine Rechte.
+	 *   Code 404: Nicht gefunden.
+	 *
+	 * @param {string} schema - der Pfad-Parameter schema
+	 * @param {number} id - der Pfad-Parameter id
+	 */
+	public async deleteUvStundentafel(schema : string, id : number) : Promise<void> {
+		const path = "/db/{schema}/unterrichtsverteilung/stundentafeln/{id : \\d+}"
+			.replace(/{schema\s*(:[^{}]+({[^{}]+})*)?}/g, schema)
+			.replace(/{id\s*(:[^{}]+({[^{}]+})*)?}/g, id.toString());
+		await super.deleteJSON(path, null);
+		return;
+	}
+
+
+	/**
+	 * Implementierung der POST-Methode createUvStundentafel für den Zugriff auf die URL https://{hostname}/db/{schema}/unterrichtsverteilung/stundentafeln/create
+	 *
+	 * Erstellt eine neue UvStundentafel und gibt sie zurück. Dabei wird geprüft, ob der SVWS-Benutzer die notwendige Berechtigung zum Erstellen besitzt.
+	 *
+	 * Mögliche HTTP-Antworten:
+	 *   Code 201: UvStundentafel wurde erfolgreich angelegt.
+	 *     - Mime-Type: application/json
+	 *     - Rückgabe-Typ: UvStundentafel
+	 *   Code 403: Der SVWS-Benutzer hat keine Rechte, um eine UvStundentafel anzulegen.
+	 *   Code 409: Die UvStundentafel ist schon in der Datenbank enthalten.
+	 *
+	 * @param {Partial<UvStundentafel>} data - der Request-Body für die HTTP-Methode
+	 * @param {string} schema - der Pfad-Parameter schema
+	 *
+	 * @returns UvStundentafel wurde erfolgreich angelegt.
+	 */
+	public async createUvStundentafel(data : Partial<UvStundentafel>, schema : string) : Promise<UvStundentafel> {
+		const path = "/db/{schema}/unterrichtsverteilung/stundentafeln/create"
+			.replace(/{schema\s*(:[^{}]+({[^{}]+})*)?}/g, schema);
+		const body : string = UvStundentafel.transpilerToJSONPatch(data);
+		const result : string = await super.postJSON(path, body);
+		const text = result;
+		return UvStundentafel.transpilerFromJSON(text);
+	}
+
+
+	/**
+	 * Implementierung der PATCH-Methode patchUvStundentafelFach für den Zugriff auf die URL https://{hostname}/db/{schema}/unterrichtsverteilung/stundentafeln/faecher/{id : \d+}
+	 *
+	 * Patcht ein bestehendes UvStundentafelFach anhand der ID.
+	 *
+	 * Mögliche HTTP-Antworten:
+	 *   Code 200: Patch erfolgreich.
+	 *   Code 400: Fehlerhafte Daten.
+	 *   Code 403: Keine Rechte.
+	 *   Code 404: Nicht gefunden.
+	 *
+	 * @param {Partial<UvStundentafelFach>} data - der Request-Body für die HTTP-Methode
+	 * @param {string} schema - der Pfad-Parameter schema
+	 * @param {number} id - der Pfad-Parameter id
+	 */
+	public async patchUvStundentafelFach(data : Partial<UvStundentafelFach>, schema : string, id : number) : Promise<void> {
+		const path = "/db/{schema}/unterrichtsverteilung/stundentafeln/faecher/{id : \\d+}"
+			.replace(/{schema\s*(:[^{}]+({[^{}]+})*)?}/g, schema)
+			.replace(/{id\s*(:[^{}]+({[^{}]+})*)?}/g, id.toString());
+		const body : string = UvStundentafelFach.transpilerToJSONPatch(data);
+		return super.patchJSON(path, body);
+	}
+
+
+	/**
+	 * Implementierung der DELETE-Methode deleteUvStundentafelFach für den Zugriff auf die URL https://{hostname}/db/{schema}/unterrichtsverteilung/stundentafeln/faecher/{id : \d+}
+	 *
+	 * Löscht ein bestehendes UvStundentafelFach anhand der ID.
+	 *
+	 * Mögliche HTTP-Antworten:
+	 *   Code 204: Löschung erfolgreich.
+	 *   Code 403: Keine Rechte.
+	 *   Code 404: Nicht gefunden.
+	 *
+	 * @param {string} schema - der Pfad-Parameter schema
+	 * @param {number} id - der Pfad-Parameter id
+	 */
+	public async deleteUvStundentafelFach(schema : string, id : number) : Promise<void> {
+		const path = "/db/{schema}/unterrichtsverteilung/stundentafeln/faecher/{id : \\d+}"
+			.replace(/{schema\s*(:[^{}]+({[^{}]+})*)?}/g, schema)
+			.replace(/{id\s*(:[^{}]+({[^{}]+})*)?}/g, id.toString());
+		await super.deleteJSON(path, null);
+		return;
+	}
+
+
+	/**
+	 * Implementierung der POST-Methode createUvStundentafelFach für den Zugriff auf die URL https://{hostname}/db/{schema}/unterrichtsverteilung/stundentafeln/faecher/create
+	 *
+	 * Erstellt ein neues UvStundentafelFach und gibt es zurück. Dabei wird geprüft, ob der SVWS-Benutzer die notwendige Berechtigung zum Erstellen besitzt.
+	 *
+	 * Mögliche HTTP-Antworten:
+	 *   Code 201: UvStundentafelFach wurde erfolgreich angelegt.
+	 *     - Mime-Type: application/json
+	 *     - Rückgabe-Typ: UvStundentafelFach
+	 *   Code 403: Der SVWS-Benutzer hat keine Rechte, um ein UvStundentafelFach anzulegen.
+	 *   Code 409: Das UvStundentafelFach ist schon in der Datenbank enthalten.
+	 *
+	 * @param {Partial<UvStundentafelFach>} data - der Request-Body für die HTTP-Methode
+	 * @param {string} schema - der Pfad-Parameter schema
+	 *
+	 * @returns UvStundentafelFach wurde erfolgreich angelegt.
+	 */
+	public async createUvStundentafelFach(data : Partial<UvStundentafelFach>, schema : string) : Promise<UvStundentafelFach> {
+		const path = "/db/{schema}/unterrichtsverteilung/stundentafeln/faecher/create"
+			.replace(/{schema\s*(:[^{}]+({[^{}]+})*)?}/g, schema);
+		const body : string = UvStundentafelFach.transpilerToJSONPatch(data);
+		const result : string = await super.postJSON(path, body);
+		const text = result;
+		return UvStundentafelFach.transpilerFromJSON(text);
+	}
+
+
+	/**
+	 * Implementierung der DELETE-Methode deleteUvStundentafelFaecherMultiple für den Zugriff auf die URL https://{hostname}/db/{schema}/unterrichtsverteilung/stundentafeln/faecher/delete/multiple
+	 *
+	 * Löscht mehrere bestehende UvStundentafelFach-Einträge anhand der IDs.
+	 *
+	 * Mögliche HTTP-Antworten:
+	 *   Code 200: Die Einträge wurden erfolgreich gelöscht.
+	 *     - Mime-Type: application/json
+	 *     - Rückgabe-Typ: List<Long>
+	 *   Code 403: Keine Rechte.
+	 *   Code 500: Unspezifizierter Fehler (z. B. beim Datenbankzugriff)
+	 *
+	 * @param {List<number>} data - der Request-Body für die HTTP-Methode
+	 * @param {string} schema - der Pfad-Parameter schema
+	 *
+	 * @returns Die Einträge wurden erfolgreich gelöscht.
+	 */
+	public async deleteUvStundentafelFaecherMultiple(data : List<number>, schema : string) : Promise<List<number>> {
+		const path = "/db/{schema}/unterrichtsverteilung/stundentafeln/faecher/delete/multiple"
+			.replace(/{schema\s*(:[^{}]+({[^{}]+})*)?}/g, schema);
+		const body : string = "[" + (data.toArray() as Array<number>).map(d => JSON.stringify(d)).join() + "]";
+		const result : string = await super.deleteJSON(path, body);
+		const obj = JSON.parse(result);
+		const ret = new ArrayList<number>();
+		obj.forEach((elem: any) => { const text : string = JSON.stringify(elem); ret.add(parseFloat(JSON.parse(text))); });
+		return ret;
+	}
+
+
+	/**
+	 * Implementierung der PATCH-Methode patchUvStundentafelFaecherMultiple für den Zugriff auf die URL https://{hostname}/db/{schema}/unterrichtsverteilung/stundentafeln/faecher/patch/multiple
+	 *
+	 * Patcht mehrere bestehende UvStundentafelFach-Einträge anhand der IDs.
+	 *
+	 * Mögliche HTTP-Antworten:
+	 *   Code 200: Patch erfolgreich.
+	 *   Code 400: Fehlerhafte Daten.
+	 *   Code 403: Keine Rechte.
+	 *   Code 404: Nicht gefunden.
+	 *
+	 * @param {List<Partial<UvStundentafelFach>>} data - der Request-Body für die HTTP-Methode
+	 * @param {string} schema - der Pfad-Parameter schema
+	 */
+	public async patchUvStundentafelFaecherMultiple(data : List<Partial<UvStundentafelFach>>, schema : string) : Promise<void> {
+		const path = "/db/{schema}/unterrichtsverteilung/stundentafeln/faecher/patch/multiple"
+			.replace(/{schema\s*(:[^{}]+({[^{}]+})*)?}/g, schema);
+		const body : string = "[" + (data.toArray() as Array<UvStundentafelFach>).map(d => UvStundentafelFach.transpilerToJSONPatch(d)).join() + "]";
+		return super.patchJSON(path, body);
+	}
+
+
+	/**
+	 * Implementierung der DELETE-Methode deleteUvStundentafelnMultiple für den Zugriff auf die URL https://{hostname}/db/{schema}/unterrichtsverteilung/stundentafeln/multiple
+	 *
+	 * Löscht mehrere bestehende UvStundentafeln anhand ihrer IDs.
+	 *
+	 * Mögliche HTTP-Antworten:
+	 *   Code 200: Die UvStundentafeln für die angegebenen IDs wurden erfolgreich gelöscht.
+	 *     - Mime-Type: application/json
+	 *     - Rückgabe-Typ: List<Long>
+	 *   Code 403: Der SVWS-Benutzer hat keine Rechte, um UvStundentafeln zu löschen.
+	 *   Code 500: Unspezifizierter Fehler (z.B. beim Datenbankzugriff)
+	 *
+	 * @param {List<number>} data - der Request-Body für die HTTP-Methode
+	 * @param {string} schema - der Pfad-Parameter schema
+	 *
+	 * @returns Die UvStundentafeln für die angegebenen IDs wurden erfolgreich gelöscht.
+	 */
+	public async deleteUvStundentafelnMultiple(data : List<number>, schema : string) : Promise<List<number>> {
+		const path = "/db/{schema}/unterrichtsverteilung/stundentafeln/multiple"
+			.replace(/{schema\s*(:[^{}]+({[^{}]+})*)?}/g, schema);
+		const body : string = "[" + (data.toArray() as Array<number>).map(d => JSON.stringify(d)).join() + "]";
+		const result : string = await super.deleteJSON(path, body);
+		const obj = JSON.parse(result);
+		const ret = new ArrayList<number>();
+		obj.forEach((elem: any) => { const text : string = JSON.stringify(elem); ret.add(parseFloat(JSON.parse(text))); });
+		return ret;
+	}
+
+
+	/**
+	 * Implementierung der PATCH-Methode patchUvStundentafelnMultiple für den Zugriff auf die URL https://{hostname}/db/{schema}/unterrichtsverteilung/stundentafeln/patch/multiple
+	 *
+	 * Patcht einen bestehenden UvStundentafel.
+	 *
+	 * Mögliche HTTP-Antworten:
+	 *   Code 200: Patch erfolgreich.
+	 *   Code 400: Fehlerhafte Daten.
+	 *   Code 403: Keine Rechte.
+	 *   Code 404: Nicht gefunden.
+	 *
+	 * @param {List<Partial<UvStundentafel>>} data - der Request-Body für die HTTP-Methode
+	 * @param {string} schema - der Pfad-Parameter schema
+	 */
+	public async patchUvStundentafelnMultiple(data : List<Partial<UvStundentafel>>, schema : string) : Promise<void> {
+		const path = "/db/{schema}/unterrichtsverteilung/stundentafeln/patch/multiple"
+			.replace(/{schema\s*(:[^{}]+({[^{}]+})*)?}/g, schema);
+		const body : string = "[" + (data.toArray() as Array<UvStundentafel>).map(d => UvStundentafel.transpilerToJSONPatch(d)).join() + "]";
+		return super.patchJSON(path, body);
+	}
+
+
+	/**
+	 * Implementierung der PATCH-Methode patchUvUnterricht für den Zugriff auf die URL https://{hostname}/db/{schema}/unterrichtsverteilung/unterrichte/{id : \d+}
+	 *
+	 * Patcht eine bestehende Unterrichtseinheit anhand der ID.
+	 *
+	 * Mögliche HTTP-Antworten:
+	 *   Code 200: Patch erfolgreich.
+	 *
+	 * @param {Partial<UvUnterricht>} data - der Request-Body für die HTTP-Methode
+	 * @param {string} schema - der Pfad-Parameter schema
+	 * @param {number} id - der Pfad-Parameter id
+	 */
+	public async patchUvUnterricht(data : Partial<UvUnterricht>, schema : string, id : number) : Promise<void> {
+		const path = "/db/{schema}/unterrichtsverteilung/unterrichte/{id : \\d+}"
+			.replace(/{schema\s*(:[^{}]+({[^{}]+})*)?}/g, schema)
+			.replace(/{id\s*(:[^{}]+({[^{}]+})*)?}/g, id.toString());
+		const body : string = UvUnterricht.transpilerToJSONPatch(data);
+		return super.patchJSON(path, body);
+	}
+
+
+	/**
+	 * Implementierung der DELETE-Methode deleteUvUnterricht für den Zugriff auf die URL https://{hostname}/db/{schema}/unterrichtsverteilung/unterrichte/{id : \d+}
+	 *
+	 * Löscht eine bestehende Unterrichtseinheit anhand der ID.
+	 *
+	 * Mögliche HTTP-Antworten:
+	 *   Code 204: Löschung erfolgreich.
+	 *
+	 * @param {string} schema - der Pfad-Parameter schema
+	 * @param {number} id - der Pfad-Parameter id
+	 */
+	public async deleteUvUnterricht(schema : string, id : number) : Promise<void> {
+		const path = "/db/{schema}/unterrichtsverteilung/unterrichte/{id : \\d+}"
+			.replace(/{schema\s*(:[^{}]+({[^{}]+})*)?}/g, schema)
+			.replace(/{id\s*(:[^{}]+({[^{}]+})*)?}/g, id.toString());
+		await super.deleteJSON(path, null);
+		return;
+	}
+
+
+	/**
+	 * Implementierung der POST-Methode createUvUnterricht für den Zugriff auf die URL https://{hostname}/db/{schema}/unterrichtsverteilung/unterrichte/create
+	 *
+	 * Erstellt eine neue Unterrichtseinheit und gibt diese zurück.
+	 *
+	 * Mögliche HTTP-Antworten:
+	 *   Code 201: Unterricht erfolgreich erstellt.
+	 *     - Mime-Type: application/json
+	 *     - Rückgabe-Typ: UvUnterricht
+	 *
+	 * @param {Partial<UvUnterricht>} data - der Request-Body für die HTTP-Methode
+	 * @param {string} schema - der Pfad-Parameter schema
+	 *
+	 * @returns Unterricht erfolgreich erstellt.
+	 */
+	public async createUvUnterricht(data : Partial<UvUnterricht>, schema : string) : Promise<UvUnterricht> {
+		const path = "/db/{schema}/unterrichtsverteilung/unterrichte/create"
+			.replace(/{schema\s*(:[^{}]+({[^{}]+})*)?}/g, schema);
+		const body : string = UvUnterricht.transpilerToJSONPatch(data);
+		const result : string = await super.postJSON(path, body);
+		const text = result;
+		return UvUnterricht.transpilerFromJSON(text);
+	}
+
+
+	/**
+	 * Implementierung der DELETE-Methode deleteUvUnterrichteMultiple für den Zugriff auf die URL https://{hostname}/db/{schema}/unterrichtsverteilung/unterrichte/delete/multiple
+	 *
+	 * Löscht mehrere bestehende Unterrichtseinheiten anhand ihrer IDs.
+	 *
+	 * Mögliche HTTP-Antworten:
+	 *   Code 200: Löschung erfolgreich.
+	 *
+	 * @param {List<number>} data - der Request-Body für die HTTP-Methode
+	 * @param {string} schema - der Pfad-Parameter schema
+	 */
+	public async deleteUvUnterrichteMultiple(data : List<number>, schema : string) : Promise<void> {
+		const path = "/db/{schema}/unterrichtsverteilung/unterrichte/delete/multiple"
+			.replace(/{schema\s*(:[^{}]+({[^{}]+})*)?}/g, schema);
+		const body : string = "[" + (data.toArray() as Array<number>).map(d => JSON.stringify(d)).join() + "]";
+		await super.deleteJSON(path, body);
+		return;
+	}
+
+
+	/**
+	 * Implementierung der PATCH-Methode patchUvUnterrichteMultiple für den Zugriff auf die URL https://{hostname}/db/{schema}/unterrichtsverteilung/unterrichte/patch/multiple
+	 *
+	 * Patcht mehrere Unterrichtseinheiten gleichzeitig anhand ihrer IDs.
+	 *
+	 * Mögliche HTTP-Antworten:
+	 *   Code 200: Patch erfolgreich.
+	 *
+	 * @param {List<Partial<UvUnterricht>>} data - der Request-Body für die HTTP-Methode
+	 * @param {string} schema - der Pfad-Parameter schema
+	 */
+	public async patchUvUnterrichteMultiple(data : List<Partial<UvUnterricht>>, schema : string) : Promise<void> {
+		const path = "/db/{schema}/unterrichtsverteilung/unterrichte/patch/multiple"
+			.replace(/{schema\s*(:[^{}]+({[^{}]+})*)?}/g, schema);
+		const body : string = "[" + (data.toArray() as Array<UvUnterricht>).map(d => UvUnterricht.transpilerToJSONPatch(d)).join() + "]";
+		return super.patchJSON(path, body);
+	}
+
+
+	/**
+	 * Implementierung der PATCH-Methode patchUvZeitraster für den Zugriff auf die URL https://{hostname}/db/{schema}/unterrichtsverteilung/zeitraster/{id : \d+}
+	 *
+	 * Patcht ein bestehendes Zeitraster anhand der ID.
+	 *
+	 * Mögliche HTTP-Antworten:
+	 *   Code 200: Patch erfolgreich.
+	 *   Code 400: Fehlerhafte Daten.
+	 *   Code 403: Keine Rechte.
+	 *   Code 404: Zeit­raster nicht gefunden.
+	 *
+	 * @param {Partial<UvZeitraster>} data - der Request-Body für die HTTP-Methode
+	 * @param {string} schema - der Pfad-Parameter schema
+	 * @param {number} id - der Pfad-Parameter id
+	 */
+	public async patchUvZeitraster(data : Partial<UvZeitraster>, schema : string, id : number) : Promise<void> {
+		const path = "/db/{schema}/unterrichtsverteilung/zeitraster/{id : \\d+}"
+			.replace(/{schema\s*(:[^{}]+({[^{}]+})*)?}/g, schema)
+			.replace(/{id\s*(:[^{}]+({[^{}]+})*)?}/g, id.toString());
+		const body : string = UvZeitraster.transpilerToJSONPatch(data);
+		return super.patchJSON(path, body);
+	}
+
+
+	/**
+	 * Implementierung der DELETE-Methode deleteUvZeitraster für den Zugriff auf die URL https://{hostname}/db/{schema}/unterrichtsverteilung/zeitraster/{id : \d+}
+	 *
+	 * Löscht ein bestehendes Zeitraster anhand der ID.
+	 *
+	 * Mögliche HTTP-Antworten:
+	 *   Code 204: Löschung erfolgreich.
+	 *   Code 403: Keine Rechte.
+	 *   Code 404: Zeit­raster nicht gefunden.
+	 *
+	 * @param {string} schema - der Pfad-Parameter schema
+	 * @param {number} id - der Pfad-Parameter id
+	 */
+	public async deleteUvZeitraster(schema : string, id : number) : Promise<void> {
+		const path = "/db/{schema}/unterrichtsverteilung/zeitraster/{id : \\d+}"
+			.replace(/{schema\s*(:[^{}]+({[^{}]+})*)?}/g, schema)
+			.replace(/{id\s*(:[^{}]+({[^{}]+})*)?}/g, id.toString());
+		await super.deleteJSON(path, null);
+		return;
+	}
+
+
+	/**
+	 * Implementierung der POST-Methode createUvZeitraster für den Zugriff auf die URL https://{hostname}/db/{schema}/unterrichtsverteilung/zeitraster/create
+	 *
+	 * Erstellt ein neues Zeitraster und gibt es zurück. Dabei wird geprüft, ob der SVWS-Benutzer die notwendige Berechtigung besitzt.
+	 *
+	 * Mögliche HTTP-Antworten:
+	 *   Code 201: Zeit­raster wurde erfolgreich angelegt.
+	 *     - Mime-Type: application/json
+	 *     - Rückgabe-Typ: UvZeitraster
+	 *   Code 403: Keine Rechte, um ein Zeitraster anzulegen.
+	 *   Code 409: Das Zeitraster ist bereits vorhanden.
+	 *
+	 * @param {Partial<UvZeitraster>} data - der Request-Body für die HTTP-Methode
+	 * @param {string} schema - der Pfad-Parameter schema
+	 *
+	 * @returns Zeit­raster wurde erfolgreich angelegt.
+	 */
+	public async createUvZeitraster(data : Partial<UvZeitraster>, schema : string) : Promise<UvZeitraster> {
+		const path = "/db/{schema}/unterrichtsverteilung/zeitraster/create"
+			.replace(/{schema\s*(:[^{}]+({[^{}]+})*)?}/g, schema);
+		const body : string = UvZeitraster.transpilerToJSONPatch(data);
+		const result : string = await super.postJSON(path, body);
+		const text = result;
+		return UvZeitraster.transpilerFromJSON(text);
+	}
+
+
+	/**
+	 * Implementierung der DELETE-Methode deleteUvZeitrasterMultiple für den Zugriff auf die URL https://{hostname}/db/{schema}/unterrichtsverteilung/zeitraster/delete/multiple
+	 *
+	 * Löscht mehrere bestehende Zeitraster anhand der IDs.
+	 *
+	 * Mögliche HTTP-Antworten:
+	 *   Code 200: Löschung erfolgreich.
+	 *     - Mime-Type: application/json
+	 *     - Rückgabe-Typ: List<Long>
+	 *   Code 403: Keine Rechte.
+	 *   Code 500: Fehler beim Löschen der Datensätze.
+	 *
+	 * @param {List<number>} data - der Request-Body für die HTTP-Methode
+	 * @param {string} schema - der Pfad-Parameter schema
+	 *
+	 * @returns Löschung erfolgreich.
+	 */
+	public async deleteUvZeitrasterMultiple(data : List<number>, schema : string) : Promise<List<number>> {
+		const path = "/db/{schema}/unterrichtsverteilung/zeitraster/delete/multiple"
+			.replace(/{schema\s*(:[^{}]+({[^{}]+})*)?}/g, schema);
+		const body : string = "[" + (data.toArray() as Array<number>).map(d => JSON.stringify(d)).join() + "]";
+		const result : string = await super.deleteJSON(path, body);
+		const obj = JSON.parse(result);
+		const ret = new ArrayList<number>();
+		obj.forEach((elem: any) => { const text : string = JSON.stringify(elem); ret.add(parseFloat(JSON.parse(text))); });
+		return ret;
+	}
+
+
+	/**
+	 * Implementierung der PATCH-Methode patchUvZeitrasterMultiple für den Zugriff auf die URL https://{hostname}/db/{schema}/unterrichtsverteilung/zeitraster/patch/multiple
+	 *
+	 * Patcht mehrere bestehende Zeitraster anhand der angegebenen IDs.
+	 *
+	 * Mögliche HTTP-Antworten:
+	 *   Code 200: Patch erfolgreich.
+	 *   Code 400: Fehlerhafte Daten.
+	 *   Code 403: Keine Rechte.
+	 *   Code 404: Ein oder mehrere Zeitraster nicht gefunden.
+	 *
+	 * @param {List<Partial<UvZeitraster>>} data - der Request-Body für die HTTP-Methode
+	 * @param {string} schema - der Pfad-Parameter schema
+	 */
+	public async patchUvZeitrasterMultiple(data : List<Partial<UvZeitraster>>, schema : string) : Promise<void> {
+		const path = "/db/{schema}/unterrichtsverteilung/zeitraster/patch/multiple"
+			.replace(/{schema\s*(:[^{}]+({[^{}]+})*)?}/g, schema);
+		const body : string = "[" + (data.toArray() as Array<UvZeitraster>).map(d => UvZeitraster.transpilerToJSONPatch(d)).join() + "]";
+		return super.patchJSON(path, body);
+	}
+
+
+	/**
+	 * Implementierung der PATCH-Methode patchUvZeitrasterEintrag für den Zugriff auf die URL https://{hostname}/db/{schema}/unterrichtsverteilung/zeitrastereintraege/{id : \d+}
+	 *
+	 * Patcht einen bestehenden Zeitrastereintrag anhand der ID.
+	 *
+	 * Mögliche HTTP-Antworten:
+	 *   Code 200: Patch erfolgreich.
+	 *   Code 400: Fehlerhafte Daten.
+	 *   Code 403: Keine Rechte.
+	 *   Code 404: Zeit­rastereintrag nicht gefunden.
+	 *
+	 * @param {Partial<UvZeitrasterEintrag>} data - der Request-Body für die HTTP-Methode
+	 * @param {string} schema - der Pfad-Parameter schema
+	 * @param {number} id - der Pfad-Parameter id
+	 */
+	public async patchUvZeitrasterEintrag(data : Partial<UvZeitrasterEintrag>, schema : string, id : number) : Promise<void> {
+		const path = "/db/{schema}/unterrichtsverteilung/zeitrastereintraege/{id : \\d+}"
+			.replace(/{schema\s*(:[^{}]+({[^{}]+})*)?}/g, schema)
+			.replace(/{id\s*(:[^{}]+({[^{}]+})*)?}/g, id.toString());
+		const body : string = UvZeitrasterEintrag.transpilerToJSONPatch(data);
+		return super.patchJSON(path, body);
+	}
+
+
+	/**
+	 * Implementierung der DELETE-Methode deleteUvZeitrasterEintrag für den Zugriff auf die URL https://{hostname}/db/{schema}/unterrichtsverteilung/zeitrastereintraege/{id : \d+}
+	 *
+	 * Löscht einen bestehenden Zeitrastereintrag anhand der ID.
+	 *
+	 * Mögliche HTTP-Antworten:
+	 *   Code 204: Löschung erfolgreich.
+	 *   Code 403: Keine Rechte.
+	 *   Code 404: Zeit­rastereintrag nicht gefunden.
+	 *
+	 * @param {string} schema - der Pfad-Parameter schema
+	 * @param {number} id - der Pfad-Parameter id
+	 */
+	public async deleteUvZeitrasterEintrag(schema : string, id : number) : Promise<void> {
+		const path = "/db/{schema}/unterrichtsverteilung/zeitrastereintraege/{id : \\d+}"
+			.replace(/{schema\s*(:[^{}]+({[^{}]+})*)?}/g, schema)
+			.replace(/{id\s*(:[^{}]+({[^{}]+})*)?}/g, id.toString());
+		await super.deleteJSON(path, null);
+		return;
+	}
+
+
+	/**
+	 * Implementierung der POST-Methode createUvZeitrasterEintrag für den Zugriff auf die URL https://{hostname}/db/{schema}/unterrichtsverteilung/zeitrastereintraege/create
+	 *
+	 * Erstellt einen neuen Zeitrastereintrag und gibt diesen zurück.
+	 *
+	 * Mögliche HTTP-Antworten:
+	 *   Code 201: Zeit­rastereintrag erfolgreich erstellt.
+	 *     - Mime-Type: application/json
+	 *     - Rückgabe-Typ: UvZeitrasterEintrag
+	 *   Code 403: Keine Rechte zum Erstellen.
+	 *
+	 * @param {Partial<UvZeitrasterEintrag>} data - der Request-Body für die HTTP-Methode
+	 * @param {string} schema - der Pfad-Parameter schema
+	 *
+	 * @returns Zeit­rastereintrag erfolgreich erstellt.
+	 */
+	public async createUvZeitrasterEintrag(data : Partial<UvZeitrasterEintrag>, schema : string) : Promise<UvZeitrasterEintrag> {
+		const path = "/db/{schema}/unterrichtsverteilung/zeitrastereintraege/create"
+			.replace(/{schema\s*(:[^{}]+({[^{}]+})*)?}/g, schema);
+		const body : string = UvZeitrasterEintrag.transpilerToJSONPatch(data);
+		const result : string = await super.postJSON(path, body);
+		const text = result;
+		return UvZeitrasterEintrag.transpilerFromJSON(text);
+	}
+
+
+	/**
+	 * Implementierung der DELETE-Methode deleteUvZeitrasterEintraegeMultiple für den Zugriff auf die URL https://{hostname}/db/{schema}/unterrichtsverteilung/zeitrastereintraege/delete/multiple
+	 *
+	 * Löscht mehrere bestehende Zeitrastereinträge anhand der IDs.
+	 *
+	 * Mögliche HTTP-Antworten:
+	 *   Code 200: Löschung erfolgreich.
+	 *     - Mime-Type: application/json
+	 *     - Rückgabe-Typ: List<Long>
+	 *   Code 403: Keine Rechte.
+	 *   Code 500: Fehler beim Löschen der Datensätze.
+	 *
+	 * @param {List<number>} data - der Request-Body für die HTTP-Methode
+	 * @param {string} schema - der Pfad-Parameter schema
+	 *
+	 * @returns Löschung erfolgreich.
+	 */
+	public async deleteUvZeitrasterEintraegeMultiple(data : List<number>, schema : string) : Promise<List<number>> {
+		const path = "/db/{schema}/unterrichtsverteilung/zeitrastereintraege/delete/multiple"
+			.replace(/{schema\s*(:[^{}]+({[^{}]+})*)?}/g, schema);
+		const body : string = "[" + (data.toArray() as Array<number>).map(d => JSON.stringify(d)).join() + "]";
+		const result : string = await super.deleteJSON(path, body);
+		const obj = JSON.parse(result);
+		const ret = new ArrayList<number>();
+		obj.forEach((elem: any) => { const text : string = JSON.stringify(elem); ret.add(parseFloat(JSON.parse(text))); });
+		return ret;
+	}
+
+
+	/**
+	 * Implementierung der PATCH-Methode patchUvZeitrasterEintraegeMultiple für den Zugriff auf die URL https://{hostname}/db/{schema}/unterrichtsverteilung/zeitrastereintraege/patch/multiple
+	 *
+	 * Patcht mehrere Zeitrastereinträge gleichzeitig anhand ihrer IDs.
+	 *
+	 * Mögliche HTTP-Antworten:
+	 *   Code 200: Patch erfolgreich.
+	 *   Code 400: Fehlerhafte Daten.
+	 *   Code 403: Keine Rechte.
+	 *   Code 404: Ein oder mehrere Einträge nicht gefunden.
+	 *
+	 * @param {List<Partial<UvZeitrasterEintrag>>} data - der Request-Body für die HTTP-Methode
+	 * @param {string} schema - der Pfad-Parameter schema
+	 */
+	public async patchUvZeitrasterEintraegeMultiple(data : List<Partial<UvZeitrasterEintrag>>, schema : string) : Promise<void> {
+		const path = "/db/{schema}/unterrichtsverteilung/zeitrastereintraege/patch/multiple"
+			.replace(/{schema\s*(:[^{}]+({[^{}]+})*)?}/g, schema);
+		const body : string = "[" + (data.toArray() as Array<UvZeitrasterEintrag>).map(d => UvZeitrasterEintrag.transpilerToJSONPatch(d)).join() + "]";
+		return super.patchJSON(path, body);
+	}
+
+
+	/**
 	 * Implementierung der GET-Methode getWiedervorlageEintrag für den Zugriff auf die URL https://{hostname}/db/{schema}/wiedervorlage/{id : \d+}
 	 *
 	 * Liefert zu der ID den zugehörigen Wiedervorlage-Eintrag. Dabei wird geprüft, ob der Benutzer auf den Eintrag zugreifen darf.
@@ -19062,7 +21387,7 @@ export class ApiServer extends BaseApi {
 	 *
 	 * @returns Der Server ist erreichbar!
 	 */
-	public async isAlive() : Promise<string | null> {
+	public async isAlive() : Promise<string> {
 		const path = "/status/alive";
 		const text : string = await super.getText(path);
 		return text;
@@ -19081,7 +21406,7 @@ export class ApiServer extends BaseApi {
 	 *
 	 * @returns Der Server ist über die Privileged API erreichbar!
 	 */
-	public async isAlivePrivileged() : Promise<boolean | null> {
+	public async isAlivePrivileged() : Promise<boolean> {
 		const path = "/status/alive/privileged";
 		const result : string = await super.getJSON(path);
 		const text = result;
@@ -19101,7 +21426,7 @@ export class ApiServer extends BaseApi {
 	 *
 	 * @returns Die Datenbank-Revision
 	 */
-	public async getServerDBRevision() : Promise<number | null> {
+	public async getServerDBRevision() : Promise<number> {
 		const path = "/status/db/revision";
 		const result : string = await super.getJSON(path);
 		const text = result;
@@ -19121,7 +21446,7 @@ export class ApiServer extends BaseApi {
 	 *
 	 * @returns Der Betriebsmodus (stable, alpha, beta oder dev)
 	 */
-	public async getServerModus() : Promise<string | null> {
+	public async getServerModus() : Promise<string> {
 		const path = "/status/mode";
 		const result : string = await super.getJSON(path);
 		const text = result;
@@ -19141,7 +21466,7 @@ export class ApiServer extends BaseApi {
 	 *
 	 * @returns Die erste kompatible Schild-Version
 	 */
-	public async getSchildMinVersion() : Promise<string | null> {
+	public async getSchildMinVersion() : Promise<string> {
 		const path = "/status/schild/minversion";
 		const result : string = await super.getJSON(path);
 		const text = result;
@@ -19161,7 +21486,7 @@ export class ApiServer extends BaseApi {
 	 *
 	 * @returns Die SVWS-Server-Version
 	 */
-	public async getServerVersion() : Promise<string | null> {
+	public async getServerVersion() : Promise<string> {
 		const path = "/status/version";
 		const result : string = await super.getJSON(path);
 		const text = result;

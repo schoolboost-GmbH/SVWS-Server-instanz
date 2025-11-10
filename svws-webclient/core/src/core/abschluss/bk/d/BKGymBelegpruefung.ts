@@ -215,8 +215,13 @@ export abstract class BKGymBelegpruefung extends JavaObject {
 				if (gefunden) {
 					wahlBelegungen.addAll(mapBelegungByFach.get(tafelFach));
 					iter.remove();
-				} else
+				} else {
 					gefunden = this.istPflichtFach(tafelFach, mapBelegungByFach, !iter.hasNext());
+					if (!gefunden) {
+						wahlBelegungen.addAll(mapBelegungByFach.get(tafelFach));
+						iter.remove();
+					}
+				}
 			}
 		}
 	}
@@ -391,18 +396,19 @@ export abstract class BKGymBelegpruefung extends JavaObject {
 		for (const hj of GostHalbjahr.getQualifikationsphase()) {
 			summeTafel += fachTafel.stundenumfang[hj.id];
 			const belegung: BKGymAbiturFachbelegungHalbjahr | null = fachBelegung.belegungen[hj.id];
-			if ((belegung === null) && (fachTafel.stundenumfang[hj.id] > 0))
-				success = !this.addFehler(tafel, new BKGymBelegungsfehler(BKGymBelegungsfehlerTyp.ST_4, fachTafel.fachbezeichnung)) && success;
-			if (belegung !== null) {
-				if ((belegung.notenkuerzel !== null) && (!JavaString.isEmpty(belegung.notenkuerzel))) {
-					summeBelegung += belegung.wochenstunden;
-					unterbelegung = unterbelegung || (fachTafel.stundenumfang[hj.id] > belegung.wochenstunden);
-				} else
-					if (fachTafel.stundenumfang[hj.id] > 0) {
-						success = !(this.addFehler(tafel, new BKGymBelegungsfehler(BKGymBelegungsfehlerTyp.ST_2, fachTafel.fachbezeichnung, hj.kuerzel))) && success;
-						unterbelegung = true;
-					}
+			if (belegung === null) {
+				if (fachTafel.stundenumfang[hj.id] > 0)
+					success = !this.addFehler(tafel, new BKGymBelegungsfehler(BKGymBelegungsfehlerTyp.ST_6, fachTafel.fachbezeichnung, hj.kuerzel)) && success;
+				continue;
 			}
+			if ((belegung.notenkuerzel !== null) && (!JavaString.isEmpty(belegung.notenkuerzel))) {
+				summeBelegung += belegung.wochenstunden;
+				unterbelegung = unterbelegung || (fachTafel.stundenumfang[hj.id] > belegung.wochenstunden);
+			} else
+				if (fachTafel.stundenumfang[hj.id] > 0) {
+					success = !(this.addFehler(tafel, new BKGymBelegungsfehler(BKGymBelegungsfehlerTyp.ST_2, fachTafel.fachbezeichnung, hj.kuerzel))) && success;
+					unterbelegung = true;
+				}
 		}
 		if (summeTafel > summeBelegung) {
 			success = !this.addFehler(tafel, new BKGymBelegungsfehler(BKGymBelegungsfehlerTyp.ST_3, fachTafel.fachbezeichnung)) && success;

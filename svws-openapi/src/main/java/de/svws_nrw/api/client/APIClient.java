@@ -505,6 +505,11 @@ public class APIClient {
 				case "Nationalitaeten" -> JsonReader.fromResource("de/svws_nrw/asd/types/schule/Nationalitaeten.json");
 				case "ValidatorenFehlerartKontext" -> JsonReader.fromResource("de/svws_nrw/asd/validate/ValidatorenFehlerartKontext.json");
 				case "Floskelgruppenart" -> JsonReader.fromResource("de/svws_nrw/asd/types/schule/Floskelgruppenart.json");
+				case "Einwilligungsschluessel" -> JsonReader.fromResource("de/svws_nrw/asd/types/schule/Einwilligungsschluessel.json");
+				case "Bildungsstufe" -> JsonReader.fromResource("de/svws_nrw/asd/types/schule/Bildungsstufe.json");
+				case "Herkunftsarten" -> JsonReader.fromResource("de/svws_nrw/asd/types/schueler/Herkunftsarten.json");
+				case "HerkunftSonstige" -> JsonReader.fromResource("de/svws_nrw/asd/types/schueler/HerkunftSonstige.json");
+				case "HerkunftSchulform" -> JsonReader.fromResource("de/svws_nrw/asd/types/schueler/HerkunftSchulform.json");
 				default -> null;
 			};
 			if (json == null)

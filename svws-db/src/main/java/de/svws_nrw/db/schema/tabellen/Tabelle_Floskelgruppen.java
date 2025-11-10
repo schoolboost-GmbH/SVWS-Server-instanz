@@ -46,6 +46,7 @@ public class Tabelle_Floskelgruppen extends SchemaTabelle {
 		setJavaSubPackage("schild.katalog");
 		setJavaClassName("DTOFloskelgruppen");
 		setJavaComment("Liste der Floskelgruppen, diese Liste kann erweitert werden um Textbausteinen zu verwalten und die Anzeige in den Editoren zu steuern");
+		setVeraltet(SchemaRevisionen.REV_52);
 	}
 
 }

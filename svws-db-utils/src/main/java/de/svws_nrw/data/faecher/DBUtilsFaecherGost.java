@@ -5,8 +5,8 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+import de.svws_nrw.core.abschluss.gost.AbiturdatenManager;
 import de.svws_nrw.core.data.gost.GostFach;
-import de.svws_nrw.core.types.ServerMode;
 import de.svws_nrw.asd.types.fach.Fach;
 import de.svws_nrw.asd.types.fach.Fachgruppe;
 import de.svws_nrw.asd.types.jahrgang.Jahrgaenge;
@@ -43,6 +43,76 @@ public final class DBUtilsFaecherGost {
 	}
 
 	/**
+	 * Bestimmt für das Fach den Standardwert für die Wochenstundenanzahl.
+	 *
+	 * @param schuljahr   das Schuljahr
+	 * @param fach        das Fach, für welches die Wochenstundenzahl bestimmt werden soll
+	 *
+	 * @return der Standardwert für die Wochenstundenanzahl
+	 */
+	private static int getDefaultWochenstundenQPhase(final int schuljahr, final @NotNull Fach fach) {
+		final int defaultWochenstundenQ_GK = (Jahrgaenge.EF == fach.getJahrgangAb(schuljahr)) ? 4 : 3;
+		// Vertiefungskurs
+		if (fach.getFachgruppe(schuljahr) == Fachgruppe.FG_VX)
+			return 2;
+		// Alle Fächer aus Projektkurse
+		if (fach.getFachgruppe(schuljahr) != Fachgruppe.FG_PX)
+			return defaultWochenstundenQ_GK;
+		// Projekt kurse
+		if (AbiturdatenManager.nutzeExperimentellenCode(SVWSKonfiguration.get().getServerMode(), schuljahr + 1))  // Experimenteller Code
+			return 3;
+		return 2;
+	}
+
+
+	/**
+	 * Bestimmt die Wochenstundenzahl in der QPhase für das übergebene Fach-DTO.
+	 *
+	 * @param schuljahr   das Schuljahr
+	 * @param fach        das Fach-DTO für welches die Wochenstundenanzahl bestimmt werden soll
+	 *
+	 * @return die Wochenstundenanzahl
+	 */
+	private static int getWochenstundenQPhaseByDTOFach(final int schuljahr, final @NotNull DTOFach fach) {
+		final Fach tmpFach = Fach.getBySchluesselOrDefault(fach.StatistikKuerzel);
+		if (fach.WochenstundenQualifikationsphase == null)
+			return getDefaultWochenstundenQPhase(schuljahr, tmpFach);
+
+		// Experimenteller Code
+		if (AbiturdatenManager.nutzeExperimentellenCode(SVWSKonfiguration.get().getServerMode(), schuljahr + 1)
+				&& (tmpFach.getFachgruppe(schuljahr) == Fachgruppe.FG_PX))
+			return 3;
+
+		return fach.WochenstundenQualifikationsphase;
+	}
+
+
+	/**
+	 * Bestimmt die Wochenstundenzahl in der QPhase für das übergebene Fach des Abiturjahrgangs.
+	 *
+	 * @param schuljahr   das Schuljahr
+	 * @param jf          das Fach des Abiturjahrgangs für welches die Wochenstundenanzahl bestimmt werden soll
+	 * @param fach        das Fach-DTO, welches als zweite Option genutzt wird, falls das Fach des Abiturjahrgangs null ist oder keine Wochenstunden angegeben hat
+	 *
+	 * @return die Wochenstundenanzahl
+	 */
+	private static int getWochenstundenQPhaseByDTOFach(final int schuljahr, final DTOGostJahrgangFaecher jf, final @NotNull DTOFach fach) {
+		if ((jf == null) || (jf.WochenstundenQPhase == null))
+			return getWochenstundenQPhaseByDTOFach(schuljahr, fach);
+
+		// Experimenteller Code
+		final Fach tmpFach = Fach.getBySchluesselOrDefault(fach.StatistikKuerzel);
+		if (AbiturdatenManager.nutzeExperimentellenCode(SVWSKonfiguration.get().getServerMode(), schuljahr + 1)
+				&& (tmpFach.getFachgruppe(schuljahr) == Fachgruppe.FG_PX))
+			return 3;
+
+		return jf.WochenstundenQPhase;
+	}
+
+
+
+
+	/**
 	 * Diese Methode erstellt ein {@link GostFach}-Objekt mit den Daten aus dem Datenbank-Objekt
 	 * von Typ {@link DTOFach}. Dabei werden Informationen aus der Liste der Fächer verwendet.
 	 *
@@ -72,12 +142,14 @@ public final class DBUtilsFaecherGost {
 		eintrag.istMoeglichQ12 = fach.IstMoeglichQ12;
 		eintrag.istMoeglichQ21 = fach.IstMoeglichQ21;
 		eintrag.istMoeglichQ22 = fach.IstMoeglichQ22;
-		final Fach tmpFach = Fach.getBySchluesselOrDefault(fach.StatistikKuerzel);
-		final int defaultWochenstundenQ_GK = (Jahrgaenge.EF == tmpFach.getJahrgangAb(schuljahr)) ? 4 : 3;
-		final int defaultWochenstundenQ = ((tmpFach.getFachgruppe(schuljahr) == Fachgruppe.FG_VX) || (tmpFach.getFachgruppe(schuljahr) == Fachgruppe.FG_PX))
-				? 2 : defaultWochenstundenQ_GK;
-		eintrag.wochenstundenQualifikationsphase =
-				(fach.WochenstundenQualifikationsphase == null) ? defaultWochenstundenQ : fach.WochenstundenQualifikationsphase;
+		if (AbiturdatenManager.nutzeExperimentellenCode(SVWSKonfiguration.get().getServerMode(), schuljahr + 1)) { // Experimenteller Code
+			final Fach tmpFach = Fach.getBySchluesselOrDefault(fach.StatistikKuerzel);
+			if (tmpFach.getFachgruppe(schuljahr) == Fachgruppe.FG_PX) {
+				eintrag.istMoeglichQ11 = false;
+				eintrag.istMoeglichQ12 = false;
+			}
+		}
+		eintrag.wochenstundenQualifikationsphase = getWochenstundenQPhaseByDTOFach(schuljahr, fach);
 		eintrag.projektKursLeitfach1ID = fach.ProjektKursLeitfach1_ID;
 		if (fach.ProjektKursLeitfach1_ID == null) {
 			eintrag.projektKursLeitfach1Kuerzel = null;
@@ -122,8 +194,9 @@ public final class DBUtilsFaecherGost {
 		eintrag.kuerzelAnzeige = fach.Kuerzel;
 		eintrag.bezeichnung = fach.Bezeichnung;
 		eintrag.sortierung = fach.SortierungAllg;
-		eintrag.istPruefungsordnungsRelevant = fach.IstPruefungsordnungsRelevant
-				&& ((SVWSKonfiguration.get().getServerMode() != ServerMode.DEV) || (schuljahr < 2028) || ((f != Fach.IN) && (f != Fach.VO))); // Experimenteller Code
+		eintrag.istPruefungsordnungsRelevant = fach.IstPruefungsordnungsRelevant;
+		if (AbiturdatenManager.nutzeExperimentellenCode(SVWSKonfiguration.get().getServerMode(), schuljahr + 1)) // Experimenteller Code
+			eintrag.istPruefungsordnungsRelevant = eintrag.istPruefungsordnungsRelevant && ((f != Fach.IN) && (f != Fach.VO));
 		eintrag.istFremdsprache = fach.IstFremdsprache;
 		eintrag.istFremdSpracheNeuEinsetzend = fach.IstMoeglichAlsNeueFremdspracheInSekII;
 		eintrag.biliSprache = ((fach.Unterrichtssprache != null) && (!"".equals(fach.Unterrichtssprache)) && (!"D".equals(fach.Unterrichtssprache)))
@@ -137,17 +210,15 @@ public final class DBUtilsFaecherGost {
 			eintrag.istMoeglichQ12 = jf.WaehlbarQ12;
 			eintrag.istMoeglichQ21 = jf.WaehlbarQ21;
 			eintrag.istMoeglichQ22 = jf.WaehlbarQ22;
+			if (AbiturdatenManager.nutzeExperimentellenCode(SVWSKonfiguration.get().getServerMode(), schuljahr + 1)) { // Experimenteller Code
+				final Fach tmpFach = Fach.getBySchluesselOrDefault(fach.StatistikKuerzel);
+				if (tmpFach.getFachgruppe(schuljahr) == Fachgruppe.FG_PX) {
+					eintrag.istMoeglichQ11 = false;
+					eintrag.istMoeglichQ12 = false;
+				}
+			}
 		}
-		final Fach tmpFach = Fach.getBySchluesselOrDefault(fach.StatistikKuerzel);
-		final int defaultWochenstundenQ_GK = (Jahrgaenge.EF == tmpFach.getJahrgangAb(schuljahr)) ? 4 : 3;
-		final int defaultWochenstundenQ = ((tmpFach.getFachgruppe(schuljahr) == Fachgruppe.FG_VX) || (tmpFach.getFachgruppe(schuljahr) == Fachgruppe.FG_PX))
-				? 2 : defaultWochenstundenQ_GK;
-		if ((jf == null) || (jf.WochenstundenQPhase == null)) {
-			eintrag.wochenstundenQualifikationsphase = (fach.WochenstundenQualifikationsphase == null)
-					? defaultWochenstundenQ : fach.WochenstundenQualifikationsphase;
-		} else {
-			eintrag.wochenstundenQualifikationsphase = jf.WochenstundenQPhase;
-		}
+		eintrag.wochenstundenQualifikationsphase = getWochenstundenQPhaseByDTOFach(schuljahr, jf, fach);
 		eintrag.projektKursLeitfach1ID = fach.ProjektKursLeitfach1_ID;
 		eintrag.projektKursLeitfach1Kuerzel = (fach.ProjektKursLeitfach1_ID == null)
 				? null : faecher.get(fach.ProjektKursLeitfach1_ID).StatistikKuerzel;

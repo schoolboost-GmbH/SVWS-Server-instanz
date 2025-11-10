@@ -32,7 +32,7 @@ export class ValidatorGesamtLehrerdaten extends Validator {
 	}
 
 	isTranspiledInstanceOf(name: string): boolean {
-		return ['de.svws_nrw.asd.validate.gesamt.ValidatorGesamtLehrerdaten', 'de.svws_nrw.asd.validate.Validator'].includes(name);
+		return ['de.svws_nrw.asd.validate.gesamt.ValidatorGesamtLehrerdaten', 'de.svws_nrw.asd.validate.BasicValidator', 'de.svws_nrw.asd.validate.Validator'].includes(name);
 	}
 
 	public static class = new Class<ValidatorGesamtLehrerdaten>('de.svws_nrw.asd.validate.gesamt.ValidatorGesamtLehrerdaten');

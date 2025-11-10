@@ -119,6 +119,16 @@ import { FormOffenerGanztag } from "../types/schule/FormOffenerGanztag";
 import { FormOffenerGanztagKatalogEintrag } from "../data/schule/FormOffenerGanztagKatalogEintrag";
 import { Floskelgruppenart } from "../types/schule/Floskelgruppenart";
 import { FloskelgruppenartKatalogEintrag } from "../data/schule/FloskelgruppenartKatalogEintrag";
+import { Einwilligungsschluessel } from "../types/schule/Einwilligungsschluessel";
+import { EinwilligungsschluesselKatalogEintrag } from "../data/schule/EinwilligungsschluesselKatalogEintrag";
+import { Herkunftsarten } from "../types/schueler/Herkunftsarten";
+import { HerkunftsartenKatalogEintrag } from "../data/schueler/HerkunftsartenKatalogEintrag";
+import { HerkunftSonstige } from "../types/schueler/HerkunftSonstige";
+import { HerkunftSonstigeKatalogEintrag } from "../data/schueler/HerkunftSonstigeKatalogEintrag";
+import { HerkunftSchulform } from "../types/schueler/HerkunftSchulform";
+import { HerkunftSchulformKatalogEintrag } from "../data/schueler/HerkunftSchulformKatalogEintrag";
+import { Bildungsstufe } from "../types/schule/Bildungsstufe";
+import { BildungsstufeKatalogEintrag } from "../data/schule/BildungsstufeKatalogEintrag";
 
 interface JsonCoreTypeEntry<T> {
 	bezeichner: string;
@@ -161,7 +171,7 @@ export class JsonCoreTypeReader {
 		"LehrerLehramtAnerkennung", "LehrerLehrbefaehigungAnerkennung", "LehrerLeitungsfunktion", "LehrerRechtsverhaeltnis", "LehrerZugangsgrund", "BilingualeSprache", "KAOABerufsfeld",
 		"KAOAMerkmaleOptionsarten", "KAOAZusatzmerkmaleOptionsarten", "KAOAEbene4", "KAOAZusatzmerkmal", "KAOAAnschlussoptionen", "KAOAKategorie", "KAOAMerkmal", "Klassenart", "Uebergangsempfehlung",
 		"ZulaessigeKursart", "Foerderschwerpunkt", "Termin", "Betreuungsart", "FormOffenerGanztag", "LehrerAnrechnungsgrund", "LehrerMehrleistungsarten", "LehrerMinderleistungsarten", "LehrerPflichtstundensollVollzeit", "Nationalitaeten", "ValidatorenFehlerartKontext",
-		"Floskelgruppenart",
+		"Floskelgruppenart", "Einwilligungsschluessel", "Herkunftsarten", "HerkunftSonstige", "HerkunftSchulform", "Bildungsstufe",
 	] as const;
 
 	public constructor(url?: string) {
@@ -509,12 +519,12 @@ export class JsonCoreTypeReader {
 		const manager = new CoreTypeDataManager<BetreuungsartKatalogEintrag, Betreuungsart>(data.version, Betreuungsart.class, Betreuungsart.values(), data.mapData, data.mapStatistikIDs);
 		Betreuungsart.init(manager);
 	}
-	
+
 	public readFormOffenerGanztag() {
-			const data = this.read('FormOffenerGanztag', (json) => FormOffenerGanztagKatalogEintrag.transpilerFromJSON(json));
-			const manager = new CoreTypeDataManager<FormOffenerGanztagKatalogEintrag, FormOffenerGanztag>(data.version, FormOffenerGanztag.class, FormOffenerGanztag.values(), data.mapData, data.mapStatistikIDs);
-			FormOffenerGanztag.init(manager);
-		}
+		const data = this.read('FormOffenerGanztag', (json) => FormOffenerGanztagKatalogEintrag.transpilerFromJSON(json));
+		const manager = new CoreTypeDataManager<FormOffenerGanztagKatalogEintrag, FormOffenerGanztag>(data.version, FormOffenerGanztag.class, FormOffenerGanztag.values(), data.mapData, data.mapStatistikIDs);
+		FormOffenerGanztag.init(manager);
+	}
 
 	public readLehrerAnrechnungsgrund() {
 		const data = this.read('LehrerAnrechnungsgrund', (json) => LehrerAnrechnungsgrundKatalogEintrag.transpilerFromJSON(json));
@@ -556,6 +566,41 @@ export class JsonCoreTypeReader {
 		CoreTypeSimple.initValues(new Floskelgruppenart(), Floskelgruppenart.class, data.mapData);
 		const manager = new CoreTypeDataManager<FloskelgruppenartKatalogEintrag, Floskelgruppenart>(data.version, Floskelgruppenart.class, Floskelgruppenart.values(), data.mapData, data.mapStatistikIDs);
 		Floskelgruppenart.init(manager);
+	}
+
+	public readEinwilligungsschluessel() {
+		const data = this.read('Einwilligungsschluessel', (json) => EinwilligungsschluesselKatalogEintrag.transpilerFromJSON(json));
+		CoreTypeSimple.initValues(new Einwilligungsschluessel(), Einwilligungsschluessel.class, data.mapData);
+		const manager = new CoreTypeDataManager<EinwilligungsschluesselKatalogEintrag, Einwilligungsschluessel>(data.version, Einwilligungsschluessel.class, Einwilligungsschluessel.values(), data.mapData, data.mapStatistikIDs);
+		Einwilligungsschluessel.init(manager);
+	}
+
+	public readBildungsstufe() {
+		const data = this.read('Bildungsstufe', (json) => BildungsstufeKatalogEintrag.transpilerFromJSON(json));
+		CoreTypeSimple.initValues(new Bildungsstufe(), Bildungsstufe.class, data.mapData);
+		const manager = new CoreTypeDataManager<BildungsstufeKatalogEintrag, Bildungsstufe>(data.version, Bildungsstufe.class, Bildungsstufe.values(), data.mapData, data.mapStatistikIDs);
+		Bildungsstufe.init(manager);
+	}
+
+	public readHerkunftsarten() {
+		const data = this.read('Herkunftsarten', (json) => HerkunftsartenKatalogEintrag.transpilerFromJSON(json));
+		CoreTypeSimple.initValues(new Herkunftsarten(), Herkunftsarten.class, data.mapData);
+		const manager = new CoreTypeDataManager<HerkunftsartenKatalogEintrag, Herkunftsarten>(data.version, Herkunftsarten.class, Herkunftsarten.values(), data.mapData, data.mapStatistikIDs);
+		Herkunftsarten.init(manager);
+	}
+
+	public readHerkunftSonstige() {
+		const data = this.read('HerkunftSonstige', (json) => HerkunftSonstigeKatalogEintrag.transpilerFromJSON(json));
+		CoreTypeSimple.initValues(new HerkunftSonstige(), HerkunftSonstige.class, data.mapData);
+		const manager = new CoreTypeDataManager<HerkunftSonstigeKatalogEintrag, HerkunftSonstige>(data.version, HerkunftSonstige.class, HerkunftSonstige.values(), data.mapData, data.mapStatistikIDs);
+		HerkunftSonstige.init(manager);
+	}
+
+	public readHerkunftSchulform() {
+		const data = this.read('HerkunftSchulform', (json) => HerkunftSchulformKatalogEintrag.transpilerFromJSON(json));
+		CoreTypeSimple.initValues(new HerkunftSchulform(), HerkunftSchulform.class, data.mapData);
+		const manager = new CoreTypeDataManager<HerkunftSchulformKatalogEintrag, HerkunftSchulform>(data.version, HerkunftSchulform.class, HerkunftSchulform.values(), data.mapData, data.mapStatistikIDs);
+		HerkunftSchulform.init(manager);
 	}
 
 	public readValidatorenFehlerartKontext() {
@@ -651,6 +696,11 @@ export class JsonCoreTypeReader {
 			this.readNationalitaeten();
 			this.readValidatorenFehlerartKontext();
 			this.readFloskelgruppenart();
+			this.readEinwilligungsschluessel();
+			this.readHerkunftsarten();
+			this.readHerkunftSonstige();
+			this.readHerkunftSchulform();
+			this.readBildungsstufe();
 		} catch (e) {
 			console.log(e);
 		}

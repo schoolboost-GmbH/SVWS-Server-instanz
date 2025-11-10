@@ -26,7 +26,7 @@ import de.svws_nrw.csv.converter.current.DatumConverterDeserializer;
 @Entity
 @Cacheable(DBEntityManager.use_db_caching)
 @Table(name = "UV_Raeume")
-@JsonPropertyOrder({"ID", "Kuerzel", "GueltigAb", "GueltigBis"})
+@JsonPropertyOrder({"ID", "Kuerzel", "GueltigVon", "GueltigBis"})
 public final class DTOUvRaum {
 
 	/** Die Datenbankabfrage für alle DTOs */
@@ -53,11 +53,11 @@ public final class DTOUvRaum {
 	/** Die Datenbankabfrage für DTOs anhand einer Liste von Werten des Attributes Kuerzel */
 	public static final String QUERY_LIST_BY_KUERZEL = "SELECT e FROM DTOUvRaum e WHERE e.Kuerzel IN ?1";
 
-	/** Die Datenbankabfrage für DTOs anhand des Attributes GueltigAb */
-	public static final String QUERY_BY_GUELTIGAB = "SELECT e FROM DTOUvRaum e WHERE e.GueltigAb = ?1";
+	/** Die Datenbankabfrage für DTOs anhand des Attributes GueltigVon */
+	public static final String QUERY_BY_GUELTIGVON = "SELECT e FROM DTOUvRaum e WHERE e.GueltigVon = ?1";
 
-	/** Die Datenbankabfrage für DTOs anhand einer Liste von Werten des Attributes GueltigAb */
-	public static final String QUERY_LIST_BY_GUELTIGAB = "SELECT e FROM DTOUvRaum e WHERE e.GueltigAb IN ?1";
+	/** Die Datenbankabfrage für DTOs anhand einer Liste von Werten des Attributes GueltigVon */
+	public static final String QUERY_LIST_BY_GUELTIGVON = "SELECT e FROM DTOUvRaum e WHERE e.GueltigVon IN ?1";
 
 	/** Die Datenbankabfrage für DTOs anhand des Attributes GueltigBis */
 	public static final String QUERY_BY_GUELTIGBIS = "SELECT e FROM DTOUvRaum e WHERE e.GueltigBis = ?1";
@@ -77,12 +77,12 @@ public final class DTOUvRaum {
 	public String Kuerzel;
 
 	/** Das Datum, ab dem der Raum gültig ist */
-	@Column(name = "GueltigAb")
+	@Column(name = "GueltigVon")
 	@JsonProperty
 	@Convert(converter = DatumConverter.class)
 	@JsonSerialize(using = DatumConverterSerializer.class)
 	@JsonDeserialize(using = DatumConverterDeserializer.class)
-	public String GueltigAb;
+	public String GueltigVon;
 
 	/** Das Datum, bis wann der Raum gültig ist. Ist kein Datum gesetzt, gilt der Raum unbegrenzt weiter. */
 	@Column(name = "GueltigBis")
@@ -103,18 +103,18 @@ public final class DTOUvRaum {
 	 * Erstellt ein neues Objekt der Klasse DTOUvRaum ohne eine Initialisierung der Attribute.
 	 * @param ID   der Wert für das Attribut ID
 	 * @param Kuerzel   der Wert für das Attribut Kuerzel
-	 * @param GueltigAb   der Wert für das Attribut GueltigAb
+	 * @param GueltigVon   der Wert für das Attribut GueltigVon
 	 */
-	public DTOUvRaum(final long ID, final String Kuerzel, final String GueltigAb) {
+	public DTOUvRaum(final long ID, final String Kuerzel, final String GueltigVon) {
 		this.ID = ID;
 		if (Kuerzel == null) {
 			throw new NullPointerException("Kuerzel must not be null");
 		}
 		this.Kuerzel = Kuerzel;
-		if (GueltigAb == null) {
-			throw new NullPointerException("GueltigAb must not be null");
+		if (GueltigVon == null) {
+			throw new NullPointerException("GueltigVon must not be null");
 		}
-		this.GueltigAb = GueltigAb;
+		this.GueltigVon = GueltigVon;
 	}
 
 
@@ -146,7 +146,7 @@ public final class DTOUvRaum {
 	 */
 	@Override
 	public String toString() {
-		return "DTOUvRaum(ID=" + this.ID + ", Kuerzel=" + this.Kuerzel + ", GueltigAb=" + this.GueltigAb + ", GueltigBis=" + this.GueltigBis + ")";
+		return "DTOUvRaum(ID=" + this.ID + ", Kuerzel=" + this.Kuerzel + ", GueltigVon=" + this.GueltigVon + ", GueltigBis=" + this.GueltigBis + ")";
 	}
 
 }

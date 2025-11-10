@@ -1,5 +1,7 @@
 import { JavaObject } from '../../java/lang/JavaObject';
 import { ValidatorFehlerart } from '../../asd/validate/ValidatorFehlerart';
+import { ValidatorException } from '../../asd/validate/ValidatorException';
+import { BasicValidator } from '../../asd/validate/BasicValidator';
 import { Class } from '../../java/lang/Class';
 import { ValidatorKontext } from '../../asd/validate/ValidatorKontext';
 import { Validator, cast_de_svws_nrw_asd_validate_Validator } from '../../asd/validate/Validator';
@@ -9,7 +11,7 @@ export class ValidatorFehler extends JavaObject {
 	/**
 	 * Der Validator bei dem die Validierung fehlgeschlagen ist.
 	 */
-	private readonly _validator: Validator;
+	private readonly _validator: BasicValidator;
 
 	/**
 	 * Die Nummer des Prüfschrittes, bei welchem der Fehler aufgetreten ist
@@ -29,7 +31,7 @@ export class ValidatorFehler extends JavaObject {
 	 * @param pruefschritt    die Nummer des Prüfschrittes, bei welchem der Fehler aufgetreten ist
 	 * @param fehlermeldung   die Fehlermeldung, welche vom Validator gemeldet wurde
 	 */
-	public constructor(validator: Validator, pruefschritt: number, fehlermeldung: string) {
+	public constructor(validator: BasicValidator, pruefschritt: number, fehlermeldung: string) {
 		super();
 		this._validator = validator;
 		this._fehlermeldung = fehlermeldung;
@@ -42,7 +44,7 @@ export class ValidatorFehler extends JavaObject {
 	 * @return die Schulnummer
 	 */
 	public getSchulnummer(): number {
-		return this._validator.kontext().getSchulnummer();
+		return this.getKontext().getSchulnummer();
 	}
 
 	/**
@@ -51,7 +53,9 @@ export class ValidatorFehler extends JavaObject {
 	 * @return der Kontext
 	 */
 	public getKontext(): ValidatorKontext {
-		return this._validator.kontext();
+		if (((this._validator instanceof JavaObject) && (this._validator.isTranspiledInstanceOf('de.svws_nrw.asd.validate.Validator'))))
+			return (this._validator as unknown as Validator).kontext();
+		throw new ValidatorException("Der Validator ist nur ein BasicValidator und kein Validator, weshalb er keinen ValidatorKontext hat.")
 	}
 
 	/**
@@ -59,7 +63,7 @@ export class ValidatorFehler extends JavaObject {
 	 *
 	 * @return der Validator
 	 */
-	public getValidator(): Validator | null {
+	public getValidator(): BasicValidator | null {
 		return this._validator;
 	}
 
@@ -77,7 +81,7 @@ export class ValidatorFehler extends JavaObject {
 	 *
 	 * @return die Validator-Klasse
 	 */
-	public getValidatorClass(): Class<Validator> | null {
+	public getValidatorClass(): Class<BasicValidator> | null {
 		return this._validator.getClass();
 	}
 

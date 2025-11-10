@@ -229,6 +229,8 @@
 	}
 
 	function openListbox() {
+		if (props.readonly)
+			return;
 		showList.value = true;
 		if ((selectedItem.value !== null) && (selectedItem.value !== undefined) && (refList.value !== undefined) && (refList.value !== null)) {
 			refList.value.activeItemIndex = filteredList.value.findIndex(item => item === selectedItem.value);

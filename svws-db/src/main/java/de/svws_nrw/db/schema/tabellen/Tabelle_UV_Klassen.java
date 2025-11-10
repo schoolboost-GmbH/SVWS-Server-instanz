@@ -37,7 +37,14 @@ public class Tabelle_UV_Klassen extends SchemaTabelle {
 	/** Die Definition der Tabellenspalte Klasse */
 	public final SchemaTabelleSpalte col_Klasse = add("Klasse", SchemaDatentypen.VARCHAR, false).setDatenlaenge(15)
 			.setNotNull()
-			.setJavaComment("Kürzel der Klasse");
+			.setJavaComment("Kürzel der Klasse")
+			.setVeraltet(SchemaRevisionen.REV_49);
+
+	/** Die Definition der Tabellenspalte Kuerzel */
+	public final SchemaTabelleSpalte col_Kuerzel = add("Kuerzel", SchemaDatentypen.VARCHAR, false).setDatenlaenge(15)
+			.setNotNull()
+			.setJavaComment("Kürzel der Klasse")
+			.setRevision(SchemaRevisionen.REV_50);
 
 	/** Die Definition der Tabellenspalte Parallelitaet */
 	public final SchemaTabelleSpalte col_Parallelitaet = add("Parallelitaet", SchemaDatentypen.VARCHAR, false).setDatenlaenge(2)
@@ -82,6 +89,15 @@ public class Tabelle_UV_Klassen extends SchemaTabelle {
 			new Pair<>(col_Stundentafel_ID, Schema.tab_UV_Stundentafeln.col_ID)
 	);
 
+	/** Fremdschlüssel auf die Tabelle UV_Schuelergruppen DEPRECATED wegen Bug bei Erstellung des FKs (Spaltenreihenfolge #4a702e6e) */
+	public final SchemaTabelleFremdschluessel fk_UVKlassen_UVSchuelergruppen_FK_Deprecated_Revision_49 = addForeignKey(
+			"UVKlassen_UVSchuelergruppen_FK",
+			/* OnUpdate: */ SchemaFremdschluesselAktionen.CASCADE,
+			/* OnDelete: */ SchemaFremdschluesselAktionen.RESTRICT,
+			new Pair<>(col_Schuelergruppe_ID, Schema.tab_UV_Schuelergruppen.col_ID),
+			new Pair<>(col_Planungsabschnitt_ID, Schema.tab_UV_Schuelergruppen.col_Planungsabschnitt_ID)
+	).setVeraltet(SchemaRevisionen.REV_49);
+
 	/** Fremdschlüssel auf die Tabelle UV_Schuelergruppen */
 	public final SchemaTabelleFremdschluessel fk_UVKlassen_UVSchuelergruppen_FK = addForeignKey(
 			"UVKlassen_UVSchuelergruppen_FK",
@@ -89,7 +105,7 @@ public class Tabelle_UV_Klassen extends SchemaTabelle {
 			/* OnDelete: */ SchemaFremdschluesselAktionen.RESTRICT,
 			new Pair<>(col_Schuelergruppe_ID, Schema.tab_UV_Schuelergruppen.col_ID),
 			new Pair<>(col_Planungsabschnitt_ID, Schema.tab_UV_Schuelergruppen.col_Planungsabschnitt_ID)
-	);
+	).setRevision(SchemaRevisionen.REV_50);
 
 	/** Unique-Index für die Kombination ID und Planungsabschnitt_ID, benötigt durch 2-teiligen FK */
 	public final SchemaTabelleUniqueIndex unique_UVKlassen_UC1 = addUniqueIndex("UVKlassen_UC1",

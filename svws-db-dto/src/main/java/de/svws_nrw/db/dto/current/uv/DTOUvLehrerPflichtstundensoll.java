@@ -26,7 +26,7 @@ import de.svws_nrw.csv.converter.current.DatumConverterDeserializer;
 @Entity
 @Cacheable(DBEntityManager.use_db_caching)
 @Table(name = "UV_LehrerPflichtstundensoll")
-@JsonPropertyOrder({"ID", "Lehrer_ID", "PflichtstdSoll", "GueltigAb", "GueltigBis"})
+@JsonPropertyOrder({"ID", "Lehrer_ID", "PflichtstdSoll", "GueltigVon", "GueltigBis"})
 public final class DTOUvLehrerPflichtstundensoll {
 
 	/** Die Datenbankabfrage für alle DTOs */
@@ -59,11 +59,11 @@ public final class DTOUvLehrerPflichtstundensoll {
 	/** Die Datenbankabfrage für DTOs anhand einer Liste von Werten des Attributes PflichtstdSoll */
 	public static final String QUERY_LIST_BY_PFLICHTSTDSOLL = "SELECT e FROM DTOUvLehrerPflichtstundensoll e WHERE e.PflichtstdSoll IN ?1";
 
-	/** Die Datenbankabfrage für DTOs anhand des Attributes GueltigAb */
-	public static final String QUERY_BY_GUELTIGAB = "SELECT e FROM DTOUvLehrerPflichtstundensoll e WHERE e.GueltigAb = ?1";
+	/** Die Datenbankabfrage für DTOs anhand des Attributes GueltigVon */
+	public static final String QUERY_BY_GUELTIGVON = "SELECT e FROM DTOUvLehrerPflichtstundensoll e WHERE e.GueltigVon = ?1";
 
-	/** Die Datenbankabfrage für DTOs anhand einer Liste von Werten des Attributes GueltigAb */
-	public static final String QUERY_LIST_BY_GUELTIGAB = "SELECT e FROM DTOUvLehrerPflichtstundensoll e WHERE e.GueltigAb IN ?1";
+	/** Die Datenbankabfrage für DTOs anhand einer Liste von Werten des Attributes GueltigVon */
+	public static final String QUERY_LIST_BY_GUELTIGVON = "SELECT e FROM DTOUvLehrerPflichtstundensoll e WHERE e.GueltigVon IN ?1";
 
 	/** Die Datenbankabfrage für DTOs anhand des Attributes GueltigBis */
 	public static final String QUERY_BY_GUELTIGBIS = "SELECT e FROM DTOUvLehrerPflichtstundensoll e WHERE e.GueltigBis = ?1";
@@ -85,15 +85,15 @@ public final class DTOUvLehrerPflichtstundensoll {
 	/** Pflichtstundensoll des Lehrers im jeweiligen Gültigkeitszeitraum */
 	@Column(name = "PflichtstdSoll")
 	@JsonProperty
-	public Double PflichtstdSoll;
+	public double PflichtstdSoll;
 
-	/** Das Datum, ab dem das Pflichtstundensoll gültig ist */
-	@Column(name = "GueltigAb")
+	/** Das Datum, ab dem der Raum gültig ist */
+	@Column(name = "GueltigVon")
 	@JsonProperty
 	@Convert(converter = DatumConverter.class)
 	@JsonSerialize(using = DatumConverterSerializer.class)
 	@JsonDeserialize(using = DatumConverterDeserializer.class)
-	public String GueltigAb;
+	public String GueltigVon;
 
 	/** Das Datum, bis wann das Pflichtstundensoll gültig ist */
 	@Column(name = "GueltigBis")
@@ -114,20 +114,17 @@ public final class DTOUvLehrerPflichtstundensoll {
 	 * Erstellt ein neues Objekt der Klasse DTOUvLehrerPflichtstundensoll ohne eine Initialisierung der Attribute.
 	 * @param ID   der Wert für das Attribut ID
 	 * @param Lehrer_ID   der Wert für das Attribut Lehrer_ID
-	 * @param GueltigAb   der Wert für das Attribut GueltigAb
-	 * @param GueltigBis   der Wert für das Attribut GueltigBis
+	 * @param PflichtstdSoll   der Wert für das Attribut PflichtstdSoll
+	 * @param GueltigVon   der Wert für das Attribut GueltigVon
 	 */
-	public DTOUvLehrerPflichtstundensoll(final long ID, final long Lehrer_ID, final String GueltigAb, final String GueltigBis) {
+	public DTOUvLehrerPflichtstundensoll(final long ID, final long Lehrer_ID, final double PflichtstdSoll, final String GueltigVon) {
 		this.ID = ID;
 		this.Lehrer_ID = Lehrer_ID;
-		if (GueltigAb == null) {
-			throw new NullPointerException("GueltigAb must not be null");
+		this.PflichtstdSoll = PflichtstdSoll;
+		if (GueltigVon == null) {
+			throw new NullPointerException("GueltigVon must not be null");
 		}
-		this.GueltigAb = GueltigAb;
-		if (GueltigBis == null) {
-			throw new NullPointerException("GueltigBis must not be null");
-		}
-		this.GueltigBis = GueltigBis;
+		this.GueltigVon = GueltigVon;
 	}
 
 
@@ -159,7 +156,7 @@ public final class DTOUvLehrerPflichtstundensoll {
 	 */
 	@Override
 	public String toString() {
-		return "DTOUvLehrerPflichtstundensoll(ID=" + this.ID + ", Lehrer_ID=" + this.Lehrer_ID + ", PflichtstdSoll=" + this.PflichtstdSoll + ", GueltigAb=" + this.GueltigAb + ", GueltigBis=" + this.GueltigBis + ")";
+		return "DTOUvLehrerPflichtstundensoll(ID=" + this.ID + ", Lehrer_ID=" + this.Lehrer_ID + ", PflichtstdSoll=" + this.PflichtstdSoll + ", GueltigVon=" + this.GueltigVon + ", GueltigBis=" + this.GueltigBis + ")";
 	}
 
 }

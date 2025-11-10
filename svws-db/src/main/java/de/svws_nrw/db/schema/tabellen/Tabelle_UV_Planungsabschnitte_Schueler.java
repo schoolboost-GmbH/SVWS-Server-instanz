@@ -14,13 +14,6 @@ import de.svws_nrw.db.schema.SchemaTabelleSpalte;
  */
 public class Tabelle_UV_Planungsabschnitte_Schueler extends SchemaTabelle {
 
-	// Neue Tabelle Tabelle_UV_Gost_Schueler_Fachwahlen (planungsabschnitts-spezifisch) -> erstmal zurückstellen
-
-//	/** Die Definition der Tabellenspalte ID */
-//	public final SchemaTabelleSpalte col_ID = add("ID", SchemaDatentypen.BIGINT, true)
-//			.setNotNull()
-//			.setJavaComment("ID des UV-Schuelers (generiert, planungsspezifisch)");
-
 	/** Die Definition der Tabellenspalte Planungsabschnitt_ID */
 	public final SchemaTabelleSpalte col_Planungsabschnitt_ID = add("Planungsabschnitt_ID", SchemaDatentypen.BIGINT, true)
 			.setNotNull()
@@ -67,6 +60,15 @@ public class Tabelle_UV_Planungsabschnitte_Schueler extends SchemaTabelle {
 			new Pair<>(col_Jahrgang_ID, Schema.tab_EigeneSchule_Jahrgaenge.col_ID)
 	);
 
+	/** Die Definition des Fremdschlüssels UVPlanungsabschnitteSchueler_UVKlassen_FK DEPRECATED wegen Bug bei Erstellung des FKs (Spaltenreihenfolge #4a702e6e) */
+	public final SchemaTabelleFremdschluessel fk_UVPlanungsabschnitteSchueler_UVKlassen_FK_Deprecated_Revision_49 = addForeignKey(
+			"UVPlanungsabschnitteSchueler_UVKlassen_FK",
+			/* OnUpdate: */ SchemaFremdschluesselAktionen.CASCADE,
+			/* OnDelete: */ SchemaFremdschluesselAktionen.RESTRICT,
+			new Pair<>(col_Klasse_ID, Schema.tab_UV_Klassen.col_ID),
+			new Pair<>(col_Planungsabschnitt_ID, Schema.tab_UV_Klassen.col_Planungsabschnitt_ID)
+	).setVeraltet(SchemaRevisionen.REV_49);
+
 	/** Die Definition des Fremdschlüssels UVPlanungsabschnitteSchueler_UVKlassen_FK */
 	public final SchemaTabelleFremdschluessel fk_UVPlanungsabschnitteSchueler_UVKlassen_FK = addForeignKey(
 			"UVPlanungsabschnitteSchueler_UVKlassen_FK",
@@ -74,17 +76,7 @@ public class Tabelle_UV_Planungsabschnitte_Schueler extends SchemaTabelle {
 			/* OnDelete: */ SchemaFremdschluesselAktionen.RESTRICT,
 			new Pair<>(col_Klasse_ID, Schema.tab_UV_Klassen.col_ID),
 			new Pair<>(col_Planungsabschnitt_ID, Schema.tab_UV_Klassen.col_Planungsabschnitt_ID)
-	);
-
-//	/** Unique-Index für die Kombination ID und Planungsabschnitt_ID, benötigt durch 2-teiligen FK */
-//	public final SchemaTabelleUniqueIndex unique_UVPlanungsabschnitteSchueler_UC1 = addUniqueIndex("UVPlanungsabschnitteSchueler_UC1",
-//			col_ID, col_Planungsabschnitt_ID
-//	);
-
-//	/** Unique-Index für die Kombination Schueler_ID und Planungsabschnitt_ID */
-//	public final SchemaTabelleUniqueIndex unique_UVPlanungsabschnitteSchueler_UC2 = addUniqueIndex("UVPlanungsabschnitteSchueler_UC2",
-//			col_Schueler_ID, col_Planungsabschnitt_ID
-//	);
+	).setRevision(SchemaRevisionen.REV_50);
 
 	/**
 	 * Erstellt die Schema-Defintion für die Tabelle UV_Planungsabschnitte_Schueler.

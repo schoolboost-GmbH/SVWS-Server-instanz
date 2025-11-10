@@ -1,18 +1,21 @@
 package de.svws_nrw.data.schule;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
+import java.util.Set;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
-import de.svws_nrw.asd.data.jahrgang.JahrgaengeKatalogEintrag;
-import de.svws_nrw.asd.types.jahrgang.Jahrgaenge;
 import de.svws_nrw.core.data.schule.Floskel;
+import de.svws_nrw.core.data.schule.FloskelJahrgangZuordnung;
 import de.svws_nrw.data.DataManagerRevised;
 import de.svws_nrw.data.JSONMapper;
 import de.svws_nrw.db.DBEntityManager;
+import de.svws_nrw.db.dto.current.katalog.DTOFloskelgruppen;
+import de.svws_nrw.db.dto.current.katalog.DTOFloskeln;
 import de.svws_nrw.db.dto.current.schild.faecher.DTOFach;
-import de.svws_nrw.db.dto.current.schild.katalog.DTOFloskelgruppen;
-import de.svws_nrw.db.dto.current.schild.katalog.DTOFloskeln;
 import de.svws_nrw.db.schema.Schema;
 import de.svws_nrw.db.utils.ApiOperationException;
 import jakarta.ws.rs.core.Response;
@@ -21,151 +24,187 @@ import jakarta.ws.rs.core.Response;
 /**
  * Diese Klasse erweitert den abstrakten {@link DataManagerRevised} für das Core-DTO {@link Floskel}.
  */
-public final class DataFloskeln extends DataManagerRevised<String, DTOFloskeln, Floskel> {
+public final class DataFloskeln extends DataManagerRevised<Long, DTOFloskeln, Floskel> {
 
-	private final Map<String, DTOFach> faecherByKuerzel;
+	private final DataFloskelJahrgangZuordnung dataZuordnung;
 
 	/**
 	 * Erstellt einen neuen Datenmanager mit der angegebenen Verbindung
 	 *
-	 * @param conn die Datenbank-Verbindung, welche vom Daten-Manager benutzt werden soll
+	 * @param conn 				die Datenbank-Verbindung, welche vom Daten-Manager benutzt werden soll
+	 * @param dataZuordnung 	DataFloskelJahrgangZuordnung
 	 */
-	public DataFloskeln(final DBEntityManager conn) {
+	public DataFloskeln(final DBEntityManager conn, final DataFloskelJahrgangZuordnung dataZuordnung) {
 		super(conn);
+		this.dataZuordnung = dataZuordnung;
 		setAttributesRequiredOnCreation("kuerzel");
-		setAttributesNotPatchable("kuerzel");
-		this.faecherByKuerzel = getFaecherByKuerzel();
+		setAttributesNotPatchable("id");
+		setAttributesDelayedOnCreation("idsJahrgaenge");
 	}
 
 	@Override
-	protected String getID(final Map<String, Object> initAttributes) throws ApiOperationException {
-		return JSONMapper.convertToString(initAttributes.get("kuerzel"), false, false, Schema.tab_Floskeln.col_Kuerzel.datenlaenge(), "kuerzel");
+	protected void initDTO(final DTOFloskeln dto, final Long newID, final Map<String, Object> initAttributes) {
+		dto.ID = newID;
 	}
 
 	@Override
-	public void checkBeforeCreation(final String newID, final Map<String, Object> initAttributes) throws ApiOperationException {
-		final String kuerzel = JSONMapper.convertToString(initAttributes.get("kuerzel"), false, false, Schema.tab_Floskeln.col_Kuerzel.datenlaenge(), "kuerzel");
-		final boolean alreadyUsed = this.conn
-				.queryAll(DTOFloskeln.class).stream()
-				.anyMatch(f -> kuerzel.equalsIgnoreCase(f.Kuerzel));
-
-		if (alreadyUsed)
-			throw new ApiOperationException(Response.Status.BAD_REQUEST, "Das Kürzel %s wird bereits verwendet.".formatted(kuerzel));
+	protected long getLongId(final DTOFloskeln dto) throws ApiOperationException {
+		return dto.ID;
 	}
 
 	@Override
-	protected void initDTO(final DTOFloskeln dto, final String newID, final Map<String, Object> initAttributes) {
-		dto.Kuerzel = newID;
-	}
+	public Floskel getById(final Long id) throws ApiOperationException {
+		if (id == null)
+			throw new ApiOperationException(Response.Status.BAD_REQUEST, "Die ID der Floskel darf nicht null sein.");
 
-	@Override
-	protected Floskel map(final DTOFloskeln dto) {
-		final Floskel floskel = new Floskel();
-		floskel.kuerzel = dto.Kuerzel;
-		floskel.text = dto.FloskelText;
-		floskel.kuerzelFloskelgruppe = dto.FloskelGruppe;
-		floskel.idFach = mapIdFach(dto.FloskelFach);
-		floskel.niveau = dto.FloskelNiveau;
-		floskel.idJahrgang = mapIdJahrgang(dto.FloskelJahrgang);
-		return floskel;
-	}
-
-	@Override
-	public Floskel getById(final String kuerzel) throws ApiOperationException {
-		if (kuerzel == null)
-			throw new ApiOperationException(Response.Status.BAD_REQUEST, "Das Kürzel der Floskel darf nicht null sein.");
-
-		final DTOFloskeln dto = this.conn.queryByKey(DTOFloskeln.class, kuerzel);
+		final DTOFloskeln dto = this.conn.queryByKey(DTOFloskeln.class, id);
 		if (dto == null)
-			throw new ApiOperationException(Response.Status.NOT_FOUND, "Es wurde keine Floskel mit dem Kürzel %s gefunden.".formatted(kuerzel));
+			throw new ApiOperationException(Response.Status.NOT_FOUND, "Es wurde keine Floskel mit der ID %d gefunden.".formatted(id));
 
 		return map(dto);
 	}
 
 	@Override
 	public List<Floskel> getAll() {
-		return conn.queryAll(DTOFloskeln.class).stream()
+		return this.conn
+				.queryAll(DTOFloskeln.class).stream()
 				.map(this::map)
-				.collect(Collectors.toList());
+				.toList();
+	}
+
+	@Override
+	protected Floskel map(final DTOFloskeln dto) {
+		final Floskel floskel = new Floskel();
+		floskel.id = dto.ID;
+		floskel.kuerzel = dto.Kuerzel;
+		floskel.text = dto.Text;
+		floskel.idFloskelgruppe = dto.Gruppe_ID;
+		floskel.idFach = dto.Fach_ID;
+		floskel.niveau = dto.Niveau;
+		floskel.idsJahrgaenge = getIdsJahrgaenge(dto.ID);
+		floskel.istSichtbar = Boolean.TRUE.equals(dto.Sichtbar);
+		floskel.sortierung = (dto.Sortierung == null) ? 32000 : dto.Sortierung;
+		return floskel;
 	}
 
 	@Override
 	protected void mapAttribute(final DTOFloskeln dto, final String name, final Object value, final Map<String, Object> map)
 			throws ApiOperationException {
 		switch (name) {
-			case "kuerzel" -> {
-				// nicht patchbar - wird beim neu erstellen in der Methode initDto gesetzt
-			}
-			case "text" -> dto.FloskelText = JSONMapper.convertToString(value, true, true, Schema.tab_Floskeln.col_FloskelText.datenlaenge(), name);
-			case "kuerzelFloskelgruppe" -> updateFloskelgruppe(dto, name, value);
+			case "kuerzel" -> updateKuerzel(dto, value, name);
+			case "text" -> updateText(dto, name, value);
+			case "idFloskelgruppe" -> updateIdFloskelgruppe(dto, name, value);
 			case "idFach" -> updateFach(dto, name, value);
-			case "niveau" -> dto.FloskelNiveau = JSONMapper.convertToString(value, true, true, Schema.tab_Floskeln.col_FloskelNiveau.datenlaenge(), name);
-			case "idJahrgang" -> updateJahrgang(dto, name, value);
+			case "niveau" -> updateNiveau(dto, name, value);
+			case "idsJahrgaenge" -> updateIdsJahrgaenge(dto, name, value);
+			case "istSichtbar" -> updateSichtbar(dto, name, value);
+			case "sortierung" -> updateSortierung(dto, name, value);
 			default -> throw new ApiOperationException(Response.Status.BAD_REQUEST, "Die Daten des Patches enthalten das unbekannte Attribut %s.".formatted(name));
 		}
 	}
 
-	// --- constructor ---
-
-	private Map<String, DTOFach> getFaecherByKuerzel() {
-		return this.conn
-				.queryAll(DTOFach.class).stream()
-				.collect(Collectors.toMap(f -> f.Kuerzel, f -> f));
+	private List<Long> getIdsJahrgaenge(final long idFloskel) {
+		return this.dataZuordnung
+				.getListByIdFloskel(idFloskel).stream()
+				.map(fj -> fj.idJahrgang)
+				.toList();
 	}
 
-	// --- map ---
+	private void updateKuerzel(final DTOFloskeln dto, final Object value, final String name) throws ApiOperationException {
+		final String kuerzel = JSONMapper.convertToString(value, false, false, Schema.tab_Katalog_Floskeln.col_Kuerzel.datenlaenge(), name);
+		if (Objects.equals(dto.Kuerzel, kuerzel) || kuerzel.isBlank())
+			return;
 
-	private Long mapIdFach(final String kuerzelFach) {
-		final DTOFach fach = faecherByKuerzel.get(kuerzelFach);
-		return (fach == null) ? null : fach.ID;
+		final boolean alreadyUsed = this.conn
+				.queryAll(DTOFloskeln.class).stream()
+				.anyMatch(f -> (f.ID != dto.ID) && kuerzel.equalsIgnoreCase(f.Kuerzel));
+
+		if (alreadyUsed)
+			throw new ApiOperationException(Response.Status.BAD_REQUEST, "Das Kürzel %s wird bereits verwendet.".formatted(kuerzel));
+
+		dto.Kuerzel = kuerzel;
 	}
 
-	private Long mapIdJahrgang(final String kuerzelJahrgang) {
-		final int schuljahr = this.conn.getUser().schuleGetSchuljahresabschnitt().schuljahr;
-		final Jahrgaenge jahrgang = Jahrgaenge.data().getWertByKuerzel(kuerzelJahrgang);
-		return (jahrgang == null) ? null : jahrgang.daten(schuljahr).id;
+	private static void updateText(final DTOFloskeln dto, final String name, final Object value) throws ApiOperationException {
+		dto.Text = JSONMapper.convertToString(value, false, false, null, name);
 	}
 
-	// --- mapAttribute ---
+	private void updateIdFloskelgruppe(final DTOFloskeln dto, final String name, final Object value) throws ApiOperationException {
+		final Long idFloskelgruppe = JSONMapper.convertToLong(value, false, name);
+		if (Objects.equals(idFloskelgruppe, dto.Gruppe_ID))
+			return;
 
-	private void updateFloskelgruppe(final DTOFloskeln dto, final String name, final Object value) throws ApiOperationException {
-		final String kuerzelFloskelgruppe = JSONMapper.convertToString(value, false, false, Schema.tab_Floskeln.col_FloskelGruppe.datenlaenge(), name);
-		if (keineFloskelgruppeZumKuerzelVorhanden(kuerzelFloskelgruppe))
-			throw new ApiOperationException(Response.Status.NOT_FOUND, "Keine Floskelgruppe mit dem Kürzel %s vorhanden.".formatted(kuerzelFloskelgruppe));
+		if (matchingFloskelgruppeNotFound(idFloskelgruppe))
+			throw new ApiOperationException(Response.Status.NOT_FOUND, "Keine Floskelgruppe mit der id %d vorhanden.".formatted(idFloskelgruppe));
 
-		dto.FloskelGruppe = kuerzelFloskelgruppe;
+		dto.Gruppe_ID = idFloskelgruppe;
 	}
 
-	private boolean keineFloskelgruppeZumKuerzelVorhanden(final String kuerzelFloskelgruppe) {
-		return (this.conn.queryByKey(DTOFloskelgruppen.class, kuerzelFloskelgruppe) == null);
+	private boolean matchingFloskelgruppeNotFound(final Long id) {
+		return (this.conn.queryByKey(DTOFloskelgruppen.class, id) == null);
 	}
 
 	private void updateFach(final DTOFloskeln dto, final String name, final Object value) throws ApiOperationException {
 		final Long idFach = JSONMapper.convertToLong(value, true, name);
 		if (idFach == null) {
-			dto.FloskelFach = null;
+			dto.Fach_ID = null;
 			return;
 		}
 
-		final DTOFach fach = this.conn.queryByKey(DTOFach.class, idFach);
-		if (fach == null)
+		if (this.conn.queryByKey(DTOFach.class, idFach) == null)
 			throw new ApiOperationException(Response.Status.NOT_FOUND, "Kein Fach mit der ID %d gefunden.".formatted(idFach));
 
-		dto.FloskelFach = fach.Kuerzel;
+		dto.Fach_ID = idFach;
 	}
 
-	private void updateJahrgang(final DTOFloskeln dto, final String name, final Object value) throws ApiOperationException {
-		final Long idJahrgang = JSONMapper.convertToLong(value, true, name);
-		if (idJahrgang == null) {
-			dto.FloskelJahrgang = null;
+	private void updateIdsJahrgaenge(final DTOFloskeln dto, final String name, final Object value) throws ApiOperationException {
+		final List<Long> ids = JSONMapper.convertToListOfLong(value, false, name);
+		final Set<Long> newIdsJahrgaenge = new HashSet<>(ids);
+		if (ids.size() != newIdsJahrgaenge.size())
+			throw new ApiOperationException(Response.Status.BAD_REQUEST, "Die Liste der neuen JahrgangIDs darf keine Duplikate enthalten.");
+
+		final Map<Long, FloskelJahrgangZuordnung> zuordnungenById = this.dataZuordnung
+				.getAll().stream()
+				.collect(Collectors.toMap(
+						z -> z.idJahrgang,
+						Function.identity()
+				));
+
+		final Set<Long> oldIdsJahrgaenge = Set.copyOf(zuordnungenById.keySet());
+		if (newIdsJahrgaenge.equals(oldIdsJahrgaenge))
 			return;
+
+		deleteObsoleteZuordnungen(oldIdsJahrgaenge, newIdsJahrgaenge, zuordnungenById);
+		addNewZuordnungen(oldIdsJahrgaenge, newIdsJahrgaenge, dto.ID);
+	}
+
+	private void deleteObsoleteZuordnungen(final Set<Long> oldIdsJahrgaenge, final Set<Long> newIdsJahrgaenge, final Map<Long, FloskelJahrgangZuordnung> zuordnungenByIdJahrgang)
+			throws ApiOperationException {
+		for (final Long oldIdJahrgang: oldIdsJahrgaenge) {
+			if (!newIdsJahrgaenge.contains(oldIdJahrgang)) {
+				this.dataZuordnung.delete(zuordnungenByIdJahrgang.get(oldIdJahrgang).id);
+			}
 		}
+	}
 
-		final JahrgaengeKatalogEintrag jahrgang = Jahrgaenge.data().getEintragByID(idJahrgang);
-		if (jahrgang == null)
-			throw new ApiOperationException(Response.Status.NOT_FOUND, "Kein Jahrgang mit der ID %d gefunden.".formatted(idJahrgang));
+	private void addNewZuordnungen(final Set<Long> oldIds, final Set<Long> newIds, final Long idFloskel) throws ApiOperationException {
+		for (final Long newId: newIds) {
+			if (!oldIds.contains(newId)) {
+				this.dataZuordnung.add(Map.of("idFloskel", idFloskel, "idJahrgang", newId));
+			}
+		}
+	}
 
-		dto.FloskelJahrgang = jahrgang.kuerzel;
+	private static void updateSortierung(final DTOFloskeln dto, final String name, final Object value) throws ApiOperationException {
+		dto.Sortierung = JSONMapper.convertToIntegerInRange(value, true, 0, null, name);
+	}
+
+	private static void updateSichtbar(final DTOFloskeln dto, final String name, final Object value) throws ApiOperationException {
+		dto.Sichtbar = JSONMapper.convertToBoolean(value, true, name);
+	}
+
+	private static void updateNiveau(final DTOFloskeln dto, final String name, final Object value) throws ApiOperationException {
+		dto.Niveau = JSONMapper.convertToInteger(value, true, name);
 	}
 
 }

@@ -119,12 +119,12 @@
 	</div>
 </template>
 
-<script setup lang="ts" generic="T, V extends Validator">
+<script setup lang="ts" generic="T, V extends BasicValidator">
 
 	import { computed, ref, toRaw, useAttrs, watch } from 'vue';
 	import { useUiSelectUtils } from './selectManager/UiSelectUtils';
 	import type { UiSelectSingleProps } from './selectManager/UiSelectProps';
-	import type { Validator } from '../../../../../core/src/asd/validate/Validator';
+	import type { BasicValidator } from '../../../../../core/src/asd/validate/BasicValidator';
 	import { SelectManager } from './selectManager/SelectManager';
 	import { DeveloperNotificationException } from '../../../../../core/src/core/exceptions/DeveloperNotificationException';
 
@@ -204,7 +204,7 @@
 	 * Prüft, ob Eingaben abhänig von den Validatoren valide sind
 	 */
 	const isValidatorValid = computed((): boolean =>
-		(props.validator !== undefined) ? props.doValidate(props.validator(), toRaw(model.value) ?? null) : true
+		(props.validator === undefined) ? true : props.doValidate(props.validator(), toRaw(model.value) ?? null)
 	);
 
 	/**

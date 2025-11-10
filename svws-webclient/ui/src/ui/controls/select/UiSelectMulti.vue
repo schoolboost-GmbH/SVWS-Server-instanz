@@ -129,11 +129,11 @@
 	</div>
 </template>
 
-<script setup lang="ts" generic="T, V extends Validator">
+<script setup lang="ts" generic="T, V extends BasicValidator">
 
 	import { computed, ref, toRaw, useAttrs, watch } from 'vue';
 	import { useUiSelectUtils } from './selectManager/UiSelectUtils';
-	import type { Validator } from '../../../../../core/src/asd/validate/Validator';
+	import type { BasicValidator } from '../../../../../core/src/asd/validate/BasicValidator';
 	import type { UiSelectMultiProps } from './selectManager/UiSelectProps';
 	import { SelectManager } from './selectManager/SelectManager';
 	import { DeveloperNotificationException } from '../../../../../core/src/core/exceptions/DeveloperNotificationException';
@@ -233,7 +233,7 @@
 	 * Prüft, ob Eingaben abhänig von den Validatoren valide sind
 	 */
 	const isValidatorValid = computed((): boolean =>
-		(props.validator !== undefined) ? props.doValidate(props.validator(), toRaw(model.value) ?? null) : true
+		(props.validator === undefined) ? true : props.doValidate(props.validator(), toRaw(model.value) ?? null)
 	);
 
 	/**
@@ -266,7 +266,7 @@
 		if ((min !== null) && (max !== null))
 			return (min === max) ? `${min} Option` : `${Math.min(min, max)} - ${Math.max(min, max)} Optionen`;
 
-		return (min !== null) ? `min. ${min}` : `max. ${max}`;
+		return (min === null) ? `max. ${max}` : `min. ${min}`;
 	});
 
 	/**

@@ -209,9 +209,10 @@ public class Tabelle_Schueler extends SchemaTabelle {
 			.setConverter(BooleanPlusMinusDefaultMinusConverter.class)
 			.setJavaComment("DEPRECATED: Gibt an ob eine Schwerbehinderung vorliegt Ja Nein - verschoben nach SchuelerLernabschittsdaten");
 
-	/** Die Definition der Tabellenspalte Sportbefreiung_ID */
+	/** Die Definition der Tabellenspalte Sportbefreiung_ID DEPRECATED: wird jetzt über SchuelerVermerke abgebildet */
 	public final SchemaTabelleSpalte col_Sportbefreiung_ID = add("Sportbefreiung_ID", SchemaDatentypen.BIGINT, false)
-			.setJavaComment("ID der Sportbefreiung");
+			.setJavaComment("ID der Sportbefreiung")
+			.setVeraltet(SchemaRevisionen.REV_51);
 
 	/** Die Definition der Tabellenspalte Fahrschueler_ID */
 	public final SchemaTabelleSpalte col_Fahrschueler_ID = add("Fahrschueler_ID", SchemaDatentypen.BIGINT, false)
@@ -862,7 +863,7 @@ public class Tabelle_Schueler extends SchemaTabelle {
 			/* OnUpdate: */ SchemaFremdschluesselAktionen.CASCADE,
 			/* OnDelete: */ SchemaFremdschluesselAktionen.SET_NULL,
 			new Pair<>(col_Sportbefreiung_ID, Schema.tab_K_Sportbefreiung.col_ID)
-	).setRevision(SchemaRevisionen.REV_2);
+	).setRevision(SchemaRevisionen.REV_2).setVeraltet(SchemaRevisionen.REV_51);
 
 	/** Die Definition des Fremdschlüssels Schueler_Status_FK */
 	public final SchemaTabelleFremdschluessel fk_Schueler_Status_FK = addForeignKey(

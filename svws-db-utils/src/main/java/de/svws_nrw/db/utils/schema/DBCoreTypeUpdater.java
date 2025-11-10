@@ -13,10 +13,9 @@ import de.svws_nrw.asd.data.fach.FachKatalogEintrag;
 import de.svws_nrw.asd.data.fach.FachgruppeKatalogEintrag;
 import de.svws_nrw.asd.data.schueler.HerkunftBildungsgangKatalogEintrag;
 import de.svws_nrw.asd.data.schueler.HerkunftBildungsgangTypKatalogEintrag;
-import de.svws_nrw.core.data.schule.HerkunftSchulformKatalogEintrag;
-import de.svws_nrw.core.data.schule.HerkunftSonstigeKatalogEintrag;
-import de.svws_nrw.core.data.schule.HerkunftsartKatalogEintrag;
-import de.svws_nrw.core.data.schule.HerkunftsartKatalogEintragBezeichnung;
+import de.svws_nrw.asd.data.schueler.HerkunftSchulformKatalogEintrag;
+import de.svws_nrw.asd.data.schueler.HerkunftSonstigeKatalogEintrag;
+import de.svws_nrw.asd.data.schueler.HerkunftsartenKatalogEintrag;
 import de.svws_nrw.asd.data.schule.SchulformKatalogEintrag;
 import de.svws_nrw.asd.data.schule.SchulformSchulgliederung;
 import de.svws_nrw.core.logger.Logger;
@@ -31,9 +30,9 @@ import de.svws_nrw.asd.types.kurse.ZulaessigeKursart;
 import de.svws_nrw.asd.types.lehrer.LehrerLeitungsfunktion;
 import de.svws_nrw.asd.types.schueler.HerkunftBildungsgang;
 import de.svws_nrw.asd.types.schueler.HerkunftBildungsgangTyp;
-import de.svws_nrw.core.types.schueler.HerkunftSchulform;
-import de.svws_nrw.core.types.schueler.HerkunftSonstige;
-import de.svws_nrw.core.types.schueler.Herkunftsarten;
+import de.svws_nrw.asd.types.schueler.HerkunftSchulform;
+import de.svws_nrw.asd.types.schueler.HerkunftSonstige;
+import de.svws_nrw.asd.types.schueler.Herkunftsarten;
 import de.svws_nrw.asd.types.schule.AllgemeinbildendOrganisationsformen;
 import de.svws_nrw.core.types.schule.AllgemeineMerkmale;
 import de.svws_nrw.asd.types.schule.BerufskollegOrganisationsformen;
@@ -109,14 +108,14 @@ public class DBCoreTypeUpdater {
 		tables.add(new CoreTypeTable("Nationalitaeten_Keys", Nationalitaeten.data().getVersion(), updateNationalitaeten_Keys));
 		tables.add(new CoreTypeTable("Jahrgaenge_Keys", Jahrgaenge.data().getVersion(), updateJahrgaengeKeys));
 		tables.add(new CoreTypeTable("Noten", Note.data().getVersion(), updateNoten));
-		final long versionHerkuenfte = HerkunftSonstige.VERSION + HerkunftBildungsgang.data().getVersion() + HerkunftBildungsgangTyp.data().getVersion()
-				+ HerkunftSchulform.VERSION;
+		final long versionHerkuenfte = HerkunftSonstige.data().getVersion() + HerkunftBildungsgang.data().getVersion() + HerkunftBildungsgangTyp.data().getVersion()
+				+ HerkunftSchulform.data().getVersion();
 		tables.add(new CoreTypeTable("Herkunft", versionHerkuenfte, updateHerkuenfte));
 		tables.add(new CoreTypeTable("Herkunft_Keys", versionHerkuenfte, updateHerkuenfteKeys));
 		tables.add(new CoreTypeTable("Herkunft_Schulformen", versionHerkuenfte, updateHerkuenfteSchulformen));
-		tables.add(new CoreTypeTable("Herkunftsart", Herkunftsarten.VERSION, updateHerkunftsarten));
-		tables.add(new CoreTypeTable("Herkunftsart_Keys", Herkunftsarten.VERSION, updateHerkunftsartenKeys));
-		tables.add(new CoreTypeTable("Herkunftsart_Schulformen", Herkunftsarten.VERSION, updateHerkunftsartenSchulformen));
+		tables.add(new CoreTypeTable("Herkunftsart", Herkunftsarten.data().getVersion(), updateHerkunftsarten));
+		tables.add(new CoreTypeTable("Herkunftsart_Keys", Herkunftsarten.data().getVersion(), updateHerkunftsartenKeys));
+		tables.add(new CoreTypeTable("Herkunftsart_Schulformen", Herkunftsarten.data().getVersion(), updateHerkunftsartenSchulformen));
 		tables.add(new CoreTypeTable("KlassenartenKatalog_Keys", Klassenart.data().getVersion(), updateKlassenartenKeys));
 		tables.add(new CoreTypeTable("KursartenKatalog_Keys", ZulaessigeKursart.data().getVersion(), updateKursartenKeys));
 		tables.add(new CoreTypeTable("FachKatalog", Fach.data().getVersion(), updateZulaessigeFaecher));
@@ -555,12 +554,12 @@ public class DBCoreTypeUpdater {
 		sql.append("(ID, Kuerzel, Beschreibung, gueltigVon, gueltigBis) ");
 		boolean isFirst = true;
 		for (final HerkunftSonstige herkunft : HerkunftSonstige.values()) {
-			for (final HerkunftSonstigeKatalogEintrag h : herkunft.historie) {
+			for (final HerkunftSonstigeKatalogEintrag h : herkunft.historie()) {
 				sql.append(isFirst ? strValues : ", (");
 				isFirst = false;
 				sql.append(h.id + 1000000000L).append(",");
 				sql.append("'").append(h.kuerzel).append("'").append(",");
-				sql.append("'").append(h.beschreibung.replace("'", "''")).append("'").append(",");
+				sql.append("'").append(h.text.replace("'", "''")).append("'").append(",");
 				sql.append(h.gueltigVon).append(",");
 				sql.append(h.gueltigBis).append(")");
 			}
@@ -588,12 +587,12 @@ public class DBCoreTypeUpdater {
 			}
 		}
 		for (final HerkunftSchulform herkunft : HerkunftSchulform.values()) {
-			for (final HerkunftSchulformKatalogEintrag h : herkunft.historie) {
+			for (final HerkunftSchulformKatalogEintrag h : herkunft.historie()) {
 				sql.append(isFirst ? strValues : ", (");
 				isFirst = false;
 				sql.append(h.id + 4000000000L).append(",");
 				sql.append("'").append(h.kuerzel).append("'").append(",");
-				sql.append("'").append(h.beschreibung.replace("'", "''")).append("'").append(",");
+				sql.append("'").append(h.text.replace("'", "''")).append("'").append(",");
 				sql.append(h.gueltigVon).append(",");
 				sql.append(h.gueltigBis).append(")");
 			}
@@ -601,8 +600,8 @@ public class DBCoreTypeUpdater {
 		if (conn.getDBDriver() != DBDriver.SQLITE)
 			sql.append(
 					" ON DUPLICATE KEY UPDATE ID=VALUES(ID), Kuerzel=VALUES(Kuerzel), Beschreibung=VALUES(Beschreibung), gueltigVon=VALUES(gueltigVon), gueltigBis=VALUES(gueltigBis)");
-		final long version = HerkunftSonstige.VERSION + HerkunftBildungsgang.data().getVersion() + HerkunftBildungsgangTyp.data().getVersion()
-				+ HerkunftSchulform.VERSION;
+		final long version = HerkunftSonstige.data().getVersion() + HerkunftBildungsgang.data().getVersion() + HerkunftBildungsgangTyp.data().getVersion()
+				+ HerkunftSchulform.data().getVersion();
 		updateCoreTypeTabelle(conn, tabname, "de.svws_nrw.core.types.schueler.Herkunft", version, sql.toString());
 	};
 
@@ -618,11 +617,11 @@ public class DBCoreTypeUpdater {
 		sql.append(tabname);
 		sql.append(strSpaltenNurKuerzel);
 		final List<String> kuerzel = new ArrayList<>(
-				Stream.concat(Arrays.stream(HerkunftSonstige.values()).map(h -> h.daten.kuerzel).distinct(),
-						Stream.concat(Arrays.stream(HerkunftBildungsgang.values()).flatMap(hb -> hb.historie().stream()).map(h -> h.kuerzel).distinct(),
+				Stream.concat(Arrays.stream(HerkunftSonstige.values()).flatMap(hs -> hs.historie().stream()).map(h -> h.schluessel).distinct(),
+						Stream.concat(Arrays.stream(HerkunftBildungsgang.values()).flatMap(hb -> hb.historie().stream()).map(h -> h.schluessel).distinct(),
 								Stream.concat(
-										Arrays.stream(HerkunftBildungsgangTyp.values()).flatMap(hb -> hb.historie().stream()).map(h -> h.kuerzel).distinct(),
-										Arrays.stream(HerkunftSchulform.values()).map(h -> h.daten.kuerzel).distinct()))
+										Arrays.stream(HerkunftBildungsgangTyp.values()).flatMap(hb -> hb.historie().stream()).map(h -> h.schluessel).distinct(),
+										Arrays.stream(HerkunftSchulform.values()).flatMap(hs -> hs.historie().stream()).map(h -> h.schluessel).distinct()))
 				).distinct().toList());
 		boolean isFirst = true;
 		for (final String k : kuerzel) {
@@ -630,8 +629,8 @@ public class DBCoreTypeUpdater {
 			isFirst = false;
 			sql.append("'").append(k).append("')");
 		}
-		final long version = HerkunftSonstige.VERSION + HerkunftBildungsgang.data().getVersion() + HerkunftBildungsgangTyp.data().getVersion()
-				+ HerkunftSchulform.VERSION;
+		final long version = HerkunftSonstige.data().getVersion() + HerkunftBildungsgang.data().getVersion() + HerkunftBildungsgangTyp.data().getVersion()
+				+ HerkunftSchulform.data().getVersion();
 		if (conn.getDBDriver() != DBDriver.SQLITE)
 			sql.append(" ON DUPLICATE KEY UPDATE Kuerzel=VALUES(Kuerzel)");
 		updateCoreTypeTabelle(conn, tabname, "de.svws_nrw.core.types.schueler.Herkunft", version, sql.toString());
@@ -650,7 +649,7 @@ public class DBCoreTypeUpdater {
 		sql.append("(Herkunft_ID, Schulform_Kuerzel) ");
 		boolean isFirst = true;
 		for (final HerkunftSonstige herkunft : HerkunftSonstige.values()) {
-			for (final HerkunftSonstigeKatalogEintrag h : herkunft.historie) {
+			for (final HerkunftSonstigeKatalogEintrag h : herkunft.historie()) {
 				for (final String sf : h.schulformen) {
 					sql.append(isFirst ? strValues : ", (");
 					isFirst = false;
@@ -680,7 +679,7 @@ public class DBCoreTypeUpdater {
 			}
 		}
 		for (final HerkunftSchulform herkunft : HerkunftSchulform.values()) {
-			for (final HerkunftSchulformKatalogEintrag h : herkunft.historie) {
+			for (final HerkunftSchulformKatalogEintrag h : herkunft.historie()) {
 				for (final String sf : h.schulformen) {
 					sql.append(isFirst ? strValues : ", (");
 					isFirst = false;
@@ -691,8 +690,8 @@ public class DBCoreTypeUpdater {
 		}
 		if (conn.getDBDriver() != DBDriver.SQLITE)
 			sql.append(" ON DUPLICATE KEY UPDATE Herkunft_ID=VALUES(Herkunft_ID), Schulform_Kuerzel=VALUES(Schulform_Kuerzel)");
-		final long version = HerkunftSonstige.VERSION + HerkunftBildungsgang.data().getVersion() + HerkunftBildungsgangTyp.data().getVersion()
-				+ HerkunftSchulform.VERSION;
+		final long version = HerkunftSonstige.data().getVersion() + HerkunftBildungsgang.data().getVersion() + HerkunftBildungsgangTyp.data().getVersion()
+				+ HerkunftSchulform.data().getVersion();
 		updateCoreTypeTabelle(conn, tabname, "de.svws_nrw.core.types.schueler.Herkunft", version, sql.toString());
 	};
 
@@ -710,18 +709,18 @@ public class DBCoreTypeUpdater {
 		final Herkunftsarten[] values = Herkunftsarten.values();
 		boolean isFirst = true;
 		for (final Herkunftsarten herkunft : values) {
-			for (final HerkunftsartKatalogEintrag h : herkunft.historie) {
+			for (final HerkunftsartenKatalogEintrag h : herkunft.historie()) {
 				sql.append(isFirst ? strValues : ", (");
 				isFirst = false;
 				sql.append(h.id).append(",");
-				sql.append("'").append(h.kuerzel).append("'").append(",");
+				sql.append("'").append(h.schluessel).append("'").append(",");
 				sql.append(h.gueltigVon).append(",");
 				sql.append(h.gueltigBis).append(")");
 			}
 		}
 		if (conn.getDBDriver() != DBDriver.SQLITE)
 			sql.append(" ON DUPLICATE KEY UPDATE ID=VALUES(ID), Kuerzel=VALUES(Kuerzel), gueltigVon=VALUES(gueltigVon), gueltigBis=VALUES(gueltigBis)");
-		updateCoreTypeTabelle(conn, tabname, Herkunftsarten.class.getCanonicalName(), Herkunftsarten.VERSION, sql.toString());
+		updateCoreTypeTabelle(conn, tabname, Herkunftsarten.class.getCanonicalName(), Herkunftsarten.data().getVersion(), sql.toString());
 	};
 
 
@@ -735,16 +734,16 @@ public class DBCoreTypeUpdater {
 		sql.append(strInsertInto);
 		sql.append(tabname);
 		sql.append(strSpaltenNurKuerzel);
-		final List<String> kuerzel = Arrays.stream(Herkunftsarten.values()).map(h -> h.daten.kuerzel).distinct().toList();
+		final List<String> schluessel = Arrays.stream(Herkunftsarten.values()).flatMap(h -> h.historie().stream()).map(h -> h.schluessel).distinct().toList();
 		boolean isFirst = true;
-		for (final String k : kuerzel) {
+		for (final String k : schluessel) {
 			sql.append(isFirst ? strValues : ", (");
 			isFirst = false;
 			sql.append("'").append(k).append("')");
 		}
 		if (conn.getDBDriver() != DBDriver.SQLITE)
 			sql.append(" ON DUPLICATE KEY UPDATE Kuerzel=VALUES(Kuerzel)");
-		updateCoreTypeTabelle(conn, tabname, Herkunftsarten.class.getCanonicalName(), Herkunftsarten.VERSION, sql.toString());
+		updateCoreTypeTabelle(conn, tabname, Herkunftsarten.class.getCanonicalName(), Herkunftsarten.data().getVersion(), sql.toString());
 	};
 
 
@@ -761,21 +760,21 @@ public class DBCoreTypeUpdater {
 		final Herkunftsarten[] values = Herkunftsarten.values();
 		boolean isFirst = true;
 		for (final Herkunftsarten herkunftsart : values) {
-			for (final HerkunftsartKatalogEintrag h : herkunftsart.historie) {
-				for (final HerkunftsartKatalogEintragBezeichnung hb : h.bezeichnungen) {
+			for (final HerkunftsartenKatalogEintrag h : herkunftsart.historie()) {
+				for (final String schulform : h.schulformen) {
 					sql.append(isFirst ? strValues : ", (");
 					isFirst = false;
 					sql.append(h.id).append(",");
-					sql.append("'").append(hb.schulform).append("'").append(",");
-					sql.append("'").append(hb.kurzBezeichnung.replace("'", "''")).append("'").append(",");
-					sql.append("'").append(hb.bezeichnung.replace("'", "''")).append("'").append(")");
+					sql.append("'").append(schulform).append("'").append(",");
+					sql.append("'").append(h.kuerzel.replace("'", "''")).append("'").append(",");
+					sql.append("'").append(h.text.replace("'", "''")).append("'").append(")");
 				}
 			}
 		}
 		if (conn.getDBDriver() != DBDriver.SQLITE)
 			sql.append(
 					" ON DUPLICATE KEY UPDATE Herkunftsart_ID=VALUES(Herkunftsart_ID), Schulform_Kuerzel=VALUES(Schulform_Kuerzel), KurzBezeichnung=VALUES(KurzBezeichnung), Bezeichnung=VALUES(Bezeichnung)");
-		updateCoreTypeTabelle(conn, tabname, Herkunftsarten.class.getCanonicalName(), Herkunftsarten.VERSION, sql.toString());
+		updateCoreTypeTabelle(conn, tabname, Herkunftsarten.class.getCanonicalName(), Herkunftsarten.data().getVersion(), sql.toString());
 	};
 
 

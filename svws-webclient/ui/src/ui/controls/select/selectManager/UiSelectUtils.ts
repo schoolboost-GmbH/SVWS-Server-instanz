@@ -1,12 +1,12 @@
-import { computed, nextTick, onBeforeUnmount, onMounted, ref, watch, type ComputedRef, type Ref } from 'vue';
+import { computed, nextTick, onMounted, ref, watch, type ComputedRef, type Ref } from 'vue';
 import { useWindowSize } from "@vueuse/core";
 import type { UiSelectProps } from "./UiSelectProps";
-import type { Validator } from "../../../../../../core/src/asd/validate/Validator";
+import type { BasicValidator } from "../../../../../../core/src/asd/validate/BasicValidator";
 import { ValidatorFehlerart } from "../../../../../../core/src/asd/validate/ValidatorFehlerart";
 import { ArrayList } from "../../../../../../core/src/java/util/ArrayList";
 import type { List } from "../../../../../../core/src/java/util/List";
 
-export function useUiSelectUtils<T, V extends Validator>(
+export function useUiSelectUtils<T, V extends BasicValidator>(
 	multi: boolean,
 	props: UiSelectProps<T, V>,
 	attrs: Record<string, any>,
@@ -255,9 +255,9 @@ export function useUiSelectUtils<T, V extends Validator>(
 	 */
 	const topPosition = computed(() => {
 		if (flip.value) {
-			const dropdownHeight = uiSelectDropdown.value?.scrollHeight !== undefined
-				? Math.min(maxHeight.value, uiSelectDropdown.value.scrollHeight)
-				: maxHeight.value;
+			const dropdownHeight = uiSelectDropdown.value?.scrollHeight === undefined
+				? maxHeight.value
+				: Math.min(maxHeight.value, uiSelectDropdown.value.scrollHeight);
 			return `${top.value - dropdownHeight - 2}px`;
 		} else
 			return `${top.value + height.value + 3}px`;
@@ -287,7 +287,7 @@ export function useUiSelectUtils<T, V extends Validator>(
 			maxHeight = top.value - 5;
 		else
 			maxHeight = windowHeight.value - (top.value + height.value) - 5;
-		return (maxHeight > 235) ? 235 : maxHeight;
+		return Math.min(235, maxHeight);
 	});
 
 	/**
@@ -536,9 +536,7 @@ export function useUiSelectUtils<T, V extends Validator>(
 		if (!props.searchable!) {
 			lastInput = event.key;
 			// Wenn der Timer bereits läuft, füge den neuen Buchstaben an `search.value` an
-			if (timer !== null)
-				search.value += event.key;
-			else {
+			if (timer === null) {
 				// Setzt den Timer, wenn noch keiner läuft und setzt `search.value` auf den aktuellen Buchstaben
 				search.value = event.key;
 				timer = setTimeout(() => {
@@ -546,7 +544,8 @@ export function useUiSelectUtils<T, V extends Validator>(
 					timer = null;
 					resetSearch();
 				}, 500);
-			}
+			} else
+				search.value += event.key;
 		}
 
 		focusOptionThatStartsWith(search.value);

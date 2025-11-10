@@ -83,7 +83,7 @@ describe("Adressbuch Dav", () => {
 			"\t<D:href>/dav/gymabi/adressbuecher/erzieher/Erzieher_2307.vcf</D:href>\n" +
 			"</C:addressbook-multiget>\n"
 
-	describe.each([{schema: "GymAbiDav"}])('Adressbücher Dav Tests gegen %s', ({schema}) => {
+	describe.each([{schema: "GymAbiDav01"}])('Adressbücher Dav Tests gegen %s', ({schema}) => {
 		test("Prüft das XML Format gleich geblieben ist.", async () => {
 			const response = await apiService.propfind(`/dav/${schema}`, {body: bodyDataDav})
 			const xmlAsString = await response!.text()
@@ -177,7 +177,7 @@ describe("Adressbuch Dav", () => {
 				"\t</D:prop>\n" +
 				"</D:propfind>\n"
 
-		describe.each([{schema: "GymAbiDav"}])('Kalender Dav Tests gegen %s', ({schema}) => {
+		describe.each([{schema: "GymAbiDav01"}])('Kalender Dav Tests gegen %s', ({schema}) => {
 			test("Testet Property-Suche auf die Liste von  mit Account Ande", async () => {
 				const response = await apiServiceAnde.propfind(`/dav/${schema}/kalender`, {body: bodyDataDavCalCollection})
 				const xmlAsString = await response!.text()

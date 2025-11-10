@@ -7,14 +7,11 @@ import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-import de.svws_nrw.asd.data.kurse.KursDaten;
 import de.svws_nrw.core.data.stundenplan.StundenplanListeEintrag;
 import de.svws_nrw.data.DataManager;
-import de.svws_nrw.data.kurse.DataKurse;
 import de.svws_nrw.db.DBEntityManager;
 import de.svws_nrw.db.dto.current.schild.schule.DTOSchuljahresabschnitte;
 import de.svws_nrw.db.dto.current.schild.stundenplan.DTOStundenplan;
-import de.svws_nrw.db.dto.current.schema.DTOSchemaAutoInkremente;
 import de.svws_nrw.db.utils.ApiOperationException;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
@@ -144,60 +141,6 @@ public final class DataStundenplanListe extends DataManager<Long> {
 	public Response patch(final Long id, final InputStream is) {
 		throw new UnsupportedOperationException();
 	}
-
-
-	/**
-	 * Fügt einen leeren Stundenplan für den angegebenen Schuljahresabschnitt
-	 * hinzu und gibt den neuen Listen-Eintrag zurück.
-	 *
-	 * @param idSchuljahresabschnitt   die ID des Schuljahresabschnitts
-	 *
-	 * @return Eine Response mit dem neuen Stundenplan-Listeneintrag
-	 *
-	 * @throws ApiOperationException im Fehlerfall
-	 */
-	public Response addEmpty(final long idSchuljahresabschnitt) throws ApiOperationException {
-		try {
-			// Bestimme den Schuljahresabschnitt
-			final DTOSchuljahresabschnitte abschnitt = conn.queryByKey(DTOSchuljahresabschnitte.class, idSchuljahresabschnitt);
-			if (abschnitt == null)
-				throw new ApiOperationException(Status.NOT_FOUND,
-						"Ein Schuljahresabschnitt mit der ID %d konnte nicht gefunden werden.".formatted(idSchuljahresabschnitt));
-			// Bestimme die ID, für welche der Datensatz eingefügt wird
-			final DTOSchemaAutoInkremente dbStundenplanID = conn.queryByKey(DTOSchemaAutoInkremente.class, "Stundenplan");
-			final long idStundenplan = (dbStundenplanID == null) ? 1 : (dbStundenplanID.MaxID + 1);
-			// Ermittle, ob bereits Stundenpläne für den Schuljahresabschnitt existieren und bestimme das Start bzw. das Enddatum aus dem Abschnitt
-			final List<StundenplanListeEintrag> stundenplaene = DataStundenplanListe.getStundenplaene(conn, idSchuljahresabschnitt);
-			String beginn = (abschnitt.Abschnitt == 1) ? "%d-08-01".formatted(abschnitt.Jahr) : "%d-02-01".formatted(abschnitt.Jahr + 1);
-			final String ende = (abschnitt.Abschnitt == 1) ? "%d-01-31".formatted(abschnitt.Jahr + 1) : "%d-07-31".formatted(abschnitt.Jahr + 1);
-			if (!stundenplaene.isEmpty()) {
-				// TODO Bestimme den Folgetag auf das Datum, nicht den Tag selbst
-				final String vorherEnde = stundenplaene.get(stundenplaene.size() - 1).gueltigBis;
-				if ((vorherEnde != null) && (vorherEnde.compareTo(ende) < 0))
-					beginn = stundenplaene.get(stundenplaene.size() - 1).gueltigBis;
-			}
-			// Erstelle und persistiere den leeren Stundenplan mit Wochentyp-Modell 0
-			final DTOStundenplan stundenplan = new DTOStundenplan(idStundenplan, idSchuljahresabschnitt, beginn, false, "Neuer Stundenplan", 0);
-			stundenplan.Ende = ende;
-			conn.transactionPersist(stundenplan);
-			conn.transactionFlush();
-			// Füge die Schienen, welche bereits in der Kursliste angegeben sind zum Stundenplan hinzu
-			final List<KursDaten> kurse = DataKurse.getKursListenFuerAbschnitt(conn, idSchuljahresabschnitt, false);
-			DataStundenplanSchienen.updateSchienenFromKursliste(conn, stundenplan.ID, kurse);
-			// Geben den neuen Stundenplan-Listeneintrag zurück
-			final StundenplanListeEintrag daten = DataStundenplanListe.dtoMapper.apply(stundenplan);
-			daten.schuljahr = abschnitt.Jahr;
-			daten.abschnitt = abschnitt.Abschnitt;
-			return Response.status(Status.CREATED).type(MediaType.APPLICATION_JSON).entity(daten).build();
-		} catch (final Exception exception) {
-			if (exception instanceof IllegalArgumentException)
-				throw new ApiOperationException(Status.NOT_FOUND);
-			if (exception instanceof final ApiOperationException aoe)
-				throw aoe;
-			throw new ApiOperationException(Status.INTERNAL_SERVER_ERROR, exception);
-		}
-	}
-
 
 	/**
 	 * Entfernt einen Stundenplan mit der angegebenen ID.

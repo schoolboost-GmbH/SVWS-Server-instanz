@@ -26,7 +26,7 @@ import de.svws_nrw.csv.converter.current.DatumConverterDeserializer;
 @Entity
 @Cacheable(DBEntityManager.use_db_caching)
 @Table(name = "UV_LehrerAnrechnungsstunden")
-@JsonPropertyOrder({"ID", "Lehrer_ID", "AnrechnungsgrundKrz", "AnrechnungStd", "GueltigAb", "GueltigBis"})
+@JsonPropertyOrder({"ID", "Lehrer_ID", "AnrechnungsgrundKrz", "AnzahlStunden", "GueltigVon", "GueltigBis"})
 public final class DTOUvLehrerAnrechnungsstunden {
 
 	/** Die Datenbankabfrage für alle DTOs */
@@ -59,17 +59,17 @@ public final class DTOUvLehrerAnrechnungsstunden {
 	/** Die Datenbankabfrage für DTOs anhand einer Liste von Werten des Attributes AnrechnungsgrundKrz */
 	public static final String QUERY_LIST_BY_ANRECHNUNGSGRUNDKRZ = "SELECT e FROM DTOUvLehrerAnrechnungsstunden e WHERE e.AnrechnungsgrundKrz IN ?1";
 
-	/** Die Datenbankabfrage für DTOs anhand des Attributes AnrechnungStd */
-	public static final String QUERY_BY_ANRECHNUNGSTD = "SELECT e FROM DTOUvLehrerAnrechnungsstunden e WHERE e.AnrechnungStd = ?1";
+	/** Die Datenbankabfrage für DTOs anhand des Attributes AnzahlStunden */
+	public static final String QUERY_BY_ANZAHLSTUNDEN = "SELECT e FROM DTOUvLehrerAnrechnungsstunden e WHERE e.AnzahlStunden = ?1";
 
-	/** Die Datenbankabfrage für DTOs anhand einer Liste von Werten des Attributes AnrechnungStd */
-	public static final String QUERY_LIST_BY_ANRECHNUNGSTD = "SELECT e FROM DTOUvLehrerAnrechnungsstunden e WHERE e.AnrechnungStd IN ?1";
+	/** Die Datenbankabfrage für DTOs anhand einer Liste von Werten des Attributes AnzahlStunden */
+	public static final String QUERY_LIST_BY_ANZAHLSTUNDEN = "SELECT e FROM DTOUvLehrerAnrechnungsstunden e WHERE e.AnzahlStunden IN ?1";
 
-	/** Die Datenbankabfrage für DTOs anhand des Attributes GueltigAb */
-	public static final String QUERY_BY_GUELTIGAB = "SELECT e FROM DTOUvLehrerAnrechnungsstunden e WHERE e.GueltigAb = ?1";
+	/** Die Datenbankabfrage für DTOs anhand des Attributes GueltigVon */
+	public static final String QUERY_BY_GUELTIGVON = "SELECT e FROM DTOUvLehrerAnrechnungsstunden e WHERE e.GueltigVon = ?1";
 
-	/** Die Datenbankabfrage für DTOs anhand einer Liste von Werten des Attributes GueltigAb */
-	public static final String QUERY_LIST_BY_GUELTIGAB = "SELECT e FROM DTOUvLehrerAnrechnungsstunden e WHERE e.GueltigAb IN ?1";
+	/** Die Datenbankabfrage für DTOs anhand einer Liste von Werten des Attributes GueltigVon */
+	public static final String QUERY_LIST_BY_GUELTIGVON = "SELECT e FROM DTOUvLehrerAnrechnungsstunden e WHERE e.GueltigVon IN ?1";
 
 	/** Die Datenbankabfrage für DTOs anhand des Attributes GueltigBis */
 	public static final String QUERY_BY_GUELTIGBIS = "SELECT e FROM DTOUvLehrerAnrechnungsstunden e WHERE e.GueltigBis = ?1";
@@ -94,17 +94,17 @@ public final class DTOUvLehrerAnrechnungsstunden {
 	public String AnrechnungsgrundKrz;
 
 	/** Anzahl der Anrechnungsstunden */
-	@Column(name = "AnrechnungStd")
+	@Column(name = "AnzahlStunden")
 	@JsonProperty
-	public Double AnrechnungStd;
+	public double AnzahlStunden;
 
-	/** Das Datum, ab dem die Anrechnungsstunde gültig ist */
-	@Column(name = "GueltigAb")
+	/** Das Datum, ab dem der Raum gültig ist */
+	@Column(name = "GueltigVon")
 	@JsonProperty
 	@Convert(converter = DatumConverter.class)
 	@JsonSerialize(using = DatumConverterSerializer.class)
 	@JsonDeserialize(using = DatumConverterDeserializer.class)
-	public String GueltigAb;
+	public String GueltigVon;
 
 	/** Das Datum, bis wann die Anrechnungsstunde gültig ist */
 	@Column(name = "GueltigBis")
@@ -125,16 +125,23 @@ public final class DTOUvLehrerAnrechnungsstunden {
 	 * Erstellt ein neues Objekt der Klasse DTOUvLehrerAnrechnungsstunden ohne eine Initialisierung der Attribute.
 	 * @param ID   der Wert für das Attribut ID
 	 * @param Lehrer_ID   der Wert für das Attribut Lehrer_ID
-	 * @param GueltigAb   der Wert für das Attribut GueltigAb
+	 * @param AnrechnungsgrundKrz   der Wert für das Attribut AnrechnungsgrundKrz
+	 * @param AnzahlStunden   der Wert für das Attribut AnzahlStunden
+	 * @param GueltigVon   der Wert für das Attribut GueltigVon
 	 * @param GueltigBis   der Wert für das Attribut GueltigBis
 	 */
-	public DTOUvLehrerAnrechnungsstunden(final long ID, final long Lehrer_ID, final String GueltigAb, final String GueltigBis) {
+	public DTOUvLehrerAnrechnungsstunden(final long ID, final long Lehrer_ID, final String AnrechnungsgrundKrz, final double AnzahlStunden, final String GueltigVon, final String GueltigBis) {
 		this.ID = ID;
 		this.Lehrer_ID = Lehrer_ID;
-		if (GueltigAb == null) {
-			throw new NullPointerException("GueltigAb must not be null");
+		if (AnrechnungsgrundKrz == null) {
+			throw new NullPointerException("AnrechnungsgrundKrz must not be null");
 		}
-		this.GueltigAb = GueltigAb;
+		this.AnrechnungsgrundKrz = AnrechnungsgrundKrz;
+		this.AnzahlStunden = AnzahlStunden;
+		if (GueltigVon == null) {
+			throw new NullPointerException("GueltigVon must not be null");
+		}
+		this.GueltigVon = GueltigVon;
 		if (GueltigBis == null) {
 			throw new NullPointerException("GueltigBis must not be null");
 		}
@@ -170,7 +177,7 @@ public final class DTOUvLehrerAnrechnungsstunden {
 	 */
 	@Override
 	public String toString() {
-		return "DTOUvLehrerAnrechnungsstunden(ID=" + this.ID + ", Lehrer_ID=" + this.Lehrer_ID + ", AnrechnungsgrundKrz=" + this.AnrechnungsgrundKrz + ", AnrechnungStd=" + this.AnrechnungStd + ", GueltigAb=" + this.GueltigAb + ", GueltigBis=" + this.GueltigBis + ")";
+		return "DTOUvLehrerAnrechnungsstunden(ID=" + this.ID + ", Lehrer_ID=" + this.Lehrer_ID + ", AnrechnungsgrundKrz=" + this.AnrechnungsgrundKrz + ", AnzahlStunden=" + this.AnzahlStunden + ", GueltigVon=" + this.GueltigVon + ", GueltigBis=" + this.GueltigBis + ")";
 	}
 
 }

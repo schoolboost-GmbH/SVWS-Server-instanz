@@ -141,6 +141,15 @@ export class StundenplanListeManager extends AuswahlManager<number, StundenplanL
 	}
 
 	/**
+	 * Gibt eine alle Stundenpläne zurück.
+	 *
+	 * @return die Liste der Stundenpläne
+	 */
+	public alle(): List<StundenplanListeEintrag> {
+		return this.liste.list();
+	}
+
+	/**
 	 * Setzt die Daten. Dabei wird ggf. die Auswahl angepasst. Die vorherige Auswahl wird gespeichert.
 	 *
 	 * @param daten   die neuen Daten

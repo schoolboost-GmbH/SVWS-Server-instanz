@@ -28,7 +28,7 @@ import de.svws_nrw.core.types.KursFortschreibungsart;
 import de.svws_nrw.core.types.PersonalTyp;
 import de.svws_nrw.asd.types.schueler.SchuelerStatus;
 import de.svws_nrw.asd.types.fach.Fach;
-import de.svws_nrw.core.types.schueler.Herkunftsarten;
+import de.svws_nrw.asd.types.schueler.Herkunftsarten;
 import de.svws_nrw.asd.types.schule.Schulform;
 import de.svws_nrw.asd.types.schule.Schulgliederung;
 import de.svws_nrw.core.utils.AdressenUtils;
@@ -1951,10 +1951,10 @@ public final class DBMigrationManager {
 			// Passe das Feld LSVersetzung an und verwende die ID statt des Statistik-Kürzels in der DB
 			if ((daten.LSVersetzung != null)) {
 				final Herkunftsarten art = switch (daten.LSVersetzung) {
-					case "0", "3", "4" -> Herkunftsarten.getByKuerzel("0" + daten.LSVersetzung);
-					default -> Herkunftsarten.getByKuerzel(daten.LSVersetzung);
+					case "0", "3", "4" -> Herkunftsarten.data().getWertBySchluessel("0" + daten.LSVersetzung);
+					default -> Herkunftsarten.data().getWertBySchluessel(daten.LSVersetzung);
 				};
-				daten.LSVersetzung = (art == null) ? null : ("" + art.daten.id);
+				daten.LSVersetzung = (art == null) ? null : ("" + art.historie().getLast().id);
 			}
 			schuelerIDs.add(daten.ID);
 		}

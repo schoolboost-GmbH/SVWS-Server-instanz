@@ -26,7 +26,7 @@ import de.svws_nrw.csv.converter.current.DatumConverterDeserializer;
 @Entity
 @Cacheable(DBEntityManager.use_db_caching)
 @Table(name = "UV_Faecher")
-@JsonPropertyOrder({"ID", "Fach_ID", "GueltigAb", "GueltigBis"})
+@JsonPropertyOrder({"ID", "Fach_ID", "GueltigVon", "GueltigBis"})
 public final class DTOUvFach {
 
 	/** Die Datenbankabfrage für alle DTOs */
@@ -53,11 +53,11 @@ public final class DTOUvFach {
 	/** Die Datenbankabfrage für DTOs anhand einer Liste von Werten des Attributes Fach_ID */
 	public static final String QUERY_LIST_BY_FACH_ID = "SELECT e FROM DTOUvFach e WHERE e.Fach_ID IN ?1";
 
-	/** Die Datenbankabfrage für DTOs anhand des Attributes GueltigAb */
-	public static final String QUERY_BY_GUELTIGAB = "SELECT e FROM DTOUvFach e WHERE e.GueltigAb = ?1";
+	/** Die Datenbankabfrage für DTOs anhand des Attributes GueltigVon */
+	public static final String QUERY_BY_GUELTIGVON = "SELECT e FROM DTOUvFach e WHERE e.GueltigVon = ?1";
 
-	/** Die Datenbankabfrage für DTOs anhand einer Liste von Werten des Attributes GueltigAb */
-	public static final String QUERY_LIST_BY_GUELTIGAB = "SELECT e FROM DTOUvFach e WHERE e.GueltigAb IN ?1";
+	/** Die Datenbankabfrage für DTOs anhand einer Liste von Werten des Attributes GueltigVon */
+	public static final String QUERY_LIST_BY_GUELTIGVON = "SELECT e FROM DTOUvFach e WHERE e.GueltigVon IN ?1";
 
 	/** Die Datenbankabfrage für DTOs anhand des Attributes GueltigBis */
 	public static final String QUERY_BY_GUELTIGBIS = "SELECT e FROM DTOUvFach e WHERE e.GueltigBis = ?1";
@@ -76,13 +76,13 @@ public final class DTOUvFach {
 	@JsonProperty
 	public long Fach_ID;
 
-	/** Datum, ab dem das Fach gültig ist */
-	@Column(name = "GueltigAb")
+	/** Das Datum, ab dem der Raum gültig ist */
+	@Column(name = "GueltigVon")
 	@JsonProperty
 	@Convert(converter = DatumConverter.class)
 	@JsonSerialize(using = DatumConverterSerializer.class)
 	@JsonDeserialize(using = DatumConverterDeserializer.class)
-	public String GueltigAb;
+	public String GueltigVon;
 
 	/** Datum, bis zu dem das Fach gültig ist. Ist kein Datum gesetzt, gilt das Fach unbegrenzt weiter. */
 	@Column(name = "GueltigBis")
@@ -103,15 +103,15 @@ public final class DTOUvFach {
 	 * Erstellt ein neues Objekt der Klasse DTOUvFach ohne eine Initialisierung der Attribute.
 	 * @param ID   der Wert für das Attribut ID
 	 * @param Fach_ID   der Wert für das Attribut Fach_ID
-	 * @param GueltigAb   der Wert für das Attribut GueltigAb
+	 * @param GueltigVon   der Wert für das Attribut GueltigVon
 	 */
-	public DTOUvFach(final long ID, final long Fach_ID, final String GueltigAb) {
+	public DTOUvFach(final long ID, final long Fach_ID, final String GueltigVon) {
 		this.ID = ID;
 		this.Fach_ID = Fach_ID;
-		if (GueltigAb == null) {
-			throw new NullPointerException("GueltigAb must not be null");
+		if (GueltigVon == null) {
+			throw new NullPointerException("GueltigVon must not be null");
 		}
-		this.GueltigAb = GueltigAb;
+		this.GueltigVon = GueltigVon;
 	}
 
 
@@ -143,7 +143,7 @@ public final class DTOUvFach {
 	 */
 	@Override
 	public String toString() {
-		return "DTOUvFach(ID=" + this.ID + ", Fach_ID=" + this.Fach_ID + ", GueltigAb=" + this.GueltigAb + ", GueltigBis=" + this.GueltigBis + ")";
+		return "DTOUvFach(ID=" + this.ID + ", Fach_ID=" + this.Fach_ID + ", GueltigVon=" + this.GueltigVon + ", GueltigBis=" + this.GueltigBis + ")";
 	}
 
 }

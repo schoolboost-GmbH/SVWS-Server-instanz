@@ -38,6 +38,15 @@ public class Tabelle_UV_Schuelergruppen_Schueler extends SchemaTabelle {
 			new Pair<>(col_Planungsabschnitt_ID, Schema.tab_UV_Schuelergruppen.col_Planungsabschnitt_ID)
 	);
 
+	/** Die Definition des Fremdschlüssels auf Planungsabschnitte_Schueler DEPRECATED wegen Bug bei Erstellung des FKs (Spaltenreihenfolge #4a702e6e) */
+	public final SchemaTabelleFremdschluessel fk_UVSchuelergruppenSchueler_UVSchuelerPlanungsabschnitte_FK_Deprecated_Revision_49 = addForeignKey(
+			"UVSchuelergruppenSchueler_UVSchuelerPlanungsabschnitte_FK",
+			/* OnUpdate: */ SchemaFremdschluesselAktionen.CASCADE,
+			/* OnDelete: */ SchemaFremdschluesselAktionen.CASCADE,
+			new Pair<>(col_Planungsabschnitt_ID, Schema.tab_UV_Planungsabschnitte_Schueler.col_Planungsabschnitt_ID),
+			new Pair<>(col_Schueler_ID, Schema.tab_UV_Planungsabschnitte_Schueler.col_Schueler_ID)
+	).setVeraltet(SchemaRevisionen.REV_49);
+
 	/** Die Definition des Fremdschlüssels auf Planungsabschnitte_Schueler */
 	public final SchemaTabelleFremdschluessel fk_UVSchuelergruppenSchueler_UVSchuelerPlanungsabschnitte_FK = addForeignKey(
 			"UVSchuelergruppenSchueler_UVSchuelerPlanungsabschnitte_FK",
@@ -45,7 +54,7 @@ public class Tabelle_UV_Schuelergruppen_Schueler extends SchemaTabelle {
 			/* OnDelete: */ SchemaFremdschluesselAktionen.CASCADE,
 			new Pair<>(col_Planungsabschnitt_ID, Schema.tab_UV_Planungsabschnitte_Schueler.col_Planungsabschnitt_ID),
 			new Pair<>(col_Schueler_ID, Schema.tab_UV_Planungsabschnitte_Schueler.col_Schueler_ID)
-	);
+	).setRevision(SchemaRevisionen.REV_50);
 
 	/**
 	 * Erstellt die Schema-Definition für die Tabelle UV_Schuelergruppen_Schueler.

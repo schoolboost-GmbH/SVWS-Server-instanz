@@ -1,6 +1,4 @@
-
 import groovy.json.JsonSlurper
-import org.codehaus.groovy.runtime.GStringImpl
 
 // Initialisierung der Plugins
 plugins {
@@ -8,22 +6,14 @@ plugins {
 }
 
 def configDir = "${rootDir}/config/tests"
-
-def configFile = file("$configDir/config.json")
-if (!configFile.exists()) {
-	configFile = file("$configDir/config_default.json")
-}
-
-def CONFIG = new JsonSlurper().parse(configFile)
+def configFile = file("$configDir/config.json").exists() ? file("$configDir/config.json") : file("$configDir/config_default.json")
+def config = new JsonSlurper().parse(configFile)
 
 def CLIENT_SECRET = "not set"
 
 // Führt alle Tasks von subproject-plugin.gradle in diesem Verzeichnis aus
 apply from: ('../subproject-plugin.gradle')
 apply from: 'custom-tasks.gradle'
-
-// Erzeuge eine unique JobId welche in den Tasks, temporären Dateien und Container verwendet wird.
-def jobId = UUID.randomUUID().toString().substring(0, 8)
 
 /**
  * Konfiguration für das Subpackage bzw. die Tests
@@ -32,20 +22,20 @@ ext {
 	SVWS_SERVERMODE = "dev"
 
 	// Docker Konfiguration
-	APP_CONTAINER_NAME = "app-vite-enm-tests${generateContainerSuffix(jobId)}"
-	DB_CONTAINER_NAME = "database-vite-enm-tests${generateContainerSuffix(jobId)}"
-	ENM_CONTAINER_NAME = "env-server${generateContainerSuffix(jobId)}"
+	APP_CONTAINER_NAME = "svws-server-enm-tests${rootProject.ext.CONTAINER_NAME_SUFFIX}"
+	ENM_CONTAINER_NAME = "enm-server-enm-tests${rootProject.ext.CONTAINER_NAME_SUFFIX}"
+	DB_CONTAINER_NAME = "db-enm-tests${rootProject.ext.CONTAINER_NAME_SUFFIX}"
 
-	DB_SERVICE_NAME = "mariadb${generateContainerSuffix(jobId)}"
-	APP_IMAGE_NAME = "svws-app${generateContainerSuffix(jobId)}"
-	ENM_IMAGE_NAME = "svws-enm${generateContainerSuffix(jobId)}"
+	APP_IMAGE_NAME = "svws-server-enm-tests${rootProject.ext.CONTAINER_NAME_SUFFIX}"
+	ENM_IMAGE_NAME = "enm-server-enm-tests${rootProject.ext.CONTAINER_NAME_SUFFIX}"
+	DB_SERVICE_NAME = "db-enm-tests${rootProject.ext.CONTAINER_NAME_SUFFIX}"
 
 	// Auch für Docker. Forwarded Ports, werden nur bei lokal genutzten Container verwendet
 	FORWARDED_DB_PORT = 3333
 	FORWARDED_APP_PORT = 5050
 
 	// Liste der Datenbanken die für die Tests genutzt / geseedet werden sollen
-	TARGET_TEST_DATA_BASES = ['EnmA']
+	TARGET_TEST_DATABASES = ['ENM02A']
 }
 
 /**
@@ -167,16 +157,14 @@ tasks.register('runTestsAfterSetup', NpmRun) {
  */
 tasks.register('testAgainstDockerEnv') {
 	description = 'Startet die Integrationstests gegen die Docker Umgebung'
-	group = 'verification'
+	group = 'testing'
 	dependsOn ':svws-webclient:core:assemble'
 	dependsOn ':svws-webclient:client:assemble'
-	dependsOn 'seedDatabase'
+	dependsOn 'starteDockerContainerMitTestUmgebung'
 
 	// Stelle sicher das zwischen diesem Task und SeedDatabase noch die Custom Tasks von ENM laufen
 	dependsOn 'starteDockerContainerMitTestUmgebungENM'
 	mustRunAfter(starteDockerContainerMitTestUmgebungENM)
-
-	starteDockerContainerMitTestUmgebungENM.mustRunAfter 'seedDatabase'
 
 	doFirst {
 		mkdir file("$projectDir/build/test-results")
@@ -187,7 +175,7 @@ tasks.register('testAgainstDockerEnv') {
 	finalizedBy("runSyncTest")
 	finalizedBy("runTestsAfterSetup")
 
-	if(!CONFIG.keepContainerAfterTestRun) {
+	if(!config.keepContainerAfterTestRun) {
 		finalizedBy("removeENMBuildArtifacts") // räume die Testumgebung ab
 	}
 }

@@ -22,10 +22,6 @@ public class FoerderschwerpunktEintrag {
 	@Schema(description = "das Kürzel des Eintrags", example = "EZ")
 	public @NotNull String kuerzel = "";
 
-	/** Die textuelle Beschreibung des Katalog-Eintrags. */
-	@Schema(description = "die textuelle Beschreibung des Katalog-Eintrags", example = "Emotionale und soziale Entwicklung")
-	public @NotNull String text = "";
-
 	/** Das Kürzel des Eintrags im Rahmen der amtlichen Schulstatisik. */
 	@Schema(description = "das Kürzel des Eintrags im Rahmen der amtlichen Schulstatisik", example = "EZ")
 	public @NotNull String kuerzelStatistik = "";
@@ -37,6 +33,10 @@ public class FoerderschwerpunktEintrag {
 	/** Die Sortierreihenfolge des Förderschwerpunkt-Eintrags. */
 	@Schema(description = "die Sortierreihenfolge des Förderschwerpunkt-Eintrags", example = "1")
 	public int sortierung;
+
+	/** Gibt an, ob der Förderschwerpunkt in anderen Datenbanktabellen referenziert ist oder nicht. */
+	@Schema(description = "Gibt an, ob der Förderschwerpunkt in anderen Datenbanktabellen referenziert ist oder nicht.", example = "true", accessMode = Schema.AccessMode.READ_ONLY)
+	public Boolean referenziertInAnderenTabellen = false;
 
 	/**
 	 * Leerer Standardkonstruktor.

@@ -47,9 +47,10 @@ public final class Abi30GostAbiturMarkierungsalgorithmus {
 	 */
 	public static @NotNull GostAbiturMarkierungsalgorithmusErgebnis berechne(final @NotNull AbiturdatenManager manager,
 			final @NotNull List<GostBelegpruefung> belegpruefungen) {
-		final @NotNull Abi30GostAbiturMarkierungsalgorithmus initialState = new Abi30GostAbiturMarkierungsalgorithmus(manager, belegpruefungen);
+		// final @NotNull Abi30GostAbiturMarkierungsalgorithmus initialState = new Abi30GostAbiturMarkierungsalgorithmus(manager, belegpruefungen);
 		// TODO implementation required
-		return initialState.ergebnis;
+		// return initialState.ergebnis;
+		return new GostAbiturMarkierungsalgorithmusErgebnis();
 	}
 
 }

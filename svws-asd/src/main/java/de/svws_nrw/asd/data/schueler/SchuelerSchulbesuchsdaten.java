@@ -66,9 +66,9 @@ public class SchuelerSchulbesuchsdaten {
 	@Schema(description = "das Entlassdatum von dieser Schule", example = "1902-03-11")
 	public String entlassungDatum;
 
-	/** Der Jahrgang bei der Entlassung von dieser Schule. */
-	@Schema(description = "er Jahrgang bei der Entlassung von dieser Schule", example = "03")
-	public String entlassungJahrgang;
+	/** Die Id des Jahrgangs bei der Entlassung von dieser Schule. */
+	@Schema(description = "Die Id des Jahrgangs bei der Entlassung von dieser Schule.", example = "3")
+	public Long idEntlassjahrgang;
 
 	/** Die ID des Grundes für die Entlassung von dieser Schule. */
 	@Schema(description = "die ID des Grundes für die Entlassung von dieser Schule", example = "1")

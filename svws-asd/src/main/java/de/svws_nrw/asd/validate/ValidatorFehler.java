@@ -8,7 +8,7 @@ import jakarta.validation.constraints.NotNull;
 public class ValidatorFehler {
 
 	/** Der Validator bei dem die Validierung fehlgeschlagen ist. */
-	private final @NotNull Validator _validator;
+	private final @NotNull BasicValidator _validator;
 
 	/** Die Nummer des Prüfschrittes, bei welchem der Fehler aufgetreten ist */
 	private final int _pruefschritt;
@@ -24,7 +24,7 @@ public class ValidatorFehler {
 	 * @param pruefschritt    die Nummer des Prüfschrittes, bei welchem der Fehler aufgetreten ist
 	 * @param fehlermeldung   die Fehlermeldung, welche vom Validator gemeldet wurde
 	 */
-	public ValidatorFehler(final @NotNull Validator validator, final int pruefschritt, final @NotNull String fehlermeldung) {
+	public ValidatorFehler(final @NotNull BasicValidator validator, final int pruefschritt, final @NotNull String fehlermeldung) {
 		this._validator = validator;
 		this._fehlermeldung = fehlermeldung;
 		this._pruefschritt = pruefschritt;
@@ -37,7 +37,7 @@ public class ValidatorFehler {
 	 * @return die Schulnummer
 	 */
 	public long getSchulnummer() {
-		return _validator.kontext().getSchulnummer();
+		return getKontext().getSchulnummer();
 	}
 
 
@@ -47,7 +47,9 @@ public class ValidatorFehler {
 	 * @return der Kontext
 	 */
 	public @NotNull ValidatorKontext getKontext() {
-		return _validator.kontext();
+		if (_validator instanceof final Validator validator)
+			return validator.kontext();
+		throw new ValidatorException("Der Validator ist nur ein BasicValidator und kein Validator, weshalb er keinen ValidatorKontext hat.");
 	}
 
 
@@ -56,7 +58,7 @@ public class ValidatorFehler {
 	 *
 	 * @return der Validator
 	 */
-	public Validator getValidator() {
+	public BasicValidator getValidator() {
 		return _validator;
 	}
 
@@ -76,7 +78,7 @@ public class ValidatorFehler {
 	 *
 	 * @return die Validator-Klasse
 	 */
-	public Class<? extends Validator> getValidatorClass() {
+	public Class<? extends BasicValidator> getValidatorClass() {
 		return _validator.getClass();
 	}
 

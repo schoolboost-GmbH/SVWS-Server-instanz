@@ -40,11 +40,10 @@
 
 	import { computed, ref } from "vue";
 	import type { PausenzeitenAuswahlProps } from "./SPausenzeitenAuswahlProps";
-	import { BenutzerKompetenz, StundenplanPausenzeit } from "@core";
-	import { Wochentag, DateUtils } from "@core";
+	import { BenutzerKompetenz, StundenplanPausenzeit, Wochentag, DateUtils } from "@core";
 
 	const props = defineProps<PausenzeitenAuswahlProps>();
-	const readonly = computed<boolean>(() => !(props.benutzerKompetenzen.has(BenutzerKompetenz.STUNDENPLAN_AENDERN)));
+	const readonly = computed<boolean>(() => !(props.benutzerKompetenzen.has(BenutzerKompetenz.KATALOG_EINTRAEGE_AENDERN)));
 	const selected = ref<StundenplanPausenzeit[]>([]);
 	const actionPausenzeiten = ref<boolean>(false);
 

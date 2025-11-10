@@ -37,8 +37,7 @@ export class Abi30GostAbiturMarkierungsalgorithmus extends JavaObject {
 	 * @return das Ergebnis der Berechnung
 	 */
 	public static berechne(manager: AbiturdatenManager, belegpruefungen: List<GostBelegpruefung>): GostAbiturMarkierungsalgorithmusErgebnis {
-		const initialState: Abi30GostAbiturMarkierungsalgorithmus = new Abi30GostAbiturMarkierungsalgorithmus(manager, belegpruefungen);
-		return initialState.ergebnis;
+		return new GostAbiturMarkierungsalgorithmusErgebnis();
 	}
 
 	transpilerCanonicalName(): string {

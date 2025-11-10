@@ -296,7 +296,6 @@
 	}
 
 	async function patchLehrer(lehrer: StundenplanLehrer[], unterricht: StundenplanUnterricht) {
-		const list = new ArrayList<number>();
 		unterricht.lehrer.clear();
 		for (const l of lehrer)
 			unterricht.lehrer.add(l.id);
@@ -312,7 +311,6 @@
 	}
 
 	async function patchKlassen(klassen: (StundenplanKlasse | StundenplanRaum)[], unterricht: StundenplanUnterricht) {
-		const list = new ArrayList<number>();
 		unterricht.klassen.clear();
 		for (const k of klassen)
 			unterricht.klassen.add(k.id);
@@ -327,7 +325,6 @@
 	}
 
 	async function patchRaeume(raeume: (StundenplanKlasse | StundenplanRaum)[], unterricht: StundenplanUnterricht) {
-		const list = new ArrayList<number>();
 		unterricht.raeume.clear();
 		for (const r of raeume)
 			unterricht.raeume.add(r.id);
@@ -342,7 +339,6 @@
 	}
 
 	async function patchSchienen(schienen: StundenplanSchiene[], unterricht: StundenplanUnterricht) {
-		const list = new ArrayList<number>();
 		unterricht.schienen.clear();
 		for (const s of schienen)
 			unterricht.schienen.add(s.id);

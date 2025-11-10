@@ -190,7 +190,17 @@ export class RouteDataStundenplan extends RouteDataAuswahl<StundenplanListeManag
 	};
 
 	add = async (partial: Partial<Stundenplan>): Promise<void> => {
-		const neu = await api.server.addStundenplan({ ...partial, idSchuljahresabschnitt: routeApp.data.idSchuljahresabschnitt }, api.schema);
+		await this.addAsCopy(partial, undefined);
+	};
+
+	getStundenplanListeEintragVorgaengerabschnitt = async() => {
+		if ((routeApp.data.aktAbschnitt.value.abschnitt < 2) || (routeApp.data.aktAbschnitt.value.idVorigerAbschnitt === null))
+			return new ArrayList<StundenplanListeEintrag>();
+		return new ArrayList<StundenplanListeEintrag>(await api.server.getStundenplanlisteFuerAbschnitt(api.schema, routeApp.data.aktAbschnitt.value.idVorigerAbschnitt));
+	}
+
+	addAsCopy = async (partial: Partial<Stundenplan>, idFromStundenplan: number | undefined): Promise<void> => {
+		const neu = (idFromStundenplan === undefined) ? await api.server.addStundenplan({ ...partial, idSchuljahresabschnitt: routeApp.data.idSchuljahresabschnitt }, api.schema) : await api.server.addStundenplanAsCopy({ ...partial, idSchuljahresabschnitt: routeApp.data.idSchuljahresabschnitt }, api.schema, idFromStundenplan);
 		await this.setSchuljahresabschnitt(this._state.value.idSchuljahresabschnitt, true);
 		await this.gotoDefaultView(neu.id);
 	};

@@ -10,14 +10,14 @@ import { routeFoerderschwerpunkteDaten } from "~/router/apps/schule/schulbezogen
 import { routeFoerderschwerpunkteGruppenprozesse } from "~/router/apps/schule/schulbezogen/foerderschwerpunkte/RouteFoerderschwerpunkteGruppenprozesse";
 import { RouteDataFoerderschwerpunkte } from "~/router/apps/schule/schulbezogen/foerderschwerpunkte/RouteDataFoerderschwerpunkte";
 
-const SFoerderschwerpunkteApp = () => import("~/components/schule/schulbezogen/foerderschwerpunkte/SFoerderschwerpunkteApp.vue");
-const SFoerderschwerpunkteAuswahl = () => import("~/components/schule/schulbezogen/foerderschwerpunkte/SFoerderschwerpunkteAuswahl.vue");
+const FoerderschwerpunkteApp = () => import("~/components/schule/schulbezogen/foerderschwerpunkte/FoerderschwerpunkteApp.vue");
+const FoerderschwerpunkteAuswahl = () => import("~/components/schule/schulbezogen/foerderschwerpunkte/FoerderschwerpunkteAuswahl.vue");
 
 export class RouteFoerderschwerpunkte extends RouteAuswahlNode<FoerderschwerpunkteListeManager, RouteDataFoerderschwerpunkte, RouteApp> {
 
 	public constructor() {
 		super(Schulform.values(), [BenutzerKompetenz.KATALOG_EINTRAEGE_ANSEHEN, BenutzerKompetenz.KATALOG_EINTRAEGE_AENDERN], "schule.foerderschwerpunkte",
-			"schule/foerderschwerpunkte/:id(\\d+)?", SFoerderschwerpunkteApp, SFoerderschwerpunkteAuswahl, new RouteDataFoerderschwerpunkte());
+			"schule/foerderschwerpunkte/:id(\\d+)?", FoerderschwerpunkteApp, FoerderschwerpunkteAuswahl, new RouteDataFoerderschwerpunkte());
 		super.mode = ServerMode.DEV;
 		super.text = "Förderschwerpunkte";
 		super.menugroup = RouteSchuleMenuGroup.SCHULBEZOGEN;

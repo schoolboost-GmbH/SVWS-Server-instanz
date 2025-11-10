@@ -39,8 +39,8 @@ public class ReportingSchuelerSchulbesuch extends ReportingBaseType {
 	/** Das Entlassdatum von dieser Schule. */
 	protected final String entlassungDatum;
 
-	/** Der Jahrgang bei der Entlassung von dieser Schule. */
-	protected final String entlassungJahrgang;
+	/** Die ID des Jahrgangs bei der Entlassung von dieser Schule. */
+	protected final Long idEntlassjahrgang;
 
 	/** Der Grund für die Entlassung von dieser Schule. */
 	protected final KatalogEntlassgrund entlassungGrund;
@@ -105,7 +105,7 @@ public class ReportingSchuelerSchulbesuch extends ReportingBaseType {
 	 * @param vorigeEntlassgrund Die ID des Grundes für die Entlassung von der zuvor besuchten Schule.
 	 * @param vorigeAbschlussartID Die ID des Abschlusses, welcher an der zuvor besuchten Schule erworben wurde.
 	 * @param entlassungDatum Das Entlassdatum von dieser Schule.
-	 * @param entlassungJahrgang Der Jahrgang bei der Entlassung von dieser Schule.
+	 * @param idEntlassjahrgang Die ID des Jahrgangs bei der Entlassung von dieser Schule.
 	 * @param entlassungGrund Die ID des Grundes für die Entlassung von dieser Schule.
 	 * @param entlassungAbschlussartID Die ID des Abschlusses, welcher an dieser Schule erworben wurde.
 	 * @param aufnehmendeSchule Die aufnehmende Schule nach einer Entlassung.
@@ -127,7 +127,7 @@ public class ReportingSchuelerSchulbesuch extends ReportingBaseType {
 	public ReportingSchuelerSchulbesuch(final ReportingSchulkatalogEintragNRW vorherigeSchule, final String vorigeAllgHerkunft,
 			final String vorigeEntlassdatum, final String vorigeEntlassjahrgang, final String vorigeArtLetzteVersetzung,
 			final String vorigeBemerkung, final KatalogEntlassgrund vorigeEntlassgrund, final String vorigeAbschlussartID,
-			final String entlassungDatum, final String entlassungJahrgang, final KatalogEntlassgrund entlassungGrund,
+			final String entlassungDatum, final Long idEntlassjahrgang, final KatalogEntlassgrund entlassungGrund,
 			final String entlassungAbschlussartID, final ReportingSchulkatalogEintragNRW aufnehmendeSchule, final String aufnehmendWechseldatum,
 			final Boolean aufnehmendBestaetigt, final Integer grundschuleEinschulungsjahr, final Long grundschuleEinschulungsartID,
 			final Long idGrundschuleJahreEingangsphase, final String kuerzelGrundschuleUebergangsempfehlung,
@@ -143,7 +143,7 @@ public class ReportingSchuelerSchulbesuch extends ReportingBaseType {
 		this.vorigeEntlassgrund = vorigeEntlassgrund;
 		this.vorigeAbschlussartID = vorigeAbschlussartID;
 		this.entlassungDatum = entlassungDatum;
-		this.entlassungJahrgang = entlassungJahrgang;
+		this.idEntlassjahrgang = idEntlassjahrgang;
 		this.entlassungGrund = entlassungGrund;
 		this.entlassungAbschlussartID = entlassungAbschlussartID;
 		this.aufnehmendeSchule = aufnehmendeSchule;
@@ -247,12 +247,12 @@ public class ReportingSchuelerSchulbesuch extends ReportingBaseType {
 	}
 
 	/**
-	 * Gibt den Jahrgang bei der Entlassung von dieser Schule zurück.
+	 * Gibt die ID des Jahrgangs bei der Entlassung von dieser Schule zurück.
 	 *
 	 * @return Der Jahrgang bei der Entlassung.
 	 */
-	public String entlassungJahrgang() {
-		return entlassungJahrgang;
+	public Long idEntlassJahrgang() {
+		return idEntlassjahrgang;
 	}
 
 	/**

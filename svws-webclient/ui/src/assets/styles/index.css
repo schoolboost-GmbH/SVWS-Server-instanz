@@ -78,10 +78,6 @@
 		font-size: x-large;
 		pointer-events: none;
 		margin-top: -4px;
-
-		&.sub-nav {
-			margin-top: -7px;
-		}
 	}
 
 	/* Buttons haben seit v4 keinen Pointer mehr: */

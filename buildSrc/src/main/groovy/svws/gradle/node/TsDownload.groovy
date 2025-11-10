@@ -1,15 +1,6 @@
-package svws.gradle.node;
+package svws.gradle.node
 
-import org.apache.tools.ant.Project
-import org.gradle.api.DefaultTask;
-import org.gradle.api.tasks.Copy;
-import org.gradle.api.tasks.Exec;
-import org.gradle.api.tasks.Input;
-import org.gradle.api.tasks.Internal;
-import org.gradle.api.tasks.OutputDirectory;
-import org.gradle.api.tasks.OutputFile;
-import org.gradle.api.tasks.TaskAction;
-import org.gradle.api.file.RegularFileProperty;
+import org.gradle.api.tasks.*
 
 abstract class TsDownload extends Exec {
 
@@ -62,7 +53,7 @@ abstract class TsDownload extends Exec {
 		cmdLine.add(0, 'typescript@' + this.getTSVersion());
 		cmdLine.add(0, '--global');
 		cmdLine.add(0, 'install');
-		cmdLine.add(0, this.cfg.getNpmExectuable());
+		cmdLine.add(0, this.cfg.getNpmExecutable());
 		if (this.cfg.isWindows()) {
 			cmdLine.add(0, '/c');
 			cmdLine.add(0, 'cmd');

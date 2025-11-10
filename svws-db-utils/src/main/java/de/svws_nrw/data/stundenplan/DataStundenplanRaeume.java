@@ -19,7 +19,6 @@ import de.svws_nrw.db.dto.current.schild.stundenplan.DTOStundenplan;
 import de.svws_nrw.db.dto.current.schild.stundenplan.DTOStundenplanRaum;
 import de.svws_nrw.db.dto.current.schild.stundenplan.DTOStundenplanUnterrichtRaum;
 import de.svws_nrw.db.utils.ApiOperationException;
-import jakarta.validation.constraints.NotNull;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.Response.Status;
 
@@ -125,7 +124,7 @@ public final class DataStundenplanRaeume extends DataManagerRevised<Long, DTOStu
 	 *
 	 * @throws ApiOperationException   im Fehlerfall
 	 */
-	public static List<StundenplanRaum> getRaeume(final @NotNull DBEntityManager conn, final long idStundenplan) throws ApiOperationException {
+	public static List<StundenplanRaum> getRaeume(final DBEntityManager conn, final long idStundenplan) throws ApiOperationException {
 		final List<DTOStundenplanRaum> raeume = conn.queryList(DTOStundenplanRaum.QUERY_BY_STUNDENPLAN_ID, DTOStundenplanRaum.class, idStundenplan);
 		return (new DataStundenplanRaeume(conn, idStundenplan)).mapList(raeume);
 	}
@@ -140,7 +139,7 @@ public final class DataStundenplanRaeume extends DataManagerRevised<Long, DTOStu
 	 * @return eine Map, in der die Räume der jeweiligen UnterrichtId zugeordnet ist
 	 * @throws ApiOperationException    im Fehlerfall
 	 */
-	public static Map<Long, List<StundenplanRaum>> getRaeumeByUnterrichtId(final @NotNull DBEntityManager conn,
+	public static Map<Long, List<StundenplanRaum>> getRaeumeByUnterrichtId(final DBEntityManager conn,
 			final long idStundenplan, final List<Long> unterrichtIds) throws ApiOperationException {
 		final Map<Long, StundenplanRaum> raumById = DataStundenplanRaeume.getRaeume(conn, idStundenplan).stream()
 				.collect(Collectors.toMap(r -> r.id, Function.identity()));
@@ -167,7 +166,7 @@ public final class DataStundenplanRaeume extends DataManagerRevised<Long, DTOStu
 	 *
 	 * @throws ApiOperationException im Fehlerfall
 	 */
-	public static StundenplanRaum getOrCreateRaum(final @NotNull DBEntityManager conn, final long idStundenplan, final String kuerzel)
+	public static StundenplanRaum getOrCreateRaum(final DBEntityManager conn, final long idStundenplan, final String kuerzel)
 			throws ApiOperationException {
 		final List<DTOStundenplanRaum> raeume = conn.queryList(
 				"SELECT e FROM DTOStundenplanRaum e WHERE e.Stundenplan_ID = ?1 AND e.Kuerzel = ?2", DTOStundenplanRaum.class, idStundenplan, kuerzel);
@@ -206,7 +205,7 @@ public final class DataStundenplanRaeume extends DataManagerRevised<Long, DTOStu
 	 * @param dtoStundenplan   das DTO des Stundenplans
 	 * @param raeume           die hinzuzufügenden Räume
 	 */
-	public static void addRaeume(final @NotNull DBEntityManager conn, final DTOStundenplan dtoStundenplan, final List<Raum> raeume) {
+	public static void addRaeume(final DBEntityManager conn, final DTOStundenplan dtoStundenplan, final List<Raum> raeume) {
 		long id = conn.transactionGetNextID(DTOStundenplanRaum.class);
 		for (final Raum raum : raeume)
 			conn.transactionPersist(new DTOStundenplanRaum(id++, dtoStundenplan.ID, raum.kuerzel, raum.beschreibung, raum.groesse));
@@ -226,6 +225,20 @@ public final class DataStundenplanRaeume extends DataManagerRevised<Long, DTOStu
 	protected void saveDatabaseDTO(final DTOStundenplanRaum dto) throws ApiOperationException {
 		super.saveDatabaseDTO(dto);
 		DataGostKlausurenRaum.dbHookStundenplangueltigkeitPlus(conn, DataStundenplan.getDTOStundenplan(conn, dto.Stundenplan_ID));
+	}
+
+	/**
+	 * Gibt die Räume des Stundenplans zurück.
+	 *
+	 * @param conn            die Datenbankverbindung
+	 * @param idStundenplan   die ID des Stundenplans
+	 *
+	 * @return die Liste der Räume
+	 *
+	 */
+	public static List<DTOStundenplanRaum> getDTOsByStundenplanid(final DBEntityManager conn, final long idStundenplan) {
+		return conn.queryList(DTOStundenplanRaum.QUERY_BY_STUNDENPLAN_ID,
+				DTOStundenplanRaum.class, idStundenplan);
 	}
 
 

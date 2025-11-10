@@ -1,4 +1,4 @@
-import type { FoerderschwerpunkteDatenProps } from "~/components/schule/schulbezogen/foerderschwerpunkte/daten/SFoerderschwerpunkteDatenProps";
+import type { FoerderschwerpunkteDatenProps } from "~/components/schule/schulbezogen/foerderschwerpunkte/daten/FoerderschwerpunkteDatenProps";
 import type { RouteLocationNormalized } from "vue-router";
 import type { RouteFoerderschwerpunkte } from "~/router/apps/schule/schulbezogen/foerderschwerpunkte/RouteFoerderschwerpunkte";
 import { BenutzerKompetenz, Schulform, ServerMode } from "@core";
@@ -6,7 +6,7 @@ import { RouteNode } from "~/router/RouteNode";
 import { api } from "~/router/Api";
 import { routeFoerderschwerpunkte } from "~/router/apps/schule/schulbezogen/foerderschwerpunkte/RouteFoerderschwerpunkte";
 
-const SFoerderschwerpunkteDaten = () => import("~/components/schule/schulbezogen/foerderschwerpunkte/daten/SFoerderschwerpunkteDaten.vue");
+const SFoerderschwerpunkteDaten = () => import("~/components/schule/schulbezogen/foerderschwerpunkte/daten/FoerderschwerpunkteDaten.vue");
 
 export class RouteFoerderschwerpunkteDaten extends RouteNode<any, RouteFoerderschwerpunkte> {
 
@@ -23,6 +23,8 @@ export class RouteFoerderschwerpunkteDaten extends RouteNode<any, RouteFoerdersc
 			manager: () => routeFoerderschwerpunkte.data.manager,
 			benutzerKompetenzen: api.benutzerKompetenzen,
 			patch: routeFoerderschwerpunkte.data.patch,
+			schulform: api.schulform,
+			schuljahr: api.abschnitt.schuljahr,
 		};
 	}
 }

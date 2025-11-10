@@ -245,6 +245,9 @@
         <class>de.svws_nrw.db.dto.current.gost.kursblockung.DTOGostBlockungZwischenergebnis</class>
         <class>de.svws_nrw.db.dto.current.gost.kursblockung.DTOGostBlockungZwischenergebnisKursSchiene</class>
         <class>de.svws_nrw.db.dto.current.gost.kursblockung.DTOGostBlockungZwischenergebnisKursSchueler</class>
+        <class>de.svws_nrw.db.dto.current.katalog.DTOFloskelgruppen</class>
+        <class>de.svws_nrw.db.dto.current.katalog.DTOFloskeln</class>
+        <class>de.svws_nrw.db.dto.current.katalog.DTOFloskelnJahrgaenge</class>
         <class>de.svws_nrw.db.dto.current.lehrer.DTOLehrerNotenmodulCredentials</class>
         <class>de.svws_nrw.db.dto.current.schema.DTOSchemaAutoInkremente</class>
         <class>de.svws_nrw.db.dto.current.schema.DTOSchemaCoreTypeVersion</class>
@@ -297,8 +300,6 @@
         <class>de.svws_nrw.db.dto.current.schild.impexp.DTOEigeneImporteTabellen</class>
         <class>de.svws_nrw.db.dto.current.schild.katalog.DTOAnsprechpartnerAllgemeineAdresse</class>
         <class>de.svws_nrw.db.dto.current.schild.katalog.DTOFahrschuelerart</class>
-        <class>de.svws_nrw.db.dto.current.schild.katalog.DTOFloskelgruppen</class>
-        <class>de.svws_nrw.db.dto.current.schild.katalog.DTOFloskeln</class>
         <class>de.svws_nrw.db.dto.current.schild.katalog.DTOHaltestellen</class>
         <class>de.svws_nrw.db.dto.current.schild.katalog.DTOKatalogAdressart</class>
         <class>de.svws_nrw.db.dto.current.schild.katalog.DTOKatalogAllgemeineAdresse</class>
@@ -359,7 +360,6 @@
         <class>de.svws_nrw.db.dto.current.schild.schueler.DTOSchuelerTeilleistung</class>
         <class>de.svws_nrw.db.dto.current.schild.schueler.DTOSchuelerVermerke</class>
         <class>de.svws_nrw.db.dto.current.schild.schueler.DTOSchuelerZP10</class>
-        <class>de.svws_nrw.db.dto.current.schild.schueler.DTOSportbefreiung</class>
         <class>de.svws_nrw.db.dto.current.schild.schueler.DTOTeilleistungsarten</class>
         <class>de.svws_nrw.db.dto.current.schild.schueler.abitur.DTOSchuelerAbitur</class>
         <class>de.svws_nrw.db.dto.current.schild.schueler.abitur.DTOSchuelerAbiturFach</class>

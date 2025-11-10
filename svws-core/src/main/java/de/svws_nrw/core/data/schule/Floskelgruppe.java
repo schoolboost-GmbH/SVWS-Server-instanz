@@ -14,6 +14,10 @@ import jakarta.xml.bind.annotation.XmlRootElement;
 @TranspilerDTO
 public class Floskelgruppe {
 
+	/** Die ID der Floskelgruppe */
+	@Schema(description = "Die ID der Floskelgruppe", example = "1", accessMode = Schema.AccessMode.READ_ONLY)
+	public long id;
+
 	/** Das Kürzel der Floskelgruppe */
 	@Schema(description = "Das Kürzel der Floskelgruppe", example = "ALLG")
 	public String kuerzel;
@@ -29,9 +33,5 @@ public class Floskelgruppe {
 	/** Die Farbe */
 	@Schema(description = "Die Farbe", example = "8421376")
 	public RGBFarbe farbe;
-
-	/** Gibt an, ob die Floskelgruppe in anderen Datenbanktabellen referenziert ist. */
-	@Schema(description = "Gibt an, ob die Floskelgruppe in anderen Datenbanktabellen referenziert ist.", example = "true", accessMode = Schema.AccessMode.READ_ONLY)
-	public Boolean referenziertInAnderenTabellen;
 
 }

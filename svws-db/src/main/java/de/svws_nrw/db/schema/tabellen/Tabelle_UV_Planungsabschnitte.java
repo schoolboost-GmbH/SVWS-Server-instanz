@@ -27,12 +27,22 @@ public class Tabelle_UV_Planungsabschnitte extends SchemaTabelle {
 			.setNotNull()
 			.setJavaComment("Gibt an, ob der Planungsabschnitt aktiv ist. An einem Stichtag darf nur ein Planungsabschnitt aktiv sein");
 
-	/** Die Definition der Tabellenspalte GueltigAb */
+	/** Die Definition der Tabellenspalte GueltigAb_Deprecated_Revision_49 */
 	public final SchemaTabelleSpalte col_GueltigAb = add("GueltigAb", SchemaDatentypen.DATE, false)
 			.setDefault("1899-01-01")
 			.setNotNull()
 			.setConverter(DatumConverter.class)
-			.setJavaComment("Datum, ab dem der Planungsabschnitt gültig ist");
+			.setJavaComment("Datum, ab dem der Planungsabschnitt gültig ist")
+			.setVeraltet(SchemaRevisionen.REV_49);
+
+	/** Die Definition der Tabellenspalte GueltigVon */
+	public final SchemaTabelleSpalte col_GueltigVon = add("GueltigVon", SchemaDatentypen.DATE, false)
+			.setDefault("1899-01-01")
+			.setNotNull()
+			.setConverter(DatumConverter.class)
+			.setJavaComment("Das Datum, ab dem der Raum gültig ist")
+			.setRevision(SchemaRevisionen.REV_50);
+
 
 	/** Die Definition der Tabellenspalte GueltigBis */
 	public final SchemaTabelleSpalte col_GueltigBis = add("GueltigBis", SchemaDatentypen.DATE, false)

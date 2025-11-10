@@ -9,9 +9,10 @@ import de.svws_nrw.asd.types.schueler.Einschulungsart;
 import de.svws_nrw.asd.types.schueler.Uebergangsempfehlung;
 import de.svws_nrw.asd.types.schule.Kindergartenbesuch;
 import de.svws_nrw.asd.types.schule.Schulform;
-import de.svws_nrw.core.types.schueler.Herkunftsarten;
+import de.svws_nrw.asd.types.schueler.Herkunftsarten;
 import de.svws_nrw.db.dto.current.schild.grundschule.DTOKindergarten;
 import de.svws_nrw.db.dto.current.schild.katalog.DTOSchuleNRW;
+import de.svws_nrw.db.dto.current.schild.schule.DTOJahrgang;
 import jakarta.validation.constraints.NotNull;
 
 import java.util.ArrayList;
@@ -132,7 +133,7 @@ public final class DataSchuelerSchulbesuchsdaten extends DataManagerRevised<Long
 		daten.vorigeAbschlussartID = dtoSchueler.LSEntlassArt;
 		// Informationen zu der Entlassung von der eigenen Schule
 		daten.entlassungDatum = dtoSchueler.Entlassdatum;
-		daten.entlassungJahrgang = dtoSchueler.Entlassjahrgang;
+		daten.idEntlassjahrgang = dtoSchueler.Entlassjahrgang_ID;
 		final DTOEntlassarten entlassgrund = (dtoSchueler.Entlassgrund == null) ? null : this.entlassartenByBezeichnung.get(dtoSchueler.Entlassgrund);
 		daten.entlassungGrundID = (entlassgrund == null) ? null : entlassgrund.ID;
 		daten.entlassungAbschlussartID = dtoSchueler.Entlassart;
@@ -207,7 +208,7 @@ public final class DataSchuelerSchulbesuchsdaten extends DataManagerRevised<Long
 			case "idVorherigeSchule" -> mapSchulnummer(value, "idVorherigeSchule", v -> dtoSchueler.LSSchulNr = v);
 			case "vorigeAllgHerkunft" -> { /* Feld ist historisch überflüssig */ }
 			case "vorigeEntlassdatum" -> dtoSchueler.LSSchulEntlassDatum = JSONMapper.convertToString(value, true, true, null, "vorigeEntlassdatum");
-			case "vorigeEntlassjahrgang" -> mapJahrgang(value, "vorigeEntlassjahrgang", v -> dtoSchueler.LSJahrgang = v);
+			case "vorigeEntlassjahrgang" -> updateVorigeEntlassjahrgang(dtoSchueler, value, name);
 			case "vorigeArtLetzteVersetzung" -> mapVorigeArtLetzteVersetzung(dtoSchueler, value);
 			case "vorigeBemerkung" -> dtoSchueler.LSBemerkung =
 					JSONMapper.convertToString(value, true, true, Schema.tab_Schueler.col_LSBemerkung.datenlaenge(), "vorigeBemerkung");
@@ -217,7 +218,7 @@ public final class DataSchuelerSchulbesuchsdaten extends DataManagerRevised<Long
 
 			// Informationen zu der Entlassung von der eigenen Schule
 			case "entlassungDatum" -> dtoSchueler.Entlassdatum = JSONMapper.convertToString(value, true, true, null, "entlassungDatum");
-			case "entlassungJahrgang" -> mapJahrgang(value, "entlassungJahrgang", v -> dtoSchueler.Entlassjahrgang = v);
+			case "idEntlassjahrgang" -> updateIdEntlassjahrgang(dtoSchueler, value, name);
 			case "entlassungGrundID" -> mapEntlassgrundID(value, "entlassungGrundID", v -> dtoSchueler.Entlassgrund = v);
 			case "entlassungAbschlussartID" -> // TODO Katalog ...
 				dtoSchueler.Entlassart = JSONMapper.convertToString(value, true, true, null, "entlassungAbschlussartID");
@@ -351,17 +352,31 @@ public final class DataSchuelerSchulbesuchsdaten extends DataManagerRevised<Long
 		setter.accept(schulnummer);
 	}
 
-	private static void mapJahrgang(final Object value, final String key, final Consumer<String> setter) throws ApiOperationException {
-		final String kuerzel = JSONMapper.convertToString(
-				value, true, true, null, key);
+	private static void updateVorigeEntlassjahrgang(final DTOSchueler dto, final Object value, final String name) throws ApiOperationException {
+		final String kuerzel = JSONMapper.convertToString(value, true, true, Schema.tab_Schueler.col_LSJahrgang.datenlaenge(), name);
 		if (kuerzel == null) {
-			setter.accept(null);
+			dto.LSJahrgang = null;
 			return;
 		}
 		if (Jahrgaenge.data().getWertByKuerzel(kuerzel) == null)
 			throw new ApiOperationException(Status.NOT_FOUND, "Kein Jahrgang für das Kürzel %s gefunden.".formatted(kuerzel));
 
-		setter.accept(kuerzel);
+		dto.LSJahrgang = kuerzel;
+	}
+
+	private void updateIdEntlassjahrgang(final DTOSchueler dto, final Object value, final String name) throws ApiOperationException {
+		final Long idEntlassjahrgang = JSONMapper.convertToLong(value, true, name);
+		if (idEntlassjahrgang == null) {
+			dto.Entlassjahrgang_ID = null;
+			dto.Entlassjahrgang = null;
+			return;
+		}
+		final DTOJahrgang dtoJahrgang = this.conn.queryByKey(DTOJahrgang.class, idEntlassjahrgang);
+		if (dtoJahrgang == null)
+			throw new ApiOperationException(Status.NOT_FOUND, "Kein Jahrgang für die ID %d gefunden.".formatted(idEntlassjahrgang));
+
+		dto.Entlassjahrgang_ID = idEntlassjahrgang;
+		dto.Entlassjahrgang = dtoJahrgang.ASDJahrgang;
 	}
 
 	private static void mapVorigeArtLetzteVersetzung(final DTOSchueler dtoSchueler, final Object value) throws ApiOperationException {
@@ -373,7 +388,7 @@ public final class DataSchuelerSchulbesuchsdaten extends DataManagerRevised<Long
 		}
 
 		final Long idAsLong = JSONMapper.convertToLong(id, true, "id");
-		if (Herkunftsarten.getByID(idAsLong) == null)
+		if (Herkunftsarten.data().getWertByIDOrNull(idAsLong) == null)
 			throw new ApiOperationException(Status.NOT_FOUND, "Keine Herkunftsart für die ID: %s gefunden.".formatted(id));
 
 		dtoSchueler.LSVersetzung = id;

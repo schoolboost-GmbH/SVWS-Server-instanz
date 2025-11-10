@@ -219,8 +219,13 @@ public abstract class BKGymBelegpruefung {
 				if (gefunden) {
 					wahlBelegungen.addAll(mapBelegungByFach.get(tafelFach));
 					iter.remove();
-				} else
-				  gefunden = istPflichtFach(tafelFach, mapBelegungByFach, !iter.hasNext());
+				} else {
+					gefunden = istPflichtFach(tafelFach, mapBelegungByFach, !iter.hasNext());
+					if (!gefunden) {
+						wahlBelegungen.addAll(mapBelegungByFach.get(tafelFach));
+						iter.remove();
+					}
+				}
 			}
 		}
 	}
@@ -432,17 +437,18 @@ public abstract class BKGymBelegpruefung {
 			summeTafel += fachTafel.stundenumfang[hj.id];
 			final BKGymAbiturFachbelegungHalbjahr belegung = fachBelegung.belegungen[hj.id];
 
-			if ((belegung == null) && (fachTafel.stundenumfang[hj.id] > 0))
-				success = !addFehler(tafel, new BKGymBelegungsfehler(BKGymBelegungsfehlerTyp.ST_4, fachTafel.fachbezeichnung)) && success;
+			if (belegung == null) {
+				if (fachTafel.stundenumfang[hj.id] > 0)
+					success = !addFehler(tafel, new BKGymBelegungsfehler(BKGymBelegungsfehlerTyp.ST_6, fachTafel.fachbezeichnung, hj.kuerzel)) && success;
+				continue;
+			}
 
-			if (belegung != null) {
-				if ((belegung.notenkuerzel != null) && (!belegung.notenkuerzel.isEmpty())) {
-					summeBelegung += belegung.wochenstunden;
-					unterbelegung |= (fachTafel.stundenumfang[hj.id] > belegung.wochenstunden);
-				} else if (fachTafel.stundenumfang[hj.id] > 0) {
-					success = !(addFehler(tafel, new BKGymBelegungsfehler(BKGymBelegungsfehlerTyp.ST_2, fachTafel.fachbezeichnung, hj.kuerzel))) && success;
-					unterbelegung = true;
-				}
+			if ((belegung.notenkuerzel != null) && (!belegung.notenkuerzel.isEmpty())) {
+				summeBelegung += belegung.wochenstunden;
+				unterbelegung |= (fachTafel.stundenumfang[hj.id] > belegung.wochenstunden);
+			} else if (fachTafel.stundenumfang[hj.id] > 0) {
+				success = !(addFehler(tafel, new BKGymBelegungsfehler(BKGymBelegungsfehlerTyp.ST_2, fachTafel.fachbezeichnung, hj.kuerzel))) && success;
+				unterbelegung = true;
 			}
 		}
 

@@ -43,6 +43,9 @@ import de.svws_nrw.asd.data.lehrer.LehrerPflichtstundensollVollzeitKatalogEintra
 import de.svws_nrw.asd.data.lehrer.LehrerRechtsverhaeltnisKatalogEintrag;
 import de.svws_nrw.asd.data.lehrer.LehrerZugangsgrundKatalogEintrag;
 import de.svws_nrw.asd.data.schueler.BetreuungsartKatalogEintrag;
+import de.svws_nrw.asd.data.schueler.HerkunftsartenKatalogEintrag;
+import de.svws_nrw.asd.data.schueler.HerkunftSchulformKatalogEintrag;
+import de.svws_nrw.asd.data.schueler.HerkunftSonstigeKatalogEintrag;
 import de.svws_nrw.asd.data.schueler.EinschulungsartKatalogEintrag;
 import de.svws_nrw.asd.data.schueler.HerkunftBildungsgangKatalogEintrag;
 import de.svws_nrw.asd.data.schueler.HerkunftBildungsgangTypKatalogEintrag;
@@ -51,6 +54,7 @@ import de.svws_nrw.asd.data.schueler.UebergangsempfehlungKatalogEintrag;
 import de.svws_nrw.asd.data.schule.BeruflichesGymnasiumPruefungsordnungAnlageKatalogEintrag;
 import de.svws_nrw.asd.data.schule.BerufskollegAnlageKatalogEintrag;
 import de.svws_nrw.asd.data.schule.BildungsgangTypKatalogEintrag;
+import de.svws_nrw.asd.data.schule.EinwilligungsschluesselKatalogEintrag;
 import de.svws_nrw.asd.data.schule.FloskelgruppenartKatalogEintrag;
 import de.svws_nrw.asd.data.schule.FoerderschwerpunktKatalogEintrag;
 import de.svws_nrw.asd.data.schule.FormOffenerGanztagKatalogEintrag;
@@ -62,6 +66,7 @@ import de.svws_nrw.asd.data.schule.SchulabschlussAllgemeinbildendKatalogEintrag;
 import de.svws_nrw.asd.data.schule.SchulabschlussBerufsbildendKatalogEintrag;
 import de.svws_nrw.asd.data.schule.SchulformKatalogEintrag;
 import de.svws_nrw.asd.data.schule.SchulgliederungKatalogEintrag;
+import de.svws_nrw.asd.data.schule.BildungsstufeKatalogEintrag;
 import de.svws_nrw.asd.data.schule.TerminKatalogEintrag;
 import de.svws_nrw.asd.data.schule.VerkehrsspracheKatalogEintrag;
 import de.svws_nrw.asd.types.CoreType;
@@ -100,6 +105,9 @@ import de.svws_nrw.asd.types.lehrer.LehrerPflichtstundensollVollzeit;
 import de.svws_nrw.asd.types.lehrer.LehrerRechtsverhaeltnis;
 import de.svws_nrw.asd.types.lehrer.LehrerZugangsgrund;
 import de.svws_nrw.asd.types.schueler.Betreuungsart;
+import de.svws_nrw.asd.types.schueler.Herkunftsarten;
+import de.svws_nrw.asd.types.schueler.HerkunftSchulform;
+import de.svws_nrw.asd.types.schueler.HerkunftSonstige;
 import de.svws_nrw.asd.types.schueler.Einschulungsart;
 import de.svws_nrw.asd.types.schueler.HerkunftBildungsgang;
 import de.svws_nrw.asd.types.schueler.HerkunftBildungsgangTyp;
@@ -110,6 +118,7 @@ import de.svws_nrw.asd.types.schule.BeruflichesGymnasiumPruefungsordnungAnlage;
 import de.svws_nrw.asd.types.schule.BerufskollegAnlage;
 import de.svws_nrw.asd.types.schule.BerufskollegBildungsgangTyp;
 import de.svws_nrw.asd.types.schule.BerufskollegOrganisationsformen;
+import de.svws_nrw.asd.types.schule.Einwilligungsschluessel;
 import de.svws_nrw.asd.types.schule.Floskelgruppenart;
 import de.svws_nrw.asd.types.schule.Foerderschwerpunkt;
 import de.svws_nrw.asd.types.schule.FormOffenerGanztag;
@@ -120,6 +129,7 @@ import de.svws_nrw.asd.types.schule.SchulabschlussAllgemeinbildend;
 import de.svws_nrw.asd.types.schule.SchulabschlussBerufsbildend;
 import de.svws_nrw.asd.types.schule.Schulform;
 import de.svws_nrw.asd.types.schule.Schulgliederung;
+import de.svws_nrw.asd.types.schule.Bildungsstufe;
 import de.svws_nrw.asd.types.schule.Termin;
 import de.svws_nrw.asd.types.schule.Verkehrssprache;
 import de.svws_nrw.asd.types.schule.WeiterbildungskollegBildungsgangTyp;
@@ -494,6 +504,16 @@ public final class CoreTypeRessource<T extends CoreTypeData, U extends CoreType<
 				"de/svws_nrw/asd/types/schule/Verkehrssprache.json");
 		addSimple(Floskelgruppenart.class, FloskelgruppenartKatalogEintrag.class,
 				"de/svws_nrw/asd/types/schule/Floskelgruppenart.json");
+		addSimple(Einwilligungsschluessel.class, EinwilligungsschluesselKatalogEintrag.class,
+				"de/svws_nrw/asd/types/schule/Einwilligungsschluessel.json");
+		addSimple(Herkunftsarten.class, HerkunftsartenKatalogEintrag.class,
+				"de/svws_nrw/asd/types/schueler/Herkunftsarten.json");
+		addSimple(HerkunftSchulform.class, HerkunftSchulformKatalogEintrag.class,
+				"de/svws_nrw/asd/types/schueler/HerkunftSchulform.json");
+		addSimple(HerkunftSonstige.class, HerkunftSonstigeKatalogEintrag.class,
+				"de/svws_nrw/asd/types/schueler/HerkunftSonstige.json");
+		addSimple(Bildungsstufe.class, BildungsstufeKatalogEintrag.class,
+				"de/svws_nrw/asd/types/schule/Bildungsstufe.json");
 	}
 
 }

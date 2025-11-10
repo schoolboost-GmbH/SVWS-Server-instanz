@@ -318,15 +318,15 @@
 
 	function getSourceString(multi = false) {
 		return `<ui-select-multi
-        label="..."
-        :manager="..."
-        ${state.searchable ? 'searchable' : ''}
-        ${state.disabled ? 'disabled' : ''}
-        ${state.statistics ? 'statistics' : ''}
+		label="..."
+		:manager="..."
+		${state.searchable ? 'searchable' : ''}
+		${state.disabled ? 'disabled' : ''}
+		${state.statistics ? 'statistics' : ''}
 		${state.required ? 'required' : ''}
-        ${state.headless ? 'headless' : ''}
+		${state.headless ? 'headless' : ''}
 		':sort="(a, b) => ..."' : ''
-      `.split('\n').filter(line => line.trim() !== '').join('\n');
-
+		`.split('\n').filter(line => line.trim() !== '').join('\n');
 	}
+
 </script>

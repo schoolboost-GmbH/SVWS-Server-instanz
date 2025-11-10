@@ -22,7 +22,6 @@ import de.svws_nrw.db.DBEntityManager;
 import de.svws_nrw.db.dto.current.schild.stundenplan.DTOStundenplanSchienen;
 import de.svws_nrw.db.dto.current.schild.stundenplan.DTOStundenplanUnterrichtSchiene;
 import de.svws_nrw.db.utils.ApiOperationException;
-import jakarta.validation.constraints.NotNull;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.Response.Status;
@@ -73,7 +72,7 @@ public final class DataStundenplanSchienen extends DataManager<Long> {
 	 *
 	 * @return die Liste der Schienen
 	 */
-	public static List<StundenplanSchiene> getSchienen(final @NotNull DBEntityManager conn, final long idStundenplan) {
+	public static List<StundenplanSchiene> getSchienen(final DBEntityManager conn, final long idStundenplan) {
 		final List<DTOStundenplanSchienen> schienen = conn.queryList(
 				DTOStundenplanSchienen.QUERY_BY_STUNDENPLAN_ID, DTOStundenplanSchienen.class, idStundenplan);
 		final ArrayList<StundenplanSchiene> daten = new ArrayList<>();
@@ -92,7 +91,7 @@ public final class DataStundenplanSchienen extends DataManager<Long> {
 	 *
 	 * @return eine Map von StundenplanSchiene auf die entsprechenden UnterrichtIds
 	 */
-	public static Map<Long, List<StundenplanSchiene>> getSchienenByUnterrichtId(final @NotNull DBEntityManager conn,
+	public static Map<Long, List<StundenplanSchiene>> getSchienenByUnterrichtId(final DBEntityManager conn,
 			final long idStundenplan, final List<Long> unterrichtIds) {
 		final Map<Long, StundenplanSchiene> schienenById = DataStundenplanSchienen.getSchienen(conn, idStundenplan)
 				.stream().collect(Collectors.toMap(s -> s.id, Function.identity()));
@@ -135,7 +134,7 @@ public final class DataStundenplanSchienen extends DataManager<Long> {
 	 *
 	 * @return die HashMap2D
 	 */
-	public static @NotNull HashMap2D<Integer, Long, DTOStundenplanSchienen> getMapDTOs(final DBEntityManager conn, final long idStundenplan) {
+	public static HashMap2D<Integer, Long, DTOStundenplanSchienen> getMapDTOs(final DBEntityManager conn, final long idStundenplan) {
 		final List<DTOStundenplanSchienen> listSchienen =
 				conn.queryList(DTOStundenplanSchienen.QUERY_BY_STUNDENPLAN_ID, DTOStundenplanSchienen.class, idStundenplan);
 		final HashMap2D<Integer, Long, DTOStundenplanSchienen> result = new HashMap2D<>();
@@ -156,7 +155,7 @@ public final class DataStundenplanSchienen extends DataManager<Long> {
 	 *                        und der Jahrgangs-ID (long) auf das DTO für die Schiene abbildet
 	 */
 	public static void updateSchienenFromKurslisteInternal(final DBEntityManager conn, final Long idStundenplan, final List<KursDaten> kurse,
-			final @NotNull HashMap2D<Integer, Long, DTOStundenplanSchienen> mapDTOs) {
+			final HashMap2D<Integer, Long, DTOStundenplanSchienen> mapDTOs) {
 		final Set<Pair<Long, Integer>> setJahrgangsSchienen = new HashSet<>();
 		for (final KursDaten kurs : kurse)
 			for (final long idJahrgang : kurs.idJahrgaenge)
@@ -213,6 +212,20 @@ public final class DataStundenplanSchienen extends DataManager<Long> {
 	@Override
 	public Response patch(final Long id, final InputStream is) throws ApiOperationException {
 		return super.patchBasic(id, is, DTOStundenplanSchienen.class, patchMappings);
+	}
+
+	/**
+	 * Gibt die Schienen des Stundenplans zurück.
+	 *
+	 * @param conn            die Datenbankverbindung
+	 * @param idStundenplan   die ID des Stundenplans
+	 *
+	 * @return die Liste der Schienen
+	 *
+	 */
+	public static List<DTOStundenplanSchienen> getDTOsByStundenplanid(final DBEntityManager conn, final long idStundenplan) {
+		return conn.queryList(DTOStundenplanSchienen.QUERY_BY_STUNDENPLAN_ID,
+				DTOStundenplanSchienen.class, idStundenplan);
 	}
 
 }

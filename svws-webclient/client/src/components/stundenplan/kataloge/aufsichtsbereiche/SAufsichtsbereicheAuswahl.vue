@@ -24,7 +24,7 @@
 	import { BenutzerKompetenz, StundenplanAufsichtsbereich, type Aufsichtsbereich } from "@core";
 
 	const props = defineProps<AufsichtsbereicheAuswahlProps>();
-	const readonly = computed<boolean>(() => !(props.benutzerKompetenzen.has(BenutzerKompetenz.STUNDENPLAN_AENDERN)));
+	const readonly = computed<boolean>(() => !(props.benutzerKompetenzen.has(BenutzerKompetenz.KATALOG_EINTRAEGE_AENDERN)));
 	const selected = ref<Aufsichtsbereich[]>([]);
 
 	const columns = [

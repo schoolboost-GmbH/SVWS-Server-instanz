@@ -34,10 +34,6 @@ public class Tabelle_UV_Unterrichte extends SchemaTabelle {
             .setNotNull()
             .setJavaComment("Fremdschlüssel auf die Lerngruppe (Tabelle UV_Lerngruppen)");
 
-//    /** Fremdschlüssel auf den Raum (Tabelle UV_Raeume) */
-//    public final SchemaTabelleSpalte col_Raum_ID = add("Raum_ID", SchemaDatentypen.BIGINT, false)
-//            .setJavaComment("Fremdschlüssel auf den Raum (Tabelle UV_Raeume)");
-
     /** Fremdschlüssel auf die Tabelle UV_Zeitraster */
     public final SchemaTabelleFremdschluessel fk_UVUnterrichte_UVZeitrasterEintraege_FK = addForeignKey(
             "UVUnterrichte_UVZeitrasterEintraege_FK",
@@ -54,14 +50,6 @@ public class Tabelle_UV_Unterrichte extends SchemaTabelle {
             new Pair<>(col_Lerngruppe_ID, Schema.tab_UV_Lerngruppen.col_ID),
             new Pair<>(col_Planungsabschnitt_ID, Schema.tab_UV_Lerngruppen.col_Planungsabschnitt_ID)
     );
-
-//    /** Fremdschlüssel auf die Tabelle UV_Raeume */
-//    public final SchemaTabelleFremdschluessel fk_UV_Raeume_FK = addForeignKey(
-//            "UV_Raeume_FK",
-//            /* OnUpdate: */ SchemaFremdschluesselAktionen.CASCADE,
-//            /* OnDelete: */ SchemaFremdschluesselAktionen.SET_NULL,
-//            new Pair<>(col_Raum_ID, Schema.tab_UV_Raeume.col_ID)
-//    );
 
 	/** Die Definition des Unique-Index UV_Unterrichte_UC1 */
 	public final SchemaTabelleUniqueIndex unique_UV_Unterrichte_UC1 = addUniqueIndex("UV_Unterrichte_UC1",

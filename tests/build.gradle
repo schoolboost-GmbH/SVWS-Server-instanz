@@ -1,69 +1,88 @@
-import groovy.json.JsonOutput
 import groovy.json.JsonSlurper
 import groovy.xml.XmlSlurper
+import svws.gradle.scripts.FileUtils
 
-def configDir = "${rootDir}/config/tests"
-
-def configFile = file("$configDir/config.json")
-if (!configFile.exists()) {
-	configFile = file("$configDir/config_default.json")
+dependencies {
+	implementation project(':svws-server-app')
 }
 
-def CONFIG = new JsonSlurper().parse(configFile)
+def buildDirPath = layout.buildDirectory.get()
+def config = file("${rootDir}/config/tests/config.json").exists()
+		? new JsonSlurper().parse(file("${rootDir}/config/tests/config.json"))
+		: new JsonSlurper().parse(file("${rootDir}/config/tests/config_default.json"))
 
-def commitId = System.getenv('CI_COMMIT_SHORT_SHA') ?: '-' ;
+ext {
+	def APP_BASE_IMAGE_NAME
+	def CONTAINER_NAME_SUFFIX
+}
 
-ext.generateContainerSuffix = { jobId ->
-	return "-${jobId}-${commitId}-gradled" as String
+tasks.register('copyWebclientBuildArtefacts', Copy) {
+	description = 'Kopiert die SVWS Client Artefakte'
+	dependsOn ':svws-webclient:client:doZip'
+	from "${rootDir}/svws-webclient/client/build/SVWS-Client.zip"
+	into "./build"
+}
+
+tasks.register('copyAdminclientBuildArtefacts', Copy) {
+	description = 'Kopiert die SVWS Admin Client Artefakte'
+	dependsOn ':svws-webclient:client:doZip'
+	from "${rootDir}/svws-webclient/admin/build/SVWS-Admin-Client.zip"
+	into "./build"
+}
+
+
+/**
+ * Dieser Task kopiert die Laufzeit-Abhängigkeiten in das angegebene Build-Verzeichnis,
+ * wobei bestimmte JAR-Dateien ausgeschlossen oder eingeschlossen werden.
+ */
+tasks.register('copyJavaBuildArtefacts', Copy) {
+	description = 'Kopiert die Laufzeit-Abhängigkeiten in das Build-Verzeichnis'
+	dependsOn 'copyWebclientBuildArtefacts'
+	dependsOn 'copyAdminclientBuildArtefacts'
+
+	into "$buildDirPath/extLib"
+
+	into("lib/") {
+		from(configurations.runtimeClasspath) {
+			exclude "svws-*.jar"
+		}
+	}
+	into("/") {
+		from(configurations.runtimeClasspath) {
+			include "svws-*.jar"
+		}
+	}
+}
+
+
+tasks.register('buildAppBaseDockerImage', Exec) {
+	description = 'Erstellen des App-Base Docker-Images für die Testumgebung'
+	dependsOn 'generateAppBaseDockerfile'
+	commandLine 'docker', 'build', '-t', "${APP_BASE_IMAGE_NAME}", '-f', "${buildDirPath}/docker/app.base.dockerfile", '.'
 }
 
 /**
- * Dieser Task lädt die Testdatenbanken herunter, die für die Integrationstests benötigt werden. Dieser Task überprüft auch, ob die Testdatenbanken aktualisiert wurden.
+ * Dieser Task generiert die Dockerfile-Datei für die Testumgebung. Dabei wird ein Template geladen und entsprechende Platzhalter durch Variablen in Gradle ersetzt.
  */
-tasks.register('downloadTestDatabases') {
-	description = 'Lädt die Testdatenbanken herunter, die für die Integrationstests benötigt werden.'
+tasks.register('generateAppBaseDockerfile') {
+	description = 'Generiert die Dockerfile-Datei für das App-Base Image'
+	dependsOn 'copyJavaBuildArtefacts'
+
+	def templateDockerfile = file('templates/docker/template.app.base.dockerfile')
+	def outputDockerfile = file("${buildDirPath}/docker/app.base.dockerfile")
+
+	def DOCKER_REGISTRY_URL = System.getenv('CI_SERVER') != null ? config.dockerRegistry : "docker.io"
+
+	doFirst {
+		mkdir "${buildDirPath}/docker"
+	}
+
 	doLast {
-		def dataBaseRepositoryPrefix = 'https://api.github.com/repos/SVWS-NRW/SVWS-TestMDBs'
-		mkdir "$rootDir/download/testDatenbanken"
+		def replacements = [
+				'GRADLE_PLACEHOLDER_DOCKER_REG_URL': "${DOCKER_REGISTRY_URL}"
+		]
 
-		// Erhalte Datum und Uhrzeit wann das Zielrepository mit den Testdatenbanken das letzte mal aktualisiert wurde
-		def connection = new URI(dataBaseRepositoryPrefix).toURL().openConnection()
-		connection.setRequestProperty('User-Agent', 'Gradle Script')
-		def lastRepoUpdate = "-1"
-		if (connection.responseCode == 200) {
-			def json = new JsonSlurper().parse(connection.inputStream)
-			lastRepoUpdate = json.updated_at
-			println "updated_at: ${json.updated_at}"
-		} else {
-			println "Aktualität der Testdatenbanken konnte nicht ermittelt werden. Fehler: ${connection.responseCode}"
-		}
-
-		// Jede in der Config angegebene Testdatenbanken wird heruntergeladen falls diese noch nicht existiert oder das Github Repository mit den Test Datenbanken aktualisiert wurde
-		CONFIG.testDatenbanken.each { db ->
-			def fileName = db + ".sqlite"
-
-			def file = new File("${rootDir}/download/testDatenbanken/${fileName}")
-			if (lastRepoUpdate == -1 && file.exists()) {
-				// Es konnte nicht geprüft ob die aktuelle Datenbank auf dem neusten Stand ist
-				println 'Warnung: Aktualität der Testdatenbanken konnte nicht geprüft werden.'
-			} else if ((getDownloadTimeStamp()["lastRepoUpdate"] != lastRepoUpdate) || !file.exists()) {
-				// Die remote verfügbare Datenbank ist neuer als die aktuelle oder es existiert keine Lokale. Daher muss die Datenbank downloaded werden.
-				println 'Testdatenbanken wurden aktualisiert oder sind nicht vorhanden und müssen daher neu heruntergeladen werden.'
-
-				// Downloade und erstze lokale Datenbank
-				file.withOutputStream { out ->
-					new URI(CONFIG[db as String] as String).toURL().withInputStream { from -> from.transferTo(out) }
-				}
-
-				// Aktualisiert den Zeitstempel des letzten Repository-Updates in der JSON-Datei für die Testeinstellungen.
-				updateDownloadTimeStamp(lastRepoUpdate)
-
-			} else {
-				if (file.exists()) {
-					println 'Testdatenbank download skipped da vorhanden und aktuell.'
-				}
-			}
-		}
+		FileUtils.replaceFilePlaceholderWithValues(templateDockerfile, outputDockerfile, replacements)
 	}
 }
 
@@ -126,23 +145,24 @@ tasks.register('checkIfDockerIsRunning') {
 tasks.register('startTestDockerNetwork') {
 	description = 'Prüft ob das benötigte Docker Netzwerk läuft. Falls nicht in CI, startet er den Task. Falls in CI, wirft er einen Fehler.'
 	dependsOn 'checkIfDockerIsRunning'
+
 	doLast {
 		def networkExists = 'docker network ls --filter name=gitlab_runner_network -q'.execute().text.trim()
 		if (networkExists) {
 			println 'Docker Network `gitlab_runner_network` läuft.'
 		} else {
-			// Fall in CI Pipeline
+			// Fail in CI Pipeline
 			if (System.getenv('CI_SERVER')) {
 				throw new GradleException('Docker Network `gitlab_runner_network` nicht verfügbar')
-			} else {
-				// Falls lokal
-				println 'Docker Network `gitlab_runner_network` läuft nicht und wird gestartet.'
-
-				// Starte das Docker Netzwerk
-				def createNetwork = 'docker network create gitlab_runner_network'.execute()
-				createNetwork.waitFor()
-				println createNetwork.text
 			}
+
+			// Falls lokal
+			println 'Docker Network `gitlab_runner_network` läuft nicht und wird gestartet.'
+
+			// Starte das Docker Netzwerk
+			def createNetwork = 'docker network create gitlab_runner_network'.execute()
+			createNetwork.waitFor()
+			println createNetwork.text
 		}
 	}
 }
@@ -154,15 +174,14 @@ tasks.register('startTestDockerNetwork') {
  * Einstiegspunkt sowohl für die CI als auch die lokale Ausführung.
  */
 tasks.register('integrationTest') {
-	group = 'verification'
+	group = 'testing'
 	description = 'Ausführung aller Integrationstests welche jeweils gegen eine temporäre standardisierte Testumgebung laufen.'
 
 	// Überprüfe ob für die Integrationstests alle Voraussetzungen erfüllt sind
-	dependsOn 'downloadTestDatabases'
 	dependsOn 'startTestDockerNetwork'
 	dependsOn 'checkIfConfigFilesAreConsistent'
 
-	// Tatsächliche Integrationstests welche für jedes Subpackage ausgeführt werden
+	// Integrationstests welche für jedes Subpackage ausgeführt werden
 	// Weitere Testpackages können hier hinzugefügt werden
 	dependsOn 'tests-server-api:testAgainstDockerEnv' // Vite API Tests
 	dependsOn 'tests-e2e-devmode:testAgainstDockerEnv' // Playwright E2E Tests DEV Modus
@@ -170,33 +189,15 @@ tasks.register('integrationTest') {
 	dependsOn 'tests-server-dav:testAgainstDockerEnv' // Vite API Dav Tests
 	dependsOn 'tests-server-enm:testAgainstDockerEnv' // Vite API ENM Tests
 
-
-	// Serielle Ausführung sicherstellen
-	project('tests-e2e-devmode').tasks.named('testAgainstDockerEnv').configure {
-		mustRunAfter project('tests-server-api').tasks.named('testAgainstDockerEnv')
-	}
-	project('tests-e2e-stablemode').tasks.named('testAgainstDockerEnv').configure {
-		mustRunAfter project('tests-e2e-devmode').tasks.named('testAgainstDockerEnv')
-	}
-	project('tests-server-dav').tasks.named('testAgainstDockerEnv').configure {
-		mustRunAfter project('tests-e2e-stablemode').tasks.named('testAgainstDockerEnv')
-	}
-	project('tests-server-enm').tasks.named('testAgainstDockerEnv').configure {
-		mustRunAfter project('tests-server-dav').tasks.named('testAgainstDockerEnv')
-	}
-
-
-
-	if(!CONFIG.keepContainerAfterTestRun) {
-		// Stoppe die container für die jeweiligen Testumgebungen nach den Integrationstests
-		// Jeden ausgeführte Test Sub-Packet sollte auch hier auftauchen
+	if (!config.keepContainerAfterTestRun) {
+		// Stoppe die Container für die jeweiligen Testumgebungen nach den Integrationstests
 		finalizedBy 'tests-server-api:removeTestEnvironmentEntryPoint'
 		finalizedBy 'tests-e2e-devmode:removeTestEnvironmentEntryPoint'
 		finalizedBy 'tests-e2e-stablemode:removeTestEnvironmentEntryPoint'
 		finalizedBy 'tests-server-dav:removeTestEnvironmentEntryPoint'
 		finalizedBy 'tests-server-enm:removeTestEnvironmentEntryPoint'
 
-		// Aggregiere die Informationen aus allen Tests
+		// Aggregiere die Test-Results aus allen Tests
 		finalizedBy 'checkJUnitResults'
 	} else {
 		println("Achtung: Testcontainer werden nicht abgeräumt!")
@@ -210,7 +211,7 @@ tasks.register('integrationTest') {
  *
  * @throws GradleException Wenn der HTTP-Antwortcode des lokalen Servers nicht 200 ist.
  */
-tasks.register('checkIfLokalApplikationIsRunning') {
+tasks.register('checkIfLocalAppIsRunning') {
 	description = 'Wirf einen Fehler wenn SVWS Server App auf dem Host System auf Port 443 läuft.'
 	doFirst {
 		// Führe den curl-Befehl aus und speichere die Ausgabe in einer Variable
@@ -233,17 +234,15 @@ tasks.register('checkIfLokalApplikationIsRunning') {
  *
  * @throws GradleException Wenn keine Datenbank mit offenem Socket auf 3306 läuft.
  */
-tasks.register('checkIfLokalDataBaseIsRunning') {
+tasks.register('checkIfLocalDatabaseIsRunning') {
 	description = 'Wirf einen Fehler wenn keine MariaDB auf dem Host System auf Port 3306 läuft.'
 	doLast {
 		def socket = new Socket()
 		try {
 			socket.connect(new InetSocketAddress('localhost', 3306), 2000)
 			println 'MariaDB Database auf port 3306 erreichbar.'
-
 		} catch (IOException ignored) {
 			throw new GradleException('Es läuft keine MariaDB auf port 3306.')
-
 		} finally {
 			try {
 				socket.close()
@@ -262,11 +261,11 @@ tasks.register('checkIfLokalDataBaseIsRunning') {
  */
 tasks.register('no_auto_docker_integrationTest') {
 	description = 'Führt die integrations gegen das laufende Backed + Datenbank aus. Diese werden daher benötigt und sollten vorher manuel gestartet werden'
-	group = 'verification'
+	group = 'testing'
 
 	// Prüfe ob Voraussetzungen erfüllt sind
-	dependsOn ':tests:checkIfLokalApplikationIsRunning'
-	dependsOn ':tests:checkIfLokalDataBaseIsRunning'
+	dependsOn ':tests:checkIfLocalAppIsRunning'
+	dependsOn ':tests:checkIfLocalDatabaseIsRunning'
 
 	// Führe die lokalen Tests der jeweiligen Subpackages aus
 	dependsOn 'tests-server-api:no_auto_docker_test_APIServer' // VITE API Tests
@@ -329,42 +328,13 @@ tasks.register('checkJUnitResults') {
 		if (totalErroredTests > 0) {
 			throw new GradleException("Integrationstests insgesamt: ${totalTests} | Skipped: ${totalSkippedTests} | Error: ${totalErroredTests}")
 		} else {
-
-			// Für farbiges Log benötigt
+			// Log in grüner Schrift anzeigen
 			def highlightGreen = { text -> "\033[32m${text}\033[0m" }
 
-			def debugMessage = "Alle ${totalTests} Integrationstests waren fehlerfrei. (Skipped: ${totalSkippedTests})"
 			println("${highlightGreen('\n****************************************************************')}")
-			println("${highlightGreen(debugMessage)}")
+			println("Alle ${totalTests} Integrationstests waren fehlerfrei. (Skipped: ${totalSkippedTests})")
 			println("${highlightGreen('****************************************************************\n')}")
 		}
 	}
 }
-
-def getDownloadTimeStamp() {
-	def dbJson = file("${rootDir}/download/testDatenbanken/download-state.json")
-
-	if (!dbJson.exists()) {
-		// Erstelle die Datei mit einem leeren JSON-Objekt oder einem Standardinhalt
-		dbJson.parentFile.mkdirs() // Stelle sicher, dass der Ordner existiert
-		dbJson.text = JsonOutput.toJson([lastRepoUpdate: "never "])
-	}
-	return new JsonSlurper().parse(dbJson)
-}
-
-
-/**
- * Aktualisiert den Zeitstempel des letzten Repository-Updates in der JSON-Datei für die Testeinstellungen.
- *
- * @param filePath Der Pfad zur JSON-Datei, die aktualisiert werden soll.
- * @param newValue Der neue Wert für das Feld "lastRepoUpdate".
- */
-def updateDownloadTimeStamp(String newValue) {
-	def dbJson = file("${rootDir}/download/testDatenbanken/download-state.json")
-	def json = getDownloadTimeStamp()
-	json['lastRepoUpdate'] = newValue
-	dbJson.text = JsonOutput.prettyPrint(JsonOutput.toJson(json))
-	println "Updated \"lastRepoUpdate\""
-}
-
 

@@ -11,7 +11,7 @@
 		</template>
 		<template #modalActions>
 			<svws-ui-button type="secondary" @click="show = false"> Abbrechen </svws-ui-button>
-			<svws-ui-button type="secondary" @click="importer()" :disabled="item.kuerzel.trim().length === 0 || (item.groesse < 1)"> Raum hinzufügen </svws-ui-button>
+			<svws-ui-button type="secondary" @click="importer()" :disabled="(item.kuerzel.trim().length === 0) || (item.groesse < 1)"> Raum hinzufügen </svws-ui-button>
 		</template>
 	</svws-ui-modal>
 </template>

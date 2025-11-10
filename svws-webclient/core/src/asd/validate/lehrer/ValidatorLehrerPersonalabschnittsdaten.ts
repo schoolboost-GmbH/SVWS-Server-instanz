@@ -5,6 +5,7 @@ import { ValidatorLehrerPersonalabschnittsdatenRechtsverhaeltnis } from '../../.
 import { Class } from '../../../java/lang/Class';
 import { ValidatorKontext } from '../../../asd/validate/ValidatorKontext';
 import { Validator } from '../../../asd/validate/Validator';
+import { ValidatorLabbLehrerPersonalabschnittsdatenBeschaeftigungsartBlockmodell } from '../../../asd/validate/lehrer/ValidatorLabbLehrerPersonalabschnittsdatenBeschaeftigungsartBlockmodell';
 import { ValidatorLehrerPersonalabschnittsdatenPflichtstundensoll } from '../../../asd/validate/lehrer/ValidatorLehrerPersonalabschnittsdatenPflichtstundensoll';
 
 export class ValidatorLehrerPersonalabschnittsdaten extends Validator {
@@ -20,6 +21,7 @@ export class ValidatorLehrerPersonalabschnittsdaten extends Validator {
 	public constructor(daten: LehrerPersonalabschnittsdaten, stammdaten: LehrerStammdaten, kontext: ValidatorKontext) {
 		super(kontext);
 		this._validatoren.add(new ValidatorLehrerPersonalabschnittsdatenPflichtstundensoll(daten, kontext));
+		this._validatoren.add(new ValidatorLabbLehrerPersonalabschnittsdatenBeschaeftigungsartBlockmodell(daten, kontext));
 		try {
 			const geburtsdatum: DateManager = DateManager.from(stammdaten.geburtsdatum);
 			this._validatoren.add(new ValidatorLehrerPersonalabschnittsdatenRechtsverhaeltnis(daten, geburtsdatum, kontext));
@@ -37,7 +39,7 @@ export class ValidatorLehrerPersonalabschnittsdaten extends Validator {
 	}
 
 	isTranspiledInstanceOf(name: string): boolean {
-		return ['de.svws_nrw.asd.validate.lehrer.ValidatorLehrerPersonalabschnittsdaten', 'de.svws_nrw.asd.validate.Validator'].includes(name);
+		return ['de.svws_nrw.asd.validate.BasicValidator', 'de.svws_nrw.asd.validate.lehrer.ValidatorLehrerPersonalabschnittsdaten', 'de.svws_nrw.asd.validate.Validator'].includes(name);
 	}
 
 	public static class = new Class<ValidatorLehrerPersonalabschnittsdaten>('de.svws_nrw.asd.validate.lehrer.ValidatorLehrerPersonalabschnittsdaten');

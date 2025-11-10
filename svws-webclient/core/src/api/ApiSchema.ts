@@ -31,7 +31,7 @@ export class ApiSchema extends BaseApi {
 	 *
 	 * @returns true, falls es sich um ein "verdorbenes" Schema handelt und ansonsten false
 	 */
-	public async isTainted(schema : string) : Promise<boolean | null> {
+	public async isTainted(schema : string) : Promise<boolean> {
 		const path = "/db/{schema}/api/isTainted"
 			.replace(/{schema\s*(:[^{}]+({[^{}]+})*)?}/g, schema);
 		const result : string = await super.getJSON(path);
@@ -55,7 +55,7 @@ export class ApiSchema extends BaseApi {
 	 *
 	 * @returns Die Revision des Schemas
 	 */
-	public async revision(schema : string) : Promise<number | null> {
+	public async revision(schema : string) : Promise<number> {
 		const path = "/db/{schema}/api/revision"
 			.replace(/{schema\s*(:[^{}]+({[^{}]+})*)?}/g, schema);
 		const result : string = await super.getJSON(path);

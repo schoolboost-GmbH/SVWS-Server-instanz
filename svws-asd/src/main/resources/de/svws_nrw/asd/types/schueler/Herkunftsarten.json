@@ -1,5 +1,5 @@
 {
-    "version": 1,
+    "version": 6,
     "daten": [
       {
         "bezeichner": "NICHTVERSETZUNG",
@@ -553,8 +553,8 @@
         "historie": [
           {
             "id": 92000,
-            "schluessel": "Übergang von Deutschförderung",
-            "kuerzel": "HI",
+            "schluessel": "92",
+            "kuerzel": "Übergang von Deutschförderung",
             "text": "Übergang von Deutschförderung ins Regelsystem (BASS 13-63 Nr. 3 Nr. 4.1.2))",
             "schulformen": [
               "V",
@@ -696,6 +696,44 @@
         ]
       },
       {
+        "bezeichner": "HA9B",
+        "idStatistik": "36",
+        "historie": [
+          {
+            "id": 3000000,
+            "schluessel": "C",
+            "kuerzel": "HA9-10B",
+            "text": "Hauptschulabschluss mit Berechtigung zum Besuch der Klasse 10, Typ B / Abgangszeugnis aus Klasse 10 ohne Mittlerer Abschluss",
+            "schulformen": [
+              "WB",
+              "SB",
+              "FW",
+              "BK",
+              "WF",
+              "HI"
+            ],
+            "gueltigVon": null,
+            "gueltigBis": 2022
+          },
+          {
+            "id": 3000001,
+            "schluessel": "C",
+            "kuerzel": "ESA-10B",
+            "text": "Erster Schulabschluss mit Berechtigung zum Besuch der Klasse 10, Typ B / Abgangszeugnis aus Klasse 10 ohne Erweiterten Ersten Schulabschluss",
+            "schulformen": [
+              "WB",
+              "SB",
+              "FW",
+              "BK",
+              "WF",
+              "HI"
+            ],
+            "gueltigVon": 2023,
+            "gueltigBis": null
+          }
+        ]
+      },
+      {
         "bezeichner": "HA10",
         "idStatistik": "17",
         "historie": [
@@ -739,8 +777,8 @@
         "historie": [
           {
             "id": 6000000,
-            "schluessel": "MSA",
-            "kuerzel": "WB",
+            "schluessel": "F",
+            "kuerzel": "MSA",
             "text": "Mittlerer Abschluss, Fachoberschulreife ohne Berechtigung zum Besuch der gymnasialen Oberstufe",
             "schulformen": [
               "WB",
@@ -760,415 +798,403 @@
         "idStatistik": "19",
         "historie": [
           {
-            "id": 19000,
-            "schluessel": "WF",
-            "kuerzel": "WF",
-            "text": "Freie Waldorfförderschule",
+            "id": 7000000,
+            "schluessel": "G",
+            "kuerzel": "MSA-Q",
+            "text": "Mittlerer Abschluss, Fachoberschulreife mit Berechtigung zum Besuch der gymnasialen Oberstufe (Einführungsphase)",
             "schulformen": [
               "BK",
               "SB",
               "FW",
               "HI",
               "WF",
-              "G",
-              "GE",
-              "GM",
-              "GY",
-              "H",
-              "PS",
-              "R",
-              "KS",
-              "S",
-              "SG",
-              "SK",
-              "SR",
-              "V",
               "WB"
             ],
             "gueltigVon": null,
             "gueltigBis": 2022
-          },
-          {
-            "bezeichner": "FHR_S",
-            "idStatistik": "20",
-            "historie": [
-              {
-                "id": 8000000,
-                "schluessel": "H",
-                "kuerzel": "FHR (schulischer Teil)",
-                "text": "Fachhochschulreife (schulischer Teil)",
-                "schulformen": [
-                  "BK", 
-                  "SB", 
-                  "FW", 
-                  "HI", 
-                  "WF", 
-                  "WB"
-                ],
-                "gueltigVon": null,
-                "gueltigBis": null
-              }
-            ]
-          },
-          {
-            "bezeichner": "MSA_Q1",
-            "idStatistik": "21",
-            "historie": [
-              {
-                "id": 9000000,
-                "schluessel": "I",
-                "kuerzel": "MSA-Q1",
-                "text": "Mittlerer Abschluss, Fachoberschulreife mit Berechtigung zum Besuch der Qualifikationsphase 1",
-                "schulformen": [
-                  "FW", 
-                  "HI", 
-                  "WF", 
-                  "BK", 
-                  "SB", 
-                  "WB"
-                ],
-                "gueltigVon": null,
-                "gueltigBis": null
-              }
-            ]
-          },
-          {
-            "bezeichner": "FHR",
-            "idStatistik": "22",
-            "historie": [
-              {
-                "id": 10000000,
-                "schluessel": "J",
-                "kuerzel": "FHR",
-                "text": "Fachhochschulreife",
-                "schulformen": [
-                  "BK", 
-                  "SB", 
-                  "FW", 
-                  "HI", 
-                  "WF", 
-                  "WB"
-                ],
-                "gueltigVon": null,
-                "gueltigBis": null
-              }
-            ]
-          },
-          {
-            "bezeichner": "AHR",
-            "idStatistik": "23",
-            "historie": [
-              {
-                "id": 11000000,
-                "schluessel": "K",
-                "kuerzel": "AHR",
-                "text": "Allgemeine Hochschulreife",
-                "schulformen": [
-                  "BK", 
-                  "SB", 
-                  "WB"
-                ],
-                "gueltigVon": null,
-                "gueltigBis": null
-              }
-            ]
-          },
-          {
-            "bezeichner": "HR_NRW",
-            "idStatistik": "24",
-            "historie": [
-              {
-                "id": 12000000,
-                "schluessel": "L",
-                "kuerzel": "Hochschulreife NRW",
-                "text": "Hochschulreife für das Land NRW",
-                "schulformen": [
-                  "BK", 
-                  "SB", 
-                  "WB"
-                ],
-                "gueltigVon": null,
-                "gueltigBis": null
-              }
-            ]
-          },
-          {
-            "bezeichner": "ABSCHLUSS_FOEG",
-            "idStatistik": "25",
-            "historie": [
-              {
-                "id": 13000000,
-                "schluessel": "M",
-                "kuerzel": "Abschlusszeugnis Förderschule (geistige Entwicklung)",
-                "text": "Abschlusszeugnis (Förderschule, Förderschwerpunkt geistige Entwicklung)",
-                "schulformen": [
-                  "BK", 
-                  "SB", 
-                  "WB"
-                ],
-                "gueltigVon": null,
-                "gueltigBis": 2022
-              },
-              {
-                "id": 13000001,
-                "schluessel": "M",
-                "kuerzel": "Abschluss Bildungsgang Geistige Entwicklung",
-                "text": "Abschlusszeugnis im zieldifferenten Bildungsgang Geistige Entwicklung",
-                "schulformen": [
-                  "BK", 
-                  "SB", 
-                  "WB"
-                ],
-                "gueltigVon": 2023,
-                "gueltigBis": null
-              }
-            ]
-          },
-          {
-            "bezeichner": "ABSCHLUSS_FOEL",
-            "idStatistik": "26",
-            "historie": [
-              {
-                "id": 14000000,
-                "schluessel": "N",
-                "kuerzel": "Abschlusszeugnis Förderschule (Lernen)",
-                "text": "Abschlusszeugnis (Förderschule, Förderschwerpunkt Lernen)",
-                "schulformen": [
-                  "BK", 
-                  "SB", 
-                  "WB"
-                ],
-                "gueltigVon": null,
-                "gueltigBis": 2022
-              },
-              {
-                "id": 14000001,
-                "schluessel": "N",
-                "kuerzel": "Abschluss Bildungsgang Lernen",
-                "text": "Abschluss des zieldifferenten Bildungsgangs Lernen",
-                "schulformen": [
-                  "BK", 
-                  "SB", 
-                  "WB"
-                ],
-                "gueltigVon": 2023,
-                "gueltigBis": null
-              }
-            ]
-          },
-          {
-            "bezeichner": "HA9_Q",
-            "idStatistik": "27",
-            "historie": [
-              {
-                "id": 15000000,
-                "schluessel": "O",
-                "kuerzel": "HA-Q",
-                "text": "Hauptschulabschluss mit Berechtigung zum Besuch der gymnasialen Oberstufe (auch Versetzungszeugnis der Kl. 9 des Gymnasiums)",
-                "schulformen": [
-                  "FW", 
-                  "HI", 
-                  "WF", 
-                  "BK", 
-                  "SB", 
-                  "WB"
-                ],
-                "gueltigVon": null,
-                "gueltigBis": 2022
-              },
-              {
-                "id": 15000001,
-                "schluessel": "O",
-                "kuerzel": "ESA-Q",
-                "text": "Erster Schulabschluss mit Berechtigung zum Besuch der gymnasialen Oberstufe (auch Versetzungszeugnis der Kl.9 des Gymnasiums)",
-                "schulformen": [
-                  "FW", 
-                  "HI", 
-                  "WF", 
-                  "BK", 
-                  "SB", 
-                  "WB"
-                ],
-                "gueltigVon": 2023,
-                "gueltigBis": null
-              }
-            ]
-          },
-          {
-            "bezeichner": "VS_11",
-            "idStatistik": "28",
-            "historie": [
-              {
-                "id": 16000000,
-                "schluessel": "P",
-                "kuerzel": "Versetzung Kl. 11",
-                "text": "Versetzung nach Klasse 11 FO",
-                "schulformen": [
-                  "BK", 
-                  "SB", 
-                  "WB"
-                ],
-                "gueltigVon": null,
-                "gueltigBis": null
-              }
-            ]
-          },
-          {
-            "bezeichner": "FGHR",
-            "idStatistik": "29",
-            "historie": [
-              {
-                "id": 17000000,
-                "schluessel": "Q",
-                "kuerzel": "FGHR",
-                "text": "Fachgebundene Hochschulreife",
-                "schulformen": [
-                  "BK", 
-                  "SB", 
-                  "WB"
-                ],
-                "gueltigVon": null,
-                "gueltigBis": null
-              }
-            ]
-          },
-          {
-            "bezeichner": "KEIN_ABSCHLUSS_AUS_DEUTSCHFOERDERUNG",
-            "idStatistik": "30",
-            "historie": [
-              {
-                "id": 18000000,
-                "schluessel": "R",
-                "kuerzel": "FGHR",
-                "text": "Ohne Abschluss, kommt aus der Deutschförderung",
-                "schulformen": [
-                  "FW", 
-                  "HI", 
-                  "WF", 
-                  "BK", 
-                  "SB", 
-                  "WB"
-                ],
-                "gueltigVon": null,
-                "gueltigBis": null
-              }
-            ]
-          },
-          {
-            "bezeichner": "HA9_FOE",
-            "idStatistik": "31",
-            "historie": [
-              {
-                "id": 19000000,
-                "schluessel": "S",
-                "kuerzel": "HA-IntFö",
-                "text": "Ein dem Hauptschulabschluss vergleichbarer Abschluss mit Berechtigung zum Besuch eines weiterführenden Bildungsgangs im Berufskolleg (nur Internationale Förderklasse)",
-                "schulformen": [
-                  "BK", 
-                  "SB", 
-                  "WB"
-                ],
-                "gueltigVon": null,
-                "gueltigBis": 2022
-              },
-              {
-                "id": 19000001,
-                "schluessel": "S",
-                "kuerzel": "ESA-IntFö",
-                "text": "Erster Schulabschluss mit Berechtigung zum Besuch eines weiterführenden Bildungsgangs im Berufskolleg (nur Internationale Förderklasse)",
-                "schulformen": [
-                  "BK", 
-                  "SB", 
-                  "WB"
-                ],
-                "gueltigVon": 2023,
-                "gueltigBis": null
-              }
-            ]
-          },
-          {
-            "bezeichner": "UNBEKANNT",
-            "idStatistik": "32",
-            "historie": [
-              {
-                "id": 21000000,
-                "schluessel": "U",
-                "kuerzel": "Unbekannt",
-                "text": "Herkunft noch unbekannt (nur Gliederung A12, A13, A17 - A19)",
-                "schulformen": [
-                  "BK", 
-                  "SB"
-                ],
-                "gueltigVon": null,
-                "gueltigBis": null
-              }
-            ]
-          },
-          {
-            "bezeichner": "VERSETZT",
-            "idStatistik": "33",
-            "historie": [
-              {
-                "id": 22000000,
-                "schluessel": "V",
-                "kuerzel": "Versetzt",
-                "text": "Versetzte bzw. vorgerückte Schüler/-innen / Höheres Semester",
-                "schulformen": [
-                  "BK", 
-                  "SB", 
-                  "FW", 
-                  "HI", 
-                  "WF", 
-                  "WB"
-                ],
-                "gueltigVon": null,
-                "gueltigBis": null
-              }
-            ]
-          },
-          {
-            "bezeichner": "WIEDERHOLER",
-            "idStatistik": "34",
-            "historie": [
-              {
-                "id": 23000000,
-                "schluessel": "W",
-                "kuerzel": "Wiederholer",
-                "text": "Wiederholer / Gleiches oder niedrigeres Semester",
-                "schulformen": [
-                  "BK", 
-                  "SB", 
-                  "FW", 
-                  "HI", 
-                  "WF", 
-                  "WB"
-                ],
-                "gueltigVon": null,
-                "gueltigBis": null
-              }
-            ]
-          },
-          {
-            "bezeichner": "SONSTIGE_QUALIFIKATION",
-            "idStatistik": "35",
-            "historie": [
-              {
-                "id": 24000000,
-                "schluessel": "X",
-                "kuerzel": "Sonstige Qualifikation",
-                "text": "Sonstige Qualifikation (bei Schüler/-innen, die seit den letzten amtlichen Schuldaten aus dem Ausland zugezogen sind)",
-                "schulformen": [
-                  "BK", 
-                  "SB", 
-                  "FW", 
-                  "HI", 
-                  "WF", 
-                  "WB"],
-                "gueltigVon": null,
-                "gueltigBis": null
-              }
-            ]
           }
-        ]}
-    ]
-  }
+        ]
+    },
+    {
+      "bezeichner": "FHR_S",
+      "idStatistik": "20",
+      "historie": [
+        {
+          "id": 8000000,
+          "schluessel": "H",
+          "kuerzel": "FHR (schulischer Teil)",
+          "text": "Fachhochschulreife (schulischer Teil)",
+          "schulformen": [
+            "BK", 
+            "SB", 
+            "FW", 
+            "HI", 
+            "WF", 
+            "WB"
+          ],
+          "gueltigVon": null,
+          "gueltigBis": null
+        }
+      ]
+    },
+    {
+      "bezeichner": "MSA_Q1",
+      "idStatistik": "21",
+      "historie": [
+        {
+          "id": 9000000,
+          "schluessel": "I",
+          "kuerzel": "MSA-Q1",
+          "text": "Mittlerer Abschluss, Fachoberschulreife mit Berechtigung zum Besuch der Qualifikationsphase 1",
+          "schulformen": [
+            "FW", 
+            "HI", 
+            "WF", 
+            "BK", 
+            "SB", 
+            "WB"
+          ],
+          "gueltigVon": null,
+          "gueltigBis": null
+        }
+      ]
+    },
+    {
+      "bezeichner": "FHR",
+      "idStatistik": "22",
+      "historie": [
+        {
+          "id": 10000000,
+          "schluessel": "J",
+          "kuerzel": "FHR",
+          "text": "Fachhochschulreife",
+          "schulformen": [
+            "BK", 
+            "SB", 
+            "FW", 
+            "HI", 
+            "WF", 
+            "WB"
+          ],
+          "gueltigVon": null,
+          "gueltigBis": null
+        }
+      ]
+    },
+    {
+      "bezeichner": "AHR",
+      "idStatistik": "23",
+      "historie": [
+        {
+          "id": 11000000,
+          "schluessel": "K",
+          "kuerzel": "AHR",
+          "text": "Allgemeine Hochschulreife",
+          "schulformen": [
+            "BK", 
+            "SB", 
+            "WB"
+          ],
+          "gueltigVon": null,
+          "gueltigBis": null
+        }
+      ]
+    },
+    {
+      "bezeichner": "HR_NRW",
+      "idStatistik": "24",
+      "historie": [
+        {
+          "id": 12000000,
+          "schluessel": "L",
+          "kuerzel": "Hochschulreife NRW",
+          "text": "Hochschulreife für das Land NRW",
+          "schulformen": [
+            "BK", 
+            "SB", 
+            "WB"
+          ],
+          "gueltigVon": null,
+          "gueltigBis": null
+        }
+      ]
+    },
+    {
+      "bezeichner": "ABSCHLUSS_FOEG",
+      "idStatistik": "25",
+      "historie": [
+        {
+          "id": 13000000,
+          "schluessel": "M",
+          "kuerzel": "Abschlusszeugnis Förderschule (geistige Entwicklung)",
+          "text": "Abschlusszeugnis (Förderschule, Förderschwerpunkt geistige Entwicklung)",
+          "schulformen": [
+            "BK", 
+            "SB", 
+            "WB"
+          ],
+          "gueltigVon": null,
+          "gueltigBis": 2022
+        },
+        {
+          "id": 13000001,
+          "schluessel": "M",
+          "kuerzel": "Abschluss Bildungsgang Geistige Entwicklung",
+          "text": "Abschlusszeugnis im zieldifferenten Bildungsgang Geistige Entwicklung",
+          "schulformen": [
+            "BK", 
+            "SB", 
+            "WB"
+          ],
+          "gueltigVon": 2023,
+          "gueltigBis": null
+        }
+      ]
+    },
+    {
+      "bezeichner": "ABSCHLUSS_FOEL",
+      "idStatistik": "26",
+      "historie": [
+        {
+          "id": 14000000,
+          "schluessel": "N",
+          "kuerzel": "Abschlusszeugnis Förderschule (Lernen)",
+          "text": "Abschlusszeugnis (Förderschule, Förderschwerpunkt Lernen)",
+          "schulformen": [
+            "BK", 
+            "SB", 
+            "WB"
+          ],
+          "gueltigVon": null,
+          "gueltigBis": 2022
+        },
+        {
+          "id": 14000001,
+          "schluessel": "N",
+          "kuerzel": "Abschluss Bildungsgang Lernen",
+          "text": "Abschluss des zieldifferenten Bildungsgangs Lernen",
+          "schulformen": [
+            "BK", 
+            "SB", 
+            "WB"
+          ],
+          "gueltigVon": 2023,
+          "gueltigBis": null
+        }
+      ]
+    },
+    {
+      "bezeichner": "HA9_Q",
+      "idStatistik": "27",
+      "historie": [
+        {
+          "id": 15000000,
+          "schluessel": "O",
+          "kuerzel": "HA-Q",
+          "text": "Hauptschulabschluss mit Berechtigung zum Besuch der gymnasialen Oberstufe (auch Versetzungszeugnis der Kl. 9 des Gymnasiums)",
+          "schulformen": [
+            "FW", 
+            "HI", 
+            "WF", 
+            "BK", 
+            "SB", 
+            "WB"
+          ],
+          "gueltigVon": null,
+          "gueltigBis": 2022
+        },
+        {
+          "id": 15000001,
+          "schluessel": "O",
+          "kuerzel": "ESA-Q",
+          "text": "Erster Schulabschluss mit Berechtigung zum Besuch der gymnasialen Oberstufe (auch Versetzungszeugnis der Kl.9 des Gymnasiums)",
+          "schulformen": [
+            "FW", 
+            "HI", 
+            "WF", 
+            "BK", 
+            "SB", 
+            "WB"
+          ],
+          "gueltigVon": 2023,
+          "gueltigBis": null
+        }
+      ]
+    },
+    {
+      "bezeichner": "VS_11",
+      "idStatistik": "28",
+      "historie": [
+        {
+          "id": 16000000,
+          "schluessel": "P",
+          "kuerzel": "Versetzung Kl. 11",
+          "text": "Versetzung nach Klasse 11 FO",
+          "schulformen": [
+            "BK", 
+            "SB", 
+            "WB"
+          ],
+          "gueltigVon": null,
+          "gueltigBis": null
+        }
+      ]
+    },
+    {
+      "bezeichner": "FGHR",
+      "idStatistik": "29",
+      "historie": [
+        {
+          "id": 17000000,
+          "schluessel": "Q",
+          "kuerzel": "FGHR",
+          "text": "Fachgebundene Hochschulreife",
+          "schulformen": [
+            "BK", 
+            "SB", 
+            "WB"
+          ],
+          "gueltigVon": null,
+          "gueltigBis": null
+        }
+      ]
+    },
+    {
+      "bezeichner": "KEIN_ABSCHLUSS_AUS_DEUTSCHFOERDERUNG",
+      "idStatistik": "30",
+      "historie": [
+        {
+          "id": 18000000,
+          "schluessel": "R",
+          "kuerzel": "Deutschförderung",
+          "text": "Ohne Abschluss, kommt aus der Deutschförderung",
+          "schulformen": [
+            "FW", 
+            "HI", 
+            "WF", 
+            "BK", 
+            "SB", 
+            "WB"
+          ],
+          "gueltigVon": null,
+          "gueltigBis": null
+        }
+      ]
+    },
+    {
+      "bezeichner": "HA9_FOE",
+      "idStatistik": "31",
+      "historie": [
+        {
+          "id": 19000000,
+          "schluessel": "S",
+          "kuerzel": "HA-IntFö",
+          "text": "Ein dem Hauptschulabschluss vergleichbarer Abschluss mit Berechtigung zum Besuch eines weiterführenden Bildungsgangs im Berufskolleg (nur Internationale Förderklasse)",
+          "schulformen": [
+            "BK", 
+            "SB", 
+            "WB"
+          ],
+          "gueltigVon": null,
+          "gueltigBis": 2022
+        },
+        {
+          "id": 19000001,
+          "schluessel": "S",
+          "kuerzel": "ESA-IntFö",
+          "text": "Erster Schulabschluss mit Berechtigung zum Besuch eines weiterführenden Bildungsgangs im Berufskolleg (nur Internationale Förderklasse)",
+          "schulformen": [
+            "BK", 
+            "SB", 
+            "WB"
+          ],
+          "gueltigVon": 2023,
+          "gueltigBis": null
+        }
+      ]
+    },
+    {
+      "bezeichner": "UNBEKANNT",
+      "idStatistik": "32",
+      "historie": [
+        {
+          "id": 21000000,
+          "schluessel": "U",
+          "kuerzel": "Unbekannt",
+          "text": "Herkunft noch unbekannt (nur Gliederung A12, A13, A17 - A19)",
+          "schulformen": [
+            "BK", 
+            "SB"
+          ],
+          "gueltigVon": null,
+          "gueltigBis": null
+        }
+      ]
+    },
+    {
+      "bezeichner": "VERSETZT",
+      "idStatistik": "33",
+      "historie": [
+        {
+          "id": 22000000,
+          "schluessel": "V",
+          "kuerzel": "Versetzt",
+          "text": "Versetzte bzw. vorgerückte Schüler/-innen / Höheres Semester",
+          "schulformen": [
+            "BK", 
+            "SB", 
+            "FW", 
+            "HI", 
+            "WF", 
+            "WB"
+          ],
+          "gueltigVon": null,
+          "gueltigBis": null
+        }
+      ]
+    },
+    {
+      "bezeichner": "WIEDERHOLER",
+      "idStatistik": "34",
+      "historie": [
+        {
+          "id": 23000000,
+          "schluessel": "W",
+          "kuerzel": "Wiederholer",
+          "text": "Wiederholer / Gleiches oder niedrigeres Semester",
+          "schulformen": [
+            "BK", 
+            "SB", 
+            "FW", 
+            "HI", 
+            "WF", 
+            "WB"
+          ],
+          "gueltigVon": null,
+          "gueltigBis": null
+        }
+      ]
+    },
+    {
+      "bezeichner": "SONSTIGE_QUALIFIKATION",
+      "idStatistik": "35",
+      "historie": [
+        {
+          "id": 24000000,
+          "schluessel": "X",
+          "kuerzel": "Sonstige Qualifikation",
+          "text": "Sonstige Qualifikation (bei Schüler/-innen, die seit den letzten amtlichen Schuldaten aus dem Ausland zugezogen sind)",
+          "schulformen": [
+            "BK", 
+            "SB", 
+            "FW", 
+            "HI", 
+            "WF", 
+            "WB"],
+          "gueltigVon": null,
+          "gueltigBis": null
+        }
+      ]
+    }
+  ]
+}

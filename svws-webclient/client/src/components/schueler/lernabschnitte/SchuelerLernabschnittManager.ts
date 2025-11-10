@@ -1,8 +1,9 @@
 import { Jahrgaenge, Note, JavaLong, KursUtils, HashMap, Fach, KlassenUtils, ArrayList,
-	DeveloperNotificationException, Schulgliederung, JavaString, HashSet } from '@core';
+	DeveloperNotificationException, Schulgliederung, JavaString, HashSet, } from '@core';
 import type { Schuljahresabschnitt, SchuelerLernabschnittsdaten, SchuelerLeistungsdaten, Schulform, JahrgangsDaten,
 	KlassenDaten, SchuelerListeEintrag, KursDaten, LehrerListeEintrag, FachDaten, FoerderschwerpunktEintrag, List,
 	Comparator, JavaMap, JavaSet } from '@core';
+import { FoerderschwerpunkteListeManager } from "@ui";
 
 /**
  * Ein Manager zum Verwalten der Schüler-Lernabschnittsdaten eines Schülers.
@@ -73,11 +74,6 @@ export class SchuelerLernabschnittManager {
 			return cmp;
 		cmp = JavaString.compareTo(a.kuerzel, b.kuerzel);
 		return (cmp === 0) ? JavaLong.compare(a.id, b.id) : cmp;
-	} };
-
-	// Comparator: Führt einen Vergleich von zwei Förderschwerpunkte durch
-	private static readonly _compFoerderschwerpunkte: Comparator<FoerderschwerpunktEintrag> = { compare: (a: FoerderschwerpunktEintrag, b: FoerderschwerpunktEintrag) => {
-		return JavaString.compareTo(a.text, b.text);
 	} };
 
 	// Comparator: Führt einen Vergleich von zwei Lehrern durch
@@ -175,7 +171,7 @@ export class SchuelerLernabschnittManager {
 	private initFoerderschwerpunkte(foerderschwerpunkte: List<FoerderschwerpunktEintrag>): void {
 		this._foerderschwerpunkte.clear();
 		this._foerderschwerpunkte.addAll(foerderschwerpunkte);
-		this._foerderschwerpunkte.sort(SchuelerLernabschnittManager._compFoerderschwerpunkte);
+		this._foerderschwerpunkte.sort(FoerderschwerpunkteListeManager.comparator);
 		this._mapFoerderschwerpunktByID.clear();
 		for (const f of foerderschwerpunkte)
 			this._mapFoerderschwerpunktByID.put(f.id, f);

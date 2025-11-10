@@ -244,19 +244,12 @@
 	import { Fachgruppe } from "../../../../../core/src/asd/types/fach/Fachgruppe";
 	import { LehrerRechtsverhaeltnis } from "../../../../../core/src/asd/types/lehrer/LehrerRechtsverhaeltnis";
 	import { Schulform } from "../../../../../core/src/asd/types/schule/Schulform";
-	import type { Validator } from "../../../../../core/src/asd/validate/Validator";
+	import { BasicValidator } from "../../../../../core/src/asd/validate/BasicValidator";
 	import type { LehrerRechtsverhaeltnisKatalogEintrag } from "../../../../../core/src/asd/data/lehrer/LehrerRechtsverhaeltnisKatalogEintrag";
-	import { LehrerPersonalabschnittsdaten } from "../../../../../core/src/asd/data/lehrer/LehrerPersonalabschnittsdaten";
-	import { LehrerStammdaten } from "../../../../../core/src/asd/data/lehrer/LehrerStammdaten";
-	import { SchuleStammdaten } from "../../../../../core/src/asd/data/schule/SchuleStammdaten";
-	import { Schuljahresabschnitt } from "../../../../../core/src/asd/data/schule/Schuljahresabschnitt";
-	import { ValidatorKontext } from "../../../../../core/src/asd/validate/ValidatorKontext";
-	import { ValidatorLehrerPersonalabschnittsdatenPflichtstundensoll } from "../../../../../core/src/asd/validate/lehrer/ValidatorLehrerPersonalabschnittsdatenPflichtstundensoll";
-	import { ValidatorLehrerStammdatenNachname } from "../../../../../core/src/asd/validate/lehrer/ValidatorLehrerStammdatenNachname";
-	import { ValidatorLehrerStammdatenVorname } from "../../../../../core/src/asd/validate/lehrer/ValidatorLehrerStammdatenVorname";
 	import { CoreTypeSelectManager } from "./selectManager/CoreTypeSelectManager";
 	import { SelectManager } from "./selectManager/SelectManager";
 	import Docs from "./UiSelect.story.md";
+	import { ValidatorFehlerart } from "../../../../../core/src";
 
 	const state = reactive({
 		searchable: false,
@@ -385,74 +378,47 @@
 	 * Validatoren
 	 */
 
-	const schuleStammdaten = new SchuleStammdaten();
-	schuleStammdaten.schulform = Schulform.GY.toString();
-	schuleStammdaten.idSchuljahresabschnitt = 16;
-	const schuljahresabschnitt = new Schuljahresabschnitt();
-	schuljahresabschnitt.id = 16;
-	schuljahresabschnitt.schuljahr = 2023;
-	schuljahresabschnitt.abschnitt = 1;
-	schuljahresabschnitt.idVorigerAbschnitt = null;
-	schuljahresabschnitt.idFolgeAbschnitt = null;
-	schuleStammdaten.abschnitte.add(schuljahresabschnitt);
-	const selectValidatorKontext = new ValidatorKontext(schuleStammdaten, false);
-
-
 	const hinweisValidatorSelection = ref<string | undefined>();
 	const kannValidatorSelection = ref<string | undefined>();
 	const mussValidatorSelection = ref<string | undefined>();
 
-
 	const sHinweisValidatorSelectManager = new SelectManager({ options: ["Christian", "Anna"] });
-
-	const sKannValidatorSelectManager = new SelectManager({ options: ["30 Pflichtstunden", "100 Pflichtstunden"] });
-
+	const sKannValidatorSelectManager = new SelectManager({ options: ["20 Pflichtstunden", "40 Pflichtstunden"] });
 	const sMussValidatorSelectManager = new SelectManager({ options: ["Müller", "Meier"] });
 
-
-	const validatorHinweis = computed(() => {
-		const lehrerStammdaten = new LehrerStammdaten();
-		lehrerStammdaten.vorname = hinweisValidatorSelection.value ?? "";
-		return new ValidatorLehrerStammdatenVorname(lehrerStammdaten, selectValidatorKontext);
-	});
-
-	const validatorKann = computed(() => {
-		const lehrerPersonalabschnittsdaten = new LehrerPersonalabschnittsdaten();
-		switch (kannValidatorSelection.value) {
-			case "30 Pflichtstunden":
-				lehrerPersonalabschnittsdaten.pflichtstundensoll = 30.0;
-				break;
-			case "100 Pflichtstunden":
-				lehrerPersonalabschnittsdaten.pflichtstundensoll = 100.0;
-				break;
-			default:
-				break;
+	class ValidatorTest extends BasicValidator {
+		private readonly testfn: () => string | null;
+		constructor(testfn: () => string | null, art: ValidatorFehlerart) {
+			super(art);
+			this.testfn = testfn;
 		}
-		return new ValidatorLehrerPersonalabschnittsdatenPflichtstundensoll(lehrerPersonalabschnittsdaten, selectValidatorKontext);
-	});
+		protected pruefe(): boolean {
+			const result = this.testfn();
+			if (result !== null)
+				this.addFehler(0, result);
+			return (result === null);
+		}
+	};
 
+	const validatorHinweis = computed(() => new ValidatorTest(() => (hinweisValidatorSelection.value === "Anna") ? null : "Hier ist die Eintragung von Anna gewünscht.", ValidatorFehlerart.HINWEIS));
+	const validatorKann = computed(() => new ValidatorTest(() => (kannValidatorSelection.value === "20 Pflichtstunden") ? null : "Der Pflichstundensoll sollte eingetragen werden. Ein zu hoher Wert ist nicht plausibel.", ValidatorFehlerart.KANN))
+	const validatorMuss = computed(() => new ValidatorTest(() => (mussValidatorSelection.value === "Müller") ? null : "In diesem Feld ist es verpflichtend, dass Müller ausgewählt wird. Alles andere führt zu einem Fehler.", ValidatorFehlerart.MUSS))
 
-	const validatorMuss = computed(() => {
-		const lehrerStammdaten = new LehrerStammdaten();
-		lehrerStammdaten.nachname = mussValidatorSelection.value ?? "";
-		return new ValidatorLehrerStammdatenNachname(lehrerStammdaten, selectValidatorKontext);
-	});
-
-	function validateSelect(validator: Validator, value: string | Iterable<string> | null): boolean {
+	function validateSelect(validator: BasicValidator, value: string | Iterable<string> | null): boolean {
 		return validator.run();
 	}
 
 	function getSourceString(multi = false) {
 		return `<ui-select
-        label="..."
-        :manager="..."
-        ${state.searchable ? 'searchable' : ''}
-        ${state.disabled ? 'disabled' : ''}
-        ${state.statistics ? 'statistics' : ''}
+		label="..."
+		:manager="..."
+		${state.searchable ? 'searchable' : ''}
+		${state.disabled ? 'disabled' : ''}
+		${state.statistics ? 'statistics' : ''}
 		${state.required ? 'required' : ''}
-        ${state.headless ? 'headless' : ''}
+		${state.headless ? 'headless' : ''}
 		':sort="(a, b) => ..."' : ''
-      `.split('\n').filter(line => line.trim() !== '').join('\n');
-
+		`.split('\n').filter(line => line.trim() !== '').join('\n');
 	}
+
 </script>

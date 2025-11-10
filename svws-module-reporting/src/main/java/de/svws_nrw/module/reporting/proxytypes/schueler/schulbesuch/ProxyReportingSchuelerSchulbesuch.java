@@ -42,7 +42,7 @@ public class ProxyReportingSchuelerSchulbesuch extends ReportingSchuelerSchulbes
 				createEndlassgrund(reportingRepository, schulbesuchsdaten.vorigeEntlassgrundID),
 				schulbesuchsdaten.vorigeAbschlussartID,
 				ersetzeNullBlankTrim(schulbesuchsdaten.entlassungDatum),
-				ersetzeNullBlankTrim(schulbesuchsdaten.entlassungJahrgang),
+				schulbesuchsdaten.idEntlassjahrgang,
 				createEndlassgrund(reportingRepository, schulbesuchsdaten.entlassungGrundID),
 				schulbesuchsdaten.entlassungAbschlussartID,
 				createReportingSchulkatalogEintragNRW(reportingRepository, schulbesuchsdaten.idAufnehmendeSchule),

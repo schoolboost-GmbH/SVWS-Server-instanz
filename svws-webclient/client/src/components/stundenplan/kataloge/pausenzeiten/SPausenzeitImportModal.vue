@@ -64,7 +64,7 @@
 	}
 
 	async function import_file() {
-		if (!file.value)
+		if (file.value === null)
 			return;
 		status.value = undefined;
 		loading.value = true;

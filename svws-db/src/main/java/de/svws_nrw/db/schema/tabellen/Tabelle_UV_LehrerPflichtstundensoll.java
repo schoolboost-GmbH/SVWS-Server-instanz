@@ -25,22 +25,47 @@ public class Tabelle_UV_LehrerPflichtstundensoll extends SchemaTabelle {
 			.setNotNull()
 			.setJavaComment("Die ID des UV-Lehrers des Planungsabschnitts als Fremdschlüssel auf die Tabelle UV_Lehrer");
 
+	/** Die Definition der Tabellenspalte PflichtstdSoll_Deprecated_Revision_49 */
+	public final SchemaTabelleSpalte col_PflichtstdSoll_Deprecated_Revision_49 = add("PflichtstdSoll", SchemaDatentypen.FLOAT, false)
+			.setJavaComment("Pflichtstundensoll des Lehrers im jeweiligen Gültigkeitszeitraum")
+			.setVeraltet(SchemaRevisionen.REV_49);
+
 	/** Die Definition der Tabellenspalte PflichtstdSoll */
 	public final SchemaTabelleSpalte col_PflichtstdSoll = add("PflichtstdSoll", SchemaDatentypen.FLOAT, false)
-			.setJavaComment("Pflichtstundensoll des Lehrers im jeweiligen Gültigkeitszeitraum");
+			.setNotNull()
+			.setJavaComment("Pflichtstundensoll des Lehrers im jeweiligen Gültigkeitszeitraum")
+			.setRevision(SchemaRevisionen.REV_50);
 
-	/** Die Definition der Tabellenspalte GueltigAb */
+
+	/** Die Definition der Tabellenspalte GueltigAb_Deprecated_Revision_49 */
 	public final SchemaTabelleSpalte col_GueltigAb = add("GueltigAb", SchemaDatentypen.DATE, false)
 			.setDefault("1899-01-01")
 			.setNotNull()
 			.setConverter(DatumConverter.class)
-			.setJavaComment("Das Datum, ab dem das Pflichtstundensoll gültig ist");
+			.setJavaComment("Das Datum, ab dem das Pflichtstundensoll gültig ist")
+			.setVeraltet(SchemaRevisionen.REV_49);
+
+	/** Die Definition der Tabellenspalte GueltigVon */
+	public final SchemaTabelleSpalte col_GueltigVon = add("GueltigVon", SchemaDatentypen.DATE, false)
+			.setDefault("1899-01-01")
+			.setNotNull()
+			.setConverter(DatumConverter.class)
+			.setJavaComment("Das Datum, ab dem der Raum gültig ist")
+			.setRevision(SchemaRevisionen.REV_50);
+
+
+	/** Die Definition der Tabellenspalte GueltigBis_Deprecated_Revision_49 */
+	public final SchemaTabelleSpalte col_GueltigBis_Deprecated_Revision_49 = add("GueltigBis", SchemaDatentypen.DATE, false)
+			.setNotNull()
+			.setConverter(DatumConverter.class)
+			.setJavaComment("Das Datum, bis wann das Pflichtstundensoll gültig ist")
+			.setVeraltet(SchemaRevisionen.REV_49);
 
 	/** Die Definition der Tabellenspalte GueltigBis */
 	public final SchemaTabelleSpalte col_GueltigBis = add("GueltigBis", SchemaDatentypen.DATE, false)
-			.setNotNull()
 			.setConverter(DatumConverter.class)
-			.setJavaComment("Das Datum, bis wann das Pflichtstundensoll gültig ist");
+			.setJavaComment("Das Datum, bis wann das Pflichtstundensoll gültig ist")
+			.setRevision(SchemaRevisionen.REV_50);
 
 
 

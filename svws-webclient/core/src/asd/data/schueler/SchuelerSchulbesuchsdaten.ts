@@ -58,9 +58,9 @@ export class SchuelerSchulbesuchsdaten extends JavaObject {
 	public entlassungDatum: string | null = null;
 
 	/**
-	 * Der Jahrgang bei der Entlassung von dieser Schule.
+	 * Die Id des Jahrgangs bei der Entlassung von dieser Schule.
 	 */
-	public entlassungJahrgang: string | null = null;
+	public idEntlassjahrgang: number | null = null;
 
 	/**
 	 * Die ID des Grundes für die Entlassung von dieser Schule.
@@ -185,7 +185,7 @@ export class SchuelerSchulbesuchsdaten extends JavaObject {
 		result.vorigeEntlassgrundID = (obj.vorigeEntlassgrundID === undefined) ? null : obj.vorigeEntlassgrundID === null ? null : obj.vorigeEntlassgrundID;
 		result.vorigeAbschlussartID = (obj.vorigeAbschlussartID === undefined) ? null : obj.vorigeAbschlussartID === null ? null : obj.vorigeAbschlussartID;
 		result.entlassungDatum = (obj.entlassungDatum === undefined) ? null : obj.entlassungDatum === null ? null : obj.entlassungDatum;
-		result.entlassungJahrgang = (obj.entlassungJahrgang === undefined) ? null : obj.entlassungJahrgang === null ? null : obj.entlassungJahrgang;
+		result.idEntlassjahrgang = (obj.idEntlassjahrgang === undefined) ? null : obj.idEntlassjahrgang === null ? null : obj.idEntlassjahrgang;
 		result.entlassungGrundID = (obj.entlassungGrundID === undefined) ? null : obj.entlassungGrundID === null ? null : obj.entlassungGrundID;
 		result.entlassungAbschlussartID = (obj.entlassungAbschlussartID === undefined) ? null : obj.entlassungAbschlussartID === null ? null : obj.entlassungAbschlussartID;
 		result.idAufnehmendeSchule = (obj.idAufnehmendeSchule === undefined) ? null : obj.idAufnehmendeSchule === null ? null : obj.idAufnehmendeSchule;
@@ -231,7 +231,7 @@ export class SchuelerSchulbesuchsdaten extends JavaObject {
 		result += '"vorigeEntlassgrundID" : ' + ((obj.vorigeEntlassgrundID === null) ? 'null' : obj.vorigeEntlassgrundID.toString()) + ',';
 		result += '"vorigeAbschlussartID" : ' + ((obj.vorigeAbschlussartID === null) ? 'null' : JSON.stringify(obj.vorigeAbschlussartID)) + ',';
 		result += '"entlassungDatum" : ' + ((obj.entlassungDatum === null) ? 'null' : JSON.stringify(obj.entlassungDatum)) + ',';
-		result += '"entlassungJahrgang" : ' + ((obj.entlassungJahrgang === null) ? 'null' : JSON.stringify(obj.entlassungJahrgang)) + ',';
+		result += '"idEntlassjahrgang" : ' + ((obj.idEntlassjahrgang === null) ? 'null' : obj.idEntlassjahrgang.toString()) + ',';
 		result += '"entlassungGrundID" : ' + ((obj.entlassungGrundID === null) ? 'null' : obj.entlassungGrundID.toString()) + ',';
 		result += '"entlassungAbschlussartID" : ' + ((obj.entlassungAbschlussartID === null) ? 'null' : JSON.stringify(obj.entlassungAbschlussartID)) + ',';
 		result += '"idAufnehmendeSchule" : ' + ((obj.idAufnehmendeSchule === null) ? 'null' : obj.idAufnehmendeSchule.toString()) + ',';
@@ -301,8 +301,8 @@ export class SchuelerSchulbesuchsdaten extends JavaObject {
 		if (obj.entlassungDatum !== undefined) {
 			result += '"entlassungDatum" : ' + ((obj.entlassungDatum === null) ? 'null' : JSON.stringify(obj.entlassungDatum)) + ',';
 		}
-		if (obj.entlassungJahrgang !== undefined) {
-			result += '"entlassungJahrgang" : ' + ((obj.entlassungJahrgang === null) ? 'null' : JSON.stringify(obj.entlassungJahrgang)) + ',';
+		if (obj.idEntlassjahrgang !== undefined) {
+			result += '"idEntlassjahrgang" : ' + ((obj.idEntlassjahrgang === null) ? 'null' : obj.idEntlassjahrgang.toString()) + ',';
 		}
 		if (obj.entlassungGrundID !== undefined) {
 			result += '"entlassungGrundID" : ' + ((obj.entlassungGrundID === null) ? 'null' : obj.entlassungGrundID.toString()) + ',';

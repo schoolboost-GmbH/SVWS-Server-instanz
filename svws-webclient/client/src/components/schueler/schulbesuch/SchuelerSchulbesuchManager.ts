@@ -1,5 +1,5 @@
-import type { KatalogEntlassgrund, Merkmal, SchulEintrag, SchuelerSchulbesuchSchule, SchuelerSchulbesuchMerkmal, Kindergarten } from "@core";
-import type { Schuljahresabschnitt, List } from "@core";
+import type { KatalogEntlassgrund, Merkmal, SchulEintrag, SchuelerSchulbesuchSchule, SchuelerSchulbesuchMerkmal, Kindergarten, JahrgangsDaten,
+	Schuljahresabschnitt, List } from "@core";
 import { Einschulungsart, Herkunftsarten, Jahrgaenge, PrimarstufeSchuleingangsphaseBesuchsjahre, Schulform, Uebergangsempfehlung, Kindergartenbesuch,
 	SchuelerSchulbesuchsdaten, SchuelerListeEintrag } from "@core";
 import { StateManager } from "@ui";
@@ -33,6 +33,9 @@ export class SchuelerSchulbesuchManager extends StateManager<ManagerStateDataSch
 	/** Eine Map der Kindergärten gemappt nach id */
 	protected _kindergaertenById: Map<number, Kindergarten> = new Map();
 
+	/** Eine Map der Jahrgänge gemappt nach id */
+	protected _jahrgaengeById: Map<number, JahrgangsDaten> = new Map();
+
 	/** Das Schuljahr vom Schuljahresabschnitts des aktuell ausgewählten Schülers */
 	protected _schuljahr: number;
 
@@ -50,11 +53,12 @@ export class SchuelerSchulbesuchManager extends StateManager<ManagerStateDataSch
 	 * @param merkmale				   eine Liste der Merkmale
 	 * @param entlassgruende		   eine Liste der Entlassgruende
 	 * @param kindergaerten			   eine Liste der Kindergärten
+	 * @param jahrgaenge			   eine Liste der Jahrgänge
 	 * @param patch					   die PatchMethode der SchuelerSchulbesuchsdaten
 	 */
 	public constructor(daten: SchuelerSchulbesuchsdaten, auswahl: SchuelerListeEintrag, schuljahresabschnitte: List<Schuljahresabschnitt>,
 		schulen: List<SchulEintrag>, merkmale: List<Merkmal>, entlassgruende: List<KatalogEntlassgrund>, kindergaerten: List<Kindergarten>,
-		patch: (data: Partial<SchuelerSchulbesuchsdaten>) => Promise<void>) {
+		jahrgaenge: List<JahrgangsDaten>, patch: (data: Partial<SchuelerSchulbesuchsdaten>) => Promise<void>) {
 		super(defaultState);
 		this._state.value.daten = daten;
 		this._state.value.auswahl = auswahl;
@@ -64,7 +68,13 @@ export class SchuelerSchulbesuchManager extends StateManager<ManagerStateDataSch
 		this.mapMerkmale(merkmale);
 		this.mapEntlassgruende(entlassgruende);
 		this.mapKindergaerten(kindergaerten);
+		this.mapJahrgaenge(jahrgaenge);
 		this._schuljahr = this.calcSchuljahr();
+	}
+
+	private mapJahrgaenge(jahrgaenge: List<JahrgangsDaten>) {
+		for (const jahrgang of jahrgaenge)
+			this._jahrgaengeById.set(jahrgang.id, jahrgang);
 	}
 
 	private mapKindergaerten(kindergaerten: List<Kindergarten>) {
@@ -95,6 +105,11 @@ export class SchuelerSchulbesuchManager extends StateManager<ManagerStateDataSch
 	/** Gibt die aktuell im Manager gespeicherten SchuelerSchulbesuchsdaten zurück. */
 	public get daten(): SchuelerSchulbesuchsdaten {
 		return this._state.value.daten;
+	}
+
+	/** Gibt die aktuell im Manager gespeicherten Jahrgänge zurück */
+	public get jahrgaengeById(): Map<number, JahrgangsDaten> {
+		return this._jahrgaengeById;
 	}
 
 	/** Gibt die aktuell im Manager gespeicherten Schulen zurück */
@@ -132,7 +147,7 @@ export class SchuelerSchulbesuchManager extends StateManager<ManagerStateDataSch
 		if (this.daten.vorigeArtLetzteVersetzung === null)
 			return undefined;
 		const artID = Number(this.daten.vorigeArtLetzteVersetzung);
-		return Herkunftsarten.getByID(artID) || undefined;
+		return Herkunftsarten.data().getWertByIDOrNull(artID) || undefined;
 	}
 
 
@@ -153,9 +168,8 @@ export class SchuelerSchulbesuchManager extends StateManager<ManagerStateDataSch
 	}
 
 	/** Gibt die Herkunftsarten der vorherigen Schulform des ausgewählten Schülers zurück */
-	public getHerkunftsarten(): Herkunftsarten[] {
-		return Herkunftsarten.values().filter(
-			h => h.getBezeichnung(this._schuljahr, this.getVorigeSchulform() || Schulform.G) !== null);
+	public getHerkunftsarten(): List<Herkunftsarten> {
+		return Herkunftsarten.data().getListBySchuljahrAndSchulform(this._schuljahr, this.getVorigeSchulform() ?? Schulform.G);
 	}
 
 	/** Gibt die vorherige Schulform des ausgewählten Schülers zurück */
@@ -167,8 +181,8 @@ export class SchuelerSchulbesuchManager extends StateManager<ManagerStateDataSch
 	}
 
 	/** Gibt den Entlassjahrgang des ausgewählten Schülers zurück */
-	public getEntlassjahrgang(field: "vorigeEntlassjahrgang" | "entlassungJahrgang") {
-		return Jahrgaenge.values().find(v => v.daten(this.schuljahr)?.kuerzel === this.daten[field]) ?? null;
+	public getVorigeEntlassjahrgang() {
+		return Jahrgaenge.values().find(v => v.daten(this.schuljahr)?.kuerzel === this.daten.vorigeEntlassjahrgang) ?? null;
 	}
 
 	/** Gibt den Entlassgrund des ausgewählten Schülers zurück */
@@ -223,7 +237,7 @@ export class SchuelerSchulbesuchManager extends StateManager<ManagerStateDataSch
 
 	/** Die spezielle Patch-Methode der vorigeArtLetzteVersetzung */
 	public patchVorigeArtLetzteVersetzung(value: Herkunftsarten | undefined | null) {
-		void this.doPatch({ vorigeArtLetzteVersetzung: ((value === null) || (value === undefined)) ? null : value.daten.id.toString() });
+		void this.doPatch({ vorigeArtLetzteVersetzung: value?.daten(this.schuljahr)?.id.toString() ?? null });
 	}
 
 	/** Die spezielle Patch-Methode der Schuleinträge */
@@ -238,8 +252,8 @@ export class SchuelerSchulbesuchManager extends StateManager<ManagerStateDataSch
 	}
 
 	/** Die spezielle Patch-Methode der Entlassjahrgänge */
-	public patchEntlassjahrgang(v: Jahrgaenge | undefined | null, field: "vorigeEntlassjahrgang" | "entlassungJahrgang") {
-		void this.doPatch({ [field]: v?.daten(this.schuljahr)?.kuerzel ?? null });
+	public patchEntlassjahrgang(v: Jahrgaenge | undefined | null) {
+		void this.doPatch({ vorigeEntlassjahrgang: v?.daten(this.schuljahr)?.kuerzel ?? null });
 	}
 
 	/** Eintrag zu den bisher besuchten Schulen hinzufügen */

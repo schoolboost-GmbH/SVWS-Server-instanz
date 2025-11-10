@@ -14,11 +14,6 @@ export class FoerderschwerpunktEintrag extends JavaObject {
 	public kuerzel: string = "";
 
 	/**
-	 * Die textuelle Beschreibung des Katalog-Eintrags.
-	 */
-	public text: string = "";
-
-	/**
 	 * Das Kürzel des Eintrags im Rahmen der amtlichen Schulstatisik.
 	 */
 	public kuerzelStatistik: string = "";
@@ -32,6 +27,11 @@ export class FoerderschwerpunktEintrag extends JavaObject {
 	 * Die Sortierreihenfolge des Förderschwerpunkt-Eintrags.
 	 */
 	public sortierung: number = 0;
+
+	/**
+	 * Gibt an, ob der Förderschwerpunkt in anderen Datenbanktabellen referenziert ist oder nicht.
+	 */
+	public referenziertInAnderenTabellen: boolean | null = false;
 
 
 	/**
@@ -60,9 +60,6 @@ export class FoerderschwerpunktEintrag extends JavaObject {
 		if (obj.kuerzel === undefined)
 			throw new Error('invalid json format, missing attribute kuerzel');
 		result.kuerzel = obj.kuerzel;
-		if (obj.text === undefined)
-			throw new Error('invalid json format, missing attribute text');
-		result.text = obj.text;
 		if (obj.kuerzelStatistik === undefined)
 			throw new Error('invalid json format, missing attribute kuerzelStatistik');
 		result.kuerzelStatistik = obj.kuerzelStatistik;
@@ -72,6 +69,7 @@ export class FoerderschwerpunktEintrag extends JavaObject {
 		if (obj.sortierung === undefined)
 			throw new Error('invalid json format, missing attribute sortierung');
 		result.sortierung = obj.sortierung;
+		result.referenziertInAnderenTabellen = (obj.referenziertInAnderenTabellen === undefined) ? null : obj.referenziertInAnderenTabellen === null ? null : obj.referenziertInAnderenTabellen;
 		return result;
 	}
 
@@ -79,10 +77,10 @@ export class FoerderschwerpunktEintrag extends JavaObject {
 		let result = '{';
 		result += '"id" : ' + obj.id.toString() + ',';
 		result += '"kuerzel" : ' + JSON.stringify(obj.kuerzel) + ',';
-		result += '"text" : ' + JSON.stringify(obj.text) + ',';
 		result += '"kuerzelStatistik" : ' + JSON.stringify(obj.kuerzelStatistik) + ',';
 		result += '"istSichtbar" : ' + obj.istSichtbar.toString() + ',';
 		result += '"sortierung" : ' + obj.sortierung.toString() + ',';
+		result += '"referenziertInAnderenTabellen" : ' + ((obj.referenziertInAnderenTabellen === null) ? 'null' : obj.referenziertInAnderenTabellen.toString()) + ',';
 		result = result.slice(0, -1);
 		result += '}';
 		return result;
@@ -96,9 +94,6 @@ export class FoerderschwerpunktEintrag extends JavaObject {
 		if (obj.kuerzel !== undefined) {
 			result += '"kuerzel" : ' + JSON.stringify(obj.kuerzel) + ',';
 		}
-		if (obj.text !== undefined) {
-			result += '"text" : ' + JSON.stringify(obj.text) + ',';
-		}
 		if (obj.kuerzelStatistik !== undefined) {
 			result += '"kuerzelStatistik" : ' + JSON.stringify(obj.kuerzelStatistik) + ',';
 		}
@@ -107,6 +102,9 @@ export class FoerderschwerpunktEintrag extends JavaObject {
 		}
 		if (obj.sortierung !== undefined) {
 			result += '"sortierung" : ' + obj.sortierung.toString() + ',';
+		}
+		if (obj.referenziertInAnderenTabellen !== undefined) {
+			result += '"referenziertInAnderenTabellen" : ' + ((obj.referenziertInAnderenTabellen === null) ? 'null' : obj.referenziertInAnderenTabellen.toString()) + ',';
 		}
 		result = result.slice(0, -1);
 		result += '}';

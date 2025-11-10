@@ -1,10 +1,12 @@
-package svws.gradle.node;
+package svws.gradle.node
 
-import org.gradle.api.Plugin
+
 import org.gradle.api.Project
 import org.gradle.api.provider.Property
-import org.gradle.api.tasks.AbstractExecTask;
+import org.gradle.api.tasks.AbstractExecTask
 import org.gradle.nativeplatform.platform.internal.DefaultNativePlatform
+
+import java.nio.file.Path
 
 /**
  * Die Konfigurationserweiterung des Node-Plugins.
@@ -16,210 +18,196 @@ import org.gradle.nativeplatform.platform.internal.DefaultNativePlatform
  */
 abstract class NodePluginConfig {
 
-	def os = DefaultNativePlatform.getCurrentOperatingSystem();
-	def arch = DefaultNativePlatform.getCurrentArchitecture().getName();
-	def rootProject;
-	def project;
+	def os = DefaultNativePlatform.getCurrentOperatingSystem()
+	def arch = DefaultNativePlatform.getCurrentArchitecture().getName()
+	def rootProject
+	def project
 
-	abstract Property<String> getUrl();
-	abstract Property<String> getVersion();
-	abstract Property<String> getNpmVersion();
-	abstract Property<String> getTsVersion();
-	abstract Property<String> getTsNodeTypesVersion();
+	abstract Property<String> getUrl()
+	abstract Property<String> getVersion()
+	abstract Property<String> getNpmVersion()
+	abstract Property<String> getTsVersion()
+	abstract Property<String> getTsNodeTypesVersion()
 
 	NodePluginConfig(Project p) {
-		this.project = p;
-		this.rootProject = p.rootProject;
-		url.convention('https://nodejs.org/dist/v');
-		version.convention('24.11.0'); // https://nodejs.org/en/download/prebuilt-installer
-		npmVersion.convention('11.6.1');
-		tsVersion.convention('5.9.3'); // https://github.com/microsoft/TypeScript/releases
-		tsNodeTypesVersion.convention('24.9.1'); // https://www.npmjs.com/package/@types/node
+		this.project = p
+		this.rootProject = p.rootProject
+		url.convention('https://nodejs.org/dist/v')
+		version.convention('24.11.0') // https://nodejs.org/en/download/prebuilt-installer
+		npmVersion.convention('11.6.1')
+		tsVersion.convention('5.9.3') // https://github.com/microsoft/TypeScript/releases
+		tsNodeTypesVersion.convention('24.9.1') // https://www.npmjs.com/package/@types/node
 	}
 
 	boolean isLinux() {
-		return os.isLinux();
+		return os.isLinux()
 	}
 
 	boolean isWindows() {
-		return os.isWindows();
+		return os.isWindows()
 	}
 
 	boolean isMacOsX() {
-		return os.isMacOsX();
+		return os.isMacOsX()
+	}
+
+	static boolean useSystemNode() {
+		return System.getenv("USE_SYSTEM_NODE") == "1"
 	}
 
 	String getOSString() {
-		if (os.isLinux())
-			return "linux";
-		if (os.isWindows())
-			return "win";
-		if (os.isMacOsX())
-			return "darwin";
-		throw new Exception("Unsupported operating system ${os.getName()} for the node plugin!");
+		if (isWindows())
+			return "win"
+		else if (isLinux())
+			return "linux"
+		else if (isMacOsX())
+			return "darwin"
+		else
+			throw new Exception("Unsupported operating system ${os.getName()} for the node plugin!")
 	}
 
 	String getArchString() {
 		if (["x86_64", "amd64", "x64", "x86-64"].contains(arch))
-			return "x64";
-		if (["arm64", "arm-v8", "aarch64"].contains(arch))
-			return "arm64";
-		if (["ppc64"].contains(arch))
-			return "ppc64le";
-		throw new Exception("Unsupported operating system architecture ${os.getName()} ${arch} for the node plugin!")
+			return "x64"
+		else if (["arm64", "arm-v8", "aarch64"].contains(arch))
+			return "arm64"
+		else if (["ppc64"].contains(arch))
+			return "ppc64le"
+		else
+			throw new Exception("Unsupported operating system architecture ${os.getName()} ${arch} for the node plugin!")
 	}
 
 	String getCompressedFileType() {
-		if (os.isMacOsX() || this.os.isLinux())
-			return "tar.gz";
-		if (os.isWindows())
-			return "zip";
-		throw new Exception("Unsupported operating system ${os.getName()} for the node plugin!");
-	}
-
-	String getCompressedFilename() {
-		return "node-v" + this.version.get() + "-" + this.getOSString() + "-" + this.getArchString();
+		if (isWindows())
+			return "zip"
+		else if (isMacOsX() || isLinux())
+			return "tar.gz"
+		else
+			throw new Exception("Unsupported operating system ${os.getName()} for the node plugin!")
 	}
 
 	String getCompressedFilenameExt() {
-		return "node-v" + this.version.get() + "-" + this.getOSString() + "-" + this.getArchString() + "." + this.getCompressedFileType();
+		return "node-v" + version.get() + "-" + getOSString() + "-" + getArchString() + "." + getCompressedFileType()
 	}
 
 	URL getDownloadURL() {
 		if (project.hasProperty('node_download_url'))
-			return new URL(project.node_download_url + this.version.get() + "/" + this.getCompressedFilenameExt());
+			return new URI("${project.node_download_url}${version.get()}/${getCompressedFilenameExt()}").toURL()
 		def downloadUrl = System.getenv("NODE_DOWNLOAD_URL")
 		if (downloadUrl != null)
-			return new URL(downloadUrl + this.version.get() + "/" + this.getCompressedFilenameExt());
-		return new URL(this.url.get() + this.version.get() + "/" + this.getCompressedFilenameExt());
+			return new URI(downloadUrl + version.get() + "/" + getCompressedFilenameExt()).toURL()
+		return new URI(url.get() + version.get() + "/" + getCompressedFilenameExt()).toURL()
 	}
 
 	String getDownloadUser() {
 		if (project.hasProperty('node_download_user'))
-			return project.node_download_user;
+			return project.node_download_user
 		def downloadUser = System.getenv("NODE_DOWNLOAD_USER")
 		if (downloadUser != null)
-			return downloadUser;
-		return null;
+			return downloadUser
+		return null
 	}
 
 	String getDownloadPasswd() {
 		if (project.hasProperty('node_download_passwd'))
-			return project.node_download_passwd;
+			return project.node_download_passwd
 		def downloadPasswd = System.getenv("NODE_DOWNLOAD_PASSWD")
 		if (downloadPasswd != null)
-			return downloadPasswd;
-		return "";
+			return downloadPasswd
+		return ""
 	}
 
 	String getDownloadDirectory() {
-		return "${project.rootProject.projectDir}/download";
+		return "${project.rootProject.projectDir}/download"
 	}
 
 	String getNodeDirectory() {
-		return "${project.rootProject.projectDir}/node";
+		return useSystemNode() ? "" : "${project.rootProject.projectDir}/node"
 	}
 
-
-	String getNpmExectuable() {
-		if (os.isWindows()) {
-	   		return "${project.rootProject.projectDir}/node/npm.cmd";
-		} else if (os.isLinux()) {
-	   		return "${project.rootProject.projectDir}/node/bin/npm";
-		} else if (os.isMacOsX()) {
-	   		return "${project.rootProject.projectDir}/node/bin/npm";
+	String getNpmExecutable() {
+		if (isWindows()) {
+	   		return useSystemNode() ? "npm.cmd" : Path.of(getNodeDirectory(), "npm.cmd").toString()
+		} else if (isLinux() || isMacOsX()) {
+			return useSystemNode() ? "npm" : Path.of(getNodeDirectory(), "bin", "npm").toString()
 		} else {
-			throw new Exception("Unsupported operating system ${os.getName()} for the node plugin!");
+			throw new Exception("Unsupported operating system ${os.getName()} for the node plugin!")
 		}
 	}
 
-	String getNpxExectuable() {
-		if (os.isWindows()) {
-	   		return "${project.rootProject.projectDir}/node/npx.cmd";
-		} else if (os.isLinux()) {
-	   		return "${project.rootProject.projectDir}/node/bin/npx";
-		} else if (os.isMacOsX()) {
-	   		return "${project.rootProject.projectDir}/node/bin/npx";
+	String getNpxExecutable() {
+		if (isWindows()) {
+			return useSystemNode() ? "npx.cmd" : Path.of(getNodeDirectory(), "npx.cmd").toString()
+		} else if (isLinux() || isMacOsX()) {
+			return useSystemNode() ? "npx" : Path.of(getNodeDirectory(), "bin", "npx").toString()
 		} else {
-			throw new Exception("Unsupported operating system ${os.getName()} for the node plugin!");
+			throw new Exception("Unsupported operating system ${os.getName()} for the node plugin!")
 		}
 	}
 
-	String getPnpmExectuable() {
-		if (os.isWindows()) {
-	   		return "${project.rootProject.projectDir}/node/pnpm.cmd";
-		} else if (os.isLinux()) {
-	   		return "${project.rootProject.projectDir}/node/lib/node_modules/corepack/shims/pnpm";
-		} else if (os.isMacOsX()) {
-	   		return "${project.rootProject.projectDir}/node/lib/node_modules/corepack/shims/pnpm";
+	String getPnpmExecutable() {
+		if (isWindows()) {
+			return useSystemNode() ? "pnpm.cmd" : Path.of(getNodeDirectory(), "pnpm.cmd").toString()
+		} else if (isLinux() || isMacOsX()) {
+			return useSystemNode() ? "pnpm" : Path.of(getNodeDirectory(), "lib", "node_modules", "corepack", "shims", "pnpm").toString()
 		} else {
-			throw new Exception("Unsupported operating system ${os.getName()} for the node plugin!");
+			throw new Exception("Unsupported operating system ${os.getName()} for the node plugin!")
 		}
 	}
 
-	String getPnpxExectuable() {
-		if (os.isWindows()) {
-	   		return "${project.rootProject.projectDir}/node/pnpx.cmd";
-		} else if (os.isLinux()) {
-	   		return "${project.rootProject.projectDir}/node/lib/node_modules/corepack/shims/pnpx";
-		} else if (os.isMacOsX()) {
-	   		return "${project.rootProject.projectDir}/node/lib/node_modules/corepack/shims/pnpx";
+	String getPnpxExecutable() {
+		if (isWindows()) {
+			return useSystemNode() ? "pnpx.cmd" : Path.of(getNodeDirectory(), "pnpx.cmd").toString()
+		} else if (isLinux() || isMacOsX()) {
+			return useSystemNode() ? "pnpx" : Path.of(getNodeDirectory(), "lib", "node_modules", "corepack", "shims", "pnpx").toString()
 		} else {
-			throw new Exception("Unsupported operating system ${os.getName()} for the node plugin!");
+			throw new Exception("Unsupported operating system ${os.getName()} for the node plugin!")
 		}
 	}
 
 	String getTscExecutable() {
-		if (os.isWindows()) {
-	   		return "${project.rootProject.projectDir}/node/tsc.cmd";
-		} else if (os.isLinux()) {
-	   		return "${project.rootProject.projectDir}/node/lib/node_modules/typescript/bin/tsc";
-		} else if (os.isMacOsX()) {
-	   		return "${project.rootProject.projectDir}/node/lib/node_modules/typescript/bin/tsc";
+		if (isWindows()) {
+			return useSystemNode() ? "tsc.cmd" : Path.of(getNodeDirectory(), "tsc.cmd").toString()
+		} else if (isLinux() || isMacOsX()) {
+			return useSystemNode() ? "tsc" : Path.of(getNodeDirectory(), "lib", "node_modules", "typescript", "bin", "tsc").toString()
 		} else {
-			throw new Exception("Unsupported operating system ${os.getName()} for the node plugin!");
+			throw new Exception("Unsupported operating system ${os.getName()} for the node plugin!")
 		}
 	}
 
 	String getTsserverExecutable() {
-		if (os.isWindows()) {
-	   		return "${project.rootProject.projectDir}/node/tsserver.cmd";
-		} else if (os.isLinux()) {
-	   		return "${project.rootProject.projectDir}/node/lib/node_modules/typescript/bin/tsserver";
-		} else if (os.isMacOsX()) {
-	   		return "${project.rootProject.projectDir}/node/lib/node_modules/typescript/bin/tsserver";
+		if (isWindows()) {
+			return useSystemNode() ? "tsserver.cmd" : Path.of(getNodeDirectory(), "tsserver.cmd").toString()
+		} else if (isLinux() || isMacOsX()) {
+			return useSystemNode() ? "tsserver" : Path.of(getNodeDirectory(), "lib", "node_modules", "typescript", "bin", "tsserver").toString()
 		} else {
-			throw new Exception("Unsupported operating system ${os.getName()} for the node plugin!");
+			throw new Exception("Unsupported operating system ${os.getName()} for the node plugin!")
 		}
 	}
 
-	void addEnvironment(AbstractExecTask<?> t) {
-		def path = null;
-		def nodePath = null;
-		for (entry in t.getEnvironment()) {
-			if ("PATH".equals(entry.key.toUpperCase())) {
-				path = entry.value;
-				break;
-			}
-			if ("NODE_PATH".equals(entry.key.toUpperCase())) {
-				nodePath = entry.value;
-				break;
+	void addEnvironment(AbstractExecTask<? extends AbstractExecTask> task) {
+		String path = null
+		String nodePath = null
+		for (entry in task.getEnvironment()) {
+			if ("PATH" == entry.key.toUpperCase()) {
+				path = entry.value
+			} else if ("NODE_PATH" == entry.key.toUpperCase()) {
+				nodePath = entry.value
 			}
 		}
-		def rootNodePath = "${project.rootProject.projectDir}/node";
-		if ((nodePath == null) || ("".equals(nodePath.trim()))) {
-			t.environment('NODE_PATH', rootNodePath);
-		} else if (this.isWindows()) {
-			t.environment('NODE_PATH', rootNodePath + ";" + nodePath);
+		if ((nodePath == null) || nodePath.isBlank()) {
+			task.environment('NODE_PATH', getNodeDirectory())
+		} else if (isWindows()) {
+			task.environment('NODE_PATH', getNodeDirectory() + ";" + nodePath)
 		} else {
-			t.environment('NODE_PATH', rootNodePath + ":" + nodePath);
+			task.environment('NODE_PATH', getNodeDirectory() + ":" + nodePath)
 		}
-		if ((path == null) || ("".equals(path.trim()))) {
-			t.environment('PATH', this.getNodeDirectory());
-		} else if (this.isWindows()) {
-			t.environment('PATH', this.getNodeDirectory() + ";" + path);
+		if ((path == null) || path.isBlank()) {
+			task.environment('PATH', getNodeDirectory())
+		} else if (isWindows()) {
+			task.environment('PATH', getNodeDirectory() + ";" + path)
 		} else {
-			t.environment('PATH', this.getNodeDirectory() + "/bin:" + path);
+			task.environment('PATH', getNodeDirectory() + "/bin:" + path)
 		}
 	}
 

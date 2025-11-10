@@ -4,7 +4,7 @@
 			<div class="content-card" v-if="manager().hasDaten()">
 				<div class="content-card--header content-card--headline">Allgemein</div>
 				<div class="content-card--content input-wrapper grid-cols-2">
-					<div class="flex gap-1"><svws-ui-checkbox type="toggle" :disabled="(!manager().auswahl().aktiv && !manager().istKonfliktfreiZuAktivenStundenplaenen(gueltigData.gueltigAb, gueltigData.gueltigBis))" :model-value="manager().daten().isAktiv()" @update:model-value="handleChangeAktiv" />Stundenplan aktiv</div>
+					<div v-if="!readonly" class="flex gap-1"><svws-ui-checkbox type="toggle" :disabled="(!manager().auswahl().aktiv && !manager().istKonfliktfreiZuAktivenStundenplaenen(gueltigData.gueltigAb, gueltigData.gueltigBis))" :model-value="manager().daten().isAktiv()" @update:model-value="handleChangeAktiv" />Stundenplan aktiv</div>
 					<svws-ui-text-input class="contentFocusField" :readonly placeholder="Bezeichnung" :model-value="manager().daten().getBezeichnungStundenplan()" :valid="StundenplanListeManager.validateBezeichnung" @change="bezeichnungStundenplan=> bezeichnungStundenplan && patch({ bezeichnungStundenplan })" />
 					<div v-if="!readonly" :class="{'flex gap-2': showExtraWTM}">
 						<svws-ui-select title="Wochentypmodell" :items="[0,2,3,4,5]" :item-text="i=> wochenTypModell[i] || ''" :model-value="manager().daten().getWochenTypModell()" @update:model-value="modell => doPatch(modell)" ref="select" />
@@ -73,7 +73,7 @@
 							</s-pausenzeit-neu-modal>
 						</template>
 					</svws-ui-table>
-					<ui-card icon="i-ri-add-line" title="Alle Pausenzeiten erstellen" :is-open="subActionPausenzeiten" @update:is-open="isOpen => subActionPausenzeiten = isOpen">
+					<ui-card v-if="!readonly" icon="i-ri-add-line" title="Alle Pausenzeiten erstellen" :is-open="subActionPausenzeiten" @update:is-open="isOpen => subActionPausenzeiten = isOpen">
 						<stundenplan-zeitraster-einstellungen :manager="() => manager().daten()" :set-settings-defaults>
 							<svws-ui-button type="secondary" @click="addBlock" title="Alle Pausenzeiten erstellen">
 								<span class="icon i-ri-calendar-event-line" />

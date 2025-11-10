@@ -17,8 +17,8 @@
 				<svws-ui-text-input placeholder="Entlassen am" type="date" :model-value="manager().daten.vorigeEntlassdatum" statistics :readonly
 					@change="vorigeEntlassdatum => manager().doPatch({ vorigeEntlassdatum })" />
 				<svws-ui-select title="Entlassjahrgang" :items="manager().getJahrgaengeBySchulform(manager().getVorigeSchulform())" :item-text="textJahrgang"
-					:model-value="manager().getEntlassjahrgang('vorigeEntlassjahrgang')" :disabled="manager().getVorherigeSchule() === undefined"
-					@update:model-value="v => manager().patchEntlassjahrgang(v, 'vorigeEntlassjahrgang')" removable statistics :readonly />
+					:model-value="manager().getVorigeEntlassjahrgang()" :disabled="manager().getVorherigeSchule() === undefined"
+					@update:model-value="manager().patchEntlassjahrgang" removable statistics :readonly />
 				<svws-ui-text-input placeholder="Bemerkung" span="full" :model-value="manager().daten.vorigeBemerkung" :max-len="255"
 					@change="v => { if ((v ?? '').length <= 255) manager().doPatch({ vorigeBemerkung : v }) } " :readonly />
 				<svws-ui-spacing />
@@ -35,9 +35,10 @@
 			<svws-ui-input-wrapper :grid="2">
 				<svws-ui-text-input class="contentFocusField" placeholder="Entlassen am" type="date" :model-value="manager().daten.entlassungDatum"
 					@change="entlassungDatum => manager().doPatch({ entlassungDatum })" statistics :readonly />
-				<svws-ui-select title="Entlassjahrgang" :items="manager().getJahrgaengeBySchulform(props.schulform)"
-					:model-value="manager().getEntlassjahrgang('entlassungJahrgang')" :readonly
-					@update:model-value="v => manager().patchEntlassjahrgang(v, 'entlassungJahrgang')" :item-text="textJahrgang" removable />
+				<svws-ui-select title="Entlassjahrgang"
+					:items="manager().jahrgaengeById.values()"
+					v-model="entlassjahrgangEigeneSchule"
+					:readonly :item-text='j => j.bezeichnung ?? ""' removable />
 				<svws-ui-select title="Entlassgrund" :items="manager().entlassgruendeById.values()" :item-text="v => v.bezeichnung" removable
 					:model-value="manager().getEntlassgrund('entlassungGrundID')" :readonly
 					@update:model-value="v => manager().patchEntlassgrund(v, 'entlassungGrundID')" />
@@ -237,9 +238,12 @@
 
 <script setup lang="ts">
 
-	import { BenutzerKompetenz, Einschulungsart, PrimarstufeSchuleingangsphaseBesuchsjahre, SchuelerSchulbesuchSchule, Schulform, Schulgliederung,
-		Uebergangsempfehlung, SchulEintrag, AdressenUtils, ArrayList, SchuelerSchulbesuchMerkmal, Kindergartenbesuch, Jahrgaenge, ServerMode } from "@core";
-	import type { Herkunftsarten, SchulformKatalogEintrag, SchulgliederungKatalogEintrag, Merkmal } from "@core";
+	import {
+		BenutzerKompetenz, Einschulungsart, PrimarstufeSchuleingangsphaseBesuchsjahre, SchuelerSchulbesuchSchule, Schulform, Schulgliederung,
+		Uebergangsempfehlung, SchulEintrag, AdressenUtils, ArrayList, SchuelerSchulbesuchMerkmal, Kindergartenbesuch, Jahrgaenge, ServerMode,
+	} from "@core";
+	import type { Herkunftsarten, SchulformKatalogEintrag, SchulgliederungKatalogEintrag, Merkmal, JahrgangsDaten,
+	} from "@core";
 	import type { SchuelerSchulbesuchProps } from './SSchuelerSchulbesuchProps';
 	import { CoreTypeSelectManager, type DataTableColumn, SelectManager } from "@ui";
 	import { coreTypeDataFilter, filterSchulenEintraege, formatDate } from "~/utils/helfer";
@@ -248,6 +252,15 @@
 	const props = defineProps<SchuelerSchulbesuchProps>();
 	const hatKompetenzUpdate = computed<boolean>(() => props.benutzerKompetenzen.has(BenutzerKompetenz.SCHUELER_INDIVIDUALDATEN_AENDERN));
 	const readonly = computed(() => !hatKompetenzUpdate.value);
+
+	const entlassjahrgangEigeneSchule = computed<JahrgangsDaten | null>({
+		get: () => {
+			const idEntlassjahrgang = props.manager().daten.idEntlassjahrgang;
+			return props.manager().jahrgaengeById.get(idEntlassjahrgang ?? -1) ?? null;
+		},
+		set: (v: JahrgangsDaten | null) => void props.manager().doPatch({ idEntlassjahrgang: v?.id ?? null }),
+	});
+
 	function enterDefaultMode() {
 		setMode(Mode.DEFAULT);
 		resetBisherigeSchule();
@@ -423,13 +436,13 @@
 	const schuljahrNewEntryBisherigeSchuleDatumVon = computed<number>(() => {
 		if (newEntryBisherigeSchule.value.datumVon === null)
 			return -1;
-		return Number(newEntryBisherigeSchule.value.datumVon.toString().substring(0, 4));
+		return Number(newEntryBisherigeSchule.value.datumVon.substring(0, 4));
 	});
 
 	const schuljahrNewEntryBisherigeSchuleDatumBis = computed<number>(() => {
 		if (newEntryBisherigeSchule.value.datumBis === null)
 			return -1;
-		return Number(newEntryBisherigeSchule.value.datumBis.toString().substring(0, 4));
+		return Number(newEntryBisherigeSchule.value.datumBis.substring(0, 4));
 	});
 
 	const jahrgangVonManager = new CoreTypeSelectManager({ clazz: Jahrgaenge.class, schuljahr: schuljahrNewEntryBisherigeSchuleDatumVon,
@@ -510,7 +523,8 @@
 	}
 
 	function textHerkunftsarten(h: Herkunftsarten) {
-		return h.getBezeichnung(props.manager().schuljahr, props.manager().getVorigeSchulform() || Schulform.G) + ' (' + h.daten.kuerzel + ')';
+		const eintrag = h.daten(props.manager().schuljahr);
+		return (eintrag?.text ?? "???") + ' (' + (eintrag?.kuerzel ?? "???") + ')';
 	}
 
 	function textSchule(s: SchulEintrag) {
