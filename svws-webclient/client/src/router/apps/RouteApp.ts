@@ -52,6 +52,8 @@ import { routeNotenmodulTeilleistungen } from "./notenmodul/RouteNotenmodulTeill
 import { routeFahrschuelerarten } from "~/router/apps/schule/allgemein/fahrschuelerarten/RouteFahrschuelerarten";
 import { routeHaltestellen } from "~/router/apps/schule/allgemein/haltestellen/RouteHaltestellen";
 import { routeBeschaeftigungsarten } from "~/router/apps/schule/allgemein/beschaeftigungsarten/RouteBeschaeftigungsarten";
+import { routeFloskelgruppen } from "~/router/apps/schule/schulbezogen/floskelgruppen/RouteFloskelgruppen";
+import { routeFloskeln } from "~/router/apps/schule/schulbezogen/floskeln/RouteFloskeln";
 import SApp from "~/components/SApp.vue";
 
 
@@ -142,6 +144,8 @@ export class RouteApp extends RouteNode<RouteDataApp, any> {
 			routeKatalogEinwilligungsarten,
 			routeEntlassgruende,
 			routeFaecher,
+			routeFloskelgruppen,
+			routeFloskeln,
 			routeFoerderschwerpunkte,
 			routeJahrgaenge,
 			routeMerkmale,

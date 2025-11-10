@@ -151,3 +151,5 @@ export { VermerkartenListeManager } from './ui/managers/kataloge/vermerkart/Verm
 export { FachListeManager } from './ui/managers/fach/FachListeManager';
 export { ErzieherartListeManager } from './ui/managers/erzieherart/ErzieherartListeManager';
 export { EinwilligungsartenListeManager } from './ui/managers/einwilligungsart/EinwilligungsartenListeManager';
+export { FloskelgruppenListeManager } from './ui/managers/schule/schulbezogen/FloskelgruppenListeManager';
+export { FloskelnListeManager } from './ui/managers/schule/schulbezogen/FloskelnListeManager';

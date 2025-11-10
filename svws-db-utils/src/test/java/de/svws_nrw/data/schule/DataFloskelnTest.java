@@ -93,6 +93,14 @@ class DataFloskelnTest {
 	}
 
 	@Test
+	@DisplayName("getLongId")
+	void getLongId() throws ApiOperationException {
+		final var dto = new DTOFloskeln(2L, "kuerzel", "bez");
+
+		assertThat(this.data.getLongId(dto)).isEqualTo(2);
+	}
+
+	@Test
 	@DisplayName("getById | Id is null")
 	void getByIdTest_idIsNull() {
 		assertThatException()
@@ -298,28 +306,28 @@ class DataFloskelnTest {
 
 	@Test
 	@DisplayName("patch | text | null")
-	void patch_text_null() throws ApiOperationException {
-		final var dto = new DTOFloskeln(1L, "kuerz", "bez");
-		when(this.conn.queryByKey(DTOFloskeln.class, 1L)).thenReturn(dto);
-		when(this.conn.transactionPersist(dto)).thenReturn(true);
+	void patch_text_null() {
+		when(this.conn.queryByKey(DTOFloskeln.class, 1L)).thenReturn(mock(DTOFloskeln.class));
 		final var map = new HashMap<String, Object>();
 		map.put("text", null);
 
-		this.data.patch(1L, map);
-
-		assertThat(dto.Text).isNull();
+		assertThatException()
+				.isThrownBy(() -> this.data.patch(1L, map))
+				.isInstanceOf(ApiOperationException.class)
+				.withMessage("Attribut text: Der Wert null ist nicht erlaubt.")
+				.hasFieldOrPropertyWithValue("status", Response.Status.BAD_REQUEST);
 	}
 
 	@Test
 	@DisplayName("patch | text | empty")
-	void patch_text_empty() throws ApiOperationException {
-		final var dto = new DTOFloskeln(1L, "kuerz", "bez");
-		when(this.conn.queryByKey(DTOFloskeln.class, 1L)).thenReturn(dto);
-		when(this.conn.transactionPersist(dto)).thenReturn(true);
+	void patch_text_empty() {
+		when(this.conn.queryByKey(DTOFloskeln.class, 1L)).thenReturn(mock(DTOFloskeln.class));
 
-		this.data.patch(1L, Map.of("text", ""));
-
-		assertThat(dto.Text).isEmpty();
+		assertThatException()
+				.isThrownBy(() -> this.data.patch(1L, Map.of("text", "")))
+				.isInstanceOf(ApiOperationException.class)
+				.withMessage("Attribut text: Ein leerer String ist hier nicht erlaubt.")
+				.hasFieldOrPropertyWithValue("status", Response.Status.BAD_REQUEST);
 	}
 
 	@Test
@@ -586,16 +594,16 @@ class DataFloskelnTest {
 	}
 
 	@Test
-	@DisplayName("patch | sortierung | above max value")
-	void patch_sortierungAboveMax() {
+	@DisplayName("patch | sortierung at max")
+	void patch_sortierungAtMax() throws ApiOperationException {
 		final var dto = new DTOFloskeln(1L, "same", "bez");
+		dto.Sortierung = 99;
 		when(this.conn.queryByKey(DTOFloskeln.class, 1L)).thenReturn(dto);
+		when(this.conn.transactionPersist(dto)).thenReturn(true);
 
-		assertThatException()
-				.isThrownBy(() -> this.data.patch(1L, Map.of("sortierung", 32001)))
-				.isInstanceOf(ApiOperationException.class)
-				.withMessage("Attribut sortierung: Fehler beim Konvertieren: Der Zahlwert liegt außerhalb des geforderten Bereichs.")
-				.hasFieldOrPropertyWithValue("status", Response.Status.BAD_REQUEST);
+		this.data.patch(1L, Map.of("sortierung", 32000));
+
+		assertThat(dto.Sortierung).isEqualTo(32000);
 	}
 
 	@Test

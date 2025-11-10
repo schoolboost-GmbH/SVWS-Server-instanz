@@ -105,7 +105,11 @@ public final class DataFloskelgruppen extends DataManagerRevised<Long, DTOFloske
 	}
 
 	private static void updateFloskelgruppenart(final DTOFloskelgruppen dto, final String name, final Object value) throws ApiOperationException {
-		final long idFloskelgruppenart = JSONMapper.convertToLong(value, false, name);
+		final Long idFloskelgruppenart = JSONMapper.convertToLong(value, true, name);
+		if (idFloskelgruppenart == null) {
+			dto.Hauptgruppe_ID = null;
+			return;
+		}
 		if (Objects.equals(idFloskelgruppenart, dto.Hauptgruppe_ID))
 			return;
 
@@ -121,6 +125,10 @@ public final class DataFloskelgruppen extends DataManagerRevised<Long, DTOFloske
 
 	private static void updateFarbe(final DTOFloskelgruppen dto, final Object value) throws ApiOperationException {
 		try {
+			if (value == null) {
+				dto.Farbe = null;
+				return;
+			}
 			final RGBFarbe farbe = JSONMapper.mapper.convertValue(value, RGBFarbe.class);
 			dto.Farbe = farbe.asDecimal();
 		} catch (final IllegalArgumentException e) {

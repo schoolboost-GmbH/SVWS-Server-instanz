@@ -3354,7 +3354,7 @@ public class APISchule {
 			required = true, content = @Content(mediaType = MediaType.APPLICATION_JSON,
 			array = @ArraySchema(schema = @Schema(implementation = Long.class)))) final InputStream is, @Context final HttpServletRequest request) {
 		return DBBenutzerUtils.runWithTransactionOnErrorSimpleResponse(
-				conn -> new DataFloskeln(conn, new DataFloskelJahrgangZuordnung(conn)).deleteMultipleAsResponse(JSONMapper.toListOfLong(is)),
+				conn -> new DataFloskeln(conn, new DataFloskelJahrgangZuordnung(conn)).deleteMultipleAsSimpleResponseList(JSONMapper.toListOfLong(is)),
 				request, ServerMode.STABLE,
 				BenutzerKompetenz.KATALOG_EINTRAEGE_LOESCHEN);
 	}

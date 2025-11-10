@@ -48,6 +48,11 @@ public final class DataFloskeln extends DataManagerRevised<Long, DTOFloskeln, Fl
 	}
 
 	@Override
+	protected long getLongId(final DTOFloskeln dto) throws ApiOperationException {
+		return dto.ID;
+	}
+
+	@Override
 	public Floskel getById(final Long id) throws ApiOperationException {
 		if (id == null)
 			throw new ApiOperationException(Response.Status.BAD_REQUEST, "Die ID der Floskel darf nicht null sein.");
@@ -121,7 +126,7 @@ public final class DataFloskeln extends DataManagerRevised<Long, DTOFloskeln, Fl
 	}
 
 	private static void updateText(final DTOFloskeln dto, final String name, final Object value) throws ApiOperationException {
-		dto.Text = JSONMapper.convertToString(value, true, true, null, name);
+		dto.Text = JSONMapper.convertToString(value, false, false, null, name);
 	}
 
 	private void updateIdFloskelgruppe(final DTOFloskeln dto, final String name, final Object value) throws ApiOperationException {
@@ -191,7 +196,7 @@ public final class DataFloskeln extends DataManagerRevised<Long, DTOFloskeln, Fl
 	}
 
 	private static void updateSortierung(final DTOFloskeln dto, final String name, final Object value) throws ApiOperationException {
-		dto.Sortierung = JSONMapper.convertToIntegerInRange(value, true, 0, 32000, name);
+		dto.Sortierung = JSONMapper.convertToIntegerInRange(value, true, 0, null, name);
 	}
 
 	private static void updateSichtbar(final DTOFloskeln dto, final String name, final Object value) throws ApiOperationException {
