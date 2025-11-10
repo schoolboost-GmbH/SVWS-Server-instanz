@@ -9,7 +9,7 @@ describe("Dav Api, prüfe ob mit falschen Username/Password alle Endpunkte gesch
 	// Credentials welche keine Auth bekommen sollten
 	const apiService = getApiService('Admin', 'wrongPassword')
 
-	describe.each([{schema: "GymAbiDav"}])('gegen %s', ({schema}) => {
+	describe.each([{schema: "GymAbiDav01"}])('gegen %s', ({schema}) => {
 		test("Einfacher Request gegen die DAV API ohne Pfad", async () => {
 			const response = await apiService.propfind(`/dav/${schema}`)
 			expect(response).toBeDefined();
@@ -123,26 +123,26 @@ describe("Dav Api, prüfe ob privilegierter Benutzer auf Daten anderer Benutzer 
 	test("Zugriff auf privaten Kalender eines anderen Benutzers nicht gestattet", async () => {
 		// Admin kann seine eigenen Kalender ansehen.
 		const apiServiceAdmin = getApiService('Admin', '');
-		const response = await apiServiceAdmin.propfind("/dav/GymAbiDav/kalender", {body: calender_collection_body});
+		const response = await apiServiceAdmin.propfind("/dav/GymAbiDav01/kalender", {body: calender_collection_body});
 		const content = await response!.text()
 		expect(response!.status).toBe(207)
 		expect(content).toContain('Eigener Kalender')
-		expect(content).toContain('/dav/GymAbiDav/kalender/persoenlich_2')
+		expect(content).toContain('/dav/GymAbiDav01/kalender/persoenlich_2')
 
 		// Ande Account kann ebenfalls Kalender enthalten, dort ist nicht der des Admins mit drin
 		const apiServiceAnde = getApiService('Ande', '');
-		const responseAnde = await apiServiceAnde.propfind("/dav/GymAbiDav/kalender", {body: calender_collection_body});
+		const responseAnde = await apiServiceAnde.propfind("/dav/GymAbiDav01/kalender", {body: calender_collection_body});
 		const contentAnde = await responseAnde!.text()
 		expect(responseAnde!.status).toBe(207)
 		expect(contentAnde).toContain('Eigener Kalender')
-		expect(contentAnde).not.toContain('/dav/GymAbiDav/kalender/persoenlich_2')
+		expect(contentAnde).not.toContain('/dav/GymAbiDav01/kalender/persoenlich_2')
 
 		// Admin Account kann seinen eigenen Kalender ansehen
-		const responseAllowed = await apiServiceAdmin.propfind("/dav/GymAbiDav/kalender/persoenlich_2");
+		const responseAllowed = await apiServiceAdmin.propfind("/dav/GymAbiDav01/kalender/persoenlich_2");
 		expect(responseAllowed!.status).toBe(207);
 
 		// Ande Account kann seinen eigenen Kalender ansehen
-		const responseNotAllowed = await apiServiceAnde.propfind("/dav/GymAbiDav/kalender/persoenlich_2");
+		const responseNotAllowed = await apiServiceAnde.propfind("/dav/GymAbiDav01/kalender/persoenlich_2");
 		const contentNotAllowed = await responseNotAllowed!.text()
 		expect(responseNotAllowed!.status).toBe(404);
 		expect(contentNotAllowed).toContain('<d:error')
@@ -151,7 +151,7 @@ describe("Dav Api, prüfe ob privilegierter Benutzer auf Daten anderer Benutzer 
 	test("Testet, ob der Nutzer mit Lese aber ohne Schreibrechte die entsprechenden Priviliges erhält.", async () => {
 		// Admin kann seine eigenen Kalender ansehen.
 		const apiServiceAdmin = getApiService('Bagi', '');
-		const response = await apiServiceAdmin.propfind("/dav/GymAbiDav/kalender", {body: calender_collection_body});
+		const response = await apiServiceAdmin.propfind("/dav/GymAbiDav01/kalender", {body: calender_collection_body});
 		const content = await response!.text()
 		expect(response!.status).toBe(207)
 
@@ -169,7 +169,7 @@ describe("Dav Api, prüfe ob privilegierter Benutzer auf Daten anderer Benutzer 
 	test("Testet, ob der Gemeinsame Kalender nicht zugeordneten Nutzern nicht angezeigt wird.", async () => {
 		// Admin kann seine eigenen Kalender ansehen.
 		const apiServiceAdmin = getApiService('Admin', '');
-		const response = await apiServiceAdmin.propfind("/dav/GymAbiDav/kalender", {body: calender_collection_body});
+		const response = await apiServiceAdmin.propfind("/dav/GymAbiDav01/kalender", {body: calender_collection_body});
 		const content = await response!.text()
 		expect(response!.status).toBe(207)
 

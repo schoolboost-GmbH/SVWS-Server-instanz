@@ -7,7 +7,7 @@ const targetUrlENMServerFORSvwsApp: string = process.env.VITE_ENM_FOR_SVWS_targe
 
 const CLIENT_SECRET = process.env.VITE_CLIENT_SECRET ?? "clientsecret";
 
-const targetDB = "EnmA"
+const targetDB = "ENM02A"
 
 const svwsAppapiService = getApiService('Admin', '', targetUrlSVWSAppServer)
 

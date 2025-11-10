@@ -6,7 +6,7 @@ const allowDestructiveTests = process.env.MODE === 'allowDestructiveTests'
 describe("Prüft ob entsprechende Endpunkte erreichbar sind", () => {
 	const apiService = getApiService('Admin', '')
 
-	describe.each([{schema: "GymAbiDav"}])('gegen %s', ({schema}) => {
+	describe.each([{schema: "GymAbiDav01"}])('gegen %s', ({schema}) => {
 		test("Dav/", async () => {
 			const response = await apiService.propfind(`/dav/${schema}`, {body: "a"})
 			expect(response).toBeDefined();
@@ -89,7 +89,7 @@ describe("Prüft ob entsprechende Endpunkte erreichbar sind", () => {
 });
 
 describe("Prüft ob entsprechende Endpunkte nicht erreichbar sind", () => {
-	describe.each([{schema: "GymAbiDav"}])('gegen %s', ({schema}) => {
+	describe.each([{schema: "GymAbiDav01"}])('gegen %s', ({schema}) => {
 		const apiService = getApiService('Admin', '')
 
 		test(`dav/${schema}/adressbuecher/-1`, async () => {

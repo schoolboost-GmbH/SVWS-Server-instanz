@@ -1,5 +1,3 @@
-import org.codehaus.groovy.runtime.GStringImpl
-
 // Initialisierung der Plugins
 plugins {
 	id 'svws.gradle.node.plugin'
@@ -8,9 +6,6 @@ plugins {
 // Führt alle Tasks von subproject-plugin.gradle in diesem Verzeichnis aus
 apply from: ('../subproject-plugin.gradle')
 
-// Erzeuge eine unique JobId welche in den Tasks, temporären Dateien und Container verwendet wird.
-def jobId = UUID.randomUUID().toString().substring(0, 8)
-
 /**
  * Konfiguration für das Subpackage bzw. die Tests
  */
@@ -18,17 +13,18 @@ ext {
 	SVWS_SERVERMODE = "dev"
 
 	// Docker Konfiguration
-	APP_CONTAINER_NAME = "app-vite-dav-tests${generateContainerSuffix(jobId)}"
-	DB_CONTAINER_NAME = "database-vite-dav-tests${generateContainerSuffix(jobId)}"
-	DB_SERVICE_NAME = "mariadb${generateContainerSuffix(jobId)}"
-	APP_IMAGE_NAME = "svws-app${generateContainerSuffix(jobId)}"
+	APP_CONTAINER_NAME = "svws-server-dav-tests${rootProject.ext.CONTAINER_NAME_SUFFIX}"
+	DB_CONTAINER_NAME = "db-dav-tests${rootProject.ext.CONTAINER_NAME_SUFFIX}"
+
+	APP_IMAGE_NAME = "svws-server-dav-tests${rootProject.ext.CONTAINER_NAME_SUFFIX}"
+	DB_SERVICE_NAME = "db-dav-tests${rootProject.ext.CONTAINER_NAME_SUFFIX}"
 
 	// Auch für Docker. Forwarded Ports, werden nur bei lokal genutzten Container verwendet
 	FORWARDED_DB_PORT = 3319
 	FORWARDED_APP_PORT = 5019
 
 	// Liste der Datenbanken die für die Tests genutzt / geseedet werden sollen
-	TARGET_TEST_DATA_BASES = ['GymAbiDav']
+	TARGET_TEST_DATABASES = ['GymAbiDav01']
 }
 
 /**
@@ -39,7 +35,7 @@ tasks.register('testAgainstDockerEnv', NpmRun) {
 	group = 'verification'
 	dependsOn ':svws-webclient:core:assemble'
 	dependsOn ':svws-webclient:client:assemble'
-	dependsOn 'seedDatabase'
+	dependsOn 'starteDockerContainerMitTestUmgebung'
 
 	// Vite darf gegen Server laufen mit selbst signierten Zertifikaten
 	environment NODE_TLS_REJECT_UNAUTHORIZED: 0
@@ -70,8 +66,8 @@ tasks.register('testAgainstDockerEnv', NpmRun) {
  */
 tasks.register('no_auto_docker_test_DAV', NpmRun) {
 	group = 'verification'
-	dependsOn ':tests:checkIfLokalApplikationIsRunning'
-	dependsOn ':tests:checkIfLokalDataBaseIsRunning'
+	dependsOn ':tests:checkIfLocalAppIsRunning'
+	dependsOn ':tests:checkIfLocalDatabaseIsRunning'
 
 	inputs.files fileTree("$projectDir/tests"),
 			fileTree("$rootDir").matching { exclude 'build', 'dist' }

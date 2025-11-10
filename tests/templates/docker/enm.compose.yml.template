@@ -1,0 +1,16 @@
+services:
+    enm-server:
+        image: #GRADLE_PLACEHOLDER_ENM_IMAGE_NAME
+        container_name: #GRADLE_PLACEHOLDER_ENM_CONTAINER_NAME
+        ports: [#GRADLE_PLACEHOLDER_ENM_FORWARDING_PORTS]
+        healthcheck:
+            test: [ "CMD-SHELL", "curl --insecure --fail --silent --show-error --output /dev/null https://#GRADLE_PLACEHOLDER_ENM_CONTAINER_NAME/api/alive || exit 1" ]
+            interval: 30s
+            timeout: 12s
+            retries: 5
+        networks:
+            - gitlab_runner_network
+
+networks:
+    gitlab_runner_network:
+        external: true

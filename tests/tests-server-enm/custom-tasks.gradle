@@ -1,17 +1,13 @@
 import groovy.json.JsonSlurper
+import svws.gradle.scripts.FileUtils
 
 def svwsArtifactVersion = project.ext.latestRelease
 def buildDirPath = layout.buildDirectory.get()
 def rootProjectPath = project.rootProject.projectDir
 
 def configDir = "${rootDir}/config/tests"
-
-def configFile = file("$configDir/config.json")
-if (!configFile.exists()) {
-	configFile = file("$configDir/config_default.json")
-}
-
-def CONFIG = new JsonSlurper().parse(configFile)
+def configFile = file("$configDir/config.json").exists() ? file("$configDir/config.json") : file("$configDir/config_default.json")
+def config = new JsonSlurper().parse(configFile)
 
 /**
  * Kopiert ENM-Build-Artefakte (ZIP).
@@ -21,6 +17,7 @@ tasks.register('copyENMServerBuildArtefacts') {
 	dependsOn ':svws-webclient:enmserver:doZip'
 	mustRunAfter(':svws-webclient:enmserver:doZip')
 	inputs.file("${rootProjectPath}/svws-webclient/enmserver/build/SVWS-ENMServer-${svwsArtifactVersion}.zip")
+
 	doLast {
 		copy {
 			from "${rootProjectPath}/svws-webclient/enmserver/build/SVWS-ENMServer-${svwsArtifactVersion}.zip"
@@ -79,38 +76,20 @@ tasks.register('generateENMDockerFile') {
 	mustRunAfter("starteDockerContainerMitTestUmgebung")
 	mustRunAfter(unzipENMBuildArtefact)
 
-	def docker_reg_url = ""
-	if (System.getenv('CI_SERVER')) {
-		docker_reg_url = CONFIG.dockerRegistry
-	}
-
 	doFirst {
 		mkdir file("./build/tempdocker/enm")
 	}
+
+	def dockerReqistryUrl = System.getenv('CI_SERVER') ? config.dockerRegistry : "docker.io"
+	def inputFile = file('../templates/docker/template.enm.dockerfile')
+	def outputFile = file("$buildDirPath/tempdocker/enm/Dockerfile")
+
 	doLast {
-		def outputFile = file("$buildDirPath/tempdocker/enm/Dockerfile")
+		def replacements = [
+				'GRADLE_PLACEHOLDER_DOCKER_REG_URL' : "${dockerReqistryUrl}",
+		]
 
-		def content = "FROM ${docker_reg_url}php:8.4-apache\n\n" +
-				"# Aktivieren des Rewrite und SSL -Moduls\n" +
-				"RUN <<EOF\n" +
-				"  a2enmod ssl rewrite\n" +
-				"  a2ensite default-ssl\n" +
-				"  a2enmod rewrite\n" +
-				"EOF\n" +
-				"# Baue selbst signierte SSL Zertifikat\n" +
-				"COPY ./build/tempdocker/enm/certs/private.key /etc/ssl/private/ssl-cert-snakeoil.key\n" +
-				"COPY ./build/tempdocker/enm/certs/public.pem  /etc/ssl/certs/ssl-cert-snakeoil.pem\n" +
-				"COPY ./build/tempdocker/enm/hostconfig/enm.conf /etc/apache2/sites-available/000-default.conf\n" +
-				"COPY ./build/tempdocker/enm/hostconfig/enmSSL.conf /etc/apache2/sites-available/default-ssl.conf\n" +
-				"COPY --chown=www-data:www-data ./build/tempdocker/enm/dist /var/www/html\n\n" +
-
-				"WORKDIR /var/www/html"
-
-		// Überschreibe den Inhalt der Ausgabedatei
-		outputFile.withWriter { writer ->
-			writer.write(content)
-		}
-		println "ENM Dockerfile written and saved to ${outputFile.path}"
+		FileUtils.replaceFilePlaceholderWithValues(inputFile, outputFile, replacements)
 	}
 }
 
@@ -122,51 +101,29 @@ tasks.register('generateENMDockerComposeFile') {
 	mustRunAfter("starteDockerContainerMitTestUmgebung")
 	mustRunAfter(unzipENMBuildArtefact)
 
-	def ENM_IMAGE_NAME = project.ext.ENM_IMAGE_NAME
-	def ENM_CONTAINER_NAME = project.ext.ENM_CONTAINER_NAME
 	doFirst {
 		mkdir file("./build/tempdocker/enm")
 	}
 
+	def ENM_IMAGE_NAME = project.ext.ENM_IMAGE_NAME
+	def ENM_CONTAINER_NAME = project.ext.ENM_CONTAINER_NAME
+	def ENM_FORWARDING_PORTS = "\"80:80\", \"443:443\""
+	def inputFile = file('../templates/docker/enm.compose.yml.template')
+	def outputFile = file("$buildDirPath/tempdocker/enm/compose.yml")
+
 	doLast {
+		def replacements = [
+				'#GRADLE_PLACEHOLDER_ENM_IMAGE_NAME' : "${ENM_IMAGE_NAME}",
+				'#GRADLE_PLACEHOLDER_ENM_CONTAINER_NAME': "${ENM_CONTAINER_NAME}",
+				'#GRADLE_PLACEHOLDER_ENM_FORWARDING_PORTS': "${ENM_FORWARDING_PORTS}",
+		]
 
-		def forwardsPortsString = "\n"
-		if (!System.getenv('CI_SERVER') || true) {
-			forwardsPortsString = "ports:\n" +
-					"      - \"80:80\"\n" +
-					"      - \"443:443\"\n"
-		}
-
-		def outputFile = file("$buildDirPath/tempdocker/enm/Docker-compose.yml")
-		def content = "services:\n" +
-				"  enm:\n" +
-				"    image: ${ENM_IMAGE_NAME}\n" +
-				"    container_name: ${ENM_CONTAINER_NAME}\n" +
-				"    ${forwardsPortsString}" +
-				"    healthcheck:\n" +
-				"        test: [\"CMD-SHELL\", \"curl --insecure --fail --silent --show-error --output /dev/null https://${ENM_CONTAINER_NAME}/api/alive || exit 1\"]\n" +
-				"        interval: 30s\n" +
-				"        timeout: 12s\n" +
-				"        retries: 5\n" +
-				"    networks:\n" +
-				"      - gitlab_runner_network\n\n" +
-				"networks:\n" +
-				"    gitlab_runner_network:\n" +
-				"        external: true\n"
-
-		// Überschreibe den Inhalt der Ausgabedatei
-		outputFile.withWriter { writer ->
-			writer.write(content)
-		}
-		println "Dockerfile written and saved to ${outputFile.path}"
+		FileUtils.replaceFilePlaceholderWithValues(inputFile, outputFile, replacements)
 	}
 }
 
-/**
- * Erstelle die Apache2 Host Dateien für das interne Routing im ENM Container
- */
-tasks.register('generateHostConfig') {
-	description = 'Erstelle die Apache2 Host Dateien für das interne Routing im ENM Container'
+tasks.register('copyApacheHostConfig', Copy) {
+	description = 'Kopiert die Apache2 Non SSL Host Config, für das interne Routing im ENM Container'
 	dependsOn 'generateENMDockerComposeFile'
 	mustRunAfter("starteDockerContainerMitTestUmgebung")
 	mustRunAfter(unzipENMBuildArtefact)
@@ -174,76 +131,22 @@ tasks.register('generateHostConfig') {
 	doFirst {
 		mkdir file("./build/tempdocker/enm/hostconfig")
 	}
-	doLast {
-		def outputFile = file("$buildDirPath/tempdocker/enm/hostconfig/enm.conf")
 
-		def content = "<VirtualHost *:80>\n" +
-				"\tServerAdmin webmaster@yourdomain.com\n" +
-				"\tServerName localhost\n" +
-				"\n" +
-				"\tDocumentRoot /var/www/html/public\n" +
-				"\n" +
-				"\t<Directory /var/www/html/public>\n" +
-				"\t\tOptions Indexes FollowSymLinks\n" +
-				"\t\tAllowOverride All\n" +
-				"\t\tRequire all granted\n" +
-				"\t</Directory>\n" +
-				"\n" +
-				"\tErrorLog \${APACHE_LOG_DIR}/error.log\n" +
-				"\tCustomLog \${APACHE_LOG_DIR}/access.log combined\n" +
-				"</VirtualHost>\n"
-
-		// Überschreibe den Inhalt der Ausgabedatei
-		outputFile.withWriter { writer ->
-			writer.write(content)
-		}
-		println "Host conf written and saved to ${outputFile.path}"
-	}
+	from "${rootDir}/tests/templates/config/enm.apache-config.conf"
+	into "${buildDirPath}/tempdocker/enm/hostconfig"
 }
 
-/**
- * Erstelle die Apache2 SSL Host Dateien für das interne Routing im ENM Container
- */
-tasks.register('generateHostConfigSSL') {
-	description = 'Erstelle die Apache2 SSL Host Dateien für das interne Routing im ENM Container'
+tasks.register('copyApacheHostConfigSSL', Copy) {
+	description = 'Kopiert die Apache2 SSL Host Config, für das interne Routing im ENM Container'
 	mustRunAfter("starteDockerContainerMitTestUmgebung")
 	mustRunAfter(unzipENMBuildArtefact)
 
 	doFirst {
 		mkdir file("./build/tempdocker/enm/hostconfig")
 	}
-	doLast {
-		def outputFile = file("$buildDirPath/tempdocker/enm/hostconfig/enmSSL.conf")
 
-		def content = "<VirtualHost *:443>\n" +
-				"\tServerAdmin webmaster@localhost\n" +
-				"\tServerName localhost\n" +
-				"\n" +
-				"\tDocumentRoot /var/www/html/public\n" +
-				"\n" +
-				"\tErrorLog \${APACHE_LOG_DIR}/error.log\n" +
-				"\tCustomLog \${APACHE_LOG_DIR}/access.log combined\n" +
-				"\n" +
-				"\t# Enable/Disable SSL for this virtual host.\n" +
-				"\tSSLEngine on\n" +
-				"\n" +
-				"\tSSLCertificateFile\t/etc/ssl/certs/ssl-cert-snakeoil.pem\n" +
-				"\tSSLCertificateKeyFile /etc/ssl/private/ssl-cert-snakeoil.key\n" +
-				"\n" +
-				"\t<Directory /var/www/html/public>\n" +
-				"\t\tOptions Indexes FollowSymLinks\n" +
-				"\t\tAllowOverride All\n" +
-				"\t\tRequire all granted\n" +
-				"\t</Directory>\n" +
-				"\n" +
-				"</VirtualHost>\n"
-
-		// Überschreibe den Inhalt der Ausgabedatei
-		outputFile.withWriter { writer ->
-			writer.write(content)
-		}
-		println "Host conf written and saved to ${outputFile.path}"
-	}
+	from "${rootDir}/tests/templates/config/enm.apache-config-ssl.conf"
+	into "${buildDirPath}/tempdocker/enm/hostconfig"
 }
 
 /**
@@ -255,19 +158,19 @@ tasks.register('buildDockerImageENM', Exec) {
 	dependsOn generateENMDockerFile
 	dependsOn copySSLCerts
 	dependsOn unzipENMBuildArtefact
-	dependsOn generateHostConfigSSL
-	dependsOn generateHostConfig
+	dependsOn copyApacheHostConfigSSL
+	dependsOn copyApacheHostConfig
 
 	mustRunAfter(unzipENMBuildArtefact)
-	mustRunAfter(generateHostConfigSSL)
-	mustRunAfter(generateHostConfig)
+	mustRunAfter(copyApacheHostConfigSSL)
+	mustRunAfter(copyApacheHostConfig)
 	mustRunAfter(copySSLCerts)
 
 	def ENM_IMAGE_NAME = project.ext.ENM_IMAGE_NAME
 
 	doFirst {
 		executable 'docker'
-		args 'build', '--label', '"integrationtests=prune"', '-t', "${ENM_IMAGE_NAME}", '-f', "$buildDirPath/tempdocker/enm/Dockerfile", '.'
+		args 'build', '-t', "${ENM_IMAGE_NAME}", '-f', "$buildDirPath/tempdocker/enm/Dockerfile", '.'
 	}
 }
 
@@ -277,12 +180,11 @@ tasks.register('buildDockerImageENM', Exec) {
 tasks.register('starteDockerContainerMitTestUmgebungENM', Exec) {
 	description = 'Starte den Docker-Container für die Testumgebung des ENM Server'
 	dependsOn 'buildDockerImageENM'
+	dependsOn ':tests:startTestDockerNetwork'
 	def PROJECT_NAME = project.name
 	doFirst {
 		executable 'docker'
 		workingDir "$buildDirPath/tempdocker/enm"
-		args 'compose', '-p', "svws-$PROJECT_NAME", '-f', "$buildDirPath/tempdocker/enm/Docker-compose.yml", 'up', '--wait'
-		println("Docker Container ${ENM_CONTAINER_NAME} gestartet")
-
+		args 'compose', '-p', "svws-$PROJECT_NAME", '-f', "$buildDirPath/tempdocker/enm/compose.yml", 'up', '--wait'
 	}
 }
