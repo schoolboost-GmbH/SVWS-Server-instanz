@@ -533,6 +533,7 @@ class DataKatalogSchuelerFoerderschwerpunkteTest {
 	@Test
 	@DisplayName("checkBeforeDeletionWithSimpleOperationResponse")
 	void checkBeforeDeletionWithSimpleOperationResponse() {
+		@SuppressWarnings("unchecked")
 		final TypedQuery<Long> queryMock = mock(TypedQuery.class);
 		when(queryMock.setParameter(eq("ids"), any())).thenReturn(queryMock);
 		when(queryMock.getResultList()).thenReturn(List.of(1L));
@@ -554,6 +555,7 @@ class DataKatalogSchuelerFoerderschwerpunkteTest {
 	@Test
 	@DisplayName("checkBeforeDeletionWithSimpleOperationResponseTest | foerderschwerpunkt not referenced")
 	void checkBeforeDeletionWithSimpleOperationResponseFoerderschwerpunktNotReferenced() {
+		@SuppressWarnings("unchecked")
 		final TypedQuery<Long> queryMock = mock(TypedQuery.class);
 		when(queryMock.setParameter(eq("ids"), any())).thenReturn(queryMock);
 		when(queryMock.getResultList()).thenReturn(List.of(2L));
@@ -566,8 +568,9 @@ class DataKatalogSchuelerFoerderschwerpunkteTest {
 
 		this.data.checkBeforeDeletionWithSimpleOperationResponse(List.of(dto), responses);
 
-		assertThat(response).hasFieldOrPropertyWithValue("success", true);
-		assertThat(response.log).isEmpty();
+		assertThat(response)
+				.hasFieldOrPropertyWithValue("success", true)
+				.satisfies(r -> assertThat(r.log).isEmpty());
 	}
 
 }

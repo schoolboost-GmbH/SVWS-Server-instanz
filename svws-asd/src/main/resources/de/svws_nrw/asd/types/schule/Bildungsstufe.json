@@ -1,0 +1,64 @@
+{
+	"version": 1,
+	"daten": [ {
+		"bezeichner": "PR",
+		"idStatistik": "0",
+		"historie": [ {
+			"id": 0,
+			"kuerzel": "PR",
+			"text": "Primarstufe",
+			"schulformen": [ "BK", "FW", "G", "GE", "GM", "GY", "H", "HI", "PS", "R", "S", "KS", "SB", "SG", "SK", "SR", "V", "WB", "WF" ],
+			"schluessel": "PR",
+			"gueltigVon": null,
+			"gueltigBis": null
+		} ]
+	}, {
+		"bezeichner": "SI",
+		"idStatistik": "1",
+		"historie": [ {
+			"id": 1,
+			"kuerzel": "SI",
+			"text": "Sekundarstufe I",
+			"schulformen": [ "BK", "FW", "G", "GE", "GM", "GY", "H", "HI", "PS", "R", "S", "KS", "SB", "SG", "SK", "SR", "V", "WB", "WF" ],
+			"schluessel": "SI",
+			"gueltigVon": null,
+			"gueltigBis": null
+		} ]
+	}, {
+		"bezeichner": "SII-1",
+		"idStatistik": "2",
+		"historie": [ {
+			"id": 2,
+			"kuerzel": "SII-1",
+			"text": "Sekundarstufe II-1",
+			"schulformen": [ "BK", "FW", "G", "GE", "GM", "GY", "H", "HI", "PS", "R", "S", "KS", "SB", "SG", "SK", "SR", "V", "WB", "WF" ],
+			"schluessel": "SII-1",
+			"gueltigVon": null,
+			"gueltigBis": null
+		} ]
+	}, {
+		"bezeichner": "SII-2",
+		"idStatistik": "3",
+		"historie": [ {
+			"id": 3,
+			"kuerzel": "SII-2",
+			"text": "Sekundarstufe II-2",
+			"schulformen": [ "BK", "FW", "G", "GE", "GM", "GY", "H", "HI", "PS", "R", "S", "KS", "SB", "SG", "SK", "SR", "V", "WB", "WF" ],
+			"schluessel": "SII-2",
+			"gueltigVon": null,
+			"gueltigBis": null
+		} ]
+	}, {
+		"bezeichner": "SII-3",
+		"idStatistik": "4",
+		"historie": [ {
+			"id": 4,
+			"kuerzel": "SII-3",
+			"text": "Sekundarstufe II-3",
+			"schulformen": [ "BK", "FW", "G", "GE", "GM", "GY", "H", "HI", "PS", "R", "S", "KS", "SB", "SG", "SK", "SR", "V", "WB", "WF" ],
+			"schluessel": "SII-3",
+			"gueltigVon": null,
+			"gueltigBis": null
+		} ]
+	} ]
+}
