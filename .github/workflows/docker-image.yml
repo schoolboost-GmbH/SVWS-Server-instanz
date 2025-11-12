@@ -55,6 +55,5 @@ jobs:
           context: deployment/docker/build/svws
           push: true
           tags: |
-              ${{ env.IMAGE_NAME }}:latest
-              ${{ env.IMAGE_NAME }}:schoolboost
-              ${{ env.IMAGE_NAME }}:${{ github.sha }}
+            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:schoolboost
+            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
