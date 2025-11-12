@@ -7,8 +7,7 @@ on:
   workflow_dispatch:
 
 env:
-  REGISTRY: ghcr.io
-  IMAGE_NAME: ${{ github.repository | toLower }}
+  REGISTRY: docker.io
 
 jobs:
   build-and-push:
@@ -19,6 +18,27 @@ jobs:
     steps:
       - name: Checkout sources
         uses: actions/checkout@v4
+
+      - name: Load image reference from .env
+        id: image-info
+        run: |
+          if [ ! -f .env ]; then
+            echo "Missing .env file with SVWS_SERVER_IMAGE entry" >&2
+            exit 1
+          fi
+          IMAGE_LINE=$(grep -E '^SVWS_SERVER_IMAGE=' .env | tail -n 1 | cut -d '=' -f2-)
+          if [ -z "$IMAGE_LINE" ]; then
+            echo "SVWS_SERVER_IMAGE not found in .env" >&2
+            exit 1
+          fi
+          IMAGE_NAME="${IMAGE_LINE%%:*}"
+          if [ "$IMAGE_NAME" = "$IMAGE_LINE" ]; then
+            IMAGE_TAG="latest"
+          else
+            IMAGE_TAG="${IMAGE_LINE##*:}"
+          fi
+          echo "name=$IMAGE_NAME" >> "$GITHUB_OUTPUT"
+          echo "tag=$IMAGE_TAG" >> "$GITHUB_OUTPUT"
 
       - name: Setup Java
         uses: actions/setup-java@v4
@@ -42,12 +62,12 @@ jobs:
         env:
           GRADLE_OPTS: "-Dorg.gradle.daemon=false"
 
-      - name: Log in to GHCR
+      - name: Log in to Docker Hub
         uses: docker/login-action@v3
         with:
           registry: ${{ env.REGISTRY }}
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       - name: Build and push image
         uses: docker/build-push-action@v5
@@ -55,5 +75,5 @@ jobs:
           context: deployment/docker/build/svws
           push: true
           tags: |
-            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
-            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
+            ${{ env.REGISTRY }}/${{ steps.image-info.outputs.name }}:${{ steps.image-info.outputs.tag }}
+            ${{ env.REGISTRY }}/${{ steps.image-info.outputs.name }}:${{ github.sha }}
