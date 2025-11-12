@@ -3,12 +3,12 @@ name: Build and Publish SVWS Image
 on:
   push:
     branches:
-      - main
+      - dev
   workflow_dispatch:
 
 env:
   REGISTRY: docker.io
-  IMAGE_NAME: ${{ vars.SVWS_SERVER_IMAGE }}
+  IMAGE_NAME: ${{ secrets.DOCKER_IMAGE_NAME }}
 
 jobs:
   build-and-push:
