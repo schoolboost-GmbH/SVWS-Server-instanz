@@ -180,12 +180,13 @@
 	@apply flex h-auto flex-col;
 
 	.svws-clickable & {
+
 		.svws-ui-tr {
 			@apply cursor-pointer;
 
 			&:not(.svws-clicked):hover,
 			&:not(.svws-clicked):focus-visible {
-				@apply bg-ui-hover;
+				@apply bg-ui-hover text-ui-onselected;
 			}
 		}
 	}
@@ -291,7 +292,7 @@
 	}
 
 	&:focus {
-		@apply bg-ui-hover;
+		@apply bg-ui-hover text-ui-onselected;
 	}
 }
 
