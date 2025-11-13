@@ -25,8 +25,8 @@ services:
     image: ${SVWS_SERVER_IMAGE}
     depends_on:
       - mariadb
-    # ports:
-    #   - "8455:8443"
+    ports:
+      - "8455:8443"
     environment:
       - MARIADB_HOST=mariadb
       - MARIADB_DATABASE=${MARIADB_DATABASE}
