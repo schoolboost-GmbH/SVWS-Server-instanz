@@ -8,7 +8,7 @@ on:
 
 env:
   REGISTRY: docker.io
-  IMAGE_NAME: ${{ secrets.DOCKER_IMAGE_NAME }}
+  IMAGE_NAME: usamasaeed1028/svws-server
 
 jobs:
   build-and-push:
@@ -55,7 +55,5 @@ jobs:
           context: deployment/docker/build/svws
           push: true
           tags: |
-            ${{ env.IMAGE_NAME }}:latest
-            ${{ env.IMAGE_NAME }}:schoolboost
-            ${{ env.IMAGE_NAME }}:${{ github.sha }}
-
+            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:schoolboost
+            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
