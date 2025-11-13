@@ -58,7 +58,7 @@ jobs:
             ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:schoolboost
             ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
             ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
-            
-      - name: Trigger Coolify redeploy
+
+      - name: Deploy to Coolify
         run: |
-          curl -X POST "https://admin.schoolboost.de/api/v1/deploy?uuid=q0kc0gskscwko0k0kk0gkgw4&force=true"
+         curl --request GET '${{ secrets.COOLIFY_WEBHOOK }}' --header 'Authorization: Bearer ${{ secrets.COOLIFY_TOKEN }}'
