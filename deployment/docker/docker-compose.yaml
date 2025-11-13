@@ -17,12 +17,11 @@ services:
       - MARIADB_PASSWORD=${MARIADB_PASSWORD}
     volumes:
       - mariadb_data:/var/lib/mysql
-    # Port nur exposen, wenn SchILD3 direkt zugreifen muss
-    # ports:
-    #   - "3306:3306"
 
   svws:
-    image: ${SVWS_SERVER_IMAGE}
+    build:
+      context: .
+      dockerfile: deployment/docker/svws/Dockerfile
     depends_on:
       - mariadb
     ports:
@@ -35,7 +34,6 @@ services:
       - SVWS_TLS_KEYSTORE_PATH=/etc/app/svws/conf/keystore
       - SVWS_TLS_KEYSTORE_PASSWORD=${SVWS_TLS_KEYSTORE_PASSWORD}
       - SVWS_TLS_KEY_ALIAS=${SVWS_TLS_KEY_ALIAS}
-      # WICHTIG: Testdaten nach Erstinitialisierung deaktivieren
       - IMPORT_TEST_DATA=false
     volumes:
       - svws_keystore:/etc/app/svws/conf/keystore
