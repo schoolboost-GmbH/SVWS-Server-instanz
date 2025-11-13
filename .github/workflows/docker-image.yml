@@ -61,4 +61,4 @@ jobs:
             
       - name: Trigger Coolify redeploy
         run: |
-          curl -X POST "https://admin.schoolboost.de/api/v1/deploy?uuid=u8ccgg44g0wcog84wc8k844o&force=true"
+          curl -X POST "https://admin.schoolboost.de/api/v1/deploy?uuid=q0kc0gskscwko0k0kk0gkgw4&force=true"
