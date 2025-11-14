@@ -1,42 +1,42 @@
-volumes:
-  svws_keystore:
-  svws_logs:
-  mariadb_data:
+  volumes:
+    svws_keystore:
+    svws_logs:
+    mariadb_data:
 
-services:
-  mariadb:
-    image: mariadb:11.7
-    command: >
-      --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
-    environment:
-      - MARIADB_ROOT_PASSWORD=${MARIADB_ROOT_PASSWORD}
-      - MARIADB_DATABASE=${MARIADB_DATABASE}
-      - MARIADB_USER=${MARIADB_USER}
-      - MARIADB_PASSWORD=${MARIADB_PASSWORD}
-    volumes:
-      - mariadb_data:/var/lib/mysql
-    # Port nur exposen, wenn SchILD3 direkt zugreifen muss
-    # ports:
-    #   - "3306:3306"
+  services:
+    mariadb:
+      image: mariadb:11.7
+      command: >
+        --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+      environment:
+        - MARIADB_ROOT_PASSWORD=${MARIADB_ROOT_PASSWORD}
+        - MARIADB_DATABASE=${MARIADB_DATABASE}
+        - MARIADB_USER=${MARIADB_USER}
+        - MARIADB_PASSWORD=${MARIADB_PASSWORD}
+      volumes:
+        - mariadb_data:/var/lib/mysql
+      # Port nur exposen, wenn SchILD3 direkt zugreifen muss
+      # ports:
+      #   - "3306:3306"
 
-  svws:
-    build:
-      context: ../../
-      dockerfile: deployment/docker/svws/Dockerfile
-    depends_on:
-      - mariadb
-    ports:
-      - "8465:8443"
-    environment:
-      - MARIADB_HOST=mariadb
-      - MARIADB_DATABASE=${MARIADB_DATABASE}
-      - MARIADB_USER=${MARIADB_USER}
-      - MARIADB_PASSWORD=${MARIADB_PASSWORD}
-      - SVWS_TLS_KEYSTORE_PATH=/etc/app/svws/conf/keystore
-      - SVWS_TLS_KEYSTORE_PASSWORD=${SVWS_TLS_KEYSTORE_PASSWORD}
-      - SVWS_TLS_KEY_ALIAS=${SVWS_TLS_KEY_ALIAS}
-      # WICHTIG: Testdaten nach Erstinitialisierung deaktivieren
-      - IMPORT_TEST_DATA=false
-    volumes:
-      - svws_keystore:/etc/app/svws/conf/keystore
-      - svws_logs:/opt/app/svws/logs
+    svws:
+      build:
+        context: ../../
+        dockerfile: deployment/docker/svws/Dockerfile
+      depends_on:
+        - mariadb
+      ports:
+        - "8465:8443"
+      environment:
+        - MARIADB_HOST=mariadb
+        - MARIADB_DATABASE=${MARIADB_DATABASE}
+        - MARIADB_USER=${MARIADB_USER}
+        - MARIADB_PASSWORD=${MARIADB_PASSWORD}
+        - SVWS_TLS_KEYSTORE_PATH=/etc/app/svws/conf/keystore
+        - SVWS_TLS_KEYSTORE_PASSWORD=${SVWS_TLS_KEYSTORE_PASSWORD}
+        - SVWS_TLS_KEY_ALIAS=${SVWS_TLS_KEY_ALIAS}
+        # WICHTIG: Testdaten nach Erstinitialisierung deaktivieren
+        - IMPORT_TEST_DATA=false
+      volumes:
+        - svws_keystore:/etc/app/svws/conf/keystore
+        - svws_logs:/opt/app/svws/logs
