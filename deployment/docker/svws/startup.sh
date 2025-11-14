@@ -32,4 +32,4 @@ fi
 
 # Start SVWS server using the fat JAR
 echo "Starte SVWS-Server ..."
-java -jar /opt/app/svws/svws-server-app-all-1.2.0-SNAPSHOT.jar
+java -cp "../svws-server-app-*.jar:../*:../lib/*" de.svws_nrw.server.jetty.Main
