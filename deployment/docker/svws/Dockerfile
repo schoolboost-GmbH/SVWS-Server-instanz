@@ -4,7 +4,7 @@ RUN apt update && apt-get -y upgrade && apt-get -y install gettext zip && apt au
 RUN mkdir -p /opt/app/svws/
 # RUN mkdir -p /opt/app/svws/client && mkdir /opt/app/svws/conf && mkdir /opt/app/svws/init
 
-COPY svws-server-app/build/libs/svws-server-app-all-1.2.0-SNAPSHOT.jar /opt/app/svws
+# COPY svws-server-app/build/libs/svws-server-app-all-1.2.0-SNAPSHOT.jar /opt/app/svws
 COPY deployment/docker/svws/svwsconfig-template.json /opt/app/svws/svwsconfig-template.json
 COPY deployment/docker/svws/svwsconfig-template-nodb.json /opt/app/svws/svwsconfig-template-nodb.json
 COPY deployment/docker/svws/startup.sh /opt/app/svws/startup.sh
