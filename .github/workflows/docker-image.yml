@@ -1,59 +1,19 @@
-name: Build and Publish SVWS Image
+FROM eclipse-temurin:21 AS builder
 
-on:
-  push:
-    branches:
-      - main
-  workflow_dispatch:
+RUN apt-get update && apt-get install -y \
+    git \
+    unzip \
+    bash \
+    docker.io \
+    && rm -rf /var/lib/apt/lists/*
 
-env:
-  REGISTRY: docker.io
-  IMAGE_NAME: ${{ vars.SVWS_SERVER_IMAGE }}
+COPY . /build
+WORKDIR /build
 
-jobs:
-  build-and-push:
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      packages: write
-    steps:
-      - name: Checkout sources
-        uses: actions/checkout@v4
+RUN chmod +x ./gradlew
 
-      - name: Setup Java
-        uses: actions/setup-java@v4
-        with:
-          distribution: temurin
-          java-version: 21
+# Debug output first
+RUN ./gradlew --version
 
-      - name: Cache Gradle
-        uses: actions/cache@v4
-        with:
-          path: |
-            ~/.gradle/caches
-            ~/.gradle/wrapper
-          key: gradle-${{ runner.os }}-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
-          restore-keys: gradle-${{ runner.os }}-
-
-      - name: Prepare Docker build context
-        run: |
-          chmod +x ./gradlew
-          ./gradlew :deployment:docker:copyDockerClientArtifacts
-        env:
-          GRADLE_OPTS: "-Dorg.gradle.daemon=false"
-
-      - name: Log in to Docker Hub
-        uses: docker/login-action@v3
-        with:
-          registry: ${{ env.REGISTRY }}
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
-
-      - name: Build and push image
-        uses: docker/build-push-action@v5
-        with:
-          context: deployment/docker/build/svws
-          push: true
-          tags: |
-            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:schoolboost
-            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
+# Run your build task with full logs
+RUN ./gradlew :deployment:docker:copyDockerClientArtifacts --stacktrace --info
