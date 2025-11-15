@@ -51,8 +51,8 @@
     COPY deployment/docker/svws/startup.sh .
     
     # Copy frontend build output from frontend-builder
-    COPY --from=frontend-builder /app/svws-webclient/client/dist  client
-    COPY --from=frontend-builder /app/svws-webclient/admin/dist adminclient
+    COPY --from=frontend-builder /app/svws-webclient/client/build/output client
+    COPY --from=frontend-builder /app/svws-webclient/admin/build/output adminclient
     
     # Make startup script executable
     RUN chmod +x startup.sh
