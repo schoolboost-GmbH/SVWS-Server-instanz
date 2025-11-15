@@ -34,6 +34,19 @@ COPY svws-webclient ./svws-webclient
 COPY svws-asd ./svws-asd
 COPY eslint.config.js ./
 
+# Ensure generated version/githash stubs exist when githash.ts is ignored
+RUN node - <<'EOF'
+const fs = require('fs');
+const path = require('path');
+const version = require('./package.json').version || '0.0.0';
+for (const pkg of ['client', 'admin', 'laufbahnplanung', 'enmserver']) {
+  const dir = path.join('svws-webclient', pkg);
+  fs.mkdirSync(dir, { recursive: true });
+  fs.writeFileSync(path.join(dir, 'version.ts'), `export const version = "${version}"\n`);
+  fs.writeFileSync(path.join(dir, 'githash.ts'), 'export const githash = null\n');
+}
+EOF
+
 
 # Build the client and admin workspaces
 RUN npm run -w @svws-nrw/svws-client build \
