@@ -28,7 +28,7 @@ COPY svws-webclient/enmserver ./svws-webclient/enmserver
 
 # Generate githash dynamically
 ARG GIT_COMMIT=fallback
-RUN echo "export const githash = '${GIT_COMMIT}';" > svws-webclient/githash.ts
+RUN echo "export const githash = '${GIT_COMMIT}';" > svws-webclient/client/githash.ts
 
 # Install dependencies
 RUN npm ci --include=dev
