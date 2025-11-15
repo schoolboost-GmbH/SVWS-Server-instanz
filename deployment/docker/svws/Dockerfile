@@ -26,10 +26,18 @@ RUN npm ci --include=dev \
 RUN node - <<'EOF_NODE'
 const fs = require('fs');
 const version = require('./package.json').version || '0.0.0';
+let githash = 'dev';
+try {
+  githash = require('child_process').execSync('git rev-parse HEAD').toString().trim();
+} catch (e) {
+  try {
+    githash = fs.readFileSync('.git/HEAD', 'utf8').trim();
+  } catch (_) {}
+}
 for (const pkg of ['client','admin','laufbahnplanung','enmserver']) {
   fs.mkdirSync(`svws-webclient/${pkg}`, { recursive: true });
   fs.writeFileSync(`svws-webclient/${pkg}/version.ts`, `export const version = "${version}"\n`);
-  fs.writeFileSync(`svws-webclient/${pkg}/githash.ts`, 'export const githash = null\n');
+  fs.writeFileSync(`svws-webclient/${pkg}/githash.ts`, `export const githash = "${githash}"\n`);
 }
 EOF_NODE
 
