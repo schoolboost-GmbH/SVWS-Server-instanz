@@ -34,6 +34,10 @@ COPY svws-webclient ./svws-webclient
 COPY svws-asd ./svws-asd
 COPY eslint.config.js ./
 
+# Generate required version.ts and githash.ts files for workspaces (normally done by Gradle)
+RUN node -e "const fs=require('fs');const ver=require('./package.json').version||'0.0.0';['client','admin','laufbahnplanung','enmserver'].forEach(p=>{fs.writeFileSync(`svws-webclient/${p}/version.ts`,`export const version = \\\"${ver}\\\"\\n`);});" \
+ && node -e "const fs=require('fs');const gh=null;['client','admin','laufbahnplanung','enmserver'].forEach(p=>{fs.writeFileSync(`svws-webclient/${p}/githash.ts`,`export const githash = ${gh}\\n`);});"
+
 # Build the client and admin workspaces
 RUN npm run -w @svws-nrw/svws-client build \
  && npm run -w @svws-nrw/svws-admin-client build
