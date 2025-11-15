@@ -23,13 +23,15 @@ COPY svws-webclient/enmserver/package*.json svws-webclient/enmserver/
 COPY svws-webclient/laufbahnplanung/package*.json svws-webclient/laufbahnplanung/
 COPY svws-webclient/ui/package*.json svws-webclient/ui/
 COPY tests/tests-server-api/package*.json tests/tests-server-api/
+COPY svws-asd/package*.json svws-asd/
 
 # Install workspace dependencies including devDeps at root and add missing bundlers/plugins
 RUN npm ci --include=dev \
-    && npm install -D rollup@^4 esbuild typescript vue-tsc @vitejs/plugin-vue unplugin-vue-components unplugin-vue-markdown @tailwindcss/vite tailwindcss @tailwindcss/typography remixicon
+    && npm install -D vite@7.2.2 rollup@^4 esbuild typescript vue-tsc @vitejs/plugin-vue unplugin-vue-components unplugin-vue-markdown @tailwindcss/vite tailwindcss @tailwindcss/typography remixicon
 
 # Copy sources
 COPY svws-webclient ./svws-webclient
+COPY svws-asd ./svws-asd
 COPY eslint.config.js ./
 
 # Build the client and admin workspaces
