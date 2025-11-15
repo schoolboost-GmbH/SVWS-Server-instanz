@@ -55,8 +55,8 @@ RUN mkdir -p client adminclient conf init logs
 COPY --from=server-builder /app/svws-server-app/build/libs/*-all-*.jar svws-server-app.jar
 
 # Copy frontend build outputs
-COPY --from=frontend-builder /app/svws-webclient/client/dist ./client
-COPY --from=frontend-builder /app/svws-webclient/admin/dist ./adminclient
+COPY --from=frontend-builder /app/svws-webclient/client/build/output ./client
+COPY --from=frontend-builder /app/svws-webclient/admin/build/output ./adminclient
 
 # Copy configs and startup script
 COPY deployment/docker/svws/svwsconfig-template.json .
