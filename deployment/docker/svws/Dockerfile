@@ -27,12 +27,12 @@
     # Build client
     WORKDIR /app/svws-webclient/client
     RUN npm install
-    RUN npm run build
+    RUN npx vite build
     
     # Build admin
     WORKDIR /app/svws-webclient/admin
     RUN npm install
-    RUN npm run build 
+    RUN npx vite build 
     
     # ---- Final Image ----
     FROM eclipse-temurin:21
