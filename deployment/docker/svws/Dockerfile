@@ -9,7 +9,6 @@ WORKDIR /app/svws-server-app
 # Build server JAR
 RUN gradle build -x test --no-daemon
 
-
 # ==== Stage 2: Build Frontend ====
 FROM node:20 AS frontend-builder
 WORKDIR /app
@@ -43,15 +42,17 @@ RUN npm install -D vite@7.2.2 rollup@^4 esbuild typescript vue-tsc \
 RUN npm run -w @svws-nrw/svws-client build
 RUN npm run -w @svws-nrw/svws-admin-client build
 
-
 # ==== Stage 3: Final Runtime Image ====
 FROM eclipse-temurin:21
 WORKDIR /opt/app/svws
 
+# Install envsubst (required for startup.sh)
+RUN apt-get update && apt-get install -y gettext unzip wget && rm -rf /var/lib/apt/lists/*
+
 # Create required folders
 RUN mkdir -p client adminclient conf init logs
 
-# Copy server 
+# Copy server JAR
 COPY --from=server-builder /app/svws-server-app/build/libs/*-all-*.jar svws-server-app.jar
 
 # Copy frontend build outputs
@@ -64,5 +65,11 @@ COPY deployment/docker/svws/svwsconfig-template-nodb.json .
 COPY deployment/docker/svws/startup.sh .
 RUN chmod +x startup.sh
 
-# Run server
-ENTRYPOINT ["bash","startup.sh"]
+# Set WORKDIR to where JAR and startup.sh are located
+WORKDIR /opt/app/svws
+
+# Expose server port (adjust if your server uses a different one)
+EXPOSE 8465
+
+# Start the server
+ENTRYPOINT ["bash", "startup.sh"]
