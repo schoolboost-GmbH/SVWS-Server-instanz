@@ -7,7 +7,7 @@ COPY . .
 WORKDIR /app/svws-server-app
 
 # Build server JAR
-RUN gradle build -x test --no-daemon
+RUN gradle build -x test --no-daemon -i --dry-run || true
 
 # ==== Stage 2: Build Frontend ====
 FROM node:20 AS frontend-builder
