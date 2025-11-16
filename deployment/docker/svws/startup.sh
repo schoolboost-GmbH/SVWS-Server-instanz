@@ -58,4 +58,11 @@ fi
 
 # SVWS-Server starten
 echo "Starte SVWS-Server ..."
-java -cp "../svws-server-app.jar:../*:../lib/*" de.svws_nrw.server.jetty.Main
+JAR_FILE=$(ls /opt/app/svws/*.jar 2>/dev/null | head -n 1)
+
+if [[ -z "$JAR_FILE" ]]; then
+    echo "No JAR file found!"
+    exit 1
+fi
+
+java -cp "$JAR_FILE:../*:../lib/*" de.svws_nrw.server.jetty.Main
