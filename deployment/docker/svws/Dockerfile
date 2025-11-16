@@ -68,8 +68,5 @@ RUN chmod +x startup.sh
 # Set WORKDIR to where JAR and startup.sh are located
 WORKDIR /opt/app/svws
 
-# Expose server port (adjust if your server uses a different one)
-EXPOSE 8465
-
 # Start the server
-ENTRYPOINT ["bash", "startup.sh"]
+# ENTRYPOINT ["bash", "startup.sh"]
