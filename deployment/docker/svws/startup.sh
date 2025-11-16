@@ -58,4 +58,4 @@ fi
 
 # SVWS-Server starten
 echo "Starte SVWS-Server ..."
-java -jar svws-server-app.jar
+java -cp "svws-server-app.jar:lib/*" de.svws_nrw.server.jetty.Main
