@@ -69,4 +69,4 @@ RUN chmod +x startup.sh
 WORKDIR /opt/app/svws
 
 # Start the server
-# ENTRYPOINT ["bash", "startup.sh"]
+ENTRYPOINT ["bash", "startup.sh"]
