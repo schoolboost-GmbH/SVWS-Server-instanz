@@ -51,8 +51,8 @@ WORKDIR /opt/app/svws
 # Create required folders
 RUN mkdir -p client adminclient conf init logs
 
-# Copy server JAR
-COPY --from=server-builder /app/svws-server-app/build/libs/*-all-*.jar svws-server-app.jar
+# Copy server 
+COPY --from=server-builder /app/svws-server-app/build/libs /opt/app/svws
 
 # Copy frontend build outputs
 COPY --from=frontend-builder /app/svws-webclient/client/build/output ./client
