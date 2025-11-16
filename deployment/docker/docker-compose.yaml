@@ -43,3 +43,4 @@ services:
     volumes:
       - svws_keystore:/etc/app/svws/conf/keystore
       - svws_logs:/opt/app/svws/logs
+	  restart: "no"
