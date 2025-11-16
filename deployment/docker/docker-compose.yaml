@@ -11,36 +11,35 @@ services:
     command: >
       --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
     environment:
-      - MARIADB_ROOT_PASSWORD=${MARIADB_ROOT_PASSWORD}
-      - MARIADB_DATABASE=${MARIADB_DATABASE}
-      - MARIADB_USER=${MARIADB_USER}
-      - MARIADB_PASSWORD=${MARIADB_PASSWORD}
+      MARIADB_ROOT_PASSWORD: ${MARIADB_ROOT_PASSWORD}
+      MARIADB_DATABASE: ${MARIADB_DATABASE}
+      MARIADB_USER: ${MARIADB_USER}
+      MARIADB_PASSWORD: ${MARIADB_PASSWORD}
     volumes:
       - mariadb_data:/var/lib/mysql
-    # Port nur exposen, wenn SchILD3 direkt zugreifen muss
+    # Uncomment ports if external access is needed
     # ports:
     #   - "3306:3306"
 
   svws:
     build:
-      # Make sure to set the correct context for Docker build
-      # context: .
       dockerfile: deployment/docker/svws/Dockerfile
+      # context: .  # Uncomment if needed
     depends_on:
       - mariadb
     ports:
       - "8465:8443"
     environment:
-      - MARIADB_HOST=mariadb
-      - MARIADB_DATABASE=${MARIADB_DATABASE}
-      - MARIADB_USER=${MARIADB_USER}
-      - MARIADB_PASSWORD=${MARIADB_PASSWORD}
-      - SVWS_TLS_KEYSTORE_PATH=/etc/app/svws/conf/keystore
-      - SVWS_TLS_KEYSTORE_PASSWORD=${SVWS_TLS_KEYSTORE_PASSWORD}
-      - SVWS_TLS_KEY_ALIAS=${SVWS_TLS_KEY_ALIAS}
-      # WICHTIG: Testdaten nach Erstinitialisierung deaktivieren
-      - IMPORT_TEST_DATA=false
+      MARIADB_HOST: mariadb
+      MARIADB_DATABASE: ${MARIADB_DATABASE}
+      MARIADB_USER: ${MARIADB_USER}
+      MARIADB_PASSWORD: ${MARIADB_PASSWORD}
+      SVWS_TLS_KEYSTORE_PATH: /etc/app/svws/conf/keystore
+      SVWS_TLS_KEYSTORE_PASSWORD: ${SVWS_TLS_KEYSTORE_PASSWORD}
+      SVWS_TLS_KEY_ALIAS: ${SVWS_TLS_KEY_ALIAS}
+      # IMPORTANT: Disable test data import after first initialization
+      IMPORT_TEST_DATA: "false"
     volumes:
       - svws_keystore:/etc/app/svws/conf/keystore
       - svws_logs:/opt/app/svws/logs
-	restart: "no"  
+    restart: "no"
