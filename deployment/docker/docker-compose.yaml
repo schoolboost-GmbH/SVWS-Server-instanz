@@ -38,11 +38,10 @@ services:
       SVWS_TLS_KEY_ALIAS: ${SVWS_TLS_KEY_ALIAS}
       # IMPORTANT: Disable test data import after first initialization
       IMPORT_TEST_DATA: "false"
-      
     volumes:
       - svws_keystore:/etc/app/svws/conf/keystore
       - svws_logs:/opt/app/svws/logs
-	networks:
+    networks:
       - coolify
     labels:
       - coolify.managed=true
