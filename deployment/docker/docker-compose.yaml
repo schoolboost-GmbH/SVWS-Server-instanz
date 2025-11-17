@@ -10,8 +10,12 @@ networks:
     external: true
 
 services:
+  # -----------------------------
+  # MariaDB Database
+  # -----------------------------
   mariadb:
     image: mariadb:11.7
+    restart: unless-stopped
     command: >
       --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
     environment:
@@ -24,10 +28,14 @@ services:
     networks:
       - coolify
 
+  # -----------------------------
+  # SVWS Backend
+  # -----------------------------
   svws:
     build:
-      # context: ../../
       dockerfile: deployment/docker/svws/Dockerfile
+      # context: ../../
+    # restart: unless-stopped
     depends_on:
       - mariadb
     environment:
@@ -36,7 +44,7 @@ services:
       MARIADB_USER: ${MARIADB_USER}
       MARIADB_PASSWORD: ${MARIADB_PASSWORD}
 
-      # Keep HTTPS backend
+      # TLS / Keystore
       SVWS_TLS_KEYSTORE_PATH: /etc/app/svws/conf/keystore
       SVWS_TLS_KEYSTORE_PASSWORD: ${SVWS_TLS_KEYSTORE_PASSWORD}
       SVWS_TLS_KEY_ALIAS: ${SVWS_TLS_KEY_ALIAS}
@@ -52,9 +60,9 @@ services:
       - "traefik.http.routers.svws.rule=Host(`svws.domsingschule-aachen.de`)"
       - "traefik.http.routers.svws.entrypoints=https"
       - "traefik.http.routers.svws.tls.certresolver=letsencrypt"
+      - "traefik.http.routers.svws.tls.options=insecure-backend@file"
       - "traefik.http.services.svws.loadbalancer.server.port=8443"
       - "traefik.http.services.svws.loadbalancer.server.scheme=https"
-      - "traefik.http.services.svws.loadbalancer.server.transport.insecureSkipVerify=true"
       # Optional: strip /svws prefix if frontend uses it
-      # - "traefik.http.middlewares.svws-strip.stripprefix.prefixes=/svws"
-      # - "traefik.http.routers.svws.middlewares=svws-strip"
+      #- "traefik.http.middlewares.svws-strip.stripprefix.prefixes=/svws"
+      #- "traefik.http.routers.svws.middlewares=svws-strip"
