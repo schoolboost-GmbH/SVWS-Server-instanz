@@ -17,18 +17,14 @@ services:
       MARIADB_PASSWORD: ${MARIADB_PASSWORD}
     volumes:
       - mariadb_data:/var/lib/mysql
-    # Uncomment for external access
-    # ports:
-    #   - "3306:3306"
 
   svws:
     build:
       dockerfile: deployment/docker/svws/Dockerfile
-      # context: ../../   # Uncomment or adjust if needed
     depends_on:
       - mariadb
     ports:
-      - "8465:8443"
+      - "8465:8443"   # internal port mapping
     environment:
       MARIADB_HOST: mariadb
       MARIADB_DATABASE: ${MARIADB_DATABASE}
@@ -39,7 +35,6 @@ services:
       SVWS_TLS_KEYSTORE_PASSWORD: ${SVWS_TLS_KEYSTORE_PASSWORD}
       SVWS_TLS_KEY_ALIAS: ${SVWS_TLS_KEY_ALIAS}
 
-      # Disable initial test data import after first bootstrap
       IMPORT_TEST_DATA: "false"
     volumes:
       - svws_keystore:/etc/app/svws/conf/keystore
@@ -48,11 +43,13 @@ services:
       - coolify
     labels:
       - traefik.enable=true
-      - traefik.http.routers.svws.rule=Host(`svws.domsingschule-aachen.de`) && PathPrefix(`/svws`)
+      - traefik.http.routers.svws.rule=Host(`svws.domsingschule-aachen.de`)
       - traefik.http.routers.svws.entrypoints=http,https
       - traefik.http.routers.svws.tls.certresolver=letsencrypt
+      - traefik.http.routers.svws.middlewares=svws-strip
       - traefik.http.services.svws.loadbalancer.server.port=8443
       - traefik.http.services.svws.loadbalancer.server.scheme=https
+      - traefik.http.middlewares.svws-strip.stripprefix.prefixes=/svws
 
 networks:
   coolify:
