@@ -47,8 +47,7 @@ services:
       - coolify.managed=true
       - coolify.proxy=true
       - traefik.http.services.svws.loadbalancer.server.port=8443
-	  - traefik.http.services.svws.loadbalancer.server.scheme=https
-
+      - traefik.http.services.svws.loadbalancer.server.scheme=https
 
 networks:
   coolify:
