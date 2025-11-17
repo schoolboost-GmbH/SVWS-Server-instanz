@@ -5,6 +5,10 @@ volumes:
   svws_logs:
   mariadb_data:
 
+networks:
+  coolify:
+    external: true
+
 services:
   mariadb:
     image: mariadb:11.7
@@ -17,20 +21,22 @@ services:
       MARIADB_PASSWORD: ${MARIADB_PASSWORD}
     volumes:
       - mariadb_data:/var/lib/mysql
+    networks:
+      - coolify
 
   svws:
     build:
       dockerfile: deployment/docker/svws/Dockerfile
+      context: ../../
     depends_on:
       - mariadb
-    ports:
-      - "8465:8443"   # internal port mapping
     environment:
       MARIADB_HOST: mariadb
       MARIADB_DATABASE: ${MARIADB_DATABASE}
       MARIADB_USER: ${MARIADB_USER}
       MARIADB_PASSWORD: ${MARIADB_PASSWORD}
 
+      # Keep HTTPS backend
       SVWS_TLS_KEYSTORE_PATH: /etc/app/svws/conf/keystore
       SVWS_TLS_KEYSTORE_PASSWORD: ${SVWS_TLS_KEYSTORE_PASSWORD}
       SVWS_TLS_KEY_ALIAS: ${SVWS_TLS_KEY_ALIAS}
@@ -42,14 +48,16 @@ services:
     networks:
       - coolify
     labels:
-      - traefik.enable=true
-      - traefik.http.routers.svws.rule=Host(`svws.domsingschule-aachen.de`)
-      - traefik.http.routers.svws.entrypoints=http,https
-      - traefik.http.routers.svws.tls.certresolver=letsencrypt
-      - traefik.http.routers.svws.middlewares=svws-strip
-      - traefik.http.services.svws.loadbalancer.server.port=8443
-      - traefik.http.services.svws.loadbalancer.server.scheme=https
-      - traefik.http.middlewares.svws-strip.stripprefix.prefixes=/svws
+      - "traefik.enable=true"
+      - "traefik.http.routers.svws.rule=Host(`svws.domsingschule-aachen.de`)"
+      - "traefik.http.routers.svws.entrypoints=https"
+      - "traefik.http.routers.svws.tls.certresolver=letsencrypt"
+      - "traefik.http.services.svws.loadbalancer.server.port=8443"
+      - "traefik.http.services.svws.loadbalancer.server.scheme=https"
+      - "traefik.http.services.svws.loadbalancer.server.transport.insecureSkipVerify=true"
+      # Optional: strip /svws prefix if frontend uses it
+      #- "traefik.http.middlewares.svws-strip.stripprefix.prefixes=/svws"
+      # - "traefik.http.routers.svws.middlewares=svws-strip"
 
 networks:
   coolify:
