@@ -24,7 +24,7 @@ services:
   svws:
     build:
       dockerfile: deployment/docker/svws/Dockerfile
-      context: ../../   # IMPORTANT: adjust if needed
+      # context: ../../   # IMPORTANT: adjust if needed
     depends_on:
       - mariadb
     ports:
