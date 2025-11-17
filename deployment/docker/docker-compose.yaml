@@ -35,13 +35,15 @@ services:
     volumes:
       - svws_keystore:/etc/app/svws/conf/keystore
       - svws_logs:/opt/app/svws/logs
-
-    # Traefik labels for domain routing
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.svws.rule=Host(`svws.domsingschule-aachen.de`)"
       - "traefik.http.routers.svws.entrypoints=http,https"
       - "traefik.http.routers.svws.tls=true"
       - "traefik.http.services.svws.loadbalancer.server.port=8443"
-      - "traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https"
-      - "traefik.http.routers.svws.middlewares=redirect-to-https"
+    networks:
+      - swcgww8osw4wc80wssss8wcs
+
+networks:
+  swcgww8osw4wc80wssss8wcs:
+    external: true
