@@ -35,9 +35,11 @@ services:
     build:
       dockerfile: deployment/docker/svws/Dockerfile
       # context: ../../
-    # restart: unless-stopped
+    restart: unless-stopped
     depends_on:
       - mariadb
+	ports:
+      - "8465:8443"
     environment:
       MARIADB_HOST: mariadb
       MARIADB_DATABASE: ${MARIADB_DATABASE}
