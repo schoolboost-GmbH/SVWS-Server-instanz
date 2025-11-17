@@ -42,3 +42,9 @@ services:
     volumes:
       - svws_keystore:/etc/app/svws/conf/keystore
       - svws_logs:/opt/app/svws/logs
+	networks:
+      - coolify
+    labels:
+      - coolify.managed=true
+      - coolify.proxy=true
+      - traefik.http.services.svws.loadbalancer.server.port=8443
