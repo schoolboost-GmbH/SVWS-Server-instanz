@@ -47,3 +47,7 @@ services:
       - coolify.managed=true
       - coolify.proxy=true
       - traefik.http.services.svws.loadbalancer.server.port=8443
+
+networks:
+  coolify:
+    external: true
