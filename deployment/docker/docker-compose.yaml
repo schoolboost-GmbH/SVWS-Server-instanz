@@ -60,7 +60,7 @@ services:
       - "traefik.http.routers.svws.rule=Host(`svws.domsingschule-aachen.de`)"
       - "traefik.http.routers.svws.entrypoints=https"
       - "traefik.http.routers.svws.tls.certresolver=letsencrypt"
-      - "traefik.http.routers.svws.tls.options=insecure-backend@file"
+      - "traefik.http.services.svws.loadbalancer.server.transport=insecure-backend@file"
       - "traefik.http.services.svws.loadbalancer.server.port=8443"
       - "traefik.http.services.svws.loadbalancer.server.scheme=https"
       # Optional: strip /svws prefix if frontend uses it
