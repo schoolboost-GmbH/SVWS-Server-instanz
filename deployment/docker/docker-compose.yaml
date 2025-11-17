@@ -26,8 +26,8 @@ services:
 
   svws:
     build:
-      dockerfile: deployment/docker/svws/Dockerfile
       context: ../../
+      dockerfile: deployment/docker/svws/Dockerfile
     depends_on:
       - mariadb
     environment:
@@ -56,9 +56,5 @@ services:
       - "traefik.http.services.svws.loadbalancer.server.scheme=https"
       - "traefik.http.services.svws.loadbalancer.server.transport.insecureSkipVerify=true"
       # Optional: strip /svws prefix if frontend uses it
-      #- "traefik.http.middlewares.svws-strip.stripprefix.prefixes=/svws"
+      # - "traefik.http.middlewares.svws-strip.stripprefix.prefixes=/svws"
       # - "traefik.http.routers.svws.middlewares=svws-strip"
-
-networks:
-  coolify:
-    external: true
