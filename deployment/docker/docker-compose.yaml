@@ -48,7 +48,7 @@ services:
       - coolify
     labels:
       - traefik.enable=true
-      - traefik.http.routers.svws.rule=Host(`svws.domsingschule-aachen.de`)
+  	  - traefik.http.routers.svws.rule=Host(`svws.domsingschule-aachen.de`) && PathPrefix(`/svws`)
       - traefik.http.routers.svws.entrypoints=http,https
       - traefik.http.routers.svws.tls.certresolver=letsencrypt
       - traefik.http.services.svws.loadbalancer.server.port=8443
