@@ -17,18 +17,12 @@ services:
       MARIADB_PASSWORD: ${MARIADB_PASSWORD}
     volumes:
       - mariadb_data:/var/lib/mysql
-    # Uncomment ports if external access is needed
-    # ports:
-    #   - "3306:3306"
 
   svws:
     build:
       dockerfile: deployment/docker/svws/Dockerfile
-      # context: .  # Uncomment if needed
     depends_on:
       - mariadb
-    ports:
-      - "8465:8443"
     environment:
       MARIADB_HOST: mariadb
       MARIADB_DATABASE: ${MARIADB_DATABASE}
@@ -37,8 +31,17 @@ services:
       SVWS_TLS_KEYSTORE_PATH: /etc/app/svws/conf/keystore
       SVWS_TLS_KEYSTORE_PASSWORD: ${SVWS_TLS_KEYSTORE_PASSWORD}
       SVWS_TLS_KEY_ALIAS: ${SVWS_TLS_KEY_ALIAS}
-      # IMPORTANT: Disable test data import after first initialization
       IMPORT_TEST_DATA: "false"
     volumes:
       - svws_keystore:/etc/app/svws/conf/keystore
       - svws_logs:/opt/app/svws/logs
+
+    # Traefik labels for domain routing
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.svws.rule=Host(`svws.domsingschule-aachen.de`)"
+      - "traefik.http.routers.svws.entrypoints=http,https"
+      - "traefik.http.routers.svws.tls=true"
+      - "traefik.http.services.svws.loadbalancer.server.port=8443"
+      - "traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https"
+      - "traefik.http.routers.svws.middlewares=redirect-to-https"
