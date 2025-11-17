@@ -26,7 +26,7 @@ services:
 
   svws:
     build:
-      context: ../../
+      # context: ../../
       dockerfile: deployment/docker/svws/Dockerfile
     depends_on:
       - mariadb
