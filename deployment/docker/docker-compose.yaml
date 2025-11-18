@@ -4,11 +4,6 @@ volumes:
   svws_keystore:
   svws_logs:
   mariadb_data:
-  traefik_letsencrypt:
-
-networks:
-  coolify:
-    external: true
 
 services:
   # -----------------------------
@@ -27,8 +22,6 @@ services:
       MARIADB_PASSWORD: ${MARIADB_PASSWORD}
     volumes:
       - mariadb_data:/var/lib/mysql
-    networks:
-      - coolify
 
   # -----------------------------
   # SVWS Backend
@@ -36,7 +29,6 @@ services:
   svws:
     build:
       dockerfile: deployment/docker/svws/Dockerfile
-      # context: ../../
     restart: unless-stopped
     depends_on:
       - mariadb
@@ -47,49 +39,10 @@ services:
       MARIADB_DATABASE: ${MARIADB_DATABASE}
       MARIADB_USER: ${MARIADB_USER}
       MARIADB_PASSWORD: ${MARIADB_PASSWORD}
-
-      # TLS / Keystore
       SVWS_TLS_KEYSTORE_PATH: /etc/app/svws/conf/keystore
       SVWS_TLS_KEYSTORE_PASSWORD: ${SVWS_TLS_KEYSTORE_PASSWORD}
       SVWS_TLS_KEY_ALIAS: ${SVWS_TLS_KEY_ALIAS}
-
-      # Disable test import after initial run
       IMPORT_TEST_DATA: "false"
     volumes:
       - svws_keystore:/etc/app/svws/conf/keystore
       - svws_logs:/opt/app/svws/logs
-    networks:
-      - coolify
-    labels:
-      - "traefik.enable=true"
-      # Router for HTTPS
-      - "traefik.http.routers.svws.rule=Host(`svws.domsingschule-aachen.de`)"
-      - "traefik.http.routers.svws.entrypoints=websecure"
-      - "traefik.http.routers.svws.tls.certresolver=letsencrypt"
-      - "traefik.http.services.svws.loadbalancer.server.port=8443"
-      - "traefik.http.services.svws.loadbalancer.server.scheme=https"
-      # Optional: strip /svws prefix if frontend uses it
-      # - "traefik.http.middlewares.svws-strip.stripprefix.prefixes=/svws"
-      # - "traefik.http.routers.svws.middlewares=svws-strip"
-
-  # -----------------------------
-  # Traefik Reverse Proxy
-  # -----------------------------
-  traefik:
-    image: traefik:v3.1
-    restart: unless-stopped
-    command:
-      - "--entrypoints.web.address=:80"
-      - "--entrypoints.websecure.address=:443"
-      - "--providers.docker=true"
-      - "--certificatesresolvers.letsencrypt.acme.email=you@example.com"
-      - "--certificatesresolvers.letsencrypt.acme.storage=/letsencrypt/acme.json"
-      - "--log.level=INFO"
-    ports:
-      - "80:80"
-      - "443:443"
-    volumes:
-      - "/var/run/docker.sock:/var/run/docker.sock:ro"
-      - "traefik_letsencrypt:/letsencrypt"
-    networks:
-      - coolify
