@@ -22,6 +22,8 @@ services:
       MARIADB_PASSWORD: ${MARIADB_PASSWORD}
     volumes:
       - mariadb_data:/var/lib/mysql
+    networks:
+      - coolify
 
   # -----------------------------
   # SVWS Backend
@@ -32,8 +34,6 @@ services:
     restart: unless-stopped
     depends_on:
       - mariadb
-    ports:
-      - "8465:8443"
     environment:
       MARIADB_HOST: mariadb
       MARIADB_DATABASE: ${MARIADB_DATABASE}
@@ -46,3 +46,31 @@ services:
     volumes:
       - svws_keystore:/etc/app/svws/conf/keystore
       - svws_logs:/opt/app/svws/logs
+    networks:
+      - coolify
+    labels:
+      # Enable Traefik for this service
+      - "traefik.enable=true"
+      
+      # HTTP Router (redirects to HTTPS)
+      - "traefik.http.routers.svws-http.rule=Host(`svws.domsingschule-aachen.de`)"
+      - "traefik.http.routers.svws-http.entrypoints=http"
+      - "traefik.http.routers.svws-http.middlewares=svws-redirect-to-https"
+      
+      # HTTPS Router
+      - "traefik.http.routers.svws-https.rule=Host(`svws.domsingschule-aachen.de`)"
+      - "traefik.http.routers.svws-https.entrypoints=https"
+      - "traefik.http.routers.svws-https.tls=true"
+      - "traefik.http.routers.svws-https.tls.certresolver=letsencrypt"
+      
+      # Redirect middleware (HTTP to HTTPS)
+      - "traefik.http.middlewares.svws-redirect-to-https.redirectscheme.scheme=https"
+      - "traefik.http.middlewares.svws-redirect-to-https.redirectscheme.permanent=true"
+      
+      # Service definition - points to the internal container port
+      - "traefik.http.services.svws.loadbalancer.server.port=8443"
+
+networks:
+  coolify:
+    external: true
+
