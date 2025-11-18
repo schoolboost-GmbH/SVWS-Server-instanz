@@ -15,6 +15,7 @@ services:
     command: >
       --character-set-server=utf8mb4
       --collation-server=utf8mb4_unicode_ci
+      --bind-address=0.0.0.0
     environment:
       MARIADB_ROOT_PASSWORD: ${MARIADB_ROOT_PASSWORD}
       MARIADB_DATABASE: ${MARIADB_DATABASE}
@@ -24,6 +25,11 @@ services:
       - mariadb_data:/var/lib/mysql
     networks:
       - coolify
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
   # -----------------------------
   # SVWS Backend
@@ -33,7 +39,10 @@ services:
       dockerfile: deployment/docker/svws/Dockerfile
     restart: unless-stopped
     depends_on:
-      - mariadb
+      mariadb:
+        condition: service_healthy
+    ports:
+      - "8465:8443"
     environment:
       MARIADB_HOST: mariadb
       MARIADB_DATABASE: ${MARIADB_DATABASE}
