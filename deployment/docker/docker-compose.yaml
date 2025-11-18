@@ -38,7 +38,7 @@ services:
     restart: unless-stopped
     depends_on:
       - mariadb
-	ports:
+    ports:
       - "8465:8443"
     environment:
       MARIADB_HOST: mariadb
@@ -51,6 +51,7 @@ services:
       SVWS_TLS_KEYSTORE_PASSWORD: ${SVWS_TLS_KEYSTORE_PASSWORD}
       SVWS_TLS_KEY_ALIAS: ${SVWS_TLS_KEY_ALIAS}
 
+      # Disable test import after initial run
       IMPORT_TEST_DATA: "false"
     volumes:
       - svws_keystore:/etc/app/svws/conf/keystore
@@ -65,5 +66,5 @@ services:
       - "traefik.http.services.svws.loadbalancer.server.port=8443"
       - "traefik.http.services.svws.loadbalancer.server.scheme=https"
       # Optional: strip /svws prefix if frontend uses it
-      #- "traefik.http.middlewares.svws-strip.stripprefix.prefixes=/svws"
-      #- "traefik.http.routers.svws.middlewares=svws-strip"
+      # - "traefik.http.middlewares.svws-strip.stripprefix.prefixes=/svws"
+      # - "traefik.http.routers.svws.middlewares=svws-strip"
