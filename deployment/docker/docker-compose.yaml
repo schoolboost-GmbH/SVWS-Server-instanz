@@ -60,11 +60,37 @@ services:
       - coolify
     labels:
       - "traefik.enable=true"
+      # Router for HTTPS
       - "traefik.http.routers.svws.rule=Host(`svws.domsingschule-aachen.de`)"
-      - "traefik.http.routers.svws.entrypoints=https"
+      - "traefik.http.routers.svws.entrypoints=websecure"
       - "traefik.http.routers.svws.tls.certresolver=letsencrypt"
       - "traefik.http.services.svws.loadbalancer.server.port=8443"
       - "traefik.http.services.svws.loadbalancer.server.scheme=https"
-      # Optional: strip /svws prefix if frontend uses it
+      # Optional: strip /svws prefix if needed
       # - "traefik.http.middlewares.svws-strip.stripprefix.prefixes=/svws"
       # - "traefik.http.routers.svws.middlewares=svws-strip"
+
+  # -----------------------------
+  # Traefik HTTP → HTTPS Redirect
+  # -----------------------------
+  traefik-redirect:
+    image: traefik:v3.1
+    restart: unless-stopped
+    command:
+      - "--entrypoints.web.address=:80"
+      - "--entrypoints.websecure.address=:443"
+      - "--providers.docker=true"
+      - "--certificatesresolvers.letsencrypt.acme.email=you@example.com"
+      - "--certificatesresolvers.letsencrypt.acme.storage=/letsencrypt/acme.json"
+      - "--log.level=INFO"
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+      - "traefik_letsencrypt:/letsencrypt"
+    networks:
+      - coolify
+
+volumes:
+  traefik_letsencrypt:
