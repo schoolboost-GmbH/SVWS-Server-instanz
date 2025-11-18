@@ -4,6 +4,7 @@ volumes:
   svws_keystore:
   svws_logs:
   mariadb_data:
+  traefik_letsencrypt:
 
 networks:
   coolify:
@@ -17,7 +18,8 @@ services:
     image: mariadb:11.7
     restart: unless-stopped
     command: >
-      --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+      --character-set-server=utf8mb4
+      --collation-server=utf8mb4_unicode_ci
     environment:
       MARIADB_ROOT_PASSWORD: ${MARIADB_ROOT_PASSWORD}
       MARIADB_DATABASE: ${MARIADB_DATABASE}
@@ -66,14 +68,14 @@ services:
       - "traefik.http.routers.svws.tls.certresolver=letsencrypt"
       - "traefik.http.services.svws.loadbalancer.server.port=8443"
       - "traefik.http.services.svws.loadbalancer.server.scheme=https"
-      # Optional: strip /svws prefix if needed
+      # Optional: strip /svws prefix if frontend uses it
       # - "traefik.http.middlewares.svws-strip.stripprefix.prefixes=/svws"
       # - "traefik.http.routers.svws.middlewares=svws-strip"
 
   # -----------------------------
-  # Traefik HTTP → HTTPS Redirect
+  # Traefik Reverse Proxy
   # -----------------------------
-  traefik-redirect:
+  traefik:
     image: traefik:v3.1
     restart: unless-stopped
     command:
@@ -91,6 +93,3 @@ services:
       - "traefik_letsencrypt:/letsencrypt"
     networks:
       - coolify
-
-volumes:
-  traefik_letsencrypt:
