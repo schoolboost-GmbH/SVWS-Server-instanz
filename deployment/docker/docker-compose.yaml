@@ -60,26 +60,28 @@ services:
     labels:
       # Enable Traefik for this service
       - "traefik.enable=true"
-      
+
       # HTTP Router (redirects to HTTPS)
       - "traefik.http.routers.svws-http.rule=Host(`svws.domsingschule-aachen.de`)"
       - "traefik.http.routers.svws-http.entrypoints=http"
       - "traefik.http.routers.svws-http.middlewares=svws-redirect-to-https"
-      
+      - "traefik.http.routers.svws-http.service=svws"
+
       # HTTPS Router
       - "traefik.http.routers.svws-https.rule=Host(`svws.domsingschule-aachen.de`)"
       - "traefik.http.routers.svws-https.entrypoints=https"
       - "traefik.http.routers.svws-https.tls=true"
       - "traefik.http.routers.svws-https.tls.certresolver=letsencrypt"
-      
+      - "traefik.http.routers.svws-https.service=svws"
+
       # Redirect middleware (HTTP to HTTPS)
       - "traefik.http.middlewares.svws-redirect-to-https.redirectscheme.scheme=https"
       - "traefik.http.middlewares.svws-redirect-to-https.redirectscheme.permanent=true"
-      
-      # Service definition - points to the internal container port
+
       - "traefik.http.services.svws.loadbalancer.server.port=8443"
+      - "traefik.http.services.svws.loadbalancer.server.scheme=https"
+      - "traefik.http.services.svws.loadbalancer.server.transport.insecureSkipVerify=true"
 
 networks:
   coolify:
     external: true
-
