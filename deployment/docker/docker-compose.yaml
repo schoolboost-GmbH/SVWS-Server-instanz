@@ -15,6 +15,7 @@ services:
     command: >
       --character-set-server=utf8mb4
       --collation-server=utf8mb4_unicode_ci
+      --bind-address=0.0.0.0
     environment:
       MARIADB_ROOT_PASSWORD: ${MARIADB_ROOT_PASSWORD}
       MARIADB_DATABASE: ${MARIADB_DATABASE}
@@ -22,6 +23,13 @@ services:
       MARIADB_PASSWORD: ${MARIADB_PASSWORD}
     volumes:
       - mariadb_data:/var/lib/mysql
+    networks:
+      - coolify
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
   # -----------------------------
   # SVWS Backend
@@ -31,9 +39,8 @@ services:
       dockerfile: deployment/docker/svws/Dockerfile
     restart: unless-stopped
     depends_on:
-      - mariadb
-    ports:
-      - "8465:8443"
+      mariadb:
+        condition: service_healthy
     environment:
       MARIADB_HOST: mariadb
       MARIADB_DATABASE: ${MARIADB_DATABASE}
@@ -46,3 +53,30 @@ services:
     volumes:
       - svws_keystore:/etc/app/svws/conf/keystore
       - svws_logs:/opt/app/svws/logs
+    networks:
+      - coolify
+    labels:
+      - "traefik.enable=true"
+      
+      # HTTP Router (Redirect to HTTPS)
+      - "traefik.http.routers.svws-http.rule=Host(`svws.domsingschule-aachen.de`)"
+      - "traefik.http.routers.svws-http.entrypoints=http"
+      - "traefik.http.routers.svws-http.middlewares=svws-redirect-to-https"
+      
+      # HTTPS Router
+      - "traefik.http.routers.svws-https.rule=Host(`svws.domsingschule-aachen.de`)"
+      - "traefik.http.routers.svws-https.entrypoints=https"
+      - "traefik.http.routers.svws-https.tls=true"
+      - "traefik.http.routers.svws-https.tls.certresolver=letsencrypt"
+      
+      # Middleware
+      - "traefik.http.middlewares.svws-redirect-to-https.redirectscheme.scheme=https"
+      - "traefik.http.middlewares.svws-redirect-to-https.redirectscheme.permanent=true"
+      
+      # Service Configuration
+      - "traefik.http.services.svws.loadbalancer.server.port=8443"
+      - "traefik.http.services.svws.loadbalancer.server.scheme=https"
+
+networks:
+  coolify:
+    external: true
