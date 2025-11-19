@@ -11,16 +11,14 @@ services:
   # -----------------------------
   mariadb:
     image: mariadb:11.7
-    restart: unless-stopped
     command: >
-      --character-set-server=utf8mb4
-      --collation-server=utf8mb4_unicode_ci
-      --bind-address=0.0.0.0
+      --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    restart: unless-stopped
     environment:
-      MARIADB_ROOT_PASSWORD: ${MARIADB_ROOT_PASSWORD}
-      MARIADB_DATABASE: ${MARIADB_DATABASE}
-      MARIADB_USER: ${MARIADB_USER}
-      MARIADB_PASSWORD: ${MARIADB_PASSWORD}
+      - MARIADB_ROOT_PASSWORD=${MARIADB_ROOT_PASSWORD}
+      - MARIADB_DATABASE=${MARIADB_DATABASE}
+      - MARIADB_USER=${MARIADB_USER}
+      - MARIADB_PASSWORD=${MARIADB_PASSWORD}
     volumes:
       - mariadb_data:/var/lib/mysql
     networks:
@@ -35,21 +33,22 @@ services:
   # SVWS Backend
   # -----------------------------
   svws:
-    build:
-      dockerfile: deployment/docker/svws/Dockerfile
+    image: ${SVWS_SERVER_IMAGE}
     restart: unless-stopped
     depends_on:
       mariadb:
         condition: service_healthy
+    ports:
+      - "8465:8443"
     environment:
-      MARIADB_HOST: mariadb
-      MARIADB_DATABASE: ${MARIADB_DATABASE}
-      MARIADB_USER: ${MARIADB_USER}
-      MARIADB_PASSWORD: ${MARIADB_PASSWORD}
-      SVWS_TLS_KEYSTORE_PATH: /etc/app/svws/conf/keystore
-      SVWS_TLS_KEYSTORE_PASSWORD: ${SVWS_TLS_KEYSTORE_PASSWORD}
-      SVWS_TLS_KEY_ALIAS: ${SVWS_TLS_KEY_ALIAS}
-      IMPORT_TEST_DATA: "false"
+      - MARIADB_HOST=mariadb
+      - MARIADB_DATABASE=${MARIADB_DATABASE}
+      - MARIADB_USER=${MARIADB_USER}
+      - MARIADB_PASSWORD=${MARIADB_PASSWORD}
+      - SVWS_TLS_KEYSTORE_PATH=/etc/app/svws/conf/keystore
+      - SVWS_TLS_KEYSTORE_PASSWORD=${SVWS_TLS_KEYSTORE_PASSWORD}
+      - SVWS_TLS_KEY_ALIAS=${SVWS_TLS_KEY_ALIAS}
+      - IMPORT_TEST_DATA=false
     volumes:
       - svws_keystore:/etc/app/svws/conf/keystore
       - svws_logs:/opt/app/svws/logs
@@ -57,13 +56,25 @@ services:
       - coolify
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.svws.rule=Host(`svws.domsingschule-aachen.de`)"
-      - "traefik.http.routers.svws.entrypoints=https"
-      - "traefik.http.routers.svws.tls=true"
-      - "traefik.http.routers.svws.tls.certresolver=letsencrypt"
+      
+      # HTTP Router (Redirect to HTTPS)
+      - "traefik.http.routers.svws-http.rule=Host(`svws.domsingschule-aachen.de`)"
+      - "traefik.http.routers.svws-http.entrypoints=http"
+      - "traefik.http.routers.svws-http.middlewares=svws-redirect-to-https"
+      
+      # HTTPS Router
+      - "traefik.http.routers.svws-https.rule=Host(`svws.domsingschule-aachen.de`)"
+      - "traefik.http.routers.svws-https.entrypoints=https"
+      - "traefik.http.routers.svws-https.tls=true"
+      - "traefik.http.routers.svws-https.tls.certresolver=letsencrypt"
+      
+      # Middleware
+      - "traefik.http.middlewares.svws-redirect-to-https.redirectscheme.scheme=https"
+      - "traefik.http.middlewares.svws-redirect-to-https.redirectscheme.permanent=true"
+      
+      # Service Configuration
       - "traefik.http.services.svws.loadbalancer.server.port=8443"
       - "traefik.http.services.svws.loadbalancer.server.scheme=https"
-      - "traefik.http.services.svws.loadbalancer.serversTransport=svws-transport"
 
 networks:
   coolify:
