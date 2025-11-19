@@ -44,9 +44,14 @@
 .sidebar--menu--footer .sidebar--menu-item:focus {
 	&:not(.sidebar--menu-item--active) {
 		@apply bg-ui-hover;
-		color: var(--color-palette-neutral-400);
-
-	
+		
+		[data-theme="light"] & {
+			color: black;
+		}
+		
+		[data-theme="dark"] & {
+			color: white;
+		}
 	}
 }
 

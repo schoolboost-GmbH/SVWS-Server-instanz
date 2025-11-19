@@ -35,9 +35,6 @@ html {
 	@apply rounded-3xl text-ui;
 }
 
-html:not(.dark) .app--menu {
-	background-color: #fefbfc;
-}
 
 html.dark .app--menu {
 	background-color: transparent;

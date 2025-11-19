@@ -10,10 +10,10 @@
 						<svws-ui-menu-header v-if="menu.benutzerprofil !== null" :user="username" :schule="schulname" :schema="schemaname" @click="startSetApp(menu.benutzerprofil)" class="cursor-pointer" />
 					</template>
 					<template #default>
-						<template v-for="item in menu.main" :key="item.name">
-							<svws-ui-menu-item :active="menu.mainEntry.name === item.name" @click="startSetApp(item)">
-								<template #icon><span class="icon-lg" :class="getIcon(item)" /></template>
-								<template #label><span class="text-xs"> {{ item.text }}</span> </template>
+						<template  v-for="item in menu.main" :key="item.name">
+							<svws-ui-menu-item class="group" :active="menu.mainEntry.name === item.name" @click="startSetApp(item)">
+								<template #icon><span class="icon-lg group-hover:bg-white" :class="getIcon(item)" /></template>
+								<template #label><span class="text-xs "> {{ item.text }}</span> </template>
 							</svws-ui-menu-item>
 						</template>
 					</template>

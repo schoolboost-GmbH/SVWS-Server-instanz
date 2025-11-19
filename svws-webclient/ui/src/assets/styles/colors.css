@@ -14,7 +14,7 @@
 		--color-text-ui-50: light-dark(var(--color-palette-neutral-700), var(--color-palette-neutral-300));
 		--color-text-ui-75: light-dark(var(--color-palette-neutral-800), var(--color-palette-neutral-200));
 		--color-text-ui-100: light-dark(var(--color-palette-neutral-900), var(--color-palette-neutral-100));
-		--color-text-ui-hover: light-dark(var(--color-palette-neutral-100), var(--color-palette-brand-400));
+		--color-text-ui-hover: light-dark(black, white);
 		--color-text-ui-secondary: light-dark(var(--color-palette-neutral-700), var(--color-palette-neutral-500));
 		--color-text-ui-secondary-hover: light-dark(var(--color-palette-brand-400), var(--color-palette-brand-300));
 		--color-text-ui-brand: light-dark(var(--color-palette-brand-500), var(--color-palette-brand-400));
@@ -57,7 +57,7 @@
 		--color-text-ui-onstatistic: light-dark(var(--color-palette-neutral-100), var(--color-palette-neutral-100));
 		--color-text-ui-onstatistic-hover: light-dark(var(--color-palette-neutral-200), var(--color-palette-neutral-200));
 		--color-text-ui-onstatistic-secondary: light-dark(var(--color-palette-statistic-200), var(--color-palette-statistic-200));
-		--color-text-ui-onselected: light-dark(#ffffff, #ffffff);
+		--color-text-ui-onselected: light-dark(#000000, #ffffff);
 		--color-text-ui-onselected-hover: light-dark(#ffffff, #ffffff);
 		--color-text-ui-onselected-secondary: light-dark(#e9f9fd, #e9f9fd);
 		--color-text-ui-ondanger: light-dark(var(--color-palette-neutral-100), var(--color-palette-neutral-100));
@@ -95,11 +95,11 @@
 		--color-icon-ui-hover: light-dark(var(--color-palette-brand-500), var(--color-palette-brand-400));
 		--color-icon-ui-secondary: light-dark(var(--color-palette-neutral-700), var(--color-palette-neutral-500));
 		--color-icon-ui-secondary-hover: light-dark(var(--color-palette-brand-400), var(--color-palette-brand-300));
-		--color-icon-ui-brand: light-dark(var(--color-palette-neutral-400), var(--color-palette-brand-400));
+		--color-icon-ui-brand: light-dark( black, white);
 		--color-icon-ui-brand-hover: light-dark(var(--color-palette-brand-600), var(--color-palette-brand-300));
 		--color-icon-ui-brand-secondary: light-dark(var(--color-palette-brand-300), var(--color-palette-brand-500));
 		--color-icon-ui-brand-secondary-hover: light-dark(var(--color-palette-brand-400), var(--color-palette-brand-400));
-		--color-icon-ui-statistic: light-dark(var(--color-palette-schoolboost-primary), var(--color-palette-schoolboost-primary));
+		--color-icon-ui-statistic: light-dark(var(--color-palette-schoolboost-secondary), var(--color-palette-schoolboost-secondary));
 		--color-icon-ui-statistic-hover: light-dark(var(--color-palette-statistic-600), var(--color-palette-statistic-200));
 		--color-icon-ui-statistic-secondary: light-dark(var(--color-palette-statistic-300), var(--color-palette-statistic-400));
 		--color-icon-ui-statistic-secondary-hover: light-dark(var(--color-palette-statistic-400), var(--color-palette-statistic-300));
@@ -170,14 +170,14 @@
 		--color-bg-ui-50: light-dark(var(--color-palette-neutral-500), var(--color-palette-neutral-700));
 		--color-bg-ui-75: light-dark(var(--color-palette-neutral-300), var(--color-palette-neutral-800));
 		--color-bg-ui-100: light-dark(var(--color-palette-neutral-100), var(--color-palette-neutral-900));
-		--color-bg-ui-hover: light-dark(var(--color-palette-schoolboost-primary), var(--color-palette-schoolboost-primary));
+		--color-bg-ui-hover: light-dark(var(--color-palette-schoolboost-primary), var(--color-palette-schoolboost-secondary));
 		--color-bg-ui-brand: light-dark(var(--color-palette-brand-500), var(--color-palette-brand-500));
 		--color-bg-ui-brand-hover: light-dark(var(--color-palette-brand-600), var(--color-palette-brand-400));
 		--color-bg-ui-brand-secondary: light-dark(var(--color-palette-brand-50), var(--color-palette-brand-900));
 		--color-bg-ui-statistic: light-dark(var(--color-palette-statistic-500), var(--color-palette-statistic-500));
 		--color-bg-ui-statistic-hover: light-dark(var(--color-palette-statistic-600), var(--color-palette-statistic-400));
 		--color-bg-ui-statistic-secondary: light-dark(var(--color-palette-statistic-50), var(--color-palette-statistic-50));
-		--color-bg-ui-selected: light-dark(var(--color-palette-schoolboost-primary), var(--color-palette-schoolboost-primary));
+		--color-bg-ui-selected: light-dark(var(--color-palette-schoolboost-primary), var(--color-palette-schoolboost-secondary));
 		--color-bg-ui-selected-hover: light-dark(#2aa0bc, #2aa0bc);
 		--color-bg-ui-danger: light-dark(var(--color-palette-danger-500), var(--color-palette-danger-500));
 		--color-bg-ui-danger-hover: light-dark(var(--color-palette-danger-600), var(--color-palette-danger-400));
@@ -192,7 +192,7 @@
 		--color-bg-ui-caution-hover: light-dark(var(--color-palette-caution-600), var(--color-palette-caution-300));
 		--color-bg-ui-caution-secondary: light-dark(var(--color-palette-caution-50), var(--color-palette-caution-900));
 		--color-bg-ui-neutral: light-dark(var(--color-palette-neutral-200), var(--color-palette-neutral-750));
-		--color-bg-ui-neutral-hover: light-dark(var(--color-palette-neutral-400), var(--color-palette-neutral-700));
+		--color-bg-ui-neutral-hover: light-dark(black, var(--color-palette-neutral-700));
 		--color-bg-ui-neutral-secondary: light-dark(var(--color-palette-neutral-50), var(--color-palette-neutral-950));
 		--color-bg-ui-disabled: light-dark(var(--color-palette-neutral-300), var(--color-palette-neutral-850));
 		--color-bg-uistatic: var(--color-palette-neutral-100);
