@@ -1,62 +1,48 @@
 version: "3.9"
 
 volumes:
-  mariadb_test_data:
-  svws_test_keystore:
-  svws_test_logs:
+  svws_keystore:
+  svws_logs:
+  mariadb_data:
 
 services:
-  # --------------------------------------------------
-  # TEST MariaDB Database
-  # --------------------------------------------------
-  mariadb_test:
+  # -----------------------------
+  # MariaDB Database
+  # -----------------------------
+  mariadb:
     image: mariadb:11.7
     restart: unless-stopped
     command: >
       --character-set-server=utf8mb4
       --collation-server=utf8mb4_unicode_ci
-      --bind-address=0.0.0.0
     environment:
-      MARIADB_ROOT_PASSWORD: ${MARIADB_TEST_ROOT_PASSWORD}
-      MARIADB_DATABASE: ${MARIADB_TEST_DATABASE}
-      MARIADB_USER: ${MARIADB_TEST_USER}
-      MARIADB_PASSWORD: ${MARIADB_TEST_PASSWORD}
+      MARIADB_ROOT_PASSWORD: ${MARIADB_ROOT_PASSWORD}
+      MARIADB_DATABASE: ${MARIADB_DATABASE}
+      MARIADB_USER: ${MARIADB_USER}
+      MARIADB_PASSWORD: ${MARIADB_PASSWORD}
     volumes:
-      - mariadb_test_data:/var/lib/mysql
-    networks:
-      - svws_test_net
+      - mariadb_data:/var/lib/mysql
 
-  # --------------------------------------------------
-  # TEST SVWS Backend
-  # --------------------------------------------------
-  svws_test:
+  # -----------------------------
+  # SVWS Backend
+  # -----------------------------
+  svws:
     build:
       dockerfile: deployment/docker/svws/Dockerfile
     restart: unless-stopped
     depends_on:
-      - mariadb_test
-    environment:
-      MARIADB_HOST: mariadb_test
-      MARIADB_DATABASE: ${MARIADB_TEST_DATABASE}
-      MARIADB_USER: ${MARIADB_TEST_USER}
-      MARIADB_PASSWORD: ${MARIADB_TEST_PASSWORD}
-
-      SVWS_TLS_KEYSTORE_PATH: /etc/app/svws/conf/keystore
-      SVWS_TLS_KEYSTORE_PASSWORD: ${SVWS_TEST_TLS_KEYSTORE_PASSWORD}
-      SVWS_TLS_KEY_ALIAS: ${SVWS_TEST_TLS_KEY_ALIAS}
-
-      IMPORT_TEST_DATA: ${IMPORT_TEST_DATA}
-
-      # Added to make the backend listen on all interfaces
-      SVWS_HOST: 0.0.0.0
-    volumes:
-      - svws_test_keystore:/etc/app/svws/conf/keystore
-      - svws_test_logs:/opt/app/svws/logs
+      - mariadb
     ports:
-      - "9443:8443"   # expose test backend at https://<server-ip>:9443
-    networks:
-      - svws_test_net
-
-networks:
-  svws_test_net:
-    driver: bridge
+      - "8080:8443"
+    environment:
+      MARIADB_HOST: mariadb
+      MARIADB_DATABASE: ${MARIADB_DATABASE}
+      MARIADB_USER: ${MARIADB_USER}
+      MARIADB_PASSWORD: ${MARIADB_PASSWORD}
+      SVWS_TLS_KEYSTORE_PATH: /etc/app/svws/conf/keystore
+      SVWS_TLS_KEYSTORE_PASSWORD: ${SVWS_TLS_KEYSTORE_PASSWORD}
+      SVWS_TLS_KEY_ALIAS: ${SVWS_TLS_KEY_ALIAS}
+      IMPORT_TEST_DATA: "false"
+    volumes:
+      - svws_keystore:/etc/app/svws/conf/keystore
+      - svws_logs:/opt/app/svws/logs
