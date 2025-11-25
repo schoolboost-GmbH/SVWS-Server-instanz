@@ -46,6 +46,9 @@ services:
       SVWS_TLS_KEY_ALIAS: ${SVWS_TEST_TLS_KEY_ALIAS}
 
       IMPORT_TEST_DATA: ${IMPORT_TEST_DATA}
+
+      # Added to make the backend listen on all interfaces
+      SVWS_HOST: 0.0.0.0
     volumes:
       - svws_test_keystore:/etc/app/svws/conf/keystore
       - svws_test_logs:/opt/app/svws/logs
