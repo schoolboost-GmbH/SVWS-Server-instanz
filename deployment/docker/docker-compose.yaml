@@ -5,12 +5,10 @@ volumes:
   svws_logs:
   mariadb_data:
   svws_db_backups:
-    # persistent volume for backups
+
 
 services:
-  # -----------------------------
-  # MariaDB Database
-  # -----------------------------
+
   mariadb:
     image: mariadb:11.7
     restart: unless-stopped
@@ -31,11 +29,9 @@ services:
       timeout: 5s
       retries: 5
 
-  # -----------------------------
-  # SVWS Backend
-  # -----------------------------
   svws:
     build:
+      context: .
       dockerfile: deployment/docker/svws/Dockerfile
     restart: unless-stopped
     depends_on:
@@ -56,28 +52,30 @@ services:
     networks:
       - coolify
     labels:
+      - "coolify.proxy=true"
       - "traefik.enable=true"
-      # HTTP Router
+
+      # HTTP
       - "traefik.http.routers.svws-http.rule=Host(`svws.domsingschule-aachen.de`)"
       - "traefik.http.routers.svws-http.entrypoints=http"
       - "traefik.http.routers.svws-http.middlewares=svws-redirect-to-https"
-      # HTTPS Router
+
+      # HTTPS
       - "traefik.http.routers.svws-https.rule=Host(`svws.domsingschule-aachen.de`)"
       - "traefik.http.routers.svws-https.entrypoints=https"
       - "traefik.http.routers.svws-https.tls=true"
       - "traefik.http.routers.svws-https.tls.certresolver=letsencrypt"
+
       # Middleware
       - "traefik.http.middlewares.svws-redirect-to-https.redirectscheme.scheme=https"
       - "traefik.http.middlewares.svws-redirect-to-https.redirectscheme.permanent=true"
-      # Service port
+
+      # Service
       - "traefik.http.services.svws.loadbalancer.server.port=8443"
       - "traefik.http.services.svws.loadbalancer.server.scheme=https"
 
-  # -----------------------------
-  # Backup Container (automated every 3 days)
-  # -----------------------------
   svws_backup:
-    image: mysql:8.0 # ensures mysqldump is available
+    image: mysql:8.0
     depends_on:
       - mariadb
     environment:
@@ -92,11 +90,8 @@ services:
     command: >
       -c "while true; do
           DATE=$(date +%Y-%m-%d_%H-%M-%S);
-          echo 'Backing up database...';
           mysqldump -h mariadb -u${MARIADB_USER} -p${MARIADB_PASSWORD} ${MARIADB_DATABASE} > /backups/${MARIADB_DATABASE}_$DATE.sql;
-          echo 'Backup complete. Cleaning old backups...';
           ls -1tr /backups/*.sql | head -n -10 | xargs -d '\n' rm -f -- || true;
-          echo 'Next backup in 3 days.';
           sleep $((3*24*60*60));
         done"
     restart: unless-stopped
