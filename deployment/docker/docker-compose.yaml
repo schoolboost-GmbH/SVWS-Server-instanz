@@ -4,6 +4,7 @@ volumes:
   svws_keystore:
   svws_logs:
   mariadb_data:
+  svws_db_backups:  # Volume for database backups
 
 services:
   # -----------------------------
@@ -76,6 +77,33 @@ services:
       # Service Configuration
       - "traefik.http.services.svws.loadbalancer.server.port=8443"
       - "traefik.http.services.svws.loadbalancer.server.scheme=https"
+
+  # -----------------------------
+  # MariaDB Backup Service
+  # -----------------------------
+  svws_backup:
+    image: mariadb:11.7
+    depends_on:
+      - mariadb
+    environment:
+      MARIADB_ROOT_PASSWORD: ${MARIADB_ROOT_PASSWORD}
+      MARIADB_USER: ${MARIADB_USER}
+      MARIADB_PASSWORD: ${MARIADB_PASSWORD}
+      MARIADB_DATABASE: ${MARIADB_DATABASE}
+    volumes:
+      - svws_db_backups:/backups   # store backups in volume
+    networks:
+      - coolify
+    entrypoint: /bin/bash
+    command: >
+      -c "while true; do
+           DATE=$(date +%Y-%m-%d_%H-%M-%S);
+           echo 'Backing up database...';
+           docker exec mariadb sh -c 'exec mysqldump -u${MARIADB_USER} -p${MARIADB_PASSWORD} ${MARIADB_DATABASE}' > /backups/${MARIADB_DATABASE}_$DATE.sql;
+           echo 'Backup complete. Next backup in 3 days.';
+           sleep $((3*24*60*60));
+         done"
+    restart: unless-stopped
 
 networks:
   coolify:
