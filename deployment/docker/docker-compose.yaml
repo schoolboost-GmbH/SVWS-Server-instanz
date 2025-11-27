@@ -78,8 +78,7 @@ services:
   # -----------------------------
   svws_backup:
     build:
-      context: ./deployment/docker/backup
-      dockerfile: Dockerfile
+      dockerfile: deployment/docker/backup/Dockerfile
     depends_on:
       - mariadb
     environment:
