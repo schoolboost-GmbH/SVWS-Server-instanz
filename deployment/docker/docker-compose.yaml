@@ -93,7 +93,7 @@ services:
       -c "while true; do
           DATE=$(date +%Y-%m-%d_%H-%M-%S);
           echo 'Backing up database...';
-          mysqldump -h mariadb -u${MARIADB_USER} -p${MARIADB_PASSWORD} ${MARIADB_DATABASE} > /backups/${MARIADB_DATABASE}_$DATE.sql;
+       	  mysqldump -h mariadb -u${MARIADB_USER} -p${MARIADB_PASSWORD} --all-databases > /backups/all_databases_$DATE.sql;
           echo 'Backup complete. Cleaning old backups...';
           ls -1tr /backups/*.sql | head -n -10 | xargs -d '\n' rm -f -- || true;
           echo 'Next backup in 3 days.';
