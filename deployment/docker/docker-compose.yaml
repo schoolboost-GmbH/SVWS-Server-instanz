@@ -4,8 +4,7 @@ volumes:
   svws_keystore:
   svws_logs:
   mariadb_data:
-  svws_db_backups:
-    # persistent volume for backups
+  svws_db_backups:  # persistent volume for backups
 
 services:
   # -----------------------------
@@ -15,7 +14,9 @@ services:
     image: mariadb:11.7
     restart: unless-stopped
     command: >
-      --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci --bind-address=0.0.0.0
+      --character-set-server=utf8mb4
+      --collation-server=utf8mb4_unicode_ci
+      --bind-address=0.0.0.0
     environment:
       MARIADB_ROOT_PASSWORD: ${MARIADB_ROOT_PASSWORD}
       MARIADB_DATABASE: ${MARIADB_DATABASE}
@@ -26,7 +27,7 @@ services:
     networks:
       - coolify
     healthcheck:
-      test: [ "CMD", "healthcheck.sh", "--connect", "--innodb_initialized" ]
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -77,28 +78,43 @@ services:
   # Backup Container (automated every 3 days)
   # -----------------------------
   svws_backup:
-    image: mysql:8.0 # ensures mysqldump is available
+    image: mysql:8.0
     depends_on:
       - mariadb
     environment:
       MARIADB_USER: ${MARIADB_USER}
       MARIADB_PASSWORD: ${MARIADB_PASSWORD}
-      MARIADB_DATABASE: ${MARIADB_DATABASE}
     volumes:
       - svws_db_backups:/backups
     networks:
       - coolify
     entrypoint: /bin/bash
     command: >
-      -c "while true; do
-          DATE=$(date +%Y-%m-%d_%H-%M-%S);
-          echo 'Backing up database...';
-       	  mysqldump -h mariadb -u${MARIADB_USER} -p${MARIADB_PASSWORD} --all-databases > /backups/all_databases_$DATE.sql;
-          echo 'Backup complete. Cleaning old backups...';
-          ls -1tr /backups/*.sql | head -n -10 | xargs -d '\n' rm -f -- || true;
-          echo 'Next backup in 3 days.';
-          sleep $((3*24*60*60));
-        done"
+      -c "set +H;
+          while true; do
+            DATE=\$(date +%Y-%m-%d_%H-%M-%S);
+            echo 'Backing up all databases individually...';
+            DBS=\$(mysql -h mariadb -u\"\$MARIADB_USER\" -p\"\$MARIADB_PASSWORD\" -sNe \"SHOW DATABASES;\" | grep -Ev '^(mysql|information_schema|performance_schema|sys)$');
+            for db in \$DBS; do
+              echo \"Backing up '\$db'...\";
+              mysqldump -h mariadb \
+                        -u\"\$MARIADB_USER\" \
+                        -p\"\$MARIADB_PASSWORD\" \
+                        --single-transaction \
+                        --routines \
+                        --triggers \
+                        --events \
+                        --databases \"\$db\" \
+                        --skip-lock-tables \
+                        --column-statistics=0 \
+                        > /backups/\$(echo \"\$db\" | tr ' ' '_')_\$DATE.sql;
+              sleep 2;
+            done;
+            echo 'Backup complete. Cleaning old backups...';
+            ls -1tr /backups/*.sql | head -n -10 | xargs -d '\n' rm -f -- || true;
+            echo 'Next backup in 3 days.';
+            sleep $((3*24*60*60));
+          done"
     restart: unless-stopped
 
 networks:
