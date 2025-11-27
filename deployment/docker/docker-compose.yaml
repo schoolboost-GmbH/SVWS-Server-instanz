@@ -35,7 +35,6 @@ services:
   # -----------------------------
   svws:
     build:
-      context: ../../
       dockerfile: deployment/docker/svws/Dockerfile
     restart: unless-stopped
     ports:
