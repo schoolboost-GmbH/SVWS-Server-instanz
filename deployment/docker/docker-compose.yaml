@@ -86,7 +86,7 @@ services:
       MARIADB_PASSWORD: ${MARIADB_PASSWORD}
     volumes:
       - svws_db_backups:/backups
-      - /full/path/to/deployment/docker/backup.sh:/backup.sh:ro
+      - ./backup.sh:/backup.sh:ro
     networks:
       - coolify
     entrypoint: /bin/sh
