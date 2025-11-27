@@ -92,4 +92,4 @@ services:
 
 networks:
   coolify:
-    external: false
+    external: true
