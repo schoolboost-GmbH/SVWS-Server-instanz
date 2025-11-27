@@ -37,8 +37,6 @@ services:
     build:
       dockerfile: deployment/docker/svws/Dockerfile
     restart: unless-stopped
-    ports:
-      - "8444:8443"
     depends_on:
       mariadb:
         condition: service_healthy
