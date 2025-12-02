@@ -28,5 +28,5 @@ while true; do
   ls -1tr /backups/*.sql | head -n -10 | xargs -r rm -f
 
   echo "Next backup in 5 minutes..."
-  sleep 300
+  sleep 604800
 done
