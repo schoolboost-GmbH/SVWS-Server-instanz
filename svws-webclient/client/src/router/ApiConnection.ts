@@ -1,11 +1,22 @@
 import { ref, shallowRef } from "vue";
 
 import type { BenutzerDaten, DBSchemaListeEintrag, List, SchuleStammdaten } from "@core";
-import { ValidatorKontext, ApiSchema, ApiServer, ApiExternal, BenutzerKompetenz, ServerMode, DeveloperNotificationException, UserNotificationException, OpenApiError } from "@core";
+import { ValidatorKontext, ApiSchema, ApiServer, ApiExternal, BenutzerKompetenz, ServerMode, DeveloperNotificationException, UserNotificationException, OpenApiError, JsonCoreTypeReader, Schulform } from "@core";
 
 import { Config } from "../../../ui/src/utils/Config";
 import { AES } from "~/utils/crypto/aes";
 import { AESAlgo } from "~/utils/crypto/aesAlgo";
+
+const LOGIN_STORAGE_KEY = "SVWS-Client AutoLogin";
+const LOGIN_STORAGE_MAX_AGE = 60 * 60 * 1000; // 1 Stunde
+
+interface PersistedLoginData {
+	hostname: string;
+	schema: string;
+	username: string;
+	password: string;
+	timestamp: number;
+}
 
 export class ApiConnection {
 
@@ -13,7 +24,7 @@ export class ApiConnection {
 	protected _authenticated = ref<boolean>(false);
 
 	// Der Hostname (evtl. mit Port) des Servers, bei dem der Login stattfindet
-	protected _hostname = ref<string>(window.location.hostname + ":" + window.location.port);
+	protected _hostname = ref<string>(globalThis.location.hostname + ":" + globalThis.location.port);
 
 	// Die URL mit welcher der Server verbunden ist
 	protected _url: string | undefined = undefined;
@@ -79,22 +90,25 @@ export class ApiConnection {
 
 	// Gibt die Server-API zurück.
 	get api(): ApiServer {
-		if (this._api === undefined)
+		if (this._api === undefined) {
 			throw new DeveloperNotificationException("Es wurde kein Api-Objekt angelegt - Verbindungen zum Server können nicht erfolgen");
+		}
 		return this._api;
 	}
 
 	// Gibt die External-API zurück.
 	get apiExternal(): ApiExternal {
-		if (this._apiExternal === undefined)
+		if (this._apiExternal === undefined) {
 			throw new DeveloperNotificationException("Es wurde kein Api-Objekt angelegt - Verbindungen zum Server können nicht erfolgen");
+		}
 		return this._apiExternal;
 	}
 
 	// Gibt das Datenbank-Schema zurück.
 	get schema(): string {
-		if (this._schema === undefined)
+		if (this._schema === undefined) {
 			throw new DeveloperNotificationException("Es liegt kein DB-Schema für die Api vor");
+		}
 		return this._schema;
 	}
 
@@ -115,43 +129,49 @@ export class ApiConnection {
 
 	// Gibt die Benutzerdaten des angemeldeten Benutzers zurück, sofern ein Login stattgefunden hat
 	get benutzerdaten(): BenutzerDaten {
-		if (this._benutzerdaten.value === undefined)
+		if (this._benutzerdaten.value === undefined) {
 			throw new DeveloperNotificationException("Ein Benutzer muss angemeldet sein, damit dessen Daten geladen sein können.");
+		}
 		return this._benutzerdaten.value;
 	}
 
 	// Gibt an, sofern ein Login stattgefunden hat, ob es sich bei dem angemeldeten Benutzer um einen Administrator handelt oder nicht
 	get istAdmin(): boolean {
-		if (this._istAdmin.value === undefined)
+		if (this._istAdmin.value === undefined) {
 			throw new DeveloperNotificationException("Ein Benutzer muss angemeldet sein, damit ermittelt werden kann, ob es sich um einen Administrator handelt oder nicht.");
+		}
 		return this._istAdmin.value;
 	}
 
 	// Die Kompetenzen des angemeldeten Benutzers, sofern ein Login stattgefunden hat
 	get kompetenzen(): Set<BenutzerKompetenz> {
-		if (this._kompetenzen.value === undefined)
+		if (this._kompetenzen.value === undefined) {
 			throw new DeveloperNotificationException("Ein Benutzer muss angemeldet sein, damit dessen Kompetenzen ermittelt werden können.");
+		}
 		return this._kompetenzen.value;
 	}
 
 	// Die Klassen-IDs, auf denen der angemeldete Benutzer aufgrund einer Klassen- oder Abteilungsleitung funktionsbezogene Kompetenzen hat
 	get kompetenzenKlasse(): Set<number> {
-		if (this._kompetenzenKlasse.value === undefined)
+		if (this._kompetenzenKlasse.value === undefined) {
 			throw new DeveloperNotificationException("Ein Benutzer muss angemeldet sein, damit dessen funktionsbezogene Kompetenzen ermittelt werden können.");
+		}
 		return this._kompetenzenKlasse.value;
 	}
 
 	// Die Abiturjahrgänge, auf denen der angemeldete Benutzer als Beratungslehrer funktionsbezogene Kompetenzen hat
 	get kompetenzenAbiturjahrgaenge(): Set<number> {
-		if (this._kompetenzenAbiturjahrgaenge.value === undefined)
+		if (this._kompetenzenAbiturjahrgaenge.value === undefined) {
 			throw new DeveloperNotificationException("Ein Benutzer muss angemeldet sein, damit dessen funktionsbezogene Kompetenzen ermittelt werden können.");
+		}
 		return this._kompetenzenAbiturjahrgaenge.value;
 	}
 
 	// Gibt die Konfiguration für den angemeldeten Benutzer zurück, sofern ein Login stattgefunden hat
 	get config(): Config {
-		if (this._config.value === undefined)
+		if (this._config.value === undefined) {
 			throw new DeveloperNotificationException("Eine Konfiguration ist nicht vorhanden.");
+		}
 		return this._config.value as Config;
 	}
 
@@ -168,15 +188,17 @@ export class ApiConnection {
 	// Gibt ein Promise zurück mit einem AES-Schlüssel
 	get aes(): AES {
 		const aes = this._aes.value;
-		if (aes === undefined)
+		if (aes === undefined) {
 			throw new DeveloperNotificationException("Das AES-Objekt ist nicht definiert");
+		}
 		return aes;
 	}
 
 	// gibt die Map mit den CoreType-Daten zurück
 	get mapCoreTypeNameJsonData(): Map<string, string> {
-		if (this._mapCoreTypeNameJsonData.value === undefined)
+		if (this._mapCoreTypeNameJsonData.value === undefined) {
 			throw new DeveloperNotificationException("Eine Map mit den CoreType-Daten ist nicht vorhanden.");
+		}
 		return this._mapCoreTypeNameJsonData.value;
 	}
 
@@ -211,8 +233,9 @@ export class ApiConnection {
 	 * @returns die Stammdaten
 	 */
 	get schuleStammdaten(): SchuleStammdaten {
-		if (this._stammdaten.value.stammdaten === undefined)
+		if (this._stammdaten.value.stammdaten === undefined) {
 			throw new DeveloperNotificationException("Der Benutzer muss angemeldet sein und die Stammdaten der Schule müssen erfolgreich geladen sein.");
+		}
 		return this._stammdaten.value.stammdaten;
 	}
 
@@ -222,8 +245,9 @@ export class ApiConnection {
 	 * @returns der Validator-Kontext
 	 */
 	get validatorKontext(): ValidatorKontext {
-		if (this._stammdaten.value.kontext === undefined)
+		if (this._stammdaten.value.kontext === undefined) {
 			throw new DeveloperNotificationException("Der Benutzer muss angemeldet sein und der Validator-Kontext muss erfolgreich erstellt sein.");
+		}
 		return this._stammdaten.value.kontext;
 	}
 
@@ -265,10 +289,11 @@ export class ApiConnection {
 		console.log(`Verbinde zum SVWS-Server unter https://${host}...`);
 		try {
 			const list = await this.connect(host);
-			if (url.port.length > 0)
+			if (url.port.length > 0) {
 				localStorage.setItem("SVWS-Client Port", url.port);
+			}
 			return list;
-		} catch (error) {
+		} catch {
 			console.log(`Verbindung zum SVWS-Server unter https://${host} fehlgeschlagen`);
 		}
 		const hostname = url.hostname;
@@ -276,7 +301,7 @@ export class ApiConnection {
 			console.log(`Verbinde zum SVWS-Server unter https://${hostname}...`);
 			try {
 				return await this.connect(hostname);
-			} catch (error) {
+			} catch {
 				console.log(`Verbindung zum SVWS-Server unter https://${hostname} fehlgeschlagen.`);
 			}
 		}
@@ -285,7 +310,7 @@ export class ApiConnection {
 			console.log(`Verbinde zum SVWS-Server unter https://${hostname}:${port}...`);
 			try {
 				return await this.connect(`${hostname}:${port}`);
-			} catch (error) {
+			} catch {
 				console.log(`Verbindung zum SVWS-Server unter https://${hostname}:${port} fehlgeschlagen.`);
 			}
 		}
@@ -301,11 +326,14 @@ export class ApiConnection {
 	 * @returns true, falls der benutzer Administrator-Rechte hat, und ansonsten false
 	 */
 	protected getIstAdmin(daten: BenutzerDaten): boolean {
-		if (daten.istAdmin)
+		if (daten.istAdmin) {
 			return true;
-		for (const gruppe of daten.gruppen)
-			if (gruppe.istAdmin)
+		}
+		for (const gruppe of daten.gruppen) {
+			if (gruppe.istAdmin) {
 				return true;
+			}
+		}
 		return false;
 	}
 
@@ -325,22 +353,25 @@ export class ApiConnection {
 		const istAdmin = this.getIstAdmin(daten);
 		if (istAdmin) {
 			result.add(BenutzerKompetenz.ADMIN);
-			for (const k of BenutzerKompetenz.values())
+			for (const k of BenutzerKompetenz.values()) {
 				result.add(k);
+			}
 			return result;
 		}
 		// Lese die Kompetenzen ein, die der Benutzer direkt hat
 		for (const kid of daten.kompetenzen) {
 			const k = BenutzerKompetenz.getByID(kid);
-			if (k !== null)
+			if (k !== null) {
 				result.add(k);
+			}
 		}
 		// Lese die Kompetenzen ein, die der Benutzer indirekt über eine Gruppe hat
 		for (const gruppe of daten.gruppen) {
 			for (const kid of gruppe.kompetenzen) {
 				const k = BenutzerKompetenz.getByID(kid);
-				if (k !== null)
+				if (k !== null) {
 					result.add(k);
+				}
 			}
 		}
 		return result;
@@ -357,8 +388,9 @@ export class ApiConnection {
 	 */
 	protected getKompetenzenKlasse(daten: BenutzerDaten): Set<number> {
 		const result = new Set<number>();
-		for (const id of daten.kompetenzenKlassen)
+		for (const id of daten.kompetenzenKlassen) {
 			result.add(id);
+		}
 		return result;
 	}
 
@@ -373,8 +405,9 @@ export class ApiConnection {
 	 */
 	protected getKompetenzenAbiturjahrgaenge(daten: BenutzerDaten): Set<number> {
 		const result = new Set<number>();
-		for (const id of daten.kompetenzenAbiturjahrgaenge)
+		for (const id of daten.kompetenzenAbiturjahrgaenge) {
 			result.add(id);
+		}
 		return result;
 	}
 
@@ -387,11 +420,13 @@ export class ApiConnection {
 		try {
 			if ((this._api !== undefined) && (this._schema !== undefined)) {
 				const stammdaten = await this._api.getSchuleStammdaten(this._schema);
-				const kontext = new ValidatorKontext(stammdaten, false);
+				const schulform = Schulform.data().getWertByKuerzelOrException(stammdaten.schulform);
+				const kontext = new ValidatorKontext(stammdaten.schulNr, schulform, stammdaten.abschnitte,
+					stammdaten.idSchuljahresabschnitt, false);
 				this._stammdaten.value = { stammdaten, kontext };
 			}
 			return true;
-		} catch (error) {
+		} catch {
 			this._stammdaten.value = { stammdaten: undefined, kontext: undefined };
 		}
 		return false;
@@ -407,11 +442,13 @@ export class ApiConnection {
 	protected async initConfig(): Promise<void> {
 		const cfg = await this.api.getClientConfig(this.schema, 'SVWS-Client');
 		const mapUser = new Map<string, string>();
-		for (const c of cfg.user)
+		for (const c of cfg.user) {
 			mapUser.set(c.key, c.value);
+		}
 		const mapGlobal = new Map<string, string>();
-		for (const c of cfg.global)
+		for (const c of cfg.global) {
 			mapGlobal.set(c.key, c.value);
+		}
 		this.config.mapGlobal = mapGlobal;
 		this.config.mapUser = mapUser;
 		// nicht-persistente Config ebenfalls anlegen
@@ -431,8 +468,9 @@ export class ApiConnection {
 	 */
 	login = async (schema: string, username: string, password: string): Promise<void> => {
 		try {
-			if (this._url === undefined)
+			if (this._url === undefined) {
 				throw new DeveloperNotificationException("Keine gültige URL für einen Login verfügbar.");
+			}
 			this._schema_api = new ApiSchema(this._url, username, password);
 			const result = await this._schema_api.revision(schema);
 			// TODO verwende revision für Client Check
@@ -452,10 +490,12 @@ export class ApiConnection {
 			this._kompetenzenAbiturjahrgaenge.value = this.getKompetenzenAbiturjahrgaenge(this._benutzerdaten.value);
 			this._serverMode.value = ServerMode.getByText(await this._api.getServerModus());
 			await this.initConfig();
+			this.persistLoginSession(schema, username, password);
 		} catch (error) {
 			// Wenn Status 404, dann ist das Schema noch nicht initialisiert
-			if ((error instanceof OpenApiError) && (error.response?.status === 404))
+			if ((error instanceof OpenApiError) && (error.response?.status === 404)) {
 				return;
+			}
 			if ((error instanceof OpenApiError) && (error.response?.status === 503)) {
 				const res = await error.response.text();
 				throw new UserNotificationException(res);
@@ -499,7 +539,83 @@ export class ApiConnection {
 		this.config.mapUser = new Map();
 		this.nonPersistentConfig.mapGlobal = new Map();
 		this.nonPersistentConfig.mapUser = new Map();
+		this.clearPersistedLoginSession();
 	};
+
+	/**
+	 * Versucht einen zuvor gespeicherten Login wiederherzustellen.
+	 *
+	 * @returns true, falls der Login erfolgreich rekonstruiert werden konnte.
+	 */
+	restoreSession = async (): Promise<boolean> => {
+		const persisted = this.getPersistedLoginSession();
+		if (persisted === null)
+			return false;
+		this._hostname.value = persisted.hostname;
+		this._url = `https://${persisted.hostname}`;
+		try {
+			const reader = new JsonCoreTypeReader(this._url);
+			await reader.loadAll();
+			reader.readAll();
+			this.mapCoreTypeNameJsonData = reader.mapCoreTypeNameJsonData;
+		} catch (error) {
+			this.clearPersistedLoginSession();
+			return false;
+		}
+		await this.login(persisted.schema, persisted.username, persisted.password);
+		if (!this.authenticated) {
+			this.clearPersistedLoginSession();
+			return false;
+		}
+		return true;
+	};
+
+	private persistLoginSession(schema: string, username: string, password: string): void {
+		try {
+			const hostname = this._hostname.value;
+			if ((hostname === undefined) || (hostname.length === 0))
+				return;
+			const data: PersistedLoginData = {
+				hostname,
+				schema,
+				username,
+				password,
+				timestamp: Date.now(),
+			};
+			localStorage.setItem(LOGIN_STORAGE_KEY, JSON.stringify(data));
+		} catch (error) {
+			console.warn("Persistenter Login konnte nicht gespeichert werden:", error);
+		}
+	}
+
+	private clearPersistedLoginSession(): void {
+		try {
+			localStorage.removeItem(LOGIN_STORAGE_KEY);
+		} catch (error) {
+			console.warn("Persistenter Login konnte nicht entfernt werden:", error);
+		}
+	}
+
+	private getPersistedLoginSession(): PersistedLoginData | null {
+		try {
+			const raw = localStorage.getItem(LOGIN_STORAGE_KEY);
+			if (raw === null)
+				return null;
+			const data = JSON.parse(raw) as PersistedLoginData;
+			if ((data.hostname === undefined) || (data.schema === undefined) || (data.username === undefined) || (data.password === undefined) || (data.timestamp === undefined)) {
+				this.clearPersistedLoginSession();
+				return null;
+			}
+			if ((Date.now() - data.timestamp) > LOGIN_STORAGE_MAX_AGE) {
+				this.clearPersistedLoginSession();
+				return null;
+			}
+			return data;
+		} catch (error) {
+			this.clearPersistedLoginSession();
+			return null;
+		}
+	}
 
 	/**
 	 * Informiert die Api-Verbindung, dass ihre Daten, z.B. die Stammdaten der Schule angepasst wurden
@@ -509,4 +625,3 @@ export class ApiConnection {
 	};
 
 }
-

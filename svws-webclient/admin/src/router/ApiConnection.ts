@@ -5,6 +5,15 @@ import { BenutzerKennwort } from "@core/core/data/BenutzerKennwort";
 import { UserNotificationException } from "@core/core/exceptions/UserNotificationException";
 import { ServerMode } from "@core/core/types/ServerMode";
 
+const ADMIN_LOGIN_STORAGE_KEY = "SVWS-Admin AutoLogin";
+const LOGIN_STORAGE_MAX_AGE = 60 * 60 * 1000;
+
+interface PersistedAdminLoginData {
+	hostname: string;
+	username: string;
+	password: string;
+	timestamp: number;
+}
 
 export class ApiConnection {
 
@@ -12,7 +21,7 @@ export class ApiConnection {
 	protected _authenticated = ref<boolean>(false);
 
 	// Der Hostname (evtl. mit Port) des Servers, bei dem der Login stattfindet
-	protected _hostname = ref<string>(window.location.hostname + ":" + window.location.port);
+	protected _hostname = ref<string>(globalThis.location.hostname + ":" + globalThis.location.port);
 
 	// Die URL mit welcher der Server verbunden ist
 	protected _url: string | undefined = undefined;
@@ -41,15 +50,17 @@ export class ApiConnection {
 
 	// Gibt die Server-API zurück.
 	get api(): ApiServer {
-		if (this._api === undefined)
+		if (this._api === undefined) {
 			throw new Error("Es wurde kein Api-Objekt angelegt - Verbindungen zum Server können nicht erfolgen");
+		}
 		return this._api;
 	}
 
 	// Gibt die API für den priviligierten Schema-Zugriff zurück.
 	get api_privileged(): ApiPrivileged {
-		if (this._schema_api_privileged === undefined)
+		if (this._schema_api_privileged === undefined) {
 			throw new Error("Es wurde kein Api-Objekt angelegt - Verbindungen zum Server können für den priviligierten Schema-Zugriff nicht erfolgen");
+		}
 		return this._schema_api_privileged;
 	}
 
@@ -146,8 +157,9 @@ export class ApiConnection {
 	 */
 	login = async (username: string, password: string): Promise<boolean> => {
 		try {
-			if (this._url === undefined)
+			if (this._url === undefined) {
 				throw new Error("Keine gültige URL für einen Login verfügbar.");
+			}
 			const api_priv = new ApiPrivileged(this._url, username, password);
 			const data = new BenutzerKennwort();
 			data.user = username;
@@ -155,14 +167,15 @@ export class ApiConnection {
 			await api_priv.getSchemaListe();
 			try {
 				const isPrivilegedRoot = await api_priv.checkDBPassword(data);
-				if ((isPrivilegedRoot === null) || (isPrivilegedRoot === false))
+				if ((isPrivilegedRoot === false)) {
 					throw new UserNotificationException("Der Datenbank-Benutzer besitzt nicht die nötigen Privilegien.");
+				}
 				this._hasRootPrivileges = true;
 			} catch (error) {
 				this._hasRootPrivileges = false;
 			}
 			try {
-				this._isServerAdmin = await api_priv.isPrivilegedUser() ?? false;
+				this._isServerAdmin = await api_priv.isPrivilegedUser();
 			} catch (error) {
 				this._isServerAdmin = false;
 			}
@@ -172,6 +185,7 @@ export class ApiConnection {
 			this._authenticated.value = true;
 			this._api = new ApiServer(this._url, "", "");
 			this._serverMode.value = ServerMode.getByText(await this._api.getServerModus());
+			this.persistLoginSession(username, password);
 			return true;
 		} catch (error) {
 			// TODO Anmelde-Fehler wird nur in der App angezeigt. Der konkrete Fehler könnte ggf. geloggt werden...
@@ -194,7 +208,72 @@ export class ApiConnection {
 		this._api = undefined;
 		this._schema_api_privileged = undefined;
 		this._isServerAdmin = false;
+		this.clearPersistedLoginSession();
 	};
 
-}
+	/**
+	 * Versucht einen gespeicherten Login für die Administrative Verwaltung wiederherzustellen.
+	 *
+	 * @returns true, falls der Login erfolgreich rekonstruiert wurde
+	 */
+	restoreSession = async (): Promise<boolean> => {
+		const persisted = this.getPersistedLoginSession();
+		if (persisted === null)
+			return false;
+		this._hostname.value = persisted.hostname;
+		this._url = `https://${persisted.hostname}`;
+		await this.login(persisted.username, persisted.password);
+		if (!this.authenticated) {
+			this.clearPersistedLoginSession();
+			return false;
+		}
+		return true;
+	};
 
+	private persistLoginSession(username: string, password: string): void {
+		try {
+			const hostname = this._hostname.value;
+			if ((hostname === undefined) || (hostname.length === 0))
+				return;
+			const data: PersistedAdminLoginData = {
+				hostname,
+				username,
+				password,
+				timestamp: Date.now(),
+			};
+			localStorage.setItem(ADMIN_LOGIN_STORAGE_KEY, JSON.stringify(data));
+		} catch (error) {
+			console.warn("Persistenter Admin-Login konnte nicht gespeichert werden:", error);
+		}
+	}
+
+	private clearPersistedLoginSession(): void {
+		try {
+			localStorage.removeItem(ADMIN_LOGIN_STORAGE_KEY);
+		} catch (error) {
+			console.warn("Persistenter Admin-Login konnte nicht entfernt werden:", error);
+		}
+	}
+
+	private getPersistedLoginSession(): PersistedAdminLoginData | null {
+		try {
+			const raw = localStorage.getItem(ADMIN_LOGIN_STORAGE_KEY);
+			if (raw === null)
+				return null;
+			const data = JSON.parse(raw) as PersistedAdminLoginData;
+			if ((data.hostname === undefined) || (data.username === undefined) || (data.password === undefined) || (data.timestamp === undefined)) {
+				this.clearPersistedLoginSession();
+				return null;
+			}
+			if ((Date.now() - data.timestamp) > LOGIN_STORAGE_MAX_AGE) {
+				this.clearPersistedLoginSession();
+				return null;
+			}
+			return data;
+		} catch (error) {
+			this.clearPersistedLoginSession();
+			return null;
+		}
+	}
+
+}

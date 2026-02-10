@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.Files;
+import java.nio.file.InvalidPathException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
@@ -355,7 +356,50 @@ public final class SVWSKonfiguration {
 	 * @return der Pfad zu den Admin-Web-Client-Dateien zurück.
 	 */
 	public String getAdminClientPath() {
-		return ((dto == null) || (dto.adminClientPath == null) || ("".equals(dto.adminClientPath))) ? null : dto.adminClientPath;
+		if ((dto == null) || (dto.adminClientPath == null) || ("".equals(dto.adminClientPath))) {
+			final String detectedPath = detectAdminClientPath();
+			if ((detectedPath != null) && (dto != null))
+				dto.adminClientPath = detectedPath;
+			return detectedPath;
+		}
+		return dto.adminClientPath;
+	}
+
+
+	/**
+	 * Versucht den Pfad zu den Dateien des Admin-Web-Clients automatisch zu bestimmen, falls dieser
+	 * nicht in der Konfiguration gesetzt wurde. Dabei werden typische Installationspfade geprüft.
+	 *
+	 * @return der gefundene Pfad oder null, falls keiner bestimmt werden konnte
+	 */
+	private String detectAdminClientPath() {
+		final ArrayList<Path> candidates = new ArrayList<>();
+		final String clientPath = getClientPath();
+		if ((clientPath != null) && (!clientPath.isBlank())) {
+			try {
+				final Path client = Paths.get(clientPath).normalize();
+				candidates.add(client.resolveSibling("adminclient"));
+				candidates.add(client.resolveSibling("admin/build/output"));
+			} catch (final InvalidPathException e) {
+				Logger.global().logLn(LogLevel.WARNING, "Ungültiger ClientPath '" + clientPath + "' beim Ermitteln des AdminClientPath.");
+			}
+		}
+		candidates.add(Paths.get("adminclient"));
+		candidates.add(Paths.get("./adminclient"));
+		candidates.add(Paths.get("../adminclient"));
+		candidates.add(Paths.get("svws-webclient/admin/build/output"));
+		candidates.add(Paths.get("./svws-webclient/admin/build/output"));
+		for (final Path candidate : candidates) {
+			if (candidate == null)
+				continue;
+			try {
+				if (Files.isDirectory(candidate))
+					return candidate.toString();
+			} catch (final SecurityException e) {
+				Logger.global().logLn(LogLevel.WARNING, "Kein Zugriff auf den möglichen AdminClientPath '" + candidate + "'.");
+			}
+		}
+		return null;
 	}
 
 
