@@ -41,8 +41,7 @@ services:
       dockerfile: deployment/docker/svws/Dockerfile
     restart: unless-stopped
     depends_on:
-      mariadb:
-        condition: service_healthy
+      - mariadb
     environment:
       MARIADB_HOST: mariadb
       MARIADB_DATABASE: ${MARIADB_DATABASE}
@@ -52,7 +51,6 @@ services:
       SVWS_TLS_KEYSTORE_PASSWORD: ${SVWS_TLS_KEYSTORE_PASSWORD}
       SVWS_TLS_KEY_ALIAS: ${SVWS_TLS_KEY_ALIAS}
       IMPORT_TEST_DATA: "false"
-      _JAVA_OPTIONS: '-Xmx8g -Xms2g'
     volumes:
       - svws_keystore:/etc/app/svws/conf/keystore
       - svws_logs:/opt/app/svws/logs
@@ -61,11 +59,11 @@ services:
     labels:
       - "traefik.enable=true"
       # HTTP Router
-      - "traefik.http.routers.svws-http.rule=Host(`svws.domsingschule-aachen.de`)"
+      - "traefik.http.routers.svws-http.rule=Host(`svws.schoolboost.de`)"
       - "traefik.http.routers.svws-http.entrypoints=http"
       - "traefik.http.routers.svws-http.middlewares=svws-redirect-to-https"
       # HTTPS Router
-      - "traefik.http.routers.svws-https.rule=Host(`svws.domsingschule-aachen.de`)"
+      - "traefik.http.routers.svws-https.rule=Host(`svws.schoolboost.de`)"
       - "traefik.http.routers.svws-https.entrypoints=https"
       - "traefik.http.routers.svws-https.tls=true"
       - "traefik.http.routers.svws-https.tls.certresolver=letsencrypt"
@@ -85,8 +83,8 @@ services:
     depends_on:
       - mariadb
     environment:
-      MARIADB_USER: ${MARIADB_USER}
-      MARIADB_PASSWORD: ${MARIADB_PASSWORD}
+      MARIADB_USER: root
+      MARIADB_ROOT_PASSWORD: ${MARIADB_ROOT_PASSWORD}
     volumes:
       - svws_db_backups:/backups
     networks:
