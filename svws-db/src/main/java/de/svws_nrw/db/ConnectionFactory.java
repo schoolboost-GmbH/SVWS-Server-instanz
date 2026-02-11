@@ -25,7 +25,7 @@ import jakarta.validation.constraints.NotNull;
 public class ConnectionFactory {
 
 	/** Das Intervall, nachdem Factories nach einem close aufgeräumt werden, sofern sie nicht zwischenzeitlich neue Verbindungen aufgebaut haben. */
-	private static final long CONNECTION_CLEANUP_INTERVAL = 60000;  // 1 min
+	private static final long CONNECTION_CLEANUP_INTERVAL = 300000;  // 5 min
 
 	/** Ein Zufallszahlen-Generator */
 	private static final Random random = new Random();
@@ -226,6 +226,8 @@ public class ConnectionFactory {
 		// propertyMap.put("eclipselink.logging.parameters", "true");
 		// propertyMap.put("eclipselink.profiler","PerformanceProfiler");
 		propertyMap.put("eclipselink.cache.shared.default", "false");
+		propertyMap.put("eclipselink.jdbc.validate-connections", "true");
+		propertyMap.put("eclipselink.connection-pool.default.test-before-use", "true");
 		// Connection Pool Konfiguration - keep pool small to avoid connection exhaustion
 		propertyMap.put("eclipselink.connection-pool.default.initial", "1");
 		propertyMap.put("eclipselink.connection-pool.default.min", "1");
