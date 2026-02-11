@@ -65,4 +65,9 @@ if [[ -z "$JAR_FILE" ]]; then
     exit 1
 fi
 
-java -Xmx8g -Xms2g -cp "$JAR_FILE:../*:../lib/*" de.svws_nrw.server.jetty.Main
+java -Xmx4g -Xms1g \
+    -XX:+ExitOnOutOfMemoryError \
+    -XX:+HeapDumpOnOutOfMemoryError \
+    -XX:HeapDumpPath=/opt/app/svws/logs/ \
+    -Xlog:gc*:file=/opt/app/svws/logs/gc.log:time,level:filecount=3,filesize=10m \
+    -cp "$JAR_FILE:../*:../lib/*" de.svws_nrw.server.jetty.Main
