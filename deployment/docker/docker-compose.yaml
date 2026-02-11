@@ -14,8 +14,8 @@ services:
   mariadb:
     image: mariadb:11.7
     restart: unless-stopped
-    mem_limit: 3g
-    command: "--character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci --bind-address=0.0.0.0 --max-connections=200 --wait-timeout=600 --interactive-timeout=600 --innodb-buffer-pool-size=1G"
+    mem_limit: 2g
+    command: "--character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci --bind-address=0.0.0.0 --max-connections=200 --wait-timeout=600 --interactive-timeout=600 --innodb-buffer-pool-size=512M"
     ports:
       - "3306:3306"
     environment:
@@ -41,7 +41,7 @@ services:
     build:
       dockerfile: deployment/docker/svws/Dockerfile
     restart: unless-stopped
-    mem_limit: 10g
+    mem_limit: 7g
     depends_on:
       - mariadb
     environment:
@@ -53,7 +53,7 @@ services:
       SVWS_TLS_KEYSTORE_PASSWORD: ${SVWS_TLS_KEYSTORE_PASSWORD}
       SVWS_TLS_KEY_ALIAS: ${SVWS_TLS_KEY_ALIAS}
       IMPORT_TEST_DATA: "false"
-      _JAVA_OPTIONS: '-Xmx7g -Xms2g'
+      _JAVA_OPTIONS: '-Xmx5g -Xms1g'
     volumes:
       - svws_keystore:/etc/app/svws/conf/keystore
       - svws_logs:/opt/app/svws/logs
