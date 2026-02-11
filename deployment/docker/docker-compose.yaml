@@ -15,7 +15,7 @@ services:
     image: mariadb:11.7
     restart: unless-stopped
     mem_limit: 3g
-    command: "--character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci --bind-address=0.0.0.0 --max-connections=200 --wait-timeout=300 --interactive-timeout=300 --innodb-buffer-pool-size=1G"
+    command: "--character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci --bind-address=0.0.0.0 --max-connections=200 --wait-timeout=120 --interactive-timeout=120 --innodb-buffer-pool-size=1G"
     ports:
       - "3306:3306"
     environment:
@@ -73,17 +73,9 @@ services:
       # Middleware
       - "traefik.http.middlewares.svws-redirect-to-https.redirectscheme.scheme=https"
       - "traefik.http.middlewares.svws-redirect-to-https.redirectscheme.permanent=true"
-      # Compression middleware (significantly speeds up API responses and frontend assets)
-      - "traefik.http.middlewares.svws-compress.compress=true"
-      - "traefik.http.routers.svws-https.middlewares=svws-compress"
       # Service port
       - "traefik.http.services.svws.loadbalancer.server.port=8443"
       - "traefik.http.services.svws.loadbalancer.server.scheme=https"
-      # Health check so Traefik can detect and recover from broken connections
-      - "traefik.http.services.svws.loadbalancer.healthCheck.path=/status/alive"
-      - "traefik.http.services.svws.loadbalancer.healthCheck.interval=15s"
-      - "traefik.http.services.svws.loadbalancer.healthCheck.timeout=5s"
-      - "traefik.http.services.svws.loadbalancer.healthCheck.scheme=https"
 
   # -----------------------------
   # Backup Container (disabled for now)
