@@ -51,6 +51,7 @@ services:
       SVWS_TLS_KEYSTORE_PASSWORD: ${SVWS_TLS_KEYSTORE_PASSWORD}
       SVWS_TLS_KEY_ALIAS: ${SVWS_TLS_KEY_ALIAS}
       IMPORT_TEST_DATA: "false"
+      _JAVA_OPTIONS: '-Xmx8g -Xms2g'
     volumes:
       - svws_keystore:/etc/app/svws/conf/keystore
       - svws_logs:/opt/app/svws/logs

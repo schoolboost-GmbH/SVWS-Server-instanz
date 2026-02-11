@@ -65,4 +65,4 @@ if [[ -z "$JAR_FILE" ]]; then
     exit 1
 fi
 
-java -cp "$JAR_FILE:../*:../lib/*" de.svws_nrw.server.jetty.Main
+java -Xmx8g -Xms2g -cp "$JAR_FILE:../*:../lib/*" de.svws_nrw.server.jetty.Main
