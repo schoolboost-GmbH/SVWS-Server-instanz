@@ -4,8 +4,7 @@ volumes:
   svws_keystore:
   svws_logs:
   mariadb_data:
-  svws_db_backups:
-    # persistent volume for backups
+  svws_db_backups: # persistent volume for backups
 
 services:
   # -----------------------------
@@ -14,8 +13,11 @@ services:
   mariadb:
     image: mariadb:11.7
     restart: unless-stopped
-    mem_limit: 3g
-    command: "--character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci --bind-address=0.0.0.0 --max-connections=200 --wait-timeout=120 --interactive-timeout=120 --innodb-buffer-pool-size=1G"
+    mem_limit: 6g
+    command: >
+      --character-set-server=utf8mb4
+      --collation-server=utf8mb4_unicode_ci
+      --bind-address=0.0.0.0
     ports:
       - "3306:3306"
     environment:
@@ -28,7 +30,7 @@ services:
     networks:
       - coolify
     healthcheck:
-      test: [ "CMD", "healthcheck.sh", "--connect", "--innodb_initialized" ]
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -43,7 +45,8 @@ services:
     restart: unless-stopped
     mem_limit: 6g
     depends_on:
-      - mariadb
+      mariadb:
+        condition: service_healthy
     environment:
       MARIADB_HOST: mariadb
       MARIADB_DATABASE: ${MARIADB_DATABASE}
@@ -53,7 +56,7 @@ services:
       SVWS_TLS_KEYSTORE_PASSWORD: ${SVWS_TLS_KEYSTORE_PASSWORD}
       SVWS_TLS_KEY_ALIAS: ${SVWS_TLS_KEY_ALIAS}
       IMPORT_TEST_DATA: "false"
-      _JAVA_OPTIONS: '-Xmx6g -Xms2g'
+      _JAVA_OPTIONS: "-Xmx6g -Xms4g"
     volumes:
       - svws_keystore:/etc/app/svws/conf/keystore
       - svws_logs:/opt/app/svws/logs
@@ -61,38 +64,25 @@ services:
       - coolify
     labels:
       - "traefik.enable=true"
+
       # HTTP Router
       - "traefik.http.routers.svws-http.rule=Host(`svws.domsingschule-aachen.de`)"
       - "traefik.http.routers.svws-http.entrypoints=http"
       - "traefik.http.routers.svws-http.middlewares=svws-redirect-to-https"
+
       # HTTPS Router
       - "traefik.http.routers.svws-https.rule=Host(`svws.domsingschule-aachen.de`)"
       - "traefik.http.routers.svws-https.entrypoints=https"
       - "traefik.http.routers.svws-https.tls=true"
       - "traefik.http.routers.svws-https.tls.certresolver=letsencrypt"
+
       # Middleware
       - "traefik.http.middlewares.svws-redirect-to-https.redirectscheme.scheme=https"
       - "traefik.http.middlewares.svws-redirect-to-https.redirectscheme.permanent=true"
+
       # Service port
       - "traefik.http.services.svws.loadbalancer.server.port=8443"
       - "traefik.http.services.svws.loadbalancer.server.scheme=https"
-
-  # -----------------------------
-  # Backup Container (disabled for now)
-  # -----------------------------
-  # svws_backup:
-  #   build:
-  #     dockerfile: deployment/docker/backup/Dockerfile
-  #   depends_on:
-  #     - mariadb
-  #   environment:
-  #     MARIADB_USER: root
-  #     MARIADB_PASSWORD: ${MARIADB_ROOT_PASSWORD}
-  #   volumes:
-  #     - svws_db_backups:/backups
-  #   networks:
-  #     - coolify
-  #   restart: unless-stopped
 
 networks:
   coolify:
