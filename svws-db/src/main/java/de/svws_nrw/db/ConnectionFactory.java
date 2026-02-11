@@ -226,10 +226,10 @@ public class ConnectionFactory {
 		// propertyMap.put("eclipselink.logging.parameters", "true");
 		// propertyMap.put("eclipselink.profiler","PerformanceProfiler");
 		propertyMap.put("eclipselink.cache.shared.default", "false");
-		// Connection Pool Konfiguration
-		propertyMap.put("eclipselink.connection-pool.default.initial", "5");
-		propertyMap.put("eclipselink.connection-pool.default.min", "5");
-		propertyMap.put("eclipselink.connection-pool.default.max", "50");
+		// Connection Pool Konfiguration - keep pool small to avoid connection exhaustion
+		propertyMap.put("eclipselink.connection-pool.default.initial", "1");
+		propertyMap.put("eclipselink.connection-pool.default.min", "1");
+		propertyMap.put("eclipselink.connection-pool.default.max", "10");
 		propertyMap.put("eclipselink.connection-pool.default.wait", "5000");
 		// propertyMap.put("eclipselink.exception-handler",
 		// "de.svws_nrw.db.DBExceptionHandler");
