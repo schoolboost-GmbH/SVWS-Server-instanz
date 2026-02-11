@@ -78,21 +78,21 @@ services:
       - "traefik.http.services.svws.loadbalancer.server.scheme=https"
 
   # -----------------------------
-  # Backup Container
+  # Backup Container (disabled for now)
   # -----------------------------
-  svws_backup:
-    build:
-      dockerfile: deployment/docker/backup/Dockerfile
-    depends_on:
-      - mariadb
-    environment:
-      MARIADB_USER: root
-      MARIADB_PASSWORD: ${MARIADB_ROOT_PASSWORD}
-    volumes:
-      - svws_db_backups:/backups
-    networks:
-      - coolify
-    restart: unless-stopped
+  # svws_backup:
+  #   build:
+  #     dockerfile: deployment/docker/backup/Dockerfile
+  #   depends_on:
+  #     - mariadb
+  #   environment:
+  #     MARIADB_USER: root
+  #     MARIADB_PASSWORD: ${MARIADB_ROOT_PASSWORD}
+  #   volumes:
+  #     - svws_db_backups:/backups
+  #   networks:
+  #     - coolify
+  #   restart: unless-stopped
 
 networks:
   coolify:
