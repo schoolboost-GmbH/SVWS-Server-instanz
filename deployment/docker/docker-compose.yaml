@@ -73,9 +73,22 @@ services:
       # Middleware
       - "traefik.http.middlewares.svws-redirect-to-https.redirectscheme.scheme=https"
       - "traefik.http.middlewares.svws-redirect-to-https.redirectscheme.permanent=true"
+      # Compression middleware (significantly speeds up API responses and frontend assets)
+      - "traefik.http.middlewares.svws-compress.compress=true"
+      - "traefik.http.routers.svws-https.middlewares=svws-compress"
+      # Backend transport (self-signed cert + disable HTTP/2 to prevent stale multiplexed connections)
+      - "traefik.http.serversTransports.svws-transport.insecureSkipVerify=true"
+      - "traefik.http.serversTransports.svws-transport.forwardingTimeouts.idleConnTimeout=180s"
+      - "traefik.http.serversTransports.svws-transport.forwardingTimeouts.responseHeaderTimeout=300s"
       # Service port
       - "traefik.http.services.svws.loadbalancer.server.port=8443"
       - "traefik.http.services.svws.loadbalancer.server.scheme=https"
+      - "traefik.http.services.svws.loadbalancer.serversTransport=svws-transport@docker"
+      # Health check so Traefik can detect and recover from broken connections
+      - "traefik.http.services.svws.loadbalancer.healthCheck.path=/status/alive"
+      - "traefik.http.services.svws.loadbalancer.healthCheck.interval=15s"
+      - "traefik.http.services.svws.loadbalancer.healthCheck.timeout=5s"
+      - "traefik.http.services.svws.loadbalancer.healthCheck.scheme=https"
 
   # -----------------------------
   # Backup Container (disabled for now)
