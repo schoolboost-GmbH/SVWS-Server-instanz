@@ -41,7 +41,7 @@ services:
     build:
       dockerfile: deployment/docker/svws/Dockerfile
     restart: unless-stopped
-    mem_limit: 10g
+    mem_limit: 6g
     depends_on:
       - mariadb
     environment:
@@ -53,7 +53,7 @@ services:
       SVWS_TLS_KEYSTORE_PASSWORD: ${SVWS_TLS_KEYSTORE_PASSWORD}
       SVWS_TLS_KEY_ALIAS: ${SVWS_TLS_KEY_ALIAS}
       IMPORT_TEST_DATA: "false"
-      _JAVA_OPTIONS: '-Xmx7g -Xms2g'
+      _JAVA_OPTIONS: '-Xmx6g -Xms2g'
     volumes:
       - svws_keystore:/etc/app/svws/conf/keystore
       - svws_logs:/opt/app/svws/logs

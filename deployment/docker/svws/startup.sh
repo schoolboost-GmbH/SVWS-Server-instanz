@@ -65,7 +65,7 @@ if [[ -z "$JAR_FILE" ]]; then
     exit 1
 fi
 
-java -Xmx7g -Xms2g \
+java -Xmx6g -Xms2g \
     -XX:+ExitOnOutOfMemoryError \
     -XX:+HeapDumpOnOutOfMemoryError \
     -XX:HeapDumpPath=/opt/app/svws/logs/ \

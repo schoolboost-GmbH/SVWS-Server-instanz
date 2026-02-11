@@ -1,0 +1,29 @@
+services:
+  mariadb:
+    networks:
+      - default
+    ports:
+      - "3306:3306"
+
+  svws:
+    build:
+      context: ../..
+      dockerfile: deployment/docker/svws/Dockerfile
+    networks:
+      - default
+    ports:
+      - "8443:8443"
+    environment:
+      SVWS_TLS_CERT_CN: localhost
+      SVWS_TLS_CERT_OU: Test
+      SVWS_TLS_CERT_O: Test
+      SVWS_TLS_CERT_L: Test
+      SVWS_TLS_CERT_S: NRW
+      SVWS_TLS_CERT_C: DE
+
+networks:
+  default:
+    driver: bridge
+  coolify:
+    external: false
+    driver: bridge
