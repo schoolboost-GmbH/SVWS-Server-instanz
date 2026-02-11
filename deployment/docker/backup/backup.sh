@@ -6,19 +6,19 @@ while true; do
   DATE=$(date +%Y-%m-%d_%H-%M-%S)
   echo "Backing up all databases..."
 
-  mysqldump -h mariadb -u"$MARIADB_USER" -p"$MARIADB_PASSWORD" \
+  mariadb-dump -h mariadb -u"$MARIADB_USER" -p"$MARIADB_PASSWORD" \
             --all-databases --single-transaction --routines --triggers --events \
-            --skip-lock-tables --column-statistics=0 \
+            --skip-lock-tables \
             > /backups/all_databases_$DATE.sql
 
-  DBS=$(mysql -h mariadb -u"$MARIADB_USER" -p"$MARIADB_PASSWORD" -sNe "SHOW DATABASES;" | grep -Ev '^(mysql|information_schema|performance_schema|sys)$')
+  DBS=$(mariadb -h mariadb -u"$MARIADB_USER" -p"$MARIADB_PASSWORD" -sNe "SHOW DATABASES;" | grep -Ev '^(mysql|information_schema|performance_schema|sys)$')
 
   while IFS= read -r db; do
     OUT=$(echo "$db" | tr ' ' '_')
     echo "Backing up '$db' individually..."
-    mysqldump -h mariadb -u"$MARIADB_USER" -p"$MARIADB_PASSWORD" \
+    mariadb-dump -h mariadb -u"$MARIADB_USER" -p"$MARIADB_PASSWORD" \
               --single-transaction --routines --triggers --events \
-              --databases "$db" --skip-lock-tables --column-statistics=0 \
+              --databases "$db" --skip-lock-tables \
               > /backups/${OUT}_$DATE.sql
     sleep 2
   done <<< "$DBS"
