@@ -64,9 +64,9 @@ public final class ConnectionManager {
 	 * @throws DBException   bei Fehlern im Verbindungsaufbau
 	 */
 	DBEntityManager getConnection(final Benutzer user) throws DBException {
+		final @NotNull ConnectionFactory factory = this.getOrCreateFactory(user.getConfig());
 		this.lock();
 		try {
-			final @NotNull ConnectionFactory factory = this.get(user.getConfig());
 			final @NotNull DBEntityManager conn = factory.connect(user);
 			return conn;
 		} finally {
@@ -88,8 +88,9 @@ public final class ConnectionManager {
 
 
 	/**
-	 * Gibt die Connection-Factory passen für die übergebene Konfiguration zurück.
-	 * Sollt keine Factory existieren, so wird versucht eine neue zu erstellen.
+	 * Gibt die Connection-Factory passend für die übergebene Konfiguration zurück.
+	 * Sollte keine Factory existieren, so wird eine neue erstellt.
+	 * Die Factory-Erstellung erfolgt OHNE globalen Lock, um andere Verbindungen nicht zu blockieren.
 	 *
 	 * @param config   die Konfiguration der Datenbank-Verbindung
 	 *
@@ -97,76 +98,102 @@ public final class ConnectionManager {
 	 *
 	 * @throws DBException   bei einem fehlerhaften Verbindungsaufbau, z.B. einer fehlschlagenen Authentifizierung
 	 */
-	private @NotNull ConnectionFactory get(final DBConfig config) throws DBException {
-		ConnectionFactory factory = mapFactories.get(config);
-		if ((factory != null) && (!factory.checkCredentials(config.getUsername(), config.getPassword()))) {
-			mapFactories.remove(config);
-			factory.close();
-			factory = null;
-		}
-		if (factory == null) {
-			factory = new ConnectionFactory(config);
-			try {
-				try (EntityManager em = factory.getNewJPAEntityManager()) {
-					mapFactories.put(config, factory);
-				}
-				Logger.global().logLn(LogLevel.INFO, "Factory für Verbindung(-en) des Datenbank-Benutzers %s zu %s (Schema: %s) erzeugt."
-						.formatted(config.getUsername(), config.getDBLocation(), config.getDBSchema()));
-			} catch (final PersistenceException pe) {
-				if ((pe.getCause() instanceof final DatabaseException de) && (de.getCause() instanceof final SQLInvalidAuthorizationSpecException ae)) {
-					factory.close();
-					throw new DBException("Fehler beim Aufbau der Verbindung. Überprüfen Sie Benutzername und Kennwort.", ae);
-				}
-				if (pe.getCause() instanceof DatabaseException) {
-					factory.close();
-					throw new DBException("Fehler beim Aufbau der Verbindung. Überprüfen Sie die Verbindungsparameter.");
-				}
-				if (pe.getMessage().startsWith("java.lang.IllegalStateException: Could not determine FileFormat")) {
-					factory.close();
-					throw new DBException("Fehlerhaftes oder zu altes MDB-Datei-Format.");
-				}
-				throw pe;
+	private @NotNull ConnectionFactory getOrCreateFactory(final DBConfig config) throws DBException {
+		// Schneller Pfad: Factory existiert bereits — nur kurzer Lock
+		this.lock();
+		try {
+			ConnectionFactory factory = mapFactories.get(config);
+			if ((factory != null) && (!factory.checkCredentials(config.getUsername(), config.getPassword()))) {
+				mapFactories.remove(config);
+				factory.close();
+				factory = null;
 			}
-		} else {
-			// Führe eine Dummy-DB-Abfrage aus, um Probleme mit der
-			// Server-seitigen Beendung einer Verbindung zu erkennen
-			try {
-				try (EntityManager em = factory.getNewJPAEntityManager()) {
-					try {
-						em.getTransaction().begin();
-						@SuppressWarnings("resource") final Connection conn = em.unwrap(Connection.class);
-						try (Statement stmt = conn.createStatement()) {
-							try (ResultSet rs = stmt.executeQuery("SELECT 1")) {
-								rs.next();
-								rs.getInt(1);
-							}
-						}
-						em.getTransaction().commit();
-						em.clear();
-					} catch (@SuppressWarnings("unused") SQLException | DatabaseException e) {
-						// Bestimme die Anzahl der verfügbaren Verbindungen
-						final ServerSession serverSession = em.unwrap(ServerSession.class);
-						final ConnectionPool pool = serverSession.getConnectionPools().get("default");
-						if (pool == null) {
-							Logger.global().logLn(LogLevel.ERROR, "Fehler beim Zugriff auf den DB-Connection-Pool default");
-						} else {
-							Logger.global().logLn(LogLevel.ERROR, "INFO: Verbindung zur Datenbank unterbrochen - versuche sie neu aufzubauen...");
-							Logger.global().logLn(LogLevel.ERROR, "Total number of connections: " + pool.getTotalNumberOfConnections());
-							Logger.global().logLn(LogLevel.ERROR, "Available number of connections: " + pool.getConnectionsAvailable().size());
-							pool.resetConnections();
+			if (factory != null) {
+				// Factory existiert — validiere die Verbindung
+				validateFactory(factory, config);
+				return factory;
+			}
+		} finally {
+			this.unlock();
+		}
+		// Langsamer Pfad: Factory muss neu erstellt werden — OHNE Lock
+		final ConnectionFactory newFactory = new ConnectionFactory(config);
+		try {
+			try (EntityManager em = newFactory.getNewJPAEntityManager()) {
+				// Test-Verbindung erfolgreich — Factory registrieren unter Lock
+				this.lock();
+				try {
+					// Prüfe ob zwischenzeitlich ein anderer Thread eine Factory erstellt hat
+					final ConnectionFactory existing = mapFactories.get(config);
+					if (existing != null) {
+						newFactory.close();
+						return existing;
+					}
+					mapFactories.put(config, newFactory);
+				} finally {
+					this.unlock();
+				}
+			}
+			Logger.global().logLn(LogLevel.INFO, "Factory für Verbindung(-en) des Datenbank-Benutzers %s zu %s (Schema: %s) erzeugt."
+					.formatted(config.getUsername(), config.getDBLocation(), config.getDBSchema()));
+		} catch (final PersistenceException pe) {
+			if ((pe.getCause() instanceof final DatabaseException de) && (de.getCause() instanceof final SQLInvalidAuthorizationSpecException ae)) {
+				newFactory.close();
+				throw new DBException("Fehler beim Aufbau der Verbindung. Überprüfen Sie Benutzername und Kennwort.", ae);
+			}
+			if (pe.getCause() instanceof DatabaseException) {
+				newFactory.close();
+				throw new DBException("Fehler beim Aufbau der Verbindung. Überprüfen Sie die Verbindungsparameter.");
+			}
+			if (pe.getMessage().startsWith("java.lang.IllegalStateException: Could not determine FileFormat")) {
+				newFactory.close();
+				throw new DBException("Fehlerhaftes oder zu altes MDB-Datei-Format.");
+			}
+			throw pe;
+		}
+		return newFactory;
+	}
+
+
+	/**
+	 * Validiert eine existierende Factory mit einer Dummy-Abfrage.
+	 * Muss unter Lock aufgerufen werden.
+	 */
+	private void validateFactory(final ConnectionFactory factory, final DBConfig config) throws DBException {
+		try {
+			try (EntityManager em = factory.getNewJPAEntityManager()) {
+				try {
+					em.getTransaction().begin();
+					@SuppressWarnings("resource") final Connection conn = em.unwrap(Connection.class);
+					try (Statement stmt = conn.createStatement()) {
+						try (ResultSet rs = stmt.executeQuery("SELECT 1")) {
+							rs.next();
+							rs.getInt(1);
 						}
 					}
+					em.getTransaction().commit();
+					em.clear();
+				} catch (@SuppressWarnings("unused") SQLException | DatabaseException e) {
+					final ServerSession serverSession = em.unwrap(ServerSession.class);
+					final ConnectionPool pool = serverSession.getConnectionPools().get("default");
+					if (pool == null) {
+						Logger.global().logLn(LogLevel.ERROR, "Fehler beim Zugriff auf den DB-Connection-Pool default");
+					} else {
+						Logger.global().logLn(LogLevel.ERROR, "INFO: Verbindung zur Datenbank unterbrochen - versuche sie neu aufzubauen...");
+						Logger.global().logLn(LogLevel.ERROR, "Total number of connections: " + pool.getTotalNumberOfConnections());
+						Logger.global().logLn(LogLevel.ERROR, "Available number of connections: " + pool.getConnectionsAvailable().size());
+						pool.resetConnections();
+					}
 				}
-			} catch (final PersistenceException pe) {
-				if ((pe.getCause() instanceof final DatabaseException de) && (de.getCause() instanceof final SQLInvalidAuthorizationSpecException ae)) {
-					mapFactories.remove(config);
-					factory.close();
-					throw new DBException(ae);
-				}
-				throw pe;
 			}
+		} catch (final PersistenceException pe) {
+			if ((pe.getCause() instanceof final DatabaseException de) && (de.getCause() instanceof final SQLInvalidAuthorizationSpecException ae)) {
+				mapFactories.remove(config);
+				factory.close();
+				throw new DBException(ae);
+			}
+			throw pe;
 		}
-		return factory;
 	}
 
 

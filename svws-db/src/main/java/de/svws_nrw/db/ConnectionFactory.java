@@ -48,13 +48,8 @@ public class ConnectionFactory {
 	 * @param config   die Datenbank-Konfiguration für die Factory
 	 */
 	ConnectionFactory(final DBConfig config) {
-		ConnectionManager.instance.lock();
-		try {
-			this.config = config;
-			this.emf = createEntityManagerFactory();
-		} finally {
-			ConnectionManager.instance.unlock();
-		}
+		this.config = config;
+		this.emf = createEntityManagerFactory();
 	}
 
 
