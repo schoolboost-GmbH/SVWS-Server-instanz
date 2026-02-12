@@ -1,0 +1,89 @@
+version: "3.9"
+
+volumes:
+  svws_keystore:
+  svws_logs:
+  mariadb_data:
+
+services:
+  # -----------------------------
+  # MariaDB Database (4 GB)
+  # -----------------------------
+  mariadb:
+    image: mariadb:11.7
+    restart: unless-stopped
+    mem_limit: 4g
+    command: >
+      --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    environment:
+      MARIADB_ROOT_PASSWORD: ${MARIADB_ROOT_PASSWORD}
+      MARIADB_DATABASE: ${MARIADB_DATABASE}
+      MARIADB_USER: ${MARIADB_USER}
+      MARIADB_PASSWORD: ${MARIADB_PASSWORD}
+    volumes:
+      - mariadb_data:/var/lib/mysql
+    networks:
+      - coolify
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 60s
+
+  # -----------------------------
+  # SVWS Backend (6 GB total / 4 GB heap)
+  # -----------------------------
+  svws:
+    image: svwsnrw/svws-server:1.2.1
+    restart: unless-stopped
+    mem_limit: 6g
+    depends_on:
+      mariadb:
+        condition: service_healthy
+    environment:
+      MARIADB_HOST: mariadb
+      MARIADB_DATABASE: ${MARIADB_DATABASE}
+      MARIADB_USER: ${MARIADB_USER}
+      MARIADB_PASSWORD: ${MARIADB_PASSWORD}
+
+      SVWS_TLS_KEYSTORE_PATH: /etc/app/svws/conf/keystore
+      SVWS_TLS_KEYSTORE_PASSWORD: ${SVWS_TLS_KEYSTORE_PASSWORD}
+      SVWS_TLS_KEY_ALIAS: ${SVWS_TLS_KEY_ALIAS}
+
+      IMPORT_TEST_DATA: "false"
+
+      # JVM memory: 4GB heap inside 6GB container
+      _JAVA_OPTIONS: "-Xms4g -Xmx4g"
+
+    volumes:
+      - svws_keystore:/etc/app/svws/conf/keystore
+      - svws_logs:/opt/app/svws/logs
+    networks:
+      - coolify
+
+    labels:
+      - "traefik.enable=true"
+
+      # HTTP Router
+      - "traefik.http.routers.svws-http.rule=Host(`svws.domsingschule-aachen.de`)"
+      - "traefik.http.routers.svws-http.entrypoints=http"
+      - "traefik.http.routers.svws-http.middlewares=svws-redirect-to-https"
+
+      # HTTPS Router
+      - "traefik.http.routers.svws-https.rule=Host(`svws.domsingschule-aachen.de`)"
+      - "traefik.http.routers.svws-https.entrypoints=https"
+      - "traefik.http.routers.svws-https.tls=true"
+      - "traefik.http.routers.svws-https.tls.certresolver=letsencrypt"
+
+      # Redirect Middleware
+      - "traefik.http.middlewares.svws-redirect-to-https.redirectscheme.scheme=https"
+      - "traefik.http.middlewares.svws-redirect-to-https.redirectscheme.permanent=true"
+
+      # Service port (SVWS runs HTTPS internally on 8443)
+      - "traefik.http.services.svws.loadbalancer.server.port=8443"
+      - "traefik.http.services.svws.loadbalancer.server.scheme=https"
+
+networks:
+  coolify:
+    external: true
