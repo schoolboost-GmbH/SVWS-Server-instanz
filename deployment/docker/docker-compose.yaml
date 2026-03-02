@@ -4,6 +4,7 @@ volumes:
   svws_keystore:
   svws_logs:
   mariadb_data:
+  mariadb_backups:
 
 services:
   # -----------------------------
@@ -85,6 +86,28 @@ services:
       # Service port (SVWS runs HTTPS internally on 8443)
       - "traefik.http.services.svws.loadbalancer.server.port=8443"
       - "traefik.http.services.svws.loadbalancer.server.scheme=https"
+
+  # -----------------------------
+  # Database Backup (daily at 3 AM)
+  # -----------------------------
+  mariadb-backup:
+    build: ./backup
+    restart: unless-stopped
+    mem_limit: 512m
+    depends_on:
+      mariadb:
+        condition: service_healthy
+    environment:
+      MARIADB_HOST: mariadb
+      MARIADB_DATABASE: ${MARIADB_DATABASE}
+      MARIADB_USER: ${MARIADB_USER}
+      MARIADB_PASSWORD: ${MARIADB_PASSWORD}
+      BACKUP_CRON_SCHEDULE: "0 3 * * *"
+      BACKUP_RETENTION_DAYS: "7"
+    volumes:
+      - mariadb_backups:/backups
+    networks:
+      - coolify
 
 networks:
   coolify:

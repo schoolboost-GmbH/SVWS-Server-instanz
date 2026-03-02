@@ -19,6 +19,10 @@ services:
       SVWS_TLS_CERT_S: NRW
       SVWS_TLS_CERT_C: DE
 
+  mariadb-backup:
+    networks:
+      - default
+
 networks:
   default:
     driver: bridge
