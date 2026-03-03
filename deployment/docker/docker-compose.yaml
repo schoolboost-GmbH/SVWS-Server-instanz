@@ -88,21 +88,18 @@ services:
       - "traefik.http.services.svws.loadbalancer.server.scheme=https"
 
   # -----------------------------
-  # Database Backup (daily at 3 AM)
+  # Database Backup (daily, 7-day retention)
   # -----------------------------
   mariadb-backup:
-    build: ./backup
+    build: ./deployment/docker/backup
     restart: unless-stopped
     mem_limit: 512m
     depends_on:
       mariadb:
         condition: service_healthy
     environment:
-      MARIADB_HOST: mariadb
-      MARIADB_DATABASE: ${MARIADB_DATABASE}
-      MARIADB_USER: ${MARIADB_USER}
-      MARIADB_PASSWORD: ${MARIADB_PASSWORD}
-      BACKUP_CRON_SCHEDULE: "0 3 * * *"
+      MARIADB_ROOT_PASSWORD: ${MARIADB_ROOT_PASSWORD}
+      BACKUP_HOUR: "3"
       BACKUP_RETENTION_DAYS: "7"
     volumes:
       - mariadb_backups:/backups
